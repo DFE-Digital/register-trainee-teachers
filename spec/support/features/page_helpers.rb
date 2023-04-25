@@ -258,6 +258,18 @@ module Features
       @withdrawal_forbidden_page ||= PageObjects::Trainees::WithdrawalForbidden.new
     end
 
+    def show_undo_withdrawal_page
+      @show_undo_withdrawal_page ||= PageObjects::Trainees::ShowUndoWithdrawal.new
+    end
+
+    def edit_undo_withdrawal_page
+      @edit_undo_withdrawal_page ||= PageObjects::Trainees::EditUndoWithdrawal.new
+    end
+
+    def undo_withdrawal_confirmation_page
+      @undo_withdrawal_confirmation_page ||= PageObjects::Trainees::UndoWithdrawalConfirmation.new
+    end
+
     def reinstatement_page
       @reinstatement_page ||= PageObjects::Trainees::Reinstatement.new
     end

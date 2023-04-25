@@ -2,7 +2,7 @@
 
 module ConfirmUndoWithdrawalDetails
   class View < GovukComponent::Base
-    StateStruct = Struct.new(:state, :award_type)
+    State = Struct.new(:state, :award_type)
 
     include SanitizeHelper
     include SummaryHelper
@@ -13,7 +13,7 @@ module ConfirmUndoWithdrawalDetails
       @trainee = trainee
       @comment = comment
       @ticket = ticket
-      @state = StateStruct.new(state, trainee.award_type)
+      @state = State.new(state, trainee.award_type)
       @editable = editable
     end
 

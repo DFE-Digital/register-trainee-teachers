@@ -8,7 +8,7 @@ class UndoWithdrawalForm
   validates :comment, presence: true
   validates :ticket, format: URI::DEFAULT_PARSER.make_regexp(%w[http https]), allow_blank: true
 
-  def initialize(trainee: nil, comment: nil, ticket: nil, session: nil)
+  def initialize(trainee:, session:, comment: nil, ticket: nil)
     @trainee = trainee
     @session = session
     @comment = comment || session[:undo_withdrawal_comment]
