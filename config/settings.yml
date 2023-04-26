@@ -3,8 +3,8 @@ port: 5000
 # The url for this app, also used by `dfe_sign_in`
 base_url: https://localhost:5000
 
-# The url for the google doc feedback link (non-live version)
-feedback_link_url: "https://docs.google.com/forms/d/e/1FAIpQLSd1p-DrskEt7qnF0k0U4jsMgbAAHbz-wrQpvQCmGIJdzkGXcQ/viewform"
+# The url for the microsoft forms feedback link (non-live version)
+feedback_link_url: "https://forms.office.com/pages/responsepage.aspx?id=yXfS-grGoU2187O4s0qC-XoQTPfbQ2dGrsruj75vocFUOFhUQUE4SkpBNlo2Q1hGMlBKVFNLOTlVSi4u"
 
 # The email address for support queries
 support_email: becomingateacher@digital.education.gov.uk
