@@ -59,10 +59,21 @@ feature "recommending trainees" do
       end
     end
 
-    scenario "I can change who i want to recommend" do
-      and_i_check_who_ill_recommend
-      and_i_click_change_link
-      then_i_see_the_form_to_change_upload
+    context "I can change who I want to recommend" do
+      scenario "I see the form to change upload" do
+        and_i_check_who_ill_recommend
+        and_i_click_change_link
+        then_i_see_the_form_to_change_upload
+      end
+
+      scenario "I get redirected to the correct page when no CSV is uploaded" do
+        and_i_check_who_ill_recommend
+        and_i_click_change_link
+        then_i_see_the_form_to_change_upload
+        and_i_submit_form_with_no_file
+        then_i_see_validation_errors
+        and_i_remain_on_the_change_upload_page
+      end
     end
 
     context "and I upload a CSV with an error" do
@@ -157,9 +168,14 @@ private
   def when_i_submit_form_with_no_file_attached
     recommendations_checks_show_page.upload_button.click
   end
+  alias and_i_submit_form_with_no_file when_i_submit_form_with_no_file_attached
 
   def then_i_see_validation_errors
     expect(recommendations_checks_show_page).to have_text("Please select a file")
+  end
+
+  def and_i_remain_on_the_change_upload_page
+    expect(recommendations_checks_show_page).to have_text("Change who you’ll recommend for QTS or EYTS")
   end
 
   def and_i_see_a_list_of_trainees_to_check
