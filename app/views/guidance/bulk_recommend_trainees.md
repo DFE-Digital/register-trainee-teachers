@@ -11,7 +11,7 @@ You cannot use this process to indicate that trainees have withdrawn or deferred
 records. You need to do this separately for each trainee.
 
 You can also use the Higher Education Statistics Agency (HESA) service if you have access to it. You cannot use it
- to indicate that trainees have deferred.
+ to indicate that trainees have withdrawn.
 {/inset-text}
 
 ## How to bulk recommend trainees for QTS or EYTS
