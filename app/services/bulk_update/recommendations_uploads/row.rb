@@ -14,8 +14,10 @@ module BulkUpdate
       def initialize(csv_row)
         ::Reports::BulkRecommendReport::DEFAULT_HEADERS.each do |header|
           method_name = header.downcase.gsub(" ", "_")
+          method_value = csv_row[header.downcase]
+          method_value = method_value&.tr("'", "") if method_name == "hesa_id"
 
-          instance_variable_set("@#{method_name}", csv_row[header.downcase])
+          instance_variable_set("@#{method_name}", method_value)
           self.class.send(:attr_reader, method_name)
         end
       end
