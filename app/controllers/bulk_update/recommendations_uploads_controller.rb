@@ -21,6 +21,17 @@ module BulkUpdate
       end
     end
 
+    def update
+      @recommendations_upload_form = RecommendationsUploadForm.new(provider:, file:)
+
+      if @recommendations_upload_form.save
+        create_rows!
+        redirect_to(bulk_update_recommendations_upload_summary_path(@recommendations_upload_form.recommendations_upload))
+      else
+        render(:edit)
+      end
+    end
+
   private
 
     attr_reader :recommendations_upload_form
