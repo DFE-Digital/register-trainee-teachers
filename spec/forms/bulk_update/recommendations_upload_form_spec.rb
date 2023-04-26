@@ -27,13 +27,13 @@ module BulkUpdate
     let(:content_type) { "text/csv" }
 
     context "when passed a file" do
+      before do
+        allow(RecommendationsUploads::ValidateCsv).to receive(:new).with(anything).and_return(double("validation", validate!: true))
+        allow(RecommendationsUploads::ValidateFile).to receive(:new).with(anything).and_return(double("validation", validate!: true))
+      end
+
       context "that is a CSV with expected headers" do
         let(:test_file) { file_fixture("bulk_update/recommendations_upload/complete.csv") }
-
-        before do
-          allow(RecommendationsUploads::ValidateCsv).to receive(:new).with(anything).and_return(double("validation", validate!: true))
-          allow(RecommendationsUploads::ValidateFile).to receive(:new).with(anything).and_return(double("validation", validate!: true))
-        end
 
         it "returns a RecommendationsUpload record and CSV::Table" do
           expect(form.valid?).to be true
@@ -45,11 +45,6 @@ module BulkUpdate
 
       context "that has possibly malicious scripts" do
         let(:test_file) { file_fixture("bulk_update/recommendations_upload/injected.csv") }
-
-        before do
-          allow(RecommendationsUploads::ValidateCsv).to receive(:new).with(anything).and_return(double("validation", validate!: true))
-          allow(RecommendationsUploads::ValidateFile).to receive(:new).with(anything).and_return(double("validation", validate!: true))
-        end
 
         it "returns a RecommendationsUpload record and sanitised CSV::Table" do
           # cell containing potential spreadsheet formula is safely quoted to avoid execution
