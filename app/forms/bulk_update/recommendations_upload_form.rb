@@ -9,6 +9,9 @@ module BulkUpdate
     validate :validate_file!
     validate :validate_csv!
 
+    ENCODING = "UTF-8"
+    CSV_ARGS = { headers: true, header_converters: :downcase, strip: true, encoding: ENCODING }.freeze
+
     def initialize(provider: nil, file: nil)
       @provider = provider
       @file = file
@@ -20,7 +23,6 @@ module BulkUpdate
       @recommendations_upload = RecommendationsUpload.create(provider: provider, file: original_csv_sanitised_file)
     end
 
-    CSV_ARGS = { headers: true, header_converters: :downcase, strip: true }.freeze
     def csv
       @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
@@ -37,7 +39,7 @@ module BulkUpdate
     def original_csv_sanitised
       @original_csv_sanitised ||= begin
         file.tempfile.rewind
-        CSVSafe.new(file.tempfile, headers: true).read
+        CSVSafe.new(file.tempfile, headers: true, encoding: ENCODING).read
       end
     end
 
@@ -45,8 +47,11 @@ module BulkUpdate
     def original_csv_sanitised_file
       return @original_csv_sanitised_file if defined?(@original_csv_sanitised_file)
 
-      sanitised_tempfile = Tempfile.new
-      sanitised_tempfile.write(original_csv_sanitised.to_csv)
+      sanitised_tempfile = Tempfile.new(encoding: ENCODING)
+
+      # Set the encoding of the data being written to UTF-8
+      sanitised_data = original_csv_sanitised.to_csv.force_encoding(ENCODING)
+      sanitised_tempfile.write(sanitised_data)
       sanitised_tempfile.rewind
 
       # Return the temporary file as an UploadedFile expected by RecommendationsUpload
