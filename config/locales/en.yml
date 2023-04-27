@@ -393,8 +393,8 @@ en:
         withdrawal:
           show: Withdraw trainee
         undo_withdrawal:
-          show: Undo Withdrawal
-          edit: Undo Withdrawal
+          show: Undo withdrawal
+          edit: Why you’re undoing the withdrawal
         confirm_undo_withdrawal:
           show: Confirm Undo Withdrawal
         confirm_withdrawal:

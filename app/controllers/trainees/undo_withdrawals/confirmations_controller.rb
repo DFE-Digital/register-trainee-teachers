@@ -4,6 +4,7 @@ module Trainees
   module UndoWithdrawals
     class ConfirmationsController < Trainees::BaseController
       helper_method :undo_withdrawal_form, :trainee, :comment, :ticket, :state
+      before_action :can_undo_withdraw?
 
       def show; end
 
@@ -25,6 +26,10 @@ module Trainees
       end
 
     private
+
+      def can_undo_withdraw?
+        authorize(trainee, :undo_withdraw?)
+      end
 
       def redirect_failed
         redirect_to(trainee_path(trainee), flash: { warning: "Unable to undo the trainee Withdrawal. Please contact support." })

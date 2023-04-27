@@ -143,20 +143,11 @@ module Trainees
     end
 
     def undo_withdraw_message
-      [
-        ["Comment:", undo_withdraw_comment],
-        (["Zendesk ticket:", undo_withdraw_ticket] if undo_withdraw_ticket),
-      ].compact
+      [["Comment:", undo_withdraw_comment]]
     end
 
     def undo_withdraw_comment
       comment.split("\n").first
-    end
-
-    def undo_withdraw_ticket
-      return unless comment.split("\n").count > 1
-
-      comment.split("\n").last
     end
 
     # An action can be one of "create", "destroy" or "update". Here, we're

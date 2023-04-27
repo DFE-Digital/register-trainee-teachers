@@ -2,4 +2,10 @@
   title: t("components.confirmation.withdrawal_details.summary_title"),
   rows: rows,
   editable: editable,
-  )%>
+  ) do |component| %>
+  <% component.header_actions do %>
+    <% if editable %>
+      <%= govuk_link_to "Undo withdrawal", trainee_undo_withdrawal_path(trainee) %>
+    <% end %>
+  <% end %>
+<% end %>

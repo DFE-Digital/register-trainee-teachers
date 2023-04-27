@@ -37,7 +37,7 @@ feature "Undo trainee withdrawal" do
       and_i_fill_in_the_form(comment: "this is the comment", ticket: "https://google.com")
       and_i_continue
       and_i_confirm
-      
+
       record_page.timeline_tab.click
 
       then_i_expect_the_timeline_to_show_the_comment_and_ticket

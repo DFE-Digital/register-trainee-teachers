@@ -3,6 +3,7 @@
 module Trainees
   class UndoWithdrawalsController < BaseController
     helper_method :trainee
+    before_action :can_undo_withdraw?
 
     def show; end
 
@@ -11,8 +12,6 @@ module Trainees
     end
 
     def update
-      authorize(trainee, :undo_withdraw?)
-
       @undo_withdrawal_form = UndoWithdrawalForm.new(
         trainee: trainee,
         comment: trainee_params[:comment],
@@ -28,6 +27,10 @@ module Trainees
     end
 
   private
+
+    def can_undo_withdraw?
+      authorize(trainee, :undo_withdraw?)
+    end
 
     def trainee_params
       params

@@ -9,8 +9,8 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-
-    <h1 class="govuk-heading-l"> Why you’re undoing the withdrawal </h1>
+    <span class="govuk-caption-l"> <%= trainee.full_name %> </span>
+    <h1 class="govuk-heading-l"> <%= t("components.page_titles.trainees.undo_withdrawal.edit") %> </h1>
 
     <%= register_form_with(model: @undo_withdrawal_form, url: trainee_undo_withdrawal_path(trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
