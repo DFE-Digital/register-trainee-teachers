@@ -396,7 +396,7 @@ en:
           show: Undo withdrawal
           edit: Why you’re undoing the withdrawal
         confirm_undo_withdrawal:
-          show: Confirm Undo Withdrawal
+          show: Confirm you want to undo the withdrawal
         confirm_withdrawal:
           show: Check withdrawal details
         deferral:
@@ -1619,8 +1619,6 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-            ticket:
-              invalid: Must be a URL
   page_headings:
     start_page: Register trainee teachers
   service_updates:

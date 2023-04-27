@@ -22,14 +22,6 @@ feature "Undo trainee withdrawal" do
         then_i_expect_the_page_to_show_comment_error
       end
     end
-
-    context "ticket validation" do
-      scenario "invalid URL" do
-        and_i_fill_in_the_form(comment: "this is the comment", ticket: "ticket")
-        and_i_continue
-        then_i_expect_the_page_to_show_url_error
-      end
-    end
   end
 
   context "undo trainee withdrawal flow" do
@@ -92,7 +84,6 @@ feature "Undo trainee withdrawal" do
 
   def then_i_expect_the_timeline_to_show_the_comment_and_ticket
     expect(page).to have_content("this is the comment")
-    expect(page).to have_content("https://google.com")
   end
 
   def then_i_expect_the_trainee_to_have_been_updated
@@ -100,6 +91,7 @@ feature "Undo trainee withdrawal" do
     expect(trainee.withdraw_reason).to be_nil
     expect(trainee.withdraw_date).to be_nil
     expect(trainee.additional_withdraw_reason).to be_nil
+    expect(trainee.audits.last.comment).to have_text("https://google.com")
   end
 
   def then_i_expect_the_session_to_have_been_cleared

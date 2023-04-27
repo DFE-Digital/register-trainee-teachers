@@ -15,7 +15,7 @@
     <%= register_form_with(model: @undo_withdrawal_form, url: trainee_undo_withdrawal_path(trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <%= f.govuk_text_field :comment, label: { text: 'Comment for trainee timeline', tag: :h2, size: 'm' }, hint: { text: "For example, 'Provider withdrew the trainee in error'" } %>
+      <%= f.govuk_text_field :comment, label: { text: 'Comment for trainee timeline', tag: :h2, size: 'm' }, hint: { text: "For example, ‘Provider withdrew the trainee in error’" } %>
 
       <%= f.govuk_text_field :ticket, label: { text: 'Zendesk ticket URL (optional)', tag: :h2, size: 'm' }, hint: { text: "For example, https://becomingateacher.zendesk.com/agent/tickets/12345" } %>
 
