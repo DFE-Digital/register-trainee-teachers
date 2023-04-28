@@ -1,0 +1,10 @@
+<%= render SummaryCard::View.new(
+  title: "#{trainee.award_type} details",
+  rows: [
+    {
+      key: "Award date",
+      value: award_date,
+      action_visually_hidden_text: 'award date',
+    },
+  ]
+) %>

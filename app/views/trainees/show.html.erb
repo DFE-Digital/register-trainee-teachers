@@ -24,9 +24,9 @@
   </div>
 <% end %>
 
-<% if @trainee.awarded? or @trainee.recommended_for_award? %>
+<% if @trainee.awarded? || @trainee.recommended_for_award? %>
   <div class="award-details">
-    <%= render OutcomeDetails::View.new(OutcomeDateForm.new(@trainee), editable: trainee_editable?) %>
+    <%= render AwardDetails::View.new(@trainee) %>
   </div>
 <% end %>
 
