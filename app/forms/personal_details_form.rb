@@ -31,8 +31,13 @@ class PersonalDetailsForm < TraineeForm
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
   validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys }
-  validates :other_nationality1, :other_nationality2, :other_nationality3, autocomplete: true, allow_nil: true, if: :other_is_selected?
-  validate :nationalities_cannot_be_empty
+  validates :other_nationality1,
+            :other_nationality2,
+            :other_nationality3,
+            autocomplete: true,
+            allow_nil: true,
+            if: :other_is_selected?
+  validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? }
 
   def date_of_birth
     date_hash = { year:, month:, day: }

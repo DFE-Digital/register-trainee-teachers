@@ -63,6 +63,12 @@ describe PersonalDetailsForm, type: :model do
         )
       end
 
+      context "the trainee came from HESA" do
+        let(:trainee) { create(:trainee, :imported_from_hesa) }
+
+        it { is_expected.to be_valid }
+      end
+
       context "when a blank autocomplete value is submitted" do
         let(:params) do
           ActionController::Parameters.new({
