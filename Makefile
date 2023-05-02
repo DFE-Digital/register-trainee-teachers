@@ -106,12 +106,6 @@ review_aks:
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).test.teacherservices.cloud will be created in aks
-#	$(eval APP_NAME_SUFFIX=pr-$(APP_NAME))
-#	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
-#	$(eval export TF_VAR_app_name_suffix=pr-$(APP_NAME))
-#	$(eval export TF_VAR_app_name=$(APP_NAME))	might be required?
-#	$(eval export TF_VAR_paas_app_name=$(APP_NAME))
-#	$(eval export TF_VAR_app_suffix=$(paas_env))
 #	$(eval export TF_VAR_azure_resource_group_name=s121d01-reg-rv-$(APP_NAME)-rg)
 #	$(eval export TF_VAR_azure_tempdata_storage_account_name=s121d01regrv$(subst -,,$(APP_NAME)))
 
@@ -125,10 +119,36 @@ dv_review_aks: ## make dv_review_aks deploy APP_NAME=2222 CLUSTER=cluster1
 	$(eval export TF_VAR_app_name=$(APP_NAME))
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).$(CLUSTER).development.teacherservices.cloud will be created in aks
-#	$(eval APP_NAME_SUFFIX=dv-review-$(APP_NAME))
-#	$(eval backend_key=-backend-config=key=pr-$(APP_NAME).tfstate)
-#	$(eval export TF_VAR_app_name_suffix=pr-$(APP_NAME))
 
+qa_aks:
+	$(eval include global_config/qa_aks.sh)
+	$(eval DEPLOY_ENV=qa_aks)
+	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
+	$(eval paas_env=qa)
+	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
+staging_aks:
+	$(eval include global_config/staging_aks.sh)
+	$(eval DEPLOY_ENV=staging_aks)
+	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
+production_aks:
+	$(eval include global_config/production_aks.sh)
+	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+	$(eval DEPLOY_ENV=production_aks)
+	$(eval HOST_NAME=www)
+	$(eval DTTP_HOSTNAME=traineeteacherportal)
+	$(eval paas_env=production)
+	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
+productiondata_aks:
+	$(eval include global_config/productiondata_aks.sh)
+	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+	$(eval DEPLOY_ENV=productiondata_aks)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
 set-azure-account:
 	echo "Logging on to ${AZ_SUBSCRIPTION}"
