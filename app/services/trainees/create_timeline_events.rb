@@ -131,7 +131,7 @@ module Trainees
     attr_reader :audit, :current_user
 
     def withdrawal_undone?
-      return unless audited_changes.is_a?(Hash)
+      return unless audited_changes.is_a?(Hash) && username
 
       audited_changes.any? do |key, value|
         key == "state" &&
@@ -143,7 +143,7 @@ module Trainees
     end
 
     def undo_withdraw_message
-      [["Comment:", undo_withdraw_comment]]
+      [["Comment:", undo_withdraw_comment]] if comment.present?
     end
 
     def undo_withdraw_comment
