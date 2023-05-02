@@ -4,8 +4,6 @@ module Degrees
   class CreateFromHesa
     include ServicePattern
 
-    UNKNOWN_DEGREE_TYPE = "999"
-
     # The dfe-reference gem does not include degree types with honours in
     # the name, so we need fallback to the non-honours generic degree types.
     HONOURS_TO_NON_HONOURS_HESA_CODE_MAP = {
@@ -104,8 +102,6 @@ module Degrees
     end
 
     def importable?(hesa_degree)
-      return true unless hesa_degree[:degree_type]&.include?(UNKNOWN_DEGREE_TYPE)
-
       hesa_degree.compact.size > 1
     end
 
