@@ -102,6 +102,7 @@ private
   end
 
   def trainee
+    puts "ID: #{params[:id]}, slugs: #{Trainee.all.map(&:slug)}"
     @trainee ||= Trainee.from_param(params[:id])
   end
 

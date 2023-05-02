@@ -104,7 +104,9 @@ module Degrees
     end
 
     def importable?(hesa_degree)
-      return true unless hesa_degree[:degree_type]&.include?(UNKNOWN_DEGREE_TYPE)
+      puts "DEGREEE: #{hesa_degree[:degree_type]}"
+
+      # return true unless hesa_degree[:degree_type]&.include?(UNKNOWN_DEGREE_TYPE)
 
       hesa_degree.compact.size > 1
     end

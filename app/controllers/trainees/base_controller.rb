@@ -7,6 +7,8 @@ module Trainees
   private
 
     def trainee
+      puts "Looking for: #{params[:trainee_id]} in #{Trainee.all.map(&:slug)}...\n"
+
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 

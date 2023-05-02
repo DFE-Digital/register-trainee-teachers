@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: f1a586f2170d46c717aca22a52e74c1669a1154a
-  ref: f1a586f
+  revision: 03cb8815684355b1e04f2b0e39faf682d1ba7f7c
+  ref: 03cb881
   specs:
-    dfe-reference-data (2.0.0)
+    dfe-reference-data (2.1.0)
       activesupport
       tzinfo
 
@@ -340,7 +340,7 @@ GEM
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    i18n (1.12.0)
+    i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
     irb (1.6.3)

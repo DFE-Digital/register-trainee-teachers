@@ -8,7 +8,7 @@ module Degrees
 
     GRADES = DfE::ReferenceData::Degrees::GRADES
     SUBJECTS = DfE::ReferenceData::Degrees::SUBJECTS_INCLUDING_GENERICS
-    TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
+    TYPES = DfE::ReferenceData::Degrees::ALL_TYPES
     INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS_INCLUDING_GENERICS
 
     SUPPORTED_GRADES_BY_HESA_CODES = %w[01 02 03 05 12 13 14].freeze
