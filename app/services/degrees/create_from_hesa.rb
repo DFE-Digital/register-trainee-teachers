@@ -104,7 +104,7 @@ module Degrees
     end
 
     def importable?(hesa_degree)
-      puts "DEGREEE: #{hesa_degree[:degree_type]}"
+      Rails.logger.debug { "DEGREEE: #{hesa_degree[:degree_type]}" }
 
       # return true unless hesa_degree[:degree_type]&.include?(UNKNOWN_DEGREE_TYPE)
 
