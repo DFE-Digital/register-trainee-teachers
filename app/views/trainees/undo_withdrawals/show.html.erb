@@ -1,0 +1,35 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.undo_withdrawal.show") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: trainee_path(trainee),
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l"> <%= trainee.full_name %> </span>
+    <h1 class="govuk-heading-l">Undo withdrawal</h1>
+
+    <p class="govuk-body">
+      You should only undo this withdrawal if the trainee either:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>decided to continue on the same course</li>
+      <li>was withdrawn in error</li>
+    </ul>
+
+    <p class="govuk-body">
+      Do not undo this withdrawal if the trainee is changing to a different course.
+      Tell the provider to register the trainee again.
+    </p>
+
+    <%= govuk_link_to "Continue", edit_trainee_undo_withdrawal_path(trainee), class: "govuk-button" %>
+            
+    <%= register_form_with model: trainee, url: trainee_undo_withdrawal_confirmation_path(trainee), method: :delete, local: true do |f| %>
+      <%= f.submit "Cancel and return to record", class: "govuk-link app-button--link govuk-body", role: "link" %>
+    <% end %>
+  </div>
+</div>

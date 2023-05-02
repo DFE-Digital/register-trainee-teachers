@@ -14,6 +14,7 @@ module PageObjects
       element :record_outcome, ".record-actions > .govuk-button"
       element :reinstate, ".govuk-link.reinstate"
       element :withdraw, ".govuk-link.withdraw"
+      element :undo_withdrawal, "a", text: "Undo withdrawal"
       element :defer, ".govuk-link.defer"
       element :delete, ".govuk-link.delete"
 

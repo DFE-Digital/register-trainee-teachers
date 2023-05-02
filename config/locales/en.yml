@@ -261,6 +261,13 @@ en:
       study_mode_values:
         full_time: Full time
         part_time: Part time
+    withdrawal:
+      title: Withdrawal details
+      rows:
+        date: Date the trainee withdrew
+        reason: Why the trainee withdrew
+        details: Details about why the trainee withdrew
+        avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
     school_details:
       summary_title: Schools
       lead_school_key: Lead school
@@ -385,6 +392,11 @@ en:
           edit: Is the trainee full time or part time?
         withdrawal:
           show: Withdraw trainee
+        undo_withdrawal:
+          show: Undo withdrawal
+          edit: Why you’re undoing the withdrawal
+        confirm_undo_withdrawal:
+          show: Confirm you want to undo the withdrawal
         confirm_withdrawal:
           show: Check withdrawal details
         deferral:
@@ -1603,6 +1615,10 @@ en:
             code:
               blank: Enter the code from your email
               invalid_code: The code is incorrect or has expired
+        undo_withdrawal_form:
+          attributes:
+            comment:
+              blank: Enter a comment
   page_headings:
     start_page: Register trainee teachers
   service_updates:

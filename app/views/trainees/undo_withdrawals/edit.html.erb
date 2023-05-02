@@ -1,0 +1,29 @@
+<%= render PageTitle::View.new(text: t("components.page_titles.trainees.undo_withdrawal.edit"), has_errors: @undo_withdrawal_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: trainee_undo_withdrawal_path(trainee),
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l"> <%= trainee.full_name %> </span>
+    <h1 class="govuk-heading-l"> <%= t("components.page_titles.trainees.undo_withdrawal.edit") %> </h1>
+
+    <%= register_form_with(model: @undo_withdrawal_form, url: trainee_undo_withdrawal_path(trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_text_field :comment, label: { text: 'Comment for trainee timeline', tag: :h2, size: 'm' }, hint: { text: "For example, ‘Provider withdrew the trainee in error’" } %>
+
+      <%= f.govuk_text_field :ticket, label: { text: 'Zendesk ticket URL (optional)', tag: :h2, size: 'm' }, hint: { text: "For example, https://becomingateacher.zendesk.com/agent/tickets/12345" } %>
+
+      <%= f.govuk_submit t(:continue) %>
+    <% end %>
+  </div>
+</div>
+
+<%= register_form_with model: trainee, url: trainee_undo_withdrawal_confirmation_path(trainee), method: :delete, local: true do |f| %>
+  <%= f.submit "Cancel and return to record", class: "govuk-link app-button--link govuk-body", role: "link" %>
+<% end %>

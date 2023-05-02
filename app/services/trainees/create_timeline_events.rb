@@ -56,7 +56,7 @@ module Trainees
       withdraw_date
     ].freeze
 
-    delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, to: :audit
+    delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, :comment, to: :audit
 
     def initialize(audit:, current_user: nil)
       @audit = audit
@@ -65,6 +65,15 @@ module Trainees
 
     def call
       return if trainee_association_imported_from_dttp?
+
+      if withdrawal_undone?
+        return TimelineEvent.new(
+          title: "Withdrawal undone",
+          date: created_at,
+          username: username,
+          items: undo_withdraw_message,
+        )
+      end
 
       if action == "create"
         creation_events = [
@@ -120,6 +129,26 @@ module Trainees
   private
 
     attr_reader :audit, :current_user
+
+    def withdrawal_undone?
+      return unless audited_changes.is_a?(Hash)
+
+      audited_changes.any? do |key, value|
+        key == "state" &&
+          value.is_a?(Array) &&
+          value.size == 2 &&
+          value[0] == Trainee.states["withdrawn"] &&
+          value[1].is_a?(Integer)
+      end
+    end
+
+    def undo_withdraw_message
+      [["Comment:", undo_withdraw_comment]]
+    end
+
+    def undo_withdraw_comment
+      comment.split("\n").first
+    end
 
     # An action can be one of "create", "destroy" or "update". Here, we're
     # creating a new "state_change" action as they're displayed differently.
