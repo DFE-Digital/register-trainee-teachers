@@ -122,7 +122,7 @@ runs:
 
     - name: Generate example data
       shell: bash
-      if: inputs.environment == 'review'
+      if: inputs.environment == 'review_aks'
       run: kubectl exec -n ${{ env.namespace }} deployment/register-${APP_NAME} -- /bin/sh -c "date"
 #      run: kubectl exec -n ${{ env.namespace }} deployment/register-${APP_NAME} -- /bin/sh -c "cd /app && bundle exec rails db:seed example_data:generate"
 
