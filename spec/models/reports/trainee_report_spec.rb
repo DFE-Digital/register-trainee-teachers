@@ -416,8 +416,7 @@ describe Reports::TraineeReport do
   context "when there is an EYTS trainee" do
     let!(:trainee) { create(:trainee, :eyts_recommended, start_academic_cycle: current_cycle, end_academic_cycle: nil) }
 
-    it 'returns a blank age range' do
-      p trainee.award_type
+    it "returns a blank age range" do
       expect(subject.course_age_range).to eq(" ")
     end
   end
