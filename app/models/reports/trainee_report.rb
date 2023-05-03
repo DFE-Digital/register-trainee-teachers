@@ -379,6 +379,9 @@ module Reports
     end
 
     def course_age_range
+      if trainee.award_type == "EYTS"
+        return " "
+      end
       "#{course_minimum_age} to #{course_maximum_age}"
     end
 
