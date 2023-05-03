@@ -111,6 +111,10 @@ variable "postgres_extensions" {
 variable "postgres_create_servicename_db" {
   default = false
 }
+
+variable "redis_cache_url" {}
+variable "redis_queue_url" {}
+
 # local.postgres_service_name
 
 locals {
@@ -123,21 +127,6 @@ locals {
   postgres_dns_zone                    = local.current_cluster.dns_zone_prefix != null ? "${local.current_cluster.dns_zone_prefix}.internal.postgres.database.azure.com" : "production.internal.postgres.database.azure.com"
   postgres_server_name                 = "${var.azure_resource_prefix}-${var.service_short}-${var.app_environment}-psql"
   postgres_service_name                = "${var.service_name}-postgres-${var.app_environment}"
-  redis_dns_zone                       = "privatelink.redis.cache.windows.net"
-  redis_cache_name                     = "${var.azure_resource_prefix}-${var.service_short}-${var.app_environment}-redis-cache"
-  redis_cache_private_endpoint_name    = "${var.azure_resource_prefix}-${var.service_short}-${var.app_environment}-redis-cache-pe"
-  redis_queue_name                     = "${var.azure_resource_prefix}-${var.service_short}-${var.app_environment}-redis-queue"
-  redis_queue_private_endpoint_name    = "${var.azure_resource_prefix}-${var.service_short}-${var.app_environment}-redis-queue-pe"
-  redis_service_name                   = "${var.service_name}-redis-${var.app_environment}"
-  redis_container_url                  = "redis://${local.redis_service_name}:6379/0"
-  redis_queue_azure_url = (var.deploy_azure_backing_services ?
-    "rediss://:${azurerm_redis_cache.redis-queue[0].primary_access_key}@${azurerm_redis_cache.redis-queue[0].hostname}:${azurerm_redis_cache.redis-queue[0].ssl_port}/0" :
-    local.redis_container_url
-  )
-  redis_cache_azure_url = (var.deploy_azure_backing_services ?
-    "rediss://:${azurerm_redis_cache.redis-cache[0].primary_access_key}@${azurerm_redis_cache.redis-cache[0].hostname}:${azurerm_redis_cache.redis-cache[0].ssl_port}/0" :
-    local.redis_container_url
-  )
 
   postgres_db = var.postgres_create_servicename_db ? local.postgres_service_name : "postgres"
 
@@ -157,8 +146,8 @@ locals {
     {
       DATABASE_URL        = local.database_url
       BLAZER_DATABASE_URL = local.database_url
-      REDIS_URL           = local.redis_queue_azure_url
-      REDIS_CACHE_URL     = local.redis_cache_azure_url
+      REDIS_URL           = "${var.redis_queue_url}"
+      REDIS_CACHE_URL     = "${var.redis_cache_url}"
     }
   )
   # Create a unique name based on the values to force recreation when they change

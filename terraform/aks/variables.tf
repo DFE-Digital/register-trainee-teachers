@@ -64,6 +64,8 @@ variable "cluster" {}
 
 variable "deploy_azure_backing_services" { default = true }
 
+variable "enable_monitoring" { default = true }
+
 variable "db_sslmode" { default = "require" }
 
 #variable "webapp_startup_command" { default = null }
