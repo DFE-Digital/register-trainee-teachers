@@ -382,6 +382,7 @@ module Reports
       if trainee.award_type == "EYTS"
         return " "
       end
+
       "#{course_minimum_age} to #{course_maximum_age}"
     end
 
