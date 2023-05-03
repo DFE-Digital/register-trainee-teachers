@@ -413,6 +413,15 @@ describe Reports::TraineeReport do
     end
   end
 
+  context "when there is an EYTS trainee" do
+    let!(:trainee) { create(:trainee, :eyts_recommended, start_academic_cycle: current_cycle, end_academic_cycle: nil) }
+
+    it 'returns a blank age range' do
+      p trainee.award_type
+      expect(subject.course_age_range).to eq(" ")
+    end
+  end
+
   describe "#academic_years" do
     before do
       allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
