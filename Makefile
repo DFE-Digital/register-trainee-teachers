@@ -124,7 +124,6 @@ qa_aks:
 	$(eval include global_config/qa_aks.sh)
 	$(eval DEPLOY_ENV=qa_aks)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
-	$(eval paas_env=qa)
 	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
@@ -140,7 +139,6 @@ production_aks:
 	$(eval DEPLOY_ENV=production_aks)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
-	$(eval paas_env=production)
 	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
