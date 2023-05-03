@@ -15,9 +15,6 @@ module "kubernetes" {
   postgres_flexible_server_sku        = var.postgres_flexible_server_sku
   postgres_flexible_server_storage_mb = var.postgres_flexible_server_storage_mb
   postgres_enable_high_availability   = var.postgres_enable_high_availability
-  redis_capacity                      = var.redis_capacity
-  redis_family                        = var.redis_family
-  redis_sku_name                      = var.redis_sku_name
   gov_uk_host_names                   = var.gov_uk_host_names
   pg_actiongroup_name                 = var.pg_actiongroup_name
   pg_actiongroup_rg                   = var.pg_actiongroup_rg
@@ -33,6 +30,9 @@ module "kubernetes" {
   probe_path                          = var.probe_path
   worker_apps                         = var.worker_apps
   main_app                            = var.main_app
+  ########## TEMP
+  redis_cache_url                     = module.redis-cache.url
+  redis_queue_url                     = module.redis-queue.url
 }
 
 #module "statuscake" {
