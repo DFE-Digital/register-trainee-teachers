@@ -192,8 +192,10 @@ module Degrees
             ]
           end
 
-          it "does not save the degree" do
-            expect(trainee.degrees.count).to eq(0)
+          it "saves the degree" do
+            subject
+
+            expect(trainee.degrees.count).to eq(1)
           end
         end
 
@@ -212,6 +214,8 @@ module Degrees
           end
 
           it "saves the degree" do
+            subject
+
             expect(trainee.degrees.count).to eq(1)
             expect(degree.grade).to eq("Pass")
           end
