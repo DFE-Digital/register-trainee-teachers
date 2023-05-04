@@ -3,6 +3,8 @@
 module BulkUpdate
   module RecommendationsUploads
     class ValidateCsvRow
+      include Config
+
       def initialize(csv:, row:, trainee:)
         @csv = csv
         @row = row
@@ -43,21 +45,21 @@ module BulkUpdate
 
       def trn_format
         return if row.trn.blank?
-        return if row.trn =~ /^\d{7}$/
+        return if row.trn =~ VALID_TRN
 
         @messages << error_message(:trn_format)
       end
 
       def hesa_id_format
         return if row.hesa_id.nil?
-        return if row.hesa_id =~ /^[0-9]{13}([0-9]{4})?$/
+        return if row.hesa_id =~ VALID_HESA_ID
 
         @messages << error_message(:hesa_id_format)
       end
 
       def standards_met_at
         case row.standards_met_at
-        when /^\d{1,2}[\/-]\d{1,2}[\/-]\d{4}$/ # dd/mm/yyyy or dd-mm-yyyy or d/m/yyyy etc etc
+        when VALID_STANDARDS_MET_AT
           @date = row.standards_met_at.to_date
           today = Time.zone.today.to_date
           ago_12_months = 12.months.ago.to_date
@@ -87,7 +89,7 @@ module BulkUpdate
       def hesa_id
         return unless column_exists?(Reports::BulkRecommendReport::HESA_ID)
 
-        @messages << error_message(:hesa_id) if trainee.hesa_id != row.hesa_id
+        @messages << error_message(:hesa_id) if trainee.hesa_id != row.sanitised_hesa_id
       end
 
       def provider_trainee_id
@@ -152,7 +154,7 @@ module BulkUpdate
       def transliterate(string)
         return unless string
 
-        I18n.transliterate(string.dup.force_encoding("UTF-8"), replacement: "")&.downcase
+        I18n.transliterate(string.dup.force_encoding(ENCODING), replacement: "")&.downcase
       end
 
       def error_message(key, variables = {})
