@@ -4,6 +4,8 @@ module BulkUpdate
   module RecommendationsUploads
     # finds and validates a trainee scoped within provider, via trn/hesa/provider_trainee_id
     class ValidateTrainee
+      include Config
+
       def initialize(row:, provider:)
         @row = row
         @provider = provider
@@ -65,7 +67,7 @@ module BulkUpdate
 
       # rubocop:disable Naming/MemoizedInstanceVariableName
       def trainees_by_trn!
-        return unless row.trn =~ /^\d{7}$/
+        return unless row.trn =~ VALID_TRN
 
         @trainees ||= begin
           t = scope.where(trn: row.trn)
@@ -75,10 +77,10 @@ module BulkUpdate
       end
 
       def trainees_by_hesa_id!
-        return unless row.hesa_id =~ /^[0-9]{13}([0-9]{4})?$/
+        return unless row.hesa_id =~ VALID_HESA_ID
 
         @trainees ||= begin
-          t = scope.where(hesa_id: row.hesa_id)
+          t = scope.where(hesa_id: row.sanitised_hesa_id)
           @found_with = :hesa_id if t.any?
           t
         end

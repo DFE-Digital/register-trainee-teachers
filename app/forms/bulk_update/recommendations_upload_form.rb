@@ -5,12 +5,10 @@ module BulkUpdate
     include ActiveModel::Model
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks
+    include RecommendationsUploads::Config
 
     validate :validate_file!
     validate :validate_csv!
-
-    ENCODING = "UTF-8"
-    CSV_ARGS = { headers: true, header_converters: :downcase, strip: true, encoding: ENCODING }.freeze
 
     def initialize(provider: nil, file: nil)
       @provider = provider
