@@ -8,7 +8,50 @@ module Degrees
 
     GRADES = DfE::ReferenceData::Degrees::GRADES
     SUBJECTS = DfE::ReferenceData::Degrees::SUBJECTS_INCLUDING_GENERICS
-    TYPES = DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS
+
+    ## TODO: Remove this once the dfe-reference-data gem is updated to the latest version
+
+    # Extracts the mapping from https://github.com/DFE-Digital/dfe-reference-data/blob/03cb8815684355b1e04f2b0e39faf682d1ba7f7c/lib/dfe/reference_data/degrees/types.rb#L904
+    # This is a temporary solution until we are able to upgrade the gem to its latest version
+
+    UNKNOWN_TYPES_SCHEMA = DfE::ReferenceData::Degrees::TYPES_SCHEMA.merge(
+      {
+        qualification: { kind: :optional, schema: :string },
+        unknown: :boolean,
+      },
+    )
+
+    UNKNOWN_TYPES = DfE::ReferenceData::HardcodedReferenceList.new(
+      {
+        "3e042de2-a453-47dc-9452-90a23399e9ee" =>
+        { name: "Not available",
+          abbreviation: nil,
+          suggestion_synonyms: [],
+          match_synonyms: [],
+          hesa_itt_code: "999",
+          unknown: true },
+      },
+      schema: UNKNOWN_TYPES_SCHEMA,
+      list_description: 'Generic "catch-all" degree types, for approximating degree types not listed in TYPES (eg, "First Degree" to cover any first degree).',
+      list_docs_url: "https://github.com/DFE-Digital/dfe-reference-data/blob/main/docs/lists_degrees.md#dfereferencedatadegreesgeneric_types",
+      field_descriptions: DfE::ReferenceData::Degrees::TYPES_FIELD_DESCRIPTIONS,
+    )
+
+    ##########################################################################
+
+    TYPES = DfE::ReferenceData::JoinedReferenceList.new(
+      [DfE::ReferenceData::Degrees::TYPES_INCLUDING_GENERICS, UNKNOWN_TYPES],
+      schema: DfE::ReferenceData::Degrees::TYPES_SCHEMA.merge(
+        {
+          qualification: { kind: :optional, schema: :string },
+          generic: { kind: :optional, schema: :boolean },
+          unknown: { kind: :optional, schema: :boolean },
+        },
+      ),
+      list_description: "All degree types",
+      field_descriptions: DfE::ReferenceData::Degrees::TYPES_FIELD_DESCRIPTIONS,
+    )
+
     INSTITUTIONS = DfE::ReferenceData::Degrees::INSTITUTIONS_INCLUDING_GENERICS
 
     SUPPORTED_GRADES_BY_HESA_CODES = %w[01 02 03 05 12 13 14].freeze
