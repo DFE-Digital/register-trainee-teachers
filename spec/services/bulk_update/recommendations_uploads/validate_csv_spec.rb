@@ -18,7 +18,7 @@ module BulkUpdate
       end
 
       context "given a CSV with no header row" do
-        let(:csv) { CSV.new("", **BulkUpdate::RecommendationsUploadForm::CSV_ARGS).read }
+        let(:csv) { CSV.new("", **Config::CSV_ARGS).read }
 
         it { expect(record.errors.first.message).to eql "No header was detected" }
       end
@@ -43,7 +43,7 @@ module BulkUpdate
 
       context "given a CSV with only headers, no trainees" do
         let(:headers) { Reports::BulkRecommendReport::DEFAULT_HEADERS.join(",") }
-        let(:csv) { CSV.new(headers, **BulkUpdate::RecommendationsUploadForm::CSV_ARGS).read }
+        let(:csv) { CSV.new(headers, **Config::CSV_ARGS).read }
 
         it { expect(record.errors.first.message).to eql "The selected file must contain at least one trainee" }
       end

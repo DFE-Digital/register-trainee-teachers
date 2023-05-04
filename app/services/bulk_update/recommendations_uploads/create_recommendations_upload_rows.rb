@@ -5,9 +5,8 @@ module BulkUpdate
     # creates recommendations_upload_rows from a CSV
     # validates each row and trainee to create recommendations_upload_row.row_errors
     class CreateRecommendationsUploadRows
+      include Config
       include ServicePattern
-
-      FIRST_CSV_ROW_NUMBER = 2
 
       def initialize(recommendations_upload:, csv:)
         @recommendations_upload = recommendations_upload
