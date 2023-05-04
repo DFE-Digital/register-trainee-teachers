@@ -4,8 +4,7 @@ module BulkUpdate
   module RecommendationsUploads
     class CreateCsvWithErrors
       include ServicePattern
-
-      FIRST_CSV_ROW_NUMBER = 2
+      include Config
 
       def initialize(recommendations_upload:)
         @recommendations_upload = recommendations_upload
