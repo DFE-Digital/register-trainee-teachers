@@ -74,14 +74,6 @@ staging:
 	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
 	$(eval PLATFORM=paas)
 
-pen:
-	$(eval DEPLOY_ENV=pen)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
-	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
-
-audit:
-	$(eval DEPLOY_ENV=audit)
-
 production:
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
 	$(eval DEPLOY_ENV=production)
