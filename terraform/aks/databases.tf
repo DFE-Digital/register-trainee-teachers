@@ -3,7 +3,7 @@ module "redis-cache" {
 
   name                  = "cache"
   namespace             = var.namespace
-  environment           = "${var.paas_app_environment}"
+  environment           = local.app_name_suffix
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
   config_short          = var.config_short
@@ -19,7 +19,7 @@ module "redis-queue" {
 
   name                  = "queue"
   namespace             = var.namespace
-  environment           = "${var.paas_app_environment}"
+  environment           = local.app_name_suffix
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
   config_short          = var.config_short
@@ -28,4 +28,6 @@ module "redis-queue" {
 
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
+  azure_maxmemory_policy  = "noeviction"
+
 }

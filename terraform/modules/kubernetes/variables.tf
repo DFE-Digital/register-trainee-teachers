@@ -146,8 +146,8 @@ locals {
     {
       DATABASE_URL        = local.database_url
       BLAZER_DATABASE_URL = local.database_url
-      REDIS_URL           = "${var.redis_queue_url}"
-      REDIS_CACHE_URL     = "${var.redis_cache_url}"
+      REDIS_QUEUE_URL     = var.redis_queue_url
+      REDIS_CACHE_URL     = var.redis_cache_url
     }
   )
   # Create a unique name based on the values to force recreation when they change
