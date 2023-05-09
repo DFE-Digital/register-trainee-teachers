@@ -175,6 +175,11 @@ read-tf-config:
 	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval space=$(shell jq -r '.paas_space_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 
+read-cluster-config:
+	$(eval CLUSTER=$(shell jq -r '.cluster' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval NAMESPACE=$(shell jq -r '.namespace' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval CONFIG_LONG=$(shell jq -r '.env_config' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+
 edit-app-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} \
 		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml -c
@@ -207,6 +212,17 @@ terraform-init:
 	az account set -s $(AZ_SUBSCRIPTION) && az account show \
 	&& terraform -chdir=terraform/$(PLATFORM) init -reconfigure -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
+get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
+	az aks get-credentials --overwrite-existing -g ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER_SHORT}-rg -n ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER}-aks
+
+aks-console: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
+	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID} -- /bin/sh -c "cd /app && /usr/local/bin/bundle exec rails c"
+
+aks-logs: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
+	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID} --tail=-1 --timestamps=true
+
 console: read-tf-config
 	cf target -s ${space}
 	cf ssh register-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
@@ -222,6 +238,14 @@ ssh: read-tf-config
 worker-ssh: read-tf-config
 	cf target -s ${space}
 	cf ssh register-worker-${DEPLOY_ENV}
+
+aks-ssh: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
+	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID} -- /bin/sh
+
+aks-worker-ssh: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
+	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-worker-${APP_ID} -- /bin/sh
 
 enable-maintenance: read-tf-config ## make qa enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
