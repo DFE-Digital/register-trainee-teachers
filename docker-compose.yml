@@ -28,7 +28,7 @@ services:
       - DB_HOSTNAME=db
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
-      - REDIS_URL=redis://redis:6379
+      - REDIS_CACHE_URL=redis://redis:6379
       - SENTRY_DSN=${SENTRY_DSN}
 
   bg-jobs:
@@ -43,4 +43,4 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
       - SETTINGS__APPLICATION=register-trainee-teachers-bg-jobs
-      - REDIS_URL=redis://redis:6379
+      - REDIS_QUEUE_URL=redis://redis:6379
