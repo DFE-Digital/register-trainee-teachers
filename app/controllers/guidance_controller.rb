@@ -2,9 +2,9 @@
 
 class GuidanceController < ApplicationController
   skip_before_action :authenticate
+  helper_method :signing_off_data
 
   def show
-    @previous_academic_cycle_label = previous_academic_cycle.label
     render(layout: "application")
   end
 
@@ -25,12 +25,16 @@ class GuidanceController < ApplicationController
   end
 
   def performance_profiles
-    @current_academic_cycle_label = current_academic_cycle.label
-    @previous_academic_cycle_label = previous_academic_cycle.label
-    @academic_cycle_for_filter = previous_academic_cycle.start_year
-    @sign_off_deadline = Date.new(AcademicCycle.current.end_year, 1, 31).strftime("%d %B %Y")
-    @sign_off_url = Settings.sign_off_performance_profiles_url
-    render(layout: "application")
+    if Settings.in_sign_off_period?
+      @current_academic_cycle_label = current_academic_cycle.label
+      @previous_academic_cycle_label = previous_academic_cycle.label
+      @academic_cycle_for_filter = previous_academic_cycle.start_year
+      @sign_off_deadline = Date.new(AcademicCycle.current.end_year, 1, 31).strftime("%d %B %Y")
+      @sign_off_url = Settings.sign_off_performance_profiles_url
+      render(layout: "application")
+    else
+      render(:performance_profiles_outside, layout: "application")
+    end
   end
 
 private
@@ -41,6 +45,14 @@ private
 
   def current_academic_cycle
     @current_academic_cycle ||= AcademicCycle.current
+  end
+
+  def signing_off_data
+    @signing_off_data ||= if Settings.in_sign_off_period?
+                            "Sign off your list of trainees from #{previous_academic_cycle.label} for the performance profiles publication"
+                          else
+                            "Signing off your list of trainees for the performance profiles publication"
+                          end
   end
 
   def valid_tabs

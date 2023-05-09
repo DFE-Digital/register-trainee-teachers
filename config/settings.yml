@@ -156,6 +156,7 @@ google:
 
 sign_off_trainee_data_url: https://example.com/trainee-data-sign-off
 sign_off_performance_profiles_url: https://forms.gle/AtAvteRTKJu3mbXS7
+in_sign_off_period?: false
 
 trainee_export:
   record_limit: 100
