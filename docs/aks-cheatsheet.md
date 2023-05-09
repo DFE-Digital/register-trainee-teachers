@@ -117,6 +117,13 @@ Alternatively you can install kubetail and run:
 $ kubetail -n bat-qa register-qa-*
 ```
 
+You can also get logs from a deployed app using make with aks-logs:
+
+```
+$ make review_aks aks-logs APP_NAME=pr-1234
+$ make qa_aks aks-logs
+```
+
 ## Open a shell
 
 ```
@@ -128,6 +135,20 @@ Alternatively you can enter directly on a pod:
 
 ```
 $ kubectl -n bat-qa exec -ti register-qa-some-number -- sh
+```
+
+You can run a rails console on a deployed app using make with aks-console:
+
+```
+$ make review_aks aks-console APP_NAME=pr-1234
+$ make qa_aks aks-console
+```
+
+You can connect using ssh on a deployed app using make with aks-ssh or aks-worker-ssh:
+
+```
+$ make review_aks aks-ssh APP_NAME=pr-1234
+$ make qa_aks aks-worker-ssh
 ```
 
 ## Show CPU / Memory Usage

@@ -5,3 +5,4 @@ AZ_SUBSCRIPTION=s189-teacher-services-cloud-development
 RESOURCE_NAME_PREFIX=s189d01
 ENV_TAG=Dev
 PLATFORM=aks
+CLUSTER_SHORT=dv
