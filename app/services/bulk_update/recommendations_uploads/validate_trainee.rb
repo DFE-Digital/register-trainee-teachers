@@ -36,6 +36,7 @@ module BulkUpdate
       end
 
       def validate!
+        return if row.empty?
         return if trainee
         # if no singular trainee in state trn_recevied was found then check if there are multiple in trn_received
         return @messages << error_message(:multiple_trainees_trn_received, count: trainees.count, found_with: found_with) if trainees.size > 1

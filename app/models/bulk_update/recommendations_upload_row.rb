@@ -50,6 +50,10 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
     row_errors.map(&:message).join("\n")
   end
 
+  def all_parameters_blank?
+    %w[first_names last_names lead_school phase qts_or_eyts route standards_met_at subject trn hesa_id].all? { |attr| self[attr].blank? }
+  end
+
   def qts?
     trainee&.award_type == "QTS"
   end

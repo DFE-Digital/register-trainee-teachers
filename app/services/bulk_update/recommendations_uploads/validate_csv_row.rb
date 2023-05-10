@@ -25,6 +25,10 @@ module BulkUpdate
       attr_reader :trainee, :csv, :row
 
       def validate!
+        if row.empty?
+          return
+        end
+
         trn_format
         hesa_id_format
         standards_met_at
