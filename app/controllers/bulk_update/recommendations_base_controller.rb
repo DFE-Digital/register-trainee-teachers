@@ -35,7 +35,7 @@ module BulkUpdate
     end
 
     def total_rows_count
-      @total_rows_count ||= recommendations_upload.rows.size
+      @total_rows_count ||= recommendations_upload.rows.size - recommendations_upload.empty_row_ids.size
     end
 
     def recommendations_upload
