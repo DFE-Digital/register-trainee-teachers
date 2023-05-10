@@ -63,6 +63,43 @@ module BulkUpdate
             end
           end
         end
+
+        context "When row is empty" do
+          let(:row) do
+            Row.new({})
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be true }
+          end
+
+          describe "messages" do
+            it do
+              expect(service.messages).to eql([])
+            end
+          end
+        end
+
+        context "When row contains blank strings" do
+          let(:row) do
+            Row.new({
+              "trn" => "",
+              "hesa id" => "",
+              "provider trainee id" => "",
+              "date qts or eyts standards met" => "",
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be true }
+          end
+
+          describe "messages" do
+            it do
+              expect(service.messages).to eql([])
+            end
+          end
+        end
       end
 
       context "with a matched trainee" do

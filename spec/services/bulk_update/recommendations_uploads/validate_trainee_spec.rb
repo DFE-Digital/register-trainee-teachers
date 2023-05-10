@@ -10,6 +10,22 @@ module BulkUpdate
       context "with a single trainee" do
         let(:trainee) { create(:trainee, :bulk_recommend) }
 
+        context "and an empty row" do
+          let(:row) do
+            Row.new({
+              "trn" => "",
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be true }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql [] }
+          end
+        end
+
         context "and a row with only TRN" do
           let(:row) do
             Row.new({

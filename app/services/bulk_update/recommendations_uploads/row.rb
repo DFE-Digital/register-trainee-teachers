@@ -28,6 +28,13 @@ module BulkUpdate
       def sanitised_hesa_id
         send("hesa_id")&.gsub(/[^\d]/, "")
       end
+
+      def empty?
+        instance_variables.all? do |variable|
+          value = instance_variable_get(variable)
+          value.blank? || value.to_s.strip.empty?
+        end
+      end
     end
   end
 end
