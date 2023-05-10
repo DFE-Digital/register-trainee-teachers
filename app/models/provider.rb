@@ -30,9 +30,19 @@ class Provider < ApplicationRecord
   validates :ukprn, format: { with: /\A[0-9]{8}\z/ }
   validates :accreditation_id, presence: true, uniqueness: true
 
-  has_many :courses, class_name: "Course", foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :provider
+  has_many :courses,
+           class_name: "Course",
+           foreign_key: :accredited_body_code,
+           primary_key: :code,
+           inverse_of: :provider
+
   has_many :apply_applications, ->(provider) { unscope(:where).where(accredited_body_code: provider.code) }
-  has_many :dttp_trainees, class_name: "Dttp::Trainee", foreign_key: :provider_dttp_id, primary_key: :dttp_id, inverse_of: :provider
+
+  has_many :dttp_trainees,
+           class_name: "Dttp::Trainee",
+           foreign_key: :provider_dttp_id,
+           primary_key: :dttp_id,
+           inverse_of: :provider
 
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
@@ -40,6 +50,8 @@ class Provider < ApplicationRecord
   audited
 
   has_associated_audits
+
+  before_update :update_courses, if: :code_changed?
 
   def code=(cde)
     self[:code] = cde.to_s.upcase
@@ -52,5 +64,11 @@ class Provider < ApplicationRecord
 
   def name_and_code
     "#{name} (#{code})"
+  end
+
+private
+
+  def update_courses
+    Course.where(accredited_body_code: code_was).update_all(accredited_body_code: code)
   end
 end

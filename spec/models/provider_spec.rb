@@ -67,4 +67,14 @@ describe Provider do
       expect(subject).to eq("DfE University (B1T)")
     end
   end
+
+  describe "code change" do
+    let(:new_code) { "123" }
+    let(:provider) { create(:provider, :with_courses) }
+
+    it "changes the accredited_body_code for all the courses related to the provider" do
+      provider.update(code: new_code)
+      expect(provider.courses.pluck(:accredited_body_code)).to eq([new_code])
+    end
+  end
 end
