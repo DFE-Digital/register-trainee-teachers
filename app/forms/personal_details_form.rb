@@ -141,6 +141,8 @@ private
       errors.add(:date_of_birth, :future)
     elsif date_of_birth.year.digits.length != 4
       errors.add(:date_of_birth, :invalid_year)
+    elsif date_of_birth > 16.years.ago
+      errors.add(:date_of_birth, :under16)
     elsif date_of_birth < 100.years.ago
       errors.add(:date_of_birth, :past)
     end

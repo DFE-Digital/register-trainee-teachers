@@ -106,6 +106,22 @@ describe PersonalDetailsForm, type: :model do
         end
       end
 
+      context "under 16 years old" do
+        let(:params) { { day: 26, month: 2, year: (Time.zone.now.year - 10) } }
+
+        before do
+          subject.validate
+        end
+
+        it "is invalid" do
+          expect(subject.errors[:date_of_birth]).to include(
+            I18n.t(
+              "activemodel.errors.models.personal_details_form.attributes.date_of_birth.under16",
+            ),
+          )
+        end
+      end
+
       context "invalid date year" do
         let(:params) { { day: 1, month: 4, year: 21 } }
 
