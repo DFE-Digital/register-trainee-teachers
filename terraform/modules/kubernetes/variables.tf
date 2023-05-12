@@ -8,7 +8,6 @@ variable "app_environment_variables" {}
 variable "app_secrets" {}
 variable "cluster" {}
 variable "deploy_azure_backing_services" {}
-#variable "webapp_startup_command" {}
 variable "azure_resource_prefix" {}
 variable "postgres_version" {}
 variable "postgres_admin_password" { sensitive = true }
@@ -51,15 +50,6 @@ variable "redis_public_network_access_enabled" {
 }
 
 variable "app_resource_group_name" {}
-
-# variable "webapp_memory_max" {}
-# variable "worker_memory_max" {}
-# variable "secondary_worker_memory_max" {}
-# variable "clock_worker_memory_max" {}
-# variable "webapp_replicas" {}
-# variable "worker_replicas" {}
-# variable "secondary_worker_replicas" {}
-# variable "clock_worker_replicas" {}
 
 variable "gov_uk_host_names" {
   default = []
@@ -130,28 +120,9 @@ locals {
 
   postgres_db = var.postgres_create_servicename_db ? local.postgres_service_name : "postgres"
 
-  #webapp_startup_command = var.webapp_startup_command == null ? null : ["/bin/sh", "-c", var.webapp_startup_command]
   webapp_name            = "${var.service_name}-${var.app_environment}"
   worker_name            = "${var.service_name}-worker-${var.app_environment}"
   vnet_name              = "${local.current_cluster.cluster_resource_prefix}-vnet"
-
-  webapp_env_variables = merge(
-    var.app_environment_variables
-  )
-
-  webapp_env_variables_hash = sha1(join("-", [for k, v in local.webapp_env_variables : "${k}:${v}"]))
-
-  app_secrets = merge(
-    var.app_secrets,
-    {
-      DATABASE_URL        = local.database_url
-      BLAZER_DATABASE_URL = local.database_url
-      REDIS_QUEUE_URL     = var.redis_queue_url
-      REDIS_CACHE_URL     = var.redis_cache_url
-    }
-  )
-  # Create a unique name based on the values to force recreation when they change
-  app_secrets_hash = sha1(join("-", [for k, v in local.app_secrets : "${k}:${v}" if v != null]))
 
   cluster = {
     cluster1 = {
