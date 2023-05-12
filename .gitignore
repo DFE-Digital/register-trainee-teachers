@@ -64,6 +64,10 @@ config/localhost/https/localhost.crt
 dump.rdb
 
 bin/fetch_config.rb
+bin/terrafile
+
+# Downloaded terraform modules
+terraform/aks/vendor/
 
 Procfile.dev
 missing-location-graph-from-dttp.json
