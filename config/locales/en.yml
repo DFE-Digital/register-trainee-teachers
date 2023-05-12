@@ -1405,6 +1405,7 @@ en:
             date_of_birth:
               blank: Enter a date of birth
               future: Enter a date of birth that is in the past, for example 31 3 1980
+              under16: Enter a valid date of birth, trainee cannot be younger than 16 years old
               hint_html: For example, 31 3 %{year}
               invalid: Enter a valid date
               invalid_year: The year must include 4 numbers
