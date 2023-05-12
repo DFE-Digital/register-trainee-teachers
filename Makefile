@@ -218,7 +218,7 @@ terraform-init: install-terrafile
 
 	az account set -s $(AZ_SUBSCRIPTION) && az account show
 	./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile
-	terraform -chdir=terraform/$(PLATFORM) init -reconfigure -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
+	terraform -chdir=terraform/$(PLATFORM) init -reconfigure -upgrade -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
 	az aks get-credentials --overwrite-existing -g ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER_SHORT}-rg -n ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER}-aks
