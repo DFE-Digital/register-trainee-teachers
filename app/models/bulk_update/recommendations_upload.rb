@@ -32,8 +32,12 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
     rows.where.not(standards_met_at: nil).where.missing(:row_errors)
   end
 
+  def empty_row_ids
+    rows.select(&:all_parameters_blank?).pluck(:id)
+  end
+
   def missing_date_rows
-    rows.where(standards_met_at: nil).where.missing(:row_errors)
+    rows.where(standards_met_at: nil).where.missing(:row_errors).where.not(id: empty_row_ids)
   end
 
   def error_rows
