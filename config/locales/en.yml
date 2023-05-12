@@ -1339,40 +1339,40 @@ en:
         bulk_update/recommendations_upload_form:
           attributes:
             file:
-              missing: Please select a file
-              empty: File cannot be empty
-              too_large: File must be no greater than 1MB
-              is_not_csv: File must be a CSV
+              missing: Select a CSV file
+              empty: The selected file is empty
+              too_large: The selected file must be smaller than 1MB
+              is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
-              no_id_header: At least one identifying column is required (TRN, HESA ID or Trainee provider ID)
-              no_date_header: Date QTS or EYTS standards met is required
-              no_dates_given: No dates have been provided in this CSV
+              no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID
+              no_date_header: The selected file must contain a column for date QTS or EYTS standards met
+              no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
               no_trainees: The selected file must contain at least one trainee
         bulk_update:
           recommendations_uploads:
             validate_trainee:
-              multiple_trainees_trn_recieved: Multiple trainees in state 'trn received' found via %{found_with}
-              multiple_trainees_found_via: Multiple trainees found via %{found_with}
-              trainee_wrong_state: Trainee is %{state}
-              no_trainee_matched: No trainee could be matched
+              multiple_trainees_trn_received: "%{count} trainee records with TRN received status have the same %{found_with} - contact becomingateacher@digital.education.gov.uk to fix this"
+              multiple_trainees_found_via: "%{count} trainee records have the same %{found_with} but none have TRN received status - you can only recommend trainees with TRN received status"
+              trainee_wrong_state: "The trainee has %{state} status - you can only recommend trainees with TRN received status"
+              no_trainee_matched: "%{id_available} must match a trainee record"
             validate_csv_row:
-              trn_format: TRN must be 7 characters long and contain only numbers
-              hesa_id_format: HESA ID must be 13 or 17 characters long and contain only numbers
-              award_date_future: Award date must not be in the future (%{date})
-              award_date_past: Award date cannot be from more than 12 months ago (%{date})
-              date_standards_met: Date standards met cannot be before the ITT start date (%{date})
-              date_parse: Date could not be parsed, please use the format dd/mm/yyyy e.g. 27/02/2022
-              trn: Trainee TRN does not match
-              hesa_id: Trainee HESA ID does not match
-              provider_trainee_id: Provider trainee id does not match
-              first_names: Trainee first names do not match
-              last_names: Trainee last names do not match
-              lead_school: Lead school does not match
-              qts_or_eyts: QTS/EYTS declaration does not match
-              route: Route does not match
-              phase: Phase does not match
-              age_range: Age range does not match
-              subject: Subject does not match
+              trn_format: TRN must be 7 numbers
+              hesa_id_format: HESA ID must be 13 or 17 numbers
+              award_date_future: Date QTS or EYTS standards met must be today or in the past
+              award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk recommend - you can recommend the trainee separately in their trainee record
+              date_standards_met: Date QTS or EYTS standards met must be after trainee’s ITT start date
+              date_parse: Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023
+              trn: TRN must match trainee record
+              hesa_id: HESA ID must match trainee record
+              provider_trainee_id: Provider trainee ID must match trainee record
+              first_names: First name must match trainee record
+              last_names: Last name must match trainee record
+              lead_school: Lead school must match trainee record
+              qts_or_eyts: QTS or EYTS must match trainee record
+              route: Route must match trainee record
+              phase: Phase must match trainee record
+              age_range: Age range must match trainee record
+              subject: Subject must match trainee record
         deferral_form:
           attributes:
             date_string:
