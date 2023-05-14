@@ -202,6 +202,7 @@ Rails.application.routes.draw do
     get "/hesa-register-data-mapping/:tab", to: "guidance#hesa_register_data_mapping", as: "hesa_register_data_mapping"
     get "/performance-profiles", to: "guidance#performance_profiles"
     get "/bulk-recommend-trainees", to: "guidance#bulk_recommend_trainees"
+    get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
   end
 
   if FeatureService.enabled?("funding")
