@@ -10,7 +10,7 @@
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
-              "About Register trainee teachers",
+              "About this service",
               about_register_trainee_teachers_guidance_path,
             ) %>
       </li>
@@ -44,13 +44,19 @@
       </li>
     </ul>
 
-    <h2 class="govuk-heading-m">Recommending trainees for QTS or EYTS</h2>
+    <h2 class="govuk-heading-m">Recording teacher training outcomes</h2>
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
-              "Bulk recommend trainees for QTS or EYTS",
-              bulk_recommend_trainees_guidance_path,
-            ) %>
+            "Withdraw, defer, reinstate or recommend a trainee for QTS or EYTS",
+            withdraw_defer_reinstate_or_recommend_a_trainee_guidance_path,
+          ) %>
+      </li>
+      <li>
+        <%= govuk_link_to(
+            "Bulk recommend trainees for QTS or EYTS",
+            bulk_recommend_trainees_guidance_path,
+          ) %>
       </li>
     </ul>
 

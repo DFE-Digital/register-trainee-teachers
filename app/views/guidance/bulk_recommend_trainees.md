@@ -3,15 +3,14 @@ page_title: Bulk recommend trainees for QTS or EYTS
 title: Bulk recommend trainees for QTS or EYTS
 ---
 
-## Bulk recommend trainees for QTS or EYTS
-You can [recommend multiple trainees at the same time](/bulk-update/recommend/choose-who-to-recommend) for QTS or EYTS.
+You can [bulk recommend](/bulk-update/recommend/upload) multiple trainees at the same time for qualified teacher status (QTS) or early years teacher status (EYTS).
 
 {inset-text}
-You cannot use this process to indicate that trainees have withdrawn or deferred, or to make changes to trainee
-records. You need to do this separately for each trainee.
+You cannot use this process to record other training outcomes or to change trainee or course details.
 
-You can also use the Higher Education Statistics Agency (HESA) service if you have access to it. You cannot use it
- to indicate that trainees have withdrawn.
+Find out [how to withdraw, defer, reinstate or recommend an individual trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
+
+You can change other trainee or course details in an individual trainee’s record. You can also use the Higher Education Statistics Agency (HESA) service if you have access to it.
 {/inset-text}
 
 ## How to bulk recommend trainees for QTS or EYTS
@@ -23,10 +22,12 @@ You can also use the Higher Education Statistics Agency (HESA) service if you ha
 
 ### 1. Download a CSV file listing trainees you can recommend for QTS or EYTS
 
-The CSV file includes all trainees who have a TRN and either:
+The CSV file includes all trainees who have a teacher reference number (TRN) and either:
 
 - an estimated end date in the past 6 months or the next 6 months
 - no estimated end date
+
+The CSV file does not include trainees who have deferred or withdrawn.
 
 If a trainee’s estimated end date is not in the period covered by the CSV file, you can either:
 
@@ -35,10 +36,9 @@ If a trainee’s estimated end date is not in the period covered by the CSV file
 
 ### 2. Fill in the date when each trainee met QTS or EYTS standards
 
-The CSV file has a blank column for you to fill in the date when trainees met QTS or EYTS standards. This may be
-different to the date when they finish their course or get an academic qualification.
+The CSV file has a blank column for you to fill in the date when trainees met the QTS or EYTS standards. This may be different to the date when they finish their course or get an academic qualification.
 
-You can only bulk recommend trainees who met the QTS or EYTS standards in the past 12 months. If a trainee met the standards longer ago, you need to recommend them separately in their trainee record.
+You can only bulk recommend trainees who met the QTS or EYTS standards in the past 12 months. If a trainee met the standards longer ago, you need to recommend them separately from within their trainee record.
 
 If a trainee has not met the standards, either delete the row or leave the date blank in the CSV file.
 
@@ -62,4 +62,6 @@ errors later and recommend the trainees.
 
 ### 4. Submit your recommendations
 
-After you submit your recommendations, they’ll be immediately recommended for QTS or EYTS.
+After you submit your recommendations, the Teaching Regulation Agency (TRA) will award the trainees with QTS or EYTS within 3 working days. The trainees will then be able to download their certificates from the TRA teacher self-service portal.
+
+The TRA will later send an email to the trainees to tell them that their certificates are available.
