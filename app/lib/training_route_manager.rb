@@ -7,10 +7,6 @@ class TrainingRouteManager
     @trainee = trainee
   end
 
-  def requires_placement_details?
-    FeatureService.enabled?("placements") && enabled?(:provider_led_postgrad)
-  end
-
   def requires_degree?
     !undergrad_route?
   end

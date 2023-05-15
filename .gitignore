@@ -61,6 +61,8 @@ config/localhost/https/localhost.crt
 .ruby-version
 /.idea
 
+dump.rdb
+
 bin/fetch_config.rb
 
 Procfile.dev

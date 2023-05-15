@@ -274,6 +274,14 @@ en:
       employing_school_key: Employing school
     placement_detail:
       title: Placement details
+      placement_1: First placement
+      placement_2: Second placement
+      placement_3: Third placement
+      placement_4: Fourth placement
+      placement_5: Fifth placement
+      magic_urn:
+        900000: "Placement outside England and Wales"
+        900010: "Not applicable or not available"
     degrees:
       add_another_degree: Add another degree
       institution: &institution Awarding institution

@@ -40,7 +40,7 @@
   </div>
 <% end %>
 
-<% if @trainee.requires_placement_details? %>
+<% if @trainee.placement_details? %>
   <div class="placement-details">
     <%= render PlacementDetails::View.new(trainee: @trainee, editable: trainee_editable?) %>
   </div>

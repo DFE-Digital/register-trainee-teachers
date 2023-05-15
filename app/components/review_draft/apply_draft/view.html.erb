@@ -25,7 +25,7 @@
               component.row(**row_helper(@trainee, :school_details))
             end
 
-            if @trainee.requires_placement_details?
+            if @trainee.placement_details?
               component.row(**row_helper(@trainee, :placement_details))
             end
 

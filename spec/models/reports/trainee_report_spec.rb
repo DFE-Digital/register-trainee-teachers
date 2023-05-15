@@ -304,6 +304,86 @@ describe Reports::TraineeReport do
       expect(subject.bursary_tier).to eq("Tier 1")
     end
 
+    context "when placement data is available" do
+      let(:hesa_student) do
+        create(
+          :hesa_student,
+          collection_reference: "C22053",
+          hesa_id: trainee.hesa_id,
+          first_names: trainee.first_names,
+          last_name: trainee.last_name,
+          degrees: degrees,
+          placements: placements,
+        )
+      end
+
+      let!(:schools) { create_list(:school, 4) }
+
+      let(:degrees) do
+        [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
+      end
+
+      before do
+        allow(Settings.hesa).to receive(:current_collection_reference).and_return("C22053")
+
+        trainee.hesa_students << hesa_student
+      end
+
+      context "when there is only one placement" do
+        let(:placements) do
+          [{ "school_urn" => schools[0].urn }]
+        end
+
+        it "includes the placement_one with the urn value" do
+          expect(subject.placement_one).to eq(schools[0].urn)
+        end
+
+        Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.each do |magic_urn|
+          context "when it contains the magic URN #{magic_urn}" do
+            let(:placements) do
+              [{ "school_urn" => magic_urn }]
+            end
+
+            it "includes the placement_one with the special placement label" do
+              expect(subject.placement_one).to eq(I18n.t("components.placement_detail.magic_urn.#{magic_urn}"))
+            end
+          end
+        end
+      end
+
+      context "when there are two placements" do
+        let(:placements) do
+          [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }]
+        end
+
+        it "includes the placement_two with the urn value" do
+          expect(subject.placement_two).to eq(schools[1].urn)
+        end
+      end
+
+      context "when there are over two placements" do
+        let(:placements) do
+          [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }, { "school_urn" => schools[2].urn }, { "school_urn" => schools[3].urn }]
+        end
+
+        it "includes the other_placement with the urn values comma separated" do
+          expect(subject.other_placement).to eq("#{schools[2].urn}, #{schools[3].urn}")
+        end
+      end
+    end
+
+    it "includes the placement_one" do
+      expect(subject.placement_one).to eq("")
+    end
+
+    it "includes the placement_two" do
+      expect(subject.placement_two).to eq("")
+    end
+
+    it "includes the other_placement" do
+      expect(subject.other_placement).to eq("")
+    end
+
     it "includes the award_standards_met_date" do
       expect(subject.award_standards_met_date).to eq(trainee.outcome_date&.iso8601)
     end
