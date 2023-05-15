@@ -223,6 +223,10 @@ aks-logs: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID} --tail=-1 --timestamps=true
 
+aks-worker-logs: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
+	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID}-worker --tail=-1 --timestamps=true
+
 console: read-tf-config
 	cf target -s ${space}
 	cf ssh register-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
@@ -245,7 +249,7 @@ aks-ssh: get-cluster-credentials
 
 aks-worker-ssh: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
-	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-worker-${APP_ID} -- /bin/sh
+	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID}-worker -- /bin/sh
 
 enable-maintenance: read-tf-config ## make qa enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
 	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
