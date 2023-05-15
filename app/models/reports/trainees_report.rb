@@ -74,7 +74,7 @@ module Reports
          bursary_tier
          placement_one
          placement_two
-         other_placement
+         other_placements
          award_standards_met_date
          award_given_at
          defer_date
@@ -189,7 +189,7 @@ module Reports
         trainee_report.bursary_tier,
         trainee_report.placement_one,
         trainee_report.placement_two,
-        trainee_report.other_placement,
+        trainee_report.other_placements,
         trainee_report.award_standards_met_date,
         trainee_report.award_given_at,
         trainee_report.defer_date,

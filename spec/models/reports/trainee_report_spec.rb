@@ -366,8 +366,8 @@ describe Reports::TraineeReport do
           [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }, { "school_urn" => schools[2].urn }, { "school_urn" => schools[3].urn }]
         end
 
-        it "includes the other_placement with the urn values comma separated" do
-          expect(subject.other_placement).to eq("#{schools[2].urn}, #{schools[3].urn}")
+        it "includes the other_placements with the urn values comma separated" do
+          expect(subject.other_placements).to eq("#{schools[2].urn}, #{schools[3].urn}")
         end
       end
     end
@@ -380,8 +380,8 @@ describe Reports::TraineeReport do
       expect(subject.placement_two).to eq("")
     end
 
-    it "includes the other_placement" do
-      expect(subject.other_placement).to eq("")
+    it "includes the other_placements" do
+      expect(subject.other_placements).to eq("")
     end
 
     it "includes the award_standards_met_date" do

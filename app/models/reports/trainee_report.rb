@@ -80,7 +80,7 @@ module Reports
       school_urns.second
     end
 
-    def other_placement
+    def other_placements
       return "" if school_urns.size < 3
 
       school_urns[2..].join(", ")
