@@ -5,11 +5,9 @@ on:
   push:
    branches:
     - main
-    - bulk-recommend
   pull_request:
     branches:
     - main
-    - bulk-recommend
     types: [opened, reopened, synchronize, labeled]
 
 permissions:
