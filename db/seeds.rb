@@ -24,6 +24,14 @@ Disability.upsert_all(
   unique_by: :name,
 )
 
+# load Withdraw reasons
+WithdrawalReason.upsert_all(
+  WithdrawalReason::SEEDS.map do |reason|
+    reason.merge(created_at: Time.zone.now, updated_at: Time.zone.now)
+  end,
+  unique_by: :name,
+)
+
 allocation_subjects = AllocationSubject.upsert_all(
   ALLOCATION_SUBJECT_SPECIALISM_MAPPING.keys.map do |allocation_subject|
     {

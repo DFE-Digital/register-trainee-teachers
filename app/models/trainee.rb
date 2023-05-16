@@ -233,7 +233,7 @@ class Trainee < ApplicationRecord
   }
 
   enum withdraw_reason: {
-    WithdrawalReasons::UNKNOWN => 0,
+    WithdrawalReasons::LEGACY_UNKNOWN => 0,
     WithdrawalReasons::FOR_ANOTHER_REASON => 1,
     WithdrawalReasons::DEATH => 2,
     WithdrawalReasons::EXCLUSION => 3,
