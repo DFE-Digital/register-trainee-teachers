@@ -116,19 +116,9 @@ locals {
   kv_app_secrets    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
   infra_secrets     = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
   app_config        = yamldecode(file(var.paas_app_config_file))[var.env_config]
-#  app_env_values = try(yamldecode(file("${path.module}/workspace-variables/${var.paas_app_environment}_app_env.yml")), {})
-
   base_url_env_var  = var.paas_app_environment == "review" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${module.cluster_data.configuration_map.dns_zone_prefix}.teacherservices.cloud" } : {}
 
-  app_env_values_from_yaml = try(yamldecode(file("${path.module}/workspace-variables/${var.paas_app_environment}_app_env.yml")), {})
-
-  #review_url_vars = {
-  #  "CUSTOM_HOSTNAME" = "register-${local.app_name_suffix}.test.teacherservices.cloud"
-  #  "AUTHORISED_HOSTS" = "register-${local.app_name_suffix}.test.teacherservices.cloud"
-  #}
-
   app_env_values = merge(
-    local.app_env_values_from_yaml,
     local.base_url_env_var,
     local.app_config,
   #  var.app_name_suffix != null ? local.review_url_vars : {},
@@ -141,20 +131,15 @@ locals {
 
   # added for app module
 
-  app_env_values_hash = sha1(join("-", [for k, v in local.app_env_values : "${k}:${v}"]))
-
   app_secrets = merge(
     local.kv_app_secrets,
     {
       DATABASE_URL        = module.kubernetes.database_url
       BLAZER_DATABASE_URL = module.kubernetes.database_url
-      REDIS_URL           = module.redis-queue.url
+      REDIS_QUEUE_URL     = module.redis-queue.url
       REDIS_CACHE_URL     = module.redis-cache.url
     }
   )
-  # Create a unique name based on the values to force recreation when they change
-  app_secrets_hash = sha1(join("-", [for k, v in local.app_secrets : "${k}:${v}" if v != null]))
-
 }
 
 #Possibly required for register
