@@ -11,8 +11,8 @@ module "web_application" {
 
   cluster_configuration_map = module.cluster_data.configuration_map
 
-  kubernetes_config_map_name = kubernetes_config_map.app_config.metadata[0].name
-  kubernetes_secret_name     = kubernetes_secret.app_secrets.metadata[0].name
+  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
+  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
   docker_image = var.paas_app_docker_image
   command     = each.value.startup_command
@@ -36,8 +36,8 @@ module "worker_application" {
 
   cluster_configuration_map = module.cluster_data.configuration_map
 
-  kubernetes_config_map_name = kubernetes_config_map.app_config.metadata[0].name
-  kubernetes_secret_name     = kubernetes_secret.app_secrets.metadata[0].name
+  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
+  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
   docker_image = var.paas_app_docker_image
   command     = each.value.startup_command
@@ -46,18 +46,16 @@ module "worker_application" {
   probe_command = each.value.probe_command
 }
 
-resource "kubernetes_config_map" "app_config" {
-  metadata {
-    name      = "${var.service_name}-config-${local.app_name_suffix}-${local.app_env_values_hash}"
-    namespace = var.namespace
-  }
-  data = local.app_env_values
-}
+module "application_configuration" {
 
-resource "kubernetes_secret" "app_secrets" {
-  metadata {
-    name      = "${var.service_name}-secrets-${local.app_name_suffix}-${local.app_secrets_hash}"
-    namespace = var.namespace
-  }
-  data = local.app_secrets
+  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/application_configuration?ref=main"
+
+  namespace             = var.namespace
+  environment           = local.app_name_suffix
+  azure_resource_prefix = var.azure_resource_prefix
+  service_short         = var.service_short
+  config_short          = var.config_short
+  config_variables      = local.app_env_values
+  secret_variables      = local.app_secrets
+  key_vault_secret_name = var.key_vault_app_secret_name
 }
