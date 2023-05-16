@@ -2,17 +2,10 @@
 
 module Reports
   class TraineeReport
-    attr_reader :trainee, :degree, :funding_manager, :course
+    attr_reader :trainee
 
     def initialize(trainee)
       @trainee = trainee
-      @degree = trainee.degrees.first
-      @funding_manager = FundingManager.new(trainee)
-
-      # In rails 6 we can't preload the `published_course`, because it is instance dependent. This is supported in rails 7.
-      #  The association scope 'published_course' is instance dependent (the scope block takes an argument).
-      #  Preloading instance dependent scopes is not supported.
-      @course = Course.includes(:provider).find_by(uuid: trainee.course_uuid)
     end
 
     # rubocop:disable Naming/VariableNumber
@@ -39,6 +32,18 @@ module Reports
              :course_subject_three,
              to: :trainee,
              allow_nil: true
+
+    def degree
+      @degree ||= trainee.degrees.first
+    end
+
+    def course
+      @course ||= Course.includes(:provider).find_by(uuid: trainee.course_uuid)
+    end
+
+    def funding_manager
+      @funding_manager ||= FundingManager.new(trainee)
+    end
 
     def academic_years
       return unless trainee.start_academic_cycle && trainee.end_academic_cycle

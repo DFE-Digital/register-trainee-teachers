@@ -6,12 +6,19 @@ module BulkUpdate
     class ValidateTrainee
       include Config
 
-      def initialize(row:, provider:)
+      FIELD_MAP = {
+        trn: "TRN",
+        hesa_id: "HESA ID",
+        provider_trainee_id: "provider trainee ID",
+      }.freeze
+
+      def initialize(row:, provider:, trainee_lookup:)
         @row = row
         @provider = provider
+        @trainee_lookup = trainee_lookup
+        @trainees = find_trainees
         @messages = []
 
-        find!
         validate!
       end
 
@@ -20,40 +27,56 @@ module BulkUpdate
       end
 
       def trainee
-        trainees&.first if trainees&.size == 1
+        trainees_trn_received&.first if trainees_trn_received&.size == 1
       end
 
       attr_reader :messages
 
     private
 
-      attr_reader :row, :provider
-
-      def find!
-        trainees_by_trn!
-        trainees_by_hesa_id!
-        trainees_by_provider_trainee_id!
-      end
+      attr_reader :row, :provider, :trainee_lookup
 
       def validate!
         return if row.empty?
         return if trainee
+
         # if no singular trainee in state trn_recevied was found then check if there are multiple in trn_received
-        return @messages << error_message(:multiple_trainees_trn_received, count: trainees.count, found_with: found_with) if trainees.size > 1
+        if trainees_trn_received.size > 1
+          return @messages << error_message(:multiple_trainees_trn_received,
+                                            count: trainees_trn_received.count,
+                                            found_with: found_with)
+        end
         # otherwise check if multiple in non-draft non-trn-received were found
-        return @messages << error_message(:multiple_trainees_found_via, count: trainees_not_trn_received.count, found_with: found_with) if trainees_not_trn_received.size > 1
+        if trainees_not_trn_received.size > 1
+          return @messages << error_message(:multiple_trainees_found_via,
+                                            count: trainees_not_trn_received.count,
+                                            found_with: found_with)
+        end
         # otherwise check if one was found outside of non-draft, non-trn_received
-        return @messages << error_message(:trainee_wrong_state, state: format_output(trainee_not_trn_received.state)) if trainee_not_trn_received
+        if trainee_not_trn_received
+          return @messages << error_message(:trainee_wrong_state,
+                                            state: format_output(trainee_not_trn_received.state))
+        end
 
         @messages << error_message(:no_trainee_matched, id_available: id_columns)
       end
 
       def found_with
-        { trn: "TRN", hesa_id: "HESA ID", provider_trainee_id: "the provider trainee ID" }[@found_with]
+        FIELD_MAP[@found_with]
       end
 
-      def trainees
-        @trainees&.trn_received
+      def trainee_not_trn_received
+        trainees_not_trn_received&.first if trainees_not_trn_received&.size == 1
+      end
+
+      def trainees_trn_received
+        @trainees&.select(&:trn_received?)
+      end
+
+      def trainees_not_trn_received
+        return @trainees_not_trn_received if defined?(@trainees_not_trn_received)
+
+        @trainees_not_trn_received = @trainees&.reject(&:trn_received?)
       end
 
       def format_output(state)
@@ -67,60 +90,31 @@ module BulkUpdate
         end
       end
 
-      def trainees_not_trn_received
-        return @trainees_not_trn_received if defined?(@trainees_not_trn_received)
-
-        @trainees_not_trn_received = @trainees&.not_trn_received
-      end
-
-      def trainee_not_trn_received
-        trainees_not_trn_received&.first if trainees_not_trn_received&.size == 1
-      end
-
-      # rubocop:disable Naming/MemoizedInstanceVariableName
-      def trainees_by_trn!
-        return unless row.trn =~ VALID_TRN
-
-        @trainees ||= begin
-          t = scope.where(trn: row.trn)
-          @found_with = :trn if t.any?
-          t
-        end
-      end
-
-      def trainees_by_hesa_id!
-        return unless row.hesa_id =~ VALID_HESA_ID
-
-        @trainees ||= begin
-          t = scope.where(hesa_id: row.sanitised_hesa_id)
-          @found_with = :hesa_id if t.any?
-          t
-        end
-      end
-
       def id_columns
-        formatted = { trn: "TRN", hesa_id: "HESA ID", provider_trainee_id: "provider trainee ID" }
         output = []
-        %i[trn hesa_id provider_trainee_id].each do |field|
-          output << formatted[field] if row.public_send(field)
+
+        FIELD_MAP.each_key do |field|
+          output << FIELD_MAP[field] if row.public_send(field)
         end
+
         if output.length == 1 && output.include?("provider trainee ID")
           output[0] = "Provider trainee ID"
         end
-        output.length > 1 ? "#{output[0..-2].join(', ')} or #{output.last}" : output.join
+
+        output.length > 1 ? "#{output[0..-2]&.join(', ')} or #{output.last}" : output.join
       end
 
-      def trainees_by_provider_trainee_id!
-        @trainees ||= begin
-          t = scope.where(trainee_id: row.provider_trainee_id)
-          @found_with = :provider_trainee_id if t.any?
-          t
+      def find_trainees
+        trainees = []
+        FIELD_MAP.each_key do |field|
+          method_name = field == :hesa_id ? :sanitised_hesa_id : field
+          trainees = trainee_lookup[row.public_send(method_name)]
+          if trainees.present?
+            @found_with = field
+            break
+          end
         end
-      end
-      # rubocop:enable Naming/MemoizedInstanceVariableName
-
-      def scope
-        @scope ||= provider.trainees.where.not(state: :draft)
+        trainees
       end
 
       def error_message(key, variables = {})
