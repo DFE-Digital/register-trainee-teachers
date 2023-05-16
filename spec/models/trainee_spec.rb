@@ -400,13 +400,6 @@ describe Trainee do
       end
     end
 
-    describe "#requires_placement_details?" do
-      it "is delegated to TrainingRouteManager" do
-        expect(subject.training_route_manager).to receive(:requires_placement_details?)
-        subject.requires_placement_details?
-      end
-    end
-
     describe "#apply_application?" do
       subject { trainee.apply_application? }
 
@@ -756,6 +749,54 @@ describe Trainee do
 
     it "returns true if another trainee has the same nam, date of birth and email address" do
       expect(trainee.duplicate?).to be(true)
+    end
+  end
+
+  describe "placement_details?" do
+    subject(:trainee) {
+      create(:trainee, :imported_from_hesa)
+    }
+
+    before do
+      allow(Settings.hesa).to receive(:current_collection_reference).and_return("C22053")
+    end
+
+    context "when no placement data exists" do
+      it "returns false" do
+        expect(trainee.placement_details?).to be false
+      end
+    end
+
+    context "when placement data exists" do
+      let(:hesa_student) do
+        create(
+          :hesa_student,
+          collection_reference: "C22053",
+          hesa_id: trainee.hesa_id,
+          first_names: trainee.first_names,
+          last_name: trainee.last_name,
+          degrees: degrees,
+          placements: placements,
+        )
+      end
+
+      let!(:schools) { create_list(:school, 2) }
+
+      let(:placements) do
+        [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }]
+      end
+
+      let(:degrees) do
+        [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
+      end
+
+      before do
+        trainee.hesa_students << hesa_student
+      end
+
+      it "returns true" do
+        expect(trainee.placement_details?).to be true
+      end
     end
   end
 end

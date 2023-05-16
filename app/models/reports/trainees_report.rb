@@ -72,6 +72,9 @@ module Reports
          funding_method
          funding_value
          bursary_tier
+         placement_one
+         placement_two
+         other_placements
          award_standards_met_date
          award_given_at
          defer_date
@@ -102,7 +105,8 @@ module Reports
                                        :nationalities,
                                        :provider,
                                        :start_academic_cycle,
-                                       :trainee_disabilities).in_batches.each_record do |trainee|
+                                       :trainee_disabilities,
+                                       :hesa_students).in_batches.each_record do |trainee|
         add_trainee_to_csv(trainee)
       end
     end
@@ -183,6 +187,9 @@ module Reports
         trainee_report.funding_method,
         trainee_report.funding_value,
         trainee_report.bursary_tier,
+        trainee_report.placement_one,
+        trainee_report.placement_two,
+        trainee_report.other_placements,
         trainee_report.award_standards_met_date,
         trainee_report.award_given_at,
         trainee_report.defer_date,

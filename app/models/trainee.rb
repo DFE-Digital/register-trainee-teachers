@@ -174,7 +174,6 @@ class Trainee < ApplicationRecord
   attribute :progress, Progress.to_type
 
   delegate :award_type,
-           :requires_placement_details?,
            :requires_schools?,
            :requires_employing_school?,
            :early_years_route?,
@@ -540,6 +539,12 @@ class Trainee < ApplicationRecord
     return "dttp" if  created_from_dttp?
 
     "manual"
+  end
+
+  def placement_details?
+    hesa_student = hesa_student_for_collection(Settings.hesa.current_collection_reference)
+
+    hesa_student&.placements.present?
   end
 
 private

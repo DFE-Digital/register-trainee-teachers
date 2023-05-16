@@ -25,15 +25,6 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
       end
     end
 
-    context "with a Provider-led (postgrad) trainee" do
-      let(:trainee) { create(:trainee, :submitted_for_trn, :provider_led_postgrad) }
-      let(:current_user) { create(:user, :system_admin) }
-
-      it "renders the placement details component" do
-        expect(rendered).to have_text("Placement details")
-      end
-    end
-
     context "with non early year trainees that have status trn_received" do
       let(:non_early_year_trainees) { TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :provider_led_postgrad, :school_direct_tuition_fee, :school_direct_salaried) }
       let(:trainee) { create(:trainee, :trn_received, non_early_year_trainees.sample) }
@@ -55,18 +46,16 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
     end
   end
 
-  context "placements disabled", feature_placements: false do
+  context "no placement data exists" do
     before do
       render
     end
 
-    context "with a Provider-led (postgrad) trainee" do
-      let(:current_user) { create(:user, :system_admin) }
-      let(:trainee) { create(:trainee, :submitted_for_trn, :provider_led_postgrad) }
+    let(:current_user) { create(:user, :system_admin) }
+    let(:trainee) { create(:trainee, :submitted_for_trn) }
 
-      it "doesn't render the placement details component" do
-        expect(rendered).not_to have_text("Placement details")
-      end
+    it "doesn't render the placement details component" do
+      expect(rendered).not_to have_text("Placement details")
     end
   end
 

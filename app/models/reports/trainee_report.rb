@@ -65,6 +65,27 @@ module Reports
       trainee.awarded_at&.iso8601
     end
 
+    def placement_one
+      return "" if school_urns.empty?
+
+      # According to the data we have so far, there is only one placement record per hesa student that has a magic URN
+      return I18n.t("components.placement_detail.magic_urn.#{school_urns.first}") if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.include?(school_urns.first)
+
+      school_urns.first
+    end
+
+    def placement_two
+      return "" if school_urns.size < 2
+
+      school_urns.second
+    end
+
+    def other_placements
+      return "" if school_urns.size < 3
+
+      school_urns[2..].join(", ")
+    end
+
     def award_standards_met_date
       trainee.outcome_date&.iso8601
     end
@@ -371,6 +392,18 @@ module Reports
       return if subject.blank?
 
       SubjectSpecialism.find_by("lower(name) = ?", subject.downcase)&.allocation_subject&.name
+    end
+
+    def school_urns
+      @school_urns ||= begin
+        school_urns =
+          trainee
+            .hesa_student_for_collection(Settings.hesa.current_collection_reference)
+            &.placements
+            &.map { |placement| placement["school_urn"] }
+
+        school_urns.nil? ? [] : school_urns
+      end
     end
   end
 end
