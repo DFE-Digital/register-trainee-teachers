@@ -1,5 +1,5 @@
 module "redis-cache" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/redis?ref=main"
+  source = "./vendor/modules/aks//aks/redis"
 
   name                  = "cache"
   namespace             = var.namespace
@@ -15,7 +15,7 @@ module "redis-cache" {
 }
 
 module "redis-queue" {
-  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/redis?ref=main"
+  source = "./vendor/modules/aks//aks/redis"
 
   name                  = "queue"
   namespace             = var.namespace

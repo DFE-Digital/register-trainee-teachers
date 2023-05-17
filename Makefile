@@ -3,6 +3,7 @@ ifndef VERBOSE
 endif
 SERVICE_SHORT=rtt
 SERVICE_NAME=register
+TERRAFILE_VERSION=0.8
 
 help:
 	@echo "Environment setup targets:"
@@ -33,6 +34,12 @@ install-konduit: ## Install the konduit script, for accessing backend services
 	[ ! -f bin/konduit.sh ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh \
+		|| true
+
+install-terrafile: ## Install terrafile to manage terraform modules
+	[ ! -f bin/terrafile ] \
+		&& curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
+		| tar xz -C ./bin terrafile \
 		|| true
 
 .PHONY: review
@@ -203,14 +210,15 @@ deploy: terraform-init
 destroy: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) destroy -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS} $(AUTO_APPROVE)
 
-terraform-init:
+terraform-init: install-terrafile
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=main))
 	$(eval export TF_VAR_paas_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 
-	az account set -s $(AZ_SUBSCRIPTION) && az account show \
-	&& terraform -chdir=terraform/$(PLATFORM) init -reconfigure -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
+	az account set -s $(AZ_SUBSCRIPTION) && az account show
+	./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile
+	terraform -chdir=terraform/$(PLATFORM) init -reconfigure -upgrade -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
 	az aks get-credentials --overwrite-existing -g ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER_SHORT}-rg -n ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER}-aks
