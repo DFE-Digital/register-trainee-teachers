@@ -419,8 +419,7 @@ module Reports
       @school_urns ||= begin
         school_urns =
           trainee
-            .hesa_student_for_collection(Settings.hesa.current_collection_reference)
-            &.placements
+            .placements
             &.map { |placement| placement["school_urn"] }
 
         school_urns.nil? ? [] : school_urns

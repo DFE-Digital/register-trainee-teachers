@@ -747,10 +747,6 @@ describe Trainee do
       create(:trainee, :imported_from_hesa)
     }
 
-    before do
-      allow(Settings.hesa).to receive(:current_collection_reference).and_return("C22053")
-    end
-
     context "when no placement data exists" do
       it "returns false" do
         expect(trainee.placement_details?).to be false
@@ -781,11 +777,55 @@ describe Trainee do
       end
 
       before do
-        trainee.hesa_students << hesa_student
+        trainee.hesa_students = [hesa_student]
       end
 
       it "returns true" do
         expect(trainee.placement_details?).to be true
+      end
+    end
+  end
+
+  describe "placements" do
+    subject(:trainee) {
+      create(:trainee, :imported_from_hesa)
+    }
+
+    context "when no placement data exists" do
+      it "returns nil" do
+        expect(trainee.placements).to be_nil
+      end
+    end
+
+    context "when placement data exists" do
+      let(:hesa_student) do
+        create(
+          :hesa_student,
+          collection_reference: "C22053",
+          hesa_id: trainee.hesa_id,
+          first_names: trainee.first_names,
+          last_name: trainee.last_name,
+          degrees: degrees,
+          placements: placements,
+        )
+      end
+
+      let!(:schools) { create_list(:school, 2) }
+
+      let(:placements) do
+        [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }]
+      end
+
+      let(:degrees) do
+        [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
+      end
+
+      before do
+        trainee.hesa_students = [hesa_student]
+      end
+
+      it "returns true" do
+        expect(trainee.placements).to eq([{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }])
       end
     end
   end

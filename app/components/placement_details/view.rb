@@ -32,8 +32,7 @@ module PlacementDetails
     def urns
       @urns ||=
         trainee
-          .hesa_student_for_collection(Settings.hesa.current_collection_reference)
-          &.placements
+          .placements
           &.map { |placement| placement["school_urn"] }
     end
 
