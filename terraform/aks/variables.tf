@@ -1,5 +1,7 @@
 variable "app_name_suffix" { default = null }
 
+variable "postgres_version" { default = 13 }
+
 variable "app_name" { default = null }
 
 # PaaS variables
@@ -59,28 +61,12 @@ variable "enable_alerting" { default = false }
 variable "pg_actiongroup_name" { default = false }
 variable "pg_actiongroup_rg" { default = false }
 
-variable "postgres_flexible_server_sku" { default = "B_Standard_B1ms" }
-variable "postgres_flexible_server_storage_mb" { default = 32768 }
-variable "postgres_enable_high_availability" { default = false }
-variable "redis_capacity" { default = 1 }
-variable "redis_family" { default = "C" }
-variable "redis_sku_name" { default = "Standard" }
-
 variable "pdb_min_available" { default = null }
-variable "postgres_version" { default = "11" }
 variable "config_short" {}
 variable "service_short" {}
 
 variable paas_app_config_file { default = "workspace-variables/app_config.yml" }
 variable env_config {}
-
-variable "postgres_extensions" {
-  default = null
-}
-
-variable "postgres_create_servicename_db" {
-  default = false
-}
 
 variable "service_name" {}
 variable "worker_apps" {
@@ -134,8 +120,8 @@ locals {
   app_secrets = merge(
     local.kv_app_secrets,
     {
-      DATABASE_URL        = module.kubernetes.database_url
-      BLAZER_DATABASE_URL = module.kubernetes.database_url
+      DATABASE_URL        = module.postgres.url
+      BLAZER_DATABASE_URL = module.postgres.url
       REDIS_QUEUE_URL     = module.redis-queue.url
       REDIS_CACHE_URL     = module.redis-cache.url
     }
