@@ -23,5 +23,5 @@
 #
 class TraineeWithdrawalReason < ApplicationRecord
   belongs_to :trainee
-  belongs_to :withdraw_reason
+  belongs_to :withdrawal_reason
 end

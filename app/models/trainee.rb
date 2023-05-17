@@ -171,6 +171,9 @@ class Trainee < ApplicationRecord
            inverse_of: :trainee,
            class_name: "Hesa::Student"
 
+  has_many :trainee_withdrawal_reasons, inverse_of: :trainee
+  has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
+
   attribute :progress, Progress.to_type
 
   delegate :award_type,
