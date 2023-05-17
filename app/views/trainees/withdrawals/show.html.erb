@@ -72,7 +72,7 @@
                                  autocomplete: :off %>
         <% end %>
 
-        <%= f.govuk_radio_button :withdraw_reason, WithdrawalReasons::UNKNOWN,
+        <%= f.govuk_radio_button :withdraw_reason, WithdrawalReasons::LEGACY_UNKNOWN,
                                  label: { text: t("views.forms.withdrawal_reasons.labels.unknown") } %>
       <% end %>
 

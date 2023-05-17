@@ -31,7 +31,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -111,7 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.string "comment"
     t.string "remote_address"
     t.string "request_uuid"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["associated_type", "associated_id"], name: "associated_index"
     t.index ["auditable_type", "auditable_id", "version"], name: "auditable_index"
     t.index ["created_at"], name: "index_audits_on_created_at"
@@ -124,7 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.bigint "query_id"
     t.text "statement"
     t.string "data_source"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["query_id"], name: "index_blazer_audits_on_query_id"
     t.index ["user_id"], name: "index_blazer_audits_on_user_id"
   end
@@ -138,7 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.text "slack_channels"
     t.string "check_type"
     t.text "message"
-    t.datetime "last_run_at"
+    t.datetime "last_run_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_checks_on_creator_id"
@@ -210,9 +210,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
     t.index ["recruitment_cycle_year"], name: "index_courses_on_recruitment_cycle_year"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
-  end
-
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -474,7 +471,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
 
   create_table "hesa_collection_requests", force: :cascade do |t|
     t.string "collection_reference"
-    t.datetime "requested_at"
+    t.datetime "requested_at", precision: nil
     t.text "response_body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -575,7 +572,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
 
   create_table "hesa_trn_submissions", force: :cascade do |t|
     t.text "payload"
-    t.datetime "submitted_at"
+    t.datetime "submitted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -683,14 +680,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.index ["trainee_id"], name: "index_trainee_disabilities_on_trainee_id"
   end
 
-  create_table "trainee_withdraw_reasons", force: :cascade do |t|
+  create_table "trainee_withdrawal_reasons", force: :cascade do |t|
     t.bigint "trainee_id", null: false
-    t.bigint "withdraw_reason_id", null: false
+    t.bigint "withdrawal_reason_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["trainee_id", "withdraw_reason_id"], name: "uniq_idx_trainee_withdaw_reasons", unique: true
-    t.index ["trainee_id"], name: "index_trainee_withdraw_reasons_on_trainee_id"
-    t.index ["withdraw_reason_id"], name: "index_trainee_withdraw_reasons_on_withdraw_reason_id"
+    t.index ["trainee_id", "withdrawal_reason_id"], name: "uniq_idx_trainee_withdawal_reasons", unique: true
+    t.index ["trainee_id"], name: "index_trainee_withdrawal_reasons_on_trainee_id"
+    t.index ["withdrawal_reason_id"], name: "index_trainee_withdrawal_reasons_on_withdrawal_reason_id"
   end
 
   create_table "trainees", force: :cascade do |t|
@@ -724,14 +721,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.date "itt_end_date"
     t.uuid "placement_assignment_dttp_id"
     t.string "trn"
-    t.datetime "submitted_for_trn_at"
+    t.datetime "submitted_for_trn_at", precision: nil
     t.integer "state", default: 0
     t.integer "withdraw_reason"
-    t.datetime "withdraw_date"
+    t.datetime "withdraw_date", precision: nil
     t.string "additional_withdraw_reason"
     t.date "defer_date"
     t.citext "slug", null: false
-    t.datetime "recommended_for_award_at"
+    t.datetime "recommended_for_award_at", precision: nil
     t.string "dttp_update_sha"
     t.date "trainee_start_date"
     t.date "reinstate_date"
@@ -743,7 +740,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.integer "course_max_age"
     t.text "course_subject_two"
     t.text "course_subject_three"
-    t.datetime "awarded_at"
+    t.datetime "awarded_at", precision: nil
     t.boolean "applying_for_bursary"
     t.integer "training_initiative"
     t.integer "bursary_tier"
@@ -758,12 +755,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.boolean "employing_school_not_applicable", default: false
     t.boolean "submission_ready", default: false
     t.integer "commencement_status"
-    t.datetime "discarded_at"
+    t.datetime "discarded_at", precision: nil
     t.boolean "created_from_dttp", default: false, null: false
     t.string "hesa_id"
     t.jsonb "additional_dttp_data"
     t.boolean "created_from_hesa", default: false, null: false
-    t.datetime "hesa_updated_at"
+    t.datetime "hesa_updated_at", precision: nil
     t.bigint "course_allocation_subject_id"
     t.bigint "start_academic_cycle_id"
     t.bigint "end_academic_cycle_id"
@@ -810,11 +807,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "dfe_sign_in_uid"
-    t.datetime "last_signed_in_at"
+    t.datetime "last_signed_in_at", precision: nil
     t.uuid "dttp_id"
     t.boolean "system_admin", default: false
-    t.datetime "welcome_email_sent_at"
-    t.datetime "discarded_at"
+    t.datetime "welcome_email_sent_at", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.boolean "read_only", default: false
     t.string "otp_secret"
     t.index ["dfe_sign_in_uid"], name: "index_users_on_dfe_sign_in_uid", unique: true
@@ -832,12 +829,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
     t.index ["user_id"], name: "index_validation_errors_on_user_id"
   end
 
-  create_table "withdraw_reasons", force: :cascade do |t|
+  create_table "withdrawal_reasons", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "description"
-    t.index ["name"], name: "index_withdraw_reasons_on_name"
+    t.index ["name"], name: "index_withdrawal_reasons_on_name"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -857,8 +854,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_12_104231) do
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
-  add_foreign_key "trainee_withdraw_reasons", "trainees"
-  add_foreign_key "trainee_withdraw_reasons", "withdraw_reasons"
+  add_foreign_key "trainee_withdrawal_reasons", "trainees"
+  add_foreign_key "trainee_withdrawal_reasons", "withdrawal_reasons"
   add_foreign_key "trainees", "academic_cycles", column: "end_academic_cycle_id"
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"

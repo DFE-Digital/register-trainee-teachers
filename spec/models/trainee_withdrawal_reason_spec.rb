@@ -2,6 +2,6 @@
 
 require "rails_helper"
 
-RSpec.describe TraineeWithdrawReason do
+RSpec.describe TraineeWithdrawalReason do
   pending "add some examples to (or delete) #{__FILE__}"
 end

@@ -1,108 +1,70 @@
 # frozen_string_literal: true
 
 module WithdrawalReasons
-  # legacy ENUM values
-  # TODO: remove once migrated
+  # Legacy reasons
   DEATH = "death"
   DID_NOT_PASS_ASSESSMENT = "did_not_pass_assessment"
   DID_NOT_PASS_EXAMS = "did_not_pass_exams"
   EXCLUSION = "exclusion"
-  FINANCIAL_REASONS = "financial_reasons"
-  FOR_ANOTHER_REASON = "for_another_reason"
-  GONE_INTO_EMPLOYMENT = "gone_into_employment"
-  HEALTH_REASONS = "health_reasons"
   PERSONAL_REASONS = "personal_reasons"
   TRANSFERRED_TO_ANOTHER_PROVIDER = "transferred_to_another_provider"
-  LEGACY_UNKNOWN = "unknown"
   WRITTEN_OFF_AFTER_LAPSE_OF_TIME = "written_off_after_lapse_of_time"
+  FINANCIAL_REASONS = "financial_reasons"
+  GONE_INTO_EMPLOYMENT = "gone_into_employment"
+  HEALTH_REASONS = "health_reasons"
+  FOR_ANOTHER_REASON = "for_another_reason"
 
-  # Reason names
-  TIME = "Time"
-  UNSUITABLE = "Unsuitable"
-  PROGRESS = "Progress"
-  ENTRY_REQUIREMENTS = "Entry requirements"
-  UNWANTED = "Unwanted"
-  FAMILY_PROBLEMS = "Family problems"
-  FINANCIAL_PROBLEMS = "Financial problems"
-  JOB = "Job"
-  HEALTH_PROBLEMS = "Health problems"
-  STOPPED_RESPONDING = "Stopped responding"
-  PLACEMENT_PROBLEMS = "Placement problems"
-  BEHAVIOUR = "Behaviour"
-  UNHAPPY = "Unhappy"
-  ANOTHER_REASON = "Another reason"
-  UNKNOWN = "Unknown"
+  # New reasons
+  FINANCIAL_PROBLEMS = "financial_problems"
+  ANOTHER_REASON = "another_reason"
+  GOT_A_JOB = "got_a_job"
+  PROBLEMS_WITH_THEIR_HEALTH = "problems_with_their_health"
+  UNKNOWN = "unknown"
+  COULD_NOT_GIVE_ENOUGH_TIME = "could_not_give_enough_time"
+  COURSE_WAS_NOT_SUITABLE = "course_was_not_suitable"
+  DID_NOT_MAKE_PROGRESS = "did_not_make_progress"
+  DID_NOT_MEET_ENTRY_REQUIREMENTS = "did_not_meet_entry_requirements"
+  DOES_NOT_WANT_TO_BECOME_A_TEACHER = "does_not_want_to_become_a_teacher"
+  FAMILY_PROBLEMS = "family_problems"
+  STOPPED_RESPONDING_TO_MESSAGES = "stopped_responding_to_messages"
+  TEACHING_PLACEMENT_PROBLEMS = "teaching_placement_problems"
+  UNACCEPTABLE_BEHAVIOUR = "unacceptable_behaviour"
+  UNHAPPY_WITH_COURSE_PROVIDER_OR_EMPLOYING_SCHOOL = "unhappy_with_course_provider_or_employing_school"
 
-  # Legacy reason names
-  LEGACY_DEATH = "Death"
-  LEGACY_EXCLUSION = "Exclusion"
-  LEGACY_PERSONAL_REASONS = "Personal reasons"
-  LEGACY_TRANSFERRED = "Transferred"
-  LEGACY_WRITTEN_OFF = "Written off"
-  LEGACY_FAILED_ASSESSMENT = "Failed assessment"
-  LEGACY_FAILED_EXAM = "Failed exam"
+  LEGACY_REASONS = [
+    DEATH,
+    DID_NOT_PASS_ASSESSMENT,
+    DID_NOT_PASS_EXAMS,
+    EXCLUSION,
+    PERSONAL_REASONS,
+    TRANSFERRED_TO_ANOTHER_PROVIDER,
+    WRITTEN_OFF_AFTER_LAPSE_OF_TIME,
+  ].freeze
 
-  SPECIFIC = [
-    TIME,
-    UNSUITABLE,
-    PROGRESS,
-    ENTRY_REQUIREMENTS,
-    UNWANTED,
+  REASONS = [
+    COULD_NOT_GIVE_ENOUGH_TIME,
+    COURSE_WAS_NOT_SUITABLE,
+    DID_NOT_MAKE_PROGRESS,
+    DID_NOT_MEET_ENTRY_REQUIREMENTS,
+    DOES_NOT_WANT_TO_BECOME_A_TEACHER,
     FAMILY_PROBLEMS,
     FINANCIAL_PROBLEMS,
-    JOB,
-    HEALTH_PROBLEMS,
-    STOPPED_RESPONDING,
-    PLACEMENT_PROBLEMS,
-    BEHAVIOUR,
-    UNHAPPY,
+    GOT_A_JOB,
+    PROBLEMS_WITH_THEIR_HEALTH,
+    STOPPED_RESPONDING_TO_MESSAGES,
+    TEACHING_PLACEMENT_PROBLEMS,
+    UNACCEPTABLE_BEHAVIOUR,
+    UNHAPPY_WITH_COURSE_PROVIDER_OR_EMPLOYING_SCHOOL,
     ANOTHER_REASON,
     UNKNOWN,
   ].freeze
 
-  LEGACY_MAPPINGS = {
-    LEGACY_DEATH => DEATH,
-    DID_NOT_PASS_ASSESSMENT => LEGACY_FAILED_ASSESSMENT,
-    DID_NOT_PASS_EXAMS => LEGACY_FAILED_EXAM,
-    EXCLUSION => LEGACY_EXCLUSION,
+  LEGACY_MAPPING = {
     FINANCIAL_REASONS => FINANCIAL_PROBLEMS,
+    GONE_INTO_EMPLOYMENT => GOT_A_JOB,
+    HEALTH_REASONS => PROBLEMS_WITH_THEIR_HEALTH,
     FOR_ANOTHER_REASON => ANOTHER_REASON,
-    GONE_INTO_EMPLOYMENT => JOB,
-    HEALTH_REASONS => HEALTH_PROBLEMS,
-    PERSONAL_REASONS => LEGACY_PERSONAL_REASONS,
-    TRANSFERRED_TO_ANOTHER_PROVIDER => LEGACY_TRANSFERRED,
-    LEGACY_UNKNOWN => UNKNOWN,
-    WRITTEN_OFF_AFTER_LAPSE_OF_TIME => LEGACY_WRITTEN_OFF,
   }.freeze
 
-  REASONS = [
-    { name: TIME, description: "Could not give enough time to course" },
-    { name: UNSUITABLE, description: "Course was not suitable for them" },
-    { name: PROGRESS, description: "Did not make progress in course" },
-    { name: ENTRY_REQUIREMENTS, description: "Did not meet course entry requirements" },
-    { name: UNWANTED, description: "Does not want to become a teacher" },
-    { name: FAMILY_PROBLEMS, description: "Family problems" },
-    { name: FINANCIAL_PROBLEMS, description: "Financial problems" },
-    { name: JOB, description: "Got a job" },
-    { name: HEALTH_PROBLEMS, description: "Problems with their health" },
-    { name: STOPPED_RESPONDING, description: "Stopped responding to messages" },
-    { name: PLACEMENT_PROBLEMS, description: "Teaching placement problems" },
-    { name: BEHAVIOUR, description: "Unacceptable behaviour" },
-    { name: UNHAPPY, description: "Unhappy with course, provider or employing school" },
-    { name: ANOTHER_REASON, description: "Another reason" },
-    { name: UNKNOWN, description: "Unknown" },
-  ].freeze
-
-  # these have no direct mapping to the new reasons
-  LEGACY_REASONS = [
-    { name: LEGACY_DEATH, description: "Death" },
-    { name: LEGACY_EXCLUSION, description: "Exclusion" },
-    { name: LEGACY_PERSONAL_REASONS, description: "Personal reasons" },
-    { name: LEGACY_TRANSFERRED, description: "Transferred to another provider" },
-    { name: LEGACY_WRITTEN_OFF, description: "Written off after lapse of time" },
-    { name: LEGACY_FAILED_ASSESSMENT, description: "Did no pass assessment" },
-    { name: LEGACY_FAILED_EXAM, description: "Did no pass the exams" },
-  ].freeze
-
-  SEEDS = [*REASONS, *LEGACY_REASONS].freeze
+  SEED = (LEGACY_REASONS + REASONS).map { |reason| { name: reason } }.freeze
 end

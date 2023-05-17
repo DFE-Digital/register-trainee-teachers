@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: withdraw_reasons
+# Table name: withdrawal_reasons
 #
 #  id          :bigint           not null, primary key
 #  description :string
@@ -12,7 +12,7 @@
 #
 # Indexes
 #
-#  index_withdraw_reasons_on_name  (name)
+#  index_withdrawal_reasons_on_name  (name)
 #
-class WithdrawReason < ApplicationRecord
+class WithdrawalReason < ApplicationRecord
 end
