@@ -217,7 +217,7 @@ terraform-init: install-terrafile
 	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 
 	az account set -s $(AZ_SUBSCRIPTION) && az account show
-	./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile
+	[ "${RUN_TERRAFILE}" = "yes" ] && ./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile || true
 	terraform -chdir=terraform/$(PLATFORM) init -reconfigure -upgrade -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
