@@ -101,7 +101,7 @@ module RecordDetails
     end
 
     def render_text_with_hint(date)
-      hint_text = tag.span(time_ago_in_words(date).concat(" ago"), class: "govuk-hint")
+      hint_text = tag.span("#{time_ago_in_words(date)} ago", class: "govuk-hint")
 
       sanitize(tag.p(date_for_summary_view(date), class: "govuk-body") + hint_text)
     end
