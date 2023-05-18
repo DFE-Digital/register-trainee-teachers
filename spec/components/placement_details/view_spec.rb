@@ -29,9 +29,7 @@ module PlacementDetails
     end
 
     before do
-      allow(Settings.hesa).to receive(:current_collection_reference).and_return("C22053")
-
-      trainee.hesa_students << hesa_student
+      trainee.hesa_students = [hesa_student]
 
       render_inline(View.new(trainee:))
     end

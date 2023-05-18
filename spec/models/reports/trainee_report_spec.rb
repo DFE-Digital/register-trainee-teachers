@@ -324,9 +324,7 @@ describe Reports::TraineeReport do
       end
 
       before do
-        allow(Settings.hesa).to receive(:current_collection_reference).and_return("C22053")
-
-        trainee.hesa_students << hesa_student
+        trainee.hesa_students = [hesa_student]
       end
 
       context "when there is only one placement" do

@@ -81,5 +81,7 @@ module Hesa
                primary_key: :hesa_id,
                inverse_of: :hesa_students,
                optional: true
+
+    scope :latest, -> { order(collection_reference: :desc).first }
   end
 end

@@ -539,10 +539,16 @@ class Trainee < ApplicationRecord
     "manual"
   end
 
-  def placement_details?
-    hesa_student = hesa_student_for_collection(Settings.hesa.current_collection_reference)
+  def placements
+    hesa_student = hesa_students.latest
 
-    hesa_student&.placements.present?
+    return nil if hesa_student.blank?
+
+    hesa_student.placements
+  end
+
+  def placement_details?
+    placements.present?
   end
 
   def estimated_end_date
