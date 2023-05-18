@@ -2,8 +2,9 @@
 
 class TraineeWithdrawalReasons < ActiveRecord::Migration[7.0]
   def up
+    WithdrawalReason.upsert_all(WithdrawalReasons::SEED, unique_by: :name)
     # Create TraineeWithdrawalReason entries for each withdrawal reason
-    Trainee.withdraw_reason.each_key do |withdraw_reason|
+    Trainee.withdraw_reasons.each_key do |withdraw_reason|
       # Check if there's a mapping for the current withdraw_reason
       mapped_reason = WithdrawalReasons::LEGACY_MAPPING[withdraw_reason] || withdraw_reason
 
@@ -15,7 +16,7 @@ class TraineeWithdrawalReasons < ActiveRecord::Migration[7.0]
       next unless trainees.any?
 
       # Create TraineeWithdrawalReason entries
-      TraineeWithdrawReason.create(
+      TraineeWithdrawalReason.create(
         trainees.map do |trainee|
           { trainee_id: trainee.id, withdrawal_reason_id: withdrawal_reason_id }
         end,
