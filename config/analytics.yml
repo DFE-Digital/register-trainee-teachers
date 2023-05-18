@@ -272,3 +272,15 @@ shared:
   hesa_collection_requests:
     - requested_at
     - state
+  :withdrawal_reasons:
+  - id
+  - created_at
+  - updated_at
+  - name
+  - description
+  :trainee_withdrawal_reasons:
+  - id
+  - trainee_id
+  - withdrawal_reason_id
+  - created_at
+  - updated_at
