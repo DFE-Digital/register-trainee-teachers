@@ -231,18 +231,21 @@ en:
         withdraw_date_label: Date of withdrawal
         withdraw_reason_label: Reason for withdrawal
         reasons: &withdrawal_reasons
-          death: Death
-          did_not_pass_assessment: Did not pass the assessment
-          did_not_pass_exams: Did not pass the exams
-          exclusion: Exclusion
-          financial_reasons: Financial reasons
-          for_another_reason: For another reason
-          gone_into_employment: Gone into employment
-          health_reasons: Health reasons
-          personal_reasons: Other personal reasons and dropped out
-          transferred_to_another_provider: Transferred to another provider
+          could_not_give_enough_time: Could not give enough time to course
+          course_was_not_suitable: Course was not suitable for them
+          did_not_make_progress: Did not make progress in course
+          did_not_meet_entry_requirements: Did not meet entry requirements
+          does_not_want_to_become_a_teacher: Does not want to become a teacher
+          family_problems: Family problems
+          financial_problems: Financial problems
+          got_a_job: Got a job
+          problems_with_their_health: Problems with their health
+          stopped_responding_to_messages: Stopped responding to messages
+          teaching_placement_problems: Teaching placement problems
+          unacceptable_behaviour: Unacceptable behaviour
+          unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
+          another_reason: Another reason
           unknown: Unknown
-          written_off_after_lapse_of_time: Written off after lapse of time
       flash:
         diversity: disclosure
         disclosure: diversity information
