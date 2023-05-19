@@ -1,3 +1,3 @@
 output "url" {
-  value = "https://${module.kubernetes.hostname}/"
+  value = { for k,v in module.web_application : k => "https://${v["hostname"]}/" }
 }
