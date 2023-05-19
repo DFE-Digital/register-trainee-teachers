@@ -67,12 +67,15 @@ module Trainees
     def call
       return if trainee_association_imported_from_dttp?
 
-      if withdrawal_undone?
+      if withdrawal_undone? || award_undone?
+        title = withdrawal_undone? ? "Withdrawal undone" : "#{auditable.award_type} award removed"
+        items = withdrawal_undone? ? undo_message : [undo_comment]
+
         return TimelineEvent.new(
-          title: "Withdrawal undone",
+          title: title,
           date: created_at,
           username: username,
-          items: undo_withdraw_message,
+          items: items,
         )
       end
 
@@ -132,22 +135,28 @@ module Trainees
     attr_reader :audit, :current_user
 
     def withdrawal_undone?
-      return unless audited_changes.is_a?(Hash) && username
-
-      audited_changes.any? do |key, value|
-        key == "state" &&
-          value.is_a?(Array) &&
-          value.size == 2 &&
-          value[0] == Trainee.states["withdrawn"] &&
-          value[1].is_a?(Integer)
-      end
+      valid_undo?("withdrawn")
     end
 
-    def undo_withdraw_message
-      [["Comment:", undo_withdraw_comment]] if comment.present?
+    def award_undone?
+      valid_undo?("awarded")
     end
 
-    def undo_withdraw_comment
+    def valid_undo?(state)
+      return false unless audited_changes.is_a?(Hash) && username
+
+      change = audited_changes["state"]
+      change.is_a?(Array) &&
+        change.size == 2 &&
+        change[0] == Trainee.states[state] &&
+        change[1].is_a?(Integer)
+    end
+
+    def undo_message
+      [["Comment:", undo_comment]] if comment.present?
+    end
+
+    def undo_comment
       comment.split("\n").first
     end
 
