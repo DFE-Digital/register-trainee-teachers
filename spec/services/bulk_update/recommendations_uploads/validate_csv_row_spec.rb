@@ -37,6 +37,25 @@ module BulkUpdate
           end
         end
 
+        context "When date is invalid" do
+          let(:row) do
+            Row.new({
+              "trn" => "1234567",
+              "hesa id" => "12345678912345678",
+              "provider trainee id" => "1234567",
+              "date qts or eyts standards met" => "21/85/2022",
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be false }
+          end
+
+          describe "messages" do
+            it { expect(service.messages).to eql ["Date QTS or EYTS standards met must be a valid date"] }
+          end
+        end
+
         context "When row is invalid" do
           let(:row) do
             Row.new({

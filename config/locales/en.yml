@@ -1366,6 +1366,7 @@ en:
             validate_csv_row:
               trn_format: TRN must be 7 numbers
               hesa_id_format: HESA ID must be 13 or 17 numbers
+              award_date_not_valid: Date QTS or EYTS standards met must be a valid date
               award_date_future: Date QTS or EYTS standards met must be today or in the past
               award_date_past: Date QTS or EYTS standards met must be within the past 12 months to bulk recommend - you can recommend the trainee separately in their trainee record
               date_standards_met: Date QTS or EYTS standards met must be after trainee’s ITT start date
