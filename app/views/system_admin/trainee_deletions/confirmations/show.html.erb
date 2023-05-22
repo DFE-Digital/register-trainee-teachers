@@ -1,0 +1,26 @@
+<%= render PageTitle::View.new(text: t("system_admin.trainee_deletions.confirmations.show.heading")) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t("back"), href: edit_trainee_deletions_reason_path(@trainee)) %>
+<% end %>
+
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-l">
+    <%= trainee_name(@trainee) %>
+  </span>
+  <%= t("system_admin.trainee_deletions.confirmations.show.heading") %>
+</h1>
+
+<%= render ConfirmTraineeDelete::View.new(trainee: @trainee,
+                                          delete_reason: @delete_trainee_form.delete_reason_or_other,
+                                          ticket: @delete_trainee_form.ticket) %>
+
+<%= govuk_button_to "Delete record", trainee_deletions_confirmation_path(@trainee),
+                    method: :patch,
+                    class: "govuk-button--warning" %>
+
+<%= register_form_with model: @trainee, url: trainee_deletions_confirmation_path(@trainee),
+                       method: :delete,
+                       local: true do |f| %>
+  <%= f.submit "Cancel and return to record", class: "govuk-link app-button--link govuk-body", role: "link" %>
+<% end %>

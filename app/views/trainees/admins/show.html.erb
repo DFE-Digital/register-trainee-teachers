@@ -25,3 +25,11 @@
       </div>
    </section>
 <% end %>
+
+<% if policy(trainee).destroy_with_reason? %>
+  <p class="govuk-body">
+    <%= govuk_link_to "Delete this trainee",
+                      edit_trainee_deletions_reason_path(trainee),
+                      class: "app-link--warning delete" %>
+  </p>
+<% end %>

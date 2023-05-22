@@ -55,6 +55,11 @@ module SystemAdminRoutes
         end
 
         resources :uploads, only: %i[index new create show destroy]
+
+        namespace :trainee_deletions, path: "trainee-deletions" do
+          resources :reasons, only: %i[edit update]
+          resources :confirmations, only: %i[show update destroy]
+        end
       end
     end
   end

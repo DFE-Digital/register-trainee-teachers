@@ -853,6 +853,9 @@ en:
         labels:
           additional_reason: Enter the reason for withdrawal
           <<: *withdrawal_reasons
+      delete_trainee_reasons:
+        headings:
+          delete_reason: Reason for deletion
       training_details:
         title: *trainee_id
         trainee_id:
@@ -1324,6 +1327,12 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
+        system_admin/delete_trainee_form:
+          attributes:
+            delete_reason:
+              invalid: Select a delete reason
+            additional_delete_reason:
+              blank: Enter another reason
         contact_details_form:
           attributes:
             locale_code:
@@ -1706,6 +1715,13 @@ en:
         attribute_error: Attribute error
         error_count: Error count
         form: Form
+    trainee_deletions:
+      reasons:
+        edit:
+          heading: Delete trainee record
+      confirmations:
+        show:
+          heading: Confirm deletion of trainee record
   api:
     errors:
       bad_request: The query param needs to be at least %{length} characters

@@ -1,0 +1,51 @@
+<%= render PageTitle::View.new(text: t("system_admin.trainee_deletions.reasons.edit.heading"),
+                               has_errors: @delete_trainee_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t("back"), href: trainee_admin_path(@trainee)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @delete_trainee_form,
+                           url: trainee_deletions_reason_path(@trainee),
+                           method: :put,
+                           local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">
+          <%= trainee_name(@trainee) %>
+        </span>
+        <%= t("system_admin.trainee_deletions.reasons.edit.heading") %>
+      </h1>
+
+      <%= f.govuk_radio_buttons_fieldset(:delete_reason,
+                                         legend: {
+                                           text: t("views.forms.delete_trainee_reasons.headings.delete_reason")
+                                         }) do %>
+        <% SystemAdmin::DeleteTraineeForm::DELETE_REASONS.each_with_index do |delete_reason, index| %>
+          <%= f.govuk_radio_button(:delete_reason, delete_reason,
+                                   label: { text: delete_reason },
+                                   link_errors: index.zero?) %>
+        <% end %>
+
+        <%= f.govuk_radio_divider %>
+
+        <%= f.govuk_radio_button :delete_reason, SystemAdmin::DeleteTraineeForm::ANOTHER_REASON,
+                                 label: { text: SystemAdmin::DeleteTraineeForm::ANOTHER_REASON } do %>
+          <%= f.govuk_text_field :additional_delete_reason,
+                                 label: { text: "Reason" },
+                                 autocomplete: :off %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_text_field :ticket, label: { text: 'Zendesk ticket URL (optional)', tag: :h2, size: 'm' },
+                             hint: { text: "For example, https://becomingateacher.zendesk.com/agent/tickets/12345" } %>
+
+      <%= f.govuk_submit t("views.forms.common.continue") %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

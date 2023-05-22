@@ -20,8 +20,8 @@ module Trainees
 
     attr_reader :trainees, :filters
 
-    def remove_empty_trainees(trainees)
-      trainees.where.not(id: FindEmptyTrainees.call(trainees: trainees, ids_only: true))
+    def remove_empty_or_discarded_trainees(trainees)
+      trainees.where.not(id: FindEmptyTrainees.call(trainees: trainees, ids_only: true)).undiscarded
     end
 
     def remove_hesa_trn_data_trainees(trainees)
@@ -30,7 +30,7 @@ module Trainees
     end
 
     def remove_hesa_trn_data_trainees_and_empty_trainees(trainees)
-      remove_hesa_trn_data_trainees(remove_empty_trainees(trainees))
+      remove_hesa_trn_data_trainees(remove_empty_or_discarded_trainees(trainees))
     end
 
     def academic_year(trainees, academic_years)

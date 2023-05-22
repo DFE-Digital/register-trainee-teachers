@@ -430,6 +430,14 @@ module Features
       @admin_remove_lead_school_access_page ||= PageObjects::SystemAdmin::LeadSchools::RemoveAccessConfirmation.new
     end
 
+    def admin_delete_trainee_reasons_page
+      @admin_delete_trainee_reasons_page ||= PageObjects::SystemAdmin::TraineeDeletions::Reasons.new
+    end
+
+    def admin_delete_trainee_confirmation_page
+      @admin_delete_trainee_confirmation_page ||= PageObjects::SystemAdmin::TraineeDeletions::Confirmation.new
+    end
+
     def admin_uploads_page
       @admin_uploads_index_page ||= PageObjects::SystemAdmin::Uploads::Index.new
     end

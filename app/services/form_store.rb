@@ -36,6 +36,7 @@ class FormStore
     training_details
     iqts_country
     training_routes
+    delete_trainee
   ].freeze
 
   class << self

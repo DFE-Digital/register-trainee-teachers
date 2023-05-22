@@ -7,6 +7,7 @@ module PageObjects
 
       element :collection_name, ".govuk-summary-list__key"
       element :collection, "details"
+      element :delete, ".govuk-link.delete"
     end
   end
 end

@@ -97,6 +97,10 @@ class TraineePolicy
     user_is_system_admin? || (user_in_provider_context? && trainee.awaiting_action?)
   end
 
+  def destroy_with_reason?
+    user_is_system_admin? && !trainee.recommended_for_award? && !trainee.awarded?
+  end
+
   alias_method :index?, :show?
   alias_method :edit?, :update?
   alias_method :destroy?, :update?
