@@ -14,6 +14,7 @@ module SystemAdminRoutes
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
         resources :dead_jobs, only: %i[index show]
+        resources :pending_trns, only: %i[index show]
 
         resources :providers, only: %i[index new create show edit update] do
           resources :users, controller: "providers/users", only: %i[index edit update]
@@ -59,6 +60,11 @@ module SystemAdminRoutes
         namespace :trainee_deletions, path: "trainee-deletions" do
           resources :reasons, only: %i[edit update]
           resources :confirmations, only: %i[show update destroy]
+        end
+
+        namespace :pending_trns, path: "pending-trns" do
+          resources :retrieve_trns, only: %i[update], path: "retrieve-trns"
+          resources :request_trns, only: %i[create], path: "request-trns"
         end
       end
     end

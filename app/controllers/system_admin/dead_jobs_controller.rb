@@ -32,10 +32,10 @@ module SystemAdmin
     end
 
     def dead_job_services
+      # returns Array of DeadJob classes instances, e.g. [::DeadJobs::DqtUpdateTrainee, ...]
       @dead_job_services ||=
         DeadJobs
           .constants
-          # returns Array of DeadJob classes instances, e.g. [::DeadJobs::DqtUpdateTrainee, ...]
           .select { |constant| (DeadJobs.const_get(constant).is_a?(Class) && constant != :Base) }
           .map { |constant| "::DeadJobs::#{constant}".constantize.new }
     end

@@ -1,0 +1,49 @@
+<%= render PageTitle::View.new(i18n_key: "dead_jobs.index") %>
+
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-full">
+    <%= render "system_admin/tab_nav" %>
+
+    <%= render ErrorSummary::View.new(renderable: dqt_error.present?) do %>
+      <%= dqt_error %>
+    <% end %>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Trainees Pending TRN</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">First names</th>
+          <th scope="col" class="govuk-table__header">Last name</th>
+          <th scope="col" class="govuk-table__header">Days waiting</th>
+          <th scope="col" class="govuk-table__header"></th>
+          <th scope="col" class="govuk-table__header"></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @trainees.each do |trainee| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= trainee.first_names %></td>
+            <td class="govuk-table__cell"><%= trainee.last_name %></td>
+            <td class="govuk-table__cell">
+              <%= (Date.current - trainee.dqt_trn_request.created_at.to_date).to_i %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= govuk_button_to "Check for TRN",
+                                  pending_trns_retrieve_trn_path(trainee),
+                                  method: :put,
+                                  class: "govuk-!-margin-0 govuk-button--secondary" %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= govuk_button_to "Re-request for TRN",
+                                  pending_trns_request_trns_path(trainee),
+                                  method: :post,
+                                  class: "govuk-!-margin-0 govuk-button--secondary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
