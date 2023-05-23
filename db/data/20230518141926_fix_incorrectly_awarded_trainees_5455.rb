@@ -228,7 +228,9 @@ class FixIncorrectlyAwardedTrainees5455 < ActiveRecord::Migration[7.0]
        4yMWgBpacUrZbsrypiMRnbpP
        9LyPjgyN6TWd41SsHVe7t4yb
        4sdm4XpQhJ5Y7jtvFAvhuLwG
-       ny92SK54v27Lvqhqrv6yDfZb].each do |slug|
+       ny92SK54v27Lvqhqrv6yDfZb
+       fQMYKzUoiKoF9eSZGQymSdEf
+       uSn8U43s7GdmoqBWfqvQM9sR].each do |slug|
       Trainee.find_by(slug:)&.update!(state: :trn_received, awarded_at: nil, outcome_date: nil, recommended_for_award_at: nil, audit_comment: "Provider awarded the trainee in error")
     end
   end
