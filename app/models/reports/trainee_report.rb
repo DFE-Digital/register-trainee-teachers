@@ -74,24 +74,30 @@ module Reports
     end
 
     def placement_one
-      return "" if school_urns.empty?
+      return "" if placements.empty?
 
-      # According to the data we have so far, there is only one placement record per hesa student that has a magic URN
-      return I18n.t("components.placement_detail.magic_urn.#{school_urns.first}") if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.include?(school_urns.first)
+      placement = placements.first
 
-      school_urns.first
+      placement.school_id.present? ? placement.school.urn : placement.name
     end
 
     def placement_two
-      return "" if school_urns.size < 2
+      return "" if placements.size < 2
 
-      school_urns.second
+      placement = placements.second
+
+      placement.school.urn
     end
 
     def other_placements
-      return "" if school_urns.size < 3
+      return "" if placements.size < 3
 
-      school_urns[2..].join(", ")
+      # Fetches the school ids for the remaining placements (e.g from the 3rd, onwards)
+      school_ids = placements[2..].pluck(:school_id).compact
+
+      school_urns = School.where(id: school_ids).pluck(:urn)
+
+      school_urns.join(", ")
     end
 
     def award_standards_met_date
@@ -418,15 +424,8 @@ module Reports
       SubjectSpecialism.find_by("lower(name) = ?", subject.downcase)&.allocation_subject&.name
     end
 
-    def school_urns
-      @school_urns ||= begin
-        school_urns =
-          trainee
-            .placements
-            &.map { |placement| placement["school_urn"] }
-
-        school_urns.nil? ? [] : school_urns
-      end
+    def placements
+      @placements ||= trainee.placements
     end
   end
 end

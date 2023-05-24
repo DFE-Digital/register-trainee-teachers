@@ -754,31 +754,7 @@ describe Trainee do
     end
 
     context "when placement data exists" do
-      let(:hesa_student) do
-        create(
-          :hesa_student,
-          collection_reference: "C22053",
-          hesa_id: trainee.hesa_id,
-          first_names: trainee.first_names,
-          last_name: trainee.last_name,
-          degrees: degrees,
-          placements: placements,
-        )
-      end
-
-      let!(:schools) { create_list(:school, 2) }
-
-      let(:placements) do
-        [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }]
-      end
-
-      let(:degrees) do
-        [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
-      end
-
-      before do
-        trainee.hesa_students = [hesa_student]
-      end
+      let!(:placement) { create(:placement, trainee:) }
 
       it "returns true" do
         expect(trainee.placement_details?).to be true
@@ -793,39 +769,17 @@ describe Trainee do
 
     context "when no placement data exists" do
       it "returns nil" do
-        expect(trainee.placements).to be_nil
+        expect(trainee.placements).to be_empty
       end
     end
 
     context "when placement data exists" do
-      let(:hesa_student) do
-        create(
-          :hesa_student,
-          collection_reference: "C22053",
-          hesa_id: trainee.hesa_id,
-          first_names: trainee.first_names,
-          last_name: trainee.last_name,
-          degrees: degrees,
-          placements: placements,
-        )
-      end
-
-      let!(:schools) { create_list(:school, 2) }
-
-      let(:placements) do
-        [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }]
-      end
-
-      let(:degrees) do
-        [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
-      end
-
-      before do
-        trainee.hesa_students = [hesa_student]
-      end
+      let!(:placements) { create_list(:placement, 2, trainee:) }
 
       it "returns true" do
-        expect(trainee.placements).to eq([{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }])
+        trainee.placements.each do |placement|
+          expect(placement.name).to eq(placement.school.name)
+        end
       end
     end
   end

@@ -27,6 +27,7 @@ module Trainees
 
         if trainee.save!
           create_degrees!
+          create_placements!
           store_hesa_metadata!
           enqueue_background_jobs!
           check_for_missing_hesa_mappings!
@@ -254,6 +255,10 @@ module Trainees
 
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+    end
+
+    def create_placements!
+      ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements])
     end
 
     def store_hesa_metadata!
