@@ -6,9 +6,7 @@ module Trainees
       if OutcomeDateForm.new(trainee).save! && trainee.submission_ready?
         trainee.recommend_for_award!
 
-        if FeatureService.enabled?(:integrate_with_dqt)
-          Dqt::RecommendForAwardJob.perform_later(trainee)
-        end
+        Dqt::RecommendForAwardJob.perform_later(trainee)
 
         redirect_to(recommended_trainee_outcome_details_path(trainee))
       end

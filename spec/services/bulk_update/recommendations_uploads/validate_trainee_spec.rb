@@ -5,7 +5,11 @@ require "rails_helper"
 module BulkUpdate
   module RecommendationsUploads
     describe ValidateTrainee do
-      subject(:service) { described_class.new(row: row, provider: trainee.provider) }
+      let(:trainee_lookup) { TraineeLookup.new([row], trainee.provider) }
+
+      subject(:service) do
+        described_class.new(row: row, provider: trainee.provider, trainee_lookup: trainee_lookup)
+      end
 
       context "with a single trainee" do
         let(:trainee) { create(:trainee, :bulk_recommend) }
@@ -226,7 +230,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same the provider trainee ID - contact becomingateacher@digital.education.gov.uk to fix this"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same provider trainee ID - contact becomingateacher@digital.education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do
