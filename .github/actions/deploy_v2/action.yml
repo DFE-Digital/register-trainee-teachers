@@ -114,6 +114,23 @@ runs:
         az aks get-credentials -g ${{ env.cluster_rg }} -n ${{ env.cluster_name }}
         make install-konduit
 
+    - name: Check DB migrations
+      shell: bash
+      run: |
+        MIGSTATUS=$(kubectl exec -n ${{ env.namespace }} deployment/register-${APP_NAME} -- /bin/sh -c "bundle exec rails db:migrate:status" | grep -c 'Database requires migration' || true)
+        echo "${MIGSTATUS}"
+        COUNT=0
+        until [[ ${MIGSTATUS} -eq 0 ]]; do
+          sleep 30
+          MIGSTATUS=$(kubectl exec -n ${{ env.namespace }} deployment/register-${APP_NAME} -- /bin/sh -c "bundle exec rails db:migrate:status" | grep -c 'Database requires migration' || true)
+          echo "${MIGSTATUS}"
+          if [[ "${COUNT}" -gt 19 ]]; then
+            echo "DB migrations failed to complete after 10 minutes"
+            exit 1
+          fi
+          ((COUNT++))
+        done
+
     - name: Run data migrations
       shell: bash
       if: inputs.environment == 'staging_aks' || inputs.environment == 'productiondata_aks' || inputs.environment == 'production_aks'
