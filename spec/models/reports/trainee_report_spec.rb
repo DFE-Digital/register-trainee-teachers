@@ -411,11 +411,19 @@ describe Reports::TraineeReport do
     end
   end
 
-  context "when there is an EYTS trainee" do
+  context "when there is a trainee with no age range" do
     let!(:trainee) { create(:trainee, :eyts_recommended, start_academic_cycle: current_cycle, end_academic_cycle: nil) }
 
-    it "returns a blank age range" do
-      expect(subject.course_age_range).to eq(" ")
+    it "returns nil for age range" do
+      expect(subject.course_age_range).to be_nil
+    end
+  end
+
+  context "when there is a trainee with an age range" do
+    let!(:trainee) { create(:trainee, :eyts_recommended, start_academic_cycle: current_cycle, end_academic_cycle: nil, course_min_age: 1, course_max_age: 5) }
+
+    it "returns the age range" do
+      expect(subject.course_age_range).to eq("1 to 5")
     end
   end
 
