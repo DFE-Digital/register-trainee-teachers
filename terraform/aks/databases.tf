@@ -12,6 +12,7 @@ module "redis-cache" {
 
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
+  azure_patch_schedule    = [{ "day_of_week": "Sunday", "start_hour_utc": 01 }]
 }
 
 module "redis-queue" {
@@ -29,7 +30,7 @@ module "redis-queue" {
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
   azure_maxmemory_policy  = "noeviction"
-
+  azure_patch_schedule    = [{ "day_of_week": "Sunday", "start_hour_utc": 01 }]
 }
 
 module "postgres" {
@@ -47,4 +48,8 @@ module "postgres" {
   azure_enable_monitoring = var.enable_monitoring
   azure_extensions        = ["PGCRYPTO","BTREE_GIST","CITEXT","PG_TRGM"]
   server_version          = var.postgres_version
+  azure_sku_name          = var.postgres_flexible_server_sku
+
+  azure_enable_high_availability = var.postgres_enable_high_availability
+  azure_maintenance_window       = var.azure_maintenance_window
 }
