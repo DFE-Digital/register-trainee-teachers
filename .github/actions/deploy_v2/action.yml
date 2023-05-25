@@ -117,8 +117,7 @@ runs:
     - name: Run data migrations
       shell: bash
       if: inputs.environment == 'staging_aks' || inputs.environment == 'productiondata_aks' || inputs.environment == 'production_aks'
-      run: kubectl exec -n ${{ env.namespace }} deployment/register-${{ env.aks_app_environment }} -- /bin/sh -c "date"
-#      run: kubectl exec -n ${{ env.namespace }} deployment/register-${{ env.aks_app_environment }} -- /bin/sh -c "cd /app && bundle exec rails data:migrate"
+      run: kubectl exec -n ${{ env.namespace }} deployment/register-${{ env.aks_app_environment }} -- /bin/sh -c "cd /app && bundle exec rails data:migrate"
 
     - name: Generate example data
       shell: bash
