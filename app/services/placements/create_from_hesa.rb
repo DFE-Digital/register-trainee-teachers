@@ -23,24 +23,30 @@ module Placements
         hesa_urns = hesa_placements.map { |placement| placement[:school_urn] }
         schools = School.where(urn: hesa_urns)
         if schools.present?
-          schools.find_each do |school|
-            placement = trainee.placements.new(school:)
-
-            placement.save!
-          end
+          link_schools(schools)
         else
-          hesa_urns.each do |hesa_urn|
-            next if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.exclude?(hesa_urn)
-
-            placement = trainee.placements.new(
-              {
-                urn: hesa_urn,
-                name: I18n.t("components.placement_detail.magic_urn.#{hesa_urn}"),
-              },
-            )
-            placement.save!
-          end
+          handle_not_applicable_urns(hesa_urns)
         end
+      end
+    end
+
+    def link_schools(schools)
+      schools.find_each do |school|
+        trainee.placements.create!(school:)
+      end
+    end
+
+    def handle_not_applicable_urns(urns)
+      urns.each do |urn|
+        # Skip if the not applicable urns are not among Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS
+        next if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
+
+        trainee.placements.create!(
+          {
+            urn: urn,
+            name: I18n.t("components.placement_detail.magic_urn.#{urn}"),
+          },
+        )
       end
     end
   end

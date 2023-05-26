@@ -20,8 +20,8 @@
 #  index_placements_on_trainee_id  (trainee_id)
 #
 class Placement < ApplicationRecord
-  belongs_to :trainee, touch: true
-  belongs_to :school, touch: true, optional: true
+  belongs_to :trainee
+  belongs_to :school, optional: true
 
   validates :name, presence: true, if: -> { school.blank? }
 
