@@ -11,6 +11,8 @@ module Dqt
 
       trn_request = RegisterForTrn.call(trainee:)
       RetrieveTrnJob.perform_later(trn_request) unless trn_request.failed?
+
+      trn_request
     end
   end
 end
