@@ -4,20 +4,32 @@ module SystemAdmin
   class DeadJobsController < ApplicationController
     helper_method :dead_job_service, :dead_job_services, :trainees
 
+    def index; end
+
     def show
       respond_to do |format|
         format.html
         format.csv do
-          send_data(dead_job_service.to_csv(includes:), filename: "#{dead_job_service.name}_#{DateTime.now.strftime('%F')}.csv", disposition: :attachment)
+          send_data(dead_job_service.to_csv, filename: "#{dead_job_service.name}_#{DateTime.now.strftime('%F')}.csv", disposition: :attachment)
         end
       end
     end
 
-  private
-
-    def includes
-      include_dqt_status ? %i[dqt_status] : []
+    def update
+      job = Sidekiq::DeadSet.new.find_job(params[:id])
+      job&.retry
+      flash[:success] = "Job will be retried imminently"
+      redirect_back_or_to dead_jobs_path
     end
+
+    def destroy
+      job = Sidekiq::DeadSet.new.find_job(params[:id])
+      job&.delete
+      flash[:success] = "Job successfully deleted"
+      redirect_back_or_to dead_jobs_path
+    end
+
+  private
 
     def dead_job_service
       @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status:)

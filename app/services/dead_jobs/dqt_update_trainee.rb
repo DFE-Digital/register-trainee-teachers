@@ -1,18 +1,15 @@
 # frozen_string_literal: true
-
 module DeadJobs
   class DqtUpdateTrainee < Base
-    # includes the error_message entry using `includes: ...`
-    def to_csv(includes: [])
-      build_csv(includes: %i[job_id error_message params_sent] | includes)
+
+    private
+
+    def build_csv_row(trainee)
+      super.merge(params_sent: params_sent(trainee))
     end
 
-  private
-
-    def build_rows
-      super do |trainee|
-        { params_sent: Dqt::Params::Update.new(trainee:).to_json&.to_s&.gsub('"', "'") }
-      end
+    def params_sent(trainee)
+      flatten_hash(Dqt::Params::Update.new(trainee:).params.compact)
     end
 
     # full class name to look for in Sidekiq dead jobs

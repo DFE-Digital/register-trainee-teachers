@@ -22,8 +22,11 @@
     <thead class="govuk-table__head">
       <tr class="govuk-table__row">
         <% dead_job_service.headers&.each do |header| %>
+          <% next if header == :job_id %>
+
           <th scope="col" class="govuk-table__header"><%= header.to_s.humanize %></th>
         <% end %>
+        <th scope="col" class="govuk-table__header"> </th>
       </tr>
     </thead>
 
@@ -32,15 +35,16 @@
         <% row = dead_job_service.rows.select{|row| row[:register_id] == trainee.id}.first %>
           <tr class="govuk-table__row">
             <% row.each do |data| %>
+              <% next if data[0] == :job_id %>
+
               <td class="govuk-table__cell"><%= data[-1] %></td>
             <% end %>
             <td class="govuk-table__cell">
-              <%= render GovukButtonLinkTo::View.new(
-                body: "View",
-                id: "view_#{row[:register_id]}",
-                url: trainee_path(Trainee.find(row[:register_id]),
-                                  class_option: "govuk-!-margin-bottom-0"
-                )) %>
+              <div class="govuk-button-group">
+                <%= govuk_button_to "View", trainee_path(Trainee.find(row[:register_id])), method: :get, class: "govuk-button--default govuk-!-margin-bottom-0" %>
+                <%= govuk_button_to "Retry", dead_job_path(row[:job_id]), method: :put, class: "govuk-button--secondary govuk-!-margin-bottom-0" %>
+                <%= govuk_button_to "Delete", dead_job_path(row[:job_id]), method: :delete, class: "govuk-button--warning govuk-!-margin-bottom-0" %>
+              </div>
             </td>
           </tr>
         <% end %>
