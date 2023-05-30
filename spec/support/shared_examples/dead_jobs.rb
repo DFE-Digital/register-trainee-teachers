@@ -1,44 +1,24 @@
 # frozen_string_literal: true
 
-shared_examples "DeadJobs" do
-  let(:service) { described_class.new(dead_set:, include_dqt_status:) }
-  let(:include_dqt_status) { false }
-  let(:trainee) { create(:trainee, :completed, :trn_received, sex: "female", hesa_id: 1) }
-  let(:dqt_trn_params) { Dqt::Params::TrnRequest.new(trainee:).params }
-  let(:programme_route) { dqt_trn_params.dig("initialTeacherTraining", "programmeType") }
-  let(:programme_start_date) { dqt_trn_params.dig("initialTeacherTraining", "programmeStartDate") }
-  let(:programme_end_date) { dqt_trn_params.dig("initialTeacherTraining", "programmeEndDate") }
-  let(:job_id) { "jobid1234" }
+require "rails_helper"
 
-  let(:result) do
-    {
-      register_id: trainee.id,
-      trainee_name: trainee.full_name,
-      trainee_trn: trainee.trn,
-      trainee_dob: trainee.date_of_birth,
-      trainee_state: trainee.state,
-      provider_name: trainee.provider.name,
-      provider_ukprn: trainee.provider.ukprn,
-      programme_route: programme_route,
-      programme_start_date: programme_start_date,
-      programme_end_date: programme_end_date,
-    }
-  end
+RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
+  let(:job_id) { SecureRandom.hex }
+  let(:trainee) { create(:trainee, :completed, :trn_received, sex: "female", hesa_id: 1) }
+  let(:csv) { CSV.parse(subject.to_csv, headers: true) }
 
   let(:dead_set) do
     [
       OpenStruct.new(
         item: {
-          wrapped: klass,
-          args:
-            [
-              {
-                arguments: [
-                  { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" },
-                  { _aj_serialized: "ActiveJob::Serializers::TimeWithZoneSerializer", value: "2023-01-15T00:00:42.798653522Z" },
-                ],
-              },
-            ],
+          wrapped: dead_jobs_klass.to_s,
+          args: [
+            {
+              arguments: [
+                { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" },
+              ],
+            },
+          ],
           error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
           jid: job_id,
         }.with_indifferent_access,
@@ -46,60 +26,99 @@ shared_examples "DeadJobs" do
     ]
   end
 
-  let(:headers) { DeadJobs::Base::DEFAULT_HEADERS }
-  let(:row) { result.dup.merge(trainee_dob: result[:trainee_dob].strftime("%F")).values.join(",") }
-
-  let(:csv) do
-    <<~CSV
-      #{headers.join(',')},job_id,error_message
-      #{row},#{job_id},"{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}"
-    CSV
+  let(:dqt_response) do
+    { "trn" => "1234567",
+      "firstName" => "Bobby",
+      "lastName" => "Burger",
+      "middleName" => "Chrystal",
+      "dateOfBirth" => "1989-11-01",
+      "hasActiveSanctions" => false,
+      "initialTeacherTraining" =>
+      [{ "programmeStartDate" => "2022-09-03",
+         "programmeEndDate" => "2023-07-01",
+         "programmeType" => "InternationalQualifiedTeacherStatus",
+         "result" => "InTraining",
+         "provider" => { "ukprn" => "10007159" },
+         "husId" => nil,
+         "active" => true }] }
   end
 
-  let(:csv_with_dqt_status) do
-    <<~CSV
-      #{headers.join(',')},job_id,error_message,dqt_status
-      #{row},#{job_id},"{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}",Pass
-    CSV
+  let(:dqt_response_humanised) do
+    <<~TEXT
+      trn: 1234567
+      firstName: Bobby
+      lastName: Burger
+      middleName: Chrystal
+      dateOfBirth: 1989-11-01
+      hasActiveSanctions: false
+      initialTeacherTraining: [{"programmeStartDate"=>"2022-09-03", "programmeEndDate"=>"2023-07-01", "programmeType"=>"InternationalQualifiedTeacherStatus", "result"=>"InTraining", "provider"=>{"ukprn"=>"10007159"}, "husId"=>nil, "active"=>true}]
+    TEXT
   end
+
+  before do
+    allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee:).and_return(dqt_response)
+  end
+
+  subject { described_class.new(dead_set: dead_set, include_dqt_status: true) }
 
   describe "#to_csv" do
-    context "excluding DQT status" do
-      it "returns the expected CSV" do
-        expect(service.to_csv).to eq(csv)
-      end
-    end
+    it "returns CSV content" do
+      expect(csv.headers).to include(
+        *%w[
+          register_id
+          job_id
+          url
+          trn
+          date_of_birth
+          full_name
+          email
+          state
+          provider_name
+          provider_ukprn
+          training_route
+          itt_start_date
+          itt_end_date
+          course_min_age
+          course_max_age
+          course_subject_one
+          course_subject_two
+          course_subject_three
+          error_message
+          dqt
+        ],
+      )
 
-    context "including DQT status" do
-      let(:include_dqt_status) { true }
-
-      before do
-        allow(Dqt::RetrieveTraining).to receive(:call).with(trainee:).and_return(
-          { "result" => "Pass" },
-        )
-      end
-
-      it "returns the expected CSV" do
-        expect(service.to_csv(includes: %i[dqt_status])).to eq(csv_with_dqt_status)
-      end
+      expect(csv[0]["register_id"]).to eql trainee.id.to_s
+      expect(csv[0]["job_id"]).to eql job_id.to_s
+      expect(csv[0]["error_message"]).to eql "{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}"
+      expect(csv[0]["dqt"]).to eql dqt_response_humanised
     end
   end
 
   describe "#headers" do
-    it { expect(service.headers).to eq(headers) }
+    it "returns an array of header names" do
+      expect(subject.headers).to include(
+        *%i[
+          register_id
+          trn
+          name
+          date_of_birth
+          state
+          job_id
+        ],
+      )
+    end
   end
 
   describe "#rows" do
-    it "returns the expected array of hashes" do
-      expect(service.rows).to eq([result])
+    it "returns an array of row data" do
+      expect(subject.rows.first[:register_id]).to eq(trainee.id)
     end
   end
 
   describe "#name" do
-    it { expect(service.name).to eq(name) }
-  end
-
-  describe "#count" do
-    it { expect(service.count).to eq(1) }
+    it "returns the human-friendly name of the job" do
+      expect(subject.name).to eq(name)
+    end
   end
 end

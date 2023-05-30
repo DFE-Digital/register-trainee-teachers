@@ -1,8 +1,8 @@
 # frozen_string_literal: true
+
 module DeadJobs
   class DqtUpdateTrainee < Base
-
-    private
+  private
 
     def build_csv_row(trainee)
       super.merge(params_sent: params_sent(trainee))

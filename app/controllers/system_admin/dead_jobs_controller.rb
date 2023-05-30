@@ -16,20 +16,22 @@ module SystemAdmin
     end
 
     def update
-      job = Sidekiq::DeadSet.new.find_job(params[:id])
       job&.retry
-      flash[:success] = "Job will be retried imminently"
-      redirect_back_or_to dead_jobs_path
+      flash[:success] = "Job will be retried imminently" # rubocop:disable Rails/I18nLocaleTexts
+      redirect_back_or_to(dead_jobs_path)
     end
 
     def destroy
-      job = Sidekiq::DeadSet.new.find_job(params[:id])
       job&.delete
-      flash[:success] = "Job successfully deleted"
-      redirect_back_or_to dead_jobs_path
+      flash[:success] = "Job successfully deleted" # rubocop:disable Rails/I18nLocaleTexts
+      redirect_back_or_to(dead_jobs_path)
     end
 
   private
+
+    def job
+      Sidekiq::DeadSet.new.find_job(params[:id])
+    end
 
     def dead_job_service
       @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status:)

@@ -49,9 +49,8 @@ module DeadJobs
     end
 
     def build_csv_row(trainee)
-      dqt_params = dqt_params(trainee)
       {
-        id: trainee.id,
+        register_id: trainee.id,
         job_id: dead_jobs[trainee.id][:job_id],
         url: "#{Settings.base_url}/trainees/#{trainee.slug}",
         trn: trainee.trn,
@@ -69,10 +68,8 @@ module DeadJobs
         course_subject_one: trainee.course_subject_one,
         course_subject_two: trainee.course_subject_two,
         course_subject_three: trainee.course_subject_three,
-        dqt_programme_route: (dqt_params.dig("initialTeacherTraining", "programmeType") if include_dqt_status),
-        dqt_programme_start_date: (dqt_params.dig("initialTeacherTraining", "programmeStartDate") if include_dqt_status),
-        dqt_programme_end_date: (dqt_params.dig("initialTeacherTraining", "programmeEndDate") if include_dqt_status),
         error_message: dead_job_error_message(trainee.id),
+        dqt: dqt(trainee),
       }
     end
 
@@ -87,9 +84,12 @@ module DeadJobs
       }
     end
 
-    def dqt_params(trainee)
-      @dqt_params ||= {}
-      @dqt_params[trainee.id] ||= Dqt::Params::TrnRequest.new(trainee:).params
+    def dqt(trainee)
+      return unless include_dqt_status && trainee.trn.present?
+
+      flatten_hash(Dqt::RetrieveTeacher.call(trainee:))
+    rescue StandardError => e
+      "error: #{e.message}"
     end
 
     def dead_jobs
@@ -114,7 +114,7 @@ module DeadJobs
     def parse_error(error)
       return error unless error.include?("body: ")
 
-      parsed = JSON.parse(
+      JSON.parse(
         error.split("body: ")
              .last
              .split(", headers:")
@@ -126,8 +126,8 @@ module DeadJobs
 
     def flatten_hash(hash, parent_key = "", result = "")
       hash.each do |key, value|
-        new_key = parent_key == "" ? "#{key}" : "#{parent_key}_#{key}"
-        if value.is_a? Hash
+        new_key = parent_key == "" ? key.to_s : "#{parent_key}_#{key}"
+        if value.is_a?(Hash)
           result = flatten_hash(value, new_key, result)
         else
           result += "#{new_key}: #{value}\n"
