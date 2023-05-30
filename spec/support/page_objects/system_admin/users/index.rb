@@ -11,14 +11,14 @@ module PageObjects
         end
 
         element :add_a_user, "a", text: "Add a user"
-        element :search, '#search-field', visible: :all
+        element :search, "#search-field", visible: :all
         element :submit_search, ".submit-search"
         sections :users, UserRow, ".user-row"
         element :flash_message, ".govuk-notification-banner__header"
         element :flash_message, ".govuk-notification-banner__header"
 
         def body_text_excluding_search
-          Capybara.current_session.text.gsub(search.text, '')
+          Capybara.current_session.text.gsub(search.text, "")
         end
       end
     end

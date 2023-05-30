@@ -62,7 +62,7 @@ private
   end
 
   def then_the_user_is_not_returned_in_search
-    admin_users_index_page.search.set(user.last_name + "\n") # hit enter
+    admin_users_index_page.search.set("#{user.last_name}\n") # hit enter
     expect(admin_users_index_page.body_text_excluding_search).not_to have_text(user.last_name)
   end
 end
