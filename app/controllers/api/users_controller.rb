@@ -5,7 +5,7 @@ module Api
     def index
       return error_response if invalid_query?
 
-      @user_search = UserSearch.call(**args).users
+      @user_search = filtered_users
 
       render(json: { users: @user_search.as_json(only: %i[id first_name last_name email],
                                                  include: { providers: { only: [:name] },
@@ -25,6 +25,10 @@ module Api
     def error_response
       message = I18n.t("api.errors.bad_request", length: SchoolSearch::MIN_QUERY_LENGTH)
       render_json_error(message: message, status: :bad_request)
+    end
+
+    def filtered_users
+      UserSearch.call(**args, scope: User.kept).users
     end
   end
 end

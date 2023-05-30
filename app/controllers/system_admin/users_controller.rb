@@ -39,7 +39,7 @@ module SystemAdmin
     end
 
     def user
-      @user ||= authorize(User.find(params[:id]))
+      @user ||= authorize(User.kept.find(params[:id]))
     end
 
     def filtered_users(users)

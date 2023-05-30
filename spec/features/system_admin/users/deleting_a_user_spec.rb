@@ -10,12 +10,13 @@ feature "Deleting a user" do
     given_i_am_authenticated(user: system_admin)
   end
 
-  scenario "can be done by an admin" do
+  scenario "can be done by an admin", js: true do
     visiting_the_users_page
     and_i_click_on_delete
     i_am_taken_to_the_delete_user_page
     where_i_click_the_delete_button
     and_successfully_delete_the_user
+    then_the_user_is_not_returned_in_search
   end
 
   context "that is a system admin" do
@@ -58,5 +59,10 @@ private
   def delete_page_is_redirected
     admin_user_delete_page.load(id: user.id)
     expect(admin_users_index_page).to be_displayed
+  end
+
+  def then_the_user_is_not_returned_in_search
+    admin_users_index_page.search.set("#{user.last_name}\n") # hit enter
+    expect(admin_users_index_page.body_text_excluding_search).not_to have_text(user.last_name)
   end
 end
