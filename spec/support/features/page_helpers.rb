@@ -402,6 +402,10 @@ module Features
       @admin_dead_jobs_dqt_update_trainee ||= PageObjects::SystemAdmin::DeadJobs::DqtUpdateTrainee.new
     end
 
+    def admin_pending_trns_page
+      @admin_pending_trns_page ||= PageObjects::SystemAdmin::PendingTrns::PendingTrnsSummary.new
+    end
+
     def admin_users_index_page
       @admin_users_index_page ||= PageObjects::SystemAdmin::Users::Index.new
     end

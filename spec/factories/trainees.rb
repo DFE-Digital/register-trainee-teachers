@@ -403,6 +403,8 @@ FactoryBot.define do
       submitted_for_trn_at { Time.zone.now }
       state { "submitted_for_trn" }
       submission_ready
+
+      association :dqt_trn_request
     end
 
     trait :trn_received do

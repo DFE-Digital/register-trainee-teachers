@@ -22,7 +22,7 @@ module Dqt
   private
 
     def trainee_updatable?(trainee)
-      VALID_STATES.include?(trainee.state)
+      VALID_STATES.include?(trainee.reload.state)
     end
   end
 end
