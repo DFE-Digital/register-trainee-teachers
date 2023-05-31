@@ -6,7 +6,9 @@ module PageObjects
       class DqtUpdateTrainee < PageObjects::Base
         set_url "/system-admin/dead_jobs/DeadJobs::DqtUpdateTrainee"
 
-        element :view_trainee_button, "a", id: "view_10001", text: "View"
+        element :view_trainee_button, "button", text: "View"
+        element :retry_trainee_button, "button", text: "Retry"
+        element :delete_trainee_button, "button", text: "Delete"
       end
     end
   end

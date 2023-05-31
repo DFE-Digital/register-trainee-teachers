@@ -2,43 +2,28 @@
 
 module DeadJobs
   class Base
-    DEFAULT_HEADERS = %i[
-      register_id
-      trainee_name
-      trainee_trn
-      trainee_dob
-      trainee_state
-      provider_name
-      provider_ukprn
-      programme_route
-      programme_start_date
-      programme_end_date
-    ].freeze
-
     def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false)
       @dead_set = dead_set
       @include_dqt_status = include_dqt_status
     end
 
-    # includes the error_message entry using `includes: ...`
-    def to_csv(includes: [])
-      build_csv(includes: %i[job_id error_message] | includes)
+    def to_csv
+      CSV.generate do |csv|
+        csv << csv_headers
+        trainees.each do |trainee|
+          csv << build_csv_row(trainee).values
+        end
+      end
     end
 
-    # by default only use the defined headers in DEFAULT_HEADERS
-    # so as not to clutter the html view
-    def headers(includes: [])
+    def headers
       return if rows.blank?
 
-      rows(includes:).first.keys
+      rows.first.keys
     end
 
-    # by default only use the defined headers in DEFAULT_HEADERS
-    # so as not to clutter the html view
-    def rows(includes: [])
-      build_rows.map do |row|
-        row.slice(*(DEFAULT_HEADERS | includes))
-      end
+    def rows
+      @rows ||= trainees.map { |trainee| build_html_row(trainee) }
     end
 
     def name
@@ -59,39 +44,54 @@ module DeadJobs
 
     attr_reader :dead_set, :include_dqt_status
 
-    def build_csv(includes:)
-      CSV.generate do |csv|
-        csv << headers(includes:)
-        rows(includes:).each do |row|
-          csv << row.values
-        end
-      end
+    def csv_headers
+      build_csv_row(trainees.first).keys
     end
 
-    def build_rows
-      @build_rows ||= trainees.map do |trainee|
-        dqt_trn_params = Dqt::Params::TrnRequest.new(trainee:).params
-        {
-          register_id: trainee.id,
-          trainee_name: trainee.full_name,
-          trainee_trn: trainee.trn,
-          trainee_dob: trainee.date_of_birth,
-          trainee_state: trainee.state,
-          provider_name: trainee.provider.name,
-          provider_ukprn: trainee.provider.ukprn,
-          programme_route: dqt_trn_params.dig("initialTeacherTraining", "programmeType"),
-          programme_start_date: dqt_trn_params.dig("initialTeacherTraining", "programmeStartDate"),
-          programme_end_date: dqt_trn_params.dig("initialTeacherTraining", "programmeEndDate"),
-          job_id: dead_jobs[trainee.id][:job_id],
-          error_message: dead_jobs[trainee.id][:error_message]&.to_s&.gsub('"', "'"),
-        }.tap do |row|
-          row.merge!(yield(trainee)) if block_given?
-          row.merge!(dqt_status: dqt_status(trainee))
-        end
-      end
+    def build_csv_row(trainee)
+      {
+        register_id: trainee.id,
+        job_id: dead_jobs[trainee.id][:job_id],
+        url: "#{Settings.base_url}/trainees/#{trainee.slug}",
+        trn: trainee.trn,
+        date_of_birth: trainee.date_of_birth,
+        full_name: trainee.full_name,
+        email: trainee.email,
+        state: trainee.state,
+        provider_name: trainee.provider.name,
+        provider_ukprn: trainee.provider.ukprn,
+        training_route: trainee.training_route,
+        itt_start_date: trainee.itt_start_date,
+        itt_end_date: trainee.itt_start_date,
+        course_min_age: trainee.course_min_age,
+        course_max_age: trainee.course_max_age,
+        course_subject_one: trainee.course_subject_one,
+        course_subject_two: trainee.course_subject_two,
+        course_subject_three: trainee.course_subject_three,
+        error_message: dead_job_error_message(trainee.id),
+        dqt: dqt(trainee),
+      }
     end
 
-    # returns: [{ record_id => error_message }, ... ]
+    def build_html_row(trainee)
+      {
+        register_id: trainee.id,
+        trn: trainee.trn,
+        name: trainee.full_name,
+        date_of_birth: trainee.date_of_birth,
+        state: trainee.state,
+        job_id: dead_jobs[trainee.id][:job_id],
+      }
+    end
+
+    def dqt(trainee)
+      return unless include_dqt_status && trainee.trn.present?
+
+      flatten_hash(Dqt::RetrieveTeacher.call(trainee:))
+    rescue StandardError => e
+      "error: #{e.message}"
+    end
+
     def dead_jobs
       @dead_jobs ||=
         dead_set
@@ -107,12 +107,8 @@ module DeadJobs
         end
     end
 
-    def dqt_status(trainee)
-      return unless include_dqt_status && trainee.trn.present?
-
-      Dqt::RetrieveTraining.call(trainee:)["result"]&.to_s&.gsub('"', "'")
-    rescue StandardError => e
-      "error: #{e.message}"
+    def dead_job_error_message(trainee_id)
+      dead_jobs[trainee_id][:error_message]&.to_s&.gsub('"', "'")
     end
 
     def parse_error(error)
@@ -126,6 +122,18 @@ module DeadJobs
       )
     rescue JSON::ParserError
       error
+    end
+
+    def flatten_hash(hash, parent_key = "", result = "")
+      hash.each do |key, value|
+        new_key = parent_key == "" ? key.to_s : "#{parent_key}_#{key}"
+        if value.is_a?(Hash)
+          result = flatten_hash(value, new_key, result)
+        else
+          result += "#{new_key}: #{value}\n"
+        end
+      end
+      result
     end
   end
 end
