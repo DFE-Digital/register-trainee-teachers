@@ -178,6 +178,8 @@ class Trainee < ApplicationRecord
            dependent: :nullify,
            inverse_of: :trainee
 
+  has_many :placements, dependent: :destroy, inverse_of: :trainee
+
   attribute :progress, Progress.to_type
 
   delegate :award_type,
@@ -537,14 +539,6 @@ class Trainee < ApplicationRecord
     return "dttp" if  created_from_dttp?
 
     "manual"
-  end
-
-  def placements
-    hesa_student = hesa_students.latest
-
-    return nil if hesa_student.blank?
-
-    hesa_student.placements
   end
 
   def placement_details?

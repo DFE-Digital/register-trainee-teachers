@@ -280,3 +280,13 @@ shared:
     - errored_on_id
     - errored_on_type
     - message
+  :placements:
+    - id
+    - trainee_id
+    - school_id
+    - urn
+    - name
+    - address
+    - postcode
+    - created_at
+    - updated_at

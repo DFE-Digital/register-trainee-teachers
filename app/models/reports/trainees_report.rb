@@ -106,6 +106,7 @@ module Reports
                                        :provider,
                                        :start_academic_cycle,
                                        :trainee_disabilities,
+                                       { placements: :school },
                                        :hesa_students).in_batches.each_record do |trainee|
         add_trainee_to_csv(trainee)
       end

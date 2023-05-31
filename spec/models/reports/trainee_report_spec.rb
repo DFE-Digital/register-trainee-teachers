@@ -305,67 +305,31 @@ describe Reports::TraineeReport do
     end
 
     context "when placement data is available" do
-      let(:hesa_student) do
-        create(
-          :hesa_student,
-          collection_reference: "C22053",
-          hesa_id: trainee.hesa_id,
-          first_names: trainee.first_names,
-          last_name: trainee.last_name,
-          degrees: degrees,
-          placements: placements,
-        )
-      end
+      context "when there are 2 placements" do
+        let!(:placements) { create_list(:placement, 2, trainee:).reverse }
 
-      let!(:schools) { create_list(:school, 4) }
-
-      let(:degrees) do
-        [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
-      end
-
-      before do
-        trainee.hesa_students = [hesa_student]
-      end
-
-      context "when there is only one placement" do
-        let(:placements) do
-          [{ "school_urn" => schools[0].urn }]
+        it "adds the first placement school urn under placement_one" do
+          expect(subject.placement_one).to eq(placements.first.school.urn)
         end
 
-        it "includes the placement_one with the urn value" do
-          expect(subject.placement_one).to eq(schools[0].urn)
-        end
-
-        Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.each do |magic_urn|
-          context "when it contains the magic URN #{magic_urn}" do
-            let(:placements) do
-              [{ "school_urn" => magic_urn }]
-            end
-
-            it "includes the placement_one with the special placement label" do
-              expect(subject.placement_one).to eq(I18n.t("components.placement_detail.magic_urn.#{magic_urn}"))
-            end
-          end
+        it "adds the second placement school urn under placement_two" do
+          expect(subject.placement_two).to eq(placements.second.school.urn)
         end
       end
 
-      context "when there are two placements" do
-        let(:placements) do
-          [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }]
-        end
+      context "when there is a placement with a magic urn" do
+        let!(:placement) { create(:placement, :not_applicable_school, trainee:) }
 
-        it "includes the placement_two with the urn value" do
-          expect(subject.placement_two).to eq(schools[1].urn)
+        it "includes the placement_one with the special placement label" do
+          expect(subject.placement_one).to eq(I18n.t("components.placement_detail.magic_urn.#{placement.urn}"))
         end
       end
 
       context "when there are over two placements" do
-        let(:placements) do
-          [{ "school_urn" => schools[0].urn }, { "school_urn" => schools[1].urn }, { "school_urn" => schools[2].urn }, { "school_urn" => schools[3].urn }]
-        end
+        let!(:placements) { create_list(:placement, 4, trainee:).reverse }
 
-        it "includes the other_placements with the urn values comma separated" do
-          expect(subject.other_placements).to eq("#{schools[2].urn}, #{schools[3].urn}")
+        it "adds the rest of the placement school urns under other_placements" do
+          expect(subject.other_placements).to eq("#{placements[3].school.urn}, #{placements[2].school.urn}")
         end
       end
     end
