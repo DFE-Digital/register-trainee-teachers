@@ -306,7 +306,7 @@ describe Reports::TraineeReport do
 
     context "when placement data is available" do
       context "when there are 2 placements" do
-        let!(:placements) { create_list(:placement, 2, trainee:) }
+        let!(:placements) { create_list(:placement, 2, trainee:).reverse }
 
         it "adds the first placement school urn under placement_one" do
           expect(subject.placement_one).to eq(placements.first.school.urn)
@@ -326,10 +326,10 @@ describe Reports::TraineeReport do
       end
 
       context "when there are over two placements" do
-        let!(:placements) { create_list(:placement, 4, trainee:) }
+        let!(:placements) { create_list(:placement, 4, trainee:).reverse }
 
         it "adds the rest of the placement school urns under other_placements" do
-          expect(subject.other_placements).to eq("#{placements[2].school.urn}, #{placements[3].school.urn}")
+          expect(subject.other_placements).to eq("#{placements[3].school.urn}, #{placements[2].school.urn}")
         end
       end
     end

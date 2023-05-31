@@ -32,7 +32,7 @@ module Placements
 
     def link_schools(schools)
       schools.find_each do |school|
-        trainee.placements.create!(school:)
+        trainee.placements.find_or_create_by(school:)
       end
     end
 
@@ -41,7 +41,7 @@ module Placements
         # Skip if the not applicable urns are not among Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS
         next if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
 
-        trainee.placements.create!(
+        trainee.placements.find_or_create_by(
           {
             urn: urn,
             name: I18n.t("components.placement_detail.magic_urn.#{urn}"),

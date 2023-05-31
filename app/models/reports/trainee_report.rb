@@ -425,7 +425,7 @@ module Reports
     end
 
     def placements
-      @placements ||= trainee.placements
+      @placements ||= trainee.placements.reverse
     end
   end
 end

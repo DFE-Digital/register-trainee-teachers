@@ -30,7 +30,7 @@ module PlacementDetails
     end
 
     def placement_records
-      trainee.placements
+      trainee.placements.reverse
     end
 
     def placement_rows
