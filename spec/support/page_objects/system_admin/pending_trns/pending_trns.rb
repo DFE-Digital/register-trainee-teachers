@@ -7,7 +7,7 @@ module PageObjects
         set_url "/system-admin/pending_trns"
 
         element :check_for_trn_button, "button", text: "Check for TRN"
-        element :resumbit_for_trn_button, "button", text: "Re-request for TRN"
+        element :resumbit_for_trn_button, "button", text: "Re-submit for TRN"
       end
     end
   end
