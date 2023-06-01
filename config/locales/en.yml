@@ -630,8 +630,8 @@ en:
       default_hint_text_html: 'Enter an answer <span class="govuk-visually-hidden"> for %{field_label}</span>'
       apply_field_hint_text_html: 'Review the trainee’s answer<span class="govuk-visually-hidden"> for %{field_label}</span>'
     missing_data_banner_view:
-      header: You need to provide additional details before recording an outcome
-      missing_field_text: "%{missing_field} is missing"
+      header: "You need to give additional details before you can recommend the trainee for %{award_type}"
+      missing_field_text: "%{missing_field}"
       missing_field_link:
         first_names: &personal_details_path edit_trainee_personal_details_path
         last_name: *personal_details_path

@@ -14,13 +14,15 @@ class MissingDataBannerView
   end
 
   def header
-    I18n.t("views.missing_data_banner_view.header")
+    I18n.t("views.missing_data_banner_view.header", award_type: trainee.award_type)
   end
 
   def content
     return unless can_render?
 
-    tag.ul(class: "govuk-list app-notice-banner__list") do
+    tag.p("You need to enter:", class: "govuk-body")
+
+    tag.ul(class: "govuk-list govuk-list--bullet") do
       render_links
     end
   end
@@ -40,7 +42,7 @@ private
           link_to(
             link_text(field).html_safe,
             link_path(field),
-            class: "govuk-notification-banner__link",
+            class: "govuk-link",
           ),
         )
       end,
@@ -61,7 +63,7 @@ private
   end
 
   def link_text(field)
-    I18n.t("views.missing_data_banner_view.missing_field_text", missing_field: display_name(field))
+    I18n.t("views.missing_data_banner_view.missing_field_text", missing_field: display_name(field)).downcase_first
   end
 
   def display_name(field)
