@@ -22,8 +22,8 @@ class MissingDataBannerView
 
     safe_join(
       [
-        tag.p("You need to enter:", class: "govuk-body"),
-        tag.ul(class: "govuk-list govuk-list--bullet") do
+        tag.p("You need to enter:", class: "govuk-body govuk-!-margin-bottom-2"),
+        tag.ul(class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-0") do
           render_links
         end
       ]
