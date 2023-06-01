@@ -20,11 +20,15 @@ class MissingDataBannerView
   def content
     return unless can_render?
 
-    tag.p("You need to enter:", class: "govuk-body")
+    safe_join(
+      [
+        tag.p("You need to enter:", class: "govuk-body"),
+        tag.ul(class: "govuk-list govuk-list--bullet") do
+          render_links
+        end
+      ]
+    )
 
-    tag.ul(class: "govuk-list govuk-list--bullet") do
-      render_links
-    end
   end
 
 private
@@ -63,7 +67,7 @@ private
   end
 
   def link_text(field)
-    I18n.t("views.missing_data_banner_view.missing_field_text", missing_field: display_name(field)).downcase_first
+    I18n.t("views.missing_data_banner_view.missing_field_text", missing_field: display_name(field))
   end
 
   def display_name(field)
