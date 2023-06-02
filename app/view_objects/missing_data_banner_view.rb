@@ -26,7 +26,7 @@ class MissingDataBannerView
         tag.ul(class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-0") do
           render_links
         end,
-      ]
+      ],
     )
   end
 
