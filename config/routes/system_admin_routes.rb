@@ -64,7 +64,7 @@ module SystemAdminRoutes
 
         namespace :pending_trns, path: "pending-trns" do
           resources :retrieve_trns, only: %i[update], path: "retrieve-trns"
-          resources :request_trns, only: %i[create], path: "request-trns"
+          resources :request_trns, only: %i[update], path: "request-trns"
         end
       end
     end

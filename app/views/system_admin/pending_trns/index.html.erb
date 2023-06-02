@@ -25,7 +25,7 @@
             <td class="govuk-table__cell"><%= trainee.first_names %></td>
             <td class="govuk-table__cell"><%= trainee.last_name %></td>
             <td class="govuk-table__cell">
-              <%= (Date.current - trainee.dqt_trn_request.created_at.to_date).to_i %>
+              <%= (Date.current - trainee.dqt_trn_request.created_at.to_date).to_i if trainee.dqt_trn_request.present? %>
             </td>
             <td class="govuk-table__cell">
               <%= govuk_button_to "Check for TRN",
@@ -34,9 +34,9 @@
                                   class: "govuk-!-margin-0 govuk-button--secondary" %>
             </td>
             <td class="govuk-table__cell">
-              <%= govuk_button_to "Re-request for TRN",
-                                  pending_trns_request_trns_path(trainee),
-                                  method: :post,
+              <%= govuk_button_to "Re-submit for TRN",
+                                  pending_trns_request_trn_path(trainee),
+                                  method: :put,
                                   class: "govuk-!-margin-0 govuk-button--secondary" %>
             </td>
           </tr>

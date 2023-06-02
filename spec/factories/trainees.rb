@@ -405,6 +405,12 @@ FactoryBot.define do
       submission_ready
     end
 
+    trait :with_dqt_trn_request do
+      after(:create) do |trainee|
+        create(:dqt_trn_request, trainee:)
+      end
+    end
+
     trait :trn_received do
       submitted_for_trn
       trn { Faker::Number.number(digits: 7) }
