@@ -25,10 +25,9 @@ class MissingDataBannerView
         tag.p("You need to enter:", class: "govuk-body govuk-!-margin-bottom-2"),
         tag.ul(class: "govuk-list govuk-list--bullet govuk-!-margin-bottom-0") do
           render_links
-        end
+        end,
       ]
     )
-
   end
 
 private
