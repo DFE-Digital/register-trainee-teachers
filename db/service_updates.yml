@@ -1,3 +1,30 @@
+  - date: '2023-05-26'
+    title: Bulk recommend trainees for QTS or EYTS
+    content: |
+      You can now recommend multiple trainees at the same time for QTS or EYTS.
+
+      Read about [how to bulk recommend trainees](/guidance/bulk-recommend-trainees).
+
+- date: '2023-06-02'
+  title: This service has replaced the TRA initial teacher training provider portal
+  content: |
+    Higher education institutions (HEIs) must now use this service instead of the provider portal to:
+      <ul>
+        <li>withdraw trainees who are no longer training for qualified teacher status (QTS) or early years teacher status (EYTS)</li>
+        <li>defer trainees or reinstate them when they return to training - you can also do this through the Higher Education Statistics Authority (HESA) service if you used it to register the trainee</li>
+        <li>recommend trainees for QTS or EYTS</li>
+      </ul>
+      Read about [how to withdraw, defer, reinstate or recommend a trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
+
+- date: '2023-06-02'
+  title: Editing data for trainees imported from HESA
+  content: |
+    Higher education institutions (HEIs) can now enable editing for trainees who were imported from HESA.
+    
+    The edited trainee record will still be linked to the HESA service. If you update it later using the HESA service then any changes you’ve made in Register will be replaced by the data from HESA.
+
+    You will not be able to make any changes once the trainee has either withdrawn or been awarded QTS or EYTS.
+
 - date: '2023-01-11'
   title: Trainee list can now be filtered by academic year
   content: |
