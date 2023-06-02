@@ -1,9 +1,9 @@
-  - date: '2023-05-26'
-    title: Bulk recommend trainees for QTS or EYTS
-    content: |
-      You can now recommend multiple trainees at the same time for QTS or EYTS.
-
-      Read about [how to bulk recommend trainees](/guidance/bulk-recommend-trainees).
+- date: '2023-06-02'
+  title: Bulk recommend trainees for QTS or EYTS
+  content: |
+    You can now recommend multiple trainees at the same time for QTS or EYTS.
+    
+    Read about [how to bulk recommend trainees](/guidance/bulk-recommend-trainees).
 
 - date: '2023-06-02'
   title: This service has replaced the TRA initial teacher training provider portal
@@ -14,7 +14,7 @@
         <li>defer trainees or reinstate them when they return to training - you can also do this through the Higher Education Statistics Authority (HESA) service if you used it to register the trainee</li>
         <li>recommend trainees for QTS or EYTS</li>
       </ul>
-      Read about [how to withdraw, defer, reinstate or recommend a trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
+    Read about [how to withdraw, defer, reinstate or recommend a trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
 
 - date: '2023-06-02'
   title: Editing data for trainees imported from HESA
