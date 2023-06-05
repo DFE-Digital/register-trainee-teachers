@@ -38,20 +38,20 @@ class DegreesForm
   end
 
   def degrees
-    @degrees = {}
+    slug_degree_forms_map = {}
 
     trainee.degrees.order(created_at: :asc).each do |degree|
-      @degrees[degree.slug] = DegreeForm.new(degrees_form: self, degree: degree)
+      slug_degree_forms_map[degree.slug] = DegreeForm.new(degrees_form: self, degree: degree)
     end
 
     get_store.each do |slug, attrs|
       # Initialize stored unsaved degree
-      @degrees[slug] ||= build_degree(attrs)
+      slug_degree_forms_map[slug] ||= build_degree(attrs)
       # Load any stored attributes
-      @degrees[slug].attributes = attrs
+      slug_degree_forms_map[slug].attributes = attrs
     end
 
-    @degrees.values
+    slug_degree_forms_map.values
   end
 
   def stash_degree_on_store(slug, fields)
@@ -73,7 +73,7 @@ class DegreesForm
   def missing_fields(include_degree_id: false)
     return [] if valid?
 
-    degree_forms.map do |degree_form|
+    degrees.map do |degree_form|
       degree_form.valid?
       if include_degree_id
         { degree_form.slug => degree_form.errors.attribute_names }
@@ -107,13 +107,7 @@ private
     errors.add(:degree_ids, :invalid) unless all_degrees_are_valid?
   end
 
-  def degree_forms
-    trainee.degrees.map do |degree|
-      DegreeForm.new(degrees_form: self, degree: degree)
-    end
-  end
-
   def all_degrees_are_valid?
-    degree_forms.all?(&:valid?)
+    degrees.all?(&:valid?)
   end
 end
