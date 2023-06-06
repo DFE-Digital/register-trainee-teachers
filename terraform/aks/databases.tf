@@ -7,6 +7,7 @@ module "redis-cache" {
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
   config_short          = var.config_short
+  service_name          = var.service_name
 
   cluster_configuration_map = module.cluster_data.configuration_map
 
@@ -24,6 +25,7 @@ module "redis-queue" {
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
   config_short          = var.config_short
+  service_name          = var.service_name
 
   cluster_configuration_map = module.cluster_data.configuration_map
 
@@ -41,6 +43,7 @@ module "postgres" {
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
   config_short          = var.config_short
+  service_name          = var.service_name
 
   cluster_configuration_map = module.cluster_data.configuration_map
 
