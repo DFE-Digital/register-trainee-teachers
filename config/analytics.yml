@@ -258,6 +258,8 @@ shared:
     - updated_at
     - withdraw_date
     - withdraw_reason
+    - withdraw_reasons_details
+    - withdraw_reasons_dfe_details
     - hesa_trn_submission_id
   users:
     - created_at
@@ -277,7 +279,6 @@ shared:
   - created_at
   - updated_at
   - name
-  - description
   :trainee_withdrawal_reasons:
   - id
   - trainee_id

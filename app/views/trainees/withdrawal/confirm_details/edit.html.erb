@@ -1,0 +1,19 @@
+<% heading = t("trainees.withdrawals.confirm_details.edit.heading") %>
+
+<%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: edit_trainee_withdrawal_extra_information_path(trainee),
+    ) %>
+<% end %>
+
+<%= render TraineeName::View.new(trainee) %>
+<h1 class="govuk-heading-l"> <%= heading %> </h1>
+
+<%= render Withdrawal::View.new(data_model: form, editable: true) %>
+
+<%= govuk_button_to t("trainees.withdrawals.confirm_details.edit.confirm"), trainee_withdrawal_confirm_detail_path(trainee), method: :put %>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>

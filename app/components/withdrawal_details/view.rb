@@ -59,7 +59,7 @@ module WithdrawalDetails
       {
         key: t("components.confirmation.withdrawal_details.withdraw_date_label"),
         value: withdraw_date,
-        action_href: deferred ? nil : trainee_withdrawal_path(data_model.trainee),
+        action_href: deferred ? nil : edit_trainee_withdrawal_date_path(data_model.trainee),
         action_text: deferred ? nil : t(:change),
       }
     end
@@ -68,7 +68,7 @@ module WithdrawalDetails
       {
         key: t("components.confirmation.withdrawal_details.withdraw_reason_label"),
         value: withdraw_reason,
-        action_href: trainee_withdrawal_path(data_model.trainee),
+        action_href: edit_trainee_withdrawal_reason_path(data_model.trainee),
         action_text: t(:change),
       }
     end

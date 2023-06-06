@@ -7,7 +7,6 @@
 #  id                              :bigint           not null, primary key
 #  additional_dttp_data            :jsonb
 #  additional_ethnic_background    :text
-#  additional_withdraw_reason      :string
 #  address_line_one                :text
 #  address_line_two                :text
 #  applying_for_bursary            :boolean
@@ -66,6 +65,8 @@
 #  trn                             :string
 #  withdraw_date                   :datetime
 #  withdraw_reason                 :integer
+#  withdraw_reasons_details        :string
+#  withdraw_reasons_dfe_details    :string
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  apply_application_id            :bigint

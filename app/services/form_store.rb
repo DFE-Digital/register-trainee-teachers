@@ -14,7 +14,9 @@ class FormStore
     deferral
     reinstatement
     outcome_date
-    withdrawal
+    withdrawal_date
+    withdrawal_reasons
+    withdrawal_extra_information
     diversity_disclosure
     ethnic_group
     ethnic_background

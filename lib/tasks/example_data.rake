@@ -267,7 +267,7 @@ namespace :example_data do
 
             # Make *roughly* 75% of submitted_for_trn trainees have trainee withdraw reason
             if state == :withdrawn && sample_index < sample_size * 75.0 / 100
-              trainee.withdrawal_reasons << WithdrawalReason.find_by_name(WithdrawalReasons::SPECIFIC.sample)
+              trainee.withdrawal_reasons << WithdrawalReason.find_by_name(WithdrawalReasons::REASONS.sample)
             end
           end
         end
