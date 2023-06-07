@@ -380,6 +380,8 @@ class Trainee < ApplicationRecord
   before_save :set_submission_ready, if: :awaiting_action?
   before_save :set_academic_cycles
 
+  after_touch :set_submission_ready, :save
+
   def hesa_student_for_collection(collection_reference)
     Hesa::Student.where(hesa_id:, collection_reference:).order(created_at: :asc).first
   end

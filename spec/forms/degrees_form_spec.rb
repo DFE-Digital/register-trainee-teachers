@@ -9,6 +9,10 @@ describe DegreesForm, type: :model do
   subject { described_class.new(trainee, form_store) }
 
   describe "validations" do
+    before do
+      allow(form_store).to receive(:get).and_return({})
+    end
+
     context "degrees" do
       before do
         subject.valid?
@@ -23,8 +27,11 @@ describe DegreesForm, type: :model do
       end
 
       context "with invalid degrees" do
+        let(:degree_form) { instance_double(DegreeForm) }
+
         before do
-          trainee.degrees << create(:degree, subject: "")
+          allow(degree_form).to receive(:valid?).and_return(false)
+          allow(subject).to receive(:degrees).and_return([degree_form])
         end
 
         it { is_expected.not_to be_valid }
