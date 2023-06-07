@@ -64,6 +64,8 @@ module BulkUpdate
       def standards_met_at
         case row.standards_met_at
         when VALID_STANDARDS_MET_AT
+          return @messages << error_message(:award_date_not_valid) unless valid_date?(row.standards_met_at)
+
           @date = row.standards_met_at.to_date
           today = Time.zone.today.to_date
           ago_12_months = 12.months.ago.to_date
@@ -78,6 +80,13 @@ module BulkUpdate
 
       def gds_date(date)
         date.strftime(Date::DATE_FORMATS[:govuk])
+      end
+
+      def valid_date?(date_str)
+        Date.strptime(date_str, "%d/%m/%Y")
+        true
+      rescue ArgumentError
+        false
       end
 
       def column_exists?(column_name)
