@@ -33,7 +33,7 @@ module Submissions
     end
 
     def validate_degree?
-      !apply_application_and_draft? && requires_degree?
+      !trainee.hesa_record? && !apply_application_and_draft? && requires_degree?
     end
 
     def apply_application_and_draft?

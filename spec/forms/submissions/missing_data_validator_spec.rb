@@ -63,6 +63,16 @@ module Submissions
           end
         end
       end
+
+      context "HESA trainee with degree having missing fields" do
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :imported_from_hesa) }
+
+        before { Degree.create(trainee: trainee, locale_code: :uk) }
+
+        it "doesn't cause validation errors" do
+          expect(subject.valid?).to be(true)
+        end
+      end
     end
   end
 end
