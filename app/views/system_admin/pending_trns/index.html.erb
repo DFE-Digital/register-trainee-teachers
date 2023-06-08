@@ -15,8 +15,7 @@
           <th scope="col" class="govuk-table__header">First names</th>
           <th scope="col" class="govuk-table__header">Last name</th>
           <th scope="col" class="govuk-table__header">Days waiting</th>
-          <th scope="col" class="govuk-table__header"></th>
-          <th scope="col" class="govuk-table__header"></th>
+          <th scope="col" class="govuk-table__header" colspan="3"></th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -26,6 +25,9 @@
             <td class="govuk-table__cell"><%= trainee.last_name %></td>
             <td class="govuk-table__cell">
               <%= (Date.current - trainee.dqt_trn_request.created_at.to_date).to_i if trainee.dqt_trn_request.present? %>
+            </td>
+            <td class="govuk-table__cell">
+              <%= govuk_link_to "View", trainee_personal_details_path(trainee), class: "govuk-!-margin-0 govuk-button" %>
             </td>
             <td class="govuk-table__cell">
               <%= govuk_button_to "Check for TRN",
