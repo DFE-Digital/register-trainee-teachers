@@ -14,13 +14,14 @@ module Trainees
 
     def initialize(student_node:, record_source:)
       @hesa_trainee = ::Hesa::Parsers::IttRecord.to_attributes(student_node:)
-      @trainee = Trainee.find_or_initialize_by(hesa_id: hesa_trainee[:hesa_id])
+      @trainee = find_or_initialize_trainee_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
-      @current_trainee_state = @trainee.state.to_sym
+      @current_trainee_state = @trainee&.state&.to_sym
     end
 
     def call
-      return if @current_trainee_state == :awarded
+      # Skip if we have no record to take action on e.g create or update
+      return if trainee.blank?
 
       Audited.audit_class.as_user(USERNAME) do
         trainee.assign_attributes(mapped_attributes)
@@ -61,6 +62,22 @@ module Trainees
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
+    end
+
+    def find_or_initialize_trainee_by(hesa_id:)
+      # If we have multiple trainees with the same HESA ID, we want to pick the one most recently created
+      trainee = Trainee.where(hesa_id:).order(:created_at).last
+
+      return new_trainee_record(hesa_id) if trainee.blank?
+      # if the trainee is neither awarded nor withdrawn we always update the existing record
+      return trainee unless awarded_or_withdrawn?(trainee)
+      # if the trainee is either awarded or withdrawn and the ITT start date is different to the existing record,
+      # we need to create a new record because the provider is submitting the trainee for a new course
+      return new_trainee_record(hesa_id) if itt_start_date_changed_for?(trainee)
+
+      # if the trainee's ITT start date has not changed, and the trainee is either awarded or withdrawn,
+      # then we do nothing (we don't create a new record, nor update the existing one), therefore we
+      # return no record at all so the importer knows to skip this case completely
     end
 
     # As soon as the trainee has been submitted over the HESA collection
@@ -291,6 +308,18 @@ module Trainees
 
     def check_for_missing_hesa_mappings!
       ::Hesa::ValidateMapping.call(hesa_trainee:, record_source:)
+    end
+
+    def new_trainee_record(hesa_id)
+      Trainee.new(hesa_id:)
+    end
+
+    def itt_start_date_changed_for?(trainee)
+      Date.parse(itt_start_date) != trainee.itt_start_date
+    end
+
+    def awarded_or_withdrawn?(trainee)
+      %i[awarded withdrawn].include?(trainee.state.to_sym)
     end
   end
 end
