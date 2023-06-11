@@ -4,20 +4,30 @@ module Withdrawal
     validates_presence_of :reason_ids
     validate :unknown_exclusively
 
-    FIELDS = %i[reason_ids].freeze
+    FIELDS = %i[reason_ids]
 
     attr_accessor(*FIELDS)
 
-    def reasons
+    def withdrawal_reasons
       WithdrawalReason.where(id: reason_ids)
+    end
+
+    def save!
+      trainee.withdrawal_reasons << withdrawal_reasons
+      trainee.save
+      clear_stash
     end
   
   private
 
     def unknown_exclusively
-      if false # TODO
-        errors.add(:reason_ids, :unknown_exclusively)
-      end
+      return unless unknown_reason? && withdrawal_reasons.count > 1
+
+      errors.add(:reason_ids, :unknown_exclusively)
+    end
+
+    def unknown_reason?
+      withdrawal_reasons.pluck(:name).include?(WithdrawalReasons::UNKNOWN)
     end
 
     def form_store_key

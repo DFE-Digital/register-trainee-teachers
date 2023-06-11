@@ -7,6 +7,12 @@ module Withdrawal
     ].freeze
 
     attr_accessor(*FIELDS)
+
+    def save!
+      assign_attributes_to_trainee
+      trainee.save
+      clear_stash
+    end
   
   private
 

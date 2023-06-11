@@ -1,6 +1,6 @@
 <% heading = t("trainees.withdrawals.confirm_details.edit.heading") %>
 
-<%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
+<%= render PageTitle::View.new(text: heading) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(

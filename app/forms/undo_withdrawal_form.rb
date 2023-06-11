@@ -19,10 +19,11 @@ class UndoWithdrawalForm
   def save
     return false unless valid?
 
+    trainee.withdrawal_reasons.clear
     trainee.update(
       state: previous_state,
-      withdraw_reason: nil,
-      additional_withdraw_reason: nil,
+      withdraw_reasons_details: nil,
+      withdraw_reasons_dfe_details: nil,
       withdraw_date: nil,
       audit_comment: audit_comment,
     )

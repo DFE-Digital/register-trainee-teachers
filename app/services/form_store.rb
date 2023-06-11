@@ -14,6 +14,7 @@ class FormStore
     deferral
     reinstatement
     outcome_date
+    withdraw
     withdrawal_date
     withdrawal_reasons
     withdrawal_extra_information

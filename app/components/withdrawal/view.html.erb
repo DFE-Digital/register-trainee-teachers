@@ -3,5 +3,11 @@
   title: "Withdrawal details",
   rows: rows,
   editable: editable,
-  has_errors: has_errors
-) %>
+  has_errors: false,
+) do |component| %>
+  <% component.header_actions do %>
+    <% if undo_withdrawal %>
+      <%= govuk_link_to "Undo withdrawal", trainee_undo_withdrawal_path(trainee) %>
+    <% end %>
+  <% end %>
+<% end %>

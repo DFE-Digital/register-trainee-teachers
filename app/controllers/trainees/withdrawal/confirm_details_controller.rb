@@ -1,12 +1,14 @@
 module Trainees
   module Withdrawal
     class ConfirmDetailsController < Base
+
       def update
         @form = form_class.new(trainee)
-        if form.save
+        if form.save!
           flash[:success] = t("trainees.withdrawals.confirm_details.update.success")
           redirect_to trainee_path(trainee)
         else
+          flash[:error] = t("trainees.withdrawals.confirm_details.update.success")
           render :edit
         end
       end

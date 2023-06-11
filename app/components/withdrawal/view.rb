@@ -4,9 +4,9 @@ module Withdrawal
   class View < GovukComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, editable: false, undo_withdrawal: false)
       @data_model = data_model
-      @has_errors = has_errors
+      @undo_withdrawal = undo_withdrawal
       @editable = editable
     end
 
@@ -26,7 +26,7 @@ module Withdrawal
 
   private
 
-    attr_accessor :data_model, :has_errors, :editable
+    attr_accessor :data_model, :editable, :undo_withdrawal
 
     def start_date
       mappable_field(
@@ -53,7 +53,7 @@ module Withdrawal
     end
 
     def reasons_html_safe
-      data_model.reasons.map do |reason|
+      data_model.withdrawal_reasons.map do |reason|
         t("components.confirmation.withdrawal_details.reasons.#{reason.name}")
       end.join("<br>").html_safe
     end
