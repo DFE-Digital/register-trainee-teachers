@@ -776,7 +776,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.integer "state", default: 0
     t.integer "withdraw_reason"
     t.datetime "withdraw_date", precision: nil
-    t.string "additional_withdraw_reason"
+    t.string "withdraw_reasons_details"
     t.date "defer_date"
     t.citext "slug", null: false
     t.datetime "recommended_for_award_at", precision: nil
@@ -819,6 +819,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.bigint "hesa_trn_submission_id"
     t.string "iqts_country"
     t.boolean "hesa_editable", default: false
+    t.string "withdraw_reasons_dfe_details"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -882,11 +883,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
   end
 
   create_table "withdrawal_reasons", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
-    t.string "description"
-    t.index ["name"], name: "index_withdrawal_reasons_on_name"
+    t.index ["name"], name: "index_withdrawal_reasons_on_name", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

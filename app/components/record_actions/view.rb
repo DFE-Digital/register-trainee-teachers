@@ -126,7 +126,7 @@ module RecordActions
 
     def relevant_redirect_path
       if trainee.trainee_start_date.present?
-        trainee_withdrawal_path(trainee)
+        edit_trainee_withdrawal_date_path(trainee)
       else
         trainee_start_date_verification_path(trainee, context: :withdraw)
       end

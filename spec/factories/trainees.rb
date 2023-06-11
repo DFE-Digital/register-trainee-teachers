@@ -484,13 +484,12 @@ FactoryBot.define do
 
     trait :withdrawn_for_specific_reason do
       with_withdrawal_date
-      withdraw_reason { WithdrawalReasons::SPECIFIC.sample }
+      withdraw_reason { WithdrawalReasons::REASONS.sample }
     end
 
     trait :withdrawn_for_another_reason do
       with_withdrawal_date
       withdraw_reason { WithdrawalReasons::FOR_ANOTHER_REASON }
-      additional_withdraw_reason { Faker::Lorem.paragraph }
     end
 
     trait :with_related_courses do

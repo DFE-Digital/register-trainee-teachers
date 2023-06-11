@@ -1,0 +1,34 @@
+<% heading = t("trainees.withdrawals.dates.edit.heading") %>
+
+<%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: trainee_path(trainee),
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: form, url: trainee_withdrawal_date_path(trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(@trainee) %>
+      </span>
+
+      <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: heading, tag: "h1", size: "l" }, classes: "withdrawal-date") do %>
+        <%= f.govuk_radio_button :date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
+        <%= f.govuk_radio_button :date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
+        <%= f.govuk_radio_button :date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>
+          <%= f.govuk_date_field :date, legend: { text: t("views.forms.common.on_what_date"), size: "s" }, hint: { text: "#{t('views.forms.common.for_example')}, 21 3 2023" } %>
+        <% end %>
+      <% end %>
+
+      <%= f.govuk_submit t(:continue) %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

@@ -2,12 +2,12 @@
 
 require "rails_helper"
 
-describe WithdrawalDetails::View do
+describe Withdrawal::View do
   include SummaryHelper
 
   let(:trainee) { build(:trainee, withdraw_date: 2.days.ago, trainee_start_date: 3.days.ago, id: 1) }
   let(:withdraw_date) { trainee.withdraw_date }
-  let(:withdraw_reason) { nil }
+  let(:withdraw_reason) { WithdrawalReasons::REASONS.sample }
   let(:additional_withdraw_reason) { nil }
 
   let(:data_model) do

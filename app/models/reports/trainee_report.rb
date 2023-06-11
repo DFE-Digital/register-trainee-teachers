@@ -17,8 +17,7 @@ module Reports
              to: :degree,
              prefix: :degree_1,
              allow_nil: true
-    delegate :additional_withdraw_reason,
-             :course_duration_in_years,
+    delegate :course_duration_in_years,
              :ethnic_background,
              :first_names,
              :hesa_id,
@@ -26,7 +25,8 @@ module Reports
              :postcode,
              :town_city,
              :trn,
-             :withdraw_reason,
+             :withdraw_reasons_details,
+             :withdraw_reasons_dfe_details,
              :course_subject_one,
              :course_subject_two,
              :course_subject_three,
@@ -409,6 +409,17 @@ module Reports
     def qts_or_eyts
       trainee.award_type
     end
+
+    def withdraw_reasons
+      trainee.withdraw_reasons.map do |reason|
+        t("components.confirmation.withdrawal_details.reasons.#{reason.name}")
+      end.join("\n")
+    end
+
+  private
+
+    def course_allocation_subject
+      return if course.blank? || course.subjects.blank?
 
     def course_age_range
       return nil if course_minimum_age.blank? && course_maximum_age.blank?

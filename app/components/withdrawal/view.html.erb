@@ -1,10 +1,12 @@
-<%= render SummaryCard::View.new(
-  title: t("components.confirmation.withdrawal_details.summary_title"),
+<%= render MappableSummary::View.new(
+  trainee: trainee, 
+  title: "Withdrawal details",
   rows: rows,
   editable: editable,
-  ) do |component| %>
+  has_errors: false,
+) do |component| %>
   <% component.header_actions do %>
-    <% if editable %>
+    <% if undo_withdrawal %>
       <%= govuk_link_to "Undo withdrawal", trainee_undo_withdrawal_path(trainee) %>
     <% end %>
   <% end %>
