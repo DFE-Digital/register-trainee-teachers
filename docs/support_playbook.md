@@ -28,10 +28,12 @@ Sometimes support will ask a dev to unwithdraw a trainee which has been withdraw
 
 Here is an example of unwithdrawing a trainee. Note that the audit trail should be left intact.
 
+
 ```ruby
 trainee = Trainee.find_by(slug: "XXX")
 
-trainee.update_columns(state: "XXX", withdraw_reason: nil, additional_withdraw_reason: nil, withdraw_date: nil)
+trainee.withdrawal_reasons.clear
+trainee.update_columns(state: "XXX", withdraw_reasons_details: nil, withdraw_reasons_dfe_details: nil, withdraw_date: nil)
 ```
 
 ## Error codes on DQT trainee jobs

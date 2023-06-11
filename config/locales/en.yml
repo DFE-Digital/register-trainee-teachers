@@ -1162,6 +1162,25 @@ en:
       edit:
         label: Which country or territory is the trainee studying in?
         hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time.
+    withdrawals:
+      dates:
+        edit:
+          heading: When did the trainee withdraw?
+      reasons:
+        edit:
+          heading: Why did the trainee withdraw from the course?
+      extra_informations:
+        edit:
+          heading: More details of why the trainee withdrew from the course
+          why_the_trainee_withdrew: Details about why the trainee withdrew (optional)
+          what_the_dfe_could_have_done: What the Department of Education could have done to prevent the trainee withdrawing (optional)
+      confirm_details:
+        edit:
+          heading: Check withdrawal details
+          confirm: Withdraw this trainee
+        update:
+          success: Trainee withdrawn
+          error: Unable to withdraw trainee, please message support
   activerecord:
     attributes:
       trainee:
@@ -1439,6 +1458,11 @@ en:
               not_valid: The disability disclosure section is not valid for this trainee
             disability_ids:
               not_valid: Trainee has been disclosed as disabled but no disabilities exist
+        withdrawal/reason_form:
+          attributes:
+            reason_ids:
+              blank: Select at least one withdrawal reason
+              unknown_exclusively: Select why the trainee withdrew from the course or select ”Unknown”
         funding/training_initiatives_form:
           attributes:
             training_initiative:

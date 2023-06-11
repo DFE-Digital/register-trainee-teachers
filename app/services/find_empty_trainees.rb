@@ -28,9 +28,6 @@ class FindEmptyTrainees
     trainees.itt_end_date
     trainees.trn
     trainees.submitted_for_trn_at
-    trainees.withdraw_reason
-    trainees.withdraw_date
-    trainees.additional_withdraw_reason
     trainees.defer_date
     trainees.recommended_for_award_at
     trainees.trainee_start_date

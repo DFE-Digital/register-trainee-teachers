@@ -1,0 +1,45 @@
+<% heading = t("trainees.withdrawals.reasons.edit.heading") %>
+
+<%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
+
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: edit_trainee_withdrawal_date_path(trainee),
+    ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(trainee) %>
+      </span>
+      
+      <% another_reason = WithdrawalReason.find_by_name(WithdrawalReasons::ANOTHER_REASON) %>
+      <% unknown = WithdrawalReason.find_by_name(WithdrawalReasons::UNKNOWN) %>
+
+      <%= f.govuk_check_boxes_fieldset :reason_ids,
+          legend: { text: heading, tag: "h1", size: "l" },
+          hint: { text: "Select all that apply" },
+          classes: "withdrawal" do %>
+
+        <% WithdrawalReason.all.each_with_index do |withdrawal, index| %>
+          <% if [WithdrawalReasons::UNKNOWN, WithdrawalReasons::ANOTHER_REASON, *WithdrawalReasons::LEGACY_REASONS].exclude?(withdrawal.name) %>  
+            <%= f.govuk_check_box :reason_ids, withdrawal.id, label: { text: t("components.confirmation.withdrawal_details.reasons.#{withdrawal.name}") }, link_errors: index.zero? %>
+          <% end %>
+        <% end %>
+        <%= f.govuk_check_box :reason_ids, another_reason.id, label: { text: t("components.confirmation.withdrawal_details.reasons.#{another_reason.name}") } %>
+        <%= f.govuk_check_box_divider %>
+        <%= f.govuk_check_box :reason_ids, unknown.id, exclusive: true, label: { text: t("components.confirmation.withdrawal_details.reasons.#{unknown.name}") } %>
+      <% end %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>
