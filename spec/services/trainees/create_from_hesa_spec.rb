@@ -472,5 +472,113 @@ module Trainees
         expect(trainee.itt_end_date).to eq(DateTime.new(2024, 5, 11))
       end
     end
+
+    context "when the trainee's itt start date has changed" do
+      before do
+        trainee.update(itt_start_date: DateTime.new(2022, 9, 20))
+      end
+
+      context "when the trainee is withdrawn" do
+        before do
+          trainee.update(state: :withdrawn)
+        end
+
+        it "creates a new record" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.to change { Trainee.count }.by(1)
+        end
+      end
+
+      context "when the trainee is awarded" do
+        before do
+          trainee.update(state: :awarded)
+        end
+
+        it "creates a new record" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.to change { Trainee.count }.by(1)
+        end
+      end
+
+      context "when the trainee is neither awarded nor withdrawn" do
+        it "updates the existing trainee instead of creating a new one" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.not_to change { Trainee.count }
+
+          expect(trainee.reload.itt_start_date).to eq(DateTime.new(2022, 9, 27))
+        end
+      end
+    end
+
+    context "when the trainee's itt start date has not changed" do
+      context "when the trainee is withdrawn" do
+        before do
+          trainee.update(state: :withdrawn)
+        end
+
+        it "does not create a new record" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.not_to change { Trainee.count }
+        end
+
+        it "does not update the existing trainee" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.not_to change { trainee }
+        end
+      end
+
+      context "when the trainee is awarded" do
+        before do
+          trainee.update(state: :awarded)
+        end
+
+        it "does not create a new record" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.not_to change { Trainee.count }
+        end
+
+        it "does not update the existing trainee" do
+          expect {
+            described_class.call(student_node:, record_source:)
+          }.not_to change { trainee.reload }
+        end
+      end
+
+      context "when the trainee is neither awarded nor withdrawn" do
+        before do
+          trainee.update(state: :draft)
+
+          described_class.call(student_node:, record_source:)
+        end
+
+        it "updates the existing trainee" do
+          expect(trainee.reload.state).to eq("submitted_for_trn")
+        end
+      end
+
+      context "when there are multiple trainees for the same HESA ID that are neither withdrawn nor awarded" do
+        let!(:latest_trainee) { create(:trainee, hesa_id: trainee.hesa_id, itt_start_date: DateTime.new(2022, 9, 20)) }
+
+        before do
+          trainee.update(itt_start_date: DateTime.new(2022, 9, 20))
+
+          described_class.call(student_node:, record_source:)
+        end
+
+        it "updates the trainee with the most recent created_at timestamp" do
+          expect(latest_trainee.reload.itt_start_date).to eq(DateTime.new(2022, 9, 27))
+        end
+
+        it "does not update the trainee with the earlier created_at timestamp" do
+          expect(trainee.reload.itt_start_date).to eq(DateTime.new(2022, 9, 20))
+        end
+      end
+    end
   end
 end
