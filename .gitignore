@@ -66,6 +66,7 @@ dump.rdb
 
 bin/fetch_config.rb
 bin/terrafile
+bin/konduit.sh
 
 # Downloaded terraform modules
 terraform/aks/vendor/
