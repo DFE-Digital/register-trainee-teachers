@@ -189,6 +189,7 @@ module Dqt
       def find_country_code(country)
         return if country.blank?
 
+        Dttp::CodeSets::Countries::MAPPING.dig(country, :country_code) ||
         Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
       end
     end
