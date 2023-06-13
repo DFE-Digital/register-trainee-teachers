@@ -50,6 +50,8 @@ describe Trainee do
         ROUTE_INITIATIVES_ENUMS[:transition_to_teach] => 3,
         ROUTE_INITIATIVES_ENUMS[:no_initiative] => 4,
         ROUTE_INITIATIVES_ENUMS[:troops_to_teachers] => 5,
+        ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] => 6,
+        ROUTE_INITIATIVES_ENUMS[:international_relocation_payment] => 7,
       )
     end
 

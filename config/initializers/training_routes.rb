@@ -23,6 +23,8 @@ ROUTE_INITIATIVES_ENUMS = {
   maths_physics_chairs_programme_researchers_in_schools: "maths_physics_chairs_programme_researchers_in_schools",
   future_teaching_scholars: "future_teaching_scholars",
   no_initiative: "no_initiative",
+  veterans_teaching_undergraduate_bursary: "veterans_teaching_undergraduate_bursary",
+  international_relocation_payment: "international_relocation_payment",
 }.freeze
 
 TRAINING_ROUTES = {
@@ -48,6 +50,8 @@ ROUTE_INITIATIVES = {
   ROUTE_INITIATIVES_ENUMS[:transition_to_teach] => 3,
   ROUTE_INITIATIVES_ENUMS[:no_initiative] => 4,
   ROUTE_INITIATIVES_ENUMS[:troops_to_teachers] => 5,
+  ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] => 6,
+  ROUTE_INITIATIVES_ENUMS[:international_relocation_payment] => 7,
 }.freeze
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
