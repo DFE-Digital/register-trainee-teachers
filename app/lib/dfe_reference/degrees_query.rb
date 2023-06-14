@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Degrees
-  class DfEReference
+module DfEReference
+  class DegreesQuery
     OTHER = "Other"
 
     COMMON_TYPES = ["Bachelor of Arts", "Bachelor of Science", "Master of Arts", "PhD"].freeze
@@ -51,7 +51,7 @@ module Degrees
       end
 
       def find_item(list_type, filters)
-        ref_dataset = Degrees::DfEReference.const_get(list_type.to_s.upcase)
+        ref_dataset = const_get(list_type.to_s.upcase)
 
         return ref_dataset.one(filters[:id]) if filters[:id].present?
 

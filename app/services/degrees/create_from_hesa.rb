@@ -35,7 +35,7 @@ module Degrees
         hesa_degrees.each do |hesa_degree|
           next unless importable?(hesa_degree)
 
-          subject = DfEReference.find_subject(hecos_code: hesa_degree[:subject_one])
+          subject = DfEReference::DegreesQuery.find_subject(hecos_code: hesa_degree[:subject_one])
           degree = trainee.degrees.new(
             subject: subject&.name,
             subject_uuid: subject&.id,
@@ -52,7 +52,7 @@ module Degrees
 
     def set_country_specific_attributes(degree, hesa_degree)
       country = Hesa::CodeSets::Countries::MAPPING[hesa_degree[:country]]
-      degree_type = DfEReference.find_type(hesa_code: degree_type_hesa_code(hesa_degree))
+      degree_type = DfEReference::DegreesQuery.find_type(hesa_code: degree_type_hesa_code(hesa_degree))
 
       # Country code is not always provided, so we have to fallback to institution which is always UK based
       if uk_country?(country) || institution_hesa_code(hesa_degree).present?
@@ -75,7 +75,7 @@ module Degrees
     end
 
     def set_grade_attributes(degree, hesa_degree)
-      grade = DfEReference.find_grade(hesa_code: grade_hesa_code(hesa_degree))
+      grade = DfEReference::DegreesQuery.find_grade(hesa_code: grade_hesa_code(hesa_degree))
 
       degree.grade = grade&.name
       degree.grade_uuid = grade&.id
@@ -107,9 +107,9 @@ module Degrees
 
     def find_institution(hesa_degree)
       hesa_code = institution_hesa_code(hesa_degree)
-      institution = DfEReference.find_institution(hesa_code:)
+      institution = DfEReference::DegreesQuery.find_institution(hesa_code:)
 
-      institution || DfEReference.find_institution(name: "Other UK institution")
+      institution || DfEReference::DegreesQuery.find_institution(name: "Other UK institution")
     end
   end
 end

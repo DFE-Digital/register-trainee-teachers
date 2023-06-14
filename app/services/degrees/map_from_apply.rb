@@ -81,7 +81,7 @@ module Degrees
       if grade
         { grade: grade.name, grade_uuid: grade.id, other_grade: nil }
       else
-        { grade: Degrees::DfEReference::OTHER, grade_uuid: nil, other_grade: attributes["grade"] }
+        { grade: DfEReference::DegreesQuery::OTHER, grade_uuid: nil, other_grade: attributes["grade"] }
       end
     end
 
@@ -94,27 +94,27 @@ module Degrees
     end
 
     def find_dfe_reference_subject
-      DfEReference.find_subject(uuid: attributes["subject_uuid"],
-                                name: attributes["subject"],
-                                hecos_code: attributes["hesa_degsbj"])
+      DfEReference::DegreesQuery.find_subject(uuid: attributes["subject_uuid"],
+                                              name: attributes["subject"],
+                                              hecos_code: attributes["hesa_degsbj"])
     end
 
     def find_dfe_reference_type
-      DfEReference.find_type(uuid: attributes["degree_type_uuid"],
-                             abbreviation: attributes["qualification_type"],
-                             hesa_code: attributes["hesa_degtype"])
+      DfEReference::DegreesQuery.find_type(uuid: attributes["degree_type_uuid"],
+                                           abbreviation: attributes["qualification_type"],
+                                           hesa_code: attributes["hesa_degtype"])
     end
 
     def find_dfe_reference_institution
-      DfEReference.find_institution(uuid: attributes["institution_uuid"],
-                                    name: attributes["institution_details"].split(",").first,
-                                    hesa_code: attributes["hesa_degest"])
+      DfEReference::DegreesQuery.find_institution(uuid: attributes["institution_uuid"],
+                                                  name: attributes["institution_details"].split(",").first,
+                                                  hesa_code: attributes["hesa_degest"])
     end
 
     def find_dfe_reference_grade
-      DfEReference.find_grade(uuid: attributes["grade_uuid"],
-                              name: attributes["grade"],
-                              hesa_code: attributes["hesa_degclss"])
+      DfEReference::DegreesQuery.find_grade(uuid: attributes["grade_uuid"],
+                                            name: attributes["grade"],
+                                            hesa_code: attributes["hesa_degclss"])
     end
 
     def country

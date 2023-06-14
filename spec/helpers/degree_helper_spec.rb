@@ -12,7 +12,7 @@ describe DegreesHelper do
     let(:suggestion_synonym) { "Bachelor" }
 
     before do
-      stub_const("Degrees::DfEReference::TYPES",
+      stub_const("DfEReference::DegreesQuery::TYPES",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_type,
@@ -21,7 +21,7 @@ describe DegreesHelper do
                      suggestion_synonyms: [suggestion_synonym],
                    },
                  }))
-      stub_const("Degrees::DfEReference::COMMON_TYPES", [degree_type])
+      stub_const("DfEReference::DegreesQuery::COMMON_TYPES", [degree_type])
     end
 
     it "iterates over array and prints out correct degree options" do
@@ -46,7 +46,7 @@ describe DegreesHelper do
     let(:match_synonym) { "UCL" }
 
     before do
-      stub_const("Degrees::DfEReference::INSTITUTIONS",
+      stub_const("DfEReference::DegreesQuery::INSTITUTIONS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: institution,
@@ -70,7 +70,7 @@ describe DegreesHelper do
     let(:match_synonym) { "Maths" }
 
     before do
-      stub_const("Degrees::DfEReference::SUBJECTS",
+      stub_const("DfEReference::DegreesQuery::SUBJECTS",
                  DfE::ReferenceData::HardcodedReferenceList.new({
                    SecureRandom.uuid => {
                      name: degree_subject,

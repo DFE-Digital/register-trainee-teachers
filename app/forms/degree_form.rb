@@ -30,9 +30,9 @@ class DegreeForm
   validates :subject, :institution, autocomplete: true, allow_nil: true
   validates :country, autocomplete: true, allow_nil: true
 
-  validates :institution, inclusion: { in: Degrees::DfEReference::INSTITUTIONS.all.map(&:name) }, allow_nil: true
-  validates :subject, inclusion: { in: Degrees::DfEReference::SUBJECTS.all.map(&:name) }, allow_nil: true
-  validates :uk_degree, inclusion: { in: Degrees::DfEReference::TYPES.all.map(&:name) }, allow_nil: true
+  validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
+  validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) }, allow_nil: true
+  validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_nil: true
 
   validate :validate_with_degree_model
 
@@ -136,10 +136,10 @@ private
 
   def uuids
     {
-      subject_uuid: Degrees::DfEReference.find_subject(name: subject)&.id,
-      institution_uuid: Degrees::DfEReference.find_institution(name: institution)&.id,
-      uk_degree_uuid: Degrees::DfEReference.find_type(name: uk_degree)&.id,
-      grade_uuid: Degrees::DfEReference.find_grade(name: grade)&.id,
+      subject_uuid: DfEReference::DegreesQuery.find_subject(name: subject)&.id,
+      institution_uuid: DfEReference::DegreesQuery.find_institution(name: institution)&.id,
+      uk_degree_uuid: DfEReference::DegreesQuery.find_type(name: uk_degree)&.id,
+      grade_uuid: DfEReference::DegreesQuery.find_grade(name: grade)&.id,
     }
   end
 end

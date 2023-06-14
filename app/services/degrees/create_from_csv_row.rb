@@ -67,7 +67,7 @@ module Degrees
     end
 
     def subject
-      @subject ||= DfEReference.find_subject(name: raw_subject)
+      @subject ||= DfEReference::DegreesQuery.find_subject(name: raw_subject)
     end
 
     def raw_subject
@@ -78,16 +78,16 @@ module Degrees
     def institution
       @institution ||= begin
         institution = csv_row["Degree: UK awarding institution"]
-        DfEReference.find_institution(name: institution, ukprn: institution)
+        DfEReference::DegreesQuery.find_institution(name: institution, ukprn: institution)
       end
     end
 
     def degree_grade
-      @degree_grade ||= DfEReference.find_grade(name: csv_row["Degree: UK grade"])
+      @degree_grade ||= DfEReference::DegreesQuery.find_grade(name: csv_row["Degree: UK grade"])
     end
 
     def uk_degree_type
-      @uk_degree_type ||= DfEReference.find_type(name: csv_row["Degree: UK degree types"])
+      @uk_degree_type ||= DfEReference::DegreesQuery.find_type(name: csv_row["Degree: UK degree types"])
     end
 
     def non_uk_degree_type
