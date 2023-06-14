@@ -20,7 +20,7 @@ dqt:
 
 features:
   sign_in_method: dfe-sign-in
-  basic_auth: false
+  basic_auth: true
   enable_feedback_link: true
   import_courses_from_ttapi: true
   import_applications_from_apply: true
@@ -38,8 +38,8 @@ features:
     school_direct_tuition_fee: true
     iqts: true
   google:
-    send_data_to_big_query: true
-  integrate_with_dqt: true
+    send_data_to_big_query: false
+  integrate_with_dqt: false
   hesa_trn_requests: true
   hesa_import:
     sync_collection: true
@@ -48,7 +48,3 @@ features:
     sync_teachers: true
 environment:
   name: beta
-
-google_tag_manager:
-  auth_id: XYyafYf931M1IT_2vjH8DA
-  env_id: 1
