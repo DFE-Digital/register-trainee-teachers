@@ -83,6 +83,17 @@ module Dqt
           end
         end
 
+        context "iQTS trainee East Asia" do
+          let(:trainee_attributes) { { training_route: "iqts", iqts_country: "South Korea" } }
+
+          it "sets the programme type and training country code appropriately" do
+            expect(subject["initialTeacherTraining"]).to include({
+              "trainingCountryCode" => "KR",
+              "programmeType" => "InternationalQualifiedTeacherStatus",
+            })
+          end
+        end
+
         context "itt_end_date is missing" do
           let(:hesa_metadatum) { build(:hesa_metadatum) }
           let(:trainee_attributes) { { itt_end_date: nil, hesa_metadatum: hesa_metadatum, training_route: training_route, study_mode: study_mode } }
