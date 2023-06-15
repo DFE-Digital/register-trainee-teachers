@@ -12,8 +12,9 @@ module Trainees
       @course = application_record.provider.courses.find_by(uuid: @raw_course["course_uuid"])
       @raw_trainee = application_record.application.dig("attributes", "candidate")
       @raw_contact_details = application_record.application.dig("attributes", "contact_details")
+      @disability_uuids = raw_trainee["disabilities_and_health_conditions"].filter_map { |d| d["uuid"] }
       @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
-      @disabilities = find_or_create_disabilities
+      @disabilities = Disability.where(uuid: disability_uuids)
       @trainee = Trainee.new(mapped_attributes)
       @personal_details_form = PersonalDetailsForm.new(trainee, params: { nationality_names: })
     end
@@ -28,6 +29,7 @@ module Trainees
       raise(MissingCourseError, "Cannot find course with uuid: #{raw_course['course_uuid']}") if course.nil?
 
       trainee.save!
+      save_other_disability_text!
       save_personal_details!
       create_degrees!
       application_record.imported!
@@ -44,7 +46,8 @@ module Trainees
                 :raw_contact_details,
                 :study_mode,
                 :disabilities,
-                :personal_details_form
+                :personal_details_form,
+                :disability_uuids
 
     def mapped_attributes
       {
@@ -134,36 +137,15 @@ module Trainees
     end
 
     def not_provided?
-      raw_trainee["disabilities"].include?(Diversities::PREFER_NOT_TO_SAY)
+      disability_uuids.include?(DfEReference::DisabilitiesQuery::PREFER_NOT_TO_SAY_UUID)
     end
 
     def no_disabilities?
-      if trainee_requires_old_disability_mapping?
-        raw_trainee["disabilities"].empty?
-      else
-        raw_trainee["disabilities"].include?(Diversities::NO_DISABILITY)
-      end
-    end
-
-    def find_or_create_disabilities
-      disability_names = []
-
-      raw_trainee["disabilities"].each do |disability|
-        disability_names << Disability.find_or_create_by(name: map_disability_name(disability)).name
-      end
-
-      Disability.where(name: disability_names)
-    end
-
-    def map_disability_name(disability)
-      mapping = trainee_requires_old_disability_mapping? ? "OLD_MAPPING" : "NEW_MAPPING"
-      ApplyApi::CodeSets::Disabilities.const_get(mapping).fetch(disability, disability)
+      disability_uuids.include?(DfEReference::DisabilitiesQuery::NO_DISABILITY_UUID)
     end
 
     def nationality_names
-      raw_trainee["nationality"].map do |nationality|
-        ApplyApi::CodeSets::Nationalities::MAPPING[nationality]
-      end
+      raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
     end
 
     def trainee_already_exists?
@@ -189,8 +171,18 @@ module Trainees
       end
     end
 
-    def trainee_requires_old_disability_mapping?
-      raw_course["recruitment_cycle_year"] <= 2022
+    def save_other_disability_text!
+      trainee.trainee_disabilities.includes(:disability).each do |trainee_disability|
+        if trainee_disability.disability.uuid == DfEReference::DisabilitiesQuery::OTHER_DISABILITY_UUID
+          trainee_disability.update!(additional_disability: other_disability&.dig("text"))
+        end
+      end
+    end
+
+    def other_disability
+      raw_trainee["disabilities_and_health_conditions"].find do |disability|
+        disability["uuid"] == DfEReference::DisabilitiesQuery::OTHER_DISABILITY_UUID
+      end
     end
   end
 end

@@ -159,7 +159,7 @@ module Dqt
       end
 
       def subject_code
-        DfEReference.find_subject(name: degree.subject)&.hecos_code
+        DfEReference::DegreesQuery.find_subject(name: degree.subject)&.hecos_code
       end
 
       def graduation_date
