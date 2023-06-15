@@ -25,7 +25,6 @@ private
     {
       provider_led_postgrad: t(".hints.provider_led_postgrad"),
       provider_led_undergrad: t(".hints.provider_led_undergrad"),
-      iqts: t(".hints.iqts"),
     }[training_route]
   end
 end
