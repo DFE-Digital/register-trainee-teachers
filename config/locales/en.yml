@@ -1121,7 +1121,6 @@ en:
         hints:
           provider_led_postgrad: &provider_led_hint Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
           provider_led_undergrad: *provider_led_hint
-          iqts: This is a pilot programme that selected training providers are offering for the 2022 to 2023 academic year
     start_statuses:
       edit:
         itt_not_yet_started: They have not started yet
