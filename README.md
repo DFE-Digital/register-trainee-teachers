@@ -45,9 +45,9 @@ newer versions of tools.
 
 ### Setting up seed records
 
-#### Using a Dev persona (optional) 
+#### Using a Dev persona (optional)
 
-This will allow you to create a dev perosona with your own email address - useful for when testing mailers/notify.
+This will allow you to create a dev persona with your own email address - useful for when testing mailers/notify.
 
 create the file `config/initializers/developer_persona.rb` and add your own credentials in the format:
 
@@ -58,7 +58,7 @@ DEVELOPER_PERSONA = { first_name: "first", last_name: "last", email: "first.last
 #### Seeding
 
 Run `rake example_data:generate` to generate seed records.
-If you have created a dev perosona, this wil be included when generating the persona profiles.
+If you have created a dev persona, this wil be included when generating the persona profiles.
 
 
 ## Architectural Decision Record
@@ -72,7 +72,7 @@ ASDF).
 To ensure webpacker works for you when tests run:
 
 ```bash
-RAILS_ENV=test bundle exec rails assets:precompile 
+RAILS_ENV=test bundle exec rails assets:precompile
 ```
 
 Then you can run the full test suite with:
