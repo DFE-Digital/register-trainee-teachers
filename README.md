@@ -52,7 +52,7 @@ This will allow you to create a dev persona with your own email address - useful
 create the file `config/initializers/developer_persona.rb` and add your own credentials in the format:
 
 ```ruby
-DEVELOPER_PERSONA = { first_name: "first", last_name: "last", email: "first.last@digital.education.gov.uk", system_admin: true }.freeze
+DEVELOPER_PERSONA = { first_name: "first", last_name: "last", email: "first.last@education.gov.uk", system_admin: true }.freeze
 ```
 
 #### Seeding
