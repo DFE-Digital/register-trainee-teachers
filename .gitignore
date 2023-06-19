@@ -60,6 +60,7 @@ config/localhost/https/localhost.key
 config/localhost/https/localhost.crt
 .nvmrc
 .ruby-version
+.node-version
 /.idea
 
 dump.rdb
