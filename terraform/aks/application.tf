@@ -57,5 +57,5 @@ module "application_configuration" {
   config_short          = var.config_short
   config_variables      = local.app_env_values
   secret_variables      = local.app_secrets
-  key_vault_secret_name = var.key_vault_app_secret_name
+  secret_yaml_key       = var.key_vault_app_secret_name
 }
