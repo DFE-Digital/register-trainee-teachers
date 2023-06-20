@@ -65,6 +65,10 @@ cf logs [APP_NAME] --recent
 ```
 cf env [APP_NAME]
 ```
+### Elevate privileges to include SpaceDeveloper role (prior to shelling into production)
+```
+cf set-space-role [YOUR_EMAIL_ADDRESS] dfe [SPACE_NAME] SpaceDeveloper
+```
 ### Shell into an application container
 ```
 cf v3-ssh [APP_NAME]
