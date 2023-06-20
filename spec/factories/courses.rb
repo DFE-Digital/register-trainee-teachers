@@ -65,7 +65,7 @@ FactoryBot.define do
         subjects_count { 1 }
         subject_names { [] }
         study_mode { "full_time" }
-        recruitment_cycle_year { Settings.current_default_course_year }
+        recruitment_cycle_year { Settings.current_recruitment_cycle_year }
       end
 
       before(:create) do |course, evaluator|

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "Change course", feature_publish_course_details: true do
-  let(:itt_start_date) { Date.new(Settings.current_default_course_year, 9, 1) }
+  let(:itt_start_date) { Date.new(Settings.current_recruitment_cycle_year, 9, 1) }
   let(:itt_end_date) { itt_start_date + 1.year }
 
   scenario "TRN received" do

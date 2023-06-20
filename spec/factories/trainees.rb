@@ -496,7 +496,7 @@ FactoryBot.define do
         courses_count { 5 }
         subject_names { [] }
         study_mode { "full_time" }
-        recruitment_cycle_year { Settings.current_default_course_year }
+        recruitment_cycle_year { Settings.current_recruitment_cycle_year }
       end
 
       after(:create) do |trainee, evaluator|
