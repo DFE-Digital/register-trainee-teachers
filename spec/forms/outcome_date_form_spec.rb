@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe OutcomeDateForm, type: :model do
+  include ActiveJob::TestHelper
+
   let(:trainee) { create(:trainee, :deferred) }
   let(:form_store) { class_double(FormStore) }
 
@@ -15,7 +17,13 @@ describe OutcomeDateForm, type: :model do
     }
   end
 
-  subject { described_class.new(trainee, params: params.stringify_keys, store: form_store) }
+  subject do
+    described_class.new(
+      trainee,
+      params: params.stringify_keys,
+      store: form_store,
+    )
+  end
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -92,7 +100,31 @@ describe OutcomeDateForm, type: :model do
       expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
 
       date_params = params.except("date_string").values.map(&:to_i)
-      expect { subject.save! }.to change(trainee, :outcome_date).to(Date.new(*date_params))
+      expect { subject.save! }.to change(trainee.reload, :outcome_date).to(Date.new(*date_params))
+    end
+
+    it "calls update trainee on DQT API" do
+      expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
+
+      expect(subject).to be_valid
+      expect { subject.save! }.to have_enqueued_job(Dqt::UpdateTraineeJob)
+    end
+
+    context "when we opt-out of DQT API call" do
+      subject do
+        described_class.new(
+          trainee,
+          params: params.stringify_keys,
+          store: form_store,
+          update_dqt: false,
+        )
+      end
+
+      it "skips update trainee on DQT API" do
+        expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
+
+        expect { subject.save! }.not_to have_enqueued_job(Dqt::UpdateTraineeJob)
+      end
     end
   end
 end
