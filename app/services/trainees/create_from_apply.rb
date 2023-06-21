@@ -137,7 +137,8 @@ module Trainees
     end
 
     def not_provided?
-      disability_uuids.include?(DfEReference::DisabilitiesQuery::PREFER_NOT_TO_SAY_UUID)
+      disability_uuids.blank? ||
+        disability_uuids.include?(DfEReference::DisabilitiesQuery::PREFER_NOT_TO_SAY_UUID)
     end
 
     def no_disabilities?
