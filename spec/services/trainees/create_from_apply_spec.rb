@@ -137,7 +137,7 @@ module Trainees
       it { is_expected.to have_attributes(course_education_phase: COURSE_EDUCATION_PHASE_ENUMS[:primary]) }
     end
 
-    context "disabilties" do
+    context "disabilities" do
       before do
         DfEReference::DisabilitiesQuery.all.each do |reference_data|
           Disability.create!(name: reference_data.name, uuid: reference_data.id)
