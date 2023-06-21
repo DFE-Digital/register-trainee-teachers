@@ -48,7 +48,6 @@ jobs:
         echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
     - name: Set KV environment variables
-      if: github.actor != 'dependabot[bot]'
       run: |
         # tag build to the review env for vars and secrets
         tf_vars_file=terraform/paas/workspace-variables/review.tfvars.json
@@ -63,12 +62,10 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - uses: azure/login@v1
-      if: github.actor != 'dependabot[bot]'
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
-      if: github.actor != 'dependabot[bot]'
       id: get-secret
       with:
         keyvault: ${{ env.KEY_VAULT_NAME }}
@@ -95,7 +92,6 @@ jobs:
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Run Snyk to check Docker image for vulnerabilities
-      if: github.actor != 'dependabot[bot]'
       uses: snyk/actions/docker@master
       env:
         SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
@@ -134,7 +130,6 @@ jobs:
         echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
 
     - name: Set KV environment variables
-      if: github.actor != 'dependabot[bot]'
       run: |
         # tag build to the review env for vars and secrets
         tf_vars_file=terraform/paas/workspace-variables/review.tfvars.json
@@ -142,12 +137,10 @@ jobs:
         echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
 
     - uses: azure/login@v1
-      if: github.actor != 'dependabot[bot]'
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
-      if: github.actor != 'dependabot[bot]'
       id: get-secret
       with:
         keyvault: ${{ env.KEY_VAULT_NAME }}
@@ -205,7 +198,7 @@ jobs:
   deploy_review:
     name: Deployment To Review
     concurrency: deploy_review_${{ github.event.pull_request.number }}
-    if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
+    if: ${{ github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies')) }}
     needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -285,6 +278,23 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.deploy_v2_review.outputs.deploy-url }}
+
+  merge-dependabot:
+    name: Merge dependabot
+    if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') }}
+    needs: [test, deploy_review]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Merge minor dependency updates
+        uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          target: minor
+          exclude: 'govuk-components,govuk_design_system_formbuilder,govuk-frontend,@ministryofjustice/frontend'
+          merge-method: merge
 
   deploy-before-production:
     name: Parallel deployment before production
