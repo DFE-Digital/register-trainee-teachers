@@ -42,7 +42,9 @@ module Trainees
     end
 
     def language_specialism_params
-      params.fetch(:language_specialisms_form, {}).permit(language_specialisms: [])
+      params.fetch(:language_specialisms_form, {}).permit(
+        %i[course_subject_one course_subject_two course_subject_three],
+      )
     end
 
     def course_uuid

@@ -13,6 +13,7 @@
 
       <%= render TraineeName::View.new(@trainee) %>
       <div class="govuk-form-group">
+
         <%= f.govuk_check_boxes_fieldset :language_specialisms,
                                           legend: { text: t(".heading"), tag: "h1", size: "l" },
                                           classes: "language-specialisms" do %>
@@ -22,16 +23,29 @@
             <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
           </div>
 
-          <% sort_languages(@language_specialisms).each_with_index do |language, index| %>
-            <%= f.govuk_check_box(
-                :language_specialisms,
-                language,
-                multiple: true,
-                link_errors: index.zero?,
-                checked: f.object.languages.include?(language),
-                label: { text: format_language(language).upcase_first },
-              ) %>
-          <% end %>
+          <%=
+            f.govuk_select(
+              :course_subject_one,
+              @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              label: { text: "First language", size: "s" },
+            )
+          %>
+
+          <%=
+            f.govuk_select(
+              :course_subject_two,
+              @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              label: { text: "Second language (optional)", size: "s" },
+            )
+          %>
+
+          <%=
+            f.govuk_select(
+              :course_subject_three,
+              @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              label: { text: "Third language (optional)", size: "s" },
+            )
+          %>
         <% end %>
       </div>
 

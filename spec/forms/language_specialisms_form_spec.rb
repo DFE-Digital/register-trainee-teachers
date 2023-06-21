@@ -15,32 +15,32 @@ describe LanguageSpecialismsForm, type: :model do
 
   describe "validations" do
     context "when no subjects are supplied" do
-      let(:params) { { language_specialisms: [] } }
+      let(:params) { { course_subject_one: nil, course_subject_two: nil, course_subject_three: nil } }
 
       before do
         subject.valid?
       end
 
       it "returns an error" do
-        expect(subject.errors[:language_specialisms]).to include(
+        expect(subject.errors[:course_subject_one]).to include(
           I18n.t(
-            "activemodel.errors.models.language_specialisms_form.attributes.language_specialisms.blank",
+            "activemodel.errors.models.language_specialisms_form.attributes.course_subject_one.blank",
           ),
         )
       end
     end
 
-    context "when more than three subjects are supplied" do
-      let(:params) { { language_specialisms: %w[french german spanish mandarin] } }
+    context "when there are duplicate subjects" do
+      let(:params) { { course_subject_one: "French language", course_subject_two: "German language", course_subject_three: "French language" } }
 
       before do
         subject.valid?
       end
 
       it "returns an error" do
-        expect(subject.errors[:language_specialisms]).to include(
+        expect(subject.errors[:course_subject_one]).to include(
           I18n.t(
-            "activemodel.errors.models.language_specialisms_form.attributes.language_specialisms.invalid",
+            "activemodel.errors.models.language_specialisms_form.attributes.course_subject_one.invalid",
           ),
         )
       end
@@ -48,7 +48,7 @@ describe LanguageSpecialismsForm, type: :model do
   end
 
   context "valid trainee" do
-    let(:params) { { language_specialisms: %w[french german spanish] } }
+    let(:params) { { course_subject_one: "French language", course_subject_two: "German language", course_subject_three: "Spanish language" } }
 
     let(:trainee) { create(:trainee) }
 
@@ -57,9 +57,9 @@ describe LanguageSpecialismsForm, type: :model do
 
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and language_specialisms" do
         expect(form_store).to receive(:set).with(trainee.id, :language_specialisms, {
-          course_subject_one: params[:language_specialisms][0],
-          course_subject_three: params[:language_specialisms][2],
-          course_subject_two: params[:language_specialisms][1],
+          course_subject_one: params[:course_subject_one],
+          course_subject_two: params[:course_subject_two],
+          course_subject_three: params[:course_subject_three],
         })
 
         subject.stash
