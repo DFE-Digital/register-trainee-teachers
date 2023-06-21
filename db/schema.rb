@@ -17,7 +17,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
