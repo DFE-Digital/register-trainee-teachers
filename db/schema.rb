@@ -249,9 +249,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
   end
 
-  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
-  end
-
   create_table "degrees", force: :cascade do |t|
     t.integer "locale_code", null: false
     t.string "uk_degree"
