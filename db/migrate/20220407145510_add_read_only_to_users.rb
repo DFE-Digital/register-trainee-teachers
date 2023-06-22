@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddReadOnlyToUsers < ActiveRecord::Migration[6.1]
@@ -5,3 +6,4 @@ class AddReadOnlyToUsers < ActiveRecord::Migration[6.1]
     add_column :users, :read_only, :boolean, default: false
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

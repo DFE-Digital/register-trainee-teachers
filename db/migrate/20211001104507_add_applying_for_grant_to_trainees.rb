@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddApplyingForGrantToTrainees < ActiveRecord::Migration[6.1]
@@ -5,3 +6,4 @@ class AddApplyingForGrantToTrainees < ActiveRecord::Migration[6.1]
     add_column :trainees, :applying_for_grant, :boolean
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn
