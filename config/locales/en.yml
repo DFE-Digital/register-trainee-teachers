@@ -1424,7 +1424,7 @@ en:
           attributes:
             disability_ids:
               empty_disabilities: Select at least one disability
-        diversities/flow_validator:
+        diversities/form_validator:
           attributes:
             disclosure_section:
               not_valid: The disclosure section is not valid for this trainee
