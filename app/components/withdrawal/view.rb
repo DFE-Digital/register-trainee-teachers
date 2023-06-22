@@ -30,7 +30,7 @@ module Withdrawal
 
     def start_date
       mappable_field(
-        data_model.itt_start_date.strftime(Date::DATE_FORMATS[:govuk]),
+        trainee.trainee_start_date.strftime(Date::DATE_FORMATS[:govuk]),
         "Trainee start date",
         trainee_path(trainee)
       )
@@ -54,7 +54,7 @@ module Withdrawal
 
     def reasons_html_safe
       data_model.withdrawal_reasons.map do |reason|
-        t("components.confirmation.withdrawal_details.reasons.#{reason.name}")
+        t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("<br>").html_safe
     end
 

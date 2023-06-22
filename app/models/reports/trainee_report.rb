@@ -412,7 +412,7 @@ module Reports
 
     def withdraw_reasons
       trainee.withdraw_reasons.map do |reason|
-        t("components.confirmation.withdrawal_details.reasons.#{reason.name}")
+        t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("\n")
     end
 

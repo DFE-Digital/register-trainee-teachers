@@ -66,5 +66,5 @@ module WithdrawalReasons
     FOR_ANOTHER_REASON => ANOTHER_REASON,
   }.freeze
 
-  SEED = (LEGACY_REASONS + REASONS).map { |reason| { name: reason } }.freeze
+  SEED = (LEGACY_REASONS + REASONS).map { |name| {name:} }.freeze
 end

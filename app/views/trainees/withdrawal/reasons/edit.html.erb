@@ -29,12 +29,12 @@
 
         <% WithdrawalReason.all.each_with_index do |withdrawal, index| %>
           <% if [WithdrawalReasons::UNKNOWN, WithdrawalReasons::ANOTHER_REASON, *WithdrawalReasons::LEGACY_REASONS].exclude?(withdrawal.name) %>  
-            <%= f.govuk_check_box :reason_ids, withdrawal.id, label: { text: t("components.confirmation.withdrawal_details.reasons.#{withdrawal.name}") }, link_errors: index.zero? %>
+            <%= f.govuk_check_box :reason_ids, withdrawal.id, label: { text: t("components.withdrawal_details.reasons.#{withdrawal.name}") }, link_errors: index.zero? %>
           <% end %>
         <% end %>
-        <%= f.govuk_check_box :reason_ids, another_reason.id, label: { text: t("components.confirmation.withdrawal_details.reasons.#{another_reason.name}") } %>
+        <%= f.govuk_check_box :reason_ids, another_reason.id, label: { text: t("components.withdrawal_details.reasons.#{another_reason.name}") } %>
         <%= f.govuk_check_box_divider %>
-        <%= f.govuk_check_box :reason_ids, unknown.id, exclusive: true, label: { text: t("components.confirmation.withdrawal_details.reasons.#{unknown.name}") } %>
+        <%= f.govuk_check_box :reason_ids, unknown.id, exclusive: true, label: { text: t("components.withdrawal_details.reasons.#{unknown.name}") } %>
       <% end %>
 
       <%= f.govuk_submit %>

@@ -11,7 +11,7 @@ module Withdrawal
     attr_reader(:trainee, :reasons_form, :extra_information_form, :date_form)
     attr_accessor(*FIELDS)
 
-    delegate :id, :itt_start_date, to: :trainee
+    delegate :id, to: :trainee
     delegate :withdrawal_reasons, to: :reasons_form
 
     def initialize(trainee)
