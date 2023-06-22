@@ -291,7 +291,7 @@ jobs:
       - name: Merge minor dependency updates
         uses: fastify/github-action-merge-dependabot@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
           target: minor
           exclude: 'govuk-components,govuk_design_system_formbuilder,govuk-frontend,@ministryofjustice/frontend'
           merge-method: merge
