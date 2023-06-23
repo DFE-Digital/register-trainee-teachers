@@ -7,7 +7,7 @@ module Dqt
     describe TrnRequest do
       let(:trainee_attributes) { {} }
       let(:degree) { build(:degree, :uk_degree_with_details) }
-      let(:hesa_code) { Degrees::DfEReference::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
+      let(:hesa_code) { DfEReference::DegreesQuery::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
       let(:hesa_metadatum) { build(:hesa_metadatum) }
       let(:trainee) do
         create(:trainee,
@@ -149,7 +149,7 @@ module Dqt
         end
 
         it "returns a hash including degree attributes" do
-          allow(Degrees::DfEReference::INSTITUTIONS).to receive(:one).with(degree.institution_uuid).and_return(double(ukprn: "12345678"))
+          allow(DfEReference::DegreesQuery::INSTITUTIONS).to receive(:one).with(degree.institution_uuid).and_return(double(ukprn: "12345678"))
 
           expect(subject["qualification"]).to include({
             "providerUkprn" => "12345678",
@@ -189,7 +189,7 @@ module Dqt
           let(:degree) { build(:degree, :uk_degree_with_details, institution_uuid: nil) }
 
           before do
-            allow(Degrees::DfEReference::INSTITUTIONS).to receive(:one).with(nil).and_return(nil)
+            allow(DfEReference::DegreesQuery::INSTITUTIONS).to receive(:one).with(nil).and_return(nil)
           end
 
           it "sets the providerUkprn to nil" do

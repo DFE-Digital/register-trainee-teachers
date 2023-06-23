@@ -7,6 +7,7 @@
 #  id          :bigint           not null, primary key
 #  description :string
 #  name        :string           not null
+#  uuid        :uuid
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

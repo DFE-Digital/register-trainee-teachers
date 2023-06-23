@@ -159,7 +159,7 @@ module Dqt
       end
 
       def subject_code
-        Degrees::DfEReference.find_subject(name: degree.subject)&.hecos_code
+        DfEReference::DegreesQuery.find_subject(name: degree.subject)&.hecos_code
       end
 
       def graduation_date
@@ -171,7 +171,7 @@ module Dqt
       def institution_ukprn
         return if degree.institution_uuid.nil?
 
-        Degrees::DfEReference::INSTITUTIONS.one(degree.institution_uuid)&.ukprn
+        DfEReference::DegreesQuery::INSTITUTIONS.one(degree.institution_uuid)&.ukprn
       end
 
       def country_code

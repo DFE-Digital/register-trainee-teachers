@@ -137,77 +137,119 @@ module Trainees
       it { is_expected.to have_attributes(course_education_phase: COURSE_EDUCATION_PHASE_ENUMS[:primary]) }
     end
 
-    context "when the application is diversity disclosed with disabilities" do
-      before { Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h)) }
-
-      it "adds the trainee's disabilities" do
-        expect(trainee.disabilities.map(&:name)).to match_array(["Blind", "Long-standing illness"])
+    context "disabilities" do
+      before do
+        DfEReference::DisabilitiesQuery.all.each do |reference_data|
+          Disability.create!(name: reference_data.name, uuid: reference_data.id)
+        end
       end
 
-      it "sets the diversity disclosure to disclosed" do
-        expect(trainee).to be_diversity_disclosed
+      context "when the application is diversity disclosed with disabilities" do
+        it "adds the trainee's disabilities" do
+          disability_names = trainee.disabilities.pluck(:name)
+
+          expect(disability_names).to include("Blindness or a visual impairment not corrected by glasses")
+          expect(disability_names).to include("Long-term illness")
+        end
+
+        it "sets the diversity disclosure to disclosed" do
+          expect(trainee).to be_diversity_disclosed
+        end
+
+        it "sets the disability disclosure to provided" do
+          expect(trainee).to be_disabled
+        end
       end
 
-      it "sets the disability disclosure to provided" do
-        expect(trainee).to be_disabled
+      context "when the application has an empty list of disabilities" do
+        let(:candidate_attributes) do
+          {
+            disabilities_and_health_conditions: [],
+          }
+        end
+
+        it "sets the disability disclosure to not provided" do
+          expect(trainee).to be_disability_not_provided
+        end
       end
-    end
 
-    context "when the application has no disabilities" do
-      let(:candidate_attributes) { { disabilities: [Diversities::NO_DISABILITY] } }
-
-      it "sets the disability disclosure to not disabled" do
-        expect(trainee).to be_no_disability
-      end
-
-      context "application is 2022 or earlier" do
-        let(:recruitment_cycle_year) { 2022 }
-        let(:candidate_attributes) { { disabilities: [] } }
+      context "when the application has no disabilities" do
+        let(:candidate_attributes) do
+          {
+            disabilities_and_health_conditions: [
+              {
+                uuid: DfEReference::DisabilitiesQuery::NO_DISABILITY_UUID,
+              },
+            ],
+          }
+        end
 
         it "sets the disability disclosure to not disabled" do
           expect(trainee).to be_no_disability
         end
+      end
 
-        context "continues to support older disability mappings" do
-          let(:candidate_attributes) { { disabilities: ["blind"] } }
+      context "when the application has no disabilities and a disability" do
+        let(:candidate_attributes) do
+          {
+            disabilities_and_health_conditions: [
+              {
+                uuid: DfEReference::DisabilitiesQuery::NO_DISABILITY_UUID,
+              },
+              {
+                name: "Blindness or a visual impairment not corrected by glasses",
+                uuid: "a31b75e7-659d-4547-9654-5fc1015ad2a5",
+              },
+            ],
+          }
+        end
 
-          it "adds the trainee's disabilities" do
-            expect(trainee.disabilities.map(&:name)).to match_array(["Blind"])
-          end
+        it "sets the disability disclosure to not disabled" do
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
         end
       end
-    end
 
-    context "when the application has no disabilities and a disability" do
-      let(:candidate_attributes) do
-        { disabilities: ["I do not have any of these disabilities or health conditions", "Blindness or a visual impairment not corrected by glasses"] }
+      context "when the application is diversity disclosed with no disability information" do
+        let(:candidate_attributes) do
+          {
+            disabilities_and_health_conditions: [
+              {
+                uuid: DfEReference::DisabilitiesQuery::PREFER_NOT_TO_SAY_UUID,
+              },
+            ],
+          }
+        end
+
+        it "sets the disability disclosure to not provided" do
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
+        end
       end
 
-      before { Disability.create!(Diversities::SEED_DISABILITIES.map(&:to_h)) }
+      context "when the application has a custom disability" do
+        let(:custom_disability) { "Long term pain" }
+        let(:generic_disability) do
+          DfEReference::DisabilitiesQuery.find_disability(id: DfEReference::DisabilitiesQuery::OTHER_DISABILITY_UUID)
+        end
 
-      it "sets the disability disclosure to not disabled" do
-        expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
-      end
-    end
+        let(:candidate_attributes) do
+          {
+            disabilities_and_health_conditions: [
+              generic_disability.to_h.merge(text: custom_disability, uuid: generic_disability.id),
+            ],
+          }
+        end
 
-    context "when the application is diversity disclosed with no disability information" do
-      let(:candidate_attributes) { { disabilities: ["Prefer not to say"] } }
+        it "sets the disability as generic" do
+          expect(trainee.disabilities.pluck(:uuid)).to include(DfEReference::DisabilitiesQuery::OTHER_DISABILITY_UUID)
+        end
 
-      it "sets the disability disclosure to not provided" do
-        expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
-      end
-    end
+        it "sets the disability to the custom value" do
+          expect(trainee.trainee_disabilities.pluck(:additional_disability)).to include(custom_disability)
+        end
 
-    context "when the application is has a custom disability" do
-      let(:custom_disability) { "Long term pain" }
-      let(:candidate_attributes) { { disabilities: [custom_disability] } }
-
-      it "sets the disability to the custom value" do
-        expect(trainee.disabilities.pluck(:name)).to include(custom_disability)
-      end
-
-      it "sets the disability disclosure to not provided" do
-        expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+        it "sets the disability disclosure to not provided" do
+          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+        end
       end
     end
 

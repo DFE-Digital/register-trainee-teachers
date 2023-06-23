@@ -16,7 +16,7 @@ class FixUnmappedTraineeDegreeSubjects < ActiveRecord::Migration[7.0]
       degree_subject_hesa_codes.each do |subject_hesa_code|
         next unless UNKNOWN_NOT_APPLICABLE_SUBJECT_HESA_CODES.include?(subject_hesa_code)
 
-        subject = Degrees::DfEReference.find_subject(hecos_code: subject_hesa_code)
+        subject = DfEReference::DegreesQuery.find_subject(hecos_code: subject_hesa_code)
         degree.subject = subject&.name
         degree.subject_uuid = subject&.id
         degree.save

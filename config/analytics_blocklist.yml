@@ -70,6 +70,7 @@
   :disabilities:
   - name
   - description
+  - uuid
   :dttp_accounts:
   - id
   - dttp_id

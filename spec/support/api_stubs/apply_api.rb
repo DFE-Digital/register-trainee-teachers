@@ -122,6 +122,20 @@ module ApiStubs
         disability_disclosure: "I am dyslexic",
         gender: "female",
         disabilities: ["Blindness or a visual impairment not corrected by glasses", "Long-term illness"],
+        disabilities_and_health_conditions: [
+          {
+            text: "",
+            hesa_code: "58",
+            name: "Blindness or a visual impairment not corrected by glasses",
+            uuid: "a31b75e7-659d-4547-9654-5fc1015ad2a5",
+          },
+          {
+            text: "",
+            hesa_code: "54",
+            name: "Long-term illness",
+            uuid: "9955ea7d-e147-4b12-8913-d0c4ec925409",
+          },
+        ],
         ethnic_group: "Asian or Asian British",
         ethnic_background: "Chinese",
       }.merge(candidate_attributes)
