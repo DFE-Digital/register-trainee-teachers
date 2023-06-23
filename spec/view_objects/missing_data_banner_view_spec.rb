@@ -23,7 +23,7 @@ describe MissingDataBannerView do
 
       let(:expected_display_name) { I18n.t("views.missing_data_view.missing_fields_mapping.#{field}") }
       let(:expected_html) do
-        "<ul class=\"govuk-list app-notice-banner__list\"><li><a class=\"govuk-notification-banner__link\" href=\"#{expected_path}\">#{expected_display_name} is missing</a></li></ul>"
+        "<p class=\"govuk-body govuk-!-margin-bottom-2\">You need to enter:</p><ul class=\"govuk-list govuk-list--bullet govuk-!-margin-bottom-0\"><li><a class=\"govuk-link\" href=\"#{expected_path}\">#{expected_display_name}</a></li></ul>"
       end
 
       context "and the trainee is not awaiting action" do
