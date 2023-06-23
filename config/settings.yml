@@ -93,7 +93,7 @@ apply_api:
   base_url: "https://www.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: "auth-token-from-env"
 
-current_recruitment_cycle_year: 2022
+current_recruitment_cycle_year: 2023
 current_default_course_year: 2023
 
 apply_applications:
