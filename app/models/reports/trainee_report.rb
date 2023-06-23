@@ -416,10 +416,6 @@ module Reports
       end.join("\n")
     end
 
-  private
-
-    def course_allocation_subject
-      return if course.blank? || course.subjects.blank?
 
     def course_age_range
       return nil if course_minimum_age.blank? && course_maximum_age.blank?

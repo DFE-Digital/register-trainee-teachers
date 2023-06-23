@@ -5,7 +5,7 @@ module Withdrawal
 
     attr_accessor(*FIELDS)
 
-    validate :date_valid
+    validate :date_valid, unless: :uses_deferral_date?
 
     def withdraw_date
       date
@@ -21,6 +21,16 @@ module Withdrawal
       assign_attributes_to_trainee
       trainee.save
       clear_stash
+    end
+
+    def uses_deferral_date?
+      trainee.deferred? && trainee.defer_date.present?
+    end
+
+    def date
+      return trainee.defer_date if uses_deferral_date?
+
+      super
     end
 
   private

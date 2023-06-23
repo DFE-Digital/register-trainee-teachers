@@ -11,11 +11,21 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <% if trainee.duplicate? %>
+      <%= render GovukComponent::InsetTextComponent.new(classes: "duplicate-notice") do %>
+        <p class="govuk-body duplicate-notice_text">
+          <%= t("views.forms.withdrawal_date.duplicate_record_notice",
+                contact_link: govuk_mail_to(Settings.support_email)).html_safe %>
+        </p>
+      <% end %>
+    <% end %>
+
     <%= register_form_with(model: form, url: trainee_withdrawal_date_path(trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
       <span class="govuk-caption-l">
-        <%= trainee_name(@trainee) %>
+        <%= trainee_name(trainee) %>
       </span>
 
       <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: heading, tag: "h1", size: "l" }, classes: "withdrawal-date") do %>
@@ -31,4 +41,4 @@
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>

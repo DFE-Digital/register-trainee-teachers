@@ -12,6 +12,19 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
+
+    <% if @trainee.deferred? && @trainee.defer_date.present? %>
+      <h3 class="govuk-heading-s"><%= t("views.forms.withdrawal_date.deferral_notice_heading") %></h3>
+      <%= render GovukComponent::InsetTextComponent.new(classes: "deferral-notice") do %>
+        <p class="govuk-body deferral-notice_text">
+          <%= t("views.forms.withdrawal_date.deferral_notice_html", date: date_for_summary_view(@trainee.defer_date)) %>
+        </p>
+        <p class="govuk-body deferral-notice_link">
+          <%= t("views.forms.withdrawal_date.deferral_notice_link_html", reinstatement_link: govuk_link_to("reinstate this trainee", trainee_reinstatement_path(@trainee))) %>
+        </p>
+      <% end %>
+    <% end %>
+
     <%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
       <%= f.govuk_error_summary %>
 

@@ -8,7 +8,7 @@ module Trainees
           flash[:success] = t("trainees.withdrawals.confirm_details.update.success")
           redirect_to trainee_path(trainee)
         else
-          flash[:error] = t("trainees.withdrawals.confirm_details.update.success")
+          flash[:error] = t("trainees.withdrawals.confirm_details.update.error")
           render :edit
         end
       end

@@ -9,6 +9,9 @@ module PageObjects
         set_url "/trainees/{id}/withdrawal/reason/edit"
 
         element :continue, "button[type='submit']"
+        element :cancel, "a", text: "Cancel and return to record"
+
+        section :deferral_notice, PageObjects::Sections::DeferralNotice, ".deferral-notice"
       end
     end
   end

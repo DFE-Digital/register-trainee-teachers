@@ -262,10 +262,6 @@ module Features
       @withdrawal_confirm_detail_page ||= PageObjects::Trainees::Withdrawal::ConfirmDetail.new
     end
 
-    def withdrawal_confirmation_page
-      @withdrawal_confirmation_page ||= PageObjects::Trainees::ConfirmWithdrawal.new
-    end
-
     def withdrawal_forbidden_page
       @withdrawal_forbidden_page ||= PageObjects::Trainees::WithdrawalForbidden.new
     end
