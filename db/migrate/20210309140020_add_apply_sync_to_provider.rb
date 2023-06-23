@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddApplySyncToProvider < ActiveRecord::Migration[6.1]
@@ -5,3 +6,4 @@ class AddApplySyncToProvider < ActiveRecord::Migration[6.1]
     add_column :providers, :apply_sync_enabled, :boolean, default: false
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

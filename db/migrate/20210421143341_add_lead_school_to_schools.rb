@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddLeadSchoolToSchools < ActiveRecord::Migration[6.1]
@@ -5,3 +6,4 @@ class AddLeadSchoolToSchools < ActiveRecord::Migration[6.1]
     add_column :schools, :lead_school, :boolean, null: false
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

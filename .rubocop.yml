@@ -80,3 +80,10 @@ Rails/UnknownEnv:
     - production
     - development
     - test
+
+Metrics/CollectionLiteralLength:
+  Exclude:
+    - "app/lib/dttp/**/*"
+    - "app/lib/hesa/**/*"
+    - "config/initializers/subjects/**/*"
+    - "db/data/**/*"

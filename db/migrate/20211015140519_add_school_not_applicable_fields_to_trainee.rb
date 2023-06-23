@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddSchoolNotApplicableFieldsToTrainee < ActiveRecord::Migration[6.1]
@@ -8,3 +9,4 @@ class AddSchoolNotApplicableFieldsToTrainee < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

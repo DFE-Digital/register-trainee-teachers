@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddSystemAdminBooleanToUsers < ActiveRecord::Migration[6.1]
@@ -6,3 +7,4 @@ class AddSystemAdminBooleanToUsers < ActiveRecord::Migration[6.1]
     change_column_null :users, :provider_id, true
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

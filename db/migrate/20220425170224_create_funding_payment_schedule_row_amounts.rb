@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class CreateFundingPaymentScheduleRowAmounts < ActiveRecord::Migration[6.1]
@@ -16,3 +17,4 @@ class CreateFundingPaymentScheduleRowAmounts < ActiveRecord::Migration[6.1]
               name: "index_payment_schedule_row_amounts_on_payment_schedule_row_id"
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

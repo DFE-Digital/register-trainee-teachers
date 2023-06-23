@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class AddSubmissionReadyToTrainees < ActiveRecord::Migration[6.1]
@@ -5,3 +6,4 @@ class AddSubmissionReadyToTrainees < ActiveRecord::Migration[6.1]
     add_column :trainees, :submission_ready, :boolean, default: false
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

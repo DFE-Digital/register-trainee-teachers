@@ -1,3 +1,4 @@
+# rubocop:disable Rails/ThreeStateBooleanColumn
 # frozen_string_literal: true
 
 class CreateApplyApplicationSyncRequests < ActiveRecord::Migration[6.1]
@@ -10,3 +11,4 @@ class CreateApplyApplicationSyncRequests < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable Rails/ThreeStateBooleanColumn

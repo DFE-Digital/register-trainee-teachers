@@ -245,7 +245,7 @@ module ApplyApi
       # Prydeinig
       # Scottish
       # Welsh
-      MAPPING = APPLY_MAPPING.map(&:reverse).to_h.merge("GB" => Dttp::CodeSets::Nationalities::BRITISH)
+      MAPPING = APPLY_MAPPING.invert.merge("GB" => Dttp::CodeSets::Nationalities::BRITISH)
     end
   end
 end
