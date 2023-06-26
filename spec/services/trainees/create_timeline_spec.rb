@@ -53,13 +53,11 @@ module Trainees
 
         before do
           trainee.withdraw_date = "2021-09-21"
-          trainee.withdraw_reason = WithdrawalReasons::FOR_ANOTHER_REASON
-          trainee.additional_withdraw_reason = "lost interest"
           trainee.withdraw!
         end
 
         it "returns the date of withdrawal in the correct format and reason" do
-          expect(subject.first.items).to eq([["Date of withdrawal:", "21 September 2021"], ["Reason for withdrawal:", "Lost interest"]])
+          expect(subject.first.items).to eq([["Date of withdrawal:", "21 September 2021"]])
         end
       end
 

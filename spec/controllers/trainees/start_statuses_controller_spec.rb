@@ -74,7 +74,7 @@ describe Trainees::StartStatusesController do
         let(:page_context) { :withdraw }
 
         it "redirects to the withdrawal page" do
-          expect(response).to redirect_to(trainee_withdrawal_path(trainee))
+          expect(response).to redirect_to(edit_trainee_withdrawal_date_path(trainee))
         end
       end
 
@@ -83,7 +83,7 @@ describe Trainees::StartStatusesController do
         let(:page_context) { :withdraw }
 
         it "redirects to the withdrawal confirmation page" do
-          expect(response).to redirect_to(trainee_confirm_withdrawal_path(trainee))
+          expect(response).to redirect_to(edit_trainee_withdrawal_confirm_detail_path(trainee))
         end
       end
     end

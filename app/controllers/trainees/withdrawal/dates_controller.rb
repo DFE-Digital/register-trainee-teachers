@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 module Trainees
   module Withdrawal
     class DatesController < Base
-
       def edit
         @form = form_class.new(trainee)
         if @form.uses_deferral_date?
-          redirect_to next_page
+          redirect_to(next_page)
         else
           super
         end

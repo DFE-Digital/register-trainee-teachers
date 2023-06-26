@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Withdrawal
   class ExtraInformationForm < TraineeForm
     FIELDS = %i[
@@ -16,7 +17,7 @@ module Withdrawal
       trainee.save
       clear_stash
     end
-  
+
   private
 
     def form_store_key

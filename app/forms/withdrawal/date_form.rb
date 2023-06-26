@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 module Withdrawal
   class DateForm < MultiDateForm
-    FIELDS = [:withdraw_date]
+    FIELDS = [:withdraw_date].freeze
 
     attr_accessor(*FIELDS)
 
@@ -13,7 +14,7 @@ module Withdrawal
 
     def fields
       super.merge(
-        date_field => date
+        date_field => date,
       )
     end
 

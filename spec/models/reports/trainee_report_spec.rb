@@ -366,12 +366,20 @@ describe Reports::TraineeReport do
       expect(subject.withdraw_date).to eq(trainee.withdraw_date&.to_date&.iso8601)
     end
 
-    it "includes the withdraw_reason" do
-      expect(subject.withdraw_reason).to eq(trainee.withdraw_reason)
+    it "includes the withdraw_reasons" do
+      expect(subject.withdraw_reasons).to eq(
+        trainee.withdrawal_reasons.map do |reason|
+          t("components.withdrawal_details.reasons.#{reason.name}")
+        end.join("\n"),
+      )
     end
 
-    it "includes the additional_withdraw_reason" do
-      expect(subject.additional_withdraw_reason).to eq(trainee.additional_withdraw_reason)
+    it "includes the withdraw_reasons_details" do
+      expect(subject.withdraw_reasons_details).to eq(trainee.withdraw_reasons_details)
+    end
+
+    it "includes the withdraw_reasons_dfe_details" do
+      expect(subject.withdraw_reasons_dfe_details).to eq(trainee.withdraw_reasons_dfe_details)
     end
   end
 

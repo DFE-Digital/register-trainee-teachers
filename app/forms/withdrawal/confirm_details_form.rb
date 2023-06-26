@@ -1,12 +1,12 @@
 # frozen_string_literal: true
+
 module Withdrawal
   class ConfirmDetailsForm < TraineeForm
-
     FIELDS = [
       *DateForm::FIELDS,
       *ReasonForm::FIELDS,
       *ExtraInformationForm::FIELDS,
-    ]
+    ].freeze
 
     attr_reader(:trainee, :reasons_form, :extra_information_form, :date_form)
     attr_accessor(*FIELDS)
@@ -55,7 +55,7 @@ module Withdrawal
 
     def compute_fields
       withdrawal_forms
-        .map { |form| form.fields }
+        .map(&:fields)
         .reduce({}, :merge)
         .slice(*FIELDS)
     end

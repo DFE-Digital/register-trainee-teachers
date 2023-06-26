@@ -411,11 +411,10 @@ module Reports
     end
 
     def withdraw_reasons
-      trainee.withdraw_reasons.map do |reason|
+      trainee.withdrawal_reasons.map do |reason|
         t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("\n")
     end
-
 
     def course_age_range
       return nil if course_minimum_age.blank? && course_maximum_age.blank?

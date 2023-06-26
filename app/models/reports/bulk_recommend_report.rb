@@ -78,6 +78,7 @@ module Reports
                                        :end_academic_cycle,
                                        :start_academic_cycle,
                                        :provider,
+                                       :withdrawal_reasons,
                                        :lead_school).each do |trainee| # rubocop:disable Rails/FindEach
         add_trainee_to_csv(trainee)
       end

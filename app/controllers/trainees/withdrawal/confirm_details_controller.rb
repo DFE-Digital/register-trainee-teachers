@@ -1,15 +1,16 @@
+# frozen_string_literal: true
+
 module Trainees
   module Withdrawal
     class ConfirmDetailsController < Base
-
       def update
         @form = form_class.new(trainee)
         if form.save!
           flash[:success] = t("trainees.withdrawals.confirm_details.update.success")
-          redirect_to trainee_path(trainee)
+          redirect_to(trainee_path(trainee))
         else
           flash[:error] = t("trainees.withdrawals.confirm_details.update.error")
-          render :edit
+          render(:edit)
         end
       end
 

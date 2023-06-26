@@ -33,7 +33,7 @@ module Withdrawal
       mappable_field(
         trainee.trainee_start_date.strftime(Date::DATE_FORMATS[:govuk]),
         "Trainee start date",
-        (trainee_start_date_verification_path(trainee, context: :withdraw) unless deferred)
+        (trainee_start_date_verification_path(trainee, context: :withdraw) unless deferred),
       )
     end
 
@@ -41,7 +41,7 @@ module Withdrawal
       mappable_field(
         data_model.withdraw_date.strftime(Date::DATE_FORMATS[:govuk]),
         "Date the trainee withdrew",
-        edit_trainee_withdrawal_date_path(trainee)
+        edit_trainee_withdrawal_date_path(trainee),
       )
     end
 
@@ -49,7 +49,7 @@ module Withdrawal
       mappable_field(
         reasons_html_safe,
         "Why the trainee withdrew",
-        edit_trainee_withdrawal_reason_path(trainee)
+        edit_trainee_withdrawal_reason_path(trainee),
       )
     end
 
@@ -63,7 +63,7 @@ module Withdrawal
       mappable_field(
         data_model.withdraw_reasons_details,
         "Details of why the trainee withdrew",
-        edit_trainee_withdrawal_extra_information_path(trainee)
+        edit_trainee_withdrawal_extra_information_path(trainee),
       )
     end
 
@@ -71,7 +71,7 @@ module Withdrawal
       mappable_field(
         data_model.withdraw_reasons_dfe_details,
         "What the Department for Education could have done",
-        edit_trainee_withdrawal_extra_information_path(trainee)
+        edit_trainee_withdrawal_extra_information_path(trainee),
       )
     end
 

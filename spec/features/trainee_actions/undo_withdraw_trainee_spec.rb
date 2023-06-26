@@ -68,7 +68,7 @@ feature "Undo trainee withdrawal" do
   def when_i_am_on_the_undo_withdrawal_page
     given_i_am_authenticated
     current_user.update(system_admin: true)
-    given_a_trainee_exists(:withdrawn)
+    given_a_trainee_exists(:withdrawn_for_specific_reason)
     and_i_am_on_the_trainee_record_page
     record_page.undo_withdrawal.click
     click_link "Continue"
@@ -88,9 +88,10 @@ feature "Undo trainee withdrawal" do
 
   def then_i_expect_the_trainee_to_have_been_updated
     expect(trainee.reload.state).not_to eql "withdrawn"
-    expect(trainee.withdraw_reason).to be_nil
+    expect(trainee.withdrawal_reasons).to be_empty
     expect(trainee.withdraw_date).to be_nil
-    expect(trainee.additional_withdraw_reason).to be_nil
+    expect(trainee.withdraw_reasons_details).to be_nil
+    expect(trainee.withdraw_reasons_dfe_details).to be_nil
     expect(trainee.audits.last.comment).to have_text("https://google.com")
   end
 

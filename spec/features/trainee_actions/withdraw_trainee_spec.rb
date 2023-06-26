@@ -112,7 +112,7 @@ feature "Withdrawing a trainee" do
 
       scenario "successfully" do
         when_i_choose_another_day
-        withdawal_date = and_i_enter_a_valid_date
+        withdrawal_date = and_i_enter_a_valid_date
         and_i_continue(:date)
         when_i_check_a_reason(withdrawal_reason.name)
         and_i_continue(:reason)
@@ -231,7 +231,6 @@ feature "Withdrawing a trainee" do
     and_i_am_on_the_trainee_record_page
     and_i_click_on_withdraw
   end
-
 
   def when_i_am_on_the_date_page
     withdrawal_date_page.load(id: trainee.slug)

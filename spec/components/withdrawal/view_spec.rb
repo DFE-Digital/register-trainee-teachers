@@ -18,7 +18,7 @@ describe Withdrawal::View do
       withdraw_date: withdraw_date,
       withdrawal_reasons: withdrawal_reasons,
       withdraw_reasons_details: withdraw_reasons_details,
-      withdraw_reasons_dfe_details: withdraw_reasons_dfe_details
+      withdraw_reasons_dfe_details: withdraw_reasons_dfe_details,
     )
   end
 

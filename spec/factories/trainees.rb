@@ -431,6 +431,7 @@ FactoryBot.define do
     trait :withdrawn do
       trn_received
       with_withdrawal_date
+
       state { "withdrawn" }
     end
 
@@ -480,6 +481,8 @@ FactoryBot.define do
 
     trait :withdrawn_for_specific_reason do
       withdrawn
+      withdraw_reasons_details { "withdraw details" }
+      withdraw_reasons_dfe_details { "withdraw dfe details" }
 
       after(:create) do |trainee|
         create(:trainee_withdrawal_reason, trainee:)
@@ -488,6 +491,8 @@ FactoryBot.define do
 
     trait :withdrawn_for_another_reason do
       withdrawn
+      withdraw_reasons_details { "withdraw details" }
+      withdraw_reasons_dfe_details { "withdraw dfe details" }
 
       after(:create) do |trainee|
         withdrawal_reason = create(:withdrawal_reason, name: WithdrawalReasons::ANOTHER_REASON)
