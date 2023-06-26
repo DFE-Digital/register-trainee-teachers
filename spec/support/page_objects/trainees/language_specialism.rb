@@ -2,16 +2,13 @@
 
 module PageObjects
   module Trainees
-    class LanguageSpecialismOptions < SitePrism::Section
-      element :input, "input"
-      element :label, "label"
-    end
-
     class LanguageSpecialism < PageObjects::Base
       include PageObjects::Helpers
       set_url "/trainees/{trainee_id}/language-specialisms/edit"
 
-      sections :language_specialism_options, LanguageSpecialismOptions, ".govuk-checkboxes__item"
+      element :language_select_one, "select#language-specialisms-form-course-subject-one-field"
+      element :language_select_two, "select#language-specialisms-form-course-subject-two-field"
+      element :language_select_three, "select#language-specialisms-form-course-subject-three-field"
 
       element :submit_button, "button[type='submit']"
     end

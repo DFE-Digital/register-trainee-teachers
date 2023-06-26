@@ -120,7 +120,7 @@ feature "publish course details", feature_publish_course_details: true do
           and_i_select_languages("Arabic languages", "Welsh", "Portuguese")
           and_i_submit_the_language_specialism_form
           and_i_enter_itt_dates
-          then_i_should_see_the_subject_described_as("Arabic languages with Portuguese and Welsh")
+          then_i_should_see_the_subject_described_as("Arabic languages with Welsh and Portuguese")
           and_i_confirm_the_course
           and_i_visit_the_review_draft_page
           then_the_section_should_be(completed)
@@ -256,7 +256,7 @@ feature "publish course details", feature_publish_course_details: true do
           and_i_select_languages("Arabic languages", "Welsh", "Portuguese")
           and_i_submit_the_language_specialism_form
           and_i_enter_itt_dates
-          then_i_should_see_the_subject_described_as("Arabic languages with Portuguese and Welsh")
+          then_i_should_see_the_subject_described_as("Arabic languages with Welsh and Portuguese")
         end
       end
     end
@@ -308,11 +308,12 @@ feature "publish course details", feature_publish_course_details: true do
     alias_method :when_i_select_a_course, :and_i_select_a_course
 
     def and_i_select_languages(*languages)
-      options = language_specialism_page.language_specialism_options.select do |option|
-        languages.include?(option.label.text)
+      %i[language_select_one language_select_two language_select_three].zip(languages).each do |select_element, language|
+        select(
+          language,
+          from: language_specialism_page.send(select_element)[:id],
+        )
       end
-
-      options.each { |checkbox| click(checkbox.input) }
     end
 
     def and_i_submit_the_form

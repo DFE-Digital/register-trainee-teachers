@@ -14,9 +14,10 @@
       <%= render TraineeName::View.new(@trainee) %>
       <div class="govuk-form-group">
 
-        <%= f.govuk_check_boxes_fieldset :language_specialisms,
-                                          legend: { text: t(".heading"), tag: "h1", size: "l" },
-                                          classes: "language-specialisms" do %>
+        <%= f.govuk_fieldset(
+          legend: { text: t(".heading"), tag: "h1", size: "l" },
+          classes: "language-specialisms"
+        ) do %>
 
           <div class="govuk-hint" id="language-language-specialisms-form-language-specialisms-hint">
             <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
@@ -26,15 +27,16 @@
           <%=
             f.govuk_select(
               :course_subject_one,
-              @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              [["", ""]] + @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
               label: { text: "First language", size: "s" },
+              include_blank: true,
             )
           %>
 
           <%=
             f.govuk_select(
               :course_subject_two,
-              @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              [["", ""]] + @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
               label: { text: "Second language (optional)", size: "s" },
             )
           %>
@@ -42,7 +44,7 @@
           <%=
             f.govuk_select(
               :course_subject_three,
-              @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              [["", ""]] + @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
               label: { text: "Third language (optional)", size: "s" },
             )
           %>
