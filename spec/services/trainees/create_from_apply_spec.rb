@@ -161,10 +161,22 @@ module Trainees
         end
       end
 
-      context "when the application has an empty list of disabilities" do
+      context "when the application has an empty list of disabilities_and_health_conditions" do
         let(:candidate_attributes) do
           {
             disabilities_and_health_conditions: [],
+          }
+        end
+
+        it "sets the disability disclosure to not provided" do
+          expect(trainee).to be_disability_not_provided
+        end
+      end
+
+      context "when the application has a nil value for disabilities_and_health_conditions" do
+        let(:candidate_attributes) do
+          {
+            disabilities_and_health_conditions: nil,
           }
         end
 
