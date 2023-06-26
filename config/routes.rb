@@ -145,10 +145,10 @@ Rails.application.routes.draw do
       # resource :withdrawal, only: %i[show update], path: "/withdraw"
 
       namespace :withdrawal do
-        resource :date, only: [:edit, :update]
-        resource :reason, only: [:edit, :update]
-        resource :extra_information, only: [:edit, :update], path: 'extra-information'
-        resource :confirm_detail, only: [:edit, :update], path: 'confirm'
+        resource :date, only: %i[edit update]
+        resource :reason, only: %i[edit update]
+        resource :extra_information, only: %i[edit update], path: "extra-information"
+        resource :confirm_detail, only: %i[edit update], path: "confirm"
       end
 
       resource :undo_withdrawal, only: %i[show edit update destroy], path: "undo-withdrawal" do

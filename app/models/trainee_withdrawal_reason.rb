@@ -22,6 +22,8 @@
 #  fk_rails_...  (withdrawal_reason_id => withdrawal_reasons.id)
 #
 class TraineeWithdrawalReason < ApplicationRecord
-  belongs_to :trainee
+  belongs_to :trainee, touch: true
   belongs_to :withdrawal_reason
+
+  audited associated_with: :trainee
 end

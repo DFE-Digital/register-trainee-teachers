@@ -411,15 +411,10 @@ module Reports
     end
 
     def withdraw_reasons
-      trainee.withdraw_reasons.map do |reason|
-        t("components.confirmation.withdrawal_details.reasons.#{reason.name}")
+      trainee.withdrawal_reasons.map do |reason|
+        t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("\n")
     end
-
-  private
-
-    def course_allocation_subject
-      return if course.blank? || course.subjects.blank?
 
     def course_age_range
       return nil if course_minimum_age.blank? && course_maximum_age.blank?

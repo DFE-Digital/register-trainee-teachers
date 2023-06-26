@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 module Withdrawal
   class DateForm < MultiDateForm
-    FIELDS = [:withdraw_date]
+    FIELDS = [:withdraw_date].freeze
 
     attr_accessor(*FIELDS)
 
-    validate :date_valid
+    validate :date_valid, unless: :uses_deferral_date?
 
     def withdraw_date
       date
@@ -13,7 +14,7 @@ module Withdrawal
 
     def fields
       super.merge(
-        date_field => date
+        date_field => date,
       )
     end
 
@@ -21,6 +22,16 @@ module Withdrawal
       assign_attributes_to_trainee
       trainee.save
       clear_stash
+    end
+
+    def uses_deferral_date?
+      trainee.deferred? && trainee.defer_date.present?
+    end
+
+    def date
+      return trainee.defer_date if uses_deferral_date?
+
+      super
     end
 
   private

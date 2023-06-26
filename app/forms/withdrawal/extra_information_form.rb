@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Withdrawal
   class ExtraInformationForm < TraineeForm
     FIELDS = %i[
@@ -8,12 +9,15 @@ module Withdrawal
 
     attr_accessor(*FIELDS)
 
+    validates :withdraw_reasons_details, length: { maximum: 500 }, allow_blank: true
+    validates :withdraw_reasons_dfe_details, length: { maximum: 500 }, allow_blank: true
+
     def save!
       assign_attributes_to_trainee
       trainee.save
       clear_stash
     end
-  
+
   private
 
     def form_store_key

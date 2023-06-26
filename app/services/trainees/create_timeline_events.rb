@@ -194,7 +194,6 @@ module Trainees
       if state_change_action == "withdrawn" && auditable.withdraw_date
         [
           ["#{I18n.t('components.timeline.withdrawal_date')}:", auditable.withdraw_date.strftime("%e %B %Y").to_s],
-          ["#{I18n.t('components.timeline.withdrawal_reason')}:", (auditable.withdraw_reasons_details&.upcase_first || auditable.withdraw_reason&.humanize).to_s],
         ]
       end
     end

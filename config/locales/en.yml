@@ -168,6 +168,28 @@ en:
         blank: No route provided
       trainee_name:
         blank: Draft record
+    withdrawal_details:
+      summary_title: Withdrawal details
+      withdrawal_date: "%{date} (date of deferral)"
+      trainee_start_date_label: Trainee start date
+      withdraw_date_label: Date of withdrawal
+      withdraw_reason_label: Reason for withdrawal
+      reasons: &withdrawal_reasons
+        could_not_give_enough_time: Could not give enough time to course
+        course_was_not_suitable: Course was not suitable for them
+        did_not_make_progress: Did not make progress in course
+        did_not_meet_entry_requirements: Did not meet entry requirements
+        does_not_want_to_become_a_teacher: Does not want to become a teacher
+        family_problems: Family problems
+        financial_problems: Financial problems
+        got_a_job: Got a job
+        problems_with_their_health: Problems with their health
+        stopped_responding_to_messages: Stopped responding to messages
+        teaching_placement_problems: Teaching placement problems
+        unacceptable_behaviour: Unacceptable behaviour
+        unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
+        another_reason: Another reason
+        unknown: Unknown
     confirmation:
       not_provided_from_hesa_update: Not provided from HESA update
       missing: missing
@@ -224,28 +246,6 @@ en:
       reinstatement_details:
         reinstate_date_label: Date of return
         summary_title: Reinstatement details
-      withdrawal_details:
-        summary_title: Withdrawal details
-        withdrawal_date: "%{date} (date of deferral)"
-        trainee_start_date_label: Trainee start date
-        withdraw_date_label: Date of withdrawal
-        withdraw_reason_label: Reason for withdrawal
-        reasons: &withdrawal_reasons
-          could_not_give_enough_time: Could not give enough time to course
-          course_was_not_suitable: Course was not suitable for them
-          did_not_make_progress: Did not make progress in course
-          did_not_meet_entry_requirements: Did not meet entry requirements
-          does_not_want_to_become_a_teacher: Does not want to become a teacher
-          family_problems: Family problems
-          financial_problems: Financial problems
-          got_a_job: Got a job
-          problems_with_their_health: Problems with their health
-          stopped_responding_to_messages: Stopped responding to messages
-          teaching_placement_problems: Teaching placement problems
-          unacceptable_behaviour: Unacceptable behaviour
-          unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
-          another_reason: Another reason
-          unknown: Unknown
       flash:
         diversity: disclosure
         disclosure: diversity information
@@ -1461,8 +1461,18 @@ en:
         withdrawal/reason_form:
           attributes:
             reason_ids:
-              blank: Select at least one withdrawal reason
-              unknown_exclusively: Select why the trainee withdrew from the course or select ”Unknown”
+              blank: Select why the trainee withdrew from the course or select "Unknown"
+              unknown_exclusively: Select why the trainee withdrew from the course or select "Unknown"
+        withdrawal/date_form:
+          attributes:
+            date_string:
+              blank: Choose a withdrawal date
+        withdrawal/extra_information_form:
+          attributes:
+            withdraw_reasons_details:
+              too_long: Details about why the trainee withdrew must be 500 characters or less
+            withdraw_reasons_dfe_details:
+              too_long: What the Department for Education could have done must be x characters or less
         funding/training_initiatives_form:
           attributes:
             training_initiative:

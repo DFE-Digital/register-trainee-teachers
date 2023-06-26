@@ -14,94 +14,127 @@ feature "Withdrawing a trainee" do
     ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
   end
 
+  let!(:withdrawal_reason) { create(:withdrawal_reason) }
+  let!(:withdrawal_reason_unknown) { create(:withdrawal_reason, :unknown) }
+  let!(:withdrawal_reason_another_reason) { create(:withdrawal_reason, :another_reason) }
+
   context "validation errors" do
+    before do
+      given_i_am_authenticated
+      given_a_trainee_exists_to_be_withdrawn
+    end
+
+    scenario "no date provided" do
+      when_i_am_on_the_date_page
+      and_i_continue(:date)
+      then_i_see_the_error_message_for_date_not_chosen
+    end
+
+    scenario "no reason provided" do
+      when_i_am_on_the_reason_page
+      and_i_continue(:reason)
+      then_i_see_the_error_message_for_reason_not_chosen
+    end
+
+    scenario "reason given with 'unknown' also selected" do
+      when_i_am_on_the_reason_page
+      when_i_check_a_reason(withdrawal_reason_unknown.name)
+      when_i_check_a_reason(withdrawal_reason.name)
+      and_i_continue(:reason)
+      then_i_see_the_error_message_for_reason_not_chosen
+    end
+
+    scenario "extra details too long" do
+      when_i_am_on_the_extra_information_page
+      when_i_add_detail(:withdraw_reasons_details, Faker::Lorem.words(number: 200).join(" "))
+      and_i_continue(:extra_information)
+      then_i_see_the_error_message_for_details_too_long
+    end
+
+    scenario "extra details dfe too long" do
+      when_i_am_on_the_extra_information_page
+      when_i_add_detail(:withdraw_reasons_dfe_details, Faker::Lorem.words(number: 200).join(" "))
+      and_i_continue(:extra_information)
+      then_i_see_the_error_message_for_dfe_details_too_long
+    end
+  end
+
+  context "trainee withdrawn" do
     before do
       when_i_am_on_the_withdrawal_page
     end
 
-    scenario "no information provided" do
-      and_i_continue
-      then_i_see_the_error_message_for_date_not_chosen
-      then_i_see_the_error_message_for_reason_not_chosen
+    let(:details) { Faker::Lorem.words(number: 20).join(" ") }
+    let(:details_dfe) { Faker::Lorem.words(number: 20).join(" ") }
+    let(:reason) { withdrawal_reason.name }
+    let(:start_date) { trainee.trainee_start_date }
+
+    context "today" do
+      let(:withdrawal_date) { Time.zone.today }
+
+      scenario "successfully" do
+        when_i_choose_today
+        and_i_continue(:date)
+        when_i_check_a_reason(withdrawal_reason.name)
+        and_i_continue(:reason)
+        when_i_add_detail(:withdraw_reasons_details, details)
+        when_i_add_detail(:withdraw_reasons_dfe_details, details_dfe)
+        and_i_continue(:extra_information)
+        then_i_am_redirected_to_withdrawal_confirmation_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+        and_i_continue(:confirm_detail)
+        then_i_am_redirected_to_the_record_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+      end
     end
 
-    scenario "invalid date for another day" do
-      when_i_choose_another_day
-      and_enter_an_invalid_date
-      and_i_continue
-      then_i_see_the_error_message_for_invalid_date
+    context "yesterday" do
+      let(:withdrawal_date) { Time.zone.yesterday }
+
+      scenario "successfully" do
+        when_i_choose_yesterday
+        and_i_continue(:date)
+        when_i_check_a_reason(withdrawal_reason.name)
+        and_i_continue(:reason)
+        when_i_add_detail(:withdraw_reasons_details, details)
+        when_i_add_detail(:withdraw_reasons_dfe_details, details_dfe)
+        and_i_continue(:extra_information)
+        then_i_am_redirected_to_withdrawal_confirmation_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+        and_i_continue(:confirm_detail)
+        then_i_am_redirected_to_the_record_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+      end
     end
 
-    scenario "blank date for another day" do
-      when_i_choose_another_day
-      and_i_continue
-      then_i_see_the_error_message_for_blank_date
-    end
-  end
+    context "another date" do
+      let(:withdrawal_date) { nil }
 
-  context "trainee withdrawn for specific reason" do
-    background do
-      when_i_am_on_the_withdrawal_page
-      and_i_choose_a_specific_reason
-    end
-
-    scenario "today" do
-      when_i_choose_today
-      and_i_continue
-      then_i_am_redirected_to_withdrawal_confirmation_page
-      and_i_see_my_date(Time.zone.today)
-      when_i_withdraw
-      then_the_withdraw_date_and_reason_is_updated
-    end
-
-    scenario "yesterday" do
-      when_i_choose_yesterday
-      and_i_continue
-      then_i_am_redirected_to_withdrawal_confirmation_page
-      and_i_see_my_date(Time.zone.yesterday)
-      when_i_withdraw
-      then_the_withdraw_date_and_reason_is_updated
-    end
-
-    scenario "on another day" do
-      when_i_choose_another_day
-      and_i_enter_a_valid_date
-      and_i_continue
-      then_i_am_redirected_to_withdrawal_confirmation_page
-      and_i_see_my_date(@chosen_date)
-      when_i_withdraw
-      then_the_withdrawal_details_is_updated
+      scenario "successfully" do
+        when_i_choose_another_day
+        withdrawal_date = and_i_enter_a_valid_date
+        and_i_continue(:date)
+        when_i_check_a_reason(withdrawal_reason.name)
+        and_i_continue(:reason)
+        when_i_add_detail(:withdraw_reasons_details, details)
+        when_i_add_detail(:withdraw_reasons_dfe_details, details_dfe)
+        and_i_continue(:extra_information)
+        then_i_am_redirected_to_withdrawal_confirmation_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+        and_i_continue(:confirm_detail)
+        then_i_am_redirected_to_the_record_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+      end
     end
 
     scenario "when DQT integration feature is active" do
       when_i_choose_today
-      and_integrate_with_dqt_feature_is_active
-      and_i_continue
-      then_i_am_redirected_to_withdrawal_confirmation_page
-      and_i_see_my_date(Time.zone.today)
-      when_i_withdraw
-      then_the_withdraw_date_and_reason_is_updated
+      and_i_continue(:date)
+      when_i_check_a_reason(withdrawal_reason.name)
+      and_i_continue(:reason)
+      and_i_continue(:extra_information)
+      and_i_continue(:confirm_detail)
       and_a_withdrawal_job_has_been_queued
-    end
-  end
-
-  context "trainee withdrawn for another reason" do
-    background do
-      when_i_am_on_the_withdrawal_page
-      and_i_choose_for_another_reason
-    end
-
-    scenario "and that reason is provided" do
-      when_i_choose_today
-      and_i_provide_a_reason
-      and_i_continue
-      then_i_am_redirected_to_withdrawal_confirmation_page
-      and_the_additional_reason_is_displayed
-    end
-
-    scenario "and a reason is not provided" do
-      and_i_continue
-      then_i_see_the_error_message_for_missing_additional_reason
     end
   end
 
@@ -127,11 +160,10 @@ feature "Withdrawing a trainee" do
   scenario "cancelling changes" do
     when_i_am_on_the_withdrawal_page
     and_i_choose_today
-    and_i_choose_a_specific_reason
-    and_i_continue
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_see_my_date(Time.zone.today)
-    when_i_cancel_my_changes
+    and_i_continue(:date)
+    when_i_check_a_reason(withdrawal_reason.name)
+    and_i_continue(:reason)
+    when_i_cancel_my_changes(:extra_information)
     then_i_am_redirected_to_the_record_page
     and_the_withdrawal_information_i_set_is_cleared
   end
@@ -142,9 +174,12 @@ feature "Withdrawing a trainee" do
     and_i_am_on_the_trainee_record_page
     and_i_click_on_withdraw
     then_the_deferral_text_should_be_shown
-    when_i_choose_a_specific_reason
-    and_i_continue
+    when_i_check_a_reason(withdrawal_reason.name)
+    and_i_continue(:reason)
+    and_i_continue(:extra_information)
     then_i_am_redirected_to_withdrawal_confirmation_page
+    and_the_deferral_date_is_used
+    and_i_continue(:confirm_detail)
     and_the_deferral_date_is_used
   end
 
@@ -160,37 +195,19 @@ feature "Withdrawing a trainee" do
   scenario "trainee is withdrawn and changes their start date to a date before the withdrawal date" do
     when_i_am_on_the_withdrawal_page
     and_i_choose_today
-    and_i_choose_a_specific_reason
-    and_i_continue
+    and_i_continue(:date)
+    when_i_check_a_reason(withdrawal_reason.name)
+    and_i_continue(:reason)
+    and_i_continue(:extra_information)
     then_i_am_redirected_to_withdrawal_confirmation_page
     and_i_click_change_start_date
     and_i_choose_they_have_started
-    and_i_continue
+    and_i_continue(:date)
     and_i_select_no_they_started_later
     and_i_fill_in_a_new_start_date(2.days.ago)
-    and_i_continue
+    and_i_continue(:date)
     then_i_am_redirected_to_withdrawal_confirmation_page
     and_i_see_my_date(2.days.ago)
-  end
-
-  scenario "trainee is withdrawn and changes their start date to a date after the withdrawal date" do
-    when_i_am_on_the_withdrawal_page
-    when_i_choose_yesterday
-    and_i_choose_a_specific_reason
-    and_i_continue
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_click_change_start_date
-    and_i_choose_they_have_started
-    and_i_continue
-    and_i_select_no_they_started_later
-    and_i_fill_in_a_new_start_date(Time.zone.today)
-    and_i_continue
-    then_i_should_be_on_the_withdrawal_page
-    and_i_choose_today
-    and_i_choose_a_specific_reason
-    and_i_continue
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_see_my_date(Time.zone.today)
   end
 
   scenario "trainee is already withdrawn" do
@@ -215,33 +232,58 @@ feature "Withdrawing a trainee" do
     and_i_click_on_withdraw
   end
 
+  def when_i_am_on_the_date_page
+    withdrawal_date_page.load(id: trainee.slug)
+  end
+
+  def when_i_am_on_the_reason_page
+    withdrawal_reason_page.load(id: trainee.slug)
+  end
+
+  def when_i_am_on_the_extra_information_page
+    withdrawal_extra_information_page.load(id: trainee.slug)
+  end
+
   def when_i_choose_today
-    when_i_choose("Today")
+    when_i_choose(:date, "Today")
   end
 
   alias_method :and_i_choose_today, :when_i_choose_today
 
   def when_i_choose_yesterday
-    when_i_choose("Yesterday")
+    when_i_choose(:date, "Yesterday")
   end
 
   def when_i_choose_another_day
-    when_i_choose("Another date")
+    when_i_choose(:date, "Another date")
   end
 
   def and_i_enter_a_valid_date
     @chosen_date = valid_date_after_itt_start_date
     @chosen_date.tap do |withdraw_date|
-      withdrawal_page.set_date_fields(:withdraw_date, withdraw_date.strftime("%d/%m/%Y"))
+      withdrawal_date_page.set_date_fields(:withdrawal_date, withdraw_date.strftime("%d/%m/%Y"))
     end
+    @chosen_date
   end
 
-  def when_i_choose(option)
-    withdrawal_page.choose(option)
+  def when_i_add_detail(input, words)
+    withdrawal_extra_information_page.send(input).fill_in(with: words)
   end
 
-  def and_i_continue
-    withdrawal_page.continue.click
+  def when_i_check_a_reason(reason)
+    when_i_check(:reason, I18n.t("components.withdrawal_details.reasons.#{reason}"))
+  end
+
+  def when_i_choose(page, option)
+    public_send("withdrawal_#{page}_page").choose(option)
+  end
+
+  def when_i_check(page, option)
+    public_send("withdrawal_#{page}_page").check(option)
+  end
+
+  def and_i_continue(page)
+    public_send("withdrawal_#{page}_page").continue.click
   end
 
   def and_i_click_on_withdraw
@@ -273,9 +315,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(withdrawal_page).to have_content(
-      I18n.t("activemodel.errors.models.withdrawal_form.attributes.date_string.blank"),
-    )
+    expect(withdrawal_date_page).to have_content("Choose a withdrawal date")
   end
 
   def then_i_see_the_error_message_for_invalid_date
@@ -291,9 +331,15 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_reason_not_chosen
-    expect(withdrawal_page).to have_content(
-      I18n.t("activemodel.errors.models.withdrawal_form.attributes.withdraw_reason.invalid"),
-    )
+    expect(withdrawal_reason_page).to have_content('Select why the trainee withdrew from the course or select "Unknown"')
+  end
+
+  def then_i_see_the_error_message_for_details_too_long
+    expect(withdrawal_reason_page).to have_content("Details about why the trainee withdrew must be 500 characters or less")
+  end
+
+  def then_i_see_the_error_message_for_dfe_details_too_long
+    expect(withdrawal_reason_page).to have_content("What the Department for Education could have done must be x characters or less")
   end
 
   def then_i_see_the_error_message_for_missing_additional_reason
@@ -302,13 +348,21 @@ feature "Withdrawing a trainee" do
     )
   end
 
+  def and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
+    expect(page).to have_text(date_for_summary_view(start_date))
+    expect(page).to have_text(date_for_summary_view(withdrawal_date))
+    expect(page).to have_text(details)
+    expect(page).to have_text(details_dfe)
+    expect(page).to have_text(I18n.t("components.withdrawal_details.reasons.#{reason}"))
+  end
+
   def then_the_withdrawal_details_is_updated
     trainee.reload
     expect(withdrawal_page).to have_text(date_for_summary_view(trainee.withdraw_date))
   end
 
   def then_i_am_redirected_to_withdrawal_confirmation_page
-    expect(withdrawal_confirmation_page).to be_displayed(id: trainee.slug)
+    expect(withdrawal_confirm_detail_page).to be_displayed(id: trainee.slug)
   end
 
   def then_the_withdraw_date_and_reason_is_updated
@@ -353,8 +407,8 @@ feature "Withdrawing a trainee" do
     @additional_withdraw_reason ||= Faker::Lorem.paragraph
   end
 
-  def when_i_cancel_my_changes
-    withdrawal_confirmation_page.cancel.click
+  def when_i_cancel_my_changes(page)
+    public_send("withdrawal_#{page}_page").cancel.click
   end
 
   def then_i_am_redirected_to_the_record_page
@@ -364,22 +418,21 @@ feature "Withdrawing a trainee" do
   def and_the_withdrawal_information_i_set_is_cleared
     trainee.reload
     expect(trainee.withdraw_date).to be_nil
-    expect(trainee.withdraw_reason).to be_nil
-    expect(trainee.additional_withdraw_reason).to be_nil
+    expect(trainee.withdrawal_reasons).to be_empty
+    expect(trainee.withdraw_reasons_details).to be_nil
+    expect(trainee.withdraw_reasons_dfe_details).to be_nil
   end
 
   def then_the_deferral_text_should_be_shown
-    expect(withdrawal_page).to have_deferral_notice
+    expect(withdrawal_reason_page).to have_deferral_notice
   end
 
   def then_the_duplicate_record_text_should_be_shown
-    expect(withdrawal_page).to have_duplicate_notice
+    expect(withdrawal_date_page).to have_duplicate_notice
   end
 
   def and_the_deferral_date_is_used
-    expect(withdrawal_confirmation_page).to have_text(
-      t("components.confirmation.withdrawal_details.withdrawal_date", date: date_for_summary_view(trainee.defer_date)),
-    )
+    expect(page).to have_text(date_for_summary_view(trainee.defer_date))
   end
 
   def and_i_choose_they_have_started
@@ -393,7 +446,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_should_be_on_the_withdrawal_page
-    expect(withdrawal_page).to be_displayed
+    expect(withdrawal_date_page).to be_displayed
   end
 
   def and_i_choose_they_have_not_started
@@ -406,7 +459,7 @@ feature "Withdrawing a trainee" do
   end
 
   def and_i_click_change_start_date
-    withdrawal_confirmation_page.start_date_change_link.click
+    withdrawal_confirm_detail_page.start_date_change_link.click
   end
 
   def then_i_am_redirected_to_start_date_verification_page

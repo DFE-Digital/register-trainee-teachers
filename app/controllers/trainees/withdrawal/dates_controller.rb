@@ -1,7 +1,18 @@
+# frozen_string_literal: true
+
 module Trainees
   module Withdrawal
     class DatesController < Base
-      private
+      def edit
+        @form = form_class.new(trainee)
+        if @form.uses_deferral_date?
+          redirect_to(next_page)
+        else
+          super
+        end
+      end
+
+    private
 
       def form_class
         ::Withdrawal::DateForm

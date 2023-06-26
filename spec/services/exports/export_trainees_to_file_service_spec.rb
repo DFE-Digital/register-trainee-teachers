@@ -339,12 +339,16 @@ describe Exports::ExportTraineesToFileService, type: :model do
         expect(trainee_csv_row["withdraw_date"]).to eq(trainee_report.withdraw_date)
       end
 
-      it "includes the withdraw_reason in the csv" do
-        expect(trainee_csv_row["withdraw_reason"]).to eq(trainee_report.withdraw_reason)
+      it "includes the withdraw_reasons in the csv" do
+        expect(trainee_csv_row["withdraw_reasons"]).to eq(trainee_report.withdraw_reasons)
       end
 
-      it "includes the additional_withdraw_reason in the csv" do
-        expect(trainee_csv_row["additional_withdraw_reason"]).to eq(trainee_report.additional_withdraw_reason)
+      it "includes the withdraw_reasons_details in the csv" do
+        expect(trainee_csv_row["withdraw_reasons_details"]).to eq(trainee_report.withdraw_reasons_details)
+      end
+
+      it "includes the withdraw_reasons_dfe_details in the csv" do
+        expect(trainee_csv_row["withdraw_reasons_dfe_details"]).to eq(trainee_report.withdraw_reasons_dfe_details)
       end
     end
   end

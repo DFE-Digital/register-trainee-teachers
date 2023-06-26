@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 module Withdrawal
   class ReasonForm < TraineeForm
     validates_presence_of :reason_ids
     validate :unknown_exclusively
 
-    FIELDS = %i[reason_ids]
+    FIELDS = %i[reason_ids].freeze
 
     attr_accessor(*FIELDS)
 
@@ -17,7 +18,7 @@ module Withdrawal
       trainee.save
       clear_stash
     end
-  
+
   private
 
     def unknown_exclusively

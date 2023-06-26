@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainees
   module Withdrawal
     class Base < Trainees::BaseController
@@ -10,13 +12,13 @@ module Trainees
       def update
         @form = form_class.new(trainee, params: form_params)
         if form.stash_or_save!
-          redirect_to next_page
+          redirect_to(next_page)
         else
-          render :edit
+          render(:edit)
         end
       end
 
-      private
+    private
 
       attr_reader :form
 
@@ -31,11 +33,15 @@ module Trainees
       end
 
       def form_class
-        raise NotImplementedError, 'Child class must define a form_class method'
+        raise(NotImplementedError, "Child class must define a form_class method")
       end
 
       def attribute_names
-        raise NotImplementedError, 'Child class must define an attribute_names method'
+        raise(NotImplementedError, "Child class must define an attribute_names method")
+      end
+
+      def authorize_trainee
+        authorize(trainee, :withdraw?)
       end
     end
   end
