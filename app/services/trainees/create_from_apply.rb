@@ -12,7 +12,7 @@ module Trainees
       @course = application_record.provider.courses.find_by(uuid: @raw_course["course_uuid"])
       @raw_trainee = application_record.application.dig("attributes", "candidate")
       @raw_contact_details = application_record.application.dig("attributes", "contact_details")
-      @disability_uuids = raw_trainee["disabilities_and_health_conditions"].filter_map { |d| d["uuid"] }
+      @disability_uuids = raw_trainee["disabilities_and_health_conditions"]&.filter_map { |d| d["uuid"] } || []
       @study_mode = TRAINEE_STUDY_MODE_ENUMS[@raw_course["study_mode"]]
       @disabilities = Disability.where(uuid: disability_uuids)
       @trainee = Trainee.new(mapped_attributes)
