@@ -30,7 +30,7 @@ module Exports
         }
       end
 
-      let(:csv_title) { "fussington-academy-trainee-summary-#{Settings.current_recruitment_cycle_year}-to-#{Settings.current_recruitment_cycle_year + 1}.csv" }
+      let(:csv_title) { "fussington-academy-trainee-summary-#{current_academic_year}-to-#{current_academic_year + 1}.csv" }
 
       it "sets the correct headers" do
         expect(subject.csv).to include(expected_output.keys.join(","))
