@@ -55,20 +55,5 @@ RSpec.configure do |config|
     if ex.metadata[:js]
       Capybara.reset!
     end
-
-    # Allow Sentry to pick up messages triggered in our CI test build (and not locally).
-    # Sends a warning when tests are retried so we can track indeterminate tests.
-    if ENV.key?("SENTRY_DSN") && ex.metadata[:retry_exceptions]
-      # Disable WebMock so we can send events to Sentry
-      # Add sleep to avoid race condition
-      WebMock.disable!
-      sleep(3.seconds)
-      SentryForRSpec.report_retry(ex, config)
-      sleep(3.seconds)
-      WebMock.enable!
-      sleep(3.seconds)
-      WebMock.disable_net_connect!(allow_localhost: true)
-      sleep(3.seconds)
-    end
   end
 end
