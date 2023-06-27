@@ -70,7 +70,7 @@ describe LeadSchoolUserImport do
 
     it "associates the user with both schools" do
       subject
-      expect(User.find_by(email: "dave@example.com").lead_schools).to match_array([school_one, school_two])
+      expect(User.find_by(email: "dave@example.com").lead_schools).to contain_exactly(school_one, school_two)
     end
   end
 end

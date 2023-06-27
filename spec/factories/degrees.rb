@@ -4,7 +4,7 @@ NEXT_YEAR = Time.zone.now.year.next unless defined?(NEXT_YEAR)
 
 FactoryBot.define do
   factory :degree, class: "Degree" do
-    association :trainee
+    trainee
 
     uk_degree_type
 

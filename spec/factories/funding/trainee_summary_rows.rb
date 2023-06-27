@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :trainee_summary_row, class: "Funding::TraineeSummaryRow" do
-    association :trainee_summary, factory: :trainee_summary
+    trainee_summary
 
     subject { "Biology" }
     route { "Provider-led" }

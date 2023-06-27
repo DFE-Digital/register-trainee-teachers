@@ -39,7 +39,7 @@ feature "edit trainee record" do
   end
 
   def given_a_trainee_exists_with_a_degree
-    given_a_trainee_exists(:submitted_for_trn, degrees: [create(:degree, :uk_degree_with_details)])
+    given_a_trainee_exists(:submitted_for_trn, degrees: create_list(:degree, 1, :uk_degree_with_details))
   end
 
   def then_i_see_the_trainee_name

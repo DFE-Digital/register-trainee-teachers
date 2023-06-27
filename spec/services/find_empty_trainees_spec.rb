@@ -22,7 +22,7 @@ describe FindEmptyTrainees do
   context "returning trainee ID's only" do
     subject { described_class.call(ids_only: true) }
 
-    it { is_expected.to match_array([draft_trainee_with_no_data.id]) }
+    it { is_expected.to contain_exactly(draft_trainee_with_no_data.id) }
   end
 
   context "if trainee fields have changed" do

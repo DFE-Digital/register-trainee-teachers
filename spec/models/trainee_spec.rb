@@ -610,7 +610,7 @@ describe Trainee do
                course_subject_three: CourseSubjects::BIOLOGY)
       end
 
-      it { is_expected.to match_array([trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three]) }
+      it { is_expected.to contain_exactly(trainee_with_subject, trainee_with_subject_two, trainee_with_subject_three) }
     end
 
     context "with allocation subject" do

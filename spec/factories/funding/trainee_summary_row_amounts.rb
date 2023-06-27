@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :trainee_summary_row_amount, class: "Funding::TraineeSummaryRowAmount" do
-    association :row, factory: :trainee_summary_row
+    row factory: %i[trainee_summary_row]
 
     trait :with_scholarship do
       payment_type { "scholarship" }

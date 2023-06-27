@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :trainee_disability, class: "TraineeDisability" do
-    association :trainee
-    association :disability
+    trainee
+    disability
   end
 end

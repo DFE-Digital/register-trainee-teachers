@@ -188,7 +188,7 @@ module Trainees
       let!(:trainee_with_physics) { create(:trainee, course_subject_one: "Physics") }
       let(:filters) { { subject: subject_name } }
 
-      it { is_expected.to match_array([trainee_with_biology, trainee_with_chemistry, trainee_with_physics]) }
+      it { is_expected.to contain_exactly(trainee_with_biology, trainee_with_chemistry, trainee_with_physics) }
     end
 
     context "with text_search filter" do
@@ -204,13 +204,13 @@ module Trainees
       context "complete" do
         let(:filters) { { record_completion: ["complete"] } }
 
-        it { is_expected.to match_array([non_draft_trainee]) }
+        it { is_expected.to contain_exactly(non_draft_trainee) }
       end
 
       context "incomplete" do
         let(:filters) { { record_completion: ["incomplete"] } }
 
-        it { is_expected.to match_array([draft_trainee, apply_draft_trainee]) }
+        it { is_expected.to contain_exactly(draft_trainee, apply_draft_trainee) }
       end
     end
 
@@ -224,7 +224,7 @@ module Trainees
 
         context "trainee starting in that year" do
           it "returns the trainee" do
-            expect(subject).to match_array([trainee])
+            expect(subject).to contain_exactly(trainee)
           end
         end
 
@@ -244,7 +244,7 @@ module Trainees
           before { create(:academic_cycle, :current) }
 
           it "returns the trainee" do
-            expect(subject).to match_array([trainee])
+            expect(subject).to contain_exactly(trainee)
           end
         end
       end
@@ -255,7 +255,7 @@ module Trainees
 
         context "trainee ending in that year" do
           it "returns the trainee" do
-            expect(subject).to match_array([trainee])
+            expect(subject).to contain_exactly(trainee)
           end
         end
 
@@ -275,7 +275,7 @@ module Trainees
           before { create(:academic_cycle, :current) }
 
           it "returns the trainee" do
-            expect(subject).to match_array([trainee])
+            expect(subject).to contain_exactly(trainee)
           end
         end
       end
@@ -306,25 +306,25 @@ module Trainees
       context "with record_source filter set to both manual and apply" do
         let(:filter_value) { %w[apply manual] }
 
-        it { is_expected.to match_array([apply_draft_trainee, draft_trainee]) }
+        it { is_expected.to contain_exactly(apply_draft_trainee, draft_trainee) }
       end
 
       context "with record_source filter set to both dttp and apply" do
         let(:filter_value) { %w[apply dttp] }
 
-        it { is_expected.to match_array([apply_draft_trainee, dttp_trainee]) }
+        it { is_expected.to contain_exactly(apply_draft_trainee, dttp_trainee) }
       end
 
       context "with record_source filter set to both dttp and manual" do
         let(:filter_value) { %w[manual dttp] }
 
-        it { is_expected.to match_array([draft_trainee, dttp_trainee]) }
+        it { is_expected.to contain_exactly(draft_trainee, dttp_trainee) }
       end
 
       context "with record_source filter set to both dttp, apply and manual" do
         let(:filter_value) { %w[apply dttp manual] }
 
-        it { is_expected.to match_array([apply_draft_trainee, dttp_trainee, draft_trainee]) }
+        it { is_expected.to contain_exactly(apply_draft_trainee, dttp_trainee, draft_trainee) }
       end
     end
 

@@ -22,20 +22,20 @@ RSpec.describe BulkUpdate::RecommendationsUpload do
 
     describe "awardable_rows" do
       it "returns the rows with dates and no errors" do
-        expect(recommendations_upload.awardable_rows).to match_array([complete_row])
+        expect(recommendations_upload.awardable_rows).to contain_exactly(complete_row)
       end
     end
 
     describe "missing_date_rows" do
       it "returns the rows with missing dates and no errors" do
-        expect(recommendations_upload.missing_date_rows).to match_array([missing_date_row])
+        expect(recommendations_upload.missing_date_rows).to contain_exactly(missing_date_row)
       end
     end
 
     describe "error_rows" do
       context "with rows with single error"
       it "returns the rows with errors" do
-        expect(recommendations_upload.error_rows).to match_array([error_row, missing_date_and_error_row])
+        expect(recommendations_upload.error_rows).to contain_exactly(error_row, missing_date_and_error_row)
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe BulkUpdate::RecommendationsUpload do
       end
 
       it "returns the rows with errors" do
-        expect(recommendations_upload.error_rows).to match_array([error_row, multiple_errors_row, missing_date_and_error_row])
+        expect(recommendations_upload.error_rows).to contain_exactly(error_row, multiple_errors_row, missing_date_and_error_row)
       end
     end
   end

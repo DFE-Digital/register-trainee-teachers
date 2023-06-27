@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :lead_school_user do
-    association :lead_school, factory: :school
+    lead_school factory: %i[school]
     user
   end
 end

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :course_subjects, class: "CourseSubject" do
-    association :course
-    association :subject
+    course
+    subject
   end
 end

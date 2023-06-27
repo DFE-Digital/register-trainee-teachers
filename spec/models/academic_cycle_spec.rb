@@ -40,13 +40,13 @@ describe AcademicCycle do
     context "a trainee that spans the academic cycle" do
       let(:trainee) { create(:trainee, start_academic_cycle: previous_cycle, end_academic_cycle: next_cycle) }
 
-      it { is_expected.to match_array([trainee]) }
+      it { is_expected.to contain_exactly(trainee) }
     end
 
     context "a trainee that ends in the cycle" do
       let(:trainee) { create(:trainee, start_academic_cycle: previous_cycle, end_academic_cycle: current_cycle) }
 
-      it { is_expected.to match_array([trainee]) }
+      it { is_expected.to contain_exactly(trainee) }
     end
   end
 
@@ -58,13 +58,13 @@ describe AcademicCycle do
     context "a trainee with trainee_start_date in the cycle" do
       let(:trainee) { create(:trainee, trainee_start_date: academic_cycle.start_date, itt_start_date: nil) }
 
-      it { is_expected.to match_array([trainee]) }
+      it { is_expected.to contain_exactly(trainee) }
     end
 
     context "a trainee with itt_start_date in the cycle" do
       let(:trainee) { create(:trainee, itt_start_date: academic_cycle.start_date, trainee_start_date: nil) }
 
-      it { is_expected.to match_array([trainee]) }
+      it { is_expected.to contain_exactly(trainee) }
     end
 
     context "a trainee with trainee_start_date in the cycle and itt_start_date outside the cycle" do
@@ -73,7 +73,7 @@ describe AcademicCycle do
       end
 
       it "returns the trainee having preferred trainee start date" do
-        expect(subject).to match_array([trainee])
+        expect(subject).to contain_exactly(trainee)
       end
     end
 
@@ -99,7 +99,7 @@ describe AcademicCycle do
       context "the current cycle" do
         let(:academic_cycle) { build(:academic_cycle, :current) }
 
-        it { is_expected.to match_array([trainee]) }
+        it { is_expected.to contain_exactly(trainee) }
       end
 
       context "a non-current cycle" do

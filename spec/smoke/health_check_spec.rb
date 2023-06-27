@@ -10,7 +10,7 @@ describe "system health check spec", smoke: true do
     subject(:response) { HTTParty.get(endpoint, verify: false) }
 
     it "returns HTTP success" do
-      expect(response.code).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "returns the expected response report" do

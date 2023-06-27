@@ -23,7 +23,7 @@ describe AcademicYearFilterOptions do
 
     context "when a trainee exists in the current academic cycle" do
       it "returns the year with current year label" do
-        expect(subject).to match_array([current_year_string])
+        expect(subject).to contain_exactly(current_year_string)
       end
     end
 
@@ -31,7 +31,7 @@ describe AcademicYearFilterOptions do
       let(:academic_cycle) { create(:academic_cycle, cycle_year: 2020) }
 
       it "returns the year" do
-        expect(subject).to match_array(["2020 to 2021"])
+        expect(subject).to contain_exactly("2020 to 2021")
       end
     end
 
@@ -44,7 +44,7 @@ describe AcademicYearFilterOptions do
       end
 
       it "returns the years in reverse order" do
-        expect(subject).to match_array([current_year_string, "2020 to 2021"])
+        expect(subject).to contain_exactly(current_year_string, "2020 to 2021")
       end
     end
 
@@ -64,7 +64,7 @@ describe AcademicYearFilterOptions do
 
     context "when there is a draft trainee in an academic cycle" do
       it "returns the year" do
-        expect(subject).to match_array([current_year_string])
+        expect(subject).to contain_exactly(current_year_string)
       end
     end
   end
@@ -77,7 +77,7 @@ describe AcademicYearFilterOptions do
     subject { described_class.new(user: current_user, draft: true).formatted_years(cycle_context) }
 
     it "returns the future cycle" do
-      expect(subject).to match_array([academic_cycle.label])
+      expect(subject).to contain_exactly(academic_cycle.label)
     end
   end
 end
