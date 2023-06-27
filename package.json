@@ -20,7 +20,7 @@
     "serialize-javascript": "^6.0.1",
     "set-value": "^4.1.0",
     "turbolinks": "^5.2.0",
-    "jest-environment-jsdom": "^29.3.1"
+    "jest-environment-jsdom": "^29.5.0"
 
   },
   "devDependencies": {
