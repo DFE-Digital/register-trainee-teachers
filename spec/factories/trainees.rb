@@ -544,7 +544,13 @@ FactoryBot.define do
 
     trait :with_invalid_apply_application do
       degrees { [build(:degree, :uk_degree_with_details, institution: "Unknown institution")] }
-      apply_application { build(:apply_application, :with_invalid_data, degree_slug: degrees.first.slug) }
+      apply_application {
+        association(
+          :apply_application,
+          :with_invalid_data,
+          degree_slug: degrees.first.slug,
+        )
+      }
     end
 
     trait :with_funding do
@@ -637,7 +643,7 @@ FactoryBot.define do
       hesa_id { Faker::Number.number(digits: 13) }
       created_from_hesa { true }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      hesa_students { 1.times.map { create(:hesa_student, hesa_id:) } }
+      hesa_students { create_list(:hesa_student, 1, hesa_id:) }
 
       after(:create) do |trainee, evaluator|
         create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)

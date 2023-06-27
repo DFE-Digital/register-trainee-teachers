@@ -9,7 +9,7 @@ FactoryBot.define do
     dttp_id { SecureRandom.uuid }
     placement_assignment_dttp_id { SecureRandom.uuid }
     response {
-      create(
+      association(
         :api_dormant_period,
         dfe_dormantperiodid: dttp_id,
         _dfe_trainingrecordid_value: placement_assignment_dttp_id,

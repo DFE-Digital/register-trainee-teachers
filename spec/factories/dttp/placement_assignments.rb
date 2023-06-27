@@ -12,16 +12,15 @@ FactoryBot.define do
     end
     trainee_status { SecureRandom.uuid }
     response {
-      create(
-        :api_placement_assignment,
-        dttp_id: dttp_id,
-        contact_dttp_id: contact_dttp_id,
-        provider_dttp_id: provider_dttp_id,
-        _dfe_academicyearid_value: academic_year,
-        dfe_programmestartdate: programme_start_date.strftime("%Y-%m-%d"),
-        dfe_programmeenddate: programme_end_date.strftime("%Y-%m-%d"),
-        dfe_undergraddegreedateobtained: Faker::Date.between(from: 2.years.ago, to: 1.year.ago),
-      )
+      association(:api_placement_assignment) do
+        dttp_id { dttp_id }
+        contact_dttp_id { contact_dttp_id }
+        provider_dttp_id { provider_dttp_id }
+        _dfe_academicyearid_value { academic_year }
+        dfe_programmestartdate { programme_start_date.strftime("%Y-%m-%d") }
+        dfe_programmeenddate { programme_end_date.strftime("%Y-%m-%d") }
+        dfe_undergraddegreedateobtained { Faker::Date.between(from: 2.years.ago, to: 1.year.ago) }
+      end
     }
 
     trait :with_academic_year_twenty_twenty_one do
