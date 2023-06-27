@@ -89,6 +89,7 @@ private
   def and_a_trainee_exists_created_from_apply
     given_a_trainee_exists(:with_apply_application,
                            :with_related_courses,
+                           :with_valid_itt_start_date,
                            courses_count: 1,
                            subject_names: subjects,
                            training_route: training_route)

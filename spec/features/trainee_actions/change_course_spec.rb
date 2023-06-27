@@ -23,7 +23,7 @@ feature "Change course", feature_publish_course_details: true do
 
   scenario "published course not selected" do
     given_i_am_authenticated
-    and_a_trainee_exists
+    and_a_trainee_exists_for_valid_itt_start_date
     and_trainee_related_courses_exist
     and_courses_on_another_route_exist
     and_i_am_on_the_trainee_record_page
@@ -95,6 +95,10 @@ private
 
   def and_a_trainee_exists
     given_a_trainee_exists(:trn_received, :school_direct_salaried, :with_secondary_education)
+  end
+
+  def and_a_trainee_exists_for_valid_itt_start_date
+    given_a_trainee_exists(:trn_received, :school_direct_salaried, :with_secondary_education, :with_valid_itt_start_date)
   end
 
   def when_i_click_to_change_course_details
