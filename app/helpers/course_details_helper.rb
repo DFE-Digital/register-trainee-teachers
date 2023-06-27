@@ -63,7 +63,19 @@ module CourseDetailsHelper
     edit_trainee_course_education_phase_path(trainee)
   end
 
+  def language_specialism_options
+    options = language_specialisms.map do |language|
+      [format_language(language).upcase_first, language]
+    end
+
+    [["", ""]] + options
+  end
+
 private
+
+  def language_specialisms
+    PUBLISH_SUBJECT_SPECIALISM_MAPPING[PublishSubjects::MODERN_LANGUAGES]
+  end
 
   def age_ranges(option:, level:)
     Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option && attributes[:levels]&.include?(level&.to_sym) }.keys.map do |age_range|

@@ -5,7 +5,6 @@ module Trainees
     include Publishable
 
     before_action :skip_manual_selection, if: :course_has_one_language_specialism?
-    before_action :load_language_specialisms
 
     def edit
       @language_specialisms_form = LanguageSpecialismsForm.new(trainee)
@@ -35,10 +34,6 @@ module Trainees
 
     def course_has_one_language_specialism?
       subject_specialisms.all? { |_, v| v.count < 2 }
-    end
-
-    def load_language_specialisms
-      @language_specialisms = PUBLISH_SUBJECT_SPECIALISM_MAPPING[PublishSubjects::MODERN_LANGUAGES]
     end
 
     def language_specialism_params

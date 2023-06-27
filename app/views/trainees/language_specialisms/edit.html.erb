@@ -27,7 +27,7 @@
           <%=
             f.govuk_select(
               :course_subject_one,
-              [["", ""]] + @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              language_specialism_options,
               label: { text: "First language", size: "s" },
               include_blank: true,
             )
@@ -36,7 +36,7 @@
           <%=
             f.govuk_select(
               :course_subject_two,
-              [["", ""]] + @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              language_specialism_options,
               label: { text: "Second language (optional)", size: "s" },
             )
           %>
@@ -44,7 +44,7 @@
           <%=
             f.govuk_select(
               :course_subject_three,
-              [["", ""]] + @language_specialisms.map { |language| [format_language(language).upcase_first, language] },
+              language_specialism_options,
               label: { text: "Third language (optional)", size: "s" },
             )
           %>
