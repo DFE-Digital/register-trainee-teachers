@@ -2,6 +2,7 @@
 
 class AddAwardsFromTraToTrainees < ActiveRecord::Migration[7.0]
   def up
+    # rubocop:disable Metrics/CollectionLiteralLength
     {
       "1968961" => "05/01/2023",
       "1855506" => "05/01/2023",
@@ -329,6 +330,7 @@ class AddAwardsFromTraToTrainees < ActiveRecord::Migration[7.0]
       trainee.assign_attributes(state: :awarded, awarded_at: awarded_at, defer_date: nil, withdraw_date: nil)
       trainee.save!
     end
+    # rubocop:enable Metrics/CollectionLiteralLength
   end
 
   def down
