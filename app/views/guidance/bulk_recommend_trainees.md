@@ -3,7 +3,7 @@ page_title: Bulk recommend trainees for QTS or EYTS
 title: Bulk recommend trainees for QTS or EYTS
 ---
 
-You can [bulk recommend](/bulk-update/recommend/upload) multiple trainees at the same time for qualified teacher status (QTS) or early years teacher status (EYTS).
+You can [bulk recommend](/bulk-update/recommend/choose-who-to-recommend) multiple trainees at the same time for qualified teacher status (QTS) or early years teacher status (EYTS).
 
 {inset-text}
 You cannot use this process to record other training outcomes or to change trainee or course details.
