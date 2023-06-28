@@ -78,7 +78,7 @@ module Trainees
         publish_course_details: "trainee's course details",
         trainee_start_status: "start date",
         iqts_country: "international training details",
-      }[trainee_section_key.to_sym] || trainee_section_key.gsub(/_/, " ").gsub(/id/, "ID")
+      }[trainee_section_key.to_sym] || trainee_section_key.gsub("_", " ").gsub("id", "ID")
     end
 
     def flash_message_title

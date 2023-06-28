@@ -124,7 +124,7 @@ private
   end
 
   def apply_invalid_data_includes_slug?
-    return unless degrees_form.trainee.invalid_apply_data?
+    return false unless degrees_form.trainee.invalid_apply_data?
 
     degrees_form.trainee.apply_application.degrees_invalid_data.keys.include?(slug)
   end

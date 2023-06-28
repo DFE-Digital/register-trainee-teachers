@@ -24,7 +24,7 @@ private
 
   # 600 = 10 mins validity
   def code_is_correct?
-    return unless code.present? && user
+    return false unless code.present? && user
 
     if totp.verify(code, drift_behind: 600).blank?
       errors.add(:code, :invalid_code)
