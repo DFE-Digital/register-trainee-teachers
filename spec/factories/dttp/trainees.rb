@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :dttp_trainee, class: "Dttp::Trainee" do
     transient do
       dttp_id_for_provider { provider&.dttp_id || SecureRandom.uuid }
-      association :api_trainee_hash, :api_trainee
+      api_trainee_hash { association(:api_trainee) }
     end
 
     dttp_id { SecureRandom.uuid }

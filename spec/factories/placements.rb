@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :placement do
-    association :trainee
+    trainee
 
     school
 
