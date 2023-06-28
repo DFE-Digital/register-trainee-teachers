@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "provider-led (postgrad) end-to-end journey" do
-  context "non overlapping `Academic Cycles`" do
+  context "non overlapping `Academic Cycles`", feature_show_draft_trainee_course_year_choice: false do
     around do |example|
       Timecop.freeze(Settings.current_recruitment_cycle_year, 8, 1) do
         example.run
