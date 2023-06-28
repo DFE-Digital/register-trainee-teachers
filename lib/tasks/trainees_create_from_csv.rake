@@ -18,7 +18,6 @@ namespace :trainees do
       Rails.logger.error("error on row #{i + 1}: #{e.message}")
       Sentry.capture_exception(e)
     end
-
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.error("Provider not found with code #{args.provider_code}")
     Sentry.capture_exception(e)
