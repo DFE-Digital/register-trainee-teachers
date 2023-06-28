@@ -1,11 +1,15 @@
 import tracker from '../../components/form_components/tracker.js'
+jest.useFakeTimers('modern')
 
 describe('tracker', () => {
   beforeAll(() => {
-    jest.spyOn(Date, 'now').mockImplementation(() => Date.now())
+    jest.useFakeTimers('modern')
   })
 
-  afterAll(() => { jest.restoreAllMocks() })
+  afterAll(() => {
+    jest.restoreAllMocks()
+    jest.useRealTimers()
+  })
 
   describe('trackSearch', () => {
     it('pushes a search into the searches array', () => {
@@ -36,7 +40,7 @@ describe('tracker', () => {
           failedSearches: ['flower'],
           successfulSearch: undefined,
           match: undefined,
-          timeTaken: undefined
+          timeTaken: 0
         })
       })
     })

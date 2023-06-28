@@ -21,6 +21,8 @@ module.exports = {
   roots: ['app/webpacker'],
   testEnvironment: 'jsdom',
   testMatch: ['**/app/webpacker/**/*.spec.js'],
-  testURL: 'http://localhost/',
+  testEnvironmentOptions: {
+    url: 'http://localhost/'
+  },
   testPathIgnorePatterns: []
 }
