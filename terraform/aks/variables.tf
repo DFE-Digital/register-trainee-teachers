@@ -11,7 +11,7 @@ variable "paas_app_environment" {}
 
 variable "paas_app_docker_image" {}
 
-variable "paas_snapshot_databases_to_deploy" { default = 0 }
+variable "snapshot_databases_to_deploy" { default = 0 }
 
 variable "prometheus_app" { default = null }
 
@@ -123,11 +123,12 @@ locals {
   app_secrets = merge(
     local.kv_app_secrets,
     {
-      DATABASE_URL        = module.postgres.url
-      BLAZER_DATABASE_URL = module.postgres.url
-      REDIS_QUEUE_URL     = module.redis-queue.url
-      REDIS_CACHE_URL     = module.redis-cache.url
-    }
+      DATABASE_URL          = module.postgres.url
+      BLAZER_DATABASE_URL   = module.postgres.url
+      REDIS_QUEUE_URL       = module.redis-queue.url
+      REDIS_CACHE_URL       = module.redis-cache.url
+    },
+    var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {}
   )
 }
 
