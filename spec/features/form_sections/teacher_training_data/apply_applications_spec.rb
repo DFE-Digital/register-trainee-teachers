@@ -14,6 +14,14 @@ feature "apply registrations" do
     given_i_am_on_the_review_draft_page
   end
 
+  before do
+    FormStore.clear_all(trainee.id)
+  end
+
+  after do
+    FormStore.clear_all(trainee.id)
+  end
+
   describe "with a missing course code against the trainee" do
     let(:subjects) { ["History"] }
 
