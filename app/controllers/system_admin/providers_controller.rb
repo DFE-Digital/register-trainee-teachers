@@ -5,7 +5,14 @@ module SystemAdmin
     before_action :set_provider, only: %i[show edit update]
 
     def index
-      @providers = authorize(Provider.all.order(:name))
+      @providers = authorize(
+        Provider
+          .select("providers.*, count(users.id) as user_count")
+          .left_outer_joins(:users)
+          .where("users.discarded_at": nil)
+          .group("providers.id")
+          .order(:name),
+      )
     end
 
     def show
