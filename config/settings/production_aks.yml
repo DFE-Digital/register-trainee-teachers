@@ -40,7 +40,7 @@ features:
   google:
     send_data_to_big_query: false
   integrate_with_dqt: false
-  hesa_trn_requests: true
+  hesa_trn_requests: false
   hesa_import:
     sync_collection: true
     sync_trn_data: true
