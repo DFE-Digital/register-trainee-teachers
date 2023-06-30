@@ -17,7 +17,7 @@ module Trainees
         return redirect_to(next_step_path)
       end
 
-      @subject = course_subjects[position - 1]
+      @subject = subject_for_position(position)
       @subject_specialism_form = SubjectSpecialismForm.new(trainee, position)
     end
 
@@ -27,7 +27,7 @@ module Trainees
       if @subject_specialism_form.stash_or_save!
         redirect_to(next_step_path)
       else
-        @subject = course_subjects[position - 1]
+        @subject = subject_for_position(position)
         @specialisms = subject_specialisms_for_position(position)
 
         render(:edit)
@@ -64,7 +64,27 @@ module Trainees
     end
 
     def subject_specialisms_for_position(position)
-      subject_specialisms[course_subject_attribute_name(position)]
+      specialisms = subject_specialisms[course_subject_attribute_name(position)]
+
+      if specialisms.blank? && first_course_is_modern_language? && position == 3
+        specialisms = subject_specialisms[course_subject_attribute_name(position - 1)]
+      end
+
+      specialisms
+    end
+
+    def subject_for_position(position)
+      @subject = course_subjects[position - 1]
+
+      if @subject.blank? && first_course_is_modern_language? && position == 3
+        @subject = course_subjects[position - 2]
+      end
+
+      @subject
+    end
+
+    def first_course_is_modern_language?
+      course_subjects.first.downcase.include?("modern")
     end
 
     def course_subject_attribute_name(number = position)

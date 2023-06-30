@@ -20,9 +20,19 @@
         ) do %>
 
           <div class="govuk-hint" id="language-language-specialisms-form-language-specialisms-hint">
-            <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
-            <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
+            <% if non_language_subject.present? %>
+              <p class="govuk-body govuk-hint">
+                Choose the languages the trainee will study with <%= non_language_subject %>.
+              </p>
+              <p class="govuk-body govuk-hint">
+                Choose up to two.
+              </p>
+            <% else %>	
+              <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
+              <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
+            <% end %>	
           </div>
+
 
           <%=
             f.govuk_select(
@@ -41,13 +51,15 @@
             )
           %>
 
-          <%=
-            f.govuk_select(
-              :course_subject_three,
-              language_specialism_options,
-              label: { text: "Third language (optional)", size: "s" },
-            )
-          %>
+          <% unless non_language_subject.present? %>
+            <%=
+              f.govuk_select(
+                :course_subject_three,
+                language_specialism_options,
+                label: { text: "Third language (optional)", size: "s" },
+              )
+            %>
+          <% end %>
         <% end %>
       </div>
 

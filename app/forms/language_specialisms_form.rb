@@ -59,6 +59,10 @@ class LanguageSpecialismsForm < TraineeForm
     super
   end
 
+  def non_language_subject
+    @non_language_subject ||= (@trainee.published_course.subjects.map(&:name) - PUBLISH_MODERN_LANGUAGES).first
+  end
+
 private
 
   def compute_fields

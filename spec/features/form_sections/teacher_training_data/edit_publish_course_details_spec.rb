@@ -127,6 +127,28 @@ feature "publish course details", feature_publish_course_details: true do
         end
       end
 
+      context "with a course that requires selecting a non-language and language specialisms" do
+        let(:subjects) { ["Modern languages (other)", "Biology"] }
+        let!(:subject_specialism1) { create(:subject_specialism, name: "Welsh languages") }
+        let!(:subject_specialism2) { create(:subject_specialism, name: "Portuguese language") }
+        let!(:subject_specialism3) { create(:subject_specialism, name: "Biology") }
+
+        scenario "renders a 'completed' status when details fully provided" do
+          when_i_visit_the_publish_course_details_page
+          and_i_select_a_course
+          and_i_submit_the_form
+          and_i_select_languages("Welsh", "Portuguese")
+          and_i_submit_the_language_specialism_form
+          and_i_select_a_specialism("Biology")
+          and_i_submit_the_specialism_form
+          and_i_enter_itt_dates
+          then_i_should_see_the_subject_described_as("Welsh with Portuguese and biology")
+          and_i_confirm_the_course
+          and_i_visit_the_review_draft_page
+          then_the_section_should_be(completed)
+        end
+      end
+
       context "with a course that has a mixture of multiple specalism subjects single specialism ones" do
         let(:subjects) do
           [
@@ -309,10 +331,9 @@ feature "publish course details", feature_publish_course_details: true do
 
     def and_i_select_languages(*languages)
       %i[language_select_one language_select_two language_select_three].zip(languages).each do |select_element, language|
-        select(
-          language,
-          from: language_specialism_page.send(select_element)[:id],
-        )
+        if language.present?
+          select(language, from: language_specialism_page.send(select_element)[:id])
+        end
       end
     end
 

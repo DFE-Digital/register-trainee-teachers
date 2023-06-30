@@ -10,6 +10,7 @@ class CalculateSubjectSpecialismType
   def call
     return :primary if primary_subject?
     return :language if language_specialism?
+    return :language_and_other if any_language_specialism?
     return :single if single_subject?
 
     :multiple_subjects
@@ -23,6 +24,10 @@ private
     subject_is_modern_languages? || all_subjects_are_modern_languages?
   end
 
+  def any_language_specialism?
+    any_subjects_are_modern_languages?
+  end
+
   def primary_subject?
     single_subject? && subjects.first.include?(AllocationSubjects::PRIMARY)
   end
@@ -34,6 +39,10 @@ private
 
   def all_subjects_are_modern_languages?
     subjects.all? { |subject| PUBLISH_MODERN_LANGUAGES.include?(subject) }
+  end
+
+  def any_subjects_are_modern_languages?
+    subjects.any? { |subject| PUBLISH_MODERN_LANGUAGES.include?(subject) }
   end
 
   def single_subject?
