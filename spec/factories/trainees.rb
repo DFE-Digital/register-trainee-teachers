@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :abstract_trainee, class: "Trainee" do
     transient do
       randomise_subjects { false }
-      potential_itt_start_date { itt_start_date || compute_valid_itt_start_date }
+      potential_itt_start_date { itt_start_date || compute_valid_past_itt_start_date }
     end
 
     sequence :trainee_id do |n|
@@ -65,7 +65,7 @@ FactoryBot.define do
       disabled_with_disabilites_disclosed
       training_initiative { "transition_to_teach" }
       international_address { "Test addr" }
-      itt_start_date { compute_valid_itt_start_date }
+      itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date { itt_start_date + 2.years }
     end
 
@@ -228,13 +228,17 @@ FactoryBot.define do
       with_course_allocation_subject
     end
 
+    trait :with_valid_itt_start_date do
+      itt_start_date { compute_valid_itt_start_date }
+    end
+
     trait :with_course_allocation_subject do
       course_allocation_subject { SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject }
     end
 
     trait :with_study_mode_and_course_dates do
       study_mode { TRAINEE_STUDY_MODE_ENUMS.keys.sample }
-      itt_start_date { compute_valid_itt_start_date }
+      itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date do
         additional_years = if [2, 9, 10].include?(training_route)
                              3
@@ -273,7 +277,7 @@ FactoryBot.define do
         if itt_start_date.present?
           Faker::Date.between(from: itt_start_date, to: itt_start_date + rand(20).days)
         else
-          compute_valid_itt_start_date
+          compute_valid_past_itt_start_date
         end
       end
     end

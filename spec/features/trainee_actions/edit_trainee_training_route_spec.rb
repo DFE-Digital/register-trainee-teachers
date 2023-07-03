@@ -5,7 +5,7 @@ require "rails_helper"
 feature "editing a trainee training route" do
   background do
     given_i_am_authenticated
-    given_a_trainee_exists(traits)
+    given_a_trainee_exists(*traits)
   end
 
   context "draft-trainee" do
@@ -51,7 +51,9 @@ feature "editing a trainee training route" do
       end
 
       context "and the route has published courses" do
-        scenario "redirects to the publish course path" do
+        let(:traits) { %i[completed with_valid_itt_start_date] }
+
+        scenario "redirects to the publish course path", feature_show_draft_trainee_course_year_choice: false do
           and_i_select_school_direct_salaried
           and_i_submit_the_new_route
           then_i_am_redirected_to_the_publish_course_details_path

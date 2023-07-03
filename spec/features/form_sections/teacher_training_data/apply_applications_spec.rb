@@ -14,10 +14,18 @@ feature "apply registrations" do
     given_i_am_on_the_review_draft_page
   end
 
+  before do
+    FormStore.clear_all(trainee.id)
+  end
+
+  after do
+    FormStore.clear_all(trainee.id)
+  end
+
   describe "with a missing course code against the trainee" do
     let(:subjects) { ["History"] }
 
-    scenario "reviewing course" do
+    scenario "reviewing course", feature_show_draft_trainee_course_year_choice: false do
       given_the_trainee_does_not_have_a_course_uuid
       when_i_enter_the_course_details_page
       then_i_am_on_the_publish_course_details_page
@@ -37,17 +45,25 @@ feature "apply registrations" do
       then_i_am_redirected_to_the_review_draft_page
     end
 
-    scenario "changing course with a different route via the confirm course page" do
-      given_my_provider_has_courses_for_other_training_routes
-      when_i_enter_the_course_details_page
-      and_i_confirm_the_course_details
-      and_i_enter_itt_dates
-      when_i_click_change_course_on_the_confirm_course_page
-      and_i_select_a_different_route
-      and_i_choose_a_course_on_a_different_route
-      and_i_enter_itt_dates
-      and_i_confirm_the_course
-      then_the_school_direct_training_route_is_the_route
+    context "non overlapping `Academic Cycles`", feature_show_draft_trainee_course_year_choice: false do
+      around do |example|
+        Timecop.freeze(Settings.current_recruitment_cycle_year, 8, 1) do
+          example.run
+        end
+      end
+
+      scenario "changing course with a different route via the confirm course page" do
+        given_my_provider_has_courses_for_other_training_routes
+        when_i_enter_the_course_details_page
+        and_i_confirm_the_course_details
+        and_i_enter_itt_dates
+        when_i_click_change_course_on_the_confirm_course_page
+        and_i_select_a_different_route
+        and_i_choose_a_course_on_a_different_route
+        and_i_enter_itt_dates
+        and_i_confirm_the_course
+        then_the_school_direct_training_route_is_the_route
+      end
     end
   end
 
@@ -89,6 +105,7 @@ private
   def and_a_trainee_exists_created_from_apply
     given_a_trainee_exists(:with_apply_application,
                            :with_related_courses,
+                           :with_valid_itt_start_date,
                            courses_count: 1,
                            subject_names: subjects,
                            training_route: training_route)

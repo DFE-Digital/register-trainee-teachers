@@ -78,7 +78,7 @@ features:
   # For the 3 months prior to an academic cycle, we're not sure
   # which year the user wants courses listed for. This feature
   # makes sure the correct year is selected before listing courses.
-  show_draft_trainee_course_year_choice: false
+  show_draft_trainee_course_year_choice: true
 dfe_sign_in:
   # Our service name
   identifier: rtt
@@ -93,7 +93,7 @@ apply_api:
   base_url: "https://www.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: "auth-token-from-env"
 
-current_recruitment_cycle_year: 2022
+current_recruitment_cycle_year: 2023
 current_default_course_year: 2023
 
 apply_applications:
