@@ -8,7 +8,7 @@ module Withdrawal
       *ExtraInformationForm::FIELDS,
     ].freeze
 
-    attr_reader(:trainee, :reasons_form, :extra_information_form, :date_form)
+    attr_reader(:trainee, :reasons_form, :extra_information_form, :date_form, :start_date_form)
     attr_accessor(*FIELDS)
 
     delegate :id, to: :trainee
@@ -19,6 +19,7 @@ module Withdrawal
       @reasons_form = ReasonForm.new(trainee)
       @extra_information_form = ExtraInformationForm.new(trainee)
       @date_form = DateForm.new(trainee)
+      @start_date_form = ::TraineeStartStatusForm.new(trainee)
       @fields = compute_fields
       assign_attributes(fields)
     end
@@ -39,6 +40,10 @@ module Withdrawal
       @valid = withdrawal_forms.all?(&:valid?)
     end
 
+    def trainee_start_date
+      start_date_form&.trainee_start_date || trainee.trainee_start_date
+    end
+
   private
 
     def withdrawal_forms
@@ -46,7 +51,12 @@ module Withdrawal
         extra_information_form,
         reasons_form,
         date_form,
-      ]
+        (start_date_form unless exclude_start_date_form?),
+      ].compact
+    end
+
+    def exclude_start_date_form?
+      start_date_form.trainee_start_date == trainee.trainee_start_date
     end
 
     def save_forms

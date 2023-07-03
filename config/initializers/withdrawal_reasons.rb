@@ -14,7 +14,7 @@ module WithdrawalReasons
   HEALTH_REASONS = "health_reasons"
   FOR_ANOTHER_REASON = "for_another_reason"
 
-  # New reasons
+  # New reasons June 2023 https://trello.com/c/HPlzoKk1/5423
   FINANCIAL_PROBLEMS = "financial_problems"
   ANOTHER_REASON = "another_reason"
   GOT_A_JOB = "got_a_job"

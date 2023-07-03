@@ -20,9 +20,9 @@ module Withdrawal
         start_date,
         withdraw_date,
         reasons,
-        details,
+        (details if data_model.withdraw_reasons_details.present?),
         details_dfe,
-      ]
+      ].compact
     end
 
   private
@@ -31,7 +31,7 @@ module Withdrawal
 
     def start_date
       mappable_field(
-        trainee.trainee_start_date.strftime(Date::DATE_FORMATS[:govuk]),
+        data_model.trainee_start_date&.strftime(Date::DATE_FORMATS[:govuk]),
         "Trainee start date",
         (trainee_start_date_verification_path(trainee, context: :withdraw) unless deferred),
       )
@@ -69,10 +69,18 @@ module Withdrawal
 
     def details_dfe
       mappable_field(
-        data_model.withdraw_reasons_dfe_details,
-        "What the Department for Education could have done",
+        data_model.withdraw_reasons_dfe_details.presence || "No",
+        details_dfe_label,
         edit_trainee_withdrawal_extra_information_path(trainee),
       )
+    end
+
+    def details_dfe_label
+      if data_model.withdraw_reasons_dfe_details.blank?
+        "Could the Department for Education have done anything to avoid the candidate withdrawing?"
+      else
+        "What the Department for Education could have done"
+      end
     end
 
     def mappable_field(field_value, field_label, action_url)

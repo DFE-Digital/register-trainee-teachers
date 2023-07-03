@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
@@ -247,6 +248,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.index ["code", "accredited_body_code"], name: "index_courses_on_code_and_accredited_body_code"
     t.index ["recruitment_cycle_year"], name: "index_courses_on_recruitment_cycle_year"
     t.index ["uuid"], name: "index_courses_on_uuid", unique: true
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "degrees", force: :cascade do |t|
@@ -818,8 +822,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.string "record_source"
     t.bigint "hesa_trn_submission_id"
     t.string "iqts_country"
-    t.string "withdraw_reasons_dfe_details"
     t.boolean "hesa_editable", default: false
+    t.string "withdraw_reasons_dfe_details"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -883,7 +887,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
   end
 
   create_table "withdrawal_reasons", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_withdrawal_reasons_on_name", unique: true
