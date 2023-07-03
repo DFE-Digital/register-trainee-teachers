@@ -6,6 +6,7 @@ class BaseTraineeController < ApplicationController
     filter_params
     filters
     filtered_trainees
+    filtered_trainees_count
     academic_cycle_options
     available_record_sources
     show_source_filters?
@@ -31,7 +32,7 @@ class BaseTraineeController < ApplicationController
       format.html
       format.js { render(json: json_response) }
       format.csv do
-        if current_user.system_admin? && filtered_trainees.count > Settings.trainee_export.record_limit
+        if current_user.system_admin? && filtered_trainees_count > Settings.trainee_export.record_limit
           return redirect_to(
             search_path(filter_params),
             flash: { warning: "System admins cannot export more than #{Settings.trainee_export.record_limit} trainees" },
@@ -76,10 +77,10 @@ private
   end
 
   def total_trainees_count
-    if filtered_trainees.count == unfiltered_trainees.count
-      filtered_trainees.count.to_s
+    if filtered_trainees_count == unfiltered_trainees_count
+      filtered_trainees_count.to_s
     else
-      "#{filtered_trainees.count} of #{unfiltered_trainees.count}"
+      "#{filtered_trainees_count} of #{unfiltered_trainees_count}"
     end
   end
 
@@ -118,11 +119,19 @@ private
     )
   end
 
+  def filtered_trainees_count
+    @filtered_trainees_count ||= filtered_trainees.count
+  end
+
   def unfiltered_trainees
     @unfiltered_trainees ||= Trainees::Filter.call(
       trainees: policy_scope(trainee_search_scope),
       filters: {},
     )
+  end
+
+  def unfiltered_trainees_count
+    @unfiltered_trainees_count ||= unfiltered_trainees.count
   end
 
   def field
