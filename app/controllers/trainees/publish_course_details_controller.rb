@@ -55,7 +55,7 @@ module Trainees
       @year ||= params[:year].presence ||
         trainee.published_course&.recruitment_cycle_year ||
         trainee.start_academic_cycle&.start_year ||
-        Settings.current_default_course_year
+        Settings.current_recruitment_cycle_year
     end
 
     def course_uuid

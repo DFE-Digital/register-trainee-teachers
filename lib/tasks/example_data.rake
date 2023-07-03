@@ -80,9 +80,9 @@ namespace :example_data do
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
 
     recruitment_cycle_years = [
-      Settings.current_default_course_year - 1,
-      Settings.current_default_course_year,
-      Settings.current_default_course_year + 1,
+      Settings.current_recruitment_cycle_year - 1,
+      Settings.current_recruitment_cycle_year,
+      Settings.current_recruitment_cycle_year + 1,
     ]
 
     # For each persona...
@@ -177,14 +177,14 @@ namespace :example_data do
                 # Make *roughly* half of draft trainees apply drafts
                 if sample_index >= sample_size / 2
                   # Create apply drafts for *next* academic cycle
-                  courses = courses.where(recruitment_cycle_year: Settings.current_default_course_year + 1)
+                  courses = courses.where(recruitment_cycle_year: Settings.current_recruitment_cycle_year + 1)
 
                   attrs.merge!(
                     apply_application: FactoryBot.build(:apply_application, accredited_body_code: provider.code),
                   )
                 else
                   # Create manual drafts for *current* academic cycle
-                  courses = courses.where(recruitment_cycle_year: Settings.current_default_course_year)
+                  courses = courses.where(recruitment_cycle_year: Settings.current_recruitment_cycle_year)
                 end
               end
 
