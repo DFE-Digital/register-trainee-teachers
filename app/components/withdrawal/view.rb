@@ -61,7 +61,7 @@ module Withdrawal
 
     def details
       mappable_field(
-        data_model.withdraw_reasons_details,
+        data_model.withdraw_reasons_details.presence || "-",
         "Details of why the trainee withdrew",
         edit_trainee_withdrawal_extra_information_path(trainee),
       )

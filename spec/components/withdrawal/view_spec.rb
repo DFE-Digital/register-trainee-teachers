@@ -14,7 +14,7 @@ describe Withdrawal::View do
   let(:data_model) do
     OpenStruct.new(
       trainee: trainee,
-      itt_start_date: trainee.trainee_start_date,
+      trainee_start_date: trainee.trainee_start_date,
       withdraw_date: withdraw_date,
       withdrawal_reasons: withdrawal_reasons,
       withdraw_reasons_details: withdraw_reasons_details,
