@@ -10,16 +10,16 @@ module PageObjects
 
       STATUS_COMPLETED = "Status completed"
 
-      section :personal_details, PageObjects::Sections::PersonalDetails, ".personal-details"
-      section :apply_trainee_data, PageObjects::Sections::ApplyTraineeData, ".trainee-data"
+      section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
+      section :apply_trainee_data, PageObjects::Sections::ApplyTraineeData, ".app-task-list__item.trainee-data"
       section :contact_details, PageObjects::Sections::ContactDetails, ".contact-details"
-      section :diversity_section, PageObjects::Sections::Diversity, ".diversity-details"
+      section :diversity_section, PageObjects::Sections::Diversity, ".app-task-list__item.diversity-details"
       section :degree_details, PageObjects::Sections::DegreeDetails, ".degree-details"
-      section :course_details, PageObjects::Sections::CourseDetails, ".course-details"
+      section :course_details, PageObjects::Sections::CourseDetails, ".app-task-list__item.course-details"
       section :training_details, PageObjects::Sections::TrainingDetails, ".training-details"
-      section :funding_section, PageObjects::Sections::Funding, ".funding"
-      section :lead_and_employing_schools_section, PageObjects::Sections::SchoolsDetails, ".school-details"
-      section :iqts_country_section, PageObjects::Sections::IqtsCountry, ".iqts-country-details"
+      section :funding_section, PageObjects::Sections::Funding, ".app-task-list__item.funding"
+      section :lead_and_employing_schools_section, PageObjects::Sections::SchoolsDetails, ".app-task-list__item.school-details"
+      section :iqts_country_section, PageObjects::Sections::IqtsCountry, ".app-task-list__item.iqts-country-details"
 
       element :review_this_record_link, "#check-details"
       element :delete_this_draft_link, ".app-link--warning"
