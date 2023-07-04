@@ -20,7 +20,7 @@ module Withdrawal
         start_date,
         withdraw_date,
         reasons,
-        (details if data_model.withdraw_reasons_details.present?),
+        details,
         details_dfe,
       ].compact
     end

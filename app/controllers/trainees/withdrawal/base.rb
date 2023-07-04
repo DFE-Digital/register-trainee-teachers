@@ -11,6 +11,7 @@ module Trainees
 
       def update
         @form = form_class.new(trainee, params: form_params)
+
         if form.stash_or_save!
           redirect_to(next_page)
         else
