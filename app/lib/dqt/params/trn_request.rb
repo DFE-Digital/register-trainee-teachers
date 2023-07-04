@@ -115,7 +115,7 @@ module Dqt
       def initial_teacher_training_params
         {
           "providerUkprn" => trainee.provider.ukprn,
-          "programmeStartDate" => trainee.itt_start_date.iso8601,
+          "programmeStartDate" => trainee.itt_start_date&.iso8601,
           "programmeEndDate" => itt_end_date&.iso8601,
           "programmeType" => PROGRAMME_TYPE[trainee.training_route],
           "subject1" => course_subject_code(trainee.course_subject_one),
