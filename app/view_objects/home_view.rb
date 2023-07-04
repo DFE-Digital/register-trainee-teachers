@@ -8,6 +8,7 @@ class HomeView
   def initialize(trainees, current_user)
     @trainees = Trainees::Filter.call(trainees: trainees, filters: {})
     @current_user = current_user
+    @trainees_cache_key_with_version = @trainees.cache_key_with_version
 
     create_badges
 
@@ -21,13 +22,13 @@ class HomeView
   Badge = Struct.new(:status, :trainee_count, :link)
 
   def draft_trainees_count
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_trainees_count") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/draft_trainees_count") do
       trainees.draft.size
     end
   end
 
   def draft_apply_trainees_count
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/draft_apply_trainees_count") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/draft_apply_trainees_count") do
       trainees.draft.with_apply_application.size
     end
   end
@@ -49,16 +50,16 @@ class HomeView
 
 private
 
-  attr_reader :trainees
+  attr_reader :trainees, :trainees_cache_key_with_version
 
   def awarded_this_year_size
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/awarded_this_year") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/awarded_this_year") do
       trainees.awarded.merge(current_academic_cycle.trainees_ending).size
     end
   end
 
   def bulk_recommend_count
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/bulk_recommend_count") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/bulk_recommend_count") do
       Pundit.policy_scope(current_user, FindBulkRecommendTrainees.call).count
     end
   end
@@ -118,13 +119,13 @@ private
   end
 
   def course_not_yet_started_size
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/course_not_yet_started_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/course_not_yet_started_size") do
       trainees.course_not_yet_started.size
     end
   end
 
   def deferred_size
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/deferred_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/deferred_size") do
       trainees.deferred.size
     end
   end
@@ -142,13 +143,13 @@ private
   end
 
   def incomplete_size
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/incomplete_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/incomplete_size") do
       trainees.not_draft.incomplete.size
     end
   end
 
   def trainees_in_training_size
-    Rails.cache.fetch("#{@trainees.cache_key_with_version}/trainees_in_training_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/trainees_in_training_size") do
       trainees.in_training.size
     end
   end
