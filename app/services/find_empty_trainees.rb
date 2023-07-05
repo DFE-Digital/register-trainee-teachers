@@ -86,8 +86,8 @@ private
     trainees
       .draft
       .where(trainee_id: nil)
-      .includes(:degrees, :disabilities, :nationalities)
-      .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil })
+      .includes(:degrees, :disabilities, :nationalities, :withdrawal_reasons)
+      .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil }, withdrawal_reasons: { id: nil })
       .where(empty_fields_query)
   end
 
