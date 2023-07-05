@@ -90,6 +90,7 @@
     <main class="govuk-main-wrapper " id="main-content" role="main">
       <%= yield :start_page_banner %>
       <div class="govuk-width-container">
+        <%= render(YearChangeBanner::View.new) %>
         <%= render(FlashBanner::View.new(flash: flash, trainee: @trainee)) %>
         <%= yield %>
       </div>
