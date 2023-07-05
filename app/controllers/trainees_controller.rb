@@ -61,7 +61,7 @@ private
   end
 
   def trainee_search_scope
-    Trainee.includes({ provider: [:courses] }, :start_academic_cycle, :end_academic_cycle).not_draft
+    Trainee.includes({ provider: [:courses] }, :start_academic_cycle, :apply_application, :end_academic_cycle).not_draft
   end
 
   def export_results_path
