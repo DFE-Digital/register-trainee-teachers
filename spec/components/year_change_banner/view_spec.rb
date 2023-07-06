@@ -7,6 +7,7 @@ describe YearChangeBanner::View do
 
   before do
     Timecop.freeze(current_date) do
+      create(:academic_cycle)
       @result = render_inline(YearChangeBanner::View.new)
     end
   end
