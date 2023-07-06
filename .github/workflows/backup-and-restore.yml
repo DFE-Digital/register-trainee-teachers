@@ -8,8 +8,6 @@ on:
         type: choice
         default: qa
         options:
-          - qa
-          - staging
           - productiondata
           - production
 
