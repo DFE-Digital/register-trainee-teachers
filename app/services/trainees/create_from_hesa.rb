@@ -23,7 +23,7 @@ module Trainees
       # Skip if we have no record to take action on e.g create or update
       return if trainee.blank?
 
-      Audited.audit_class.as_user(USERNAME) do
+      Audited.audit_model.as_user(USERNAME) do
         trainee.assign_attributes(mapped_attributes)
 
         if trainee.save!
