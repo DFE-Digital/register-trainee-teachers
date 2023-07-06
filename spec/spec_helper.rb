@@ -56,4 +56,20 @@ RSpec.configure do |config|
       Capybara.reset!
     end
   end
+
+  use_next_academic_year = ENV.fetch("USE_NEXT_ACADEMIC_YEAR", false) == "true"
+
+  config.around do |example|
+    if use_next_academic_year
+      Timecop.travel(current_academic_year + 1, 8, 1) do
+        example.run
+      end
+    else
+      example.run
+    end
+  end
+
+  config.after do
+    Timecop.return if use_next_academic_year
+  end
 end
