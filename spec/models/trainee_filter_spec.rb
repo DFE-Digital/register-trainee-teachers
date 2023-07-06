@@ -47,8 +47,21 @@ describe TraineeFilter do
       end
     end
 
-    context "with academic years" do
-      let(:academic_year_filter) { "2021" }
+    context "with previous academic years" do
+      let(:academic_year_filter) do
+        build(:academic_cycle, previous_cycle: true).start_year.to_s
+      end
+      let(:params) { { academic_year: [academic_year_filter] } }
+
+      it "applies the academic year" do
+        expect(subject.filters).to eq({ "academic_year" => [academic_year_filter] })
+      end
+    end
+
+    context "with current academic years" do
+      let(:academic_year_filter) do
+        build(:academic_cycle, :current).start_year.to_s
+      end
       let(:params) { { academic_year: [academic_year_filter] } }
 
       it "applies the academic year" do
