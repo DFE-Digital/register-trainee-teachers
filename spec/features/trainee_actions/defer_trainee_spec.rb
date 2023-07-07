@@ -30,7 +30,7 @@ feature "Deferring a trainee" do
       then_the_defer_date_is_updated
     end
 
-    scenario "choosing yesterday" do
+    scenario "choosing yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
       when_i_choose_yesterday
       and_i_continue
       then_i_am_redirected_to_deferral_confirmation_page

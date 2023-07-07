@@ -37,7 +37,7 @@ feature "Recording a training outcome" do
     then_the_outcome_date_is_updated
   end
 
-  scenario "choosing yesterday records the outcome" do
+  scenario "choosing yesterday records the outcome", skip: skip_test_due_to_first_day_of_current_academic_year? do
     given_a_trainee_exists(:trn_received)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
