@@ -71,7 +71,6 @@ feature "apply registrations" do
     let(:subjects) { ["Art and design"] }
 
     scenario "selecting specialisms" do
-      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")
@@ -85,7 +84,6 @@ feature "apply registrations" do
     let(:subjects) { ["Modern languages (other)"] }
 
     scenario "selecting languages" do
-      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
       and_i_choose_my_languages
