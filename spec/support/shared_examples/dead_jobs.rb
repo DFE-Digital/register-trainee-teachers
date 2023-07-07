@@ -5,6 +5,8 @@ require "rails_helper"
 RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
   let(:job_id) { SecureRandom.hex }
   let(:trainee) { create(:trainee, :completed, :trn_received, sex: "female", hesa_id: 1) }
+  let!(:dqt_teacher) { create(:dqt_teacher, :with_teacher_training, trn: trainee.trn) }
+  let(:dqt_teacher_training) { dqt_teacher.dqt_trainings.first }
   let(:csv) { CSV.parse(subject.to_csv, headers: true) }
 
   let(:dead_set) do
@@ -26,37 +28,14 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
     ]
   end
 
-  let(:dqt_response) do
-    { "trn" => "1234567",
-      "firstName" => "Bobby",
-      "lastName" => "Burger",
-      "middleName" => "Chrystal",
-      "dateOfBirth" => "1989-11-01",
-      "hasActiveSanctions" => false,
-      "initialTeacherTraining" =>
-      [{ "programmeStartDate" => "2022-09-03",
-         "programmeEndDate" => "2023-07-01",
-         "programmeType" => "InternationalQualifiedTeacherStatus",
-         "result" => "InTraining",
-         "provider" => { "ukprn" => "10007159" },
-         "husId" => nil,
-         "active" => true }] }
-  end
-
   let(:dqt_response_humanised) do
     <<~TEXT
-      trn: 1234567
-      firstName: Bobby
-      lastName: Burger
-      middleName: Chrystal
-      dateOfBirth: 1989-11-01
-      hasActiveSanctions: false
-      initialTeacherTraining: [{"programmeStartDate"=>"2022-09-03", "programmeEndDate"=>"2023-07-01", "programmeType"=>"InternationalQualifiedTeacherStatus", "result"=>"InTraining", "provider"=>{"ukprn"=>"10007159"}, "husId"=>nil, "active"=>true}]
+      trn: #{dqt_teacher.trn}
+      first_name: #{dqt_teacher.first_name}
+      last_name: #{dqt_teacher.last_name}
+      date_of_birth: #{dqt_teacher.date_of_birth}
+      dqt_teacher_trainings: [{"programme_start_date"=>"#{dqt_teacher_training.programme_start_date}", "programme_end_date"=>"#{dqt_teacher_training.programme_end_date}", "programme_type"=>"#{dqt_teacher_training.programme_type}", "result"=>"#{dqt_teacher_training.result}", "provider_ukprn"=>"#{dqt_teacher_training.provider_ukprn}", "hesa_id"=>"#{dqt_teacher_training.hesa_id}", "active"=>#{dqt_teacher_training.active}}]
     TEXT
-  end
-
-  before do
-    allow(Dqt::RetrieveTeacher).to receive(:call).with(trainee:).and_return(dqt_response)
   end
 
   subject { described_class.new(dead_set: dead_set, include_dqt_status: true) }

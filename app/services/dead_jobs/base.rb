@@ -35,7 +35,7 @@ module DeadJobs
     end
 
     def trainees
-      Trainee.includes(:provider).find(dead_jobs.keys)
+      Trainee.includes(:provider, :dqt_teacher, :dqt_teacher_trainings).find(dead_jobs.keys)
     end
 
     delegate :count, to: :dead_jobs
@@ -87,9 +87,14 @@ module DeadJobs
     def dqt(trainee)
       return unless include_dqt_status && trainee.trn.present?
 
-      flatten_hash(Dqt::RetrieveTeacher.call(trainee:))
-    rescue StandardError => e
-      "error: #{e.message}"
+      dqt_teacher_keys = %w[trn first_name last_name middle_name date_of_birth]
+      dqt_teacher_training_keys = %w[programme_start_date programme_end_date programme_type result provider_ukprn hesa_id active]
+
+      flatten_hash(
+        trainee.dqt_teacher.attributes.slice(*dqt_teacher_keys).merge(
+          dqt_teacher_trainings: trainee.dqt_teacher_trainings.map { |tt| tt.attributes.slice(*dqt_teacher_training_keys) },
+        ),
+      )
     end
 
     def dead_jobs
