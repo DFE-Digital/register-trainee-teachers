@@ -10,6 +10,13 @@ DELETE FROM "funding_payment_schedule_row_amounts";
 DELETE FROM "funding_trainee_summaries";
 DELETE FROM "funding_trainee_summary_rows";
 DELETE FROM "funding_trainee_summary_row_amounts";
+DELETE FROM "uploads";
+DELETE FROM "active_storage_attachments";
+DELETE FROM "active_storage_blobs";
+DELETE FROM "active_storage_variant_records";
+DELETE FROM "bulk_update_recommendations_upload_rows";
+DELETE FROM "bulk_update_recommendations_uploads";
+DELETE FROM "bulk_update_row_errors";
 
 -- Users
 UPDATE "users"
