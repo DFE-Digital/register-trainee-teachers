@@ -9,7 +9,7 @@ class CalculateSubjectSpecialismType
 
   def call
     return :primary if primary_subject?
-    return :language if language_specialism?
+    return :language if language_only_specialism?
     return :language_and_other if any_subjects_are_modern_languages?
     return :single if single_subject?
 
@@ -20,7 +20,7 @@ private
 
   attr_reader :subjects
 
-  def language_specialism?
+  def language_only_specialism?
     subject_is_modern_languages? || all_subjects_are_modern_languages?
   end
 
