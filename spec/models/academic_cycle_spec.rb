@@ -160,23 +160,23 @@ describe AcademicCycle do
     end
 
     let(:past_academic_year) { create(:academic_cycle, cycle_year: 2019) }
-    let(:current_academic_year) { create(:academic_cycle, cycle_year: 2020) }
+    let(:expected_current_academic_year) { create(:academic_cycle, cycle_year: 2020) }
     let(:future_academic_year) { create(:academic_cycle, cycle_year: 2021) }
 
     before do
       past_academic_year
-      current_academic_year
+      expected_current_academic_year
       future_academic_year
     end
 
     subject { described_class.current }
 
-    it { is_expected.to eq(current_academic_year) }
+    it { is_expected.to eq(expected_current_academic_year) }
 
     describe ".previous" do
       subject { described_class.previous }
 
-      it { is_expected.to eq(past_academic_year) }
+      it { expect(subject).to eq(past_academic_year) }
     end
   end
 end
