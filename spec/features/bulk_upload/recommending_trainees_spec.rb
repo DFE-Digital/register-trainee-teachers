@@ -20,8 +20,8 @@ feature "recommending trainees" do
     let(:write_to_disk) { true }
     let(:overwrite) do # one valid date for each trainee created in `given_two_trainees_exist_to_recommend`
       [
-        { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
-        { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+        { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
+        { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
       ]
     end
 
@@ -49,7 +49,7 @@ feature "recommending trainees" do
     context "and I upload a CSV missing dates" do
       let(:overwrite) do # a valid date for the first trainee created in `given_two_trainees_exist_to_recommend`
         [
-          { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+          { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
         ]
       end
 
@@ -80,7 +80,7 @@ feature "recommending trainees" do
       let(:overwrite) do # one valid, and one invalid date for trainees created in `given_two_trainees_exist_to_recommend`
         [
           { Reports::BulkRecommendReport::DATE => Date.tomorrow.strftime("%d/%m/%Y") },
-          { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+          { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
         ]
       end
 

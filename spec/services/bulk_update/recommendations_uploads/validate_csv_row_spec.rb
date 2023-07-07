@@ -125,7 +125,7 @@ module BulkUpdate
         # generate and overwrite dates within a BulkRecommendExport CSV
         let(:overwrite) do
           [
-            { Reports::BulkRecommendReport::DATE => Date.yesterday.strftime("%d/%m/%Y") },
+            { Reports::BulkRecommendReport::DATE => Time.zone.now.strftime("%d/%m/%Y") },
           ]
         end
 
