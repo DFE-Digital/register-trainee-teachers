@@ -17,7 +17,7 @@ module PageObjects
         element :add_provider, "a.add-user-to-provider"
         element :add_lead_school, "a.add-user-lead-school"
         element :delete_user, "a", text: "Delete this user"
-        element :flash_message, ".govuk-notification-banner__header"
+        element :flash_message, ".app-flash .govuk-notification-banner__header"
       end
     end
   end
