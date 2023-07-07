@@ -15,10 +15,11 @@ class LanguageSpecialismsForm < TraineeForm
 
   attr_accessor(*FIELDS)
 
-  validate :language_specialism_count
+  validate :language_specialism_count, :language_specialism_duplicates
 
   def initialize(trainee, params: {}, user: nil, store: FormStore)
     params.merge!(course_subjects(params[:language_specialisms]))
+
     super(trainee, params:, user:, store:)
   end
 
@@ -58,6 +59,10 @@ class LanguageSpecialismsForm < TraineeForm
     super
   end
 
+  def non_language_subject
+    @non_language_subject ||= (@trainee.published_course.subjects.map(&:name) - PUBLISH_MODERN_LANGUAGES).first
+  end
+
 private
 
   def compute_fields
@@ -76,10 +81,14 @@ private
   end
 
   def language_specialism_count
-    if language_specialisms.empty?
-      errors.add(:language_specialisms, :blank)
-    elsif language_specialisms.length > 3
-      errors.add(:language_specialisms, :invalid)
+    if course_subject_one.blank?
+      errors.add(:course_subject_one, :blank)
+    end
+  end
+
+  def language_specialism_duplicates
+    if languages.count > languages.uniq.count
+      errors.add(:course_subject_one, :invalid)
     end
   end
 

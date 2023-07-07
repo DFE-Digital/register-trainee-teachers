@@ -13,24 +13,52 @@
 
       <%= render TraineeName::View.new(@trainee) %>
       <div class="govuk-form-group">
-        <%= f.govuk_check_boxes_fieldset :language_specialisms,
-                                          legend: { text: t(".heading"), tag: "h1", size: "l" },
-                                          classes: "language-specialisms" do %>
+
+        <%= f.govuk_fieldset(
+          legend: { text: t(".heading"), tag: "h1", size: "l" },
+          classes: "language-specialisms"
+        ) do %>
 
           <div class="govuk-hint" id="language-language-specialisms-form-language-specialisms-hint">
-            <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
-            <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
+            <% if non_language_subject.present? %>
+              <p class="govuk-body govuk-hint">
+                Choose the languages the trainee will study with <%= non_language_subject %>.
+              </p>
+              <p class="govuk-body govuk-hint">
+                Choose up to two.
+              </p>
+            <% else %>	
+              <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
+              <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
+            <% end %>	
           </div>
 
-          <% sort_languages(@language_specialisms).each_with_index do |language, index| %>
-            <%= f.govuk_check_box(
-                :language_specialisms,
-                language,
-                multiple: true,
-                link_errors: index.zero?,
-                checked: f.object.languages.include?(language),
-                label: { text: format_language(language).upcase_first },
-              ) %>
+
+          <%=
+            f.govuk_select(
+              :course_subject_one,
+              language_specialism_options,
+              label: { text: "First language", size: "s" },
+              include_blank: true,
+            )
+          %>
+
+          <%=
+            f.govuk_select(
+              :course_subject_two,
+              language_specialism_options,
+              label: { text: "Second language (optional)", size: "s" },
+            )
+          %>
+
+          <% unless non_language_subject.present? %>
+            <%=
+              f.govuk_select(
+                :course_subject_three,
+                language_specialism_options,
+                label: { text: "Third language (optional)", size: "s" },
+              )
+            %>
           <% end %>
         <% end %>
       </div>

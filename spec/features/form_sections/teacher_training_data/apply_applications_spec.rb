@@ -71,7 +71,6 @@ feature "apply registrations" do
     let(:subjects) { ["Art and design"] }
 
     scenario "selecting specialisms" do
-      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       when_i_enter_the_course_details_page
       and_i_confirm_the_course_details
       and_i_select_a_specialism("Graphic design")
@@ -90,7 +89,7 @@ feature "apply registrations" do
       and_i_choose_my_languages
       and_i_enter_itt_dates
       then_i_am_redirected_to_the_apply_applications_confirm_course_page
-      and_i_should_see_the_subject_specialism("Modern languages")
+      and_i_should_see_the_subject_specialism("Welsh with Portuguese")
     end
   end
 
@@ -113,10 +112,6 @@ private
     Course.first.tap do |course|
       trainee.update(course_uuid: course.uuid)
     end
-  end
-
-  def given_i_am_on_an_existing_course
-    given_a_trainee_exists(:with_apply_application, :with_publish_course_details)
   end
 
   def given_the_trainee_does_not_have_a_course_uuid
@@ -168,7 +163,8 @@ private
   end
 
   def and_i_choose_my_languages
-    language_specialism_page.language_specialism_options.first.check
+    select("Welsh", from: language_specialism_page.send(:language_select_one)[:id])
+    select("Portuguese", from: language_specialism_page.send(:language_select_two)[:id])
     language_specialism_page.submit_button.click
   end
 

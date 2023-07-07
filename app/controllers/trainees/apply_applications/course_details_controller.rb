@@ -36,9 +36,13 @@ module Trainees
       end
 
       def subject_specialism_path
-        return edit_trainee_language_specialisms_path(trainee) if specialism_type == :language
+        return edit_trainee_language_specialisms_path(trainee) if language_specialism?
 
         edit_trainee_subject_specialism_path(trainee, 1)
+      end
+
+      def language_specialism?
+        specialism_type == :language || specialism_type == :language_and_other
       end
 
       def specialism_type

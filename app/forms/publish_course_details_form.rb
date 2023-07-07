@@ -70,7 +70,7 @@ class PublishCourseDetailsForm < TraineeForm
   end
 
   def language_specialism?
-    specialism_type == :language
+    %i[language language_and_other].include?(specialism_type)
   end
 
   def selected_specialisms

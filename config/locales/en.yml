@@ -1351,9 +1351,9 @@ en:
               invalid: Enter an email address in the correct format, like name@example.com
         language_specialisms_form:
           attributes:
-            language_specialisms:
+            course_subject_one:
               blank: Select at least one language
-              invalid: Select a maximum of three languages
+              invalid: You must select different languages
         bulk_update/recommendations_upload_form:
           attributes:
             file:
