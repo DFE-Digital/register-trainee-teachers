@@ -25,7 +25,7 @@ feature "edit training initiative" do
   end
 
   scenario "edit with valid parameters on the early_years_postgrad route" do
-    given_a_trainee_exists(:early_years_postgrad, itt_start_date: 1.day.ago)
+    given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
     when_i_visit_the_training_initiative_page
     and_i_update_the_training_initiative
     and_i_submit_the_form

@@ -8,7 +8,7 @@ feature "edit bursary" do
   let(:course_subject) { CourseSubjects::LAW }
 
   scenario "edit with valid parameters" do
-    given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject, itt_start_date: 1.day.ago)
+    given_a_trainee_exists(:provider_led_postgrad, :with_valid_itt_start_date, course_subject_one: course_subject)
     and_a_bursary_exists_for_their_subject
     when_i_visit_the_bursary_page
     and_i_choose_applying_for_bursary
@@ -18,7 +18,7 @@ feature "edit bursary" do
   end
 
   scenario "submitting with invalid parameters" do
-    given_a_trainee_exists(:provider_led_postgrad, course_subject_one: course_subject, itt_start_date: 1.day.ago)
+    given_a_trainee_exists(:provider_led_postgrad, :with_valid_itt_start_date, course_subject_one: course_subject)
     and_a_bursary_exists_for_their_subject
     when_i_visit_the_bursary_page
     and_i_submit_the_form
@@ -26,7 +26,7 @@ feature "edit bursary" do
   end
 
   scenario "edit with valid parameters for tiered bursary" do
-    given_a_trainee_exists(:early_years_postgrad, itt_start_date: 1.day.ago)
+    given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
     when_i_visit_the_bursary_page
     and_i_choose_the_applicable_bursary_tier
 
