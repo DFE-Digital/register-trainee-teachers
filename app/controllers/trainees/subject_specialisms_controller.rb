@@ -64,8 +64,12 @@ module Trainees
     end
 
     def subject_specialisms_for_position(position)
+      # Fetch the specialisms for the given position
       specialisms = subject_specialisms[course_subject_attribute_name(position)]
 
+      # If there are no specialisms in the given position and the first
+      # course is a modern language and the position is 3, then use the
+      # specialisms for the previous position instead
       if specialisms.blank? && first_course_is_modern_language? && position == 3
         specialisms = subject_specialisms[course_subject_attribute_name(position - 1)]
       end
@@ -74,8 +78,12 @@ module Trainees
     end
 
     def subject_for_position(position)
+      # Fetch the subject for the given position
       @subject = course_subjects[position - 1]
 
+      # If there is no subject in the given position and the first course is
+      # a modern language and the position is 3, then use the subject for the
+      # previous position instead
       if @subject.blank? && first_course_is_modern_language? && position == 3
         @subject = course_subjects[position - 2]
       end
