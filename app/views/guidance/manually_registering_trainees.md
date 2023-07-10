@@ -5,21 +5,23 @@ title: Register trainees manually in this service
 
 Training providers can register their trainees manually in the Register service by creating draft trainee records and adding the required data about your trainees.
 
-Get prepared for adding a trainee record manually by [checking what data you need to provide](/guidance/check-data).
+To prepare for adding trainee records manually [check what data you need to provide](/guidance/check-data).
 
 ## How trainees are grouped on the Register homepage
 
-When you log into Register, on the homepage you’ll see a section called ‘Draft trainees’ and a section called ‘Registered trainees’. Under ‘Registered trainees’ there are ‘training statuses’ where trainees are grouped by:
+When you sign into Register you will see ‘Draft trainees’ and ‘Registered trainees’ sections on the homepage.
 
-* course not started yet (trainees who are registered but their course has not started)
-* in training (all trainees currently doing training, excluding those on courses that have not started or are deferred)
-* currently deferred
-* awarded this year (all trainees awarded QTS or EYTS in the current academic year)
-* incomplete records (registered trainees that are missing data)
+‘Registered trainees’ are grouped by the following ‘training statuses’:
 
-## Getting a teacher reference number (TRN)
+* **‘Course not started yet’** - trainees who are registered but their course has not started
+* **‘In training’** - all trainees currently doing training, excluding those on courses that have not started or are deferred
+* **‘Currently deferred’**
+* **‘Awarded this year’** - all trainees awarded QTS or EYTS in the current academic year
+* **‘Incomplete records’** - registered trainees that are missing data
 
-Once a draft is complete, you can request a TRN for each trainee record. This is when the trainee becomes registered with the Department for Education.
+## Get a teacher reference number (TRN)
+
+Once a draft is complete, you can request a TRN for each trainee record. This is when the trainee becomes registered with the Department for Education (DfE).
 
 Trainees will receive their TRN by email.
 
@@ -29,9 +31,9 @@ When an application reaches the ‘recruited’ status in Apply, it will be impo
 
 Applications from Apply will import into Register every day at 4:00am. This is called the ‘Apply integration’.
 
-An application imported from Apply into Register will become a draft trainee record. You can find these records on the homepage under ‘Draft trainees’ at the link called ‘View draft trainees imported from Apply’. You should not need to manually duplicate applications from Apply into Register.
+Applications imported from Apply into Register will become draft trainee records. You can find these records on the homepage under ‘Draft trainees’ at the link called ‘View draft trainees imported from Apply’. You should not need to manually duplicate applications from Apply into Register.
 
-On a trainee record from Apply, you’ll see:
+On a trainee record from Apply you’ll see:
 
 * the course the trainee applied for
 * the trainee’s personal details
@@ -42,18 +44,14 @@ To register trainees that come from Apply, you’ll need to check if their data 
 
 * checking their course is correct (if their course has changed, you can update this in Register)
 * fixing any mistakes that you know of
-* providing any further training data like if the trainee will get funding or who their lead or employing school will be
+* providing any further training data, such as if the trainee will get funding or who their lead or employing school will be
 
-Once an application is imported into Register, any changes you make to the application in Apply (after it’s in ‘recruited’ status) will not show in Register. Changes to trainee data in Register will also not reflect in Apply. At the moment, our integration only works to bring applications into Register.
+Note, once an application is imported into Register, any changes you make to the application in Apply (after it’s in ‘recruited’ status) will not show in Register. Changes to trainee data in Register will also not reflect in Apply. At the moment, our integration only works to bring applications into Register.
 
-## Checking your trainee data to make sure it’s correct
+## Check your trainee data to make sure it’s correct
 
-There are 3 ways to do this in Register and you can choose whichever one suits you. These are:
+There are 3 ways to check trainee data in Register. Choose whichever one of the following that suits you:
 
-* using the new ‘Reports’ section and exporting a CSV of your new trainees for the 2022 to 2023 academic year
-* exporting a CSV of your trainees in the ‘Registered trainees’ section, using the ‘start year’ filter to select the current academic year
-* checking your trainees directly in the service one by one
-
-
-
-
+* Use the new ‘Reports’ section and export a CSV of your new trainees for the current academic year
+* Export a CSV of your trainees in the ‘Registered trainees’ section, using the ‘start year’ filter to select the current academic year
+* Check your trainees directly in the service one by one
