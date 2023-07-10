@@ -63,15 +63,15 @@ The ITT census happens in September and October every year. We‘ll notify you a
 
 At the start of every academic year, during September and October, you’ll need to register your new trainees and sign off your new trainee data. You need to sign off your data so we know it’s accurate for the ITT census publication. This must be done before the end of October.
 
-Find out what the [dates and deadlines are for the 2023 to 2024 academic year](https://www.register-trainee-teachers.service.gov.uk/guidance/dates-and-deadlines).
+Find out what the [dates and deadlines are for the 2023 to 2024 academic year](/guidance/dates-and-deadlines).
 
 Training providers that do not use the Higher Education Statistics Agency (HESA) data collection system should register their trainees manually in the Register service.
 
-Find out how to [register your trainees manually](https://www.register-trainee-teachers.service.gov.uk/guidance/manually-registering-trainees).
+Find out how to [register your trainees manually](/guidance/manually-registering-trainees).
 
 Training providers who use HESA should submit their data through HESA. Your data will then be imported into Register where you can check and sign it off.
 
-Read more about how to [register your trainees through HESA](https://www.register-trainee-teachers.service.gov.uk/guidance/registering-trainees-through-hesa).
+Read more about how to [register your trainees through HESA](/guidance/registering-trainees-through-hesa).
 
 ### Who you must register
 
