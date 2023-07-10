@@ -1,6 +1,6 @@
 ---
-page_title: Registering trainees through HESA
-title: Registering trainees through HESA (Higher Education Statistics Agency)
+page_title: Register trainees through HESA
+title: Register trainees through HESA (Higher Education Statistics Agency)
 ---
 
 Training providers that use HESA can submit data through the HESA data collection system to register their trainees.  
