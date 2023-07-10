@@ -1,6 +1,6 @@
 ---
-page_title: Registering trainees manually in Register
-title: Registering trainees manually in this service
+page_title: Register trainees manually in this service
+title: Register trainees manually in this service
 ---
 
 Training providers can register their trainees manually in the Register service by creating draft trainee records and adding the required data about your trainees.
