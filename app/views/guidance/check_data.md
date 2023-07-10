@@ -5,7 +5,7 @@ title: Check what data you need to provide to register trainees manually
 
 This information is mainly for school centred initial teacher training providers (SCITTs) that use this service to manually register their trainees.
 
-You’ll need the following information about a trainee to complete their record manually in Register.
+You’ll need the following information about a trainee to register them manually in Register.
 
 ## Personal details
 
@@ -123,4 +123,4 @@ Whether the trainee is on a training initiative
 
 {inset-text}You should keep a record of the location of the trainee’s placements.
 
-You cannot currently provide this data but you’ll be asked to provide it later in the 2022 to 2023 academic year.{/inset-text}
+You cannot currently provide this data but you’ll be asked to provide it later in the 2023 to 2024 academic year.{/inset-text}
