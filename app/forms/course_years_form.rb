@@ -11,6 +11,9 @@ class CourseYearsForm
 
   def initialize(trainee: nil, params: {})
     assign_attributes(params)
+    @course_year ||= AcademicCycle.for_date(
+      Time.zone.now + Trainees::SetAcademicCycles::DEFAULT_CYCLE_OFFSET,
+    )&.start_date&.year
     @trainee = trainee
   end
 

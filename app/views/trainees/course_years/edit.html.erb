@@ -18,7 +18,6 @@
         <%= f.govuk_radio_buttons_fieldset :course_year, legend: { text: t(".heading"), tag: "h1", size: "l" } do %>
           <% f.object.course_years_options.each do |val, name| %>
             <%= f.govuk_radio_button :course_year, val,
-              checked: (val == params[:year].to_i),
               label: { text: name },
               link_errors: false %>
           <% end %>
