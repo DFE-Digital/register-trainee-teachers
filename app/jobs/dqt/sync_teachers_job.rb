@@ -7,7 +7,9 @@ module Dqt
     def perform(batch_size = 500, interval = 30.seconds)
       return unless FeatureService.enabled?("dqt_import.sync_teachers")
 
-      trainees = Trainee.where.not(trn: nil).where("length(trn) = 7").in_training.or(Trainee.deferred)
+      trainees = Trainee.where.not(trn: nil).where("length(trn) = 7").in_training.or(
+        Trainee.where.not(trn: nil).where("length(trn) = 7").deferred,
+      )
 
       trainees.find_in_batches(batch_size:).with_index do |group, batch|
         # The API rate limit is 3000 requests per minute so by default we're
