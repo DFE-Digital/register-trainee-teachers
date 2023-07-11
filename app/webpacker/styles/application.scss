@@ -122,3 +122,7 @@ body:not(.js-enabled) .app-js-only {
 .link--delete {
   color: govuk-colour("red") !important;
 }
+
+.app-start-page-banner + .govuk-width-container > .govuk-notification-banner {
+  margin-top: 40px;
+}
