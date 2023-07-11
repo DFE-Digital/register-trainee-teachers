@@ -85,7 +85,7 @@ module DeadJobs
     end
 
     def dqt(trainee)
-      return unless include_dqt_status && trainee.trn.present?
+      return unless include_dqt_status && trainee.trn.present? && dqt_record_available?(trainee)
 
       dqt_teacher_keys = %w[trn first_name last_name middle_name date_of_birth]
       dqt_teacher_training_keys = %w[programme_start_date programme_end_date programme_type result provider_ukprn hesa_id active]
@@ -139,6 +139,10 @@ module DeadJobs
         end
       end
       result
+    end
+
+    def dqt_record_available?(trainee)
+      trainee.dqt_teacher.present? && trainee.dqt_teacher_trainings.present?
     end
   end
 end
