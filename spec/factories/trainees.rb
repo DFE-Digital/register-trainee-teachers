@@ -560,7 +560,7 @@ FactoryBot.define do
       applying_for_bursary { true }
 
       after(:create) do |trainee, evaluator|
-        funding_method = create(:funding_method, :bursary, :with_subjects, training_route: :provider_led_postgrad)
+        funding_method = create(:funding_method, :bursary, :with_subjects, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
         funding_method.amount = evaluator.funding_amount if evaluator.funding_amount.present?
         funding_method.save
 
@@ -574,7 +574,7 @@ FactoryBot.define do
       applying_for_grant { true }
 
       after(:create) do |trainee, _|
-        funding_method = create(:funding_method, :grant, :with_subjects, training_route: :early_years_salaried)
+        funding_method = create(:funding_method, :grant, :with_subjects, training_route: :early_years_salaried, academic_cycle: trainee.start_academic_cycle)
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
         trainee.trainee_start_date = funding_method.academic_cycle.start_date
@@ -585,7 +585,7 @@ FactoryBot.define do
       applying_for_scholarship { true }
 
       after(:create) do |trainee, _|
-        funding_method = create(:funding_method, :scholarship, :with_subjects, training_route: :provider_led_postgrad)
+        funding_method = create(:funding_method, :scholarship, :with_subjects, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
         trainee.training_route = funding_method.training_route
         trainee.trainee_start_date = funding_method.academic_cycle.start_date
@@ -600,7 +600,7 @@ FactoryBot.define do
       applying_for_grant { true }
 
       after(:create) do |trainee, evaluator|
-        funding_method = create(:funding_method, :grant, :with_subjects, training_route: :provider_led_postgrad)
+        funding_method = create(:funding_method, :grant, :with_subjects, training_route: :provider_led_postgrad, academic_cycle: trainee.start_academic_cycle)
         funding_method.amount = evaluator.funding_amount if evaluator.funding_amount.present?
         funding_method.save
 
