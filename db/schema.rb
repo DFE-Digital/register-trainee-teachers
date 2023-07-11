@@ -231,9 +231,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
-    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
+    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -668,8 +668,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.string "accreditation_id"
     t.index ["accreditation_id"], name: "index_providers_on_accreditation_id", unique: true
@@ -731,6 +731,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.index ["trainee_id"], name: "index_trainee_disabilities_on_trainee_id"
   end
 
+  create_table "trainee_withdrawal_reasons", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.bigint "withdrawal_reason_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trainee_id", "withdrawal_reason_id"], name: "uniq_idx_trainee_withdawal_reasons", unique: true
+    t.index ["trainee_id"], name: "index_trainee_withdrawal_reasons_on_trainee_id"
+    t.index ["withdrawal_reason_id"], name: "index_trainee_withdrawal_reasons_on_withdrawal_reason_id"
+  end
+
   create_table "trainees", force: :cascade do |t|
     t.text "trainee_id"
     t.text "first_names"
@@ -766,7 +776,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.integer "state", default: 0
     t.integer "withdraw_reason"
     t.datetime "withdraw_date", precision: nil
-    t.string "additional_withdraw_reason"
+    t.string "withdraw_reasons_details"
     t.date "defer_date"
     t.citext "slug", null: false
     t.datetime "recommended_for_award_at", precision: nil
@@ -782,14 +792,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.integer "training_initiative"
     t.boolean "applying_for_bursary"
+    t.integer "training_initiative"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.boolean "applying_for_scholarship"
     t.integer "course_education_phase"
+    t.boolean "applying_for_scholarship"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false
@@ -809,6 +819,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.bigint "hesa_trn_submission_id"
     t.string "iqts_country"
     t.boolean "hesa_editable", default: false
+    t.string "withdraw_reasons_dfe_details"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -871,6 +882,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.index ["user_id"], name: "index_validation_errors_on_user_id"
   end
 
+  create_table "withdrawal_reasons", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_withdrawal_reasons_on_name", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
@@ -891,6 +909,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
+  add_foreign_key "trainee_withdrawal_reasons", "trainees"
+  add_foreign_key "trainee_withdrawal_reasons", "withdrawal_reasons"
   add_foreign_key "trainees", "academic_cycles", column: "end_academic_cycle_id"
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"

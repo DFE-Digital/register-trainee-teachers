@@ -214,11 +214,6 @@ namespace :example_data do
               attrs.merge!(trainee_start_date: nil)
             end
 
-            # Make *roughly* 75% of submitted_for_trn trainees have trainee withdraw reason
-            if state == :withdrawn && sample_index < sample_size * 75.0 / 100
-              attrs.merge!(withdraw_reason: (WithdrawalReasons::SPECIFIC + ["unknown"]).sample)
-            end
-
             # Make 75% of drafts (both apply and manual) incomplete
             if state == :draft && (sample_index < sample_size * 75.0 / 100)
               attrs.merge!(
@@ -269,6 +264,11 @@ namespace :example_data do
             end
 
             trainee.save!
+
+            # Make *roughly* 75% of submitted_for_trn trainees have trainee withdraw reason
+            if state == :withdrawn && sample_index < sample_size * 75.0 / 100
+              trainee.withdrawal_reasons << WithdrawalReason.find_by_name(WithdrawalReasons::REASONS.sample)
+            end
           end
         end
       end

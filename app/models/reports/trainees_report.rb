@@ -80,8 +80,9 @@ module Reports
          defer_date
          return_from_deferral_date
          withdraw_date
-         withdraw_reason
-         additional_withdraw_reason]
+         withdraw_reasons
+         withdraw_reasons_details
+         withdraw_reasons_dfe_details]
     end
 
     alias trainees scope
@@ -107,7 +108,8 @@ module Reports
                                        :start_academic_cycle,
                                        :trainee_disabilities,
                                        { placements: :school },
-                                       :hesa_students).in_batches.each_record do |trainee|
+                                       :hesa_students,
+                                       :withdrawal_reasons).in_batches.each_record do |trainee|
         add_trainee_to_csv(trainee)
       end
     end
@@ -196,8 +198,9 @@ module Reports
         trainee_report.defer_date,
         trainee_report.return_from_deferral_date,
         trainee_report.withdraw_date,
-        trainee_report.withdraw_reason,
-        trainee_report.additional_withdraw_reason,
+        trainee_report.withdraw_reasons,
+        trainee_report.withdraw_reasons_details,
+        trainee_report.withdraw_reasons_dfe_details,
       ].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end

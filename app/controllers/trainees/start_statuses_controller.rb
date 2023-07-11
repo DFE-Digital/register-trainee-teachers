@@ -41,9 +41,13 @@ module Trainees
     def relevant_redirect_path
       return trainee_forbidden_deletes_path(trainee) if @trainee_start_status_form.deleting?
 
-      return trainee_confirm_withdrawal_path(trainee) if trainee_start_date_before_withdrawal_date?
+      if trainee_start_date_before_withdrawal_date?
+        @trainee_start_status_form.save!
 
-      return trainee_withdrawal_path(trainee) if @trainee_start_status_form.withdrawing?
+        return edit_trainee_withdrawal_confirm_detail_path(trainee)
+      end
+
+      return edit_trainee_withdrawal_date_path(trainee) if @trainee_start_status_form.withdrawing?
 
       if @trainee_start_status_form.deferring?
         return trainee_deferral_path(trainee) if @trainee_start_status_form.needs_deferral_date?
@@ -55,7 +59,7 @@ module Trainees
     end
 
     def trainee_start_date_before_withdrawal_date?
-      withdrawal_date = WithdrawalForm.new(trainee).date
+      withdrawal_date = ::Withdrawal::DateForm.new(trainee).date
 
       return false unless withdrawal_date
 

@@ -258,6 +258,8 @@ shared:
     - updated_at
     - withdraw_date
     - withdraw_reason
+    - withdraw_reasons_details
+    - withdraw_reasons_dfe_details
     - hesa_trn_submission_id
     - hesa_editable
   users:
@@ -290,3 +292,14 @@ shared:
     - postcode
     - created_at
     - updated_at
+  :withdrawal_reasons:
+  - id
+  - created_at
+  - updated_at
+  - name
+  :trainee_withdrawal_reasons:
+  - id
+  - trainee_id
+  - withdrawal_reason_id
+  - created_at
+  - updated_at

@@ -14,7 +14,7 @@
 
 <% if @trainee.withdrawn? %>
   <div class="withdrawal-details">
-    <%= render WithdrawalDetails::View.new(WithdrawalForm.new(@trainee), editable: trainee_editable?, omit_start_date_row: true) %>
+    <%= render Withdrawal::View.new(data_model: @trainee, undo_withdrawal: trainee_editable?) %>
   </div>
 <% end %>
 

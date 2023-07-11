@@ -7,7 +7,6 @@
 #  id                              :bigint           not null, primary key
 #  additional_dttp_data            :jsonb
 #  additional_ethnic_background    :text
-#  additional_withdraw_reason      :string
 #  address_line_one                :text
 #  address_line_two                :text
 #  applying_for_bursary            :boolean
@@ -67,6 +66,8 @@
 #  trn                             :string
 #  withdraw_date                   :datetime
 #  withdraw_reason                 :integer
+#  withdraw_reasons_details        :string
+#  withdraw_reasons_dfe_details    :string
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  apply_application_id            :bigint
@@ -179,6 +180,9 @@ class Trainee < ApplicationRecord
            inverse_of: :trainee
 
   has_many :placements, dependent: :destroy, inverse_of: :trainee
+
+  has_many :trainee_withdrawal_reasons, inverse_of: :trainee
+  has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
 
   attribute :progress, Progress.to_type
 
@@ -362,13 +366,13 @@ class Trainee < ApplicationRecord
     :ethnic_background,
     :additional_ethnic_background,
     :trn,
-    :additional_withdraw_reason,
+    :withdraw_reasons_details,
+    :withdraw_reasons_dfe_details,
     :region,
     :hesa_id,
     :course_subject_one,
     :course_subject_two,
     :course_subject_three,
-    :additional_withdraw_reason,
     squish: true,
     nullify: false,
   )

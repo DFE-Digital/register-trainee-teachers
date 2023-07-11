@@ -28,9 +28,6 @@ class FindEmptyTrainees
     trainees.itt_end_date
     trainees.trn
     trainees.submitted_for_trn_at
-    trainees.withdraw_reason
-    trainees.withdraw_date
-    trainees.additional_withdraw_reason
     trainees.defer_date
     trainees.recommended_for_award_at
     trainees.trainee_start_date
@@ -89,8 +86,8 @@ private
     trainees
       .draft
       .where(trainee_id: nil)
-      .includes(:degrees, :disabilities, :nationalities)
-      .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil })
+      .includes(:degrees, :disabilities, :nationalities, :withdrawal_reasons)
+      .where(degrees: { id: nil }, disabilities: { id: nil }, nationalities: { id: nil }, withdrawal_reasons: { id: nil })
       .where(empty_fields_query)
   end
 

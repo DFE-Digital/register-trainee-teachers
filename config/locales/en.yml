@@ -168,6 +168,28 @@ en:
         blank: No route provided
       trainee_name:
         blank: Draft record
+    withdrawal_details:
+      summary_title: Withdrawal details
+      withdrawal_date: "%{date} (date of deferral)"
+      trainee_start_date_label: Trainee start date
+      withdraw_date_label: Date of withdrawal
+      withdraw_reason_label: Reason for withdrawal
+      reasons: &withdrawal_reasons
+        could_not_give_enough_time: Could not give enough time to course
+        course_was_not_suitable: Course was not suitable for them
+        did_not_make_progress: Did not make progress in course
+        did_not_meet_entry_requirements: Did not meet entry requirements
+        does_not_want_to_become_a_teacher: Does not want to become a teacher
+        family_problems: Family problems
+        financial_problems: Financial problems
+        got_a_job: Got a job
+        problems_with_their_health: Problems with their health
+        stopped_responding_to_messages: Stopped responding to messages
+        teaching_placement_problems: Teaching placement problems
+        unacceptable_behaviour: Unacceptable behaviour
+        unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
+        another_reason: Another reason
+        unknown: Unknown
     confirmation:
       not_provided_from_hesa_update: Not provided from HESA update
       missing: missing
@@ -224,25 +246,6 @@ en:
       reinstatement_details:
         reinstate_date_label: Date of return
         summary_title: Reinstatement details
-      withdrawal_details:
-        summary_title: Withdrawal details
-        withdrawal_date: "%{date} (date of deferral)"
-        trainee_start_date_label: Trainee start date
-        withdraw_date_label: Date of withdrawal
-        withdraw_reason_label: Reason for withdrawal
-        reasons: &withdrawal_reasons
-          death: Death
-          did_not_pass_assessment: Did not pass the assessment
-          did_not_pass_exams: Did not pass the exams
-          exclusion: Exclusion
-          financial_reasons: Financial reasons
-          for_another_reason: For another reason
-          gone_into_employment: Gone into employment
-          health_reasons: Health reasons
-          personal_reasons: Other personal reasons and dropped out
-          transferred_to_another_provider: Transferred to another provider
-          unknown: Unknown
-          written_off_after_lapse_of_time: Written off after lapse of time
       flash:
         diversity: disclosure
         disclosure: diversity information
@@ -1159,6 +1162,25 @@ en:
       edit:
         label: Which country or territory is the trainee studying in?
         hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time.
+    withdrawals:
+      dates:
+        edit:
+          heading: When did the trainee withdraw?
+      reasons:
+        edit:
+          heading: Why did the trainee withdraw from the course?
+      extra_informations:
+        edit:
+          heading: More details of why the trainee withdrew from the course
+          why_the_trainee_withdrew: Details about why the trainee withdrew (optional)
+          what_the_dfe_could_have_done: What the Department of Education could have done to prevent the trainee withdrawing (optional)
+      confirm_details:
+        edit:
+          heading: Check withdrawal details
+          confirm: Withdraw this trainee
+        update:
+          success: Trainee withdrawn
+          error: Unable to withdraw trainee, please message support
   activerecord:
     attributes:
       trainee:
@@ -1436,6 +1458,21 @@ en:
               not_valid: The disability disclosure section is not valid for this trainee
             disability_ids:
               not_valid: Trainee has been disclosed as disabled but no disabilities exist
+        withdrawal/reason_form:
+          attributes:
+            reason_ids:
+              blank: Select why the trainee withdrew from the course or select "Unknown"
+              unknown_exclusively: Select why the trainee withdrew from the course or select "Unknown"
+        withdrawal/date_form:
+          attributes:
+            date_string:
+              blank: Choose a withdrawal date
+        withdrawal/extra_information_form:
+          attributes:
+            withdraw_reasons_details:
+              too_long: Details about why the trainee withdrew must be 500 characters or less
+            withdraw_reasons_dfe_details:
+              too_long: What the Department for Education could have done must be x characters or less
         funding/training_initiatives_form:
           attributes:
             training_initiative:

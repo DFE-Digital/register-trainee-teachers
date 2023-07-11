@@ -141,8 +141,13 @@ Rails.application.routes.draw do
 
       resource :award_recommendations, only: %i[create]
 
-      resource :confirm_withdrawal, only: %i[show update], path: "/withdraw/confirm"
-      resource :withdrawal, only: %i[show update], path: "/withdraw"
+      namespace :withdrawal do
+        resource :date, only: %i[edit update]
+        resource :reason, only: %i[edit update]
+        resource :extra_information, only: %i[edit update], path: "extra-information"
+        resource :confirm_detail, only: %i[edit update], path: "confirm"
+      end
+
       resource :undo_withdrawal, only: %i[show edit update destroy], path: "undo-withdrawal" do
         scope module: :undo_withdrawals do
           resource :confirmation, only: %i[show update destroy]

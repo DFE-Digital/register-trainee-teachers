@@ -31,7 +31,6 @@
   - ethnic_group
   - ethnic_background
   - additional_ethnic_background
-  - additional_withdraw_reason
   - additional_dttp_data
   :active_storage_attachments:
   - id

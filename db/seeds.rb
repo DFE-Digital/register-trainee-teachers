@@ -24,6 +24,9 @@ Disability.upsert_all(
   unique_by: :name,
 )
 
+# load Withdrawal reasons
+WithdrawalReason.upsert_all(WithdrawalReasons::SEED, unique_by: :name)
+
 allocation_subjects = AllocationSubject.upsert_all(
   ALLOCATION_SUBJECT_SPECIALISM_MAPPING.keys.map do |allocation_subject|
     {

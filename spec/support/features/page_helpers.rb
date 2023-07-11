@@ -246,12 +246,20 @@ module Features
       @trainee_admin_page ||= PageObjects::Trainees::Admin.new
     end
 
-    def withdrawal_page
-      @withdrawal_page ||= PageObjects::Trainees::Withdrawal.new
+    def withdrawal_date_page
+      @withdrawal_date_page ||= PageObjects::Trainees::Withdrawal::Date.new
     end
 
-    def withdrawal_confirmation_page
-      @withdrawal_confirmation_page ||= PageObjects::Trainees::ConfirmWithdrawal.new
+    def withdrawal_reason_page
+      @withdrawal_reason_page ||= PageObjects::Trainees::Withdrawal::Reason.new
+    end
+
+    def withdrawal_extra_information_page
+      @withdrawal_extra_information_page ||= PageObjects::Trainees::Withdrawal::ExtraInformation.new
+    end
+
+    def withdrawal_confirm_detail_page
+      @withdrawal_confirm_detail_page ||= PageObjects::Trainees::Withdrawal::ConfirmDetail.new
     end
 
     def withdrawal_forbidden_page
