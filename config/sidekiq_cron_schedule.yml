@@ -39,7 +39,7 @@ sync_hesa_students:
   class: "Hesa::SyncStudentsJob"
   queue: hesa
 sync_dqt_teachers:
-  cron: "0 0 1 * *"
+  cron: "0 2 * * 1"
   class: "Dqt::SyncTeachersJob"
   queue: default
 remove_duplicate_dead_jobs:
