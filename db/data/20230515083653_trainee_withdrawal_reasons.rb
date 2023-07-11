@@ -22,10 +22,7 @@ class TraineeWithdrawalReasons < ActiveRecord::Migration[7.0]
     end
 
     # Perform bulk insert
-    TraineeWithdrawalReason.insert_all(trainee_withdrawal_reasons)
-
-    # Now nullify the old enum values
-    Trainee.update_all(withdraw_reason: nil)
+    TraineeWithdrawalReason.insert_all(trainee_withdrawal_reasons) unless trainee_withdrawal_reasons.empty?
   end
 
   def down
