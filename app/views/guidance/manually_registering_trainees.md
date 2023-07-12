@@ -3,7 +3,7 @@ page_title: Register trainees manually in this service
 title: Register trainees manually in this service
 ---
 
-Training providers can register their trainees manually in the Register service by creating draft trainee records and adding the required data about your trainees.
+Training providers can register their trainees manually in the Register trainee teachers (Register) service by creating draft trainee records and adding the required data.
 
 To prepare for adding trainee records manually [check what data you need to provide](/guidance/check-data).
 
@@ -27,9 +27,9 @@ Trainees will receive their TRN by email.
 
 ## Trainee records imported from the Apply for teacher training (Apply) service
 
-When an application reaches the ‘recruited’ status in Apply, it will be imported into Register. If an application has any conditions set, it will only reach recruited status in Apply once all conditions have been met.
+When an application reaches the ‘recruited’ status in Apply, it will be imported into Register. If an application has any conditions set, it will only reach the recruited status in Apply once all conditions have been met.
 
-Applications from Apply will import into Register every day at 4:00am. This is called the ‘Apply integration’.
+Applications from Apply will import into Register every day at 4am. This is called the ‘Apply integration’.
 
 Applications imported from Apply into Register will become draft trainee records. You can find these records on the homepage under ‘Draft trainees’ at the link called ‘View draft trainees imported from Apply’. You should not need to manually duplicate applications from Apply into Register.
 

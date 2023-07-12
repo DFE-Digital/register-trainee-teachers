@@ -9,13 +9,13 @@ Your trainee data will then be imported into the Register trainee teachers servi
 
 You’ll be able to view or export trainee data, including your trainees’ teacher reference numbers (TRNs).
 
-[Find out when you should submit your trainee data](/guidance/dates-and-deadlines).
+[Find out when you should submit your trainee data](/guidance/dates-and-deadlines)
 
 ## How trainees are grouped on the Register homepage
 
 When you sign into Register you will see ‘Draft trainees’ and ‘Registered trainees’ sections on the homepage.
 
-‘Registered trainees’ are grouped by the following ‘training statuses’:
+You can filter ‘Registered trainees’ by the following ‘training statuses’:
 
 * **‘Course not started yet’** - trainees who are registered but their course has not started
 * **‘In training’** - all trainees currently doing training, excluding those on courses that have not started or are deferred
@@ -35,4 +35,4 @@ In the CSV export from the ‘Registered trainees’ section, we’ve included a
 You can also export CSV files from the ‘Reports’ section when you need to sign off your:  
 
 * new trainees for the census in October  
-* trainee outcomess from the previous academic year for performance profiles in January
+* trainee outcomes from the previous academic year for performance profiles in January

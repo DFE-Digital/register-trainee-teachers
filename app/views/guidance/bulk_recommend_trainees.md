@@ -49,7 +49,7 @@ You can only bulk recommend trainees who met the QTS or EYTS standards in the pa
 If a trainee has not met the standards, you can choose to either:
 
 - delete the row 
-- leave the date blank in the CSV file.
+- leave the date blank in the CSV file
 
 Do not make any other changes to the CSV file.
 
