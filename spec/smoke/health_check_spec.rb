@@ -10,7 +10,9 @@ describe "system health check spec", smoke: true do
     subject(:response) { HTTParty.get(endpoint, verify: false) }
 
     it "returns HTTP success" do
-      expect(response).to have_http_status(:ok)
+      # rubocop:disable RSpec/Rails/HaveHttpStatus
+      expect(response.code).to eq(200)
+      # rubocop:enable RSpec/Rails/HaveHttpStatus
     end
 
     it "returns the expected response report" do
