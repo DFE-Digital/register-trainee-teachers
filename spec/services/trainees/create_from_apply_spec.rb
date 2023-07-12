@@ -96,6 +96,24 @@ module Trainees
       end
     end
 
+    context "trainee already exists but name differs by case" do
+      before do
+        create(
+          :trainee,
+          trainee_attributes.merge(
+            first_names: candidate_info["first_name"].upcase,
+            last_name: candidate_info["last_name"].downcase,
+          ),
+        )
+      end
+
+      it "marks the application as a duplicate" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("non_importable_duplicate")
+      end
+    end
+
     context "course doesn't exist" do
       let(:course_uuid) { "c6b9f9f0-f9f9-4f0f-b9e2-f9f9f9f9f9f9" }
 

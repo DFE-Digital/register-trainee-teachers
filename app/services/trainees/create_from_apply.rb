@@ -151,9 +151,13 @@ module Trainees
 
     def trainee_already_exists?
       scope = application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
-      scope.exists?(first_names: raw_trainee["first_name"],
-                    last_name: raw_trainee["last_name"],
-                    date_of_birth: raw_trainee["date_of_birth"])
+      scope
+        .where(date_of_birth: raw_trainee["date_of_birth"])
+        .exists?([
+          "first_names ILIKE ? AND last_name ILIKE ?",
+          raw_trainee["first_name"],
+          raw_trainee["last_name"],
+        ])
     end
 
     def ethnic_background_attributes
