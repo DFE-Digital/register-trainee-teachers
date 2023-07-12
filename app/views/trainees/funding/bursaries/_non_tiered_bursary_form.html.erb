@@ -3,21 +3,39 @@
 
   <%= render TraineeName::View.new(@trainee) %>
   <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.bursaries.edit") %></h1>
-  <p class="govuk-body">
-    <%= t(
-      (@trainee.early_years_route? ? "views.forms.funding.bursaries.non_tiered.early_years_description" : "views.forms.funding.bursaries.non_tiered.description"),
-      amount: format_currency(@bursary_form.bursary_amount),
-      subject: @bursary_form.allocation_subject_name,
-      training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
-    ) %>
-  </p>
+
+  <% if @bursary_form.can_apply_for_scholarship? %>
+
+    <p class="govuk-body">
+      <%= t("views.forms.funding.bursaries.scholarship_and_bursary.description", subject: @bursary_form.allocation_subject_name) %>
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li> <%= t("views.forms.funding.bursaries.scholarship_and_bursary.bursary", amount: format_currency(@bursary_form.bursary_amount)) %> </li>
+      <li> <%= t("views.forms.funding.bursaries.scholarship_and_bursary.scholarship", amount: format_currency(@bursary_form.scholarship_amount)) %> </li>
+    </ul>
+
+  <% else %>
+
+    <p class="govuk-body">
+      <%= t(
+        (@trainee.early_years_route? ? "views.forms.funding.bursaries.non_tiered.early_years_description" : "views.forms.funding.bursaries.non_tiered.description"),
+        amount: format_currency(@bursary_form.bursary_amount),
+        subject: @bursary_form.allocation_subject_name,
+        training_route: t("activerecord.attributes.trainee.training_routes.#{@trainee.training_route}"),
+      ) %>
+    </p>
+
+  <% end %>
 
   <p class="govuk-body">
+    You can 
     <%= govuk_link_to(
-      t("views.forms.funding.bursaries.guidance_link_text") + @bursary_form.funding_guidance_link_text,
+      t("views.forms.funding.bursaries.guidance_link_text"),
       t("views.forms.funding.bursaries.guidance_url") + @bursary_form.funding_guidance_url,
       { target: "_blank", rel: "noreferrer noopener" }
     ) %>
+    .
   </p>
 
   <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.non_tiered.title"), size: "m" }) do %>
@@ -29,12 +47,9 @@
       ) %>
 
       <% if @bursary_form.can_apply_for_scholarship? %>
-        <div class="govuk-radios__divider">or</div>
-
         <%= f.govuk_radio_button(
           :funding_type,
           FUNDING_TYPE_ENUMS[:scholarship],
-          hint: { text: t("views.forms.funding.funding_type.scholarship.hint", amount: format_currency(@bursary_form.scholarship_amount)) },
           label: { text: t("views.forms.funding.funding_type.scholarship.label") },
         ) %>
       <% end %>
@@ -42,7 +57,6 @@
       <%= f.govuk_radio_button(
         :funding_type,
         f.object.class::NONE_TYPE,
-        hint: { text: t("views.forms.funding.funding_type.bursary.none.hint") },
         label: { text: t("views.forms.funding.funding_type.bursary.none.label") },
       ) %>
   <% end %>
