@@ -361,6 +361,10 @@ describe Reports::TraineeReport do
     it "includes the return_from_deferral_date" do
       expect(subject.return_from_deferral_date).to eq(trainee.reinstate_date&.iso8601)
     end
+  end
+
+  context "when there is a withdrawn trainee" do
+    let(:trainee) { create(:trainee, :withdrawn_for_specific_reason) }
 
     it "includes the withdraw_date" do
       expect(subject.withdraw_date).to eq(trainee.withdraw_date&.to_date&.iso8601)
@@ -369,7 +373,7 @@ describe Reports::TraineeReport do
     it "includes the withdraw_reasons" do
       expect(subject.withdraw_reasons).to eq(
         trainee.withdrawal_reasons.map do |reason|
-          t("components.withdrawal_details.reasons.#{reason.name}")
+          I18n.t("components.withdrawal_details.reasons.#{reason.name}")
         end.join("\n"),
       )
     end
