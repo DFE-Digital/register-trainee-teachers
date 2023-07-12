@@ -368,28 +368,6 @@ jobs:
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
-  deploy-after-production:
-    name: Deployment after production
-    environment:
-      name: productiondata
-      url: ${{ steps.deploy_app_after_production.outputs.deploy-url }}
-    if: ${{ success() && github.ref == 'refs/heads/main' }}
-    needs: [deploy-production]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Deploy app to productiondata
-      id: deploy_app_after_production
-      uses: ./.github/actions/deploy/
-      with:
-        arm-access-key: ${{ secrets.ARM_ACCESS_KEY_PRODUCTIONDATA }}
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTIONDATA }}
-        environment: productiondata
-        sha: ${{ github.sha }}
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-
   deploy-aks-after-production:
     name: Deployment after production v2
     environment:
