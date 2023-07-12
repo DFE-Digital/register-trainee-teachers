@@ -29,7 +29,7 @@ class BulkUpdate::RecommendationsUpload < ApplicationRecord
   alias rows recommendations_upload_rows
 
   def awardable_rows
-    rows.where.not(standards_met_at: nil).where.missing(:row_errors)
+    rows.includes(:trainee).where.not(standards_met_at: nil).where.missing(:row_errors)
   end
 
   def empty_row_ids
