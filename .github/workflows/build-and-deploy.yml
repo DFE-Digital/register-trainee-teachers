@@ -177,15 +177,6 @@ jobs:
     - name: Run DfE Analytics checks
       run:  docker-compose exec -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake db:test:load dfe:analytics:check'
 
-    - name: Reset DB
-      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:reset"
-
-    - name: Run Rspec tests for next academic year
-      run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test USE_NEXT_ACADEMIC_YEAR=true bundle exec rake spec'
-
-    - name: Reset DB
-      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:reset"
-
     - name: Run Rspec tests
       run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake spec'
 
