@@ -46,12 +46,22 @@ private
     { "academic_year" => academic_year_options }
   end
 
-  def academic_year_options
-    current_academic_cycle ||= AcademicCycle.current
+  def current_academic_cycle
+    @current_academic_cycle ||= AcademicCycle.current
+  end
 
+  def current_start_year
+    @current_start_year ||= current_academic_cycle.start_year.to_s
+  end
+
+  def previous_start_year
+    @previous_start_year ||= (current_academic_cycle.start_year - 1).to_s
+  end
+
+  def academic_year_options
     return [] if current_academic_cycle.nil?
 
-    [current_academic_cycle.start_year.to_s, (current_academic_cycle.start_year - 1).to_s].each_with_object([]) do |option, arr|
+    [current_start_year, previous_start_year].each_with_object([]) do |option, arr|
       arr << option if params[:academic_year]&.include?(option)
     end
   end

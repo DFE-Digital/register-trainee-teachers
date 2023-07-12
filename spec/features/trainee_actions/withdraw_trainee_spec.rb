@@ -88,7 +88,7 @@ feature "Withdrawing a trainee" do
       end
     end
 
-    context "yesterday" do
+    context "yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
       let(:withdrawal_date) { Time.zone.yesterday }
 
       scenario "successfully" do
@@ -192,7 +192,7 @@ feature "Withdrawing a trainee" do
     then_the_duplicate_record_text_should_be_shown
   end
 
-  scenario "trainee is withdrawn and changes their start date to a date before the withdrawal date" do
+  scenario "trainee is withdrawn and changes their start date to a date before the withdrawal date", skip: skip_test_due_to_first_day_of_current_academic_year? do
     when_i_am_on_the_withdrawal_page
     and_i_choose_today
     and_i_continue(:date)
