@@ -6,7 +6,7 @@ module YearChangeBanner
 
     def initialize
       @today = Time.zone.today
-      super(classes: "", html_attributes: "")
+      # super(classes: "", html_attributes: "")
     end
 
     def render?
