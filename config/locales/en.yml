@@ -888,16 +888,20 @@ en:
             If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
           non_tiered:
-            description: The course you have selected has a bursary available of %{amount} for %{subject}. You need to check if the trainee is eligible for this bursary.
+            description: You can apply now for a %{amount} bursary for the trainee's %{subject} course. You must have checked that they’re eligible.
             early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
-            title: Do you want to apply for a bursary for this trainee?
+            title: Funding type
+          scholarship_and_bursary:
+            description: "The trainee may get funding for their %{subject} course if either:"
+            bursary: you apply now for a %{amount} bursary - you must have checked that they're eligible
+            scholarship: they apply for a %{amount} scholarship
           grant:
-            description: The course you have selected has a grant available of %{amount} for %{subject}. You need to check if the trainee is eligible for this grant.
+            description: The trainee can apply for a %{amount} grant for their %{subject} course.
             early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
-            title: Do you want to apply for a grant for this trainee?
+            title: Funding Type
           tiered:
-            description: Early years (postgrad) has a bursary available. You need to check if the trainee is eligible for this bursary.
-            title: Do you want to apply for a bursary for this trainee?
+            description: Early years (postgrad) has bursaries available. You need to check if the trainee is eligible for any of these.
+            title: Funding type
             tier_one:
               label: Yes - Tier 1 (£5,000)
               hint: First-class honours degree, doctoral degree, medical masters (distinction)
@@ -907,22 +911,20 @@ en:
             tier_three:
               label: Yes - Tier 3 (£2,000)
               hint: 2:2 honours degree
-          guidance_link_text: "Funding: initial teacher training (ITT), academic year "
+          guidance_link_text: check the funding rules for this academic year (opens in a new tab)
           guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-
         funding_type:
           bursary:
-            label: Yes, apply for a bursary
+            label: Bursary
             none:
-              label: No, do not apply for a bursary
-              hint: For example, the trainee is not eligible or is self-funded
+              label: None
           scholarship:
-            label: No, the trainee has applied for a scholarship
+            label: Scholarship
             hint: "%{amount} estimated scholarship"
           grant:
-            label: Yes, apply for a grant
+            label: Grant
             none:
-              label: No, do not apply for a grant
-              hint: For example, the trainee is not eligible or is self-funded
+              label: None
   pages:
     home:
       heading: Your trainee teachers

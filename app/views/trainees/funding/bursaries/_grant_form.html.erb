@@ -3,6 +3,7 @@
 
   <%= render TraineeName::View.new(@trainee) %>
   <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.grants.edit") %></h1>
+
   <p class="govuk-body">
     <%= t(
       (@trainee.early_years_route? ? "views.forms.funding.bursaries.grant.early_years_description" : "views.forms.funding.bursaries.grant.description"),
@@ -13,11 +14,12 @@
   </p>
 
   <p class="govuk-body">
+    You can 
     <%= govuk_link_to(
-      t("views.forms.funding.bursaries.guidance_link_text") + @bursary_form.funding_guidance_link_text,
+      t("views.forms.funding.bursaries.guidance_link_text"),
       t("views.forms.funding.bursaries.guidance_url") + @bursary_form.funding_guidance_url,
       { target: "_blank", rel: "noreferrer noopener" }
-    ) %>
+    ) %>.
   </p>
 
   <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.grant.title"), size: "m" }) do %>
@@ -31,7 +33,6 @@
       <%= f.govuk_radio_button(
         :funding_type,
         f.object.class::NONE_TYPE,
-        hint: { text: t("views.forms.funding.funding_type.grant.none.hint") },
         label: { text: t("views.forms.funding.funding_type.grant.none.label") },
       ) %>
   <% end %>
