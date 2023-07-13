@@ -78,6 +78,7 @@ shared:
   disabilities:
     - created_at
     - id
+    - uuid
     - updated_at
   :dqt_trn_requests:
     - id
