@@ -96,12 +96,31 @@ module Trainees
       end
     end
 
-    context "trainee already exists but name differs by case" do
+    context "trainee with matching DOB exists but last name differs" do
+      before { create(:trainee, trainee_attributes.merge(last_name: "Jones")) }
+
+      it "marks the application as imported" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("imported")
+      end
+    end
+
+    context "trainee with matching last_name exists but DOB differs" do
+      before { create(:trainee, trainee_attributes.merge(date_of_birth: "1998-03-19")) }
+
+      it "marks the application as imported" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("imported")
+      end
+    end
+
+    context "trainee already exists but last name only differs by case" do
       before do
         create(
           :trainee,
           trainee_attributes.merge(
-            first_names: candidate_info["first_name"].upcase,
             last_name: candidate_info["last_name"].downcase,
           ),
         )
