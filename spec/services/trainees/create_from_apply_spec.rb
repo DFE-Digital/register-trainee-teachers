@@ -116,6 +116,16 @@ module Trainees
       end
     end
 
+    context "trainee with matching last_name and DOB exists but recruitment_year differs" do
+      before { create(:trainee, trainee_attributes.merge(recruitment_cycle_year: recruitment_cycle_year - 1)) }
+
+      it "marks the application as imported" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("imported")
+      end
+    end
+
     context "trainee already exists but last name only differs by case" do
       before do
         create(
