@@ -349,7 +349,7 @@ module Trainees
 
         it "adds the trainee's nationality" do
           create_trainee_from_dttp
-          expect(Trainee.last.nationalities.map(&:name)).to match_array(["british"])
+          expect(Trainee.last.nationalities.map(&:name)).to contain_exactly("british")
         end
 
         context "when the nationality is a uk nationality" do
@@ -358,7 +358,7 @@ module Trainees
           it "adds the trainee's nationality" do
             create_trainee_from_dttp
             trainee = Trainee.last
-            expect(trainee.nationalities.map(&:name)).to match_array(["british"])
+            expect(trainee.nationalities.map(&:name)).to contain_exactly("british")
           end
         end
 
@@ -380,7 +380,7 @@ module Trainees
             it "uses the non-ambiguous nationality name" do
               create_trainee_from_dttp
               trainee = Trainee.last
-              expect(trainee.nationalities.map(&:name)).to match_array([nationality_name])
+              expect(trainee.nationalities.map(&:name)).to contain_exactly(nationality_name)
             end
           end
         end

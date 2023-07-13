@@ -23,6 +23,6 @@ describe SubjectSpecialism do
       create(:subject_specialism, name: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
     end
 
-    it { is_expected.to match_array([secondary_specialism]) }
+    it { is_expected.to contain_exactly(secondary_specialism) }
   end
 end

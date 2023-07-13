@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :trainee_withdrawal_reason do
-    association :trainee
-    association :withdrawal_reason
+    trainee
+    withdrawal_reason
   end
 end

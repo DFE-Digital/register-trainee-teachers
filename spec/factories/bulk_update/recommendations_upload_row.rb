@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :bulk_update_recommendations_upload_row, class: "BulkUpdate::RecommendationsUploadRow" do
-    association :recommendations_upload, factory: :bulk_update_recommendations_upload
+    recommendations_upload factory: %i[bulk_update_recommendations_upload]
     csv_row_number { 1 }
     trn { "12345" }
     hesa_id { "54321" }

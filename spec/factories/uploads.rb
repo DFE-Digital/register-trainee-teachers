@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :upload do
-    user { create(:user, :system_admin) }
+    user factory: %i[user system_admin]
     name { "test.txt" }
 
     after(:build) do |upload|

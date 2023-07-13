@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :dttp_training_initiative, class: "Dttp::TrainingInitiative" do
     dttp_id { SecureRandom.uuid }
     response {
-      create(
+      association(
         :api_training_initiative,
         dfe_initiativeid: dttp_id,
       )

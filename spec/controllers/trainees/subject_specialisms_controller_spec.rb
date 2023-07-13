@@ -31,7 +31,7 @@ describe Trainees::SubjectSpecialismsController do
 
       it "rerenders the page" do
         put(:update, params: { trainee_id: trainee, position: 1 })
-        expect(response.code).to eq("200")
+        expect(response).to have_http_status(:ok)
       end
     end
 

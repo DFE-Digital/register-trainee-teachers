@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "teach-first end-to-end journey" do
-  let(:user) { create(:user, providers: [create(:provider, code: TEACH_FIRST_PROVIDER_CODE)]) }
+  let(:user) { create(:user, providers: create_list(:provider, 1, code: TEACH_FIRST_PROVIDER_CODE)) }
 
   background { given_i_am_authenticated(user:) }
 

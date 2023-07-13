@@ -64,11 +64,11 @@ describe SchoolSearch do
       let!(:school_three) { create(:school, name: "Beaumont College - A Salutem/Ambito College") }
 
       it "matches all" do
-        expect(described_class.call(query: "mary's").schools).to match_array([school_one, school_two])
+        expect(described_class.call(query: "mary's").schools).to contain_exactly(school_one, school_two)
       end
 
       it "matches all without punctuations" do
-        expect(described_class.call(query: "marys").schools).to match_array([school_one, school_two])
+        expect(described_class.call(query: "marys").schools).to contain_exactly(school_one, school_two)
       end
 
       it "ignores non-punctuation characters" do

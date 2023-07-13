@@ -5,6 +5,7 @@ class CorrectHpittScienceSubjects < ActiveRecord::Migration[6.1]
     hpitt_provider_id = 209
     hpitt_trainee_scope = Trainee.where(provider_id: hpitt_provider_id)
 
+    # rubocop:disable Metrics/CollectionLiteralLength
     correct_subjects = [
       [9563, "biology"],
       [9534, "physics"],
@@ -288,6 +289,7 @@ class CorrectHpittScienceSubjects < ActiveRecord::Migration[6.1]
       [9277, "chemistry"],
       [9360, "physics"],
     ]
+    # rubocop:enable Metrics/CollectionLiteralLength
 
     correct_subjects.each do |id, subject|
       trainee = hpitt_trainee_scope.find_by(id:)

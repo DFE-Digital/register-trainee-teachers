@@ -24,7 +24,7 @@ describe ServiceUpdatesController do
     it "renders service updates" do
       get :index
 
-      expect(response.code).to eq("200")
+      expect(response).to have_http_status(:ok)
       expect(assigns(:service_updates).count).to eq(2)
     end
   end

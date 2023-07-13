@@ -54,7 +54,7 @@ private
                            :with_ethnic_group,
                            :with_ethnic_background,
                            disability_disclosure: :disabled,
-                           disabilities: [create(:disability)])
+                           disabilities: create_list(:disability, 1))
   end
 
   def and_i_am_on_the_disability_disclosure_page

@@ -12,7 +12,7 @@ FactoryBot.define do
     end
     trainee_status { SecureRandom.uuid }
     response {
-      create(
+      association(
         :api_placement_assignment,
         dttp_id: dttp_id,
         contact_dttp_id: contact_dttp_id,

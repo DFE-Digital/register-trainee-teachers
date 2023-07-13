@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/CollectionLiteralLength
 module Dttp
   module CodeSets
     module JacsSubjects
@@ -2752,3 +2753,4 @@ module Dttp
     end
   end
 end
+# rubocop:enable Metrics/CollectionLiteralLength

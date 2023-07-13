@@ -53,3 +53,7 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/NoExpectationExample:
   Enabled: false
+
+# This enables `let` names like `thing1` and `thing2`
+RSpec/IndexedLet:
+  Enabled: false

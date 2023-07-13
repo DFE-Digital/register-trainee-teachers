@@ -20,6 +20,6 @@ describe SchoolPolicy do
 
     subject { described_class.new(user, School).resolve }
 
-    it { expect(subject).to match_array([school1, school2]) }
+    it { expect(subject).to contain_exactly(school1, school2) }
   end
 end

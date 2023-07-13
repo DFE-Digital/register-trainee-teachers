@@ -28,7 +28,7 @@ module Features
       @trainee.ethnic_group = Diversities::ETHNIC_GROUP_ENUMS[:asian]
       @trainee.ethnic_background = "some background"
       @trainee.disability_disclosure = Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled]
-      @trainee.disabilities = [create(:disability, name: "deaf")]
+      @trainee.disabilities = create_list(:disability, 1, name: "deaf")
       @trainee.progress.diversity = true
       @trainee.save!
     end

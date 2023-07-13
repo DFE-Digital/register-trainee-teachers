@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class FixSubmissionReadyForTrainees < ActiveRecord::Migration[7.0]
+  # rubocop:disable Metrics/CollectionLiteralLength
   def up
     %w[
       H6ttM3q8AdcFezDammHQ3x1N
@@ -452,6 +453,7 @@ class FixSubmissionReadyForTrainees < ActiveRecord::Migration[7.0]
       trainee.save
     end
   end
+  # rubocop:enable Metrics/CollectionLiteralLength
 
   def down
     raise ActiveRecord::IrreversibleMigration
