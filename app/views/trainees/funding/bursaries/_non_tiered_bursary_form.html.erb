@@ -34,8 +34,7 @@
       t("views.forms.funding.bursaries.guidance_link_text"),
       t("views.forms.funding.bursaries.guidance_url") + @bursary_form.funding_guidance_url,
       { target: "_blank", rel: "noreferrer noopener" }
-    ) %>
-    .
+    ) %>.
   </p>
 
   <%= f.govuk_radio_buttons_fieldset(:funding_type, legend: { text: t("views.forms.funding.bursaries.non_tiered.title"), size: "m" }) do %>

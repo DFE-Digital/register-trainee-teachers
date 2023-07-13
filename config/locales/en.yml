@@ -900,8 +900,8 @@ en:
             early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
             title: Funding Type
           tiered:
-            description: Early years (postgrad) has a bursary available. You need to check if the trainee is eligible for this bursary.
-            title: Do you want to apply for a bursary for this trainee?
+            description: Early years (postgrad) has bursaries available. You need to check if the trainee is eligible for any of these.
+            title: Funding type
             tier_one:
               label: Yes - Tier 1 (£5,000)
               hint: First-class honours degree, doctoral degree, medical masters (distinction)
