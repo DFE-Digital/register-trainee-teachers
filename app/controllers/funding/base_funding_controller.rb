@@ -27,7 +27,7 @@ module Funding
     end
 
     def trainee_summaries
-      organisation.funding_trainee_summaries.where(academic_year: academic_year_string)
+      organisation.funding_trainee_summaries.includes(:payable, rows: %i[amounts trainee_summary]).where(academic_year: academic_year_string)
     end
   end
 end
