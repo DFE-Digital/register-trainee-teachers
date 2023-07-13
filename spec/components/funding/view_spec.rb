@@ -5,7 +5,9 @@ require "rails_helper"
 module Funding
   describe View do
     let(:data_model) { Funding::FormValidator.new(trainee) }
-    let(:start_academic_cycle) { create(:academic_cycle) }
+    let!(:current_academic_cycle) { create(:academic_cycle) }
+    let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
+    let(:start_academic_cycle) { next_academic_cycle }
 
     before { render_inline(View.new(data_model: trainee, editable: true)) }
 
@@ -44,7 +46,14 @@ module Funding
 
       let(:subject_specialism) { create(:subject_specialism, name: AllocationSubjects::MATHEMATICS) }
       let(:amount) { 9000 }
-      let(:funding_method) { create(:funding_method, training_route: route, amount: amount) }
+      let(:funding_method) do
+        create(
+          :funding_method,
+          training_route: route,
+          amount: amount,
+          academic_cycle: start_academic_cycle,
+        )
+      end
 
       context "when there is a bursary available" do
         before do
@@ -103,7 +112,7 @@ module Funding
 
         describe "has no bursary" do
           before do
-            create(:funding_method)
+            create(:funding_method, academic_cycle: start_academic_cycle)
             render_inline(View.new(data_model:))
           end
 
@@ -126,7 +135,13 @@ module Funding
 
         describe "has bursary" do
           let(:trainee) {
-            create(:trainee, :with_provider_led_bursary, funding_amount: 24000, applying_for_bursary: applying_for_bursary, start_academic_cycle: start_academic_cycle)
+            create(
+              :trainee,
+              :with_provider_led_bursary,
+              funding_amount: 24000,
+              applying_for_bursary: applying_for_bursary,
+              start_academic_cycle: start_academic_cycle,
+            )
           }
 
           before do
@@ -178,6 +193,7 @@ module Funding
       let(:trainee) { create(:trainee, :with_grant, funding_amount: 25000, applying_for_grant: applying_for_grant, start_academic_cycle: start_academic_cycle) }
 
       before do
+        create(:funding_method, academic_cycle: start_academic_cycle)
         render_inline(View.new(data_model: trainee, editable: true))
       end
 

@@ -4,6 +4,8 @@ module Trainees
   class SetAcademicCycles
     include ServicePattern
 
+    DEFAULT_CYCLE_OFFSET = 1.month
+
     def initialize(trainee:)
       @trainee = trainee
     end
@@ -25,7 +27,7 @@ module Trainees
              :itt_end_date, to: :trainee
 
     def start_academic_cycle
-      start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.current
+      start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.zone.now + DEFAULT_CYCLE_OFFSET)
     end
 
     def end_academic_cycle

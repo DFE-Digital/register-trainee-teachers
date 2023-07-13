@@ -50,6 +50,22 @@ feature "Change course", feature_publish_course_details: true do
       and_i_do_not_change_training_route
       and_i_am_redirected_to_the_publish_course_details_page
     end
+
+    context "within 1 month of the next cycle" do
+      around do |example|
+        Timecop.freeze(Date.new(Time.zone.today.year, 7, 15)) { example.run }
+      end
+
+      scenario "do not show course year choice and default to next cycle", feature_show_draft_trainee_course_year_choice: false do
+        given_i_am_authenticated
+        and_a_draft_trainee_exists
+        and_i_am_on_the_confirm_course_details_page
+        and_i_click_change_course
+        and_i_do_not_change_training_route
+        and_i_am_redirected_to_the_publish_course_details_page
+        then_i_can_pick_a_course_from_the_next_cycle
+      end
+    end
   end
 
 private
@@ -159,5 +175,11 @@ private
 
   def and_i_am_redirected_to_the_publish_course_details_page
     expect(publish_course_details_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_i_can_pick_a_course_from_the_next_cycle
+    expect(publish_course_details_page.title).to include(
+      "Your school direct salaried courses starting in #{Time.zone.today.year} to #{1.year.from_now.year}",
+    )
   end
 end

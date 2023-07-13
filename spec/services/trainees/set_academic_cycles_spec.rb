@@ -40,11 +40,23 @@ module Trainees
         end
       end
 
-      context "when a trainee has no trainee_start_date/itt_start_date" do
+      context "when a trainee has no trainee_start_date/itt_start_date and we are 3 months from the new cycle" do
         let(:trainee) { build(:trainee) }
 
         it "favours current academic cycle" do
-          expect(subject).to eq(current_academic_cycle)
+          Timecop.freeze(next_academic_cycle.start_date - 3.months) do
+            expect(subject).to eq(current_academic_cycle)
+          end
+        end
+      end
+
+      context "when a trainee has no trainee_start_date/itt_start_date and we are 3 weeks from the new cycle" do
+        let(:trainee) { build(:trainee) }
+
+        it "favours next academic cycle" do
+          Timecop.freeze(next_academic_cycle.start_date - 3.weeks) do
+            expect(subject).to eq(next_academic_cycle)
+          end
         end
       end
     end
