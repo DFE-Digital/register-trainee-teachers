@@ -648,7 +648,6 @@ module Trainees
         create_trainee_from_dttp
         trainee = Trainee.last
         expect(trainee.withdraw_date).to eq date
-        expect(trainee.withdraw_reason).to eq WithdrawalReasons::FOR_ANOTHER_REASON
       end
     end
 

@@ -392,10 +392,7 @@ module Trainees
     def withdrawal_attributes
       return {} unless trainee_state == "withdrawn"
 
-      {
-        withdraw_date: withdraw_date,
-        withdraw_reason: withdraw_reason || WithdrawalReasons::FOR_ANOTHER_REASON,
-      }
+      { withdraw_date: }
     end
 
     def deferral_attributes

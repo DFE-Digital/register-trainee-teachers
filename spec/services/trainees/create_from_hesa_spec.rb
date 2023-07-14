@@ -37,6 +37,7 @@ module Trainees
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:school, urn: student_attributes[:lead_school_urn])
+      create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
       described_class.call(student_node:, record_source:)
     end
@@ -378,7 +379,7 @@ module Trainees
             expect(trainee.state).to eq("withdrawn")
             expect(trainee.submitted_for_trn_at).not_to be_nil
             expect(trainee.withdraw_date).to eq(date)
-            expect(trainee.withdraw_reason).to eq(WithdrawalReasons::DEATH)
+            expect(trainee.withdrawal_reasons.first.name).to eq(WithdrawalReasons::DEATH)
           end
 
           it "enqueues Dqt::WithdrawTraineeJob" do

@@ -41,7 +41,7 @@ feature "Withdrawing a trainee" do
       when_i_check_a_reason(withdrawal_reason_unknown.name)
       when_i_check_a_reason(withdrawal_reason.name)
       and_i_continue(:reason)
-      then_i_see_the_error_message_for_reason_not_chosen
+      then_i_see_the_error_message_for_unknown_exclusivity
     end
 
     scenario "extra details too long" do
@@ -332,6 +332,10 @@ feature "Withdrawing a trainee" do
 
   def then_i_see_the_error_message_for_reason_not_chosen
     expect(withdrawal_reason_page).to have_content('Select why the trainee withdrew from the course or select "Unknown"')
+  end
+
+  def then_i_see_the_error_message_for_unknown_exclusivity
+    expect(withdrawal_reason_page).to have_content('Only select "Unknown" if no other withdrawal reasons apply')
   end
 
   def then_i_see_the_error_message_for_details_too_long

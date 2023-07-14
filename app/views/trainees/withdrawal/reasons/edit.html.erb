@@ -37,7 +37,7 @@
 
       <%= f.govuk_check_boxes_fieldset :reason_ids,
           legend: { text: heading, tag: "h1", size: "l" },
-          hint: { text: "Select all that apply" },
+          hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
           classes: "withdrawal" do %>
 
         <% WithdrawalReason.all.each_with_index do |withdrawal, index| %>

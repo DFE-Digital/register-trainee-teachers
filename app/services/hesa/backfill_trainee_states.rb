@@ -12,7 +12,10 @@ module Hesa
 
     def call
       if hesa_student && withdrawn?
-        trainee.update_columns(state: "withdrawn", withdraw_reason: reason_for_leaving, withdraw_date: hesa_student.end_date)
+        trainee.withdrawal_reasons.clear
+        trainee.assign_attributes(state: "withdrawn", withdraw_date: hesa_student.end_date)
+        trainee.withdrawal_reasons << WithdrawalReason.find_by_name(reason_for_leaving)
+        trainee.save!
       end
     end
 
@@ -24,7 +27,7 @@ module Hesa
       [
         WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER,
         WithdrawalReasons::DEATH,
-        WithdrawalReasons::FOR_ANOTHER_REASON,
+        WithdrawalReasons::ANOTHER_REASON,
       ].include?(reason_for_leaving) && hesa_student.end_date.present?
     end
 

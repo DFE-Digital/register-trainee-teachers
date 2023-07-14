@@ -49,7 +49,7 @@ module Trainees
       [
         WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER,
         WithdrawalReasons::DEATH,
-        WithdrawalReasons::FOR_ANOTHER_REASON,
+        WithdrawalReasons::ANOTHER_REASON,
       ].include?(reason_for_leaving) && hesa_trainee[:end_date].present?
     end
 

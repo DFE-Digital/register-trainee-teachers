@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_14_105157) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -774,7 +774,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.string "trn"
     t.datetime "submitted_for_trn_at", precision: nil
     t.integer "state", default: 0
-    t.integer "withdraw_reason"
     t.datetime "withdraw_date", precision: nil
     t.string "withdraw_reasons_details"
     t.date "defer_date"
