@@ -150,15 +150,32 @@ module Trainees
     end
 
     def trainee_already_exists?
-      scope = application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
-      potential_duplicates = scope
+      potential_duplicates.any? { |trainee| confirmed_duplicate?(trainee) }
+    end
+
+    def potential_duplicates
+      application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
         .where(date_of_birth: raw_trainee["date_of_birth"])
         .where("last_name ILIKE ?", raw_trainee["last_name"])
-      filtered_duplicates = potential_duplicates.select do |trainee|
-        trainee.start_academic_cycle&.start_date&.year == raw_course["recruitment_cycle_year"] &&
-          trainee.training_route == course["route"]
-      end
-      filtered_duplicates.present?
+    end
+
+    def confirmed_duplicate?(trainee)
+      matching_recruitment_cycle_year?(trainee) &&
+      matching_qualification_type?(trainee) &&
+      at_least_one_match_identifying_attribute?(trainee)
+    end
+
+    def matching_recruitment_cycle_year?(trainee)
+      trainee.start_academic_cycle&.start_date&.year == raw_course["recruitment_cycle_year"]
+    end
+
+    def matching_qualification_type?(trainee)
+      trainee.training_route == course["route"]
+    end
+
+    def at_least_one_match_identifying_attribute?(trainee)
+      # TODO:
+      true
     end
 
     def ethnic_background_attributes
