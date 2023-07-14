@@ -179,11 +179,12 @@ module Trainees
     end
 
     def matching_first_name?(trainee)
-      trainee.first_names == raw_trainee["first_name"]
+      trainee.first_names&.strip&.downcase&.gsub(/[^a-z ]/, "")&.partition(" ")&.first ==
+        raw_trainee["first_name"]&.strip&.downcase&.gsub(/[^a-z ]/, "")&.partition(" ")&.first
     end
 
     def matching_email?(trainee)
-      trainee.email == raw_trainee["email"]
+      trainee.email&.strip&.downcase == raw_trainee["email"]&.strip&.downcase
     end
 
     def ethnic_background_attributes

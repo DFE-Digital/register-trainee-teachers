@@ -120,6 +120,60 @@ module Trainees
       end
     end
 
+    context "trainee with match last name and DOB exists and first name also matches but email differs" do
+      before do
+        create(
+          :trainee,
+          duplicate_trainee_attributes.merge(
+            first_names: "Martin",
+            email: "mwells@mailinator.COM ",
+          ),
+        )
+      end
+
+      it "marks the application as a duplicate" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("non_importable_duplicate")
+      end
+    end
+
+    context "trainee with match last name and DOB exists and first name matches but email and middle names do not" do
+      before do
+        create(
+          :trainee,
+          duplicate_trainee_attributes.merge(
+            first_names: "Martin Derek Clive",
+            email: "mwells@mailinator.COM ",
+          ),
+        )
+      end
+
+      it "marks the application as a duplicate" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("non_importable_duplicate")
+      end
+    end
+
+    context "trainee with match last name and DOB exists but first name and email differ only by case/spacing" do
+      before do
+        create(
+          :trainee,
+          duplicate_trainee_attributes.merge(
+            first_names: " MaRtIn.",
+            email: "martin.wells@mailinator.COM ",
+          ),
+        )
+      end
+
+      it "marks the application as a duplicate" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("non_importable_duplicate")
+      end
+    end
+
     context "trainee with matching DOB exists but last name differs" do
       before { create(:trainee, duplicate_trainee_attributes.merge(last_name: "Jones")) }
 
