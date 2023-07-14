@@ -55,6 +55,12 @@ module Trainees
       }
     end
 
+    let(:duplicate_trainee_attributes) do
+      trainee_attributes.merge(
+        itt_start_date: Date.new(recruitment_cycle_year, 9, 1),
+      )
+    end
+
     let(:uk_address_attributes) do
       {
         address_line_one: contact_details["address_line1"],
@@ -87,7 +93,7 @@ module Trainees
     end
 
     context "trainee already exists" do
-      before { create(:trainee, trainee_attributes) }
+      before { create(:trainee, duplicate_trainee_attributes) }
 
       it "marks the application as a duplicate" do
         expect {
@@ -97,7 +103,7 @@ module Trainees
     end
 
     context "trainee with matching DOB exists but last name differs" do
-      before { create(:trainee, trainee_attributes.merge(last_name: "Jones")) }
+      before { create(:trainee, duplicate_trainee_attributes.merge(last_name: "Jones")) }
 
       it "marks the application as imported" do
         expect {
@@ -107,7 +113,7 @@ module Trainees
     end
 
     context "trainee with matching last_name exists but DOB differs" do
-      before { create(:trainee, trainee_attributes.merge(date_of_birth: "1998-03-19")) }
+      before { create(:trainee, duplicate_trainee_attributes.merge(date_of_birth: "1998-03-19")) }
 
       it "marks the application as imported" do
         expect {
@@ -117,7 +123,7 @@ module Trainees
     end
 
     context "trainee with matching last_name and DOB exists but qualification type differs" do
-      before { create(:trainee, trainee_attributes.merge(training_route: :early_years_undergrad)) }
+      before { create(:trainee, duplicate_trainee_attributes.merge(training_route: :early_years_undergrad)) }
 
       it "marks the application as imported" do
         expect {
@@ -147,7 +153,7 @@ module Trainees
       before do
         create(
           :trainee,
-          trainee_attributes.merge(
+          duplicate_trainee_attributes.merge(
             last_name: candidate_info["last_name"].downcase,
           ),
         )
