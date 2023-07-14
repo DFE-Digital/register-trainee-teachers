@@ -199,6 +199,7 @@ group :test do
   gem "webmock"
 
   # DfE Digital forked rspec-retry detects flaky specs and reports them
+  gem "database_cleaner-active_record"
   gem "rspec-retry", git: "https://github.com/DFE-Digital/rspec-retry.git", branch: "main"
 end
 

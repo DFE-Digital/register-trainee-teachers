@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :nationality do
-    name { Faker::Nation.unique.nationality }
+    name { Dttp::CodeSets::Nationalities::MAPPING.keys.sample }
 
     trait :british do
       name { Dttp::CodeSets::Nationalities::BRITISH }
