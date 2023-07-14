@@ -1,0 +1,187 @@
+name: Next academic year tests
+concurrency: next_academic_year_tests_${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+  schedule: # At 06:00
+    - cron: '0 6 * * *'
+
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+
+jobs:
+  build:
+    name: Build
+    env:
+      DOCKER_IMAGE: ghcr.io/dfe-digital/register-trainee-teachers
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_HOSTNAME: localhost
+    outputs:
+      docker_image: ${{ env.DOCKER_IMAGE }}
+      image_tag: ${{ env.IMAGE_TAG }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout
+
+    - name: Set environment variables (push)
+      if: github.event_name == 'push'
+      run: |
+        GIT_BRANCH=${GITHUB_REF##*/}
+        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV # GIT_BRANCH will be main for refs/heads/main
+        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+    - name: Set environment variables (pull_request)
+      if: github.event_name == 'pull_request'
+      run: |
+        GIT_BRANCH=${GITHUB_HEAD_REF##*/}
+        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
+        echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
+
+    - name: Set KV environment variables
+      run: |
+        # tag build to the review env for vars and secrets
+        tf_vars_file=terraform/paas/workspace-variables/review.tfvars.json
+        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+
+    - uses: DFE-Digital/keyvault-yaml-secret@v1
+      id: get-secret
+      with:
+        keyvault: ${{ env.KEY_VAULT_NAME }}
+        secret: ${{ env.KEY_VAULT_INFRA_SECRET_NAME }}
+        key: SNYK_TOKEN
+
+    - name: Build Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        tags: |
+          ${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
+          ${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
+        push: false
+        load: true
+        cache-to: type=inline
+        cache-from: |
+          type=registry,ref=${{env.DOCKER_IMAGE}}:main
+          type=registry,ref=${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
+          type=registry,ref=${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
+        build-args: COMMIT_SHA=${{ github.sha }}
+
+    - name: Push ${{ env.DOCKER_IMAGE }} images for review
+      if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
+      run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
+
+    - name: Run Snyk to check Docker image for vulnerabilities
+      uses: snyk/actions/docker@master
+      env:
+        SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
+      with:
+        image: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
+        args: --file=Dockerfile --severity-threshold=high --exclude-app-vulns
+
+    - name: Push ${{ env.DOCKER_IMAGE }} images
+      if: ${{ success() && !contains(github.event.pull_request.labels.*.name, 'deploy') }}
+      run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
+
+    - name: Check for Failure
+      if: ${{ failure() && github.ref == 'refs/heads/main' }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_CHANNEL: twd_publish_register_tech
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Build Failure
+        SLACK_MESSAGE: ':alert: Build failure on commit ${{env.IMAGE_TAG}} :sadparrot:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  test:
+    name: Test
+    needs: [build]
+    outputs:
+      image_tag: ${{ needs.build.outputs.image_tag }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Set environment variables
+      run: |
+        echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
+
+    - name: Set KV environment variables
+      run: |
+        # tag build to the review env for vars and secrets
+        tf_vars_file=terraform/paas/workspace-variables/review.tfvars.json
+        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+
+    - uses: DFE-Digital/keyvault-yaml-secret@v1
+      id: get-secret
+      with:
+        keyvault: ${{ env.KEY_VAULT_NAME }}
+        secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
+        key: SENTRY_DSN
+
+    - name: Pull docker images
+      run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
+
+    - name: Bring images up
+      run: |
+        docker-compose up --no-build -d
+        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
+        docker-compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
+        docker-compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
+      env:
+        SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
+
+    - name: Install chromedriver
+      run: docker-compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
+
+    - name: Setup DB
+      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
+
+    - name: Reset DB
+      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:reset"
+
+    - name: Run Rspec tests for next academic year
+      run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test USE_NEXT_ACADEMIC_YEAR=true bundle exec rake spec'
+
+    - name: Reset DB
+      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:reset"
+
+    - name: Run Rspec tests
+      run: docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake spec'
+
+    - name: Run Javascript tests
+      run: docker-compose exec -T web /bin/sh -c 'yarn run test'
+
+    - name: Check for Failure
+      if: ${{ failure() && github.ref == 'refs/heads/main' }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_CHANNEL: twd_publish_register_tech
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Build Failure
+        SLACK_MESSAGE: ':alert: :flake: :flake: :flake: :flake: ${{env.IMAGE_TAG}} :sadparrot:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
