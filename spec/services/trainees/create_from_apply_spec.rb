@@ -205,11 +205,17 @@ module Trainees
     end
 
     context "trainee with matching last_name and DOB exists but recruitment_cycle_year differs" do
+      around do |example|
+        Timecop.freeze(Date.new(2023, 7, 1)) { example.run }
+      end
+
       before do
+        previous_academic_cycle = create(:academic_cycle, previous_cycle: true)
         create(
           :trainee,
           trainee_attributes.merge(
-            start_academic_cycle: create(:academic_cycle, previous_cycle: true),
+            start_academic_cycle: previous_academic_cycle,
+            itt_start_date: previous_academic_cycle.start_date,
           ),
         )
       end
