@@ -51,8 +51,8 @@ feature "course details" do
       end
     end
 
-    describe "editing the course details" do
-      scenario "submitting with a partial subject/age range", js: true do
+    describe "editing the course details", js: true do
+      scenario "submitting with a partial subject/age range" do
         when_i_visit_the_course_details_page
         and_i_fill_in_subject_without_selecting_a_value(with: "moose")
         and_i_submit_the_form
@@ -60,7 +60,7 @@ feature "course details" do
         then_i_see_error_messages_for_partially_submitted_fields
       end
 
-      scenario "clearing previously selected value", js: true do
+      scenario "clearing previously selected value" do
         given_a_trainee_exists_with_course_details
         when_i_visit_the_course_details_page
         and_i_fill_in_subject_with_a_blank_value
