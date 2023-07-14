@@ -16,11 +16,11 @@ const guard = (data) => {
 
 // Sort two things alphabetically, not case-sensitive
 const sortAlphabetical = (x, y) => {
-  if(x.toLowerCase() !== y.toLowerCase()) {
-    x = x.toLowerCase();
-    y = y.toLowerCase();
+  if (x.toLowerCase() !== y.toLowerCase()) {
+    x = x.toLowerCase()
+    y = y.toLowerCase()
   }
-  return x > y ? 1 : (x < y ? -1 : 0);
+  return x > y ? 1 : (x < y ? -1 : 0)
 }
 
 const tryUpdateStatusMessage = (users) => {
@@ -33,18 +33,18 @@ const tryUpdateStatusMessage = (users) => {
 
 // The autocomplete plugin prevents the user from submitting the form on enter
 const overrideEnterKey = (form, autocompleteElement) => {
-  form.addEventListener('keydown', function(event) {
+  form.addEventListener('keydown', function (event) {
     if (event.keyCode === 13 && !userSelected) {
       const input = autocompleteElement.querySelector('input')
       const searchField = document.createElement('input')
-      searchField.setAttribute("type", "hidden");
-      searchField.setAttribute("name", "search");
-      searchField.setAttribute("value", input.value);
+      searchField.setAttribute('type', 'hidden')
+      searchField.setAttribute('name', 'search')
+      searchField.setAttribute('value', input.value)
       form.appendChild(searchField)
       input.removeAttribute('name')
       form.submit()
     }
-  });
+  })
 }
 
 const findUsers = ({ query, populateResults }) => {
@@ -62,14 +62,14 @@ const findUsers = ({ query, populateResults }) => {
 }
 
 const inputTemplate = (user) => {
-  return user && `${user['first_name']} ${user['last_name']}`
+  return user && `${user.first_name} ${user.last_name}`
 }
 
 const suggestionTemplate = (user) => {
   if (typeof user === 'object' && 'first_name' in user) {
-    const providerNames = user['providers'].map(provider => provider.name).sort(sortAlphabetical)
-    const leadSchools = user['lead_schools'].map(school => school.name).sort(sortAlphabetical)
-    const name = `${user['first_name']} ${user['last_name']}`
+    const providerNames = user.providers.map(provider => provider.name).sort(sortAlphabetical)
+    const leadSchools = user.lead_schools.map(school => school.name).sort(sortAlphabetical)
+    const name = `${user.first_name} ${user.last_name}`
     const allOrgs = providerNames.concat(leadSchools)
 
     return `${name} <span class="autocomplete__option--hint">${user.email}<br>${allOrgs.join(', ')}</span>`
@@ -82,7 +82,6 @@ const renderTemplate = {
   inputValue: inputTemplate,
   suggestion: suggestionTemplate
 }
-
 
 const setupAutoComplete = (form) => {
   const inputs = form.querySelectorAll('[data-field="users-autocomplete"]')
@@ -98,18 +97,18 @@ const setupAutoComplete = (form) => {
         id: input.id,
         minLength: 2,
         name: fieldName,
-        defaultValue: defaultValue,
+        defaultValue,
         source: (query, populateResults) => {
           return findUsers({
             query,
-            populateResults,
+            populateResults
           })
         },
         templates: renderTemplate,
         onConfirm: (user) => {
           if (user) {
             userSelected = true
-            window.location.assign(`/system-admin/users/${user.id}`);
+            window.location.assign(`/system-admin/users/${user.id}`)
           }
         },
         tNoResults: () => statusMessage

@@ -21,9 +21,9 @@ function Tracker () {
       if (filteredSearches.length > 0) {
         window.dataLayer.push({
           event: 'autocomplete-search',
-          fieldName: fieldName,
+          fieldName,
           failedSearches: filteredSearches,
-          successfulSearch: successfulSearch,
+          successfulSearch,
           match: this._match(fieldName, match),
           timeTaken: this._timeTaken()
         })

@@ -264,6 +264,8 @@ jobs:
         docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
         docker-compose exec -T web /bin/sh -c 'bundle config --local disable_exec_load true'
         docker-compose exec -T web /bin/sh -c 'bundle exec rake parallel:setup'
+        docker-compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
+        docker-compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
       env:
         SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
 
