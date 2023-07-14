@@ -153,6 +153,8 @@ group :development, :test do
 
   gem "rails-controller-testing"
 
+  # run specs in parallel
+  gem "parallel_tests"
   gem "rspec-benchmark", require: false
 
   # Adds support for Capybara system testing and selenium driver

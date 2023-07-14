@@ -11,6 +11,15 @@ if ENV.fetch("COVERAGE", false)
   SimpleCov.start("rails") do
     add_filter %r{/code_sets/}
   end
+
+  # If running specs in parallel this ensures SimpleCov results appears
+  # upon completion of all specs
+  if ENV["TEST_ENV_NUMBER"]
+    SimpleCov.at_exit do
+      result = SimpleCov.result
+      result.format! if ParallelTests.number_of_running_processes <= 1
+    end
+  end
 end
 
 RSpec.configure do |config|

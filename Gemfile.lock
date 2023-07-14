@@ -446,6 +446,8 @@ GEM
     options (2.3.2)
     os (1.1.4)
     parallel (1.23.0)
+    parallel_tests (4.2.1)
+      parallel
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
@@ -776,6 +778,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  parallel_tests
   pg (>= 0.18, < 2.0)
   pg_search (~> 2.3)
   progress_bar
