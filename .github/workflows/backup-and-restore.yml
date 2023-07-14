@@ -8,7 +8,6 @@ on:
         type: choice
         default: qa
         options:
-          - productiondata
           - production
 
 jobs:

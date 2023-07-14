@@ -10,7 +10,6 @@ on:
         type: choice
         options:
         - production
-        - productiondata
       sha:
         description: Commit sha to be deployed
         required: true

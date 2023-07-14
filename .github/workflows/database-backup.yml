@@ -117,16 +117,60 @@ jobs:
         path: backup_sanitised.sql
         retention-days: 3
 
-    - name: Restore backup to productiondata
-      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
-      run: |
-        cf conduit register-postgres-13-productiondata -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
-
     - name: Restore backup to analysis
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
       run: |
         cf conduit register-postgres-analysis-13 -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
         rm ${BACKUP_FILE_NAME}.sql
+
+    - name: Paas cleanup
+      shell: bash
+      run: |
+        cf logout
+        az logout
+
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_AKS_PRODUCTION }}
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: "v1.26.1" # default is latest stable
+
+    - name: K8 setup
+      shell: bash
+      run: |
+        az aks get-credentials -g s189t01-tsc-pd-rg -n s189t01-tsc-production-aks
+        make install-konduit
+
+    - name: Restore backup to aks productiondata database
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
+      shell: bash
+      run: |
+        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
+
+    - name: Remove PaaS specific event triggers from productiondata
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
+      shell: bash
+      run: |
+        bin/konduit.sh register-productiondata -- psql -c 'drop event trigger forbid_ddl_reader'
+        bin/konduit.sh register-productiondata -- psql -c 'drop event trigger make_readable'
+        bin/konduit.sh register-productiondata -- psql -c 'drop event trigger reassign_owned'
+
+    - name: Restore backup to aks analysis database
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
+      shell: bash
+      run: |
+        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -p ANALYSIS_DATABASE_URL -t 7200 register-production -- psql
+
+    - name: Remove PaaS specific event triggers from analysis
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
+      shell: bash
+      run: |
+        bin/konduit.sh -p ANALYSIS_DATABASE_URL register-production -- psql -c 'drop event trigger forbid_ddl_reader'
+        bin/konduit.sh -p ANALYSIS_DATABASE_URL register-production -- psql -c 'drop event trigger make_readable'
+        bin/konduit.sh -p ANALYSIS_DATABASE_URL register-production -- psql -c 'drop event trigger reassign_owned'
 
   restore_staging:
     needs: [backup]
