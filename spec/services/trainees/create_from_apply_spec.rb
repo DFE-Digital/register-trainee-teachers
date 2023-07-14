@@ -116,8 +116,25 @@ module Trainees
       end
     end
 
-    context "trainee with matching last_name and DOB exists but recruitment_year differs" do
-      before { create(:trainee, trainee_attributes.merge(recruitment_cycle_year: recruitment_cycle_year - 1)) }
+    context "trainee with matching last_name and DOB exists but qualification type differs" do
+      before { create(:trainee, trainee_attributes.merge(training_route: :early_years_undergrad)) }
+
+      it "marks the application as imported" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("imported")
+      end
+    end
+
+    context "trainee with matching last_name and DOB exists but recruitment_cycle_year differs" do
+      before do
+        create(
+          :trainee,
+          trainee_attributes.merge(
+            start_academic_cycle: create(:academic_cycle, previous_cycle: true),
+          ),
+        )
+      end
 
       it "marks the application as imported" do
         expect {
