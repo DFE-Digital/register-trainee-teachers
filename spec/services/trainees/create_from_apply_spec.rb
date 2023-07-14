@@ -102,6 +102,24 @@ module Trainees
       end
     end
 
+    context "trainee with match last name and DOB exists but first name and email both differ" do
+      before do
+        create(
+          :trainee,
+          duplicate_trainee_attributes.merge(
+            first_names: "Bob",
+            email: "bob@example.com",
+          ),
+        )
+      end
+
+      it "marks the application as imported" do
+        expect {
+          create_trainee_from_apply
+        }.to change(apply_application, :state).to("imported")
+      end
+    end
+
     context "trainee with matching DOB exists but last name differs" do
       before { create(:trainee, duplicate_trainee_attributes.merge(last_name: "Jones")) }
 

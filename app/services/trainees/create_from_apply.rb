@@ -174,8 +174,16 @@ module Trainees
     end
 
     def at_least_one_match_identifying_attribute?(trainee)
-      # TODO:
-      true
+      matching_first_name?(trainee) ||
+        matching_email?(trainee)
+    end
+
+    def matching_first_name?(trainee)
+      trainee.first_names == raw_trainee["first_name"]
+    end
+
+    def matching_email?(trainee)
+      trainee.email == raw_trainee["email"]
     end
 
     def ethnic_background_attributes
