@@ -19,7 +19,6 @@ module Hesa
         WALES,
       ].freeze
 
-      # rubocop:disable Metrics/CollectionLiteralLength
       MAPPING = {
         "AF" => "Afghanistan",
         "XQ" => "Africa not otherwise specified",
@@ -285,7 +284,6 @@ module Hesa
         "ZM" => "Zambia",
         "ZW" => "Zimbabwe",
       }.freeze
-      # rubocop:enable Metrics/CollectionLiteralLength
     end
   end
 end

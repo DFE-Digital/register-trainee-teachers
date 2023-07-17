@@ -1095,7 +1095,6 @@ unless defined?(DegreeSubjects)
     YOUTH_AND_COMMUNITY_WORK = "Youth And Community Work"
     ZOOLOGY = "Zoology"
 
-    # rubocop:disable Metrics/CollectionLiteralLength
     MAPPING = {
       # ACCOUNTANCY => { hecos_code: "100104" },
       ACCOUNTING => { hecos_code: "100105" },
@@ -2190,6 +2189,5 @@ unless defined?(DegreeSubjects)
       YOUTH_AND_COMMUNITY_WORK => { hecos_code: "100466" },
       ZOOLOGY => { hecos_code: "100356" },
     }.freeze
-    # rubocop:enable Metrics/CollectionLiteralLength
   end
 end
