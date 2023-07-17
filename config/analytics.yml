@@ -257,6 +257,7 @@ shared:
     - trn
     - updated_at
     - withdraw_date
+    - withdraw_reason
     - withdraw_reasons_details
     - withdraw_reasons_dfe_details
     - hesa_trn_submission_id
