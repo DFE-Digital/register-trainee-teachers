@@ -4,7 +4,7 @@ yarn 1.22.19
 bundler 2.4.16
 terraform 1.3.5
 cf 8.4.0
-az 2.36.0
+azure-cli 2.50.0
 jq 1.6
 make 4.2.1
 redis 7.0.0
