@@ -131,14 +131,6 @@ runs:
         sudo apt-get install -y redis-tools redis-server
         bin/konduit.sh -r REDIS_QUEUE_URL register-productiondata -- redis-cli del queues
 
-# temporary will running alongside paas env
-    - name: Delete redis queues for production
-      shell: bash
-      if: ${{ inputs.environment == 'production_aks' && env.worker_app_instances == 0 }}
-      run: |
-        sudo apt-get install -y redis-tools redis-server
-        bin/konduit.sh -r REDIS_QUEUE_URL register-production -- redis-cli del queues
-
     - name: Run Smoke Tests for ${{ inputs.environment }}
       uses: ./.github/actions/smoke-test_v2/
       with:
@@ -147,14 +139,14 @@ runs:
         pr-number: ${{ inputs.pr-number }}
         slack-webhook: ${{ inputs.slack-webhook }}
 
-#    - name: Notify Slack channel on job failure
-#      if: ${{ failure() && github.ref == 'refs/heads/main' }}
-#      uses: rtCamp/action-slack-notify@master
-#      env:
-#        SLACK_CHANNEL: twd_publish_register_tech
-#        SLACK_COLOR: '#ef5343'
-#        SLACK_ICON_EMOJI: ':github-logo:'
-#        SLACK_USERNAME: Register Trainee Teachers
-#        SLACK_TITLE: Deployment failure on ${{ inputs.environment }}
-#        SLACK_MESSAGE: ':alert: Deployment of commit ${{ inputs.sha }} to ${{ inputs.environment }} failed :sadparrot:'
-#        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
+    - name: Notify Slack channel on job failure
+      if: ${{ failure() && github.ref == 'refs/heads/main' }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_CHANNEL: twd_publish_register_tech
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Deployment failure on ${{ inputs.environment }}
+        SLACK_MESSAGE: ':alert: Deployment of commit ${{ inputs.sha }} to ${{ inputs.environment }} failed :sadparrot:'
+        SLACK_WEBHOOK: ${{ inputs.slack-webhook }}
