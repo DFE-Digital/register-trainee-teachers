@@ -121,7 +121,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns = ["withdraw_reason"]
+  self.ignored_columns += ["withdraw_reason"] # rubocop:disable Rails/UnusedIgnoredColumns
 
   include Sluggable
   include PgSearch::Model
