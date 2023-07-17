@@ -28,19 +28,11 @@ jobs:
     - uses: actions/checkout@v3
       name: Checkout
 
-    - name: Set environment variables (push)
-      if: github.event_name == 'push'
+    - name: Set environment variables
       run: |
         GIT_BRANCH=${GITHUB_REF##*/}
         echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV # GIT_BRANCH will be main for refs/heads/main
         echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-
-    - name: Set environment variables (pull_request)
-      if: github.event_name == 'pull_request'
-      run: |
-        GIT_BRANCH=${GITHUB_HEAD_REF##*/}
-        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
-        echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
 
     - name: Set KV environment variables
       run: |
