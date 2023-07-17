@@ -65,6 +65,7 @@
 #  training_route                  :integer
 #  trn                             :string
 #  withdraw_date                   :datetime
+#  withdraw_reason                 :integer
 #  withdraw_reasons_details        :string
 #  withdraw_reasons_dfe_details    :string
 #  created_at                      :datetime         not null
