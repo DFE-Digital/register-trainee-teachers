@@ -102,5 +102,8 @@ qa:
 review:
   <<: *production
 
+review_aks:
+  <<: *production
+
 staging:
   <<: *production
