@@ -90,7 +90,13 @@
     <main class="govuk-main-wrapper " id="main-content" role="main">
       <%= yield :start_page_banner %>
       <div class="govuk-width-container">
-        <%= render(YearChangeBanner::View.new) %>
+        <%= govuk_notification_banner(title_text: "Important") do |banner|
+          banner.heading(text: "Register will be unavailable on Wednesday 19 July from 5pm")
+
+          content_tag(:p, "You will be able to use the service from 9am on Thursday 20 July 2023.", class: "govuk-body")
+        end %>
+
+        <%# <%= render(YearChangeBanner::View.new) %>
         <%= render(FlashBanner::View.new(flash: flash, trainee: @trainee)) %>
         <%= yield %>
       </div>
