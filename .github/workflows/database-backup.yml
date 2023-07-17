@@ -131,7 +131,7 @@ jobs:
 
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_AKS_PRODUCTION }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_AKS_PROD }}
 
     - name: Install kubectl
       uses: azure/setup-kubectl@v3
