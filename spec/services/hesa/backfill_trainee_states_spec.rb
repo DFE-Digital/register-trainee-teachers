@@ -4,6 +4,10 @@ require "rails_helper"
 
 module Hesa
   describe BackfillTraineeStates do
+    before do
+      create(:withdrawal_reason, :with_all_reasons)
+    end
+
     let(:trainee) { create(:trainee, :trn_received, :imported_from_hesa) }
     let(:end_date) { Time.zone.today }
     let(:reason_for_leaving_code) { %w[11 05 03].sample }
@@ -27,7 +31,7 @@ module Hesa
       end
 
       it "updates withdraw_reason" do
-        expect(trainee.withdraw_reason).to eq(reason_for_leaving)
+        expect(trainee.withdrawal_reasons.first.name).to eq(reason_for_leaving)
       end
 
       it "updates withdraw_data" do
@@ -45,7 +49,7 @@ module Hesa
       end
 
       it "does not change withdraw_reason" do
-        expect(trainee.withdraw_reason).to be_nil
+        expect(trainee.withdrawal_reasons).to be_empty
       end
 
       it "does not change withdraw_data" do

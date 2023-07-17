@@ -10,7 +10,7 @@ module Hesa
         "01" =>	COMPLETED_WITH_CREDIT_OR_AWARD,
         "03" =>	WithdrawalReasons::TRANSFERRED_TO_ANOTHER_PROVIDER,
         "05" =>	WithdrawalReasons::DEATH,
-        "11" =>	WithdrawalReasons::FOR_ANOTHER_REASON,
+        "11" =>	WithdrawalReasons::ANOTHER_REASON,
         "98" =>	COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN,
       }.freeze
     end

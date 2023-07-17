@@ -129,7 +129,7 @@ module Trainees
 
       context "when a trainee has a dormant mode, reason for leaving and an end date" do
         let(:hesa_stub_attributes) do
-          { reason_for_leaving: hesa_reason_for_leaving_codes[WithdrawalReasons::FOR_ANOTHER_REASON],
+          { reason_for_leaving: hesa_reason_for_leaving_codes[WithdrawalReasons::ANOTHER_REASON],
             end_date: date_today,
             mode: hesa_mode_codes[::Hesa::CodeSets::Modes::DORMANT_FULL_TIME] }
         end

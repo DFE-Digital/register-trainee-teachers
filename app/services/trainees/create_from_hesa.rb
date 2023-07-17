@@ -115,9 +115,13 @@ module Trainees
     end
 
     def withdrawal_attributes
-      return { withdraw_date: nil, withdraw_reason: nil } unless mapped_trainee_state == :withdrawn
+      if mapped_trainee_state != :withdrawn
+        trainee.withdrawal_reasons.clear
+        return { withdraw_date: nil, withdraw_reasons_details: nil, withdraw_reasons_dfe_details: nil }
+      end
 
-      { withdraw_date: hesa_trainee[:end_date], withdraw_reason: reason_for_leaving }
+      trainee.withdrawal_reasons << WithdrawalReason.find_by_name(reason_for_leaving)
+      { withdraw_date: hesa_trainee[:end_date] }
     end
 
     def deferral_attributes

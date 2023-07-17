@@ -849,10 +849,6 @@ en:
         deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
       withdrawal_reasons:
-        headings:
-          withdrawal_date: Date the trainee withdrew
-          withdrawal_date_hint: This is the last day they trained for %{award_type}.
-          withdrawal_reason: Reason for leaving
         labels:
           additional_reason: Enter the reason for withdrawal
           <<: *withdrawal_reasons
@@ -1171,6 +1167,7 @@ en:
       reasons:
         edit:
           heading: Why did the trainee withdraw from the course?
+          hint: Select all reasons that apply
       extra_informations:
         edit:
           heading: More details of why the trainee withdrew from the course
@@ -1464,7 +1461,7 @@ en:
           attributes:
             reason_ids:
               blank: Select why the trainee withdrew from the course or select "Unknown"
-              unknown_exclusively: Select why the trainee withdrew from the course or select "Unknown"
+              unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply 
         withdrawal/date_form:
           attributes:
             date_string:

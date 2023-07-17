@@ -774,7 +774,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.string "trn"
     t.datetime "submitted_for_trn_at", precision: nil
     t.integer "state", default: 0
-    t.integer "withdraw_reason"
     t.datetime "withdraw_date", precision: nil
     t.string "withdraw_reasons_details"
     t.date "defer_date"
@@ -820,6 +819,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_131445) do
     t.string "iqts_country"
     t.boolean "hesa_editable", default: false
     t.string "withdraw_reasons_dfe_details"
+    t.integer "withdraw_reason"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
