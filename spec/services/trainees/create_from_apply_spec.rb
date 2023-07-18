@@ -92,7 +92,7 @@ module Trainees
     end
 
     context "trainee already exists" do
-      before { allow(Trainees::FindDuplicates).to receive(:call).and_return([build(:trainee)]) }
+      let(:duplicates) { [build(:trainee)] }
 
       it "marks the application as a duplicate" do
         expect {
