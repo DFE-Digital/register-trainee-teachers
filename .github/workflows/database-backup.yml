@@ -121,7 +121,6 @@ jobs:
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
       run: |
         cf conduit register-postgres-analysis-13 -- psql < ${{ env.BACKUP_FILE_NAME }}.sql
-        rm ${BACKUP_FILE_NAME}.sql
 
     - name: Paas cleanup
       shell: bash
@@ -141,7 +140,7 @@ jobs:
     - name: K8 setup
       shell: bash
       run: |
-        az aks get-credentials -g s189t01-tsc-pd-rg -n s189t01-tsc-production-aks
+        az aks get-credentials -g s189p01-tsc-pd-rg -n s189p01-tsc-production-aks
         make install-konduit
 
     - name: Restore backup to aks productiondata database
