@@ -172,6 +172,10 @@ module Trainees
           ),
         )
       end
+
+      it "returns no duplicates" do
+        expect(duplicate_trainees).to be_empty
+      end
     end
 
     context "trainee already exists but last name only differs by case" do
