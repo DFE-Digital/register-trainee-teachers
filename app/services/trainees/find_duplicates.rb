@@ -45,12 +45,24 @@ module Trainees
     end
 
     def matching_first_name?(trainee)
-      trainee.first_names&.strip&.downcase&.gsub(/[^a-z ]/, "")&.partition(" ")&.first ==
-        raw_trainee["first_name"]&.strip&.downcase&.gsub(/[^a-z ]/, "")&.partition(" ")&.first
+      extract_first_name(trainee.first_names) ==
+        extract_first_name(raw_trainee["first_name"])
     end
 
     def matching_email?(trainee)
-      trainee.email&.strip&.downcase == raw_trainee["email"]&.strip&.downcase
+      normalise_name(trainee.email) == normalise_name(raw_trainee["email"])
+    end
+
+    def normalise_name(name)
+      name&.strip&.downcase
+    end
+
+    def normalise_and_remove_punctuation(name)
+      normalise_name(name)&.gsub(/[^a-z ]/, "")
+    end
+
+    def extract_first_name(names)
+      normalise_and_remove_punctuation(names)&.partition(" ")&.first
     end
   end
 end

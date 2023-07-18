@@ -55,12 +55,6 @@ module Trainees
       }
     end
 
-    let(:duplicate_trainee_attributes) do
-      trainee_attributes.merge(
-        itt_start_date: Date.new(recruitment_cycle_year, 9, 1),
-      )
-    end
-
     let(:uk_address_attributes) do
       {
         address_line_one: contact_details["address_line1"],
