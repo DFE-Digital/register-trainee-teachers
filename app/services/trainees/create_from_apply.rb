@@ -49,6 +49,10 @@ module Trainees
                 :personal_details_form,
                 :disability_uuids
 
+    def trainee_already_exists?
+      Trainees::FindDuplicates.call(application_record:).present?
+    end
+
     def mapped_attributes
       {
         apply_application: application_record,
@@ -147,13 +151,6 @@ module Trainees
 
     def nationality_names
       raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
-    end
-
-    def trainee_already_exists?
-      scope = application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
-      scope.exists?(first_names: raw_trainee["first_name"],
-                    last_name: raw_trainee["last_name"],
-                    date_of_birth: raw_trainee["date_of_birth"])
     end
 
     def ethnic_background_attributes

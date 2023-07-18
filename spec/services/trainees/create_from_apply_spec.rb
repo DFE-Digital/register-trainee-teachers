@@ -15,6 +15,7 @@ module Trainees
     let(:subject_names) { [] }
     let(:recruitment_cycle_year) { current_academic_year + 1 }
     let(:course_uuid) { course_info["course_uuid"] }
+    let(:duplicates) { [] }
     let!(:current_academic_cycle) { create(:academic_cycle) }
     let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
@@ -74,6 +75,10 @@ module Trainees
 
     subject(:create_trainee_from_apply) { described_class.call(application: apply_application) }
 
+    before do
+      allow(Trainees::FindDuplicates).to receive(:call).and_return(duplicates)
+    end
+
     it "creates a draft trainee" do
       expect {
         create_trainee_from_apply
@@ -87,7 +92,7 @@ module Trainees
     end
 
     context "trainee already exists" do
-      before { create(:trainee, trainee_attributes) }
+      let(:duplicates) { [build(:trainee)] }
 
       it "marks the application as a duplicate" do
         expect {
