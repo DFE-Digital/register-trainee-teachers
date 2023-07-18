@@ -125,6 +125,8 @@ gem "faraday", "~> 1.10.3"
 gem "csv-safe"
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
+gem "strong_migrations"
+
 group :qa, :qa_aks, :review, :review_aks, :staging, :staging_aks, :production, :production_aks do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
   gem "azure-storage-blob", "~> 2", require: false
