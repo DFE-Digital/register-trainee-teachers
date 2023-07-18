@@ -49,6 +49,10 @@ module Trainees
                 :personal_details_form,
                 :disability_uuids
 
+    def trainee_already_exists?
+      Trainees::FindDuplicates.call(application_record:).present?
+    end
+
     def mapped_attributes
       {
         apply_application: application_record,
@@ -147,44 +151,6 @@ module Trainees
 
     def nationality_names
       raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
-    end
-
-    def trainee_already_exists?
-      potential_duplicates.any? { |trainee| confirmed_duplicate?(trainee) }
-    end
-
-    def potential_duplicates
-      application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
-        .where(date_of_birth: raw_trainee["date_of_birth"])
-        .where("last_name ILIKE ?", raw_trainee["last_name"])
-    end
-
-    def confirmed_duplicate?(trainee)
-      matching_recruitment_cycle_year?(trainee) &&
-      matching_qualification_type?(trainee) &&
-      at_least_one_match_identifying_attribute?(trainee)
-    end
-
-    def matching_recruitment_cycle_year?(trainee)
-      trainee.start_academic_cycle&.start_date&.year == raw_course["recruitment_cycle_year"]
-    end
-
-    def matching_qualification_type?(trainee)
-      trainee.training_route == course["route"]
-    end
-
-    def at_least_one_match_identifying_attribute?(trainee)
-      matching_first_name?(trainee) ||
-        matching_email?(trainee)
-    end
-
-    def matching_first_name?(trainee)
-      trainee.first_names&.strip&.downcase&.gsub(/[^a-z ]/, "")&.partition(" ")&.first ==
-        raw_trainee["first_name"]&.strip&.downcase&.gsub(/[^a-z ]/, "")&.partition(" ")&.first
-    end
-
-    def matching_email?(trainee)
-      trainee.email&.strip&.downcase == raw_trainee["email"]&.strip&.downcase
     end
 
     def ethnic_background_attributes

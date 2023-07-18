@@ -80,6 +80,10 @@ module Trainees
 
     subject(:create_trainee_from_apply) { described_class.call(application: apply_application) }
 
+    before do
+      allow(Trainees::FindDuplicates).to receive(:call).and_return([])
+    end
+
     it "creates a draft trainee" do
       expect {
         create_trainee_from_apply
@@ -93,149 +97,7 @@ module Trainees
     end
 
     context "trainee already exists" do
-      before { create(:trainee, duplicate_trainee_attributes) }
-
-      it "marks the application as a duplicate" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("non_importable_duplicate")
-      end
-    end
-
-    context "trainee with match last name and DOB exists but first name and email both differ" do
-      before do
-        create(
-          :trainee,
-          duplicate_trainee_attributes.merge(
-            first_names: "Bob",
-            email: "bob@example.com",
-          ),
-        )
-      end
-
-      it "marks the application as imported" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("imported")
-      end
-    end
-
-    context "trainee with match last name and DOB exists and first name also matches but email differs" do
-      before do
-        create(
-          :trainee,
-          duplicate_trainee_attributes.merge(
-            first_names: "Martin",
-            email: "mwells@mailinator.COM ",
-          ),
-        )
-      end
-
-      it "marks the application as a duplicate" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("non_importable_duplicate")
-      end
-    end
-
-    context "trainee with match last name and DOB exists and first name matches but email and middle names do not" do
-      before do
-        create(
-          :trainee,
-          duplicate_trainee_attributes.merge(
-            first_names: "Martin Derek Clive",
-            email: "mwells@mailinator.COM ",
-          ),
-        )
-      end
-
-      it "marks the application as a duplicate" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("non_importable_duplicate")
-      end
-    end
-
-    context "trainee with match last name and DOB exists but first name and email differ only by case/spacing" do
-      before do
-        create(
-          :trainee,
-          duplicate_trainee_attributes.merge(
-            first_names: " MaRtIn.",
-            email: "martin.wells@mailinator.COM ",
-          ),
-        )
-      end
-
-      it "marks the application as a duplicate" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("non_importable_duplicate")
-      end
-    end
-
-    context "trainee with matching DOB exists but last name differs" do
-      before { create(:trainee, duplicate_trainee_attributes.merge(last_name: "Jones")) }
-
-      it "marks the application as imported" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("imported")
-      end
-    end
-
-    context "trainee with matching last_name exists but DOB differs" do
-      before { create(:trainee, duplicate_trainee_attributes.merge(date_of_birth: "1998-03-19")) }
-
-      it "marks the application as imported" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("imported")
-      end
-    end
-
-    context "trainee with matching last_name and DOB exists but qualification type differs" do
-      before { create(:trainee, duplicate_trainee_attributes.merge(training_route: :early_years_undergrad)) }
-
-      it "marks the application as imported" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("imported")
-      end
-    end
-
-    context "trainee with matching last_name and DOB exists but recruitment_cycle_year differs" do
-      around do |example|
-        Timecop.freeze(Date.new(2023, 7, 1)) { example.run }
-      end
-
-      before do
-        previous_academic_cycle = create(:academic_cycle, previous_cycle: true)
-        create(
-          :trainee,
-          trainee_attributes.merge(
-            start_academic_cycle: previous_academic_cycle,
-            itt_start_date: previous_academic_cycle.start_date,
-          ),
-        )
-      end
-
-      it "marks the application as imported" do
-        expect {
-          create_trainee_from_apply
-        }.to change(apply_application, :state).to("imported")
-      end
-    end
-
-    context "trainee already exists but last name only differs by case" do
-      before do
-        create(
-          :trainee,
-          duplicate_trainee_attributes.merge(
-            last_name: candidate_info["last_name"].downcase,
-          ),
-        )
-      end
+      before { allow(Trainees::FindDuplicates).to receive(:call).and_return([build(:trainee)]) }
 
       it "marks the application as a duplicate" do
         expect {
