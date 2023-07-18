@@ -196,7 +196,7 @@ jobs:
 
   test:
     name: Test
-    needs: [build]
+    needs: [build, lint]
     outputs:
       image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
