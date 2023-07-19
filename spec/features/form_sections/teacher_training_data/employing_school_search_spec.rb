@@ -10,24 +10,26 @@ feature "EmployingSchoolSearch" do
     and_i_visit_the_trainee_edit_employing_school_page
   end
 
-  scenario "choosing a employing school", js: true do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
-    and_i_fill_in_my_employing_school
-    and_i_click_the_first_item_in_the_list
-    and_i_continue
-    then_i_am_redirected_to_the_confirm_lead_school_page
-  end
-
   scenario "choosing a employing school without javascript" do
     and_i_fill_in_my_employing_school_without_js
     and_i_continue
     then_i_am_redirected_to_the_employing_schools_page_filtered_by_my_query
   end
 
-  scenario "when a employing school is not selected", js: true do
-    and_i_fill_in_my_employing_school
-    and_i_continue
-    then_i_am_redirected_to_the_employing_schools_page_filtered_by_my_query
+  context "employing school with javascript", js: true do
+    scenario "choosing a employing school" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+      and_i_fill_in_my_employing_school
+      and_i_click_the_first_item_in_the_list
+      and_i_continue
+      then_i_am_redirected_to_the_confirm_lead_school_page
+    end
+
+    scenario "when a employing school is not selected" do
+      and_i_fill_in_my_employing_school
+      and_i_continue
+      then_i_am_redirected_to_the_employing_schools_page_filtered_by_my_query
+    end
   end
 
 private

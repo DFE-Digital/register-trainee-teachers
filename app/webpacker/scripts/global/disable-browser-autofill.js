@@ -23,18 +23,16 @@ function disableBrowserAutofill () {
   }
 
   document.querySelectorAll('form').forEach(form => {
-
     let inputs = [...form.querySelectorAll('input')]
       .filter(input => inputTypes.includes(input.type))
 
-    if (form.dataset.jsDisableBrowserAutofill === 'on'){
+    if (form.dataset.jsDisableBrowserAutofill === 'on') {
       inputs = inputs.filter(input => input.dataset.jsDisableBrowserAutofill !== 'off')
     } else {
       inputs = inputs.filter(input => input.dataset.jsDisableBrowserAutofill === 'on')
     }
 
     if (inputs.length) {
-
       inputs.forEach(input => {
         // The autocomplete attribute needs to be set to a non-standard attribute
         // for the solution to work
@@ -48,7 +46,6 @@ function disableBrowserAutofill () {
           input.name = input.getAttribute(dataAttributeName)
         })
       })
-
     }
   })
 }

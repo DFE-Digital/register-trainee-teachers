@@ -68,7 +68,7 @@ Record (ADR). We use [adr-tools](https://github.com/npryce/adr-tools) to manage
 our ADRs, see the link for how to install (hint: `brew install adr-tools` or use
 ASDF).
 
-## Running specs, linter(without auto correct) and annotate models and serializers
+## Testing
 To ensure webpacker works for you when tests run:
 
 ```bash
@@ -87,6 +87,21 @@ bundle exec rake
 bundle exec rspec
 ```
 
+### Running specs in parallel
+
+When running specs in parallel for the first time you will first need to set up
+your test databases.
+
+`bundle exec rails parallel:setup`
+
+To run the specs in parallel:
+`bundle exec rails parallel:spec`
+
+To drop the test databases:
+`bundle exec rails parallel:drop`
+
+You can see the full list of commands with: `bundle exec rails -T | grep parallel`
+
 ### rspec-retry
 
 [rspec-retry](https://github.com/NoRedInk/rspec-retry) is a gem that handles
@@ -103,14 +118,51 @@ RSPEC_RETRY_RETRY_COUNT: 1
 
 ## Linting
 
-It's best to lint just your app directories and not those belonging to the framework, e.g.
+### Ruby
+
+It's best to lint just your app directories and not those belonging to the framework:
 
 ```bash
-bundle exec rubocop app config db lib spec Gemfile --format clang -a
-
+bundle exec rails lint:ruby
+```
 or
 
-bundle exec scss-lint app/webpacker/styles
+```
+docker-compose exec web /bin/sh -c "bundle exec rails lint:ruby"
+```
+
+To fix Rubocop issues:
+
+```
+bundle exec rubocop -a app config db lib spec --format clang
+```
+
+### JavaScript
+
+To lint the JavaScript files:
+
+```
+yarn standard
+```
+
+To fix JavaScript lint issues:
+
+```
+yarn run standard --fix
+```
+
+### SCSS
+
+To lint the SCSS files:
+
+```
+bundle exec rails lint:scss
+```
+
+### Running all pre-build checks
+
+```
+bundle exec rake
 ```
 
 ## Secrets vs Settings

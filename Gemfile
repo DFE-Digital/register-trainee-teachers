@@ -155,6 +155,8 @@ group :development, :test do
 
   gem "rails-controller-testing"
 
+  # run specs in parallel
+  gem "parallel_tests"
   gem "rspec-benchmark", require: false
 
   # Adds support for Capybara system testing and selenium driver
@@ -197,6 +199,9 @@ group :test do
   gem "site_prism", "~> 4.0"
 
   gem "webmock"
+
+  # Clean out the database between tests
+  gem "database_cleaner-active_record"
 
   # DfE Digital forked rspec-retry detects flaky specs and reports them
   gem "rspec-retry", git: "https://github.com/DFE-Digital/rspec-retry.git", branch: "main"

@@ -77,7 +77,7 @@ const setupAutoComplete = (form) => {
   try {
     inputs.forEach(input => {
       accessibleAutocomplete({
-        element: element,
+        element,
         id: input.id,
         minLength: 2,
         defaultValue: defaultValueOption,
@@ -93,9 +93,8 @@ const setupAutoComplete = (form) => {
         templates: renderTemplate,
         onConfirm: (value) => {
           if (value?.id && element.dataset.systemAdminRedirectLeadSchool) {
-            window.location.assign(`/system-admin/lead-schools/${value.id}`);
-          }
-          else {
+            window.location.assign(`/system-admin/lead-schools/${value.id}`)
+          } else {
             tracker.sendTrackingEvent(value, fieldName)
             setSchoolHiddenField(value)
           }

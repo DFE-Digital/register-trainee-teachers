@@ -179,6 +179,10 @@ GEM
     data_migrate (9.1.0)
       activerecord (>= 6.0)
       railties (>= 6.0)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -446,6 +450,8 @@ GEM
     options (2.3.2)
     os (1.1.4)
     parallel (1.23.0)
+    parallel_tests (4.2.1)
+      parallel
     parser (3.2.2.3)
       ast (~> 2.4.1)
       racc
@@ -752,6 +758,7 @@ DEPENDENCIES
   csv-safe
   cuprite (~> 0.13)
   data_migrate
+  database_cleaner-active_record
   debug
   dfe-analytics!
   dfe-reference-data!
@@ -778,6 +785,7 @@ DEPENDENCIES
   omniauth
   omniauth-rails_csrf_protection
   omniauth_openid_connect
+  parallel_tests
   pg (>= 0.18, < 2.0)
   pg_search (~> 2.3)
   progress_bar

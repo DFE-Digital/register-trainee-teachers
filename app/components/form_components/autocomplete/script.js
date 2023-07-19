@@ -13,7 +13,7 @@ const suggestion = (value, options) => {
     const html = option.append ? `<span>${value}</span> ${option.append}` : `<span>${value}</span>`
     return option.hint ? `${html}<br>${option.hint}` : html
   } else {
-    return `<span>No results found</span>`
+    return '<span>No results found</span>'
   }
 }
 
