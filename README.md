@@ -148,7 +148,7 @@ yarn standard
 To fix JavaScript lint issues:
 
 ```
-yarn run standard:fix
+yarn run standard --fix
 ```
 
 ### SCSS
