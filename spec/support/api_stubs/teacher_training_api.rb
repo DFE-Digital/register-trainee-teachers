@@ -97,5 +97,49 @@ module ApiStubs
         },
       }
     end
+
+    def self.lead_schools
+      { data: [lead_school], links: { next: nil } }
+    end
+
+    def self.lead_school(attrs = {})
+      {
+        id: "18658",
+        type: "providers",
+        attributes: {
+          ukprn: "10000000",
+          urn: "100000",
+          postcode: "N1 4PF",
+          provider_type: "lead_school",
+          region_code: "london",
+          train_with_disability: "train with disability",
+          train_with_us: "train with us",
+          website: "https://www.test.org/",
+          latitude: nil,
+          longitude: nil,
+          telephone: nil,
+          email: "admin@test.org",
+          can_sponsor_skilled_worker_visa: false,
+          can_sponsor_student_visa: false,
+          accredited_body: false,
+          changed_at: "2023-08-13T07:37:23Z",
+          city: "London",
+          code: "R3G",
+          county: "",
+          created_at: "2022-08-06T11:52:52Z",
+          name: "Register Primary School",
+          "street_address_1" => "105 Register Street",
+          "street_address_2" => "Jubilee Register Centre",
+          "street_address_3" => nil,
+        }.merge(attrs),
+        relationships: {
+          recruitment_cycle: {
+            meta: {
+              included: false,
+            },
+          },
+        },
+      }
+    end
   end
 end
