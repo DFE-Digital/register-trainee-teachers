@@ -40,6 +40,7 @@ module Dqt
             "lastName" => trainee.last_name,
             "birthDate" => trainee.date_of_birth.iso8601,
             "emailAddress" => trainee.email,
+            "slugid" => trainee.slug,
             "genderCode" => "Female",
             "address" => uk_address_hash,
           })
