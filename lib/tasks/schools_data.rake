@@ -3,6 +3,38 @@
 GIAS_CSV_PATH = Rails.root.join("data/schools_gias.csv").freeze
 
 namespace :schools_data do
+  desc "Generate data/schools_gias.csv from GIAS data"
+  # NOTE: Academies and free school fields CSV & State-funded school fields CSV
+  task :generate_csv_from_gias, %i[gias_csv_1_path gias_csv_2_path output_path] => [:environment] do |_, args|
+    items = [args.gias_csv_1_path, args.gias_csv_2_path].flat_map do |csv_path|
+      schools = CSV.read(csv_path, headers: true, encoding: "windows-1251:utf-8")
+
+      schools.map do |school|
+        town = school["Town"].presence || [school["Address3"], school["Locality"]].detect(&:present?).tap do |backup|
+          puts("Town missing for school: '#{school['EstablishmentName']}', estimating as #{backup}")
+        end
+
+        {
+          urn: school["URN"],
+          name: school["EstablishmentName"],
+          open_date: school["OpenDate"].presence,
+          town: town,
+          postcode: school["Postcode"],
+        }
+      end
+    end
+    items = items.uniq { |a| a[:urn] }
+    items = items.sort { |a, b| a[:urn] <=> b[:urn] }
+
+    puts "Schools total: #{items.count}"
+    CSV.open(args.output_path || GIAS_CSV_PATH, "w+") do |csv|
+      csv << items.first.keys
+      items.each do |hash|
+        csv << hash.values
+      end
+    end
+  end
+
   desc "Import schools from csv data/schools_gias.csv"
   task import_gias: :environment do
     updated = 0
