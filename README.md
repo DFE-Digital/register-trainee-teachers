@@ -268,35 +268,6 @@ dttp:
 In order to login, change space roles and interact with PaaS based application,
 please follow this [instruction](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2409791489/Changing+set+and+unset+roles+and+interacting+with+App+on+PaaS)
 
-### Generating schools data
-
-To create/update schools data, we do this using a rake task:
-
-```bash
-bundle exec rake schools_data:import
-```
-
-which reads from a csv located in `data/schools.csv`. This will create
-any new schools that aren't in the database, or update existing ones
-based on the urn.
-
-## Regenerating data/schools.csv
-
-if required, the `data/schools.csv` can be regenerated using this rake
-task (if school details update, or there is a new list of lead schools
-for the coming year.
-
-```bash
-bundle exec rake schools_data:generate_csv[establishment_csv_path, lead_schools_csv_path]
-```
-
-The establisment csv can be downloaded here https://get-information-schools.service.gov.uk/Downloads
-under "Establishment fields".
-
-To create the lead schools csv, there is a spreadsheet in google drive: https://drive.google.com/file/d/1ziI5x4oSqXCUaG5q_8-VXiMzDWOVlIiC/view
-
-The second tab: "MASTER LIST_All Lead Schools" must be exported as a csv.
-
 ## Running Apply application import against example data
 
 Add the following to your `development.local.yml`:
