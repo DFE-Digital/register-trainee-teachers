@@ -3,25 +3,25 @@ default: &default
 
 review:
   <<: *default
-  RAILS_ENV: review_aks
-  RACK_ENV: review_aks
+  RAILS_ENV: review
+  RACK_ENV: review
 
 qa:
   <<: *default
-  RAILS_ENV: qa_aks
-  RACK_ENV: qa_aks
+  RAILS_ENV: qa
+  RACK_ENV: qa
 
 staging:
   <<: *default
-  RAILS_ENV: staging_aks
-  RACK_ENV: staging_aks
+  RAILS_ENV: staging
+  RACK_ENV: staging
 
 production:
   <<: *default
-  RAILS_ENV: production_aks
-  RACK_ENV: production_aks
+  RAILS_ENV: production
+  RACK_ENV: production
 
 productiondata:
   <<: *default
-  RAILS_ENV: productiondata_aks
-  RACK_ENV: productiondata_aks
+  RAILS_ENV: productiondata
+  RACK_ENV: productiondata
