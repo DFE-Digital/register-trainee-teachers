@@ -1,5 +1,5 @@
 # The url for this app, also used by `dfe_sign_in`
-base_url: https://register-productiondata.london.cloudapps.digital
+base_url: https://register-productiondata.teacherservices.cloud
 
 dttp:
   scope: https://dttp.crm4.dynamics.com/.default

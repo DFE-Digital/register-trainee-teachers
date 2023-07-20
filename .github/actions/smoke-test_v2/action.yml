@@ -28,7 +28,7 @@ runs:
       run: |
         if [ ! -z "${{ inputs.pr-number }}" ]; then
           PR_NUMBER=${{ inputs.pr-number }}
-          echo "base_url: https://register-pr-$PR_NUMBER.test.teacherservices.cloud" >> config/settings/review_aks.yml
+          echo "base_url: https://register-pr-$PR_NUMBER.test.teacherservices.cloud" >> config/settings/review.yml
         fi;
 
     - name: Bundle smoke test gems

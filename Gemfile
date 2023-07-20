@@ -127,7 +127,7 @@ gem "progress_bar" # useful to track progress of long running data migrations us
 
 gem "strong_migrations"
 
-group :qa, :qa_aks, :review, :review_aks, :staging, :staging_aks, :production, :production_aks do
+group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
   gem "azure-storage-blob", "~> 2", require: false
   gem "azure-storage-common", "~> 2.0", ">= 2.0.4"
@@ -208,7 +208,7 @@ group :test do
 end
 
 # Required for example_data so needed in review, qa and pen too
-group :development, :test, :review, :review_aks, :qa, :qa_aks, :audit, :pen do
+group :development, :test, :review, :qa, :audit, :pen do
   gem "bundle-audit", require: false
   gem "factory_bot_rails"
   gem "faker"
