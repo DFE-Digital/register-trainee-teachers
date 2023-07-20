@@ -46,7 +46,6 @@ environment:
 apply_applications:
   import:
     recruitment_cycle_years:
-      - 2021
-      - 2022
+      - 2023
   create:
-    recruitment_cycle_year: 2022
+    recruitment_cycle_year: 2023
