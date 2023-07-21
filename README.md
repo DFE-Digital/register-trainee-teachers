@@ -279,9 +279,9 @@ In order to create and update the  schools follow the below steps
 ### Download Get Information about Schools data
 1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
 2. From `Open academies and free schools data` select `Academies and free school fields CSV`
-3. From `Open state-funded schools data` select ` State-funded school fields CSV`
+3. From `Open state-funded schools data` select `State-funded school fields CSV`
 4. Click on `Download selected files`
-5. Extract to content to `./data` directory
+5. Extract content to `./data` directory
 
 ### Generate data/schools_gias.csv from GIAS data
 To generate the data/schools_gias.csv from GIAS data, use the following rake task:
