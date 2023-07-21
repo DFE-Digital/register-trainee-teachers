@@ -87,11 +87,25 @@ jobs:
         az storage blob upload --container-name database-backup \
         --file ${BACKUP_FILE_NAME}.tar.gz --name ${BACKUP_FILE_NAME}.tar.gz --overwrite \
         --connection-string '${{ env.STORAGE_CONN_STR }}'
+        rm ${BACKUP_FILE_NAME}.tar.gz
+
+    - name: Restore backup to aks productiondata database
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
+      shell: bash
+      run: |
+        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
+
+    - name: Restore backup to aks analysis database
+      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
+      shell: bash
+      run: |
+        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -p ANALYSIS_DATABASE_URL -t 7200 register-production -- psql
 
     - name: Sanitise the Database backup
       run: |
         echo "::group::Restore backup to intermediate database"
         createdb ${DATABASE_NAME} && psql -f ${{ env.BACKUP_FILE_NAME }}.sql -d ${DATABASE_NAME}
+        rm ${{ env.BACKUP_FILE_NAME }}.sql
         echo "::endgroup::"
 
         echo "::group::Sanitise user data"
@@ -115,17 +129,18 @@ jobs:
         path: backup_sanitised.sql
         retention-days: 3
 
-    - name: Restore backup to aks productiondata database
-      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
-      shell: bash
-      run: |
-        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
+    - name: Check for Failure
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_CHANNEL: twd_publish_register_tech
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Backup Failure
+        SLACK_MESSAGE: ':alert: Backup failure :sadparrot:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
-    - name: Restore backup to aks analysis database
-      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
-      shell: bash
-      run: |
-        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -p ANALYSIS_DATABASE_URL -t 7200 register-production -- psql
 
   restore_staging:
     needs: [backup]
@@ -161,3 +176,15 @@ jobs:
       shell: bash
       run: |
         bin/konduit.sh -i backup_sanitised.sql -t 7200 register-staging -- psql
+
+    - name: Check for Failure
+      if: ${{ failure() }}
+      uses: rtCamp/action-slack-notify@master
+      env:
+        SLACK_CHANNEL: twd_publish_register_tech
+        SLACK_COLOR: '#ef5343'
+        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_USERNAME: Register Trainee Teachers
+        SLACK_TITLE: Staging Restore Failure
+        SLACK_MESSAGE: ':alert: Daily restore failure for staging :sadparrot:'
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
