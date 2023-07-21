@@ -46,5 +46,13 @@ describe Withdrawal::View do
     it "renders the reason for withdrawal" do
       expect(rendered_component).to have_text(I18n.t("components.withdrawal_details.reasons.#{withdrawal_reasons.first.name}"))
     end
+
+    context "with no withdrawal date present" do
+      let(:withdraw_date) { nil }
+
+      it "renders no date of withdrawal" do
+        expect(rendered_component).to have_selector("#date-the-trainee-withdrew", text: "-")
+      end
+    end
   end
 end

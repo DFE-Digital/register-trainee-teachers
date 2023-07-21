@@ -31,7 +31,7 @@ module Withdrawal
 
     def start_date
       mappable_field(
-        data_model.trainee_start_date&.strftime(Date::DATE_FORMATS[:govuk]),
+        data_model.trainee_start_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
         "Trainee start date",
         (trainee_start_date_verification_path(trainee, context: :withdraw) unless deferred),
       )
@@ -39,7 +39,7 @@ module Withdrawal
 
     def withdraw_date
       mappable_field(
-        data_model.withdraw_date.strftime(Date::DATE_FORMATS[:govuk]),
+        data_model.withdraw_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
         "Date the trainee withdrew",
         edit_trainee_withdrawal_date_path(trainee),
       )
