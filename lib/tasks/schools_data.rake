@@ -1,56 +1,38 @@
 # frozen_string_literal: true
 
-HEADERS = %w[urn name town postcode lead_school open_date close_date].freeze
-REFINED_CSV_PATH = Rails.root.join("data/schools.csv").freeze
+GIAS_CSV_PATH = Rails.root.join("data/schools_gias.csv").freeze
 
 namespace :schools_data do
-  # This task requires two csvs, see readme under "Regenerating data/schools.csv" for details
-  desc "Generate school csv with only the required columns from the establishment and lead school csv"
-  task :generate_csv, %i[establishment_csv_path lead_schools_csv_path output_path] => [:environment] do |_, args|
-    urns = CSV.read(args.lead_schools_csv_path, headers: true).by_col["Lead School (URN)"]
-    urns = Set.new(urns)
+  desc "Generate data/schools_gias.csv from GIAS data"
+  # NOTE: Academies and free school fields CSV & State-funded school fields CSV
+  task :generate_csv_from_gias, %i[gias_csv_1_path gias_csv_2_path output_path] => [:environment] do |_, args|
+    items = [args.gias_csv_1_path, args.gias_csv_2_path].flat_map do |csv_path|
+      schools = CSV.read(csv_path, headers: true, encoding: "windows-1251:utf-8")
 
-    schools = CSV.read(args.establishment_csv_path, headers: true, encoding: "windows-1251:utf-8")
+      schools.map do |school|
+        town = school["Town"].presence || [school["Address3"], school["Locality"]].detect(&:present?).tap do |backup|
+          puts("Town missing for school: '#{school['EstablishmentName']}', estimating as #{backup}")
+        end
 
-    output_path = args.output_path || REFINED_CSV_PATH
-
-    CSV.open(output_path, "w+") do |csv|
-      csv << HEADERS
-      schools.each do |school|
-        lead_school = urns.include?(school["URN"])
-        town =
-          school["Town"].presence || [school["Address3"], school["Locality"]].detect(&:present?).tap do |backup|
-            puts("Town missing for school: '#{school['EstablishmentName']}', estimating as #{backup}")
-          end
-
-        csv <<
-          [
-            school["URN"],
-            school["EstablishmentName"],
-            town,
-            school["Postcode"],
-            lead_school,
-            school["OpenDate"],
-            school["CloseDate"],
-          ]
+        {
+          urn: school["URN"],
+          name: school["EstablishmentName"],
+          open_date: school["OpenDate"].presence,
+          town: town,
+          postcode: school["Postcode"],
+        }
       end
     end
-  end
+    items = items.uniq { |a| a[:urn] }
+    items = items.sort { |a, b| a[:urn] <=> b[:urn] }
 
-  desc "Import schools from csv data/schools.csv"
-  task :import, [:csv_path] => :environment do |_, args|
-    csv_path = args.csv_path || REFINED_CSV_PATH
-    schools = CSV.read(csv_path, headers: true)
-
-    upserted = 0
-    schools.each do |school|
-      School.find_or_initialize_by(urn: school["urn"])
-        .update!(school.to_h.except(:urn))
-      puts "upserted school with urn: #{school['urn']}"
-      upserted += 1
+    puts "Schools total: #{items.count}"
+    CSV.open(args.output_path || GIAS_CSV_PATH, "w+") do |csv|
+      csv << items.first.keys
+      items.each do |hash|
+        csv << hash.values
+      end
     end
-
-    puts "Done! #{upserted} schools upserted"
   end
 
   desc "Import schools from csv data/schools_gias.csv"
@@ -58,7 +40,7 @@ namespace :schools_data do
     updated = 0
     created = 0
 
-    CSV.read(Rails.root.join("data/schools_gias.csv"), headers: true).each do |row|
+    CSV.read(GIAS_CSV_PATH, headers: true).each do |row|
       school = School.find_or_initialize_by(urn: row["urn"])
       school.id ? updated += 1 : created += 1
       # we don't have data on if the imported school is a lead school or not

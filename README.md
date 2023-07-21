@@ -268,34 +268,42 @@ dttp:
 In order to login, change space roles and interact with PaaS based application,
 please follow this [instruction](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2409791489/Changing+set+and+unset+roles+and+interacting+with+App+on+PaaS)
 
-### Generating schools data
+## School data
+[Get Information about Schools](https://get-information-schools.service.gov.uk) holds the most complete information for schools.
 
-To create/update schools data, we do this using a rake task:
+In order to create and update the  schools follow the below steps
+1. [Download Get Information about Schools data](#download-get-information-about-schools-data)
+2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
+2. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
+
+### Download Get Information about Schools data
+1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
+2. From `Open academies and free schools data` select `Academies and free school fields CSV`
+3. From `Open state-funded schools data` select `State-funded school fields CSV`
+4. Click on `Download selected files`
+5. Extract content to `./data` directory
+
+### Generate data/schools_gias.csv from GIAS data
+To generate the data/schools_gias.csv from GIAS data, use the following rake task:
 
 ```bash
-bundle exec rake schools_data:import
+
+# gias_csv_1_path: path to the GIAS file
+# gias_csv_2_path: path to the GIAS file
+# output_path: optional, path to the output file, default to `data/schools_gias.csv`
+bundle exec rake schools_data:generate_csv_from_gias\[gias_csv_1_path,gias_csv_2_path,output_path\]
+
+# as an example
+bundle exec rake schools_data:generate_csv_from_gias\[./data/edubaseallacademiesandfree20230719.csv,./data/edubaseallstatefunded20230719.csv\]
+
 ```
 
-which reads from a csv located in `data/schools.csv`. This will create
-any new schools that aren't in the database, or update existing ones
-based on the urn.
-
-## Regenerating data/schools.csv
-
-if required, the `data/schools.csv` can be regenerated using this rake
-task (if school details update, or there is a new list of lead schools
-for the coming year.
+### Import schools from csv data/schools_gias.csv
+To import schools from csv data/schools_gias.csv, use the following rake task:
 
 ```bash
-bundle exec rake schools_data:generate_csv[establishment_csv_path, lead_schools_csv_path]
+bundle exec rake schools_data:import_gias
 ```
-
-The establisment csv can be downloaded here https://get-information-schools.service.gov.uk/Downloads
-under "Establishment fields".
-
-To create the lead schools csv, there is a spreadsheet in google drive: https://drive.google.com/file/d/1ziI5x4oSqXCUaG5q_8-VXiMzDWOVlIiC/view
-
-The second tab: "MASTER LIST_All Lead Schools" must be exported as a csv.
 
 ## Running Apply application import against example data
 
