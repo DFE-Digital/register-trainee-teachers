@@ -274,7 +274,8 @@ please follow this [instruction](https://dfedigital.atlassian.net/wiki/spaces/Ba
 In order to create and update the  schools follow the below steps
 1. [Download Get Information about Schools data](#download-get-information-about-schools-data)
 2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
-2. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
+3. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
+4. [Generate data/lead_schools_publish.csv from Publish api](#generate-datalead_schools_publishcsv-from-publish-api)
 
 ### Download Get Information about Schools data
 1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
@@ -303,6 +304,20 @@ To import schools from csv data/schools_gias.csv, use the following rake task:
 
 ```bash
 bundle exec rake schools_data:import_gias
+```
+
+### Generate data/lead_schools_publish.csv from Publish api
+
+To generate the data/lead_schools_publish.csv from Publish api data, use the following rake task:
+
+```bash
+
+# output_path: optional, path to the output file, default to `data/lead_schools_publish.csv`
+bundle exec rake schools_data:generate_csv_from_publish\[output_path\]
+
+# as an example
+bundle exec rake schools_data:generate_csv_from_publish
+
 ```
 
 ## Running Apply application import against example data
