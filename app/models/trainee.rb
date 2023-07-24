@@ -55,6 +55,7 @@
 #  reinstate_date                  :date
 #  sex                             :integer
 #  slug                            :citext           not null
+#  slug_sent_to_dqt_at             :datetime
 #  state                           :integer          default("draft")
 #  study_mode                      :integer
 #  submission_ready                :boolean          default(FALSE)
