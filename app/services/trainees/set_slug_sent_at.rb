@@ -9,8 +9,7 @@ module Trainees
     end
 
     def call
-      trainee.slug_sent_to_dqt_at ||= Time.zone.now
-      trainee.save!
+      trainee.update!(slug_sent_to_dqt_at: Time.zone.now)
     end
 
   private
