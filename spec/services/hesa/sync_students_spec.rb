@@ -28,7 +28,7 @@ module Hesa
         let(:xml_response) { "" }
 
         it "doesn't try to parse the XML response" do
-          expect { described_class.call }.not_to raise_error(Nokogiri::XML::SyntaxError)
+          expect { described_class.call }.not_to raise_error
         end
       end
 
@@ -47,18 +47,31 @@ module Hesa
         before do
           upload.file.attach(
             io: File.open(xml_file_path),
-            filename: filename, content_type: "text/xml"
+            filename: filename, content_type: file_type
           )
         end
 
-        it "uses the uploaded xml to create students" do
-          expect { described_class.call(upload_id: upload.id) }.to change { Student.count }.from(0).to(1)
+        context "with an xml file type" do
+          let(:file_type) { "text/xml" }
+
+          it "uses the uploaded xml to create students" do
+            expect { described_class.call(upload_id: upload.id) }.to change { Student.count }.from(0).to(1)
+          end
+
+          it "sets collection reference correctly" do
+            described_class.call(upload_id: upload.id)
+
+            expect(Student.first.collection_reference).to eq("C16053")
+          end
         end
 
-        it "sets collection reference correctly" do
-          described_class.call(upload_id: upload.id)
+        context "with a zip file type" do
+          let(:file_type) { "application/zip" }
+          let(:filename) { "itt_record.zip" }
 
-          expect(Student.first.collection_reference).to eq("C16053")
+          it "uses the uploaded xml to create students" do
+            expect { described_class.call(upload_id: upload.id) }.to change { Student.count }.from(0).to(1)
+          end
         end
       end
     end

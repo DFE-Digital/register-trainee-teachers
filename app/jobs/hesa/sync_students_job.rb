@@ -4,10 +4,10 @@ module Hesa
   class SyncStudentsJob < ApplicationJob
     queue_as :hesa
 
-    def perform
+    def perform(upload_id: nil)
       return unless FeatureService.enabled?("hesa_import.sync_collection")
 
-      SyncStudents.call
+      SyncStudents.call(upload_id:)
     end
   end
 end

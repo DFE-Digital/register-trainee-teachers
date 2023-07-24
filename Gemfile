@@ -92,6 +92,8 @@ gem "stateful_enum"
 gem "kaminari"
 
 gem "activerecord-session_store"
+# Zip file extracting
+gem "rubyzip"
 
 # End-user application performance monitoring
 gem "skylight"
