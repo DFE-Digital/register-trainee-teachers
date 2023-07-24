@@ -23,7 +23,7 @@ module Dqt
     end
 
     def path
-      @path ||= "/v2/teachers/#{trainee.trn}/itt-outcome?birthDate=#{trainee.date_of_birth.iso8601}"
+      @path ||= "/v2/teachers/#{trainee.trn}/itt-outcome?slugId=#{trainee.slug}&birthDate=#{trainee.date_of_birth.iso8601}"
     end
 
     def params
