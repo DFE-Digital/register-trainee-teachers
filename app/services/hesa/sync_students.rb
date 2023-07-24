@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "zip"
+
 module Hesa
   # If the service needs access to a HESA xml file no longer available from HESA i.e.
   # a previous collection, upload a file via `/system-admin/uploads` and pass the
@@ -19,9 +21,9 @@ module Hesa
     def call
       return sync_data(fetch_xml_from_hesa) unless upload
 
-      upload.file.open do |xml|
-        sync_data(xml.read.to_s)
-      end
+      xml_content = zip_file? ? extract_from_zip : upload.file.open(&:read).to_s
+
+      sync_data(xml_content)
     end
 
   private
@@ -52,6 +54,18 @@ module Hesa
 
         hesa_student.save
       end
+    end
+
+    def extract_from_zip
+      Zip::File.open_buffer(upload.file.open(&:read)) do |zip_file|
+        zip_file.each do |entry|
+          return entry.get_input_stream.read if entry.name.end_with?(".xml")
+        end
+      end
+    end
+
+    def zip_file?
+      upload.file.blob.content_type == "application/zip"
     end
   end
 end

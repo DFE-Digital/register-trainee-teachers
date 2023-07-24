@@ -804,6 +804,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   ruby-progressbar
+  rubyzip
   scss_lint-govuk
   sentry-rails
   sentry-ruby

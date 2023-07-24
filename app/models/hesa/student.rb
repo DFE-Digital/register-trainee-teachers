@@ -66,6 +66,7 @@
 #  hesa_id                      :string
 #  provider_course_id           :string
 #  rec_id                       :string
+#  student_instance_id          :string
 #  trainee_id                   :string
 #
 # Indexes
