@@ -23,7 +23,7 @@ module Dqt
     end
 
     def path
-      "/v2/teachers/#{trainee.trn}/itt-outcome?birthDate=#{trainee.date_of_birth.iso8601}"
+      "/v2/teachers/#{trainee.trn}/itt-outcome?slugId=#{trainee.slug}"
     end
 
     def params
