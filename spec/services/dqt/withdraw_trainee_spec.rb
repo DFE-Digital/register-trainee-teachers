@@ -10,7 +10,7 @@ module Dqt
         "trn" => trainee.trn,
       }
     }
-    let(:expected_path) { "/v2/teachers/#{trainee.trn}/itt-outcome?slugId=#{trainee.slug}&birthDate=#{trainee.date_of_birth.iso8601}" }
+    let(:expected_path) { "/v2/teachers/#{trainee.trn}/itt-outcome?birthDate=#{trainee.date_of_birth.iso8601}" }
     let(:json_body_params) { "withdrawing bob" }
 
     subject { described_class.call(trainee:) }
