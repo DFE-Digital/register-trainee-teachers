@@ -164,6 +164,7 @@ GEM
     cloudfront-rails (0.4.0)
       railties (> 4.0)
     coderay (1.1.3)
+    colorize (1.1.0)
     concurrent-ruby (1.2.2)
     config (4.2.1)
       deep_merge (~> 1.2, >= 1.2.1)
@@ -754,6 +755,7 @@ DEPENDENCIES
   canonical-rails
   capybara (~> 3.39)
   cloudfront-rails
+  colorize
   config (~> 4.2)
   csv-safe
   cuprite (~> 0.13)
