@@ -3,7 +3,7 @@
 require "rails_helper"
 require "tempfile"
 
-describe "schools_data:generate_csv_from_publish" do
+describe "schools_data:get_lead_schools_from_publish" do
   let(:query_params) { "filter[provider_type]=lead_school&sort=name" }
   let(:output_path) do
     Tempfile.new(["fake", ".csv"]).path
@@ -22,7 +22,7 @@ describe "schools_data:generate_csv_from_publish" do
       %i[output_path],
       [output_path],
     )
-    Rake::Task["schools_data:generate_csv_from_publish"].execute(args)
+    Rake::Task["schools_data:get_lead_schools_from_publish"].execute(args)
   end
 
   it "combines the relevant fields and outputs them to a csv" do

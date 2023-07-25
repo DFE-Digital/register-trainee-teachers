@@ -315,10 +315,10 @@ To generate the data/lead_schools_publish.csv from Publish api data, use the fol
 ```bash
 
 # output_path: optional, path to the output file, default to `data/lead_schools_publish.csv`
-bundle exec rake schools_data:generate_csv_from_publish\[output_path\]
+bundle exec rake schools_data:get_lead_schools_from_publish\[output_path\]
 
 # as an example
-bundle exec rake schools_data:generate_csv_from_publish
+bundle exec rake schools_data:get_lead_schools_from_publish
 
 ```
 

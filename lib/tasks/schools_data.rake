@@ -53,7 +53,7 @@ namespace :schools_data do
   end
 
   desc "Generate data/lead_schools_publish.csv from Publish api"
-  task :generate_csv_from_publish, %i[output_path] => [:environment] do |_, args|
+  task :get_lead_schools_from_publish, %i[output_path] => [:environment] do |_, args|
     request_uri = TeacherTrainingApi::RetrieveLeadSchools::DEFAULT_PATH
 
     items = []
@@ -69,6 +69,8 @@ namespace :schools_data do
 
     items = items.uniq { |a| a[:urn] }
     items = items.sort { |a, b| a[:urn] <=> b[:urn] }
+
+    puts "Lead schools total: #{items.count}"
 
     CSV.open(args.output_path || PUBLISH_CSV_PATH, "w+") do |csv|
       csv << items.first.keys
