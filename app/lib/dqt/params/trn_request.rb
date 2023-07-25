@@ -82,6 +82,7 @@ module Dqt
           "lastName" => trainee.last_name,
           "birthDate" => trainee.date_of_birth.iso8601,
           "emailAddress" => trainee.email,
+          "slugid" => trainee.slug,
           "address" => address_params,
           "husid" => trainee.hesa_id,
           "genderCode" => GENDER_CODES[trainee.sex.to_sym],

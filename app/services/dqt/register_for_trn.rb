@@ -31,6 +31,7 @@ module Dqt
       response = Client.put(path, body:)
       trn_request.response = response
       trn_request.requested!
+      Trainees::SetSlugSentAt.call(trainee:)
     rescue Client::HttpError => e
       # Sometimes we receive a 500 from DQT even though the TRN request is
       # eventually successful. Because of this, we still want to save the
