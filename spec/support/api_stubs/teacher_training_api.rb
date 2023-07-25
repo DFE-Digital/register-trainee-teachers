@@ -128,9 +128,11 @@ module ApiStubs
           county: "",
           created_at: "2022-08-06T11:52:52Z",
           name: "Register Primary School",
-          "street_address_1" => "105 Register Street",
-          "street_address_2" => "Jubilee Register Centre",
-          "street_address_3" => nil,
+          # rubocop:disable Naming/VariableNumber: Use normalcase for symbol numbers.
+          street_address_1: "105 Register Street",
+          street_address_2: "Jubilee Register Centre",
+          street_address_3: nil,
+          # rubocop:enable Naming/VariableNumber: Use normalcase for symbol numbers.
         }.merge(attrs),
         relationships: {
           recruitment_cycle: {
