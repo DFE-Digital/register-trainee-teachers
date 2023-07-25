@@ -11,7 +11,11 @@ module AwardDetails
     end
 
     def award_date
-      date_for_summary_view(trainee.awarded_at)
+      if trainee.awarded_at.present?
+        date_for_summary_view(trainee.awarded_at)
+      elsif trainee.recommended_for_award?
+        "Waiting for award - met standards on #{date_for_summary_view(trainee.recommended_for_award_at)}"
+      end
     end
   end
 end
