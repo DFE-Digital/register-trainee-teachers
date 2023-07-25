@@ -78,8 +78,8 @@ namespace :schools_data do
     end
   end
 
-  desc "Update schools to lead schools from csv data/lead_schools_publish.csv"
-  task :update_school_to_lead_school_publish, %i[input_path] => [:environment] do |_, args|
+  desc "Update schools to lead schools from publish data/lead_schools_publish.csv"
+  task :update_lead_schools_from_publish, %i[input_path] => [:environment] do |_, args|
     updated = 0
     skipped = 0
 

@@ -277,7 +277,7 @@ In order to create and update the schools and the lead schools follow the below 
 2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
 3. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
 4. [Generate data/lead_schools_publish.csv from Publish api](#generate-datalead_schools_publishcsv-from-publish-api)
-5. [Update schools to lead schools from csv data/lead_schools_publish.csv](#update-schools-to-lead-schools-from-csv-datalead_schools_publishcsv)
+5. [Update schools to lead schools from publish data/lead_schools_publish.csv](#update-schools-to-lead-schools-from-publish-datalead_schools_publishcsv)
 
 ### Download Get Information about Schools data
 1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
@@ -322,15 +322,15 @@ bundle exec rake schools_data:generate_csv_from_publish
 
 ```
 
-### Update schools to lead schools from csv data/lead_schools_publish.csv
+### Update schools to lead schools from publish data/lead_schools_publish.csv
 
-To update schools to lead schools from csv data/lead_schools_publish.csv, use the following rake task:
+To update schools to lead schools from publish data/lead_schools_publish.csv, use the following rake task:
 ```bash
 
 # input_path: optional, path to the input file, default to `data/lead_schools_publish.csv`
-bundle exec rake schools_data:update_school_to_lead_school_publish\[input_path\]
+bundle exec rake schools_data:update_lead_schools_from_publish\[input_path\]
 
-bundle exec rake schools_data:update_school_to_lead_school_publish
+bundle exec rake schools_data:update_lead_schools_from_publish
 
 ```
 

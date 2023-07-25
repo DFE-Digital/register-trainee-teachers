@@ -3,7 +3,7 @@
 require "rails_helper"
 require "tempfile"
 
-describe "schools_data:update_school_to_lead_school_publish" do
+describe "schools_data:update_lead_schools_from_publish" do
   let(:input_path) { input_file.path }
   let(:school_to_lead_school) {    create(:school) }
   let(:headers) { %w[urn name town postcode] }
@@ -15,7 +15,7 @@ describe "schools_data:update_school_to_lead_school_publish" do
   }
 
   let(:input_file) do
-    Tempfile.new(["fake_update_school_to_lead_school_publish", ".csv"]).tap do |f|
+    Tempfile.new(["fake_update_lead_schools_from_publish", ".csv"]).tap do |f|
       f.write csv_body
       f.flush
       f.close
@@ -31,7 +31,7 @@ describe "schools_data:update_school_to_lead_school_publish" do
       %i[input_path],
       [input_path],
     )
-    Rake::Task["schools_data:update_school_to_lead_school_publish"].execute(args)
+    Rake::Task["schools_data:update_lead_schools_from_publish"].execute(args)
   end
 
   it "updates the school to lead school" do
