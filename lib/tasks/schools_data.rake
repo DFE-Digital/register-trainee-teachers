@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 GIAS_CSV_PATH = Rails.root.join("data/schools_gias.csv").freeze
+PUBLISH_CSV_PATH = Rails.root.join("data/lead_schools_publish.csv").freeze
 
 namespace :schools_data do
   desc "Generate data/schools_gias.csv from GIAS data"
@@ -49,5 +50,51 @@ namespace :schools_data do
     end
 
     puts "Done! created: #{created}, updated: #{updated}"
+  end
+
+  desc "Generate data/lead_schools_publish.csv from Publish api"
+  task :get_lead_schools_from_publish, %i[output_path] => [:environment] do |_, args|
+    request_uri = TeacherTrainingApi::RetrieveLeadSchools::DEFAULT_PATH
+
+    items = []
+
+    while request_uri
+      payload = TeacherTrainingApi::RetrieveLeadSchools.call(request_uri:)
+      items += payload[:data].map do |provider_data|
+        provider_data[:attributes].slice(:urn, :name, :city, :postcode)
+      end
+
+      request_uri = payload[:links][:next]
+    end
+
+    items = items.uniq { |a| a[:urn] }
+    items = items.sort { |a, b| a[:urn] <=> b[:urn] }
+
+    puts "Lead schools total: #{items.count}"
+
+    CSV.open(args.output_path || PUBLISH_CSV_PATH, "w+") do |csv|
+      csv << items.first.keys
+      items.each do |hash|
+        csv << hash.values
+      end
+    end
+  end
+
+  desc "Update schools to lead schools from publish data/lead_schools_publish.csv"
+  task :update_lead_schools_from_publish, %i[input_path] => [:environment] do |_, args|
+    updated = 0
+    skipped = 0
+
+    CSV.read(args.input_path || PUBLISH_CSV_PATH, headers: true).each do |row|
+      school = School.find_by(urn: row["urn"], lead_school: false)
+      if school.present?
+        updated += 1
+        school.update!(lead_school: true)
+      else
+        skipped += 1
+      end
+    end
+
+    puts "Done! updated: #{updated}, skipped: #{skipped}"
   end
 end

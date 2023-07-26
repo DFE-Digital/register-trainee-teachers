@@ -268,13 +268,16 @@ dttp:
 In order to login, change space roles and interact with PaaS based application,
 please follow this [instruction](https://dfedigital.atlassian.net/wiki/spaces/BaT/pages/2409791489/Changing+set+and+unset+roles+and+interacting+with+App+on+PaaS)
 
-## School data
+## Schools data
 [Get Information about Schools](https://get-information-schools.service.gov.uk) holds the most complete information for schools.
+[Teacher Training Courses API](https://api.publish-teacher-training-courses.service.gov.uk) holds the most complete information for lead schools.
 
-In order to create and update the  schools follow the below steps
+In order to create and update the schools and the lead schools follow the below steps
 1. [Download Get Information about Schools data](#download-get-information-about-schools-data)
 2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
-2. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
+3. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
+4. [Generate data/lead_schools_publish.csv from Publish api](#generate-datalead_schools_publishcsv-from-publish-api)
+5. [Update schools to lead schools from publish data/lead_schools_publish.csv](#update-schools-to-lead-schools-from-publish-datalead_schools_publishcsv)
 
 ### Download Get Information about Schools data
 1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
@@ -304,6 +307,33 @@ To import schools from csv data/schools_gias.csv, use the following rake task:
 ```bash
 bundle exec rake schools_data:import_gias
 ```
+
+### Generate data/lead_schools_publish.csv from Publish api
+
+To generate the data/lead_schools_publish.csv from Publish api data, use the following rake task:
+
+```bash
+
+# output_path: optional, path to the output file, default to `data/lead_schools_publish.csv`
+bundle exec rake schools_data:get_lead_schools_from_publish\[output_path\]
+
+# as an example
+bundle exec rake schools_data:get_lead_schools_from_publish
+
+```
+
+### Update schools to lead schools from publish data/lead_schools_publish.csv
+
+To update schools to lead schools from publish data/lead_schools_publish.csv, use the following rake task:
+```bash
+
+# input_path: optional, path to the input file, default to `data/lead_schools_publish.csv`
+bundle exec rake schools_data:update_lead_schools_from_publish\[input_path\]
+
+bundle exec rake schools_data:update_lead_schools_from_publish
+
+```
+
 
 ## Running Apply application import against example data
 
