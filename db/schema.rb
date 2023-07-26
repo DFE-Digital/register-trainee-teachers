@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_20_111602) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_105546) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -821,6 +821,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_20_111602) do
     t.boolean "hesa_editable", default: false
     t.string "withdraw_reasons_dfe_details"
     t.datetime "slug_sent_to_dqt_at"
+    t.string "previous_hesa_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"

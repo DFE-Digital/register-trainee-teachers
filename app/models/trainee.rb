@@ -80,6 +80,7 @@
 #  hesa_trn_submission_id          :bigint
 #  lead_school_id                  :bigint
 #  placement_assignment_dttp_id    :uuid
+#  previous_hesa_id                :string
 #  provider_id                     :bigint           not null
 #  start_academic_cycle_id         :bigint
 #  trainee_id                      :text
