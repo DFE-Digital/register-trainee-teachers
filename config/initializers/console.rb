@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module RegisterConsole
   def start
     show_warning_message_about_environments
 
-    if development?
+    if Rails.env.development?
       super
     else
       puts("Hello! Who are you? This name will be used in the audit log for any changes you make.")
@@ -17,7 +19,7 @@ module RegisterConsole
   end
 
   def show_warning_message_about_environments
-    if production?
+    if Rails.env.production?
       puts(("*" * 50).red)
       puts("** You are in the Rails console for PRODUCTION! **".red)
       puts(("*" * 50).red)
@@ -26,14 +28,6 @@ module RegisterConsole
       puts("-- This is the Rails console for the #{environment_name} environment. --".blue)
       puts(("-" * 65).blue)
     end
-  end
-
-  def production?
-    environment_name == "production"
-  end
-
-  def development?
-    environment_name == "development"
   end
 
   def environment_name
