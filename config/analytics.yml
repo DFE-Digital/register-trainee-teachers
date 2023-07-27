@@ -228,6 +228,7 @@ shared:
     - end_academic_cycle_id
     - sex
     - hesa_id
+    - previous_hesa_id
     - hesa_updated_at
     - id
     - iqts_country
