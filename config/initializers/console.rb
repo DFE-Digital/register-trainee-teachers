@@ -4,9 +4,7 @@ module RegisterConsole
   def start
     show_warning_message_about_environments
 
-    if Rails.env.development?
-      super
-    else
+    if Rails.env.production?
       puts("Hello! Who are you? This name will be used in the audit log for any changes you make.")
       who_are_you = $stdin.gets
       audited_user = "#{who_are_you.chomp} via the Rails console"
@@ -15,6 +13,8 @@ module RegisterConsole
       Audited.audit_class.as_user(audited_user) do
         super
       end
+    else
+      super
     end
   end
 
