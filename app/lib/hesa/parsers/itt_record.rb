@@ -15,19 +15,15 @@ module Hesa
         course_subject_one: "F_SBJCA1",
         course_subject_two: "F_SBJCA2",
         course_subject_three: "F_SBJCA3",
-        commencement_date: "F_COMDATE",
         itt_end_date: "F_EXPECTEDENDDATE",
         employing_school_urn: "F_SDEMPLOY",
         lead_school_urn: "F_SDLEAD",
         mode: "F_MODE",
         course_age_range: "F_ITTPHSC",
-        itt_commencement_date: "F_ITTCOMDATE",
         training_initiative: "F_INITIATIVES1",
         hesa_id: "F_HUSID",
-        end_date: "F_ENDDATE",
-        reason_for_leaving: "F_RSNEND",
+        student_instance_id: "F_NUMHUS",
         bursary_level: "F_BURSLEV",
-        trn: "F_TRN",
         training_route: "F_ENTRYRTE",
         nationality: "F_NATION",
         hesa_updated_at: "F_STATUS_TIMESTAMP",
@@ -60,6 +56,9 @@ module Hesa
         surname16: "F_SNAME16",
         ttcid: "F_TTCID",
         hesa_committed_at: "F_COMMIT_TIMESTAMP",
+        application_choice_id: "APPLYAPPLICATIONID",
+        itt_start_date: "ITTSTARTDATE",
+        trainee_start_date: "TRAINEESTARTDATE",
       }.freeze
 
       class << self
@@ -99,7 +98,6 @@ module Hesa
           [placements&.values].flatten.compact.map do |placement|
             {
               school_urn: placement["F_PLMNTSCH"],
-              placement_days: placement["F_PLMNTDYS"],
             }
           end
         end
