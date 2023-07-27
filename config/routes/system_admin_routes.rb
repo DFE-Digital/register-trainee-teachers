@@ -62,6 +62,12 @@ module SystemAdminRoutes
           resources :confirmations, only: %i[show update destroy]
         end
 
+        namespace :trainee_undo_awards, path: "trainee-undo-awards" do
+          resources :dqt_checks, only: %i[edit update], path: "dqt-checks"
+          resources :reasons, only: %i[edit update], path: "reasons"
+          resources :confirmations, only: %i[edit update], path: "confirmations"
+        end
+
         namespace :pending_trns, path: "pending-trns" do
           resources :retrieve_trns, only: %i[update], path: "retrieve-trns"
           resources :request_trns, only: %i[update], path: "request-trns"

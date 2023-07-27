@@ -1762,6 +1762,10 @@ en:
       confirmations:
         show:
           heading: Confirm deletion of trainee record
+    trainee_undo_awards:
+      dqt_checks:
+        edit:
+          heading: Remove QTS
   api:
     errors:
       bad_request: The query param needs to be at least %{length} characters

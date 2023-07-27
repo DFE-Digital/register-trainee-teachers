@@ -20,5 +20,9 @@ module AwardDetails
         )
       end
     end
+
+    def show_remove_qts_link?
+      trainee.awarded?
+    end
   end
 end
