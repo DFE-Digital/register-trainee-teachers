@@ -232,14 +232,14 @@ ds.select { _1.item["error_message"].starts_with? "status: 405" }.map(&:retry)
 
 ## Settings
 
-Sometimes we need to toggle/change features and settings. This can be done using the `cf set-env` command. For example:
+Sometimes we need to toggle/change features and settings. This can be done using the `kubectl set env` command. For example:
 
 ```sh
-# set the ENV
-cf set-env register-production SETTINGS__FEATURES__SIGN_IN_METHOD otp
-# restart the app server
-cf restage register-production
+# set the ENV, the pods will automatically restart once the process has gone through
+kubectl -n bat-production set env deployment/production SETTINGS__FEATURES__SIGN_IN_METHOD=otp
 ```
+This process can take a short while, follow [Verifying settings has been changed](#verifying-settings-has-been-changed)
+
 
 The format of the ENV you set is important. Double underscores `__` are the equivalent of subsections in `settings.yml` so the above is equivalent to:
 
@@ -249,3 +249,18 @@ The format of the ENV you set is important. Double underscores `__` are the equi
 features:
   sign_in_method: otp
 ```
+
+### Verifying settings has been changed
+To check how the process is going. Use `kubectl get pods`. For example:
+
+```sh
+# Check that the old pods now have a status showing `Terminating`` and the new ones show `Running``.
+kubectl -n bat-production get pods
+```
+
+To check that the environment variable has ben set. Use `kubectl describe`
+
+```sh
+kubectl -n bat-production describe deployment/register-production
+```
+
