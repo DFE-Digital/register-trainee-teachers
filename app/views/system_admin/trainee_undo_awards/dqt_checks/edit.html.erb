@@ -2,3 +2,9 @@ Remove QTS
 <%= render PageTitle::View.new(
   text: 'Remove QTS',
 ) %>
+<%= govuk_button_to(
+  "Continue",
+  trainee_undo_awards_dqt_check_path(@trainee),
+  method: :patch,
+  class: "govuk-button",
+) %>
