@@ -31,7 +31,7 @@ module Trainees
           create_placements!
           store_application_choice_id!
           store_hesa_metadata!
-          submit_for_trn!
+          enqueue_background_jobs!
           check_for_missing_hesa_mappings!
         end
       end
@@ -181,10 +181,14 @@ module Trainees
       end.compact
     end
 
-    def submit_for_trn!
+    def enqueue_background_jobs!
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      Dqt::RegisterForTrnJob.perform_later(trainee)
+      if trainee.trn.present?
+        Trainees::Update.call(trainee:)
+      else
+        Dqt::RegisterForTrnJob.perform_later(trainee)
+      end
     end
 
     def training_initiative
