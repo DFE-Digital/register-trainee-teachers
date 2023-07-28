@@ -9,7 +9,7 @@ module Trainees
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
-    let(:hesa_stub_attributes) { { trn: hesa_trn } }
+    let(:hesa_stub_attributes) { {} }
     let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
     let(:hesa_course_subject_codes) { ::Hesa::CodeSets::CourseSubjects::MAPPING.invert }
@@ -70,11 +70,11 @@ module Trainees
         expect(trainee.course_subject_three).to be_nil
         expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
         expect(trainee.study_mode).to eq("full_time")
-        expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:commencement_date]))
+        expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
         expect(trainee.itt_end_date).to eq(Date.parse(student_attributes[:itt_end_date]))
         expect(trainee.start_academic_cycle).to eq(start_academic_cycle)
         expect(trainee.end_academic_cycle).to eq(end_academic_cycle)
-        expect(trainee.trainee_start_date).to eq(Date.parse(student_attributes[:commencement_date]))
+        expect(trainee.trainee_start_date).to eq(Date.parse(student_attributes[:trainee_start_date]))
       end
 
       it "updates the trainee's school and training details" do
@@ -131,39 +131,12 @@ module Trainees
         end
       end
 
-      context "when there's an itt_commencement_date provided" do
-        let(:hesa_stub_attributes) { { itt_commencement_date: "2022-09-10" } }
+      context "when there's an trainee_start_date provided" do
+        let(:hesa_stub_attributes) { { trainee_start_date: "2022-09-10" } }
 
-        it "sets this as the trainee's itt_start_date/commencement_date rather than commencement_date" do
-          itt_commencement_date = Date.parse(student_attributes[:itt_commencement_date])
-          expect(trainee.itt_start_date).to eq(itt_commencement_date)
-          expect(trainee.trainee_start_date).to eq(itt_commencement_date)
-        end
-      end
-
-      context "when the trn does not exist", feature_integrate_with_dqt: true do
-        let(:hesa_stub_attributes) { {} }
-
-        it "enqueues Dqt::RegisterForTrnJob" do
-          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(trainee)
-        end
-      end
-
-      context "when the trn is present", feature_integrate_with_dqt: true do
-        let(:create_custom_state) { create(:trainee, :trn_received, hesa_id: student_attributes[:hesa_id]) }
-
-        it "sends an update to DQT" do
-          expect(Trainees::Update).to have_received(:call).with(trainee:)
-        end
-      end
-
-      context "when the trainee has no TRN and no reason for leaving", feature_integrate_with_dqt: true do
-        let(:hesa_stub_attributes) { { trn: nil } }
-
-        it "sets the state to submitted_for_trn and the submitted_for_trn_at" do
-          expect(trainee.state).to eq("submitted_for_trn")
-          expect(trainee.submitted_for_trn_at).not_to be_nil
-          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later).with(trainee)
+        it "sets this as the trainee's start_date rather than using itt_start_date" do
+          trainee_start_date = Date.parse(student_attributes[:trainee_start_date])
+          expect(trainee.trainee_start_date).to eq(trainee_start_date)
         end
       end
     end
@@ -216,16 +189,6 @@ module Trainees
         subject { trainee.created_from_hesa }
 
         it { is_expected.to be(false) }
-      end
-
-      context "when the trainee has a previously saved TRN" do
-        context "HESA TRN is nil" do
-          let(:hesa_stub_attributes) { { trn: nil } }
-
-          it "does not overwrite the existing trainee TRN" do
-            expect(trainee.trn).to eq(existing_trn)
-          end
-        end
       end
 
       context "when ethnicity is missing" do
@@ -358,58 +321,6 @@ module Trainees
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
           expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:black])
           expect(trainee.ethnic_background).to eq(Diversities::AFRICAN)
-        end
-      end
-
-      context "when end date is available" do
-        let(:date) { "2020-12-12" }
-        let(:hesa_reasons_for_leaving_codes) { ::Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING.invert }
-        let(:existing_trn) { nil }
-
-        context "and the trainee did not complete the course", feature_integrate_with_dqt: true do
-          let(:hesa_stub_attributes) do
-            {
-              trn: nil,
-              end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[WithdrawalReasons::DEATH],
-            }
-          end
-
-          it "creates a withdrawn trainee with the relevant details" do
-            expect(trainee.state).to eq("withdrawn")
-            expect(trainee.submitted_for_trn_at).not_to be_nil
-            expect(trainee.withdraw_date).to eq(date)
-            expect(trainee.withdrawal_reasons.first.name).to eq(WithdrawalReasons::DEATH)
-          end
-
-          it "enqueues Dqt::WithdrawTraineeJob" do
-            expect(Dqt::WithdrawTraineeJob).to have_received(:perform_later).with(trainee)
-          end
-
-          context "trainee has already been withdrawn" do
-            let(:create_custom_state) { create(:trainee, :withdrawn, hesa_id: student_attributes[:hesa_id]) }
-
-            it "does not enqueue Dqt::WithdrawTraineeJob" do
-              expect(Dqt::WithdrawTraineeJob).not_to have_received(:perform_later).with(trainee)
-            end
-          end
-        end
-
-        context "and the reason for completion is 'Left but award of credit or a qualification not yet known'" do
-          let(:hesa_modes) { ::Hesa::CodeSets::Modes::MAPPING.invert }
-
-          let(:hesa_stub_attributes) do
-            {
-              end_date: date,
-              reason_for_leaving: hesa_reasons_for_leaving_codes[::Hesa::CodeSets::ReasonsForLeavingCourse::COMPLETED_WITH_CREDIT_OR_AWARD_UNKNOWN],
-              mode: hesa_modes[::Hesa::CodeSets::Modes::DORMANT_FULL_TIME],
-            }
-          end
-
-          it "creates a deferred trainee with the relevant details" do
-            expect(trainee.defer_date).to eq(Date.parse(date))
-            expect(trainee.state).to eq("deferred")
-          end
         end
       end
 

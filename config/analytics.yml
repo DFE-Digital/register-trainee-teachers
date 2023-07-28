@@ -20,6 +20,7 @@ shared:
     - id
     - recruitment_cycle_year
     - state
+    - application_choice_id
     - updated_at
   allocation_subjects:
     - created_at

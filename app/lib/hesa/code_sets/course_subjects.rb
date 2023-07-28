@@ -75,7 +75,7 @@ module Hesa
         "100101" => ::CourseSubjects::TRAVEL_AND_TOURISM,
         "100610" => ::CourseSubjects::UK_GOVERNMENT_PARLIAMENTARY_STUDIES,
         "100333" => ::CourseSubjects::WELSH_LANGUAGE,
-        "101169" => ::CourseSubjects::JAPANESE_LANGUAGES,
+        "101169" => ::CourseSubjects::JAPANESE_LANGUAGE,
         "100513" => ::CourseSubjects::TEACHING_ENGLISH_AS_A_FOREIGN_LANGUAGE,
       }.freeze
     end

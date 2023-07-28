@@ -191,10 +191,6 @@ module Trainees
       ::Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
     end
 
-    # Use HESA's itt_commencement_date first, this is populated when the trainee
-    # has transferred from a non-QTS  awarding course, to an ITT (QTS awarding)
-    # course, otherwise use HESA's commencement_date.  This is the start date
-    # for trainees who have not transferred courses.
     def itt_start_date
       hesa_trainee[:itt_start_date]
     end
@@ -203,10 +199,8 @@ module Trainees
       hesa_trainee[:itt_end_date]
     end
 
-    # HESA do not distinguish between the ITT start date and the trainee
-    # start date, so we're setting both to the ITT start date.
     def trainee_start_date
-      hesa_trainee[:trainee_start_date] || itt_start_date
+      hesa_trainee[:trainee_start_date].presence || itt_start_date
     end
 
     def course_subject_name(subject_code)
