@@ -9,7 +9,8 @@ module SystemAdmin
     end
 
     def call
-      dqt_trainee = Dqt::FindTeacher.call(@trainee)
+      dqt_trainee = Dqt::RetrieveTraining.call(trainee: @trainee)
+      dqt_trainee.present? && dqt_trainee["result"] == "Pass"
     end
   end
 end

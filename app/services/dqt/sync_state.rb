@@ -29,9 +29,9 @@ module Dqt
 
     attr_reader :trainee
 
-    # def response
-    #   @response ||= Dqt::RetrieveTeacher.call(trainee:)
-    # end
+    def response
+      @response ||= Dqt::RetrieveTeacher.call(trainee:)
+    end
 
     # def dqt_state
     #   @dqt_state ||= response.dig("initial_teacher_training", "result")

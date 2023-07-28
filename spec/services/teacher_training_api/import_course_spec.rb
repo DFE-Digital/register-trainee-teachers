@@ -5,6 +5,13 @@ require "rails_helper"
 module TeacherTrainingApi
   describe ImportCourse do
     describe "#call" do
+# frozen_string_literal: true
+
+require "rails_helper"
+
+module TeacherTrainingApi
+  describe ImportCourse do
+    describe "#call" do
       let(:course_attributes) { { subject_codes: %w[C6 BW] } }
       let(:course_data) { ApiStubs::TeacherTrainingApi.course(course_attributes) }
       let(:course_code) { course_data[:attributes][:code] }

@@ -27,6 +27,7 @@ module Dqt
     attr_reader :trainee
 
     def teachers
+      require 'pry'; binding.pry
       @teachers ||= Client.get("/v2/teachers/find?#{params.to_query}")["results"]
     end
 
