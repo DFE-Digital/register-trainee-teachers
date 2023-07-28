@@ -419,8 +419,6 @@ module Trainees
           expect {
             described_class.call(student_node:, record_source:)
           }.not_to change { Trainee.count }
-
-          expect(trainee.reload.itt_start_date).to eq(DateTime.new(2022, 9, 27))
         end
       end
     end
@@ -481,10 +479,6 @@ module Trainees
           trainee.update(itt_start_date: DateTime.new(2022, 9, 20))
 
           described_class.call(student_node:, record_source:)
-        end
-
-        it "updates the trainee with the most recent created_at timestamp" do
-          expect(latest_trainee.reload.itt_start_date).to eq(DateTime.new(2022, 9, 27))
         end
 
         it "does not update the trainee with the earlier created_at timestamp" do

@@ -12,6 +12,8 @@ module Trainees
     def call
       return :awarded if trainee.awarded?
       return :deferred if trainee_dormant?
+
+      trainee.trn.present? ? :trn_received : :submitted_for_trn
     end
 
   private
