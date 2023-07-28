@@ -52,10 +52,8 @@ gem "request_store", "~> 1.5"
 gem "govuk-components", "3.0.3"
 gem "govuk_design_system_formbuilder"
 
-gem "redis"
-
 # Background job processor
-gem "sidekiq", "~> 7.0"
+gem "sidekiq", "~> 6.5"
 gem "sidekiq-cron", "~> 1.10"
 
 # UK postcode parsing and validation for Ruby

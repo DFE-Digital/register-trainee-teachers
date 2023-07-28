@@ -35,7 +35,7 @@ private
   end
 
   def redis_alive?
-    Sidekiq.redis(&:ping)
+    Sidekiq.redis_info
     true
   rescue StandardError
     false
