@@ -22,6 +22,8 @@
 #  index_providers_on_dttp_id           (dttp_id) UNIQUE
 #
 class Provider < ApplicationRecord
+  include Discard::Model
+
   has_many :provider_users, inverse_of: :provider
   has_many :users, through: :provider_users
   has_many :trainees

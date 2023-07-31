@@ -171,6 +171,7 @@ shared:
     - name
     - ukprn
     - updated_at
+    - discarded_at
   schools:
     - close_date
     - created_at
