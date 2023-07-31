@@ -404,7 +404,7 @@ GEM
     mime-types-data (3.2023.0218.1)
     mini_mime (1.1.2)
     mini_portile2 (2.8.2)
-    minitest (5.18.1)
+    minitest (5.19.0)
     msgpack (1.6.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -675,7 +675,7 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.25)
     stateful_enum (0.7.0)
-    store_model (2.0.1)
+    store_model (2.1.0)
       activerecord (>= 5.2)
     strong_migrations (1.6.0)
       activerecord (>= 5.2)
@@ -824,7 +824,7 @@ DEPENDENCIES
   sprockets-rails
   stackprof
   stateful_enum
-  store_model (~> 2.0)
+  store_model (~> 2.1)
   strong_migrations
   timecop (~> 0.9.6)
   tzinfo-data
