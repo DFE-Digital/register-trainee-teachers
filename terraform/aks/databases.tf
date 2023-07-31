@@ -36,7 +36,7 @@ module "redis-queue" {
 }
 
 module "postgres" {
-  source = "./vendor/modules/aks//aks/postgres"
+  source = "git::https://github.com/DFE-Digital/terraform-modules.git//aks/postgres?ref=485-bug-postgres-monitoring"
 
   namespace             = var.namespace
   environment           = local.app_name_suffix
