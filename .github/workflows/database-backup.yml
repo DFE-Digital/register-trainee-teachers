@@ -100,6 +100,10 @@ jobs:
       shell: bash
       run: |
         bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -p ANALYSIS_DATABASE_URL -t 7200 register-production -- psql
+        bin/konduit.sh -p ANALYSIS_DATABASE_URL -t 300 register-production -- psql -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "${{ env.SQLPAD_USER }}"'
+        bin/konduit.sh -p ANALYSIS_DATABASE_URL -t 300 register-production -- psql -c 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "${{ env.SQLPAD_USER }}"'
+      env:
+        SQLPAD_USER: ${{ secrets.SQLPAD_USER }}
 
     - name: Sanitise the Database backup
       run: |
