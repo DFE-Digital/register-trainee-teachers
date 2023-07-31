@@ -152,6 +152,8 @@ group :development, :test do
   # Better use of test helpers such as save_and_open_page/screenshot
   gem "launchy"
 
+  gem "bullet"
+
   # Testing framework
   gem "rspec-rails", "~> 6.0.3"
 
@@ -167,6 +169,8 @@ group :development, :test do
   gem "dotenv-rails"
 
   gem "timecop", "~> 0.9.6"
+
+  gem "bullet"
 end
 
 group :development do
