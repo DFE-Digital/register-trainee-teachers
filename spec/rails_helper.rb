@@ -56,4 +56,8 @@ RSpec.configure do |config|
   end
 
   Faker::Config.locale = "en-GB"
+
+  # Configure prosopite
+  config.before { Prosopite.scan }
+  config.after { Prosopite.finish }
 end

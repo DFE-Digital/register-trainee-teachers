@@ -152,6 +152,9 @@ group :development, :test do
   # Better use of test helpers such as save_and_open_page/screenshot
   gem "launchy"
 
+  gem "pg_query"
+  gem "prosopite"
+
   # Testing framework
   gem "rspec-rails", "~> 6.0.3"
 
