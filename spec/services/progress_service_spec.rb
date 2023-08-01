@@ -49,9 +49,8 @@ describe ProgressService do
 
       context "and in review" do
         before do
-          allow(validator_stub).to receive(:valid?).and_return(true)
+          allow(validator_stub).to receive_messages(valid?: true, apply_application?: true)
           allow(validator_stub).to receive(:respond_to?).with(:apply_application?).and_return(true)
-          allow(validator_stub).to receive(:apply_application?).and_return(true)
         end
 
         it "returns a 'review' status" do

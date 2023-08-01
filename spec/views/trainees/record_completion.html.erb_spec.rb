@@ -5,9 +5,7 @@ require "rails_helper"
 describe "trainees/_record_completion_filter", "feature_routes.provider_led_postgrad": true do
   before do
     without_partial_double_verification do
-      allow(view).to receive(:search_path).and_return(trainees_path)
-      allow(view).to receive(:filters).and_return(nil)
-      allow(view).to receive(:lead_school_user?).and_return(lead_school_user?)
+      allow(view).to receive_messages(search_path: trainees_path, filters: nil, lead_school_user?: lead_school_user?)
       render
     end
   end

@@ -30,8 +30,7 @@ module Hesa
       before do
         enable_features("hesa_import.sync_collection")
 
-        allow(Settings.hesa).to receive(:current_collection_start_date).and_return(from_date)
-        allow(Settings.hesa).to receive(:current_collection_reference).and_return(current_reference)
+        allow(Settings.hesa).to receive_messages(current_collection_start_date: from_date, current_collection_reference: current_reference)
         allow(Hesa::Client).to receive(:get).and_return(hesa_api_stub.raw_xml)
         allow(Trainees::CreateFromHesa).to receive(:call).and_return([trainee, ukprn])
       end

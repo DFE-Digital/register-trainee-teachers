@@ -10,8 +10,7 @@ describe PublishCourseDetailsForm, type: :model do
   subject { described_class.new(trainee, params: params, store: form_store) }
 
   before do
-    allow(form_store).to receive(:get).and_return(nil)
-    allow(form_store).to receive(:set).and_return(nil)
+    allow(form_store).to receive_messages(get: nil, set: nil)
   end
 
   describe "validations" do

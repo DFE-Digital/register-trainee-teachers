@@ -7,8 +7,7 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
     assign(:trainee, trainee)
     assign(:current_user, current_user)
     without_partial_double_verification do
-      allow(view).to receive(:trainee_editable?).and_return(true)
-      allow(view).to receive(:display_record_actions?).and_return(true)
+      allow(view).to receive_messages(trainee_editable?: true, display_record_actions?: true)
     end
   end
 

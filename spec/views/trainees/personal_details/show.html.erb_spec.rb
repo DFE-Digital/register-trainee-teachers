@@ -9,8 +9,7 @@ describe "trainees/personal_details/show" do
   before do
     assign(:trainee, trainee)
     without_partial_double_verification do
-      allow(view).to receive(:trainee_editable?).and_return(true)
-      allow(view).to receive(:lead_school_user?).and_return(lead_school_user?)
+      allow(view).to receive_messages(trainee_editable?: true, lead_school_user?: lead_school_user?)
     end
     render
   end

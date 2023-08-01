@@ -11,10 +11,8 @@ module Hesa
     subject { Client.new }
 
     before do
-      allow(Settings.hesa).to receive(:username).and_return("test@example.com")
-      allow(Settings.hesa).to receive(:password).and_return("test12345")
-      allow(subject).to receive(:agent).and_return(mechanize)
-      allow(subject).to receive(:login).and_return(true)
+      allow(Settings.hesa).to receive_messages(username: "test@example.com", password: "test12345")
+      allow(subject).to receive_messages(agent: mechanize, login: true)
     end
 
     describe ".login" do

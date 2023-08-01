@@ -9,8 +9,7 @@ module Hesa
 
     describe ".next_from_date" do
       before do
-        allow(Settings.hesa).to receive(:current_collection_reference).and_return(collection_reference)
-        allow(Settings.hesa).to receive(:current_collection_start_date).and_return(settings_date)
+        allow(Settings.hesa).to receive_messages(current_collection_reference: collection_reference, current_collection_start_date: settings_date)
       end
 
       subject { described_class.next_from_date }
