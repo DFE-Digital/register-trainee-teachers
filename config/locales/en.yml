@@ -1463,7 +1463,7 @@ en:
           attributes:
             reason_ids:
               blank: Select why the trainee withdrew from the course or select "Unknown"
-              unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply 
+              unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
         withdrawal/date_form:
           attributes:
             date_string:
