@@ -11,26 +11,26 @@
   <tbody class="govuk-table__body"><tr class="govuk-table__row">
     <td class="govuk-table__cell">hesa_id</td>
     <td class="govuk-table__cell">not displayed</td>
-    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/husid">HUSID</a> (HESA unique student identifier)</td>
-    <td class="govuk-table__cell">–</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c23053/e/husid">HUSID</a> (HESA unique student identifier)</td>
+    <td class="govuk-table__cell">A trainee should only ever have one unique student identifier.<br><br>It is important that the ‘hesa_id’ assigned to a trainee does not incorrectly change as this will create duplicate records for a trainee in the Register service.</td>
   </tr>
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">provider_trainee_id</td>
-    <td class="govuk-table__cell">Trainee ID</td>
-    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/ownstu">OWNSTU</a> (provider’s own identifier for student)</td>
-    <td class="govuk-table__cell">–</td>
+    <td class="govuk-table__cell">Provider trainee ID</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c23053/e/ownstu">OWNSTU</a> (provider’s own identifier for student)</td>
+    <td class="govuk-table__cell">The ‘Provider trainee ID’ can be used in Register to search and find trainees.</td>
   </tr>
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">trn</td>
     <td class="govuk-table__cell">TRN</td>
-    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/trn">TRN</a> (teacher reference number)</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c23053/e/trn">TRN</a> (teacher reference number)</td>
     <td class="govuk-table__cell">–</td>
   </tr>
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">trainee_status</td>
     <td class="govuk-table__cell">Trainee status</td>
-    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c22053/e/rsnend">RSNEND</a> (reason for ending instance)</td>
-    <td class="govuk-table__cell">If HESA codes 03, 05 or 11 are used we mark the trainee status as ‘withdrawn’ in Register. We’ll also add a ‘withdraw_date’ and ‘withdraw_reason’ in the Register CSV.<br><br>HESA field ‘MODE’ will also impact ‘Trainee status’. If codes 63 or 64 (dormant trainees) are used, the trainee’s status will change to ‘Deferred’ in Register.<br><br>‘Dormant’ in HESA means ‘Deferred’ in Register.</td>
+    <td class="govuk-table__cell"><a class="govuk-link" href="https://www.hesa.ac.uk/collection/c23053/e/mode">MODE</a> (reason for ending instance)</td>
+    <td class="govuk-table__cell">HESA field ‘MODE’ will impact ‘Trainee status’. If codes 63 or 64 (dormant trainees) are used, the trainee’s status will change to ‘Deferred’ in Register.<br><br>To reinstate a trainee from deferral, 01, 02 or 31 can be used.<br><br>‘Dormant’ in HESA means ‘Deferred’ in Register.</td>
   </tr>
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">hesa_record_last_changed_at</td>
