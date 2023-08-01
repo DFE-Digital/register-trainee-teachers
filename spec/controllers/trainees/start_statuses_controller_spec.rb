@@ -24,8 +24,7 @@ describe Trainees::StartStatusesController do
     end
 
     before do
-      allow(controller).to receive(:current_user).and_return(current_user)
-      allow(controller).to receive(:authorize_trainee).and_return(true)
+      allow(controller).to receive_messages(current_user: current_user, authorize_trainee: true)
     end
 
     context "when the trainee is draft" do

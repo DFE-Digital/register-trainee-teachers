@@ -18,10 +18,7 @@ module Dttp
       let(:path) { "/#{tenant_id}/oauth2/v2.0/token" }
 
       before do
-        allow(Settings.dttp).to receive(:client_id).and_return(client_id)
-        allow(Settings.dttp).to receive(:scope).and_return(scope)
-        allow(Settings.dttp).to receive(:client_secret).and_return(client_secret)
-        allow(Settings.dttp).to receive(:tenant_id).and_return(tenant_id)
+        allow(Settings.dttp).to receive_messages(client_id:, scope:, client_secret:, tenant_id:)
 
         response = double(body: { access_token: "token", expires_in: 3600 }.to_json)
 

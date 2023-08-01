@@ -16,8 +16,7 @@ module Dqt
     before do
       enable_features(:integrate_with_dqt)
       allow(RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
-      allow(Settings.jobs).to receive(:poll_delay_hours).and_return(configured_delay)
-      allow(Settings.jobs).to receive(:max_poll_duration_days).and_return(configured_poll_timeout_days)
+      allow(Settings.jobs).to receive_messages(poll_delay_hours: configured_delay, max_poll_duration_days: configured_poll_timeout_days)
       allow(SlackNotifierService).to receive(:call)
     end
 

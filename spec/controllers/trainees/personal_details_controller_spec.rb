@@ -37,8 +37,7 @@ describe Trainees::PersonalDetailsController do
 
       before do
         allow(PersonalDetailsForm).to receive(:new).and_return(double(stash_or_save!: true))
-        allow(controller).to receive(:page_tracker).and_return(double(last_origin_page_path: "/trainees/#{trainee.slug}/relevant-redirect", save!: nil))
-        allow(controller).to receive(:personal_details_params).and_return(nil)
+        allow(controller).to receive_messages(page_tracker: double(last_origin_page_path: "/trainees/#{trainee.slug}/relevant-redirect", save!: nil), personal_details_params: nil)
       end
 
       it "redirects to /relevant-redirect after update" do

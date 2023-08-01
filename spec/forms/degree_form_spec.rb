@@ -158,8 +158,7 @@ describe DegreeForm, type: :model do
 
   describe "#stash" do
     before do
-      allow(subject).to receive(:fields).and_return({ subject: "test1" })
-      allow(subject).to receive(:valid?).and_return(true)
+      allow(subject).to receive_messages(fields: { subject: "test1" }, valid?: true)
       allow(degrees_form).to receive(:stash_degree_on_store).with(subject.slug, { subject: "test1" })
     end
 
@@ -197,8 +196,7 @@ describe DegreeForm, type: :model do
 
     describe "saved record" do
       before do
-        allow(degree).to receive(:new_record?).and_return(false)
-        allow(degree).to receive(:destroy!).and_return(true)
+        allow(degree).to receive_messages(new_record?: false, destroy!: true)
       end
 
       it "destroy degree" do
