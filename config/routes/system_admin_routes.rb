@@ -16,13 +16,14 @@ module SystemAdminRoutes
         resources :dead_jobs, only: %i[index show update destroy]
         resources :pending_trns, only: %i[index show]
 
-        resources :providers, only: %i[index new create show edit update] do
+        resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]
 
           namespace :funding do
             resource :payment_schedule, only: %i[show], path: "/payment-schedule"
             resource :trainee_summary, only: %i[show], path: "/trainee-summary"
           end
+          resource :confirm_deletes, only: :show, path: "/confirm-delete", as: :confirm_delete, module: :providers
         end
 
         resources :users do
