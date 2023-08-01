@@ -191,7 +191,7 @@ end
 group :test do
   # Headless browser testing kit
   gem "cuprite", "~> 0.13"
-  gem "webdrivers", "~> 5.2"
+  gem "webdrivers", "~> 5.3"
 
   gem "shoulda-matchers", "~> 5.3"
   # Code coverage reporter
