@@ -4,10 +4,12 @@ require "rails_helper"
 
 feature "Edit providers" do
   context "as a system admin" do
-    let(:user) { create(:user, system_admin: true) }
+    let(:user) { create(:user, system_admin: true, providers: [provider]) }
     let(:existing_provider) { create(:provider) }
     let(:accreditation_id) { Faker::Number.number(digits: 4) }
+    let(:provider) { build(:provider) }
 
+    # context "an active provider" do
     before do
       given_i_am_authenticated(user:)
       when_i_visit_the_provider_index_page
@@ -32,6 +34,45 @@ feature "Edit providers" do
       and_i_submit_the_form
       then_i_see_accreditation_id_uniqueness_error
     end
+
+    scenario "discarding the provider" do
+      when_i_am_on_the_edit_page
+      and_i_click_on_the_delete_button
+      and_i_am_on_the_confirmation_page
+      and_i_click_on_the_delete_confirmation_button
+      then_i_am_on_the_providers_listing_page
+      and_the_provider_is_deleted
+    end
+  end
+
+private
+
+  def when_i_am_on_the_edit_page
+    expect(page).to have_current_path("/system-admin/providers/#{provider.id}/edit")
+    expect(page).not_to have_selector("h1 > .govuk-tag.govuk-tag--red", text: "Deleted")
+  end
+
+  def and_i_click_on_the_delete_button
+    page.click_button("Delete this provider")
+  end
+
+  def and_i_am_on_the_confirmation_page
+    expect(page).to have_current_path("/system-admin/providers/#{provider.id}/confirm-delete")
+  end
+
+  def and_i_click_on_the_delete_confirmation_button
+    expect { page.click_button("Delete this provider") }.to change(provider.users, :count).from(1).to(0)
+  end
+
+  def then_i_am_on_the_providers_listing_page
+    expect(page).to have_current_path("/system-admin/providers")
+  end
+
+  def and_the_provider_is_deleted
+    expect(page).to have_selector(".govuk-notification-banner--success > * .govuk-notification-banner__heading", text: "Provider successfully deleted")
+
+    expect(page).to have_selector(".govuk-tag.govuk-tag--red", text: "Deleted")
+    expect(page).to have_text("0 users")
   end
 
   def when_i_visit_the_provider_index_page
