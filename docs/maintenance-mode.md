@@ -15,7 +15,7 @@ When enabled, all requests will receive the [service unavailable page](/service_
 
 NB: the maintenance page is deployed from your local machine. There is no need to open a PR, CI etc during the deployment.
 
-* Login to PaaS: `cf login --sso` or `cf login -o dfe -u my.name@digital.education.gov.uk`
+* Login to PaaS: `cf login --sso` or `cf login -o dfe -u my.name@education.gov.uk`
 
 * Run the make command: `make prod enable-maintenance CONFIRM_PRODUCTION=y`
 

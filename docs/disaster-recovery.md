@@ -87,7 +87,7 @@ When testing this step against a review environment a manual backup will need to
 # space is the name of the environment in GOV.UK PaaS, eg 'bat-prod'
 # env is the target environment in the make file e.g. 'production'
 az login
-cf login -o dfe -s <space> -u my.name@digital.education.gov.uk
+cf login -o dfe -s <space> -u my.name@education.gov.uk
 make <env> restore-data-from-nightly-backup BACKUP_DATE="yyyy-mm-dd" CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES
 ```
 
@@ -154,7 +154,7 @@ The following commands combine the makefile recipes above to initiate the restor
 # env is the target environment in the make file e.g. 'production'
 # space is the name of the environment in GOV.UK PaaS, eg 'bat-prod'
 az login
-cf login -o dfe -s <space> -u my.name@digital.education.gov.uk
+cf login -o dfe -s <space> -u my.name@education.gov.uk
 PASSCODE=xxxx # obtain from https://login.london.cloud.service.gov.uk/passcode
 DB_INSTANCE_GUID=$(make <env> get-postgres-instance-guid)
 TAG=$(make <env> get-image-tag)

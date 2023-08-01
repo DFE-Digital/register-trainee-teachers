@@ -7,8 +7,8 @@ base_url: https://localhost:5000
 feedback_link_url: "https://forms.office.com/pages/responsepage.aspx?id=yXfS-grGoU2187O4s0qC-XoQTPfbQ2dGrsruj75vocFUOFhUQUE4SkpBNlo2Q1hGMlBKVFNLOTlVSi4u"
 
 # The email address for support queries
-support_email: becomingateacher@digital.education.gov.uk
-data_email: registerateacher@digital.education.gov.uk
+support_email: becomingateacher@education.gov.uk
+data_email: registerateacher@education.gov.uk
 
 dttp:
   client_id: "application-registration-client-id-from-env"
