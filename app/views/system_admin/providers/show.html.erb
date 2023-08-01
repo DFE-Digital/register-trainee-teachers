@@ -11,7 +11,9 @@
   <%= govuk_tag(text: "Deleted", colour: "red") if @provider.discarded? %>
 </h1>
 
-<p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %></p>
+<% if @provider.kept? %>
+  <p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %></p>
+<% end %>
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
