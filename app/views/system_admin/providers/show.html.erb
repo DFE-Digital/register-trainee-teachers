@@ -7,7 +7,9 @@
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l"><%= @provider.name %></h1>
+<h1 class="govuk-heading-l"><%= @provider.name %>
+  <%= govuk_tag(text: "Deleted", colour: "red") if @provider.discarded? %>
+</h1>
 
 <p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %></p>
 
