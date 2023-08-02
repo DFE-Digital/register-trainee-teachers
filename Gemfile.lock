@@ -176,7 +176,7 @@ GEM
     cuprite (0.14.3)
       capybara (~> 3.0)
       ferrum (~> 0.13.0)
-    data_migrate (9.1.0)
+    data_migrate (9.1.1)
       activerecord (>= 6.0)
       railties (>= 6.0)
     database_cleaner-active_record (2.1.0)
@@ -731,7 +731,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.8)
+    zeitwerk (2.6.11)
 
 PLATFORMS
   ruby
