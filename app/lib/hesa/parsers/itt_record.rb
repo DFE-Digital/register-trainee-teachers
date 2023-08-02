@@ -24,7 +24,6 @@ module Hesa
         itt_commencement_date: "F_ITTCOMDATE",
         training_initiative: "F_INITIATIVES1",
         hesa_id: "F_HUSID",
-        student_instance_id: "F_NUMHUS",
         end_date: "F_ENDDATE",
         reason_for_leaving: "F_RSNEND",
         bursary_level: "F_BURSLEV",

@@ -40,10 +40,11 @@ module Hesa
 
         student_node = Nokogiri::XML(node.outer_xml).at("./Student")
         hesa_trainee = Hesa::Parsers::IttRecord.to_attributes(student_node:)
-        hesa_student = Hesa::Student.find_or_initialize_by(
-          hesa_id: hesa_trainee[:hesa_id],
-          rec_id: hesa_trainee[:rec_id],
-        )
+
+        hesa_student = find_by_id(hesa_trainee) || find_by_biographic_details(hesa_trainee) || Hesa::Student.new
+
+        hesa_student = update_hesa_ids(hesa_student, hesa_trainee) unless hesa_student.new_record?
+
         hesa_student.assign_attributes(hesa_trainee)
 
         if upload.nil?
@@ -66,6 +67,30 @@ module Hesa
 
     def zip_file?
       upload.file.blob.content_type == "application/zip"
+    end
+
+    def find_by_id(hesa_trainee)
+      Student.find_by(hesa_id: hesa_trainee[:hesa_id], rec_id: hesa_trainee[:rec_id]) || Student.find_by(previous_hesa_id: hesa_trainee[:hesa_id], rec_id: hesa_trainee[:rec_id])
+    end
+
+    def find_by_biographic_details(hesa_trainee)
+      Hesa::Student.find_by(
+        first_names: hesa_trainee[:first_names],
+        last_name: hesa_trainee[:last_name],
+        date_of_birth: hesa_trainee[:date_of_birth],
+        trainee_id: hesa_trainee[:trainee_id],
+        ukprn: hesa_trainee[:ukprn],
+        itt_commencement_date: hesa_trainee[:itt_commencement_date],
+        numhus: hesa_trainee[:numhus],
+        email: hesa_trainee[:email],
+      )
+    end
+
+    def update_hesa_ids(hesa_student, hesa_trainee)
+      hesa_student.previous_hesa_id = hesa_student.hesa_id
+      hesa_student.hesa_id = hesa_trainee[:hesa_id]
+
+      hesa_student
     end
   end
 end

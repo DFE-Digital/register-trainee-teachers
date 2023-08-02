@@ -80,7 +80,6 @@
 #  hesa_trn_submission_id          :bigint
 #  lead_school_id                  :bigint
 #  placement_assignment_dttp_id    :uuid
-#  previous_hesa_id                :string
 #  provider_id                     :bigint           not null
 #  start_academic_cycle_id         :bigint
 #  trainee_id                      :text
@@ -123,7 +122,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns += ["withdraw_reason"] # rubocop:disable Rails/UnusedIgnoredColumns
+  self.ignored_columns += %w[withdraw_reason previous_hesa_id] # rubocop:disable Rails/UnusedIgnoredColumns
 
   include Sluggable
   include PgSearch::Model

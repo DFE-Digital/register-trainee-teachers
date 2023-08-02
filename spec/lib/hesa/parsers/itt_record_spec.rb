@@ -33,7 +33,6 @@ module Hesa
             itt_commencement_date: nil,
             training_initiative: "009",
             hesa_id: "0310261553101",
-            student_instance_id: "02",
             reason_for_leaving: nil,
             end_date: nil,
             disability1: "95",
