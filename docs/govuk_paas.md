@@ -5,7 +5,7 @@ It uses the open source Cloud Foundry platform and run on AWS.
 
 ## Getting a PaaS account
 You can get an account by requesting in the `#digital-tools-support` channel. 
-Request for an account with a `SpaceDeveloper` role to be created under your `@digital.education.gov.uk` email address and access to the `dfe-teacher-services` organisation and the below spaces:
+Request for an account with a `SpaceDeveloper` role to be created under your `@education.gov.uk` email address and access to the `dfe-teacher-services` organisation and the below spaces:
 
 |Spaces       |
 |:------------|
