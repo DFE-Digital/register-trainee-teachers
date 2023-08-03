@@ -5,6 +5,26 @@ require "rails_helper"
 feature "Viewing sidekiq dead jobs" do
   let(:user) { create(:user, system_admin: true) }
   let!(:trainee) { create(:trainee, :submitted_for_trn, first_names: "James Blint") }
+  let(:dead_jobs_data) do
+    [
+      OpenStruct.new(
+        item: {
+          wrapped: "Dqt::UpdateTraineeJob",
+          args:
+          [
+            {
+              arguments: [
+                { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" },
+              ],
+            },
+          ],
+          error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
+          jid: "1234",
+          enqueued_at: 73.hours.ago.to_i,
+        }.with_indifferent_access,
+      ),
+    ]
+  end
 
   before do
     allow_any_instance_of(SystemAdmin::DeadJobsController).to receive(:job).and_return(nil) # rubocop:disable RSpec/AnyInstance
@@ -37,30 +57,31 @@ feature "Viewing sidekiq dead jobs" do
     then_the_job_is_deleted
   end
 
+  scenario "view job details" do
+    when_i_click_view
+    then_i_am_taken_to_the_dqt_update_page
+    and_i_can_see_the_data_associated_with_the_job
+  end
+
   def when_i_visit_the_dead_jobs_tab
     admin_dead_jobs_page.load
   end
 
   def and_dead_jobs_exist
-    allow(Sidekiq::DeadSet).to receive(:new).and_return(
-      [
-        OpenStruct.new(
+    allow(Sidekiq::DeadSet).to receive(:new).and_return(dead_jobs_data)
+    without_partial_double_verification do
+      allow(dead_jobs_data).to receive(:find_job).and_return(
+        double(
           item: {
-            wrapped: "Dqt::UpdateTraineeJob",
-            args:
-              [
-                {
-                  arguments: [
-                    { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" },
-                  ],
-                },
-              ],
-            error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
-            jid: "1234",
-          }.with_indifferent_access,
+            "retry" => 0,
+            "queue" => "dqt",
+            "class" => "ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper",
+            "wrapped" => "Dqt::WithdrawTraineeJob",
+            "enqueued_at" => 73.hours.ago.to_i,
+          },
         ),
-      ],
-    )
+      )
+    end
   end
 
   def then_i_see_the_dead_jobs_page
@@ -73,6 +94,10 @@ feature "Viewing sidekiq dead jobs" do
 
   def then_i_am_taken_to_the_dqt_update_page
     expect(admin_dead_jobs_dqt_update_trainee).to be_displayed
+  end
+
+  def and_i_can_see_the_data_associated_with_the_job
+    expect(page).to have_text("#{trainee.id} #{trainee.full_name} #{trainee.date_of_birth} submitted_for_trn 3")
   end
 
   def then_i_see_the_trainee

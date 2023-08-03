@@ -101,6 +101,7 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
           date_of_birth
           state
           job_id
+          days_waiting
         ],
       )
     end
