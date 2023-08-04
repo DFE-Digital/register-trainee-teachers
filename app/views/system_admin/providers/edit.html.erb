@@ -22,6 +22,6 @@
       <%= f.govuk_submit %>
     <% end %>
 
-    <%= govuk_button_to(t(".delete_provider_button"), provider_confirm_delete_path(@provider), { warning: true, method: :get }) if @provider.kept?%>
+    <%= govuk_button_to(t(".delete_provider_button"), provider_confirm_delete_path(@provider), { warning: true, method: :get }) if @provider.kept? %>
   </div>
 </div>

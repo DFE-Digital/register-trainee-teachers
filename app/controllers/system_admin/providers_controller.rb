@@ -44,9 +44,9 @@ module SystemAdmin
     end
 
     def destroy
-      @provider.users.delete_all
-
       @provider.discard!
+
+      @provider.users.delete_all
 
       flash[:success] = t("views.provider.delete")
       redirect_to(providers_path)

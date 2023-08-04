@@ -9,7 +9,6 @@ feature "Edit providers" do
     let(:accreditation_id) { Faker::Number.number(digits: 4) }
     let(:provider) { build(:provider) }
 
-    # context "an active provider" do
     before do
       given_i_am_authenticated(user:)
       when_i_visit_the_provider_index_page
