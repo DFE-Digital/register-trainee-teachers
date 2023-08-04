@@ -43,7 +43,7 @@ module Hesa
 
         hesa_student = find_by_id(hesa_trainee) || find_by_biographic_details(hesa_trainee) || Hesa::Student.new
 
-        hesa_student = update_hesa_ids(hesa_student, hesa_trainee) unless hesa_student.new_record?
+        hesa_student = update_hesa_ids(hesa_student, hesa_trainee) unless student_is_new_or_has_same_hesa_id?(hesa_student, hesa_trainee)
 
         hesa_student.assign_attributes(hesa_trainee)
 
@@ -91,6 +91,10 @@ module Hesa
       hesa_student.hesa_id = hesa_trainee[:hesa_id]
 
       hesa_student
+    end
+
+    def student_is_new_or_has_same_hesa_id?(hesa_student, hesa_trainee)
+      hesa_student.new_record? || hesa_student.hesa_id == hesa_trainee[:hesa_id]
     end
   end
 end

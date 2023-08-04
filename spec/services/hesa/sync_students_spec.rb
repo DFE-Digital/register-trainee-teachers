@@ -57,6 +57,16 @@ module Hesa
         end
       end
 
+      context "hesa record with the same hesa id in an existing collection" do
+        let!(:hesa_student) { create(:hesa_student, hesa_id: "0310261553101", rec_id: "16053") }
+
+        it "updates the existing record and does not update the hesa ids" do
+          expect { service }.not_to change { Student.count }
+          expect(hesa_student.reload.hesa_id).to eq "0310261553101"
+          expect(hesa_student.previous_hesa_id).to be_nil
+        end
+      end
+
       context "hesa record with a different hesa_id but matching combined fields in an existing collection" do
         let!(:hesa_student) do
           create(
