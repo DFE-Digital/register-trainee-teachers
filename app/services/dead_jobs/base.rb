@@ -108,6 +108,7 @@ module DeadJobs
       @dead_jobs ||=
         dead_set
         .select { |job| job.item["wrapped"] == klass }
+        .sort_by { |job| job.item["enqueued_at"] }
         .to_h do |job|
           [
             job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i,
