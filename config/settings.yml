@@ -100,9 +100,9 @@ current_default_course_year: 2023
 apply_applications:
   import:
     recruitment_cycle_years:
-      - 2022
+      - 2023
   create:
-    recruitment_cycle_year: 2022
+    recruitment_cycle_year: 2023
 
 jobs:
   poll_delay_hours: 1
