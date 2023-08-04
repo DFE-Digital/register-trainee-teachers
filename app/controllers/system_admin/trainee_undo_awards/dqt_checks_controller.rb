@@ -8,7 +8,7 @@ module SystemAdmin
       def edit; end
 
       def update
-        if SystemAdmin::TraineeUndoAwardCheck.call(@trainee)
+        if TraineeSafeToUnaward.call(@trainee)
           redirect_to(edit_trainee_undo_awards_reason_path(@trainee))
         else
           render(:check_failed)
