@@ -40,6 +40,134 @@ module Hesa
         end
       end
 
+      context "hesa record with an alternative hesa id in an existing collection" do
+        let!(:hesa_student) { create(:hesa_student, hesa_id: "0000000000000", previous_hesa_id: "0310261553101", rec_id: "16053") }
+
+        before do
+          allow(Hesa::Parsers::IttRecord).to receive(:to_attributes).and_return(
+            hesa_id: "0310261553101",
+            rec_id: "16053",
+          )
+        end
+
+        it "updates the existing record and moves the old hesa_id to previous_hesa_id" do
+          expect { service }.not_to change { Student.count }
+          expect(hesa_student.reload.hesa_id).to eq "0310261553101"
+          expect(hesa_student.previous_hesa_id).to eq "0000000000000"
+        end
+      end
+
+      context "hesa record with the same hesa id in an existing collection" do
+        let!(:hesa_student) { create(:hesa_student, hesa_id: "0310261553101", rec_id: "16053") }
+
+        it "updates the existing record and does not update the hesa ids" do
+          expect { service }.not_to change { Student.count }
+          expect(hesa_student.reload.hesa_id).to eq "0310261553101"
+          expect(hesa_student.previous_hesa_id).to be_nil
+        end
+      end
+
+      context "hesa record with a different hesa_id but matching combined fields in an existing collection" do
+        let!(:hesa_student) do
+          create(
+            :hesa_student,
+            hesa_id: "0000000000000",
+            rec_id: "16053",
+            first_names: "Dave",
+            last_name: "George",
+            date_of_birth: "1978-08-13",
+            trainee_id: "99157234/2/01",
+            ukprn: "10007713",
+            itt_commencement_date: nil,
+            numhus: "02",
+            email: "student.name@email.com",
+          )
+        end
+
+        it "updates the existing record and moves the old hesa_id to previous_hesa_id" do
+          expect { service }.not_to change { Student.count }
+          expect(hesa_student.reload.hesa_id).to eq "0310261553101"
+          expect(hesa_student.previous_hesa_id).to eq "0000000000000"
+        end
+      end
+
+      context "hesa record with a different hesa_id but matching combined fields in a new collection" do
+        let!(:hesa_student) do
+          create(
+            :hesa_student,
+            hesa_id: "0310261553101",
+            rec_id: "16053",
+            first_names: "Dave",
+            last_name: "George",
+            date_of_birth: "1978-08-13",
+            trainee_id: "99157234/2/01",
+            ukprn: "10007713",
+            itt_commencement_date: nil,
+            numhus: "02",
+            email: "student.name@email.com",
+          )
+        end
+
+        before do
+          allow(Hesa::Parsers::IttRecord).to receive(:to_attributes).and_return(
+            hesa_id: "0310261553101",
+            rec_id: "16054", # different rec_id,
+            first_names: "Dave",
+            last_name: "George",
+            date_of_birth: "1978-08-13",
+            trainee_id: "99157234/2/01",
+            ukprn: "10007713",
+            itt_commencement_date: nil,
+            numhus: "02",
+            email: "student.name@email.com",
+          )
+        end
+
+        it "updates the existing record and moves the old hesa_id to previous_hesa_id" do
+          expect { service }.not_to change { Student.count }
+        end
+      end
+
+      context "hesa record with the same hesa_id but different additional info in an existing collection" do
+        let!(:hesa_student) do
+          create(
+            :hesa_student,
+            hesa_id: "0310261553101",
+            rec_id: "16053",
+            first_names: "Dave",
+            last_name: "George",
+            date_of_birth: "1978-08-13",
+            trainee_id: "99157234/2/01",
+            ukprn: "10007713",
+            itt_commencement_date: nil,
+            numhus: "02",
+            email: "student.name@email.com",
+          )
+        end
+
+        before do
+          allow(Hesa::Parsers::IttRecord).to receive(:to_attributes).and_return(
+            hesa_id: "0310261553101",
+            rec_id: "16053",
+            first_names: "New Name",
+            last_name: "New Surname",
+            date_of_birth: "1980-08-13",
+            trainee_id: "99157234/2/01",
+            ukprn: "10007713",
+            itt_commencement_date: nil,
+            numhus: "02",
+            email: "student.name@email.com",
+          )
+        end
+
+        it "updates the existing record with new additional info" do
+          expect { service }.not_to change { Student.count }
+          expect(hesa_student.reload.first_names).to eq "New Name"
+          expect(hesa_student.last_name).to eq "New Surname"
+          expect(hesa_student.date_of_birth).to eq "1980-08-13"
+        end
+      end
+
       context "with an optional upload" do
         let(:filename) { "itt_record.xml" }
         let(:upload) { create(:upload, name: filename, file: nil) }

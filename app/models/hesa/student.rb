@@ -64,9 +64,9 @@
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
 #  hesa_id                      :string
+#  previous_hesa_id             :string
 #  provider_course_id           :string
 #  rec_id                       :string
-#  student_instance_id          :string
 #  trainee_id                   :string
 #
 # Indexes
@@ -76,6 +76,7 @@
 module Hesa
   class Student < ApplicationRecord
     self.table_name = "hesa_students"
+    self.ignored_columns += %w[student_instance_id] # rubocop:disable Rails/UnusedIgnoredColumns
 
     belongs_to :trainee,
                foreign_key: :hesa_id,

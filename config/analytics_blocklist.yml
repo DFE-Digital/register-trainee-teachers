@@ -195,7 +195,7 @@
   :hesa_students:
   - id
   - hesa_id
-  - student_instance_id
+  - previous_hesa_id
   - first_names
   - last_name
   - email
