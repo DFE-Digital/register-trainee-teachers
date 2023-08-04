@@ -236,16 +236,10 @@ module ApplyApi
         "zimbabwean" => "ZW",
       }.freeze
 
-      # Apply have the following values for GB, whereas DTTP use just british
-      # British
-      # Cymraes
-      # Cymro
-      # English
-      # Northern Irish
-      # Prydeinig
-      # Scottish
-      # Welsh
-      MAPPING = APPLY_MAPPING.invert.merge("GB" => Dttp::CodeSets::Nationalities::BRITISH)
+      # The following HESA nationality codes need to be mapped to British
+      BRITISH_MAPPING = %w[GB IM JE GG IO FK].index_with { |_code| Dttp::CodeSets::Nationalities::BRITISH }.freeze
+
+      MAPPING = APPLY_MAPPING.invert.merge(BRITISH_MAPPING)
     end
   end
 end
