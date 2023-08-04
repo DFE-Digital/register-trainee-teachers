@@ -69,19 +69,6 @@ feature "Viewing sidekiq dead jobs" do
 
   def and_dead_jobs_exist
     allow(Sidekiq::DeadSet).to receive(:new).and_return(dead_jobs_data)
-    without_partial_double_verification do
-      allow(dead_jobs_data).to receive(:find_job).and_return(
-        double(
-          item: {
-            "retry" => 0,
-            "queue" => "dqt",
-            "class" => "ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper",
-            "wrapped" => "Dqt::WithdrawTraineeJob",
-            "enqueued_at" => 73.hours.ago.to_i,
-          },
-        ),
-      )
-    end
   end
 
   def then_i_see_the_dead_jobs_page

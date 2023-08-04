@@ -81,13 +81,11 @@ module DeadJobs
         date_of_birth: trainee.date_of_birth,
         state: trainee.state,
         job_id: dead_jobs[trainee.id][:job_id],
-        days_waiting: days_waiting_for(dead_jobs[trainee.id][:job_id]),
+        days_waiting: days_waiting_for(dead_jobs[trainee.id][:enqueued_at]),
       }
     end
 
-    def days_waiting_for(job_id)
-      enqueued_at = Sidekiq::DeadSet.new.find_job(job_id)&.item&.[]("enqueued_at")
-
+    def days_waiting_for(enqueued_at)
       return nil unless enqueued_at
 
       (Time.zone.today - Time.zone.at(enqueued_at).to_date).to_i
@@ -116,6 +114,7 @@ module DeadJobs
             {
               error_message: parse_error(job.item["error_message"]),
               job_id: job.item["jid"],
+              enqueued_at: job.item["enqueued_at"],
             },
           ]
         end
