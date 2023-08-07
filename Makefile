@@ -7,10 +7,10 @@ TERRAFILE_VERSION=0.8
 
 help:
 	@echo "Environment setup targets:"
-	@echo "  review     - configure for review app"
-	@echo "  qa"
-	@echo "  staging"
-	@echo "  production"
+	@echo "  review_aks     - configure for review app"
+	@echo "  qa_aks"
+	@echo "  staging_aks"
+	@echo "  production_aks"
 	@echo ""
 	@echo "Commands:"
 	@echo "  deploy-plan - Print out the plan for the deploy, does not deploy."
@@ -18,16 +18,12 @@ help:
 	@echo "Command Options:"
 	@echo "      APP_NAME  - name of the app being setup, required only for review apps"
 	@echo "      IMAGE_TAG - git sha of a built image, see builds in GitHub Actions"
-	@echo "      PASSCODE  - your authentication code for GOVUK PaaS, retrieve from"
-	@echo "                  https://login.london.cloud.service.gov.uk/passcode"
 	@echo ""
 	@echo "Examples:"
 	@echo "  Create a review app"
-	@echo "    You will need to retrieve the authentication code from GOVUK PaaS"
-	@echo "    visit https://login.london.cloud.service.gov.uk/passcode. Then run"
-	@echo "    deploy-plan to test:"
+	@echo "  Run deploy-plan to test:"
 	@echo ""
-	@echo "        make review APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF PASSCODE=AUTHCODE"
+	@echo "        make review_aks APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF"
 
 .PHONY: install-konduit
 install-konduit: ## Install the konduit script, for accessing backend services
@@ -42,60 +38,12 @@ install-terrafile: ## Install terrafile to manage terraform modules
 		| tar xz -C ./bin terrafile \
 		|| true
 
-.PHONY: review
-review:
-	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a name for your review app))
-	$(eval DEPLOY_ENV=review)
-	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
-	$(eval export TF_VAR_paas_app_name=$(APP_NAME))
-	$(eval export TF_VAR_app_suffix=$(paas_env))
-	$(eval export TF_VAR_azure_resource_group_name=s121d01-reg-rv-$(APP_NAME)-rg)
-	$(eval export TF_VAR_azure_tempdata_storage_account_name=s121d01regrv$(subst -,,$(APP_NAME)))
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-	$(eval space=bat-qa)
-	$(eval paas_env=pr-$(APP_NAME))
-	$(eval BACKUP_CONTAINER_NAME=pr-$(APP_NAME)-db-backup)
-	$(eval PLATFORM=paas)
-	echo https://register-$(APP_NAME).london.cloudapps.digital will be created in bat-qa space
-
 local: ## Configure local dev environment
 	$(eval DEPLOY_ENV=local)
 	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
 
 ci:	## Run in automation environment
-	$(eval export DISABLE_PASSCODE=true)
 	$(eval export AUTO_APPROVE=-auto-approve)
-
-qa:
-	$(eval DEPLOY_ENV=qa)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-development)
-	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
-	$(eval space=bat-qa)
-	$(eval paas_env=qa)
-	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
-	$(eval PLATFORM=paas)
-
-staging:
-	$(eval DEPLOY_ENV=staging)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-test)
-	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
-	$(eval PLATFORM=paas)
-
-production:
-	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
-	$(eval DEPLOY_ENV=production)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
-	$(eval HOST_NAME=www)
-	$(eval DTTP_HOSTNAME=traineeteacherportal)
-	$(eval paas_env=production)
-	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
-	$(eval PLATFORM=paas)
-
-productiondata:
-	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
-	$(eval DEPLOY_ENV=productiondata)
-	$(eval AZ_SUBSCRIPTION=s121-findpostgraduateteachertraining-production)
-	$(eval PLATFORM=paas)
 
 review_aks:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
@@ -105,8 +53,6 @@ review_aks:
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).test.teacherservices.cloud will be created in aks
-#	$(eval export TF_VAR_azure_resource_group_name=s121d01-reg-rv-$(APP_NAME)-rg)
-#	$(eval export TF_VAR_azure_tempdata_storage_account_name=s121d01regrv$(subst -,,$(APP_NAME)))
 
 dv_review_aks: ## make dv_review_aks deploy APP_NAME=2222 CLUSTER=cluster1
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
@@ -213,8 +159,6 @@ destroy: terraform-init
 terraform-init: install-terrafile
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=main))
 	$(eval export TF_VAR_paas_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
-	$(if $(or $(DISABLE_PASSCODE),$(PASSCODE)), , $(error Missing environment variable "PASSCODE", retrieve from https://login.london.cloud.service.gov.uk/passcode))
-	$(eval export TF_VAR_paas_sso_passcode=$(PASSCODE))
 
 	az account set -s $(AZ_SUBSCRIPTION) && az account show
 	[ "${RUN_TERRAFILE}" = "yes" ] && ./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile || true
@@ -234,22 +178,6 @@ aks-logs: get-cluster-credentials
 aks-worker-logs: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID}-worker --tail=-1 --timestamps=true
-
-console: read-tf-config
-	cf target -s ${space}
-	cf ssh register-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
-
-worker-console: read-tf-config
-	cf target -s ${space}
-	cf ssh register-worker-${DEPLOY_ENV} -t -c "cd /app && /usr/local/bin/bundle exec rails c"
-
-ssh: read-tf-config
-	cf target -s ${space}
-	cf ssh register-${DEPLOY_ENV}
-
-worker-ssh: read-tf-config
-	cf target -s ${space}
-	cf ssh register-worker-${DEPLOY_ENV}
 
 aks-ssh: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
@@ -295,7 +223,7 @@ rename-postgres-service: ## make qa rename-postgres-service
 	cf target -s ${space} 1> /dev/null
 	cf rename-service register-postgres-${paas_env} register-postgres-${paas_env}-old
 
-remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state PASSCODE=xxxx
+remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state
 	terraform -chdir=terraform/$(PLATFORM) state rm module.paas.cloudfoundry_service_instance.postgres_instance
 
 set-restore-variables:
@@ -307,7 +235,7 @@ set-restore-variables:
 	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
 	echo "Restoring register-trainee-teachers from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
 
-restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00" PASSCODE=xxxxx
+restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00"
 
 restore-data-from-nightly-backup: read-deployment-config read-tf-config # make production restore-data-from-nightly-backup CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES BACKUP_DATE="yyyy-mm-dd"
 	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${paas_env}_ ${BACKUP_DATE}
@@ -367,4 +295,3 @@ action-group-resources: set-azure-account # make env_aks action-group-resources 
 	echo ${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-mn-rg
 	az group create -l uksouth -g ${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-mn-rg --tags "Product=Register trainee teachers" "Environment=Test" "Service Offering=Teacher services cloud"
 	az monitor action-group create -n ${RESOURCE_NAME_PREFIX}-${SERVICE_NAME} -g ${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-mn-rg --action email ${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-email ${ACTION_GROUP_EMAIL}
-
