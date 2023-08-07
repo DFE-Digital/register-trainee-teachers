@@ -26,7 +26,12 @@
 
 <% if @trainee.awarded? || @trainee.recommended_for_award? %>
   <div class="award-details">
-    <%= render AwardDetails::View.new(@trainee) %>
+    <%= render(
+      AwardDetails::View.new(
+        @trainee,
+        show_undo_award: TraineePolicy.new(@current_user, @trainee).undo_award_with_reason?,
+      )
+    ) %>
   </div>
 <% end %>
 

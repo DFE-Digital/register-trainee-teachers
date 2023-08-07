@@ -66,6 +66,15 @@ describe TraineePolicy do
     end
   end
 
+  permissions :undo_award_with_reason? do
+    context "with an awarded trainee" do
+      let(:provider_trainee) { create(:trainee, :awarded, provider:) }
+
+      it { is_expected.not_to permit(provider_user, provider_trainee) }
+      it { is_expected.to permit(system_admin_user, provider_trainee) }
+    end
+  end
+
   permissions :withdraw? do
     context "when trainee is deferred?" do
       before do

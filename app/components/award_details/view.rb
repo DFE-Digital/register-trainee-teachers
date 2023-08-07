@@ -4,10 +4,12 @@ module AwardDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_reader :trainee
+    attr_reader :trainee, :show_undo_award
+    alias_method :show_undo_award?, :show_undo_award
 
-    def initialize(trainee)
+    def initialize(trainee, show_undo_award: false)
       @trainee = trainee
+      @show_undo_award = show_undo_award
     end
 
     def award_date
@@ -19,10 +21,6 @@ module AwardDetails
           recommended_for_award_at: date_for_summary_view(trainee.recommended_for_award_at),
         )
       end
-    end
-
-    def show_remove_qts_link?
-      trainee.awarded?
     end
   end
 end

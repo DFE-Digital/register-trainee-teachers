@@ -9,7 +9,7 @@
   ]
 ) do |component| %>
   <% component.header_actions do %>
-    <% if show_remove_qts_link? %>
+    <% if show_undo_award? %>
       <%= govuk_link_to(
         "Remove QTS award",
         edit_trainee_undo_awards_dqt_check_path(@trainee),
