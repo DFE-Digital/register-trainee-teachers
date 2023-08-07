@@ -81,7 +81,14 @@ module DeadJobs
         date_of_birth: trainee.date_of_birth,
         state: trainee.state,
         job_id: dead_jobs[trainee.id][:job_id],
+        days_waiting: days_waiting_for(dead_jobs[trainee.id][:enqueued_at]),
       }
+    end
+
+    def days_waiting_for(enqueued_at)
+      return nil unless enqueued_at
+
+      (Time.zone.today - Time.zone.at(enqueued_at).to_date).to_i
     end
 
     def dqt(trainee)
@@ -101,12 +108,14 @@ module DeadJobs
       @dead_jobs ||=
         dead_set
         .select { |job| job.item["wrapped"] == klass }
+        .sort_by { |job| job.item["enqueued_at"] }
         .to_h do |job|
           [
             job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i,
             {
               error_message: parse_error(job.item["error_message"]),
               job_id: job.item["jid"],
+              enqueued_at: job.item["enqueued_at"],
             },
           ]
         end
