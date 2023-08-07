@@ -1,4 +1,4 @@
-# Register
+# Register trainee teachers
 
 A service for training providers in England to register trainees with the Department for Education and record the outcome of their training.
 
