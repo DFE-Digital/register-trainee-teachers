@@ -97,7 +97,7 @@ module Reports
       return csv << ["No trainee data to export"] if trainees.blank? # TODO: move text to translation file
 
       trainees.strict_loading.includes(:apply_application,
-                                       { course_allocation_subject: [:subject_specialisms] },
+                                       { course_allocation_subject: %i[subject_specialisms funding_methods] },
                                        :degrees, :disabilities,
                                        :employing_school,
                                        :end_academic_cycle,
