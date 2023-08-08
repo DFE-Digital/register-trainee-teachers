@@ -53,7 +53,7 @@ describe ReportsController do
 
     it "renders a csv" do
       get :performance_profiles, params: { format: :csv }
-      expect(response.content_type).to eq("text/csv")
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
     end
   end
 
