@@ -223,7 +223,7 @@ module Reports
     def disabilities
       trainee.disabilities.map do |disability|
         if disability.name == Diversities::OTHER
-          trainee.trainee_disabilities.select { |x| x.disability_id == disability.id }.first.additional_disability
+          trainee.trainee_disabilities.find { |x| x.disability_id == disability.id }.additional_disability
         else
           disability.name
         end
