@@ -169,8 +169,6 @@ group :development, :test do
   gem "dotenv-rails"
 
   gem "timecop", "~> 0.9.6"
-
-  gem "bullet"
 end
 
 group :development do
