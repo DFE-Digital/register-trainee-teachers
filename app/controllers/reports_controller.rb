@@ -22,11 +22,16 @@ class ReportsController < BaseTraineeController
 
       format.csv do
         authorize(:trainee, :export?)
-        send_data(
-          Exports::ExportTraineesService.call(itt_new_starter_trainees),
-          filename: itt_new_starter_filename,
-          disposition: :attachment,
-        )
+        headers["X-Accel-Buffering"] = "no"
+        headers["Cache-Control"] = "no-cache"
+        headers["Content-Type"] = "text/csv; charset=utf-8"
+        headers["Content-Disposition"] =
+          %(attachment; filename="#{itt_new_starter_filename}")
+        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+
+        response.status = 200
+
+        self.response_body = Exports::ReportCsvEnumeratorService.call(itt_new_starter_trainees)
       end
     end
   end
@@ -42,11 +47,16 @@ class ReportsController < BaseTraineeController
 
       format.csv do
         authorize(:trainee, :export?)
-        send_data(
-          Exports::ExportTraineesService.call(performance_profiles_trainees),
-          filename: performance_profiles_filename,
-          disposition: :attachment,
-        )
+        headers["X-Accel-Buffering"] = "no"
+        headers["Cache-Control"] = "no-cache"
+        headers["Content-Type"] = "text/csv; charset=utf-8"
+        headers["Content-Disposition"] =
+          %(attachment; filename="#{performance_profiles_filename}")
+        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+
+        response.status = 200
+
+        self.response_body = Exports::ReportCsvEnumeratorService.call(performance_profiles_trainees)
       end
     end
   end
