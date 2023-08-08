@@ -427,7 +427,10 @@ module Reports
     def trainee_allocation_subject(subject)
       return if subject.blank?
 
-      SubjectSpecialism.find_by("lower(name) = ?", subject.downcase)&.allocation_subject&.name
+      subject_name = subject.downcase
+      Rails.cache.fetch("TraineeReport.trainee_allocation_subject(#{subject_name})", expires_in: 1.day) do
+        SubjectSpecialism.find_by("lower(name) = ?", subject_name)&.allocation_subject&.name
+      end
     end
 
     def placements
