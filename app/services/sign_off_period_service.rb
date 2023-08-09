@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 class SignOffPeriodService
-  # Census sign off period: 1st October - 31st October
-  CENSUS_PERIOD = (Date.new(Time.zone.today.year, 10, 1)..Date.new(Time.zone.today.year, 10, 31))
-
-  # Performance profiles sign off period: 1st January - 31st January
-  PERFORMANCE_PERIOD = (Date.new(Time.zone.today.year, 1, 1)..Date.new(Time.zone.today.year, 1, 31))
+  CENSUS_MONTH = 10          # October
+  PERFORMANCE_MONTH = 1     # January
 
   def self.call
-    today = Time.zone.today
+    today_month = Date.today.month
 
-    return :census_period if CENSUS_PERIOD.cover?(today)
-    return :performance_period if PERFORMANCE_PERIOD.cover?(today)
-
+    return :census_period if today_month == CENSUS_MONTH
+    return :performance_period if today_month == PERFORMANCE_MONTH
+    
     :outside_period
   end
 end
