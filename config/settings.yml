@@ -26,6 +26,7 @@ hesa:
   current_collection_start_date: "2022-08-01"
   username: <get from secrets>
   password: <get from secrets>
+  upload_id: null
 
 dqt:
   base_url: https://qualified-teachers-api-dev.london.cloudapps.digital
