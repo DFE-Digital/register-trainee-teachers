@@ -129,6 +129,9 @@ gem "progress_bar" # useful to track progress of long running data migrations us
 
 gem "strong_migrations"
 
+# Versioned database views for Rails
+gem "scenic"
+
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
   gem "azure-storage-blob", "~> 2", require: false

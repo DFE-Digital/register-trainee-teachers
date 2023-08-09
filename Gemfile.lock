@@ -614,6 +614,9 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+    scenic (1.7.0)
+      activerecord (>= 4.0.0)
+      railties (>= 4.0.0)
     scss_lint (0.59.0)
       sass (~> 3.5, >= 3.5.5)
     scss_lint-govuk (0.2.0)
@@ -812,6 +815,7 @@ DEPENDENCIES
   rubocop-rspec
   ruby-progressbar
   rubyzip
+  scenic
   scss_lint-govuk
   sentry-rails
   sentry-ruby
@@ -843,4 +847,4 @@ RUBY VERSION
    ruby 3.1.3p185
 
 BUNDLED WITH
-   2.3.26
+   2.4.16
