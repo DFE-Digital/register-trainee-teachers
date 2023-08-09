@@ -25,14 +25,15 @@ class GuidanceController < ApplicationController
   end
 
   def performance_profiles
-    if Settings.in_sign_off_period?
+    case sign_off_period
+    when :performance_period
       @current_academic_cycle_label = current_academic_cycle.label
       @previous_academic_cycle_label = previous_academic_cycle.label
       @academic_cycle_for_filter = previous_academic_cycle.start_year
       @sign_off_deadline = Date.new(AcademicCycle.current.end_year, 1, 31).strftime("%d %B %Y")
       @sign_off_url = Settings.sign_off_performance_profiles_url
       render(layout: "application")
-    else
+    when :census_period, :outside_period
       render(:performance_profiles_outside, layout: "application")
     end
   end
@@ -48,14 +49,19 @@ private
   end
 
   def signing_off_data
-    @signing_off_data ||= if Settings.in_sign_off_period?
-                            "Sign off your list of trainees from #{previous_academic_cycle.label} for the performance profiles publication"
-                          else
+    @signing_off_data ||= case sign_off_period
+                          when :census_period, :outside_period
                             "Signing off your list of trainees for the performance profiles publication"
+                          when :performance_period
+                            "Sign off your list of trainees for the performance profiles publication"
                           end
   end
 
   def valid_tabs
     %w[course_details database_only funding schools trainee_progress personal_details]
+  end
+
+  def sign_off_period
+    @sign_off_period ||= SignOffPeriodService.call
   end
 end
