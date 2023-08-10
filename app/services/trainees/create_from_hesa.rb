@@ -71,9 +71,10 @@ module Trainees
       return new_trainee_record(hesa_id) if trainee.blank?
       # if the trainee is neither awarded nor withdrawn we always update the existing record
       return trainee unless awarded_or_withdrawn?(trainee)
+
       # if the trainee is either awarded or withdrawn and the ITT start date is different to the existing record,
       # we need to create a new record because the provider is submitting the trainee for a new course
-      return new_trainee_record(hesa_id) if itt_start_date_changed_for?(trainee)
+      new_trainee_record(hesa_id) if itt_start_date_changed_for?(trainee)
 
       # if the trainee's ITT start date has not changed, and the trainee is either awarded or withdrawn,
       # then we do nothing (we don't create a new record, nor update the existing one), therefore we
