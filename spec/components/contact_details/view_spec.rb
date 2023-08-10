@@ -10,12 +10,12 @@ describe ContactDetails::View do
       )
     end
 
-    it "renders blank rows for address, email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
+    it "renders a blank row for email" do
+      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
     end
 
-    it "tells the user that the data is missing" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 2)
+    it "tells the user that the email is missing" do
+      expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 1)
     end
   end
 
@@ -25,45 +25,13 @@ describe ContactDetails::View do
       @result ||= render_inline(ContactDetails::View.new(data_model: mock_trainee, editable: true))
     end
 
-    it "renders rows for address, email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
+    it "renders rows for email" do
+      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
     end
 
     it "renders the contact details change link" do
       expect(rendered_component)
         .to have_link(t("change"), href: "/trainees/#{mock_trainee.slug}/contact-details/edit")
-    end
-
-    it "renders the address" do
-      expect(rendered_component)
-        .to have_text([
-          mock_trainee.address_line_one,
-          mock_trainee.address_line_two,
-          mock_trainee.town_city,
-          mock_trainee.postcode,
-        ].join)
-    end
-
-    it "renders the email address" do
-      expect(rendered_component)
-        .to have_text(mock_trainee.email)
-    end
-  end
-
-  context "non UK based trainee" do
-    before do
-      mock_trainee.locale_code = "non_uk"
-      mock_trainee.email = "visit@paris.com"
-      @result ||= render_inline(ContactDetails::View.new(data_model: mock_trainee))
-    end
-
-    it "renders rows for address, email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 2)
-    end
-
-    it "renders the address" do
-      expect(rendered_component)
-        .to have_text(mock_trainee.international_address.split(/\r\n+/).join)
     end
 
     it "renders the email address" do
@@ -79,30 +47,18 @@ describe ContactDetails::View do
       @result ||= render_inline(ContactDetails::View.new(data_model: mock_trainee))
     end
 
-    it "does not renders rows for address, only email" do
+    it "does not render rows for address, only email" do
       expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
     end
 
-    it "does not render the address" do
-      expect(rendered_component).not_to have_text(mock_trainee.address_line_one)
-    end
-
     it "renders the email address" do
-      expect(rendered_component)
-        .to have_text(mock_trainee.email)
+      expect(rendered_component).to have_text(mock_trainee.email)
     end
   end
 
 private
 
   def mock_trainee
-    @mock_trainee ||= Trainee.new(
-      address_line_one: "<a href=\"https://fidusinfosec.com/\">32 Windsor Gardens</a>",
-      address_line_two: "Westminster",
-      town_city: "London",
-      postcode: "EC1 9CP",
-      international_address: "Champ de Mars\r\n5 Avenue Anatole",
-      email: "Paddington@bear.com",
-    )
+    @mock_trainee ||= Trainee.new(email: "Paddington@bear.com")
   end
 end
