@@ -5,4 +5,7 @@
   <p class="govuk-body govuk-hint">
     <%= pluralize(user_count, "user") %>
   </p>
+
+  <%= govuk_tag(text: "Deleted", colour: "red") if provider.discarded? %>
+
 </div>

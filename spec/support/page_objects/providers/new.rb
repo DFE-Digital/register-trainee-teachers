@@ -11,7 +11,7 @@ module PageObjects
       element :accreditation_id, "#provider-accreditation-id-field"
       element :apply_sync_enabled, "#provider-apply-sync-enabled-true-field"
 
-      element :submit, 'button.govuk-button[type="submit"]'
+      element :submit, 'button.govuk-button[type="submit"]', text: "Continue"
     end
   end
 end

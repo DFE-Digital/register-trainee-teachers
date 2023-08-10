@@ -111,7 +111,7 @@ module RecordDetails
     end
 
     def last_updated_date
-      render_text_with_hint(last_updated_event.date)
+      render_text_with_hint(last_updated_event.date) if last_updated_event.present?
     end
 
     def progress_date

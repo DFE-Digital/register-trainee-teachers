@@ -2,7 +2,7 @@
 
 module SystemAdmin
   class ProvidersController < ApplicationController
-    before_action :set_provider, only: %i[show edit update]
+    before_action :set_provider, only: %i[show edit update destroy]
 
     def index
       @providers = authorize(
@@ -41,6 +41,15 @@ module SystemAdmin
       else
         render(:edit)
       end
+    end
+
+    def destroy
+      @provider.discard!
+
+      @provider.users.delete_all
+
+      flash[:success] = t("views.provider.delete")
+      redirect_to(providers_path)
     end
 
   private

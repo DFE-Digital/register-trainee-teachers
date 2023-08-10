@@ -7,6 +7,7 @@
 #  id                 :bigint           not null, primary key
 #  apply_sync_enabled :boolean          default(FALSE)
 #  code               :string
+#  discarded_at       :datetime
 #  name               :string           not null
 #  ukprn              :string
 #  created_at         :datetime         not null
@@ -17,9 +18,12 @@
 # Indexes
 #
 #  index_providers_on_accreditation_id  (accreditation_id) UNIQUE
+#  index_providers_on_discarded_at      (discarded_at)
 #  index_providers_on_dttp_id           (dttp_id) UNIQUE
 #
 class Provider < ApplicationRecord
+  include Discard::Model
+
   has_many :provider_users, inverse_of: :provider
   has_many :users, through: :provider_users
   has_many :trainees
