@@ -22,7 +22,6 @@ module Hesa
         course_age_range: "F_ITTPHSC",
         training_initiative: "F_INITIATIVES1",
         hesa_id: "F_HUSID",
-        student_instance_id: "F_NUMHUS",
         bursary_level: "F_BURSLEV",
         training_route: "F_ENTRYRTE",
         nationality: "F_NATION",

@@ -30,7 +30,6 @@ module Hesa
             course_age_range: "13909",
             training_initiative: "009",
             hesa_id: "0310261553101",
-            student_instance_id: "02",
             disability1: "95",
             disability2: nil,
             disability3: nil,
