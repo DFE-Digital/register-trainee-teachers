@@ -11,39 +11,6 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(model: @contact_details_form, url: trainee_contact_details_path(@trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
-
-      <% if @contact_details_form.address_required? %>
-        <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "Where does the trainee live?", size: "s" }, class: "locale") do %>
-          <%= f.govuk_radio_button :locale_code, :non_uk, label: { text: "Outside the UK" }, link_errors: true  do %>
-            <%= f.govuk_text_area :international_address,
-                                  width: "one-quarter",
-                                  label: { text: "Home address" },
-                                  autocomplete: :off %>
-          <% end %>
-
-          <%= f.govuk_radio_button :locale_code, :uk, label: { text: "In the UK" } do %>
-            <%= f.govuk_fieldset legend: { text: "Home address", size: "s" } do %>
-              <%= f.govuk_text_field :address_line_one,
-                                     width: "full",
-                                     label: { text: "Building and street" },
-                                     autocomplete: :off %>
-
-              <%= f.govuk_text_field :address_line_two,
-                                     width: "full",
-                                     label: { text: "Address line 2", hidden: true },
-                                     autocomplete: :off %>
-
-              <%= f.govuk_text_field :town_city,
-                                     width: "two-thirds",
-                                     label: { text: "Town or city" },
-                                     autocomplete: :off %>
-
-              <%= f.govuk_text_field :postcode, width: 10, label: { text: "Postal code" }, autocomplete: :off %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-
       <%= f.govuk_email_field :email,
                               hint: { text: t(".email.hint")},
                               width: "two-thirds",
