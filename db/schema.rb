@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_31_090931) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_152108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -923,4 +923,188 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_090931) do
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
   add_foreign_key "uploads", "users"
+
+  create_view "trainee_reports", materialized: true, sql_definition: <<-SQL
+      SELECT trainees.slug AS register_id,
+      trainees.record_source,
+      apply_applications.apply_id,
+      (trainees.hesa_id IS NOT NULL) AS hesa_record,
+      (trainees.apply_application_id IS NOT NULL) AS apply_application,
+      trainees.created_from_dttp,
+      trainees.hesa_id,
+      trainees.trainee_id AS provider_trainee_id,
+      trainees.trn,
+      trainees.start_academic_cycle_id,
+      trainees.end_academic_cycle_id,
+      trainees.id,
+      trainees.state,
+      trainees.training_route,
+      trainees.created_at,
+      trainees.updated_at,
+      trainees.hesa_updated_at,
+      trainees.submitted_for_trn_at AS trainee_submitted_for_trn_at,
+      providers.name AS provider_name,
+      providers.code AS provider_id,
+      trainees.first_names,
+      trainees.middle_names,
+      trainees.last_name AS last_names,
+      trainees.date_of_birth AS trainee_date_of_birth,
+      trainees.sex AS trainee_sex,
+      ( SELECT array_agg(nationalities.name) AS array_agg
+             FROM (nationalities
+               JOIN nationalisations ON ((nationalities.id = nationalisations.nationality_id)))
+            WHERE (nationalisations.trainee_id = trainees.id)) AS nationality_as_array,
+      trainees.address_line_one AS address_line_1,
+      trainees.address_line_two AS address_line_2,
+      trainees.town_city,
+      trainees.postcode,
+      trainees.international_address AS trainee_international_address,
+      trainees.email AS email_address,
+      trainees.diversity_disclosure AS trainee_diversity_disclosure,
+      trainees.ethnic_group AS trainee_ethnic_group,
+      trainees.ethnic_background,
+      trainees.additional_ethnic_background,
+      trainees.disability_disclosure AS trainee_disability_disclosure,
+      ( SELECT array_agg(nested_disabilities.name) AS array_agg
+             FROM ( SELECT
+                          CASE
+                              WHEN ((disabilities.name)::text = 'Other'::text) THEN (trainee_disabilities.additional_disability)::character varying
+                              ELSE disabilities.name
+                          END AS name
+                     FROM (disabilities
+                       JOIN trainee_disabilities ON ((disabilities.id = trainee_disabilities.disability_id)))
+                    WHERE (trainee_disabilities.trainee_id = trainees.id)) nested_disabilities) AS disabilities_as_array,
+      ( SELECT count(degrees.id) AS count
+             FROM degrees
+            WHERE (degrees.trainee_id = trainees.id)) AS number_of_degrees,
+      degree_1.uk_or_non_uk AS degree_1_uk_or_non_uk,
+      degree_1.institution AS degree_1_awarding_institution,
+      degree_1.country AS degree_1_country,
+      degree_1.subject AS degree_1_subject,
+      degree_1.uk_degree AS degree_1_type_uk,
+      degree_1.non_uk_degree AS degree_1_type_non_uk,
+      degree_1.grade AS degree_1_grade,
+      degree_1.other_grade AS degree_1_other_grade,
+      degree_1.graduation_year AS degree_1_graduation_year,
+      ( SELECT jsonb_agg(nested_degrees.*) AS jsonb_agg
+             FROM ( SELECT degree_1.uk_or_non_uk,
+                      degrees.institution,
+                      degrees.country,
+                      degrees.subject,
+                      degrees.uk_degree,
+                      degrees.non_uk_degree,
+                      degrees.grade,
+                      degrees.other_grade,
+                      degrees.graduation_year
+                     FROM degrees
+                    WHERE (degrees.trainee_id = trainees.id)) nested_degrees) AS degrees_as_json,
+      trainees.course_education_phase AS trainee_course_education_phase,
+      trainees.course_subject_one,
+      trainees.course_subject_one AS course_itt_subject_1,
+      trainees.course_subject_two AS course_itt_subject_2,
+      trainees.course_subject_three AS course_itt_subject_3,
+      trainees.course_min_age AS course_minimum_age,
+      trainees.course_max_age AS course_maximum_age,
+      trainees.study_mode AS course_full_or_part_time,
+      trainees.itt_start_date AS trainee_itt_start_date,
+      trainees.itt_end_date,
+      trainees.trainee_start_date AS trainee_trainee_start_date,
+          CASE
+              WHEN (trainees.lead_school_not_applicable = false) THEN lead_school.name
+              ELSE 'Not applicable'::character varying
+          END AS lead_school_name,
+      lead_school.urn AS lead_school_urn,
+          CASE
+              WHEN (trainees.employing_school_not_applicable = false) THEN employing_school.name
+              ELSE 'Not applicable'::character varying
+          END AS employing_school_name,
+      employing_school.urn AS employing_school_urn,
+      trainees.training_initiative AS trainee_training_initiative,
+      trainees.bursary_tier AS trainee_bursary_tier,
+      ( SELECT
+                  CASE (schools.urn IS NULL)
+                      WHEN true THEN placements.name
+                      ELSE schools.urn
+                  END AS urn
+             FROM (placements
+               LEFT JOIN schools ON ((placements.school_id = schools.id)))
+            WHERE (trainees.id = placements.trainee_id)
+            ORDER BY placements.id
+           LIMIT 1) AS placement_one,
+      ( SELECT schools.urn
+             FROM (placements
+               LEFT JOIN schools ON ((placements.school_id = schools.id)))
+            WHERE (trainees.id = placements.trainee_id)
+            ORDER BY placements.id
+           OFFSET 1
+           LIMIT 1) AS placement_two,
+      ( SELECT array_agg(nested_other_placements.urn) AS array_agg
+             FROM ( SELECT schools.urn
+                     FROM (placements
+                       LEFT JOIN schools ON ((placements.school_id = schools.id)))
+                    WHERE (trainees.id = placements.trainee_id)
+                    ORDER BY placements.id
+                   OFFSET 2
+                   LIMIT ALL) nested_other_placements) AS other_placements_as_array,
+      trainees.outcome_date,
+      trainees.awarded_at,
+      trainees.defer_date AS trainee_defer_date,
+      trainees.reinstate_date AS return_from_deferral_date,
+      trainees.withdraw_date AS trainee_withdraw_date,
+      ( SELECT array_agg(withdrawal_reasons.name) AS array_agg
+             FROM (withdrawal_reasons
+               JOIN trainee_withdrawal_reasons ON ((withdrawal_reasons.id = trainee_withdrawal_reasons.withdrawal_reason_id)))
+            WHERE (trainee_withdrawal_reasons.trainee_id = trainees.id)) AS withdraw_reasons_as_array,
+      trainees.withdraw_reasons_details,
+      trainees.withdraw_reasons_dfe_details,
+      trainees.course_allocation_subject_id,
+      ( SELECT array_agg(nested_course_subjects_names.name) AS array_agg
+             FROM ( SELECT subjects.name
+                     FROM ((courses
+                       LEFT JOIN course_subjects ON ((courses.id = course_subjects.course_id)))
+                       LEFT JOIN subjects ON ((subjects.id = course_subjects.subject_id)))
+                    WHERE (trainees.course_uuid = courses.uuid)
+                    ORDER BY course_subjects.id) nested_course_subjects_names) AS course_subjects_names_as_array,
+      trainees.applying_for_bursary,
+      trainees.applying_for_grant,
+      trainees.applying_for_scholarship,
+      ( SELECT courses.level
+             FROM courses
+            WHERE (trainees.course_uuid = courses.uuid)) AS course_level_from_courses,
+      trainees.reinstate_date
+     FROM (((((trainees trainees
+       LEFT JOIN apply_applications apply_applications ON ((trainees.apply_application_id = apply_applications.id)))
+       LEFT JOIN providers providers ON ((trainees.provider_id = providers.id)))
+       LEFT JOIN ( SELECT first_degree.id,
+              first_degree.locale_code,
+              first_degree.uk_degree,
+              first_degree.non_uk_degree,
+              first_degree.trainee_id,
+              first_degree.created_at,
+              first_degree.updated_at,
+              first_degree.subject,
+              first_degree.institution,
+              first_degree.graduation_year,
+              first_degree.grade,
+              first_degree.country,
+              first_degree.other_grade,
+              first_degree.slug,
+              first_degree.dttp_id,
+              first_degree.institution_uuid,
+              first_degree.uk_degree_uuid,
+              first_degree.subject_uuid,
+              first_degree.grade_uuid,
+                  CASE
+                      WHEN (first_degree.locale_code = 0) THEN 'UK'::text
+                      ELSE 'non-UK'::text
+                  END AS uk_or_non_uk
+             FROM (degrees first_degree
+               JOIN ( SELECT min(degrees_1.id) AS id
+                     FROM degrees degrees_1
+                    GROUP BY degrees_1.trainee_id) degrees ON ((degrees.id = first_degree.id)))) degree_1 ON ((degree_1.trainee_id = trainees.id)))
+       LEFT JOIN schools lead_school ON ((trainees.lead_school_id = lead_school.id)))
+       LEFT JOIN schools employing_school ON ((trainees.employing_school_id = employing_school.id)));
+  SQL
+  add_index "trainee_reports", ["id"], name: "index_trainee_reports_on_id", unique: true
+
 end
