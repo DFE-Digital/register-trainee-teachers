@@ -6,7 +6,7 @@ require "csv"
 module Exports
   class ExportTraineesService < ExportServiceBase
     def initialize(trainees)
-      @report_class = Reports::TraineesReport
+      @report_class = Reports::TraineesCsvReport
       @scope = trainees
     end
   end
