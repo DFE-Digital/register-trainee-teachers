@@ -16,8 +16,9 @@ dqt:
   base_url: https://qualified-teachers-api-preprod.london.cloudapps.digital/
 
 features:
-  basic_auth: false
   sign_in_method: dfe-sign-in
+  basic_auth: false
+  enable_feedback_link: true
   import_courses_from_ttapi: true
   import_applications_from_apply: true
   publish_course_details: true
@@ -32,6 +33,14 @@ features:
     provider_led_undergrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
+    iqts: true
+  integrate_with_dqt: true
+  hesa_trn_requests: true
+  hesa_import:
+    sync_collection: true
+    sync_trn_data: true
+  dqt_import:
+    sync_teachers: true
   google:
     send_data_to_big_query: false
 
