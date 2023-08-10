@@ -55,9 +55,9 @@ module Hesa
         surname16: "F_SNAME16",
         ttcid: "F_TTCID",
         hesa_committed_at: "F_COMMIT_TIMESTAMP",
-        application_choice_id: "APPLYAPPLICATIONID",
-        itt_start_date: "ITTSTARTDATE",
-        trainee_start_date: "TRAINEESTARTDATE",
+        application_choice_id: "F_APPLYAPPLICATIONID",
+        itt_start_date: "F_ITTSTARTDATE",
+        trainee_start_date: "F_TRAINEESTARTDATE",
       }.freeze
 
       class << self
