@@ -22,8 +22,6 @@ module Reports
              :first_names,
              :hesa_id,
              :middle_names,
-             :postcode,
-             :town_city,
              :trn,
              :withdraw_reasons_details,
              :withdraw_reasons_dfe_details,
@@ -51,14 +49,6 @@ module Reports
       start_years = trainee.start_academic_cycle.start_year..trainee.end_academic_cycle.start_year
 
       start_years.map { |year| "#{year} to #{year + 1}" }.join(", ")
-    end
-
-    def address_line_1
-      trainee.address_line_one
-    end
-
-    def address_line_2
-      trainee.address_line_two
     end
     # rubocop:enable Naming/VariableNumber
 
@@ -311,10 +301,6 @@ module Reports
 
     def hesa_record_last_changed_at
       trainee.hesa_updated_at&.iso8601
-    end
-
-    def international_address
-      Array(trainee.international_address.to_s.split(/[\r\n,]/)).join(", ").presence
     end
 
     def itt_start_date

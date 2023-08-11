@@ -120,26 +120,6 @@ describe Reports::TraineeReport do
       expect(subject.nationality).to eq(trainee.nationalities.pluck(:name).map(&:titleize).join(", "))
     end
 
-    it "includes the address_line_1" do
-      expect(subject.address_line_1).to eq(trainee.address_line_one)
-    end
-
-    it "includes the address_line_2" do
-      expect(subject.address_line_2).to eq(trainee.address_line_two)
-    end
-
-    it "includes the town_city" do
-      expect(subject.town_city).to eq(trainee.town_city)
-    end
-
-    it "includes the postcode" do
-      expect(subject.postcode).to eq(trainee.postcode)
-    end
-
-    it "includes the international_address" do
-      expect(subject.international_address).to eq(Array(trainee.international_address.split(/[\r\n,]/)).join(", ").presence)
-    end
-
     it "includes the email_address" do
       expect(subject.email_address).to eq(trainee.email)
     end

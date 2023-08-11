@@ -31,7 +31,6 @@ FactoryBot.define do
     start_academic_cycle { AcademicCycle.for_date(itt_start_date) }
     end_academic_cycle { AcademicCycle.for_date(itt_end_date) }
 
-    with_uk_address
     email { "#{first_names}.#{last_name}@example.com" }
     applying_for_bursary { nil }
 
@@ -83,15 +82,6 @@ FactoryBot.define do
 
     trait :with_nationalities do
       nationalities { [Nationality.all.sample || build(:nationality)] }
-    end
-
-    trait :with_uk_address do
-      address_line_one { Faker::Address.street_address }
-      address_line_two { Faker::Address.street_name }
-      town_city { Faker::Address.city }
-      postcode { Faker::Address.postcode }
-      international_address { nil }
-      locale_code { :uk }
     end
 
     trait :with_non_uk_address do
