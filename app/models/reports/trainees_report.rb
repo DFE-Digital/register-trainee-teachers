@@ -26,11 +26,6 @@ module Reports
          date_of_birth
          sex
          nationality
-         address_line_1
-         address_line_2
-         town_city
-         postcode
-         international_address
          email_address
          diversity_disclosure
          ethnic_group
@@ -144,11 +139,6 @@ module Reports
         trainee_report.date_of_birth,
         trainee_report.sex,
         trainee_report.nationality,
-        trainee_report.address_line_1,
-        trainee_report.address_line_2,
-        trainee_report.town_city,
-        trainee_report.postcode,
-        trainee_report.international_address,
         trainee_report.email_address,
         trainee_report.diversity_disclosure,
         trainee_report.ethnic_group,
