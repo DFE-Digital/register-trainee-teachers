@@ -15,10 +15,10 @@ on:
         required: true
         type: boolean
         default: false
-      restoreToStagingEnv:
-        required: true
-        type: boolean
-        default: false
+      # restoreToStagingEnv:
+      #   required: true
+      #   type: boolean
+      #   default: false
   schedule: # 03:00 UTC
     - cron: '0 3 * * *'
 
