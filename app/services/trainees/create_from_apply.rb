@@ -73,7 +73,7 @@ module Trainees
         disabilities: disabilities,
         study_mode: study_mode,
         record_source: RecordSources::APPLY,
-      }.merge(address).merge(ethnic_background_attributes)
+      }.merge(ethnic_background_attributes)
     end
 
     def create_degrees!
@@ -91,27 +91,6 @@ module Trainees
       return if invalid_nationalities.blank?
 
       Sentry.capture_message("Cannot map nationality from ApplyApplication id: #{application_record.id}, code: #{invalid_nationalities.join(', ')}")
-    end
-
-    def address
-      raw_contact_details["country"] == "GB" ? uk_address : international_address
-    end
-
-    def international_address
-      {
-        international_address: raw_contact_details["address_line1"],
-        locale_code: Trainee.locale_codes[:non_uk],
-      }
-    end
-
-    def uk_address
-      {
-        address_line_one: raw_contact_details["address_line1"],
-        address_line_two: raw_contact_details["address_line2"],
-        town_city: raw_contact_details["address_line3"],
-        postcode: raw_contact_details["postcode"],
-        locale_code: Trainee.locale_codes[:uk],
-      }
     end
 
     def sex

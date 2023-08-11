@@ -18,11 +18,6 @@ module Trainees
         "Date of birth" => "03/03/1996 00:00:00",
         "Sex" => "Male",
         "Nationality" => "british",
-        "UK address: Line 1" => "1 Road",
-        "UK address: Line 2" => "",
-        "UK address: town or city" => "London",
-        "UK Address 1: Postcode" => "SW1P 3BT",
-        "Outside UK address" => "",
         "Email"	=> "bob@example.com",
         "Ethnicity"	=> "Not provided",
         "Disabilities" => "Not provided",
@@ -84,10 +79,6 @@ module Trainees
           expect(trainee.date_of_birth).to eq(Date.parse(csv_row["Date of birth"]))
           expect(trainee.nationalities.pluck(:name)).to include("british")
           expect(trainee.email).to eq(csv_row["Email"])
-          expect(trainee.locale_code).to eq("uk")
-          expect(trainee.address_line_one).to eq("1 Road")
-          expect(trainee.town_city).to eq("London")
-          expect(trainee.postcode).to eq("SW1P 3BT")
         end
 
         it "updates trainee's course details" do
@@ -160,21 +151,6 @@ module Trainees
           expect(degree.grade).to be_nil
           expect(degree.other_grade).to be_nil
           expect(degree.country).to eq("Germany")
-        end
-      end
-
-      context "when the trainee does not live in the UK" do
-        before do
-          csv_row.merge!({ "Outside UK address" => "Another land" })
-          described_class.call(provider:, csv_row:)
-        end
-
-        it "sets the correct address fields" do
-          expect(trainee.locale_code).to eq("non_uk")
-          expect(trainee.address_line_one).to be_nil
-          expect(trainee.town_city).to be_nil
-          expect(trainee.postcode).to be_nil
-          expect(trainee.international_address).to eq("Another land")
         end
       end
 

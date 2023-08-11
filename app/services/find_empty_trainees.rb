@@ -8,14 +8,8 @@ class FindEmptyTrainees
     trainees.first_names
     trainees.last_name
     trainees.date_of_birth
-    trainees.address_line_one
-    trainees.address_line_two
-    trainees.town_city
-    trainees.postcode
     trainees.email
     trainees.middle_names
-    trainees.international_address
-    trainees.locale_code
     trainees.sex
     trainees.diversity_disclosure
     trainees.ethnic_group

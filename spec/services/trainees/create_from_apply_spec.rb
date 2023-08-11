@@ -56,23 +56,6 @@ module Trainees
       }
     end
 
-    let(:uk_address_attributes) do
-      {
-        address_line_one: contact_details["address_line1"],
-        address_line_two: contact_details["address_line2"],
-        town_city: contact_details["address_line3"],
-        postcode: contact_details["postcode"],
-        locale_code: "uk",
-      }
-    end
-
-    let(:non_uk_address_attributes) do
-      {
-        international_address: non_uk_contact_details["address_line1"],
-        locale_code: "non_uk",
-      }
-    end
-
     subject(:create_trainee_from_apply) { described_class.call(application: apply_application) }
 
     before do
@@ -121,16 +104,6 @@ module Trainees
     it "calls the Degrees::CreateFromApply service" do
       expect(::Degrees::CreateFromApply).to receive(:call).and_call_original
       create_trainee_from_apply
-    end
-
-    context "with a uk address" do
-      it { is_expected.to have_attributes(uk_address_attributes) }
-    end
-
-    context "with a non-uk address" do
-      let(:apply_application) { create(:apply_application, application: ApiStubs::ApplyApi.non_uk_application) }
-
-      it { is_expected.to have_attributes(non_uk_address_attributes) }
     end
 
     it "does not capture to sentry" do
