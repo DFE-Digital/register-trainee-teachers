@@ -135,24 +135,24 @@ describe Exports::ExportTraineesToFileService, type: :model do
         expect(trainee_csv_row["nationality"]).to eq(trainee_report.nationality)
       end
 
-      it "includes the address_line_1 in the csv" do
-        expect(trainee_csv_row["address_line_1"]).to eq(trainee_report.address_line_1)
+      it "does not include address_line_1 in the csv" do
+        expect(trainee_csv_row["address_line_1"]).to be_nil
       end
 
-      it "includes the address_line_2 in the csv" do
-        expect(trainee_csv_row["address_line_2"]).to eq(trainee_report.address_line_2)
+      it "does not include address_line_2 in the csv" do
+        expect(trainee_csv_row["address_line_2"]).to be_nil
       end
 
-      it "includes the town_city in the csv" do
-        expect(trainee_csv_row["town_city"]).to eq(trainee_report.town_city)
+      it "does not include town_city in the csv" do
+        expect(trainee_csv_row["town_city"]).to be_nil
       end
 
-      it "includes the postcode in the csv" do
-        expect(trainee_csv_row["postcode"]).to eq(trainee_report.postcode)
+      it "does not include postcode in the csv" do
+        expect(trainee_csv_row["postcode"]).to be_nil
       end
 
-      it "includes the international_address in the csv" do
-        expect(trainee_csv_row["international_address"]).to eq(trainee_report.international_address)
+      it "does not include international_address in the csv" do
+        expect(trainee_csv_row["international_address"]).to be_nil
       end
 
       it "includes the email_address in the csv" do
