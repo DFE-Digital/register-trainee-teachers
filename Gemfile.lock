@@ -687,7 +687,7 @@ GEM
       attr_required (>= 0.0.5)
       httpclient (>= 2.4)
     thor (1.2.2)
-    timecop (0.9.6)
+    timecop (0.9.8)
     timeout (0.4.0)
     trailblazer-option (0.1.2)
     tzinfo (2.0.6)
@@ -831,7 +831,7 @@ DEPENDENCIES
   stateful_enum
   store_model (~> 2.1)
   strong_migrations
-  timecop (~> 0.9.6)
+  timecop (~> 0.9.8)
   tzinfo-data
   uk_postcode
   web-console (>= 3.3.0)
