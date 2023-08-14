@@ -83,34 +83,11 @@ module Dqt
           "birthDate" => trainee.date_of_birth.iso8601,
           "emailAddress" => trainee.email,
           "slugid" => trainee.slug,
-          "address" => address_params,
           "husid" => trainee.hesa_id,
           "genderCode" => GENDER_CODES[trainee.sex.to_sym],
           "initialTeacherTraining" => initial_teacher_training_params,
           "qualification" => qualification_params,
         }.compact
-      end
-
-      def address_params
-        trainee.uk? ? uk_address : non_uk_address
-      end
-
-      def uk_address
-        {
-
-          "addressLine1" => trainee.address_line_one,
-          "addressLine2" => trainee.address_line_two,
-          "addressLine3" => nil,
-          "city" => trainee.town_city,
-          "postalCode" => trainee.postcode,
-          "country" => UNITED_KINGDOM,
-        }
-      end
-
-      def non_uk_address
-        {
-          "addressLine1" => trainee.international_address,
-        }
       end
 
       def initial_teacher_training_params
