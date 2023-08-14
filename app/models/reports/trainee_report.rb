@@ -159,10 +159,18 @@ module Reports
     def course_allocation_subject
       return if course.blank? || course.subjects.blank?
 
-      subject = CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
-        .values.map(&:first).first
+      trainee_allocation_subject(calculated_subject)
+    end
 
-      trainee_allocation_subject(subject)
+    def course_subject_names
+      @course_subject_names ||= course.subjects.pluck(:name)
+    end
+
+    def calculated_subject
+      Rails.cache.fetch("TraineeReport.calculated_subject(#{course_subject_names.join('-')})", expires_in: 1.day) do
+        CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
+        .values.map(&:first).first
+      end
     end
 
     def course_training_route
@@ -223,7 +231,7 @@ module Reports
     def disabilities
       trainee.disabilities.map do |disability|
         if disability.name == Diversities::OTHER
-          trainee.trainee_disabilities.select { |x| x.disability_id == disability.id }.first.additional_disability
+          trainee.trainee_disabilities.find { |x| x.disability_id == disability.id }.additional_disability
         else
           disability.name
         end
@@ -427,7 +435,10 @@ module Reports
     def trainee_allocation_subject(subject)
       return if subject.blank?
 
-      SubjectSpecialism.find_by("lower(name) = ?", subject.downcase)&.allocation_subject&.name
+      subject_name = subject.downcase
+      Rails.cache.fetch("TraineeReport.trainee_allocation_subject(#{subject_name})", expires_in: 1.day) do
+        SubjectSpecialism.find_by("lower(name) = ?", subject_name)&.allocation_subject&.name
+      end
     end
 
     def placements
