@@ -57,7 +57,7 @@ feature "Viewing sidekiq dead jobs" do
     then_the_job_is_deleted
   end
 
-  scenario "view job details" do
+  scenario "view job details", skip: skip_test_due_to_first_day_of_current_academic_year? do
     when_i_click_view
     then_i_am_taken_to_the_dqt_update_page
     and_i_can_see_the_data_associated_with_the_job

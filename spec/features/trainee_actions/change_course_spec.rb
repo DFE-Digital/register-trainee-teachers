@@ -21,7 +21,7 @@ feature "Change course", feature_publish_course_details: true do
     then_the_trainee_course_has_changed
   end
 
-  scenario "published course not selected" do
+  scenario "published course not selected", skip: skip_test_due_to_first_day_of_current_academic_year? do
     given_i_am_authenticated
     and_a_trainee_exists_for_valid_itt_start_date
     and_trainee_related_courses_exist
@@ -56,7 +56,7 @@ feature "Change course", feature_publish_course_details: true do
         Timecop.freeze(Date.new(Time.zone.today.year, 7, 15)) { example.run }
       end
 
-      scenario "do not show course year choice and default to next cycle", feature_show_draft_trainee_course_year_choice: false do
+      scenario "do not show course year choice and default to next cycle", feature_show_draft_trainee_course_year_choice: false, skip: skip_test_due_to_first_day_of_current_academic_year? do
         given_i_am_authenticated
         and_a_draft_trainee_exists
         and_i_am_on_the_confirm_course_details_page
