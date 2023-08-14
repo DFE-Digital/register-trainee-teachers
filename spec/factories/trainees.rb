@@ -84,15 +84,6 @@ FactoryBot.define do
       nationalities { [Nationality.all.sample || build(:nationality)] }
     end
 
-    trait :with_non_uk_address do
-      address_line_one { nil }
-      address_line_two { nil }
-      town_city { nil }
-      postcode { nil }
-      international_address { Faker::Address.full_address }
-      locale_code { :non_uk }
-    end
-
     trait :incomplete do
       trainee_id { nil }
       first_names { nil }
@@ -107,12 +98,6 @@ FactoryBot.define do
       additional_ethnic_background { nil }
       disability_disclosure { nil }
 
-      address_line_one { nil }
-      address_line_two { nil }
-      town_city { nil }
-      postcode { nil }
-      international_address { nil }
-      locale_code { nil }
       email { nil }
       trainee_start_date { nil }
     end
