@@ -170,6 +170,11 @@ module Trainees
 
       context "with an associated audit" do
         let(:degree) { create(:degree, trainee:) }
+        let(:associated_audit) do
+          trainee.own_and_associated_audits.find { |a| a.auditable_type == "Degree" }
+        end
+
+        subject { described_class.call(audit: associated_audit, current_user: current_user) }
 
         it "returns a 'creation' timeline event" do
           degree.reload
@@ -179,7 +184,7 @@ module Trainees
         context "when imported from dttp" do
           before do
             degree.save!
-            trainee.own_and_associated_audits.first.update!(user: "DTTP")
+            associated_audit.update!(user: "DTTP")
           end
 
           it "returns empty timeline event" do

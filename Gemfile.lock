@@ -107,8 +107,9 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     attr_required (1.0.1)
-    audited (5.0.2)
+    audited (5.3.3)
       activerecord (>= 5.0, < 7.1)
+      request_store (~> 1.2)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     azure-storage-blob (2.0.3)
@@ -746,7 +747,7 @@ DEPENDENCIES
   activerecord-session_store
   amazing_print (~> 1.5)
   annotate
-  audited (~> 5.0)
+  audited (~> 5.3)
   auto_strip_attributes
   azure-storage-blob (~> 2)
   azure-storage-common (~> 2.0, >= 2.0.4)

@@ -71,7 +71,7 @@ module Trainees
         end
 
         it "does not return the events" do
-          expect(trainee.own_and_associated_audits.count).to eq(3)
+          expect(trainee.own_and_associated_audits.count).to eq(4)
           expect(subject.count).to eq(1)
         end
       end
