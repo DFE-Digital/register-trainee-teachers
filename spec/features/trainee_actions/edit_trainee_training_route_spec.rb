@@ -50,7 +50,7 @@ feature "editing a trainee training route" do
         then_i_should_see_the_training_routes_page
       end
 
-      context "and the route has published courses" do
+      context "and the route has published courses", skip: skip_test_due_to_first_day_of_current_academic_year? do
         let(:traits) { %i[completed with_valid_itt_start_date] }
 
         scenario "redirects to the publish course path", feature_show_draft_trainee_course_year_choice: false do

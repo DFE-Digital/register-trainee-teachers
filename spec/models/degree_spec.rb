@@ -54,7 +54,7 @@ describe Degree do
       end
 
       context "when graduation year is more than 1 year in the future" do
-        let(:degree) { build(:degree, graduation_year: NEXT_YEAR + 1) }
+        let(:degree) { build(:degree, graduation_year: Time.zone.now.year.next + 1) }
 
         it "validates" do
           expect { degree.save! }.to raise_error(ActiveRecord::RecordInvalid)

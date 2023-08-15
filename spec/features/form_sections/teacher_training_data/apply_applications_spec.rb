@@ -25,7 +25,7 @@ feature "apply registrations" do
   describe "with a missing course code against the trainee" do
     let(:subjects) { ["History"] }
 
-    scenario "reviewing course", feature_show_draft_trainee_course_year_choice: false do
+    scenario "reviewing course", feature_show_draft_trainee_course_year_choice: false, skip: skip_test_due_to_first_day_of_current_academic_year? do
       given_the_trainee_does_not_have_a_course_uuid
       when_i_enter_the_course_details_page
       then_i_am_on_the_publish_course_details_page
