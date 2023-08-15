@@ -63,7 +63,7 @@ module Trainees
 
       context "when a degree has been created and deleted via HESA" do
         before do
-          Audited.audit_model.as_user(::Trainees::CreateFromHesa::USERNAME) do
+          Audited.audit_class.as_user(::Trainees::CreateFromHesa::USERNAME) do
             create(:degree, trainee:)
             trainee.degrees.destroy_all
             reload_audits
@@ -71,7 +71,7 @@ module Trainees
         end
 
         it "does not return the events" do
-          expect(trainee.own_and_associated_audits.count).to eq(3)
+          expect(trainee.own_and_associated_audits.count).to eq(4)
           expect(subject.count).to eq(1)
         end
       end
