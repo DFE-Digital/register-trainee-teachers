@@ -18,7 +18,7 @@
       <%= f.govuk_check_boxes_fieldset :disability_ids,
           legend: { text: t("components.page_titles.trainees.diversity.disabilities.edit"), tag: "h1", size: "l" },
           hint: { text: "Select all that apply" },
-          classes: "disability" do %>
+          class: "disability" do %>
 
         <% @disabilities.each_with_index do |disability, index| %>
           <% if disability.name != Diversities::OTHER %>

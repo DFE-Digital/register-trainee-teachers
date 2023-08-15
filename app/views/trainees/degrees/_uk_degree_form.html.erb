@@ -56,7 +56,7 @@
         legend: { text: "Degree grade", size: "s" },
         form_group: { class: invalid_data_class(form: @degree_form, field: "grade"), id: :grade },
         hint: -> { render InvalidDataText::View.new(form_section: :grade, degree_form: @degree_form) },
-        classes: "degree-grade") do %>
+        class: "degree-grade") do %>
 
     <% grade_options(@trainee).all.each_with_index do |item, index| %>
       <% if item[:name] == DfEReference::DegreesQuery::OTHER %>

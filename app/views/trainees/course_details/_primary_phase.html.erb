@@ -1,7 +1,7 @@
 <% if f.object.require_subject? %>
   <%= f.govuk_radio_buttons_fieldset(:primary_course_subjects,
                                      legend: { text: t(".subject_label"), size: "s" },
-                                     classes: "age_range") do %>
+                                     class: "age_range") do %>
 
     <% PUBLISH_PRIMARY_SUBJECTS.each_with_index do |age_range, index| %>
       <%= f.govuk_radio_button(:primary_course_subjects, age_range,

@@ -13,7 +13,7 @@
       <%= f.govuk_error_summary %>
 
       <% if @contact_details_form.address_required? %>
-        <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "Where does the trainee live?", size: "s" }, classes: "locale") do %>
+        <%= f.govuk_radio_buttons_fieldset(:locale_code, legend: { text: "Where does the trainee live?", size: "s" }, class: "locale") do %>
           <%= f.govuk_radio_button :locale_code, :non_uk, label: { text: "Outside the UK" }, link_errors: true  do %>
             <%= f.govuk_text_area :international_address,
                                   width: "one-quarter",

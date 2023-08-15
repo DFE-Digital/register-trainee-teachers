@@ -31,17 +31,17 @@
       <span class="govuk-caption-l">
         <%= trainee_name(trainee) %>
       </span>
-      
+
       <% another_reason = WithdrawalReason.find_by_name(WithdrawalReasons::ANOTHER_REASON) %>
       <% unknown = WithdrawalReason.find_by_name(WithdrawalReasons::UNKNOWN) %>
 
       <%= f.govuk_check_boxes_fieldset :reason_ids,
           legend: { text: heading, tag: "h1", size: "l" },
           hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
-          classes: "withdrawal" do %>
+          class: "withdrawal" do %>
 
         <% WithdrawalReason.all.each_with_index do |withdrawal, index| %>
-          <% if [WithdrawalReasons::UNKNOWN, WithdrawalReasons::ANOTHER_REASON, *WithdrawalReasons::LEGACY_REASONS].exclude?(withdrawal.name) %>  
+          <% if [WithdrawalReasons::UNKNOWN, WithdrawalReasons::ANOTHER_REASON, *WithdrawalReasons::LEGACY_REASONS].exclude?(withdrawal.name) %>
             <%= f.govuk_check_box :reason_ids, withdrawal.id, label: { text: t("components.withdrawal_details.reasons.#{withdrawal.name}") }, link_errors: index.zero? %>
           <% end %>
         <% end %>

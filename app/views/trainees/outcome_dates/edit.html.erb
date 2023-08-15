@@ -18,7 +18,7 @@
         <%= trainee_name(@trainee) %>
       </span>
 
-        <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: text, tag: "h1", size: "l" }, classes: "outcome-date") do %>
+        <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: text, tag: "h1", size: "l" }, class: "outcome-date") do %>
           <%= f.govuk_radio_button :date_string, :today, label: { text: "Today" }, link_errors: true %>
           <%= f.govuk_radio_button :date_string, :yesterday, label: { text: "Yesterday" } %>
           <%= f.govuk_radio_button :date_string, :other, label: { text: "On another day" } do %>

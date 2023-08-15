@@ -27,7 +27,7 @@
         <%= f.govuk_radio_buttons_fieldset :course_uuid,
           legend: { text: t(".course_code_label"), size: "m" },
           hint: { text: courses_fieldset_text },
-          classes: "published-courses" do %>
+          class: "published-courses" do %>
           <% @courses.each_with_index do |course, i| %>
             <%= f.govuk_radio_button :course_uuid, course.uuid,
               label: { text: "#{course.name} (#{course.code})" },
