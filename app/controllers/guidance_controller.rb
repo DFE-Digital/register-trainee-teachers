@@ -62,6 +62,6 @@ private
   end
 
   def sign_off_period
-    @sign_off_period ||= SignOffPeriodService.call
+    @sign_off_period ||= DetermineSignOffPeriod.call
   end
 end

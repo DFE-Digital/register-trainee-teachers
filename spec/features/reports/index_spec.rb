@@ -8,7 +8,7 @@ feature "viewing reports index" do
   let!(:trainee) { create(:trainee, :trn_received, start_academic_cycle: previous_cycle, end_academic_cycle: previous_cycle) }
 
   context "in the performance period" do
-    before { allow(SignOffPeriodService).to receive(:call).and_return(:performance_period) }
+    before { allow(DetermineSignOffPeriod).to receive(:call).and_return(:performance_period) }
 
     background do
       given_i_am_authenticated
@@ -21,7 +21,7 @@ feature "viewing reports index" do
   end
 
   context "in the census period" do
-    before { allow(SignOffPeriodService).to receive(:call).and_return(:census_period) }
+    before { allow(DetermineSignOffPeriod).to receive(:call).and_return(:census_period) }
 
     background do
       given_i_am_authenticated
@@ -34,7 +34,7 @@ feature "viewing reports index" do
   end
 
   context "outside of either period" do
-    before { allow(SignOffPeriodService).to receive(:call).and_return(:outside_period) }
+    before { allow(DetermineSignOffPeriod).to receive(:call).and_return(:outside_period) }
 
     background do
       given_i_am_authenticated

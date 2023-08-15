@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-describe SignOffPeriodService do
+describe DetermineSignOffPeriod do
   describe ".call" do
     subject { described_class.call }
 
     context "during the census sign off period" do
       before do
-        allow(Date).to receive_message_chain(:today, :month).and_return(10) # October
+        allow(Time).to receive_message_chain(:zone, :today, :month).and_return([9, 10].sample) # September, October
       end
 
       it "returns :census_period" do
@@ -18,7 +18,7 @@ describe SignOffPeriodService do
 
     context "during the performance profiles sign off period" do
       before do
-        allow(Date).to receive_message_chain(:today, :month).and_return(1) # January
+        allow(Time).to receive_message_chain(:zone, :today, :month).and_return(1) # January
       end
 
       it "returns :performance_period" do
@@ -28,7 +28,7 @@ describe SignOffPeriodService do
 
     context "outside of sign off periods" do
       before do
-        allow(Date).to receive_message_chain(:today, :month).and_return([2, 3, 4, 5, 6, 7, 8, 9, 11, 12].sample) # not Jan or Oct
+        allow(Time).to receive_message_chain(:zone, :today, :month).and_return([2, 3, 4, 5, 6, 7, 8, 11, 12].sample) # not Jan or Oct
       end
 
       it "returns :outside_period" do

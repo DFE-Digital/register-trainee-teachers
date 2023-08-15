@@ -10,7 +10,6 @@
     <h1 class="govuk-heading-l">
         Reports
     </h1>
-    <%# renders either: :census_period, :performance_period, :outside_period %>
-    <%= render SignOffPeriodService.call.to_s %>
+    <%= render DetermineSignOffPeriod.call.to_s %>
   </div>
 </div>
