@@ -22,7 +22,7 @@
 
       <%= f.govuk_radio_buttons_fieldset(:commencement_status,
                                            legend: { text: t(".label").html_safe, size: "l", tag: "h1" },
-                                           classes: "age_range") do %>
+                                           class: "age_range") do %>
 
           <%= f.govuk_radio_button(:commencement_status, :itt_started_on_time,
                                    label: { text: t('.on_time_html', itt_start_date: @trainee.itt_start_date.strftime("%-d %B %Y")) }) %>

@@ -16,7 +16,7 @@
 
         <%= f.govuk_fieldset(
           legend: { text: t(".heading"), tag: "h1", size: "l" },
-          classes: "language-specialisms"
+          class: "language-specialisms"
         ) do %>
 
           <div class="govuk-hint" id="language-language-specialisms-form-language-specialisms-hint">
@@ -27,10 +27,10 @@
               <p class="govuk-body govuk-hint">
                 Choose up to two.
               </p>
-            <% else %>	
+            <% else %>
               <p class="govuk-body govuk-hint"><%= t(".hint") %></p>
               <p class="govuk-body govuk-hint"><%= t(".additional_hint") %></p>
-            <% end %>	
+            <% end %>
           </div>
 
 
