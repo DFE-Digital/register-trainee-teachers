@@ -27,6 +27,10 @@ SET
 WHERE email NOT LIKE '%@digital.education.gov.uk'
       AND email NOT LIKE '%@education.gov.uk';
 
+UPDATE "users"
+SET
+  otp_secret = NULL;
+
 -- Trainees
 UPDATE "trainees"
 SET
