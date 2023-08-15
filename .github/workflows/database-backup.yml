@@ -146,49 +146,49 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
 
-  restore_staging:
-    needs: [backup]
-    name: restore Database (staging_aks)
-    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToStagingEnv == 'true') }}
-    runs-on: ubuntu-latest
+  # restore_staging:
+  #   needs: [backup]
+  #   name: restore Database (staging_aks)
+  #   if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToStagingEnv == 'true') }}
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
-      name: Checkout
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #     name: Checkout
 
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_AKS_TEST }}
+  #   - uses: azure/login@v1
+  #     with:
+  #       creds: ${{ secrets.AZURE_CREDENTIALS_AKS_TEST }}
 
-    - name: Download Sanitised Backup
-      uses: actions/download-artifact@v3
-      with:
-        name: backup_sanitised
+  #   - name: Download Sanitised Backup
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: backup_sanitised
 
-    - name: Install kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: "v1.26.1" # default is latest stable
+  #   - name: Install kubectl
+  #     uses: azure/setup-kubectl@v3
+  #     with:
+  #       version: "v1.26.1" # default is latest stable
 
-    - name: K8 setup
-      shell: bash
-      run: |
-        az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
-        make install-konduit
+  #   - name: K8 setup
+  #     shell: bash
+  #     run: |
+  #       az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
+  #       make install-konduit
 
-    - name: Restore backup to aks env database
-      shell: bash
-      run: |
-        bin/konduit.sh -i backup_sanitised.sql -t 7200 register-staging -- psql
+  #   - name: Restore backup to aks env database
+  #     shell: bash
+  #     run: |
+  #       bin/konduit.sh -i backup_sanitised.sql -t 7200 register-staging -- psql
 
-    - name: Check for Failure
-      if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Staging Restore Failure
-        SLACK_MESSAGE: ':alert: Daily restore failure for staging :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #   - name: Check for Failure
+  #     if: ${{ failure() }}
+  #     uses: rtCamp/action-slack-notify@master
+  #     env:
+  #       SLACK_CHANNEL: twd_publish_register_tech
+  #       SLACK_COLOR: '#ef5343'
+  #       SLACK_ICON_EMOJI: ':github-logo:'
+  #       SLACK_USERNAME: Register Trainee Teachers
+  #       SLACK_TITLE: Staging Restore Failure
+  #       SLACK_MESSAGE: ':alert: Daily restore failure for staging :sadparrot:'
+  #       SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
