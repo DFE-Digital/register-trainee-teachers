@@ -10,10 +10,6 @@
     <h1 class="govuk-heading-l">
         Reports
     </h1>
-    <% if Settings.in_sign_off_period? %>
-      <%= render "inside" %>
-    <% else %>
-      <%= render "outside" %>
-    <% end %>
+    <%= render DetermineSignOffPeriod.call.to_s %>
   </div>
 </div>
