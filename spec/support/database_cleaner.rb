@@ -7,13 +7,24 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
   end
 
-  config.around do |example|
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
+  config.before do |example|
+    DatabaseCleaner.strategy =
+      if example.metadata[:type] == :feature &&
+          Capybara.current_driver != :rack_test
+        :truncation
+      else
+        :transaction
+      end
 
-    # Start transaction
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+    DatabaseCleaner.start
+  end
+
+  config.append_after do
+    DatabaseCleaner.clean
+  end
+
+  config.around do |example|
+    example.run
 
     # Clear session data
     Capybara.reset_sessions!
