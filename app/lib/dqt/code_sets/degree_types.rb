@@ -101,6 +101,8 @@ module Dqt
         "0584565a-1c98-4c1d-ae64-c241542c0879" => "FirstDegree",
         "fdafdcd7-5f21-4363-b7d5-c1f44a852af1" => "HigherDegree",
         "03c4fa67-345e-4d09-8e9b-68c36a450947" => "DegreeEquivalent",
+        "348ff3a9-a4b8-4a40-a74d-dcaef9e8ac73" => "BachelorOfScienceWithIntercalatedPGCE",
+        "3e042de2-a453-47dc-9452-90a23399e9ee" => "Unknown",
       }.freeze
     end
   end
