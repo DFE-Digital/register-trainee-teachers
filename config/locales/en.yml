@@ -1198,7 +1198,7 @@ en:
         trainee_id: *trainee_id
         training_routes:
           assessment_only: Assessment only
-          early_years_assessment_only: Early years (assessment only)
+          early_years_assessment_only: Early years assessment only
           early_years_postgrad: Early years (postgrad)
           early_years_salaried: Early years (salaried)
           early_years_undergrad: Early years (undergrad)

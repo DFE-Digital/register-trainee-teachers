@@ -10,7 +10,7 @@ module Trainees
 
     TRAINING_ROUTES = {
       "Assessment only" => TRAINING_ROUTE_ENUMS[:assessment_only],
-      "Early years (assessment only)" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+      "Early years assessment only" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
       "Early years (postgrad)" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
       "Early years (salaried)" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
       "Early years (undergrad)" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],

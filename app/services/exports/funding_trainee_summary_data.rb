@@ -53,7 +53,7 @@ module Exports
     end
 
     def funding_type_prefix(row)
-      early_years_routes = ["Early years (assessment only)", "Early years (postgrad)", "Early years (salaried)", "Early years (undergrad)"]
+      early_years_routes = ["Early years assessment only", "Early years (postgrad)", "Early years (salaried)", "Early years (undergrad)"]
       if early_years_routes.include?(row.route)
         "EYITT "
       else
