@@ -5,6 +5,8 @@ class ReportsController < BaseTraineeController
 
   before_action :set_cycle_variables
 
+  helper_method :itt_new_starter_trainees
+
   def index
     authorize(current_user, :reports?)
   end
@@ -62,7 +64,7 @@ class ReportsController < BaseTraineeController
 private
 
   def itt_new_starter_trainees
-    policy_scope(FindNewStarterTrainees.new(census_date(@current_academic_cycle.start_year)).call)
+    @itt_new_starter_trainees ||= policy_scope(FindNewStarterTrainees.new(census_date(@current_academic_cycle.start_year)).call)
   end
 
   def performance_profiles_trainees
