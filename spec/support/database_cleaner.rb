@@ -4,11 +4,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation, except: %w[ar_internal_metadata])
+    DatabaseCleaner[:active_record, db: "register_trainee_teacher_data_test#{ENV.fetch('TEST_ENV_NUMBER', nil)}".to_sym].clean_with(:truncation, except: %w[ar_internal_metadata])
   end
 
   config.before do |example|
-    DatabaseCleaner.strategy =
+    DatabaseCleaner[:active_record, db: "register_trainee_teacher_data_test#{ENV.fetch('TEST_ENV_NUMBER', nil)}".to_sym].strategy =
       if example.metadata[:type] == :feature &&
           Capybara.current_driver != :rack_test
         :truncation
@@ -16,11 +16,11 @@ RSpec.configure do |config|
         :transaction
       end
 
-    DatabaseCleaner.start
+    DatabaseCleaner[:active_record, db: "register_trainee_teacher_data_test#{ENV.fetch('TEST_ENV_NUMBER', nil)}".to_sym].start
   end
 
   config.append_after do
-    DatabaseCleaner.clean
+    DatabaseCleaner[:active_record, db: "register_trainee_teacher_data_test#{ENV.fetch('TEST_ENV_NUMBER', nil)}".to_sym].clean
   end
 
   config.around do |example|
