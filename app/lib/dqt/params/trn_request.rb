@@ -83,11 +83,28 @@ module Dqt
           "birthDate" => trainee.date_of_birth.iso8601,
           "emailAddress" => trainee.email,
           "slugid" => trainee.slug,
+          "address" => address_params,
           "husid" => trainee.hesa_id,
           "genderCode" => GENDER_CODES[trainee.sex.to_sym],
           "initialTeacherTraining" => initial_teacher_training_params,
           "qualification" => qualification_params,
         }.compact
+      end
+
+      def address_params
+        uk_address
+      end
+
+      def uk_address
+        {
+
+          "addressLine1" => nil,
+          "addressLine2" => nil,
+          "addressLine3" => nil,
+          "city" => nil,
+          "postalCode" => nil,
+          "country" => nil,
+        }
       end
 
       def initial_teacher_training_params
