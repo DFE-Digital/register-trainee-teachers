@@ -34,7 +34,7 @@ gem "foreman"
 gem "canonical-rails"
 
 # Soft delete records
-gem "discard", "~> 1.2"
+gem "discard", "~> 1.3"
 
 # Sentry
 gem "sentry-rails"
