@@ -12,7 +12,7 @@ module Trainees
       "Assessment only" => TRAINING_ROUTE_ENUMS[:assessment_only],
       "Early years assessment only" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
       "Early years graduate entry" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
-      "Early years (salaried)" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
+      "Early years graduate employment based" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
       "Early years (undergrad)" => TRAINING_ROUTE_ENUMS[:early_years_undergrad],
       "Opt-in (undergrad)" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
       "Provider-led (postgrad)" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
