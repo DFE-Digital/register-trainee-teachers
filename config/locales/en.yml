@@ -902,7 +902,7 @@ en:
             early_years_description: "%{training_route} has a grant available of %{amount}. You need to check if the trainee is eligible for this grant."
             title: Funding Type
           tiered:
-            description: Early years (postgrad) has bursaries available. You need to check if the trainee is eligible for any of these.
+            description: Early years graduate entry has bursaries available. You need to check if the trainee is eligible for any of these.
             title: Funding type
             tier_one:
               label: Yes - Tier 1 (£5,000)
@@ -1199,7 +1199,7 @@ en:
         training_routes:
           assessment_only: Assessment only
           early_years_assessment_only: Early years assessment only
-          early_years_postgrad: Early years (postgrad)
+          early_years_postgrad: Early years graduate entry
           early_years_salaried: Early years (salaried)
           early_years_undergrad: Early years (undergrad)
           iqts: International qualified teacher status (iQTS)
