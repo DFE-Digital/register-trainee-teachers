@@ -122,7 +122,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns += %w[withdraw_reason previous_hesa_id] # rubocop:disable Rails/UnusedIgnoredColumns
+  self.ignored_columns += %w[withdraw_reason previous_hesa_id address_line_one address_line_two town_city postcode international_address locale_code] # rubocop:disable Rails/UnusedIgnoredColumns
 
   include Sluggable
   include PgSearch::Model
