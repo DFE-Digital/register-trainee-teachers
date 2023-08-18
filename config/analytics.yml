@@ -236,10 +236,8 @@ shared:
     - itt_start_date
     - lead_school_id
     - lead_school_not_applicable
-    - locale_code
     - outcome_date
     - placement_assignment_dttp_id
-    - postcode
     - progress
     - provider_id
     - recommended_for_award_at
@@ -252,7 +250,6 @@ shared:
     - study_mode
     - submission_ready
     - submitted_for_trn_at
-    - town_city
     - training_initiative
     - training_route
     - trn
