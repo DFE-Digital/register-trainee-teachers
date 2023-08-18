@@ -93,11 +93,16 @@ class FixHesaIdsSupportTicket128896 < ActiveRecord::Migration[7.0]
   def up
     Audited.audit_class.as_user("Data migration") do
       DATA.each do |(hesa_id, trainee_id), new_hesa_id|
-        trainee = Trainee.find_by(hesa_id:, trainee_id:)
-        trainee&.update!(
-          hesa_id: new_hesa_id,
-          audit_comment: "Correction to `hesa_id` - see https://becomingateacher.zendesk.com/agent/tickets/128896",
-        )
+        ActiveRecord::Base.transaction do
+          trainee = Trainee.find_by(hesa_id:, trainee_id:)
+          trainee&.update!(
+            hesa_id: new_hesa_id,
+            audit_comment: "Correction to `hesa_id` - see https://becomingateacher.zendesk.com/agent/tickets/128896",
+          )
+          Hesa::Student.where(hesa_id:).each do |student|
+            student.update!(hesa_id: new_hesa_id)
+          end
+        end
       end
     end
   end
