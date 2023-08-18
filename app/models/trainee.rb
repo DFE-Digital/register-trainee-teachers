@@ -7,8 +7,6 @@
 #  id                              :bigint           not null, primary key
 #  additional_dttp_data            :jsonb
 #  additional_ethnic_background    :text
-#  address_line_one                :text
-#  address_line_two                :text
 #  applying_for_bursary            :boolean
 #  applying_for_grant              :boolean
 #  applying_for_scholarship        :boolean
@@ -38,16 +36,13 @@
 #  first_names                     :text
 #  hesa_editable                   :boolean          default(FALSE)
 #  hesa_updated_at                 :datetime
-#  international_address           :text
 #  iqts_country                    :string
 #  itt_end_date                    :date
 #  itt_start_date                  :date
 #  last_name                       :text
 #  lead_school_not_applicable      :boolean          default(FALSE)
-#  locale_code                     :integer
 #  middle_names                    :text
 #  outcome_date                    :date
-#  postcode                        :text
 #  progress                        :jsonb
 #  recommended_for_award_at        :datetime
 #  record_source                   :string
@@ -60,7 +55,6 @@
 #  study_mode                      :integer
 #  submission_ready                :boolean          default(FALSE)
 #  submitted_for_trn_at            :datetime
-#  town_city                       :text
 #  trainee_start_date              :date
 #  training_initiative             :integer
 #  training_route                  :integer
@@ -100,7 +94,6 @@
 #  index_trainees_on_hesa_id                                       (hesa_id)
 #  index_trainees_on_hesa_trn_submission_id                        (hesa_trn_submission_id)
 #  index_trainees_on_lead_school_id                                (lead_school_id)
-#  index_trainees_on_locale_code                                   (locale_code)
 #  index_trainees_on_progress                                      (progress) USING gin
 #  index_trainees_on_provider_id                                   (provider_id)
 #  index_trainees_on_sex                                           (sex)
