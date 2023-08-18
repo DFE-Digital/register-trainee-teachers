@@ -16,15 +16,6 @@ You’ll need the following information about a trainee to register them manuall
 <li> Date of birth  </li> 
 <li> Sex </li>
 <li>Nationality</li>
-</ul>
-
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-
-## Contact details
-
-<ul class="govuk-list">
-<li> Address  </li>
-<li> Email address</li>
 <li>Personal email address</li>
 </ul>
 
