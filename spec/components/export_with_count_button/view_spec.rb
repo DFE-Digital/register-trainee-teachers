@@ -17,7 +17,7 @@ module ExportWithCountButton
         let(:count) { 0 }
 
         it "renders the count" do
-          expect(page).to have_link("Export (0 trainees)", href:)
+          expect(page).to have_button("Export (0 trainees)")
         end
       end
 
@@ -25,7 +25,7 @@ module ExportWithCountButton
         let(:count) { 1 }
 
         it "renders the count" do
-          expect(page).to have_link("Export (1 trainee)", href:)
+          expect(page).to have_button("Export (1 trainee)")
         end
       end
 
@@ -33,7 +33,7 @@ module ExportWithCountButton
         let(:count) { 2 }
 
         it "renders the count" do
-          expect(page).to have_link("Export (2 trainees)", href:)
+          expect(page).to have_button("Export (2 trainees)")
         end
       end
     end
