@@ -22,7 +22,7 @@ module ExportWithCountButton
           href: "/export",
         ),
       ) do |component|
-        component.no_record_text { "No trainees found" }
+        component.no_record_text { "No trainees found." }
       end
     end
   end
