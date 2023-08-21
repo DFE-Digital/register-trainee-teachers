@@ -16,4 +16,8 @@ module ExportsHelper
   def exceeds_export_limit?(current_user, filtered_trainees_count)
     current_user.system_admin? && filtered_trainees_count > Settings.trainee_export.record_limit
   end
+
+  def itt_new_starter_trainees_count
+    @itt_new_starter_trainees_count ||= itt_new_starter_trainees.count
+  end
 end
