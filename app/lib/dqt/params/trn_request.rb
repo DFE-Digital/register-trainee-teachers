@@ -32,12 +32,17 @@ module Dqt
       }.freeze
 
       DEGREE_CLASSES = {
-        Dttp::CodeSets::Grades::FIRST_CLASS_HONOURS => "FirstClassHonours",
-        Dttp::CodeSets::Grades::UPPER_SECOND_CLASS_HONOURS => "UpperSecondClassHonours",
-        Dttp::CodeSets::Grades::LOWER_SECOND_CLASS_HONOURS => "LowerSecondClassHonours",
-        Dttp::CodeSets::Grades::THIRD_CLASS_HONOURS => "ThirdClassHonours",
-        Dttp::CodeSets::Grades::OTHER => "NotKnown",
-        Dttp::CodeSets::Grades::PASS => "Pass",
+        "Aegrotat" => "Aegrotat",
+        "Distinction" => "Distinction",
+        "First-class honours" => "FirstClassHonours",
+        "Upper second-class honours (2:1)" => "UpperSecondClassHonours",
+        "Lower second-class honours (2:2)" => "LowerSecondClassHonours",
+        "Third-class honours" => "ThirdClassHonours",
+        "Undivided second-class honours" => "UndividedSecondClassHonours",
+        "Pass" => "Pass",
+        "Merit" => "Merit",
+        "Ordinary degree" => "OrdinaryDegree",
+        "Other" => "Other",
       }.freeze
 
       ITT_QUALIFICATION_AIMS = {
