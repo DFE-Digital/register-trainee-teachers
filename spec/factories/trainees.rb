@@ -49,10 +49,6 @@ FactoryBot.define do
     end
 
     trait :for_export do
-      with_primary_course_details
-      submitted_for_trn
-      trn_received
-      recommended_for_award
       awarded
       with_tiered_bursary
       with_lead_school
@@ -67,6 +63,7 @@ FactoryBot.define do
       international_address { "Test addr" }
       itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date { itt_start_date + 2.years }
+      with_primary_course_details
     end
 
     trait :bulk_recommend do
