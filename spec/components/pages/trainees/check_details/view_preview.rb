@@ -90,7 +90,6 @@ module Pages
                       additional_ethnic_background: "additional_ethnic_background",
                       sex: 1,
                       date_of_birth: Time.zone.now,
-                      postcode: "BN1 1AA",
                       email: "email@example.com",
                       course_min_age: 0,
                       course_max_age: 5,

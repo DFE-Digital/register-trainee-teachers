@@ -53,7 +53,7 @@ module Degrees
 
     def uk_degree_params
       {
-        locale_code: Trainee.locale_codes[:uk],
+        locale_code: Degree.locale_codes[:uk],
         uk_degree: degree_type,
         institution: institution,
         grade: grade.presence || Dttp::CodeSets::Grades::OTHER,
@@ -62,7 +62,7 @@ module Degrees
 
     def non_uk_degree_params
       {
-        locale_code: Trainee.locale_codes[:non_uk],
+        locale_code: Degree.locale_codes[:non_uk],
         non_uk_degree: non_uk_degree,
         country: country,
       }

@@ -212,8 +212,6 @@ class Trainee < ApplicationRecord
 
   enum bursary_tier: BURSARY_TIERS
 
-  enum locale_code: { uk: 0, non_uk: 1 }
-
   enum sex: {
     male: 0,
     female: 1,
@@ -344,12 +342,7 @@ class Trainee < ApplicationRecord
     :first_names,
     :middle_names,
     :last_name,
-    :address_line_one,
-    :address_line_two,
-    :town_city,
-    :postcode,
     :email,
-    :international_address,
     :ethnic_background,
     :additional_ethnic_background,
     :trn,

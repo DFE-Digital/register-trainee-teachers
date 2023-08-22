@@ -42,14 +42,14 @@ module Degrees
 
     def uk_degree_params
       {
-        locale_code: Trainee.locale_codes[:uk],
+        locale_code: Degree.locale_codes[:uk],
         uk_degree: degree_type,
       }
     end
 
     def non_uk_degree_params
       {
-        locale_code: Trainee.locale_codes[:non_uk],
+        locale_code: Degree.locale_codes[:non_uk],
         non_uk_degree: degree_type,
         country: country,
       }
