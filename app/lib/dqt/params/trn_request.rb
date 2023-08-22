@@ -92,24 +92,18 @@ module Dqt
       end
 
       def address_params
-        trainee.uk? ? uk_address : non_uk_address
+        uk_address
       end
 
       def uk_address
         {
 
-          "addressLine1" => trainee.address_line_one,
-          "addressLine2" => trainee.address_line_two,
+          "addressLine1" => nil,
+          "addressLine2" => nil,
           "addressLine3" => nil,
-          "city" => trainee.town_city,
-          "postalCode" => trainee.postcode,
-          "country" => UNITED_KINGDOM,
-        }
-      end
-
-      def non_uk_address
-        {
-          "addressLine1" => trainee.international_address,
+          "city" => nil,
+          "postalCode" => nil,
+          "country" => nil,
         }
       end
 

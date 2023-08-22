@@ -124,24 +124,24 @@ describe Exports::ExportTraineesService, type: :model do
         expect(trainee_csv_row["nationality"]).to eq(trainee_report.nationality)
       end
 
-      it "includes the address_line_1 in the csv" do
-        expect(trainee_csv_row["address_line_1"]).to eq(trainee_report.address_line_1)
+      it "there is no address_line_1 in the csv" do
+        expect(trainee_csv_row).not_to have_key("address_line_1")
       end
 
-      it "includes the address_line_2 in the csv" do
-        expect(trainee_csv_row["address_line_2"]).to eq(trainee_report.address_line_2)
+      it "there is no address_line_2 in the csv" do
+        expect(trainee_csv_row).not_to have_key("address_line_2")
       end
 
-      it "includes the town_city in the csv" do
-        expect(trainee_csv_row["town_city"]).to eq(trainee_report.town_city)
+      it "there is no town_city in the csv" do
+        expect(trainee_csv_row).not_to have_key("town_city")
       end
 
-      it "includes the postcode in the csv" do
-        expect(trainee_csv_row["postcode"]).to eq(trainee_report.postcode)
+      it "there is no postcode in the csv" do
+        expect(trainee_csv_row).not_to have_key("postcode")
       end
 
-      it "includes the international_address in the csv" do
-        expect(trainee_csv_row["international_address"]).to eq(trainee_report.international_address)
+      it "there is no international_address in the csv" do
+        expect(trainee_csv_row).not_to have_key("international_address")
       end
 
       it "includes the email_address in the csv" do

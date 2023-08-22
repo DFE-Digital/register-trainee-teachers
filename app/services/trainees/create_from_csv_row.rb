@@ -76,34 +76,9 @@ module Trainees
         training_initiative: training_initiative,
         employing_school_id: employing_school_id,
         lead_school_id: lead_school_id,
-      }.merge(address_attributes)
-       .merge(ethnicity_and_disability_attributes)
+      }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(funding_attributes)
-    end
-
-    def address_attributes
-      if csv_row["Outside UK address"].present?
-        {
-          locale_code: Trainee.locale_codes[:non_uk],
-          international_address: csv_row["Outside UK address"],
-        }
-      else
-        {
-          locale_code: Trainee.locale_codes[:uk],
-          address_line_one: csv_row["UK address: Line 1"],
-          address_line_two: csv_row["UK address: Line 2"],
-          town_city: csv_row["UK address: town or city"],
-          postcode: postcode,
-        }
-      end
-    end
-
-    def postcode
-      raw_postcode = csv_row["UK Address 1: Postcode"]
-      return if raw_postcode.blank?
-
-      UKPostcode.parse(raw_postcode.gsub(/\W/, "")).to_s
     end
 
     def ethnic_background

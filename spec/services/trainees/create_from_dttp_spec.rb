@@ -74,11 +74,6 @@ module Trainees
         expect(trainee.created_from_dttp).to be true
         expect(trainee.first_names).to eq(api_trainee["firstname"])
         expect(trainee.last_name).to eq(api_trainee["lastname"])
-        expect(trainee.locale_code).to eq("uk")
-        expect(trainee.address_line_one).to eq(api_trainee["address1_line1"])
-        expect(trainee.address_line_two).to eq(api_trainee["address1_line2"])
-        expect(trainee.town_city).to eq(api_trainee["address1_line3"])
-        expect(trainee.postcode).to eq(api_trainee["address1_postalcode"])
         expect(trainee.email).to eq(api_trainee["emailaddress1"])
         expect(trainee.date_of_birth).to eq(Date.parse(api_trainee["birthdate"]))
         expect(trainee.sex).to eq("male")
@@ -154,43 +149,12 @@ module Trainees
         end
       end
 
-      context "when the country is something other than England and has a non-uk postcode" do
-        let(:api_trainee) { create(:api_trainee, address1_postalcode: nil, address1_country: "France") }
-
-        it "sets the locale to non_uk" do
-          create_trainee_from_dttp
-          expect(Trainee.last.locale_code).to eq("non_uk")
-        end
-      end
-
       context "when the trainee_start_date is missing" do
         let(:api_placement_assignment) { create(:api_placement_assignment, dfe_commencementdate: nil) }
 
         it "uses the programme start date" do
           create_trainee_from_dttp
           expect(Trainee.last.trainee_start_date).to eq(placement_assignment.programme_start_date)
-        end
-      end
-
-      context "when neither address line one or postcode is present" do
-        let(:api_trainee) { create(:api_trainee, address1_line1: nil, address1_postalcode: nil) }
-
-        before do
-          create_trainee_from_dttp
-        end
-
-        it "does not set the locale to UK" do
-          expect(Trainee.last.locale_code).to be_nil
-        end
-
-        context "but the country is set to England" do
-          let(:api_trainee) do
-            create(:api_trainee, address1_line1: nil, address1_postalcode: nil, address1_country: "England")
-          end
-
-          it "sets the locale to UK" do
-            expect(Trainee.last.locale_code).to eq("uk")
-          end
         end
       end
 

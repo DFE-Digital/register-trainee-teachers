@@ -8,7 +8,7 @@ module Trainees
 
     describe "#call" do
       context "valid params" do
-        let(:params) { { first_names: "Dave", last_name: "Hill", address_line_one: "Merry Christmas Street" } }
+        let(:params) { { first_names: "Dave", last_name: "Hill" } }
 
         before do
           allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
@@ -19,7 +19,6 @@ module Trainees
           trainee.reload
           expect(trainee.first_names).to eq("Dave")
           expect(trainee.last_name).to eq("Hill")
-          expect(trainee.address_line_one).to eq("Merry Christmas Street")
         end
 
         it "queues an update to DQT" do

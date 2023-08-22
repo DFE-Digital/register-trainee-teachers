@@ -38,15 +38,6 @@ describe "trainees:create_from_csv" do
       expect(trainee.sex).to eq("female")
     end
 
-    it "sets the trainee's address" do
-      trainee = Trainee.first
-      expect(trainee.address_line_one).to eq("1 This Road")
-      expect(trainee.address_line_two).to be_nil
-      expect(trainee.town_city).to eq("London")
-      expect(trainee.postcode).to eq("SW1A 1AA")
-      expect(trainee.region).to eq("South West")
-    end
-
     it "sets the trainee's diversity details" do
       trainee = Trainee.first
       expect(trainee.nationalities.count).to eq(1)
@@ -108,14 +99,6 @@ describe "trainees:create_from_csv" do
       expect(trainee.date_of_birth).to eq(Date.parse("1970-01-29"))
       expect(trainee.email).to eq("fred.flintstone@example.com")
       expect(trainee.sex).to eq("male")
-    end
-
-    it "sets the trainee's address details" do
-      trainee = Trainee.first
-      expect(trainee.address_line_one).to eq("10 Fiddlesticks lane")
-      expect(trainee.address_line_two).to eq("Ambleside")
-      expect(trainee.town_city).to eq("Frome")
-      expect(trainee.postcode).to eq("SW1A 2AA")
     end
 
     it "sets the trainee's diversity details" do

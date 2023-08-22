@@ -21,18 +21,6 @@ module Dqt
       describe "#params" do
         subject { described_class.new(trainee:).params }
 
-        let(:uk_address_hash) do
-          {
-
-            "addressLine1" => trainee.address_line_one,
-            "addressLine2" => trainee.address_line_two,
-            "addressLine3" => nil,
-            "city" => trainee.town_city,
-            "postalCode" => trainee.postcode,
-            "country" => described_class::UNITED_KINGDOM,
-          }
-        end
-
         it "returns a hash including personal attributes" do
           expect(subject).to include({
             "firstName" => trainee.first_names,
@@ -42,7 +30,6 @@ module Dqt
             "emailAddress" => trainee.email,
             "slugid" => trainee.slug,
             "genderCode" => "Female",
-            "address" => uk_address_hash,
           })
         end
 
@@ -211,16 +198,6 @@ module Dqt
 
           it "maps gender to not available" do
             expect(subject["genderCode"]).to eq("NotAvailable")
-          end
-        end
-
-        context "when trainee has an international address" do
-          let(:trainee) { create(:trainee, :completed, :with_non_uk_address) }
-
-          it "maps international address to addressLine1" do
-            expect(subject["address"]).to eq({
-              "addressLine1" => trainee.international_address,
-            })
           end
         end
 

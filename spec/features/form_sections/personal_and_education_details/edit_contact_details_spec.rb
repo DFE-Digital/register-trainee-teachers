@@ -16,13 +16,6 @@ feature "edit contact details" do
     and_the_contact_details_are_updated
   end
 
-  scenario "changing locale clears previous address" do
-    and_i_enter_an_international_address
-    and_i_submit_the_form
-    and_i_am_on_the_contact_details_page
-    and_the_old_address_is_cleared
-  end
-
 private
 
   def and_i_am_on_the_contact_details_page
@@ -30,31 +23,16 @@ private
   end
 
   def and_i_make_a_change
-    @new_address_line = Faker::Address.street_name
+    @new_email_address = Faker::Internet.email
 
-    contact_details_page.address_line_one.set(@new_address_line)
+    contact_details_page.email.set(@new_email_address)
   end
 
   def and_i_submit_the_form
     contact_details_page.submit_button.click
   end
 
-  def and_i_enter_an_international_address
-    @new_address_line = Faker::Address.street_name
-
-    contact_details_page.non_uk_locale.choose
-    contact_details_page.international_address.set(@new_address_line)
-  end
-
   def and_the_contact_details_are_updated
-    expect(contact_details_page.address_line_one.value).to eq(@new_address_line)
-  end
-
-  def and_the_old_address_is_cleared
-    expect(contact_details_page.international_address.value).to eq(@new_address_line)
-    expect(contact_details_page.address_line_one.value).to be_nil
-    expect(contact_details_page.address_line_two.value).to be_nil
-    expect(contact_details_page.town_city.value).to be_nil
-    expect(contact_details_page.postcode.value).to be_nil
+    expect(contact_details_page.email.value).to eq(@new_email_address)
   end
 end

@@ -12,15 +12,9 @@ module Trainees
       first_names
       last_name
       date_of_birth
-      address_line_one
-      address_line_two
-      town_city
-      postcode
       email
       middle_names
       training_route
-      international_address
-      locale_code
       sex
       gender
       diversity_disclosure
