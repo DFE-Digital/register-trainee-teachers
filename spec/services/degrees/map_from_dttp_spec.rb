@@ -64,7 +64,7 @@ module Degrees
 
       let(:uk_degree_attributes) do
         {
-          locale_code: Trainee.locale_codes[:uk],
+          locale_code: Degree.locale_codes[:uk],
           uk_degree: degree_type,
           institution: institution,
           grade: grade,
@@ -157,7 +157,7 @@ module Degrees
 
       let(:non_uk_degree_attributes) do
         {
-          locale_code: Trainee.locale_codes[:non_uk],
+          locale_code: Degree.locale_codes[:non_uk],
           non_uk_degree: api_degree_qualification["dfe_name"],
           country: country,
         }

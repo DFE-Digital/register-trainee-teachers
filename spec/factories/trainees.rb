@@ -63,7 +63,6 @@ FactoryBot.define do
       disability_disclosure { "disabled" }
       disabled_with_disabilites_disclosed
       training_initiative { "transition_to_teach" }
-      international_address { "Test addr" }
       itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date { itt_start_date + 2.years }
     end

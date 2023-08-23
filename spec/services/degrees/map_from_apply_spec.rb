@@ -56,7 +56,7 @@ module Degrees
     context "with a uk degree" do
       let(:expected_uk_degree_attributes) do
         {
-          locale_code: Trainee.locale_codes[:uk],
+          locale_code: Degree.locale_codes[:uk],
           uk_degree: dfe_degree_type_reference_data[:name],
           uk_degree_uuid: dfe_degree_type_reference_data[:id],
           institution: dfe_degree_institution_reference_data[:name],
@@ -123,7 +123,7 @@ module Degrees
 
       let(:expected_non_uk_degree_attributes) do
         {
-          locale_code: Trainee.locale_codes[:non_uk],
+          locale_code: Degree.locale_codes[:non_uk],
           country: "St Kitts and Nevis",
           non_uk_degree: degree_attributes["comparable_uk_degree"],
         }
@@ -141,7 +141,7 @@ module Degrees
 
         let(:expected_non_uk_degree_attributes) do
           {
-            locale_code: Trainee.locale_codes[:non_uk],
+            locale_code: Degree.locale_codes[:non_uk],
             non_uk_degree: degree_attributes["comparable_uk_degree"],
           }
         end

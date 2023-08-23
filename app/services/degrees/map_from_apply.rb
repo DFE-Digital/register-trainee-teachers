@@ -31,7 +31,7 @@ module Degrees
 
     def uk_degree_params
       {
-        locale_code: Trainee.locale_codes[:uk],
+        locale_code: Degree.locale_codes[:uk],
       }.merge(qualification_type_params)
        .merge(grade_params)
        .merge(institution_params)
@@ -39,7 +39,7 @@ module Degrees
 
     def non_uk_degree_params
       {
-        locale_code: Trainee.locale_codes[:non_uk],
+        locale_code: Degree.locale_codes[:non_uk],
         non_uk_degree: attributes["comparable_uk_degree"],
         country: country,
       }

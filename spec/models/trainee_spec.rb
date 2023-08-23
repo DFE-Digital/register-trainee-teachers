@@ -24,7 +24,6 @@ describe Trainee do
       )
     end
 
-    it { is_expected.to define_enum_for(:locale_code).with_values(uk: 0, non_uk: 1) }
     it { is_expected.to define_enum_for(:sex).with_values(male: 0, female: 1, other: 2, sex_not_provided: 3, prefer_not_to_say: 4) }
 
     it do
