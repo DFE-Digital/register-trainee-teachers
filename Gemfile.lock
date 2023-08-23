@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: d158f315e1adcc4593193b894cfca70506d38a4a
-  branch: update-hesa-degree-types
+  revision: 41de61a0c614283d55be139e7ef8fa575a0632eb
+  branch: main
   specs:
-    dfe-reference-data (2.2.0)
+    dfe-reference-data (2.3.0)
       activesupport
       tzinfo
 
