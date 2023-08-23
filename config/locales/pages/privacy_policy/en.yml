@@ -43,11 +43,11 @@ en:
         <li>full name</li>
         <li>sex (female, male, other or not provided)</li>
         <li>nationality</li>
-        <li>address (including country)</li>
         <li>date of birth</li>
         <li>email address</li>
         <li>qualifications</li>
         <li>equality and diversity information</li>
+        <li>National Insurance number</li>
       </ul>
 
       <h2 class='govuk-heading-m'>The data we collect from all users</h2>
@@ -97,12 +97,6 @@ en:
 
       <p class='govuk-body'><a href='https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1' class='govuk-link'>Visit the Zendesk website to find out how they use and look after your data (“service data”)</a></p>
 
-      <h3 class='govuk-heading-s'>Website hosting services</h3>
-
-      <p class='govuk-body'>We use GOV.UK PaaS to enable us to run the service.</p>
-
-      <p class='govuk-body'><a href='https://www.cloud.service.gov.uk/privacy-notice/#what-data-we-collect-from-end-users' class='govuk-link'>Visit the GOV.UK PaaS website to find out how they use and look after your data (“end user data”)</a></p>
-
       <h2 class='govuk-heading-m' id='how-long-we-keep-your-personal-data'>How long we keep your personal data</h2>
 
       <h3 class='govuk-heading-s'>Provider staff data and user analytics data</h3>
@@ -151,6 +145,5 @@ en:
 
       <p class='govuk-body'>We’ll update this privacy notice when required. You should regularly review the notice.</p>
 
-      <p class='govuk-body'>This version was last updated on 31 March 2022.
-</p>
+      <p class='govuk-body'>This version was last updated on 7 August 2023.</p>
       "
