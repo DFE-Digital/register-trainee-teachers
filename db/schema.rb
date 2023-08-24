@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_31_090931) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -751,16 +751,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_090931) do
     t.date "date_of_birth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "address_line_one"
-    t.text "address_line_two"
-    t.text "town_city"
-    t.text "postcode"
     t.text "email"
     t.uuid "dttp_id"
     t.text "middle_names"
     t.integer "training_route"
-    t.text "international_address"
-    t.integer "locale_code"
     t.integer "sex"
     t.integer "diversity_disclosure"
     t.integer "ethnic_group"
@@ -837,7 +831,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_090931) do
     t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
     t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
-    t.index ["locale_code"], name: "index_trainees_on_locale_code"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
     t.index ["sex"], name: "index_trainees_on_sex"
