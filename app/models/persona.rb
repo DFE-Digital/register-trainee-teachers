@@ -27,5 +27,7 @@
 #  index_users_on_discarded_at     (discarded_at)
 #
 class Persona < User
-  default_scope { where(email: PERSONA_EMAILS) }
+  def self.sanitised_user_ids = %w[600 874 296 732 846 605 1302 567 56 1199]
+
+  default_scope { where(email: PERSONA_EMAILS).or(where(id: sanitised_user_ids)) }
 end
