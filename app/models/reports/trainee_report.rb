@@ -143,24 +143,11 @@ module Reports
     end
 
     def course_subject_category
-      trainee_allocation_subject(trainee.course_subject_one) || course_allocation_subject
-    end
-
-    def course_allocation_subject
-      return if course.blank? || course.subjects.blank?
-
-      trainee_allocation_subject(calculated_subject)
+      trainee.course_allocation_subject&.name
     end
 
     def course_subject_names
       @course_subject_names ||= course.subjects.pluck(:name)
-    end
-
-    def calculated_subject
-      Rails.cache.fetch("TraineeReport.calculated_subject(#{course_subject_names.join('-')})", expires_in: 1.day) do
-        CalculateSubjectSpecialisms.call(subjects: course.subjects.pluck(:name))
-        .values.map(&:first).first
-      end
     end
 
     def course_training_route
@@ -417,15 +404,6 @@ module Reports
     end
 
   private
-
-    def trainee_allocation_subject(subject)
-      return if subject.blank?
-
-      subject_name = subject.downcase
-      Rails.cache.fetch("TraineeReport.trainee_allocation_subject(#{subject_name})", expires_in: 1.day) do
-        SubjectSpecialism.find_by("lower(name) = ?", subject_name)&.allocation_subject&.name
-      end
-    end
 
     def placements
       @placements ||= trainee.placements.reverse
