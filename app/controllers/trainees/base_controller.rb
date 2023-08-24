@@ -7,6 +7,12 @@ module Trainees
   private
 
     def trainee
+      if Trainee.where(slug: params[:trainee_id]).blank?
+        raise(
+          "Trainee for params #{params} not found. Available slugs are: #{Trainee.pluck(:slug).join(' ')}",
+        )
+      end
+
       @trainee ||= Trainee.from_param(params[:trainee_id])
     end
 
