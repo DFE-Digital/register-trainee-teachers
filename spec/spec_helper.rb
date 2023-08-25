@@ -56,9 +56,9 @@ RSpec.configure do |config|
 
   config.display_try_failure_messages = true
 
-  config.around do |ex|
-    ex.run_with_retry retry: 3
-  end
+  # config.around do |ex|
+  #   ex.run_with_retry retry: 3
+  # end
 
   config.retry_callback = proc do |ex|
     if ex.metadata[:js]
