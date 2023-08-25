@@ -259,6 +259,9 @@
   - surname16
   - ttcid
   - hesa_committed_at
+  - application_choice_id
+  - itt_start_date
+  - trainee_start_date
   :hesa_trn_requests:
   - id
   - collection_reference

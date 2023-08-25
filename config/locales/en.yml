@@ -290,6 +290,8 @@ en:
       magic_urn:
         900000: "Placement outside England and Wales"
         900010: "Not applicable or not available"
+        900020: "Establishment does not have a URN"
+        900030: "Not available"
     degrees:
       add_another_degree: Add another degree
       institution: &institution Awarding institution

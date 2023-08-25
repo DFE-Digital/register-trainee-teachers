@@ -92,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
     t.integer "state"
     t.string "accredited_body_code"
     t.integer "recruitment_cycle_year"
+    t.string "application_choice_id"
     t.index ["accredited_body_code"], name: "index_apply_applications_on_accredited_body_code"
     t.index ["apply_id"], name: "index_apply_applications_on_apply_id", unique: true
     t.index ["recruitment_cycle_year"], name: "index_apply_applications_on_recruitment_cycle_year"
@@ -231,9 +232,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
-    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
+    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -598,6 +599,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
     t.string "ttcid"
     t.string "hesa_committed_at"
     t.string "previous_hesa_id"
+    t.string "application_choice_id"
+    t.string "itt_start_date"
+    t.string "trainee_start_date"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
 
@@ -669,8 +673,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
@@ -788,14 +792,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.integer "training_initiative"
     t.boolean "applying_for_bursary"
+    t.integer "training_initiative"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.boolean "applying_for_scholarship"
     t.integer "course_education_phase"
+    t.boolean "applying_for_scholarship"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false

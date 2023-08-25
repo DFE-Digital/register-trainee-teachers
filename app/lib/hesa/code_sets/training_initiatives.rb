@@ -12,6 +12,7 @@ module Hesa
         # "019"	=> Additional ITT place for PE with a priority subject,
         "025"	=> ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
         "026"	=> ROUTE_INITIATIVES_ENUMS[:now_teach],
+        "036" => ROUTE_INITIATIVES_ENUMS[:international_relocation_payment],
       }.freeze
     end
   end
