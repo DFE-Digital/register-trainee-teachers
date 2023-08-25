@@ -22,11 +22,10 @@ hesa:
   collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData"
   trn_data_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData"
   trn_file_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNFile"
-  current_collection_reference: "C22053"
-  current_collection_start_date: "2022-08-01"
+  current_collection_reference: "C23053"
+  current_collection_start_date: "2023-08-01"
   username: <get from secrets>
   password: <get from secrets>
-  upload_id: null
 
 dqt:
   base_url: https://qualified-teachers-api-dev.london.cloudapps.digital

@@ -18,11 +18,6 @@ dfe_sign_in:
 dqt:
   base_url: https://teacher-qualifications-api.education.gov.uk/
 
-# While HESA have taken down their collection, this serves as a fallback
-# until we test and deploy the new HESA mapping around 15th August 2023
-hesa:
-  upload_id: 12
-
 features:
   sign_in_method: dfe-sign-in
   basic_auth: false

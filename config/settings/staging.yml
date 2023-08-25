@@ -44,13 +44,6 @@ features:
     sync_teachers: true
   google:
     send_data_to_big_query: false
-hesa:
-  auth_url: "https://identity.hesa.ac.uk/Account/RemoteLogOn?ReturnDomain=https://datacollection.hesa.ac.uk&ReturnUrl=%2f"
-  collection_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData"
-  trn_data_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNData"
-  trn_file_base_url: "https://datacollection.hesa.ac.uk/apis/itt/1.1/TRNFile"
-  current_collection_reference: "C23053"
-  current_collection_start_date: "2023-08-01"
 
 environment:
   name: staging
