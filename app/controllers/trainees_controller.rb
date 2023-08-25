@@ -104,7 +104,7 @@ private
   def trainee
     if Trainee.where(slug: params[:id]).blank?
       raise(
-        "Trainee for params #{params} not found. Available slugs are: #{Trainee.pluck(:slug).join(' ')}. Path was #{}",
+        "Trainee for params #{params} not found. Available slugs are: #{Trainee.pluck(:slug).join(' ')}. Cleaners: #{DatabaseCleaner.cleaners.first}",
       )
     end
 
