@@ -4,6 +4,7 @@ module Reports
   class TraineesReport < TemplateClassCsv
     def self.headers
       %w[register_id
+         complete?
          trainee_url
          record_source
          apply_id
@@ -117,6 +118,7 @@ module Reports
       trainee_report = Reports::TraineeReport.new(trainee)
       [
         trainee_report.register_id,
+        trainee_report.complete?,
         trainee_report.trainee_url,
         trainee_report.record_source,
         trainee_report.apply_id,

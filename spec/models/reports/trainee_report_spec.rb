@@ -28,6 +28,10 @@ describe Reports::TraineeReport do
       expect(subject.funding_manager).to be_a(FundingManager)
     end
 
+    it "includes whether the trainee is complete" do
+      expect(subject.complete?).to eq(trainee.submission_ready?)
+    end
+
     it "sets the correct course" do
       expect(course).to eq(Course.find_by(uuid: trainee.course_uuid))
     end
