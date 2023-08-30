@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class DetermineSignOffPeriod
-  CENSUS_MONTHS = [9, 10].freeze # September, October
+  CENSUS_MONTHS = [8, 9, 10].freeze # September, October
   PERFORMANCE_MONTH = 1 # January
 
   def self.call
