@@ -61,19 +61,17 @@ module Dqt
         "356a5652-c197-e711-80d8-005056ac45bb" => "BachelorOfVeterinaryScience",
         "376a5652-c197-e711-80d8-005056ac45bb" => "BachelorOfEducationScotlandAndNIreland",
         "396a5652-c197-e711-80d8-005056ac45bb" => "BachelorOfPhilosophy",
+        "348ff3a9-a4b8-4a40-a74d-dcaef9e8ac73" => "BachelorOfScienceWithIntercalatedPGCE",
         "c1695652-c197-e711-80d8-005056ac45bb" => "BEd",
         "d5695652-c197-e711-80d8-005056ac45bb" => "BAwithIntercalatedPGCE",
         "3b6a5652-c197-e711-80d8-005056ac45bb" => "MasterOfArts",
         "3d6a5652-c197-e711-80d8-005056ac45bb" => "MasterOfLibrarianship",
         "3f6a5652-c197-e711-80d8-005056ac45bb" => "MasterOfLiterature",
-        # Master of Mathematics - mapped to HigherDegree temporarily
-        "f3eaa983-d543-4d4b-a239-f46d7cc94825" => "HigherDegree",
         "416a5652-c197-e711-80d8-005056ac45bb" => "MasterOfMusic",
         "436a5652-c197-e711-80d8-005056ac45bb" => "MasterOfPhilosophy",
-        # Master of Research - mapped to HigherDegree temporarily
-        "cfae21bd-2b03-4048-bfdd-5f768c5b85e9" => "HigherDegree",
-        # Master in Science - mapped to HigherDegree temporarily
-        "b6d2c5aa-cf99-4831-9bfe-6279349d8ea9" => "HigherDegree",
+        "f3eaa983-d543-4d4b-a239-f46d7cc94825" => "MasterOfMathematics",
+        "cfae21bd-2b03-4048-bfdd-5f768c5b85e9" => "MasterOfResearch",
+        "b6d2c5aa-cf99-4831-9bfe-6279349d8ea9" => "MasterInScience",
         "456a5652-c197-e711-80d8-005056ac45bb" => "MasterOfScience",
         "476a5652-c197-e711-80d8-005056ac45bb" => "MasterOfTheology",
         "496a5652-c197-e711-80d8-005056ac45bb" => "CertificateOfMembershipOfCranfieldInstituteOfTechnology",
@@ -91,9 +89,8 @@ module Dqt
         "616a5652-c197-e711-80d8-005056ac45bb" => "DoctorOfMusic",
         "636a5652-c197-e711-80d8-005056ac45bb" => "DoctorOfScience",
         "656a5652-c197-e711-80d8-005056ac45bb" => "DoctorOfPhilosophy",
+        "03d6b7af-499c-49e3-96cc-e63f9beda6e5" => "DoctorOfEducation",
         "676a5652-c197-e711-80d8-005056ac45bb" => "PHD",
-        # Doctor of Education - mapped to HigherDegree temporarily
-        "03d6b7af-499c-49e3-96cc-e63f9beda6e5" => "HigherDegree",
         "7ba49954-7595-437c-8df0-6a777c97307b" => "BSc_Education",
         "c6aeedca-9147-4e88-886a-a90302f3d097" => "BTechEducation",
         "007a0999-87f7-4afc-8ccd-ce1e1d92c9ac" => "BA_Education",
@@ -101,6 +98,7 @@ module Dqt
         "0584565a-1c98-4c1d-ae64-c241542c0879" => "FirstDegree",
         "fdafdcd7-5f21-4363-b7d5-c1f44a852af1" => "HigherDegree",
         "03c4fa67-345e-4d09-8e9b-68c36a450947" => "DegreeEquivalent",
+        "3e042de2-a453-47dc-9452-90a23399e9ee" => "Unknown",
       }.freeze
     end
   end

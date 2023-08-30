@@ -365,6 +365,8 @@ module Reports
       trainee.submitted_for_trn_at&.iso8601
     end
 
+    def complete? = trainee.submission_ready?
+
     def trainee_start_date
       trainee.trainee_start_date&.iso8601
     end

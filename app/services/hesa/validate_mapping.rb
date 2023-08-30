@@ -15,7 +15,6 @@ module Hesa
       itt_aim: Hesa::CodeSets::IttAims,
       itt_qualification_aim: Hesa::CodeSets::IttQualificationAims,
       mode: Hesa::CodeSets::StudyModes,
-      reason_for_leaving: Hesa::CodeSets::ReasonsForLeavingCourse,
       sex: Hesa::CodeSets::Sexes,
       training_initiative: Hesa::CodeSets::TrainingInitiatives,
       training_route: Hesa::CodeSets::TrainingRoutes,

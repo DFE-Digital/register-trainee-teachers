@@ -12,7 +12,7 @@ module Hesa
 
     attr_reader :collection_reference, :upload, :from_date
 
-    def initialize(upload_id: Settings.hesa.upload_id)
+    def initialize(upload_id: nil)
       @from_date = Settings.hesa.current_collection_start_date
       @collection_reference = Settings.hesa.current_collection_reference
       @upload = Upload.find_by(id: upload_id)

@@ -5,4 +5,4 @@
   <% end %>
 <% end %>
 
-<%= govuk_button_to "#{button_text} (#{count} #{count_label.pluralize(count)})", href %>
+<%= govuk_button_to("#{button_text} (#{count} #{count_label.pluralize(count)})", href, method: :get) %>

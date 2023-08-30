@@ -363,7 +363,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [qa_aks] #[qa_aks,staging_aks]
+        environment: [qa_aks,staging_aks]
     steps:
     - name: Checkout
       uses: actions/checkout@v3

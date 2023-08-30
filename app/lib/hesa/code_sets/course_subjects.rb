@@ -68,7 +68,6 @@ module Hesa
         "100330" => ::CourseSubjects::RUSSIAN_LANGUAGES,
         "100471" => ::CourseSubjects::SOCIAL_SCIENCES,
         "100332" => ::CourseSubjects::SPANISH_LANGUAGE,
-        "101085" => ::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS,
         "100433" => ::CourseSubjects::SPORT_AND_EXERCISE_SCIENCES,
         "100097" => ::CourseSubjects::SPORTS_MANAGEMENT,
         "100406" => ::CourseSubjects::STATISTICS,
@@ -76,6 +75,8 @@ module Hesa
         "100101" => ::CourseSubjects::TRAVEL_AND_TOURISM,
         "100610" => ::CourseSubjects::UK_GOVERNMENT_PARLIAMENTARY_STUDIES,
         "100333" => ::CourseSubjects::WELSH_LANGUAGE,
+        "101169" => ::CourseSubjects::JAPANESE_LANGUAGE,
+        "100513" => ::CourseSubjects::TEACHING_ENGLISH_AS_A_FOREIGN_LANGUAGE,
       }.freeze
     end
   end

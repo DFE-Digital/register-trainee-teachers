@@ -8,7 +8,7 @@ module Trainees
 
     USERNAME = "HESA"
 
-    NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010].freeze
+    NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
 
     class HesaImportError < StandardError; end
 
@@ -29,6 +29,7 @@ module Trainees
         if trainee.save!
           create_degrees!
           create_placements!
+          store_application_choice_id!
           store_hesa_metadata!
           enqueue_background_jobs!
           check_for_missing_hesa_mappings!
@@ -56,7 +57,6 @@ module Trainees
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
-       .merge(withdrawal_attributes)
        .merge(deferral_attributes)
        .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
@@ -115,16 +115,6 @@ module Trainees
       provider ? { provider: } : {}
     end
 
-    def withdrawal_attributes
-      if mapped_trainee_state != :withdrawn
-        trainee.withdrawal_reasons.clear
-        return { withdraw_date: nil, withdraw_reasons_details: nil, withdraw_reasons_dfe_details: nil }
-      end
-
-      trainee.withdrawal_reasons << WithdrawalReason.find_by_name(reason_for_leaving)
-      { withdraw_date: hesa_trainee[:end_date] }
-    end
-
     def deferral_attributes
       return { defer_date: nil } unless mapped_trainee_state == :deferred
 
@@ -132,8 +122,6 @@ module Trainees
     end
 
     def submitted_for_trn_attributes
-      return {} unless request_for_trn?
-
       { submitted_for_trn_at: Time.zone.now }
     end
 
@@ -149,7 +137,7 @@ module Trainees
       end
 
       if hesa_trainee[:employing_school_urn].present?
-        if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_school_urn])
+        if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:employing_school_urn])
           attrs.merge!(employing_school_not_applicable: true)
         else
           attrs.merge!(employing_school: School.find_by(urn: hesa_trainee[:employing_school_urn]))
@@ -196,44 +184,27 @@ module Trainees
     def enqueue_background_jobs!
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      if request_for_trn?
-        Dqt::RegisterForTrnJob.perform_later(trainee)
-      else
+      if trainee.trn.present?
         Trainees::Update.call(trainee:)
+      else
+        Dqt::RegisterForTrnJob.perform_later(trainee)
       end
-
-      Dqt::WithdrawTraineeJob.perform_later(trainee) if enqueue_dqt_withdrawal_job?
-    end
-
-    def enqueue_dqt_withdrawal_job?
-      current_trainee_state != :withdrawn && mapped_trainee_state == :withdrawn
-    end
-
-    def request_for_trn?
-      # Withdrawn trainees are also expected to get a TRN
-      trainee.trn.blank? && (mapped_trainee_state == :submitted_for_trn || mapped_trainee_state == :withdrawn)
     end
 
     def training_initiative
       ::Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
     end
 
-    # Use HESA's itt_commencement_date first, this is populated when the trainee
-    # has transferred from a non-QTS  awarding course, to an ITT (QTS awarding)
-    # course, otherwise use HESA's commencement_date.  This is the start date
-    # for trainees who have not transferred courses.
     def itt_start_date
-      hesa_trainee[:itt_commencement_date].presence || hesa_trainee[:commencement_date]
+      hesa_trainee[:itt_start_date]
     end
 
     def itt_end_date
       hesa_trainee[:itt_end_date]
     end
 
-    # HESA do not distinguish between the ITT start date and the trainee
-    # start date, so we're setting both to the ITT start date.
     def trainee_start_date
-      itt_start_date
+      hesa_trainee[:trainee_start_date].presence || itt_start_date
     end
 
     def course_subject_name(subject_code)
@@ -271,16 +242,16 @@ module Trainees
       ::Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
     end
 
-    def reason_for_leaving
-      ::Hesa::CodeSets::ReasonsForLeavingCourse::MAPPING[hesa_trainee[:reason_for_leaving]]
-    end
-
     def create_degrees!
       ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
     end
 
     def create_placements!
       ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements])
+    end
+
+    def store_application_choice_id!
+      trainee.apply_application&.update(application_choice_id: hesa_trainee[:application_choice_id])
     end
 
     def store_hesa_metadata!
