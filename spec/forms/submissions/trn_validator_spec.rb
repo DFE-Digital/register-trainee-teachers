@@ -13,10 +13,9 @@ module Submissions
     end
 
     shared_examples "error" do
-      it "is invalid and returns an error message" do
-        expect(subject.valid?).to be false
-        expect(subject.errors.messages[:trainee])
-          .to include(I18n.t("activemodel.errors.models.submissions/trn_validator.attributes.trainee.incomplete"))
+      it "is invalid" do
+        expect(subject).not_to be_valid
+        expect(subject.errors).not_to be_empty
       end
     end
 
@@ -158,7 +157,7 @@ module Submissions
 
                 it "is invalid" do
                   expect(subject.valid?).to be false
-                  expect(subject.errors).not_to be_empty
+                  expect(subject.errors.messages).to include({ schools: ["Schools not marked as complete"] })
                 end
               end
 
@@ -175,7 +174,7 @@ module Submissions
 
                 it "is invalid" do
                   expect(subject.valid?).to be false
-                  expect(subject.errors).not_to be_empty
+                  expect(subject.errors.messages).to include({ schools: ["Schools not marked as complete"] })
                 end
               end
             end
@@ -228,6 +227,26 @@ module Submissions
         let(:progress) { {} }
 
         include_examples "error"
+      end
+
+      context "with incomplete trainee" do
+        let(:trainee) { build(:trainee, :incomplete_draft) }
+        let(:progress) { {} }
+
+        subject { described_class.new(trainee:) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors.messages).to include(
+            { personal_details: ["Personal details not marked as complete"],
+              contact_details: ["Contact details not marked as complete"],
+              diversity: ["Diversity information not marked as complete"],
+              degrees: ["Degree details not started"],
+              course_details: ["Course details not started"],
+              training_details: ["Trainee ID not marked as complete"],
+              funding: ["Funding details cannot be started yet"] },
+          )
+        end
       end
     end
 
