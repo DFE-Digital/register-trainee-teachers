@@ -4,7 +4,7 @@
     <%= govuk_link_to link_text, url, name: name %>
   <% end %>
   <% if hint_text.present? %>
-    <div class="govuk-hint">
+    <div id=<%= name if hint_text.present? && url.blank?  %> class="govuk-hint">
       <%= hint_text %>
     </div>
   <% end %>
