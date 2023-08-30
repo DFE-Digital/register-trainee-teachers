@@ -1,9 +1,9 @@
 ---
-page_title: Signing off your list of trainees for the initial teacher training census 2023 to 2024
-title: Signing off your list of trainees for the initial teacher training census 2023 to 2024
+page_title: Signing off your list of trainees for the initial teacher training census
+title: Signing off your list of trainees for the initial teacher training census
 ---
 
-Each year you need to sign off your list of trainee teachers in Register for the 2023 to 2024 academic year.
+Each year you need to sign off your list of trainee teachers in Register. You must now sign off trainee data for the 2023 to 2024 academic year.
 
 ## Why the census sign-off is important
 
@@ -28,7 +28,7 @@ You can check your trainee data is correct by exporting your trainee records as 
 
 ## Signing off your trainee data
 
-A senior person from your organisation will need to complete [https://forms.office.com/e/kzBmEWKDGz]() to sign off the data.
+A senior person from your organisation will need to complete <a href="https://forms.office.com/e/kzBmEWKDGz" class="govuk-link" rel="noreferrer noopener" target="_blank">this form to sign off the data (opens in new window).</a>
 
 This must not be the same person who entered, checked and updated the data.
 
@@ -37,7 +37,7 @@ This must not be the same person who entered, checked and updated the data.
 You should:
 
 * allocate time to check the accuracy of your trainee data
-* confirm availability of your senior officer to sign off do not leave this to the last week in October
+* confirm availability of your senior officer to sign off &mdash; do not leave this to the last week in October
 
 ## How your trainee data will be used
 
