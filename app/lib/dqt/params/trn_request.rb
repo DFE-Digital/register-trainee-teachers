@@ -21,7 +21,7 @@ module Dqt
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => "EYITTGraduateEntry",
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => "EYITTGraduateEmploymentBased",
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => "EYITTUndergraduate",
-        TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => "TeachFirstProgramme",
+        TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => "HighPotentialITT",
         TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => "UndergraduateOptIn",
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => "Apprenticeship",
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "ProviderLedPostgrad",
