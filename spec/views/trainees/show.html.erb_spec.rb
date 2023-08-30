@@ -9,6 +9,8 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
     without_partial_double_verification do
       allow(view).to receive_messages(trainee_editable?: true, display_record_actions?: true)
     end
+    create(:academic_cycle)
+    create(:academic_cycle, next_cycle: true)
   end
 
   context "placements enabled", feature_placements: true do

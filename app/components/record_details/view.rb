@@ -22,8 +22,11 @@ module RecordDetails
         trainee_id_row,
         region,
         trn_row,
+        hesa_id_row,
         last_updated_row,
         record_created_row,
+        start_year_row,
+        end_year_row,
         trainee_start_date_row,
       ].compact
     end
@@ -98,6 +101,35 @@ module RecordDetails
       end
 
       mappable_field(start_date_text, t(".trainee_start_date"), start_date.link)
+    end
+
+    def start_year_row
+      return if trainee.start_date.blank?
+
+      start_year = AcademicCycle.for_date(trainee.start_date).label
+      {
+        field_label: t(".start_year"),
+        field_value: start_year,
+      }
+    end
+
+    def end_year_row
+      return if trainee.estimated_end_date.blank?
+
+      end_year = AcademicCycle.for_date(trainee.estimated_end_date).label
+      {
+        field_label: t(".end_year"),
+        field_value: end_year,
+      }
+    end
+
+    def hesa_id_row
+      return unless trainee.hesa_record?
+
+      {
+        field_label: t(".hesa_id"),
+        field_value: trainee.hesa_id,
+      }
     end
 
     def render_text_with_hint(date)

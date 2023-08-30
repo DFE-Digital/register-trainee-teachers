@@ -127,6 +127,9 @@ en:
       itt_has_not_started: ITT has not started
       not_provided: Not provided
       deferred_before_itt_started: Trainee deferred before starting their ITT
+      hesa_id: HESA ID
+      start_year: Start year
+      end_year: End year
   training_details:
     view:
       title: *trainee_id

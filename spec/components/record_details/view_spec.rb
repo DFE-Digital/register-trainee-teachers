@@ -10,10 +10,23 @@ module RecordDetails
     let(:state) { :trn_received }
     let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
     let(:provider) { create(:provider) }
-    let(:trainee) { create(:trainee, state, training_route, trn: Faker::Number.number(digits: 10), provider: provider) }
+    let(:trainee) do
+      create(
+        :trainee,
+        state,
+        training_route,
+        trn: Faker::Number.number(digits: 10),
+        provider: provider,
+        hesa_id: hesa_id,
+        study_mode: TRAINEE_STUDY_MODE_ENUMS["part_time"],
+      )
+    end
+    let(:hesa_id) { Faker::Number.number(digits: 10).to_s }
     let(:trainee_status) { "trainee-status" }
     let(:trainee_progress) { "trainee-progress" }
     let(:timeline_event) { double(date: Time.zone.today) }
+    let!(:current_academic_cycle) { create(:academic_cycle) }
+    let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
     context "when :show_provider is true" do
       before do
@@ -79,8 +92,16 @@ module RecordDetails
         expect(rendered_component).to have_text(date_for_summary_view(timeline_event.date))
       end
 
-      it "renders the trainee record created date" do
-        expect(rendered_component).to have_text(date_for_summary_view(trainee.created_at))
+      it "renders the HESA ID" do
+        expect(rendered_component).to have_text(trainee.hesa_id)
+      end
+
+      it "renders the start year" do
+        expect(rendered_component).to have_text(current_academic_cycle.label)
+      end
+
+      it "renders the end year" do
+        expect(rendered_component).to have_text(next_academic_cycle.label)
       end
 
       context "but the trainee has no trn or submitted_for_trn_at" do
