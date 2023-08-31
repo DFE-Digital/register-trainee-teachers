@@ -155,7 +155,7 @@ google:
     api_json_key: ""
     table_name: events
 
-sign_off_trainee_data_url: https://example.com/trainee-data-sign-off
+sign_off_trainee_data_url: https://forms.office.com/e/kzBmEWKDGz
 sign_off_performance_profiles_url: https://forms.gle/AtAvteRTKJu3mbXS7
 
 trainee_export:
