@@ -13,6 +13,7 @@ class GuidanceController < ApplicationController
   def check_data; end
   def bulk_recommend_trainees; end
   def manually_registering_trainees; end
+  def census_sign_off; end
 
   def dates_and_deadlines
     render(layout: "application")

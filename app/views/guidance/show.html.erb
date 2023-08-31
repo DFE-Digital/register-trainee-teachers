@@ -64,7 +64,13 @@
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
-              signing_off_data,
+              "Signing off your list of trainees for the initial teacher training census",
+              census_sign_off_guidance_path,
+              ) %>
+      </li>
+      <li>
+        <%= govuk_link_to(
+              "Signing off your list of trainees for the performance profiles publication",
               performance_profiles_guidance_path,
             ) %>
       </li>

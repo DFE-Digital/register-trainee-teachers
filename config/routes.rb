@@ -205,6 +205,7 @@ Rails.application.routes.draw do
     get "/registering-trainees-through-hesa", to: "guidance#registering_trainees_through_hesa"
     get "/check-data", to: "guidance#check_data"
     get "/hesa-register-data-mapping/:tab", to: "guidance#hesa_register_data_mapping", as: "hesa_register_data_mapping"
+    get "/census-sign-off", to: "guidance#census_sign_off"
     get "/performance-profiles", to: "guidance#performance_profiles"
     get "/bulk-recommend-trainees", to: "guidance#bulk_recommend_trainees"
     get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
