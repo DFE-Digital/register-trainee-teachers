@@ -60,21 +60,21 @@
       </li>
     </ul>
 
-    <% census_sign_off = sign_off_period == :census_period ? "Sign" : "Signing" %>
-    <% performance_sign_off = sign_off_period == :performance_period ? "Sign" : "Signing" %>
+    <% @census_sign_off = sign_off_period == :census_period ? "Sign" : "Signing" %>
+    <% @performance_sign_off = sign_off_period == :performance_period ? "Sign" : "Signing" %>
 
     <h2 class="govuk-heading-m">Signing off data</h2>
 
     <ul class="govuk-list govuk-list--spaced">
       <li>
         <%= govuk_link_to(
-              "#{census_sign_off} off your list of trainees for the initial teacher training census",
+              "#{@census_sign_off} off your list of trainees for the initial teacher training census",
               census_sign_off_guidance_path,
               ) %>
       </li>
       <li>
         <%= govuk_link_to(
-              "#{performance_sign_off} off your list of trainees for the performance profiles publication",
+              "#{@performance_sign_off} off your list of trainees for the performance profiles publication",
               performance_profiles_guidance_path,
             ) %>
       </li>

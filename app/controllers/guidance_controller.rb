@@ -2,7 +2,7 @@
 
 class GuidanceController < ApplicationController
   skip_before_action :authenticate
-  helper_method :signing_off_period
+  helper_method :sign_off_period
 
   def show
     render(layout: "application")
