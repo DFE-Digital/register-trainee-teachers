@@ -2,7 +2,7 @@
 
 class GuidanceController < ApplicationController
   skip_before_action :authenticate
-  helper_method :signing_off_data
+  helper_method :signing_off_period
 
   def show
     render(layout: "application")
@@ -47,15 +47,6 @@ private
 
   def current_academic_cycle
     @current_academic_cycle ||= AcademicCycle.current
-  end
-
-  def signing_off_data
-    @signing_off_data ||= case sign_off_period
-                          when :census_period, :outside_period
-                            "Signing off your list of trainees for the performance profiles publication"
-                          when :performance_period
-                            "Sign off your list of trainees for the performance profiles publication"
-                          end
   end
 
   def valid_tabs
