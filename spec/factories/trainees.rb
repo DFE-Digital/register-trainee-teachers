@@ -293,6 +293,7 @@ FactoryBot.define do
 
       after(:create) do |trainee, evaluator|
         create_list(:trainee_disability, evaluator.disabilities_count, trainee:)
+        trainee.reload
       end
     end
 
