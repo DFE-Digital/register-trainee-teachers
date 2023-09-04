@@ -11,9 +11,7 @@ module ApplyApi
 
       recruitment_cycle_years.each do |recruitment_cycle_year|
         new_applications(recruitment_cycle_year).each do |application_data|
-          ImportApplication.call(application_data:)
-        rescue ApplyApi::ImportApplication::ApplyApiMissingDataError => e
-          Sentry.capture_exception(e)
+          ImportApplicationJob.perform_later(application_data)
         end
       end
     end
