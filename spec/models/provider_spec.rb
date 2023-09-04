@@ -6,16 +6,13 @@ describe Provider do
   context "fields" do
     it "validates presence" do
       expect(subject).to validate_presence_of(:name).with_message("Enter a provider name")
-      expect(subject).to validate_presence_of(:dttp_id).with_message("Enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e")
       expect(subject).to validate_presence_of(:ukprn).with_message("Enter a UKPRN in the correct format, like 12345678")
     end
 
     it "validates format" do
-      subject.dttp_id = "XXX"
       subject.code = "abcd 1234"
       subject.ukprn = "3333"
       subject.valid?
-      expect(subject.errors[:dttp_id]).to include("Enter a DTTP ID in the correct format, like b77c821a-c12a-4133-8036-6ef1db146f9e")
       expect(subject.errors[:code]).to include("Enter a provider code in the correct format, like 12Y")
       expect(subject.errors[:ukprn]).to include("Enter a UKPRN in the correct format, like 12345678")
     end

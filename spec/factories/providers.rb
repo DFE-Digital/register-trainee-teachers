@@ -5,7 +5,6 @@ FactoryBot.define do
     sequence :name do |n|
       "Provider #{n}"
     end
-    dttp_id { SecureRandom.uuid }
     code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     ukprn { Faker::Number.number(digits: 8) }
     sequence(:accreditation_id, "1111")
