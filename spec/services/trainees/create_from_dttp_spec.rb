@@ -7,7 +7,7 @@ module Trainees
     include SeedHelper
 
     let(:api_trainee) { create(:api_trainee) }
-    let(:provider) { create(:provider) }
+    let(:provider) { create(:provider, :with_dttp_id) }
     let(:api_placement_assignment) { create(:api_placement_assignment) }
     let(:placement_assignment) { create(:dttp_placement_assignment, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
     let(:dttp_trainee) { create(:dttp_trainee, placement_assignments: [placement_assignment], api_trainee_hash: api_trainee, provider: provider) }

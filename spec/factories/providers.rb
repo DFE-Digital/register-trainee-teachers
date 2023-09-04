@@ -23,5 +23,9 @@ FactoryBot.define do
         create_list(:course, evaluator.courses_count, code: evaluator.course_code, accredited_body_code: provider.code)
       end
     end
+
+    trait :with_dttp_id do
+      dttp_id { SecureRandom.uuid }
+    end
   end
 end
