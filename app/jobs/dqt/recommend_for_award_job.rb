@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class RecommendForAwardJob < ApplicationJob
+  class RecommendForAwardJob < Dqt::BaseJob
     queue_as :dqt
     retry_on Client::HttpError
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class WithdrawTraineeJob < ApplicationJob
+  class WithdrawTraineeJob < Dqt::BaseJob
     include NotifyOnTimeout
 
     sidekiq_options retry: 0

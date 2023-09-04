@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class SyncStatesJob < ApplicationJob
+  class SyncStatesJob < Dqt::BaseJob
     queue_as :dqt_sync
     retry_on Client::HttpError
 

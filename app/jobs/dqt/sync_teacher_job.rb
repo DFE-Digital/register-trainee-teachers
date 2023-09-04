@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class SyncTeacherJob < ApplicationJob
+  class SyncTeacherJob < Dqt::BaseJob
     queue_as :dqt_sync
 
     def perform(trainee)
