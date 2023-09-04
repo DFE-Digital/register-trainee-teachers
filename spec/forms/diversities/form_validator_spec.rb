@@ -17,11 +17,11 @@ module Diversities
     describe "validations" do
       context "when disclosed and all diversity forms valid" do
         before do
-          expect(DisclosureForm).to receive(:new).and_return(disclosure)
-          expect(EthnicGroupForm).to receive(:new).and_return(ethnic_group)
-          expect(EthnicBackgroundForm).to receive(:new).and_return(ethnic_background)
-          expect(DisabilityDisclosureForm).to receive(:new).and_return(disability_disclosure)
-          expect(DisabilityDetailForm).to receive(:new).and_return(disability_detail_form)
+          allow(DisclosureForm).to receive(:new).and_return(disclosure)
+          allow(EthnicGroupForm).to receive(:new).and_return(ethnic_group)
+          allow(EthnicBackgroundForm).to receive(:new).and_return(ethnic_background)
+          allow(DisabilityDisclosureForm).to receive(:new).and_return(disability_disclosure)
+          allow(DisabilityDetailForm).to receive(:new).and_return(disability_detail_form)
         end
 
         it { is_expected.to be_valid }

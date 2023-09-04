@@ -69,7 +69,7 @@ feature "submit for TRN" do
           and_i_want_to_review_record_before_submitting_for_trn
           then_i_review_the_trainee_data
           and_i_click_the_submit_for_trn_button
-          then_i_see_an_error_message
+          then_i_see_an_error_summary
         end
       end
     end
@@ -135,10 +135,8 @@ feature "submit for TRN" do
     expect(review_draft_page).to be_displayed(id: trainee.slug)
   end
 
-  def then_i_see_an_error_message
-    expect(page).to have_content(
-      I18n.t("activemodel.errors.models.submissions/trn_validator.attributes.trainee.incomplete"),
-    )
+  def then_i_see_an_error_summary
+    expect(page).to have_css(".govuk-error-summary")
   end
 
   def and_i_click_the_submit_for_trn_button

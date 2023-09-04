@@ -34,6 +34,11 @@ FactoryBot.define do
     email { "#{first_names}.#{last_name}@example.com" }
     applying_for_bursary { nil }
 
+    after(:create) do |trainee, _evaluator|
+      # NOTE: some of the tests circumvent the proper expectations with associations.
+      trainee.reload if trainee.disability_ids.blank? && trainee.trainee_disabilities.present?
+    end
+
     factory :trainee do
       date_of_birth { Faker::Date.birthday(min_age: 18, max_age: 65) }
     end
@@ -293,6 +298,7 @@ FactoryBot.define do
 
       after(:create) do |trainee, evaluator|
         create_list(:trainee_disability, evaluator.disabilities_count, trainee:)
+        trainee.reload
       end
     end
 
