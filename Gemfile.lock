@@ -16,14 +16,6 @@ GIT
       activesupport
       tzinfo
 
-GIT
-  remote: https://github.com/DFE-Digital/rspec-retry.git
-  revision: 306b42b8d5853303982e1a165e82d04744c20ea3
-  branch: main
-  specs:
-    rspec-retry (0.7.0)
-      rspec-core (> 3.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -804,7 +796,6 @@ DEPENDENCIES
   rotp
   rspec-benchmark
   rspec-rails (~> 6.0.3)
-  rspec-retry!
   rubocop-rails
   rubocop-rspec
   ruby-progressbar
@@ -839,4 +830,4 @@ RUBY VERSION
    ruby 3.1.3p185
 
 BUNDLED WITH
-   2.3.26
+   2.4.16
