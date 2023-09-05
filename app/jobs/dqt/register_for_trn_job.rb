@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class RegisterForTrnJob < ApplicationJob
+  class RegisterForTrnJob < Dqt::BaseJob
     sidekiq_options retry: 0
     queue_as :dqt
 

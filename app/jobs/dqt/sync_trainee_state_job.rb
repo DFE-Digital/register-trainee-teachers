@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class SyncTraineeStateJob < ApplicationJob
+  class SyncTraineeStateJob < Dqt::BaseJob
     queue_as :dqt_sync
     sidekiq_options retry: 5
 

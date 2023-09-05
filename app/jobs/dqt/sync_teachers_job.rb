@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Dqt
-  class SyncTeachersJob < ApplicationJob
+  class SyncTeachersJob < Dqt::BaseJob
     queue_as :dqt_sync
 
     def perform(batch_size = 500, interval = 30.seconds)
