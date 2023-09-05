@@ -1,0 +1,45 @@
+<%= render PageTitle::View.new(i18n_key: "dead_jobs.index") %>
+
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-full">
+    <%= render "system_admin/tab_nav" %>
+
+    <%= render ErrorSummary::View.new(renderable: dqt_error.present?) do %>
+      <%= dqt_error %>
+    <% end %>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Trainees Pending Award</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">First names</th>
+          <th scope="col" class="govuk-table__header">Last name</th>
+          <th scope="col" class="govuk-table__header">Days waiting</th>
+          <th scope="col" class="govuk-table__header" colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @trainees.each do |trainee| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= trainee.first_names %></td>
+            <td class="govuk-table__cell"><%= trainee.last_name %></td>
+            <td class="govuk-table__cell">
+              <%= (Date.current - trainee.recommended_for_award_at.to_date).to_i %>
+            </td>
+            <td class="govuk-table__cell">
+              <%=
+                govuk_link_to "View",
+                  trainee_personal_details_path(trainee),
+                  class: "govuk-!-margin-0 govuk-button"
+              %>
+            </td>
+            <td class="govuk-table__cell">
+            </td>
+            <td class="govuk-table__cell">
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
