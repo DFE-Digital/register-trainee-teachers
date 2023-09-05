@@ -13,8 +13,8 @@ module Funding
       @organisation&.name
     end
 
-    def path_for_funding_payment_schedule
-      return funding_payment_schedule_path if !system_admin
+    def path_for_funding_payment_schedule(year)
+      return funding_payment_schedule_path(year) if !system_admin
 
       if organisation.is_a?(Provider)
         provider_funding_payment_schedule_path(organisation)
@@ -23,8 +23,8 @@ module Funding
       end
     end
 
-    def path_for_funding_trainee_summary
-      return funding_trainee_summary_path if !system_admin
+    def path_for_funding_trainee_summary(year)
+      return funding_trainee_summary_path(year) if !system_admin
 
       if organisation.is_a?(Provider)
         provider_funding_trainee_summary_path(organisation)

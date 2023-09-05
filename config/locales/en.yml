@@ -330,6 +330,7 @@ en:
         show: Sign in
         verify: Check your email
       funding:
+        show: Select an academic year to view its funding
         trainee_summary: Funding - Trainee summary %{start_year} to %{end_year}
         payment_schedule: Funding - Payment schedule %{start_year} to %{end_year}
       personas: Personas
