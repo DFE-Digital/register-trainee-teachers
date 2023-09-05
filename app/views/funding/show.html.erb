@@ -1,14 +1,32 @@
-<%= render PageTitle::View.new(text: t("components.page_titles.funding.show")) %>
+<%= render PageTitle::View.new(text: t("components.page_titles.funding.show.title")) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
 <% end %>
 
-<h1 class="govuk-heading-l"> <%= t("components.page_titles.funding.show") %> </h1>
+<h1 class="govuk-heading-l"> <%= t("components.page_titles.funding.show.title") %> </h1>
 
-<ul class="govuk-list">
-  <% academic_years.each do |year| %>
-    <%= govuk_link_to year[:label], year[:url], class: "govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
-  <% end %>
+<% if trainee_summary_academic_years.any? %>
+
+  <h2 class="govuk-heading-m"> <%= t("components.page_titles.funding.show.payment_schedule") %> </h2>
+
   
-</ul>
+    <% payment_schedule_academic_years.each do |year| %>
+      <ul class="govuk-list">
+      <%= govuk_link_to year[:label], year[:url], class: "govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
+      </ul>
+    <% end %>
+
+<% end %>
+
+<% if trainee_summary_academic_years.any? %>
+
+  <h2 class="govuk-heading-m"> <%= t("components.page_titles.funding.show.trainee_summary") %> </h2>
+
+    <% trainee_summary_academic_years.each do |year| %>
+      <ul class="govuk-list">
+      <%= govuk_link_to year[:label], year[:url], class: "govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
+      </ul>
+    <% end %>
+
+<% end %>
