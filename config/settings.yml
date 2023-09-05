@@ -157,6 +157,7 @@ google:
 
 sign_off_trainee_data_url: https://forms.office.com/e/kzBmEWKDGz
 sign_off_performance_profiles_url: https://forms.gle/AtAvteRTKJu3mbXS7
+sign_off_period: # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb
 
 trainee_export:
   record_limit: 100
