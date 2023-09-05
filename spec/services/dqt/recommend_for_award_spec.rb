@@ -36,6 +36,14 @@ module Dqt
         ).and_return(dqt_response)
         subject
       end
+
+      context "when trn is blank" do
+        let(:trainee) { create(:trainee, :recommended_for_award, trn: nil) }
+
+        it "raises an error" do
+          expect { subject }.to raise_error(Dqt::RecommendForAward::TraineeAwardMissingTrn)
+        end
+      end
     end
   end
 end

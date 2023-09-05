@@ -4,12 +4,16 @@ module Dqt
   class RecommendForAward
     include ServicePattern
 
+    class TraineeAwardMissingTrn < StandardError; end
+
     def initialize(trainee:)
       @trainee = trainee
     end
 
     def call
       return unless FeatureService.enabled?(:integrate_with_dqt)
+
+      raise(TraineeAwardMissingTrn, "Cannot recommend for award without a trn (id: #{trainee.id})") if trainee.trn.blank?
 
       response["qtsDate"]
     end
