@@ -14,7 +14,10 @@ module Degrees
     end
 
     def call
-      trainee.degrees.create!(mapped_degree_attributes)
+      trainee.transaction do
+        trainee.degrees.destroy_all
+        trainee.degrees.create!(mapped_degree_attributes)
+      end
     end
 
   private

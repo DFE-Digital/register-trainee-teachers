@@ -66,9 +66,9 @@ module Trainees
         record_source: RecordSources::MANUAL,
         region: csv_row["Region"],
         training_route: training_route,
-        first_names: csv_row["First names"],
-        middle_names: csv_row["Middle names"],
-        last_name: csv_row["Last names"],
+        first_names: first_names,
+        middle_names: middle_names,
+        last_name: last_name,
         sex: sex,
         date_of_birth: Date.parse(csv_row["Date of birth"]),
         nationality_ids: nationality_ids,
@@ -90,6 +90,18 @@ module Trainees
 
       disabilities = csv_row["Disabilities"].split(",").map(&:strip)
       disabilities.map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
+    end
+
+    def first_names
+      csv_row["First names"].presence || csv_row["First name"]
+    end
+
+    def middle_names
+      csv_row["Middle names"].presence || csv_row["Middle name"]
+    end
+
+    def last_name
+      csv_row["Last names"].presence || csv_row["Last name"]
     end
 
     def itt_start_date
