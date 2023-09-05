@@ -32,7 +32,7 @@ class Provider < ApplicationRecord
   has_many :recommendations_upload_rows, class_name: "BulkUpdate::RecommendationsUploadRow", through: :recommendations_uploads
 
   validates :name, presence: true
-  validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }
+  validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }, allow_blank: true
   validates :code, format: { with: /\A[A-Z0-9]+\z/i }, allow_blank: true
   validates :ukprn, format: { with: /\A[0-9]{8}\z/ }
   validates :accreditation_id, presence: true, uniqueness: true

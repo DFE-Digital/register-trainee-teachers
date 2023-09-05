@@ -88,9 +88,6 @@ private
       I18n.t("#{translation_key_prefix}.name.blank"),
     )
     expect(new_provider_page).to have_text(
-      I18n.t("#{translation_key_prefix}.dttp_id.invalid"),
-    )
-    expect(new_provider_page).to have_text(
       I18n.t("#{translation_key_prefix}.ukprn.invalid"),
     )
     expect(new_provider_page).to have_text(

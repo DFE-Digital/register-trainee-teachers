@@ -24,7 +24,7 @@ FactoryBot.define do
     end
 
     trait :with_provider do
-      provider
+      provider factory: %i[provider with_dttp_id]
     end
   end
 end

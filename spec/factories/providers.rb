@@ -5,7 +5,6 @@ FactoryBot.define do
     sequence :name do |n|
       "Provider #{n}"
     end
-    dttp_id { SecureRandom.uuid }
     code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     ukprn { Faker::Number.number(digits: 8) }
     sequence(:accreditation_id, "1111")
@@ -23,6 +22,10 @@ FactoryBot.define do
       after(:create) do |provider, evaluator|
         create_list(:course, evaluator.courses_count, code: evaluator.course_code, accredited_body_code: provider.code)
       end
+    end
+
+    trait :with_dttp_id do
+      dttp_id { SecureRandom.uuid }
     end
   end
 end
