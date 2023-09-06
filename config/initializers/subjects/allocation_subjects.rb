@@ -24,7 +24,6 @@ unless defined?(AllocationSubjects)
     PHYSICAL_EDUCATION = "Physical education"
     PHYSICS = "Physics"
     PRIMARY = "Primary"
-    PRIMARY_WITH_MATHEMATICS = "Primary with mathematics"
     RELIGIOUS_EDUCATION = "Religious education"
   end
 end
