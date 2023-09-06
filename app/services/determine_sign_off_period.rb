@@ -4,13 +4,7 @@ class DetermineSignOffPeriod
   VALID_PERIODS = %i[census_period performance_period outside_period].freeze
 
   def self.call
-    if Settings.sign_off_period.present?
-      if VALID_PERIODS.include?(Settings.sign_off_period.to_sym)
-        return Settings.sign_off_period.to_sym
-      else
-        Sentry.capture_exception(StandardError.new("Invalid sign_off_period value: #{Settings.sign_off_period}"))
-      end
-    end
+    return Settings.sign_off_period.to_sym if valid_sign_off_period?
 
     current_date = Time.zone.today
 
@@ -18,6 +12,14 @@ class DetermineSignOffPeriod
     return :performance_period if performance_range.cover?(current_date)
 
     :outside_period
+  end
+
+  def self.valid_sign_off_period?
+    return false if Settings.sign_off_period.blank?
+    return true if VALID_PERIODS.include?(Settings.sign_off_period.to_sym)
+
+    Sentry.capture_exception(StandardError.new("Invalid sign_off_period value: #{Settings.sign_off_period}"))
+    false
   end
 
   def self.census_range
