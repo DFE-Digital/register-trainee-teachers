@@ -8,31 +8,42 @@ feature "pending awards" do
   before do
     given_i_am_authenticated
     and_i_have_a_trainee_with_a_pending_award
-    when_i_visit_the_pending_awards_page
   end
 
   scenario "shows pending awards page" do
+    when_there_are_no_jobs_in_the_retry_or_dead_queue
+    and_i_visit_the_pending_awards_page
     then_i_see_the_pending_awards_page
     and_i_see_the_trainee
   end
 
-  scenario "can check for award" do
-    # then_i_see_the_pending_awards_page
-    # when_i_click_check_for_award
-    # then_i_see_the_pending_awards_page
+  scenario "shows last run date if there is a job in the dead queue" do
+    when_there_is_a_job_in_the_dead_queue
+    and_i_visit_the_pending_awards_page
+    then_i_see_the_pending_awards_page
+    and_i_see_that_the_job_status_is_dead
   end
 
-  scenario "can resubmit for award" do
-    # then_i_see_the_pending_trns_page
-    # when_i_click_resubmit_for_trn
-    # then_i_see_the_pending_trns_page
+  scenario "shows next schedule date if there is a job in the retry queue" do
+    when_there_is_a_job_in_the_retry_queue
+    and_i_visit_the_pending_awards_page
+    then_i_see_the_pending_awards_page
+    and_i_see_that_the_job_status_is_retrying
+  end
+
+  scenario "shows details for individual trainees recommended for award" do
+    when_there_are_no_jobs_in_the_retry_or_dead_queue
+    and_i_visit_the_pending_awards_page
+    then_i_see_the_pending_awards_page
+    and_i_click_view
+    then_i_see_the_trainee_details
   end
 
   def and_i_have_a_trainee_with_a_pending_award
     @trainee = create(:trainee, :recommended_for_award)
   end
 
-  def when_i_visit_the_pending_awards_page
+  def and_i_visit_the_pending_awards_page
     visit "/system-admin/pending_awards"
   end
 
@@ -45,13 +56,46 @@ feature "pending awards" do
     expect(page).to have_text(trainee.last_name)
   end
 
-  # def when_i_click_check_for_trn
-  #   expect(Dqt::RetrieveTrn).to receive(:call).with(trn_request:)
-  #   admin_pending_trns_page.check_for_trn_button.click
-  # end
+  def and_i_click_view
+    click_on "View"
+  end
 
-  # def when_i_click_resubmit_for_trn
-  #   expect(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee)
-  #   admin_pending_trns_page.resumbit_for_trn_button.click
-  # end
+  def then_i_see_the_trainee_details
+    expect(page).to have_current_path(trainee_personal_details_path(trainee))
+  end
+
+  def when_there_is_a_job_in_the_dead_queue
+    allow(Dqt::FindDeadJobsService).to receive(:call).and_return(
+      @trainee.id => {
+        job_id: "dead_job_id",
+        error_message: "dead_job_error_message",
+        scheduled_at: 3.days.ago,
+      },
+    )
+    allow(Dqt::FindRetryJobsService).to receive(:call).and_return({})
+  end
+
+  def when_there_is_a_job_in_the_retry_queue
+    allow(Dqt::FindRetryJobsService).to receive(:call).and_return(
+      @trainee.id => {
+        job_id: "retry_job_id",
+        error_message: "retry_job_error_message",
+        scheduled_at: 3.days.from_now,
+      },
+    )
+    allow(Dqt::FindDeadJobsService).to receive(:call).and_return({})
+  end
+
+  def when_there_are_no_jobs_in_the_retry_or_dead_queue
+    allow(Dqt::FindDeadJobsService).to receive(:call).and_return({})
+    allow(Dqt::FindRetryJobsService).to receive(:call).and_return({})
+  end
+
+  def and_i_see_that_the_job_status_is_dead
+    expect(page).to have_text("dead")
+  end
+
+  def and_i_see_that_the_job_status_is_retrying
+    expect(page).to have_text("retrying")
+  end
 end
