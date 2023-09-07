@@ -9,6 +9,7 @@ when "dfe-sign-in"
 
   dfe_sign_in_issuer_uri = URI.parse(Settings.dfe_sign_in.issuer)
   dfe_sign_in_redirect_uri = URI.join(Settings.base_url, "/auth/dfe/callback")
+  dfe_sign_in_issuer_uri_with_port = "#{dfe_sign_in_issuer_uri}:#{dfe_sign_in_issuer_uri.port}" if dfe_sign_in_issuer_uri.present?
 
   client_options = {
     identifier: Settings.dfe_sign_in.identifier,
@@ -29,7 +30,8 @@ when "dfe-sign-in"
     path_prefix: "/auth",
     callback_path: "/auth/dfe/callback",
     client_options: client_options,
-  }
+    issuer: dfe_sign_in_issuer_uri_with_port,
+  }.compact
 
   Rails.application.config.middleware.use(OmniAuth::Strategies::OpenIDConnect, options)
 
