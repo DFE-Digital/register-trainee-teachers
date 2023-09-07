@@ -92,12 +92,16 @@ jobs:
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Run Snyk to check Docker image for vulnerabilities
-      uses: snyk/actions/docker@master
+      uses: Wandalen/wretry.action@v1.3.0
       env:
         SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
       with:
-        image: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
-        args: --file=Dockerfile --severity-threshold=high --exclude-app-vulns
+        attempt_limit: 3
+        attempt_delay: 2000
+        action: snyk/actions/docker@master
+        with: |
+          image: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
+          args: --file=Dockerfile --severity-threshold=high --exclude-app-vulns
 
     - name: Push ${{ env.DOCKER_IMAGE }} images
       if: ${{ success() && !contains(github.event.pull_request.labels.*.name, 'deploy_v2') }}
@@ -273,8 +277,11 @@ jobs:
       run: docker-compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
 
     - name: ${{ matrix.tests }} tests
-      run: |
-        docker-compose exec -T web /bin/sh -c 'bundle exec --verbose parallel_rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
+      uses: Wandalen/wretry.action@v1.3.0
+      with:
+        attempt_limit: 5
+        command: |
+          docker-compose exec -T web /bin/sh -c 'bundle exec --verbose parallel_rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
       env:
         IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
         INCLUDE_PATTERN: ${{ matrix.include-pattern }}

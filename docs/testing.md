@@ -37,20 +37,6 @@ You can run the JS specs with:
 yarn run test
 ```
 
-### rspec-retry
-
-[rspec-retry](https://github.com/NoRedInk/rspec-retry) is a gem that handles
-flakey tests by re-running failing tests a configurable number of times.
-
-It can cause problems when running tests in a development environment due to
-misleading error messages when specs (really) do fail. The workaround is to
-configure the number of attempts to `1` so that no retries happen. Add this
-line to `.env.test.local`:
-
-```
-RSPEC_RETRY_RETRY_COUNT: 1
-```
-
 ### Testing with features
 
 Rspec tests can also be tagged with `feature_{name}: true`. This will turn that feature on just for the duration of that test.

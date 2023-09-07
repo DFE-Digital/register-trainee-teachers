@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "rspec/retry"
 require "rspec-benchmark"
 
 if ENV.fetch("COVERAGE", false)
@@ -51,20 +50,6 @@ RSpec.configure do |config|
   config.order = :random
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
-
-  config.verbose_retry = true
-
-  config.display_try_failure_messages = true
-
-  config.around do |ex|
-    ex.run_with_retry retry: 3
-  end
-
-  config.retry_callback = proc do |ex|
-    if ex.metadata[:js]
-      Capybara.reset!
-    end
-  end
 
   use_next_academic_year = ENV.fetch("USE_NEXT_ACADEMIC_YEAR", false) == "true"
 

@@ -206,9 +206,6 @@ group :test do
 
   # Clean out the database between tests
   gem "database_cleaner-active_record"
-
-  # DfE Digital forked rspec-retry detects flaky specs and reports them
-  gem "rspec-retry", git: "https://github.com/DFE-Digital/rspec-retry.git", branch: "main"
 end
 
 # Required for example_data so needed in review, qa and pen too
