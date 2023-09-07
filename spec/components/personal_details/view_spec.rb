@@ -28,7 +28,7 @@ module PersonalDetails
     end
 
     context "when data has been provided with hesa optional fields" do
-      let(:trainee) { create(:trainee, id: 1, nationalities: [], created_from_hesa: true, hesa_id: 1) }
+      let(:trainee) { create(:trainee, nationalities: [], created_from_hesa: true, hesa_id: 1) }
 
       before do
         render_inline(View.new(data_model: personal_details_form))
@@ -40,7 +40,7 @@ module PersonalDetails
     end
 
     context "when data has been provided" do
-      let(:trainee) { create(:trainee, id: 1, nationalities: [british]) }
+      let(:trainee) { create(:trainee, nationalities: [british]) }
 
       before do
         render_inline(View.new(data_model: personal_details_form))
@@ -70,7 +70,7 @@ module PersonalDetails
       end
 
       context "when multiple nationalities have been provided" do
-        let(:trainee) { create(:trainee, id: 1, nationalities: [british, irish]) }
+        let(:trainee) { create(:trainee, nationalities: [british, irish]) }
 
         before do
           render_inline(View.new(data_model: personal_details_form))
