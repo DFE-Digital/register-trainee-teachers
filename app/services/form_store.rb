@@ -44,21 +44,29 @@ class FormStore
 
   class << self
     def get(trainee_id, key)
-      value = redis.get("#{trainee_id}_#{key}")
+      value = redis.get(cache_key_for(trainee_id, key))
       JSON.parse(value) if value.present?
     end
 
     def set(trainee_id, key, values)
       raise(InvalidKeyError) unless FORM_SECTION_KEYS.include?(key)
 
-      redis.set("#{trainee_id}_#{key}", values.to_json)
+      redis.set(cache_key_for(trainee_id, key), values.to_json)
 
       true
     end
 
     def clear_all(trainee_id)
       FORM_SECTION_KEYS.each do |key|
-        redis.set("#{trainee_id}_#{key}", nil)
+        redis.set(cache_key_for(trainee_id, key), nil)
+      end
+    end
+
+    def cache_key_for(trainee_id, key)
+      if ENV["TEST_ENV_NUMBER"].present?
+        "#{trainee_id}_#{key}_#{ENV['TEST_ENV_NUMBER']}"
+      else
+        "#{trainee_id}_#{key}"
       end
     end
 
