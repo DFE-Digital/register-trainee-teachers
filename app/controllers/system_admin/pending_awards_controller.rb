@@ -31,64 +31,11 @@ module SystemAdmin
   private
 
     def dead_jobs
-      @dead_jobs ||= Dqt::FindDeadJobsService.call
+      @dead_jobs ||= Dqt::FindDeadJobs.call
     end
 
     def retry_jobs
-      @retry_jobs ||= Dqt::FindRetryJobsService.call
-    end
-  end
-end
-
-module Dqt
-  class BaseFindJobsService
-    include ServicePattern
-
-    def call
-      sidekiq_class.new
-      .select { |job| job.item["wrapped"] == "Dqt::RecommendForAwardJob" }
-      .sort_by { |job| job.item["enqueued_at"] }
-      .to_h do |job|
-        [
-          job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i,
-          {
-            job_id: job.item["jid"],
-            error_message: parse_error(job.item["error_message"]),
-            scheduled_at: job.at,
-          },
-        ]
-      end
-    end
-
-  private
-
-    def parse_error(error)
-      return error unless error.include?("body: ")
-
-      JSON.parse(
-        error.split("body: ")
-             .last
-             .split(", headers:")
-             .first,
-      )
-    rescue JSON::ParserError
-      error
-    end
-  end
-end
-
-module Dqt
-  class FindDeadJobsService < BaseFindJobsService
-    def sidekiq_class
-      Sidekiq::DeadSet
-    end
-  end
-end
-
-module Dqt
-  class FindRetryJobsService < BaseFindJobsService
-    def sidekiq_class
-      Sidekiq::RetrySet
+      @retry_jobs ||= Dqt::FindRetryJobs.call
     end
   end
 end

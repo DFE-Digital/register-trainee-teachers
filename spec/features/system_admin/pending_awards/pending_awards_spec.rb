@@ -65,30 +65,30 @@ feature "pending awards" do
   end
 
   def when_there_is_a_job_in_the_dead_queue
-    allow(Dqt::FindDeadJobsService).to receive(:call).and_return(
+    allow(Dqt::FindDeadJobs).to receive(:call).and_return(
       @trainee.id => {
         job_id: "dead_job_id",
         error_message: "dead_job_error_message",
         scheduled_at: 3.days.ago,
       },
     )
-    allow(Dqt::FindRetryJobsService).to receive(:call).and_return({})
+    allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
   end
 
   def when_there_is_a_job_in_the_retry_queue
-    allow(Dqt::FindRetryJobsService).to receive(:call).and_return(
+    allow(Dqt::FindRetryJobs).to receive(:call).and_return(
       @trainee.id => {
         job_id: "retry_job_id",
         error_message: "retry_job_error_message",
         scheduled_at: 3.days.from_now,
       },
     )
-    allow(Dqt::FindDeadJobsService).to receive(:call).and_return({})
+    allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
   end
 
   def when_there_are_no_jobs_in_the_retry_or_dead_queue
-    allow(Dqt::FindDeadJobsService).to receive(:call).and_return({})
-    allow(Dqt::FindRetryJobsService).to receive(:call).and_return({})
+    allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
+    allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
   end
 
   def and_i_see_that_the_job_status_is_dead
