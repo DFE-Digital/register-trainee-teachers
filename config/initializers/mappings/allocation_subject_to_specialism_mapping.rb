@@ -121,7 +121,4 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   AllocationSubjects::PRIMARY => [
     CourseSubjects::PRIMARY_TEACHING,
   ],
-  AllocationSubjects::PRIMARY_WITH_MATHEMATICS => [
-    CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS,
-  ],
 }.freeze
