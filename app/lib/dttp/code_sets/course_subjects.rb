@@ -74,7 +74,6 @@ module Dttp
         ::CourseSubjects::RUSSIAN_LANGUAGES => { entity_id: "86a12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::SOCIAL_SCIENCES => { entity_id: "88a12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::SPANISH_LANGUAGE => { entity_id: "8aa12838-b3cf-e911-a860-000d3ab1da01" },
-        ::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS => { entity_id: "8ca12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::SPORTS_MANAGEMENT => { entity_id: "90a12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::SPORT_AND_EXERCISE_SCIENCES => { entity_id: "8ea12838-b3cf-e911-a860-000d3ab1da01" },
         ::CourseSubjects::STATISTICS => { entity_id: "a72916df-83ef-eb11-bacb-000d3ab62e3c" },
@@ -85,7 +84,6 @@ module Dttp
       }.freeze
 
       INACTIVE_MAPPING = {
-        ::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS => { entity_id: "f88274df-181e-e711-80c8-0050568902d3" },
         ::CourseSubjects::MATHEMATICS => {
           entity_id: "768274df-181e-e711-80c8-0050568902d3",
           original_name: "Mathematics (JACS)",

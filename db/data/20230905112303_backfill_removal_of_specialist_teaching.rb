@@ -2,7 +2,7 @@
 
 class BackfillRemovalOfSpecialistTeaching < ActiveRecord::Migration[7.0]
   def up
-    AcademicCycle.current.total_trainees.where(course_subject_one: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS).find do |trainee|
+    AcademicCycle.current.total_trainees.where(course_subject_one: "specialist teaching (primary with mathematics)").find do |trainee|
       if trainee.course_uuid.present?
         subject_one, subject_two, subject_three = calculate_subject_specialisms(
           Course.find_by(uuid: trainee.course_uuid).subjects.pluck(:name),

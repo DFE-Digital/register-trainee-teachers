@@ -72,7 +72,6 @@ unless defined?(CourseSubjects)
     SCIENCE = "science"
     SOCIAL_SCIENCES = "social sciences"
     SPANISH_LANGUAGE = "Spanish language"
-    SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS = "specialist teaching (primary with mathematics)"
     SPORTS_MANAGEMENT = "sports management"
     SPORT_AND_EXERCISE_SCIENCES = "sport and exercise sciences"
     STATISTICS = "statistics"
@@ -150,7 +149,6 @@ unless defined?(CourseSubjects)
       RUSSIAN_LANGUAGES => ::DegreeSubjects::RUSSIAN_LANGUAGES,
       SOCIAL_SCIENCES => ::DegreeSubjects::SOCIAL_SCIENCES,
       SPANISH_LANGUAGE => ::DegreeSubjects::SPANISH_LANGUAGE,
-      SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS => ::DegreeSubjects::SPECIALIST_TEACHING,
       SPORTS_MANAGEMENT => ::DegreeSubjects::SPORTS_MANAGEMENT,
       SPORT_AND_EXERCISE_SCIENCES => ::DegreeSubjects::SPORT_AND_EXERCISE_SCIENCES,
       STATISTICS => ::DegreeSubjects::STATISTICS,
