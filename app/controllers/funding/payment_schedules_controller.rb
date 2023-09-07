@@ -2,7 +2,7 @@
 
 module Funding
   class PaymentSchedulesController < BaseFundingController
-    before_action :redirect, only: [:show]
+    before_action :redirect_to_schedule_path, unless: -> { academic_year.present? }, only: [:show]
 
     def show
       respond_to do |format|
@@ -24,9 +24,7 @@ module Funding
 
   private
 
-    def redirect
-      return if academic_year.present?
-
+    def redirect_to_schedule_path
       redirect_to(funding_payment_schedule_path(selected_academic_cycle.start_year))
     end
 
