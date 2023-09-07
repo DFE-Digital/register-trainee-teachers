@@ -1,33 +1,29 @@
 # frozen_string_literal: true
 
 class FundingController < ApplicationController
-  helper_method :trainee_summary_academic_years, :payment_schedule_academic_years
+  helper_method :academic_years
 
   def show; end
 
 private
 
-  def trainee_summary_academic_years
-    current_user.organisation.funding_trainee_summaries.pluck(:academic_year).map do |year|
-      year = year.split("/").first.to_i
+  def academic_years
+    combined = trainee_summary_academic_years.merge(payment_schedule_academic_years)
+    combined.sort_by { |label, _| label }.reverse.to_h
+  end
 
-      {
-        label: "#{year} to #{year + 1}",
-        url: funding_trainee_summary_path(year),
-      }
+  def trainee_summary_academic_years
+    years = current_user.organisation.funding_trainee_summaries.pluck(:academic_year)
+    years.each_with_object({}) do |year, hash|
+      year_int = year.split("/").first.to_i
+      hash["#{year_int} to #{year_int + 1}"] = funding_trainee_summary_path(year_int)
     end
   end
 
   def payment_schedule_academic_years
-    current_user
-      .organisation
-      .funding_payment_schedules
-      .joins(rows: :amounts)
-      .pluck(Arel.sql("DISTINCT funding_payment_schedule_row_amounts.year")).map do |year|
-        {
-          label: "#{year} to #{year + 1}",
-          url: funding_payment_schedule_path(year),
-        }
-      end
+    years = current_user.organisation.funding_payment_schedules.joins(rows: :amounts).pluck(Arel.sql("DISTINCT funding_payment_schedule_row_amounts.year"))
+    years.each_with_object({}) do |year, hash|
+      hash["#{year} to #{year + 1}"] = funding_payment_schedule_path(year)
+    end
   end
 end

@@ -332,8 +332,6 @@ en:
       funding:
         show:
           title: Select an academic year to view its funding
-          trainee_summar: Trainee Summaries
-          payment_schedule: Payment Schedules
         trainee_summary: Funding - Trainee summary %{start_year} to %{end_year}
         payment_schedule: Funding - Payment schedule %{start_year} to %{end_year}
       personas: Personas
