@@ -24,12 +24,11 @@ Rails.application.routes.draw do
   get :healthcheck, controller: :heartbeat
   get :sha, controller: :heartbeat
 
-  get "/accessibility", to: "pages#accessibility", as: :accessibility
-  get "/privacy-policy", to: redirect("/privacy-notice")
-  get "/privacy-notice", to: "pages#privacy_notice", as: :privacy_notice
-
+  get "/accessibility", to: "pages#accessibility"
   get "/data-sharing-agreement", to: "pages#data_sharing_agreement"
   get "/dttp-replaced", to: "pages#dttp_replaced"
+  get "/privacy-notice", to: "pages#privacy_notice"
+  get "/privacy-policy", to: redirect("/privacy-notice")
 
   get "/404", to: "errors#not_found", via: :all, as: :not_found
   get "/422", to: "errors#unprocessable_entity", via: :all

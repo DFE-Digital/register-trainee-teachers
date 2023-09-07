@@ -334,12 +334,9 @@ en:
         payment_schedule: Funding - Payment schedule %{start_year} to %{end_year}
       personas: Personas
       pages:
-        accessibility: Accessibility statement for Register trainee teachers
         cookie_policy: Cookies on Register trainee teachers
-        guidance: Data requirements
         privacy_notice: Register trainee teachers privacy notice
         forbidden: &forbidden You do not have permission to perform this action
-        home: Home
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
