@@ -36,12 +36,12 @@ class HomeView
   def apply_drafts_link_text
     if drafts_are_all_apply_drafts?
       I18n.t(
-        "pages.home.draft_apply_trainees_link_all_apply",
+        "root.home.draft_apply_trainees_link_all_apply",
         count: draft_apply_trainees_count,
       )
     else
       I18n.t(
-        "pages.home.draft_apply_trainees_link",
+        "root.home.draft_apply_trainees_link",
         count: draft_apply_trainees_count,
         total: draft_trainees_count,
       )

@@ -131,7 +131,7 @@ describe HomeView do
 
       it "returns the correct text" do
         expect(subject.apply_drafts_link_text).to eq(
-          I18n.t("pages.home.draft_apply_trainees_link_all_apply", count: 1),
+          I18n.t("root.home.draft_apply_trainees_link_all_apply", count: 1),
         )
       end
     end
@@ -147,7 +147,7 @@ describe HomeView do
 
       it "returns the correct text" do
         expect(subject.apply_drafts_link_text).to eq(
-          I18n.t("pages.home.draft_apply_trainees_link", count: 1, total: 2),
+          I18n.t("root.home.draft_apply_trainees_link", count: 1, total: 2),
         )
       end
     end

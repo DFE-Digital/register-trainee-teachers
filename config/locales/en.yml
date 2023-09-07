@@ -932,7 +932,10 @@ en:
             label: Grant
             none:
               label: None
-  pages:
+  root:
+    start:
+      service_updates_title: Latest news and updates
+      service_updates_link: View all news and updates
     home:
       heading: Your trainee teachers
       draft_heading: Draft trainees
@@ -948,9 +951,7 @@ en:
       guidance_data_link: Check what data you need to provide
       give_feedback_link: Give feedback to help us improve Register trainee teachers
       data_sharing_agreement_link: Data sharing agreement
-    start:
-      service_updates_title: Latest news and updates
-      service_updates_link: View all news and updates
+  pages:
     cookie_policy:
       heading: Cookies on Register trainee teachers
     accessibility:

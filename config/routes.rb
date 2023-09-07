@@ -217,5 +217,5 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: "pages#start"
+  root to: "root#start"
 end
