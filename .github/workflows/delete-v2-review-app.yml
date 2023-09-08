@@ -12,7 +12,7 @@ jobs:
   delete-v2-review-app:
     name: Delete v2 Review App ${{ github.event.pull_request.number }}
     concurrency: deploy_v2_review_${{ github.event.pull_request.number }}
-    if: contains(github.event.pull_request.labels.*.name, 'deploy_v2')
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy_v2') || contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
