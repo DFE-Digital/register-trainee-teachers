@@ -9,8 +9,8 @@ module SystemAdmin
             @trainee_summary_view = ::Funding::TraineeSummaryView.new(trainee_summary:)
             @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
 
-            @start_year = current_academic_cycle.start_year
-            @end_year = current_academic_cycle.end_year
+            @start_year = selected_academic_cycle.start_year
+            @end_year = selected_academic_cycle.end_year
 
             render("funding/trainee_summaries/show")
           end

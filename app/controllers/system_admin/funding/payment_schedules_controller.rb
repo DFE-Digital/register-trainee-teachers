@@ -9,8 +9,8 @@ module SystemAdmin
             @payment_schedule_view = ::Funding::PaymentScheduleView.new(payment_schedule:)
             @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
 
-            @start_year = current_academic_cycle.start_year
-            @end_year = current_academic_cycle.end_year
+            @start_year = selected_academic_cycle.start_year
+            @end_year = selected_academic_cycle.end_year
 
             render("funding/payment_schedules/show")
           end
