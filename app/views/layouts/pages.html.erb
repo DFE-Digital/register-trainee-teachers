@@ -1,17 +1,9 @@
-<%= extends_layout :application do %>
-  <%= render PageTitle::View.new(text: @front_matter["page_title"])%>
-
-  <%= content_for(:breadcrumbs) do %>
-    <%= render GovukComponent::BackLinkComponent.new(
-        text: "Back",
-        href: root_path,
+<%= render(
+      "layouts/markdown_page",
+      {
+        page_title: @front_matter["page_title"],
+        title: @front_matter["title"],
+        breadcrumbs_text: "Back",
+        breadcrumbs_href: root_path,
+      },
     ) %>
-  <% end %>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-        <%= tag.h1 @front_matter["title"], class: "govuk-heading-l" %>
-        <%= yield %>
-    </div>
-  </div>
-<% end %>
