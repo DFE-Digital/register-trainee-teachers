@@ -15,6 +15,7 @@ module SystemAdminRoutes
 
         resources :dead_jobs, only: %i[index show update destroy]
         resources :pending_trns, only: %i[index show]
+        resources :pending_awards, only: %i[index show]
 
         resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]
