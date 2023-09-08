@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "pending TRNs" do
   let(:user) { create(:user, system_admin: true) }
-  let(:trainee) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request, first_names: "James Blint", id: 10001) }
+  let(:trainee) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request, first_names: "James Blint") }
   let(:trn_request) { trainee.dqt_trn_request }
 
   before do
