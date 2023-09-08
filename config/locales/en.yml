@@ -335,14 +335,12 @@ en:
       personas: Personas
       pages:
         cookie_policy: Cookies on Register trainee teachers
-        privacy_notice: Register trainee teachers privacy notice
         forbidden: &forbidden You do not have permission to perform this action
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
         no_organisation: You have not been linked to an organisation yet
         dttp_replaced: DTTP replaced
-        data_sharing_agreement: Register trainee teachers data sharing agreement
       sign_in:
         index: Sign in
       trn_submissions:
@@ -951,12 +949,6 @@ en:
   pages:
     cookie_policy:
       heading: Cookies on Register trainee teachers
-    accessibility:
-      heading: Accessibility statement for Register trainee teachers
-    data_sharing_agreement:
-      heading: Register trainee teachers data sharing agreement
-    privacy_notice:
-      heading: Register trainee teachers privacy notice
   organisations:
     index:
       heading: Choose organisation

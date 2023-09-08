@@ -1,0 +1,148 @@
+---
+page_title: Register trainee teachers privacy notice
+title: Register trainee teachers privacy notice
+---
+<h2 class='govuk-heading-m' id='who-are-we'>Who we are</h2>
+
+<p class='govuk-body'>Register trainee teachers (‘Register’) is run by the Department for Education (‘we’) for the purpose of registering trainee teachers.</p>
+
+<p class='govuk-body'>For the purpose of UK General Data Protection Regulation (UK GDPR), the DfE is the data controller for data held and processed in Register. Initial teacher training (ITT) providers, who use Register, are both data processors for DfE and also independent Data Controllers within the delivery of teacher training.</p>
+
+<h2 class='govuk-heading-m' id='who-this-privacy-policy-is-for'>Who this privacy notice is for</h2>
+<ul class='govuk-list govuk-list--bullet'>
+  <li>trainee teachers when you register with the Department for Education’s (DfE) Apply for teacher training service</li>
+  <li>trainee teachers when you register directly with a teacher training provider</li>
+  <li>Initial teacher training (ITT) provider staff when you access the Register system</li>
+</ul>
+
+<h2 class='govuk-heading-m'>The data we collect from ITT provider staff</h2>
+
+<p class='govuk-body'>We use your personal data to run and improve Register. If you have a Register account, we collect your:</p>
+<ul class='govuk-list govuk-list--bullet'>
+  <li>name</li>
+  <li>email address</li>
+</ul>
+
+<h2 class='govuk-heading-m'>How we use ITT provider staff personal data in Register</h2>
+
+<p class='govuk-body'>We collect your name and email address so that we can:</p>
+<ul class='govuk-list govuk-list--bullet'>
+  <li>enable you to access the Register service</li>
+  <li>validate your role in your organisation</li>
+  <li>send important updates about the service</li>
+  <li>get in touch with you about any queries you raise</li>
+  <li>ask if you would like to take part in user research</li>
+  <li>record a timeline of your activity so that you can review trainee progress</li>
+  <li>create log files of your activity and any error messages you come across</li>
+</ul>
+
+
+<h2 class='govuk-heading-m'>The data we collect from trainee teachers</h2>
+<p class='govuk-body'>We collect your personal data to register you with the DfE as a trainee teacher. We collect your:</p>
+<ul class='govuk-list govuk-list--bullet'>
+  <li>full name</li>
+  <li>sex (female, male, other or not provided)</li>
+  <li>nationality</li>
+  <li>date of birth</li>
+  <li>email address</li>
+  <li>qualifications</li>
+  <li>equality and diversity information</li>
+  <li>National Insurance number</li>
+</ul>
+
+<h2 class='govuk-heading-m'>The data we collect from all users</h2>
+<p class='govuk-body'>
+  We collect your IP address to help us make improvements to the service.
+  If you use other digital services for which the Data Controller is also
+  the DfE (for example, a member of ITT provider staff using Manage
+  Teacher Training Applications or a trainee using a Get Into Teaching
+  service while applying to become a teacher), we may use your IP address
+  to understand how you used these services. This allows us to ensure that
+  public funds are being spent effectively.
+</p>
+
+<h2 class='govuk-heading-m' id='how-trainee-personal-data-is-used-in-register'>How we use trainee teacher personal data in Register</h2>
+
+<p class='govuk-body'>Register processes trainee teacher personal data when candidates apply for teacher training and provide their personal data to the DfE or to ITT providers.</p>
+
+<p class='govuk-body'>Access to the service allows accredited ITT providers to:</p>
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li>submit and view ITT data, including personal details</li>
+  <li>update ITT records, including personal details</li>
+  <li>request a Teacher Reference Number (TRN)</li>
+  <li>recommend trainees for Qualified Teacher Status (QTS) or Early Years Teacher Status (EYTS)</li>
+  <li>confirm when a TRN was issued</li>
+  <li>confirm when QTS or EYTS was awarded</li>
+</ul>
+
+<h2 class='govuk-heading-m' id='our-lawful-basis-for-processing-your-personal-data'>Our lawful basis for processing your personal data</h2>
+
+<p class='govuk-body'>In order for our use of your personal data to be lawful, we need to meet one (or more) conditions in the data protection legislation, as defined in data protection law (UK GDPR and Data Protection Act 2018). For Register, we rely on:</p>
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li>article 6(1)(e) UK General Data Protection Regulation (UK GDPR), to perform a public task carried out in the public interest as part of our function as a department</li>
+  <li>article 9(2)(g) UK GDPR reasons of substantial public interest (with a basis in law)</li>
+</ul>
+
+<h2 class='govuk-heading-m' id='how-we-use-third-parties-to-process-your-data'>How we use third parties to process your data</h2>
+
+<p class='govuk-body'>Some of your personal information is processed by our Data Processors, listed below. They allow us to run and improve Register trainee teachers.</p>
+
+<p class='govuk-body'>We share your data with our Data Processors (ITT Providers) for the provision of this service. Data Protection Agreements are in place with each of these Processors and they are required to comply with the UK GDPR and the UK Data Protection Act 2018 as Data Processors.</p>
+
+<h3 class='govuk-heading-s'>Customer service management systems</h3>
+
+<p class='govuk-body'>We use Zendesk to manage and respond to your queries.</p>
+
+<p class='govuk-body'><a href='https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1' class='govuk-link'>Visit the Zendesk website to find out how they use and look after your data (“service data”)</a></p>
+
+<h2 class='govuk-heading-m' id='how-long-we-keep-your-personal-data'>How long we keep your personal data</h2>
+
+<h3 class='govuk-heading-s'>Provider staff data and user analytics data</h3>
+
+<p class='govuk-body'>We keep your personal data for as long as you use Register. We will keep it for no longer than 7 years after you stop using Register.</p>
+
+<h3 class='govuk-heading-s'>Trainee data</h3>
+
+<p class='govuk-body'>We keep your personal data for 7 years after you’ve finished your teacher training. After 7 years, your personal data will be removed from Register.</p>
+
+<h2 class='govuk-heading-m' id='sharing-itt-trainee-data-within-dfe'>Sharing ITT trainee data within DfE</h2>
+
+<p class='govuk-body'>Trainee teacher data on Register is shared with other teams and executive agencies within the DfE for the purposes of funding, issuing TRNs and confirming QTS or EYTS.</p>
+
+<h2 class='govuk-heading-m' id='sharing-itt-trainee-data-with-third-parties'>Sharing trainee personal data with third parties</h2>
+
+<p class='govuk-body'>We anonymise all trainee teacher personal data if we need to share it with third parties. This is so you cannot be identified. We will only share your anonymised data where data protection laws allow it, or there is a legal requirement to share it.</p>
+
+<p class='govuk-body'>We share your anonymised personal data so that we can analyse the ITT process, its operation and any strategic or policy related studies on behalf of DfE.</p>
+
+<h2 class='govuk-heading-m' id='your-rights'>Your rights</h2>
+
+<p class='govuk-body'>Under the DPA 2018 and the UK GDPR, you have the right to find out what data we have about you. However, your rights are conditional on the lawful basis under which your data is being processed. Our lawful basis is public task, which grants you the following rights:</p>
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li>being informed about how your data is being used</li>
+  <li>accessing personal data</li>
+  <li>having incorrect data corrected</li>
+  <li>restricting the processing of your data (for example where the data is inaccurate or outdated)</li>
+  <li>objecting to how your data is processed in certain circumstances, including automated processing and profiling</li>
+</ul>
+
+<p class='govuk-body'>You can find more information about how we handle personal data in our personal information charter.</p>
+
+<p class='govuk-body'>Contact the Register trainee teachers team at <a class='govuk-link' href='mailto:becomingateacher@education.gov.uk'>becomingateacher@education.gov.uk</a> if you have any concerns about your personal data.</p>
+
+<h2 class='govuk-heading-m' id='getting-help-raising-a-concern'>Getting help raising a concern</h2>
+
+<p class='govuk-body'>If you would like to exercise any of your rights, you can email us at <a href='mailto:becomingateacher@education.gov.uk?subject=Raising a concern - personal data in Register!' class='govuk-link'>becomingateacher@education.gov.uk</a></p>
+
+<p class='govuk-body'>You can also use our <a href='https://form.education.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-f1453496-7d8a-463f-9f33-1da2ac47ed76/AF-Stage-1e64d4cc-25fb-499a-a8d7-74e98203ac00/definition.json&redirectlink=%2Fen&cancelRedirectLink=%2Fen' class='govuk-link'>contact form</a> to get in touch with our Data Protection Officer.</p>
+
+<p class='govuk-body'>If we cannot resolve your issue, you have the right to raise it with the <a href='https://ico.org.uk/' class='govuk-link'>Information Commissioner's Office (ICO)</a>.</p>
+
+<h2 class='govuk-heading-m' id='keep-up-to-date'>Keeping our privacy notice up to date</h2>
+
+<p class='govuk-body'>We’ll update this privacy notice when required. You should regularly review the notice.</p>
+
+<p class='govuk-body'>This version was last updated on 24 August 2023.</p>
