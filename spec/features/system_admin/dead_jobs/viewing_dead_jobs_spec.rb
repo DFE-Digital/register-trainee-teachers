@@ -26,6 +26,10 @@ feature "Viewing sidekiq dead jobs" do
     ]
   end
 
+  around do |example|
+    Timecop.freeze(Time.zone.now.change(hour: 12, minute: 0)) { example.run }
+  end
+
   before do
     allow_any_instance_of(SystemAdmin::DeadJobsController).to receive(:job).and_return(nil) # rubocop:disable RSpec/AnyInstance
     given_i_am_authenticated(user:)
