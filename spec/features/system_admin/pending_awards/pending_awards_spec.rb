@@ -5,38 +5,51 @@ require "rails_helper"
 feature "pending awards" do
   attr_reader :trainee
 
-  before do
-    given_i_am_authenticated
-    and_i_have_a_trainee_with_a_pending_award
+  context "when I am authenticated as a system admin" do
+    before do
+      given_i_am_authenticated_as_system_admin
+      and_i_have_a_trainee_with_a_pending_award
+    end
+
+    scenario "shows pending awards page" do
+      when_there_are_no_jobs_in_the_retry_or_dead_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_see_the_trainee
+    end
+
+    scenario "shows last run date if there is a job in the dead queue" do
+      when_there_is_a_job_in_the_dead_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_see_that_the_job_status_is_dead
+    end
+
+    scenario "shows next schedule date if there is a job in the retry queue" do
+      when_there_is_a_job_in_the_retry_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_see_that_the_job_status_is_retrying
+    end
+
+    scenario "shows details for individual trainees recommended for award" do
+      when_there_are_no_jobs_in_the_retry_or_dead_queue
+      and_i_visit_the_pending_awards_page
+      then_i_see_the_pending_awards_page
+      and_i_click_view
+      then_i_see_the_trainee_details
+    end
   end
 
-  scenario "shows pending awards page" do
-    when_there_are_no_jobs_in_the_retry_or_dead_queue
-    and_i_visit_the_pending_awards_page
-    then_i_see_the_pending_awards_page
-    and_i_see_the_trainee
-  end
+  context "when I am authenticated as a regular user (not a system admin)" do
+    before do
+      given_i_am_authenticated
+      and_i_have_a_trainee_with_a_pending_award
+    end
 
-  scenario "shows last run date if there is a job in the dead queue" do
-    when_there_is_a_job_in_the_dead_queue
-    and_i_visit_the_pending_awards_page
-    then_i_see_the_pending_awards_page
-    and_i_see_that_the_job_status_is_dead
-  end
-
-  scenario "shows next schedule date if there is a job in the retry queue" do
-    when_there_is_a_job_in_the_retry_queue
-    and_i_visit_the_pending_awards_page
-    then_i_see_the_pending_awards_page
-    and_i_see_that_the_job_status_is_retrying
-  end
-
-  scenario "shows details for individual trainees recommended for award" do
-    when_there_are_no_jobs_in_the_retry_or_dead_queue
-    and_i_visit_the_pending_awards_page
-    then_i_see_the_pending_awards_page
-    and_i_click_view
-    then_i_see_the_trainee_details
+    scenario "the pending awards page is inaccessible" do
+      expect { and_i_visit_the_pending_awards_page }.to raise_error(ActionController::RoutingError)
+    end
   end
 
   def and_i_have_a_trainee_with_a_pending_award

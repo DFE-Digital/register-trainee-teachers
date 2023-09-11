@@ -3,7 +3,7 @@
 module SystemAdminRoutes
   def self.extended(router)
     router.instance_exec do
-      scope module: :system_admin, path: "system-admin" do
+      scope module: :system_admin, path: "system-admin", constraints: SystemAdminConstraint.new do
         require "sidekiq/web"
         require "sidekiq/cron/web"
 
