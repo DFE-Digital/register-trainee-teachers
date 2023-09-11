@@ -261,30 +261,6 @@ module Trainees
         end
       end
 
-      context "with primary subjects" do
-        let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_ittsubject1id_value: "8ca12838-b3cf-e911-a860-000d3ab1da01") }
-
-        it "sets the course education phase" do
-          create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.course_education_phase).to eq("primary")
-          expect(trainee.course_subject_one).to eq(CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
-        end
-      end
-
-      context "with 'Primary Mathematics Specialist' as course subject" do
-        let(:api_placement_assignment) do
-          create(:api_placement_assignment,
-                 _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::INACTIVE_MAPPING[::CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS][:entity_id])
-        end
-
-        it "sets the course subject one to Specialist Teaching" do
-          create_trainee_from_dttp
-          trainee = Trainee.last
-          expect(trainee.course_subject_one).to eq(CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
-        end
-      end
-
       context "with multiple placement_assignments" do
         let(:api_placement_assignment) { create(:api_placement_assignment, _dfe_ittsubject1id_value: Dttp::CodeSets::CourseSubjects::MODERN_LANGUAGES_DTTP_ID) }
         let(:placement_assignment_one) { create(:dttp_placement_assignment, :with_academic_year_twenty_twenty_one, provider_dttp_id: provider.dttp_id, response: api_placement_assignment) }
@@ -572,19 +548,6 @@ module Trainees
 
       it "sets no initiative" do
         expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
-      end
-    end
-
-    context "when training_initiative is a primary mathematics specialism" do
-      let(:api_placement_assignment) { create(:api_placement_assignment, :primary_mathematics_specialism) }
-
-      before do
-        create_trainee_from_dttp
-      end
-
-      it "sets no initiative and course subject to primary_mathematics_specialism" do
-        expect(Trainee.last.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:no_initiative])
-        expect(Trainee.last.course_subject_one).to eq(CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
       end
     end
 

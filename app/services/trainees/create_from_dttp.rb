@@ -241,8 +241,6 @@ module Trainees
     end
 
     def course_subject_one_name
-      return CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS if primary_mathematics_specialism?
-
       course(placement_assignment.response["_dfe_ittsubject1id_value"])
     end
 
@@ -260,7 +258,6 @@ module Trainees
 
       return COURSE_EDUCATION_PHASE_ENUMS[:primary] if [
         CourseSubjects::PRIMARY_TEACHING,
-        CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS,
       ].include?(subject_name)
 
       COURSE_EDUCATION_PHASE_ENUMS[:secondary]

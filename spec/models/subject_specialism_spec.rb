@@ -20,7 +20,6 @@ describe SubjectSpecialism do
     before do
       create(:subject_specialism, name: CourseSubjects::EARLY_YEARS_TEACHING)
       create(:subject_specialism, name: CourseSubjects::PRIMARY_TEACHING)
-      create(:subject_specialism, name: CourseSubjects::SPECIALIST_TEACHING_PRIMARY_WITH_MATHEMETICS)
     end
 
     it { is_expected.to contain_exactly(secondary_specialism) }
