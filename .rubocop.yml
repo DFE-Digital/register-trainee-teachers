@@ -1,6 +1,8 @@
 require:
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-factory_bot
   - ./lib/rubocop/cop/govuk/govuk_button_to.rb
   - ./lib/rubocop/cop/govuk/govuk_link_to.rb
   - ./lib/rubocop/cop/govuk/govuk_submit.rb
