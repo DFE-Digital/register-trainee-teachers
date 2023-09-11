@@ -345,7 +345,7 @@ jobs:
   merge-dependabot:
     name: Merge dependabot
     if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') }}
-    needs: [test, deploy-v2-review-app]
+    needs: [lint, test, deploy-v2-review-app]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
