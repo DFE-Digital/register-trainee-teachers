@@ -428,7 +428,7 @@ title: Register trainee teachers data sharing agreement
 <p class='govuk-body'>
   Data subjects wanting to make an SAR can email the DfE at
   <a class='govuk-link'
-  href='mailto:becomingateacher@education.gov.uk.?subject=Subject%20access%20request'>becomingateacher@education.gov.uk</a>.
+  href='mailto:becoming.ateacher@education.gov.uk.?subject=Subject%20access%20request'>becoming.ateacher@education.gov.uk</a>.
 </p>
 <h2 class='govuk-heading-m' id='#handling-freedom-of-information-act-requests'>
   Handling freedom of information requests
@@ -503,7 +503,7 @@ title: Register trainee teachers data sharing agreement
   </p>
   <p class='govuk-body'>
     All communication should be sent by email to <a class='govuk-link'
-    href='mailto:becomingateacher@education.gov.uk.?subject=Security%20incident'>becomingateacher@education.gov.uk</a>.
+    href='mailto:becoming.ateacher@education.gov.uk.?subject=Security%20incident'>becoming.ateacher@education.gov.uk</a>.
   </p>
   <p class='govuk-body'>
     The designated points of contact will discuss and agree the next steps relating to the incident, taking specialist advice where appropriate. Such arrangements will include (but will not be limited to):
@@ -587,7 +587,7 @@ title: Register trainee teachers data sharing agreement
 <p class='govuk-body'>
   To notify the DfE with your consent to the terms of this data sharing
   agreement, email <a class='govuk-link'
-  href='mailto:becomingateacher@education.gov.uk.?subject=Register%20DSA%20consent'>becomingateacher@education.gov.uk</a> with
+  href='mailto:becoming.ateacher@education.gov.uk.?subject=Register%20DSA%20consent'>becoming.ateacher@education.gov.uk</a> with
   confirmation.
 </p>
 <h3 class='govuk-heading-s'>
