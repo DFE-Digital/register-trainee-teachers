@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RootController < ApplicationController
+class LandingPageController < ApplicationController
   skip_before_action :authenticate
 
   def start

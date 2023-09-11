@@ -927,7 +927,7 @@ en:
             label: Grant
             none:
               label: None
-  root:
+  landing_page:
     start:
       service_updates_title: Latest news and updates
       service_updates_link: View all news and updates

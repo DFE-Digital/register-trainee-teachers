@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "root" do
+feature "landing page" do
   scenario "navigate to start" do
     given_i_am_on_the_start_page
     then_i_should_see_the_service_name
