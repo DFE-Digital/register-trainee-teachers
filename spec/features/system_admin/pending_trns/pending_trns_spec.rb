@@ -3,31 +3,43 @@
 require "rails_helper"
 
 feature "pending TRNs" do
-  let(:user) { create(:user, system_admin: true) }
   let(:trainee) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request, first_names: "James Blint") }
   let(:trn_request) { trainee.dqt_trn_request }
 
-  before do
-    given_i_am_authenticated(user:)
-    and_i_have_a_trainee_with_a_pending_trn
-    when_i_visit_the_pending_trns_page
+  context "when I am authenticated as a system admin" do
+    before do
+      given_i_am_authenticated_as_system_admin
+      and_i_have_a_trainee_with_a_pending_trn
+      when_i_visit_the_pending_trns_page
+    end
+
+    scenario "shows pending TRNs page" do
+      then_i_see_the_pending_trns_page
+      and_i_see_the_trainee
+    end
+
+    scenario "can check for TRN" do
+      then_i_see_the_pending_trns_page
+      when_i_click_check_for_trn
+      then_i_see_the_pending_trns_page
+    end
+
+    scenario "can resubmit for TRN" do
+      then_i_see_the_pending_trns_page
+      when_i_click_resubmit_for_trn
+      then_i_see_the_pending_trns_page
+    end
   end
 
-  scenario "shows pending TRNs page" do
-    then_i_see_the_pending_trns_page
-    and_i_see_the_trainee
-  end
+  context "when I am authenticated as a regular user (not a system admin)" do
+    before do
+      given_i_am_authenticated
+      and_i_have_a_trainee_with_a_pending_trn
+    end
 
-  scenario "can check for TRN" do
-    then_i_see_the_pending_trns_page
-    when_i_click_check_for_trn
-    then_i_see_the_pending_trns_page
-  end
-
-  scenario "can resubmit for TRN" do
-    then_i_see_the_pending_trns_page
-    when_i_click_resubmit_for_trn
-    then_i_see_the_pending_trns_page
+    scenario "the pending awards page is inaccessible" do
+      expect { when_i_visit_the_pending_trns_page }.to raise_error(ActionController::RoutingError)
+    end
   end
 
   def and_i_have_a_trainee_with_a_pending_trn

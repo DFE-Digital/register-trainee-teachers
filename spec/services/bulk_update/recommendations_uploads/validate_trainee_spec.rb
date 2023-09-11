@@ -184,7 +184,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same TRN - contact becomingateacher@education.gov.uk to fix this"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same TRN - contact becoming.ateacher@education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do
@@ -208,7 +208,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same HESA ID - contact becomingateacher@education.gov.uk to fix this"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same HESA ID - contact becoming.ateacher@education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do
@@ -230,7 +230,7 @@ module BulkUpdate
           end
 
           describe "#messages" do
-            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same provider trainee ID - contact becomingateacher@education.gov.uk to fix this"] }
+            it { expect(service.messages).to eql ["2 trainee records with TRN received status have the same provider trainee ID - contact becoming.ateacher@education.gov.uk to fix this"] }
           end
 
           describe "#trainee" do

@@ -1401,7 +1401,7 @@ en:
         bulk_update:
           recommendations_uploads:
             validate_trainee:
-              multiple_trainees_trn_received: "%{count} trainee records with TRN received status have the same %{found_with} - contact becomingateacher@education.gov.uk to fix this"
+              multiple_trainees_trn_received: "%{count} trainee records with TRN received status have the same %{found_with} - contact becoming.ateacher@education.gov.uk to fix this"
               multiple_trainees_found_via: "%{count} trainee records have the same %{found_with} but none have TRN received status - you can only recommend trainees with TRN received status"
               trainee_wrong_state: "The trainee has %{state} status - you can only recommend trainees with TRN received status"
               no_trainee_matched: "%{id_available} must match a trainee record"

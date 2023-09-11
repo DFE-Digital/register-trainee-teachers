@@ -11,7 +11,7 @@ describe SupportEmailHelper do
       subject { helper.support_email }
 
       it has_correct_formatting do
-        expected_output = "<a class=\"govuk-link\" href=\"mailto:becomingateacher@education.gov.uk\">becomingateacher@education.gov.uk</a>"
+        expected_output = "<a class=\"govuk-link\" href=\"mailto:becoming.ateacher@education.gov.uk\">becoming.ateacher@education.gov.uk</a>"
         expect(subject).to eq(expected_output)
       end
     end
@@ -20,7 +20,7 @@ describe SupportEmailHelper do
       subject { helper.support_email(subject: "Register trainee teachers support") }
 
       it has_correct_formatting do
-        expected_output = "<a class=\"govuk-link\" href=\"mailto:becomingateacher@education.gov.uk?subject=Register%20trainee%20teachers%20support\">becomingateacher@education.gov.uk</a>"
+        expected_output = "<a class=\"govuk-link\" href=\"mailto:becoming.ateacher@education.gov.uk?subject=Register%20trainee%20teachers%20support\">becoming.ateacher@education.gov.uk</a>"
         expect(subject).to eq(expected_output)
       end
 
@@ -28,7 +28,7 @@ describe SupportEmailHelper do
         subject { helper.support_email(name: "give feedback or report a problem", subject: "Register trainee teachers feedback") }
 
         it "has the correct formatting" do
-          expected_output = "<a class=\"govuk-link\" href=\"mailto:becomingateacher@education.gov.uk?subject=Register%20trainee%20teachers%20feedback\">give feedback or report a problem</a>"
+          expected_output = "<a class=\"govuk-link\" href=\"mailto:becoming.ateacher@education.gov.uk?subject=Register%20trainee%20teachers%20feedback\">give feedback or report a problem</a>"
           expect(subject).to eq(expected_output)
         end
 
@@ -36,7 +36,7 @@ describe SupportEmailHelper do
           subject { helper.support_email(name: "give feedback or report a problem", subject: "Register trainee teachers feedback", classes: "govuk-link--no-visited-state") }
 
           it has_correct_formatting do
-            expected_output = "<a class=\"govuk-link govuk-link--no-visited-state\" href=\"mailto:becomingateacher@education.gov.uk?subject=Register%20trainee%20teachers%20feedback\">give feedback or report a problem</a>"
+            expected_output = "<a class=\"govuk-link govuk-link--no-visited-state\" href=\"mailto:becoming.ateacher@education.gov.uk?subject=Register%20trainee%20teachers%20feedback\">give feedback or report a problem</a>"
             expect(subject).to eq(expected_output)
           end
         end
