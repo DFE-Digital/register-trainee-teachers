@@ -45,4 +45,4 @@ Read the [Initial Teacher Training census methodology](https://explore-education
 
 ## Get help
 
-Email <becomingateacher@education.gov.uk> if you have any questions about signing off your new trainee data.
+Email <becoming.ateacher@education.gov.uk> if you have any questions about signing off your new trainee data.
