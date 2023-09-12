@@ -2,7 +2,7 @@
 
 module Trainees
   class CreateFromApplyJob < ApplicationJob
-    queue_as :default
+    queue_as :apply
 
     def perform
       return unless FeatureService.enabled?("import_applications_from_apply")
@@ -10,10 +10,8 @@ module Trainees
       ApplyApplication.joins(:provider).where(
         providers: { apply_sync_enabled: true },
         recruitment_cycle_year: Settings.apply_applications.create.recruitment_cycle_year,
-      ).importable.each do |application|
-        CreateFromApply.call(application:)
-      rescue Trainees::CreateFromApply::MissingCourseError => e
-        Sentry.capture_exception(e)
+      ).importable.find_each do |application|
+        CreateFromApplicationJob.perform_later(application)
       end
     end
   end
