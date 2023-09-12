@@ -2,7 +2,7 @@
 
 class UpdateSchoolsSearchableFieldWithNormalisedName < ActiveRecord::Migration[6.1]
   def up
-    School.all.find_each(&:save)
+    School.find_each(&:save)
   end
 
   def down

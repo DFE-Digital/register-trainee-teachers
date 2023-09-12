@@ -2,7 +2,7 @@
 
 class RegenerateSlugsOnTrainees < ActiveRecord::Migration[6.1]
   def up
-    Trainee.all.find_each(&:regenerate_slug)
+    Trainee.find_each(&:regenerate_slug)
   end
 
   def down
