@@ -39,11 +39,6 @@ SET
   middle_names = null,
   last_name = concat('TraineeUser', id),
   email = concat('trainee_', id, '@example.com'),
-  address_line_one = CASE WHEN address_line_one IS NULL THEN NULL ELSE 'DfE Building' END,
-  address_line_two = CASE WHEN address_line_two IS NULL THEN NULL ELSE 'Great Smith Street' END,
-  town_city = CASE WHEN town_city IS NULL THEN NULL ELSE 'London' END,
-  postcode = CASE WHEN postcode IS NULL THEN NULL ELSE 'SW1P 3BT' END,
-  international_address = CASE WHEN international_address IS NULL THEN NULL ELSE 'International Address' END,
   trainee_id = concat('trainee-', id),
   trn = CASE WHEN trn IS NULL THEN NULL ELSE id END,
   additional_dttp_data = NULL;
