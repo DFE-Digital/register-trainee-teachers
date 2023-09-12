@@ -91,7 +91,9 @@ Metrics/CollectionLiteralLength:
     - "db/data/**/*"
 
 Rails/FindEach:
-  Enabled: true
+  Exclude:
+    - 'spec/services/trainees/create_from_apply_spec.rb'
+    - 'db/data/20230612133512_backfill_disability_uuids_from_dfe_reference_gem.rb'
 
 Rails/RedundantActiveRecordAllMethod:
   Enabled: false
