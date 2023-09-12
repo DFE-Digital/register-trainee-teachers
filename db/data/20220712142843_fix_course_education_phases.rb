@@ -17,7 +17,7 @@ class FixCourseEducationPhases < ActiveRecord::Migration[6.1]
     ).or(secondary_trainees_with_primary_age_age.where(course_subject_two: CourseSubjects::PRIMARY_TEACHING))
 
     # Move "primary teaching" to course_subject_one
-    secondary_trainees_with_primary_age_age.where(course_subject_two: CourseSubjects::PRIMARY_TEACHING).each do |trainee|
+    secondary_trainees_with_primary_age_age.where(course_subject_two: CourseSubjects::PRIMARY_TEACHING).find_each do |trainee|
       trainee.update_columns(course_subject_one: trainee.course_subject_one, course_subject_two: trainee.course_subject_two)
     end
 
@@ -30,7 +30,7 @@ class FixCourseEducationPhases < ActiveRecord::Migration[6.1]
 
     results = trainees_without_primary_subject.map { |t| t.provider.id }.tally.select { |_, count| count >= 5 }
 
-    trainees_without_primary_subject.where(provider_id: results.keys).each do |trainee|
+    trainees_without_primary_subject.where(provider_id: results.keys).find_each do |trainee|
       trainee.update_columns(course_subject_one: CourseSubjects::PRIMARY_TEACHING,
                              course_subject_two: trainee.course_subject_one,
                              course_education_phase: primary_enum)

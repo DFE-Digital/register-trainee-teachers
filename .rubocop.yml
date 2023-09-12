@@ -89,3 +89,10 @@ Metrics/CollectionLiteralLength:
     - "app/lib/hesa/**/*"
     - "config/initializers/subjects/**/*"
     - "db/data/**/*"
+
+Rails/FindEach:
+  Enabled: true
+
+Rails/RedundantActiveRecordAllMethod:
+  Enabled: false
+

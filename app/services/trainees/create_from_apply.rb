@@ -149,7 +149,7 @@ module Trainees
     end
 
     def save_other_disability_text!
-      trainee.trainee_disabilities.includes(:disability).each do |trainee_disability|
+      trainee.trainee_disabilities.includes(:disability).find_each do |trainee_disability|
         if trainee_disability.disability.uuid == DfEReference::DisabilitiesQuery::OTHER_DISABILITY_UUID
           trainee_disability.update!(additional_disability: other_disability&.dig("text"))
         end

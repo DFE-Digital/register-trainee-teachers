@@ -2,7 +2,7 @@
 
 class BackfillHesaTrnSubmissionsRerun < ActiveRecord::Migration[6.1]
   def up
-    ::Hesa::TrnSubmission.where.not(payload: nil).each do |submission|
+    ::Hesa::TrnSubmission.where.not(payload: nil).find_each do |submission|
       trns = CSV.new(submission.payload, headers: true).pluck("TRN")
       next if trns.empty?
 

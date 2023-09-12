@@ -117,7 +117,7 @@ module Trainees
 
     context "disabilities" do
       before do
-        DfEReference::DisabilitiesQuery.all.each do |reference_data|
+        DfEReference::DisabilitiesQuery.all.find_each do |reference_data|
           Disability.create!(name: reference_data.name, uuid: reference_data.id)
         end
       end

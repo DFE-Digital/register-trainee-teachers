@@ -2,7 +2,7 @@
 
 class RegenerateSlugsOnDegrees < ActiveRecord::Migration[6.1]
   def up
-    Degree.all.each(&:regenerate_slug)
+    Degree.all.find_each(&:regenerate_slug)
   end
 
   def down

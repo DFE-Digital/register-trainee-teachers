@@ -6,7 +6,7 @@ class AddFundingMethodsForAncientLanguages < ActiveRecord::Migration[6.1]
     ancient_languages_allocation_subject = AllocationSubject.find_by(name: AllocationSubjects::ANCIENT_LANGUAGES)
 
     # Copy all the funding methods from Classics until we enter the 22/23 academic year
-    classics_allocation_subject.funding_methods.where(academic_cycle: AcademicCycle.current).each do |funding_method|
+    classics_allocation_subject.funding_methods.where(academic_cycle: AcademicCycle.current).find_each do |funding_method|
       ancient_languages_allocation_subject.funding_method_subjects.create(funding_method:)
     end
   end

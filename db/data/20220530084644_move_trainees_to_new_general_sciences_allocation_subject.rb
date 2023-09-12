@@ -6,7 +6,7 @@ class MoveTraineesToNewGeneralSciencesAllocationSubject < ActiveRecord::Migratio
     general_sciences_allocation_subject = AllocationSubject.find_by(name: AllocationSubjects::GENERAL_SCIENCES)
 
     Trainee.where(course_allocation_subject: biology_allocation_subject,
-                  course_subject_one: AllocationSubjects::GENERAL_SCIENCES.downcase).each do |trainee|
+                  course_subject_one: AllocationSubjects::GENERAL_SCIENCES.downcase).find_each do |trainee|
       trainee.update_columns(course_allocation_subject_id: general_sciences_allocation_subject.id,
                              applying_for_bursary: false)
     end
