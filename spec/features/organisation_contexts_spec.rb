@@ -91,7 +91,7 @@ private
   end
 
   def then_i_see_the_content_for_a_user_with_no_organisation
-    expect(organisations_index_page).to have_text(I18n.t("pages.no_organisation.heading"))
+    expect(organisations_index_page).to have_text("You have not been linked to an organisation yet")
   end
 
   def multi_organisation_user

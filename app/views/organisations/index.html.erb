@@ -9,11 +9,9 @@
       <ul class="govuk-list">
         <%- @providers.each do |provider| -%>
           <li class="govuk-!-margin-bottom-2">
-            <%= 
-              govuk_link_to provider.name, 
-                organisation_path(id: provider.id, type: "Provider"), 
-                class: "provider-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" 
-            %>
+            <%= govuk_link_to provider.name,
+              organisation_path(id: provider.id, type: "Provider"),
+              class: "provider-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
           </li>
         <%- end -%>
       </ul>
@@ -25,10 +23,9 @@
       <ul class="govuk-list govuk-!-margin-bottom-7">
         <%- @lead_schools.each do |lead_school| -%>
           <li class="govuk-!-margin-bottom-2">
-            <%= govuk_link_to lead_school.name, 
-              organisation_path(id: lead_school.id, type: "School"), 
-              class: "lead-school-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" 
-            %>
+            <%= govuk_link_to lead_school.name,
+              organisation_path(id: lead_school.id, type: "School"),
+              class: "lead-school-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
           </li>
         <%- end -%>
       </ul>
@@ -38,8 +35,7 @@
     <%- end -%>
 
     <%- if current_user.no_organisation? -%>
-      <h2 class="govuk-heading-m"><%=t("pages.no_organisation.heading")%></h2>
-      <%= t("pages.no_organisation.body_html") %>
+      <%= render("no_organisation") %>
     <%- end -%>
   </div>
 </div>

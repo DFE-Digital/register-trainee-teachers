@@ -334,18 +334,13 @@ en:
         payment_schedule: Funding - Payment schedule %{start_year} to %{end_year}
       personas: Personas
       pages:
-        accessibility: Accessibility statement for Register trainee teachers
         cookie_policy: Cookies on Register trainee teachers
-        guidance: Data requirements
-        privacy_notice: Register trainee teachers privacy notice
         forbidden: &forbidden You do not have permission to perform this action
-        home: Home
         not_found: Page not found
         internal_server_error: Sorry, something went wrong
         unprocessable_entity: Sorry, the change you wanted was rejected
         no_organisation: You have not been linked to an organisation yet
         dttp_replaced: DTTP replaced
-        data_sharing_agreement: Register trainee teachers data sharing agreement
       sign_in:
         index: Sign in
       trn_submissions:
@@ -932,7 +927,10 @@ en:
             label: Grant
             none:
               label: None
-  pages:
+  landing_page:
+    start:
+      service_updates_title: Latest news and updates
+      service_updates_link: View all news and updates
     home:
       heading: Your trainee teachers
       draft_heading: Draft trainees
@@ -948,23 +946,9 @@ en:
       guidance_data_link: Check what data you need to provide
       give_feedback_link: Give feedback to help us improve Register trainee teachers
       data_sharing_agreement_link: Data sharing agreement
-    start:
-      service_updates_title: Latest news and updates
-      service_updates_link: View all news and updates
+  pages:
     cookie_policy:
       heading: Cookies on Register trainee teachers
-    accessibility:
-      heading: Accessibility statement for Register trainee teachers
-    guidance:
-      heading: About Register trainee teachers
-    data_sharing_agreement:
-      heading: Register trainee teachers data sharing agreement
-    check_data:
-      heading: Check what data you need to provide
-    privacy_notice:
-      heading: Register trainee teachers privacy notice
-    no_organisation:
-      heading: You have not been linked to an organisation yet
   organisations:
     index:
       heading: Choose organisation
