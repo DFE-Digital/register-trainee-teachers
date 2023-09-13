@@ -25,8 +25,8 @@ jobs:
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
     outputs:
-      docker_image: ${{ env.DOCKER_IMAGE }}
-      image_tag: ${{ env.IMAGE_TAG }}
+      docker-image: ${{ env.DOCKER_IMAGE }}
+      image-tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
 
     steps:
@@ -147,37 +147,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set environment variables
-        run: |
-          echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-
-      - name: Set KV environment variables
-        run: |
-          # tag build to the review env for vars and secrets
-          tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
-          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-          echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-      - uses: azure/login@v1
+      - name: Bring docker image up
+        uses: ./.github/actions/bring-docker-image-up/
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
-
-      - uses: DFE-Digital/keyvault-yaml-secret@v1
-        id: get-secret
-        with:
-          keyvault: ${{ env.KEY_VAULT_NAME }}
-          secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
-          key: SENTRY_DSN
-
-      - name: Pull docker images
-        run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
-
-      - name: Bring images up
-        run: |
-          docker-compose up --no-build -d
-          docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
-        env:
-          SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+          docker-image: ${{needs.build.outputs.docker-image}}
+          image-tag: ${{ needs.build.outputs.image-tag }}
 
       - name: ${{ matrix.tests }}
         run: ${{ env.COMMAND }}
@@ -233,37 +208,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Set environment variables
-      run: |
-        echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-
-    - name: Set KV environment variables
-      run: |
-        # tag build to the review env for vars and secrets
-        tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
-        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - uses: azure/login@v1
+    - name: Bring docker image up
+      uses: ./.github/actions/bring-docker-image-up/
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
-
-    - uses: DFE-Digital/keyvault-yaml-secret@v1
-      id: get-secret
-      with:
-        keyvault: ${{ env.KEY_VAULT_NAME }}
-        secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
-        key: SENTRY_DSN
-
-    - name: Pull docker images
-      run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
-
-    - name: Bring images up
-      run: |
-        docker-compose up --no-build -d
-        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
-      env:
-        SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+        docker-image: ${{needs.build.outputs.docker-image}}
+        image-tag: ${{ needs.build.outputs.image-tag }}
 
     - name: Setup tests dependencies on images
       run: |
@@ -335,37 +285,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Set environment variables
-      run: |
-        echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-
-    - name: Set KV environment variables
-      run: |
-        # tag build to the review env for vars and secrets
-        tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
-        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - uses: azure/login@v1
+    - name: Bring docker image up
+      uses: ./.github/actions/bring-docker-image-up/
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
-
-    - uses: DFE-Digital/keyvault-yaml-secret@v1
-      id: get-secret
-      with:
-        keyvault: ${{ env.KEY_VAULT_NAME }}
-        secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
-        key: SENTRY_DSN
-
-    - name: Pull docker images
-      run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
-
-    - name: Bring images up
-      run: |
-        docker-compose up --no-build -d
-        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
-      env:
-        SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+        docker-image: ${{needs.build.outputs.docker-image}}
+        image-tag: ${{ needs.build.outputs.image-tag }}
 
     - name: Setup tests dependencies on images
       run: |
