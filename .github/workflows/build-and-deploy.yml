@@ -123,8 +123,6 @@ jobs:
     name: Lint
     needs: [build]
     runs-on: ubuntu-latest
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
 
     strategy:
       fail-fast: false
@@ -201,8 +199,6 @@ jobs:
   test:
     name: Test
     needs: [build]
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -303,8 +299,6 @@ jobs:
   next_academic_year_test:
     name: Next academic year tests
     needs: [build, test]
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
     runs-on: ubuntu-latest
 
     strategy:
