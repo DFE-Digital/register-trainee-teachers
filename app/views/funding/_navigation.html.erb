@@ -1,5 +1,5 @@
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "All funding years", href: funding_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "All funding years", href: back_path) %>
 <% end %>
 
 <% if @navigation_view.organisation_name %>

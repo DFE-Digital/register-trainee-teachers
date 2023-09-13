@@ -2,6 +2,8 @@
 
 module Funding
   class BaseFundingController < ApplicationController
+    helper_method :back_path
+
     def selected_academic_cycle
       @selected_academic_cycle ||=
         academic_year.blank? ? AcademicCycle.current : AcademicCycle.for_year(academic_year)
@@ -33,6 +35,10 @@ module Funding
 
     def academic_year
       params[:academic_year]
+    end
+
+    def back_path
+      funding_path
     end
   end
 end

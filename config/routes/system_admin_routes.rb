@@ -7,10 +7,10 @@ module SystemAdminRoutes
         require "sidekiq/web"
         require "sidekiq/cron/web"
 
-        mount Blazer::Engine, at: "/blazer", constraints: SystemAdminConstraint.new
+        mount Blazer::Engine, at: "/blazer"
         get "/blazer", to: redirect("/sign-in"), status: 302
 
-        mount Sidekiq::Web, at: "/sidekiq", constraints: SystemAdminConstraint.new
+        mount Sidekiq::Web, at: "/sidekiq"
         get "/sidekiq", to: redirect("/sign-in"), status: 302
 
         resources :dead_jobs, only: %i[index show update destroy]
@@ -20,9 +20,13 @@ module SystemAdminRoutes
         resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]
 
+          get "/funding", to: "funding#show", as: :funding
+
           namespace :funding do
-            resource :payment_schedule, only: %i[show], path: "/payment-schedule"
-            resource :trainee_summary, only: %i[show], path: "/trainee-summary"
+            scope "(:academic_year)" do
+              resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
+              resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
+            end
           end
           resource :confirm_deletes, only: :show, path: "/confirm-delete", as: :confirm_delete, module: :providers
         end
@@ -45,9 +49,13 @@ module SystemAdminRoutes
         resources :lead_schools, path: "lead-schools", only: %i[index show] do
           resources :users, controller: "lead_schools/users", only: %i[edit update]
 
+          get "/funding", to: "funding#show", as: :funding
+
           namespace :funding do
-            resource :payment_schedule, only: %i[show], path: "/payment-schedule"
-            resource :trainee_summary, only: %i[show], path: "/trainee-summary"
+            scope "(:academic_year)" do
+              resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
+              resource :trainee_summarys, only: %i[show], path: "/trainee-summary", as: :trainee_summary
+            end
           end
         end
 

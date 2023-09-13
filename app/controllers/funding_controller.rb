@@ -13,7 +13,9 @@ private
   end
 
   def trainee_summary_academic_years
-    years = current_user.organisation.funding_trainee_summaries.pluck(:academic_year)
+    years = organisation&.funding_trainee_summaries&.pluck(:academic_year)
+    return {} if years.blank?
+
     years.each_with_object({}) do |year, hash|
       year_int = year.split("/").first.to_i
       hash["#{year_int} to #{year_int + 1}"] = funding_trainee_summary_path(year_int)
@@ -21,9 +23,18 @@ private
   end
 
   def payment_schedule_academic_years
-    years = current_user.organisation.funding_payment_schedules.joins(rows: :amounts).pluck(Arel.sql("DISTINCT funding_payment_schedule_row_amounts.year"))
+    years = organisation&.funding_payment_schedules&.joins(rows: :amounts)&.pluck(Arel.sql("DISTINCT funding_payment_schedule_row_amounts.year"))
+    return {} if years.blank?
+
     years.each_with_object({}) do |year, hash|
       hash["#{year} to #{year + 1}"] = funding_payment_schedule_path(year)
     end
+  end
+
+  def organisation
+    return Provider.find(params[:provider_id]) if params[:provider_id].present?
+    return School.find(params[:lead_school_id]) if params[:lead_school_id].present?
+
+    current_user.organisation
   end
 end
