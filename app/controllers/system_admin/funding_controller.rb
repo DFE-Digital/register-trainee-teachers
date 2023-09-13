@@ -20,8 +20,8 @@ module SystemAdmin
       return {} if years.blank?
 
       years.each_with_object({}) do |year, hash|
-        year_int = year.split("/").first.to_i
-        hash["#{year_int} to #{year_int + 1}"] = funding_path(year_int, "trainee_summary")
+        year = year.split("/").first.to_i
+        hash["#{year} to #{year + 1}"] = funding_path(year, "trainee_summary")
       end
     end
 
