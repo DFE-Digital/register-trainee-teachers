@@ -2,7 +2,7 @@
 
 class UpdateDttpForEbaccTrainees < ActiveRecord::Migration[6.1]
   def up
-    Trainee.where(ebacc: true).each do |trainee|
+    Trainee.where(ebacc: true).find_each do |trainee|
       Dttp::UpdateTraineeJob.perform_later(trainee)
     end
   end

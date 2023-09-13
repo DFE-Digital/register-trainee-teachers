@@ -275,7 +275,7 @@ namespace :example_data do
     end
 
     # We don't want all trainees having the same update date on the index page
-    Audited.audit_class.all.each do |audit|
+    Audited.audit_class.find_each do |audit|
       random_date = rand(100).days.ago
       audit.update(created_at: random_date)
       audit.auditable.tap do |auditable|

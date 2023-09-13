@@ -6,7 +6,7 @@ class UpdateBaEducationDegreesInDttp < ActiveRecord::Migration[6.1]
   def up
     degrees = Degree.where(uk_degree: "BA/Education")
 
-    Trainee.where(id: degrees.pluck(:trainee_id)).each do |trainee|
+    Trainee.where(id: degrees.pluck(:trainee_id)).find_each do |trainee|
       Dttp::UpdateTraineeJob.perform_later(trainee)
     end
   end

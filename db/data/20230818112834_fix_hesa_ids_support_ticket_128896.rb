@@ -99,7 +99,7 @@ class FixHesaIdsSupportTicket128896 < ActiveRecord::Migration[7.0]
             hesa_id: new_hesa_id,
             audit_comment: "Correction to `hesa_id` - see https://becomingateacher.zendesk.com/agent/tickets/128896",
           )
-          Hesa::Student.where(hesa_id:).each do |student|
+          Hesa::Student.where(hesa_id:).find_each do |student|
             student.update!(hesa_id: new_hesa_id)
           end
         end

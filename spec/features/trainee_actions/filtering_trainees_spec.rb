@@ -327,7 +327,7 @@ private
   end
 
   def then_all_registered_trainees_are_visible
-    Trainee.where.not(state: "draft").each { |trainee| expect(trainee_index_page).to have_text(full_name(trainee)) }
+    Trainee.where.not(state: "draft").find_each { |trainee| expect(trainee_index_page).to have_text(full_name(trainee)) }
   end
 
   def then_all_draft_trainees_are_visible

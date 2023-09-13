@@ -3,7 +3,7 @@
 class RemoveDuplicateTrainees < ActiveRecord::Migration[6.1]
   def up
     # These records no longer exist in DTTP
-    Trainee.where(slug: %w[7juoh4yB9PzoHj6vurwX9MHe wcMqhXzPC9bmfcVx9f8tHFKB]).each(&:destroy)
+    Trainee.where(slug: %w[7juoh4yB9PzoHj6vurwX9MHe wcMqhXzPC9bmfcVx9f8tHFKB]).find_each(&:destroy)
   end
 
   def down

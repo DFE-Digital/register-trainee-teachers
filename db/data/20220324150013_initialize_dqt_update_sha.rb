@@ -2,7 +2,7 @@
 
 class InitializeDqtUpdateSha < ActiveRecord::Migration[6.1]
   def up
-    Trainee.all.find_each do |trainee|
+    Trainee.find_each do |trainee|
       trainee.update(dqt_update_sha: trainee.sha)
     end
   end

@@ -140,7 +140,7 @@ class RemoveTraineesWithIncorrectHesaids < ActiveRecord::Migration[7.0]
       22100071551541341
       22100071551554684
       22100071551560674
-    ]).each(&:destroy)
+    ]).find_each(&:destroy)
   end
 
   def down

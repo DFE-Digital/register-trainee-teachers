@@ -8,7 +8,7 @@ module Dqt
     def perform(trainee_ids)
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
-      Trainee.where(id: trainee_ids).each do |trainee|
+      Trainee.where(id: trainee_ids).find_each do |trainee|
         Dqt::SyncTraineeStateJob.perform_later(trainee)
       end
     end

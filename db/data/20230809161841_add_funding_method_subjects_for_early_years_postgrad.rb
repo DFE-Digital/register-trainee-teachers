@@ -6,7 +6,7 @@ class AddFundingMethodSubjectsForEarlyYearsPostgrad < ActiveRecord::Migration[7.
       name: "Early years ITT",
     )
 
-    FundingMethod.where(training_route: "early_years_salaried").each do |salaried_funding_method|
+    FundingMethod.where(training_route: "early_years_salaried").find_each do |salaried_funding_method|
       postgrad_funding_method = FundingMethod.find_or_create_by(
         training_route: "early_years_postgrad",
         academic_cycle_id: salaried_funding_method.academic_cycle_id,

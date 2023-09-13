@@ -85,7 +85,7 @@ private
   end
 
   def providers
-    @providers ||= Provider.all.order(:name)
+    @providers ||= Provider.order(:name)
   end
 
   def training_routes

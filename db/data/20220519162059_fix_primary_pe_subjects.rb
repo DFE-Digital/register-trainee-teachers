@@ -37,7 +37,7 @@ class FixPrimaryPeSubjects < ActiveRecord::Migration[6.1]
 
     primary_allocation_subject_id = AllocationSubject.find_by(name: "Primary").id
 
-    Trainee.where(id: trainee_ids).each do |trainee|
+    Trainee.where(id: trainee_ids).find_each do |trainee|
       trainee.without_auditing do
         trainee.update(
           course_subject_one: "primary teaching",

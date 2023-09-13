@@ -2,7 +2,7 @@
 
 class BackfillHesaMetadata
   def call
-    Trainee.where(created_from_dttp: true).where.not(hesa_id: nil).where(hesa_updated_at: nil).each do |trainee|
+    Trainee.where(created_from_dttp: true).where.not(hesa_id: nil).where(hesa_updated_at: nil).find_each do |trainee|
       latest_placement_assignment = trainee.dttp_trainee.latest_placement_assignment
       hesa_metadatum = Hesa::Metadatum.find_or_initialize_by(trainee:)
       study_length = latest_placement_assignment.response["dfe_programmelength"]
