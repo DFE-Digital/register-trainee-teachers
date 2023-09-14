@@ -80,6 +80,7 @@ features:
   # makes sure the correct year is selected before listing courses.
   show_draft_trainee_course_year_choice: true
   maintenance_banner: false
+  change_accredited_provider: false
 dfe_sign_in:
   # Our service name
   identifier: rtt
