@@ -347,6 +347,16 @@ module Trainees
         end
       end
 
+      context "when bursary level indicates veteran teaching undergraduate bursary" do
+        let(:hesa_stub_attributes) do
+          { bursary_level: described_class::VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL }
+        end
+
+        it "maps the trainee to the veteran teaching undergraduate bursary" do
+          expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary])
+        end
+      end
+
       context "trainee's course is in the primary age but subject isn't" do
         let(:hesa_stub_attributes) do
           {
