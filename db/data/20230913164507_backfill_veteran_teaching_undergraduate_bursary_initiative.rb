@@ -21,6 +21,6 @@ private
     Trainee
       .joins(:hesa_students)
       .where(hesa_students: { bursary_level: "C" })
-      .distinct("trainees.id")
+      .distinct
   end
 end
