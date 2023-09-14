@@ -10,6 +10,8 @@ module Trainees
 
     NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
 
+    VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
+
     class HesaImportError < StandardError; end
 
     def initialize(student_node:, record_source:)
@@ -192,7 +194,13 @@ module Trainees
     end
 
     def training_initiative
+      return ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] if veteran_teaching_undergraduate_bursary?
+
       ::Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_trainee[:training_initiative]]
+    end
+
+    def veteran_teaching_undergraduate_bursary?
+      hesa_trainee[:bursary_level] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
     end
 
     def itt_start_date
