@@ -108,16 +108,12 @@ jobs:
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Check for Failure
+      uses: ./.github/actions/send-failure-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: Build failure on commit ${{env.IMAGE_TAG}} :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        slack-title: 'Build failure'
+        slack-message: ':alert: Build failure on commit ${{env.IMAGE_TAG}} :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   lint:
     name: Lint
@@ -160,16 +156,12 @@ jobs:
           COMMAND: ${{ matrix.command }}
 
       - name: Check for Failure
+        uses: ./.github/actions/send-failure-notification/
         if: ${{ failure() && github.ref == 'refs/heads/main' }}
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: twd_publish_register_tech
-          SLACK_COLOR: '#ef5343'
-          SLACK_ICON_EMOJI: ':github-logo:'
-          SLACK_USERNAME: Register Trainee Teachers
-          SLACK_TITLE: Build Failure
-          SLACK_MESSAGE: ':alert: Lint failure for ${{ matrix.linter_type  }} on commit ${{env.IMAGE_TAG}} :sadparrot:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          slack-title: 'Lint failure'
+          slack-message: ':alert: Lint failure for ${{ matrix.linter_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   test:
     name: Test
@@ -237,16 +229,12 @@ jobs:
         USE_NEXT_ACADEMIC_YEAR: false
 
     - name: Check for Failure
+      uses: ./.github/actions/send-failure-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: Test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        slack-title: 'Test failure'
+        slack-message: ':alert: Test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   next_academic_year_test:
     name: Next academic year tests
@@ -314,17 +302,12 @@ jobs:
         USE_NEXT_ACADEMIC_YEAR: true
 
     - name: Check for Failure
+      uses: ./.github/actions/send-failure-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: Next academic year failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-
+      with:
+        slack-title: 'Next academic year test failure'
+        slack-message: ':alert: Next academic year test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   deploy-v2-review-app:
     name: Deployment To Review v2
