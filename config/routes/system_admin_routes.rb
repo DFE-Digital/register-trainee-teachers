@@ -68,6 +68,10 @@ module SystemAdminRoutes
           resources :retrieve_trns, only: %i[update], path: "retrieve-trns"
           resources :request_trns, only: %i[update], path: "request-trns"
         end
+
+        resources :trainees, path: "trainees" do
+          resource :accredited_provider, only: %i[edit update], path: "accredited-provider"
+        end
       end
     end
   end

@@ -37,13 +37,12 @@ module RecordDetails
     def provider_row
       return unless show_provider
 
-      change_link = current_user&.system_admin? && FeatureService.enabled?(:change_accredited_provider) ? "/foo/bar" : nil
-      # mappable_field(trainee.provider.name_and_code, t(".provider"), change_link)
-      {
-        field_label: t(".provider"),
-        field_value: trainee.provider.name_and_code,
-        action_url: change_link,
-      }
+      change_link = current_user&.system_admin? && FeatureService.enabled?(:change_accredited_provider) ? edit_trainee_accredited_provider_path(trainee) : nil
+      mappable_field(
+        trainee.provider.name_and_code,
+        t(".provider"),
+        change_link,
+      )
     end
 
     def record_source_row
