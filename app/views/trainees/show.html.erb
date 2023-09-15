@@ -9,7 +9,9 @@
       last_updated_event: @trainee.timeline.first,
       show_provider: @current_user.system_admin? || @current_user.lead_school?,
       show_record_source: @current_user.system_admin?,
-      editable: trainee_editable?) %>
+      editable: trainee_editable?,
+      current_user:,
+    ) %>
 </div>
 
 <% if @trainee.withdrawn? %>

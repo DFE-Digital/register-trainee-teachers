@@ -5,14 +5,15 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :show_record_source, :editable
+    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :show_record_source, :editable, :current_user
 
-    def initialize(trainee:, last_updated_event:, show_provider: false, show_record_source: false, editable: false)
+    def initialize(trainee:, last_updated_event:, show_provider: false, show_record_source: false, editable: false, current_user: nil)
       @trainee = trainee
       @last_updated_event = last_updated_event
       @show_provider = show_provider
       @editable = editable
       @show_record_source = show_record_source
+      @current_user = current_user
     end
 
     def record_detail_rows
@@ -36,8 +37,13 @@ module RecordDetails
     def provider_row
       return unless show_provider
 
-      { field_label: t(".provider"),
-        field_value: trainee.provider.name_and_code }
+      change_link = current_user&.system_admin? && FeatureService.enabled?(:change_accredited_provider) ? "/foo/bar" : nil
+      # mappable_field(trainee.provider.name_and_code, t(".provider"), change_link)
+      {
+        field_label: t(".provider"),
+        field_value: trainee.provider.name_and_code,
+        action_url: change_link,
+      }
     end
 
     def record_source_row
