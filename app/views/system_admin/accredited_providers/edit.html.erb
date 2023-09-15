@@ -9,7 +9,21 @@
 
         <h1 class="govuk-heading-l">Change accredited provider</h1>
 
+        <div class="app-status-box app-status-box--admin">
+          <%= govuk_tag(text: "Admin", classes: "govuk-tag--purple") %>
+
+          <p class="govuk-body">
+            Only change the accredited provider if <%= %> (the current accredited provider) has asked you to.
+          </p>
+
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            The current and new accredited providers will be sent an email confirming the change.
+          </p>
+        </div>
+
         <p><%= f.govuk_select(:provider, @providers.map(&:name).sort, label: { text: "New accredited provider", size: "s" }, width: 20, autocomplete: :enabled, class: 'provider-select') %></p>
+
+        <%= govuk_warning_text(text: "Choosing the wrong accredited provider could lead to a data breach.") %>
 
         <%= f.govuk_submit %>
       <% end %>
