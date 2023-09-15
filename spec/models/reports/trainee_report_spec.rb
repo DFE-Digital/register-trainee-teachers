@@ -52,8 +52,8 @@ describe Reports::TraineeReport do
       expect(subject.apply_id).to eq(trainee.apply_application&.apply_id)
     end
 
-    it "includes the hesa_id" do
-      expect(subject.hesa_id).to eq(trainee.hesa_id)
+    it "includes the string-enforced hesa_id" do
+      expect(subject.hesa_id).to eq("'#{trainee.hesa_id}'")
     end
 
     it "includes the provider_trainee_id" do

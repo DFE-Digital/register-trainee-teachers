@@ -20,7 +20,6 @@ module Reports
     delegate :course_duration_in_years,
              :ethnic_background,
              :first_names,
-             :hesa_id,
              :middle_names,
              :trn,
              :withdraw_reasons_details,
@@ -403,6 +402,10 @@ module Reports
       return nil if course_minimum_age.blank? && course_maximum_age.blank?
 
       "#{course_minimum_age} to #{course_maximum_age}"
+    end
+
+    def hesa_id
+      trainee.hesa_id&.gsub(/(.*)/, "'\\1") # prevent Excel from converting it to scientific notation
     end
 
   private
