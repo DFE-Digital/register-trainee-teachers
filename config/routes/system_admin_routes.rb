@@ -73,7 +73,7 @@ module SystemAdminRoutes
           namespace :accredited_providers, path: "accredited-providers" do
             resource :provider, only: %i[edit update]
             resource :reason, only: %i[edit update]
-            resource :review, only: %i[edit update]
+            resource :confirmations, only: %i[show update]
           end
         end
       end

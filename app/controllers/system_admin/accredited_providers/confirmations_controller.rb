@@ -2,7 +2,7 @@
 
 module SystemAdmin
   module AccreditedProviders
-    class ReasonsController < ApplicationController
+    class ConfirmationsController < ApplicationController
       # TODO: Verify that auth checks are happening correctly
 
       def edit
@@ -14,10 +14,10 @@ module SystemAdmin
       end
 
       def update
-        # TODO: Save the selection in temporary storage
+        # TODO: Commit the choices that are in temporary storage
 
-        redirect_to(edit_trainee_accredited_providers_confirmations_path(trainee_id: params[:trainee_id]))
-        # TODO: Or re-render the edit form
+        redirect_to(trainees_path(@trainee.slug))
+        # TODO: Or re-render the page 
       end
     end
   end

@@ -17,6 +17,10 @@ feature "Change a trainee's accredited provider" do
       when_i_visit_the_trainee_detail_page
       and_i_click_the_change_provider_link
       then_i_see_the_change_accredited_providers_page
+
+      when_i_select_a_provider
+      and_click_continue
+      then_i_see_the_reasons_page
     end
   end
 
