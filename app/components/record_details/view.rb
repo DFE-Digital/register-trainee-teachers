@@ -37,7 +37,7 @@ module RecordDetails
     def provider_row
       return unless show_provider
 
-      change_link = current_user&.system_admin? && FeatureService.enabled?(:change_accredited_provider) ? edit_trainee_accredited_provider_path(trainee) : nil
+      change_link = current_user&.system_admin? && FeatureService.enabled?(:change_accredited_provider) ? edit_trainee_accredited_providers_provider_path(trainee_id: trainee.id) : nil
       mappable_field(
         trainee.provider.name_and_code,
         t(".provider"),

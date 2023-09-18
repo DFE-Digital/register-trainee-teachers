@@ -1,0 +1,19 @@
+<div class="govuk-form-group">
+  <label class="govuk-label"><%= @trainee.full_name %></label>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= register_form_with(model: @trainee, url: edit_trainee_accredited_providers_review_path(trainee_id: @trainee.id)) do |f| %>
+
+        <%= f.govuk_error_summary %>
+
+        <h1 class="govuk-heading-l">Why you’re changing the accredited provider</h1>
+
+        <p></p>
+
+        <%= f.govuk_submit %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
