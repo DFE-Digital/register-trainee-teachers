@@ -32,9 +32,6 @@ private
   end
 
   def organisation
-    return Provider.find(params[:provider_id]) if params[:provider_id].present?
-    return School.find(params[:lead_school_id]) if params[:lead_school_id].present?
-
     current_user.organisation
   end
 end

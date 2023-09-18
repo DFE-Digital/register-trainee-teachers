@@ -46,7 +46,7 @@ module SystemAdmin
     def organisation
       return Provider.find(params[:provider_id]) if params[:provider_id].present?
 
-      School.find(params[:lead_school_id]) if params[:lead_school_id].present?
+      School.find(params[:lead_school_id])
     end
   end
 end
