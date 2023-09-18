@@ -189,7 +189,10 @@ If a trainee has incorrectly been recommended for award in register this will al
 In this scenario we must also contact DQT to fix the trainee award status and update the trainee status in register.
 
 ```ruby
-trainee.update_columns(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil)
+trainee = Trainee.find_by(slug: "limax")
+
+trainee.update(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil, audit_comment: 'fill in the blanks')
+
 ```
 
 All record changes should be sent to DQT unless otherwise specified or impossible (e.g. we can't send a DOB update). If DQT already has that info (e.g. they're awarded on DQT, and we're just awarding on Register) we should not send any information.
