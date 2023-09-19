@@ -49,6 +49,7 @@ module Trainees
       iqts_country
       withdraw_date
       hesa_editable
+      provider_id
     ].freeze
 
     delegate :user, :created_at, :auditable_type, :audited_changes, :auditable, :comment, to: :audit
@@ -110,6 +111,14 @@ module Trainees
         )
       end
 
+      if changed_accredited_provider?
+        return TimelineEvent.new(
+          title: accredited_provider_change_title,
+          date: created_at,
+          username: username,
+        )
+      end
+
       audited_changes.map do |field, change|
         next unless FIELDS.include?(field)
         # If a user leaves an already-empty field blank, Rails saves this as
@@ -168,6 +177,10 @@ module Trainees
       I18n.t("components.timeline.titles.trainee.#{state_change_action}")
     end
 
+    def accredited_provider_change_title
+      I18n.t("components.timeline.titles.trainee.accredited_provider_change")
+    end
+
     def state_change_action
       change_from, change_to = audited_changes["state"].map { |change| Trainee.states.key(change) }
 
@@ -224,6 +237,14 @@ module Trainees
       return provider_name if current_user != user
 
       user.name
+    end
+
+    def changed_accredited_provider?
+      change = audited_changes["provider_id"]
+
+      action == "update" &&
+        change.is_a?(Array) &&
+        change.size == 2
     end
 
     def hesa_or_dttp_user?
