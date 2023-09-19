@@ -4,7 +4,7 @@ class FileValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if value.blank?
 
-    if !value.blob.content_type.in?(content_types)
+    if content_types.exclude?(value.blob.content_type)
       value.purge
       record.errors.add(attribute, :invalid_content_type)
     elsif value.blob.byte_size > size_limit
