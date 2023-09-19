@@ -204,6 +204,7 @@ module RecordDetails
 
         context "trainee_start_date is not set" do
           before do
+            create(:academic_cycle, previous_cycle: create_previous_academic_year?)
             trainee.trainee_start_date = nil
             render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end

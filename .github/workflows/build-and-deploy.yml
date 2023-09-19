@@ -25,8 +25,8 @@ jobs:
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
     outputs:
-      docker_image: ${{ env.DOCKER_IMAGE }}
-      image_tag: ${{ env.IMAGE_TAG }}
+      docker-image: ${{ env.DOCKER_IMAGE }}
+      image-tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
 
     steps:
@@ -108,38 +108,32 @@ jobs:
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Check for Failure
+      uses: ./.github/actions/send-failure-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: Build failure on commit ${{env.IMAGE_TAG}} :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        slack-title: 'Build failure'
+        slack-message: ':alert: Build failure on commit ${{env.IMAGE_TAG}} :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   lint:
     name: Lint
     needs: [build]
     runs-on: ubuntu-latest
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
 
     strategy:
       fail-fast: false
       matrix:
-        tests: [rubocop, scss, dfe_analytics, javascript_lint_and_test]
+        linter-type: [rubocop, scss, dfe_analytics, javascript_lint_and_test]
         include:
-          - tests: rubocop
+          - linter-type: rubocop
             command: docker-compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
-          - tests: scss
+          - linter-type: scss
             command: docker-compose exec -T web /bin/sh -c 'bundle exec rake lint:scss'
-          - tests: dfe_analytics
+          - linter-type: dfe_analytics
             command: |
               docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
               docker-compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
-          - tests: javascript_lint_and_test
+          - linter-type: javascript_lint_and_test
             command: |
               docker-compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
               docker-compose exec -T web /bin/sh -c "yarn run standard $(git ls-files '**.js' | tr '\n' ' ')"
@@ -149,156 +143,45 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set environment variables
-        run: |
-          echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-
-      - name: Set KV environment variables
-        run: |
-          # tag build to the review env for vars and secrets
-          tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
-          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-          echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-      - uses: azure/login@v1
+      - name: Bring docker image up
+        uses: ./.github/actions/bring-docker-image-up/
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+          docker-image: ${{needs.build.outputs.docker-image}}
+          image-tag: ${{ needs.build.outputs.image-tag }}
 
-      - uses: DFE-Digital/keyvault-yaml-secret@v1
-        id: get-secret
-        with:
-          keyvault: ${{ env.KEY_VAULT_NAME }}
-          secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
-          key: SENTRY_DSN
-
-      - name: Pull docker images
-        run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
-
-      - name: Bring images up
-        run: |
-          docker-compose up --no-build -d
-          docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
-        env:
-          SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
-
-      - name: ${{ matrix.tests }}
+      - name: ${{ matrix.linter-type }}
         run: ${{ env.COMMAND }}
         env:
           COMMAND: ${{ matrix.command }}
 
       - name: Check for Failure
+        uses: ./.github/actions/send-failure-notification/
         if: ${{ failure() && github.ref == 'refs/heads/main' }}
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: twd_publish_register_tech
-          SLACK_COLOR: '#ef5343'
-          SLACK_ICON_EMOJI: ':github-logo:'
-          SLACK_USERNAME: Register Trainee Teachers
-          SLACK_TITLE: Build Failure
-          SLACK_MESSAGE: ':alert: Lint failure for ${{ matrix.tests  }} on commit ${{env.IMAGE_TAG}} :sadparrot:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          slack-title: 'Lint failure'
+          slack-message: ':alert: Lint failure for ${{ matrix.linter_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   test:
     name: Test
     needs: [build]
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+    with:
+      docker-image: ${{needs.build.outputs.docker-image}}
+      image-tag: ${{ needs.build.outputs.image-tag }}
+      use-next-academic-year: false
 
-    strategy:
-      fail-fast: false
-      matrix:
-        tests: [ unit_models, unit_services, unit_forms, unit_components, unit_other, integration_end_to_end, integration_form_sections, integration_system_admin, integration_trainee_actions, integration_other ]
-        include:
-          - tests: unit_models
-            include-pattern: spec/models/.*_spec.rb
-          - tests: unit_services
-            include-pattern: spec/services/.*_spec.rb
-          - tests: unit_forms
-            include-pattern: spec/forms/.*_spec.rb
-          - tests: unit_components
-            include-pattern: spec/components/.*_spec.rb
-          - tests: unit_other
-            include-pattern: spec/.*_spec.rb
-            exclude-pattern: spec/(features|smoke|models|services|forms|components)/.*_spec.rb
-          - tests: integration_end_to_end
-            include-pattern: spec/features/end_to_end/.*_spec.rb
-          - tests: integration_form_sections
-            include-pattern: spec/features/form_sections/.*_spec.rb
-          - tests: integration_system_admin
-            include-pattern: spec/features/system_admin/.*_spec.rb
-          - tests: integration_trainee_actions
-            include-pattern: spec/features/trainee_actions/.*_spec.rb
-          - tests: integration_other
-            include-pattern: spec/features/.*_spec.rb
-            exclude-pattern: spec/features/(end_to_end|form_sections|system_admin|trainee_actions)/.*_spec.rb
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Set environment variables
-      run: |
-        echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-
-    - name: Set KV environment variables
-      run: |
-        # tag build to the review env for vars and secrets
-        tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
-        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
-
-    - uses: DFE-Digital/keyvault-yaml-secret@v1
-      id: get-secret
-      with:
-        keyvault: ${{ env.KEY_VAULT_NAME }}
-        secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
-        key: SENTRY_DSN
-
-    - name: Pull docker images
-      run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
-
-    - name: Bring images up
-      run: |
-        docker-compose up --no-build -d
-        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
-        docker-compose exec -T web /bin/sh -c 'bundle config --local disable_exec_load true'
-        docker-compose exec -T web /bin/sh -c 'bundle exec rake parallel:setup'
-        docker-compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
-        docker-compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
-      env:
-        SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
-
-    - name: Install chromedriver
-      run: docker-compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
-
-    - name: ${{ matrix.tests }} tests
-      uses: Wandalen/wretry.action@v1.3.0
-      with:
-        attempt_limit: 5
-        command: |
-          docker-compose exec -T web /bin/sh -c 'bundle exec --verbose parallel_rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
-      env:
-        IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
-        INCLUDE_PATTERN: ${{ matrix.include-pattern }}
-        EXCLUDE_PATTERN: ${{ matrix.exclude-pattern || ' ' }}
-        TEST_MATRIX_NODE_NAME: ${{ matrix.tests }}
-
-    - name: Check for Failure
-      if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: Test failure for ${{ matrix.tests  }} on commit ${{env.IMAGE_TAG}} :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  next_academic_year_test:
+    name: Next academic year tests
+    needs: [build]
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+    with:
+      docker-image: ${{needs.build.outputs.docker-image}}
+      image-tag: ${{ needs.build.outputs.image-tag }}
+      use-next-academic-year: true
 
   deploy-v2-review-app:
     name: Deployment To Review v2
@@ -345,7 +228,7 @@ jobs:
   merge-dependabot:
     name: Merge dependabot
     if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') }}
-    needs: [lint, test, deploy-v2-review-app]
+    needs: [lint, test, next_academic_year_test, deploy-v2-review-app]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -365,7 +248,7 @@ jobs:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy_app_before_production_v2.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
-    needs: [test]
+    needs: [test, next_academic_year_test]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
