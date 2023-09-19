@@ -16,7 +16,7 @@ module SystemAdmin
       def update
         # TODO: Save the selection in temporary storage
 
-        redirect_to(edit_trainee_accredited_providers_confirmations_path(trainee_id: params[:trainee_id]))
+        redirect_to(trainee_accredited_providers_confirmations_path(trainee_id: params[:trainee_id]))
         # TODO: Or re-render the edit form
       end
     end

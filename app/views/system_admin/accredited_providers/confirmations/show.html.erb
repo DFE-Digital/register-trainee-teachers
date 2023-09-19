@@ -1,0 +1,39 @@
+<div class="govuk-form-group">
+  <label class="govuk-label"><%= @trainee.full_name %></label>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= register_form_with(
+        model: @trainee,
+        url: trainee_accredited_providers_confirmations_path(trainee_id: @trainee.id),
+      ) do |f| %>
+
+        <%= f.govuk_error_summary %>
+
+        <h1 class="govuk-heading-l">Check change of accredited provider details</h1>
+
+        <%= render SummaryCard::View.new(
+          title: "Change of accrediting provider details",
+          rows: [
+            {
+              key: "New accredited provider",
+              value: "",
+            },
+            {
+              key: "Trainee timeline comment",
+              value: "",
+            },
+            {
+              key: "Zendesk ticket URL",
+              value: "",
+            },
+          ],
+        ) %>
+
+        <%= govuk_warning_text(text: "The provider you have selected will be given ownership of this record. Selecting the wrong provider could lead to a data breach.") %>
+
+        <%= f.govuk_submit("Update record") %>
+      <% end %>
+    </div>
+  </div>
+</div>
