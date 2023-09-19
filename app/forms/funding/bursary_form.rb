@@ -32,17 +32,21 @@ module Funding
       super(trainee, params:, user:, store:)
     end
 
-    def view_partial
-      if can_apply_for_grant?
-        "grant_form"
-      elsif can_apply_for_tiered_bursary?
-        "tiered_bursary_form"
-      else
-        "non_tiered_bursary_form"
-      end
-    end
+    def view_partial = form_type.to_s
 
   private
+
+    def form_type
+      if can_apply_for_grant_and_tiered_bursary?
+        :grant_and_tiered_bursary_form
+      elsif can_apply_for_grant?
+        :grant_form
+      elsif can_apply_for_tiered_bursary?
+        :tiered_bursary_form
+      else
+        :non_tiered_bursary_form
+      end
+    end
 
     def compute_fields
       opts = trainee.attributes.symbolize_keys.slice(*FIELDS)
