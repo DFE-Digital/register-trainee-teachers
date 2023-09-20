@@ -18,7 +18,11 @@ module SystemAdmin
 
       def update
         trainee = Trainee.find(params[:trainee_id])
-        @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee)
+        @change_accredited_provider_form = ChangeAccreditedProviderForm.new(
+          trainee,
+          params: update_params,
+          user: current_user,
+        )
 
         if @change_accredited_provider_form.stash
           redirect_to(edit_trainee_accredited_providers_reason_path(trainee_id: params[:trainee_id]))
@@ -26,6 +30,14 @@ module SystemAdmin
           @providers = Provider.all
           render(:edit)
         end
+      end
+
+    private
+
+      def update_params
+        params
+          .require(:system_admin_change_accredited_provider_form)
+          .permit(:accredited_provider_id)
       end
     end
   end

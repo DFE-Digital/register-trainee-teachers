@@ -24,8 +24,8 @@
         </div>
 
         <p><%= f.govuk_select(
-          :provider,
-          @providers.map(&:name).sort,
+          :accredited_provider_id,
+          @providers.map { |provider| [provider.name_and_code, provider.id] },
           label: { text: "New accredited provider", size: "s" },
           width: 20,
           autocomplete: :enabled,

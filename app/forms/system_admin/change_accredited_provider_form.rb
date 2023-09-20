@@ -11,7 +11,7 @@ module SystemAdmin
     attr_accessor(*FIELDS)
 
     validates :accredited_provider_id, presence: true, on: :provider
-
+    #
     # TODO: This doesn't work because the validations are not scoped in the
     # form base class (they don't use the `on`) and this attribute is only
     # required from the reasons page onwards.
