@@ -35,13 +35,15 @@ module RecordDetails
       before do
         enable_features(:change_accredited_provider) if change_accredited_provider_enabled
 
-        render_inline(View.new(
-          trainee: trainee,
-          last_updated_event: timeline_event,
-          show_provider: true,
-          editable: true,
-          current_user:,
-        ))
+        render_inline(
+          View.new(
+            trainee: trainee,
+            last_updated_event: timeline_event,
+            show_provider: true,
+            editable: true,
+            current_user: current_user,
+          ),
+        )
       end
 
       it "renders the provider name and code" do
