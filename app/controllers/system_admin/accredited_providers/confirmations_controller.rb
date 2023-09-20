@@ -20,7 +20,7 @@ module SystemAdmin
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee)
 
         if @change_accredited_provider_form.save!
-          redirect_to(trainee_path(trainee.slug))
+          redirect_to(trainee_path(trainee.slug), flash: { success: "Accredited provider changed" })
         else
           render(:edit)
         end

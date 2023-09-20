@@ -21,6 +21,14 @@ feature "Change a trainee's accredited provider" do
       when_i_select_a_provider
       and_click_continue
       then_i_see_the_reasons_page
+
+      when_i_fill_in_reasons
+      and_click_continue
+      then_i_see_the_confirmation_page
+
+      when_i_click_update
+      then_i_see_a_flash_message
+      and_i_see_the_new_provider_name_and_code
     end
   end
 
@@ -43,7 +51,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def when_i_select_a_provider
-    select new_provider.name, from: "system-admin-change-accredited-provider-form-provider-field"
+    select new_provider.name, from: "system-admin-change-accredited-provider-form-accredited-provider-id-field"
   end
 
   def and_click_continue
@@ -52,5 +60,34 @@ feature "Change a trainee's accredited provider" do
 
   def then_i_see_the_reasons_page
     expect(page).to have_content("Why you’re changing the accredited provider")
+  end
+
+  def when_i_fill_in_reasons
+    fill_in(
+      "system-admin-change-accredited-provider-form-audit-comment-field",
+      with: "Provider has cancelled this course",
+    )
+    fill_in(
+      "system-admin-change-accredited-provider-form-zendesk-ticket-url-field",
+      with: "https://becomingateacher.zendesk.com/agent/tickets/12345",
+    )
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_content("Check change of accredited provider details")
+  end
+
+  def when_i_click_update
+    click_on "Update"
+  end
+
+  def then_i_see_a_flash_message
+    within ".govuk-notification-banner" do
+      expect(page).to have_content("Accredited provider changed")
+    end
+  end
+
+  def and_i_see_the_new_provider_name_and_code
+    expect(page).to have_content(new_provider.name_and_code)
   end
 end
