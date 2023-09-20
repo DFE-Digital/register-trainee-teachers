@@ -1,14 +1,29 @@
+# Jobs that run multiple times a day, sorted by frequency
+import_collection_from_hesa:
+  cron: "0 8-23/2 * * *" # every 2 hours, starting at 08:00 and ending at 23:59
+  class: "Hesa::RetrieveCollectionJob"
+  queue: hesa
+import_trn_data_from_hesa:
+  cron: "30 8-23/2 * * *" # 30 minutes past every 2nd hour from 8 through 23
+  class: "Hesa::RetrieveTrnDataJob"
+  queue: hesa
+remove_duplicate_dead_jobs:
+  cron: "*/5 * * * *"  # Every 5 minutes of every day.
+  class: "Sidekiq::RemoveDeadDuplicatesJob"
+  queue: default
+
+# Jobs that run once a day at a specific time, sorted by their running time
 truncate_activerecord_session_store:
   cron: "0 0 * * *"  # Every day at 00:00 (midnight).
   class: "SessionStoreTruncateJob"
   queue: default
+delete_empty_trainees:
+  cron: "0 0 * * *"  # Every day at 00:00 (midnight).
+  class: "DeleteEmptyTraineesJob"
+  queue: default
 import_applications_from_apply:
   cron: "0 1 * * *"  # Every day at 01:00.
   class: "ApplyApi::ImportApplicationsJob"
-  queue: default
-create_trainees_from_apply:
-  cron: "0 4 * * *"  # Every day at 04:00.
-  class: "Trainees::CreateFromApplyJob"
   queue: default
 import_subjects_from_ttapi:
   cron: "0 2 * * *"  # Every day at 02:00.
@@ -18,31 +33,25 @@ import_courses_from_ttapi:
   cron: "0 3 * * *"  # Every day at 03:00.
   class: "TeacherTrainingApi::ImportCoursesJob"
   queue: default
-delete_empty_trainees:
-  cron: "0 0 * * *"  # Every day at 00:00 (midnight).
-  class: "DeleteEmptyTraineesJob"
+create_trainees_from_apply:
+  cron: "0 4 * * *"  # Every day at 04:00.
+  class: "Trainees::CreateFromApplyJob"
   queue: default
-import_collection_from_hesa:
-  cron: "0 */2 * * *"  # Every 2 hours, starting at 00:00.
-  class: "Hesa::RetrieveCollectionJob"
-  queue: hesa
-import_trn_data_from_hesa:
-  cron: "30 */2 * * *"  # Every 2 hours, starting at 00:30.
-  class: "Hesa::RetrieveTrnDataJob"
-  queue: hesa
-upload_trn_file_to_hesa:
-  cron: "10 10 * * *"  # Every day at 10:10.
-  class: "Hesa::UploadTrnFileJob"
-  queue: hesa
 sync_hesa_students:
   cron: "0 5 * * *"  # Every day at 05:00.
   class: "Hesa::SyncStudentsJob"
   queue: hesa
+big_query_import_entities:
+  cron: "30 5 * * *"  # Every day at 05:30.
+  class: "BigQueryImportEntitiesJob"
+  queue: dfe_analytics
+upload_trn_file_to_hesa:
+  cron: "10 10 * * *"  # Every day at 10:10.
+  class: "Hesa::UploadTrnFileJob"
+  queue: hesa
+
+# Jobs that run less than once a day
 sync_dqt_teachers:
   cron: "0 2 * * 1"  # Every Monday at 02:00.
   class: "Dqt::SyncTeachersJob"
-  queue: default
-remove_duplicate_dead_jobs:
-  cron: "*/5 * * * *"  # Every 5 minutes of every day.
-  class: "Sidekiq::RemoveDeadDuplicatesJob"
   queue: default
