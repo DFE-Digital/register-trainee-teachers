@@ -82,7 +82,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def then_i_see_a_flash_message
-    within ".govuk-notification-banner" do
+    within ".govuk-notification-banner--success" do
       expect(page).to have_content("Accredited provider changed")
     end
   end
