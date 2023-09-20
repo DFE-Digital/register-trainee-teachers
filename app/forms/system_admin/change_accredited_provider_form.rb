@@ -10,8 +10,13 @@ module SystemAdmin
 
     attr_accessor(*FIELDS)
 
-    validates :accredited_provider_id, presence: true
-    validates :audit_comment, presence: true
+    validates :accredited_provider_id, presence: true, on: :provider
+
+    # TODO: This doesn't work because the validations are not scoped in the
+    # form base class (they don't use the `on`) and this attribute is only
+    # required from the reasons page onwards.
+    #
+    # validates :audit_comment, presence: true, on: :reasons
 
     def save!
       return false unless valid?
@@ -23,6 +28,12 @@ module SystemAdmin
 
       clear_stash
     end
+
+    def accredited_provider_name
+      Provider.find(accredited_provider_id)&.name_and_code
+    end
+
+    delegate :full_name, :id, to: :trainee
 
   private
 

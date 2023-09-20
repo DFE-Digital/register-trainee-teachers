@@ -1,10 +1,12 @@
 <div class="govuk-form-group">
-  <label class="govuk-label" for="sort"><%= @trainee.full_name %></label>
+  <label class="govuk-label" for="sort"><%= @change_accredited_provider_form.full_name %></label>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-      <%= register_form_with(model: @trainee, url: trainee_accredited_providers_provider_path(trainee_id: @trainee.id)) do |f| %>
-
+      <%= register_form_with(
+        model: @change_accredited_provider_form,
+        url: trainee_accredited_providers_provider_path(trainee_id: @change_accredited_provider_form.id),
+      ) do |f| %>
         <%= f.govuk_error_summary %>
 
         <h1 class="govuk-heading-l">Change accredited provider</h1>

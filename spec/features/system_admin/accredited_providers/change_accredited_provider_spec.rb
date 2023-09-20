@@ -6,7 +6,7 @@ feature "Change a trainee's accredited provider" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
     let(:trainee) { create(:trainee, :trn_received) }
-    let(:new_provider) { create(:provider) }
+    let!(:new_provider) { create(:provider) }
 
     before do
       given_i_am_authenticated(user:)
@@ -40,5 +40,17 @@ feature "Change a trainee's accredited provider" do
 
   def then_i_see_the_change_accredited_providers_page
     expect(page).to have_content("Change accredited provider")
+  end
+
+  def when_i_select_a_provider
+    select new_provider.name, from: "system-admin-change-accredited-provider-form-provider-field"
+  end
+
+  def and_click_continue
+    click_on "Continue"
+  end
+
+  def then_i_see_the_reasons_page
+    expect(page).to have_content("Why you’re changing the accredited provider")
   end
 end
