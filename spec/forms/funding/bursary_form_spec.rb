@@ -16,7 +16,7 @@ module Funding
 
     describe "validations" do
       let(:inclusion_values) do
-        Trainee.bursary_tiers.keys + %w[bursary scholarship none]
+        %w[bursary scholarship none]
       end
 
       it { is_expected.to validate_inclusion_of(:funding_type).in_array(inclusion_values) }
@@ -49,12 +49,6 @@ module Funding
           let(:trainee) { create(:trainee, applying_for_bursary: true, bursary_tier: nil, applying_for_scholarship: false) }
 
           it { expect(subject.funding_type).to eq(FUNDING_TYPE_ENUMS[:bursary]) }
-        end
-
-        describe "tiered bursary type" do
-          let(:trainee) { create(:trainee, applying_for_bursary: true, bursary_tier: "tier_two", applying_for_scholarship: false) }
-
-          it { expect(Trainee.bursary_tiers.keys).to include(subject.funding_type) }
         end
 
         describe "scholarship type" do
@@ -93,15 +87,6 @@ module Funding
           it { expect(subject.applying_for_bursary).to be_truthy }
           it { expect(subject.applying_for_scholarship).to be_falsey }
           it { expect(subject.bursary_tier).to be_nil }
-        end
-
-        describe "tiered bursary type" do
-          let(:params) { { funding_type: Trainee.bursary_tiers.keys[0] } }
-
-          it { expect(subject.funding_type).to eq(params[:funding_type]) }
-          it { expect(subject.applying_for_bursary).to be_truthy }
-          it { expect(subject.applying_for_scholarship).to be_falsey }
-          it { expect(subject.bursary_tier).to be(Trainee.bursary_tiers.keys[0]) }
         end
 
         describe "scholarship type" do
