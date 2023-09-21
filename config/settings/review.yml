@@ -20,6 +20,7 @@ features:
     iqts: true
   user_can_have_multiple_organisations: true
   funding: true
+  change_accredited_provider: true
 
 pagination:
   records_per_page: 30
