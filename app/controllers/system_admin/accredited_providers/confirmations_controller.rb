@@ -4,7 +4,8 @@ module SystemAdmin
   module AccreditedProviders
     class ConfirmationsController < ApplicationController
       # TODO: Verify that auth checks are happening correctly
-      # TODO: Enforce feature flag
+
+      before_action :enforce_feature_flag
 
       def show
         trainee = Trainee.find(params[:trainee_id])
@@ -24,6 +25,12 @@ module SystemAdmin
         else
           render(:edit)
         end
+      end
+
+    private
+
+      def enforce_feature_flag
+        redirect_to(not_found_path) unless FeatureService.enabled?(:change_accredited_provider)
       end
     end
   end

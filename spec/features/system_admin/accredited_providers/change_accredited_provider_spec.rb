@@ -10,11 +10,15 @@ feature "Change a trainee's accredited provider" do
 
     before do
       given_i_am_authenticated(user:)
-      and_the_change_accredited_provider_feature_is_enabled
+      and_the_change_accredited_provider_feature_is_not_enabled
     end
 
-    scenario "i can edit a trainee's accredited provider" do
+    scenario "I can edit a trainee's accredited provider" do
       when_i_visit_the_trainee_detail_page
+      then_i_do_not_see_a_change_provider_link
+
+      when_the_change_accredited_provider_feature_is_enabled
+      and_i_visit_the_trainee_detail_page
       and_i_click_the_change_provider_link
       then_i_see_the_change_accredited_providers_page
 
@@ -32,12 +36,23 @@ feature "Change a trainee's accredited provider" do
     end
   end
 
-  def and_the_change_accredited_provider_feature_is_enabled
+  def and_the_change_accredited_provider_feature_is_not_enabled
+    disable_features(:change_accredited_provider)
+  end
+
+  def when_the_change_accredited_provider_feature_is_enabled
     enable_features(:change_accredited_provider)
   end
 
   def when_i_visit_the_trainee_detail_page
     visit "/trainees/#{trainee.slug}"
+  end
+  alias_method :and_i_visit_the_trainee_detail_page, :when_i_visit_the_trainee_detail_page
+
+  def then_i_do_not_see_a_change_provider_link
+    within ".govuk-summary-list__row.accrediting-provider" do
+      expect(page).not_to have_link("Change")
+    end
   end
 
   def and_i_click_the_change_provider_link
