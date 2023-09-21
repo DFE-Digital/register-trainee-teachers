@@ -36,6 +36,17 @@
         %>
       </p>
 
+      <div data-module="app-autocomplete">
+        <p><%= f.govuk_select(
+          :accredited_provider_id,
+          @providers.map { |provider| [provider.name_and_code, provider.id] },
+          label: { text: "New accredited provider", size: "s" },
+          width: 20,
+          autocomplete: :enabled,
+          class: 'provider-select',
+        ) %></p>
+      </div>
+
       <%= govuk_warning_text(text: "Choosing the wrong accredited provider could lead to a data breach.") %>
 
       <%= f.govuk_submit %>
