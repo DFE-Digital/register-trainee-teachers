@@ -25,10 +25,6 @@ module Trainees
         params.require(:funding_training_initiatives_form).permit(*::Funding::TrainingInitiativesForm::FIELDS)
       end
 
-      def funding_manager
-        @funding_manager ||= FundingManager.new(trainee)
-      end
-
       def step_wizard
         @step_wizard ||= Wizards::FundingStepWizard.new(trainee:, page_tracker:)
       end
