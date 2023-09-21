@@ -78,7 +78,7 @@ module Hesa
             date_of_birth: "1978-08-13",
             trainee_id: "99157234/2/01",
             ukprn: "10007713",
-            itt_commencement_date: nil,
+            itt_commencement_date: "2023-01-01",
             numhus: "02",
             email: "student.name@email.com",
           )
@@ -117,7 +117,7 @@ module Hesa
             date_of_birth: "1978-08-13",
             trainee_id: "99157234/2/01",
             ukprn: "10007713",
-            itt_commencement_date: nil,
+            itt_start_date: nil,
             numhus: "02",
             email: "student.name@email.com",
           )
@@ -154,7 +154,7 @@ module Hesa
             date_of_birth: "1980-08-13",
             trainee_id: "99157234/2/01",
             ukprn: "10007713",
-            itt_commencement_date: nil,
+            itt_start_date: nil,
             numhus: "02",
             email: "student.name@email.com",
           )
