@@ -1300,6 +1300,11 @@ en:
             dttp_id:
               invalid: Enter a DTTP ID in the correct format, like 6a61d94f-5060-4d57-8676-bdb265a5b949
               taken: Enter a unique DTTP ID
+        upload:
+          attributes:
+            file:
+              invalid_content_type: Upload a valid file type (csv, xml or zip)
+              invalid_file_size: Upload a file less than 50mb
   activemodel:
     attributes:
       course_details_form:

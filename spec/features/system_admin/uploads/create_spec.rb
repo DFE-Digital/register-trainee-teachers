@@ -21,7 +21,7 @@ feature "Upload a file" do
     end
 
     scenario "with required attributes" do
-      attach_file("upload[file]", Rails.root.join("spec/fixtures/files/test.txt"))
+      attach_file("upload[file]", Rails.root.join("spec/fixtures/files/test.csv"))
       and_i_click_on_submit
       then_i_see_the_upload
     end
@@ -42,7 +42,7 @@ private
   end
 
   def then_i_see_the_upload
-    expect(show).to have_text("test.txt")
+    expect(show).to have_text("test.csv")
   end
 
   def then_i_see_an_error
