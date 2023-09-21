@@ -10,7 +10,7 @@ module SystemAdmin
       def edit
         @providers = Provider.all
         trainee = Trainee.find(params[:trainee_id])
-        @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee)
+        @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee, step: :provider)
 
         respond_to do |format|
           format.html
@@ -23,6 +23,7 @@ module SystemAdmin
           trainee,
           params: update_params,
           user: current_user,
+          step: :provider,
         )
 
         if @change_accredited_provider_form.stash

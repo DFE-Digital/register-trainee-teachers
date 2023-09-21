@@ -9,14 +9,15 @@ module SystemAdmin
     ].freeze
 
     attr_accessor(*FIELDS)
+    attr_accessor :step
 
-    validates :accredited_provider_id, presence: true, on: :provider
-    #
-    # TODO: This doesn't work because the validations are not scoped in the
-    # form base class (they don't use the `on`) and this attribute is only
-    # required from the reasons page onwards.
-    #
-    # validates :audit_comment, presence: true, on: :reasons
+    validates :accredited_provider_id, presence: true, if: -> { !step || step == :provider }
+    validates :audit_comment, presence: true, if: -> { !step || step == :reasons }
+
+    def initialize(trainee, params: {}, user: nil, store: FormStore, step: nil)
+      self.step = step
+      super(trainee, params:, user:, store:)
+    end
 
     def save!
       return false unless valid?

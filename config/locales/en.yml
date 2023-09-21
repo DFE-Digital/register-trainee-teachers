@@ -1351,6 +1351,12 @@ en:
               invalid: Select a delete reason
             additional_delete_reason:
               blank: Enter another reason
+        system_admin/change_accredited_provider_form:
+          attributes:
+            accredited_provider_id:
+              blank: Select an accredited provider
+            audit_comment:
+              blank: Enter an audit comment
         contact_details_form:
           attributes:
             locale_code:
