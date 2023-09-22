@@ -39,7 +39,7 @@ module SystemAdmin
   private
 
     def compute_fields
-      new_attributes
+      { accredited_provider_id: trainee.provider_id }.merge(new_attributes)
     end
 
     def form_store_key

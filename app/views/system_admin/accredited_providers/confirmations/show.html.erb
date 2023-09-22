@@ -1,18 +1,17 @@
-<div class="govuk-form-group">
-  <label class="govuk-label"><%= @change_accredited_provider_form.full_name %></label>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(
+      model: @change_accredited_provider_form,
+      url: trainee_accredited_providers_confirmations_path(trainee_id: @change_accredited_provider_form.id),
+    ) do |f| %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      <%= register_form_with(
-        model: @change_accredited_provider_form,
-        url: trainee_accredited_providers_confirmations_path(trainee_id: @change_accredited_provider_form.id),
-      ) do |f| %>
+      <%= f.govuk_error_summary %>
 
-        <%= f.govuk_error_summary %>
+      <label class="govuk-label"><%= @change_accredited_provider_form.full_name %></label>
+      <h1 class="govuk-heading-l">Check change of accredited provider details</h1>
 
-        <h1 class="govuk-heading-l">Check change of accredited provider details</h1>
-
-        <%= render SummaryCard::View.new(
+      <%=
+        render SummaryCard::View.new(
           title: "Change of accrediting provider details",
           rows: [
             {
@@ -28,12 +27,12 @@
               value: @change_accredited_provider_form.zendesk_ticket_url,
             },
           ],
-        ) %>
+        )
+      %>
 
-        <%= govuk_warning_text(text: "The provider you have selected will be given ownership of this record. Selecting the wrong provider could lead to a data breach.") %>
+      <%= govuk_warning_text(text: "The provider you have selected will be given ownership of this record. Selecting the wrong provider could lead to a data breach.") %>
 
-        <%= f.govuk_submit("Update record") %>
-      <% end %>
-    </div>
+      <%= f.govuk_submit("Update record") %>
+    <% end %>
   </div>
 </div>

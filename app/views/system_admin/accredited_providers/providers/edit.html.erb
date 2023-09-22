@@ -1,41 +1,44 @@
-<div class="govuk-form-group">
-  <label class="govuk-label" for="sort"><%= @change_accredited_provider_form.full_name %></label>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(
+      model: @change_accredited_provider_form,
+      url: trainee_accredited_providers_provider_path(trainee_id: @change_accredited_provider_form.id),
+    ) do |f| %>
+      <%= f.govuk_error_summary %>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      <%= register_form_with(
-        model: @change_accredited_provider_form,
-        url: trainee_accredited_providers_provider_path(trainee_id: @change_accredited_provider_form.id),
-      ) do |f| %>
-        <%= f.govuk_error_summary %>
+      <label class="govuk-label" for="sort"><%= @change_accredited_provider_form.full_name %></label>
+      <h1 class="govuk-heading-l">Change accredited provider</h1>
 
-        <h1 class="govuk-heading-l">Change accredited provider</h1>
+      <div class="app-status-box app-status-box--admin">
+        <%= govuk_tag(text: "Admin", classes: "govuk-tag--purple") %>
 
-        <div class="app-status-box app-status-box--admin">
-          <%= govuk_tag(text: "Admin", classes: "govuk-tag--purple") %>
+        <p class="govuk-body">
+          Only change the accredited provider if
+          <%= @change_accredited_provider_form.accredited_provider_name %>
+          (the current accredited provider) has asked you to.
+        </p>
 
-          <p class="govuk-body">
-            Only change the accredited provider if <%= %> (the current accredited provider) has asked you to.
-          </p>
+        <p class="govuk-body govuk-!-margin-bottom-0">
+          The current and new accredited providers will be sent an email confirming the change.
+        </p>
+      </div>
 
-          <p class="govuk-body govuk-!-margin-bottom-0">
-            The current and new accredited providers will be sent an email confirming the change.
-          </p>
-        </div>
+      <p>
+        <%=
+          f.govuk_select(
+            :accredited_provider_id,
+            @providers.map { |provider| [provider.name_and_code, provider.id] },
+            label: { text: "New accredited provider", size: "s" },
+            width: 20,
+            autocomplete: :enabled,
+            class: 'provider-select',
+          )
+        %>
+      </p>
 
-        <p><%= f.govuk_select(
-          :accredited_provider_id,
-          @providers.map { |provider| [provider.name_and_code, provider.id] },
-          label: { text: "New accredited provider", size: "s" },
-          width: 20,
-          autocomplete: :enabled,
-          class: 'provider-select',
-        ) %></p>
+      <%= govuk_warning_text(text: "Choosing the wrong accredited provider could lead to a data breach.") %>
 
-        <%= govuk_warning_text(text: "Choosing the wrong accredited provider could lead to a data breach.") %>
-
-        <%= f.govuk_submit %>
-      <% end %>
-    </div>
+      <%= f.govuk_submit %>
+    <% end %>
   </div>
 </div>
