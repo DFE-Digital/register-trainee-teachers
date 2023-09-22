@@ -2,18 +2,21 @@
 
 module Funding
   class BaseFundingController < ApplicationController
-    def current_academic_cycle
-      @current_academic_cycle ||= AcademicCycle.current
+    helper_method :back_path
+
+    def selected_academic_cycle
+      @selected_academic_cycle ||=
+        academic_year.blank? ? AcademicCycle.current : AcademicCycle.for_year(academic_year)
     end
 
     def academic_year_string
-      @academic_year_string ||= "#{current_academic_cycle.start_date.year}/#{current_academic_cycle.end_date.year % 100}"
+      @academic_year_string ||= "#{selected_academic_cycle.start_date.year}/#{selected_academic_cycle.end_date.year % 100}"
     end
 
     def payment_schedule
       return if payment_schedules.blank?
 
-      @payment_schedule ||= payment_schedules.order(:created_at).includes(rows: :amounts).select { |schedule| schedule.start_year == current_academic_cycle.start_year }.last
+      @payment_schedule ||= payment_schedules.order(:created_at).includes(rows: :amounts).select { |schedule| schedule.start_year == selected_academic_cycle.start_year }.last
     end
 
     def payment_schedules
@@ -28,6 +31,14 @@ module Funding
 
     def trainee_summaries
       organisation.funding_trainee_summaries.includes(:payable, rows: %i[amounts trainee_summary]).where(academic_year: academic_year_string)
+    end
+
+    def academic_year
+      params[:academic_year]
+    end
+
+    def back_path
+      funding_path
     end
   end
 end

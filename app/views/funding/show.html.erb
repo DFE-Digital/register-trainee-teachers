@@ -1,0 +1,19 @@
+<% page_title = t("components.page_titles.funding.show.title") %>
+
+<%= render PageTitle::View.new(text: page_title) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= page_title %></h1>
+
+<% if academic_years.any? %>
+  <ul class="govuk-list funding-payment-list">
+    <% academic_years.each do |label, url| %>
+      <li>
+        <%= govuk_link_to label, url, class: "govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

@@ -378,6 +378,10 @@ module Features
       @user_delete_page ||= PageObjects::Users::Delete.new
     end
 
+    def funding_page
+      @funding_page ||= PageObjects::Funding::Show.new
+    end
+
     def payment_schedule_page
       @payment_schedule_page ||= PageObjects::Funding::PaymentSchedule.new
     end
