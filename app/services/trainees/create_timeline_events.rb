@@ -242,9 +242,7 @@ module Trainees
     def changed_accredited_provider?
       change = audited_changes["provider_id"]
 
-      action == "update" &&
-        change.is_a?(Array) &&
-        change.size == 2
+      action == "update" && Array.wrap(change).size == 2
     end
 
     def hesa_or_dttp_user?
