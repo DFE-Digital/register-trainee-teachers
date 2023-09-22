@@ -26,6 +26,8 @@ module SystemAdmin
           }
         end
 
+        before { trainee.provider = nil }
+
         it { is_expected.not_to be_valid }
       end
 
