@@ -3,12 +3,9 @@
 module SystemAdmin
   module AccreditedProviders
     class ConfirmationsController < ApplicationController
-      # TODO: Verify that auth checks are happening correctly
-
       before_action :enforce_feature_flag
 
       def show
-        trainee = Trainee.find(params[:trainee_id])
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee)
 
         respond_to do |format|
@@ -17,7 +14,6 @@ module SystemAdmin
       end
 
       def update
-        trainee = Trainee.find(params[:trainee_id])
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee)
 
         if @change_accredited_provider_form.save!
@@ -25,6 +21,10 @@ module SystemAdmin
         else
           render(:show)
         end
+      end
+
+      def trainee
+        @trainee ||= Trainee.find(params[:trainee_id])
       end
 
     private

@@ -3,13 +3,10 @@
 module SystemAdmin
   module AccreditedProviders
     class ProvidersController < ApplicationController
-      # TODO: Verify that auth checks are happening correctly
-
       before_action :enforce_feature_flag
 
       def edit
         @providers = Provider.all
-        trainee = Trainee.find(params[:trainee_id])
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee, step: :provider)
 
         respond_to do |format|
@@ -18,7 +15,6 @@ module SystemAdmin
       end
 
       def update
-        trainee = Trainee.find(params[:trainee_id])
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(
           trainee,
           params: update_params,
@@ -32,6 +28,10 @@ module SystemAdmin
           @providers = Provider.all
           render(:edit)
         end
+      end
+
+      def trainee
+        @trainee ||= Trainee.find(params[:trainee_id])
       end
 
     private
