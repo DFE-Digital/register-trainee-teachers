@@ -596,17 +596,19 @@ FactoryBot.define do
     trait :with_grant_and_tiered_bursary do
       transient do
         funding_amount { 5000 }
+        start_academic_cycle { association(:academic_cycle, next_cycle: true) }
       end
 
-      training_route { :early_years_postgrad }
+      early_years_postgrad
       applying_for_grant { true }
-      applying_for_bursary { true }
-      bursary_tier { BURSARY_TIERS.keys.first }
+
+      with_tiered_bursary
 
       after(:create) do |trainee, evaluator|
+        trainee.start_academic_cycle = evaluator.start_academic_cycle
         funding_method = create(:funding_method, :grant, :with_subjects, training_route: trainee.training_route, academic_cycle: trainee.start_academic_cycle)
 
-        funding_method.amount = evaluator.funding_amount if evaluator.funding_amount.present?
+        funding_method.amount = evaluator.funding_amount
         funding_method.save
         trainee.course_allocation_subject = funding_method.allocation_subjects.first
 
