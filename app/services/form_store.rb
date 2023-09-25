@@ -40,6 +40,7 @@ class FormStore
     iqts_country
     training_routes
     delete_trainee
+    change_accredited_provider
   ].freeze
 
   class << self

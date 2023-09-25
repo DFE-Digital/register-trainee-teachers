@@ -29,12 +29,42 @@ module RecordDetails
     let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
     context "when :show_provider is true" do
+      let(:change_accredited_provider_enabled) { false }
+      let(:show_change_provider) { false }
+
       before do
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, show_provider: true))
+        enable_features(:change_accredited_provider) if change_accredited_provider_enabled
+
+        render_inline(
+          View.new(
+            trainee: trainee,
+            last_updated_event: timeline_event,
+            show_provider: true,
+            editable: true,
+            show_change_provider: show_change_provider,
+          ),
+        )
       end
 
       it "renders the provider name and code" do
         expect(rendered_component).to have_text(provider.name_and_code)
+      end
+
+      context "when current user is NOT an administrator" do
+        let(:change_accredited_provider_enabled) { true }
+
+        it "does not render a change link" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 0)
+        end
+      end
+
+      context "when current user is an administrator" do
+        let(:change_accredited_provider_enabled) { true }
+        let(:show_change_provider) { true }
+
+        it "renders a change link" do
+          expect(rendered_component).to have_selector(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 1)
+        end
       end
     end
 

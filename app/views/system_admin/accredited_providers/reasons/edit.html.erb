@@ -1,0 +1,40 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(
+      model: @change_accredited_provider_form,
+      url: trainee_accredited_providers_reason_path(trainee_id: @change_accredited_provider_form.id),
+    ) do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <label class="govuk-label"><%= @change_accredited_provider_form.full_name %></label>
+      <h1 class="govuk-heading-l">Why you’re changing the accredited provider</h1>
+
+      <p>
+        <%=
+          f.govuk_text_field(
+            :audit_comment,
+            hint: { text: "For example, ‘Provider no longer able to continue with this trainee’" },
+            width: "two-thirds",
+            label: { text: "Comment for trainee timeline", size: "m" },
+            autocomplete: :off,
+          )
+        %>
+      </p>
+
+      <p>
+        <%=
+          f.govuk_text_field(
+            :zendesk_ticket_url,
+            hint: { text: "For example, ‘https://becomingateacher.zendesk.com/agent/tickets/12345’" },
+            width: "two-thirds",
+            label: { text: "Zendesk ticket URL (optional)", size: "m" },
+            autocomplete: :off,
+          )
+        %>
+      </p>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>

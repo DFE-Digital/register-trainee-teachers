@@ -216,6 +216,16 @@ module Trainees
           expect(subject).to eq [nil]
         end
       end
+
+      context "with an accredited provider change" do
+        before do
+          trainee.update!(provider: create(:provider))
+        end
+
+        it "returns an accredited provider update event" do
+          expect(subject.title).to eq("Accredited provider updated")
+        end
+      end
     end
   end
 end
