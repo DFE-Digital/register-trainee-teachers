@@ -5,7 +5,7 @@ require "rails_helper"
 feature "edit bursary" do
   background { given_i_am_authenticated }
 
-  let(:course_subject) { CourseSubjects::LAW }
+  let(:course_subject) { CourseSubjects::EARLY_YEARS_TEACHING }
 
   scenario "edit with valid parameters" do
     given_a_trainee_exists(:provider_led_postgrad, :with_valid_itt_start_date, course_subject_one: course_subject)
@@ -25,16 +25,26 @@ feature "edit bursary" do
     then_i_see_error_messages
   end
 
-  scenario "edit with valid parameters for tiered bursary" do
-    given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
-    when_i_visit_the_bursary_page
-    and_i_choose_the_applicable_bursary_tier
+  context "early years postgrad training route" do
+    background { given_there_is_grant_funding_available_for_early_years_postgrad }
 
-    and_i_submit_the_form
-    then_i_am_redirected_to_the_funding_confirmation_page
+    scenario "edit with valid parameters for tiered bursary" do
+      given_an_early_years_postgrad_trainee_exists
+      when_i_visit_the_bursary_page
+      and_i_choose_the_applicable_funding_options
+
+      and_i_submit_the_form
+      then_i_am_redirected_to_the_funding_confirmation_page
+    end
   end
 
 private
+
+  def given_an_early_years_postgrad_trainee_exists
+    trainee = given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
+    trainee.set_early_years_course_details
+    trainee.save
+  end
 
   def when_i_visit_the_bursary_page
     bursary_page.load(id: trainee.slug)
@@ -44,8 +54,9 @@ private
     bursary_page.applying_for_bursary.click
   end
 
-  def and_i_choose_the_applicable_bursary_tier
-    bursary_page.bursary_tier.click
+  def and_i_choose_the_applicable_funding_options
+    page.choose("funding-grant-and-tiered-bursary-form-custom-applying-for-grant-yes-field")
+    page.choose("funding-grant-and-tiered-bursary-form-custom-bursary-tier-tier-one-field")
   end
 
   def and_i_submit_the_form

@@ -14,8 +14,9 @@ module Features
       review_draft_page.funding_section.link.click
       edit_funding_page.training_initiative_radios.choose("funding-training-initiatives-form-training-initiative-now-teach-field")
       edit_funding_page.continue_button.click
-      bursary_page.bursary_tier.choose
-      bursary_page.submit_button.click
+      page.choose("funding-grant-and-tiered-bursary-form-custom-applying-for-grant-yes-field")
+      page.choose("funding-grant-and-tiered-bursary-form-custom-bursary-tier-tier-one-field")
+      page.click_button("Continue")
       confirm_funding_page.confirm.check
       confirm_funding_page.continue.click
     end
