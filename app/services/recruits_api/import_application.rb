@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module ApplyApi
+module RecruitsApi
   class ImportApplication
     include ServicePattern
 
-    class ApplyApiMissingDataError < StandardError; end
+    class RecruitsApiMissingDataError < StandardError; end
 
     def initialize(application_data:)
       @application_data = application_data
@@ -57,7 +57,7 @@ module ApplyApi
     def course_attributes(attribute_name)
       application_data["attributes"]["course"][attribute_name]
     rescue NoMethodError
-      raise(ApplyApiMissingDataError, "Apply application_id #{apply_id} could not be imported")
+      raise(RecruitsApiMissingDataError, "Apply application_id #{apply_id} could not be imported")
     end
 
     def candidate_attribute(attribute_name)

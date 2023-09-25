@@ -51,7 +51,7 @@ module RecruitsApi
 
     def log_request!
       ApplyApplicationSyncRequest.create!(
-        successful: @last_response.code == ApplyApi::Client::GET_SUCCESS,
+        successful: @last_response.code == RecruitsApi::Client::GET_SUCCESS,
         response_code: @last_response.code,
         recruitment_cycle_year: recruitment_cycle_year,
       )

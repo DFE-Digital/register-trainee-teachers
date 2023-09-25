@@ -200,11 +200,11 @@ recruits_api:
 Running the following script:
 
 ```ruby
-ApplyApi::ImportApplication.class_eval do
+RecruitsApi::ImportApplication.class_eval do
   def provider
     Provider.all.sample
   end
 end
 ApplyApplicationSyncRequest.delete_all
-ApplyApi::ImportApplicationsJob.perform_now
+RecruitsApi::ImportApplicationsJob.perform_now
 ```

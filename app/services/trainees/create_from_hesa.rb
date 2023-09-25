@@ -166,7 +166,7 @@ module Trainees
     end
 
     def nationality_name
-      ApplyApi::CodeSets::Nationalities::MAPPING[hesa_trainee[:nationality]]
+      RecruitsApi::CodeSets::Nationalities::MAPPING[hesa_trainee[:nationality]]
     end
 
     def training_route

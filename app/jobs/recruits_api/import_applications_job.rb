@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ApplyApi
+module RecruitsApi
   class ImportApplicationsJob < ApplicationJob
     queue_as :default
 

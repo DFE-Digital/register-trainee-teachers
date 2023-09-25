@@ -4,7 +4,7 @@ truncate_activerecord_session_store:
   queue: default
 import_applications_from_apply:
   cron: "0 1 * * *"  # Every day at 01:00.
-  class: "ApplyApi::ImportApplicationsJob"
+  class: "RecruitsApi::ImportApplicationsJob"
   queue: default
 create_trainees_from_apply:
   cron: "0 4 * * *"  # Every day at 04:00.
