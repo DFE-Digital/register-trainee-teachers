@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Trainees
   describe CreateFromHesa do
-    let(:nationality_name) { ApplyApi::CodeSets::Nationalities::MAPPING[student_attributes[:nationality]] }
+    let(:nationality_name) { RecruitsApi::CodeSets::Nationalities::MAPPING[student_attributes[:nationality]] }
     let(:hesa_api_stub) { ApiStubs::HesaApi.new(hesa_stub_attributes) }
     let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ApplyApi
+module RecruitsApi
   module CodeSets
     module Nationalities
       # Taken from https://github.com/DFE-Digital/apply-for-teacher-training/blob/master/config/initializers/nationalities.rb

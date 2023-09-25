@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-module ApplyApi
+module RecruitsApi
   describe RetrieveApplications do
     let(:changed_since) { nil }
     let(:recruitment_cycle_year) { Settings.current_recruitment_cycle_year }
     let(:expected_path) { "/applications?recruitment_cycle_year=#{recruitment_cycle_year}&page=1" }
-    let(:http_response) { { status: status, body: ApiStubs::ApplyApi.applications } }
-    let(:request_url) { "#{Settings.apply_api.base_url}#{expected_path}" }
+    let(:http_response) { { status: status, body: ApiStubs::RecruitsApi.applications } }
+    let(:request_url) { "#{Settings.recruits_api.base_url}#{expected_path}" }
 
     subject { described_class.call(changed_since:, recruitment_cycle_year:).to_a }
 
@@ -26,7 +26,7 @@ module ApplyApi
           end
 
           it "returns all the Apply applications" do
-            expect(subject).to contain_exactly(ApiStubs::ApplyApi.application)
+            expect(subject).to contain_exactly(ApiStubs::RecruitsApi.application)
           end
 
           context "when there are no applications" do
@@ -42,7 +42,7 @@ module ApplyApi
           let(:http_response_page1) {
             {
               status: status,
-              body: ApiStubs::ApplyApi.applications_page1,
+              body: ApiStubs::RecruitsApi.applications_page1,
               headers: {
                 "Current-Page" => "1",
                 "Page-Items" => "2",
@@ -54,7 +54,7 @@ module ApplyApi
           let(:http_response_page2) {
             {
               status: status,
-              body: ApiStubs::ApplyApi.applications_page2,
+              body: ApiStubs::RecruitsApi.applications_page2,
               headers: {
                 "Current-Page" => "2",
                 "Page-Items" => "1",
@@ -64,7 +64,7 @@ module ApplyApi
             }
           }
           let(:expected_path_page2) { "/applications?recruitment_cycle_year=#{recruitment_cycle_year}&page=2" }
-          let(:request_url_page2) { "#{Settings.apply_api.base_url}#{expected_path_page2}" }
+          let(:request_url_page2) { "#{Settings.recruits_api.base_url}#{expected_path_page2}" }
 
           before do
             stub_request(:get, request_url).to_return(http_response_page1)
@@ -77,9 +77,9 @@ module ApplyApi
 
           it "returns all the Apply applications" do
             expect(subject).to contain_exactly(
-              ApiStubs::ApplyApi.application(id: "3772"),
-              ApiStubs::ApplyApi.application(id: "3773"),
-              ApiStubs::ApplyApi.application(id: "3774"),
+              ApiStubs::RecruitsApi.application(id: "3772"),
+              ApiStubs::RecruitsApi.application(id: "3773"),
+              ApiStubs::RecruitsApi.application(id: "3774"),
             )
           end
         end
@@ -90,7 +90,7 @@ module ApplyApi
           let(:expected_path) { "/applications?#{expected_query}" }
 
           it "includes the changed_at param in the request" do
-            expect(ApplyApi::Client::Request).to receive(:get).with(expected_path).and_call_original
+            expect(RecruitsApi::Client::Request).to receive(:get).with(expected_path).and_call_original
             subject
           end
         end

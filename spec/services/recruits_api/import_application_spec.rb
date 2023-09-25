@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-module ApplyApi
+module RecruitsApi
   describe ImportApplication do
     describe "#call" do
-      let(:application_data) { JSON.parse(ApiStubs::ApplyApi.application) }
+      let(:application_data) { JSON.parse(ApiStubs::RecruitsApi.application) }
 
       subject { described_class.call(application_data:) }
 
@@ -23,7 +23,7 @@ module ApplyApi
         end
 
         context "and the apply application_data also exists in register" do
-          let(:existing_application) { ApiStubs::ApplyApi.application(degree_attributes: { subject: "different subject" }) }
+          let(:existing_application) { ApiStubs::RecruitsApi.application(degree_attributes: { subject: "different subject" }) }
 
           before do
             create(:apply_application, state, apply_id: application_data["id"], application: existing_application)
@@ -79,7 +79,7 @@ module ApplyApi
         let(:application_data) { { "attributes" => { "course" => nil } } }
 
         it "will not create apply application" do
-          expect { subject }.to raise_error ApplyApi::ImportApplication::ApplyApiMissingDataError
+          expect { subject }.to raise_error RecruitsApi::ImportApplication::RecruitsApiMissingDataError
         end
       end
 
@@ -88,7 +88,7 @@ module ApplyApi
         let(:provider_b) { create(:provider) }
 
         let(:application_data) do
-          JSON.parse(ApiStubs::ApplyApi.application(course_attributes: {
+          JSON.parse(ApiStubs::RecruitsApi.application(course_attributes: {
             accredited_provider_code: provider_a.code,
             training_provider_code: provider_b.code,
           }))

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module ApplyApi
+module RecruitsApi
   describe ImportApplicationsJob do
     include ActiveJob::TestHelper
 

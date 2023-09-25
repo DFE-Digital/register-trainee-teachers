@@ -86,7 +86,7 @@ module Trainees
     end
 
     def verify_nationalities_data!
-      invalid_nationalities = raw_trainee["nationality"] - ApplyApi::CodeSets::Nationalities::MAPPING.keys
+      invalid_nationalities = raw_trainee["nationality"] - RecruitsApi::CodeSets::Nationalities::MAPPING.keys
 
       return if invalid_nationalities.blank?
 
@@ -94,12 +94,12 @@ module Trainees
     end
 
     def sex
-      ApplyApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.sexes[:sex_not_provided]
+      RecruitsApi::CodeSets::Genders::MAPPING[raw_trainee["gender"]] || Trainee.sexes[:sex_not_provided]
     end
 
     def ethnic_group
-      ApplyApi::CodeSets::Ethnicities::MAPPING.fetch(raw_trainee["ethnic_group"],
-                                                     Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
+      RecruitsApi::CodeSets::Ethnicities::MAPPING.fetch(raw_trainee["ethnic_group"],
+                                                        Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
     end
 
     def diversity_disclosure
@@ -129,7 +129,7 @@ module Trainees
     end
 
     def nationality_names
-      raw_trainee["nationality"].map { |nationality| ApplyApi::CodeSets::Nationalities::MAPPING[nationality] }
+      raw_trainee["nationality"].map { |nationality| RecruitsApi::CodeSets::Nationalities::MAPPING[nationality] }
     end
 
     def ethnic_background_attributes
