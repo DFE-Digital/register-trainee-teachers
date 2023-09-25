@@ -1,3 +1,5 @@
+<%= render PageTitle::View.new(text: 'Why you’re changing the accredited provider', has_errors: @change_accredited_provider_form.errors.present?) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(
@@ -35,6 +37,10 @@
       </p>
 
       <%= f.govuk_submit %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t('views.forms.common.cancel_and_return_to_record'), trainee_path(@trainee))%>
+      </p>
     <% end %>
   </div>
 </div>
