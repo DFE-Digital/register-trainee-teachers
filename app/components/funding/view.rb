@@ -30,7 +30,7 @@ module Funding
 
     attr_accessor :data_model, :has_errors, :editable
 
-    delegate :can_apply_for_scholarship?, :scholarship_amount,
+    delegate :can_apply_for_grant_and_tiered_bursary?, :can_apply_for_scholarship?, :scholarship_amount,
              :can_apply_for_bursary?, :bursary_amount,
              :can_apply_for_grant?, :grant_amount,
              :can_apply_for_funding_type?,
@@ -47,13 +47,25 @@ module Funding
     def funding_method_row
       return if (no_funding_methods? && data_model.bursary_tier.blank?) || data_model.training_initiative == "troops_to_teachers"
 
-      if can_apply_for_grant?
+      if can_apply_for_grant_and_tiered_bursary?
+        grant_and_bursary_funding_row
+      elsif can_apply_for_grant?
         grant_funding_row
       elsif data_model.applying_for_scholarship
         scholarship_funding_row
       else
         bursary_funding_row
       end
+    end
+
+    def grant_and_bursary_funding_row
+      funding_text = [grant_text, "<br>", funding_method].join.html_safe
+
+      mappable_field(
+        funding_text,
+        t(".funding_method"),
+        edit_trainee_funding_bursary_path(trainee),
+      )
     end
 
     def bursary_funding_row
@@ -70,13 +82,15 @@ module Funding
       !trainee.draft? || can_apply_for_funding_type?
     end
 
-    def grant_funding_row
-      grant_text = if data_model.applying_for_grant
-                     t(".grant_applied_for") + "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
-                   else
-                     t(".no_grant_applied_for")
-                   end
+    def grant_text
+      if data_model.applying_for_grant
+        t(".grant_applied_for") + "<br>#{tag.span("#{format_currency(grant_amount)} estimated grant", class: 'govuk-hint')}"
+      else
+        t(".no_grant_applied_for")
+      end
+    end
 
+    def grant_funding_row
       # In some cases, applying_for_grant can actually be nil which means it wasn't set properly during import.
       # We should let the user know that this field is missing data and should be filled in manually.
       grant_text = nil if data_model.applying_for_grant.nil?
