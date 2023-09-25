@@ -14,7 +14,7 @@ class FundingManager
   end
 
   def applicable_available_funding
-    if can_apply_for_grant_and_tiered_bursary?
+    if can_apply_for_tiered_bursary?
       :grant_and_tiered_bursary
     elsif can_apply_for_grant?
       :grant
@@ -44,17 +44,17 @@ class FundingManager
   end
 
   def can_apply_for_bursary?
-    can_apply_for_grant_and_tiered_bursary? || available_bursary_amount.present?
+    can_apply_for_tiered_bursary? || available_bursary_amount.present?
   end
 
-  def can_apply_for_grant_and_tiered_bursary? = trainee.early_years_postgrad?
+  def can_apply_for_tiered_bursary? = trainee.early_years_postgrad?
 
   def can_apply_for_scholarship?
     scholarship_amount.present?
   end
 
   def can_apply_for_grant?
-    can_apply_for_grant_and_tiered_bursary? || grant_amount.present?
+    grant_amount.present?
   end
 
   def funding_available?

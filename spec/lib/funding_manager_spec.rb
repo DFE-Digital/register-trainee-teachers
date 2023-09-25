@@ -238,4 +238,65 @@ describe FundingManager do
       end
     end
   end
+
+  describe "#can_apply_for_tiered_bursary?" do
+    subject { funding_manager.can_apply_for_tiered_bursary? }
+
+    context "training route early years postgrad" do
+      let(:training_route) { :early_years_postgrad }
+
+      it "returns true" do
+        expect(subject).to be_truthy
+      end
+    end
+
+    TRAINING_ROUTE_ENUMS.keys.reject { |x| x == :early_years_postgrad }.map do |route|
+      let(:training_route) { route }
+
+      context "training route #{route.to_s.humanize}" do
+        it "returns false" do
+          expect(subject).to be_falsey
+        end
+      end
+    end
+  end
+
+  describe "#applicable_available_funding" do
+    subject { funding_manager.applicable_available_funding }
+
+    context "training route early years postgrad" do
+      let(:training_route) { :early_years_postgrad }
+
+      it "returns grant_and_tiered_bursary" do
+        expect(subject).to be(:grant_and_tiered_bursary)
+      end
+    end
+
+    context "there is a specialism for training route" do
+      let(:subject_specialism) { create(:subject_specialism) }
+      let(:amount) { 9_000 }
+      let(:funding_method) { create(:funding_method, :grant, training_route:, amount:) }
+      let(:training_route) do
+        TRAINING_ROUTE_ENUMS.keys.reject do |x| x == :early_years_postgrad end .sample
+      end
+
+      before do
+        create(:funding_method_subject, funding_method: funding_method, allocation_subject: subject_specialism.allocation_subject)
+      end
+
+      context "without trainee course subject one" do
+        it "returns non_tiered_bursary" do
+          expect(subject).to be(:non_tiered_bursary)
+        end
+      end
+
+      context "with trainee course subject one" do
+        let(:course_subject_one) { subject_specialism.name }
+
+        it "returns grant" do
+          expect(subject).to be(:grant)
+        end
+      end
+    end
+  end
 end
