@@ -28,7 +28,7 @@ feature "edit bursary" do
   scenario "edit with valid parameters for tiered bursary" do
     given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
     when_i_visit_the_bursary_page
-    and_i_choose_the_applicable_bursary_tier
+    and_i_choose_the_applicable_funding_options
 
     and_i_submit_the_form
     then_i_am_redirected_to_the_funding_confirmation_page
@@ -44,8 +44,9 @@ private
     bursary_page.applying_for_bursary.click
   end
 
-  def and_i_choose_the_applicable_bursary_tier
-    bursary_page.bursary_tier.click
+  def and_i_choose_the_applicable_funding_options
+    page.choose("funding-grant-and-tiered-bursary-form-applying-for-grant-true-field")
+    page.choose("funding-grant-and-tiered-bursary-form-custom-bursary-tier-tier-one-field")
   end
 
   def and_i_submit_the_form
