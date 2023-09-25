@@ -192,7 +192,7 @@ Add the following to your `development.local.yml`:
 features:
   import_applications_from_apply: true
 
-apply_api:
+recruits_api:
   base_url: "https://sandbox.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: <request token from Apply team>
 ```

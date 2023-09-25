@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-module ApplyApi
+module RecruitsApi
   describe RetrieveApplications do
     let(:changed_since) { nil }
     let(:recruitment_cycle_year) { Settings.current_recruitment_cycle_year }
     let(:expected_path) { "/applications?recruitment_cycle_year=#{recruitment_cycle_year}&page=1" }
     let(:http_response) { { status: status, body: ApiStubs::ApplyApi.applications } }
-    let(:request_url) { "#{Settings.apply_api.base_url}#{expected_path}" }
+    let(:request_url) { "#{Settings.recruits_api.base_url}#{expected_path}" }
 
     subject { described_class.call(changed_since:, recruitment_cycle_year:).to_a }
 
@@ -64,7 +64,7 @@ module ApplyApi
             }
           }
           let(:expected_path_page2) { "/applications?recruitment_cycle_year=#{recruitment_cycle_year}&page=2" }
-          let(:request_url_page2) { "#{Settings.apply_api.base_url}#{expected_path_page2}" }
+          let(:request_url_page2) { "#{Settings.recruits_api.base_url}#{expected_path_page2}" }
 
           before do
             stub_request(:get, request_url).to_return(http_response_page1)

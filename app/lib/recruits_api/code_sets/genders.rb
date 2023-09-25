@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ApplyApi
+module RecruitsApi
   module CodeSets
     module Genders
       # intersex is needed until it is no longer possible to received the value from

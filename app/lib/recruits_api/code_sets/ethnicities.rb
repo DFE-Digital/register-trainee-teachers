@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ApplyApi
+module RecruitsApi
   module CodeSets
     module Ethnicities
       MAPPING = {

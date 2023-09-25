@@ -90,7 +90,7 @@ dfe_sign_in:
   # This value must be set otherwise sign in will fail
   secret: secret required value
 
-apply_api:
+recruits_api:
   base_url: "https://www.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: "auth-token-from-env"
 

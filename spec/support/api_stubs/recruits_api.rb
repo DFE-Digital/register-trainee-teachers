@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApiStubs
-  module ApplyApi
+  module RecruitsApi
     def self.applications
       { data: [application] }.to_json
     end
