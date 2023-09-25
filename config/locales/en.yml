@@ -1485,6 +1485,12 @@ en:
           attributes:
             training_initiative:
               blank: Select if the trainee is on a training initiative
+        funding/grant_and_tiered_bursary_form:
+          attributes:
+            custom_applying_for_grant:
+              inclusion: Select if the provider be awarded a grant
+            custom_bursary_tier:
+              inclusion: Select if you are applying for a bursary for this trainee
         funding/bursary_form:
           attributes:
             applying_for_grant:
