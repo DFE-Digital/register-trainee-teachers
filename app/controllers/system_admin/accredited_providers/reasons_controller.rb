@@ -7,10 +7,6 @@ module SystemAdmin
 
       def edit
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee, step: :reasons)
-
-        respond_to do |format|
-          format.html
-        end
       end
 
       def update

@@ -30,7 +30,7 @@ module RecordDetails
 
     context "when :show_provider is true" do
       let(:change_accredited_provider_enabled) { false }
-      let(:current_user) { build(:user) }
+      let(:show_change_provider) { false }
 
       before do
         enable_features(:change_accredited_provider) if change_accredited_provider_enabled
@@ -41,7 +41,7 @@ module RecordDetails
             last_updated_event: timeline_event,
             show_provider: true,
             editable: true,
-            current_user: current_user,
+            show_change_provider: show_change_provider,
           ),
         )
       end
@@ -60,7 +60,7 @@ module RecordDetails
 
       context "when current user is an administrator" do
         let(:change_accredited_provider_enabled) { true }
-        let(:current_user) { build(:user, :system_admin) }
+        let(:show_change_provider) { true }
 
         it "renders a change link" do
           expect(rendered_component).to have_selector(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 1)

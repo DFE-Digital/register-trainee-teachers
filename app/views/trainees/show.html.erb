@@ -10,7 +10,7 @@
       show_provider: @current_user.system_admin? || @current_user.lead_school?,
       show_record_source: @current_user.system_admin?,
       editable: trainee_editable?,
-      current_user: @current_user,
+      show_change_provider: @current_user.system_admin? && FeatureService.enabled?(:change_accredited_provider),
     ) %>
 </div>
 
