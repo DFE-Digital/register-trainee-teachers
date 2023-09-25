@@ -14,17 +14,17 @@
     ) %>.
   </p>
 
-<%= f.govuk_radio_buttons_fieldset(:applying_for_grant, legend: { text: "Should the provider be awarded a grant?", size: "m" }) do %>
+<%= f.govuk_radio_buttons_fieldset(:custom_applying_for_grant, legend: { text: "Should the provider be awarded a grant?", size: "m" }) do %>
       <%= f.govuk_radio_button(
-        :applying_for_grant,
-        true,
+        :custom_applying_for_grant,
+        "yes",
         label: { text: "Yes" },
         link_errors: true,
       ) %>
 
       <%= f.govuk_radio_button(
-        :applying_for_grant,
-        false,
+        :custom_applying_for_grant,
+        "no",
         label: { text: "No" },
       ) %>
   <% end %>
@@ -48,7 +48,7 @@
       f.object.class::NONE_TYPE,
       ** {
         label: { text: t("views.forms.funding.funding_type.bursary.none.label") },
-      }.merge(@trainee.applying_for_bursary.nil? ? { checked: false } : {} )
+      }.merge(@trainee.applying_for_bursary.nil? ? { checked: false } : {}),
     ) %>
   <% end %>
 

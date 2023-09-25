@@ -12,11 +12,8 @@ module Funding
     subject { described_class.new(trainee, params: params, store: form_store) }
 
     describe "validations" do
-      let(:inclusion_values) do
-        Trainee.bursary_tiers.keys + ["none"]
-      end
-
-      it { is_expected.to validate_inclusion_of(:custom_bursary_tier).in_array(inclusion_values) }
+      it { is_expected.to validate_inclusion_of(:custom_bursary_tier).in_array(Trainee.bursary_tiers.keys + ["none"]) }
+      it { is_expected.to validate_inclusion_of(:custom_applying_for_grant).in_array(%w[yes no]) }
     end
 
     describe "#stash" do
@@ -37,9 +34,9 @@ module Funding
 
     describe "#save!" do
       let(:custom_bursary_tier) { "none" }
-      let(:applying_for_grant) { "false" }
+      let(:custom_applying_for_grant) { "no" }
 
-      let(:params) { { custom_bursary_tier:, applying_for_grant: } }
+      let(:params) { { custom_bursary_tier:, custom_applying_for_grant: } }
 
       it "sets applying_for_bursary to false" do
         expect { subject.save! }.to change(trainee.reload, :applying_for_bursary).from(true).to(false)

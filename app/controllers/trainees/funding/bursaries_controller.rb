@@ -23,7 +23,7 @@ module Trainees
       def form_params
         if params.key?(:funding_grant_and_tiered_bursary_form)
           params.require(:funding_grant_and_tiered_bursary_form).permit(
-            :applying_for_grant,
+            :custom_applying_for_grant,
             :custom_bursary_tier,
           )
         else

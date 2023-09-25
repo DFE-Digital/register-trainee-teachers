@@ -91,11 +91,12 @@ module Funding
     end
 
     def grant_funding_row
+      funding_text = grant_text
       # In some cases, applying_for_grant can actually be nil which means it wasn't set properly during import.
       # We should let the user know that this field is missing data and should be filled in manually.
-      grant_text = nil if data_model.applying_for_grant.nil?
+      funding_text = nil if data_model.applying_for_grant.nil?
 
-      mappable_field(grant_text&.html_safe, t(".funding_method"), edit_trainee_funding_bursary_path(trainee))
+      mappable_field(funding_text&.html_safe, t(".funding_method"), edit_trainee_funding_bursary_path(trainee))
     end
 
     def scholarship_funding_row

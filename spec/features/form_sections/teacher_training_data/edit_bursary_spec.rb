@@ -45,7 +45,7 @@ private
   end
 
   def and_i_choose_the_applicable_funding_options
-    page.choose("funding-grant-and-tiered-bursary-form-applying-for-grant-true-field")
+    page.choose("funding-grant-and-tiered-bursary-form-custom-applying-for-grant-yes-field")
     page.choose("funding-grant-and-tiered-bursary-form-custom-bursary-tier-tier-one-field")
   end
 
