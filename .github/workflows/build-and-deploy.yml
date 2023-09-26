@@ -210,7 +210,7 @@ jobs:
           azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
           environment: review_aks
           pr-number: ${{ github.event.pull_request.number }}
-          sha: ${{ needs.build.outputs.IMAGE_TAG }}
+          sha: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Update review_aks-${{ github.event.pull_request.number }} status
