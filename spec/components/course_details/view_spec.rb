@@ -26,27 +26,27 @@ module CourseDetails
       end
 
       it "renders 7 rows" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+        expect(rendered_component).to have_css(".govuk-summary-list__row", count: 7)
       end
 
       it "renders missing hint education phase" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Education phase is missing")
+        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "Education phase is missing")
       end
 
       it "renders missing hint for subject" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Subject is missing")
+        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "Subject is missing")
       end
 
       it "renders missing hint for age range" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Age range is missing")
+        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "Age range is missing")
       end
 
       it "renders missing hint for ITT start date" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "ITT start date is missing")
+        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "ITT start date is missing")
       end
 
       it "renders missing hint for ITT end date" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "ITT end date is missing")
+        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "ITT end date is missing")
       end
     end
 
@@ -73,7 +73,7 @@ module CourseDetails
       end
 
       it "calculated/applicable specialisms for subject" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__value", text: "Spanish with public services")
+        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "Spanish with public services")
       end
 
       it "renders the course age range" do
@@ -155,7 +155,7 @@ module CourseDetails
         end
 
         it "doesn't render course details information" do
-          expect(rendered_component).not_to have_selector(".govuk-summary-list__row.course-details")
+          expect(rendered_component).not_to have_css(".govuk-summary-list__row.course-details")
         end
       end
     end
@@ -169,7 +169,7 @@ module CourseDetails
         end
 
         it "renders 7 rows" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+          expect(rendered_component).to have_css(".govuk-summary-list__row", count: 7)
         end
       end
 
@@ -181,7 +181,7 @@ module CourseDetails
         end
 
         it "renders 6 rows" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+          expect(rendered_component).to have_css(".govuk-summary-list__row", count: 6)
         end
       end
     end
@@ -260,8 +260,8 @@ module CourseDetails
       end
 
       it "renders study_mode" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
-        expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+        expect(rendered_component).to have_css(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+        expect(rendered_component).to have_css(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
       end
     end
 
@@ -273,7 +273,7 @@ module CourseDetails
       end
 
       it "does not render study_mode" do
-        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time")
+        expect(rendered_component).not_to have_css(".govuk-summary-list__row.full-time-or-part-time")
       end
     end
 

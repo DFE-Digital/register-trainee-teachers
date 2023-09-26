@@ -10,11 +10,11 @@ module NotificationBanner
       before { render_inline(View.new) }
 
       it "adds the default class" do
-        expect(component).to have_selector(".govuk-notification-banner")
+        expect(component).to have_css(".govuk-notification-banner")
       end
 
       it "doesn't add the success class" do
-        expect(component).not_to have_selector(".govuk-notification-banner--success")
+        expect(component).not_to have_css(".govuk-notification-banner--success")
       end
 
       it "has a default title of 'Important'" do
@@ -38,7 +38,7 @@ module NotificationBanner
       before { render_inline(View.new(type: :success)) }
 
       it "adds the success type class" do
-        expect(component).to have_selector(".govuk-notification-banner--success")
+        expect(component).to have_css(".govuk-notification-banner--success")
       end
 
       it "has a default title of 'Success'" do
@@ -52,7 +52,7 @@ module NotificationBanner
 
     it "supports custom classes on the parent container" do
       render_inline(View.new(classes: "test-css-class"))
-      expect(component).to have_selector(".test-css-class")
+      expect(component).to have_css(".test-css-class")
     end
 
     it "supports custom title and text" do
@@ -68,7 +68,7 @@ module NotificationBanner
 
     it "supports a custom id on the title element and sets the ariaLabelledBy" do
       render_inline(View.new(title_id: "test-id"))
-      expect(component).to have_selector(".govuk-notification-banner__title#test-id")
+      expect(component).to have_css(".govuk-notification-banner__title#test-id")
       expect(banner["aria-labelledby"]).to eq "test-id"
     end
 

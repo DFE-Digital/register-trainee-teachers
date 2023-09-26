@@ -47,7 +47,7 @@ describe Degrees::View do
       end
 
       it "renders a summary card for each degree" do
-        expect(rendered_component).to have_selector(".app-summary-card", count: trainee.degrees.size)
+        expect(rendered_component).to have_css(".app-summary-card", count: trainee.degrees.size)
       end
     end
   end
@@ -75,7 +75,7 @@ describe Degrees::View do
       end
 
       it "renders a summary card for each degree" do
-        expect(rendered_component).to have_selector(".app-summary-card", count: trainee.degrees.size)
+        expect(rendered_component).to have_css(".app-summary-card", count: trainee.degrees.size)
       end
     end
   end
