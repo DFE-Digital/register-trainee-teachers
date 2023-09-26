@@ -541,6 +541,13 @@ SCHOLARSHIPS_2023_TO_2024 = [
 
 GRANTS_2023_TO_2024 = [
   OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+    amount: 5_000,
+    allocation_subjects: [
+      AllocationSubjects::EARLY_YEARS_ITT,
+    ],
+  ),
+  OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
     amount: 14_000,
     allocation_subjects: [
