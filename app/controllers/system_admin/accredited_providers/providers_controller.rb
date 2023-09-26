@@ -19,7 +19,7 @@ module SystemAdmin
         )
 
         if @change_accredited_provider_form.stash
-          redirect_to(edit_trainee_accredited_providers_reason_path(trainee_id: params[:trainee_id]))
+          redirect_to(relevant_redirect_path)
         else
           @providers = Provider.all
           render(:edit)
@@ -40,6 +40,10 @@ module SystemAdmin
         params
           .require(:system_admin_change_accredited_provider_form)
           .permit(:accredited_provider_id)
+      end
+
+      def relevant_redirect_path
+        page_tracker.last_origin_page_path || edit_trainee_accredited_providers_reason_path(trainee_id: params[:trainee_id])
       end
     end
   end

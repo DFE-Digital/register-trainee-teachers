@@ -18,7 +18,7 @@ module SystemAdmin
         )
 
         if @change_accredited_provider_form.stash
-          redirect_to(trainee_accredited_providers_confirmations_path(trainee_id: params[:trainee_id]))
+          redirect_to(relevant_redirect_path)
         else
           render(:edit)
         end
@@ -38,6 +38,10 @@ module SystemAdmin
         params
           .require(:system_admin_change_accredited_provider_form)
           .permit(:audit_comment, :zendesk_ticket_url)
+      end
+
+      def relevant_redirect_path
+        page_tracker.last_origin_page_path || trainee_accredited_providers_confirmations_path(trainee_id: params[:trainee_id])
       end
     end
   end

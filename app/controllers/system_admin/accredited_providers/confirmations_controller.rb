@@ -6,6 +6,8 @@ module SystemAdmin
       before_action :enforce_feature_flag
 
       def show
+        page_tracker.save_as_origin!
+
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee)
       end
 
@@ -19,11 +21,11 @@ module SystemAdmin
         end
       end
 
+    private
+
       def trainee
         @trainee ||= Trainee.find(params[:trainee_id])
       end
-
-    private
 
       def enforce_feature_flag
         redirect_to(not_found_path) unless FeatureService.enabled?(:change_accredited_provider)
