@@ -218,6 +218,7 @@ module RecordDetails
           let(:trainee_start_date) { 5.days.from_now.to_date }
 
           before do
+            create(:academic_cycle, one_after_next_cycle: true)
             trainee.trainee_start_date = trainee_start_date
             render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
