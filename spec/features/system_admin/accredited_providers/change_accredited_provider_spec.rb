@@ -34,6 +34,19 @@ feature "Change a trainee's accredited provider" do
       then_i_see_a_flash_message
       and_i_see_the_new_provider_name_and_code
     end
+
+    scenario "submit buttons return to correct path from confirmation page" do
+      given_i_am_reviewing_my_changes_on_the_confirmation_page
+      when_i_click_to_change_the_accredited_provider
+      then_i_see_the_change_accredited_providers_page
+      when_i_click_continue
+      then_i_see_the_confirmation_page
+
+      when_i_click_to_change_the_zendesk_ticket_url
+      then_i_see_the_reasons_page
+      when_i_click_continue
+      then_i_see_the_confirmation_page
+    end
   end
 
   def and_the_change_accredited_provider_feature_is_not_enabled
@@ -72,6 +85,7 @@ feature "Change a trainee's accredited provider" do
   def and_click_continue
     click_on "Continue"
   end
+  alias_method :when_i_click_continue, :and_click_continue
 
   def then_i_see_the_reasons_page
     expect(page).to have_content("Why you’re changing the accredited provider")
@@ -104,5 +118,31 @@ feature "Change a trainee's accredited provider" do
 
   def and_i_see_the_new_provider_name_and_code
     expect(page).to have_content(new_provider.name_and_code)
+  end
+
+  def given_i_am_reviewing_my_changes_on_the_confirmation_page
+    when_i_visit_the_trainee_detail_page
+    then_i_do_not_see_a_change_provider_link
+
+    when_the_change_accredited_provider_feature_is_enabled
+    and_i_visit_the_trainee_detail_page
+    and_i_click_the_change_provider_link
+    then_i_see_the_change_accredited_providers_page
+
+    when_i_select_a_provider
+    and_click_continue
+    then_i_see_the_reasons_page
+
+    when_i_fill_in_reasons
+    and_click_continue
+    then_i_see_the_confirmation_page
+  end
+
+  def when_i_click_to_change_the_accredited_provider
+    click_on "Change accredited provider"
+  end
+
+  def when_i_click_to_change_the_zendesk_ticket_url
+    click_on "Change zendesk ticket url"
   end
 end
