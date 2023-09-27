@@ -1,3 +1,5 @@
+<%= render PageTitle::View.new(text: "Check change of accredited provider details") %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with(
@@ -33,6 +35,10 @@
       <%= govuk_warning_text(text: "The provider you have selected will be given ownership of this record. Selecting the wrong provider could lead to a data breach.") %>
 
       <%= f.govuk_submit("Update record") %>
+
+      <p class="govuk-body">
+        <%= govuk_link_to(t('views.forms.common.cancel_and_return_to_record'), trainee_path(@trainee))%>
+      </p>
     <% end %>
   </div>
 </div>

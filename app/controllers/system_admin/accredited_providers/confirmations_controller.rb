@@ -19,11 +19,11 @@ module SystemAdmin
         end
       end
 
+    private
+
       def trainee
         @trainee ||= Trainee.find(params[:trainee_id])
       end
-
-    private
 
       def enforce_feature_flag
         redirect_to(not_found_path) unless FeatureService.enabled?(:change_accredited_provider)

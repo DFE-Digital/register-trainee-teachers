@@ -6,6 +6,7 @@ features:
   sign_in_method: persona
   enable_feedback_link: true
   publish_course_details: true
+  change_accredited_provider: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true
