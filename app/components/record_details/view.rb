@@ -109,9 +109,9 @@ module RecordDetails
     end
 
     def start_year_row
-      return if trainee.start_date.blank?
+      return if trainee.start_academic_cycle.blank?
 
-      start_year = AcademicCycle.for_date(trainee.start_date).label
+      start_year = trainee.start_academic_cycle.label
       {
         field_label: t(".start_year"),
         field_value: start_year,
@@ -119,9 +119,9 @@ module RecordDetails
     end
 
     def end_year_row
-      return if trainee.estimated_end_date.blank?
+      return if trainee.end_academic_cycle.blank?
 
-      end_year = AcademicCycle.for_date(trainee.estimated_end_date).label
+      end_year = trainee.end_academic_cycle.label
       {
         field_label: t(".end_year"),
         field_value: end_year,

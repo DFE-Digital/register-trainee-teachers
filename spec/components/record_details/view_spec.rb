@@ -19,14 +19,16 @@ module RecordDetails
         provider: provider,
         hesa_id: hesa_id,
         study_mode: TRAINEE_STUDY_MODE_ENUMS["part_time"],
+        itt_start_date: current_academic_cycle.start_date,
+        itt_end_date: next_academic_cycle.end_date,
       )
     end
     let(:hesa_id) { Faker::Number.number(digits: 10).to_s }
     let(:trainee_status) { "trainee-status" }
     let(:trainee_progress) { "trainee-progress" }
     let(:timeline_event) { double(date: Time.zone.today) }
-    let!(:current_academic_cycle) { create(:academic_cycle) }
-    let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
+    let(:current_academic_cycle) { create(:academic_cycle) }
+    let(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
     context "when :show_provider is true" do
       let(:change_accredited_provider_enabled) { false }
