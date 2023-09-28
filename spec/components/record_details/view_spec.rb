@@ -56,7 +56,7 @@ module RecordDetails
         let(:change_accredited_provider_enabled) { true }
 
         it "does not render a change link" do
-          expect(rendered_component).to have_css(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 0)
+          expect(rendered_component).to have_css(".govuk-summary-list__row.accredited-provider .govuk-summary-list__actions a", count: 0)
         end
       end
 
@@ -65,7 +65,7 @@ module RecordDetails
         let(:show_change_provider) { true }
 
         it "renders a change link" do
-          expect(rendered_component).to have_css(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 1)
+          expect(rendered_component).to have_css(".govuk-summary-list__row.accredited-provider .govuk-summary-list__actions a", count: 1)
         end
       end
     end

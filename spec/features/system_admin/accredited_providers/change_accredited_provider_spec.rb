@@ -63,13 +63,13 @@ feature "Change a trainee's accredited provider" do
   alias_method :and_i_visit_the_trainee_detail_page, :when_i_visit_the_trainee_detail_page
 
   def then_i_do_not_see_a_change_provider_link
-    within ".govuk-summary-list__row.accrediting-provider" do
+    within ".govuk-summary-list__row.accredited-provider" do
       expect(page).not_to have_link("Change")
     end
   end
 
   def and_i_click_the_change_provider_link
-    within ".govuk-summary-list__row.accrediting-provider" do
+    within ".govuk-summary-list__row.accredited-provider" do
       click_link "Change"
     end
   end
