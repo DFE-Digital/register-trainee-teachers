@@ -71,6 +71,19 @@ module CourseDetailsHelper
     [["", ""]] + options
   end
 
+  def provider_options(providers)
+    providers.map do |provider|
+      [
+        provider.name_and_code,
+        provider.id,
+        {
+          "data-append": "<p class=\"govuk-body-s govuk-!-margin-0 govuk-caption-m govuk-hint\">UKPRN: #{provider.ukprn}</p>",
+          "data-synonyms": [provider.ukprn, provider.code].join("|"),
+        },
+      ]
+    end
+  end
+
 private
 
   def language_specialisms

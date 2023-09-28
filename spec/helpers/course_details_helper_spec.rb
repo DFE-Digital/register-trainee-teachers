@@ -108,4 +108,26 @@ describe CourseDetailsHelper do
       expect(filter_year_options(current_user, :start_year).map(&:value)).to eq(["All years", "2020 to 2021"])
     end
   end
+
+  describe "#provider_options" do
+    let(:providers) { build_list(:provider, 3) }
+
+    it "returns a list of provider options" do
+      expect(provider_options(providers).map(&:first)).to eql(providers.map(&:name_and_code))
+      expect(provider_options(providers).map(&:second)).to eql(providers.map(&:id))
+    end
+
+    it "includes synonyms for the provider codes and UKPRN" do
+      provider_options(providers).map(&:last).each_with_index do |option, index|
+        expect(option[:"data-synonyms"]).to include(providers[index].ukprn)
+        expect(option[:"data-synonyms"]).to include(providers[index].code)
+      end
+    end
+
+    it "includes the UKPRN in the dropdown" do
+      provider_options(providers).map(&:last).each_with_index do |option, index|
+        expect(option[:"data-append"]).to include(providers[index].ukprn)
+      end
+    end
+  end
 end
