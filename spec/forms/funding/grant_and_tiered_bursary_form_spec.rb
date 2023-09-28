@@ -14,8 +14,15 @@ module Funding
       subject { described_class.new(trainee, params: params, store: form_store) }
 
       describe "validations" do
-        it { is_expected.to validate_inclusion_of(:custom_bursary_tier).in_array(Trainee.bursary_tiers.keys + ["none"]) }
-        it { is_expected.to validate_inclusion_of(:custom_applying_for_grant).in_array(%w[yes no]) }
+        it {
+          expect(subject).to validate_inclusion_of(:custom_bursary_tier)
+         .in_array(Trainee.bursary_tiers.keys + ["none"]).with_message("Select if you are applying for a bursary for this trainee")
+        }
+
+        it {
+          expect(subject).to validate_inclusion_of(:custom_applying_for_grant).in_array(%w[yes no])
+          .with_message("Select if the provider should be awarded a grant")
+        }
       end
 
       describe "#stash" do
