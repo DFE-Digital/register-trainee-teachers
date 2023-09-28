@@ -41,10 +41,6 @@ sync_hesa_students:
   cron: "0 5 * * *"  # Every day at 05:00.
   class: "Hesa::SyncStudentsJob"
   queue: hesa
-big_query_import_entities:
-  cron: "30 5 * * *"  # Every day at 05:30.
-  class: "BigQueryImportEntitiesJob"
-  queue: dfe_analytics
 upload_trn_file_to_hesa:
   cron: "10 10 * * *"  # Every day at 10:10.
   class: "Hesa::UploadTrnFileJob"

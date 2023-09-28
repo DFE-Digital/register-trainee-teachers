@@ -5,55 +5,48 @@ module BulkUpdate
     include ServicePattern
 
     def initialize(recommendations_upload:)
-      @trainees = trainees_with_changed_attributes(recommendations_upload.awardable_rows.includes(:trainee))
+      @recommendations_upload = recommendations_upload
     end
 
     def call
       return if trainees.empty?
 
-      Trainee.upsert_all(build_upsert_attributes(trainees), unique_by: :slug)
-
-      enqueue_background_jobs!(trainees)
+      InsertAll.call(
+        original: original,
+        modified: modified,
+        model: Trainee,
+        unique_by: :slug
+      )
     end
 
   private
 
-    attr_reader :trainees
+    ATTRIBUTES = %i[id slug outcome_date state recommended_for_award_at]
 
-    def trainees_with_changed_attributes(awardable_rows)
-      awardable_rows.filter_map do |row|
+    # Builds a hash of trainees, indexed by ID, who meet all criteria for an award.
+    def original
+      @original ||= recommendations_upload.awardable_rows.each_with_object({}) do |row, hash|
         trainee = row.trainee
 
         next unless trainee&.trn_received?
 
-        trainee.outcome_date = row.standards_met_at
-        trainee.state = :recommended_for_award
-        trainee.recommended_for_award_at = Time.zone.now
-
-        trainee
+        hash[trainee.id] = trainee.attributes.with_indifferent_access.slice(*ATTRIBUTES)
       end
     end
 
-    def build_upsert_attributes(trainees)
-      trainees.map do |trainee|
-        {
-          slug: trainee.slug,
-          provider_id: trainee.provider_id,
-          outcome_date: trainee.outcome_date,
+    # Modifies attributes of original trainees based on user input, indexed by trainee ID.
+    def modified
+      @modified ||= recommendations_upload.awardable_rows(include_trainee: false).each_with_object({}) do |row, hash|
+        trainee_id = row.matched_trainee_id
+
+        next unless original.key?(trainee_id)
+
+        hash[trainee_id] = original[trainee_id].merge(
+          outcome_date: row.standards_met_at,
           state: :recommended_for_award,
-          recommended_for_award_at: Time.zone.now,
-        }
-      end
-    end
-
-    def enqueue_background_jobs!(trainees)
-      trainees.each do |trainee|
-        Auditing::TraineeAuditorJob.perform_later(trainee,
-                                                  trainee.send(:audited_changes),
-                                                  Audited.store[:current_user]&.call,
-                                                  Audited.store[:current_remote_address])
-        Dqt::RecommendForAwardJob.perform_later(trainee)
-      end
+          recommended_for_award: Time.zone.now
+        )
+      end.with_indifferent_access
     end
   end
 end
