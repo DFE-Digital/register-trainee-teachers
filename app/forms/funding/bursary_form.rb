@@ -15,7 +15,7 @@ module Funding
     ].freeze
 
     NONE_TYPE = "none"
-    FUNDING_TYPES = (Trainee.bursary_tiers.keys + FUNDING_TYPE_ENUMS.values + [NONE_TYPE]).freeze
+    FUNDING_TYPES = (FUNDING_TYPE_ENUMS.values + [NONE_TYPE]).freeze
 
     attr_accessor(*FIELDS)
 
@@ -30,16 +30,6 @@ module Funding
     def initialize(trainee, params: {}, user: nil, store: FormStore)
       params = add_fields_from_params(params)
       super(trainee, params:, user:, store:)
-    end
-
-    def view_partial
-      if can_apply_for_grant?
-        "grant_form"
-      elsif can_apply_for_tiered_bursary?
-        "tiered_bursary_form"
-      else
-        "non_tiered_bursary_form"
-      end
     end
 
   private
@@ -57,9 +47,7 @@ module Funding
 
     def add_funding_type_from_db(opts)
       opts[:funding_type] =
-        if trainee.bursary_tier.present?
-          trainee.bursary_tier
-        elsif trainee.applying_for_bursary?
+        if trainee.applying_for_bursary?
           FUNDING_TYPE_ENUMS[:bursary]
         elsif trainee.applying_for_scholarship?
           FUNDING_TYPE_ENUMS[:scholarship]
@@ -75,11 +63,6 @@ module Funding
 
     def add_fields_from_params(opts)
       case opts[:funding_type]
-      when *Trainee.bursary_tiers.keys
-        opts[:bursary_tier] = opts[:funding_type]
-        opts[:applying_for_bursary] = true
-        opts[:applying_for_scholarship] = false
-        opts[:applying_for_grant] = false
       when FUNDING_TYPE_ENUMS[:bursary]
         opts[:bursary_tier] = nil
         opts[:applying_for_bursary] = true

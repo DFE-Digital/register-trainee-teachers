@@ -30,6 +30,7 @@ class FormStore
     schools
     training_initiative
     bursary
+    grant_and_tiered_bursary
     language_specialisms
     subject_specialism
     itt_dates
