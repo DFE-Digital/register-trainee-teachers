@@ -6,6 +6,7 @@ class TraineesController < BaseTraineeController
 
   before_action :redirect_to_not_found, if: -> { trainee.discarded? }, only: :show
   before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
+  before_action :clear_page_tracker, only: :show
 
   def show
     authorize(trainee)
@@ -107,5 +108,9 @@ private
 
   def trainee_params
     params.fetch(:trainee, {}).permit(:training_route, :record_source)
+  end
+
+  def clear_page_tracker
+    page_tracker.clear_redundant_session_data
   end
 end

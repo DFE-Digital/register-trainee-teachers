@@ -50,6 +50,15 @@ class PageTracker
     history.pop
   end
 
+  def clear_redundant_session_data
+    match = request.referer&.match(TRAINEE_PAGE_URI_REGEX)
+    if match
+      trainee_slug = match.to_s.split("/")[1]
+      session.delete("#{HISTORY_KEY_PREFIX}_#{trainee_slug}")
+      session.delete("#{ORIGIN_PAGES_KEY_PREFIX}_#{trainee_slug}")
+    end
+  end
+
 private
 
   attr_reader :session, :request, :history_session_key, :origin_pages_session_key
@@ -78,15 +87,6 @@ private
   def reset_origin_pages_to_current_path
     full_path_index = origin_pages.index(request.fullpath)
     session[origin_pages_session_key] = origin_pages[..full_path_index]
-  end
-
-  def clear_redundant_session_data
-    match = request.referer&.match(TRAINEE_PAGE_URI_REGEX)
-    if match
-      trainee_slug = match.to_s.split("/")[1]
-      session.delete("#{HISTORY_KEY_PREFIX}_#{trainee_slug}")
-      session.delete("#{ORIGIN_PAGES_KEY_PREFIX}_#{trainee_slug}")
-    end
   end
 
   def entered_an_edit_page_directly?
