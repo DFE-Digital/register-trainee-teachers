@@ -11,11 +11,11 @@ describe ContactDetails::View do
     end
 
     it "renders a blank row for email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
+      expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
     end
 
     it "tells the user that the email is missing" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 1)
+      expect(rendered_component).to have_css(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 1)
     end
   end
 
@@ -25,7 +25,7 @@ describe ContactDetails::View do
     end
 
     it "renders rows for email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
+      expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
     end
 
     it "renders the contact details change link" do
@@ -46,7 +46,7 @@ describe ContactDetails::View do
     end
 
     it "does not render rows for address, only email" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
+      expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
     end
 
     it "renders the email address" do

@@ -56,7 +56,7 @@ module RecordDetails
         let(:change_accredited_provider_enabled) { true }
 
         it "does not render a change link" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 0)
+          expect(rendered_component).to have_css(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 0)
         end
       end
 
@@ -65,7 +65,7 @@ module RecordDetails
         let(:show_change_provider) { true }
 
         it "renders a change link" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 1)
+          expect(rendered_component).to have_css(".govuk-summary-list__row.accrediting-provider .govuk-summary-list__actions a", count: 1)
         end
       end
     end
@@ -206,7 +206,7 @@ module RecordDetails
         end
 
         it "does not render link" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
+          expect(rendered_component).to have_css(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
         end
       end
 
@@ -230,7 +230,7 @@ module RecordDetails
           end
 
           it "renders link to trainee start date form" do
-            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(rendered_component).to have_css(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
             expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-date/edit")
           end
         end
@@ -247,7 +247,7 @@ module RecordDetails
           end
 
           it "renders link to trainee start status form" do
-            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(rendered_component).to have_css(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
             expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-status/edit")
           end
 

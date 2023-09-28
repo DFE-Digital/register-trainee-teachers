@@ -14,7 +14,7 @@ module ErrorSummary
       end
 
       it "renders the given content from the block" do
-        expect(rendered_component).to have_selector("li", count: 1)
+        expect(rendered_component).to have_css("li", count: 1)
       end
     end
 
