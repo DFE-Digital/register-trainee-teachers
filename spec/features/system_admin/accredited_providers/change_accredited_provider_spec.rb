@@ -139,10 +139,10 @@ feature "Change a trainee's accredited provider" do
   end
 
   def when_i_click_to_change_the_accredited_provider
-    click_on "Change accredited provider"
+    click_link "Change accredited provider"
   end
 
   def when_i_click_to_change_the_zendesk_ticket_url
-    click_on "Change zendesk ticket url"
+    click_link "Change zendesk ticket url"
   end
 end
