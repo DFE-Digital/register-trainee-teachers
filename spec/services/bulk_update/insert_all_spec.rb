@@ -40,6 +40,11 @@ RSpec.describe BulkUpdate::InsertAll, type: :service do
   end
 
   describe ".call" do
+    it "upserts the records correctly" do
+      expect(trainee.reload.first_names).to eq("Johnny")
+      expect(trainee.state.to_sym).to eq(:recommended_for_award)
+    end
+
     it "passes the correct attributes to the audit jobs" do
       expect(BulkUpdate::AuditingJob).to have_received(:perform_later).with(
         hash_including(

@@ -26,14 +26,11 @@ module BulkUpdate
     end
 
     def enqueue_audit_jobs
-      audit_changes.each do |id, attrs|
-        AuditingJob.perform_later(
-          model: model,
-          id: id,
-          changes: attrs,
-          user: Audited.store[:current_user]&.call,
-          remote_address: Audited.store[:current_remote_address],
-        )
+      user = Audited.store[:current_user]&.call
+      remote_address = Audited.store[:current_remote_address]
+
+      audit_changes.each do |id, changes|
+        AuditingJob.perform_later(model:, id:, changes:, user:, remote_address:)
       end
     end
 
@@ -63,11 +60,9 @@ module BulkUpdate
       end
     end
 
-    def ids
-      @ids ||= modified.keys
-    end
-
     def enqueue_analytics_job
+      ids = modified.keys
+
       AnalyticsJob.perform_later(model:, ids:)
     end
   end

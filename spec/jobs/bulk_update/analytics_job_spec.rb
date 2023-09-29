@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe BulkUpdate::AnalyticsJob do
   include ActiveJob::TestHelper
 
-  let(:trainees) { create_list(:trainee, 3, :trn_received) } # Adjust the number and trait as needed
+  let(:trainees) { create_list(:trainee, 3, :trn_received) }
   let(:ids) { trainees.map(&:id) }
   let(:model) { Trainee }
 
@@ -16,7 +16,6 @@ RSpec.describe BulkUpdate::AnalyticsJob do
       described_class.perform_now(model:, ids:)
 
       expect(DfE::Analytics::SendEvents).to have_received(:do)
-      # Add any other expectations for arguments or other methods that should have been triggered.
     end
   end
 end
