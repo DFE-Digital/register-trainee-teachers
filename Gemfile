@@ -159,6 +159,8 @@ group :development, :test do
 
   gem "rails-controller-testing"
 
+  gem "rails-erd"
+
   # run specs in parallel
   gem "parallel_tests"
   gem "rspec-benchmark", require: false
