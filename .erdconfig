@@ -6,4 +6,5 @@ attributes:
   - inheritance
 exclude: "ActiveRecord::SchemaMigration, ActiveRecord::InternalMetadata, primary::SchemaMigration"
 filename: docs/database-diagram
+filetype: jpg
 title: Register Trainee Teachers Database Diagram
