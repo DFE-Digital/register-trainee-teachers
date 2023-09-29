@@ -3,8 +3,8 @@ module BulkUpdate
     include ServicePattern
 
     def initialize(original:, modified:, model:, unique_by:)
-      @original = original
-      @modified = modified
+      @original = original.with_indifferent_access
+      @modified = modified.with_indifferent_access
       @model = model
       @unique_by = unique_by
     end
@@ -12,24 +12,20 @@ module BulkUpdate
     def call
       upsert_records
       enqueue_audit_jobs
-      send_to_big_query
+      enqueue_analytics_job
     end
 
   private
 
     attr_reader :original, :modified, :model, :unique_by
 
-    def records
-      @records ||= model.find(modified.keys)
-    end
-
     def upsert_records
-      model.upsert_all(modified, unique_by:)
+      model.upsert_all(modified.values, unique_by:)
     end
 
     def enqueue_audit_jobs
       audit_changes.each do |id, attrs|
-        Auditing::BackfillJob.perform_later(
+        AuditingJob.perform_later(
           model: model,
           id: id,
           changes: attrs,
@@ -44,12 +40,13 @@ module BulkUpdate
     def audit_changes
       @audit_changes ||= modified.each_with_object({}) do |(id, mod_attrs), result|
         original_attrs = original[id]
+        result[id] = {}.with_indifferent_access
 
         mod_attrs.each do |attr, mod_value|
           next if original_attrs[attr] == mod_value
 
           orig_value, new_value = convert_enum(attr, original_attrs[attr], mod_value)
-          result[attr] = [orig_value, new_value]
+          result[id][attr] = [orig_value, new_value]
         end
       end
     end
@@ -64,17 +61,12 @@ module BulkUpdate
       end
     end
 
-    def send_to_big_query
-      DfE::Analytics::SendEvents.do(analytics_events.as_json)
+    def ids
+      @ids ||= modified.keys
     end
 
-    def analytics_events
-      @analytics_events ||= records.map do |record|
-        DfE::Analytics::Event.new
-                              .with_type('update_entity')
-                              .with_entity_table_name(model)
-                              .with_data(DfE::Analytics.extract_model_attributes(record))
-      end
+    def enqueue_analytics_job
+      AnalyticsJob.perform_later(model:, ids:)
     end
   end
 end

@@ -1,33 +1,58 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe BulkUpdate::InsertAll, type: :service do
-  let(:trainee) { create(:trainee) }
-  let(:original) { { trainee.id => { first_names: 'John', updated_at: 'some_time' } } }
-  let(:modified) { { trainee.id => { first_names: 'Johnny', updated_at: 'some_other_time' } } }
-  let(:expected_changes) { { first_names: ['John', 'Johnny'], updated_at: ['some_time', 'some_other_time'] } }
+  let!(:trainee) { create(:trainee) }
 
-  before do
-    allow(Trainee).to receive(:find).and_return([instance_double('Trainee')])
-    allow(Trainee).to receive(:upsert_all)
-    allow(DfE::Analytics::SendEvents).to receive(:do)
-    allow(Auditing::BackfillJob).to receive(:perform_later)
+  let(:original) do
+    { trainee.id => {
+      id: trainee.id,
+      first_names: "John",
+      state: trainee.state.to_sym,
+      slug: trainee.slug,
+      provider_id: trainee.provider_id,
+    } }.with_indifferent_access
   end
 
-  describe 'enqueue_audit_jobs' do
-    it 'passes the correct attributes to the audit jobs' do
-      BulkUpdate::InsertAll.call(
-        original: original,
-        modified: modified,
-        model: Trainee,
-        unique_by: :slug
-      )
+  let(:modified) do
+    { trainee.id => {
+      id: trainee.id,
+      first_names: "Johnny",
+      state: :recommended_for_award,
+      slug: trainee.slug,
+      provider_id: trainee.provider_id,
+    } }.with_indifferent_access
+  end
 
-      expect(Auditing::BackfillJob).to have_received(:perform_later).with(
+  let(:expected_changes) { { first_names: %w[John Johnny], state: [0, 3] } }
+
+  before do
+    allow(BulkUpdate::AuditingJob).to receive(:perform_later)
+    allow(BulkUpdate::AnalyticsJob).to receive(:perform_later)
+
+    described_class.call(
+      original: original,
+      modified: modified,
+      model: Trainee,
+      unique_by: :slug,
+    )
+  end
+
+  describe ".call" do
+    it "passes the correct attributes to the audit jobs" do
+      expect(BulkUpdate::AuditingJob).to have_received(:perform_later).with(
         hash_including(
           model: Trainee,
-          id: an_instance_of(Integer),
-          changes: expected_changes
-        )
+          id: trainee.id,
+          changes: expected_changes,
+        ),
+      ).once
+    end
+
+    it "passes the trainee record to enqueue_analytics_job" do
+      expect(BulkUpdate::AnalyticsJob).to have_received(:perform_later).with(
+        model: Trainee, ids: [trainee.id]
       ).once
     end
   end

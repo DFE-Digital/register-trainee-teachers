@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Auditing
-  class BackfillJob < ApplicationJob
+module BulkUpdate
+  class AuditingJob < ApplicationJob
     def perform(model:, id:, audited_changes:, user:, remote_address:)
       Audited.audit_class.as_user(user) do
         # Not ideal to be calling a private method, but it's a trade-off to allow us to create audit records
