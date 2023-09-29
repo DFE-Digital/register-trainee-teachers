@@ -6,7 +6,7 @@ module BulkUpdate
       @model = model
       @ids = ids
 
-      DfE::Analytics::SendEvents.do(analytics_events)
+      DfE::Analytics::SendEvents.do(events)
     end
 
   private
@@ -15,7 +15,7 @@ module BulkUpdate
       @events ||= records.map do |record|
         DfE::Analytics::Event.new
                               .with_type("update_entity")
-                              .with_entity_table_name(model)
+                              .with_entity_table_name(@model)
                               .with_data(DfE::Analytics.extract_model_attributes(record))
       end.as_json
     end
