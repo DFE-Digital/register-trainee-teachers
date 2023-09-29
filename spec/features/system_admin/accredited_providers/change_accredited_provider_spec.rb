@@ -47,6 +47,24 @@ feature "Change a trainee's accredited provider" do
       when_i_click_continue
       then_i_see_the_confirmation_page
     end
+
+    scenario "back links" do
+      given_i_am_reviewing_my_changes_on_the_confirmation_page
+      when_i_click_to_change_the_accredited_provider
+      then_i_see_the_change_accredited_providers_page
+      when_i_click_back
+      then_i_see_the_confirmation_page
+
+      when_i_click_to_change_the_zendesk_ticket_url
+      then_i_see_the_reasons_page
+      when_i_click_back
+      then_i_see_the_confirmation_page
+
+      when_i_click_update
+      and_i_click_the_change_provider_link
+      and_i_click_back
+      then_i_see_the_trainee_detail_page
+    end
   end
 
   def and_the_change_accredited_provider_feature_is_not_enabled
@@ -144,5 +162,14 @@ feature "Change a trainee's accredited provider" do
 
   def when_i_click_to_change_the_zendesk_ticket_url
     click_link "Change zendesk ticket url"
+  end
+
+  def when_i_click_back
+    click_link "Back"
+  end
+  alias_method :and_i_click_back, :when_i_click_back
+
+  def then_i_see_the_trainee_detail_page
+    expect(page).to have_current_path("/trainees/#{trainee.slug}", ignore_query: true)
   end
 end
