@@ -77,7 +77,7 @@ module CourseDetailsHelper
         provider.name_and_code,
         provider.id,
         {
-          "data-append": "<p class=\"govuk-body-s govuk-!-margin-0 govuk-caption-m govuk-hint\">UKPRN: #{provider.ukprn}</p>",
+          "data-append": "<p class=\"govuk-!-margin-0 autocomplete__option--hint\">UKPRN: #{provider.ukprn}</p>",
           "data-synonyms": [provider.ukprn, provider.code].join("|"),
         },
       ]
