@@ -52,7 +52,7 @@ RSpec.describe BulkUpdate::InsertAll, type: :service do
 
     it "passes the trainee record to enqueue_analytics_job" do
       expect(BulkUpdate::AnalyticsJob).to have_received(:perform_later).with(
-        model: Trainee, ids: [trainee.id]
+        model: Trainee, ids: [trainee.id],
       ).once
     end
   end

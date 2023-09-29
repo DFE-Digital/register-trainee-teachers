@@ -10,7 +10,7 @@ module BulkUpdate
           :write_audit,
           action: "update",
           audited_changes: audited_changes,
-          remote_address: remote_address
+          remote_address: remote_address,
         )
       end
     end
