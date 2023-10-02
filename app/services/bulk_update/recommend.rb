@@ -9,7 +9,7 @@ module BulkUpdate
     end
 
     def call
-      return if trainees.empty?
+      return if original&.keys&.empty?
 
       InsertAll.call(
         original: original,
@@ -20,6 +20,8 @@ module BulkUpdate
     end
 
   private
+
+    attr_reader :recommendations_upload
 
     # We include provider_id as part of the attributes even though it won't change.
     # This is because `upsert_all` requires all NOT NULL fields to be present for a successful upsert operation
@@ -47,7 +49,7 @@ module BulkUpdate
         hash[trainee_id] = original[trainee_id].merge(
           outcome_date: row.standards_met_at,
           state: :recommended_for_award,
-          recommended_for_award: Time.zone.now,
+          recommended_for_award_at: Time.zone.now,
         )
       end.with_indifferent_access
     end
