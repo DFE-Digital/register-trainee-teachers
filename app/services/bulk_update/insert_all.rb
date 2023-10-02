@@ -29,8 +29,8 @@ module BulkUpdate
       user = Audited.store[:current_user]&.call
       remote_address = Audited.store[:current_remote_address]
 
-      audit_changes.each do |id, changes|
-        AuditingJob.perform_later(model:, id:, changes:, user:, remote_address:)
+      audit_changes.each do |id, audited_changes|
+        AuditingJob.perform_later(model:, id:, audited_changes:, user:, remote_address:)
       end
     end
 

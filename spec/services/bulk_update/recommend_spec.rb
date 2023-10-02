@@ -28,7 +28,7 @@ module BulkUpdate
         it "does not update the trainee state and outcome date" do
           subject
           expect(trainee.reload.state).to eql "draft"
-          expect(trainee.outcome_date).to be nil
+          expect(trainee.outcome_date).to be_nil
         end
       end
     end

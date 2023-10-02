@@ -50,7 +50,7 @@ RSpec.describe BulkUpdate::InsertAll, type: :service do
         hash_including(
           model: Trainee,
           id: trainee.id,
-          changes: expected_changes,
+          audited_changes: expected_changes,
         ),
       ).once
     end
