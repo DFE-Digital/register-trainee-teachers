@@ -116,6 +116,7 @@ module Trainees
           title: accredited_provider_change_title,
           date: created_at,
           username: username,
+          items: changed_accredited_provider_description,
         )
       end
 
@@ -178,7 +179,10 @@ module Trainees
     end
 
     def accredited_provider_change_title
-      I18n.t("components.timeline.titles.trainee.accredited_provider_change")
+      I18n.t(
+        "components.timeline.titles.trainee.accredited_provider_change",
+        new_accredited_provider: auditable.provider.name_and_code,
+      )
     end
 
     def state_change_action
@@ -203,6 +207,10 @@ module Trainees
           ["#{I18n.t('components.timeline.withdrawal_date')}:", auditable.withdraw_date.strftime("%e %B %Y").to_s],
         ]
       end
+    end
+
+    def changed_accredited_provider_description
+      [comment]
     end
 
     def create_title
