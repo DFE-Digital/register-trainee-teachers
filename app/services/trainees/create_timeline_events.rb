@@ -181,7 +181,8 @@ module Trainees
     def accredited_provider_change_title
       I18n.t(
         "components.timeline.titles.trainee.accredited_provider_change",
-        new_accredited_provider: auditable.provider.name_and_code,
+        old_accredited_provider: Provider.find_by(id: audited_changes["provider_id"].first)&.name_and_code,
+        new_accredited_provider: Provider.find_by(id: audited_changes["provider_id"].second)&.name_and_code,
       )
     end
 
