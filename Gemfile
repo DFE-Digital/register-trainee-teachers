@@ -13,7 +13,7 @@ gem "sprockets-rails"
 gem "pg", ">= 0.18", "< 2.0"
 
 # Use Puma as the app server
-gem "puma", "~> 6.3"
+gem "puma", "~> 6.4"
 
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker"
@@ -117,7 +117,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v2.3.1"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.10.1"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.11.0"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
@@ -158,6 +158,8 @@ group :development, :test do
   gem "rspec-rails", "~> 6.0.3"
 
   gem "rails-controller-testing"
+
+  gem "rails-erd"
 
   # run specs in parallel
   gem "parallel_tests"

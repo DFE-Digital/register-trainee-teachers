@@ -20,8 +20,8 @@ jobs:
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
     outputs:
-      docker_image: ${{ env.DOCKER_IMAGE }}
-      image_tag: ${{ env.IMAGE_TAG }}
+      docker-image: ${{ env.DOCKER_IMAGE }}
+      image-tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
 
     steps:
@@ -104,84 +104,19 @@ jobs:
   test:
     name: Test
     needs: [build]
-    outputs:
-      image_tag: ${{ needs.build.outputs.image_tag }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+    with:
+      docker-image: ${{needs.build.outputs.docker-image}}
+      image-tag: ${{ needs.build.outputs.image-tag }}
+      use-next-academic-year: false
 
-    - name: Set environment variables
-      run: |
-        echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
-
-    - name: Set KV environment variables
-      run: |
-        # tag build to the review env for vars and secrets
-        tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
-        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "KEY_VAULT_APP_SECRET_NAME=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
-
-    - uses: DFE-Digital/keyvault-yaml-secret@v1
-      id: get-secret
-      with:
-        keyvault: ${{ env.KEY_VAULT_NAME }}
-        secret: ${{ env.KEY_VAULT_APP_SECRET_NAME }}
-        key: SENTRY_DSN
-
-    - name: Pull docker images
-      run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
-
-    - name: Bring images up
-      run: |
-        docker-compose up --no-build -d
-        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
-        docker-compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
-        docker-compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
-      env:
-        SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}
-
-    - name: Install chromedriver
-      run: docker-compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
-
-    - name: Setup DB
-      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
-
-    - name: Reset DB
-      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:reset"
-
-    - name: Run Rspec tests for next academic year
-      uses: Wandalen/wretry.action@v1.3.0
-      with:
-        attempt_limit: 3
-        command: |
-          docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test USE_NEXT_ACADEMIC_YEAR=true bundle exec rake spec'
-
-    - name: Reset DB
-      run: docker-compose exec -T web /bin/sh -c "bundle exec rails db:reset"
-
-    - name: Run Rspec tests
-      uses: Wandalen/wretry.action@v1.3.0
-      with:
-        attempt_limit: 3
-        command: |
-          docker-compose exec --env COVERAGE=true -T web /bin/sh -c 'RAILS_ENV=test bundle exec rake spec'
-
-    - name: Run Javascript tests
-      run: docker-compose exec -T web /bin/sh -c 'yarn run test'
-
-    - name: Check for Failure
-      if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Build Failure
-        SLACK_MESSAGE: ':alert: :flake: :flake: :flake: :flake: ${{env.IMAGE_TAG}} :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  next_academic_year_test:
+    name: Next academic year tests
+    needs: [build]
+    uses: ./.github/workflows/tests.yml
+    secrets: inherit
+    with:
+      docker-image: ${{needs.build.outputs.docker-image}}
+      image-tag: ${{ needs.build.outputs.image-tag }}
+      use-next-academic-year: true

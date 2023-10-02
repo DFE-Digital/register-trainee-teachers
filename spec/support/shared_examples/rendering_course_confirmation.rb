@@ -52,20 +52,20 @@ shared_examples "rendering course confirmation" do
     end
 
     it "renders study_mode" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+      expect(rendered_component).to have_css(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
     end
 
     it "renders the selected study_mode" do
-      expect(rendered_component).to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+      expect(rendered_component).to have_css(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
     end
 
     if described_class == PublishCourseDetails::View
       it "renders 7 rows on the confirmation page" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+        expect(rendered_component).to have_css(".govuk-summary-list__row", count: 7)
       end
     else
       it "renders 8 rows on the confirmation page" do
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 8)
+        expect(rendered_component).to have_css(".govuk-summary-list__row", count: 8)
       end
     end
 
@@ -73,20 +73,20 @@ shared_examples "rendering course confirmation" do
       let(:trainee) { build(:trainee, :assessment_only) }
 
       it "does not render study_mode" do
-        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
+        expect(rendered_component).not_to have_css(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__key", text: "Full time or part time")
       end
 
       it "does not render the selected study_mode" do
-        expect(rendered_component).not_to have_selector(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
+        expect(rendered_component).not_to have_css(".govuk-summary-list__row.full-time-or-part-time .govuk-summary-list__value", text: "Full time")
       end
 
       if described_class == PublishCourseDetails::View
         it "renders 6 rows on the confirmation page" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 6)
+          expect(rendered_component).to have_css(".govuk-summary-list__row", count: 6)
         end
       else
         it "renders 7 rows on the confirmation page" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 7)
+          expect(rendered_component).to have_css(".govuk-summary-list__row", count: 7)
         end
       end
     end

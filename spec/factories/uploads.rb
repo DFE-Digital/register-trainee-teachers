@@ -3,13 +3,13 @@
 FactoryBot.define do
   factory :upload do
     user factory: %i[user system_admin]
-    name { "test.txt" }
+    name { "test.csv" }
 
     after(:build) do |upload|
       upload.file.attach(
-        io: Rails.root.join("spec/fixtures/files/test.txt").open,
-        filename: "test.txt",
-        content_type: "text/text",
+        io: Rails.root.join("spec/fixtures/files/test.csv").open,
+        filename: "test.csv",
+        content_type: "text/csv",
       )
     end
   end

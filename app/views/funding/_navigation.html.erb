@@ -1,5 +1,5 @@
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: root_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "All funding years", href: back_path) %>
 <% end %>
 
 <% if @navigation_view.organisation_name %>
@@ -13,10 +13,10 @@
 <%= render TabNavigation::View.new(items: [
   {
     name: t("funding.payment_schedule.heading", start_year: @start_year, end_year: @end_year),
-    url: @navigation_view.path_for_funding_payment_schedule
+    url: @navigation_view.path_for_funding_payment_schedule(@start_year)
   },
   {
     name: t("funding.trainee_summary.heading", start_year: @start_year, end_year: @end_year),
-    url: @navigation_view.path_for_funding_trainee_summary
+    url: @navigation_view.path_for_funding_trainee_summary(@start_year)
   },
 ]) %>

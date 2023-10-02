@@ -51,7 +51,7 @@ describe Withdrawal::View do
       let(:withdraw_date) { nil }
 
       it "renders no date of withdrawal" do
-        expect(rendered_component).to have_selector("#date-the-trainee-withdrew", text: "-")
+        expect(rendered_component).to have_css("#date-the-trainee-withdrew", text: "-")
       end
     end
   end

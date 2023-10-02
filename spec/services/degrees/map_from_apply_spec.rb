@@ -11,7 +11,7 @@ module Degrees
     let(:degree_attributes) { JSON.parse(application_data).dig("attributes", "qualifications", "degrees").first }
 
     let(:application_data) do
-      ApiStubs::ApplyApi.application(degree_attributes: {
+      ApiStubs::RecruitsApi.application(degree_attributes: {
         subject: dfe_degree_subject_reference_data[:name],
         hesa_degsbj: dfe_degree_subject_reference_data[:hecos_code],
         grade: dfe_degree_grade_reference_data[:name],
@@ -70,7 +70,7 @@ module Degrees
 
       context "HESA codes are not present" do
         let(:application_data) do
-          ApiStubs::ApplyApi.application(degree_attributes: {
+          ApiStubs::RecruitsApi.application(degree_attributes: {
             uk_degree: dfe_degree_type_reference_data[:name],
             subject: dfe_degree_subject_reference_data[:name],
             grade: dfe_degree_grade_reference_data[:name],
@@ -86,7 +86,7 @@ module Degrees
         let(:unrecognised_grade) { "Balloney" }
 
         let(:application_data) do
-          ApiStubs::ApplyApi.application(degree_attributes: {
+          ApiStubs::RecruitsApi.application(degree_attributes: {
             grade: unrecognised_grade,
             grade_uuid: nil,
             hesa_degclss: nil,
@@ -103,7 +103,7 @@ module Degrees
         let(:uk_degree) { "Bachelor of Arts" }
 
         let(:application_data) do
-          ApiStubs::ApplyApi.application(degree_attributes: {
+          ApiStubs::RecruitsApi.application(degree_attributes: {
             hesa_degctry: nil,
             comparable_uk_degree: nil,
             non_uk_qualification_type: nil,
@@ -118,7 +118,7 @@ module Degrees
 
     context "with a non-uk degree" do
       let(:application_data) do
-        ApiStubs::ApplyApi.non_uk_application(degree_attributes: { subject: degree_subject }).to_json
+        ApiStubs::RecruitsApi.non_uk_application(degree_attributes: { subject: degree_subject }).to_json
       end
 
       let(:expected_non_uk_degree_attributes) do
@@ -133,7 +133,7 @@ module Degrees
 
       context "degree country is nil but comparable_uk_degree exists" do
         let(:application_data) do
-          ApiStubs::ApplyApi.non_uk_application(degree_attributes: {
+          ApiStubs::RecruitsApi.non_uk_application(degree_attributes: {
             hesa_degctry: nil,
             non_uk_qualification_type: nil,
           }).to_json

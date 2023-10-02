@@ -210,9 +210,13 @@ Rails.application.routes.draw do
   end
 
   if FeatureService.enabled?("funding")
+    get "/funding", to: "funding#show", as: :funding
+
     namespace :funding do
-      resource :payment_schedule, only: %i[show], path: "/payment-schedule"
-      resource :trainee_summary, only: %i[show], path: "/trainee-summary"
+      scope "(:academic_year)" do
+        resource :payment_schedules, only: [:show], path: "payment-schedule", as: :payment_schedule
+        resource :trainee_summaries, only: [:show], path: "trainee-summary", as: :trainee_summary
+      end
     end
   end
 

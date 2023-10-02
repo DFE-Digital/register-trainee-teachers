@@ -19,7 +19,7 @@ module ApplicationRecordCard
     end
 
     it "does not render provider name" do
-      expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
+      expect(rendered_component).not_to have_css(".application-record-card__provider_name")
     end
 
     context "when system admin user" do
@@ -28,11 +28,11 @@ module ApplicationRecordCard
       end
 
       it "renders provider name" do
-        expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+        expect(rendered_component).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
       end
 
       it "renders the record source" do
-        expect(rendered_component).to have_selector(".application-record-card__record_source", text: I18n.t("components.application_record_card.record_source.title"))
+        expect(rendered_component).to have_css(".application-record-card__record_source", text: I18n.t("components.application_record_card.record_source.title"))
       end
     end
 
@@ -42,7 +42,7 @@ module ApplicationRecordCard
       end
 
       it "renders provider name" do
-        expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+        expect(rendered_component).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
       end
     end
 
@@ -76,13 +76,13 @@ module ApplicationRecordCard
 
     context "when the Trainee has no trainee_id" do
       it "does not render trainee ID" do
-        expect(rendered_component).not_to have_selector(".application-record-card__id")
+        expect(rendered_component).not_to have_css(".application-record-card__id")
       end
     end
 
     context "when the Trainee has no trn" do
       it "does not render trn" do
-        expect(rendered_component).not_to have_selector(".application-record-card__trn")
+        expect(rendered_component).not_to have_css(".application-record-card__trn")
       end
     end
 
@@ -100,7 +100,7 @@ module ApplicationRecordCard
           let(:trainee) { create(:trainee, state_expectation[:state], training_route: TRAINING_ROUTE_ENUMS[:assessment_only]) }
 
           it "renders '#{state_expectation[:text]}'" do
-            expect(rendered_component).to have_selector(".govuk-tag", text: state_expectation[:text])
+            expect(rendered_component).to have_css(".govuk-tag", text: state_expectation[:text])
           end
 
           it "sets the colour to #{state_expectation[:colour]}" do
@@ -137,7 +137,7 @@ module ApplicationRecordCard
       end
 
       it "does not render provider name" do
-        expect(rendered_component).not_to have_selector(".application-record-card__provider_name")
+        expect(rendered_component).not_to have_css(".application-record-card__provider_name")
       end
 
       context "when system admin user" do
@@ -146,7 +146,7 @@ module ApplicationRecordCard
         end
 
         it "renders provider name" do
-          expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+          expect(rendered_component).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
         end
       end
 
@@ -156,7 +156,7 @@ module ApplicationRecordCard
         end
 
         it "renders provider name" do
-          expect(rendered_component).to have_selector(".application-record-card__provider_name", text: provider.name.to_s)
+          expect(rendered_component).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
         end
       end
 

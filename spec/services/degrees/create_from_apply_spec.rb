@@ -32,7 +32,7 @@ module Degrees
       let(:trainee) { create(:trainee, :with_apply_application) }
       let(:invalid_institution) { "Unknown institution" }
       let(:invalid_apply_degree) do
-        ApiStubs::ApplyApi.uk_degree(institution_details: invalid_institution).transform_keys(&:to_s)
+        ApiStubs::RecruitsApi.uk_degree(institution_details: invalid_institution).transform_keys(&:to_s)
       end
 
       before do

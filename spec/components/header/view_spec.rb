@@ -17,7 +17,7 @@ module Header
     end
 
     it "does not render links" do
-      expect(component).not_to have_selector(".app-header__content")
+      expect(component).not_to have_css(".app-header__content")
     end
 
     context "with one menu item" do

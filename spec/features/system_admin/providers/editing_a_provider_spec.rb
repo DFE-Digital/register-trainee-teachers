@@ -48,7 +48,7 @@ private
 
   def when_i_am_on_the_edit_page
     expect(page).to have_current_path("/system-admin/providers/#{provider.id}/edit")
-    expect(page).not_to have_selector("h1 > .govuk-tag.govuk-tag--red", text: "Deleted")
+    expect(page).not_to have_css("h1 > .govuk-tag.govuk-tag--red", text: "Deleted")
   end
 
   def and_i_click_on_the_delete_button
@@ -68,9 +68,9 @@ private
   end
 
   def and_the_provider_is_deleted
-    expect(page).to have_selector(".govuk-notification-banner--success > * .govuk-notification-banner__heading", text: "Provider successfully deleted")
+    expect(page).to have_css(".govuk-notification-banner--success > * .govuk-notification-banner__heading", text: "Provider successfully deleted")
 
-    expect(page).to have_selector(".govuk-tag.govuk-tag--red", text: "Deleted")
+    expect(page).to have_css(".govuk-tag.govuk-tag--red", text: "Deleted")
     expect(page).to have_text("0 users")
   end
 

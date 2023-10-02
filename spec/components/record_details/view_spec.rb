@@ -19,22 +19,54 @@ module RecordDetails
         provider: provider,
         hesa_id: hesa_id,
         study_mode: TRAINEE_STUDY_MODE_ENUMS["part_time"],
+        itt_start_date: current_academic_cycle.start_date,
+        itt_end_date: next_academic_cycle.end_date,
       )
     end
     let(:hesa_id) { Faker::Number.number(digits: 10).to_s }
     let(:trainee_status) { "trainee-status" }
     let(:trainee_progress) { "trainee-progress" }
     let(:timeline_event) { double(date: Time.zone.today) }
-    let!(:current_academic_cycle) { create(:academic_cycle) }
-    let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
+    let(:current_academic_cycle) { create(:academic_cycle) }
+    let(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
     context "when :show_provider is true" do
+      let(:change_accredited_provider_enabled) { false }
+      let(:show_change_provider) { false }
+
       before do
-        render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, show_provider: true))
+        enable_features(:change_accredited_provider) if change_accredited_provider_enabled
+
+        render_inline(
+          View.new(
+            trainee: trainee,
+            last_updated_event: timeline_event,
+            show_provider: true,
+            editable: true,
+            show_change_provider: show_change_provider,
+          ),
+        )
       end
 
       it "renders the provider name and code" do
         expect(rendered_component).to have_text(provider.name_and_code)
+      end
+
+      context "when current user is NOT an administrator" do
+        let(:change_accredited_provider_enabled) { true }
+
+        it "does not render a change link" do
+          expect(rendered_component).to have_css(".govuk-summary-list__row.accredited-provider .govuk-summary-list__actions a", count: 0)
+        end
+      end
+
+      context "when current user is an administrator" do
+        let(:change_accredited_provider_enabled) { true }
+        let(:show_change_provider) { true }
+
+        it "renders a change link" do
+          expect(rendered_component).to have_css(".govuk-summary-list__row.accredited-provider .govuk-summary-list__actions a", count: 1)
+        end
       end
     end
 
@@ -174,7 +206,7 @@ module RecordDetails
         end
 
         it "does not render link" do
-          expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
+          expect(rendered_component).to have_css(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 0)
         end
       end
 
@@ -188,6 +220,7 @@ module RecordDetails
           let(:trainee_start_date) { 5.days.from_now.to_date }
 
           before do
+            create(:academic_cycle, one_after_next_cycle: true)
             trainee.trainee_start_date = trainee_start_date
             render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
@@ -197,13 +230,14 @@ module RecordDetails
           end
 
           it "renders link to trainee start date form" do
-            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(rendered_component).to have_css(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
             expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-date/edit")
           end
         end
 
         context "trainee_start_date is not set" do
           before do
+            create(:academic_cycle, previous_cycle: create_previous_academic_year?)
             trainee.trainee_start_date = nil
             render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
           end
@@ -213,7 +247,7 @@ module RecordDetails
           end
 
           it "renders link to trainee start status form" do
-            expect(rendered_component).to have_selector(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
+            expect(rendered_component).to have_css(".govuk-summary-list__row.trainee-start-date .govuk-summary-list__actions a", count: 1)
             expect(rendered_component).to have_link(href: "/trainees/#{trainee.to_param}/trainee-start-status/edit")
           end
 

@@ -16,7 +16,7 @@ feature "Delete a file" do
   end
 
   describe "Deleting an upload" do
-    scenario "blah" do
+    scenario "upload can be deleted" do
       and_an_upload_exists
       and_i_delete_the_upload
       then_the_upload_no_longer_shows
@@ -31,7 +31,7 @@ private
 
   def and_an_upload_exists
     show.load(id: upload.id)
-    expect(show).to have_text "test.txt"
+    expect(show).to have_text "test.csv"
   end
 
   def and_i_delete_the_upload
@@ -39,6 +39,6 @@ private
   end
 
   def then_the_upload_no_longer_shows
-    expect(index).not_to have_text "test.txt"
+    expect(index).not_to have_text "test.csv"
   end
 end

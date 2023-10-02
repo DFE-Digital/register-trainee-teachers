@@ -15,12 +15,12 @@ module FormComponents
 
       it "supports custom classes on the parent container" do
         render_inline(View.new(form, attribute_name: :country, form_field: form_field, classes: "test-css-class"))
-        expect(component).to have_selector(".test-css-class")
+        expect(component).to have_css(".test-css-class")
       end
 
       it "supports custom html attributes on the parent container" do
         render_inline(View.new(form, attribute_name: :country, form_field: form_field, html_attributes: { "test-attribute" => "my-custom-attribute" }))
-        expect(component).to have_selector('[test-attribute="my-custom-attribute"]')
+        expect(component).to have_css('[test-attribute="my-custom-attribute"]')
       end
 
     private

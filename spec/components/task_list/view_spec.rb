@@ -34,7 +34,7 @@ describe TaskList::View do
   context "when task data is provided" do
     context "rendered tasks" do
       it "renders a list of tasks" do
-        expect(rendered_component).to have_selector(".app-task-list__item")
+        expect(rendered_component).to have_css(".app-task-list__item")
       end
 
       it "renders the task name" do

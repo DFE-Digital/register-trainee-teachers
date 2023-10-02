@@ -6,6 +6,7 @@ features:
   sign_in_method: persona
   enable_feedback_link: true
   publish_course_details: true
+  change_accredited_provider: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true
@@ -20,6 +21,7 @@ features:
     iqts: true
   user_can_have_multiple_organisations: true
   funding: true
+  change_accredited_provider: true
 
 pagination:
   records_per_page: 30

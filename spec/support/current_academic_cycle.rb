@@ -35,3 +35,5 @@ end
 def compute_valid_itt_start_date
   compute_valid_future_itt_start_date || compute_valid_past_itt_start_date
 end
+
+def create_previous_academic_year? = the_very_first_day_of_current_academic_year?

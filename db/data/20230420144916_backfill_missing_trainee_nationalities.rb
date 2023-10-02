@@ -7,7 +7,7 @@ class BackfillMissingTraineeNationalities < ActiveRecord::Migration[7.0]
 
       next unless nationality
 
-      nationality_name = ApplyApi::CodeSets::Nationalities::MAPPING[nationality]
+      nationality_name = RecruitsApi::CodeSets::Nationalities::MAPPING[nationality]
       trainee.nationalities = Nationality.where(name: nationality_name)
       trainee.save
     end

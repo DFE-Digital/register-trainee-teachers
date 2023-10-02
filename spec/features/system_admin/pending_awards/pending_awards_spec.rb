@@ -70,7 +70,7 @@ feature "pending awards" do
   end
 
   def and_i_click_view
-    click_on "View"
+    click_link "View"
   end
 
   def then_i_see_the_trainee_details

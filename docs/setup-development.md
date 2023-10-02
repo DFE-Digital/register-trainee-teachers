@@ -192,7 +192,7 @@ Add the following to your `development.local.yml`:
 features:
   import_applications_from_apply: true
 
-apply_api:
+recruits_api:
   base_url: "https://sandbox.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: <request token from Apply team>
 ```
@@ -200,11 +200,11 @@ apply_api:
 Running the following script:
 
 ```ruby
-ApplyApi::ImportApplication.class_eval do
+RecruitsApi::ImportApplication.class_eval do
   def provider
     Provider.all.sample
   end
 end
 ApplyApplicationSyncRequest.delete_all
-ApplyApi::ImportApplicationsJob.perform_now
+RecruitsApi::ImportApplicationsJob.perform_now
 ```

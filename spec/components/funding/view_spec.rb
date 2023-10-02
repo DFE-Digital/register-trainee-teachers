@@ -11,20 +11,71 @@ module Funding
 
     before { render_inline(View.new(data_model: trainee, editable: true)) }
 
-    context "with tieried bursary" do
-      let(:trainee) do
-        build(:trainee,
-              :early_years_postgrad,
-              :with_course_allocation_subject,
-              :with_start_date,
-              start_academic_cycle: start_academic_cycle,
-              applying_for_bursary: true,
-              bursary_tier: BURSARY_TIERS.keys.first)
+    context "early years graduate entry" do
+      let(:bursary_tier) { BURSARY_TIERS.keys.first }
+
+      context "trainee with grant and tiered bursary" do
+        let(:trainee) do
+          create(:trainee, :with_grant_and_tiered_bursary, start_academic_cycle:, applying_for_grant:, applying_for_bursary:, bursary_tier:)
+        end
+
+        context "applying without grant and with tiered bursary" do
+          let(:applying_for_grant) { false }
+          let(:applying_for_bursary) { true }
+
+          it "renders grant text" do
+            expect(rendered_component).to have_text("Not grant funded")
+          end
+
+          it "renders tiered bursary text" do
+            expect(rendered_component).to have_text("Applied for Tier 1")
+            expect(rendered_component).to have_text("£5,000 estimated bursary")
+          end
+        end
+
+        context "applying with grant and with tiered bursary" do
+          let(:applying_for_grant) { true }
+          let(:applying_for_bursary) { true }
+
+          it "renders grant text" do
+            expect(rendered_component).to have_text("Grant applied for")
+            expect(rendered_component).to have_text("£5,000 estimated grant")
+          end
+
+          it "renders tiered bursary text" do
+            expect(rendered_component).to have_text("Applied for Tier 1")
+            expect(rendered_component).to have_text("£5,000 estimated bursary")
+          end
+
+          context "applying without grant and without tiered bursary" do
+            let(:applying_for_grant) { false }
+            let(:applying_for_bursary) { false }
+            let(:bursary_tier) { nil }
+
+            it "renders grant text" do
+              expect(rendered_component).to have_text("Not grant funded")
+            end
+
+            it "renders tiered bursary text" do
+              expect(rendered_component).to have_text("Not funded")
+            end
+          end
+        end
       end
 
-      it "renders tiered bursary text" do
-        expect(rendered_component).to have_text("Applied for Tier 1")
-        expect(rendered_component).to have_text("£5,000 estimated bursary")
+      context "trainee with tiered bursary" do
+        let(:trainee) do
+          create(:trainee, :early_years_postgrad, :with_tiered_bursary, start_academic_cycle:, bursary_tier:)
+        end
+
+        it "does not renders grant text" do
+          expect(rendered_component).not_to have_text("grant")
+        end
+
+        it "renders tiered bursary text" do
+          expect(rendered_component).to have_text("Applied for Tier 1")
+          expect(rendered_component).to have_text("£5,000 estimated bursary")
+        end
       end
     end
 

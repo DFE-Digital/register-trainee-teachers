@@ -43,7 +43,7 @@ module ReviewSummary
 
     context "with header content" do
       it "renders the given content from the block" do
-        expect(rendered_component).to have_selector("p", text: invalid_data_view.summary_content)
+        expect(rendered_component).to have_css("p", text: invalid_data_view.summary_content)
       end
     end
 

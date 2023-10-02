@@ -80,7 +80,7 @@ module Hesa
         date_of_birth: hesa_trainee[:date_of_birth],
         trainee_id: hesa_trainee[:trainee_id],
         ukprn: hesa_trainee[:ukprn],
-        itt_commencement_date: hesa_trainee[:itt_commencement_date],
+        itt_commencement_date: hesa_trainee[:itt_start_date],
         numhus: hesa_trainee[:numhus],
         email: hesa_trainee[:email],
       )

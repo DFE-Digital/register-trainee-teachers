@@ -1,11 +1,18 @@
-<%= render PageTitle::View.new(i18n_key: "trainees.funding.#{@bursary_form.can_apply_for_grant? ? "grants" :"bursaries"}.edit",
+<% page_text = {
+  grant_and_tiered_bursary: "Funding",
+  grant: "Grant funding",
+  non_tiered_bursary: "Funding",
+}[@funding_manager.applicable_available_funding] %>
+<%= render PageTitle::View.new(text: page_text,
                                has_errors: @bursary_form.errors.present?) %>
+
 <%= content_for(:breadcrumbs) do %>
   <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= render @bursary_form.view_partial %>
+    <%= render "#{@funding_manager.applicable_available_funding}_form" %>
+
   </div>
 </div>

@@ -20,9 +20,13 @@ module SystemAdminRoutes
         resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]
 
+          get "/funding", to: "funding#show", as: :funding
+
           namespace :funding do
-            resource :payment_schedule, only: %i[show], path: "/payment-schedule"
-            resource :trainee_summary, only: %i[show], path: "/trainee-summary"
+            scope "(:academic_year)" do
+              resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
+              resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
+            end
           end
           resource :confirm_deletes, only: :show, path: "/confirm-delete", as: :confirm_delete, module: :providers
         end
@@ -45,9 +49,13 @@ module SystemAdminRoutes
         resources :lead_schools, path: "lead-schools", only: %i[index show] do
           resources :users, controller: "lead_schools/users", only: %i[edit update]
 
+          get "/funding", to: "funding#show", as: :funding
+
           namespace :funding do
-            resource :payment_schedule, only: %i[show], path: "/payment-schedule"
-            resource :trainee_summary, only: %i[show], path: "/trainee-summary"
+            scope "(:academic_year)" do
+              resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
+              resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
+            end
           end
         end
 
@@ -67,6 +75,14 @@ module SystemAdminRoutes
         namespace :pending_trns, path: "pending-trns" do
           resources :retrieve_trns, only: %i[update], path: "retrieve-trns"
           resources :request_trns, only: %i[update], path: "request-trns"
+        end
+
+        resources :trainees, only: [], path: "trainees" do
+          namespace :accredited_providers, path: "accredited-providers" do
+            resource :provider, only: %i[edit update]
+            resource :reason, only: %i[edit update]
+            resource :confirmations, only: %i[show update]
+          end
         end
       end
     end

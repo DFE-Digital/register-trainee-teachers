@@ -5,14 +5,15 @@ module RecordDetails
     include SanitizeHelper
     include SummaryHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :show_record_source, :editable
+    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :show_record_source, :editable, :show_change_provider
 
-    def initialize(trainee:, last_updated_event:, show_provider: false, show_record_source: false, editable: false)
+    def initialize(trainee:, last_updated_event:, show_provider: false, show_record_source: false, editable: false, show_change_provider: false)
       @trainee = trainee
       @last_updated_event = last_updated_event
       @show_provider = show_provider
       @editable = editable
       @show_record_source = show_record_source
+      @show_change_provider = show_change_provider
     end
 
     def record_detail_rows
@@ -36,8 +37,12 @@ module RecordDetails
     def provider_row
       return unless show_provider
 
-      { field_label: t(".provider"),
-        field_value: trainee.provider.name_and_code }
+      change_link = show_change_provider ? edit_trainee_accredited_providers_provider_path(trainee_id: trainee.id) : nil
+      mappable_field(
+        trainee.provider.name_and_code,
+        t(".provider"),
+        change_link,
+      )
     end
 
     def record_source_row
@@ -104,9 +109,9 @@ module RecordDetails
     end
 
     def start_year_row
-      return if trainee.start_date.blank?
+      return if trainee.start_academic_cycle.blank?
 
-      start_year = AcademicCycle.for_date(trainee.start_date).label
+      start_year = trainee.start_academic_cycle.label
       {
         field_label: t(".start_year"),
         field_value: start_year,
@@ -114,9 +119,9 @@ module RecordDetails
     end
 
     def end_year_row
-      return if trainee.estimated_end_date.blank?
+      return if trainee.end_academic_cycle.blank?
 
-      end_year = AcademicCycle.for_date(trainee.estimated_end_date).label
+      end_year = trainee.end_academic_cycle.label
       {
         field_label: t(".end_year"),
         field_value: end_year,

@@ -2,7 +2,7 @@
 
 class ReimportApplyApplicationsWithCourseUuid < ActiveRecord::Migration[6.1]
   def up
-    ApplyApi::ImportApplicationsJob.perform_later(from_date: Time.zone.parse("09 Dec 2020 14:00"))
+    RecruitsApi::ImportApplicationsJob.perform_later(from_date: Time.zone.parse("09 Dec 2020 14:00"))
   end
 
   def down

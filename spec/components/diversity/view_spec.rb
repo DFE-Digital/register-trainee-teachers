@@ -11,7 +11,7 @@ describe Diversity::View do
 
       it "renders with one line to say the trainee haven't shared data" do
         expect(rendered_component).to have_text("Not shared")
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 1)
+        expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
       end
 
       it "has one change links" do
@@ -26,7 +26,7 @@ describe Diversity::View do
 
       it "renders with one line to say the trainee has shared data" do
         expect(rendered_component).to have_text("Information disclosed")
-        expect(rendered_component).to have_selector(".govuk-summary-list__row", count: 3)
+        expect(rendered_component).to have_css(".govuk-summary-list__row", count: 3)
       end
 
       it "has three change links" do

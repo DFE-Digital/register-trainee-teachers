@@ -7,9 +7,9 @@ module Trainees
     let(:candidate_attributes) { {} }
     let(:course_attributes) { {} }
     let(:application_record) { create(:apply_application, application: application_data) }
-    let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
-    let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
-    let(:course_info) { ApiStubs::ApplyApi.course.as_json }
+    let(:candidate_info) { ApiStubs::RecruitsApi.candidate_info.as_json }
+    let(:contact_details) { ApiStubs::RecruitsApi.contact_details.as_json }
+    let(:course_info) { ApiStubs::RecruitsApi.course.as_json }
     let(:subject_names) { [] }
     let(:recruitment_cycle_year) { current_academic_year + 1 }
     let(:course_uuid) { course_info["course_uuid"] }
@@ -18,8 +18,8 @@ module Trainees
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
 
     let(:application_data) do
-      JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes,
-                                                course_attributes: course_attributes.merge(recruitment_cycle_year:)))
+      JSON.parse(ApiStubs::RecruitsApi.application(candidate_attributes: candidate_attributes,
+                                                   course_attributes: course_attributes.merge(recruitment_cycle_year:)))
     end
 
     let!(:course) do

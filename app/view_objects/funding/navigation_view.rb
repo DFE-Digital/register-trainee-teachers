@@ -13,23 +13,23 @@ module Funding
       @organisation&.name
     end
 
-    def path_for_funding_payment_schedule
-      return funding_payment_schedule_path if !system_admin
+    def path_for_funding_payment_schedule(year)
+      return funding_payment_schedule_path(year) unless system_admin
 
       if organisation.is_a?(Provider)
-        provider_funding_payment_schedule_path(organisation)
+        provider_funding_payment_schedule_path(provider_id: organisation.id, academic_year: year)
       else
-        lead_school_funding_payment_schedule_path(organisation)
+        lead_school_funding_payment_schedule_path(lead_school_id: organisation.id, academic_year: year)
       end
     end
 
-    def path_for_funding_trainee_summary
-      return funding_trainee_summary_path if !system_admin
+    def path_for_funding_trainee_summary(year)
+      return funding_trainee_summary_path(year) unless system_admin
 
       if organisation.is_a?(Provider)
-        provider_funding_trainee_summary_path(organisation)
+        provider_funding_trainee_summary_path(provider_id: organisation.id, academic_year: year)
       else
-        lead_school_funding_trainee_summary_path(organisation)
+        lead_school_funding_trainee_summary_path(lead_school_id: organisation.id, academic_year: year)
       end
     end
 

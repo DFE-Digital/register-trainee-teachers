@@ -7,10 +7,10 @@ module Trainees
     let(:candidate_attributes) { {} }
     let(:course_attributes) { {} }
     let(:apply_application) { create(:apply_application, application: application_data) }
-    let(:candidate_info) { ApiStubs::ApplyApi.candidate_info.as_json }
-    let(:contact_details) { ApiStubs::ApplyApi.contact_details.as_json }
-    let(:non_uk_contact_details) { ApiStubs::ApplyApi.non_uk_contact_details.as_json }
-    let(:course_info) { ApiStubs::ApplyApi.course.as_json }
+    let(:candidate_info) { ApiStubs::RecruitsApi.candidate_info.as_json }
+    let(:contact_details) { ApiStubs::RecruitsApi.contact_details.as_json }
+    let(:non_uk_contact_details) { ApiStubs::RecruitsApi.non_uk_contact_details.as_json }
+    let(:course_info) { ApiStubs::RecruitsApi.course.as_json }
     let(:trainee) { create_trainee_from_apply }
     let(:subject_names) { [] }
     let(:recruitment_cycle_year) { current_academic_year + 1 }
@@ -21,8 +21,8 @@ module Trainees
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
 
     let(:application_data) do
-      JSON.parse(ApiStubs::ApplyApi.application(candidate_attributes: candidate_attributes,
-                                                course_attributes: course_attributes.merge(recruitment_cycle_year:)))
+      JSON.parse(ApiStubs::RecruitsApi.application(candidate_attributes: candidate_attributes,
+                                                   course_attributes: course_attributes.merge(recruitment_cycle_year:)))
     end
 
     let!(:course) do
@@ -254,7 +254,7 @@ module Trainees
 
       context "when the trainee's nationalities is unrecognised" do
         before do
-          stub_const("ApplyApi::CodeSets::Nationalities::MAPPING", {
+          stub_const("RecruitsApi::CodeSets::Nationalities::MAPPING", {
             "AL" => "albanian",
             "GB" => "british",
           })

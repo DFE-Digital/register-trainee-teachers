@@ -19,7 +19,7 @@ module Personas
 
     it "renders a sign-in button to login as the persona" do
       expect(component.find("form")["action"]).to eq("/auth/developer/callback")
-      expect(component).to have_selector(".govuk-button")
+      expect(component).to have_css(".govuk-button")
     end
 
     context "single provider" do
