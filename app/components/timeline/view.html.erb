@@ -11,16 +11,20 @@
           <%= event.date.to_fs(:govuk_date_and_time) %>
         </time>
       </p>
-        <% if event.items.present? %>
         <div class="app-timeline__description">
-          <dl class="app-timeline__metadata-container">
-            <% event.items.each do |key, value| %>
-              <dt class="app-timeline__metadata-term"><%= key %></dt>
-              <dd class="app-timeline__metadata-definition"><%= value %></dd>
+          <% if event.items.present? && event.items.first.is_a?(String) %>
+            <% event.items.each do |value| %>
+              <p class="govuk-body"><%= value %></p>
             <% end %>
-          </dl>
+          <% elsif event.items.present? %>
+            <dl class="app-timeline__metadata-container">
+              <% event.items.each do |key, value| %>
+                <dt class="app-timeline__metadata-term"><%= key %></dt>
+                <dd class="app-timeline__metadata-definition"><%= value %></dd>
+              <% end %>
+            </dl>
+          <% end %>
         </div>
-        <% end %>
       </div>
     <% end %>
 </div>
