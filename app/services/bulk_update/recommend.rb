@@ -11,7 +11,7 @@ module BulkUpdate
     def call
       return if original&.keys&.empty?
 
-      InsertAll.call(
+      UpsertAll.call(
         original: original,
         modified: modified,
         model: Trainee,

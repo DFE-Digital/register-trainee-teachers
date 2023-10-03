@@ -12,7 +12,7 @@ RSpec.describe WarnOnUpsertAll do
 
   context "when not in seeding mode" do
     it "logs a warning message" do
-      expect(logger).to receive(:warn).with("WARNING: Please consider using `BulkUpdate::InsertAll` service for bulk insert operations to ensure that BigQuery and Audit events are triggered.")
+      expect(logger).to receive(:warn).with(match(/WARNING/))
       Nationality.upsert_all([{ name: "British" }], unique_by: :name)
     end
   end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  class InsertAll
+  class UpsertAll
     include ServicePattern
 
     def initialize(original:, modified:, model:, unique_by:)
@@ -39,20 +39,19 @@ module BulkUpdate
     def audit_changes
       @audit_changes ||= modified.each_with_object({}) do |(id, mod_attrs), result|
         original_attrs = original[id]
-        result[id] = {}.with_indifferent_access
 
-        mod_attrs.each do |attr, mod_value|
+        differences = mod_attrs.each_with_object({}.with_indifferent_access) do |(attr, mod_value), diff|
           next if original_attrs[attr] == mod_value
 
-          orig_value, new_value = convert_enum(attr, original_attrs[attr], mod_value)
-          result[id][attr] = [orig_value, new_value]
+          orig_value, new_value = convert_enums_to_integers(attr, original_attrs[attr], mod_value)
+          diff[attr] = [orig_value, new_value]
         end
+
+        result[id] = differences unless differences.empty?
       end
     end
 
-    # Handles enum conversion for given attribute and values
-    # Returns an array containing the original and modified values, converted to integers if the attribute is an enum
-    def convert_enum(attr, original_value, modified_value)
+    def convert_enums_to_integers(attr, original_value, modified_value)
       if model.defined_enums.key?(attr.to_s)
         [model.defined_enums[attr.to_s][original_value.to_s], model.defined_enums[attr.to_s][modified_value.to_s]]
       else

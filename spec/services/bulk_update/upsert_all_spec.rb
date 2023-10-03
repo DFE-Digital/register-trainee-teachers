@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe BulkUpdate::InsertAll, type: :service do
+RSpec.describe BulkUpdate::UpsertAll, type: :service do
   let!(:trainee) { create(:trainee) }
 
   let(:original) do
