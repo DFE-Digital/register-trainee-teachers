@@ -12,7 +12,7 @@
         </time>
       </p>
         <div class="app-timeline__description">
-          <% if event.items.present? && event.items.first.is_a?(String) %>
+          <% if event.items.present? && items_are_single_values?(event) %>
             <% event.items.each do |value| %>
               <p class="govuk-body"><%= value %></p>
             <% end %>

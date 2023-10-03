@@ -2,6 +2,8 @@
 
 module Timeline
   class View < GovukComponent::Base
+    include TimelineHelper
+
     attr_reader :events
 
     def initialize(events:)
