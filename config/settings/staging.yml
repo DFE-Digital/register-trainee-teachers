@@ -43,7 +43,7 @@ features:
   dqt_import:
     sync_teachers: true
   google:
-    send_data_to_big_query: false
+    send_data_to_big_query: true
   change_accredited_provider: true
 
 environment:
