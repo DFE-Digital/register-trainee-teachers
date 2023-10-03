@@ -69,7 +69,6 @@ module SystemAdmin
 
         it "attaches an audit comment to the update" do
           last_audit_entry = trainee.reload.audits.last
-          expect(last_audit_entry.comment).to match(/Accredited provider updated/)
           expect(last_audit_entry.comment).to match(audit_comment)
           expect(last_audit_entry.comment).to match(zendesk_ticket_url)
         end

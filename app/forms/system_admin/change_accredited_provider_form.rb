@@ -47,7 +47,7 @@ module SystemAdmin
     end
 
     def build_audit_comment
-      "#{I18n.t('components.timeline.titles.trainee.accredited_provider_change')}: #{audit_comment} #{zendesk_ticket_url}"
+      [audit_comment, zendesk_ticket_url].compact.join(" ")
     end
   end
 end

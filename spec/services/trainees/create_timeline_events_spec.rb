@@ -218,12 +218,19 @@ module Trainees
       end
 
       context "with an accredited provider change" do
+        let(:new_provider) { create(:provider) }
+
         before do
-          trainee.update!(provider: create(:provider))
+          @old_provider = trainee.provider
+          trainee.update!(provider: new_provider, audit_comment: "Original provider has stopped teaching")
         end
 
-        it "returns an accredited provider update event" do
-          expect(subject.title).to eq("Accredited provider updated")
+        it "title indicates an accredited provider update event" do
+          expect(subject.title).to eq("Accredited provider changed from #{@old_provider.name_and_code} to #{new_provider.name_and_code}")
+        end
+
+        it "item includes the audit comment" do
+          expect(subject.items).to eq(["Original provider has stopped teaching"])
         end
       end
     end
