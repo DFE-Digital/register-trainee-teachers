@@ -59,6 +59,7 @@
   :apply_applications:
   - application
   - invalid_data
+  - application_choice_id
   :apply_application_sync_requests:
   - id
   - response_code
