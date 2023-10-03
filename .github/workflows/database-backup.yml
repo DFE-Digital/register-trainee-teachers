@@ -117,7 +117,7 @@ jobs:
         echo "::endgroup::"
 
         echo "::group::Backup Sanitised Database"
-        pg_dump --encoding utf8 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql
+        pg_dump --encoding utf8 --compress=1 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql.gz
         echo "::endgroup::"
       env:
         DATABASE_NAME: register_trainee_teachers
@@ -130,7 +130,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: backup_sanitised
-        path: backup_sanitised.sql
+        path: backup_sanitised.sql.gz
         retention-days: 3
 
     - name: Check for Failure
@@ -179,7 +179,7 @@ jobs:
     - name: Restore backup to aks env database
       shell: bash
       run: |
-        bin/konduit.sh -i backup_sanitised.sql -t 7200 register-staging -- psql
+        bin/konduit.sh -i backup_sanitised.sql.gz -c -t 7200 register-staging -- psql
 
     - name: Check for Failure
       if: ${{ failure() }}
