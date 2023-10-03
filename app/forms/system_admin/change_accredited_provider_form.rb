@@ -22,9 +22,12 @@ module SystemAdmin
     def save!
       return false unless valid?
 
-      trainee.update!(
-        provider_id: accredited_provider_id,
-        audit_comment: build_audit_comment,
+      Trainees::Update.call(
+        trainee: trainee,
+        params: {
+          provider_id: accredited_provider_id,
+          audit_comment: build_audit_comment,
+        },
       )
 
       clear_stash
