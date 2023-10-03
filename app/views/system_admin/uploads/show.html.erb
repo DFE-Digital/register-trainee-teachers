@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: @upload.name) %>
+<%= render PageTitle::View.new(text: @upload_view.name) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: uploads_path) %>
@@ -9,25 +9,31 @@
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">File name</dt>
-    <dd class="govuk-summary-list__value"><%= @upload.name %></dd>
+    <dd class="govuk-summary-list__value"><%= @upload_view.name %></dd>
   </div>
 
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Uploaded by</dt>
-    <dd class="govuk-summary-list__value"><%= @upload.user.name %></dd>
+    <dd class="govuk-summary-list__value"><%= @upload_view.user.name %></dd>
   </div>
 
   <div class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">Upload ID</dt>
-    <dd class="govuk-summary-list__value"><%= @upload.id %></dd>
+    <dd class="govuk-summary-list__value"><%= @upload_view.id %></dd>
   </div>
 </dl>
 
 <p class="govuk-body">
-  <%= govuk_link_to "Download", rails_blob_path(@upload.file.blob, disposition: "attachment"), class: "govuk-button govuk-!-margin-bottom-2" %>
+  <% if @upload_view.upload.scan_result_clean? %>
+    <%= govuk_link_to "Download", rails_blob_path(@upload_view.file.blob, disposition: "attachment"), class: "govuk-button govuk-!-margin-bottom-2" %>
+  <% else %>
+    <p class="govuk-body">
+      Upload has not been flagged as clean.
+    </p>
+  <% end %>
 
   <%= govuk_button_to "Permanently delete file",
-                      upload_path(@upload),
+                      upload_path(@upload_view.upload),
                       method: :delete,
                       class: "govuk-button govuk-button--warning" %>
 </p>

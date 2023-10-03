@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_164646) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -853,6 +853,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_18_092637) do
     t.datetime "updated_at", null: false
     t.string "name", null: false
     t.bigint "user_id", null: false
+    t.string "malware_scan_result", default: "pending"
     t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 

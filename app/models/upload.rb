@@ -4,11 +4,12 @@
 #
 # Table name: uploads
 #
-#  id         :bigint           not null, primary key
-#  name       :string           not null
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :bigint           not null
+#  id                  :bigint           not null, primary key
+#  malware_scan_result :string           default("pending")
+#  name                :string           not null
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  user_id             :bigint           not null
 #
 # Indexes
 #
@@ -26,8 +27,16 @@ class Upload < ApplicationRecord
   pg_search_scope :search_by_name, against: :name, using: %i[tsearch trigram]
 
   belongs_to :user
-  has_one_attached :file
+  has_one_attached :file, dependent: :purge_later
 
   validates :file, presence: true, file: { content_type: VALID_CONTENT_TYPES, size_limit: MAX_FILE_SIZE }
   validates :name, presence: true
+
+  enum malware_scan_result: {
+         clean: "clean",
+         error: "error",
+         pending: "pending",
+         suspect: "suspect",
+       },
+       _prefix: :scan_result
 end

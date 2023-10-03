@@ -39,25 +39,25 @@
     </thead>
 
     <tbody class="govuk-table__body">
-      <% @uploads.each do |upload| %>
+      <% @upload_views.each do |upload_view| %>
         <tr class="govuk-table__row upload-row">
 
           <td class="govuk-table__cell">
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-              <%= govuk_link_to upload.name, upload, class: "upload-link" %>
+              <%= govuk_link_to upload_view.name, upload_view.upload, class: "upload-link" %>
             </span>
           </td>
 
           <td class="govuk-table__cell">
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-              <%= upload.user.name %>
+              <%= upload_view.user.name %>
             </span>
           </td>
 
 
           <td class="govuk-table__cell">
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-              <%= upload.id %>
+              <%= upload_view.id %>
             </span>
           </td>
         </tr>

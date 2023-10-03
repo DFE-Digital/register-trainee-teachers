@@ -20,10 +20,24 @@ feature "Upload a file" do
       then_i_see_an_error
     end
 
-    scenario "with required attributes" do
+    scenario "with required attributes and a clean file" do
       attach_file("upload[file]", Rails.root.join("spec/fixtures/files/test.csv"))
       and_i_click_on_submit
+      and_file_scan_result_is("clean")
       then_i_see_the_upload
+    end
+
+    scenario "with required attributes and a pending file" do
+      attach_file("upload[file]", Rails.root.join("spec/fixtures/files/test.csv"))
+      and_i_click_on_submit
+      then_i_see_the_upload_without_a_download_link
+    end
+
+    scenario "with required attributes and a suspect file" do
+      attach_file("upload[file]", Rails.root.join("spec/fixtures/files/test.csv"))
+      and_i_click_on_submit
+      and_file_scan_result_is("suspect")
+      then_i_see_the_upload_without_a_download_link
     end
   end
 
@@ -41,8 +55,22 @@ private
     new_upload.submit.click
   end
 
+  def and_file_scan_result_is(malware_scan_result)
+    current_url = show.current_url
+    id = current_url.split("/").last
+    upload = Upload.find(id)
+    upload.update!(malware_scan_result:)
+    show.load(id:)
+  end
+
   def then_i_see_the_upload
     expect(show).to have_text("test.csv")
+    expect(show).not_to have_text("Upload has not been flagged as clean")
+  end
+
+  def then_i_see_the_upload_without_a_download_link
+    expect(show).not_to have_text("test.csv")
+    expect(show).to have_text("Upload has not been flagged as clean")
   end
 
   def then_i_see_an_error
