@@ -7,6 +7,10 @@ import_trn_data_from_hesa:
   cron: "30 8-23/2 * * *" # 30 minutes past every 2nd hour from 8 through 23
   class: "Hesa::RetrieveTrnDataJob"
   queue: hesa
+malware_scan_uploads:
+  cron: "*/20 * * * *"  # Every 20 minutes of every day.
+  class: "MalwareScanningJob"
+  queue: default
 remove_duplicate_dead_jobs:
   cron: "*/5 * * * *"  # Every 5 minutes of every day.
   class: "Sidekiq::RemoveDeadDuplicatesJob"
