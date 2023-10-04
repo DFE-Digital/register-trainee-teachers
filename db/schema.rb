@@ -853,7 +853,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_164646) do
     t.datetime "updated_at", null: false
     t.string "name", null: false
     t.bigint "user_id", null: false
-    t.string "malware_scan_result", default: "pending"
+    t.integer "malware_scan_result", default: 0
     t.index ["user_id"], name: "index_uploads_on_user_id"
   end
 

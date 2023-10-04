@@ -5,7 +5,7 @@
 # Table name: uploads
 #
 #  id                  :bigint           not null, primary key
-#  malware_scan_result :string           default("pending")
+#  malware_scan_result :integer          default("pending")
 #  name                :string           not null
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -33,10 +33,10 @@ class Upload < ApplicationRecord
   validates :name, presence: true
 
   enum malware_scan_result: {
-         clean: "clean",
-         error: "error",
-         pending: "pending",
-         suspect: "suspect",
+         pending: 0,
+         clean: 1,
+         error: 2,
+         suspect: 3,
        },
        _prefix: :scan_result
 end
