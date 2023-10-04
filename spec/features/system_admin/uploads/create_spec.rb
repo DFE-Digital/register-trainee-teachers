@@ -65,12 +65,14 @@ private
 
   def then_i_see_the_upload
     expect(show).to have_text("test.csv")
-    expect(show).not_to have_text("Upload has not been flagged as clean")
+    expect(show).not_to have_text("Upload has not yet been flagged as clean")
+    expect(show).not_to have_text("File pending approval")
   end
 
   def then_i_see_the_upload_without_a_download_link
     expect(show).not_to have_text("test.csv")
-    expect(show).to have_text("Upload has not been flagged as clean")
+    expect(show).to have_text("File pending approval")
+    expect(show).to have_text("Upload has not yet been flagged as clean")
   end
 
   def then_i_see_an_error
