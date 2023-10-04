@@ -49,8 +49,4 @@ DfE::Analytics.configure do |config|
   # to all events we send to BigQuery.
   #
   # config.environment = ENV.fetch('RAILS_ENV', 'development')
-
-  # Enable the nightly checksum for each table
-  #
-  config.entity_table_checks_enabled = true
 end
