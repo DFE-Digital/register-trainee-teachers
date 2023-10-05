@@ -233,7 +233,7 @@ module Trainees
     end
 
     def hpitt_trainee?
-      @provider.code == "HPITT"
+      @provider.code == "1TF"
     end
 
     def sanitise_funding
