@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "Delete a file" do
   let!(:user) { create(:user, :system_admin) }
-  let!(:upload) { create(:upload) }
+  let!(:upload) { create(:upload, malware_scan_result: "clean") }
 
   let(:index) { admin_uploads_page }
   let(:new_upload) { admin_upload_new_page }

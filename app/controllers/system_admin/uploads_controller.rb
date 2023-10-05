@@ -10,6 +10,7 @@ module SystemAdmin
                  else
                    Upload.all
                  end
+      @upload_views = @uploads.map { |upload| UploadView.new(upload) }
     end
 
     def show; end
@@ -23,6 +24,7 @@ module SystemAdmin
 
       if @upload.save
         redirect_to(@upload, notice: "File successfully uploaded.")
+        fetch_and_update_malware_scan_results
       else
         render(:new)
       end
@@ -41,12 +43,20 @@ module SystemAdmin
 
     def set_upload
       @upload = Upload.find(params[:id])
+      @upload_view = UploadView.new(@upload)
     end
 
     def upload_params
       params.require(:upload).permit(:file).merge(
         user: current_user,
         name: params.dig(:upload, :file)&.original_filename,
+      )
+    end
+
+    def fetch_and_update_malware_scan_results
+      # We need a delay here to ensure that the upload has been scanned before fetching the result.
+      MalwareScanJob.set(wait: 2.minutes).perform_later(
+        upload_id: @upload.id,
       )
     end
   end

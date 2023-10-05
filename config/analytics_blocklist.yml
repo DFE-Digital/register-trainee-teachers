@@ -354,6 +354,7 @@
   - id
   - name
   - user_id
+  - malware_scan_result
   - created_at
   - updated_at
   :dqt_teachers:
