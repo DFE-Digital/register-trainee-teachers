@@ -105,20 +105,41 @@ jobs:
       env:
         SQLPAD_USER: ${{ secrets.SQLPAD_USER }}
 
-    - name: Sanitise the Database backup
+    - name: Disk cleanup
+      shell: bash
       run: |
-        echo "::group::Restore backup to intermediate database"
+        sudo rm -rf /usr/local/lib/android || true
+        sudo rm -rf /usr/share/dotnet || true
+        sudo rm -rf /opt/ghc || true
+
+    - name: Create local Sanitised Database
+      run: |
         createdb ${DATABASE_NAME} && psql -f ${{ env.BACKUP_FILE_NAME }}.sql -d ${DATABASE_NAME}
+      env:
+        DATABASE_NAME: register_trainee_teachers
+        PGUSER:  postgres
+        PGPASSWORD: postgres
+        PGHOST: localhost
+        PGPORT: 5432
+
+    - name: Remove backup file
+      shell: bash
+      run: |
         rm ${{ env.BACKUP_FILE_NAME }}.sql
-        echo "::endgroup::"
 
-        echo "::group::Sanitise user data"
+    - name: Sanitise the local Database
+      run: |
         psql -d ${DATABASE_NAME} -f db/scripts/sanitise.sql
-        echo "::endgroup::"
+      env:
+        DATABASE_NAME: register_trainee_teachers
+        PGUSER:  postgres
+        PGPASSWORD: postgres
+        PGHOST: localhost
+        PGPORT: 5432
 
-        echo "::group::Backup Sanitised Database"
+    - name: Dump the Sanitised Database
+      run: |
         pg_dump --encoding utf8 --compress=1 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql.gz
-        echo "::endgroup::"
       env:
         DATABASE_NAME: register_trainee_teachers
         PGUSER:  postgres
