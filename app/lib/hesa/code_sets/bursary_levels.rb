@@ -7,15 +7,38 @@ module Hesa
       # https://www.hesa.ac.uk/collection/c22053/e/burslev
       # Note that Tier 1, Tier 2, and Tier 3 are fetched from the previous year, i.e:
       # https://www.hesa.ac.uk/collection/c20053/e/burslev
+      SCHOLARSHIP = "4"
+      NONE = "6"
+      TIER_ONE = "7"
+      TIER_TWO = "8"
+      TIER_THREE = "9"
+      UNDERGRADUATE_BURSARY = "B"
+      VETERAN_TEACHING_UNDERGRADUATE_BURSARY = "C"
+      POSTGRADUATE_BURSARY = "D"
+      GRANT = "E"
+
       MAPPING = {
-        "4" => Dttp::CodeSets::BursaryDetails::SCHOLARSHIP,
-        "6" => Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED,
-        "7" => Dttp::CodeSets::BursaryDetails::NEW_TIER_ONE_BURSARY,
-        "8" => Dttp::CodeSets::BursaryDetails::NEW_TIER_TWO_BURSARY,
-        "9" => Dttp::CodeSets::BursaryDetails::NEW_TIER_THREE_BURSARY,
-        "B" => Dttp::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY,
-        "C" => Dttp::CodeSets::BursaryDetails::SERVICE_LEAVER_BURSARY,
-        "D" => Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY,
+        SCHOLARSHIP => Dttp::CodeSets::BursaryDetails::SCHOLARSHIP,
+        NONE => Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED,
+        TIER_ONE => Dttp::CodeSets::BursaryDetails::NEW_TIER_ONE_BURSARY,
+        TIER_TWO => Dttp::CodeSets::BursaryDetails::NEW_TIER_TWO_BURSARY,
+        TIER_THREE => Dttp::CodeSets::BursaryDetails::NEW_TIER_THREE_BURSARY,
+        UNDERGRADUATE_BURSARY => Dttp::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY,
+        VETERAN_TEACHING_UNDERGRADUATE_BURSARY => Dttp::CodeSets::BursaryDetails::VETERAN_TEACHING_UNDERGRADUATE_BURSARY,
+        POSTGRADUATE_BURSARY => Dttp::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY,
+        GRANT => Dttp::CodeSets::BursaryDetails::GRANT,
+      }.freeze
+
+      VALUES = {
+        SCHOLARSHIP => "Scholarship",
+        NONE => "No bursary, scholarship or grant awarded",
+        TIER_ONE => "Tier 1",
+        TIER_TWO => "Tier 2",
+        TIER_THREE => "Tier 3",
+        UNDERGRADUATE_BURSARY => "Undergraduate bursary",
+        VETERAN_TEACHING_UNDERGRADUATE_BURSARY => "Veteran Teaching undergraduate bursary",
+        POSTGRADUATE_BURSARY => "Postgraduate bursary",
+        GRANT => "Grant",
       }.freeze
     end
   end

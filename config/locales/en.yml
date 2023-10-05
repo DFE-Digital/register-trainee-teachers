@@ -51,6 +51,10 @@ en:
       no_bursary_applied_for: Not funded
       no_grant_applied_for: Not grant funded
       no_funding_available: Not applicable
+      applying_for_bursary: Applying for bursary
+      applying: "Yes"
+      not_applying: "No"
+      selected_bursary_level: Selected bursary level
       contact_info: Contact %{email} if you think there should be trainees who are eligible.
       tiered_bursary_applied_for:
         tier_one: Applied for Tier 1

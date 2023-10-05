@@ -51,7 +51,7 @@ FactoryBot.define do
     trait :with_early_years_salaried_bursary do
       enabled_training_routes { ["early_years_salaried"] }
       _dfe_ittsubject1id_value { Dttp::CodeSets::CourseSubjects::EARLY_YEARS_DTTP_ID }
-      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::EARLY_YEARS_SALARIED }
+      _dfe_bursarydetailsid_value { Dttp::CodeSets::BursaryDetails::GRANT }
     end
 
     trait :with_tiered_bursary do

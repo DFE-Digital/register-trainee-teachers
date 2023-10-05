@@ -282,6 +282,35 @@ module Funding
       end
     end
 
+    context "when trainee has a hesa record" do
+      describe "applying for bursary row" do
+        context "when applying for bursary" do
+          let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: true) }
+
+          subject { rendered_component }
+
+          it { is_expected.to have_text("Yes") }
+        end
+
+        context "when not applying for bursary" do
+          let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: false) }
+
+          subject { rendered_component }
+
+          it { is_expected.to have_text("No") }
+        end
+      end
+
+      describe "hesa selected bursary level" do
+        let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: true) }
+        let(:hesa_bursary_code) { trainee.hesa_students.first.bursary_level }
+
+        it "renders the hesa bursary level along with the code" do
+          expect(rendered_component).to have_text("#{hesa_bursary_code} - #{Hesa::CodeSets::BursaryLevels::VALUES[hesa_bursary_code]}")
+        end
+      end
+    end
+
     describe "when we don't know the funding rules for the trainee's cycle" do
       let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true, start_academic_cycle: start_academic_cycle) }
 
