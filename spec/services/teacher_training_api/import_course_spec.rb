@@ -65,6 +65,25 @@ module TeacherTrainingApi
           end
         end
 
+        describe "store training route" do
+          context "program type is mapped" do
+            let(:course_attributes) { { program_type: "scitt_salaried_programme" } }
+
+            it "stores training route" do
+              subject
+              expect(course.route).to eq("provider_led_postgrad")
+            end
+          end
+
+          context "program type is unmapped" do
+            let(:course_attributes) { { program_type: "you_wat_now" } }
+
+            it "raises validation error" do
+              expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
+            end
+          end
+        end
+
         context "course level is primary but max age is greater than 11" do
           let(:course_attributes) { { level: "primary", max_age: 16 } }
 

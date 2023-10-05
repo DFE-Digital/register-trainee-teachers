@@ -88,6 +88,8 @@ module TeacherTrainingApi
         school_direct_salaried_training_programme: :school_direct_salaried,
         school_direct_training_programme: :school_direct_tuition_fee,
         scitt_programme: :provider_led_postgrad,
+        scitt_salaried_programme: :provider_led_postgrad,
+        higher_education_salaried_programme: :provider_led_postgrad,
       }
 
       routes[course_attributes[:program_type].to_sym]
