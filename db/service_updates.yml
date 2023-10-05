@@ -1,3 +1,26 @@
+- date: '2023-10-05'
+  title: Access previous funding information
+  content: |
+    You can now view and download funding information from previous academic years in Register.
+
+    Go to the ‘Funding’ tab to select from a list of ‘Payment Schedules’ or ‘Trainee Summary’ by academic year.
+
+    In Payment Schedules you can:
+      <ul>
+          <li>download a CSV file by academic year</li>
+          <li>view payments by month</li>
+          <li>view running totals</li>
+          <li>view predicted payments</li>
+          <li>view payment types</li>
+      </ul>
+
+    In Trainee Summary you can:
+      <ul>
+          <li>download a CSV file by academic year</li>
+          <li>view by payment type</li>
+          <li>view payment type breakdown by route or course, number of trainees, amount per trainee and totals</li>
+      </ul>
+
 - date: '2023-09-11'
   title: Submit ITT trainee data through HESA
   content: |
