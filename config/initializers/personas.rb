@@ -3,7 +3,7 @@
 PROVIDER_A = "Londinium Teacher Training"
 PROVIDER_B = "North County SCITT"
 PROVIDER_C = "University of BAT"
-TEACH_FIRST_PROVIDER_CODE = "HPITT"
+TEACH_FIRST_PROVIDER_CODE = "1TF"
 
 PERSONAS = [
   { first_name: "Agatha", last_name: "Baker", email: "agatha_baker@example.org", system_admin: true },
