@@ -44,7 +44,6 @@ features:
     sync_teachers: true
   google:
     send_data_to_big_query: true
-  change_accredited_provider: true
 
 environment:
   name: staging
