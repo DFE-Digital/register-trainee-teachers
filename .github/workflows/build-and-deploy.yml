@@ -239,7 +239,7 @@ jobs:
         with:
           github-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
           target: minor
-          exclude: 'govuk-components,govuk_design_system_formbuilder,govuk-frontend,@ministryofjustice/frontend'
+          exclude: 'govuk-components,govuk_design_system_formbuilder,govuk-frontend,@ministryofjustice/frontend,dfe-analytics'
           merge-method: merge
 
   deploy-aks-before-production:
