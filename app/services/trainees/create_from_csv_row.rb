@@ -76,6 +76,10 @@ module Trainees
         training_initiative: training_initiative,
         employing_school_id: employing_school_id,
         lead_school_id: lead_school_id,
+        course_education_phase: course_education_phase,
+        itt_start_date: itt_start_date,
+        itt_end_date: itt_end_date,
+        trainee_start_date: trainee_start_date,
       }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(funding_attributes)
@@ -105,15 +109,15 @@ module Trainees
     end
 
     def itt_start_date
-      csv_row["Course ITT start date"]
+      csv_row["Course ITT start date"].presence&.to_date
     end
 
     def itt_end_date
-      csv_row["Course Expected End Date"]
+      csv_row["Course ITT end date"].presence&.to_date
     end
 
     def trainee_start_date
-      csv_row["Trainee start date"]
+      csv_row["Trainee start date"].presence&.to_date
     end
 
     def training_route
