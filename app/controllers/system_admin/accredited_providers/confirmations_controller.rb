@@ -3,8 +3,6 @@
 module SystemAdmin
   module AccreditedProviders
     class ConfirmationsController < ApplicationController
-      before_action :enforce_feature_flag
-
       def show
         page_tracker.save_as_origin!
 
@@ -25,10 +23,6 @@ module SystemAdmin
 
       def trainee
         @trainee ||= Trainee.find(params[:trainee_id])
-      end
-
-      def enforce_feature_flag
-        redirect_to(not_found_path) unless FeatureService.enabled?(:change_accredited_provider)
       end
     end
   end
