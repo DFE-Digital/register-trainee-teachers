@@ -1,9 +1,6 @@
 # The url for this app, also used by `dfe_sign_in`
 base_url: https://www.register-trainee-teachers.service.gov.uk
 
-# The url for the google doc feedback link (live version)
-feedback_link_url: https://forms.office.com/pages/responsepage.aspx?id=yXfS-grGoU2187O4s0qC-XoQTPfbQ2dGrsruj75vocFUOFhUQUE4SkpBNlo2Q1hGMlBKVFNLOTlVSi4u
-
 dttp:
   scope: https://dttp.crm4.dynamics.com/.default
   api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
