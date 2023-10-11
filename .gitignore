@@ -11,6 +11,7 @@
 
 # Ignore SQL backups
 *.sql
+*.sql.gz
 *.tar.gz
 
 # Ignore all logfiles and tempfiles.
