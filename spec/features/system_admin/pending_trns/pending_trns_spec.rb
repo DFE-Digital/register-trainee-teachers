@@ -29,6 +29,22 @@ feature "pending TRNs" do
       when_i_click_resubmit_for_trn
       then_i_see_the_pending_trns_page
     end
+
+    context "with trainee in state submitted_for_trn with no TRN request" do
+      let(:trainee) { create(:trainee, :submitted_for_trn, first_names: "James Blint") }
+
+      it "shows a warning message" do
+        then_i_see_the_pending_trns_page
+        and_i_see_the_trainee
+        when_i_click_check_for_trn_without_an_existing_request
+      end
+
+      it "creates a trn request" do
+        then_i_see_the_pending_trns_page
+        and_i_see_the_trainee
+        when_i_click_resubmit_for_trn_without_an_existing_request
+      end
+    end
   end
 
   context "when I am authenticated as a regular user (not a system admin)" do
@@ -70,6 +86,16 @@ feature "pending TRNs" do
   end
 
   def when_i_click_resubmit_for_trn
+    expect(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee)
+    admin_pending_trns_page.resumbit_for_trn_button.click
+  end
+
+  def when_i_click_check_for_trn_without_an_existing_request
+    admin_pending_trns_page.check_for_trn_button.click
+    expect(admin_pending_trns_page).to have_text("#{trainee.full_name} has no TRN request (it may have been manually deleted).")
+  end
+
+  def when_i_click_resubmit_for_trn_without_an_existing_request
     expect(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee)
     admin_pending_trns_page.resumbit_for_trn_button.click
   end

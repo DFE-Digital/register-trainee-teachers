@@ -17,6 +17,8 @@ module SystemAdmin
       end
 
       def trn_request
+        return @trn_request if defined?(@trn_request)
+
         @trn_request = trainee.dqt_trn_request
       end
     end
