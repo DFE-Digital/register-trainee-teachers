@@ -4,7 +4,7 @@ module SystemAdmin
   module PendingTrns
     class RequestTrnsController < BaseController
       def update
-        trn_request.destroy!
+        trn_request&.destroy!
 
         trn_request = Dqt::RegisterForTrnJob.perform_now(trainee.reload)
 
