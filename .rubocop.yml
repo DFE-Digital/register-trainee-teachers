@@ -107,3 +107,5 @@ Rails/RedundantActiveRecordAllMethod:
     - 'spec/lib/dqt/params/update_spec.rb'
     - 'spec/models/degree_spec.rb'
 
+RSpec/PendingWithoutReason:
+  Enabled: false
