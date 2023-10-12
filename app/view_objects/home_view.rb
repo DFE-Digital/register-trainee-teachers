@@ -22,13 +22,13 @@ class HomeView
   Badge = Struct.new(:status, :trainee_count, :link)
 
   def draft_trainees_count
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/draft_trainees_count") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/draft_trainees_count", expires_in: 1.week) do
       trainees.draft.size
     end
   end
 
   def draft_apply_trainees_count
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/draft_apply_trainees_count") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/draft_apply_trainees_count", expires_in: 1.week) do
       trainees.draft.with_apply_application.size
     end
   end
@@ -53,13 +53,13 @@ private
   attr_reader :trainees, :trainees_cache_key_with_version
 
   def awarded_this_year_size
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/awarded_this_year") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/awarded_this_year", expires_in: 1.week) do
       trainees.awarded.merge(current_academic_cycle.trainees_ending).size
     end
   end
 
   def bulk_recommend_count
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/bulk_recommend_count") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/bulk_recommend_count", expires_in: 1.week) do
       Pundit.policy_scope(current_user, FindBulkRecommendTrainees.call).count
     end
   end
@@ -119,13 +119,13 @@ private
   end
 
   def course_not_yet_started_size
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/course_not_yet_started_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/course_not_yet_started_size", expires_in: 1.week) do
       trainees.course_not_yet_started.size
     end
   end
 
   def deferred_size
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/deferred_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/deferred_size", expires_in: 1.week) do
       trainees.deferred.size
     end
   end
@@ -143,13 +143,13 @@ private
   end
 
   def incomplete_size
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/incomplete_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/incomplete_size", expires_in: 1.week) do
       trainees.not_draft.incomplete.size
     end
   end
 
   def trainees_in_training_size
-    Rails.cache.fetch("#{trainees_cache_key_with_version}/trainees_in_training_size") do
+    Rails.cache.fetch("#{trainees_cache_key_with_version}/trainees_in_training_size", expires_in: 1.week) do
       trainees.in_training.size
     end
   end
