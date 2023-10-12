@@ -91,11 +91,7 @@
       <%= yield :start_page_banner %>
       <div class="govuk-width-container">
         <% if FeatureService.enabled?(:maintenance_banner) %>
-          <%= govuk_notification_banner(title_text: "Important") do |banner|
-            banner.heading(text: "We're resolving an issue with the Register dashboard")
-
-            content_tag(:p, "Your dashboard numbers are temporarily unavailable. We are working to resolve the issue as soon as possible.", class: "govuk-body")
-          end %>
+          <%= yield :maintenance_content %>
         <% else %>
           <%= render(YearChangeBanner::View.new) %>
         <% end %>

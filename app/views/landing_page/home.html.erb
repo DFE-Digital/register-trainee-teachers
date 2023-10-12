@@ -1,5 +1,13 @@
 <%= render PageTitle::View.new(text: t(".heading")) %>
 
+<% content_for :maintenance_content do %>
+  <%= govuk_notification_banner(title_text: "Important") do |banner|
+    banner.heading(text: "We are resolving an issue with the Register dashboard")
+
+    content_tag(:p, "Your dashboard numbers are temporarily unavailable on this page. We are working to resolve the issue as soon as possible.", class: "govuk-body")
+  end %>
+<% end %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <% if current_user.organisation %>
