@@ -14,6 +14,8 @@ class HomeView
 
     if !current_user.system_admin? && !current_user.lead_school?
       create_action_badges
+    else
+      badges << incomplete_badge
     end
   end
 
@@ -68,6 +70,11 @@ private
         :can_bulk_recommend_for_award,
         bulk_recommend_count,
         new_bulk_update_recommendations_upload_path,
+      ),
+      Badge.new(
+        :can_complete,
+        incomplete_size,
+        trainees_path(record_completion: %w[incomplete]),
       ),
     ]
   end
