@@ -100,6 +100,7 @@
 #  index_trainees_on_slug                                          (slug) UNIQUE
 #  index_trainees_on_start_academic_cycle_id                       (start_academic_cycle_id)
 #  index_trainees_on_state                                         (state)
+#  index_trainees_on_submission_ready                              (submission_ready)
 #  index_trainees_on_training_route                                (training_route)
 #  index_trainees_on_trn                                           (trn)
 #
