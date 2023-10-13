@@ -66,11 +66,6 @@ describe HomeView do
             trainee_count: 2,
             link: trainees_path(status: %w[deferred]),
           },
-          {
-            status: :incomplete,
-            trainee_count: 1,
-            link: trainees_path(record_completion: %w[incomplete]),
-          },
         ],
       )
     end
