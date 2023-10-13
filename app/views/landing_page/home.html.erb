@@ -14,13 +14,16 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <h2 class="govuk-heading-l"><%= t(".draft_heading") %></h2>
       <ul class="govuk-list govuk-list--spaced govuk-!-margin-bottom-0">
+        <% if @home_view.draft_trainees_count > @home_view.draft_apply_trainees_count %>
           <li>
             <%= govuk_link_to(
-              t(".draft_trainees_link"),
+              t(".draft_trainees_link", count: @home_view.draft_trainees_count),
               drafts_path,
               { class: "govuk-link--no-visited-state" }
             )%>
           </li>
+        <% end %>
+        <% if @home_view.draft_apply_trainees_count > 0 %>
           <li>
             <%= govuk_link_to(
               @home_view.apply_drafts_link_text,
@@ -28,6 +31,7 @@
               { class: "govuk-link--no-visited-state" }
             )%>
           </li>
+        <% end %>
         <% if policy(Trainee).new? %>
           <li class="govuk-!-margin-bottom-0">
             <%= govuk_link_to(
