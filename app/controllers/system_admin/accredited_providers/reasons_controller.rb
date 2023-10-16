@@ -3,8 +3,6 @@
 module SystemAdmin
   module AccreditedProviders
     class ReasonsController < ApplicationController
-      before_action :enforce_feature_flag
-
       def edit
         @change_accredited_provider_form = ChangeAccreditedProviderForm.new(trainee, step: :reasons)
       end
@@ -25,10 +23,6 @@ module SystemAdmin
       end
 
     private
-
-      def enforce_feature_flag
-        redirect_to(not_found_path) unless FeatureService.enabled?(:change_accredited_provider)
-      end
 
       def trainee
         @trainee ||= Trainee.find(params[:trainee_id])
