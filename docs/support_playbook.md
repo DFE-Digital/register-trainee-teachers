@@ -267,3 +267,26 @@ To check that the environment variable has ben set. Use `kubectl describe`
 kubectl -n bat-production describe deployment/register-production
 ```
 
+### Disable DfE Analytics
+
+Previously `DfE Analytics` caused a exponential spike on system load, leading to the system becoming non-responsive, for a extended period of time, with the initial cause being a few days prior.
+
+By setting the `send_data_to_big_query` to `false` it in turns set DfE Analytics' `enable_analytics`.
+
+This will disables DfE Analytics.
+
+> A machine restart is required so either via a PR or via terminal `kubectl`.
+> This stop all of `DfE Analytics`.
+
+```yml
+# config/settings.yml
+# config/settings/production.yml
+features:
+  google:
+    send_data_to_big_query: false
+```
+
+```sh
+# set the ENV, the pods will automatically restart once the process has gone through
+kubectl -n bat-production set env deployment/production SETTINGS__FEATURES__GOOGLE__SEND_DATA_TO_BIG_QUERY=false
+```
