@@ -49,7 +49,7 @@ module Trainees
     end
 
     def applying_for_grant?
-      Dttp::CodeSets::BursaryDetails::GRANTS.include?(funding_entity_id)
+      funding_entity_id == Dttp::CodeSets::BursaryDetails::GRANT
     end
 
     def applying_for_new_tier?

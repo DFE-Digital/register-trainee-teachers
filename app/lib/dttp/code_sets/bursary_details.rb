@@ -10,9 +10,10 @@ module Dttp
       SCHOOL_DIRECT_SALARIED = "3036b79f-9fc7-eb11-bacc-000d3ab7dcfe"
       EARLY_YEARS_SALARIED = "fd403c13-3e07-ec11-94ef-000d3adda801"
 
-      SERVICE_LEAVER_BURSARY = "6ca6f51f-2189-e811-80f7-005056ac45bb"
+      VETERAN_TEACHING_UNDERGRADUATE_BURSARY = "6ca6f51f-2189-e811-80f7-005056ac45bb"
 
       SCHOLARSHIP = "188375c2-7722-e711-80c8-0050568902d3"
+      GRANT = "0ed9f6cf-d15a-49ca-8dd0-b3074d91ccf8" # Generated from SecureRandom.uuid
 
       NEW_TIER_ONE_BURSARY = "001bf834-33ff-eb11-94ef-00224899ca99"
       NEW_TIER_TWO_BURSARY = "66671547-33ff-eb11-94ef-00224899ca99"
@@ -28,18 +29,13 @@ module Dttp
         OLD_TIER_ONE_BURSARY,
         OLD_TIER_TWO_BURSARY,
         OLD_TIER_THREE_BURSARY,
-        SERVICE_LEAVER_BURSARY,
+        VETERAN_TEACHING_UNDERGRADUATE_BURSARY,
       ].freeze
 
       NEW_TIERS = [
         NEW_TIER_ONE_BURSARY,
         NEW_TIER_TWO_BURSARY,
         NEW_TIER_THREE_BURSARY,
-      ].freeze
-
-      GRANTS = [
-        EARLY_YEARS_SALARIED,
-        SCHOOL_DIRECT_SALARIED,
       ].freeze
 
       MAPPING = {

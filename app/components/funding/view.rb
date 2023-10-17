@@ -23,6 +23,8 @@ module Funding
       [
         training_initiative_row,
         funding_method_row,
+        applying_for_bursary_row,
+        selected_bursary_level_row,
       ].compact
     end
 
@@ -114,6 +116,21 @@ module Funding
       )
     end
 
+    def applying_for_bursary_row
+      return unless trainee.hesa_record?
+
+      mappable_field(trainee.applying_for_bursary ? t(".applying") : t(".not_applying"), t(".applying_for_bursary"), nil)
+    end
+
+    def selected_bursary_level_row
+      return unless trainee.hesa_record? && trainee.applying_for_bursary? && hesa_student.present?
+
+      hesa_bursary_level = Hesa::CodeSets::BursaryLevels::VALUES[hesa_student.bursary_level]
+      hesa_bursary_text = "#{hesa_student.bursary_level} - #{hesa_bursary_level}"
+
+      mappable_field(hesa_bursary_text, t(".selected_bursary_level"), nil)
+    end
+
     def training_initiative
       return if data_model.training_initiative.nil?
 
@@ -146,6 +163,10 @@ module Funding
 
     def funding_manager
       @funding_manager ||= FundingManager.new(trainee)
+    end
+
+    def hesa_student
+      @hesa_student ||= trainee.hesa_student_for_collection(Settings.hesa.current_collection_reference)
     end
   end
 end
