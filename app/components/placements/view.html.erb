@@ -1,0 +1,39 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render GovukComponent::InsetTextComponent.new(
+      text: "You need to add the details of at least 2 schools before you can recommend this trainee for QTS. These can be added at any time.") if render_inset?
+    %>
+
+    <p class="govuk-body">
+      <%= govuk_link_to('Read DfE guidance about training placements in schools and <span class="no-wrap">early years settings</span>'.html_safe, "https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools") %>
+
+    </p>
+  </div>
+</div>
+
+
+<% if data_model.placements.blank? %>
+  <%= render MappableSummary::View.new(
+    trainee: data_model,
+    title: t("components.placement_detail.title"),
+    rows: [{
+            custom_value: true,
+            key: "Placements",
+            value: "Not provided yet",
+            action_text: "Add a placement",
+            action_href: new_trainee_placements_path(trainee_id: data_model.slug),
+          }],
+    editable: true,
+    has_errors: has_errors,
+  ) %>
+<% else %>
+  <% placement_summaries.each do |placement_summary_args| %>
+    <%= render MappableSummary::View.new(**placement_summary_args) do |component| %>
+      <% component.header_actions do %>
+        <%= govuk_link_to "Delete placements", '#' %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placements_path(trainee_id: data_model.slug), class_option: "govuk-button--secondary") %>
