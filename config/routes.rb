@@ -189,6 +189,10 @@ Rails.application.routes.draw do
       end
 
       resource :placements, only: %i[new create edit update]
+
+      namespace :placements do
+        concerns :confirmable
+      end
     end
   end
 
