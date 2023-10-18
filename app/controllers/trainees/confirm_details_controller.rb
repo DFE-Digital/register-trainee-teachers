@@ -73,6 +73,7 @@ module Trainees
       @confirm_section_title ||= {
         training_details: "trainee ID",
         degrees: "degree details",
+        placements: "placement details",
         funding: "funding details",
         course_details: "trainee's course details",
         publish_course_details: "trainee's course details",
