@@ -287,7 +287,7 @@ en:
       summary_title: Schools
       lead_school_key: Lead school
       employing_school_key: Employing school
-    placement_detail:
+    placement_detail: &placement_detail
       title: Placement details
       placement_1: First placement
       placement_2: Second placement
@@ -299,6 +299,7 @@ en:
         900010: "Not applicable or not available"
         900020: "Establishment does not have a URN"
         900030: "Not available"
+    placements: *placement_detail
     degrees:
       add_another_degree: Add another degree
       institution: &institution Awarding institution
