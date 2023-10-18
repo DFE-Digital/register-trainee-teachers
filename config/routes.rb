@@ -187,6 +187,8 @@ Rails.application.routes.draw do
         resource :hesa_deferrals, only: :show, path: "/defer"
         resource :hesa_reinstatements, only: :show, path: "/reinstate"
       end
+
+      resource :placements, only: %i[new create edit update]
     end
   end
 

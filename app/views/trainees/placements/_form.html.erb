@@ -1,0 +1,29 @@
+<%= register_form_with model: [@trainee, @placement_form], local: true do |f| %>
+  <% if f.govuk_error_summary.present? %>
+    <%= f.govuk_error_summary %>
+  <% end %>
+
+  <%= render TraineeName::View.new(@trainee) %>
+  <h1 class="govuk-heading-l"><%= @placement_form.title %></h1>
+
+  <%= f.govuk_text_field(
+    :name,
+    label: { text: "School or setting name", size: "s" },
+    width: "three-quarters",
+    autocomplete: :off,
+  ) %>
+
+  <%= f.govuk_text_field(
+    :urn,
+    label: { text: "School unique reference number (URN) - if it has one", size: "s" },
+    width: "three-quarters",
+    autocomplete: :off,
+  ) %>
+
+  <%= f.govuk_text_field(
+    :postcode,
+    label: { text: "Postcode", size: "s" },
+    width: "three-quarters",
+    autocomplete: :off,
+  ) %>
+<% end %>
