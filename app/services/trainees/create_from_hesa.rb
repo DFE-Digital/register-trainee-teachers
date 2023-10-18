@@ -39,7 +39,7 @@ module Trainees
       end
     rescue ActiveRecord::RecordInvalid
       raise(HesaImportError,
-            "HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{hesa_trainee[:ukprn]})")
+            "HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{hesa_trainee[:ukprn]}, hesa_id: #{hesa_trainee[:hesa_id]})")
     end
 
   private
