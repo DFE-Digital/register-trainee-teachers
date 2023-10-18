@@ -13,6 +13,7 @@ module Dqt
 
     def call
       return unless FeatureService.enabled?(:integrate_with_dqt)
+      return if trainee.submitted_for_trn?
 
       raise(TraineeUpdateMissingTrn, "Cannot update trainee on DQT without a trn (id: #{trainee.id})") if trainee.trn.blank?
 
