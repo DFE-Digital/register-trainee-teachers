@@ -6,9 +6,11 @@ class PlacementForm
   include ActiveModel::Validations::Callbacks
 
   FIELDS = %i[school_id name urn postcode].freeze
+  attr_accessor(*FIELDS)
 
-  def initialize(trainee:)
+  def initialize(trainee:, params: {})
     @trainee = trainee
+    self.attributes = params
   end
 
   def self.model_name
@@ -38,7 +40,27 @@ class PlacementForm
   end
 
   def save!
-    # TODO: Implement persistence logic
-    false
+    if school_id.present? && (school = School.find_by(id: school_id)).present?
+      @trainee.placements.create!(
+        school_id: school_id,
+        urn: school.urn,
+        name: school.name,
+        address: school.town,
+        postcode: school.postcode,
+      )
+
+      # TODO: else School.create!(school_attributes)
+    end
+  end
+
+private
+
+  def school_attributes
+    {
+      school_id:,
+      name:,
+      urn:,
+      postcode:,
+    }
   end
 end

@@ -6,7 +6,13 @@ module Trainees
 
     def new
       @trainee = trainee
-      @placement_form = PlacementForm.new(trainee:)
+      @placement_form = PlacementForm.new(trainee: @trainee, params: new_placement_params)
+    end
+
+  private
+
+    def new_placement_params
+      params.fetch(:trainee_placement_form, {}).permit(:school_id, :urn, :name, :address, :postcode)
     end
   end
 end

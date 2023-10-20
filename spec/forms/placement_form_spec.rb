@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe PlacementForm, type: :model do
-  let(:trainee) { build(:trainee) }
+  let(:trainee) { create(:trainee) }
 
   subject { PlacementForm.new(trainee:) }
 
@@ -22,6 +22,21 @@ describe PlacementForm, type: :model do
       it "returns the _Third placement_" do
         expect(subject.title).to eq("Third placement")
       end
+    end
+  end
+
+  describe "#save!" do
+    context "when a `school_id` for an existing school is given" do
+      let(:school) { create(:school) }
+
+      subject { PlacementForm.new(trainee: trainee, params: { school_id: school.id }) }
+
+      it "creates a new placement record" do
+        expect { subject.save! }.to change { Placement.count }.by(1)
+      end
+    end
+
+    context "when details for a new school are given" do
     end
   end
 end
