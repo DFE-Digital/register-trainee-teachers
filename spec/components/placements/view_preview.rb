@@ -19,12 +19,7 @@ module Placements
   private
 
     def mock_trainee(number_of_placements: 0)
-      placements = case number_of_placements
-                   when 1 then [Placement.new(name: "placement 1")]
-                   when 2 then [Placement.new(name: "placement 1"), Placement.new(name: "placement 2")]
-                   else
-                     []
-                   end
+      placements = (1..number_of_placements).map { |number| Placement.new(name: "placement #{number}") }
 
       @mock_trainee ||= Trainee.new(
         id: 1,
