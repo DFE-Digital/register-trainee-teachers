@@ -12,16 +12,16 @@
 </div>
 
 
-<% if data_model.placements.blank? %>
+<% if trainee.placements.blank? %>
   <%= render MappableSummary::View.new(
-    trainee: data_model,
+    trainee: trainee,
     title: t("components.placement_detail.title"),
     rows: [{
             custom_value: true,
             key: "Placements",
             value: "Not provided yet",
             action_text: "Add a placement",
-            action_href: new_trainee_placements_path(trainee_id: data_model.slug),
+            action_href: new_trainee_placements_path(trainee_id: trainee.slug),
           }],
     editable: true,
     has_errors: has_errors,
@@ -36,4 +36,4 @@
   <% end %>
 <% end %>
 
-<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placements_path(trainee_id: data_model.slug), class_option: "govuk-button--secondary") %>
+<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placements_path(trainee_id: trainee.slug), class_option: "govuk-button--secondary") %>

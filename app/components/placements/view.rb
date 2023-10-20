@@ -12,14 +12,18 @@ module Placements
       @has_errors = has_errors
     end
 
+    def trainee
+      data_model.is_a?(Trainee) ? data_model : data_model.trainee
+    end
+
     def render_inset?
-      data_model.placements.size < 2
+      trainee.placements.size < 2
     end
 
     def placement_summaries
       placement_records.each_with_index.map do |placement_record, index|
         {
-          trainee: data_model,
+          trainee: trainee,
           title: t("components.placements.placement_#{index + 1}"),
           rows: [{
             field_label: "School or setting",
@@ -35,7 +39,7 @@ module Placements
   private
 
     def placement_records
-      data_model.placements.reverse
+      trainee.placements.reverse
     end
 
     def placement_details_for(placement_record)
