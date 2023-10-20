@@ -14,6 +14,7 @@ class Progress
   attribute :personal_details, :boolean, default: false
   attribute :contact_details, :boolean, default: false
   attribute :degrees, :boolean, default: false
+  attribute :placements, :boolean, default: false
   attribute :diversity, :boolean, default: false
   attribute :course_details, :boolean, default: false
   attribute :training_details, :boolean, default: false
