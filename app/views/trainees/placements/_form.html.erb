@@ -1,4 +1,9 @@
-<%= register_form_with model: [@trainee, @placement_form], local: true do |f| %>
+<%= register_form_with(
+  model: [@trainee, @placement_form],
+  local: true,
+  html: { data: { module: "app-schools-autocomplete" } },
+) do |f| %>
+
   <% if f.govuk_error_summary.present? %>
     <%= f.govuk_error_summary %>
   <% end %>
@@ -6,26 +11,37 @@
   <%= render TraineeName::View.new(@trainee) %>
   <h1 class="govuk-heading-l"><%= @placement_form.title %></h1>
 
+  <%= f.hidden_field :school_id, id: "school-id" %>
   <%= f.govuk_text_field(
-    :name,
-    label: { text: "School or setting name", size: "s" },
-    width: "three-quarters",
-    autocomplete: :off,
+    :school,
+    label: { text: "Search for a school by its unique reference number (URN), name or postcode" },
+    "data-field" => "schools-autocomplete",
+    width: "two-thirds",
   ) %>
+  <div id="schools-autocomplete-element"></div>
 
-  <%= f.govuk_text_field(
-    :urn,
-    label: { text: "School unique reference number (URN) - if it has one", size: "s" },
-    width: "three-quarters",
-    autocomplete: :off,
-  ) %>
+  <%= govuk_details(summary_text: "Placement school or setting is not listed") do %>
+    <%= f.govuk_text_field(
+      :name,
+      label: { text: "School or setting name", size: "s" },
+      width: "two-thirds",
+      autocomplete: :off,
+    ) %>
 
-  <%= f.govuk_text_field(
-    :postcode,
-    label: { text: "Postcode", size: "s" },
-    width: "three-quarters",
-    autocomplete: :off,
-  ) %>
+    <%= f.govuk_text_field(
+      :urn,
+      label: { text: "School unique reference number (URN) - if it has one", size: "s" },
+      width: "two-thirds",
+      autocomplete: :off,
+    ) %>
+
+    <%= f.govuk_text_field(
+      :postcode,
+      label: { text: "Postcode", size: "s" },
+      width: "two-thirds",
+      autocomplete: :off,
+    ) %>
+  <% end %>
 
   <%= f.govuk_submit("Continue") %>
 <% end %>
