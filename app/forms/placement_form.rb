@@ -5,7 +5,7 @@ class PlacementForm
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  FIELDS = %i[name urn postcode].freeze
+  FIELDS = %i[school_id name urn postcode].freeze
 
   def initialize(trainee:)
     @trainee = trainee
