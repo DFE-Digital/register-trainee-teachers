@@ -60,6 +60,8 @@ class Provider < ApplicationRecord
 
   before_update :update_courses, if: :code_changed?
 
+  TEACH_FIRST_PROVIDER_CODE = "1TF"
+
   def code=(cde)
     self[:code] = cde.to_s.upcase
   end

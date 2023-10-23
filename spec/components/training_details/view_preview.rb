@@ -18,7 +18,7 @@ module TrainingDetails
       Trainee.new(
         shared_attributes.merge(
           region: Dttp::CodeSets::Regions::MAPPING.keys.sample,
-          provider: Provider.new(code: TEACH_FIRST_PROVIDER_CODE),
+          provider: Provider.new(code: ::Provider::TEACH_FIRST_PROVIDER_CODE),
         ),
       )
     end
