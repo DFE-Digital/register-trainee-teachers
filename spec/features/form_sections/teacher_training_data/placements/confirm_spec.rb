@@ -11,7 +11,7 @@ feature "confirm placements", feature_trainee_placement: true do
   scenario "changing status" do
     given_i_am_on_the_confirm_placement_details_page
     and_the_i_have_completed_this_section_checkbox_is_unchecked
-    and_i_checked_the_i_have_completed_this_section_checkbox
+    and_i_check_the_i_have_completed_this_section_checkbox
     when_i_click_on_continue
     then_i_am_redirected_to_review_draft
     and_i_visit_the_confirm_placement_details_page
@@ -46,12 +46,8 @@ private
     expect(page.find_by_id("confirm-detail-form-mark-as-completed-1-field")).to be_checked
   end
 
-  def and_i_checked_the_i_have_completed_this_section_checkbox
+  def and_i_check_the_i_have_completed_this_section_checkbox
     page.check("I have completed this section")
-  end
-
-  def and_i_unchecked_the_i_have_completed_this_section_checkbox
-    page.uncheck("I have completed this section")
   end
 
   def when_i_click_on_continue
