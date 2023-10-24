@@ -47,13 +47,13 @@ describe Provider do
     subject { build(:provider, code:).hpitt_postgrad? }
 
     context "provider is a teach first provider" do
-      let(:code) { TEACH_FIRST_PROVIDER_CODE }
+      let(:code) { Provider::TEACH_FIRST_PROVIDER_CODE }
 
       it { is_expected.to be_truthy }
     end
 
     context "provider is not a teach first provider" do
-      let(:code) { TEACH_FIRST_PROVIDER_CODE.reverse }
+      let(:code) { Provider::TEACH_FIRST_PROVIDER_CODE.reverse }
 
       it { is_expected.to be_falsey }
     end

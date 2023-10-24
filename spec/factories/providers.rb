@@ -10,7 +10,7 @@ FactoryBot.define do
     sequence(:accreditation_id, "1111")
 
     trait :teach_first do
-      code { TEACH_FIRST_PROVIDER_CODE }
+      code { Provider::TEACH_FIRST_PROVIDER_CODE }
     end
 
     trait :with_courses do
