@@ -31,7 +31,7 @@ module PageObjects
       element :change_employing_school, "a", text: "Change employing school", visible: false
       element :change_course_details, "a", text: "Change course", visible: false
       element :change_trainee_status, "a", text: "Change status", visible: false
-      element :withdrawal_details_component, "h2", text: "Withdrawal details", visible: false
+      element :withdrawal_details_component, "h3", text: "Withdrawal details", visible: false
       element :enable_editing, ".enable-editing"
     end
   end
