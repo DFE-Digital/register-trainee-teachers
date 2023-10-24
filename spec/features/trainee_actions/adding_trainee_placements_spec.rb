@@ -6,6 +6,7 @@ feature "Add a placement" do
   scenario "Add a new placement to an existing trainee" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
+    and_a_school_exists
 
     when_i_navigate_to_the_new_placement_form
     then_i_see_the_not_found_page
@@ -13,12 +14,20 @@ feature "Add a placement" do
     when_the_feature_flag_is_active
     and_i_navigate_to_the_new_placement_form
     then_i_see_the_new_placement_form
+
+    when_i_select_an_existing_school
+    and_i_click_continue
+    then_i_see_the_new_placement_has_been_created
   end
 
 private
 
   def and_a_trainee_exists_with_trn_received
     @trainee ||= given_a_trainee_exists(:trn_received)
+  end
+
+  def and_a_school_exists
+    @school ||= create(:school)
   end
 
   def when_i_navigate_to_the_new_placement_form
@@ -36,5 +45,20 @@ private
 
   def then_i_see_the_new_placement_form
     expect(page).to have_content("First placement")
+  end
+
+  def when_i_select_an_existing_school
+    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@school.id)
+  end
+
+  def and_i_click_continue
+    click_button "Continue"
+  end
+
+  def then_i_see_the_new_placement_has_been_created
+    expect(page).to have_content("First placement")
+    expect(page).to have_content(@school.name)
+    expect(page).to have_content(@school.postcode)
+    expect(page).to have_content("URN #{@school.urn}")
   end
 end
