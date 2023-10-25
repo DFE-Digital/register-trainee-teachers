@@ -8,6 +8,10 @@ class PlacementForm
   FIELDS = %i[school_id name urn postcode].freeze
   attr_accessor(*FIELDS)
 
+  validates :school_id, presence: true, unless: -> { name.present? }
+  validates :name, presence: true, unless: -> { school_id.present? }
+  validates :urn, presence: true, unless: -> { school_id.present? }
+
   def initialize(trainee:, params: {})
     @trainee = trainee
     self.attributes = params
@@ -40,6 +44,8 @@ class PlacementForm
   end
 
   def save!
+    return false unless valid?
+
     if school_id.present? && (school = School.find_by(id: school_id)).present?
       create_placement_from(school)
     else
