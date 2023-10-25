@@ -18,6 +18,7 @@ feature "Add a placement" do
     when_i_select_an_existing_school
     and_i_click_continue
     then_i_see_the_new_placement_has_been_created
+    and_i_see_a_flash_message
 
     when_i_navigate_to_the_new_placement_form
     then_i_see_the_second_new_placement_form
@@ -25,6 +26,7 @@ feature "Add a placement" do
     when_i_enter_details_for_a_new_school
     and_i_click_continue
     then_i_see_the_second_new_placement_has_been_created
+    and_i_see_a_flash_message
   end
 
 private
@@ -84,5 +86,9 @@ private
     expect(page).to have_content("St. Alice's Primary School")
     expect(page).to have_content("OX1 1AA")
     expect(page).to have_content("URN 654321")
+  end
+
+  def and_i_see_a_flash_message
+    expect(page).to have_content("Trainee placement added")
   end
 end

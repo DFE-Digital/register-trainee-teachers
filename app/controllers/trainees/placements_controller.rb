@@ -17,6 +17,7 @@ module Trainees
       )
 
       if @placement_form.save!
+        flash[:success] = I18n.t("flash.trainee_placement_added")
         redirect_to(trainee_path(@trainee))
       else
         render(:new)

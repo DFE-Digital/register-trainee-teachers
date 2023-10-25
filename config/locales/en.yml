@@ -12,6 +12,7 @@ en:
     trainee_diversity_updated: Trainee diversity updated
     trainee_reinstated: Trainee reinstated
     trainee_withdrawn: Trainee withdrawn
+    trainee_placement_added: Trainee placement added
   update_record: Update record
   return_home: Return home
   mark_as_completed: I have %{action} this section
