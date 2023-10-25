@@ -41,23 +41,27 @@ class PlacementForm
 
   def save!
     if school_id.present? && (school = School.find_by(id: school_id)).present?
-      @trainee.placements.create!(
-        school_id: school_id,
-        urn: school.urn,
-        name: school.name,
-        address: school.town,
-        postcode: school.postcode,
+      create_placement_from(school)
+    else
+      create_placement_from(
+        School.create!(new_school_attributes.merge(lead_school: false)),
       )
-
-      # TODO: else School.create!(school_attributes)
     end
   end
 
 private
 
-  def school_attributes
+  def create_placement_from(school)
+    @trainee.placements.create!(
+      school: school,
+      urn: school.urn,
+      name: school.name,
+      postcode: school.postcode,
+    )
+  end
+
+  def new_school_attributes
     {
-      school_id:,
       name:,
       urn:,
       postcode:,

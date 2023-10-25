@@ -18,6 +18,13 @@ feature "Add a placement" do
     when_i_select_an_existing_school
     and_i_click_continue
     then_i_see_the_new_placement_has_been_created
+
+    when_i_navigate_to_the_new_placement_form
+    then_i_see_the_second_new_placement_form
+
+    when_i_enter_details_for_a_new_school
+    and_i_click_continue
+    then_i_see_the_second_new_placement_has_been_created
   end
 
 private
@@ -47,6 +54,10 @@ private
     expect(page).to have_content("First placement")
   end
 
+  def then_i_see_the_second_new_placement_form
+    expect(page).to have_content("Second placement")
+  end
+
   def when_i_select_an_existing_school
     find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@school.id)
   end
@@ -60,5 +71,18 @@ private
     expect(page).to have_content(@school.name)
     expect(page).to have_content(@school.postcode)
     expect(page).to have_content("URN #{@school.urn}")
+  end
+
+  def when_i_enter_details_for_a_new_school
+    fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
+    fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: false)
+    fill_in("Postcode", with: "OX1 1AA", visible: false)
+  end
+
+  def then_i_see_the_second_new_placement_has_been_created
+    expect(page).to have_content("Second placement")
+    expect(page).to have_content("St. Alice's Primary School")
+    expect(page).to have_content("OX1 1AA")
+    expect(page).to have_content("URN 654321")
   end
 end

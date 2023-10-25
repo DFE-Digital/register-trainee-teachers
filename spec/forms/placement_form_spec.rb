@@ -2,6 +2,8 @@
 
 require "rails_helper"
 
+RSpec::Matchers.define_negated_matcher :not_change, :change
+
 describe PlacementForm, type: :model do
   let(:trainee) { create(:trainee) }
 
@@ -27,16 +29,23 @@ describe PlacementForm, type: :model do
 
   describe "#save!" do
     context "when a `school_id` for an existing school is given" do
-      let(:school) { create(:school) }
+      let!(:school) { create(:school, lead_school: false) }
 
       subject { PlacementForm.new(trainee: trainee, params: { school_id: school.id }) }
 
       it "creates a new placement record" do
         expect { subject.save! }.to change { Placement.count }.by(1)
+          .and not_change { School.count }
       end
     end
 
     context "when details for a new school are given" do
+      subject { PlacementForm.new(trainee: trainee, params: { school_id: "", name: "St. Bob's High School", urn: "123456", postcode: "GU1 1AA" }) }
+
+      it "creates a new placement record" do
+        expect { subject.save! }.to change { School.count }.by(1)
+          .and change { Placement.count }.by(1)
+      end
     end
   end
 end
