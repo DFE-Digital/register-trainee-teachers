@@ -47,26 +47,19 @@ class PlacementForm
     return false unless valid?
 
     if school_id.present? && (school = School.find_by(id: school_id)).present?
-      create_placement_from(school)
+      create_placement_for(school:)
     else
-      create_placement_from(
-        School.create!(new_school_attributes.merge(lead_school: false)),
-      )
+      create_placement_for(placement_details)
     end
   end
 
 private
 
-  def create_placement_from(school)
-    @trainee.placements.create!(
-      school: school,
-      urn: school.urn,
-      name: school.name,
-      postcode: school.postcode,
-    )
+  def create_placement_for(attrs)
+    @trainee.placements.create!(attrs)
   end
 
-  def new_school_attributes
+  def placement_details
     {
       name:,
       urn:,
