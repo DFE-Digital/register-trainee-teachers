@@ -1470,7 +1470,7 @@ en:
         placement_detail_form:
           attributes:
             placement_detail:
-              blank: Select if you have the trainee's placement details
+              blank: Select if you have the trainee’s placement details
         diversities/form_validator:
           attributes:
             disclosure_section:
