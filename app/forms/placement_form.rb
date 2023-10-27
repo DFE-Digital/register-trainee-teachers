@@ -7,12 +7,13 @@ class PlacementForm
 
   FIELDS = %i[slug school_id name urn postcode].freeze
   attr_accessor(*FIELDS)
+  attr_accessor :placements_form, :placement, :trainee
 
   validates :school_id, presence: true, unless: -> { name.present? }
   validates :name, presence: true, unless: -> { school_id.present? }
   validates :urn, presence: true, unless: -> { school_id.present? }
 
-  delegate :persisted?, to: :degree
+  delegate :persisted?, to: :placement
 
   alias_method :to_param, :slug
 
@@ -28,7 +29,7 @@ class PlacementForm
   end
 
   def fields
-    placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
+    @placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
   end
 
   def attributes
@@ -44,7 +45,7 @@ class PlacementForm
   end
 
   def title
-    new_placement_number = @trainee.placements.count + 1
+    new_placement_number = @placements_form.placements.count + 1
     I18n.t(
       "components.placement_detail.placement_#{new_placement_number}",
       default: I18n.t("components.placement_detail.title"),
@@ -52,10 +53,8 @@ class PlacementForm
   end
 
   def save_or_stash
-    if placements_form.trainee.draft?
-      if save!
-        true
-      end
+    if @placements_form.trainee.draft?
+      save!
     else
       stash
     end
@@ -64,7 +63,7 @@ class PlacementForm
   def stash
     return false unless valid?
 
-    placements_form.stash_placement_on_store(slug, fields)
+    @placements_form.stash_placement_on_store(slug, fields)
     true
   end
 
@@ -76,12 +75,12 @@ class PlacementForm
     else
       create_placement_for(placement_details)
     end
-    placements_form.delete_placement_on_store(slug)
+    @placements_form.delete_placement_on_store(slug)
     true
   end
 
   def destroy!
-    placements_form.delete_placement_on_store(slug)
+    @placements_form.delete_placement_on_store(slug)
     placement.destroy! unless placement_record?
   end
 

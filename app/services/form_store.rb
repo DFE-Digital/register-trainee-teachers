@@ -43,6 +43,7 @@ class FormStore
     training_routes
     delete_trainee
     change_accredited_provider
+    placements
   ].freeze
 
   class << self

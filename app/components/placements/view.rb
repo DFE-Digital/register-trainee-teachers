@@ -17,7 +17,7 @@ module Placements
     end
 
     def render_inset?
-      trainee.placements.size < 2
+      placement_records.size < 2
     end
 
     def placement_summaries
@@ -27,7 +27,7 @@ module Placements
           title: t("components.placements.placement_#{index + 1}"),
           rows: [{
             field_label: "School or setting",
-            field_value: placement_details_for(placement_record),
+            field_value: placement_details_for(placement_record.placement),
             action_url: "#",
           }],
           editable: true,
@@ -39,7 +39,7 @@ module Placements
   private
 
     def placement_records
-      trainee.placements.reverse
+      @placement_records ||= data_model.placements
     end
 
     def placement_details_for(placement_record)

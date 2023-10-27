@@ -6,19 +6,21 @@ module Trainees
 
     def new
       @trainee = trainee
-      @placement_form = PlacementForm.new(trainee: @trainee)
+      @placement_form = PlacementForm.new(
+        placements_form: PlacementsForm.new(@trainee),
+        placement: Placement.new,
+      )
     end
 
     def create
       @trainee = trainee
       @placement_form = PlacementForm.new(
-        trainee: @trainee,
-        params: new_placement_params,
+        placements_form: PlacementsForm.new(@trainee),
+        placement: Placement.new(new_placement_params),
       )
 
-      if @placement_form.save!
-        flash[:success] = I18n.t("flash.trainee_placement_added")
-        redirect_to(trainee_path(@trainee))
+      if @placement_form.save_or_stash
+        redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
       else
         render(:new)
       end

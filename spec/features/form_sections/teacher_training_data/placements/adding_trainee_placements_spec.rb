@@ -3,6 +3,10 @@
 require "rails_helper"
 
 feature "Add a placement" do
+  after do
+    FormStore.clear_all(@trainee.id)
+  end
+
   scenario "Add a new placement to an existing trainee" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
@@ -17,22 +21,29 @@ feature "Add a placement" do
 
     when_i_select_an_existing_school
     and_i_click_continue
-    then_i_see_the_new_placement_has_been_created
-    and_i_see_a_flash_message
+    then_i_see_the_confirmation_page
+    and_i_see_the_new_placement_ready_for_confirmation
+    and_no_placements_are_created
 
-    when_i_navigate_to_the_new_placement_form
+    when_i_click_add_a_placement
     then_i_see_the_second_new_placement_form
 
     when_i_enter_details_for_a_new_school
     and_i_click_continue
-    then_i_see_the_second_new_placement_has_been_created
-    and_i_see_a_flash_message
+    then_i_see_the_confirmation_page
+    and_i_see_the_second_new_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_update
+    then_i_see_a_flash_message
+    and_two_new_placements_are_created
   end
 
 private
 
   def and_a_trainee_exists_with_trn_received
     @trainee ||= given_a_trainee_exists(:trn_received)
+    FormStore.clear_all(@trainee.id)
   end
 
   def and_a_school_exists
@@ -68,7 +79,16 @@ private
     click_button "Continue"
   end
 
-  def then_i_see_the_new_placement_has_been_created
+  def when_i_click_add_a_placement
+    click_link "Add a placement"
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: @trainee.slug))
+    expect(page).to have_content("Confirm placement details")
+  end
+
+  def and_i_see_the_new_placement_ready_for_confirmation
     expect(page).to have_content("First placement")
     expect(page).to have_content(@school.name)
     expect(page).to have_content(@school.postcode)
@@ -81,14 +101,26 @@ private
     fill_in("Postcode", with: "OX1 1AA", visible: false)
   end
 
-  def then_i_see_the_second_new_placement_has_been_created
+  def and_i_see_the_second_new_placement_ready_for_confirmation
     expect(page).to have_content("Second placement")
     expect(page).to have_content("St. Alice's Primary School")
     expect(page).to have_content("OX1 1AA")
     expect(page).to have_content("URN 654321")
   end
 
-  def and_i_see_a_flash_message
-    expect(page).to have_content("Trainee placement added")
+  def when_i_click_update
+    click_button "Update record"
+  end
+
+  def then_i_see_a_flash_message
+    expect(page).to have_content("Trainee placement details updated")
+  end
+
+  def and_no_placements_are_created
+    expect(@trainee.reload.placements.count).to eq(0)
+  end
+
+  def and_two_new_placements_are_created
+    expect(@trainee.reload.placements.count).to eq(2)
   end
 end
