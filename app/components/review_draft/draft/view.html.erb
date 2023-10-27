@@ -27,6 +27,8 @@
         component.row(**row_helper(@trainee, :course_details))
       end
 
+      component.row(**row_helper(@trainee, :placement_details))
+
       component.row(**row_helper(@trainee, :training_details).except(:hint_text))
 
       if @trainee.requires_schools?

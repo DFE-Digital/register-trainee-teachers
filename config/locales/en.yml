@@ -855,6 +855,10 @@ en:
         labels:
           disabled: Yes, they shared that they’re disabled
           no_disability: They shared that they’re not disabled
+      placement_details:
+        label_names:
+          has_placement_detail: "Yes, I can add at least one of them now"
+          no_placement_detail: "No, I'll add them later"
       reinstatement:
         heading: When did the trainee return?
       withdrawal_date:
@@ -1038,6 +1042,10 @@ en:
       edit:
         email:
           hint: Use the trainee’s personal email address. This is so they can access their ongoing teaching records with DfE.
+    placements:
+      details:
+        edit:
+          placement_details_title: Placements
     course_years:
       edit:
         heading: Which academic year do you want to choose courses from?
@@ -1459,6 +1467,10 @@ en:
           attributes:
             disability_ids:
               empty_disabilities: Select at least one disability
+        placement_detail_form:
+          attributes:
+            placement_detail:
+              blank: Select if you have the trainee's placement details
         diversities/form_validator:
           attributes:
             disclosure_section:

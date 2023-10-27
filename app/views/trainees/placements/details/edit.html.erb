@@ -1,0 +1,39 @@
+<%= render PageTitle::View.new(
+  text: t('.placement_details_title'),
+  has_errors: @placement_detail_form.errors.present?,
+) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Back",
+    href: trainee_path(@trainee),
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= register_form_with(model: @placement_detail_form, url: trainee_placements_details_path(@trainee), method: :put, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l"><%= t('.placement_details_title') %></h1>
+
+      <p class="govuk-body">
+        You can add placements at any time whenever you have the details. To recommend the trainee for EYTS, you must have provided the details of 2 placements.
+      </p>
+
+      <p class="govuk-body">
+        <a class="govuk-link " href="https://www.gov.uk/government/publications/initial-teacher-training-criteria#c23-training-in-schools">Read DfE guidance about training placements in schools and early years settings.</a>
+      </p>
+
+      <%= f.govuk_collection_radio_buttons(
+        :placement_detail,
+        PLACEMENT_DETAIL_ENUMS.values,
+        ->(value) { value },
+        ->(label) { I18n.t("views.forms.placement_details.label_names.#{label}") },
+        legend: { text: "Do you have any of the trainee's placement details?", tag: "h2" },
+      ) %>
+
+      <%= f.govuk_submit("Continue") %>
+    <% end %>
+  </div>
+</div>

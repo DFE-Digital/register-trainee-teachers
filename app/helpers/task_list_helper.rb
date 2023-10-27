@@ -45,9 +45,9 @@ module TaskListHelper
 
     when :placement_details
       {
-        task_name: "Placement details",
-        path: trainee_review_drafts_path(trainee),
-        confirm_path: trainee_review_drafts_path(trainee),
+        task_name: "Placements",
+        path: edit_trainee_placements_details_path(trainee),
+        confirm_path: trainee_placements_confirm_path(trainee),
         classes: "placement-details",
         status: ProgressService.call(
           validator: PlacementDetailForm.new(trainee),
