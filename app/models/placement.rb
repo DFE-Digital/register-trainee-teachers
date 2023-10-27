@@ -22,6 +22,8 @@
 #  index_placements_on_trainee_id           (trainee_id)
 #
 class Placement < ApplicationRecord
+  include Sluggable
+
   belongs_to :trainee
   belongs_to :school, optional: true
 

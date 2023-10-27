@@ -1350,6 +1350,11 @@ en:
           other_nationality3: *nationality
           iqts_country: Enter the country or territory the trainee is studying in
       models:
+        placements_form:
+          attributes:
+            placement_ids:
+              too_few_placements: Enter at least 2 placements
+              invalid: Some placements are invalid
         cookie_preferences_form:
           attributes:
             consent:
