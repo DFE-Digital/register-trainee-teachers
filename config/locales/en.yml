@@ -858,7 +858,7 @@ en:
       placement_details:
         label_names:
           has_placement_detail: "Yes, I can add at least one of them now"
-          no_placement_detail: "No, I'll add them later"
+          no_placement_detail: "No, I’ll add them later"
       reinstatement:
         heading: When did the trainee return?
       withdrawal_date:
