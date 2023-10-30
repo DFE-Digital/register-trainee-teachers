@@ -6,7 +6,7 @@
 #
 #  id            :bigint           not null, primary key
 #  deprecated_on :date
-#  name          :string           not null
+#  name          :citext           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  dttp_id       :string
