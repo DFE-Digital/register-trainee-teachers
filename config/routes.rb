@@ -191,6 +191,8 @@ Rails.application.routes.draw do
       resource :placements, only: %i[new create edit update]
 
       namespace :placements do
+        resource :details, only: %i[edit update], path: "/details"
+
         concerns :confirmable
       end
     end

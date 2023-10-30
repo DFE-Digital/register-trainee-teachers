@@ -172,4 +172,26 @@ describe TrainingRouteManager do
       end
     end
   end
+
+  describe "#requires_placements?" do
+    (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
+      context "for route #{route}" do
+        let(:trainee) { Struct.new(:training_route).new(route.to_s) }
+
+        it "returns true" do
+          expect(subject.requires_placements?).to be true
+        end
+      end
+    end
+
+    %w[early_years_assessment_only assessment_only].each do |route|
+      context "for route #{route}" do
+        let(:trainee) { create(:trainee, route) }
+
+        it "returns false" do
+          expect(subject.requires_placements?).to be false
+        end
+      end
+    end
+  end
 end

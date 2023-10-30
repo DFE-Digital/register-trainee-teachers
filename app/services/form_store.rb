@@ -16,6 +16,7 @@ class FormStore
     outcome_date
     withdraw
     withdrawal_date
+    placement_detail
     withdrawal_reasons
     withdrawal_extra_information
     diversity_disclosure
