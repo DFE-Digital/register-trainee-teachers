@@ -33,7 +33,7 @@ private
   end
 
   def and_i_do_not_have_the_placement_detail
-    page.choose("No, I'll add them later")
+    page.choose("No, I’ll add them later")
   end
 
   def and_i_continue

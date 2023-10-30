@@ -30,8 +30,4 @@ private
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
   end
-
-  def form_store_key
-    :placement_detail
-  end
 end
