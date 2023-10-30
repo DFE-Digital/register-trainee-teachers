@@ -5,7 +5,7 @@ require "rails_helper"
 feature "add placement details", feature_trainee_placement: true do
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
+    given_a_trainee_exists(training_route: valid_training_routes.sample)
   end
 
   scenario "placement detail available" do
@@ -25,7 +25,8 @@ feature "add placement details", feature_trainee_placement: true do
 private
 
   def when_i_visit_the_placement_details_page
-    visit(edit_trainee_placements_details_path(trainee))
+    given_i_am_on_the_review_draft_page
+    click_link "Placements"
   end
 
   def and_i_have_the_placement_details
@@ -46,5 +47,9 @@ private
 
   def then_i_am_taken_to_the_placement_confirm_page
     expect(page).to have_current_path(trainee_placements_confirm_path(trainee))
+  end
+
+  def valid_training_routes
+    TRAINING_ROUTE_ENUMS.keys - %i[assessment_only early_years_assessment_only]
   end
 end

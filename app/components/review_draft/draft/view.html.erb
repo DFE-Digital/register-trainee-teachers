@@ -27,7 +27,9 @@
         component.row(**row_helper(@trainee, :course_details))
       end
 
-      component.row(**row_helper(@trainee, :placement_details))
+      if FeatureService.enabled?(:trainee_placement) && @trainee.requires_placements?
+        component.row(**row_helper(@trainee, :placement_details))
+      end
 
       component.row(**row_helper(@trainee, :training_details).except(:hint_text))
 

@@ -184,6 +184,7 @@ class Trainee < ApplicationRecord
 
   delegate :award_type,
            :requires_schools?,
+           :requires_placements?,
            :requires_employing_school?,
            :early_years_route?,
            :undergrad_route?,

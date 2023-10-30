@@ -46,6 +46,13 @@ class TrainingRouteManager
     ].exclude?(training_route)
   end
 
+  def requires_placements?
+    [
+      TRAINING_ROUTE_ENUMS[:assessment_only],
+      TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+    ].exclude?(training_route)
+  end
+
   def undergrad_route?
     UNDERGRAD_ROUTES.keys.include?(training_route)
   end
