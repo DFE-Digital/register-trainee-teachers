@@ -60,6 +60,7 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   AllocationSubjects::ENGLISH => [
     CourseSubjects::ENGLISH_STUDIES,
     CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE,
+    CourseSubjects::TEACHING_ENGLISH_AS_A_FOREIGN_LANGUAGE,
   ],
   AllocationSubjects::GEOGRAPHY => [
     CourseSubjects::GEOGRAPHY,

@@ -34,7 +34,7 @@ unless defined?(CourseSubjects)
     FOOD_AND_BEVERAGE_STUDIES = "food and beverage studies"
     FRENCH_LANGUAGE = "French language"
     GENERAL_OR_INTEGRATED_ENGINEERING = "general or integrated engineering"
-    GENERAL_SCIENCES = "general sciences"
+    GENERAL_SCIENCES = "general science"
     GEOGRAPHY = "geography"
     GERMAN_LANGUAGE = "German language"
     GRAPHIC_DESIGN = "graphic design"
