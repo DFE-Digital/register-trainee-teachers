@@ -22,9 +22,10 @@ module Submissions
     validator :schools, form: "Schools::FormValidator", if: :requires_schools?
     validator :funding, form: "Funding::FormValidator", if: :requires_funding?
     validator :iqts_country, form: "IqtsCountryForm", if: :requires_iqts_country?
+    validator :placements, form: "PlacementDetailForm", if: :requires_placements?
 
     delegate :requires_schools?, :requires_degree?, :apply_application?,
-             :requires_funding?, :requires_iqts_country?, to: :trainee
+             :requires_funding?, :requires_iqts_country?, :requires_placements?, to: :trainee
 
     validate :submission_ready
 
