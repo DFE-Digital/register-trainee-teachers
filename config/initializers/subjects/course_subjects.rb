@@ -77,9 +77,9 @@ unless defined?(CourseSubjects)
     STATISTICS = "statistics"
     TEXTILES_TECHNOLOGY = "textiles technology"
     TRAVEL_AND_TOURISM = "travel and tourism"
-    UK_GOVERNMENT_PARLIAMENTARY_STUDIES = "UK government / Parliamentary studies"
+    UK_GOVERNMENT_PARLIAMENTARY_STUDIES = "UK government/parliamentary studies"
     WELSH_LANGUAGE = "Welsh language"
-    TEACHING_ENGLISH_AS_A_FOREIGN_LANGUAGE = "Teaching English As A Foreign Language"
+    TEACHING_ENGLISH_AS_A_FOREIGN_LANGUAGE = "teaching English as a foreign language"
 
     MAPPING = {
       ANCIENT_HEBREW => ::DegreeSubjects::ANCIENT_HEBREW_LANGUAGE,

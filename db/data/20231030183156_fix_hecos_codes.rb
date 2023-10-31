@@ -7,6 +7,7 @@ class FixHecosCodes < ActiveRecord::Migration[7.0]
       ["ancient Hebrew", "ancient Hebrew language", "101117"],
       ["classical Greek studies", nil, "101126"],
       ["Latin language", nil, "101420"],
+      ["UK government / Parliamentary studies", "UK government/parliamentary studies", "100610"],
     ].each do |name, new_name, hecos_code|
       sp = SubjectSpecialism.find_by(name:)
       next unless sp
