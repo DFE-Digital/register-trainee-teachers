@@ -290,6 +290,7 @@ shared:
     - postcode
     - created_at
     - updated_at
+    - slug
   :withdrawal_reasons:
   - id
   - created_at

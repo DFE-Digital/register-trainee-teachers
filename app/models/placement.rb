@@ -8,6 +8,7 @@
 #  address    :text
 #  name       :string
 #  postcode   :string
+#  slug       :citext
 #  urn        :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -16,8 +17,9 @@
 #
 # Indexes
 #
-#  index_placements_on_school_id   (school_id)
-#  index_placements_on_trainee_id  (trainee_id)
+#  index_placements_on_school_id            (school_id)
+#  index_placements_on_slug_and_trainee_id  (slug,trainee_id) UNIQUE
+#  index_placements_on_trainee_id           (trainee_id)
 #
 class Placement < ApplicationRecord
   belongs_to :trainee
