@@ -277,7 +277,7 @@ describe FundingManager do
       let(:amount) { 9_000 }
       let(:funding_method) { create(:funding_method, :grant, training_route:, amount:) }
       let(:training_route) do
-        TRAINING_ROUTE_ENUMS.keys.reject do |x| x == :early_years_postgrad end .sample
+        TRAINING_ROUTE_ENUMS.keys.reject { |x| x == :early_years_postgrad }.sample
       end
 
       before do
