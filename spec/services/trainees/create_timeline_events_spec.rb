@@ -178,6 +178,7 @@ module Trainees
 
         it "returns a 'creation' timeline event" do
           degree.reload
+
           expect(subject.first.title).to eq(t("components.timeline.titles.degree.create"))
         end
 
@@ -198,7 +199,8 @@ module Trainees
 
         before do
           degree.reload
-          trainee.degrees.first.destroy!
+
+          trainee.reload.degrees.first.destroy!
         end
 
         it "returns a 'destroyed' timeline event" do
