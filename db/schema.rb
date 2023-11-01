@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_124052) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_124052) do
   end
 
   create_table "allocation_subjects", force: :cascade do |t|
-    t.string "name", null: false
+    t.citext "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "dttp_id"
@@ -715,13 +715,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_124052) do
   end
 
   create_table "subject_specialisms", force: :cascade do |t|
-    t.string "name", null: false
+    t.citext "name", null: false
     t.bigint "allocation_subject_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "hecos_code"
-    t.index "lower((name)::text)", name: "index_subject_specialisms_on_lower_name", unique: true
     t.index ["allocation_subject_id"], name: "index_subject_specialisms_on_allocation_subject_id"
+    t.index ["name"], name: "index_subject_specialisms_on_name", unique: true
   end
 
   create_table "subjects", force: :cascade do |t|

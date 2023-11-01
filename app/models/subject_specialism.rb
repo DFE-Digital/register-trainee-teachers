@@ -6,7 +6,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  hecos_code            :string
-#  name                  :string           not null
+#  name                  :citext           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  allocation_subject_id :bigint           not null
@@ -14,7 +14,7 @@
 # Indexes
 #
 #  index_subject_specialisms_on_allocation_subject_id  (allocation_subject_id)
-#  index_subject_specialisms_on_lower_name             (lower((name)::text)) UNIQUE
+#  index_subject_specialisms_on_name                   (name) UNIQUE
 #
 # Foreign Keys
 #

@@ -51,7 +51,7 @@ SubjectSpecialism.upsert_all(
       }
     end
   end,
-  unique_by: :index_subject_specialisms_on_lower_name,
+  unique_by: :name,
 )
 
 ACADEMIC_CYCLES.each do |academic_cycle|
