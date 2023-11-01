@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "dfe/reference_data/countries_and_territories"
+
 module Dqt
   module Params
     class TrnRequest
@@ -189,7 +191,7 @@ module Dqt
       def find_country_code(country)
         return if country.blank?
 
-        Dttp::CodeSets::Countries::MAPPING.dig(country, :country_code) ||
+        DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
         Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
       end
     end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "dfe/reference_data/countries_and_territories"
+
 module DegreesHelper
   include ApplicationHelper
 
@@ -41,7 +43,11 @@ module DegreesHelper
   end
 
   def countries_options
-    to_options(Dttp::CodeSets::Countries::MAPPING.keys)
+    country_reference = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map do |reference|
+      reference.name.downcase
+    end
+
+    to_options(country_reference)
   end
 
   def path_for_degrees(trainee)
