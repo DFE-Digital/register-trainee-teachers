@@ -65,7 +65,7 @@ module Trainees
         before do
           Audited.audit_class.as_user(::Trainees::CreateFromHesa::USERNAME) do
             create(:degree, trainee:)
-            trainee.degrees.destroy_all
+            trainee.reload.degrees.destroy_all
             reload_audits
           end
         end
