@@ -51,7 +51,7 @@ module TaskListHelper
         classes: "placement-details",
         status: ProgressService.call(
           validator: PlacementDetailForm.new(trainee),
-          progress_value: trainee.progress.placement_details,
+          progress_value: trainee.progress.placements,
         ).status,
       }
 

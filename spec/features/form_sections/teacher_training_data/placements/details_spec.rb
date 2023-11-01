@@ -26,19 +26,19 @@ private
 
   def when_i_visit_the_placement_details_page
     given_i_am_on_the_review_draft_page
-    click_link "Placements"
+    click_link("Placements")
   end
 
   def and_i_have_the_placement_details
-    page.choose("Yes, I can add at least one of them now")
+    page.choose(t("views.forms.placement_details.label_names.has_placement_detail"))
   end
 
   def and_i_do_not_have_the_placement_detail
-    page.choose("No, I’ll add them later")
+    page.choose(t("views.forms.placement_details.label_names.no_placement_detail"))
   end
 
   def and_i_continue
-    click_button("Continue")
+    click_button(t("continue"))
   end
 
   def then_i_am_taken_to_the_placement_form_page

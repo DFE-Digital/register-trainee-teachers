@@ -137,7 +137,7 @@ FactoryBot.define do
           degrees: true,
           course_details: true,
           training_details: true,
-          placement_details: true,
+          placements: true,
           schools: true,
           funding: true,
           trainee_data: true,

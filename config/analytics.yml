@@ -235,6 +235,7 @@ shared:
     - itt_end_date
     - itt_start_date
     - lead_school_id
+    - placement_detail
     - lead_school_not_applicable
     - outcome_date
     - placement_assignment_dttp_id
