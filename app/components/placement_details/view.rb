@@ -4,13 +4,12 @@ module PlacementDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_accessor :data_model, :editable, :has_errors, :show_link
+    attr_accessor :data_model, :editable, :has_errors
 
-    def initialize(data_model:, link: true, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false)
       @data_model = data_model
       @editable = editable
       @has_errors = has_errors
-      @show_link = show_link?(link)
     end
 
     def summary_title
@@ -26,12 +25,6 @@ module PlacementDetails
     end
 
   private
-
-    def show_link?(link)
-      return false if !editable
-
-      link
-    end
 
     def placement_records
       trainee.placements.reverse

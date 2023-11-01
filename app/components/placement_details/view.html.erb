@@ -6,7 +6,7 @@
   has_errors: has_errors,
   ) do |component| %>
   <% component.header_actions do %>
-    <% if show_link %>
+    <% if editable %>
       <%= govuk_link_to "Manage placements", '#' %>
     <% end %>
   <% end %>
