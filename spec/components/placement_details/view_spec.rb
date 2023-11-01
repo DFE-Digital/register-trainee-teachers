@@ -5,12 +5,13 @@ require "rails_helper"
 module PlacementDetails
   describe View do
     let(:trainee) { create(:trainee, :imported_from_hesa) }
+    let(:data_model) { trainee }
 
     context "when placements come from hesa" do
       let!(:placements) { create_list(:placement, 2, trainee:) }
 
       before do
-        render_inline(View.new(trainee:))
+        render_inline(View.new(data_model:))
       end
 
       it "shows the placement details" do
@@ -25,7 +26,7 @@ module PlacementDetails
       let!(:placements) { create_list(:placement, 2, :manual, trainee:) }
 
       before do
-        render_inline(View.new(trainee:))
+        render_inline(View.new(data_model:))
       end
 
       it "shows the placement details" do

@@ -4,10 +4,10 @@ module PlacementDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_accessor :trainee, :editable, :has_errors, :show_link
+    attr_accessor :data_model, :editable, :has_errors, :show_link
 
-    def initialize(trainee:, link: true, has_errors: false, editable: false)
-      @trainee = trainee
+    def initialize(data_model:, link: true, has_errors: false, editable: false)
+      @data_model = data_model
       @editable = editable
       @has_errors = has_errors
       @show_link = show_link?(link)
@@ -19,6 +19,10 @@ module PlacementDetails
 
     def rows
       placement_rows
+    end
+
+    def trainee
+      data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
   private

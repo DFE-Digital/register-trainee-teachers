@@ -5,7 +5,7 @@ require "govuk/components"
 module PlacementDetails
   class ViewPreview < ViewComponent::Preview
     def default
-      render(View.new(trainee: mock_trainee))
+      render(View.new(data_model: mock_trainee))
     end
 
   private
