@@ -25,7 +25,7 @@ module Submissions
     validator :placements, form: "PlacementDetailForm", if: :requires_placements?
 
     delegate :requires_schools?, :requires_degree?, :apply_application?,
-             :requires_funding?, :requires_iqts_country?, :requires_placements?, to: :trainee
+             :requires_funding?, :requires_iqts_country?, to: :trainee
 
     validate :submission_ready
 
@@ -39,6 +39,10 @@ module Submissions
 
     def apply_application_and_draft?
       apply_application? && trainee.draft?
+    end
+
+    def requires_placements?
+      trainee.requires_placements? && FeatureService.enabled?(:trainee_placement)
     end
 
   private

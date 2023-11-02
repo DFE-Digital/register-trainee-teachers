@@ -41,6 +41,7 @@ module Submissions
         *(:degrees if @trainee.requires_degree?),
         :course_details, :training_details,
         *(:schools if trainee.requires_schools?),
+        *(:placements if trainee.requires_placements? && FeatureService.enabled?(:trainee_placement)),
         *(:funding if trainee.requires_funding?),
         *(:iqts_country if trainee.requires_iqts_country?)
       ]
