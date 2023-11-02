@@ -73,6 +73,7 @@ module Sections
         funding: Funding::View,
         trainee_data: ApplyApplications::TraineeData::View,
         iqts_country: IqtsCountry::View,
+        placements: PlacementDetails::View,
       }[section]
     end
 
