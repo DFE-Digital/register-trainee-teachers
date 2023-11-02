@@ -744,26 +744,6 @@ describe Trainee do
     end
   end
 
-  describe "placement_details?" do
-    subject(:trainee) {
-      create(:trainee, :imported_from_hesa)
-    }
-
-    context "when no placement data exists" do
-      it "returns false" do
-        expect(trainee.placement_details?).to be false
-      end
-    end
-
-    context "when placement data exists" do
-      let!(:placement) { create(:placement, trainee:) }
-
-      it "returns true" do
-        expect(trainee.placement_details?).to be true
-      end
-    end
-  end
-
   describe "placements" do
     subject(:trainee) {
       create(:trainee, :imported_from_hesa)
