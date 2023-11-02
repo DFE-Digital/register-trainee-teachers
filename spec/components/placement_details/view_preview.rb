@@ -5,9 +5,12 @@ require "govuk/components"
 module PlacementDetails
   class ViewPreview < ViewComponent::Preview
     [0, 1, 2, 5].each do |number_of_placements|
-      method_name = number_of_placements.zero? ? "default" : "with_#{number_of_placements}_placements"
-      define_method method_name do
-        render(View.new(data_model: mock_trainee(number_of_placements:)))
+      [true, false] .each do |editable|
+        method_name = number_of_placements.zero? ? "default" : "with_#{number_of_placements}_placements"
+        method_name += editable ? "_editable" : "_non_editable"
+        define_method method_name do
+          render(View.new(data_model: mock_trainee(number_of_placements:), editable: editable))
+        end
       end
     end
 

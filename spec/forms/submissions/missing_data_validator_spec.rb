@@ -73,6 +73,33 @@ module Submissions
           expect(subject.valid?).to be(true)
         end
       end
+
+      context "new trainee", feature_trainee_placement: true do
+        let(:trainee) { Trainee.new }
+
+        it "cause validation errors" do
+          expect(subject.valid?).to be(false)
+        end
+
+        it "returns all the missing fields" do
+          expect(subject.missing_fields).to contain_exactly(:first_names,
+                                                            :last_name,
+                                                            :date_of_birth,
+                                                            :sex,
+                                                            :nationality_names,
+                                                            :email,
+                                                            :diversity_disclosure,
+                                                            :course_subject_one,
+                                                            :main_age_range,
+                                                            :study_mode,
+                                                            :itt_start_date,
+                                                            :itt_end_date,
+                                                            :trainee_id,
+                                                            :training_initiative,
+                                                            :placement_detail,
+                                                            :trainee_start_date)
+        end
+      end
     end
   end
 end
