@@ -5,6 +5,7 @@ module Features
     def given_i_am_on_the_review_draft_page
       review_draft_page.load(id: trainee.slug)
     end
+    alias_method :when_i_am_on_the_review_draft_page, :given_i_am_on_the_review_draft_page
 
     def and_i_am_on_the_trainee_record_page
       record_page.load(id: trainee.slug)

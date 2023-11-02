@@ -232,9 +232,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
+    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
-    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -678,8 +678,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
@@ -797,14 +797,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.boolean "applying_for_bursary"
     t.integer "training_initiative"
+    t.boolean "applying_for_bursary"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.integer "course_education_phase"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false
@@ -826,6 +826,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
     t.boolean "hesa_editable", default: false
     t.string "withdraw_reasons_dfe_details"
     t.datetime "slug_sent_to_dqt_at"
+    t.integer "placement_detail"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -840,6 +841,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
     t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
     t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
+    t.index ["placement_detail"], name: "index_trainees_on_placement_detail"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
     t.index ["sex"], name: "index_trainees_on_sex"

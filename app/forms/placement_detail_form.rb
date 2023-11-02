@@ -17,14 +17,6 @@ class PlacementDetailForm < TraineeForm
     placement_detail == PLACEMENT_DETAIL_ENUMS[:no_placement_detail]
   end
 
-  def save!
-    if valid?
-      clear_stash
-    else
-      false
-    end
-  end
-
 private
 
   def compute_fields

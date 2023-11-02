@@ -43,6 +43,7 @@
 #  lead_school_not_applicable      :boolean          default(FALSE)
 #  middle_names                    :text
 #  outcome_date                    :date
+#  placement_detail                :integer
 #  progress                        :jsonb
 #  recommended_for_award_at        :datetime
 #  record_source                   :string
@@ -94,6 +95,7 @@
 #  index_trainees_on_hesa_id                                       (hesa_id)
 #  index_trainees_on_hesa_trn_submission_id                        (hesa_trn_submission_id)
 #  index_trainees_on_lead_school_id                                (lead_school_id)
+#  index_trainees_on_placement_detail                              (placement_detail)
 #  index_trainees_on_progress                                      (progress) USING gin
 #  index_trainees_on_provider_id                                   (provider_id)
 #  index_trainees_on_sex                                           (sex)
@@ -216,6 +218,11 @@ class Trainee < ApplicationRecord
   }
 
   enum commencement_status: COMMENCEMENT_STATUSES
+
+  enum placement_detail: {
+    PLACEMENT_DETAIL_ENUMS[:has_placement_detail] => 0,
+    PLACEMENT_DETAIL_ENUMS[:no_placement_detail] => 1,
+  }
 
   enum diversity_disclosure: {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
