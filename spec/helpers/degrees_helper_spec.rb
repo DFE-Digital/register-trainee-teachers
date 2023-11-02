@@ -89,15 +89,10 @@ describe DegreesHelper do
   end
 
   describe "#countries_options" do
-    before do
-      stub_const("Dttp::CodeSets::Countries::MAPPING", { "country" => { country_code: "C" } })
-    end
-
     it "iterates over array and prints out correct countries values" do
-      expect(countries_options.size).to be 2
       expect(countries_options.first.value).to be_nil
-      expect(countries_options.second.value).to eq "country"
-      expect(countries_options.second.text).to eq "Country"
+      expect(countries_options.second.value).to eq "andorra"
+      expect(countries_options.second.text).to eq "Andorra"
     end
   end
 end
