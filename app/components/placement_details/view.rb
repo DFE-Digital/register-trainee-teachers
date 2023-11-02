@@ -17,7 +17,7 @@ module PlacementDetails
     end
 
     def rows
-      placement_rows
+      placement_rows + missing_placements
     end
 
     def trainee
@@ -37,6 +37,30 @@ module PlacementDetails
           field_value: placement_details_for(placement_record),
         }
       end
+    end
+
+    def missing_placements
+      [
+        (missing(first_placement: true) if placement_records.size < 2),
+        (missing if placement_records.empty?),
+      ].compact
+    end
+
+    def missing(first_placement: false)
+      placement_nominal = first_placement ? placement_records.count + 1 : 2
+
+      field_label = t("components.placement_detail.placement_#{placement_nominal}")
+      link = govuk_link_to("Enter #{field_label.downcase}", new_trainee_placements_path(trainee)) if first_placement
+
+      field_value = tag.div(
+        tag.p("#{field_label} is missing", class: "app-inset-text__title") + link,
+        class: "govuk-inset-text app-inset-text--narrow-border app-inset-text--important",
+      )
+
+      {
+        field_label:,
+        field_value:,
+      }
     end
 
     def placement_details_for(placement_record)

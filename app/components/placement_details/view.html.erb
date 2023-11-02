@@ -7,7 +7,7 @@
   ) do |component| %>
   <% component.header_actions do %>
     <% if editable %>
-      <%= govuk_link_to "Manage placements", '#' %>
+      <%= govuk_link_to("Manage placements", trainee_placements_confirm_path(trainee)) %>
     <% end %>
   <% end %>
 <% end %>
