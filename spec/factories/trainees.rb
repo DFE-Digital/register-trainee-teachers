@@ -114,6 +114,11 @@ FactoryBot.define do
       degrees { [build(:degree, :uk_degree_with_details)] }
     end
 
+    trait :with_placements do
+      has_placement_detail
+      placements { build_list(:placement, 2) }
+    end
+
     trait :submission_ready do
       submission_ready { true }
     end

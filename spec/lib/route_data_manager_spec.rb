@@ -8,7 +8,7 @@ describe RouteDataManager do
       described_class.new(trainee:).update_training_route!("provider_led_postgrad")
     end
 
-    let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true) }
+    let(:progress) { Progress.new(course_details: true, funding: true, personal_details: true, placements: true) }
 
     context "when a trainee selects a new route" do
       let(:trainee) { create(:trainee, :assessment_only) }
@@ -77,6 +77,30 @@ describe RouteDataManager do
           expect { subject }
             .to change { trainee.progress.funding }
             .from(true).to(false)
+        end
+      end
+
+      context "when a trainee has placements" do
+        let(:trainee) { create(:trainee, :school_direct_tuition_fee, :with_placements, progress:) }
+
+        it "wipes the placements details" do
+          expect { subject }
+            .to change { trainee.placement_detail }
+            .from(trainee.placement_detail).to(nil)
+            .and change { trainee.placements.count }
+            .from(trainee.placements.count).to(0)
+        end
+
+        it "resets the placements progress" do
+          expect { subject }
+            .to change { trainee.progress.placements }
+            .from(true).to(false)
+        end
+
+        it "does not change any other progress" do
+          expect { subject }
+            .not_to change { trainee.progress.personal_details }
+            .from(true)
         end
       end
     end
