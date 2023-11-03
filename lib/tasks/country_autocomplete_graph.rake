@@ -17,7 +17,7 @@ namespace :country_autocomplete_graph do
     DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.each do |reference| # rubocop:disable Rails/FindEach
       results = {}
       country_code = reference.id
-      country_key = "country:#{reference.name}"
+      country_key = "country:#{country_code}"
       territory_key = "territory:#{country_code}"
 
       original_location_graph.each do |key, value|
