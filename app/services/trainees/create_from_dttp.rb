@@ -266,7 +266,7 @@ module Trainees
     def age_range
       @age_range ||= find_by_entity_id(
         placement_assignment.response["_dfe_coursephaseid_value"],
-        Dttp::CodeSets::AgeRanges::MAPPING,
+        AgeRange::MAPPING,
       )
     end
 

@@ -176,7 +176,7 @@ FactoryBot.define do
       course_subject_two { primary_specialism_subjects.second }
       course_subject_three { primary_specialism_subjects.third }
       course_age_range do
-        Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
+        AgeRange::MAPPING.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
@@ -196,7 +196,7 @@ FactoryBot.define do
       course_subject_two { nil }
       course_subject_three { nil }
       course_age_range do
-        Dttp::CodeSets::AgeRanges::MAPPING.select do |_, v|
+        AgeRange::MAPPING.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
