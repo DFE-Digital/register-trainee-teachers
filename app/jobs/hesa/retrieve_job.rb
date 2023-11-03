@@ -13,13 +13,11 @@ module Hesa
       xml_response = Hesa::Client.get(url:)
 
       Nokogiri::XML::Reader(xml_response).each do |node|
-        if node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
-          student_node = Nokogiri::XML(node.outer_xml).at("./Student")
-          Trainees::CreateFromHesa.call(student_node:, record_source:)
-        end
-      rescue Trainees::CreateFromHesa::HesaImportError => e
-        Sentry.capture_exception(e)
-        return save_hesa_request(xml_response, request_time).import_failed!
+        next unless node.name == "Student" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
+
+        student_node = Nokogiri::XML(node.outer_xml).at("./Student")
+        hesa_trainee = Parsers::IttRecord.to_attributes(student_node:)
+        CreateFromHesaJob.perform_later(hesa_trainee:, record_source:)
       end
 
       save_hesa_request(xml_response, request_time).import_successful!

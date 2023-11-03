@@ -14,8 +14,8 @@ module Trainees
 
     class HesaImportError < StandardError; end
 
-    def initialize(student_node:, record_source:)
-      @hesa_trainee = ::Hesa::Parsers::IttRecord.to_attributes(student_node:)
+    def initialize(hesa_trainee:, record_source:)
+      @hesa_trainee = hesa_trainee
       @trainee = find_or_initialize_trainee_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
       @current_trainee_state = @trainee&.state&.to_sym
