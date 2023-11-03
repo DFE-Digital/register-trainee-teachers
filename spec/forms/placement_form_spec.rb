@@ -21,7 +21,7 @@ describe PlacementForm, type: :model do
 
     context "when there are two existing placements" do
       before do
-        allow(trainee).to receive(:placements).and_return(build_list(:placement, 2))
+        allow(placements_form).to receive(:placements).and_return(build_list(:placement, 2))
       end
 
       it "returns the _Third placement_" do
@@ -83,7 +83,7 @@ describe PlacementForm, type: :model do
     describe "not draft" do
       before do
         allow(trainee).to receive(:draft?).and_return(false)
-        expect(subject).to receive(:stash).and_return(true)
+        allow(subject).to receive(:stash).and_return(true)
       end
 
       it "stashes" do

@@ -22,12 +22,13 @@ module Placements
 
     def placement_summaries
       placement_records.each_with_index.map do |placement_record, index|
+        placement = placement_record.is_a?(Placement) ? placement_record : placement_record.placement
         {
           trainee: trainee,
           title: t("components.placements.placement_#{index + 1}"),
           rows: [{
             field_label: "School or setting",
-            field_value: placement_details_for(placement_record.placement),
+            field_value: placement_details_for(placement),
             action_url: "#",
           }],
           editable: true,

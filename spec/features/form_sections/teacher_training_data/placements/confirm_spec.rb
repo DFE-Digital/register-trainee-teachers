@@ -9,7 +9,8 @@ feature "confirm placements", feature_trainee_placement: true do
   end
 
   scenario "changing status" do
-    given_i_am_on_the_confirm_placement_details_page
+    given_i_have_two_placements
+    and_i_am_on_the_confirm_placement_details_page
     and_the_i_have_completed_this_section_checkbox_is_unchecked
     and_i_check_the_i_have_completed_this_section_checkbox
     when_i_click_on_continue
@@ -34,9 +35,14 @@ feature "confirm placements", feature_trainee_placement: true do
 
 private
 
+  def given_i_have_two_placements
+    create_list(:placement, 2, trainee: @trainee)
+  end
+
   def given_i_am_on_the_confirm_placement_details_page
     visit "/trainees/#{trainee.slug}/placements/confirm"
   end
+  alias_method :and_i_am_on_the_confirm_placement_details_page, :given_i_am_on_the_confirm_placement_details_page
 
   def and_the_i_have_completed_this_section_checkbox_is_unchecked
     expect(page.find_by_id("confirm-detail-form-mark-as-completed-1-field")).not_to be_checked

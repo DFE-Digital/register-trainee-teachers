@@ -104,6 +104,8 @@ RSpec/StubbedMock:
 # Offense count: 9
 RSpec/SubjectStub:
   Exclude:
+    - 'spec/forms/placement_form_spec.rb'
+    - 'spec/forms/placements_form_spec.rb'
     - 'spec/forms/degree_form_spec.rb'
     - 'spec/forms/degrees_form_spec.rb'
 

@@ -6,7 +6,7 @@ module Placements
   describe View do
     let(:placements) { [] }
     let(:trainee) { create(:trainee, placements:) }
-    let(:data_model) { trainee }
+    let(:data_model) { PlacementsForm.new(trainee) }
 
     before do
       render_inline(View.new(data_model:))
@@ -24,7 +24,7 @@ module Placements
       expect(rendered_component).to have_text("Placement details")
       expect(rendered_component).to have_text("Placements")
       expect(rendered_component).to have_text("Not provided yet")
-      expect(rendered_component).to have_link("Add a placement", href: "/trainees/#{data_model.slug}/placements/new", class: "govuk-link")
+      expect(rendered_component).to have_link("Add a placement", href: "/trainees/#{trainee.slug}/placements/new", class: "govuk-link")
     end
 
     context "with 2 placements" do
@@ -42,7 +42,7 @@ module Placements
         expect(rendered_component).not_to have_text("Placement details")
         expect(rendered_component).not_to have_text("Placements")
         expect(rendered_component).not_to have_text("Not provided yet")
-        expect(rendered_component).not_to have_link("Add a placement", href: "/trainees/#{data_model.slug}/placements/new", class: "govuk-link")
+        expect(rendered_component).not_to have_link("Add a placement", href: "/trainees/#{trainee.slug}/placements/new", class: "govuk-link")
       end
 
       it "does not have inset text" do
@@ -54,7 +54,7 @@ module Placements
       end
 
       it "have add a placement button" do
-        expect(rendered_component).to have_link("Add a placement", href: "/trainees/#{data_model.slug}/placements/new", class: "govuk-button--secondary govuk-button")
+        expect(rendered_component).to have_link("Add a placement", href: "/trainees/#{trainee.slug}/placements/new", class: "govuk-button--secondary govuk-button")
       end
     end
   end

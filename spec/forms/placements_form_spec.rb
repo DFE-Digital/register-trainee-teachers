@@ -218,4 +218,3 @@ describe PlacementsForm, type: :model do
     end
   end
 end
-
