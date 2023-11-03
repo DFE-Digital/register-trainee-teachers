@@ -32,6 +32,7 @@ module Submissions
             course_details: true,
             training_details: true,
             funding: true,
+            placements: true,
           }
         end
 

@@ -4,13 +4,12 @@ module PlacementDetails
   class View < GovukComponent::Base
     include SummaryHelper
 
-    attr_accessor :trainee, :editable, :has_errors, :show_link
+    attr_accessor :data_model, :editable, :has_errors
 
-    def initialize(trainee:, link: true, has_errors: false, editable: false)
-      @trainee = trainee
+    def initialize(data_model:, has_errors: false, editable: false)
+      @data_model = data_model
       @editable = editable
       @has_errors = has_errors
-      @show_link = show_link?(link)
     end
 
     def summary_title
@@ -18,16 +17,14 @@ module PlacementDetails
     end
 
     def rows
-      placement_rows
+      placement_rows + missing_placements
+    end
+
+    def trainee
+      data_model.is_a?(Trainee) ? data_model : data_model.trainee
     end
 
   private
-
-    def show_link?(link)
-      return false if !editable
-
-      link
-    end
 
     def placement_records
       trainee.placements.reverse
@@ -40,6 +37,30 @@ module PlacementDetails
           field_value: placement_details_for(placement_record),
         }
       end
+    end
+
+    def missing_placements
+      [
+        (missing(first_placement: true) if placement_records.size < 2),
+        (missing if placement_records.empty?),
+      ].compact
+    end
+
+    def missing(first_placement: false)
+      placement_nominal = first_placement ? placement_records.count + 1 : 2
+
+      field_label = t("components.placement_detail.placement_#{placement_nominal}")
+      link = govuk_link_to("Enter #{field_label.downcase}", new_trainee_placements_path(trainee)) if first_placement
+
+      field_value = tag.div(
+        tag.p("#{field_label} is missing", class: "app-inset-text__title") + link,
+        class: "govuk-inset-text app-inset-text--narrow-border app-inset-text--important",
+      )
+
+      {
+        field_label:,
+        field_value:,
+      }
     end
 
     def placement_details_for(placement_record)

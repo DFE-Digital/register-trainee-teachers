@@ -129,6 +129,7 @@ FactoryBot.define do
       applying_for_scholarship { false }
       applying_for_grant { false }
       nationalities { [Nationality.all.sample || build(:nationality)] }
+      has_placement_detail
       progress do
         Progress.new(
           personal_details: true,

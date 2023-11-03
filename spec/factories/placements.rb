@@ -4,7 +4,11 @@ FactoryBot.define do
   factory :placement do
     trainee
 
-    school
+    with_school
+
+    trait :with_school do
+      school
+    end
 
     trait :manual do
       school { nil }

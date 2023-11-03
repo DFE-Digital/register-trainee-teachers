@@ -1,13 +1,13 @@
 <%= render MappableSummary::View.new(
-  trainee: trainee, 
+  trainee: trainee,
   title: summary_title,
   rows: rows,
   editable: false,
   has_errors: has_errors,
   ) do |component| %>
   <% component.header_actions do %>
-    <% if show_link %>
-      <%= govuk_link_to "Manage placements", '#' %>
+    <% if editable %>
+      <%= govuk_link_to("Manage placements", trainee_placements_confirm_path(trainee)) %>
     <% end %>
   <% end %>
 <% end %>

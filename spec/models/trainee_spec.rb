@@ -743,46 +743,4 @@ describe Trainee do
       expect(trainee.duplicate?).to be(true)
     end
   end
-
-  describe "placement_details?" do
-    subject(:trainee) {
-      create(:trainee, :imported_from_hesa)
-    }
-
-    context "when no placement data exists" do
-      it "returns false" do
-        expect(trainee.placement_details?).to be false
-      end
-    end
-
-    context "when placement data exists" do
-      let!(:placement) { create(:placement, trainee:) }
-
-      it "returns true" do
-        expect(trainee.placement_details?).to be true
-      end
-    end
-  end
-
-  describe "placements" do
-    subject(:trainee) {
-      create(:trainee, :imported_from_hesa)
-    }
-
-    context "when no placement data exists" do
-      it "returns nil" do
-        expect(trainee.placements).to be_empty
-      end
-    end
-
-    context "when placement data exists" do
-      let!(:placements) { create_list(:placement, 2, trainee:) }
-
-      it "returns true" do
-        trainee.placements.each do |placement|
-          expect(placement.name).to eq(placement.school.name)
-        end
-      end
-    end
-  end
 end

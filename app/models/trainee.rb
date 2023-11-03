@@ -527,10 +527,6 @@ class Trainee < ApplicationRecord
     "manual"
   end
 
-  def placement_details?
-    placements.present?
-  end
-
   def estimated_end_date
     start_date + estimated_course_duration
   end

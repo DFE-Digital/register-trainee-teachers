@@ -12,6 +12,7 @@ module Sections
        training_details
        schools
        funding
+       placements
        trainee_data].each do |section|
       define_method "continue_sections_#{section}" do
         trainee = continue_sections_trainee(section)
@@ -57,7 +58,8 @@ module Sections
         degrees: [Degree.new(id: 1, locale_code: :uk)],
         training_initiative: ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
         applying_for_bursary: true,
-        provider: Provider.new
+        provider: Provider.new,
+        placement_detail: :has_placement_detail
       )
     end
 
