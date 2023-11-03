@@ -74,6 +74,6 @@ bin/konduit.sh
 terraform/aks/vendor/
 
 Procfile.dev
-missing-location-graph-from-dttp.json
+missing-location-graph-from-dfe-reference.json
 .vscode/*
 Caddyfile
