@@ -5,28 +5,29 @@
   "scripts": {
     "js:lint": "standard --fix",
     "test": "jest",
-    "test:ci": "jest --ci --runInBand --coverage"
+    "test:ci": "jest --ci --runInBand --coverage",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build:css": "sass ./app/assets/stylesheets/application.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps"
   },
   "dependencies": {
     "@ministryofjustice/frontend": "^1.8.0",
-    "@rails/webpacker": "^5.4.4",
     "accessible-autocomplete": "^2.0.3",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.33.2",
+    "esbuild": "^0.19.5",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
     "govuk-frontend": "^4.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8",
     "serialize-javascript": "^6.0.1",
     "set-value": "^4.1.0",
     "turbolinks": "^5.2.0",
-    "jest-environment-jsdom": "^29.7.0"
-
+    "sass": "^1.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "standard": "^17.1.0",
-    "webpack-dev-server": "3.11.3"
+    "standard": "^17.1.0"
   },
   "standard": {
     "env": [

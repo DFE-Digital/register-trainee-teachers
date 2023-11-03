@@ -77,3 +77,6 @@ Procfile.dev
 missing-location-graph-from-dfe-reference.json
 .vscode/*
 Caddyfile
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

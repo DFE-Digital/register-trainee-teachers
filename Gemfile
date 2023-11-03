@@ -15,9 +15,6 @@ gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
 gem "puma", "~> 6.4"
 
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker"
-
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
@@ -129,6 +126,8 @@ gem "progress_bar" # useful to track progress of long running data migrations us
 
 gem "azure-storage-blob", "~> 2"
 gem "strong_migrations"
+gem "cssbundling-rails"
+gem "jsbundling-rails"
 
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
