@@ -280,7 +280,7 @@ GEM
     flamegraph (0.9.5)
     foreman (0.87.2)
     front_matter_parser (1.0.1)
-    fugit (1.8.1)
+    fugit (1.9.0)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
     globalid (1.2.1)
@@ -635,7 +635,7 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (1.10.1)
+    sidekiq-cron (1.11.0)
       fugit (~> 1.8)
       globalid (>= 1.0.1)
       sidekiq (>= 6)
@@ -809,7 +809,7 @@ DEPENDENCIES
   sentry-sidekiq
   shoulda-matchers (~> 5.3)
   sidekiq (~> 6.5)
-  sidekiq-cron (~> 1.10)
+  sidekiq-cron (~> 1.11)
   simplecov (~> 0.22.0)
   site_prism (~> 4.0)
   skylight
