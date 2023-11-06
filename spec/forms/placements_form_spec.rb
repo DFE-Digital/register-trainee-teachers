@@ -39,6 +39,7 @@ describe PlacementsForm, type: :model do
 
       context "with no placements" do
         it "returns an error if its empty" do
+          pending("Not implemented yet")
           expect(subject.errors[:placement_ids]).to include("Enter at least 2 placements")
         end
       end

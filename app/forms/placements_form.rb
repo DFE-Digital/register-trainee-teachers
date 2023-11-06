@@ -5,7 +5,7 @@ class PlacementsForm
 
   attr_accessor :trainee, :placement_ids
 
-  validate :must_have_minimum_number_of_placements
+  # validate :must_have_minimum_number_of_placements
   validate :placements_must_be_valid
 
   MINIMUM_PLACEMENTS = 2
