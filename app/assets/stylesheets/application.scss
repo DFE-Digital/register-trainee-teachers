@@ -1,12 +1,20 @@
 @import "./govuk_style_setup";
 @import "govuk-frontend/govuk/all";
 @import "@ministryofjustice/frontend/moj/all";
-@import "./govuk_overrides";
-@import "./filter_toggle_button";
-@import "./trainee_list";
-@import "./cookie_banner";
-@import "./tables";
-@import "./trainee";
+
+$moj-images-path: "@ministryofjustice/frontend/moj/assets/images/";
+
+$mobile-small-start: 400px;
+$mobile-small-end: 401px;
+$mobile-big-start: 500px;
+$mobile-big-end: 501px;
+
+@import "govuk_overrides";
+@import "filter_toggle_button";
+@import "trainee_list";
+@import "cookie_banner";
+@import "tables";
+@import "trainee";
 @import "components/all";
 
 .govuk-cookie-banner__hide {

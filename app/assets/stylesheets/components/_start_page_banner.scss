@@ -1,5 +1,4 @@
-@import "../base.scss";
-@import "../../webpacker/styles/inverted";
+@import "../inverted";
 
 .app-phase-banner__env--development .govuk-tag {
   background: govuk-colour("dark-grey");

@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { FilterToggleButton } from 'moj/all.js'
+import { FilterToggleButton } from "@ministryofjustice/frontend/moj/all";
 
 export default class FilterToggle {
   static init () {

@@ -1,5 +1,3 @@
-@import "../base.scss";
-
 .app-sort-links {
   @include govuk-font($size: 19);
   @include govuk-link-style-text;

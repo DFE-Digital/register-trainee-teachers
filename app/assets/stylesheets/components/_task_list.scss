@@ -1,5 +1,3 @@
-@import "../base.scss";
-
 .app-task-list {
   @include govuk-font($size: 19);
   @include govuk-responsive-margin(8, "bottom");
