@@ -7,7 +7,7 @@
     "test": "jest",
     "test:ci": "jest --ci --runInBand --coverage",
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
-    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --quiet-deps"
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=. --quiet-deps"
   },
   "dependencies": {
     "@ministryofjustice/frontend": "^1.8.0",
