@@ -91,7 +91,7 @@ private
   end
 
   def age_ranges(option:, level:)
-    Dttp::CodeSets::AgeRanges::MAPPING.select { |_, attributes| attributes[:option] == option && attributes[:levels]&.include?(level&.to_sym) }.keys.map do |age_range|
+    AgeRange::MAPPING.select { |_, attributes| attributes[:option] == option && attributes[:levels]&.include?(level&.to_sym) }.keys.map do |age_range|
       age_range.join(" to ")
     end
   end
