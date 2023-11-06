@@ -1,5 +1,3 @@
-@import "../../base.scss";
-
 @mixin autocomplete-set-width($max-width) {
   // Explicitly set font size on container so ex units work
   // Assumes all autocompletes are default size.
