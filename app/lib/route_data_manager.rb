@@ -16,10 +16,22 @@ private
   attr_reader :trainee
 
   def reset_trainee_details
-    trainee.assign_attributes(course_details.merge(funding_details))
+    reset_trainee
 
     # Only reset progress for draft trainees. DO NOT reset progress for submitted trainees.
     reset_progress if trainee.draft?
+  end
+
+  def reset_trainee
+    trainee.assign_attributes(trainee_attributes)
+  end
+
+  def reset_progress
+    trainee.progress.assign_attributes(progress_attributes)
+  end
+
+  def trainee_attributes
+    {}.merge(**course_details, **funding_details, **placement_detail)
   end
 
   def course_details
@@ -46,8 +58,18 @@ private
     }
   end
 
-  def reset_progress
-    trainee.progress.course_details = false
-    trainee.progress.funding = false
+  def placement_detail
+    {
+      placement_detail: nil,
+      placements: [],
+    }
+  end
+
+  def progress_attributes
+    {
+      course_details: false,
+      funding: false,
+      placements: false,
+    }
   end
 end
