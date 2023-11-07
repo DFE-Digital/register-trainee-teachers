@@ -7,15 +7,19 @@ feature "Add a placement" do
     FormStore.clear_all(@trainee.id)
   end
 
-  scenario "Add a new placement to an existing trainee" do
+  scenario "Attempt to add new placement when feature flag is inactive", feature_trainee_placement: false do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_a_school_exists
 
     when_i_navigate_to_the_new_placement_form
     then_i_see_the_not_found_page
+  end
 
-    when_the_feature_flag_is_active
+  scenario "Add a new placement to an existing trainee", feature_trainee_placement: true do
+    given_i_am_authenticated
+    and_a_trainee_exists_with_trn_received
+    and_a_school_exists
     and_i_navigate_to_the_new_placement_form
     then_i_see_the_new_placement_form
 
@@ -57,10 +61,6 @@ private
 
   def then_i_see_the_not_found_page
     expect(page).to have_current_path(not_found_path)
-  end
-
-  def when_the_feature_flag_is_active
-    enable_features(:trainee_placement)
   end
 
   def then_i_see_the_new_placement_form

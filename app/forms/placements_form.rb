@@ -5,7 +5,7 @@ class PlacementsForm
 
   attr_accessor :trainee, :placement_ids
 
-  # validate :must_have_minimum_number_of_placements
+  # validate :placement_ids, length: { mininum: 2 }
   validate :placements_must_be_valid
 
   MINIMUM_PLACEMENTS = 2
@@ -102,10 +102,6 @@ private
 
   def save_store(placements)
     store.set(trainee.id, :placements, placements)
-  end
-
-  def must_have_minimum_number_of_placements
-    errors.add(:placement_ids, :too_few_placements) if trainee.placements.size < MINIMUM_PLACEMENTS
   end
 
   def placements_must_be_valid

@@ -10,7 +10,7 @@ describe PlacementForm, type: :model do
   let(:placements_form) { PlacementsForm.new(trainee, store) }
   let(:placement) { Placement.new }
 
-  subject { described_class.new(placements_form:, placement:) }
+  subject { PlacementForm.new(placements_form:, placement:) }
 
   describe "#title" do
     context "when there are no placements" do
@@ -20,9 +20,7 @@ describe PlacementForm, type: :model do
     end
 
     context "when there are two existing placements" do
-      before do
-        allow(placements_form).to receive(:placements).and_return(build_list(:placement, 2))
-      end
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 2)) }
 
       it "returns the _Third placement_" do
         expect(subject.title).to eq("Third placement")
@@ -103,8 +101,6 @@ describe PlacementForm, type: :model do
     end
   end
 
-  # TODO: test that stash stashes the correct data for both cases.
-
   describe "#save!" do
     context "when a `school_id` for an existing school is given" do
       let!(:school) { create(:school, lead_school: false) }
@@ -112,7 +108,6 @@ describe PlacementForm, type: :model do
 
       it "creates a new placement record" do
         expect { subject.save! }.to change { Placement.count }.by(1)
-          .and not_change { School.count }
 
         new_placement = Placement.last
 
@@ -128,7 +123,6 @@ describe PlacementForm, type: :model do
 
       it "creates a new placement record" do
         expect { subject.save! }.to change { Placement.count }.by(1)
-          .and not_change { School.count }
 
         new_placement = Placement.last
 

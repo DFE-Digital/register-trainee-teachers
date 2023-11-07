@@ -30,7 +30,7 @@ describe PlacementsForm, type: :model do
         let(:placement_form) { instance_double(PlacementForm) }
 
         before do
-          allow(placement_form).to receive(:valid?).and_return(false)
+          allow(placement_form).to receive(:invalid?).and_return(true)
           allow(subject).to receive(:placements).and_return([placement_form])
         end
 
