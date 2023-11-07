@@ -9,7 +9,7 @@ module.exports = {
   coverageReporters: ['text', 'lcov'],
   collectCoverageFrom: [
     '<rootDir>/app/javascript/**/*.js',
-    '!<rootDir>/app/javascript/scripts/govuk_assets_import.js'
+    '!<rootDir>/app/javascript/scripts/govuk_assets_import.js',
   ],
   reporters: ['default'],
   transformIgnorePatterns: ['node_modules/*'],
