@@ -109,10 +109,10 @@ private
   end
 
   def placements_must_be_valid
-    errors.add(:placement_ids, :invalid) unless all_placements_are_valid?
+    errors.add(:placement_ids, :invalid) if any_placements_are_invalid?
   end
 
-  def all_placements_are_valid?
-    placements.all?(&:valid?)
+  def any_placements_are_invalid?
+    placements.any?(&:invalid?)
   end
 end
