@@ -24,7 +24,6 @@ module Hesa
       let(:expected_url) { "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData/#{current_reference}/#{from_date}" }
       let(:hesa_api_stub) { ApiStubs::HesaApi.new }
       let(:hesa_xml) { ApiStubs::HesaApi.new.raw_xml }
-      let(:ukprn) { hesa_api_stub.student_attributes[:ukprn] }
       let(:last_hesa_collection_request) { CollectionRequest.last }
 
       before do
@@ -32,7 +31,6 @@ module Hesa
 
         allow(Settings.hesa).to receive_messages(current_collection_start_date: from_date, current_collection_reference: current_reference)
         allow(Hesa::Client).to receive(:get).and_return(hesa_api_stub.raw_xml)
-        allow(Trainees::CreateFromHesa).to receive(:call).and_return([trainee, ukprn])
       end
 
       it "calls the HESA API" do
@@ -40,8 +38,9 @@ module Hesa
         described_class.new.perform
       end
 
-      it "creates or updates a trainee from a student node element" do
-        expect(Trainees::CreateFromHesa).to(receive(:call).with(student_node: instance_of(Nokogiri::XML::Element), record_source: RecordSources::HESA_COLLECTION))
+      it "calls the CreateFromHesaJob" do
+        expect(CreateFromHesaJob).to receive(:perform_later).with(hesa_trainee: hesa_api_stub.student_attributes, record_source: RecordSources::HESA_COLLECTION)
+
         described_class.new.perform
       end
 
@@ -69,28 +68,6 @@ module Hesa
         it "stores the requested_at" do
           expected_time = Time.zone.now
           expect(last_hesa_collection_request.requested_at.tv_sec).to eq(expected_time.tv_sec)
-        end
-      end
-
-      context "invalid data" do
-        let(:trainee) { build(:trainee, provider: nil) }
-        let(:hesa_import_error) do
-          error_msg = "HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{ukprn})"
-          Trainees::CreateFromHesa::HesaImportError.new(error_msg)
-        end
-
-        before do
-          allow(Trainees::CreateFromHesa).to receive(:call).and_raise(hesa_import_error)
-        end
-
-        it "sends an error message to Sentry" do
-          expect(Sentry).to receive(:capture_exception).with(hesa_import_error)
-          described_class.new.perform
-        end
-
-        it "marks the import as failed" do
-          described_class.new.perform
-          expect(last_hesa_collection_request.state).to eq("import_failed")
         end
       end
     end

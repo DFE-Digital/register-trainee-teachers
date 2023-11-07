@@ -6,7 +6,6 @@ module Trainees
   describe CreateFromHesa do
     let(:nationality_name) { RecruitsApi::CodeSets::Nationalities::MAPPING[student_attributes[:nationality]] }
     let(:hesa_api_stub) { ApiStubs::HesaApi.new(hesa_stub_attributes) }
-    let(:student_node) { hesa_api_stub.student_node }
     let(:student_attributes) { hesa_api_stub.student_attributes }
     let(:create_custom_state) { "implemented where necessary" }
     let(:hesa_stub_attributes) { {} }
@@ -39,7 +38,7 @@ module Trainees
       create(:school, urn: student_attributes[:lead_school_urn])
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
-      described_class.call(student_node:, record_source:)
+      described_class.call(hesa_trainee: student_attributes, record_source: record_source)
     end
 
     describe "HESA information imported from XML" do
@@ -407,7 +406,7 @@ module Trainees
 
         it "creates a new record" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.to change { Trainee.count }.by(1)
         end
       end
@@ -419,7 +418,7 @@ module Trainees
 
         it "creates a new record" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.to change { Trainee.count }.by(1)
         end
       end
@@ -427,7 +426,7 @@ module Trainees
       context "when the trainee is neither awarded nor withdrawn" do
         it "updates the existing trainee instead of creating a new one" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.not_to change { Trainee.count }
         end
       end
@@ -441,13 +440,13 @@ module Trainees
 
         it "does not create a new record" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.not_to change { Trainee.count }
         end
 
         it "does not update the existing trainee" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.not_to change { trainee }
         end
       end
@@ -459,13 +458,13 @@ module Trainees
 
         it "does not create a new record" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.not_to change { Trainee.count }
         end
 
         it "does not update the existing trainee" do
           expect {
-            described_class.call(student_node:, record_source:)
+            described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           }.not_to change { trainee.reload }
         end
       end
@@ -474,7 +473,7 @@ module Trainees
         before do
           trainee.update(state: :draft)
 
-          described_class.call(student_node:, record_source:)
+          described_class.call(hesa_trainee: student_attributes, record_source: record_source)
         end
 
         it "updates the existing trainee" do
@@ -488,7 +487,7 @@ module Trainees
         before do
           trainee.update(itt_start_date: DateTime.new(2022, 9, 20))
 
-          described_class.call(student_node:, record_source:)
+          described_class.call(hesa_trainee: student_attributes, record_source: record_source)
         end
 
         it "does not update the trainee with the earlier created_at timestamp" do

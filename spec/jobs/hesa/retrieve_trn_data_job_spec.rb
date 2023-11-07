@@ -40,8 +40,9 @@ module Hesa
         described_class.new.perform
       end
 
-      it "creates or updates a trainee from a student node element" do
-        expect(Trainees::CreateFromHesa).to(receive(:call).with(student_node: instance_of(Nokogiri::XML::Element), record_source: RecordSources::HESA_TRN_DATA))
+      it "calls the CreateFromHesaJob" do
+        expect(CreateFromHesaJob).to receive(:perform_later).with(hesa_trainee: hesa_api_stub.student_attributes, record_source: RecordSources::HESA_TRN_DATA)
+
         described_class.new.perform
       end
 
@@ -64,28 +65,6 @@ module Hesa
 
         it "stores the xml" do
           expect(last_hesa_trn_request.response_body).to eq(hesa_xml)
-        end
-      end
-
-      context "invalid data" do
-        let(:trainee) { build(:trainee, provider: nil) }
-        let(:hesa_import_error) do
-          error_msg = "HESA import failed (errors: #{trainee.errors.full_messages}), (ukprn: #{ukprn})"
-          Trainees::CreateFromHesa::HesaImportError.new(error_msg)
-        end
-
-        before do
-          allow(Trainees::CreateFromHesa).to receive(:call).and_raise(hesa_import_error)
-        end
-
-        it "sends an error message to Sentry" do
-          expect(Sentry).to receive(:capture_exception).with(hesa_import_error)
-          described_class.new.perform
-        end
-
-        it "marks the import as failed" do
-          described_class.new.perform
-          expect(last_hesa_trn_request.state).to eq("import_failed")
         end
       end
     end
