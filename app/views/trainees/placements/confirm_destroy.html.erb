@@ -1,0 +1,32 @@
+<%= render PageTitle::View.new(text: "Are you sure you want to delete this placement?") %>
+
+<%= render GovukComponent::BackLinkComponent.new(
+  text: "Back",
+  href: edit_trainee_placements_details_path(
+    trainee_id: @placements_form.trainee.slug,
+  ),
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">Are you sure you want to delete this placement?</h1>
+
+    <div class="govuk-body">
+      <%= govuk_button_to(
+        "Yes I’m sure — delete this placement",
+        trainee_placement_path(
+          trainee_id: @placements_form.trainee.slug,
+          id: @placement_form.placement.slug,
+        ),
+        method: :delete,
+        class: "govuk-button--warning",
+      ) %>
+    </div>
+
+    <%= govuk_link_to(
+      "Cancel",
+      trainee_placements_confirm_path(trainee_id: @placements_form.trainee.slug),
+    ) %>
+  </div>
+</div>
+

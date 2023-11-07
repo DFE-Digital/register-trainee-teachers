@@ -3,6 +3,10 @@
 require "rails_helper"
 
 feature "Delete a placement" do
+  after do
+    FormStore.clear_all(@trainee.id)
+  end
+
   scenario "Delete a placement from an existing trainee" do
     given_i_am_authenticated
     and_a_trainee_exists_with_a_placement
@@ -20,7 +24,8 @@ feature "Delete a placement" do
     when_i_navigate_to_the_delete_placement_form
     and_i_click_the_confirm_button
     then_i_see_the_confirmation_page
-    # and_the_deleted_placement_is_no_longer_visible
+    and_the_deleted_placement_is_no_longer_visible
+    and_is_not_yet_deleted
 
     when_i_click_update
     then_the_placement_is_deleted
@@ -32,6 +37,7 @@ private
   def and_a_trainee_exists_with_a_placement
     @trainee = given_a_trainee_exists(:trn_received)
     @placement = create(:placement, trainee: @trainee)
+    FormStore.clear_all(@trainee.id)
   end
 
   def when_i_navigate_to_the_delete_placement_form
@@ -58,6 +64,7 @@ private
   def then_the_placement_is_not_deleted
     expect(Placement.find_by(id: @placement.id)).to be_present
   end
+  alias_method :and_is_not_yet_deleted, :then_the_placement_is_not_deleted
 
   def then_the_placement_is_deleted
     expect(Placement.find_by(id: @placement.id)).not_to be_present
@@ -67,13 +74,20 @@ private
     click_button "Yes I’m sure — delete this placement"
   end
 
+  def when_i_click_update
+    click_button "Update record"
+  end
+
   def then_i_see_the_confirmation_page
+    expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: @trainee.slug))
+    expect(page).to have_content("Confirm placement details")
   end
 
   def and_the_deleted_placement_is_no_longer_visible
+    expect(page).not_to have_content(@placement.name)
   end
 
   def and_i_see_a_flash_message
-    expect(page).to have_content("Placement deleted")
+    expect(page).to have_content("Trainee placement details updated")
   end
 end

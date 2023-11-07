@@ -85,7 +85,7 @@ private
   end
 
   def then_i_see_the_placements_form_page
-    expect(page).to have_current_path(new_trainee_placements_path(trainee))
+    expect(page).to have_current_path(new_trainee_placement_path(trainee))
   end
 
   def when_i_click_back

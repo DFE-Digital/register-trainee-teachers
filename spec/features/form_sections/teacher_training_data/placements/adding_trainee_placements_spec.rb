@@ -59,7 +59,7 @@ private
   end
 
   def when_i_navigate_to_the_new_placement_form
-    visit new_trainee_placements_path(trainee_id: @trainee.slug)
+    visit new_trainee_placement_path(trainee_id: @trainee.slug)
   end
   alias_method :and_i_navigate_to_the_new_placement_form, :when_i_navigate_to_the_new_placement_form
 

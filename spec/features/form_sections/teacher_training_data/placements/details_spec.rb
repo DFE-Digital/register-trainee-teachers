@@ -42,7 +42,7 @@ private
   end
 
   def then_i_am_taken_to_the_placement_form_page
-    expect(page).to have_current_path(new_trainee_placements_path(trainee))
+    expect(page).to have_current_path(new_trainee_placement_path(trainee))
   end
 
   def then_i_am_taken_to_the_placement_confirm_page

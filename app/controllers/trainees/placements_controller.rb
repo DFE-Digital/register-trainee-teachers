@@ -27,16 +27,23 @@ module Trainees
     end
 
     def confirm_destroy
-      @placement_form = DestroyPlacementForm.find_from_param(@trainee, params[:id])
+      @placements_form = PlacementsForm.new(@trainee)
+      @placement_form = DestroyPlacementForm.find_from_param(
+        placements_form: @placements_form,
+        slug: params[:id],
+      )
     end
 
     def destroy
-      @placement_form = DestroyPlacementForm.find_from_param(@trainee, params[:id])
-      @placement_form.destroy!
+      @placement_form = DestroyPlacementForm.find_from_param(
+        placements_form: PlacementsForm.new(@trainee),
+        slug: params[:id],
+      )
+      @placement_form.mark_for_destruction!
 
       flash[:success] = I18n.t("flash.trainee_placement_deleted")
 
-      redirect_to(trainee_path(trainee))
+      redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
     end
 
   private

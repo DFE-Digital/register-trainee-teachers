@@ -21,7 +21,7 @@
             key: "Placements",
             value: "Not provided yet",
             action_text: "Add a placement",
-            action_href: new_trainee_placements_path(trainee_id: trainee.slug),
+            action_href: new_trainee_placement_path(trainee_id: trainee.slug),
           }],
     editable: true,
     has_errors: has_errors,
@@ -36,4 +36,4 @@
   <% end %>
 <% end %>
 
-<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placements_path(trainee_id: trainee.slug), class_option: "govuk-button--secondary") %>
+<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placement_path(trainee_id: trainee.slug), class_option: "govuk-button--secondary") %>
