@@ -24,7 +24,7 @@ gem "google-cloud-bigquery"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
 
-# Manage multiple processes i.e. web server and webpack
+# Manage multiple processes i.e. web server, redis, css/js builds
 gem "foreman"
 
 # Canonical meta tag
@@ -125,9 +125,9 @@ gem "csv-safe"
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
 gem "azure-storage-blob", "~> 2"
-gem "strong_migrations"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
+gem "strong_migrations"
 
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.

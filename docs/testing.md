@@ -2,7 +2,7 @@
 
 ## Running specs
 
-To ensure webpacker works for you when tests run:
+To ensure assets are compiled when tests run:
 
 ```bash
 RAILS_ENV=test bundle exec rails assets:precompile

@@ -1,5 +1,5 @@
 module.exports = {
-  moduleDirectories: ['node_modules', 'app/webpacker'],
+  moduleDirectories: ['node_modules', 'app/javascript'],
   moduleFileExtensions: ['js'],
   automock: false,
   resetMocks: true,
@@ -8,19 +8,17 @@ module.exports = {
   coverageDirectory: 'coverage/frontend',
   coverageReporters: ['text', 'lcov'],
   collectCoverageFrom: [
-    '<rootDir>/app/webpacker/**/*.js',
-    '!<rootDir>/app/webpacker/packs/*.js',
-    '!<rootDir>/app/webpacker/scripts/govuk_assets_import.js',
-    '!<rootDir>/app/webpacker/scripts/components.js'
+    '<rootDir>/app/javascript/**/*.js',
+    '!<rootDir>/app/javascript/scripts/govuk_assets_import.js',
   ],
   reporters: ['default'],
   transformIgnorePatterns: ['node_modules/*'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/app/webpacker/$1'
+    '^@/(.*)$': '<rootDir>/app/javascript/$1'
   },
-  roots: ['app/webpacker'],
+  roots: ['app/javascript'],
   testEnvironment: 'jsdom',
-  testMatch: ['**/app/webpacker/**/*.spec.js'],
+  testMatch: ['**/app/javascript/**/*.spec.js'],
   testEnvironmentOptions: {
     url: 'http://localhost/'
   },
