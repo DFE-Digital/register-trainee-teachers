@@ -194,7 +194,7 @@ end
 
 group :test do
   # Headless browser testing kit
-  gem "cuprite", "~> 0.13"
+  gem "cuprite", "~> 0.15"
   gem "webdrivers", "~> 5.3"
 
   gem "shoulda-matchers", "~> 5.3"
