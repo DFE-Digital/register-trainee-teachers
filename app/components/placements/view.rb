@@ -7,7 +7,7 @@ module Placements
     attr_accessor :data_model, :editable, :has_errors
 
     def initialize(data_model:, has_errors: false, editable: false)
-      @data_model = data_model
+      @data_model = data_model.is_a?(PlacementsForm) ? data_model : PlacementsForm.new(data_model)
       @editable = editable
       @has_errors = has_errors
     end

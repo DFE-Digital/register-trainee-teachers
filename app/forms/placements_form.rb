@@ -45,7 +45,7 @@ class PlacementsForm
   def placements
     slug_placements_forms_map = {}
 
-    trainee.placements.order(created_at: :asc).each do |placement|
+    trainee.placements.includes([:school]).order(created_at: :asc).each do |placement|
       slug_placements_forms_map[placement.slug] = PlacementForm.new(placements_form: self, placement: placement)
     end
 
