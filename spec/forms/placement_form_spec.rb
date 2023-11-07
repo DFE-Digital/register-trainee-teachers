@@ -10,7 +10,7 @@ describe PlacementForm, type: :model do
   let(:placements_form) { PlacementsForm.new(trainee, store) }
   let(:placement) { Placement.new }
 
-  subject { PlacementForm.new(placements_form:, placement:) }
+  subject { described_class.new(placements_form:, placement:) }
 
   describe "#title" do
     context "when there are no placements" do
