@@ -1,4 +1,4 @@
-import removeStopWords from '../../../components/form_components/autocomplete/sort/stop_words'
+import removeStopWords from '../components/form_components/autocomplete/sort/stop_words'
 
 describe('removeStopWords', () => {
   describe('text with multiple stop words', () => {

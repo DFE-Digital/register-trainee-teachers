@@ -1,4 +1,4 @@
-import clean from '../../../components/form_components/autocomplete/sort/clean'
+import clean from '../components/form_components/autocomplete/sort/clean'
 
 describe('clean', () => {
   it('returns cleaned', () => {

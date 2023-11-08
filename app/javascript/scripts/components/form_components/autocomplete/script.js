@@ -1,8 +1,7 @@
-import './style.scss'
 import accessibleAutocomplete from 'accessible-autocomplete'
-import { nodeListForEach } from 'govuk-frontend/govuk/common'
+import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
 import sort from './sort'
-import tracker from '../tracker.js'
+import tracker from '../tracker'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-autocomplete"]')
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''

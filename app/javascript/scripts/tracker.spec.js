@@ -1,4 +1,4 @@
-import tracker from '../../components/form_components/tracker.js'
+import tracker from './components/form_components/tracker.js'
 jest.useFakeTimers('modern')
 
 describe('tracker', () => {

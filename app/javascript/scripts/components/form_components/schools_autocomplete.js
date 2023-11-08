@@ -1,6 +1,6 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
-import { nodeListForEach } from 'govuk-frontend/govuk/common'
-import tracker from '../tracker.js'
+import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
+import tracker from './tracker.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
 const idElement = document.getElementById('school-id')

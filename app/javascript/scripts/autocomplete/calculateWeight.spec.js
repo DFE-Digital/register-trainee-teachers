@@ -6,7 +6,7 @@ import calculateWeight, {
   synonymsExactMatch,
   synonymsStartsWith,
   wordInSynonymStartsWithQuery
-} from '../../../components/form_components/autocomplete/sort/calculateWeight'
+} from '../components/form_components/autocomplete/sort/calculateWeight'
 
 describe('calculateWeight', () => {
   const option = {

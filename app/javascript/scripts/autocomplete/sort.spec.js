@@ -4,7 +4,7 @@ import sort, {
   hasWeight,
   byWeightThenAlphabetically,
   optionName
-} from '../../../components/form_components/autocomplete/sort'
+} from '../components/form_components/autocomplete/sort'
 
 describe('sort', () => {
   it('returns an empty array for no matches', () => {

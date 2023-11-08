@@ -1,4 +1,4 @@
-import { nodeListForEach } from 'govuk-frontend/govuk/common'
+import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
 import openregisterLocationPicker from 'govuk-country-and-territory-autocomplete'
 
 const $allCountryAutoCompleteElements = document.querySelectorAll('[data-module="app-country-autocomplete"]')
