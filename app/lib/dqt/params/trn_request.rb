@@ -43,7 +43,7 @@ module Dqt
         "Undivided second-class honours" => "UndividedSecondClassHonours",
         "Pass" => "Pass",
         "Merit" => "Merit",
-        "Ordinary degree" => "OrdinaryDegree",
+        "Ordinary degree" => "Ordinary",
         "Other" => "Other",
       }.freeze
 

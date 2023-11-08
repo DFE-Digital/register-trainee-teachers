@@ -149,6 +149,16 @@ module Dqt
           })
         end
 
+        context "when degree class is 'Ordinary degree'" do
+          let(:degree) do
+            build(:degree, :uk_degree_with_details, grade: "Ordinary degree")
+          end
+
+          it "sends the expected degree class" do
+            expect(subject["qualification"]["class"]).to eq "Ordinary"
+          end
+        end
+
         context "when there is no degree type" do
           let(:degree) { build(:degree, :uk_degree_with_details, uk_degree_uuid: nil) }
 
