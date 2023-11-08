@@ -70,10 +70,10 @@ class PlacementForm
   def save!
     return false unless valid?
 
-    if school_id.present? && (school = School.find_by(id: school_id)).present?
-      create_placement_for(school:)
+    if @placement.persisted?
+      update_placement
     else
-      create_placement_for(placement_details)
+      create_placement
     end
     @placements_form.delete_placement_on_store(slug)
     true
@@ -98,6 +98,16 @@ class PlacementForm
   end
 
 private
+
+  def create_placement
+    if school_id.present? && (school = School.find_by(id: school_id)).present?
+      create_placement_for(school:)
+    else
+      create_placement_for(placement_details)
+    end
+  end
+
+  def update_placement; end
 
   def create_placement_for(attrs)
     @trainee.placements.create!(attrs)

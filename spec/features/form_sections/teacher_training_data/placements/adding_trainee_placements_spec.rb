@@ -41,6 +41,10 @@ feature "Add a placement" do
     when_i_click_update
     then_i_see_a_flash_message
     and_two_new_placements_are_created
+
+    when_i_revisit_the_placements_confirmation_page
+    and_i_click_update
+    and_no_new_placements_are_created
   end
 
 private
@@ -111,6 +115,7 @@ private
   def when_i_click_update
     click_button "Update record"
   end
+  alias_method :and_i_click_update, :when_i_click_update
 
   def then_i_see_a_flash_message
     expect(page).to have_content("Trainee placement details updated")
@@ -122,5 +127,10 @@ private
 
   def and_two_new_placements_are_created
     expect(@trainee.reload.placements.count).to eq(2)
+  end
+  alias_method :and_no_new_placements_are_created, :and_two_new_placements_are_created
+
+  def when_i_revisit_the_placements_confirmation_page
+    visit trainee_placements_confirm_path(trainee_id: @trainee.slug)
   end
 end
