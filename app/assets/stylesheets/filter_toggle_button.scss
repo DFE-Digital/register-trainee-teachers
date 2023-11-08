@@ -49,11 +49,11 @@ $shadow-color: #0b0c0c;
   }
 }
 
-.moj-action-bar__filter:after {
+.moj-action-bar__filter::after {
   background: none;
 }
 
-@media (min-width: 48.0625em) {
+@media (width >= 48.0625em) {
   .moj-filter-layout__filter {
     max-width: 300px;
     margin-bottom: govuk-spacing(2);
@@ -64,6 +64,7 @@ $shadow-color: #0b0c0c;
   @include govuk-media-query($until: tablet) {
     // only display a scrollbar if it there is overflow to scroll
     overflow: auto;
+
     // At this width the filter has `position: fixed`. We should set a max width that will safely include the filter and a scrollbar if present
     max-width: calc(100vw - calc(100vw - 100%));
   }

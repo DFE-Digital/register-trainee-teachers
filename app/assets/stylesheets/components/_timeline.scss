@@ -2,7 +2,7 @@
   margin-bottom: govuk-spacing(4);
   position: relative;
 
-  &:before {
+  &::before {
     background-color: govuk-colour("blue");
     content: "";
     height: 100%;
@@ -15,7 +15,8 @@
 
 .app-timeline--full {
   margin-bottom: 0;
-  &:before {
+
+  &::before {
     height: calc(100% - 75px);
   }
 }
@@ -25,7 +26,7 @@
   padding-left: govuk-spacing(4);
   position: relative;
 
-  &:before {
+  &::before {
     background-color: govuk-colour("blue");
     content: "";
     height: 5px;
@@ -37,7 +38,7 @@
 }
 
 .app-timeline__item:last-child {
-  &:after {
+  &::after {
     background-color: govuk-colour("blue");
     content: "";
     height: 5px;
@@ -50,11 +51,13 @@
 
 .app-timeline__title {
   @include govuk-font($size: 19, $weight: bold);
+
   display: inline;
 }
 
 .app-timeline__actor_and_date {
   @include govuk-font($size: 19);
+
   color: $govuk-secondary-text-colour;
   display: inline;
   margin: 0;
@@ -62,6 +65,7 @@
 
 .app-timeline__date {
   @include govuk-font($size: 19);
+
   color: $govuk-secondary-text-colour;
   margin: 0;
 }
@@ -84,5 +88,6 @@
 
 .app-timeline__metadata-container {
   @include govuk-font($size: 19);
+
   color: $govuk-text-colour;
 }

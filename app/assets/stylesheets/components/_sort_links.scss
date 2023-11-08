@@ -7,7 +7,7 @@
 }
 
 .app-sort-links__prefix {
-  @include govuk-typography-weight-bold();
+  @include govuk-typography-weight-bold;
 }
 
 .app-sort-links__list {
@@ -20,15 +20,16 @@
 
 .app-sort-links__list-item {
   display: inline-block;
+
   @include govuk-font(19); // restore font
 
-  &:first-child:after {
+  &:first-child::after {
     content: "";
     display: inline-block;
     position: relative;
     top: .1875em;
     height: 1.18em;
-    border-right: .09375em solid $govuk-text-colour;
+    border-right: .0938em solid $govuk-text-colour;
     margin-left: 2px;
     margin-right: 2px;
   }

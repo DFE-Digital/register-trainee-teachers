@@ -3,7 +3,6 @@
 @import "@ministryofjustice/frontend/moj/all";
 
 $moj-images-path: "@ministryofjustice/frontend/moj/assets/images/";
-
 $mobile-small-start: 400px;
 $mobile-small-end: 401px;
 $mobile-big-start: 500px;
@@ -64,6 +63,7 @@ $mobile-big-end: 501px;
   @include govuk-link-common;
   @include govuk-link-style-default;
   @include govuk-link-print-friendly;
+
   background: none;
   margin: 0;
   padding: 0;
@@ -79,6 +79,7 @@ $mobile-big-end: 501px;
 
 .app-autocomplete__remove-link {
   @include govuk-font($size: 19);
+
   float: right;
 }
 
@@ -114,7 +115,9 @@ body:not(.js-enabled) .app-js-only {
 
 .app-inset-notice {
   border-left: govuk-spacing(1) solid $govuk-border-colour;
+
   @include govuk-font($size: 19);
+
   color: $govuk-secondary-text-colour;
   padding-left: govuk-spacing(3);
 
@@ -129,7 +132,7 @@ body:not(.js-enabled) .app-js-only {
 }
 
 .link--delete {
-  color: govuk-colour("red") !important;
+  color: govuk-colour("red") !important; /* stylelint-disable declaration-no-important */
 }
 
 .app-start-page-banner + .govuk-width-container > .govuk-notification-banner {

@@ -63,8 +63,12 @@ $app-button-inverted-hover-background-colour: govuk-tint($app-button-inverted-fo
 .app-tag--inverted {
   background-color: govuk-colour("white");
   color: govuk-colour("blue");
-
-  > :last-child { margin-bottom: 0 !important; margin-right: 0 !important; }
+  // stylelint-disable declaration-no-important
+  > :last-child {
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+  }
+  // stylelint-enable declaration-no-important
 }
 
 // PSD homepage (not signed-in)
@@ -74,6 +78,7 @@ $app-button-inverted-hover-background-colour: govuk-tint($app-button-inverted-fo
 
 // Introduction slides
 .app-inverted--card {
-  margin-top: -15px; //override govuk-main-wrapper
+  margin-top: -15px; // override govuk-main-wrapper
+
   @include govuk-responsive-padding(9);
 }

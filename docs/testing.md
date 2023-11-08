@@ -82,7 +82,7 @@ yarn run standard --fix
 To lint the SCSS files:
 
 ```shell
-bundle exec rails lint:scss
+yarn scss:lint
 ```
 
 ## Running all pre-build checks
