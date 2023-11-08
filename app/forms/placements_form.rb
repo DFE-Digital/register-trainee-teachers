@@ -5,8 +5,8 @@ class PlacementsForm
 
   attr_accessor :trainee, :placement_ids
 
-  validates :placement_ids, length: { minimum: 2 }
-  validate :placements_must_be_valid
+  validates :placement_ids, length: { minimum: 2 }, if: :non_draft_trainee?
+  validate :placements_must_be_valid, if: :non_draft_trainee?
 
   MINIMUM_PLACEMENTS = 2
 
@@ -15,6 +15,8 @@ class PlacementsForm
     @store = store
     super(fields)
   end
+
+  def non_draft_trainee? = !trainee.draft?
 
   def fields
     { placement_ids: trainee.placement_ids }
@@ -79,7 +81,7 @@ class PlacementsForm
     if valid?
       []
     else
-      "placement_detail"
+      [[:placement_detail]]
     end
   end
 

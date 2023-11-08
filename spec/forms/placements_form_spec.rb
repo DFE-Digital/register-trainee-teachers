@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe PlacementsForm, type: :model do
   let(:placements) { [] }
-  let(:trainee) { build(:trainee, placements:) }
+  let(:trainee) { build(:trainee, :submitted_for_trn, placements:) }
   let(:form_store) { class_double(FormStore) }
 
   subject { described_class.new(trainee, form_store) }

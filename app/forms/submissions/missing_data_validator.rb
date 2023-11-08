@@ -11,20 +11,14 @@ module Submissions
     end
 
     missing_data_validator :trainee_start_date, form: "TraineeStartDateForm", if: :course_already_started?
-
     missing_data_validator :placements, form: "PlacementsForm", if: :requires_placements?
 
     def missing_fields
-      binding.pry
       forms.map(&:missing_fields).flatten.uniq
     end
 
     def course_already_started?
       !trainee.starts_course_in_the_future?
-    end
-
-    def requires_placements?
-      trainee.requires_placements? && FeatureService.enabled?(:trainee_placement)
     end
 
   private
