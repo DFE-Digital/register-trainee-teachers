@@ -5,7 +5,7 @@ class PlacementsForm
 
   attr_accessor :trainee, :placement_ids
 
-  # validate :placement_ids, length: { mininum: 2 }
+  validates :placement_ids, length: { minimum: 2 }
   validate :placements_must_be_valid
 
   MINIMUM_PLACEMENTS = 2
@@ -75,16 +75,11 @@ class PlacementsForm
     placements.each(&:save!)
   end
 
-  def missing_fields(include_placement_id: false)
-    return [] if valid?
-
-    placements.map do |placement_form|
-      placement_form.valid?
-      if include_placement_id
-        { placement_form.slug => placement_form.errors.attribute_names }
-      else
-        placement_form.errors.attribute_names
-      end
+  def missing_fields
+    if valid?
+      []
+    else
+      "placement_detail"
     end
   end
 
@@ -105,10 +100,8 @@ private
   end
 
   def placements_must_be_valid
-    errors.add(:placement_ids, :invalid) if any_placements_are_invalid?
+    errors.add(:placement_ids, :invalid) if any_invalid_placements?
   end
 
-  def any_placements_are_invalid?
-    placements.any?(&:invalid?)
-  end
+  def any_invalid_placements? = placements.any?(&:invalid?)
 end
