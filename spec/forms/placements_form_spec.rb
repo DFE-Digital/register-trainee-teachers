@@ -3,7 +3,8 @@
 require "rails_helper"
 
 describe PlacementsForm, type: :model do
-  let(:trainee) { build(:trainee) }
+  let(:placements) { [] }
+  let(:trainee) { build(:trainee, :submitted_for_trn, placements:) }
   let(:form_store) { class_double(FormStore) }
 
   subject { described_class.new(trainee, form_store) }
@@ -19,9 +20,7 @@ describe PlacementsForm, type: :model do
       end
 
       context "with placements" do
-        before do
-          trainee.placements << build(:placement) << build(:placement)
-        end
+        let(:placements) { build_list(:placement, 2) }
 
         it { is_expected.to be_valid }
       end
@@ -38,8 +37,9 @@ describe PlacementsForm, type: :model do
       end
 
       context "with no placements" do
+        let(:placements) { [] }
+
         it "returns an error if its empty" do
-          pending("Not implemented yet")
           expect(subject.errors[:placement_ids]).to include("Enter at least 2 placements")
         end
       end

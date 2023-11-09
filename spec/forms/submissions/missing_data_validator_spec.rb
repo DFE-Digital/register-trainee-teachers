@@ -74,8 +74,8 @@ module Submissions
         end
       end
 
-      context "new trainee", feature_trainee_placement: true do
-        let(:trainee) { Trainee.new }
+      context "non draft trainee", feature_trainee_placement: true do
+        let(:trainee) { Trainee.new(state: :submitted_for_trn) }
 
         it "cause validation errors" do
           expect(subject.valid?).to be(false)
