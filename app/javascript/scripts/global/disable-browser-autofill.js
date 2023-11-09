@@ -14,6 +14,7 @@
 // inputs where it shouldn’t appear.
 
 function disableBrowserAutofill () {
+  console.log('disableBrowserAutofill is running')
   const dataAttributeName = 'data-nameoriginal'
   const inputTypes = ['text', 'tel', 'email', 'number']
 

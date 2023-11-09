@@ -128,11 +128,7 @@ jobs:
           - linter-type: rubocop
             command: docker-compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
           - linter-type: scss
-            command: |
-              docker-compose exec -T web /bin/sh -c "yarn add stylelint@15.11.0"
-              docker-compose exec -T web /bin/sh -c "yarn add stylelint-scss@5.3.1"
-              docker-compose exec -T web /bin/sh -c "yarn add stylelint-config-gds@1.1.0"
-              docker-compose exec -T web /bin/sh -c "yarn run scss:lint"
+            command: docker-compose exec -T web /bin/sh -c "yarn run scss:lint"
           - linter-type: dfe_analytics
             command: |
               docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
