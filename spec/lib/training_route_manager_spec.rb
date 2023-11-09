@@ -173,7 +173,7 @@ describe TrainingRouteManager do
     end
   end
 
-  describe "#requires_placements?" do
+  describe "#requires_placements?", feature_trainee_placement: true do
     (TRAINING_ROUTES.keys - %w[early_years_assessment_only assessment_only]).each do |route|
       context "for route #{route}" do
         let(:trainee) { Struct.new(:training_route).new(route.to_s) }

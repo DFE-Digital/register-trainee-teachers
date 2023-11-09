@@ -50,7 +50,7 @@ class TrainingRouteManager
     [
       TRAINING_ROUTE_ENUMS[:assessment_only],
       TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
-    ].exclude?(training_route)
+    ].exclude?(training_route) && FeatureService.enabled?(:trainee_placement)
   end
 
   def undergrad_route?
