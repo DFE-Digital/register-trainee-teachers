@@ -193,7 +193,7 @@ Rails.application.routes.draw do
       namespace :placements do
         resource :details, only: %i[edit update], path: "/details"
 
-        concerns :confirmable
+        resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "confirm_details"
       end
     end
   end

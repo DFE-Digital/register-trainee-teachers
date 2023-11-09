@@ -9,11 +9,11 @@ module Placements
     end
 
     def with_one_placement
-      render(View.new(data_model: mock_trainee(number_of_placements: 1)))
+      render(View.new(data_model: PlacementsForm.new(mock_trainee(number_of_placements: 1))))
     end
 
     def with_two_placement
-      render(View.new(data_model: mock_trainee(number_of_placements: 2)))
+      render(View.new(data_model: PlacementsForm.new(mock_trainee(number_of_placements: 2))))
     end
 
   private

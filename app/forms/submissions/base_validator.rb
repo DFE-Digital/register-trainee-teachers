@@ -22,6 +22,7 @@ module Submissions
     validator :schools, form: "Schools::FormValidator", if: :requires_schools?
     validator :funding, form: "Funding::FormValidator", if: :requires_funding?
     validator :iqts_country, form: "IqtsCountryForm", if: :requires_iqts_country?
+
     validator :placements, form: "PlacementDetailForm", if: :requires_placements?
 
     delegate :requires_schools?, :requires_degree?, :apply_application?,
@@ -33,16 +34,16 @@ module Submissions
       @trainee = trainee
     end
 
+    def requires_placements?
+      trainee.requires_placements? && FeatureService.enabled?(:trainee_placement)
+    end
+
     def validate_degree?
       !trainee.hesa_record? && !apply_application_and_draft? && requires_degree?
     end
 
     def apply_application_and_draft?
       apply_application? && trainee.draft?
-    end
-
-    def requires_placements?
-      trainee.requires_placements? && FeatureService.enabled?(:trainee_placement)
     end
 
   private

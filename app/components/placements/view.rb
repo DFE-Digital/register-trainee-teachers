@@ -7,7 +7,7 @@ module Placements
     attr_accessor :data_model, :editable, :has_errors
 
     def initialize(data_model:, has_errors: false, editable: false)
-      @data_model = data_model
+      @data_model = data_model.is_a?(PlacementsForm) ? data_model : PlacementsForm.new(data_model)
       @editable = editable
       @has_errors = has_errors
     end
@@ -17,17 +17,18 @@ module Placements
     end
 
     def render_inset?
-      trainee.placements.size < 2
+      placement_records.size < 2
     end
 
     def placement_summaries
       placement_records.each_with_index.map do |placement_record, index|
+        placement = placement_record.is_a?(Placement) ? placement_record : placement_record.placement
         {
           trainee: trainee,
           title: t("components.placements.placement_#{index + 1}"),
           rows: [{
             field_label: "School or setting",
-            field_value: placement_details_for(placement_record),
+            field_value: placement_details_for(placement),
             action_url: "#",
           }],
           editable: true,
@@ -39,7 +40,7 @@ module Placements
   private
 
     def placement_records
-      trainee.placements.reverse
+      @placement_records ||= data_model.placements
     end
 
     def placement_details_for(placement_record)

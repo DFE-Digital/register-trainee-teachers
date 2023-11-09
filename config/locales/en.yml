@@ -12,6 +12,7 @@ en:
     trainee_diversity_updated: Trainee diversity updated
     trainee_reinstated: Trainee reinstated
     trainee_withdrawn: Trainee withdrawn
+    trainee_placement_added: Trainee placement added
   update_record: Update record
   return_home: Return home
   mark_as_completed: I have %{action} this section
@@ -693,7 +694,7 @@ en:
         study_mode: *course_path
         primary_course_subjects: *course_path
         iqts_country: edit_trainee_iqts_country_path
-        placement_detail: edit_trainee_placements_details_path
+        placement_detail: trainee_placements_confirm_path
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
@@ -1349,6 +1350,11 @@ en:
           other_nationality3: *nationality
           iqts_country: Enter the country or territory the trainee is studying in
       models:
+        placements_form:
+          attributes:
+            placement_ids:
+              too_short: Enter at least 2 placements
+              invalid: Some placements are invalid
         cookie_preferences_form:
           attributes:
             consent:
@@ -1555,6 +1561,14 @@ en:
               empty_nationalities: Select at least one nationality
             other_nationality1:
               blank: If you have an additional nationality, select it from the list
+        placement:
+          attributes:
+            school_id:
+              blank: Select an existing school or enter the details for a new school
+            name:
+              blank: Enter a school name
+            urn:
+              blank: Enter a school unique reference number (URN)
         study_modes_form:
           attributes:
             study_mode:
