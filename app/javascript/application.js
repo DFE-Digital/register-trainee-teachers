@@ -28,9 +28,9 @@ LiveFilter.init()
 FilterToggle.init()
 CookieBanner.init()
 
-// You can also export components if they need to be initialized elsewhere
-export {
-  LiveFilter,
-  FilterToggle,
-  CookieBanner
-}
+// // You can also export components if they need to be initialized elsewhere
+// export {
+//   LiveFilter,
+//   FilterToggle,
+//   CookieBanner
+// }

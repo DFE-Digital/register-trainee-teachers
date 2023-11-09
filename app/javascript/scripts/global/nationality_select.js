@@ -122,4 +122,6 @@ const prepareNationalitySelect = () => {
   hideSection(thirdInputEl, thirdFormLabel)
 }
 
-prepareNationalitySelect()
+document.addEventListener('DOMContentLoaded', function () {
+  prepareNationalitySelect()
+})
