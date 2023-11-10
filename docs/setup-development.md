@@ -27,7 +27,16 @@ Add a file to config/settings called development.local.yml containing the follow
 
 ## Start the server
 
-To start all the processes run:
+To start all the processes you'll need to first create a local `Procfile.dev` file with the following:
+
+```
+web: bin/rails server -p 3000
+js: yarn build --watch
+css: yarn build:css --watch
+worker: bundle exec sidekiq -t 25 -C config/sidekiq.yml
+```
+
+Then run the following command:
 
 ```bash
 ./bin/dev
