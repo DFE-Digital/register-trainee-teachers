@@ -56,6 +56,19 @@ describe GuidanceController do
     end
   end
 
+  describe "#census_sign_off" do
+    it "returns a 200 status code" do
+      get :census_sign_off
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :census_sign_off
+      expect(response).to render_template("application")
+      expect(response).to render_template("census_sign_off")
+    end
+  end
+
   describe "#registering_trainees_through_hesa" do
     it "returns a 200 status code" do
       get :registering_trainees_through_hesa
