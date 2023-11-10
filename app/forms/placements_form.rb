@@ -74,6 +74,7 @@ class PlacementsForm
   end
 
   def save!
+    trainee.has_placement_detail!
     placements.each(&:save!)
   end
 
