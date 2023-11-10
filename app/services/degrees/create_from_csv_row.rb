@@ -14,6 +14,8 @@ module Degrees
     end
 
     def call
+      return if country.blank?
+
       trainee.transaction do
         trainee.degrees.destroy_all
         trainee.degrees.create!(mapped_degree_attributes)
