@@ -36,8 +36,6 @@ css: yarn build:css --watch
 worker: bundle exec sidekiq -t 25 -C config/sidekiq.yml
 ```
 
-there is a `Procfile.dev.sample` you can rename and modify to do this.
-
 Then run the following command:
 
 ```bash
