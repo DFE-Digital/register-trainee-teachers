@@ -188,14 +188,16 @@ Rails.application.routes.draw do
         resource :hesa_reinstatements, only: :show, path: "/reinstate"
       end
 
-      resources :placements, only: %i[new create destroy] do
+      resources :placements, only: %i[new create edit update destroy] do
         get "delete", on: :member, to: "placements#delete", as: "delete"
-      end
 
-      namespace :placements do
-        resource :details, only: %i[edit update], path: "/details"
+        collection do
+          scope module: :placements, as: :placements do
+            resource :details, only: %i[edit update], path: "/details"
 
-        resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "confirm_details"
+            resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "confirm_details"
+          end
+        end
       end
     end
   end

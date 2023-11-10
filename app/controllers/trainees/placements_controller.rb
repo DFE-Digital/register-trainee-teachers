@@ -12,6 +12,8 @@ module Trainees
       )
     end
 
+    def edit; end
+
     def create
       @trainee = trainee
       @placement_form = PlacementForm.new(
