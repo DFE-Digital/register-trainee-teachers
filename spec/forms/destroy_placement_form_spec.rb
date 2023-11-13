@@ -5,21 +5,23 @@ require "rails_helper"
 describe DestroyPlacementForm, type: :model do
   let(:trainee) { create(:trainee) }
   let!(:placement) { create(:placement) }
+  let(:placements_form) { PlacementsForm.new(trainee) }
+  let(:slug) { placement.slug }
 
-  subject(:form) { DestroyPlacementForm.find_from_param(trainee, placement.id.to_s) }
+  subject(:form) { DestroyPlacementForm.find_from_param(placements_form:, slug:) }
 
-  describe "#destroy!" do
+  describe "#mark_for_destruction!" do
     context "when the given id is for a placement for the given trainee" do
       let!(:placement) { create(:placement, trainee:) }
 
-      it "deletes the placement" do
-        expect { form.destroy! }.to change { trainee.placements.count }.by(-1)
+      it "only deletes the placement in temporary state" do
+        expect { form.mark_for_destruction! }.not_to change { trainee.placements.count }
       end
     end
 
     context "when the given id is for a placement for a different trainee" do
-      it "does NOT delete the placement" do
-        expect { form.destroy! }.to raise_error(ActiveRecord::RecordNotFound)
+      it "does NOT delete the placement and throws an exception" do
+        expect { form.mark_for_destruction! }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

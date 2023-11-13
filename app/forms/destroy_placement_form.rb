@@ -10,7 +10,7 @@ class DestroyPlacementForm
   end
 
   def self.find_from_param(placements_form:, slug:)
-    placement = placements_form.trainee.placements.find_by(slug:)
+    placement = placements_form.trainee.placements.find_by!(slug:)
     new(placements_form:, placement:)
   end
 
