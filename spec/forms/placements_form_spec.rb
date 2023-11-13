@@ -217,5 +217,13 @@ describe PlacementsForm, type: :model do
     it "run save on all the placement form objects" do
       expect(subject.save!).to be_present
     end
+
+    context "if trainee has not provided placement detail" do
+      let(:trainee) { build(:trainee, :submitted_for_trn, :no_placement_detail, placements:) }
+
+      it "updates them to have placement detail" do
+        expect { subject.save! }.to change(trainee, :placement_detail).from("no_placement_detail").to("has_placement_detail")
+      end
+    end
   end
 end
