@@ -21,7 +21,7 @@ feature "Delete a placement" do
     when_i_click_cancel
     then_the_placement_is_not_deleted
 
-    when_i_navigate_to_the_delete_placement_form
+    when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
     and_i_click_the_confirm_button
     then_i_see_the_confirmation_page
     and_the_deleted_placement_is_no_longer_visible
@@ -35,7 +35,7 @@ feature "Delete a placement" do
 private
 
   def and_a_trainee_exists_with_a_placement
-    @trainee = given_a_trainee_exists(:trn_received)
+    @trainee = given_a_trainee_exists(:trn_received, :provider_led_postgrad)
     @placement = create(:placement, trainee: @trainee)
     FormStore.clear_all(@trainee.id)
   end
@@ -44,6 +44,12 @@ private
     visit destroy_trainee_placement_path(trainee_id: @trainee.slug, id: @placement.slug)
   end
   alias_method :and_i_navigate_to_the_delete_placement_form, :when_i_navigate_to_the_delete_placement_form
+
+  def when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
+    visit trainee_path(id: @trainee.slug)
+    click_link "Manage placements"
+    click_link "Delete placement"
+  end
 
   def then_i_see_the_not_found_page
     expect(page).to have_current_path(not_found_path)

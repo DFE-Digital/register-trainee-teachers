@@ -114,7 +114,7 @@ private
   attr_reader :store
 
   def fetch_store
-    store.get(trainee.id, :placements) || {}
+    (store.get(trainee.id, :placements) || {}).with_indifferent_access
   end
 
   def save_store(placements)

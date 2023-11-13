@@ -38,8 +38,8 @@ feature "edit ethnic background" do
     end
   end
 
-  def given_a_trainee_exists(group = Diversities::ETHNIC_GROUP_ENUMS[:asian])
-    @trainee = create(:trainee, :diversity_disclosed, ethnic_group: group, provider: current_user.organisation)
+  def given_a_trainee_exists(group = Diversities::ETHNIC_GROUP_ENUMS[:asian], *traits)
+    @trainee = create(:trainee, :diversity_disclosed, *traits, ethnic_group: group, provider: current_user.organisation)
   end
 
   def with_an_additional_background_provided

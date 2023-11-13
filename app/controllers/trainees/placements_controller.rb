@@ -41,8 +41,6 @@ module Trainees
       )
       @placement_form.mark_for_destruction!
 
-      flash[:success] = I18n.t("flash.trainee_placement_deleted")
-
       redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
     end
 

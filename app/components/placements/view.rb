@@ -36,6 +36,7 @@ module Placements
           }],
           editable: true,
           has_errors: has_errors,
+          placement: placement,
         }
       end
     end
