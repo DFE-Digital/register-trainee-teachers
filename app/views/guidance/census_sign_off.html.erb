@@ -1,0 +1,15 @@
+<%= render PageTitle::View.new(text: "Signing off your list of trainees for the initial teacher training census") %>
+
+<%= content_for(:breadcrumbs) do %>
+<%= render GovukComponent::BackLinkComponent.new(
+    text: "How to use this service",
+    href: guidance_path,
+) %>
+<% end %>
+
+<% case sign_off_period %>
+<% when :census_period %>
+<%= render "census_sign_off_inside" %>
+<% else %>
+<%= render "census_sign_off_outside" %>
+<% end %>
