@@ -27,7 +27,18 @@ Add a file to config/settings called development.local.yml containing the follow
 
 ## Start the server
 
-To start all the processes run:
+To start all the processes you'll need to first create a local `Procfile.dev` file with the following:
+
+```
+web: bin/rails server -p 3000
+js: yarn build --watch
+css: yarn build:css --watch
+worker: bundle exec sidekiq -t 25 -C config/sidekiq.yml
+```
+
+there is a `Procfile.dev.sample` you can rename and modify to do this.
+
+Then run the following command:
 
 ```bash
 ./bin/dev
@@ -36,7 +47,8 @@ To start all the processes run:
 To run the processes seperately, you can do the following:
 
 1. Run `bundle exec rails server` to launch the app on http://localhost:5000
-2. Run `./bin/webpack-dev-server` in a separate shell for faster compilation of assets
+2. Run `yarn build --watch` for js
+3. Run `yarn build:css --watch` for css
 
 ## Using Docker
 

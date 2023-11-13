@@ -15,9 +15,6 @@ gem "pg", ">= 0.18", "< 2.0"
 # Use Puma as the app server
 gem "puma", "~> 6.4"
 
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker"
-
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
@@ -27,7 +24,7 @@ gem "google-cloud-bigquery"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.1.0", require: false
 
-# Manage multiple processes i.e. web server and webpack
+# Manage multiple processes i.e. web server, redis, css/js builds
 gem "foreman"
 
 # Canonical meta tag
@@ -128,6 +125,8 @@ gem "csv-safe"
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
 gem "azure-storage-blob", "~> 2"
+gem "cssbundling-rails"
+gem "jsbundling-rails"
 gem "strong_migrations"
 
 group :qa, :review, :staging, :production do

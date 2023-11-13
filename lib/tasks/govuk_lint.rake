@@ -22,6 +22,6 @@ namespace :lint do
   desc "Lint Scss"
   task scss: :environment do
     puts "Linting scss..."
-    system("bundle exec scss-lint app/webpacker/styles") || exit($CHILD_STATUS.exitstatus)
+    system("yarn run scss:lint") || exit($CHILD_STATUS.exitstatus)
   end
 end

@@ -2,7 +2,7 @@
 
 ## Running specs
 
-To ensure webpacker works for you when tests run:
+To ensure assets are compiled when tests run:
 
 ```bash
 RAILS_ENV=test bundle exec rails assets:precompile
@@ -82,7 +82,7 @@ yarn run standard --fix
 To lint the SCSS files:
 
 ```shell
-bundle exec rails lint:scss
+yarn scss:lint
 ```
 
 ## Running all pre-build checks

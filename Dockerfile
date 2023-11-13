@@ -29,7 +29,9 @@ COPY . .
 RUN echo export PATH=/usr/local/bin:\$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
 
-RUN bundle exec rake assets:precompile && \
+RUN yarn build && \
+    yarn build:css && \
+    bundle exec rake assets:precompile && \
     rm -rf node_modules tmp
 
 ARG COMMIT_SHA
