@@ -5,9 +5,8 @@ module Trainees
     before_action { require_feature_flag(:trainee_placement) }
 
     def new
-      @trainee = trainee
       @placement_form = PlacementForm.new(
-        placements_form: PlacementsForm.new(@trainee),
+        placements_form: placements_form,
         placement: Placement.new,
       )
     end
@@ -15,10 +14,9 @@ module Trainees
     def edit; end
 
     def create
-      @trainee = trainee
       @placement_form = PlacementForm.new(
-        placements_form: PlacementsForm.new(@trainee),
-        placement: Placement.new(new_placement_params),
+        placements_form: placements_form,
+        placement: Placement.new(placement_params),
       )
 
       if @placement_form.save_or_stash
@@ -48,7 +46,11 @@ module Trainees
 
   private
 
-    def new_placement_params
+    def placements_form
+      @placements_form ||= PlacementsForm.new(trainee)
+    end
+
+    def placement_params
       params.fetch(:placement, {}).permit(:school_id, :urn, :name, :address, :postcode)
     end
   end

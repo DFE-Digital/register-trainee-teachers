@@ -6,9 +6,8 @@ class PlacementForm
   include ActiveModel::Validations::Callbacks
 
   FIELDS = %i[slug school_id name urn postcode].freeze
-  attr_accessor(*FIELDS)
-  attr_accessor :placements_form, :placement, :trainee
-  attr_accessor :destroy
+
+  attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
   validates :school_id, presence: true, unless: -> { name.present? }
   validates :name, presence: true, unless: -> { school_id.present? }
@@ -21,7 +20,7 @@ class PlacementForm
 
   def initialize(placements_form:, placement:, destroy: false)
     @placements_form = placements_form
-    @trainee = @placements_form.trainee
+    @trainee = placements_form.trainee
     @placement = placement
     @destroy = destroy
     self.attributes = placement.attributes.symbolize_keys.slice(*FIELDS)
@@ -32,7 +31,7 @@ class PlacementForm
   end
 
   def fields
-    @placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
+    placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
   end
 
   def attributes
@@ -48,7 +47,7 @@ class PlacementForm
   end
 
   def title
-    new_placement_number = @placements_form.placements.count + 1
+    new_placement_number = placements_form.placements.count + 1
     I18n.t(
       "components.placement_detail.placement_#{new_placement_number}",
       default: I18n.t("components.placement_detail.title"),
@@ -56,7 +55,7 @@ class PlacementForm
   end
 
   def save_or_stash
-    if @placements_form.trainee.draft?
+    if trainee.draft?
       save!
     else
       stash
@@ -66,14 +65,14 @@ class PlacementForm
   def stash
     return false unless valid?
 
-    @placements_form.stash_placement_on_store(slug, fields)
+    placements_form.stash_placement_on_store(slug, fields)
     true
   end
 
   def save!
     return false unless valid?
 
-    if @placement.persisted?
+    if placement.persisted?
       if destroy?
         destroy_placement
       else
@@ -83,7 +82,7 @@ class PlacementForm
       create_placement unless destroy?
     end
 
-    @placements_form.delete_placement_on_store(slug)
+    placements_form.delete_placement_on_store(slug)
     true
   end
 
@@ -113,11 +112,11 @@ private
   def update_placement; end
 
   def destroy_placement
-    @placement.destroy!
+    placement.destroy!
   end
 
   def create_placement_for(attrs)
-    @trainee.placements.create!(attrs)
+    trainee.placements.create!(attrs)
   end
 
   def placement_details
