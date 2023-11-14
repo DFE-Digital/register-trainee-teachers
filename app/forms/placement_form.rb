@@ -13,7 +13,7 @@ class PlacementForm
   validates :name, presence: true, unless: -> { school_id.present? }
   validates :urn, presence: true, unless: -> { school_id.present? }
 
-  delegate :persisted?, to: :placement
+  delegate :persisted?, :school, to: :placement
 
   alias_method :to_param, :slug
   alias_method :destroy?, :destroy
@@ -44,6 +44,10 @@ class PlacementForm
     attrs.slice(*FIELDS).each do |k, v|
       public_send(:"#{k}=", v)
     end
+  end
+
+  def school_name
+    school&.name if persisted?
   end
 
   def title

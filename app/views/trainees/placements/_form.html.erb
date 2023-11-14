@@ -18,7 +18,7 @@
     "data-field" => "schools-autocomplete",
     width: "two-thirds",
   ) %>
-  <div id="schools-autocomplete-element"></div>
+  <div id="schools-autocomplete-element" data-default-value="<%= @placement_form.school_name %>"></div>
 
   <%= govuk_details(summary_text: "Placement school or setting is not listed") do %>
     <%= f.govuk_text_field(

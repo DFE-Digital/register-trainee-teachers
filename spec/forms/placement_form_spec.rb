@@ -154,4 +154,21 @@ describe PlacementForm, type: :model do
       end
     end
   end
+
+  describe "#school_name" do
+    context "when there are no placements" do
+      it "returns nil" do
+        expect(subject.school_name).to be_nil
+      end
+    end
+
+    context "when there are placements" do
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+      let(:placement) { trainee.placements.first }
+
+      it "returns school name" do
+        expect(subject.school_name).to be(placement.school.name)
+      end
+    end
+  end
 end
