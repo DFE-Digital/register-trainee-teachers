@@ -1,4 +1,4 @@
-FROM ruby:3.1.3-alpine3.15
+FROM ruby:3.2.2-alpine3.18
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
@@ -17,22 +17,19 @@ RUN apk add --update --no-cache --virtual build-dependances \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependances
 
-# Remove once base image ruby:3.1.3-alpine3.15 has been updated with latest libraries
-RUN apk add --no-cache ncurses-libs=6.3_p20211120-r2 pkgconf=1.8.1-r0
-
 COPY package.json yarn.lock ./
-RUN  yarn install --frozen-lockfile && \
-     yarn cache clean
+RUN yarn install --frozen-lockfile --ignore-scripts
 
 COPY . .
+
+# Precompile bootsnap code for faster boot times
+RUN bundle exec bootsnap precompile app/ lib/
 
 RUN echo export PATH=/usr/local/bin:\$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
 
-RUN yarn build && \
-    yarn build:css && \
-    bundle exec rake assets:precompile && \
-    rm -rf node_modules tmp
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
