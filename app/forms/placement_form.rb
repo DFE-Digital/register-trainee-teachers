@@ -67,9 +67,8 @@ class PlacementForm
   end
 
   def title
-    new_placement_number = placements_form.placements.count + 1
     I18n.t(
-      "components.placement_detail.placement_#{new_placement_number}",
+      "components.placement_detail.placement_#{placement_number}",
       default: I18n.t("components.placement_detail.title"),
     )
   end
@@ -96,7 +95,7 @@ class PlacementForm
       if destroy?
         destroy_placement
       else
-        update_placement
+        placement.update(attributes)
       end
     else
       create_placement unless destroy?
@@ -121,6 +120,14 @@ class PlacementForm
 
 private
 
+  def placement_number
+    if persisted?
+      trainee.placements.index(placement)
+    else
+      placements_form.placements.count
+    end + 1
+  end
+
   def create_placement
     if school_id.present? && (school = School.find_by(id: school_id)).present?
       create_placement_for(school:)
@@ -128,8 +135,6 @@ private
       create_placement_for(placement_details)
     end
   end
-
-  def update_placement; end
 
   def destroy_placement
     placement.destroy!

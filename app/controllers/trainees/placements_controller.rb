@@ -2,7 +2,10 @@
 
 module Trainees
   class PlacementsController < BaseController
+    include Appliable
+
     before_action { require_feature_flag(:trainee_placement) }
+    before_action :set_placement_form, only: %i[edit update]
 
     def new
       @placement_form = PlacementForm.new(
@@ -34,6 +37,16 @@ module Trainees
       )
     end
 
+    def update
+      @placement_form.update_placement(placement_params)
+
+      if @placement_form.save_or_stash
+        redirect_to(relevant_redirect_path)
+      else
+        render(:edit)
+      end
+    end
+
     def destroy
       @placement_form = DestroyPlacementForm.find_from_param(
         placements_form: PlacementsForm.new(@trainee),
@@ -46,8 +59,16 @@ module Trainees
 
   private
 
+    def relevant_redirect_path
+      draft_apply_application? ? page_tracker.last_origin_page_path : trainee_placements_confirm_path(trainee)
+    end
+
     def placements_form
       @placements_form ||= PlacementsForm.new(trainee)
+    end
+
+    def set_placement_form
+      @placement_form = placements_form.find_placement_from_param(params[:id])
     end
 
     def placement_params
