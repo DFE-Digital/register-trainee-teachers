@@ -171,4 +171,53 @@ describe PlacementForm, type: :model do
       end
     end
   end
+
+  describe "#update_placement" do
+    context "using custom school data" do
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+      let(:placement) { trainee.placements.first }
+
+      let(:attributes) do
+        { school_id: nil,
+          name: "placement name",
+          urn: "123456",
+          postcode: "AB1 23D" }
+      end
+
+      it "changes the attributes" do
+        expect { subject.update_placement(attributes) }
+          .to change { subject.school_id }.to(nil)
+          .and change { subject.name }
+          .from(nil).to(attributes[:name])
+          .and change { subject.urn }
+          .from(nil).to(attributes[:urn])
+          .and change { subject.postcode }
+          .from(nil).to(attributes[:postcode])
+      end
+    end
+
+    context "using school data" do
+      let(:school) { create(:school) }
+      let(:attributes) do
+        { school_id: school.id,
+          name: nil,
+          urn: nil,
+          postcode: nil }
+      end
+
+      it "changes the attributes" do
+        expect { subject.update_placement(attributes) }
+          .to change { subject.school_id }.to(school.id)
+      end
+    end
+
+    context "when there are placements" do
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+      let(:placement) { trainee.placements.first }
+
+      it "returns school name" do
+        expect(subject.school_name).to be(placement.school.name)
+      end
+    end
+  end
 end

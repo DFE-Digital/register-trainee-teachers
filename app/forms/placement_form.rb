@@ -34,6 +34,22 @@ class PlacementForm
     placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
   end
 
+  def update_placement(attrs)
+    update_attributes = if attrs[:school_id].blank?
+                          { school_id: nil,
+                            name: attrs[:name],
+                            urn: attrs[:urn],
+                            postcode: attrs[:postcode] }
+                        else
+                          { school_id: attrs[:school_id],
+                            name: nil,
+                            urn: nil,
+                            postcode: nil }
+                        end
+
+    assign_attributes(update_attributes)
+  end
+
   def attributes
     FIELDS.index_with do |f|
       public_send(f)
