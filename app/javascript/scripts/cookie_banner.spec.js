@@ -15,7 +15,7 @@ const templateHTML = `
   </div>
   <div class="govuk-cookie-banner" role="region" aria-label="Cookie banner" hidden="true"
     data-module="govuk-cookie-after-consent-banner">
-      <button type="button" class="govuk-button">Hide this message</button>
+      <button type="button" class="govuk-button">Hide cookie message</button>
   </div>
 </div>`
 
