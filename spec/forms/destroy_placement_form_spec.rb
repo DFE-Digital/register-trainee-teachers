@@ -8,7 +8,7 @@ describe DestroyPlacementForm, type: :model do
   let(:placements_form) { PlacementsForm.new(trainee) }
   let(:slug) { placement.slug }
 
-  subject(:form) { DestroyPlacementForm.find_from_param(placements_form:, slug:) }
+  subject(:form) { described_class.find_from_param(placements_form:, slug:) }
 
   describe "#mark_for_destruction!" do
     context "when the given id is for a placement for the given trainee" do
