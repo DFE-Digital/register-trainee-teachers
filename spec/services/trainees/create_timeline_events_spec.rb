@@ -168,7 +168,7 @@ module Trainees
         end
       end
 
-      context "with an associated audit" do
+      context "with an associated degree" do
         let(:degree) { create(:degree, trainee:) }
         let(:associated_audit) do
           trainee.own_and_associated_audits.find { |a| a.auditable_type == "Degree" }
@@ -190,6 +190,50 @@ module Trainees
 
           it "returns empty timeline event" do
             expect(subject).to be_nil
+          end
+        end
+      end
+
+      context "with an associated placement" do
+        let(:placement) { create(:placement, trainee:) }
+        let(:associated_audit) do
+          trainee.own_and_associated_audits.where(auditable_type: "Placement").last
+        end
+
+        subject { described_class.call(audit: associated_audit, current_user: current_user) }
+
+        context "for a create action" do
+          it "returns a 'creation' timeline event" do
+            placement.reload
+
+            expect(subject.first.title).to eq("Degree at #{placement.name} added")
+          end
+        end
+
+        context "for an update action" do
+          let(:placement) { create(:placement, :manual, trainee:) }
+          let(:associated_audit) do
+            trainee.own_and_associated_audits.where(auditable_type: "Placement", action: :update).last
+          end
+
+          it "returns an 'update' timeline event" do
+            original_name = placement.name
+            placement.update!(name: "University of South Oxfordshire")
+            placement.reload
+
+            expect(subject.title).to eq("Degree changed from #{original_name} to University of South Oxfordshire")
+          end
+        end
+
+        context "for a destroy action" do
+          let(:associated_audit) do
+            trainee.own_and_associated_audits.where(auditable_type: "Placement", action: :destroy).last
+          end
+
+          it "returns a 'removed' timeline event" do
+            placement.destroy!
+
+            expect(subject.title).to eq("Degree at #{placement.name} removed")
           end
         end
       end

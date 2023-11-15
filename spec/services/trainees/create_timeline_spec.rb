@@ -75,6 +75,21 @@ module Trainees
           expect(subject.count).to eq(1)
         end
       end
+
+      context "when a placement has been created, updated and deleted" do
+        before do
+          trainee.update_column(:submitted_for_trn_at, 10.days.ago)
+          placement = create(:placement, trainee:)
+          placement.update(school: create(:school))
+          placement.destroy
+          reload_audits
+        end
+
+        it "returns each of the CRUD events" do
+          expect(trainee.own_and_associated_audits.count).to eq(4)
+          expect(subject.count).to eq(4)
+        end
+      end
     end
 
     def update_name
