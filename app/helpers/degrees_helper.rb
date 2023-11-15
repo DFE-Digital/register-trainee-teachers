@@ -44,7 +44,7 @@ module DegreesHelper
 
   def countries_options
     country_reference = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map do |reference|
-      reference.name.downcase
+      reference.name
     end
 
     to_options(country_reference)
