@@ -46,7 +46,7 @@ private
   end
 
   def when_i_navigate_to_the_delete_placement_form
-    visit destroy_trainee_placement_path(trainee_id: @trainee.slug, id: @placement.slug)
+    visit delete_trainee_placement_path(trainee_id: @trainee.slug, id: @placement.slug)
   end
   alias_method :and_i_navigate_to_the_delete_placement_form, :when_i_navigate_to_the_delete_placement_form
 

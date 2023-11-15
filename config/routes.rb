@@ -189,7 +189,7 @@ Rails.application.routes.draw do
       end
 
       resources :placements, only: %i[new create destroy] do
-        get "destroy", on: :member, to: "placements#confirm_destroy", as: "destroy"
+        get "delete", on: :member, to: "placements#delete", as: "delete"
       end
 
       namespace :placements do

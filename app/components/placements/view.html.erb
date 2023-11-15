@@ -32,7 +32,7 @@
       <% component.header_actions do %>
         <%= govuk_link_to(
           "Delete placement",
-          destroy_trainee_placement_path(trainee_id: trainee.slug, id: placement_summary_args[:placement].slug),
+          delete_trainee_placement_path(trainee_id: trainee.slug, id: placement_summary_args[:placement].slug),
         ) %>
       <% end %>
     <% end %>

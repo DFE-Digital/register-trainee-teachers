@@ -26,7 +26,7 @@ module Trainees
       end
     end
 
-    def confirm_destroy
+    def delete
       @placements_form = PlacementsForm.new(@trainee)
       @placement_form = DestroyPlacementForm.find_from_param(
         placements_form: @placements_form,

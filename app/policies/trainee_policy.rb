@@ -105,7 +105,7 @@ class TraineePolicy
   alias_method :edit?, :update?
   alias_method :destroy?, :update?
   alias_method :confirm?, :update?
-  alias_method :confirm_destroy?, :destroy?
+  alias_method :delete?, :destroy?
 
 private
 
