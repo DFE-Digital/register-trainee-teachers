@@ -2,8 +2,8 @@
 
 class ProgressService
   class << self
-    def call(**args)
-      new(**args)
+    def call(**)
+      new(**)
     end
   end
 
