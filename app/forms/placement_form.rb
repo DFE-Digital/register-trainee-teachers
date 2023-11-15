@@ -35,7 +35,7 @@ class PlacementForm
   end
 
   def update_placement(attrs)
-    update_attributes = if attrs[:school_id].blank?
+    update_attributes = if attrs[:school_id].blank? || (attrs[:school_id] == school_id.to_s && attrs[:name].present?)
                           { school_id: nil,
                             name: attrs[:name],
                             urn: attrs[:urn],
@@ -91,7 +91,7 @@ class PlacementForm
   def save!
     return false unless valid?
 
-    if placement.persisted?
+    if persisted?
       if destroy?
         destroy_placement
       else
