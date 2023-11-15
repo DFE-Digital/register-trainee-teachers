@@ -43,11 +43,7 @@ module DegreesHelper
   end
 
   def countries_options
-    country_reference = DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map do |reference|
-      reference.name
-    end
-
-    to_options(country_reference)
+    to_options(DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.all.map(&:name))
   end
 
   def path_for_degrees(trainee)
