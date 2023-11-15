@@ -91,7 +91,7 @@ describe DegreesHelper do
   describe "#countries_options" do
     it "iterates over array and prints out correct countries values" do
       expect(countries_options.first.value).to be_nil
-      expect(countries_options.second.value).to eq "andorra"
+      expect(countries_options.second.value).to eq "Andorra"
       expect(countries_options.second.text).to eq "Andorra"
     end
   end
