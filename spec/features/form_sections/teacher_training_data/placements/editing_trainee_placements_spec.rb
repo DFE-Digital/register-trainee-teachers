@@ -44,7 +44,7 @@ private
   end
 
   def given_i_have_one_placement
-    create_list(:placement, 1, trainee:)
+    create(:placement, trainee:)
   end
 
   def and_a_trainee_exists_with_trn_received

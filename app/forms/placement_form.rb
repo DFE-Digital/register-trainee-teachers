@@ -35,17 +35,11 @@ class PlacementForm
   end
 
   def update_placement(attrs)
-    update_attributes = if attrs[:school_id].blank? || (attrs[:school_id] == school_id.to_s && attrs[:name].present?)
-                          { school_id: nil,
-                            name: attrs[:name],
-                            urn: attrs[:urn],
-                            postcode: attrs[:postcode] }
-                        else
-                          { school_id: attrs[:school_id],
-                            name: nil,
-                            urn: nil,
-                            postcode: nil }
-                        end
+    rely_on_school_name = attrs[:school_id].blank? || (attrs[:school_id] == school_id.to_s && attrs[:name].present?)
+
+    reset_hash = (rely_on_school_name ? [:school_id] : %i[name urn postcode]).index_with { nil }
+
+    update_attributes = attrs.slice(:school_id, :name, :urn, :postcode).merge(reset_hash)
 
     assign_attributes(update_attributes)
   end
@@ -63,7 +57,7 @@ class PlacementForm
   end
 
   def school_name
-    school&.name if persisted?
+    school&.name
   end
 
   def title
