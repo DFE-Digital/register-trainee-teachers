@@ -40,7 +40,7 @@ gem "sentry-sidekiq"
 
 # Logging
 gem "amazing_print", "~> 1.5"
-gem "rails_semantic_logger", "4.13.0"
+gem "rails_semantic_logger", "4.14.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.5"
