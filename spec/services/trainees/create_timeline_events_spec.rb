@@ -206,7 +206,7 @@ module Trainees
           it "returns a 'creation' timeline event" do
             placement.reload
 
-            expect(subject.first.title).to eq("Degree at #{placement.name} added")
+            expect(subject.first.title).to eq("Placement at #{placement.name} added")
           end
         end
 
@@ -221,7 +221,7 @@ module Trainees
             placement.update!(name: "University of South Oxfordshire")
             placement.reload
 
-            expect(subject.title).to eq("Degree changed from #{original_name} to University of South Oxfordshire")
+            expect(subject.title).to eq("Placement changed from #{original_name} to University of South Oxfordshire")
           end
         end
 
@@ -233,7 +233,7 @@ module Trainees
           it "returns a 'removed' timeline event" do
             placement.destroy!
 
-            expect(subject.title).to eq("Degree at #{placement.name} removed")
+            expect(subject.title).to eq("Placement at #{placement.name} removed")
           end
         end
       end
