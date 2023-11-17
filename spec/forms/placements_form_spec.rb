@@ -122,6 +122,7 @@ describe PlacementsForm, type: :model do
       placement_form = placements[0]
       expect(placement_form.slug).to eql(placement1.slug)
       expect(placement_form.class).to eql(PlacementForm)
+      expect(placement_form.placement.name).to eql(placement1.name)
       expect(placement_form.name).to eql(placement1.name)
       expect(placement_form.postcode).to eql(placement1.postcode)
       expect(placement_form.urn).to eql(placement1.urn)
@@ -130,12 +131,14 @@ describe PlacementsForm, type: :model do
       expect(placement_form.slug).to eql(placement2.slug)
       expect(placement_form.class).to eql(PlacementForm)
       expect(placement_form.name).to eql("Edited name for persisted placement")
+      expect(placement_form.placement.name).to eql("Edited name for persisted placement")
       expect(placement_form.postcode).to eql(placement2.postcode)
       expect(placement_form.urn).to eql(placement2.urn)
 
       placement_form = placements[2]
       expect(placement_form.slug).to eql("XXX111")
       expect(placement_form.class).to eql(PlacementForm)
+      expect(placement_form.placement.name).to eql("Edited name for new unsaved placement")
       expect(placement_form.name).to eql("Edited name for new unsaved placement")
       expect(placement_form.postcode).to be_blank
       expect(placement_form.urn).to be_blank
