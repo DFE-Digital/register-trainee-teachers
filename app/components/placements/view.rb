@@ -25,7 +25,10 @@ module Placements
         placement = placement_record.is_a?(Placement) ? placement_record : placement_record.placement
         {
           trainee: trainee,
-          title: t("components.placements.placement_#{index + 1}"),
+          title: t(
+            "components.placements.placement_#{index + 1}",
+            default: "#{(index + 1).ordinalize} Placement",
+          ),
           rows: [{
             field_label: "School or setting",
             field_value: placement_details_for(placement),
@@ -33,6 +36,7 @@ module Placements
           }],
           editable: true,
           has_errors: has_errors,
+          placement: placement,
         }
       end
     end
@@ -40,7 +44,7 @@ module Placements
   private
 
     def placement_records
-      @placement_records ||= data_model.placements
+      @placement_records ||= data_model.placements.reject(&:destroy?)
     end
 
     def placement_details_for(placement_record)

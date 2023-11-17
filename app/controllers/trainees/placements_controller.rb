@@ -26,6 +26,24 @@ module Trainees
       end
     end
 
+    def delete
+      @placements_form = PlacementsForm.new(@trainee)
+      @placement_form = DestroyPlacementForm.find_from_param(
+        placements_form: @placements_form,
+        slug: params[:id],
+      )
+    end
+
+    def destroy
+      @placement_form = DestroyPlacementForm.find_from_param(
+        placements_form: PlacementsForm.new(@trainee),
+        slug: params[:id],
+      )
+      @placement_form.mark_for_destruction!
+
+      redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
+    end
+
   private
 
     def new_placement_params

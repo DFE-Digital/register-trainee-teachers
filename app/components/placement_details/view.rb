@@ -50,7 +50,7 @@ module PlacementDetails
       placement_nominal = first_placement ? placement_records.count + 1 : 2
 
       field_label = t("components.placement_detail.placement_#{placement_nominal}")
-      link = govuk_link_to("Enter #{field_label.downcase}", new_trainee_placements_path(trainee)) if first_placement && editable
+      link = govuk_link_to("Enter #{field_label.downcase}", new_trainee_placement_path(trainee)) if first_placement && editable
 
       field_value = tag.div(
         tag.p("#{field_label} is missing", class: "app-inset-text__title") + link,

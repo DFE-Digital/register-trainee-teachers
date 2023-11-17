@@ -8,6 +8,7 @@ class PlacementForm
   FIELDS = %i[slug school_id name urn postcode].freeze
   attr_accessor(*FIELDS)
   attr_accessor :placements_form, :placement, :trainee
+  attr_accessor :destroy
 
   validates :school_id, presence: true, unless: -> { name.present? }
   validates :name, presence: true, unless: -> { school_id.present? }
@@ -16,11 +17,13 @@ class PlacementForm
   delegate :persisted?, to: :placement
 
   alias_method :to_param, :slug
+  alias_method :destroy?, :destroy
 
-  def initialize(placements_form:, placement:)
+  def initialize(placements_form:, placement:, destroy: false)
     @placements_form = placements_form
     @trainee = @placements_form.trainee
     @placement = placement
+    @destroy = destroy
     self.attributes = placement.attributes.symbolize_keys.slice(*FIELDS)
   end
 
@@ -39,7 +42,7 @@ class PlacementForm
   end
 
   def attributes=(attrs)
-    attrs.each do |k, v|
+    attrs.slice(*FIELDS).each do |k, v|
       public_send(:"#{k}=", v)
     end
   end
@@ -71,17 +74,17 @@ class PlacementForm
     return false unless valid?
 
     if @placement.persisted?
-      update_placement
+      if destroy?
+        destroy_placement
+      else
+        update_placement
+      end
     else
-      create_placement
+      create_placement unless destroy?
     end
+
     @placements_form.delete_placement_on_store(slug)
     true
-  end
-
-  def destroy!
-    @placements_form.delete_placement_on_store(slug)
-    placement.destroy! unless placement_record?
   end
 
   def save_and_return_invalid_data!
@@ -108,6 +111,10 @@ private
   end
 
   def update_placement; end
+
+  def destroy_placement
+    @placement.destroy!
+  end
 
   def create_placement_for(attrs)
     @trainee.placements.create!(attrs)

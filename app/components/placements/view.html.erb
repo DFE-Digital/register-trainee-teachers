@@ -21,19 +21,22 @@
             key: "Placements",
             value: "Not provided yet",
             action_text: "Add a placement",
-            action_href: new_trainee_placements_path(trainee_id: trainee.slug),
+            action_href: new_trainee_placement_path(trainee_id: trainee.slug),
           }],
     editable: true,
     has_errors: has_errors,
   ) %>
 <% else %>
   <% placement_summaries.each do |placement_summary_args| %>
-    <%= render MappableSummary::View.new(**placement_summary_args) do |component| %>
+    <%= render MappableSummary::View.new(**placement_summary_args.except(:placement)) do |component| %>
       <% component.header_actions do %>
-        <%= govuk_link_to "Delete placement", '#' %>
+        <%= govuk_link_to(
+          "Delete placement",
+          delete_trainee_placement_path(trainee_id: trainee.slug, id: placement_summary_args[:placement].slug),
+        ) %>
       <% end %>
     <% end %>
   <% end %>
 <% end %>
 
-<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placements_path(trainee_id: trainee.slug), class_option: "govuk-button--secondary") %>
+<%= render GovukButtonLinkTo::View.new(body: "Add a placement", url: new_trainee_placement_path(trainee_id: trainee.slug), class_option: "govuk-button--secondary") %>

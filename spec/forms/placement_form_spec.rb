@@ -102,34 +102,55 @@ describe PlacementForm, type: :model do
   end
 
   describe "#save!" do
-    context "when a `school_id` for an existing school is given" do
-      let!(:school) { create(:school, lead_school: false) }
-      let(:placement) { Placement.new(school_id: school.id) }
+    context "creating a new placement" do
+      context "when a `school_id` for an existing school is given" do
+        let!(:school) { create(:school, lead_school: false) }
+        let(:placement) { Placement.new(school_id: school.id) }
 
-      it "creates a new placement record" do
-        expect { subject.save! }.to change { Placement.count }.by(1)
+        it "creates a new placement record" do
+          expect { subject.save! }.to change { Placement.count }.by(1)
 
-        new_placement = Placement.last
+          new_placement = Placement.last
 
-        expect(new_placement.school_id).to eq(school.id)
-        expect(new_placement.name).to eq(school.name)
-        expect(new_placement.urn).to be_nil
-        expect(new_placement.postcode).to be_nil
+          expect(new_placement.school_id).to eq(school.id)
+          expect(new_placement.name).to eq(school.name)
+          expect(new_placement.urn).to be_nil
+          expect(new_placement.postcode).to be_nil
+        end
+      end
+
+      context "when details for a new school are given" do
+        let(:placement) { Placement.new(name: "St. Bob's High School", urn: "123456", postcode: "GU1 1AA") }
+
+        it "creates a new placement record" do
+          expect { subject.save! }.to change { Placement.count }.by(1)
+
+          new_placement = Placement.last
+
+          expect(new_placement.school_id).to be_nil
+          expect(new_placement.name).to eq("St. Bob's High School")
+          expect(new_placement.urn).to eq("123456")
+          expect(new_placement.postcode).to eq("GU1 1AA")
+        end
       end
     end
 
-    context "when details for a new school are given" do
-      let(:placement) { Placement.new(name: "St. Bob's High School", urn: "123456", postcode: "GU1 1AA") }
+    context "deleting a placement record" do
+      let(:trainee) { create(:trainee, placements: create_list(:placement, 2)) }
+      let(:placement_to_delete) { trainee.placements.first }
 
-      it "creates a new placement record" do
-        expect { subject.save! }.to change { Placement.count }.by(1)
+      subject do
+        PlacementForm.new(
+          placements_form: placements_form,
+          placement: placement_to_delete,
+          destroy: true,
+        )
+      end
 
-        new_placement = Placement.last
-
-        expect(new_placement.school_id).to be_nil
-        expect(new_placement.name).to eq("St. Bob's High School")
-        expect(new_placement.urn).to eq("123456")
-        expect(new_placement.postcode).to eq("GU1 1AA")
+      it "deletes the right placement" do
+        expect(Placement.find_by(id: placement_to_delete.id)).to be_present
+        expect { subject.save! }.to change { Placement.count }.by(-1)
+        expect(Placement.find_by(id: placement_to_delete.id)).to be_nil
       end
     end
   end

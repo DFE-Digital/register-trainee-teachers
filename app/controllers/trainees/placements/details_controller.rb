@@ -29,7 +29,7 @@ module Trainees
 
       def next_step
         if @placement_detail_form.detail_provided?
-          new_trainee_placements_path(trainee)
+          new_trainee_placement_path(trainee)
         else
           trainee_placements_confirm_path(trainee)
         end
