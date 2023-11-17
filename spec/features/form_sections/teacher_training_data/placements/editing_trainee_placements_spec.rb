@@ -5,22 +5,48 @@ require "rails_helper"
 feature "Editing a placement", feature_trainee_placement: true do
   background do
     given_i_am_authenticated
-    given_a_trainee_exists
   end
 
-  scenario "editing an existing placement" do
-    given_i_have_one_placement
-    and_a_school_exists
+  after do
+    FormStore.clear_all(@trainee.id)
+  end
 
-    and_i_am_on_the_confirm_placement_details_page
-    when_i_click_on_the_change_link
-    then_i_am_taken_to_the_placement_edit_page
-    and_it_is_prepopulated_with_existing_placement
-    when_i_select_an_existing_school
+  context "draft trainee" do
+    scenario "editing an existing placement" do
+      given_a_trainee_exists(:draft)
 
-    and_i_click_continue
-    then_i_see_the_confirmation_page
-    and_i_see_the_updated_placement
+      given_i_have_one_placement
+      and_a_school_exists
+
+      and_i_am_on_the_confirm_placement_details_page
+      when_i_click_on_the_change_link
+      then_i_am_taken_to_the_placement_edit_page
+      and_it_is_prepopulated_with_existing_placement
+      when_i_select_an_existing_school
+
+      and_i_click_continue
+      then_i_see_the_confirmation_page
+      and_i_see_the_updated_placement
+    end
+  end
+
+  context "non draft trainee" do
+    scenario "editing an existing placement" do
+      given_a_trainee_exists(:submitted_for_trn)
+
+      given_i_have_one_placement
+      and_a_school_exists
+
+      and_i_am_on_the_confirm_placement_details_page
+      when_i_click_on_the_change_link
+      then_i_am_taken_to_the_placement_edit_page
+      and_it_is_prepopulated_with_existing_placement
+      when_i_select_an_existing_school
+
+      and_i_click_continue
+      then_i_see_the_confirmation_page
+      and_i_see_the_updated_placement
+    end
   end
 
 private
