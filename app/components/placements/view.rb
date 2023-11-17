@@ -32,7 +32,7 @@ module Placements
           rows: [{
             field_label: "School or setting",
             field_value: placement_details_for(placement),
-            action_url: "#",
+            action_url: edit_trainee_placement_path(trainee, placement),
           }],
           editable: true,
           has_errors: has_errors,

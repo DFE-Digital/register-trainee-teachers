@@ -6,22 +6,21 @@ class PlacementForm
   include ActiveModel::Validations::Callbacks
 
   FIELDS = %i[slug school_id name urn postcode].freeze
-  attr_accessor(*FIELDS)
-  attr_accessor :placements_form, :placement, :trainee
-  attr_accessor :destroy
+
+  attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
   validates :school_id, presence: true, unless: -> { name.present? }
   validates :name, presence: true, unless: -> { school_id.present? }
   validates :urn, presence: true, unless: -> { school_id.present? }
 
-  delegate :persisted?, to: :placement
+  delegate :persisted?, :school, to: :placement
 
   alias_method :to_param, :slug
   alias_method :destroy?, :destroy
 
   def initialize(placements_form:, placement:, destroy: false)
     @placements_form = placements_form
-    @trainee = @placements_form.trainee
+    @trainee = placements_form.trainee
     @placement = placement
     @destroy = destroy
     self.attributes = placement.attributes.symbolize_keys.slice(*FIELDS)
@@ -32,7 +31,17 @@ class PlacementForm
   end
 
   def fields
-    @placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
+    placement.attributes.symbolize_keys.slice(*FIELDS).merge(attributes)
+  end
+
+  def update_placement(attrs)
+    rely_on_school_name = attrs[:school_id].blank? || (attrs[:school_id] == school_id.to_s && attrs[:name].present?)
+
+    reset_hash = (rely_on_school_name ? [:school_id] : %i[name urn postcode]).index_with { nil }
+
+    update_attributes = attrs.slice(:school_id, :name, :urn, :postcode).merge(reset_hash)
+
+    assign_attributes(update_attributes)
   end
 
   def attributes
@@ -47,16 +56,19 @@ class PlacementForm
     end
   end
 
+  def school_name
+    school&.name
+  end
+
   def title
-    new_placement_number = @placements_form.placements.count + 1
     I18n.t(
-      "components.placement_detail.placement_#{new_placement_number}",
+      "components.placement_detail.placement_#{placement_number}",
       default: I18n.t("components.placement_detail.title"),
     )
   end
 
   def save_or_stash
-    if @placements_form.trainee.draft?
+    if trainee.draft?
       save!
     else
       stash
@@ -66,24 +78,24 @@ class PlacementForm
   def stash
     return false unless valid?
 
-    @placements_form.stash_placement_on_store(slug, fields)
+    placements_form.stash_placement_on_store(slug, fields)
     true
   end
 
   def save!
     return false unless valid?
 
-    if @placement.persisted?
+    if persisted?
       if destroy?
         destroy_placement
       else
-        update_placement
+        placement.update(attributes)
       end
     else
       create_placement unless destroy?
     end
 
-    @placements_form.delete_placement_on_store(slug)
+    placements_form.delete_placement_on_store(slug)
     true
   end
 
@@ -102,6 +114,14 @@ class PlacementForm
 
 private
 
+  def placement_number
+    if persisted?
+      trainee.placements.index(placement)
+    else
+      placements_form.placements.count
+    end + 1
+  end
+
   def create_placement
     if school_id.present? && (school = School.find_by(id: school_id)).present?
       create_placement_for(school:)
@@ -110,14 +130,12 @@ private
     end
   end
 
-  def update_placement; end
-
   def destroy_placement
-    @placement.destroy!
+    placement.destroy!
   end
 
   def create_placement_for(attrs)
-    @trainee.placements.create!(attrs)
+    trainee.placements.create!(attrs)
   end
 
   def placement_details
