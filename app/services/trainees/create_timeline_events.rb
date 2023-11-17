@@ -224,13 +224,11 @@ module Trainees
     end
 
     def create_title
-      if model == "placement"
-        I18n.t("components.timeline.titles.#{model}.create", name: GetPlacementNameFromAudit.call(audit:))
-      else
-        title = I18n.t("components.timeline.titles.#{model}.create")
-        title += " in #{user}" if hesa_or_dttp_user?
-        title
-      end
+      title_key = "components.timeline.titles.#{model}.create"
+      title_args = model == "placement" ? { name: GetPlacementNameFromAudit.call(audit:) } : {}
+      title = I18n.t(title_key, **title_args)
+      title += " in #{user}" if model != "placement" && hesa_or_dttp_user?
+      title
     end
 
     def import_title
