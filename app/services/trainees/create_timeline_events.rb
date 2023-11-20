@@ -120,6 +120,15 @@ module Trainees
         )
       end
 
+      if action == "update" && model == "placement"
+        old_name, name = GetPlacementNameFromAudit.call(audit:)
+        return TimelineEvent.new(
+          title: I18n.t("components.timeline.titles.placement.update", old_name:, name:),
+          date: created_at,
+          username: username,
+        )
+      end
+
       audited_changes.map do |field, change|
         next unless FIELDS.include?(field)
         # If a user leaves an already-empty field blank, Rails saves this as
@@ -215,8 +224,10 @@ module Trainees
     end
 
     def create_title
-      title = I18n.t("components.timeline.titles.#{model}.create")
-      title += " in #{user}" if hesa_or_dttp_user?
+      title_key = "components.timeline.titles.#{model}.create"
+      title_args = model == "placement" ? { name: GetPlacementNameFromAudit.call(audit:) } : {}
+      title = I18n.t(title_key, **title_args)
+      title += " in #{user}" if model != "placement" && hesa_or_dttp_user?
       title
     end
 
@@ -225,7 +236,11 @@ module Trainees
     end
 
     def destroy_title
-      I18n.t("components.timeline.titles.#{model}.destroy")
+      if model == "placement"
+        I18n.t("components.timeline.titles.#{model}.destroy", name: GetPlacementNameFromAudit.call(audit:))
+      else
+        I18n.t("components.timeline.titles.#{model}.destroy")
+      end
     end
 
     def update_title(field)

@@ -554,6 +554,10 @@ en:
           grade: Degree grade updated
           other_grade: Degree grade updated
           country: Degree country updated
+        placement:
+          create: Placement at %{name} added
+          destroy: Placement at %{name} removed
+          update: Placement changed from %{old_name} to %{name}
         nationalisation:
           create: Nationality updated
           destroy: Nationality deleted

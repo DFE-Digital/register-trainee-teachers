@@ -29,6 +29,8 @@ class Placement < ApplicationRecord
 
   validates :name, presence: true, if: -> { school.blank? }
 
+  audited associated_with: :trainee
+
   def name
     school&.name || super
   end
