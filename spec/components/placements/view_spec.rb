@@ -13,7 +13,7 @@ module Placements
     end
 
     it "have guidance link" do
-      expect(rendered_component).to have_link("Read DfE guidance about training placements in schools and early years settings", href: "https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools")
+      expect(rendered_component).to have_link("Read DfE guidance about school placements", href: "https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools")
     end
 
     it "have inset text" do
@@ -50,7 +50,7 @@ module Placements
       end
 
       it "have guidance link" do
-        expect(rendered_component).to have_link("Read DfE guidance about training placements in schools and early years settings", href: "https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools")
+        expect(rendered_component).to have_link("Read DfE guidance about school placements", href: "https://www.gov.uk/government/publications/initial-teacher-training-criteria/initial-teacher-training-itt-criteria-and-supporting-advice#c23-training-in-schools")
       end
 
       it "have add a placement button" do
