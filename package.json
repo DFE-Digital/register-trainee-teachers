@@ -16,7 +16,7 @@
     "@ministryofjustice/frontend": "^1.8.0",
     "accessible-autocomplete": "^2.0.3",
     "babel-polyfill": "^6.26.0",
-    "core-js": "^3.33.2",
+    "core-js": "^3.33.3",
     "esbuild": "^0.19.5",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
     "govuk-frontend": "^4.7.0",
