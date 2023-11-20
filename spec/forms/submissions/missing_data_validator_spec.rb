@@ -74,6 +74,14 @@ module Submissions
         end
       end
 
+      context "Trainee with missing placements", feature_trainee_placement: true do
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad) }
+
+        it "doesn't cause validation errors" do
+          expect(subject.valid?).to be(true)
+        end
+      end
+
       context "non draft trainee", feature_trainee_placement: true do
         let(:trainee) { Trainee.new(state: :submitted_for_trn) }
 
