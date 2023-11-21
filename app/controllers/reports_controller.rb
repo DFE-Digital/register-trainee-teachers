@@ -71,6 +71,16 @@ class ReportsController < BaseTraineeController
     )
   end
 
+  def bulk_placement_export
+    authorize(current_user, :bulk_placement?)
+
+    send_data(
+      Exports::BulkPlacementExport.call(bulk_placement_trainees),
+      filename: bulk_placement_export_filename,
+      disposition: :attachment,
+    )
+  end
+
 private
 
   def itt_new_starter_trainees
@@ -99,6 +109,18 @@ private
 
   def bulk_recommend_export_filename
     "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
+  end
+
+  def bulk_placement_trainees
+    current_user.organisation.trainees.without_placements
+  end
+
+  def bulk_placement_export_filename
+    "#{time_now}_#{organisation_name_snake_case}-to-add-missing-prepopulated.csv"
+  end
+
+  def organisation_name_snake_case
+    current_user.organisation.name.parameterize
   end
 
   def census_date(year)
