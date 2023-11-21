@@ -81,6 +81,17 @@ FactoryBot.define do
       imported_from_hesa
     end
 
+    trait :for_placement do
+      awarded
+
+      after(:build) do |trainee|
+        previous_cycle = AcademicCycle.previous
+        trainee.itt_end_date = previous_cycle.end_date
+        trainee.end_academic_cycle = previous_cycle
+        trainee.start_academic_cycle = AcademicCycle.for_date(previous_cycle.start_date - 1.year) # Adjust as needed
+      end
+    end
+
     trait :with_nationalities do
       nationalities { [Nationality.all.sample || build(:nationality)] }
     end

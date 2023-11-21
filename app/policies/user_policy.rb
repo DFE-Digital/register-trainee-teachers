@@ -20,4 +20,8 @@ class UserPolicy < ProviderPolicy
   def bulk_recommend?
     !user.system_admin? && !user.lead_school?
   end
+
+  def bulk_placement?
+    !user.system_admin? && !user.lead_school?
+  end
 end
