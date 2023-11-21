@@ -1,0 +1,16 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= render GovukComponent::InsetTextComponent.new(classes: "govuk-!-padding-top-0 govuk-!-padding-bottom-0") do %>
+      <div class="govuk-body">
+        <p>
+          <%= hesa_editable? ? t("layouts.trainee_record.hesa_editable_inset") : t("layouts.trainee_record.hesa_inset") %>
+        </p>
+        <% if hesa_updated_at %>
+          <p>
+            <%= t("layouts.trainee_record.hesa_updated_at_inset", date: hesa_updated_at&.to_fs(:govuk_date_and_time)) %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

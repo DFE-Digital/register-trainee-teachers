@@ -1821,5 +1821,6 @@ en:
     trainee_record:
       hesa_inset: This trainee was imported from HESA. You can recommend, defer or withdraw them. You need to enable editing to make other changes.
       hesa_editable_inset: Editing has been enabled for this trainee. The record is still linked to the HESA service. If you update it using HESA then any changes you’ve made in this service will be replaced by the data from HESA.
+      hesa_updated_at_inset: Last updated from HESA on %{date}
       qts_award_level: QTS
       eyts_award_level: EYTS
