@@ -11,7 +11,6 @@ class PlacementForm
 
   validates :school_id, presence: true, unless: -> { name.present? }
   validates :name, presence: true, unless: -> { school_id.present? }
-  validates :urn, presence: true, unless: -> { school_id.present? }
 
   delegate :persisted?, :school, to: :placement
 
@@ -111,6 +110,7 @@ class PlacementForm
 
     save_or_stash && invalid_data
   end
+
 
 private
 

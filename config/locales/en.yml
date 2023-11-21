@@ -1571,8 +1571,6 @@ en:
               blank: Select an existing school or enter the details for a new school
             name:
               blank: Enter a school name
-            urn:
-              blank: Enter a school unique reference number (URN)
         study_modes_form:
           attributes:
             study_mode:
