@@ -12,7 +12,6 @@ module Sections
        training_details
        schools
        funding
-       placements
        trainee_data].each do |section|
       define_method "continue_sections_#{section}" do
         trainee = continue_sections_trainee(section)

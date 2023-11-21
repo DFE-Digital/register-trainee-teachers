@@ -104,7 +104,6 @@ module Submissions
                                                             :itt_end_date,
                                                             :trainee_id,
                                                             :training_initiative,
-                                                            :placement_detail,
                                                             :trainee_start_date)
         end
       end

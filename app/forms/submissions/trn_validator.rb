@@ -62,10 +62,6 @@ module Submissions
 
           if section == :funding && funding_options(trainee) == :funding_inactive
             errors.add(section, I18n.t("components.sections.titles.funding_inactive"))
-          elsif section == :placements
-            error_message = "#{I18n.t("components.sections.titles.#{section}")} #{I18n.t("components.sections.statuses.#{progress_service(:placements).status}")}"
-
-            errors.add(section, error_message)
           else
             error_message = "#{I18n.t("components.sections.titles.#{section}")} #{I18n.t("components.sections.statuses.#{sections_validation_status[section]}")}"
 
