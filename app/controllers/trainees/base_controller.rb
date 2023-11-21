@@ -17,9 +17,5 @@ module Trainees
     def training_route
       TrainingRoutesForm.new(trainee).training_route
     end
-
-    def require_feature_flag(feature)
-      redirect_to(not_found_path) unless FeatureService.enabled?(feature)
-    end
   end
 end

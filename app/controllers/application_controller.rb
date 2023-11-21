@@ -121,4 +121,8 @@ private
   def clear_form_stash(trainee)
     FormStore.clear_all(trainee.id)
   end
+
+  def require_feature_flag(feature)
+    redirect_to(not_found_path) unless FeatureService.enabled?(feature)
+  end
 end

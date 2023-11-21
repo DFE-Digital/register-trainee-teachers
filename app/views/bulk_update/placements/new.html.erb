@@ -1,0 +1,89 @@
+<%= render PageTitle::View.new(text: "Bulk add placement details to trainee records") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: bulk_update_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-xl"><%= @navigation_view.organisation_name %></span>
+      Bulk add placement details to trainee records
+    </h1>
+
+    <p class="govuk-body">
+      You’ll be asked to include placement data as part of performance profile sign off for registered trainees with a course outcome in the previous academic year.
+    </p>
+
+    <p class="govuk-body">
+      You have trainee records that need additional details:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= bulk_placements_count %> that can be bulk updated</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      1. Export a template file
+    </h2>
+
+    <p class="govuk-body ">
+      <span class="app-nowrap"><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/add-details.csv" download="webury-hill-scitt-trainees-to-add-missing-prepopulated.csv">Download trainees with missing details</a></span><br>
+    </p>
+
+    <p class="govuk-hint">File name: <span class="app-nowrap"><%= organisation_filename %></span></p>
+
+    <h2 class="govuk-heading-m">
+      2. Add missing details
+    </h2>
+
+    <p class="govuk-body">
+      Open as a CSV file and add the missing information..
+    </p>
+
+    <p class="govuk-body">
+      You can leave rows or cells empty if you do not want to update those trainee records.
+    </p>
+
+    <h3 class="govuk-heading-s">Placement schools</h3>
+
+    <p class="govuk-body">
+      In the columns <span class="app-nowrap">‘Placement 1 URN’</span> and <span class="app-nowrap">‘Placement 2 URN’</span> add the school’s URN.
+    </p>
+
+    <p class="govuk-body">
+      You can find the URNs using <a href="https://www.get-information-schools.service.gov.uk/Search" class="govuk-link" rel="noreferrer noopener" target="_blank">Get information about schools (opens in a new tab)</a>.
+    </p>
+
+    <p class="govuk-body">
+      You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.
+    </p>
+
+    <p class="govuk-body">
+      If the trainee did more than 2 placements, add those extra placements to the trainee record manually.
+    </p>
+
+    <p class="govuk-body">
+      If you do not have the information for a placement, leave the cell empty.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      3. Upload your trainee records
+    </h2>
+
+    <form action="/bulk-update/add-details/bulk-update-answer" method="post" novalidate="">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="file-upload-1">
+          Upload a file
+        </label>
+        <div id="file-upload-1-hint" class="govuk-hint">
+          File type must be ‘CSV’.
+        </div>
+        <input class="govuk-file-upload" id="file-upload-1" name="file-upload-1" type="file" aria-describedby="file-upload-1-hint" accept=".csv">
+      </div>
+      <button class="govuk-button" data-module="govuk-button">
+        Upload records
+      </button>
+    </form>
+  </div>
+</div>

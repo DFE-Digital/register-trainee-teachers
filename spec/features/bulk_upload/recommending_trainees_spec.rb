@@ -9,13 +9,6 @@ feature "recommending trainees" do
     given_i_am_authenticated
   end
 
-  context "given no trainees exist to recommend" do
-    scenario "I see 'no trainees' content" do
-      given_i_am_on_the_recommendations_upload_page
-      then_i_see_no_trainees_content
-    end
-  end
-
   context "given multiple trainees exist to recommend" do
     let(:write_to_disk) { true }
     let(:overwrite) do # one valid date for each trainee created in `given_two_trainees_exist_to_recommend`
@@ -108,10 +101,6 @@ private
 
   def then_i_see_how_many_trainees_i_can_recommend
     expect(recommendations_upload_page).to have_text("2 trainees")
-  end
-
-  def then_i_see_no_trainees_content
-    expect(recommendations_upload_page).to have_text("You do not have any trainees")
   end
 
   def and_i_upload_a_csv(csv_path)

@@ -21,6 +21,7 @@ features:
     iqts: true
   funding: true
   trainee_placement: true
+  bulk_placements: true
 
 pagination:
   records_per_page: 30

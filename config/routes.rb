@@ -67,6 +67,10 @@ Rails.application.routes.draw do
   end
 
   namespace :bulk_update, path: "bulk-update" do
+    get "/", to: "bulk_updates#index"
+
+    resource :placements, only: %i[new create], path: "add-details"
+
     resources :recommendations_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "choose-who-to-recommend", edit: "change-who-youll-recommend" } do
       get "confirmation"
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
