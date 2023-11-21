@@ -63,4 +63,11 @@ describe ReportsController do
       expect(response.content_type).to eq("text/csv")
     end
   end
+
+  describe "#bulk_placement_export" do
+    it "renders a csv" do
+      get :bulk_placement_export, params: { format: :csv }
+      expect(response.content_type).to eq("text/csv")
+    end
+  end
 end
