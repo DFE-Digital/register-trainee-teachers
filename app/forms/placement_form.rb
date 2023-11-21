@@ -112,6 +112,10 @@ class PlacementForm
   end
 
 
+  def open_details?
+    errors.has_key?(:name)
+  end
+
 private
 
   def placement_number
