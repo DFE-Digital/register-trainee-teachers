@@ -12,8 +12,9 @@ module "redis-cache" {
   cluster_configuration_map = module.cluster_data.configuration_map
 
   use_azure               = var.deploy_azure_backing_services
+  alert_window_size       = var.alert_window_size
   azure_enable_monitoring = var.enable_monitoring
-  azure_patch_schedule    = [{ "day_of_week": "Sunday", "start_hour_utc": 01 }]
+  azure_patch_schedule    = [{ "day_of_week" : "Sunday", "start_hour_utc" : 01 }]
 }
 
 module "redis-queue" {
@@ -32,7 +33,7 @@ module "redis-queue" {
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
   azure_maxmemory_policy  = "noeviction"
-  azure_patch_schedule    = [{ "day_of_week": "Sunday", "start_hour_utc": 01 }]
+  azure_patch_schedule    = [{ "day_of_week" : "Sunday", "start_hour_utc" : 01 }]
 }
 
 module "postgres" {
@@ -49,7 +50,7 @@ module "postgres" {
 
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
-  azure_extensions        = ["PGCRYPTO","BTREE_GIST","CITEXT","PG_TRGM"]
+  azure_extensions        = ["PGCRYPTO", "BTREE_GIST", "CITEXT", "PG_TRGM"]
   server_version          = var.postgres_version
   azure_sku_name          = var.postgres_flexible_server_sku
 
@@ -75,11 +76,12 @@ module "postgres_snapshot" {
 
   use_azure               = true
   azure_enable_monitoring = var.enable_monitoring
-  azure_extensions        = ["PGCRYPTO","BTREE_GIST","CITEXT","PG_TRGM"]
+  alert_window_size       = var.alert_window_size
+  azure_extensions        = ["PGCRYPTO", "BTREE_GIST", "CITEXT", "PG_TRGM"]
   server_version          = var.postgres_version
   azure_sku_name          = var.postgres_flexible_server_sku
 
-  azure_enable_high_availability      = false
-  azure_maintenance_window            = var.azure_maintenance_window
-  azure_enable_backup_storage         = false
+  azure_enable_high_availability = false
+  azure_maintenance_window       = var.azure_maintenance_window
+  azure_enable_backup_storage    = false
 }

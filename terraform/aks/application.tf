@@ -14,12 +14,12 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.paas_app_docker_image
-  command     = each.value.startup_command
-  max_memory  = each.value.memory_max
-  replicas    = each.value.replicas
+  docker_image           = var.paas_app_docker_image
+  command                = each.value.startup_command
+  max_memory             = each.value.memory_max
+  replicas               = each.value.replicas
   web_external_hostnames = var.gov_uk_host_names
-  probe_path  = each.value.probe_path
+  probe_path             = each.value.probe_path
 }
 
 module "worker_application" {
@@ -39,10 +39,10 @@ module "worker_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.paas_app_docker_image
-  command     = each.value.startup_command
-  max_memory  = each.value.memory_max
-  replicas    = each.value.replicas
+  docker_image  = var.paas_app_docker_image
+  command       = each.value.startup_command
+  max_memory    = each.value.memory_max
+  replicas      = each.value.replicas
   probe_command = each.value.probe_command
 }
 
