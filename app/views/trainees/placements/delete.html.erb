@@ -1,11 +1,11 @@
 <%= render PageTitle::View.new(text: "Are you sure you want to delete this placement?") %>
 
-<%= render GovukComponent::BackLinkComponent.new(
-  text: "Back",
-  href: edit_trainee_placements_details_path(
-    trainee_id: @placements_form.trainee.slug,
-  ),
-) %>
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: @page_tracker.last_origin_page_path.presence || trainee_path(@trainee),
+  ) %>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
