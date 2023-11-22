@@ -18,7 +18,7 @@ module UsersHelper
   end
 
   def can_bulk_update?
-    current_user&.organisation.is_a?(Provider)
+    defined?(current_user) && current_user&.organisation.is_a?(Provider)
   end
 
   def can_bulk_recommend?

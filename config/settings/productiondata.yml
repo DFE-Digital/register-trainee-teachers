@@ -40,6 +40,7 @@ features:
     test_mode: true
     sync_trn_data: false
   trainee_placement: true
+  bulk_placements: true
 
 environment:
   name: productiondata
