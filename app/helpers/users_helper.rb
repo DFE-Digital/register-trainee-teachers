@@ -17,6 +17,10 @@ module UsersHelper
     FeatureService.enabled?("funding") && defined?(current_user) && !current_user&.system_admin
   end
 
+  def can_bulk_update?
+    current_user&.organisation.is_a?(Provider)
+  end
+
   def can_bulk_recommend?
     defined?(current_user).present? && current_user.present? && UserPolicy.new(current_user, nil).bulk_recommend?
   end
