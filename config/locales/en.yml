@@ -1567,7 +1567,7 @@ en:
               blank: If you have an additional nationality, select it from the list
         placement:
           attributes:
-            school_id:
+            school:
               blank: Select an existing school or enter the details for a new school
             name:
               blank: Enter a school name

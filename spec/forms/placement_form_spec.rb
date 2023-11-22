@@ -9,8 +9,9 @@ describe PlacementForm, type: :model do
   let(:store) { FormStore }
   let(:placements_form) { PlacementsForm.new(trainee, store) }
   let(:placement) { Placement.new }
+  let(:placement_form) { described_class.new(placements_form:, placement:) }
 
-  subject { PlacementForm.new(placements_form:, placement:) }
+  subject { placement_form }
 
   describe "#title" do
     context "when there are no placements" do
@@ -217,6 +218,55 @@ describe PlacementForm, type: :model do
 
       it "returns school name" do
         expect(subject.school_name).to be(placement.school.name)
+      end
+    end
+  end
+
+  describe "#open_details?" do
+    context "with error" do
+      let(:placement) { Placement.new(urn: "123456") }
+
+      before do
+        placement_form.valid?
+      end
+
+      it "returns true" do
+        expect(subject.open_details?).to be_truthy
+      end
+    end
+
+    context "without error" do
+      let(:placement) { Placement.new(name: "name") }
+
+      it "returns false" do
+        expect(subject.open_details?).to be_falsey
+      end
+    end
+  end
+
+  describe "validations" do
+    describe "#school_valid" do
+      it "add errors" do
+        expect(subject.errors).to be_empty
+        subject.school_valid
+        expect(subject.errors).not_to be_empty
+        expect(subject.errors.messages[:school]).to include("Select an existing school or enter the details for a new school")
+      end
+    end
+
+    context "urn is set" do
+      let(:placement) { Placement.new(urn: "123456") }
+
+      it "validates presence" do
+        expect(subject).to validate_presence_of(:name).with_message("Enter a school name")
+      end
+    end
+
+    context "postcode is set" do
+      let(:placement) { Placement.new(postcode: "BN1 1AA") }
+
+      it "validates presence" do
+        expect(subject).to validate_presence_of(:name).with_message("Enter a school name")
       end
     end
   end
