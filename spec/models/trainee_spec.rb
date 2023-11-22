@@ -161,6 +161,15 @@ describe Trainee do
         expect(described_class.complete).not_to include(incomplete_trn_received)
       end
     end
+
+    describe ".without_placements" do
+      let(:trainee_with_placement) { create(:trainee, :with_placements) }
+      let!(:trainee_without_placement) { create(:trainee) }
+
+      it "returns trainees without placements" do
+        expect(Trainee.without_placements).to contain_exactly(trainee_without_placement)
+      end
+    end
   end
 
   context "associations" do
