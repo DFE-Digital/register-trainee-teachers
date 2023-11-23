@@ -112,7 +112,7 @@ private
   end
 
   def bulk_placement_trainees
-    current_user.organisation.trainees.without_placements
+    current_user.organisation.trainees_to_be_placed
   end
 
   def bulk_placement_export_filename
