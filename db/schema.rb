@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_23_173652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -827,6 +827,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
     t.string "withdraw_reasons_dfe_details"
     t.datetime "slug_sent_to_dqt_at"
     t.integer "placement_detail"
+    t.integer "application_choice_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -924,6 +925,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_30_174031) do
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
+  add_foreign_key "trainees", "apply_applications", column: "application_choice_id", primary_key: "apply_id"
   add_foreign_key "trainees", "hesa_trn_submissions"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
