@@ -134,3 +134,7 @@ body:not(.js-enabled) .app-js-only {
 .app-start-page-banner + .govuk-width-container > .govuk-notification-banner {
   margin-top: 40px;
 }
+
+.app-\!-uppercase {
+  text-transform: uppercase !important;
+}
