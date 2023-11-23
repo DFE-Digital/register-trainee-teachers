@@ -10,7 +10,9 @@ class PlacementForm
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
   validate :school_valid
+  validate :school_urn_valid
   validates :name, presence: true, if: -> { urn.present? || postcode.present? }
+  validate :urn_valid
 
   delegate :persisted?, :school, to: :placement
 
@@ -121,7 +123,31 @@ class PlacementForm
     errors.key?(:name)
   end
 
+  def school_urn_valid
+    if school_id.present? && existing_urns.any?(School.find(school_id).urn)
+      errors.add(:school, :unique)
+    end
+  end
+
+  def urn_valid
+    if urn.present? && existing_urns.any?(urn)
+      errors.add(:urn, :unique)
+    end
+  end
+
 private
+
+  def existing_urns
+    trainee.placements.filter_map do |placement|
+      if placement.slug == slug
+        nil
+      elsif placement.school.present?
+        placement.school.urn
+      else
+        placement.urn
+      end
+    end.compact
+  end
 
   def placement_number
     if persisted?
