@@ -9,9 +9,8 @@ class PlacementForm
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
-  validates :school_id, presence: true, unless: -> { name.present? }
-  validates :name, presence: true, unless: -> { school_id.present? }
-  validates :urn, presence: true, unless: -> { school_id.present? }
+  validate :school_valid
+  validates :name, presence: true, if: -> { urn.present? || postcode.present? }
 
   delegate :persisted?, :school, to: :placement
 
@@ -110,6 +109,16 @@ class PlacementForm
     end
 
     save_or_stash && invalid_data
+  end
+
+  def school_valid
+    if school_id.blank? && (name.blank? && urn.blank? && postcode.blank?)
+      errors.add(:school, :blank)
+    end
+  end
+
+  def open_details?
+    errors.key?(:name)
   end
 
 private

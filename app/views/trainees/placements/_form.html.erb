@@ -20,7 +20,7 @@
   ) %>
   <div id="schools-autocomplete-element" data-default-value="<%= @placement_form.school_name %>"></div>
 
-  <%= govuk_details(summary_text: "Placement school or setting is not listed") do %>
+  <%= govuk_details(summary_text: "Placement school or setting is not listed", open: @placement_form.open_details?) do %>
     <%= f.govuk_text_field(
       :name,
       label: { text: "School or setting name", size: "s" },
