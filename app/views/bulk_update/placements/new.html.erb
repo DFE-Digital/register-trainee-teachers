@@ -27,8 +27,8 @@
       1. Export a template file
     </h2>
 
-    <p class="govuk-body ">
-      <span class="app-nowrap"><a class="govuk-link--no-visited-state" href="/public/downloads/bulk-update/add-details.csv" download="webury-hill-scitt-trainees-to-add-missing-prepopulated.csv">Download trainees with missing details</a></span><br>
+    <p class="govuk-body">
+      <%= govuk_link_to("Download trainees with missing details", new_bulk_update_placements_path(format: :csv)) %>
     </p>
 
     <p class="govuk-hint">File name: <span class="app-nowrap"><%= organisation_filename %></span></p>

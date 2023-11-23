@@ -25,6 +25,7 @@
 #
 class School < ApplicationRecord
   include PgSearch::Model
+  include PlacementQuery
 
   before_save :update_searchable
 

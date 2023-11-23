@@ -7,7 +7,19 @@ module BulkUpdate
     helper_method :bulk_placements_count, :organisation_filename
 
     def new
-      @navigation_view = ::Funding::NavigationView.new(organisation:)
+      respond_to do |format|
+        format.html do
+          @navigation_view = ::Funding::NavigationView.new(organisation:)
+        end
+
+        format.csv do
+          send_data(
+            Exports::BulkPlacementExport.call(bulk_placements),
+            filename: organisation_filename,
+            disposition: :attachment,
+          )
+        end
+      end
     end
 
   private
@@ -17,11 +29,15 @@ module BulkUpdate
     end
 
     def bulk_placements_count
-      @bulk_placements_count ||= current_user.organisation.trainees.without_placements.count
+      @bulk_placements_count ||= bulk_placements.count
     end
 
     def organisation_filename
       "#{organisation.name.parameterize}-to-add-missing-prepopulated.csv"
+    end
+
+    def bulk_placements
+      @bulk_placements ||= current_user.organisation.trainees_to_be_placed
     end
   end
 end

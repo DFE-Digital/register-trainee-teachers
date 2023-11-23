@@ -17,7 +17,7 @@ module BulkUpdate
     end
 
     def bulk_placements_count
-      @bulk_placements_count ||= current_user.organisation.trainees.without_placements.count
+      @bulk_placements_count ||= current_user.organisation.trainees_to_be_placed.count
     end
 
     def bulk_recommend_count

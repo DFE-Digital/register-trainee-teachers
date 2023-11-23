@@ -86,9 +86,10 @@ FactoryBot.define do
 
       after(:build) do |trainee|
         previous_cycle = AcademicCycle.previous
+        trainee.awarded_at = previous_cycle.end_date
         trainee.itt_end_date = previous_cycle.end_date
         trainee.end_academic_cycle = previous_cycle
-        trainee.start_academic_cycle = AcademicCycle.for_date(previous_cycle.start_date - 1.year) # Adjust as needed
+        trainee.start_academic_cycle = AcademicCycle.for_date(previous_cycle.start_date - 1.year)
       end
     end
 

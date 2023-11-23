@@ -11,9 +11,9 @@ module Reports
 
     GUIDANCE = [
       "Do not change this column",
-      "When the trainee started their ITT.\nMust be written DD/MM/YYYY.\nFor example, if the trainee started their ITT on 20 September 2021, write '20/09/2021'.\nThe date must be in the past.\nIf you do not know the trainee’s ITT start date, leave the cell empty.",
-      "The URN of the trainee’s first placement school.\nURNs must be 6 digits long.\nIf you do not know the placement school’s URN, leave the cell empty.",
-      "The URN of the trainee’s second placement school.\nURNs must be 6 digits long.\nIf you do not know the placement school’s URN, leave the cell empty.",
+      "When the trainee started their ITT.\n\n\nMust be written DD/MM/YYYY.\n\n\nFor example, if the trainee started their ITT on 20 September 2021, write '20/09/2021'.\n\n\nThe date must be in the past.\n\n\nIf you do not know the trainee’s ITT start date, leave the cell empty.",
+      "The URN of the trainee’s first placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
+      "The URN of the trainee’s second placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
     ].freeze
 
     def initialize(csv, scope:)
@@ -31,26 +31,18 @@ module Reports
     end
 
     def add_report_rows
-      return csv << ["No trainee data to export"] if trainees.blank?
-
-      trainees.strict_loading.includes(:placements).each do |trainee| # rubocop:disable Rails/FindEach
+      trainees.each do |trainee|
         add_trainee_to_csv(trainee)
       end
     end
 
     def add_trainee_to_csv(trainee)
-      csv << csv_row(trainee)
-    end
-
-    def csv_row(trainee)
-      row = [
+      csv << [
         trainee.trn,
         trainee.itt_start_date,
         placement(trainee, :first),
         placement(trainee, :second),
       ].map { |value| CsvValueSanitiser.new(value).sanitise }
-
-      row
     end
 
     def placement(trainee, position)
