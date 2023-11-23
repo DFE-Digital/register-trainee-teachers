@@ -76,4 +76,20 @@ describe Provider do
       expect(provider.courses.pluck(:accredited_body_code)).to eq([new_code])
     end
   end
+
+  describe "#trainees_to_be_placed" do
+    before do
+      create(:academic_cycle, previous_cycle: true)
+      create(:academic_cycle, :current)
+      create_list(:trainee, 2, provider:)
+    end
+
+    let(:provider) { create(:provider) }
+    let!(:trainee) { create(:trainee, :for_placement, provider:) }
+
+    it "pulls the correct trainee(s) back" do
+      expect(provider.trainees_to_be_placed.count).to eq 1
+      expect(provider.trainees_to_be_placed.first).to eql trainee
+    end
+  end
 end
