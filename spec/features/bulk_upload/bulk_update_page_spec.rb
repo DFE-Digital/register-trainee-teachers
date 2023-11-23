@@ -9,7 +9,7 @@ feature "bulk update page" do
 
   context "there are placements to bulk upload", feature_bulk_placements: true do
     before do
-      given_a_trainee_exists
+      given_a_trainee_exists(:for_placement)
       and_i_visit_the_bulk_update_page
     end
 
