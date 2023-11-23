@@ -17,8 +17,9 @@
     label: { text: "Search for a school by its unique reference number (URN), name or postcode" },
     "data-field" => "schools-autocomplete",
     width: "two-thirds",
+    class: "govuk-input govuk-!-width-two-thirds",
   ) %>
-  <div id="schools-autocomplete-element" data-default-value="<%= @placement_form.school_name %>"></div>
+  <div id="schools-autocomplete-element" data-default-value="<%= @placement_form.school_name %>" class="app-!-autocomplete--max-width-two-thirds"></div>
 
   <%= govuk_details(summary_text: "Placement school or setting is not listed") do %>
     <%= f.govuk_text_field(
@@ -31,14 +32,14 @@
     <%= f.govuk_text_field(
       :urn,
       label: { text: "School unique reference number (URN) - if it has one", size: "s" },
-      width: "two-thirds",
+      width: "one-third",
       autocomplete: :off,
     ) %>
 
     <%= f.govuk_text_field(
       :postcode,
       label: { text: "Postcode", size: "s" },
-      width: "two-thirds",
+      class: "govuk-input--width-10 app-!-uppercase",
       autocomplete: :off,
     ) %>
   <% end %>
