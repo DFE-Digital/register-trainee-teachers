@@ -71,16 +71,6 @@ class ReportsController < BaseTraineeController
     )
   end
 
-  def bulk_placement_export
-    authorize(current_user, :bulk_placement?)
-
-    send_data(
-      Exports::BulkPlacementExport.call(bulk_placement_trainees),
-      filename: bulk_placement_export_filename,
-      disposition: :attachment,
-    )
-  end
-
 private
 
   def itt_new_starter_trainees
@@ -103,20 +93,8 @@ private
     "#{time_now}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
-  def performance_profiles_filename
-    "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
-  end
-
   def bulk_recommend_export_filename
     "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
-  end
-
-  def bulk_placement_trainees
-    current_user.organisation.trainees_to_be_placed
-  end
-
-  def bulk_placement_export_filename
-    "#{time_now}_#{organisation_name_snake_case}-to-add-missing-prepopulated.csv"
   end
 
   def organisation_name_snake_case

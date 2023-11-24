@@ -9,7 +9,7 @@ module PlacementQuery
     trainees
       .where(end_academic_cycle_id: previous_cycle.id, state: :awarded)
       .where.not(awarded_at: nil)
-      .includes(:placements)
-      .select { |trainee| trainee.placements.size < 2 }
+      .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
+      .where("placements_counts.placement_count < 2 OR placements_counts.placement_count IS NULL")
   end
 end
