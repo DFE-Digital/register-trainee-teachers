@@ -22,4 +22,10 @@ private
   def compute_fields
     trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
   end
+
+  def assign_attributes_to_trainee
+    trainee.assign_attributes(fields.except(*fields_to_ignore_before_save))
+
+    trainee.progress.placements = true if detail_not_provided?
+  end
 end

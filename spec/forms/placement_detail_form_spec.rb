@@ -21,10 +21,22 @@ describe PlacementDetailForm, type: :model do
   describe "#stash" do
     let(:params) { { placement_detail: PLACEMENT_DETAIL_ENUMS[:has_placement_detail] } }
 
-    it "uses FormStore to temporarily save the fields under a key combination of trainee ID and personal_detail" do
+    it "uses FormStore to temporarily save the fields under a key combination of trainee ID and placement_detail" do
       expect(form_store).to receive(:set).with(trainee.id, :placement_detail, subject.fields)
 
       subject.stash
+    end
+  end
+
+  describe "#save!" do
+    let(:params) { { placement_detail: PLACEMENT_DETAIL_ENUMS[:no_placement_detail] } }
+
+    it "clears store and set progress for placements to true" do
+      expect(form_store).to receive(:set).with(trainee.id, :placement_detail, nil)
+
+      expect {
+        subject.save!
+      }.to change(trainee.reload.progress, :placements).from(false).to(true)
     end
   end
 end
