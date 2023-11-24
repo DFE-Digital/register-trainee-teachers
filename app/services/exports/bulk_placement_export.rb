@@ -2,7 +2,6 @@
 
 require "csv"
 
-# Service to export data
 module Exports
   class BulkPlacementExport < ExportServiceBase
     def initialize(trainees)

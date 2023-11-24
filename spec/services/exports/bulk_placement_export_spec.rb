@@ -23,10 +23,23 @@ describe Exports::BulkPlacementExport, type: :model do
       ]
     end
 
+    let(:expected_guidance) do
+      [
+        "Do not change this column",
+        "When the trainee started their ITT.\n\n\nMust be written DD/MM/YYYY.\n\n\nFor example, if the trainee started their ITT on 20 September 2021, write '20/09/2021'.\n\n\nThe date must be in the past.\n\n\nIf you do not know the trainee’s ITT start date, leave the cell empty.",
+        "The URN of the trainee’s first placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
+        "The URN of the trainee’s second placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
+      ]
+    end
+
     context "when generated" do
-      it "includes a heading row and all relevant Trainees in the CSV file" do
-        line_count = csv.size - 1 # bulk QTS has an extra row for the "do not edit" row
+      it "includes guidance row and all relevant Trainees in the CSV file" do
+        line_count = csv.size - 1
         expect(line_count).to eq(relevent_trainee_count)
+      end
+
+      it "includes the expected guidance" do
+        expect(csv[0].fields).to match_array(expected_guidance)
       end
 
       it "includes the correct headers" do

@@ -50,7 +50,7 @@ module Reports
 
       return unless placement
 
-      placement.urn.presence || "ADDED MANUALLY"
+      placement&.school&.urn.presence || "ADDED MANUALLY"
     end
   end
 end
