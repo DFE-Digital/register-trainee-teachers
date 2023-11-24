@@ -139,14 +139,10 @@ private
 
   def existing_urns
     trainee.placements.filter_map do |placement|
-      if placement.slug == slug
-        nil
-      elsif placement.school.present?
-        placement.school.urn
-      else
-        placement.urn
-      end
-    end.compact
+      next if placement.slug == slug
+
+      placement.school&.urn || placement.urn
+    end
   end
 
   def placement_number
