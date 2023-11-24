@@ -16,4 +16,8 @@
   <%= render Sections::View.new(trainee: @trainee, form: @form, section: :schools, editable: @trainee_editable) %>
 <% end %>
 
+<% if @trainee.requires_placements? %>
+  <%= render Sections::View.new(trainee: @trainee, form: @form, section: :placements, editable: @trainee_editable) %>
+<% end %>
+
 <%= render Sections::View.new(trainee: @trainee, form: @form, section: :funding, editable: @trainee_editable) %>
