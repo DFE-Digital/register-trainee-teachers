@@ -1569,8 +1569,11 @@ en:
           attributes:
             school:
               blank: Select an existing school or enter the details for a new school
+              unique: "Choose another URN as this has already been used"
             name:
               blank: Enter a school name
+            urn:
+              unique: "Choose another URN as this has already been used"
         study_modes_form:
           attributes:
             study_mode:
