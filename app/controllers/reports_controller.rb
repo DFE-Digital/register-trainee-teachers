@@ -97,10 +97,6 @@ private
     "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
   end
 
-  def organisation_name_snake_case
-    current_user.organisation.name.parameterize
-  end
-
   def census_date(year)
     date_of_nth_weekday(10, year, 3, 2)
   end
