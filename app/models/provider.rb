@@ -23,7 +23,6 @@
 #
 class Provider < ApplicationRecord
   include Discard::Model
-  include PlacementQuery
 
   has_many :provider_users, inverse_of: :provider
   has_many :users, through: :provider_users
