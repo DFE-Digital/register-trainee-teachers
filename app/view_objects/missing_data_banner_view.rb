@@ -8,8 +8,10 @@ class MissingDataBannerView
   include CourseDetailsHelper
   include DegreesHelper
 
+  EXCLUDED_FIELDS = %i[placement_detail].freeze
+
   def initialize(missing_fields, trainee)
-    @missing_fields = missing_fields
+    @missing_fields = missing_fields.excluding(EXCLUDED_FIELDS)
     @trainee = trainee
   end
 
