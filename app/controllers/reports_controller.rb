@@ -93,6 +93,10 @@ private
     "#{time_now}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
+  def performance_profiles_filename
+    "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+  end
+
   def bulk_recommend_export_filename
     "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
   end
