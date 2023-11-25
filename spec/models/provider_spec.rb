@@ -88,7 +88,7 @@ describe Provider do
     let!(:trainee) { create(:trainee, :for_placement, provider:) }
 
     it "pulls the correct trainee(s) back" do
-      expect(provider.trainees_to_be_placed.first).to contain_exactly(trainee)
+      expect(provider.trainees_to_be_placed).to contain_exactly(trainee)
     end
   end
 end
