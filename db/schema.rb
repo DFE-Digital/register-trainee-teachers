@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_23_173652) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_134319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -925,7 +925,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_23_173652) do
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
-  add_foreign_key "trainees", "apply_applications", column: "application_choice_id", primary_key: "apply_id"
   add_foreign_key "trainees", "hesa_trn_submissions"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
