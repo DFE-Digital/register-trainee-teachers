@@ -1423,16 +1423,14 @@ en:
               no_date_header: The selected file must contain a column for date QTS or EYTS standards met
               no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
               no_trainees: The selected file must contain at least one trainee
-        bulk_update/placements_upload_form:
+        bulk_update/placements_form:
           attributes:
             file:
               missing: Select a CSV file
               empty: The selected file is empty
               too_large: The selected file must be smaller than 1MB
               is_not_csv: The selected file must be a CSV
-              no_header_detected: No header was detected
-              no_id_header: The selected file must contain a column for TRN
-              no_trainees: The selected file must contain at least one trainee
+              invalid_header: "CSV header must include: %{headers}"
         bulk_update:
           recommendations_uploads:
             validate_trainee:

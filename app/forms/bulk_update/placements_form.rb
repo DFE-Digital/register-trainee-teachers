@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  class PlacementsUploadForm
+  class PlacementsForm
     include ActiveModel::Model
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks
-    include PlacementsUploads::Config
+    include Placements::Config
 
     validate :validate_file!
     validate :validate_csv!
@@ -18,14 +18,14 @@ module BulkUpdate
     def save
       return false unless valid?
 
-      @placements_upload = PlacementsUpload.create(provider: provider, file: original_csv_sanitised_file)
+      @bulk_placement = Placement.create(provider: provider, file: original_csv_sanitised_file)
     end
 
     def csv
       @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
-    attr_reader :placements_upload, :provider, :file
+    attr_reader :bulk_placement, :provider, :file
 
   private
 
@@ -64,13 +64,13 @@ module BulkUpdate
     end
 
     def validate_file!
-      PlacementsUploads::ValidateFile.new(file: file, record: self).validate!
+      Placements::ValidateFile.new(file: file, record: self).validate!
     end
 
     def validate_csv!
       return unless tempfile
 
-      PlacementsUploads::ValidateCsv.new(csv: csv, record: self).validate!
+      Placements::ValidateCsv.new(csv: csv, record: self).validate!
     rescue CSV::MalformedCSVError, Encoding::UndefinedConversionError
       errors.add(:file, :is_not_csv)
     end

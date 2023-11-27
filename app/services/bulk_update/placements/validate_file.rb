@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  module PlacementsUploads
+  module Placements
     class ValidateFile
       def initialize(file:, record:)
         @file = file

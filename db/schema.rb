@@ -176,11 +176,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_134319) do
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
   end
 
-  create_table "bulk_update_placements_uploads", force: :cascade do |t|
+  create_table "bulk_update_placements", force: :cascade do |t|
     t.bigint "provider_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["provider_id"], name: "index_bulk_update_placements_uploads_on_provider_id"
+    t.index ["provider_id"], name: "index_bulk_update_placements_on_provider_id"
   end
 
   create_table "bulk_update_recommendations_upload_rows", force: :cascade do |t|
@@ -909,7 +909,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_134319) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
-  add_foreign_key "bulk_update_placements_uploads", "providers"
+  add_foreign_key "bulk_update_placements", "providers"
   add_foreign_key "bulk_update_recommendations_upload_rows", "bulk_update_recommendations_uploads"
   add_foreign_key "bulk_update_recommendations_upload_rows", "trainees", column: "matched_trainee_id"
   add_foreign_key "bulk_update_recommendations_uploads", "providers"

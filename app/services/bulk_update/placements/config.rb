@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  module PlacementsUploads
+  module Placements
     module Config
       # regex
       VALID_TRN = /^\d{7}$/ # 1234567

@@ -415,3 +415,8 @@
   - age_range
   - subject
   - matched_trainee_id
+  :bulk_update_placements:
+  - id
+  - created_at
+  - updated_at
+  - provider_id

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: bulk_update_placements_uploads
+# Table name: bulk_update_placements
 #
 #  id          :bigint           not null, primary key
 #  created_at  :datetime         not null
@@ -9,12 +9,13 @@
 #
 # Indexes
 #
-#  index_bulk_update_placements_uploads_on_provider_id  (provider_id)
+#  index_bulk_update_placements_on_provider_id  (provider_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
 #
-class BulkUpdate::PlacementsUpload < ApplicationRecord
+class BulkUpdate::Placement < ApplicationRecord
   belongs_to :provider
+  has_one_attached :file
 end
