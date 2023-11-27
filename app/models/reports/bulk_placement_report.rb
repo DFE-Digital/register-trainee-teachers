@@ -39,7 +39,7 @@ module Reports
     def add_trainee_to_csv(trainee)
       csv << [
         trainee.trn,
-        trainee.itt_start_date,
+        trainee.itt_start_date.to_fs(:govuk_slash),
         placement(trainee, :first),
         placement(trainee, :second),
       ].map { |value| CsvValueSanitiser.new(value).sanitise }
