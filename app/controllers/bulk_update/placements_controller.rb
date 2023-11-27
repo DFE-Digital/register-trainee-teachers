@@ -10,6 +10,7 @@ module BulkUpdate
       respond_to do |format|
         format.html do
           @navigation_view = ::Funding::NavigationView.new(organisation:)
+          @placements_upload_form = PlacementsUploadForm.new
         end
 
         format.csv do
@@ -23,6 +24,12 @@ module BulkUpdate
     end
 
   private
+
+    attr_reader :placements_upload_form
+
+    def file
+      @file ||= params.dig(:bulk_update_placements_upload_form, :file)
+    end
 
     def organisation
       @organisation ||= current_user.organisation
