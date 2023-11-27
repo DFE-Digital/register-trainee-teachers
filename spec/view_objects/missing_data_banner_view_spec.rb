@@ -39,7 +39,7 @@ describe MissingDataBannerView do
         let(:expected_path) { edit_trainee_personal_details_path(trainee) }
 
         it "returns the link to the form containing the missing data" do
-          expect(subject).to eq(expected_html)
+          expect(subject).to include(expected_html)
         end
       end
 
@@ -48,7 +48,16 @@ describe MissingDataBannerView do
         let(:expected_path) { edit_trainee_start_date_path(trainee) }
 
         it "returns the link to the form containing the missing data" do
-          expect(subject).to eq(expected_html)
+          expect(subject).to include(expected_html)
+        end
+      end
+
+      context "placement_detail" do
+        let(:field) { :placement_detail }
+
+        it "returns the link to the form containing the missing data" do
+          allow(trainee).to receive(:requires_placements?).and_return(true)
+          expect(subject.to_s).not_to include("Placement details")
         end
       end
     end

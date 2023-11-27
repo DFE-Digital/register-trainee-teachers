@@ -99,11 +99,7 @@ class PlacementsForm
   end
 
   def missing_fields
-    if valid?
-      []
-    else
-      [[:placement_detail]]
-    end
+    []
   end
 
   def trainee_reset_placements?
