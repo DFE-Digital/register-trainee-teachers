@@ -120,7 +120,7 @@ class PlacementForm
   end
 
   def open_details?
-    errors.key?(:name)
+    %i[name urn].intersect?(errors.attribute_names)
   end
 
   def school_urn_valid

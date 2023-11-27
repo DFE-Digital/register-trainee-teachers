@@ -222,14 +222,30 @@ describe PlacementForm, type: :model do
 
   describe "#open_details?" do
     context "with error" do
-      let(:placement) { Placement.new(urn: "123456") }
+      context "with urn set" do
+        let(:placement) { Placement.new(urn: "123456") }
 
-      before do
-        placement_form.valid?
+        before do
+          placement_form.valid?
+        end
+
+        it "returns true" do
+          expect(subject.open_details?).to be_truthy
+        end
       end
 
-      it "returns true" do
-        expect(subject.open_details?).to be_truthy
+      context "with duplicated urn" do
+        let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+
+        let(:placement) { Placement.new(name: "duplicated urn", urn: trainee.placements.first.school.urn) }
+
+        before do
+          placement_form.valid?
+        end
+
+        it "returns true" do
+          expect(subject.open_details?).to be_truthy
+        end
       end
     end
 
