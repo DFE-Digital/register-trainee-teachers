@@ -27,14 +27,14 @@ urn,name,city,postcode
 101497,Brent Initial Teacher Training (BITT),Wembley,HA0 3SF
 101933,Teach West London Teaching School Hub,Acton,W3 9PP
 101966,Castlebar School,Ealing,W13 0DH
-101997,Hazelwood Schools FIPC,Harlow,CM18 7HT
+101997,FIPC Hazelwood Schools hub,Harlow,CM18 7HT
 102022,De Bohun Primary School FIPC,Southgate,N14 4AD
 102028,Forty Hill CofE Primary School,Enfield,EN2 9EY
 102097,Coldfall Primary School,Muswell Hill,N10 1HS
 102139,St Mary's CofE Primary,London,N8 7BU
 102157,Gladesmore Community School,Tottenham,N15 6EB
 102239,Harrow Collegiate Alliance,Harrow,HA2 0AD
-102291,Romford Teacher Training Partnership FIPC,Romford,RM5 3QR
+102291,FIPC Romford Teacher Training Partnership TIR hub,Romford,RM5 3QR
 102418,Holy Trinity CofE Primary School,Northwood,HA6 2RH
 102683,Teach Wimbledon,London,SW20 8HA
 102698,Merton Special Training Association,Morden,SM4 6RU
@@ -61,7 +61,7 @@ urn,name,city,postcode
 104453,Mersey Boroughs ITT Partnership (School Direct),Prescot,L35 5DN
 104557,MAITT (Merseyside Alliance Initial Teacher Training),Liverpool,L8 9UB
 104705,Archbishop Blanch School,Liverpool,L7 6HQ
-104715,St John Bosco,Croxteth,L11 9DQ
+104715,Liverpool Teacher Development Partnership,Liverpool,L11 9DQ
 104748,Palmerston School,Liverpool,L17 6AU
 104751,Merseyside Special Schools Alliance,Liverpool,L5 3LU
 104774,St Helens ONE - Grange Valley Primary,St Helens,WA11 0XQ
@@ -142,16 +142,19 @@ urn,name,city,postcode
 114612,Hastings and Rother Alliance,Bexhill on Sea,TN40 1SE
 114827,Zengage Teacher Training Essex,Witham,CM8 1FR
 114875,Felsted Primary School,Dunmow,CM6 3EB
+114912,Millhouse Primary School and Nursery, Basildon, SS15 5QF
+115313,Milton Hall Primary School,Southend-on-Sea,SS0 7AU
 115356,TTTC (Thurrock Teacher Training Company),Thurrock,SS17 0NW
 116109,Aspire Community Trust,Southampton,SO17 3SZ
 116234,Newport Junior School,Aldershot,GU12 4RZ
 116305,Aspire Teaching Alliance,Overton,RG25 3ES
 116337,Alton Schools Teaching Alliance,Rowledge,GU10 4BW
+116407,Winchester Teaching Schools Alliance (WTSA),Winchester,SO225AZ
 116412,Court Moor Partnership,Fleet,GU52 7RY
 116424,The Rural Schools Alliance,"",SO32 2RB
 116436,Calthorpe Park North East Hants and Surrey Borders Consortium,Fleet,GU51 5JA
 116458,Bitterne Park Teacher Training Alliance,Bitterne Park,SO18 1BU
-116468,Winchester Schools’ Partnership,Winchester,SO22 5PN
+116468,Winchester Teaching School Alliance,Winchester,SO22 5PN
 116498,Coastal Teaching Partnership South,"Stubbington, Fareham",PO14 2AT
 116620,Southampton Inclusion Partnership,Southampton,SO19 6DH
 116665,Bromsgrove Primary Alliance,"Blackwell, Bromsgrove",B60 1BN
@@ -216,14 +219,18 @@ urn,name,city,postcode
 125528,Welford-on-Avon Primary School,Stratford-upon-Avon,CV37 8ER
 125747,Kenilworth Partnership,Kenilworth,CV8 2DA
 126063,Chichester High School,Sidcup,DA14 5AA
+126064,Inspiring Future Teachers - Tanbridge Teacher Training,Horsham,RH12 1SR
 126066,The Millais Alliance,Horsham,RH13 5HR
+130411,The Borromeo Teaching Hub,London,W10 6EY
 130487,City of Liverpool College,Liverpool,L3 5TP
 130594,York College,York,YO23 2BB
+130878,"The Ignite federation, (The Revel Primary School)",Rugby,CV23 0RA
 130908,Macmillan Academy Training School,MIDDLESBROUGH,TS5 4AG
 130909,Dixons Academies Trust,Bradford,BD5 7RR
+131079,Rowan Gate Primary School,Wellingborough,NN8 4NS
 131203,West Jesmond Primary,Newcastle-upon-Tyne,NE2 3AJ
 131232,Pen Green Centre for Children and Their Families,Corby,NN17 1AG
-131304,Mayespark Primary School TIRFIPC,Ilford,IG3 9PX
+131304,FIPC Mayespark Primary School TIR hub,Ilford,IG3 9PX
 131407,Oakthorpe Primary School,"",N13 6BY
 131570,Springboard,Leeds,LS6 2DT
 131737,The London-Exeter Partnership,London,E1 1NT
@@ -234,8 +241,8 @@ urn,name,city,postcode
 132776,Havering Train2Teach,Upminster,RM14 1SW
 133312,Abacus Primary School,Essex,EX5 5EX
 133332,Greenbank Primary Liverpool,Liverpool,L18 1JB
-133934,Gearies Primary School TIRFIPC,Ilford,IG2 6TF
-133935,Churchfields Junior School TIRFIPC,Redbridge,E18 2RB
+133934,FIPC Gearies Primary School TIR hub,Ilford,IG2 6TF
+133935,FIPC Churchfields Junior School TIR hub,Redbridge,E18 2RB
 134042,Oriel ITT Partnership,Crawley,RH10 7XW
 134798,AIM Alliance Schools,Edgware,HA8 8DE
 134855,Prince Bishops Community Primary School,Coundon Grange,DL14 8DY
@@ -253,6 +260,7 @@ urn,name,city,postcode
 135565,The Priory Academy LSST,Lincoln,LN6 0EP
 135575,Bristol Cathedral,Bristol,BS1 5TS
 135632,One Cumbria Teaching School Hub,,
+135771,University Centre Leeds,Leeds,LS3 1AA
 135818,Castle View Enterprise Teaching Alliance,Sunderland,SR5 3DX
 135907, E-ACT Academies Trust,Birmingham,B7 4QR
 135940,South Cumbria School Direct,Barrow-in-Furness,LA13 9BB
@@ -308,9 +316,10 @@ urn,name,city,postcode
 136468,The Denbigh Alliance,Milton Keynes,MK5 6EX
 136469,South Worcestershire and ITT Consortium,Evesham,WR11 4QH
 136471,Lincroft Academy,Bedford,MK44 1JL
-136474,Balcarras School,Cheltenham,GL53 8QF
+136474,Balcarras Teaching School Hub,Cheltenham,GL53 8QF
 136486,WISE Initial Teacher Training (WITT) School Direct,Sunderland,SR5 4NX
 136488,Sponne School,Northampton,NN12 6DJ
+136490,South East Essex Academy Trust ,Westcliff-On-Sea,SS0 0BS
 136496,Devonport High School for Boys,Plymouth,PL1 5QP
 136500,SUPA Salisbury,Salisbury,SP1 2ED
 136515,Springwood High School,Gaywood,PE30 4AW
@@ -355,7 +364,7 @@ urn,name,city,postcode
 136786,Shires Teaching Alliance,Studley,B80 7QX
 136814,Thorndown Primary School,St Ives,PE27 6SE
 136828,Collingwood College,Camberley,GU15 4AE
-136846,Astra Aylesbury Hub,Aylesbury,HP21 7RP
+136846,Astra Aylesbury Secondary Hub,Aylesbury,HP21 7RP
 136847,Mascalls Training Partnership,Paddock Wood,TN12 6LT
 136854,ORTU Trust (Gable Hall),"",SS17 8JT
 136873,Mounts Bay,Penzance,TR18 3JT
@@ -370,10 +379,12 @@ urn,name,city,postcode
 136914,Glenthorne High School,Sutton,SM3 9PS
 136924,Woodrush Training Consortium,Birmingham,B47 5JW
 136963,The Lion Alliance,"",CV3 6EA
+136971,Park View School,Chester Le Street,DH3 4BB
 136979,Alliance of Leading Learning,Oswestry,SY11 2AR
 136988,Abbey Infants' School,Darlington,DL3 8JA
 137042,Darlington West Park Partnership,Darlington,DL2 2GF
 137044,King Edward VI Camp Hill School for Girls,Birmingham,B14 7QJ
+137049,Pathfinder Schools,Rothwell,NN14 6BB
 137061,Two Mile Ash School,Milton Keynes,MK11 4BA
 137082,Nene Park Academy,Cambridge,CB24 4RS
 137090,Chauncy Training Partnership,Ware,SG12 0DP
@@ -382,9 +393,11 @@ urn,name,city,postcode
 137125,SUPA SOUTHAMPTON,Southampton,SO45 4ZF
 137128,Perins Innov-8,Winchester,SO24 9BS
 137139,Yorkshire Schools Alliance,Harrogate,HG2 2JR
+137152,Ormiston Rivers Academy,Burnham-On-Crouch,CM0 8QB
 137156,Bishop's Stortford Education Trust (BSET) SCITT,Cambridge Road,CM21 9BY
 137160,NIoT@The White Horse Federation,"",""
 137163,Wessex Teach,"",DT1 2ET
+137167,Bordesley Multi Academy Trust,Redditch,B98 8HB
 137184,Greenwood Academies Trust,Colwick Quays Business Park,NG4 2JY
 137197,Hall Mead School,Upminster,RM14 1SF
 137199,Harrow First,Edgware,HA86AN
@@ -463,7 +476,7 @@ urn,name,city,postcode
 138033,Victoria Academies Trust,Smethwick,B66 3HH
 138036,Learning Futures Partnership,Wigan,WN3 5NY
 138054,BCCET Teacher Training Partnership,Houghton-le-Spring,DH4 5QY
-138084,NETT,Clacton-on-Sea,CO16 8BE
+138084,Advance Teacher Training,Clacton-on-Sea,CO16 8BE
 138087,BDAT ITT in partnership with Gorse SCITT,Bradford,BD10 9TQ
 138094,Ash Field Academy School Direct,"Leicester, Leicestershire",LE5 4PY
 138130,Oakwood Academy,Eccles,M30 9DY
@@ -481,6 +494,7 @@ urn,name,city,postcode
 138329,St Bernard's School Direct Training,Rotherham,S65 3BE
 138336,The Rodillian Multi Academy Trust,"Lofthouse, Wakefield",WF3 3PS
 138352,Dacorum Schools Alliance,Tring,HP235JD
+138457,North West London Train to Teach,North Wembley,HA0 3NT
 138459,The Holy Cross School,New Malden,KT3 5AR
 138461,Waldegrave Training Alliance,Twickenham,TW2 5LH
 138464,Loreto School Direct Alliance,Altrincham,WA14 4AH
@@ -511,6 +525,7 @@ urn,name,city,postcode
 138825,Grey Court Training School,Richmond,TW10 7HN
 138841,Mercia Learning Alliance,Sheffield,S17 3QU
 138845,North East Schools Teaching Alliance,Nunthorpe,TS7 0LA
+138851,LEARN with FA1,Bolton,BL1 8QA
 138957,"Teach North West, SS Simon and Jude Alliance",Bolton ,BL3 2DT
 138961,Catholic Schools' Partnership,Bermondsey,SE16 4UN
 138982,Academies Enterprise Trust: Essex,"3rd Floor, 183 Eversholt Street",NW1 1BU
@@ -519,6 +534,7 @@ urn,name,city,postcode
 139104,Teach Thurrock Primary Partnership,South Ockendon,RM15 5JQ
 139106,Woodside Academy,Grays,RM16 2GJ
 139128,NIoT@Oasis Community Learning,Birmingham,B15 2HU
+139148,Manchester Prospere Teacher Training,Manchester,M217SL
 139152,Omega Teaching Partnership,Great Sankey,WA5 3ZJ
 139154,Hitchin Boys' School,Hitchin,SG5 1JB
 139159,Spiral Partnership Trust,St Albans,AL1 4LW
@@ -542,6 +558,7 @@ urn,name,city,postcode
 139867,ATT Partnership,Mildenhall,IP28 7JX.
 139872,Stour Vale School Direct,Halesowen,B63 3NA
 139873,Richard Hale School/The Sele School Partnership,Hertford,SG13 8EN
+139937,Academy Transformation Trust ,Sutton Coldfield,B73 6AZ
 139961,Creative Education Trust,Wellingborough,NN8 2DQ
 139975,The Beckfoot School Direct Partnership,Bingley,BD16 1EE
 139978,Shanidar - West Yorkshire,Bradford,BD5 9ET
@@ -573,6 +590,7 @@ urn,name,city,postcode
 140704,PACE Academy Trust,Coulsdon,CR5 3BW
 140713,The South Downs School Direct Partnership,Worthing,BN13 1JX
 140795,Whitefield Alliance,Walthamstow,E17 4AZ
+140850,Rise Multi Academy Trust,Leicester,LE7 2EN
 140855,CMAT West Town Primary,Cambridge,CB24 4RS
 140896,Ignite Institute,Ellesmere Port,CH65 5EW
 140925,Hursthead Junior School Alliance,Cheadle Hulme,SK8 7PZ
@@ -580,6 +598,7 @@ urn,name,city,postcode
 140933,Black Pear Trust Alliance,Hollymount Road,WR4 9SG
 140981,Congleton education Community Partnership,Congleton,CW12 4QJ
 141063,Magnificat Partnership,Widney Manor Road,B91 3WR
+141089,Aspirations Trust - Ocean Academy Poole,Poole,BH14 0PZ
 141163,Woolwich Poly,"",SE28 8AT
 141173,Rise Park Academy Trust FIPC,Romford,RM1 4UD
 141184,Castleman Learning Network,Bournemouth,BH10 5HT
@@ -590,7 +609,7 @@ urn,name,city,postcode
 141277,Lawrence Sheriff School,Rugby,CV21 3AG
 141296,Sheringham Primary School,Essex,EX5 5EX
 141342,Invictus Education Trust,"",""
-141379,NET Academies Trust FIPC,Harlow,CM18 7RQ
+141379,FIPC NET Academies Trust hub,Harlow,CM18 7RQ
 141443,Rivers Teaching Alliance,Worcester,WR2 5NS
 141454,The Rutland Learning Trust,Whissendine,LE15 7ET
 141476,Torfield School,Hastings,TN34 3JT
@@ -600,6 +619,7 @@ urn,name,city,postcode
 141666,STEP Ahead Teaching School Hub,Hailsham,BN27 2PH
 141683,Sydney Russell Teacher Training Centre,Dagenham,RM9 5QT
 141684,Brighter Futures Learning Partnership Trust,,
+141734,Lime Trust,Chingford,E4 8ET
 141757,Initio Learning Trust,Poole,BH17 8AP
 141760,The Forge Trust,Newark,NG24 4EP
 141799,Waterton Academy Trust,Wakefield ,WF2 6LD
@@ -616,6 +636,7 @@ urn,name,city,postcode
 142273,Sacred Heart Secondary - Redcar and Cleveland Teacher Training,"",""
 142282,Nicholas Postgate Catholic Academy Trust,Thornaby,TS176NE
 142283,One Sixth Form College,Ipswich,IP8 3SU
+142296,Little Lever Train to Teach,Bolton,BL3 1BT
 142349,Elston Hall Learning Trust (St Bartholomew's Multi Academy Trust),Wolverhampton,WV10 6NN
 142420,Castle Hill School,Huddersfield,HD4 6JL
 142429,Aquila,"Unit 33, Folkestone Enterprise Cen",CT19 4RH
@@ -628,6 +649,7 @@ urn,name,city,postcode
 142732,St Francis of Assisi Catholic Primary School,Norwich,NR2 3QB
 142749,Sheffield South East Learning Partnership (SSELP),Sheffield,S9 1SG
 142813,Templars Academy,Essex,EX5 5EX
+142948,Bronte Academy Trust,Bradford,BD22 8DW
 142983,Stafford Hub,Stafford,ST16 1NR
 142996,Inspire Multi Academy Trust Teaching Alliance,Houghton le Spring,DH4 5HB
 143063,Campus Stockton Teaching Alliance,Stockton on Tees,TS160LA
@@ -647,19 +669,22 @@ urn,name,city,postcode
 143476,Plymouth Teachers and Schools Alliance,St Judes,PL4 8QZ
 143480,Forge TSA,Rotherham,S63 6PY
 143506,ConnectEd Partnership,Greenacres Avenue,VV10 8NZ
+143566,Priestley Partnership,Shipley,BD17 7DB
 143569,Parkwood Primary School,Keighley,BD21 4QH
 143588,The Wonder Institute of Education,Pocklington,YO42 2LL
 143597,Halstow Primary School,Greenwich,SE10 0LD
 143629,City Excellence in Teaching,London,E1 2JP
+143634,Our Lady of the Magnificat Multi-Academy,Royal Leamington Spa,CV32 6NB
 143783,Hales Valley Teaching Hub,Halesowen,B63 1BU
 143793,West Yorkshire Teaching Alliance,Huddersfield,HD8 8HU
 143801,The Diocese of Hereford Multi Academy Trust,Ludlow,SY8 1HG
+143803,St Thomas Catholic Academies Trust,Slough,SL2 5HW
 143879,East Lancashire Inclusion Partnership,Haslingden,BB4 6LR
 143905,Southam Teaching Alliance,Southam,CV47 0JW
 143929,Hereteach Alliance,Hereford,HR1 1LU
 143994,The Learning Institute South West [School Direct],Helston,TR13 8UP
 144042,Forward Education Trust ITT,Birmingham,B26 1NS
-144046,St. James's School Direct Partnership,"",BL4 9RU
+144046,The Bishop Fraser Trust Bolton  Bury ITT Partnership,"",BL4 9RU
 144072,Exeter Consortium,Exeter,EX4 2FB 
 144104,St Mary's College,Hull,HU6 7TN
 144131,Manchester Trusts and Schools Alliance,Chorlton,M21 8EH
@@ -674,6 +699,7 @@ urn,name,city,postcode
 144243,Bosco Sussex,Barnham,PO22 0EN
 144408,Bury Schools Alliance,Bury,BL8 3AX
 144524,Beech HIll,Newcastle upon Tyne,NE5 2LW
+144542,One Excellence Trust,Stockton on Tees,TS23 2RF
 144918,Extend Learning Academies Network (ELAN),Weston-super-Mare,BS24 8BH
 145090,Richmond School,Richmond,DL10 7BQ
 145097,William Shrewsbury Primary Partnership,Burton-on-Trent,DE13 0HE
@@ -683,6 +709,7 @@ urn,name,city,postcode
 145303,Exceed Leeds East and West,Rillington Mead,BD10 0EF
 145334,Dartmoor Teacher Training Partnership,Okehampton,EX20 1PW
 145336,Devon and Cornwall Cooperative Alliance,Tavistock,PL19 8DD
+145398,Excalibur Academies Trust,Bristol,BS3 2JL
 145404,West Exe SD,Exeter,EX2 9JU
 145440,Teach in Kent,Frindsbury,ME2 4QN
 145526,Pudsey Primrose Hill,Leeds,LS28 6AB
@@ -696,14 +723,17 @@ urn,name,city,postcode
 145780,The Wider Ponteland Partnership,Ponteland,NE20 9EY
 145790,Shropshire Primary Partnership,Wem,SY4 5BX
 145795,Consortium Multi Academy Trust, Halesworth,IP19 8BX
+145916,Beaulieu Park Primary School,Chelmsford,CM1 6DT
 146064,Harleston CofE VA Primary School,Harleston,IP20 9HG
 146215,Red Kite Primary School Direct (Leeds),Leeds,LS9 0JY
 146237,Synergy,King's Lynn,PE32 2NS
 146241,St Mary's School Direct Partnership Programme,Boston,PE21 9PX
 146406,Ladywood School Direct,Bolton,BL31NG
 146477,"Developing Teachers, Schools and Academies (DTSA)",Derby,DE65 9EL
+146635,Shaw Education Trust,Stoke-on-Trent,ST7 4DL
 146663,Jewish Schools Direct Primary Consortium,"",N14 4LG
 146676,Somerset SCITT - Oak Partnership,Taunton,TA2 7QP
+146696,Excelsior MAT,Birmingham,B45 9PB
 146816,Ashton Teacher Training Partnership,Ashton-under-Lyne,OL6 9RL
 146857,Sparkenhoe School Direct,Leicester,LE2 0TD
 147066,Boorley Park Primary School,Southampton,SO32 2SH
@@ -712,6 +742,7 @@ urn,name,city,postcode
 147148,The Mead Educational Trust (School Direct),"Leicester, Leicestershire",LE4 5HH
 147264,The Training Centre by Aspire,Hemel Hempstead,HP1 1ES
 147335,St. Edward’s Teacher Training Partnership,Upton Park,E13 9AX
+147345,Holy Cross Catholic Multi Academy Company,Coventry,CV6 3BL
 147393,Redcar and Cleveland Teacher Training Partnership,"",""
 147429,St Polycarp’s Educational Partnership,Farnham,GU9 8BQ
 147637,AIM Primary Alliance,Warrington,WA4 3AH
@@ -725,16 +756,18 @@ urn,name,city,postcode
 148611,Redwell Primary School,Wellingborough,NN8 5LQ
 148680,ArrowITT,"",SP1 3GZ
 148701,St Ninian Catholic Federation,Carlisle,CA2 4JD
+148825,Learning In Harmony Teacher Training,Leigh-On-Sea,SS9 5AQ
 149052,Gateshead Schools Direct,Blaydon,NE214NE
+149476,Diocese of Worcester Multi Academy Trust ,Pershore,WR10 2AW
 15797,Prince Albert Junior and Infant School,Aston,B6 6AJ
 15879,Cornerstone Academy Trust,Exeter,EX5 3JG
 16682,TCAT Train to Teach,Warrington,WA4 3AE
 355311,St John’s Training School,Walsall,WS9 9NA
-70023,Harlow Teacher Training Partnership FIPC,Harlow,CM18 7HT
+70023,FIPC Harlow Teacher Training Partnership hub,Harlow,CM18 7HT
 70044,"INSPIRIT, St Thomas More TSA, Bedford",Stotfold,SG5 4HB
 70094,Berlesduna Academy Trust Teacher Training,Wickford,SS12 0LZ
 70246,"Windsor, Ascot and Maidenhead Consortium",Maidenhead,SL6 9BT
 70275,Essex School Direct,Loughton,IG10 2LD
-70287,Wensum Junior Partnership,Norwich,NR2 2LJ
+70287,Sheringham High School,Norwich,NR2 2LJ
 70305,Bluecoat Academy,Nottingham,NG1 6AB
 70370,Bishop Ramsey CE School,Ruislip,HA4 8EE
