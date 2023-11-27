@@ -28,7 +28,7 @@ module BulkUpdate
       @navigation_view = ::Funding::NavigationView.new(organisation:)
 
       if @placements_form.save
-        flash[:success] = "CSV is valid" # rubocop:disable Rails/I18nLocaleTexts
+        flash.now[:success] = "CSV is valid" # rubocop:disable Rails/I18nLocaleTexts
       end
       render(:new)
     end
