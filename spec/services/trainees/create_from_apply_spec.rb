@@ -53,6 +53,7 @@ module Trainees
         course_max_age: course.max_age,
         study_mode: "full_time",
         record_source: RecordSources::APPLY,
+        application_choice_id: apply_application.apply_id,
       }
     end
 

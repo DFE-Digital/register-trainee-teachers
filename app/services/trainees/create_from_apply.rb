@@ -73,6 +73,7 @@ module Trainees
         disabilities: disabilities,
         study_mode: study_mode,
         record_source: RecordSources::APPLY,
+        application_choice_id: application_record.apply_id,
       }.merge(ethnic_background_attributes)
     end
 
