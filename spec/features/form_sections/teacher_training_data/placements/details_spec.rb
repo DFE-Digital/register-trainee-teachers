@@ -19,7 +19,7 @@ feature "add placement details", feature_trainee_placement: true do
     when_i_visit_the_placement_details_page
     and_i_do_not_have_the_placement_detail
     and_i_continue
-    then_i_am_taken_to_the_placement_confirm_page
+    then_i_am_taken_to_the_trainee_review_drafts_page
   end
 
 private
@@ -47,6 +47,10 @@ private
 
   def then_i_am_taken_to_the_placement_confirm_page
     expect(page).to have_current_path(trainee_placements_confirm_path(trainee))
+  end
+
+  def then_i_am_taken_to_the_trainee_review_drafts_page
+    expect(page).to have_current_path(trainee_review_drafts_path(trainee))
   end
 
   def valid_training_routes

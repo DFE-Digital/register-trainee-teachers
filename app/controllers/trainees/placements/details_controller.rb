@@ -6,6 +6,8 @@ module Trainees
       before_action { require_feature_flag(:trainee_placement) }
 
       def edit
+        page_tracker.save_as_origin!
+
         @placement_detail_form = PlacementDetailForm.new(trainee)
       end
 
@@ -30,6 +32,8 @@ module Trainees
       def next_step
         if @placement_detail_form.detail_provided?
           new_trainee_placement_path(trainee)
+        elsif @placement_detail_form.detail_not_provided?
+          trainee_path(trainee)
         else
           trainee_placements_confirm_path(trainee)
         end
