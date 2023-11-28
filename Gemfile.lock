@@ -127,7 +127,7 @@ GEM
       parser (>= 2.4)
       smart_properties
     bindata (2.4.15)
-    blazer (3.0.1)
+    blazer (3.0.2)
       activerecord (>= 6.1)
       chartkick (>= 5)
       railties (>= 6.1)
