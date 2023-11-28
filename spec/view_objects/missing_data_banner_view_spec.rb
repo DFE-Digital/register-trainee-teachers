@@ -50,6 +50,10 @@ describe MissingDataBannerView do
         it "returns the link to the form containing the missing data" do
           expect(subject).to include(expected_html)
         end
+
+        it "displays the default (mandatory fields) title" do
+          I18n.t("views.missing_data_banner_view.header.optional_only", award_type: trainee.award_type)
+        end
       end
 
       context "placement_detail" do
@@ -58,6 +62,10 @@ describe MissingDataBannerView do
         it "returns the link to the form containing the missing data" do
           allow(trainee).to receive(:requires_placements?).and_return(true)
           expect(subject.to_s).to include("Placement details")
+        end
+
+        it "displays the optional fields only title" do
+          I18n.t("views.missing_data_banner_view.header.default", award_type: trainee.award_type)
         end
       end
     end

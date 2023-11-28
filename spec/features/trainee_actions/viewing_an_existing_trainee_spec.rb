@@ -173,7 +173,7 @@ private
   end
 
   def and_i_should_not_see_any_incomplete_data_prompts_on_the(expected_page)
-    expect(expected_page).not_to have_text(I18n.t("views.missing_data_banner_view.header"))
+    expect(expected_page).not_to have_text(I18n.t("views.missing_data_banner_view.header.default"))
   end
 
   def and_i_visit_the_personal_details
