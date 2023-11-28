@@ -109,7 +109,6 @@
 #
 # Foreign Keys
 #
-#  fk_rails_...  (application_choice_id => apply_applications.apply_id)
 #  fk_rails_...  (apply_application_id => apply_applications.id)
 #  fk_rails_...  (course_allocation_subject_id => allocation_subjects.id)
 #  fk_rails_...  (employing_school_id => schools.id)
