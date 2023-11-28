@@ -81,16 +81,8 @@ FactoryBot.define do
       imported_from_hesa
     end
 
-    trait :for_placement do
-      awarded
-
-      after(:build) do |trainee|
-        previous_cycle = AcademicCycle.previous
-        trainee.awarded_at = previous_cycle.end_date
-        trainee.itt_end_date = previous_cycle.end_date
-        trainee.end_academic_cycle = previous_cycle
-        trainee.start_academic_cycle = AcademicCycle.for_date(previous_cycle.start_date - 1.year)
-      end
+    trait :without_required_placements do
+      trn_received
     end
 
     trait :with_nationalities do

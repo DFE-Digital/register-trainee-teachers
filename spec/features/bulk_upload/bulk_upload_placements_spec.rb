@@ -25,7 +25,7 @@ private
   end
 
   def given_there_are_trainees_without_placements
-    create_list(:trainee, 2, :for_placement, provider: current_user.organisation)
+    create_list(:trainee, 2, :without_required_placements, provider: current_user.organisation)
   end
 
   def and_i_visit_the_bulk_placements_page

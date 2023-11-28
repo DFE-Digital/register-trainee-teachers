@@ -339,8 +339,6 @@ class Trainee < ApplicationRecord
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
 
-  scope :without_placements, -> { where.not(id: Placement.select(:trainee_id)) }
-
   audited associated_with: :provider
   has_associated_audits
 

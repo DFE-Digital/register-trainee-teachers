@@ -77,7 +77,7 @@ describe Provider do
     end
   end
 
-  describe "#trainees_to_be_placed" do
+  describe "#without_required_placements" do
     before do
       create(:academic_cycle, previous_cycle: true)
       create(:academic_cycle, :current)
@@ -85,10 +85,10 @@ describe Provider do
     end
 
     let(:provider) { create(:provider) }
-    let!(:trainee) { create(:trainee, :for_placement, provider:) }
+    let!(:trainee) { create(:trainee, :without_required_placements, provider:) }
 
     it "pulls the correct trainee(s) back" do
-      expect(provider.trainees_to_be_placed).to contain_exactly(trainee)
+      expect(provider.without_required_placements).to contain_exactly(trainee)
     end
   end
 end

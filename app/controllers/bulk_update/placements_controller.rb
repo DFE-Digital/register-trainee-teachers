@@ -37,7 +37,7 @@ module BulkUpdate
     end
 
     def bulk_placements
-      @bulk_placements ||= current_user.organisation.trainees_to_be_placed.includes(:placements)
+      @bulk_placements ||= current_user.organisation.without_required_placements.includes(:placements)
     end
   end
 end

@@ -263,13 +263,9 @@ namespace :example_data do
               trainee.applying_for_scholarship = true if funding_manager.can_apply_for_scholarship?
             end
 
-            # Make *roughly* 75% of persona_a's awarded trainees be applicable for placement
-            if state == :awarded && provider.name.include?(PROVIDER_A) && sample_index < sample_size * 75.0 / 100
-              previous_cycle = AcademicCycle.previous
-              trainee.awarded_at = previous_cycle.end_date
-              trainee.itt_end_date = previous_cycle.end_date
-              trainee.end_academic_cycle = previous_cycle
-              trainee.start_academic_cycle = AcademicCycle.for_date(previous_cycle.start_date - 1.year)
+            # Make *roughly* 50% of persona_a's awarded trainees be applicable for placement
+            if state == :awarded && provider.name.include?(PROVIDER_A) && sample_index < sample_size * 50.0 / 100
+              trainee.trn = Faker::Number.number(digits: 7)
             end
 
             trainee.save!
