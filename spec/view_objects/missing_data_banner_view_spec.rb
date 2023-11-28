@@ -57,7 +57,7 @@ describe MissingDataBannerView do
 
         it "returns the link to the form containing the missing data" do
           allow(trainee).to receive(:requires_placements?).and_return(true)
-          expect(subject.to_s).not_to include("Placement details")
+          expect(subject.to_s).to include("Placement details")
         end
       end
     end
