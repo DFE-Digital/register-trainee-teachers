@@ -83,6 +83,7 @@ FactoryBot.define do
 
     trait :without_required_placements do
       trn_received
+      with_valid_itt_start_date
     end
 
     trait :with_nationalities do

@@ -6,7 +6,7 @@ describe Exports::BulkPlacementExport, type: :model do
   describe "#call" do
     subject(:service) { described_class.call(trainees) }
 
-    let(:trainee) { create(:trainee) }
+    let(:trainee) { create(:trainee, :without_required_placements) }
     let(:csv) { CSV.parse(service, headers: true) }
     let(:relevent_trainee_count) { Trainee.count }
     let(:trainees) do
