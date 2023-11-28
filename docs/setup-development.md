@@ -158,7 +158,7 @@ To generate the data/schools_gias.csv from GIAS data, use the following rake tas
 bundle exec rake schools_data:generate_csv_from_gias\[gias_csv_1_path,gias_csv_2_path,output_path\]
 
 # as an example
-bundle exec rake schools_data:generate_csv_from_gias\[./data/edubaseallacademiesandfree20230719.csv,./data/edubaseallstatefunded20230719.csv\]
+bundle exec rake schools_data:generate_csv_from_gias\[./data/edubaseallacademiesandfree20231127.csv,./data/edubaseallstatefunded20231127.csv\]
 
 ```
 
