@@ -1,3 +1,43 @@
+- date: '2023-11-29'
+  title: Get ready to submit your school placements data in Register
+  content: |
+    You’ll be asked to include school placement data in the next performance profiles sign off in Register.
+
+    The next performance profile sign off period will start in December 2023 with a deadline of 31 January 2024.
+
+    You’ll be asked to sign off performance profile data for registered trainees with a course outcome in the 2022 to 2023 academic year.
+
+    <h3>Type of placement data you must have in Register</h3>
+
+    Each trainee with a course outcome in the 2022 to 2023 academic year must have a minimum of 2 school placements.
+
+    You’ll need to check you have the placement school URN, if known, otherwise the school name and postcode.
+
+    <h3>Next steps for SCITT training providers</h3>
+
+    If you keep a separate list or spread sheet of school placement information, make sure you include the school’s Unique Reference Number (URN).
+
+    If you do not have the URN, you’ll need the school or setting name and postcode.
+
+    <h3>Next steps for HEI training providers</h3>
+
+    We’ll import the URN for all HEI trainee placements from the student collection into Register so that you do not have to re-key this information again.
+
+    We aim to complete this by late December 2023. You do not have to do anything at this stage.
+
+    You’ll be contacted by early January 2024 to let you know when the import is complete. You can then:
+
+      <ul>
+          <li>check for any gaps in your placement information in Register</li>
+          <li>update any missing placement information in Register</li>
+      </ul>
+
+    <h3>Why collecting placements data is important</h3>
+
+    Trainee teachers need varied classroom experience and must have taught classes to pupils in two schools prior to the award of Qualified Teacher Status. This is called ‘placements’.
+
+    If we collect placement data in one place, we can analyse and use it to inform policy decisions, and help providers find placements more efficiently and effectively.
+
 - date: '2023-10-05'
   title: Access previous funding information
   content: |
@@ -65,143 +105,3 @@
         <li>recommend trainees for QTS or EYTS</li>
       </ul>
     Read about [how to withdraw, defer, reinstate or recommend a trainee for QTS or EYTS](/guidance/withdraw-defer-reinstate-or-recommend-a-trainee).
-
-- date: '2023-06-01'
-  title: Editing data for trainees imported from HESA
-  content: |
-    Higher education institutions (HEIs) can now enable editing for trainees who were imported from HESA.
-
-    The edited trainee record will still be linked to the HESA service. If you update it later using the HESA service then any changes you’ve made in Register will be replaced by the data from HESA.
-
-    You will not be able to make any changes once the trainee has either withdrawn or been awarded QTS or EYTS.
-
-- date: '2023-01-11'
-  title: Trainee list can now be filtered by academic year
-  content: |
-     You can now filter your list of registered trainees to show only those training in a specific academic year.
-
-     Exported lists of trainees now include academic years.
-
-- date: '2022-10-25'
-  title: Sign off deadline extended to 1 November 2022
-  content: |
-     We’ve extended the deadline to sign off your new trainee data to <span class="no-wrap">Tuesday, 1 November 2022.</span>
-
-     This is due to Register being briefly unavailable leading up to the deadline. If you have any questions or concerns, email [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
-
-- date: '2022-09-28'
-  title: Deadline for first data submission to HESA is extended to 17 October 2022
-  content: |
-     Due to the bank holiday on 19 September 2022, HESA have extended their deadline for higher education institutions (HEIs) to make their first data submission to the HESA data collection system.
-
-     The new deadline is now 17 October 2022. HEIs should have started submitting their trainee data to the HESA data collection system by this date to prepare for signing off trainee data at the end of October.
-
-     View important [dates and deadlines for the 2022 to 2023 academic year](/guidance/dates-and-deadlines).
-
-- date: '2022-09-02'
-  title: ‘Reports’ section is now available in Register to help check your data before signing it off
-  content: |
-     To help accredited providers check their data before the sign off deadline on 31 October 2022, we’ve created a new ‘Reports’ section. You can access this from the main navigation bar under ‘Reports’.
-
-     Once you’ve registered your new trainees and their data is in Register, you’ll be able to use the ‘Reports’ section to export your new trainee data into a CSV. This will help you check your data is correct for trainees starting in the 2022 to 2023 academic year.
-
-- date: '2022-08-04'
-  title: Create draft trainee records in Register for the 2022 to 2023 academic year
-  content: |
-     SCITTs, and HEIs with trainees that do not go through HESA, can now start creating draft trainee records in Register for the 2022 to 2023 academic year. You can either register your trainees immediately or wait, and register them closer to the start of their course.
-
-     Applications from Apply for teacher training (Apply) with a ‘recruited’ status will also be imported into Register as draft records. Applications will import into Register every day at 4:00am. You should not need to manually duplicate applications from Apply into Register.
-
-- date: '2022-07-12'
-  title: Update your initial teacher training (ITT) data through HESA from 18 to 29 July 2022
-  content: |
-     If you’re a higher education institute (HEI), you can start updating your trainee data through HESA from 18 to 29 July.
-
-     You’ll first need to have your data decommitted in HESA. Email our support team who will decommit your data and let you know when it’s ready to update. Email us at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=Decommit%20trainee%20data%20in%20HESA%20for%20July%20update%20period).
-
-- date: '2022-07-05'
-  title: Improvements to Register’s homepage and filters
-  content: |
-    We’ve improved our homepage designs and the way you can filter trainee records. On the homepage, under ‘Registered trainees’, you’ll see trainees are grouped by ‘training status’, which include:
-      <ul>
-        <li>course not started yet (trainees who are registered but their course has not started)</li>
-        <li>in training (all trainees currently doing training, excluding those on courses that have not started or are deferred)</li>
-        <li>currently deferred</li>
-        <li>awarded this year (all trainees awarded QTS or EYTS in the current academic year)</li>
-        <li>incomplete records (registered trainees that are missing data)</li>
-      </ul>
-    We’ve also included a new filter called ‘End year’, which shows all trainees that will finish or have finished in a given academic year. This is so you can easily find past trainee records if you need to, but they will not interfere with records of trainees who are still training.
-- date: '2022-06-20'
-  title: Funding information is now available on Register
-  content: |
-     If you have trainees that are eligible for funding, you’ll now be able to see funding information from the 2021 to 2022 academic year onwards on Register. You can access this from the main navigation bar under ‘Funding’.
-
-     Accredited providers will see funding paid and predicted to be paid for scholarships and bursaries. Lead schools will see funding paid and predicted to be paid for salary grants.
-
-- date: '2022-05-16'
-  title: Register’s website address (URL) has changed
-  content: |
-     The website address (URL) for Register has now changed to: <span class="no-wrap">www&period;register-trainee-teachers.service.gov.uk</span>
-
-     You will be automatically redirected to the new URL if you use the old one, so you will not see any disruption to your work or the service.
-
-- date: '2022-05-09'
-  title: HESA records now visible in Register for the April census update
-  content: |
-    The import from HESA to Register is working normally. This means if you’re a Higher Education Institute (HEI), you can use Register to see data that you have updated and uploaded to HESA. This will allow you to complete your April census update by 13 May.
-
-    If you have updated any data about placements in HESA, you will not be able to see this in Register yet, but this will be available in future. If you identify any further issues with your data, contact [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk?subject=HESA%20import%20issues%20in%20Register).
-
-- date: '2022-04-29'
-  title: April HESA census update extended to Friday 13 May 2022
-  content: |
-    The import from HESA to Register is ongoing. This means if you’re a Higher Education Institute (HEI) of Initial Teacher Training (ITT), you can update and upload data to HESA, but you cannot see this update on Register yet. We’ve extended the deadline for the April census update from 29 April to Friday 13 May.
-
-    We will update you when your data is visible to check on Register.
-
-- date: '2022-03-16'
-  title: DTTP switch off and transition to Register
-  content: |
-    At 5pm on 28 March 2022, DTTP will no longer be available. From this date, there will be no access to DTTP and you should use Register for all actions previously performed on DTTP.
-
-    There will be two days of downtime from 29 to 30 March when trainee data will not be available on either DTTP or Register. From 31 March, all trainee data from 2020 to 2021 onwards will be available in Register. Earlier trainees, who are not marked as having left, will also be available in Register.
-
-- date: '2022-01-20'
-  title: When you need to provide trainee start dates has changed
-  content: |
-    When registering a trainee, we were always asking when the trainee started, even if their course had not started.
-    Now, we will only ask when the trainee started, after their course has started.
-
-    You’ll need to provide a start date before you can recommend a trainee for QTS or EYTS.
-
-- date: '2022-01-04'
-  title: Draft records are now separate from the list of registered records
-  content: |
-    Instead of having a single list with all of your records, there are now separate lists for draft and
-    registered records.
-
-- date: '2021-12-21'
-  title: Support during the Christmas period
-  content: |
-    The support desk will close at 2pm on Friday 24 December 2021. It will open again on Tuesday 4 January 2022.
-
-    If you have an urgent problem during this time, you can still contact us at
-    [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
-
-- date: '2021-12-03'
-  title: The Department for Education (DfE) has published the provisional data for the 2021 initial teacher training (ITT) census
-  content: |
-    DfE has published the provisional data for the ITT census for September and October 2021. The publication
-    provides national and provider-level information about the numbers and characteristics of new entrants to
-    <span class="no-wrap">initial teacher training</span> in England in the academic year
-    <span class="no-wrap">2021 to 2022</span>.
-
-    [Read the provisional 2021 census data publication](https://www.gov.uk/government/statistics/initial-teacher-training-trainee-number-census-2021-to-2022)
-
-- date: '2021-09-01'
-  title: You no longer need to provide a lead or employing school for trainees who are employed or funded privately
-  content: |
-    When you’re registering a trainee, we were asking for a lead or employing school in all cases. If a trainee is
-    employed or funded privately, we do not need this information so we’ve added a ‘not applicable’ option to the lead
-    and employing schools sections. You do not need to provide lead or employing schools if the trainee is employed or
-    funded privately.
