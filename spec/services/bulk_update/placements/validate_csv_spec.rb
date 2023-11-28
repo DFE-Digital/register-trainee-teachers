@@ -15,7 +15,7 @@ module BulkUpdate
       before do
         create(:academic_cycle, one_before_previous_cycle: true)
         create(:academic_cycle, previous_cycle: true)
-        create(:trainee, :for_placement)
+        create(:trainee, :without_required_placements)
         service.validate!
       end
 

@@ -30,12 +30,12 @@ module BulkUpdate
   private
 
     def tempfile
-      @tempfile ||= file&.tempfile
+      @_tempfile ||= file&.tempfile
     end
 
     # no stripping or downcasing of data/headers, just reading with headers expected
     def original_csv_sanitised
-      @original_csv_sanitised ||= begin
+      @_original_csv_sanitised ||= begin
         file.tempfile.rewind
         CSVSafe.new(file.tempfile, headers: true, encoding: ENCODING).read
       end
@@ -43,24 +43,27 @@ module BulkUpdate
 
     # write original_csv_sanitised to a new tempfile
     def original_csv_sanitised_file
-      return @original_csv_sanitised_file if defined?(@original_csv_sanitised_file)
-
-      sanitised_tempfile = Tempfile.new(encoding: ENCODING)
-
-      # Set the encoding of the data being written to UTF-8
-      sanitised_data = original_csv_sanitised.to_csv.force_encoding(ENCODING)
-      sanitised_tempfile.write(sanitised_data)
-      sanitised_tempfile.rewind
-
-      # Return the temporary file as an UploadedFile expected by RecommendationsUpload
-      # with the original content type and file name from the initial upload
-      @original_csv_sanitised_file = ::ActionDispatch::Http::UploadedFile.new(
+      @_original_csv_sanitised_file ||= ::ActionDispatch::Http::UploadedFile.new(
         {
           filename: file.original_filename,
           tempfile: sanitised_tempfile,
           type: file.content_type,
         },
       )
+    end
+
+    def sanitised_tempfile
+      return @_sanitised_tempfile if defined?(@_sanitised_tempfile)
+
+      @_sanitised_tempfile = Tempfile.new(encoding: ENCODING)
+
+      # Set the encoding of the data being written to UTF-8
+      sanitised_data = original_csv_sanitised.to_csv.force_encoding(ENCODING)
+
+      # write and re-wind
+      @_sanitised_tempfile.write(sanitised_data)
+      @_sanitised_tempfile.rewind
+      @_sanitised_tempfile
     end
 
     def validate_file!
