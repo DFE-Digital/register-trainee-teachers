@@ -17,7 +17,7 @@ module Placements
     end
 
     it "have inset text" do
-      expect(rendered_component).to have_text("You need to add the details of at least 2 schools before you can recommend this trainee for QTS. These can be added at any time.")
+      expect(rendered_component).to have_text("You need to add the details of at least 2 schools. These can be added at any time.")
     end
 
     it "shows not provided placement" do
@@ -46,7 +46,7 @@ module Placements
       end
 
       it "does not have inset text" do
-        expect(rendered_component).not_to have_text("You need to add the details of at least 2 schools before you can recommend this trainee for QTS. These can be added at any time.")
+        expect(rendered_component).not_to have_text("You need to add the details of at least 2 schools. These can be added at any time.")
       end
 
       it "have guidance link" do
