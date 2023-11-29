@@ -1,0 +1,105 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+feature "Delete a placement" do
+  after do
+    FormStore.clear_all(@trainee.id)
+  end
+
+  scenario "Attempt to delete a placement when feature flag is inactive" do
+    given_i_am_authenticated
+    and_a_draft_trainee_exists_with_a_placement
+
+    when_i_navigate_to_the_delete_placement_form
+    then_i_see_the_not_found_page
+  end
+
+  scenario "Delete a placement from an existing trainee when feature flag is active" do
+    given_i_am_authenticated
+    and_a_draft_trainee_exists_with_a_placement
+
+    when_the_feature_flag_is_active
+    and_i_navigate_to_the_delete_placement_form
+    then_i_see_the_delete_placement_form
+
+    when_i_click_cancel
+    then_the_placement_is_not_deleted
+
+    when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
+    and_i_click_the_confirm_button
+    then_i_see_the_confirmation_page
+    and_the_deleted_placement_is_no_longer_visible
+    and_the_placement_is_deleted
+    and_i_see_a_flash_message
+  end
+
+private
+
+  def and_a_draft_trainee_exists_with_a_placement
+    @trainee = given_a_trainee_exists(
+      :trn_received,
+      :provider_led_postgrad,
+      :draft,
+      placement_detail: PLACEMENT_DETAIL_ENUMS[:has_placement_detail],
+    )
+    @placement = create(:placement, trainee: @trainee)
+    FormStore.clear_all(@trainee.id)
+  end
+
+  def when_i_navigate_to_the_delete_placement_form
+    visit delete_trainee_placement_path(trainee_id: @trainee.slug, id: @placement.slug)
+  end
+  alias_method :and_i_navigate_to_the_delete_placement_form, :when_i_navigate_to_the_delete_placement_form
+
+  def when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
+    visit trainee_path(id: @trainee.slug)
+    click_link "Placements"
+    click_link "Delete placement"
+  end
+
+  def then_i_see_the_not_found_page
+    expect(page).to have_current_path(not_found_path)
+  end
+
+  def when_the_feature_flag_is_active
+    enable_features(:trainee_placement)
+  end
+
+  def then_i_see_the_delete_placement_form
+    expect(page).to have_content("Are you sure you want to delete this placement?")
+  end
+
+  def when_i_click_cancel
+    click_link "Cancel"
+  end
+
+  def then_the_placement_is_not_deleted
+    expect(Placement.find_by(id: @placement.id)).to be_present
+  end
+
+  def and_the_placement_is_deleted
+    expect(Placement.find_by(id: @placement.id)).not_to be_present
+  end
+
+  def and_i_click_the_confirm_button
+    click_button "Yes I’m sure — delete this placement"
+  end
+
+  def when_i_click_update
+    click_button "Update record"
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_current_path(trainee_placements_confirm_path(trainee_id: @trainee.slug))
+    expect(page).to have_content("Confirm placement details")
+  end
+
+  def and_the_deleted_placement_is_no_longer_visible
+    expect(page).not_to have_content(@placement.name)
+  end
+
+  def and_i_see_a_flash_message
+    expect(page).to have_content("Placement removed")
+  end
+end

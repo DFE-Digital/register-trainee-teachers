@@ -14,7 +14,11 @@ class DestroyPlacementForm
     new(placements_form:, placement:)
   end
 
-  def mark_for_destruction!
-    @placements_form.mark_for_destruction!(@placement.slug)
+  def destroy_or_stash!
+    if trainee.draft?
+      @placements_form.destroy!(@placement.slug)
+    else
+      @placements_form.mark_for_destruction!(@placement.slug)
+    end
   end
 end

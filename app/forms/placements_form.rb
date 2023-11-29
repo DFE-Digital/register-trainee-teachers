@@ -87,6 +87,11 @@ class PlacementsForm
     save_store(stored_placements)
   end
 
+  def destroy!(slug)
+    Placement.find_by(slug:).destroy!
+    delete_placement_on_store(slug)
+  end
+
   def delete_placement_on_store(slug)
     placements = fetch_store
     placements.delete(slug)
