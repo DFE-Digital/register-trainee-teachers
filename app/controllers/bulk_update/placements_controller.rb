@@ -10,6 +10,7 @@ module BulkUpdate
       respond_to do |format|
         format.html do
           @navigation_view = ::Funding::NavigationView.new(organisation:)
+          @placements_form = PlacementsForm.new
         end
 
         format.csv do
@@ -22,7 +23,23 @@ module BulkUpdate
       end
     end
 
+    def create
+      @placements_form = PlacementsForm.new(provider: organisation, file: file)
+      @navigation_view = ::Funding::NavigationView.new(organisation:)
+
+      if @placements_form.save
+        flash.now[:success] = "CSV is valid" # rubocop:disable Rails/I18nLocaleTexts
+      end
+      render(:new)
+    end
+
   private
+
+    attr_reader :placements_form
+
+    def file
+      @file ||= params.dig(:bulk_update_placements_form, :file)
+    end
 
     def organisation
       @organisation ||= current_user.organisation
