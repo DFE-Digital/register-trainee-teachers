@@ -53,17 +53,12 @@ module BulkUpdate
     end
 
     def sanitised_tempfile
-      return @_sanitised_tempfile if defined?(@_sanitised_tempfile)
-
-      @_sanitised_tempfile = Tempfile.new(encoding: ENCODING)
-
-      # Set the encoding of the data being written to UTF-8
-      sanitised_data = original_csv_sanitised.to_csv.force_encoding(ENCODING)
-
-      # write and re-wind
-      @_sanitised_tempfile.write(sanitised_data)
-      @_sanitised_tempfile.rewind
-      @_sanitised_tempfile
+      @_sanitised_tempfile ||= begin
+        sanitised_file = Tempfile.new(encoding: ENCODING)
+        sanitised_file.write(original_csv_sanitised.to_csv.force_encoding(ENCODING))
+        sanitised_file.rewind
+        sanitised_file
+      end
     end
 
     def validate_file!
