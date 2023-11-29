@@ -4,6 +4,8 @@ module Submissions
   class MissingDataValidator < BaseValidator
     class_attribute :extra_validators, instance_writer: false, default: {}
 
+    OPTIONAL_FIELDS = %i[placement_detail].freeze
+
     class << self
       def missing_data_validator(name, options)
         extra_validators[name] = options
@@ -27,7 +29,7 @@ module Submissions
     end
 
     def submission_ready
-      errors.add(:trainee, :incomplete) unless missing_fields.empty?
+      errors.add(:trainee, :incomplete) unless missing_fields.excluding(OPTIONAL_FIELDS).empty?
     end
   end
 end
