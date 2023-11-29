@@ -1,6 +1,9 @@
 <% if display_record_actions? %>
   <div class="record-outcome-action-bar">
-    <%= render RecordActions::View.new(@trainee, has_missing_fields: @missing_fields.present?) %>
+    <%= render RecordActions::View.new(
+      @trainee,
+      has_missing_fields: @missing_fields&.excluding(Submissions::MissingDataValidator::OPTIONAL_FIELDS).present?,
+    ) %>
   </div>
 <% end %>
 

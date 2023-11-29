@@ -8,15 +8,13 @@ class MissingDataBannerView
   include CourseDetailsHelper
   include DegreesHelper
 
-  OPTIONAL_FIELDS = %i[placement_detail].freeze
-
   def initialize(missing_fields, trainee)
     @missing_fields = missing_fields
     @trainee = trainee
   end
 
   def header
-    if @missing_fields.all? { |field| OPTIONAL_FIELDS.include?(field) }
+    if @missing_fields&.excluding(Submissions::MissingDataValidator::OPTIONAL_FIELDS).blank?
       I18n.t("views.missing_data_banner_view.header.optional_only", award_type: trainee.award_type)
     else
       I18n.t("views.missing_data_banner_view.header.default", award_type: trainee.award_type)
