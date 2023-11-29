@@ -27,7 +27,7 @@ module PlacementDetails
   private
 
     def placement_records
-      trainee.placements.includes([:school]).reverse
+      trainee.placements.includes([:school])
     end
 
     def placement_rows
