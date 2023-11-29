@@ -3,5 +3,8 @@
 require "rails_helper"
 
 RSpec.describe BulkUpdate::Placement do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "associations" do
+    it { is_expected.to belong_to(:provider) }
+    it { is_expected.to have_one_attached(:file) }
+  end
 end
