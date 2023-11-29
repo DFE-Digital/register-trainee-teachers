@@ -13,6 +13,7 @@ en:
     trainee_reinstated: Trainee reinstated
     trainee_withdrawn: Trainee withdrawn
     trainee_placement_added: Trainee placement added
+    trainee_placement_removed: Placement removed
   update_record: Update record
   return_home: Return home
   mark_as_completed: I have %{action} this section

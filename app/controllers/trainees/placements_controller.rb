@@ -55,7 +55,7 @@ module Trainees
       )
       @placement_form.destroy_or_stash!
 
-      flash[:success] = "Placement removed"
+      flash[:success] = I18n.t("flash.trainee_placement_removed")
 
       redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
     end

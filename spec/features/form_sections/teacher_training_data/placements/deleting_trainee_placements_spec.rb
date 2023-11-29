@@ -59,11 +59,7 @@ feature "Delete a placement" do
     then_i_see_the_confirmation_page
     and_the_deleted_placement_is_no_longer_visible
     and_no_placements_are_created
-    and_i_see_a_flash_message
-
-    # when_i_click_update
-    # then_the_placement_is_deleted
-    # and_i_see_a_flash_message
+    and_i_see_a_placement_removed_flash_message
   end
 
 private
@@ -80,6 +76,7 @@ private
   def and_a_trainee_exists_with_a_placement
     and_a_trainee_exists
     @placement = create(:placement, trainee: @trainee)
+    @school ||= @placement.school
     FormStore.clear_all(@trainee.id)
   end
 
@@ -133,7 +130,7 @@ private
   end
 
   def and_the_deleted_placement_is_no_longer_visible
-    expect(page).not_to have_content(@placement.name)
+    expect(page).not_to have_content(@school.name)
   end
 
   def and_i_see_a_flash_message
