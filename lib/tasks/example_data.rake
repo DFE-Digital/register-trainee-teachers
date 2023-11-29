@@ -263,6 +263,11 @@ namespace :example_data do
               trainee.applying_for_scholarship = true if funding_manager.can_apply_for_scholarship?
             end
 
+            # Make *roughly* 50% of persona_a's awarded trainees be applicable for placement
+            if state == :awarded && provider.name.include?(PROVIDER_A) && sample_index < sample_size * 50.0 / 100
+              trainee.trn = Faker::Number.number(digits: 7)
+            end
+
             trainee.save!
 
             # Make *roughly* 75% of submitted_for_trn trainees have trainee withdraw reason

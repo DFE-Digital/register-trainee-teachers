@@ -81,6 +81,11 @@ FactoryBot.define do
       imported_from_hesa
     end
 
+    trait :without_required_placements do
+      trn_received
+      with_valid_itt_start_date
+    end
+
     trait :with_nationalities do
       nationalities { [Nationality.all.sample || build(:nationality)] }
     end

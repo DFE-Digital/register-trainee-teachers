@@ -75,6 +75,13 @@ class Provider < ApplicationRecord
     "#{name} (#{code})"
   end
 
+  def without_required_placements
+    trainees
+      .where.not(trn: nil)
+      .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
+      .where("placements_counts.placement_count < 2 OR placements_counts.placement_count IS NULL")
+  end
+
 private
 
   def update_courses

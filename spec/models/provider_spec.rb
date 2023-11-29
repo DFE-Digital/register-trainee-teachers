@@ -76,4 +76,19 @@ describe Provider do
       expect(provider.courses.pluck(:accredited_body_code)).to eq([new_code])
     end
   end
+
+  describe "#without_required_placements" do
+    before do
+      create(:academic_cycle, previous_cycle: true)
+      create(:academic_cycle, :current)
+      create_list(:trainee, 2, provider:)
+    end
+
+    let(:provider) { create(:provider) }
+    let!(:trainee) { create(:trainee, :without_required_placements, provider:) }
+
+    it "pulls the correct trainee(s) back" do
+      expect(provider.without_required_placements).to contain_exactly(trainee)
+    end
+  end
 end
