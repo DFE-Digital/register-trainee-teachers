@@ -25,6 +25,19 @@ module Submissions
             .to include(I18n.t("activemodel.errors.models.submissions/missing_data_validator.attributes.trainee.incomplete"))
         end
       end
+
+      context "when only the placements section is missing data", feature_trainee_placement: true do
+        let(:trainee) { build(:trainee, :submitted_with_start_date, :early_years_salaried) }
+
+        before do
+          trainee.placement_detail = nil
+        end
+
+        it "is valid" do
+          expect(subject.valid?).to be true
+          expect(subject.errors).to be_empty
+        end
+      end
     end
 
     describe "#missing_fields" do
