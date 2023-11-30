@@ -51,5 +51,7 @@ module RegisterTraineeTeachers
     config.active_record.encryption.primary_key = ENV.fetch("ACTIVE_RECORD_ENCRYPTION__PRIMARY_KEY", nil)
     config.active_record.encryption.deterministic_key = ENV.fetch("ACTIVE_RECORD_ENCRYPTION__DETERMINISTIC_KEY", nil)
     config.active_record.encryption.key_derivation_salt = ENV.fetch("ACTIVE_RECORD_ENCRYPTION__KEY_DERIVATION_SALT", nil)
+
+    config.active_record.raise_on_assign_to_attr_readonly = false
   end
 end
