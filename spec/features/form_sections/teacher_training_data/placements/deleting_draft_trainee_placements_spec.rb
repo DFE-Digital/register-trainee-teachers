@@ -9,7 +9,7 @@ feature "Delete a placement" do
 
   scenario "Attempt to delete a placement when feature flag is inactive" do
     given_i_am_authenticated
-    and_a_trainee_exists_with_a_placement
+    and_a_draft_trainee_exists_with_a_placement
 
     when_i_navigate_to_the_delete_placement_form
     then_i_see_the_not_found_page
@@ -17,7 +17,7 @@ feature "Delete a placement" do
 
   scenario "Delete a placement from an existing trainee when feature flag is active" do
     given_i_am_authenticated
-    and_a_trainee_exists_with_a_placement
+    and_a_draft_trainee_exists_with_a_placement
 
     when_the_feature_flag_is_active
     and_i_navigate_to_the_delete_placement_form
@@ -30,53 +30,20 @@ feature "Delete a placement" do
     and_i_click_the_confirm_button
     then_i_see_the_confirmation_page
     and_the_deleted_placement_is_no_longer_visible
-    and_is_not_yet_deleted
-
-    when_i_click_update
-    then_the_placement_is_deleted
+    and_the_placement_is_deleted
     and_i_see_a_flash_message
-  end
-
-  scenario "Delete an unsaved placement from an existing trainee when feature flag is active" do
-    given_i_am_authenticated
-    and_a_trainee_exists
-    and_a_school_exists
-
-    when_the_feature_flag_is_active
-    and_i_navigate_to_the_new_placement_form
-    then_i_see_the_new_placement_form
-
-    when_i_select_an_existing_school
-    and_i_click_continue
-    then_i_see_the_confirmation_page
-    and_i_see_the_new_placement_ready_for_confirmation
-    and_no_placements_are_created
-
-    and_i_click_the_delete_placement_link
-    then_i_see_the_delete_placement_form
-
-    and_i_click_the_confirm_button
-    then_i_see_the_confirmation_page
-    and_the_deleted_placement_is_no_longer_visible
-    and_no_placements_are_created
-    and_i_see_a_placement_removed_flash_message
   end
 
 private
 
-  def and_a_trainee_exists
-    @trainee = given_a_trainee_exists(:trn_received, :provider_led_postgrad)
-    FormStore.clear_all(@trainee.id)
-  end
-
-  def and_a_school_exists
-    @school ||= create(:school)
-  end
-
-  def and_a_trainee_exists_with_a_placement
-    and_a_trainee_exists
+  def and_a_draft_trainee_exists_with_a_placement
+    @trainee = given_a_trainee_exists(
+      :trn_received,
+      :provider_led_postgrad,
+      :draft,
+      placement_detail: PLACEMENT_DETAIL_ENUMS[:has_placement_detail],
+    )
     @placement = create(:placement, trainee: @trainee)
-    @school ||= @placement.school
     FormStore.clear_all(@trainee.id)
   end
 
@@ -87,7 +54,7 @@ private
 
   def when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
     visit trainee_path(id: @trainee.slug)
-    click_link "Manage placements"
+    click_link "Placements"
     click_link "Delete placement"
   end
 
@@ -110,9 +77,8 @@ private
   def then_the_placement_is_not_deleted
     expect(Placement.find_by(id: @placement.id)).to be_present
   end
-  alias_method :and_is_not_yet_deleted, :then_the_placement_is_not_deleted
 
-  def then_the_placement_is_deleted
+  def and_the_placement_is_deleted
     expect(Placement.find_by(id: @placement.id)).not_to be_present
   end
 
@@ -130,45 +96,10 @@ private
   end
 
   def and_the_deleted_placement_is_no_longer_visible
-    expect(page).not_to have_content(@school.name)
+    expect(page).not_to have_content(@placement.name)
   end
 
   def and_i_see_a_flash_message
-    expect(page).to have_content("Trainee placement details updated")
-  end
-
-  def and_i_navigate_to_the_new_placement_form
-    visit new_trainee_placement_path(trainee_id: @trainee.slug)
-  end
-
-  def then_i_see_the_new_placement_form
-    expect(page).to have_content("First placement")
-  end
-
-  def when_i_select_an_existing_school
-    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@school.id)
-  end
-
-  def and_i_click_continue
-    click_button "Continue"
-  end
-
-  def and_i_see_the_new_placement_ready_for_confirmation
-    expect(page).to have_content("First placement")
-    expect(page).to have_content(@school.name)
-    expect(page).to have_content(@school.postcode)
-    expect(page).to have_content("URN #{@school.urn}")
-  end
-
-  def and_no_placements_are_created
-    expect(@trainee.reload.placements.count).to eq(0)
-  end
-
-  def and_i_click_the_delete_placement_link
-    click_link "Delete placement"
-  end
-
-  def and_i_see_a_placement_removed_flash_message
     expect(page).to have_content("Placement removed")
   end
 end

@@ -12,7 +12,7 @@ module FlashBanner
     end
 
     def display?
-      flash.any? && (non_draft_trainee? || degree_deleted?)
+      flash.any? && (non_draft_trainee? || degree_deleted? || placement_deleted?)
     end
 
   private
@@ -24,6 +24,11 @@ module FlashBanner
     def degree_deleted?
       auditable = trainee.associated_audits.last
       auditable&.auditable_type == "Degree" && auditable&.action == "destroy"
+    end
+
+    def placement_deleted?
+      auditable = trainee.associated_audits.last
+      auditable&.auditable_type == "Placement" && auditable&.action == "destroy"
     end
   end
 end

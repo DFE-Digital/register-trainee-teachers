@@ -15,8 +15,8 @@
     <h1 class="govuk-heading-l">Are you sure you want to delete this placement?</h1>
 
     <div class="govuk-body">
-      <p class="govuk-body govuk-!-margin-bottom-2"><%= @placement_form.placement.name %></p>
-      <div class="govuk-hint"><%= @placement_form.placement.full_address %></div>
+      <p class="govuk-body govuk-!-margin-bottom-2"><%= @placement_form.placement&.name %></p>
+      <div class="govuk-hint"><%= @placement_form.placement&.full_address %></div>
     </div>
 
     <div class="govuk-body">
@@ -24,7 +24,7 @@
         "Yes I’m sure — delete this placement",
         trainee_placement_path(
           trainee_id: @placements_form.trainee.slug,
-          id: @placement_form.placement.slug,
+          id: @placement_form.slug,
         ),
         method: :delete,
         class: "govuk-button--warning",

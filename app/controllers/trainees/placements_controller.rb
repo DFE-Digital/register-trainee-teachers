@@ -53,7 +53,9 @@ module Trainees
         placements_form: PlacementsForm.new(@trainee),
         slug: params[:id],
       )
-      @placement_form.mark_for_destruction!
+      @placement_form.destroy_or_stash!
+
+      flash[:success] = I18n.t("flash.trainee_placement_removed")
 
       redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
     end
