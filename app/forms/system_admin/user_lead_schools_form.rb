@@ -12,7 +12,7 @@ module SystemAdmin
       no_results_search_again_query
     ].freeze
 
-    QUERY_ERROR = I18n.t("activemodel.errors.models.user_lead_schools_form.attributes.query.length")
+    QUERY_ERROR = I18n.t("activemodel.errors.models.system_admin/user_lead_schools_form.attributes.query.length")
 
     validates :lead_school_id, presence: true, if: :school_validation_required?
 
