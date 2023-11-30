@@ -346,6 +346,18 @@ module Trainees
         end
       end
 
+      context "when an Apply `application_choice_id` is available and mappable" do
+        let(:hesa_stub_attributes) do
+          {
+            application_choice_id: 123456,
+          }
+        end
+
+        it "maps the `application_choice_id` to `Trainee#application_choice_id`" do
+          expect(trainee.application_choice_id).to eq(123456)
+        end
+      end
+
       context "when bursary level indicates veteran teaching undergraduate bursary" do
         let(:hesa_stub_attributes) do
           { bursary_level: described_class::VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL }

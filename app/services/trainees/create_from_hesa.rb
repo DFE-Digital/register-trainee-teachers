@@ -64,6 +64,7 @@ module Trainees
        .merge(funding_attributes)
        .merge(school_attributes)
        .merge(training_initiative_attributes)
+       .merge(apply_attributes)
     end
 
     def find_or_initialize_trainee_by(hesa_id:)
@@ -151,6 +152,10 @@ module Trainees
 
     def training_initiative_attributes
       { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
+    end
+
+    def apply_attributes
+      { application_choice_id: hesa_trainee[:application_choice_id] }
     end
 
     def funding_attributes
