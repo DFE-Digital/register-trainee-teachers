@@ -92,6 +92,8 @@ class PlacementForm
       else
         placement.update(attributes)
       end
+    elsif placements_form.placements.index { |form| form.placement.slug == placement.slug }.present?
+      placement.update(attributes)
     else
       create_placement unless destroy?
     end
@@ -146,11 +148,7 @@ private
   end
 
   def placement_number
-    if persisted?
-      trainee.placements.index(placement)
-    else
-      placements_form.placements.count
-    end + 1
+    (placements_form.placements.index { |form| form.placement.slug == placement.slug } || placements_form.placements.count) + 1
   end
 
   def create_placement
