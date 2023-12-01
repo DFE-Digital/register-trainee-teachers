@@ -420,3 +420,13 @@
   - created_at
   - updated_at
   - provider_id
+  :bulk_update_placement_rows:
+  - id
+  - created_at
+  - updated_at
+  - state
+  - bulk_update_placement_id
+  - csv_row_number
+  - urn
+  - trn
+  - school_id

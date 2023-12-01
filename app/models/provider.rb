@@ -31,6 +31,9 @@ class Provider < ApplicationRecord
   has_many :recommendations_uploads, class_name: "BulkUpdate::RecommendationsUpload"
   has_many :recommendations_upload_rows, class_name: "BulkUpdate::RecommendationsUploadRow", through: :recommendations_uploads
 
+  has_many :bulk_update_placements, class_name: "BulkUpdate::Placement"
+  has_many :placement_rows, class_name: "BulkUpdate::PlacementRow", through: :bulk_update_placements
+
   validates :name, presence: true
   validates :dttp_id, uniqueness: true, format: { with: /\A[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}\z/i }, allow_blank: true
   validates :code, format: { with: /\A[A-Z0-9]+\z/i }, allow_blank: true

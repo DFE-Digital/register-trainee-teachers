@@ -27,16 +27,16 @@
 #
 class BulkUpdate::PlacementRow < ApplicationRecord
   belongs_to :bulk_update_placement,
-             class_name: "BulkUpdate::Placement",
-             inverse_of: :bulk_update_placement_rows
+             class_name: "BulkUpdate::Placement"
 
-  belongs_to :school
+  belongs_to :school, optional: true
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
 
   enum state: {
-    new: 0,
-    imported: 1,
-    failed: 2,
+    pending: 0,
+    importing: 1,
+    imported: 2,
+    failed: 3,
   }
 end
