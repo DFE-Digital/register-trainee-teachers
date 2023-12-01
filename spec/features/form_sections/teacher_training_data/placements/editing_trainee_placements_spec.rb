@@ -35,7 +35,7 @@ feature "Editing a placement", feature_trainee_placement: true do
       given_a_trainee_exists(:submitted_for_trn)
 
       given_i_have_one_placement
-      and_two_school_exists
+      and_two_schools_exist
 
       and_i_am_on_the_confirm_placement_details_page
       when_i_click_on_the_change_link
@@ -50,7 +50,7 @@ feature "Editing a placement", feature_trainee_placement: true do
 
     scenario "editing a stashed new placement" do
       given_a_trainee_exists(:submitted_for_trn)
-      and_two_school_exists
+      and_two_schools_exist
       and_i_am_on_the_confirm_placement_details_page
       and_i_click_on_add_a_placement_button
       and_i_am_on_the_add_placement_page
@@ -105,7 +105,7 @@ private
   end
   alias_method :and_a_school_exists, :school_one
 
-  def and_two_school_exists
+  def and_two_schools_exist
     school_one
     school_two
   end
