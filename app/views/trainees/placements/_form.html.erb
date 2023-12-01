@@ -2,6 +2,8 @@
   model: [@trainee, @placement_form],
   local: true,
   html: { data: { module: "app-schools-autocomplete" } },
+  url: url,
+  method: method,
 ) do |f| %>
 
   <% if f.govuk_error_summary.present? %>
