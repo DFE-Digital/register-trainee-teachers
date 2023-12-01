@@ -27,7 +27,7 @@ module PlacementDetails
   private
 
     def placement_records
-      trainee.placements.includes([:school]).order(created_at: :asc)
+      trainee.placements.includes([:school])
     end
 
     def placement_rows

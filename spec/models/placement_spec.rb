@@ -5,6 +5,10 @@ require "rails_helper"
 RSpec.describe Placement do
   let(:trainee) { create(:trainee) }
 
+  describe "default scope" do
+    it { expect(described_class.all.to_sql).to eq(described_class.order(created_at: :asc).to_sql) }
+  end
+
   context "validations" do
     context "when a school exists" do
       subject { described_class.new(trainee: trainee, school: create(:school)) }
