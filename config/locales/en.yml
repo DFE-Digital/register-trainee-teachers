@@ -26,6 +26,7 @@ en:
   cannot_start_yet: cannot start yet
   in_progress_valid: in progress
   in_progress_invalid: in progress
+  in_progress: in progress
   review: review
   completed: completed
   not_applicable: Not applicable
@@ -1352,6 +1353,7 @@ en:
           invalid: Enter an email address in the correct format, like name@example.com
         autocomplete:
           country: Select a country from the list - your entry is not recognised
+          search:  Select a value from the list
           subject: &subject Select a subject from the list - your entry is not recognised
           course_subject_one: *subject
           course_subject_two: *subject

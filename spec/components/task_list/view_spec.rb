@@ -22,7 +22,7 @@ describe TaskList::View do
 
     context status do
       it "renders the correct tag status" do
-        expect(rendered_component).to have_text(status)
+        expect(rendered_component).to have_text(I18n.t(status))
       end
 
       it "renders the correct tag colour" do
@@ -43,7 +43,7 @@ describe TaskList::View do
     end
 
     it_behaves_like("status indicator", "completed", "blue")
-    it_behaves_like("status indicator", "in progress", "grey")
+    it_behaves_like("status indicator", "in_progress", "grey")
     it_behaves_like("status indicator", "review", "pink")
     it_behaves_like("status indicator", "incomplete", "grey")
   end
