@@ -92,7 +92,7 @@ class PlacementForm
       else
         placement.update(attributes)
       end
-    elsif placements_form.placements.index { |form| form.placement.slug == placement.slug }.present?
+    elsif placements_form.placements.any? { |form| form.placement.slug == placement.slug }
       placement.update(attributes)
     else
       create_placement unless destroy?
