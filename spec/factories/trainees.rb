@@ -653,6 +653,7 @@ FactoryBot.define do
     trait :imported_from_hesa do
       transient do
         itt_aim { Hesa::CodeSets::IttAims::MAPPING.values.sample }
+        hesa_student_application_choice_id { nil }
       end
 
       hesa_id { Faker::Number.number(digits: 13) }
@@ -662,6 +663,11 @@ FactoryBot.define do
 
       after(:create) do |trainee, evaluator|
         create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)
+        if evaluator.hesa_student_application_choice_id.present?
+          trainee.hesa_students.first.update!(
+            application_choice_id: evaluator.hesa_student_application_choice_id.to_s,
+          )
+        end
       end
     end
   end
