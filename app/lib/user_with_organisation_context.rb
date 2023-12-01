@@ -13,6 +13,12 @@ class UserWithOrganisationContext < SimpleDelegator
     def primary_key
       "id"
     end
+
+    delegate :composite_primary_key?, :has_query_constraints?, to: :model
+
+    def model
+      User
+    end
   end
 
   def is_a?(value)
