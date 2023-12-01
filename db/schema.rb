@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_27_134319) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_29_155934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -174,6 +174,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_134319) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "index_blazer_queries_on_creator_id"
+  end
+
+  create_table "bulk_update_placement_rows", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "state", default: 0, null: false
+    t.bigint "bulk_update_placement_id", null: false
+    t.integer "csv_row_number", null: false
+    t.string "urn", null: false
+    t.string "trn", null: false
+    t.bigint "school_id"
+    t.index ["bulk_update_placement_id", "csv_row_number", "trn", "urn"], name: "idx_uniq_placement_rows", unique: true
+    t.index ["bulk_update_placement_id"], name: "index_bulk_update_placement_rows_on_bulk_update_placement_id"
+    t.index ["school_id"], name: "index_bulk_update_placement_rows_on_school_id"
   end
 
   create_table "bulk_update_placements", force: :cascade do |t|
@@ -909,6 +923,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_134319) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
+  add_foreign_key "bulk_update_placement_rows", "bulk_update_placements"
+  add_foreign_key "bulk_update_placement_rows", "schools"
   add_foreign_key "bulk_update_placements", "providers"
   add_foreign_key "bulk_update_recommendations_upload_rows", "bulk_update_recommendations_uploads"
   add_foreign_key "bulk_update_recommendations_upload_rows", "trainees", column: "matched_trainee_id"

@@ -1461,6 +1461,12 @@ en:
               phase: Phase must match trainee record
               age_range: Age range must match trainee record
               subject: Subject must match trainee record
+          placements:
+            validate_csv_row:
+              trn_format: TRN must be 7 numbers
+              urn_format: "Placement %{number} URN must be 6 digits long"
+              school_not_found: "No school was found for placement %{number} with urn %{urn}"
+              duplicate_urns: Duplicate URNs are present
         deferral_form:
           attributes:
             date_string:
