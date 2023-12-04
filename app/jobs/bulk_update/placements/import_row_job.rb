@@ -10,6 +10,8 @@ module BulkUpdate
       rescue StandardError => e
         placement_row.failed!
         placement_row.row_errors.create(message: "runtime failure: #{e.message}")
+
+        raise(e)
       end
     end
   end

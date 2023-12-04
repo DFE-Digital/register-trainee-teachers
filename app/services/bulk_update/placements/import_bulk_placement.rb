@@ -60,7 +60,6 @@ module BulkUpdate
 
       def import_rows(rows)
         rows.each do |row|
-          row.importing!
           ImportRowJob.perform_later(row)
         end
       end

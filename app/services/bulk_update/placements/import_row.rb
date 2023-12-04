@@ -10,6 +10,11 @@ module BulkUpdate
       end
 
       def call
+        return unless placement_row.can_be_imported?
+
+        placement_row.error_messages.destroy_all
+        placement_row.importing!
+
         if validator.valid?
           create_placement!
         else
@@ -23,7 +28,7 @@ module BulkUpdate
 
       def create_placement!
         row.update(school: school, state: :imported)
-        Placement.create(trainee:, school:, urn:)
+        Placement.find_or_create_by(trainee:, school:, urn:)
       end
 
       def record_errors!
