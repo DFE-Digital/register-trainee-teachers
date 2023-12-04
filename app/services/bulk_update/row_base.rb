@@ -16,8 +16,8 @@ module BulkUpdate
     end
 
     def empty?
-      instance_variables.all? do |variable|
-        value = instance_variable_get(variable)
+      headers.all? do |header|
+        value = send(header.downcase.gsub(" ", "_"))
         value.blank? || value.to_s.strip.empty?
       end
     end

@@ -58,8 +58,8 @@ module BulkUpdate
       @bulk_placements ||= current_user.organisation.without_required_placements.includes(:placements)
     end
 
-    # for now, if anything goes wrong during creation of trainees
-    # delete the recommend_upload record (and uploaded file)
+    # for now, if anything goes wrong during creation of placement rows
+    # delete the bulk_placement record (and uploaded file)
     def create_rows!
       bulk_placement = @placements_form.bulk_placement
 
