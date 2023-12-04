@@ -569,6 +569,8 @@ en:
         traineedisability:
           create: Disability details updated
           destroy: Disability details deleted
+        traineewithdrawalreason:
+          create: Withdrawal reason updated
     trainee_status_card:
       course_not_started_yet: Course not started yet
       in_training: In training
@@ -1377,6 +1379,10 @@ en:
           attributes:
             reviewed:
               blank: Select yes if this is the correct course
+        apply_applications/trainee_data_form:
+          attributes:
+            trainee:
+              incomplete: Review all of the trainee’s details before submitting
         system_admin/user_lead_schools_form:
           attributes:
             query:
