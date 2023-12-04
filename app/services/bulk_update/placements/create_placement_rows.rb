@@ -2,7 +2,6 @@
 
 module BulkUpdate
   module Placements
-    # creates placement_rows from a CSV
     class CreatePlacementRows
       include ServicePattern
 
@@ -21,6 +20,8 @@ module BulkUpdate
 
           create_bulk_placement_rows!(row, csv_row_number)
         end
+
+        ImportBulkPlacementJob.perform_later(bulk_placement)
       end
 
     private

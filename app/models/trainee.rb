@@ -337,6 +337,7 @@ class Trainee < ApplicationRecord
   scope :incomplete, -> { where(submission_ready: false).where.not(state: COMPLETE_STATES) }
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
+  scope :placements_with_urn, -> { placements.where.not(urn: nil) }
 
   audited associated_with: :provider
   has_associated_audits
