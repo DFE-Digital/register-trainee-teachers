@@ -29,9 +29,7 @@ class HeartbeatController < ActionController::API
 private
 
   def database_alive?
-    ActiveRecord::Base.connection.active?
-  rescue PG::ConnectionBad
-    false
+    ActiveRecord::Base.connected?
   end
 
   def redis_alive?
