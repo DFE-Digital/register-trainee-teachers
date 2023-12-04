@@ -13,6 +13,7 @@ module "redis-cache" {
 
   use_azure               = var.deploy_azure_backing_services
   azure_enable_monitoring = var.enable_monitoring
+  alert_window_size       = var.alert_window_size
   azure_patch_schedule    = [{ "day_of_week": "Sunday", "start_hour_utc": 01 }]
 }
 
@@ -75,6 +76,7 @@ module "postgres_snapshot" {
 
   use_azure               = true
   azure_enable_monitoring = var.enable_monitoring
+  alert_window_size       = var.alert_window_size
   azure_extensions        = ["PGCRYPTO","BTREE_GIST","CITEXT","PG_TRGM"]
   server_version          = var.postgres_version
   azure_sku_name          = var.postgres_flexible_server_sku

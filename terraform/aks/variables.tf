@@ -61,6 +61,10 @@ variable "enable_alerting" { default = false }
 variable "pg_actiongroup_name" { default = false }
 variable "pg_actiongroup_rg" { default = false }
 
+variable "alert_window_size" {
+  default = "PT5M"
+}
+
 variable "pdb_min_available" { default = null }
 variable "config_short" {}
 variable "service_short" {}
