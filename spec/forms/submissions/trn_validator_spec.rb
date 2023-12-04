@@ -196,6 +196,22 @@ module Submissions
             expect(subject.valid?).to be true
             expect(subject.errors).to be_empty
           end
+
+          context "without placements", feature_trainee_placement: true do
+            let(:trainee) do
+              create(
+                :trainee,
+                :completed,
+                :with_apply_application,
+                :early_years_postgrad,
+                progress: progress.merge(trainee_data: true, placements: false),
+              )
+            end
+
+            it "is not valid" do
+              expect(subject.valid?).to be false
+            end
+          end
         end
       end
 

@@ -59,9 +59,12 @@ module Submissions
 
     def apply_draft_trainee_sections
       [
-        :course_details, :trainee_data,
-        :training_details, *(:schools if trainee.requires_schools?),
-        :funding
+        :course_details,
+        :trainee_data,
+        :training_details,
+        *(:schools if trainee.requires_schools?),
+        :funding,
+        *(:placements if trainee.requires_placements?),
       ]
     end
 
