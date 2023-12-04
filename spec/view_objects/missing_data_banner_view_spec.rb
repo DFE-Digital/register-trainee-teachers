@@ -56,12 +56,12 @@ describe MissingDataBannerView do
         end
       end
 
-      context "placement_detail" do
-        let(:field) { :placement_detail }
+      context "placements" do
+        let(:trainee) { create(:trainee, :completed, :itt_start_date_in_the_past, :trn_received) }
 
         it "returns the link to the form containing the missing data" do
           allow(trainee).to receive(:requires_placements?).and_return(true)
-          expect(subject.to_s).to include("Placement details")
+          expect(subject.to_s).to include("Placements")
         end
 
         it "displays the optional fields only title" do

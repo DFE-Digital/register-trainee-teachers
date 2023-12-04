@@ -702,6 +702,7 @@ en:
         primary_course_subjects: *course_path
         iqts_country: edit_trainee_iqts_country_path
         placement_detail: trainee_placements_confirm_path
+        placements: trainee_placements_confirm_path
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
@@ -753,6 +754,7 @@ en:
         primary_course_subjects: *course_subject
         iqts_country: Country or territory of training
         placement_detail: Placement details
+        placements: Placements
     drafts:
       index:
         results:
