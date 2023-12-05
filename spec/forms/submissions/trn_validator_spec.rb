@@ -209,7 +209,7 @@ module Submissions
             end
 
             it "is not valid" do
-              expect(subject.valid?).to be false
+              expect(subject).not_to be_valid
             end
           end
         end
