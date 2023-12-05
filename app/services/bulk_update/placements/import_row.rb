@@ -7,6 +7,7 @@ module BulkUpdate
 
       def initialize(placement_row)
         @placement_row = placement_row
+        @urn = placement_row.urn
       end
 
       def call
@@ -24,18 +25,18 @@ module BulkUpdate
 
     private
 
-      attr_reader :placement_row
+      attr_reader :placement_row, :urn
 
       def create_placement!
-        row.update(school: school, state: :imported)
-        Placement.find_or_create_by(trainee:, school:, urn:)
+        placement_row.update(school: school, state: :imported)
+        ::Placement.find_or_create_by(trainee:, school:, urn:)
       end
 
       def record_errors!
         validator.error_messages.each do |message|
-          row.error_message.create(message:)
+          placement_row.row_errors.create(message:)
         end
-        row.failed!
+        placement_row.failed!
       end
 
       def school
@@ -47,7 +48,7 @@ module BulkUpdate
       end
 
       def validator
-        @validator ||= ValidateRow.call(placement_row)
+        @validator ||= ValidateRow.new(placement_row)
       end
     end
   end
