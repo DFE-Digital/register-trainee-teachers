@@ -23,7 +23,7 @@ module BulkUpdate
           create_bulk_placement_rows!(row, csv_row_number)
         end
 
-        ImportBulkPlacementJob.perform_later(bulk_placement)
+        ImportRowsJob.perform_later(bulk_placement)
       end
 
     private

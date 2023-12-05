@@ -6,7 +6,7 @@ module BulkUpdate
       queue_as :bulk_update
 
       def perform(bulk_placement)
-        ImportBulkPlacement.call(bulk_placement)
+        ImportRows.call(bulk_placement)
       end
     end
   end
