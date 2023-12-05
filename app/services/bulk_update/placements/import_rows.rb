@@ -37,16 +37,11 @@ module BulkUpdate
       end
 
       def valid_trainee?(trainees, trn, rows)
-        case trainees.count
-        when 0
-          create_error_message(rows, :no_trainee, trn:)
-          false
-        when 1
-          true
-        else
-          create_error_message(rows, :multiple_trainees, trn:)
-          false
-        end
+        return true if trainees.one?
+
+        error_key = trainees.empty? ? :no_trainee : :multiple_trainees
+        create_error_message(rows, error_key, trn:)
+        false
       end
 
       def create_error_message(rows, error_type, variables)
