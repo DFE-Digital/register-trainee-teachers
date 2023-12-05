@@ -12,7 +12,7 @@ module BulkUpdate
       def call
         return unless placement_row.can_be_imported?
 
-        placement_row.error_messages.destroy_all
+        placement_row.row_errors.destroy_all
         placement_row.importing!
 
         if validator.valid?

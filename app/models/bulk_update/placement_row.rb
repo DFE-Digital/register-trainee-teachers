@@ -43,4 +43,8 @@ class BulkUpdate::PlacementRow < ApplicationRecord
   def can_be_imported?
     pending? || failed?
   end
+
+  def row_error_messages
+    row_errors.map(&:message).join("\n")
+  end
 end

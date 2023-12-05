@@ -33,6 +33,8 @@ class Placement < ApplicationRecord
 
   audited associated_with: :trainee
 
+  scope :with_urn, -> { where.not(urn: nil) }
+
   def name
     school&.name || super
   end

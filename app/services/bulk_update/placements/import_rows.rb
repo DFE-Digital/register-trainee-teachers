@@ -54,18 +54,18 @@ module BulkUpdate
 
         rows.each do |row|
           row.failed!
-          row.error_message.create(message:)
+          row.row_errors.create(message:)
         end
+      end
+
+      def clear_placements!(trainee)
+        trainee.placements.with_urn.destroy_all
       end
 
       def import_rows(rows)
         rows.each do |row|
           ImportRowJob.perform_later(row)
         end
-      end
-
-      def clear_placements!(trainee)
-        trainee.placements_with_urn.destroy_all
       end
 
       def error_message(key, variables = {})
