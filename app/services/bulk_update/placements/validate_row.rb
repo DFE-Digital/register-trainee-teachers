@@ -5,7 +5,6 @@ module BulkUpdate
     class ValidateRow
       def initialize(placement_row)
         @urn = placement_row.urn
-        @trn = placement_row.trn
         @error_messages = []
         validate!
       end
@@ -22,7 +21,7 @@ module BulkUpdate
 
     private
 
-      attr_reader :urn, :trn
+      attr_reader :urn
 
       def validate!
         validate_urn_format
@@ -30,7 +29,7 @@ module BulkUpdate
       end
 
       def validate_urn_format
-        return if urn =~ VALID_URN
+        return if urn =~ Config::VALID_URN
 
         @error_messages << error_message(:urn_format)
       end

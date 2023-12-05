@@ -2,7 +2,7 @@
 
 module BulkUpdate
   module Placements
-    class ImportBulkPlacement
+    class ImportRows
       include ServicePattern
 
       def initialize(bulk_placement)

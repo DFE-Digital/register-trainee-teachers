@@ -2,7 +2,7 @@
 
 module BulkUpdate
   module Placements
-    class ImportBulkPlacementJob < ApplicationJob
+    class ImportRowsJob < ApplicationJob
       queue_as :bulk_update
 
       def perform(bulk_placement)

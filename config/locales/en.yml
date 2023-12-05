@@ -1475,12 +1475,12 @@ en:
           placements:
             validate_csv_row:
               trn_format: TRN must be 7 numbers
-              urn_format: "URN must be 6 numbers"
+              urn_format: URN must be 6 numbers
               school_not_found: "No school was found for placement %{number} with urn %{urn}"
               duplicate_urns: Duplicate URNs are present
               multiple_trainees: "More than one trainee was found for TRN: %{trn}"
               no_trainee: "No trainee was found for TRN: %{trn}"
-              no_school: "No School was found for URNL %{urn}"
+              no_school: "No School was found for URN %{urn}"
         deferral_form:
           attributes:
             date_string:
