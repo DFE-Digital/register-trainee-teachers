@@ -93,8 +93,8 @@ describe "heartbeat requests" do
 
     context "there's no db connection" do
       before do
-        allow(ActiveRecord::Base.connection)
-          .to receive(:active?).and_return(false)
+        allow(ActiveRecord::Base)
+          .to receive(:connected?).and_return(false)
       end
 
       it("returns 503") do
