@@ -9,6 +9,10 @@ DfE::Analytics.configure do |config|
   #
   # config.async = true
 
+  # Whether to run entity table checksum job.
+  #
+  config.entity_table_checks_enabled = true
+
   # Which ActiveJob queue to put events on
   #
   config.queue = :dfe_analytics
