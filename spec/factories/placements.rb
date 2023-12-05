@@ -12,7 +12,7 @@ FactoryBot.define do
 
     trait :manual do
       school { nil }
-      urn { Faker::Number.unique.number(digits: 7) }
+      urn { Faker::Number.unique.number(digits: 6) }
       name { Faker::University.name }
       address { Faker::Address.street_address }
       postcode { Faker::Address.postcode }

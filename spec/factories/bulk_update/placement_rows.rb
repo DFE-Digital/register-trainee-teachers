@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :bulk_update_placement_row, class: "BulkUpdate::PlacementRow" do
-    state { 1 }
-    bulk_update_placement { nil }
-    trn { "MyString" }
-    urn { "MyString" }
-    school { nil }
+    state { :pending }
+    bulk_update_placement
+    trn { Faker::Number.number(digits: 7) }
+    urn { Faker::Number.number(digits: 6) }
+    school
   end
 end

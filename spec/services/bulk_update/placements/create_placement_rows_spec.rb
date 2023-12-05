@@ -18,7 +18,7 @@ module BulkUpdate
           let(:file) { file_fixture("bulk_update/placements/complete.csv") }
 
           it "creates the rows with the correct row numbers" do
-            expect(provider.placement_rows.pluck(:trn, :csv_row_number, :urn)).to eql(
+            expect(bulk_placement.rows.pluck(:trn, :csv_row_number, :urn)).to eql(
               [
                 ["1234567", 3, "7823614827346"],
                 ["1234567", 3, "723894747382"],

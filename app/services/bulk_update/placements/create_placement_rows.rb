@@ -14,7 +14,7 @@ module BulkUpdate
       def call
         csv.each_with_index do |row, index|
           # skip the first guidance row
-          next if row.any? { |cell| cell.include?(Reports::BulkPlacementReport::GUIDANCE[0]) }
+          next if guidance_row?(row)
 
           row = Row.new(row)
           csv_row_number = index + Config::FIRST_CSV_ROW_NUMBER
@@ -37,6 +37,10 @@ module BulkUpdate
             csv_row_number: csv_row_number,
           )
         end
+      end
+
+      def guidance_row?(row)
+        row.any? { |cell| cell.include?(Reports::BulkPlacementReport::GUIDANCE[0]) }
       end
     end
   end
