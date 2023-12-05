@@ -29,7 +29,13 @@ class HeartbeatController < ActionController::API
 private
 
   def database_alive?
+    ActiveRecord::Base.connection_pool.with_connection do |conn|
+      conn.execute("SELECT 1")
+    end
+
     ActiveRecord::Base.connected?
+  rescue ActiveRecord::ConnectionNotEstablished, PG::ConnectionBad
+    false
   end
 
   def redis_alive?
