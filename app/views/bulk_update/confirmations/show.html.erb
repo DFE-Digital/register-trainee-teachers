@@ -1,0 +1,16 @@
+<%= render PageTitle::View.new(i18n_key: "bulk_placements.confirmation.show") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govuk_panel(title_text: "Placement data submitted", classes: "trn-submission-success-panel govuk-!-margin-bottom-6") %>
+
+    <p class="govuk-body"><%= govuk_link_to("View your trainee records", trainees_path) %></p>
+
+    <h2 class="govuk-heading-m">Next steps</h2>
+
+
+    <h3 class="govuk-heading-s">Trainees with incomplete records</h2>
+
+    <p class="govuk-body">You can complete missing placement information to the trainee record manually.</p>
+  </div>
+</div>
