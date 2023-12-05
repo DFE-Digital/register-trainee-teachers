@@ -2,11 +2,12 @@
 
 module Reports
   class BulkPlacementReport < TemplateClassCsv
+    PLACEMENT_HEADERS = Array.new(BulkUpdate::Placements::Config::MAX_PLACEMENTS) { |i| "Placement #{i + 1} URN" }.freeze
+
     HEADERS = [
       "TRN",
       "Trainee ITT start date",
-      "Placement 1 URN",
-      "Placement 2 URN",
+      *PLACEMENT_HEADERS,
     ].freeze
 
     GUIDANCE = [

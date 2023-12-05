@@ -10,17 +10,7 @@
 #
 module BulkUpdate
   module RecommendationsUploads
-    class Row
-      def initialize(csv_row)
-        ::Reports::BulkRecommendReport::DEFAULT_HEADERS.each do |header|
-          method_name = header.downcase.gsub(" ", "_")
-          method_value = csv_row[header.downcase]
-
-          instance_variable_set("@#{method_name}", method_value)
-          self.class.send(:attr_reader, method_name)
-        end
-      end
-
+    class Row < RowBase
       def standards_met_at
         send("date_qts_or_eyts_standards_met")
       end
@@ -29,11 +19,10 @@ module BulkUpdate
         send("hesa_id")&.gsub(/[^\d]/, "")
       end
 
-      def empty?
-        instance_variables.all? do |variable|
-          value = instance_variable_get(variable)
-          value.blank? || value.to_s.strip.empty?
-        end
+    private
+
+      def headers
+        @headers ||= ::Reports::BulkRecommendReport::DEFAULT_HEADERS
       end
     end
   end

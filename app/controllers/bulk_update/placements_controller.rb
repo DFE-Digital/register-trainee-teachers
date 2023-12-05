@@ -28,7 +28,8 @@ module BulkUpdate
       @navigation_view = ::Funding::NavigationView.new(organisation:)
 
       if @placements_form.save
-        flash.now[:success] = "CSV is valid" # rubocop:disable Rails/I18nLocaleTexts
+        flash.now[:success] = "Placements will be processed shortly" # rubocop:disable Rails/I18nLocaleTexts
+        create_rows!
       end
       render(:new)
     end
@@ -55,6 +56,20 @@ module BulkUpdate
 
     def bulk_placements
       @bulk_placements ||= current_user.organisation.without_required_placements.includes(:placements)
+    end
+
+    # for now, if anything goes wrong during creation of placement rows
+    # delete the bulk_placement record (and uploaded file)
+    def create_rows!
+      bulk_placement = @placements_form.bulk_placement
+
+      Placements::CreatePlacementRows.call(
+        bulk_placement: bulk_placement,
+        csv: @placements_form.csv,
+      )
+    rescue StandardError => e
+      bulk_placement.destroy
+      raise(e)
     end
   end
 end

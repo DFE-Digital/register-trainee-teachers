@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+FactoryBot.define do
+  factory :bulk_update_placement_row, class: "BulkUpdate::PlacementRow" do
+    state { :pending }
+    bulk_update_placement
+    trn { Faker::Number.number(digits: 7) }
+    urn { Faker::Number.number(digits: 6) }
+    school
+  end
+end
