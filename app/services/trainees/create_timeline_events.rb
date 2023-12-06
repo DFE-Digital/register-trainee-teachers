@@ -120,7 +120,7 @@ module Trainees
         )
       end
 
-      if action == "update" && model == "placement"
+      if changed_placement?
         old_name, name = GetPlacementNameFromAudit.call(audit:)
         return TimelineEvent.new(
           title: I18n.t("components.timeline.titles.placement.update", old_name:, name:),
@@ -140,7 +140,7 @@ module Trainees
           date: created_at,
           username: username,
         )
-      end
+      end.compact
     end
 
   private
@@ -267,6 +267,10 @@ module Trainees
       change = audited_changes["provider_id"]
 
       action == "update" && Array.wrap(change).size == 2
+    end
+
+    def changed_placement?
+      action == "update" && model == "placement" && audited_changes.keys.intersect?(%w[name school_id])
     end
 
     def hesa_or_dttp_user?

@@ -206,6 +206,8 @@ module Trainees
           it "returns a 'creation' timeline event" do
             placement.reload
 
+            expect(GetPlacementNameFromAudit).to receive(:call).with(audit: associated_audit).once.and_call_original
+
             expect(subject.first.title).to eq("Placement at #{placement.name} added")
           end
         end
@@ -216,12 +218,38 @@ module Trainees
             trainee.own_and_associated_audits.where(auditable_type: "Placement", action: :update).last
           end
 
-          it "returns an 'update' timeline event" do
-            original_name = placement.name
-            placement.update!(name: "University of South Oxfordshire")
-            placement.reload
+          context "update name" do
+            it "returns an 'update' timeline event" do
+              original_name = placement.name
+              placement.update!(name: "University of South Oxfordshire")
+              placement.reload
 
-            expect(subject.title).to eq("Placement changed from #{original_name} to University of South Oxfordshire")
+              expect(GetPlacementNameFromAudit).to receive(:call).with(audit: associated_audit).once.and_call_original
+
+              expect(subject.title).to eq("Placement changed from #{original_name} to University of South Oxfordshire")
+            end
+          end
+
+          context "update postcode" do
+            it "returns empty timeline event" do
+              placement.update!(postcode: "BN1 1AA")
+              placement.reload
+
+              expect(GetPlacementNameFromAudit).not_to receive(:call)
+
+              expect(subject).to be_empty
+            end
+          end
+
+          context "update urn" do
+            it "returns empty timeline event" do
+              placement.update!(urn: "100000")
+              placement.reload
+
+              expect(GetPlacementNameFromAudit).not_to receive(:call)
+
+              expect(subject).to be_empty
+            end
           end
         end
 
@@ -232,6 +260,8 @@ module Trainees
 
           it "returns a 'removed' timeline event" do
             placement.destroy!
+
+            expect(GetPlacementNameFromAudit).to receive(:call).with(audit: associated_audit).once.and_call_original
 
             expect(subject.title).to eq("Placement at #{placement.name} removed")
           end
@@ -259,7 +289,7 @@ module Trainees
         end
 
         it "returns empty timeline event" do
-          expect(subject).to eq [nil]
+          expect(subject).to be_empty
         end
       end
 
