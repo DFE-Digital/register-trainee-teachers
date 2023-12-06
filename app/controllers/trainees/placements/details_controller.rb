@@ -6,8 +6,6 @@ module Trainees
       before_action { require_feature_flag(:trainee_placement) }
 
       def edit
-        page_tracker.save_as_origin!
-
         @placement_detail_form = PlacementDetailForm.new(trainee)
       end
 
