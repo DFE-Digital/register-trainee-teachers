@@ -15,6 +15,7 @@ $mobile-big-end: 501px;
 @import "tables";
 @import "trainee";
 @import "components/all";
+@import "utilities";
 
 .govuk-cookie-banner__hide {
   display: none;
@@ -127,14 +128,6 @@ body:not(.js-enabled) .app-js-only {
   }
 }
 
-.link--delete {
-  color: govuk-colour("red") !important; /* stylelint-disable declaration-no-important */
-}
-
 .app-start-page-banner + .govuk-width-container > .govuk-notification-banner {
   margin-top: 40px;
-}
-
-.app-\!-uppercase {
-  text-transform: uppercase !important;
 }

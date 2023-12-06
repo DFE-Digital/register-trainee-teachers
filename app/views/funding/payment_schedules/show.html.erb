@@ -84,9 +84,8 @@
     <div class="govuk-grid-column-two-thirds-from-desktop" >
       <p class="govuk-body"><%= t("funding.payment_schedule.no_data") %></p>
       <p class="govuk-body">
-        <%= t("funding.payment_schedule.contact_info", email: govuk_mail_to(
-          Settings.support_email,
-          Settings.support_email,
+        <%= t("funding.payment_schedule.contact_info", email: support_email(
+          name: Settings.support_email,
           subject: t("funding.view.title")
         )).html_safe %>
       </p>

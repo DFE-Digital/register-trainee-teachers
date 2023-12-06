@@ -1,0 +1,13 @@
+// stylelint-disable declaration-no-important
+
+.link--delete {
+  color: govuk-colour("red") !important;
+}
+
+.app-\!-uppercase {
+  text-transform: uppercase !important;
+}
+
+.app-\!-overflow-break-word {
+  overflow-wrap: break-word !important;
+}
