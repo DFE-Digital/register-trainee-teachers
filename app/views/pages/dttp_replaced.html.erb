@@ -9,7 +9,7 @@
     <%= govuk_link_to t(".button_text"), root_path, class: "govuk-button" %>
 
     <p class="govuk-body"><%= t(".support") %>
-      <%= support_email(name: Settings.support_email, subject: t("pages.request_an_account.email_subject")) %>
+      <%= support_email(subject: t("pages.request_an_account.email_subject")) %>
     </p>
   </div>
 </div>
