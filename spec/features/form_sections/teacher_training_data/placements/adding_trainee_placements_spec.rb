@@ -45,9 +45,15 @@ feature "Add a placement" do
     when_i_revisit_the_placements_confirmation_page
     and_i_click_update
     and_no_new_placements_are_created
+
+    then_i_see_the_trainee_page
   end
 
 private
+
+  def then_i_see_the_trainee_page
+    expect(page).to have_current_path(trainee_path(trainee))
+  end
 
   def and_a_trainee_exists_with_trn_received
     @trainee ||= given_a_trainee_exists(:trn_received)
