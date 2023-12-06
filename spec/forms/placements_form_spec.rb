@@ -215,6 +215,7 @@ describe PlacementsForm, type: :model do
       allow(placement_form1).to receive(:save!).and_return(true)
       allow(placement_form2).to receive(:save!).and_return(true)
       allow(subject).to receive(:placements).and_return([placement_form1, placement_form2])
+      allow(trainee).to receive(:reload).and_return(trainee)
     end
 
     it "run save on all the placement form objects" do

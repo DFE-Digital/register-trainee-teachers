@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "Add a placement" do
   after do
-    FormStore.clear_all(@trainee.id)
+    FormStore.clear_all(@trainee.id) if @trainee.present?
   end
 
   scenario "Attempt to add new placement when feature flag is inactive", feature_trainee_placement: false do
@@ -16,7 +16,26 @@ feature "Add a placement" do
     then_i_see_the_not_found_page
   end
 
-  scenario "Add a new placement to an existing trainee", feature_trainee_placement: true do
+  scenario "Add one new placement to an existing trainee", feature_trainee_placement: true do
+    given_i_am_authenticated
+    and_a_postgrad_trainee_exists_with_trn_received
+    and_a_school_exists
+    and_i_navigate_to_the_trainee_dashboard
+    and_i_click_to_enter_first_placement
+    then_i_see_the_new_placement_form
+
+    when_i_select_an_existing_school
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_new_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_update
+    then_i_see_a_flash_message
+    and_a_new_placement_is_created
+  end
+
+  scenario "Add two new placements to an existing trainee", feature_trainee_placement: true do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_a_school_exists
@@ -60,8 +79,21 @@ private
     FormStore.clear_all(@trainee.id)
   end
 
+  def and_a_postgrad_trainee_exists_with_trn_received
+    @trainee ||= given_a_trainee_exists(:trn_received, :early_years_postgrad)
+    FormStore.clear_all(@trainee.id)
+  end
+
   def and_a_school_exists
     @school ||= create(:school)
+  end
+
+  def and_i_navigate_to_the_trainee_dashboard
+    visit trainee_path(trainee)
+  end
+
+  def and_i_click_to_enter_first_placement
+    click_link "Enter first placement"
   end
 
   def when_i_navigate_to_the_new_placement_form
@@ -129,6 +161,10 @@ private
 
   def and_no_placements_are_created
     expect(@trainee.reload.placements.count).to eq(0)
+  end
+
+  def and_a_new_placement_is_created
+    expect(@trainee.reload.placements.count).to eq(1)
   end
 
   def and_two_new_placements_are_created
