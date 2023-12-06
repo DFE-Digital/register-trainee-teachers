@@ -4,6 +4,16 @@ module Submissions
   class TrnValidator < BaseValidator
     include FundingHelper
 
+    class_attribute :extra_validators, instance_writer: false, default: {}
+
+    class << self
+      def missing_data_validator(name, options)
+        extra_validators[name] = options
+      end
+    end
+
+    missing_data_validator :placements, form: "PlacementDetailForm", if: :requires_placements?
+
     def progress_status(progress_key)
       progress_service(progress_key).status.parameterize(separator: "_").to_sym
     end
@@ -49,9 +59,12 @@ module Submissions
 
     def apply_draft_trainee_sections
       [
-        :course_details, :trainee_data,
-        :training_details, *(:schools if trainee.requires_schools?),
-        :funding
+        :course_details,
+        :trainee_data,
+        :training_details,
+        *(:schools if trainee.requires_schools?),
+        :funding,
+        *(:placements if trainee.requires_placements?),
       ]
     end
 

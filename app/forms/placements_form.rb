@@ -104,7 +104,7 @@ class PlacementsForm
   end
 
   def missing_fields
-    []
+    valid? ? [] : %i[placements]
   end
 
   def trainee_reset_placements?

@@ -4,7 +4,7 @@ module Submissions
   class MissingDataValidator < BaseValidator
     class_attribute :extra_validators, instance_writer: false, default: {}
 
-    OPTIONAL_FIELDS = %i[placement_detail].freeze
+    OPTIONAL_FIELDS = %i[placements].freeze
 
     class << self
       def missing_data_validator(name, options)
@@ -13,6 +13,7 @@ module Submissions
     end
 
     missing_data_validator :trainee_start_date, form: "TraineeStartDateForm", if: :course_already_started?
+    missing_data_validator :placements, form: "PlacementsForm", if: :requires_placements?
 
     def missing_fields
       forms.map(&:missing_fields).flatten.uniq

@@ -29,10 +29,6 @@ module Submissions
       context "when only the placements section is missing data", feature_trainee_placement: true do
         let(:trainee) { build(:trainee, :submitted_with_start_date, :early_years_salaried) }
 
-        before do
-          trainee.placement_detail = nil
-        end
-
         it "is valid" do
           expect(subject.valid?).to be true
           expect(subject.errors).to be_empty
@@ -117,7 +113,7 @@ module Submissions
                                                             :itt_end_date,
                                                             :trainee_id,
                                                             :training_initiative,
-                                                            :placement_detail,
+                                                            :placements,
                                                             :trainee_start_date)
         end
       end
