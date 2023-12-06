@@ -174,6 +174,9 @@ module Funding
           end
         end
       end
+
+      context "when grant and tiered bursary are available" do
+      end
     end
 
     describe "#missing_fields" do

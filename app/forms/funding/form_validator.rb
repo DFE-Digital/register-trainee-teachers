@@ -17,7 +17,7 @@ module Funding
 
     def initialize(trainee)
       @trainee = trainee
-      @bursary_form = BursaryForm.new(trainee)
+      @bursary_form = bursary_form_class.new(trainee)
       @training_initiatives_form = TrainingInitiativesForm.new(trainee)
       @fields = bursary_form_fields.merge(training_initiatives_form_fields)
     end
@@ -65,6 +65,14 @@ module Funding
 
     def funding_manager
       @funding_manager ||= FundingManager.new(trainee)
+    end
+
+    def grant_and_tiered_bursary?
+      funding_manager.applicable_available_funding == :grant_and_tiered_bursary
+    end
+
+    def bursary_form_class
+      grant_and_tiered_bursary? ? ::Funding::GrantAndTieredBursaryForm : ::Funding::BursaryForm
     end
   end
 end
