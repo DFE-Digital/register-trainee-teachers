@@ -33,7 +33,7 @@ module PlacementDetails
     def placement_rows
       placement_records.each_with_index.map do |placement_record, index|
         {
-          field_label: t("components.placement_detail.placement_#{index + 1}"),
+          field_label: t("components.placement_detail.placement_#{index + 1}", default: "#{(index + 1).ordinalize} Placement"),
           field_value: placement_details_for(placement_record),
         }
       end
