@@ -26,6 +26,7 @@ en:
   cannot_start_yet: cannot start yet
   in_progress_valid: in progress
   in_progress_invalid: in progress
+  in_progress: in progress
   review: review
   completed: completed
   not_applicable: Not applicable
@@ -568,6 +569,8 @@ en:
         traineedisability:
           create: Disability details updated
           destroy: Disability details deleted
+        traineewithdrawalreason:
+          create: Withdrawal reason updated
     trainee_status_card:
       course_not_started_yet: Course not started yet
       in_training: In training
@@ -1352,6 +1355,7 @@ en:
           invalid: Enter an email address in the correct format, like name@example.com
         autocomplete:
           country: Select a country from the list - your entry is not recognised
+          search:  Select a value from the list
           subject: &subject Select a subject from the list - your entry is not recognised
           course_subject_one: *subject
           course_subject_two: *subject
@@ -1375,10 +1379,15 @@ en:
           attributes:
             reviewed:
               blank: Select yes if this is the correct course
+        apply_applications/trainee_data_form:
+          attributes:
+            trainee:
+              incomplete: Review all of the trainee’s details before submitting
         system_admin/user_lead_schools_form:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
+              length: Enter at least two characters
             lead_school_id:
               blank: Select a lead school or search again
             results_search_again_query:

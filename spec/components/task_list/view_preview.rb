@@ -16,7 +16,7 @@ class TaskList::ViewPreview < ViewComponent::Preview
       component.row(
         task_name: "Funding",
         path: nil,
-        status: "cannot start yet",
+        status: "cannot_start_yet",
         hint_text: "Complete course details first",
         active: false,
       )
@@ -34,7 +34,7 @@ class TaskList::ViewPreview < ViewComponent::Preview
       component.row(
         task_name: "Contact details",
         path: "#details",
-        status: "in progress",
+        status: "in_progress",
       )
 
       component.row(

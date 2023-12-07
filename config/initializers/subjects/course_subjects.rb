@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "degree_subjects"
-
 unless defined?(CourseSubjects)
   module CourseSubjects
     ANCIENT_HEBREW = "Ancient Hebrew"

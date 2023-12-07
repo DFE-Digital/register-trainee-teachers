@@ -4,11 +4,11 @@ require "govuk/components"
 
 class PageTitle::ViewPreview < ViewComponent::Preview
   def key_heading
-    render(PageTitle::View.new(i18n_key: "trainees.new"))
+    render(PageTitle::View.new(i18n_key: "trainees.show.overview"))
   end
 
   def key_heading_with_error
-    render(PageTitle::View.new(i18n_key: "trainees.new", has_errors: true))
+    render(PageTitle::View.new(i18n_key: "trainees.show.overview", has_errors: true))
   end
 
   def text_heading
