@@ -14,9 +14,7 @@
       </p>
       <p class="govuk-body">
         <%= t("funding.trainee_summary.email_line_one") %>
-        <%= govuk_mail_to(
-          Settings.support_email,
-          Settings.support_email,
+        <%= support_email(
           subject: t("funding.trainee_summary.email_subject")
         ) %>
         <%= t("funding.trainee_summary.email_line_two") %>

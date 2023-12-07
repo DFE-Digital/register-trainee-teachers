@@ -22,7 +22,7 @@
 
       <%= render GovukComponent::DetailsComponent.new(summary_text: t(".not_applicable_details.summary_text"),
                                                       open: f.object.school_not_applicable? ) do %>
-        <%= t(".not_applicable_details.body", contact_link: govuk_mail_to(Settings.support_email)).html_safe %>
+        <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
         <%= f.govuk_check_box(:employing_school_not_applicable, "1", "0", multiple: false,
                               label: { text: t(".not_applicable_details.label_text") }) %>
       <% end  %>

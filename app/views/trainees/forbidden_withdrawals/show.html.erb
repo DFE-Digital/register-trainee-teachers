@@ -9,11 +9,11 @@
   <%= render TraineeName::View.new(@trainee) %>
 
   <h1 class="govuk-heading-l">
-    <%= t(".heading") %> 
+    <%= t(".heading") %>
   </h1>
 
   <p class="govuk-body">
-     <%= t(".reason") %> 
+     <%= t(".reason") %>
   </p>
 
   <p class="govuk-body">
@@ -21,7 +21,7 @@
   </p>
 
   <p class="govuk-body">
-     <%= t(".support") %> <%= govuk_mail_to(Settings.support_email, Settings.support_email)%>.
+     <%= t(".support") %> <%= support_email%>.
   </p>
 
   <p class="govuk-body">
