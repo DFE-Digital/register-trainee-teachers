@@ -22,5 +22,8 @@ module.exports = {
   testEnvironmentOptions: {
     url: 'http://localhost/'
   },
-  testPathIgnorePatterns: []
+  testPathIgnorePatterns: [],
+  transform: {
+    '\\.[jt]sx?$': 'esbuild-jest'
+  }
 }

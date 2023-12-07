@@ -1,4 +1,3 @@
-import 'babel-polyfill'
 import jQuery from 'jquery'
 
 import './scripts/global/nationality_select'
