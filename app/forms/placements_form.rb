@@ -51,6 +51,10 @@ class PlacementsForm
   end
 
   def placements
+    @placements ||= load_placements
+  end
+
+  def load_placements
     slug_placements_forms_map = {}
 
     trainee.placements.includes([:school]).find_each do |placement|
@@ -65,7 +69,7 @@ class PlacementsForm
       slug_placements_forms_map[slug] ||= build_placement_form(attrs)
       # Load any stored attributes
       slug_placements_forms_map[slug].assign_attributes(attrs)
-      slug_placements_forms_map[slug].placement.assign_attributes(attrs.except(:destroy))
+      slug_placements_forms_map[slug].placement.assign_attributes(attrs.except(:id, :destroy))
     end
 
     slug_placements_forms_map.values
@@ -99,8 +103,8 @@ class PlacementsForm
   end
 
   def save!
-    trainee.has_placement_detail! unless trainee.has_placement_detail?
     placements.each(&:save!)
+    trainee.reload.has_placement_detail! unless trainee.has_placement_detail?
   end
 
   def missing_fields
