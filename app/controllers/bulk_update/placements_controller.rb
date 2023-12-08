@@ -24,11 +24,10 @@ module BulkUpdate
     end
 
     def create
-      @placements_form = PlacementsForm.new(provider: organisation, file: file)
+      @placements_form = PlacementsForm.new(provider: organisation, file: file, user: current_user)
       @navigation_view = ::Funding::NavigationView.new(organisation:)
 
       if @placements_form.save
-        create_rows!
         redirect_to(bulk_update_placements_confirmation_path)
       else
         render(:new)
@@ -57,20 +56,6 @@ module BulkUpdate
 
     def bulk_placements
       @bulk_placements ||= current_user.organisation.without_required_placements.includes(:placements)
-    end
-
-    # for now, if anything goes wrong during creation of placement rows
-    # delete the bulk_placement record (and uploaded file)
-    def create_rows!
-      bulk_placement = @placements_form.bulk_placement
-
-      Placements::CreatePlacementRows.call(
-        bulk_placement: bulk_placement,
-        csv: @placements_form.csv,
-      )
-    rescue StandardError => e
-      bulk_placement.destroy
-      raise(e)
     end
   end
 end

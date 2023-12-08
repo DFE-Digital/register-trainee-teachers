@@ -2,7 +2,6 @@
 
 module BulkUpdate
   module Placements
-    # creates placement_rows from a CSV
     class CreatePlacementRows
       include ServicePattern
 
@@ -16,18 +15,22 @@ module BulkUpdate
           # skip the first guidance row
           next if guidance_row?(row)
 
+          # Row will provide us with a special method to loop over any/all URNS
+          # present in the CSV row
           row = Row.new(row)
           csv_row_number = index + Config::FIRST_CSV_ROW_NUMBER
 
           create_bulk_placement_rows!(row, csv_row_number)
         end
+
+        ImportRowsJob.perform_later(bulk_placement)
       end
 
     private
 
       attr_reader :bulk_placement, :csv
 
-      # a csv row will have multiple (up to MAX_PLACEMENTS) placement URNs
+      # A CSV row will have multiple (up to MAX_PLACEMENTS) placement URNs
       # so we loop over these to create an individual row for each.
       def create_bulk_placement_rows!(row, csv_row_number)
         row.urns.each do |urn|

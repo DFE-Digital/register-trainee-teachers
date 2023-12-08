@@ -19,7 +19,7 @@
 #
 class BulkUpdate::Placement < ApplicationRecord
   belongs_to :provider
-  has_one_attached :file
+  has_one_attached :file, dependent: :purge_later
   has_many :placement_rows,
            class_name: "BulkUpdate::PlacementRow",
            foreign_key: :bulk_update_placement_id,

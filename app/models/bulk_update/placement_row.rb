@@ -39,4 +39,12 @@ class BulkUpdate::PlacementRow < ApplicationRecord
     imported: 2,
     failed: 3,
   }
+
+  def can_be_imported?
+    pending? || failed?
+  end
+
+  def row_error_messages
+    row_errors.map(&:message).join("\n")
+  end
 end

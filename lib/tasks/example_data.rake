@@ -263,8 +263,8 @@ namespace :example_data do
               trainee.applying_for_scholarship = true if funding_manager.can_apply_for_scholarship?
             end
 
-            # Make *roughly* 50% of persona_a's awarded trainees be applicable for placement
-            if state == :awarded && provider.name.include?(PROVIDER_A) && sample_index < sample_size * 50.0 / 100
+            # Make *roughly* 10% of a persona's awarded trainees applicable for placement
+            if state == :awarded && sample_index < sample_size * 10.0 / 100
               trainee.trn = Faker::Number.number(digits: 7)
             end
 
