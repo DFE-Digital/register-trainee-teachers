@@ -68,9 +68,10 @@ module BulkUpdate
         bulk_placement: bulk_placement,
         csv: @placements_form.csv,
       )
-    rescue StandardError => e
+    rescue ActiveRecord::StatementInvalid, StandardError => e
+      Sentry.capture_exception(e, extra: { provider_id: organisation.id, user_id: current_user.id })
       bulk_placement.destroy
-      raise(e)
+      false
     end
   end
 end
