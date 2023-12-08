@@ -9,9 +9,16 @@ feature "bulk update page", feature_bulk_placements: true do
     and_i_visit_the_bulk_placements_page
   end
 
-  scenario "viewing the download instructions" do
+  scenario "viewing and downloading the file" do
     then_i_see_how_many_trainees_i_can_bulk_update
-    and_i_see_a_filename_of_the_file_need_to_download
+    and_i_see_a_filename_of_the_file_i_need_to_download
+    when_i_click_on_the_download_link
+    then_i_receive_the_file
+  end
+
+  scenario "uploading the file" do
+    when_i_upload_the_file
+    then_i_see_a_success_message
   end
 
 private
@@ -20,12 +27,13 @@ private
     expect(page).to have_content("2 that can be bulk updated")
   end
 
-  def and_i_see_a_filename_of_the_file_need_to_download
+  def and_i_see_a_filename_of_the_file_i_need_to_download
     expect(page).to have_content("#{filename}-to-add-missing-prepopulated.csv")
   end
 
   def given_there_are_trainees_without_placements
-    create_list(:trainee, 2, :without_required_placements, provider: current_user.organisation)
+    create(:trainee, :trn_received, trn: "1234567", itt_end_date: Time.zone.today, provider: current_user.organisation)
+    create(:trainee, :trn_received, trn: "7654321", itt_end_date: Time.zone.today, provider: current_user.organisation)
   end
 
   def and_i_visit_the_bulk_placements_page
@@ -34,5 +42,23 @@ private
 
   def filename
     current_user.organisation.name.parameterize
+  end
+
+  def when_i_click_on_the_download_link
+    click_link "Download trainees with missing details"
+  end
+
+  def then_i_receive_the_file
+    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"#{filename}-to-add-missing-prepopulated.csv\"")
+  end
+
+  def when_i_upload_the_file
+    attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/complete.csv"))
+    click_button "Upload records"
+  end
+
+  def then_i_see_a_success_message
+    expect(page).to have_content("Placement data submitted")
   end
 end
