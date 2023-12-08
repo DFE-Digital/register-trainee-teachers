@@ -81,6 +81,7 @@ class Provider < ApplicationRecord
       .where.not(training_route: %i[assessment_only early_years_assessment_only])
       .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
       .where("placements_counts.placement_count < 2 OR placements_counts.placement_count IS NULL")
+      .merge(AcademicCycle.previous.total_trainees)
   end
 
 private
