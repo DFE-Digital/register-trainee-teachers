@@ -15,7 +15,7 @@ module BulkUpdate
           let(:school) { create(:school) }
 
           it "is valid" do
-            expect(service.valid?).to be true
+            expect(service).to be_valid
             expect(service.school).to eql school
           end
         end
@@ -24,7 +24,7 @@ module BulkUpdate
           let(:urn) { "invalid_urn" }
 
           it "is not valid and has the correct error message" do
-            expect(service.valid?).to be false
+            expect(service).not_to be_valid
             expect(service.error_messages).to include match(/URN must be 6 numbers/)
           end
         end
@@ -33,7 +33,7 @@ module BulkUpdate
           let(:urn) { "123456" }
 
           it "is not valid and has the correct error message" do
-            expect(service.valid?).to be false
+            expect(service).not_to be_valid
             expect(service.error_messages).to include match(/No School was found for URN 123456/)
           end
         end
