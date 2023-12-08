@@ -25,6 +25,10 @@ module BulkUpdate
       @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
+    def add_manual_error(type)
+      errors.add(:file, type)
+    end
+
     attr_reader :bulk_placement, :provider, :file
 
   private

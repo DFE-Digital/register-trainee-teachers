@@ -62,15 +62,20 @@ module BulkUpdate
     # for now, if anything goes wrong during creation of placement rows
     # delete the bulk_placement record (and uploaded file)
     def create_rows!
-      bulk_placement = @placements_form.bulk_placement
-
       Placements::CreatePlacementRows.call(
-        bulk_placement: bulk_placement,
+        bulk_placement: @placements_form.bulk_placement,
         csv: @placements_form.csv,
       )
-    rescue ActiveRecord::StatementInvalid, StandardError => e
-      Sentry.capture_exception(e, extra: { provider_id: organisation.id, user_id: current_user.id })
-      bulk_placement.destroy
+    rescue ActiveRecord::StatementInvalid => e
+      capture_exception(e, :read_error)
+    rescue StandardError => e
+      capture_exception(e, :standard_error)
+    end
+
+    def capture_exception(error, error_type)
+      Sentry.capture_exception(error, extra: { provider_id: organisation.id, user_id: current_user.id })
+      @placements_form.bulk_placement.destroy
+      @placements_form.add_manual_error(error_type)
       false
     end
   end

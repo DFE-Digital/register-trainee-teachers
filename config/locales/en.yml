@@ -1446,6 +1446,8 @@ en:
               too_large: The selected file must be smaller than 1MB
               is_not_csv: The selected file must be a CSV
               invalid_header: "CSV header must include: %{headers}"
+              read_error: "There was an issue uploading your CSV file. Check you did not include special characters, for example, £ & !, in the placement school URN."
+              standard_error: "There was an issue uploading your CSV file. Check you did not include special characters, for example, £ & !, in the placement school URN."
         bulk_update:
           recommendations_uploads:
             validate_trainee:
