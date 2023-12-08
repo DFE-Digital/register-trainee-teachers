@@ -21,6 +21,11 @@ feature "bulk update page", feature_bulk_placements: true do
     then_i_see_a_success_message
   end
 
+  scenario "uploading an un-readable file" do
+    when_i_upload_the_unreadable_file
+    then_i_see_an_error_message
+  end
+
 private
 
   def then_i_see_how_many_trainees_i_can_bulk_update
@@ -58,7 +63,16 @@ private
     click_button "Upload records"
   end
 
+  def when_i_upload_the_unreadable_file
+    attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/un-readable.csv"))
+    click_button "Upload records"
+  end
+
   def then_i_see_a_success_message
     expect(page).to have_content("Placement data submitted")
+  end
+
+  def then_i_see_an_error_message
+    expect(page).to have_content("There was an issue uploading your CSV file")
   end
 end

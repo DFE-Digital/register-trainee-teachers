@@ -24,11 +24,10 @@ module BulkUpdate
     end
 
     def create
-      @placements_form = PlacementsForm.new(provider: organisation, file: file)
+      @placements_form = PlacementsForm.new(provider: organisation, file: file, user: current_user)
       @navigation_view = ::Funding::NavigationView.new(organisation:)
 
       if @placements_form.save
-        create_rows!
         redirect_to(bulk_update_placements_confirmation_path)
       else
         render(:new)
@@ -57,26 +56,6 @@ module BulkUpdate
 
     def bulk_placements
       @bulk_placements ||= current_user.organisation.without_required_placements.includes(:placements)
-    end
-
-    # for now, if anything goes wrong during creation of placement rows
-    # delete the bulk_placement record (and uploaded file)
-    def create_rows!
-      Placements::CreatePlacementRows.call(
-        bulk_placement: @placements_form.bulk_placement,
-        csv: @placements_form.csv,
-      )
-    rescue ActiveRecord::StatementInvalid => e
-      capture_exception(e, :read_error)
-    rescue StandardError => e
-      capture_exception(e, :standard_error)
-    end
-
-    def capture_exception(error, error_type)
-      Sentry.capture_exception(error, extra: { provider_id: organisation.id, user_id: current_user.id })
-      @placements_form.bulk_placement.destroy
-      @placements_form.add_manual_error(error_type)
-      false
     end
   end
 end
