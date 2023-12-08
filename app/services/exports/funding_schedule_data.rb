@@ -4,8 +4,14 @@ module Exports
   class FundingScheduleData
     include ExportsHelper
 
-    def initialize(payment_schedule:)
+    def initialize(
+      payment_schedule:,
+      start_year: AcademicCycle.current.start_year,
+      end_year: AcademicCycle.current.end_year
+    )
       @payment_schedule = payment_schedule
+      @start_year = start_year
+      @end_year = end_year
     end
 
     def to_csv
@@ -60,7 +66,7 @@ module Exports
     end
 
     def label_for(month)
-      year = month > 7 ? AcademicCycle.current.start_year : AcademicCycle.current.end_year
+      year = month > 7 ? @start_year : @end_year
       Date.new(year, month).to_fs(:govuk_approx)
     end
 

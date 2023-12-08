@@ -10,6 +10,7 @@ MONTH_HEADING = "Month"
 module Exports
   describe FundingScheduleData do
     let!(:academic_cycle) { create(:academic_cycle, :current) }
+    let!(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
 
     let(:payment_schedule) do
       create(:payment_schedule, :for_provider, :for_full_year)
@@ -99,6 +100,32 @@ module Exports
 
       def format_amount(amount_in_pence)
         amount_in_pence.zero? ? "0" : "\"#{ActionController::Base.helpers.number_to_currency(amount_in_pence.to_d / 100, unit: '£')}\""
+      end
+
+      context "for the previous academic cycle" do
+        subject(:exporter) do
+          described_class.new(
+            payment_schedule: payment_schedule,
+            start_year: previous_academic_cycle.start_year,
+            end_year: previous_academic_cycle.end_year,
+          )
+        end
+
+        let(:expected_data_line) do
+          month = 8
+          training_amount = payment_schedule.rows.where(
+            description: TRAINING_BURSARY_TRAINEES_HEADING,
+          ).first.amounts.where(month:).first.amount_in_pence
+          course_amount = payment_schedule.rows.where(
+            description: COURSE_EXTENSION_PROVIDER_PAYMENTS_HEADING,
+          ).first.amounts.where(month:).first.amount_in_pence
+
+          "August #{previous_academic_cycle.start_year},#{format_amount(training_amount)},#{format_amount(course_amount)},#{format_amount(training_amount + course_amount)}"
+        end
+
+        it "Formats data correctly" do
+          expect(exporter.to_csv).to include(expected_data_line)
+        end
       end
 
       context "with vulnerabilities in the data" do

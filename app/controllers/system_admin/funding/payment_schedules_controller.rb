@@ -7,14 +7,16 @@ module SystemAdmin
 
       helper_method :back_path
 
+      attr_reader :start_year, :end_year
+
       def show
+        @start_year = selected_academic_cycle.start_year
+        @end_year = selected_academic_cycle.end_year
+
         respond_to do |format|
           format.html do
             @payment_schedule_view = ::Funding::PaymentScheduleView.new(payment_schedule:)
             @navigation_view = ::Funding::NavigationView.new(organisation: organisation, system_admin: true)
-
-            @start_year = selected_academic_cycle.start_year
-            @end_year = selected_academic_cycle.end_year
 
             render("funding/payment_schedules/show")
           end
@@ -40,7 +42,11 @@ module SystemAdmin
       end
 
       def data_export
-        @data_export ||= Exports::FundingScheduleData.new(payment_schedule:)
+        @data_export ||= Exports::FundingScheduleData.new(
+          payment_schedule:,
+          start_year:,
+          end_year:,
+        )
       end
 
       def back_path
