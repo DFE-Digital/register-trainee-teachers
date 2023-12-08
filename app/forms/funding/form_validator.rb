@@ -19,6 +19,7 @@ module Funding
       @trainee = trainee
       @bursary_form = bursary_form_class.new(trainee)
       @training_initiatives_form = TrainingInitiativesForm.new(trainee)
+
       @fields = bursary_form_fields.merge(training_initiatives_form_fields)
     end
 

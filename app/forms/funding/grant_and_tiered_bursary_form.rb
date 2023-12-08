@@ -66,7 +66,7 @@ module Funding
       if params.present?
         fields_from_store.merge(grant_and_tiered_bursary_params).symbolize_keys
       else
-        params
+        fields_from_store.symbolize_keys
       end
     end
 

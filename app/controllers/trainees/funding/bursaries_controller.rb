@@ -11,6 +11,7 @@ module Trainees
       def update
         funding_manager
         @bursary_form = form.new(trainee, params: form_params)
+
         if @bursary_form.stash_or_save!
           redirect_to(trainee_funding_confirm_path)
         else
