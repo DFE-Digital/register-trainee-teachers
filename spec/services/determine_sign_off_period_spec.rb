@@ -8,7 +8,7 @@ describe DetermineSignOffPeriod do
 
     let(:current_year) { Time.zone.today.year }
     let(:census_period_range) { Date.new(current_year, 9, 1)..Date.new(current_year, 11, 7) }
-    let(:performance_period_range) { Date.new(current_year, 1, 1)..Date.new(current_year, 1, 31) }
+    let(:performance_period_range) { Date.new(current_year, 1, 1)..Date.new(current_year, 2, 7) }
 
     context "with a valid manual override" do
       before do
