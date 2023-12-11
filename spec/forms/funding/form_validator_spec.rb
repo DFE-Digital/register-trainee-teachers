@@ -198,11 +198,10 @@ module Funding
             end
 
             context "and GrantAndTieredBursaryForm is valid" do
-              before do
+              it "is valid" do
                 expect(grant_and_tiered_bursary_form).to receive(:valid?).and_return(true).at_least(:once)
+                expect(subject).to be_valid
               end
-
-              it { is_expected.to be_valid }
             end
           end
         end
