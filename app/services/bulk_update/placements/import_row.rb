@@ -29,7 +29,7 @@ module BulkUpdate
 
       def create_placement
         placement_row.update(school: school, state: :imported)
-        ::Placement.find_or_create_by(trainee:, school:, urn:)
+        ::Placement.find_or_create_by(trainee:, school:)
       end
 
       def record_errors
