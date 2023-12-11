@@ -82,8 +82,12 @@ FactoryBot.define do
     end
 
     trait :without_required_placements do
-      trn_received
-      with_valid_itt_start_date
+      start_academic_cycle { association(:academic_cycle, previous_cycle: true) }
+      itt_start_date { build(:academic_cycle, previous_cycle: true).start_date }
+      itt_end_date { build(:academic_cycle, previous_cycle: true).end_date }
+
+      training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+      awarded
     end
 
     trait :with_nationalities do
