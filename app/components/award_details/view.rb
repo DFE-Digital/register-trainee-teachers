@@ -16,7 +16,9 @@ module AwardDetails
       elsif trainee.recommended_for_award?
         I18n.t(
           "components.award_details.waiting_for_award",
-          recommended_for_award_at: date_for_summary_view(trainee.recommended_for_award_at),
+          recommended_for_award_at: date_for_summary_view(
+            trainee.outcome_date || trainee.recommended_for_award_at,
+          ),
         )
       end
     end

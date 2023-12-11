@@ -21,11 +21,11 @@ module AwardDetails
     end
 
     context "when trainee is recommended for award" do
-      let(:trainee) { build(:trainee, :recommended_for_award, recommended_for_award_at: 10.days.ago) }
+      let(:trainee) { build(:trainee, :recommended_for_award, recommended_for_award_at: 10.days.ago, outcome_date: 20.days.ago) }
 
       it "renders recommended date if awaiting award" do
         expect(component.find(summary_card_row_for("award-date"))).to have_text(
-          "Waiting for award - met standards on #{date_for_summary_view(trainee.recommended_for_award_at)}",
+          "Waiting for award - met standards on #{date_for_summary_view(trainee.outcome_date)}",
         )
       end
     end
