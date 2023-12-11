@@ -173,6 +173,38 @@ module Funding
             end
           end
         end
+
+        context "when grant and tiered bursary are available" do
+          let(:grant_and_tiered_bursary_form) do
+            instance_double(Funding::GrantAndTieredBursaryForm, fields: nil, applying_for_bursary: nil, applying_for_grant: nil)
+          end
+          let(:funding_manager) do
+            instance_double(
+              FundingManager,
+              applicable_available_funding: :grant_and_tiered_bursary,
+              can_apply_for_funding_type?: true,
+            )
+          end
+          let(:funding_method) { create(:funding_method, :bursary, training_route: :provider_led_postgrad) }
+
+          before do
+            allow(Funding::GrantAndTieredBursaryForm).to receive(:new).and_return(grant_and_tiered_bursary_form)
+            allow(FundingManager).to receive(:new).and_return(funding_manager)
+          end
+
+          context "when TrainingInitiativesForm is valid" do
+            before do
+              allow(training_initiative_form).to receive(:valid?).and_return(true)
+            end
+
+            context "and GrantAndTieredBursaryForm is valid" do
+              it "is valid" do
+                expect(grant_and_tiered_bursary_form).to receive(:valid?).and_return(true).at_least(:once)
+                expect(subject).to be_valid
+              end
+            end
+          end
+        end
       end
     end
 
@@ -193,7 +225,7 @@ module Funding
 
       context "with invalid TrainingInitiativesForm and Bursary form" do
         before do
-          allow(FundingManager).to receive(:new).with(trainee).and_return(double(can_apply_for_bursary?: true))
+          allow(FundingManager).to receive(:new).with(trainee).and_return(double(can_apply_for_bursary?: true, applicable_available_funding: :bursary))
         end
 
         it { is_expected.to eq([%i[training_initiative funding_type]]) }
