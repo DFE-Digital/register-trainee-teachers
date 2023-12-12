@@ -24,6 +24,14 @@ module BulkUpdate
             expect { service }.to change { ::Placement.count }.by(1)
             expect(placement_row.imported?).to be true
           end
+
+          it "creates a placement with a `school_id` but no `urn` or `name`" do
+            service
+            placement = ::Placement.last
+            expect(placement.school_id).to eq(school.id)
+            expect(placement.attributes[:urn]).to be_nil
+            expect(placement.attributes[:name]).to be_nil
+          end
         end
 
         context "when the row can be imported but is invalid" do

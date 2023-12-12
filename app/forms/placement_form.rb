@@ -11,7 +11,7 @@ class PlacementForm
 
   validate :school_valid
   validate :school_urn_valid
-  validates :name, presence: true, if: -> { urn.present? || postcode.present? }
+  validates :name, presence: true, if: -> { school_id.blank? }
   validate :urn_valid
 
   delegate :persisted?, :school, to: :placement
