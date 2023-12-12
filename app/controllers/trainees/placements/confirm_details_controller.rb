@@ -16,7 +16,7 @@ module Trainees
     private
 
       def authorize_trainee
-        placement_editable?(trainee)
+        policy(trainee).write_placements?
       end
     end
   end
