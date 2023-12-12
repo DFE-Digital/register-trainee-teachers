@@ -7,67 +7,6 @@ const idElement = document.getElementById('provider-id')
 
 let statusMessage = ' '
 
-const guard = (data) => {
-  if (data === undefined) {
-    return new Error('An error occured')
-  }
-
-  return data
-}
-
-const mapToProviders = (data) => data.providers
-
-const tryUpdateStatusMessage = (providers) => {
-  if (providers.length === 0) {
-    statusMessage = 'No results found'
-  }
-
-  return providers
-}
-
-const findProviders = ({ query, populateResults }) => {
-  idElement.value = ''
-
-  const encodedQuery = encodeURIComponent(query)
-
-  statusMessage = 'Loading...' // Shared state
-
-  window.fetch(`/api/providers?query=${encodedQuery}`)
-    .then(response => response.json())
-    .then(guard)
-    .then(mapToProviders)
-    .then(tryUpdateStatusMessage)
-    .then(populateResults)
-    .catch(console.log)
-}
-
-const inputTemplate = (value) => {
-  return value && value.name
-}
-
-const suggestionTemplate = (value) => {
-  if (!value) {
-    return
-  }
-
-  const hints = [`Code ${value.code}`, value.name, value.ukprn].filter(Boolean)
-
-  return `${value.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
-}
-
-const renderTemplate = {
-  inputValue: inputTemplate,
-  suggestion: suggestionTemplate
-}
-
-const setProviderHiddenField = (value) => {
-  if (value === undefined) {
-    return
-  }
-
-  idElement.value = value.id
-}
-
 const setupAutoComplete = (form) => {
   const element = form.querySelector('#providers-autocomplete-element')
   const inputs = form.querySelectorAll('[data-field="providers-autocomplete"]')
@@ -113,5 +52,68 @@ const setupAutoComplete = (form) => {
     console.error('Could not enhance:', err)
   }
 }
+
+const guard = (data) => {
+  if (data === undefined) {
+    return new Error('An error occured')
+  }
+
+  return data
+}
+
+const mapToProviders = (data) => data.providers
+
+const tryUpdateStatusMessage = (providers) => {
+  if (providers.length === 0) {
+    statusMessage = 'No results found'
+  }
+
+  return providers
+}
+
+const inputTemplate = (value) => {
+  return value && value.name
+}
+
+const setProviderHiddenField = (value) => {
+  if (value === undefined) {
+    return
+  }
+
+  idElement.value = value.id
+}
+
+
+const suggestionTemplate = (value) => {
+  if (!value) {
+    return
+  }
+
+  const hints = [`Code ${value.code}`, value.name, value.ukprn].filter(Boolean)
+
+  return `${value.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
+}
+
+const renderTemplate = {
+  inputValue: inputTemplate,
+  suggestion: suggestionTemplate
+}
+
+const findProviders = ({ query, populateResults }) => {
+  idElement.value = ''
+
+  const encodedQuery = encodeURIComponent(query)
+
+  statusMessage = 'Loading...' // Shared state
+
+  window.fetch(`/api/providers?query=${encodedQuery}`)
+    .then(response => response.json())
+    .then(guard)
+    .then(mapToProviders)
+    .then(tryUpdateStatusMessage)
+    .then(populateResults)
+    .catch(console.log)
+}
+
 
 nodeListForEach($allAutocompleteElements, setupAutoComplete)
