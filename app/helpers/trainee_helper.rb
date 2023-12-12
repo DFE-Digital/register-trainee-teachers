@@ -85,4 +85,8 @@ module TraineeHelper
   def course_name_for(trainee)
     trainee.provider&.courses&.find { |course| course.uuid == trainee.course_uuid }&.name
   end
+
+  def placement_editable?(trainee)
+    policy(trainee).write_placements?
+  end
 end

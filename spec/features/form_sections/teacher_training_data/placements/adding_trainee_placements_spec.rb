@@ -16,7 +16,7 @@ feature "Add a placement" do
     then_i_see_the_not_found_page
   end
 
-  %i[qts_awarded qts_recommended trn_received].each do |trait|
+  shared_examples "adding a placement" do |trait|
     scenario "Add a new placement to an existing trainee in the #{trait} state", feature_trainee_placement: true do
       given_i_am_authenticated
       and_a_postgrad_trainee_exists_with(trait)
@@ -35,6 +35,12 @@ feature "Add a placement" do
       then_i_see_a_flash_message
       and_a_new_placement_is_created
     end
+  end
+
+  context "with a trn_received state" do
+    it_behaves_like "adding a placement", :trn_received
+    it_behaves_like "adding a placement", :qts_recommended
+    it_behaves_like "adding a placement", :qts_awarded
   end
 
   scenario "Add two new placements to an existing trainee", feature_trainee_placement: true do

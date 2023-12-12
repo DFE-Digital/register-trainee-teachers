@@ -3,6 +3,7 @@
 module Trainees
   class PlacementsController < BaseController
     include Appliable
+    include TraineeHelper
 
     before_action { require_feature_flag(:trainee_placement) }
 
@@ -61,6 +62,10 @@ module Trainees
     end
 
   private
+
+    def authorize_trainee
+      placement_editable?(trainee)
+    end
 
     def relevant_redirect_path
       draft_apply_application? ? page_tracker.last_origin_page_path : trainee_placements_confirm_path(trainee)

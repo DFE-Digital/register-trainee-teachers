@@ -223,7 +223,7 @@ describe PlacementsForm, type: :model do
     end
 
     it "does not send and update to DQT" do
-      expect(Dqt::TraineeUpdate).not_to receive(:call)
+      expect(Trainees::Update).not_to receive(:call)
       subject.save!
     end
 

@@ -3,6 +3,8 @@
 module Trainees
   module Placements
     class ConfirmDetailsController < Trainees::ConfirmDetailsController
+      include TraineeHelper
+
       def update
         trainee.draft? ? toggle_trainee_progress_field : @form.save!
 
@@ -14,11 +16,7 @@ module Trainees
     private
 
       def authorize_trainee
-        authorize(trainee, :write_placements?)
-      end
-
-      def placement_editable?
-        @placement_editable ||= policy(trainee).write_placements?
+        placement_editable?(trainee)
       end
     end
   end
