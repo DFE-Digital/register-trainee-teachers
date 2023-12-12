@@ -40,6 +40,14 @@
 
 }
 
+.app-tab-navigation__item-compact {
+  @extend .app-tab-navigation__item; // stylelint-disable scss/at-extend-no-missing-placeholder
+  @include govuk-font(16);
+  @include govuk-media-query($from: 375px) {
+    margin-right: govuk-spacing(3);
+  }
+}
+
 .app-tab-navigation__link {
   @include govuk-link-common;
   @include govuk-link-style-default;
