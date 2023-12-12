@@ -107,6 +107,14 @@ class TraineePolicy
   alias_method :confirm?, :update?
   alias_method :delete?, :destroy?
 
+  def write_placements?
+    return false if user_is_read_only?
+
+    user_is_system_admin? || (
+      user_in_provider_context? && (!trainee.hesa_record? || trainee.hesa_editable?)
+    )
+  end
+
 private
 
   def read?

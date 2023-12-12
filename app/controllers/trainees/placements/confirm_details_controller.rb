@@ -10,6 +10,16 @@ module Trainees
 
         redirect_to(page_tracker.last_origin_page_path || trainee_path(trainee))
       end
+
+    private
+
+      def authorize_trainee
+        authorize(trainee, :write_placements?)
+      end
+
+      def placement_editable?
+        @placement_editable ||= policy(trainee).write_placements?
+      end
     end
   end
 end
