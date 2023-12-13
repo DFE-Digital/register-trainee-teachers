@@ -66,6 +66,16 @@ describe TraineePolicy do
     end
   end
 
+  permissions :write_placements? do
+    context "when the trainee is a HESA record in awarded state" do
+      let(:awarded_hesa_trainee) do
+        create(:trainee, :awarded, provider: provider, hesa_id: "XXX123")
+      end
+
+      it { is_expected.to permit(provider_user, awarded_hesa_trainee) }
+    end
+  end
+
   permissions :withdraw? do
     context "when trainee is deferred?" do
       before do

@@ -110,9 +110,7 @@ class TraineePolicy
   def write_placements?
     return false if user_is_read_only?
 
-    user_is_system_admin? || (
-      user_in_provider_context? && (!trainee.hesa_record? || trainee.hesa_editable?)
-    )
+    user_is_system_admin? || user_in_provider_context?
   end
 
 private
