@@ -9,11 +9,11 @@ You’ll need the following information about a trainee to register them manuall
 
 ## Personal details
 
-<ul class="govuk-list"> 
-<li> First names </li>  
-<li> Middle names  </li> 
-<li> Last or family name  </li> 
-<li> Date of birth  </li> 
+<ul class="govuk-list">
+<li> First names </li>
+<li> Middle names  </li>
+<li> Last or family name  </li>
+<li> Date of birth  </li>
 <li> Sex </li>
 <li>Nationality</li>
 <li>Personal email address</li>
@@ -40,16 +40,16 @@ You’ll need the following information about a trainee to register them manuall
 <li> Awarding institution  </li>
 <li> Subject  </li>
 <li> Grade  </li>
-<li> Graduation year </li>  
+<li> Graduation year </li>
 </ul>
 
 ### If it’s not a UK degree
 
 <ul class="govuk-list">
-<li> Country where the degree was obtained </li>  
-<li> Subject </li> 
-<li> UK ENIC comparable degree (if provided) </li>  
-<li> Graduation year </li> 
+<li> Country where the degree was obtained </li>
+<li> Subject </li>
+<li> UK ENIC comparable degree (if provided) </li>
+<li> Graduation year </li>
 </ul>
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
@@ -61,7 +61,7 @@ You’ll need the following information about a trainee to register them manuall
 <li> Subject specialisms  </li>
 <li> Full or part time  </li>
 <li> ITT start date  </li>
-Expected end date  
+Expected end date
 </ul>
 
 ### If it's not a course on Publish teacher training courses
@@ -72,7 +72,7 @@ Expected end date
 <li> Age range </li>
 <li> Full or part time (not for assessment only) </li>
 <li> ITT start date </li>
-<li> Expected end date </li> 
+<li> Expected end date </li>
 </ul>
 
 ### If it's a course leading to Early Years Teacher Status (EYTS)
@@ -99,7 +99,7 @@ These are only required for School direct and Teaching apprenticeship routes.
 
 ## Funding details
 
-Whether the trainee is on a training initiative 
+Whether the trainee is on a training initiative
 
 ### For courses with bursaries, scholarships or grants available
 
@@ -113,6 +113,8 @@ Whether the trainee is on a training initiative
 
 ## Placement details
 
-{inset-text}You should keep a record of the location of the trainee’s placements.
-
-You cannot currently provide this data but you’ll be asked to provide it later in the 2023 to 2024 academic year.{/inset-text}
+<ul class="govuk-list">
+  <li>School or setting URN if known</li>
+  <li>Placement school name</li>
+  <li>Placement school postcode</li>
+</ul>

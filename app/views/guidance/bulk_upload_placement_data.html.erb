@@ -1,0 +1,72 @@
+<%= render PageTitle::View.new(text: "Bulk upload placement data for trainee records") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "How to use this service",
+    href: guidance_path,
+    ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">Bulk upload placement data for trainee records</h1>
+
+    <p class="govuk-body-m">You can use Register trainee teachers (Register) to bulk upload placement data for trainee records.</p>
+
+    <h2 class="govuk-heading-m">Add placement data</h2>
+
+    <p class="govuk-body-m">You can bulk add placement data to registered trainee records.</p>
+
+    <p class="govuk-body-m">You can change placement details  <%= govuk_link_to("manually in an individual trainee’s record", manually_registering_trainees_guidance_path) %>.
+      You can also use the Higher Education Statistics Agency (HESA) service to update trainees in-year, if you have access to it.
+    </p>
+
+    <h2 class="govuk-heading-m">How to bulk upload placement data</h2>
+
+    <ol class="govuk-list govuk-list--number">
+      <li>Make sure you are signed into Register. Click into ‘Bulk updates’ in the main navigation.</li>
+      <li>Download a CSV file listing the trainees with missing placement data.</li>
+      <li>Add missing placement URNs.</li>
+      <li>Upload the CSV file</li>
+    </ol>
+
+    <h2 class="govuk-heading-m">1. Sign into Register</h2>
+
+    <p class="govuk-body-m">Once you have signed into Register, you can <%= govuk_link_to("access the bulk update feature", new_bulk_update_placements_path) %></p>
+
+    <h2 class="govuk-heading-m">2. Download a CSV file listing trainees with missing placement data</h2>
+
+    <p class="govuk-body-m">For the purposes of the performance profile sign off deadline in January 2024, the CSV file will only include data for all trainees who:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>were QTS awarded in the <%= @previous_academic_cycle.label %> academic year</li>
+      <li>are on all training routes apart from assessment only</li>
+      <li>do not have a minimum of 2 placements recorded</li>
+    </ul>
+
+    <p class="govuk-body-m">The CSV will not include:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>iQTS trainees who qualified in <%= @previous_academic_cycle.label %> academic year as their placement data are not being mandated for the performance profile sign off</li>
+      <li>trainees who have deferred or withdrawn.</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">3. Add missing placement details to the CSV file</h2>
+
+    <p class="govuk-body-m">In the columns ‘Placement 1 URN’ and ‘Placement 2 URN’ add the school’s URN.</p>
+
+    <p class="govuk-body-m">You can find the URNs using <a href="https://get-information-schools.service.gov.uk/Search" class="govuk-link" rel="noreferrer noopener" target="_blank">Get information about schools</a>.</p>
+
+    <p class="govuk-body-m">You cannot add information in bulk if the school or setting does not have a URN. Add those placements to the trainee record manually.</p>
+
+    <p class="govuk-body-m">If the trainee had more than 2 placements, add those extra placements to the trainee record manually.</p>
+
+    <p class="govuk-body-m">If you do not have the information for a placement, leave the cell empty. Overwriting the content of a cell with a new URN will replace the existing placement with your new URN if it is a valid URN.</p>
+
+    <p class="govuk-body-m">Deleting the content of a cell will not delete the placement in Register – you'll need to delete the placement manually in the trainee record.</p>
+
+    <h2 class="govuk-heading-m">4. Upload the CSV file</h2>
+
+    <p class="govuk-body-m">Ensure you have saved the file as a CSV file. It will not be accepted in any other format.</p>
+  </div>
+</div>
