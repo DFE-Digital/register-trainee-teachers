@@ -7,19 +7,10 @@ feature "Delete a placement" do
     FormStore.clear_all(@trainee.id)
   end
 
-  scenario "Attempt to delete a placement when feature flag is inactive" do
-    given_i_am_authenticated
-    and_a_draft_trainee_exists_with_a_placement
-
-    when_i_navigate_to_the_delete_placement_form
-    then_i_see_the_not_found_page
-  end
-
   scenario "Delete a placement from an existing trainee when feature flag is active" do
     given_i_am_authenticated
     and_a_draft_trainee_exists_with_a_placement
 
-    when_the_feature_flag_is_active
     and_i_navigate_to_the_delete_placement_form
     then_i_see_the_delete_placement_form
 
@@ -60,10 +51,6 @@ private
 
   def then_i_see_the_not_found_page
     expect(page).to have_current_path(not_found_path)
-  end
-
-  def when_the_feature_flag_is_active
-    enable_features(:trainee_placement)
   end
 
   def then_i_see_the_delete_placement_form
