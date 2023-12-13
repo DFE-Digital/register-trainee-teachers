@@ -43,6 +43,8 @@ features:
     sync_trn_data: true
   dqt_import:
     sync_teachers: true
+  trainee_placement: true
+  bulk_placements: true
 environment:
   name: beta
 
