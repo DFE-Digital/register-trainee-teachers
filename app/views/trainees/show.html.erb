@@ -47,7 +47,7 @@
 
 <% if @trainee.requires_placements? %>
   <div class="placement-details">
-    <%= render PlacementDetails::View.new(data_model: @trainee, editable: trainee_editable?) %>
+    <%= render PlacementDetails::View.new(data_model: @trainee, editable: policy(@trainee).write_placements?) %>
   </div>
 <% end %>
 

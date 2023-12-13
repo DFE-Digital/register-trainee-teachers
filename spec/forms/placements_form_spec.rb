@@ -207,7 +207,7 @@ describe PlacementsForm, type: :model do
     end
   end
 
-  describe "#save!" do
+  describe "#save!", feature_integrate_with_dqt: true do
     let(:placement_form1) { instance_double(PlacementForm) }
     let(:placement_form2) { instance_double(PlacementForm) }
 
@@ -220,6 +220,11 @@ describe PlacementsForm, type: :model do
 
     it "run save on all the placement form objects" do
       expect(subject.save!).to be_present
+    end
+
+    it "does not send and update to DQT" do
+      expect(Trainees::Update).not_to receive(:call)
+      subject.save!
     end
 
     context "if trainee has not provided placement detail" do

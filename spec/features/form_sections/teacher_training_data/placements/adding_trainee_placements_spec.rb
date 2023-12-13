@@ -16,23 +16,31 @@ feature "Add a placement" do
     then_i_see_the_not_found_page
   end
 
-  scenario "Add one new placement to an existing trainee", feature_trainee_placement: true do
-    given_i_am_authenticated
-    and_a_postgrad_trainee_exists_with_trn_received
-    and_a_school_exists
-    and_i_navigate_to_the_trainee_dashboard
-    and_i_click_to_enter_first_placement
-    then_i_see_the_new_placement_form
+  shared_examples "adding a placement" do |trait|
+    scenario "Add a new placement to an existing trainee in the #{trait} state", feature_trainee_placement: true do
+      given_i_am_authenticated
+      and_a_postgrad_trainee_exists_with(trait)
+      and_a_school_exists
+      and_i_navigate_to_the_trainee_dashboard
+      and_i_click_to_enter_first_placement
+      then_i_see_the_new_placement_form
 
-    when_i_select_an_existing_school
-    and_i_click_continue
-    then_i_see_the_confirmation_page
-    and_i_see_the_new_placement_ready_for_confirmation
-    and_no_placements_are_created
+      when_i_select_an_existing_school
+      and_i_click_continue
+      then_i_see_the_confirmation_page
+      and_i_see_the_new_placement_ready_for_confirmation
+      and_no_placements_are_created
 
-    when_i_click_update
-    then_i_see_a_flash_message
-    and_a_new_placement_is_created
+      when_i_click_update
+      then_i_see_a_flash_message
+      and_a_new_placement_is_created
+    end
+  end
+
+  context "with a trn_received state" do
+    it_behaves_like "adding a placement", :trn_received
+    it_behaves_like "adding a placement", :qts_recommended
+    it_behaves_like "adding a placement", :qts_awarded
   end
 
   scenario "Add two new placements to an existing trainee", feature_trainee_placement: true do
@@ -74,13 +82,13 @@ private
     expect(page).to have_current_path(trainee_path(trainee))
   end
 
-  def and_a_trainee_exists_with_trn_received
-    @trainee ||= given_a_trainee_exists(:trn_received)
+  def and_a_postgrad_trainee_exists_with(trait)
+    @trainee ||= given_a_trainee_exists(trait, :early_years_postgrad)
     FormStore.clear_all(@trainee.id)
   end
 
-  def and_a_postgrad_trainee_exists_with_trn_received
-    @trainee ||= given_a_trainee_exists(:trn_received, :early_years_postgrad)
+  def and_a_trainee_exists_with_trn_received
+    @trainee ||= given_a_trainee_exists(:trn_received)
     FormStore.clear_all(@trainee.id)
   end
 
