@@ -1,13 +1,10 @@
 <ul class="govuk-list govuk-list--spaced">
   <li>
     <p>
-      New trainees for the <%= @current_academic_cycle_label %> academic year - will be available for census sign off
+      Reports are available for <%= govuk_link_to "trainees who studied in the #{@previous_academic_cycle_label} academic year", performance_profiles_reports_path, class: "performance-profiles" %> - for performance profiles sign off
     </p>
   </li>
   <li>
-    <p>
-      <%= govuk_link_to "Trainees who studied in the #{@previous_academic_cycle_label} academic year", performance_profiles_reports_path, class: "performance-profiles" %>
-      - for performance profiles sign off
-    </p>
+    <p>You can read <%= govuk_link_to("guidance about signing off performance profiles", performance_profiles_guidance_path) %></p>
   </li>
 </ul>

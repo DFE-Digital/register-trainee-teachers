@@ -62,8 +62,8 @@ private
 
   def then_i_should_see_the_performance_period_content
     expect(reports_page).not_to have_text("No reports are currently available.")
-    expect(reports_page).to have_text("New trainees for the #{current_cycle.label} academic year - will be available for census sign off")
-    expect(reports_page).to have_text("Trainees who studied in the #{previous_cycle.label} academic year - for performance profiles sign off")
+    expect(reports_page).to have_text("Reports are available for trainees who studied in the #{previous_cycle.label} academic year - for performance profiles sign off")
+    expect(reports_page).to have_text("You can read guidance about signing off performance profiles")
   end
 
   def then_i_should_see_the_census_period_content

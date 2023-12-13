@@ -9,7 +9,8 @@ class DetermineSignOffPeriod
     current_date = Time.zone.today
 
     return :census_period if census_range.cover?(current_date)
-    return :performance_period if performance_range.cover?(current_date)
+
+    return :performance_period if in_performance_range?(current_date)
 
     :outside_period
   end
@@ -29,10 +30,10 @@ class DetermineSignOffPeriod
     start_date..end_date
   end
 
-  def self.performance_range
-    start_date = Date.new(Time.zone.today.year, 1, 1) # 1st January
-    end_date = Date.new(Time.zone.today.year, 1, 31) # 31st January
+  def self.in_performance_range?(date)
+    jan_to_feb_range = Date.new(Time.zone.today.year, 1, 1)..Date.new(Time.zone.today.year, 2, 7)
+    december_range = Date.new(Time.zone.today.year, 12, 1)..Date.new(Time.zone.today.year, 12, 31)
 
-    start_date..end_date
+    jan_to_feb_range.cover?(date) || december_range.cover?(date)
   end
 end
