@@ -20,7 +20,6 @@ features:
     iqts: true
   user_can_have_multiple_organisations: true
   funding: true
-  trainee_placement: true
   bulk_placements: true
 
 pagination:
