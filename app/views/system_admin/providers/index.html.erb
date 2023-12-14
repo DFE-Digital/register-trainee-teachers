@@ -12,6 +12,32 @@
 </p>
 
 <% if @providers.any? %>
+
+  <%= register_form_with url: providers_path,
+                         local: true,
+                         method: :get,
+                         html: { data: { module: "app-providers-autocomplete" } } do |f| %>
+
+    <%= f.hidden_field :provider_id, id: "provider-id" %>
+
+    <%= f.govuk_text_field(
+      :query,
+      form_group: { class: "govuk-form-group app-js-only" },
+      label: { text: "Search for a provider", size: "s" },
+      hint: { text: "Search for a provider by its code, name or UKPRN" },
+      value: params[:query],
+      "data-field" => "providers-autocomplete",
+      width: "three-quarters",
+    )%>
+
+    <div id="providers-autocomplete-element"
+         class="govuk-!-width-three-quarters"
+         data-default-value="<%= params[:query] %>"
+         data-field-name="system_admin_user_providers_form[query]">
+    </div>
+
+  <% end %>
+
   <div class="govuk-!-margin-bottom-8">
     <%= render ProviderCard::View.with_collection(@providers) %>
   </div>

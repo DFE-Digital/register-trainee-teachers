@@ -9,6 +9,7 @@
 #  code               :string
 #  discarded_at       :datetime
 #  name               :string           not null
+#  searchable         :tsvector
 #  ukprn              :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -20,9 +21,11 @@
 #  index_providers_on_accreditation_id  (accreditation_id) UNIQUE
 #  index_providers_on_discarded_at      (discarded_at)
 #  index_providers_on_dttp_id           (dttp_id) UNIQUE
+#  index_providers_on_searchable        (searchable) USING gin
 #
 class Provider < ApplicationRecord
   include Discard::Model
+  include PgSearch::Model
 
   has_many :provider_users, inverse_of: :provider
   has_many :users, through: :provider_users
@@ -58,7 +61,18 @@ class Provider < ApplicationRecord
 
   has_associated_audits
 
+  before_save :update_searchable
+
   before_update :update_courses, if: :code_changed?
+
+  pg_search_scope :search,
+                  against: %i[name code ukprn],
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      tsvector_column: "searchable",
+                    },
+                  }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
 
@@ -88,5 +102,33 @@ private
 
   def update_courses
     Course.where(accredited_body_code: code_was).update_all(accredited_body_code: code)
+  end
+
+  def update_searchable
+    ts_vector_value = [
+      code,
+      name,
+      name_normalised,
+      ukprn,
+    ].join(" ")
+
+    to_tsvector = Arel::Nodes::NamedFunction.new(
+      "TO_TSVECTOR", [
+        Arel::Nodes::Quoted.new("pg_catalog.simple"),
+        Arel::Nodes::Quoted.new(ts_vector_value),
+      ]
+    )
+
+    self.searchable =
+      ActiveRecord::Base
+        .connection
+        .execute(Arel::SelectManager.new.project(to_tsvector).to_sql)
+        .first
+        .values
+        .first
+  end
+
+  def name_normalised
+    ReplaceAbbreviation.call(string: StripPunctuation.call(string: name))
   end
 end

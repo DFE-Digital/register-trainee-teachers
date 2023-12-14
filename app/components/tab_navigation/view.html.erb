@@ -1,7 +1,7 @@
 <nav class="app-tab-navigation govuk-!-margin-bottom-4" aria-label="Sub navigation">
   <ul class="app-tab-navigation__list">
     <% items.each do |item| %>
-      <li class="app-tab-navigation__item">
+      <li class="<%= list_item_class %>">
         <% if item.fetch(:current, false) || current_page?(item.fetch(:url)) %>
           <%= govuk_link_to item[:name], item[:url], class: "app-tab-navigation__link", aria: { current: "page" } %>
         <% else %>

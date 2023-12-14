@@ -6,7 +6,7 @@
 #
 #  id                       :bigint           not null, primary key
 #  csv_row_number           :integer          not null
-#  state                    :integer          default(0), not null
+#  state                    :integer          default("pending"), not null
 #  trn                      :string           not null
 #  urn                      :string           not null
 #  created_at               :datetime         not null

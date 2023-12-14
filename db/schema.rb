@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_29_155934) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_12_160255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -704,9 +704,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_29_155934) do
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
+    t.tsvector "searchable"
     t.index ["accreditation_id"], name: "index_providers_on_accreditation_id", unique: true
     t.index ["discarded_at"], name: "index_providers_on_discarded_at"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
+    t.index ["searchable"], name: "index_providers_on_searchable", using: :gin
   end
 
   create_table "schools", force: :cascade do |t|

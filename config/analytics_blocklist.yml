@@ -280,6 +280,8 @@
   - otp_secret
   :schools:
   - searchable
+  :providers:
+  - searchable
   :trainee_disabilities:
   - id
   - trainee_id
