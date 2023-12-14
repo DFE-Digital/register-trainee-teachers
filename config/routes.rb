@@ -226,6 +226,8 @@ Rails.application.routes.draw do
     get "/performance-profiles", to: "guidance#performance_profiles"
     get "/bulk-recommend-trainees", to: "guidance#bulk_recommend_trainees"
     get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
+    get "/manage-placements", to: "guidance#manage_placements"
+    get "/bulk-upload-placement-data", to: "guidance#bulk_upload_placement_data"
   end
 
   if FeatureService.enabled?("funding")

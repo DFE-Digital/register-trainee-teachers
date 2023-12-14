@@ -60,6 +60,26 @@
       </li>
     </ul>
 
+    <h2 class="govuk-heading-m">Recording placement data</h2>
+
+    <ul class="govuk-list govuk-list--spaced">
+      <li>
+        <%= govuk_link_to(
+            "Manage your trainee placement data in Register",
+            manage_placements_guidance_path,
+          ) %>
+      </li>
+      <% if FeatureService.enabled?(:bulk_placements) %>
+        <li>
+          <%= govuk_link_to(
+              "Bulk upload placement data",
+              bulk_upload_placement_data_guidance_path,
+            ) %>
+        </li>
+      <% end %>
+    </ul>
+
+
     <% @census_sign_off = sign_off_period == :census_period ? "Sign" : "Signing" %>
     <% @performance_sign_off = sign_off_period == :performance_period ? "Sign" : "Signing" %>
 
