@@ -90,6 +90,23 @@ module Trainees
           expect(subject.count).to eq(4)
         end
       end
+
+      context "when multiple placements have been created in the same request" do
+        let(:trainee) { create(:trainee) }
+
+        before do
+          create(:placement, trainee:)
+          create(:placement, trainee:)
+          trainee.update_column(:submitted_for_trn_at, 1.day.ago)
+          ::Audited::Audit.where(auditable_type: Placement.name).update_all(request_uuid: SecureRandom.uuid)
+          reload_audits
+        end
+
+        it "returns all the placement events" do
+          expect(trainee.own_and_associated_audits.where(auditable_type: Placement.name).count).to eq(2)
+          expect(subject.count).to eq(3)
+        end
+      end
     end
 
     def update_name
