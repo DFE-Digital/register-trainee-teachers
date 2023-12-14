@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "bulk update page", feature_bulk_placements: true do
+feature "bulk update page" do
   before do
     given_i_am_authenticated
     given_there_are_trainees_without_placements
