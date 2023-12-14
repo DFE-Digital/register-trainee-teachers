@@ -20,7 +20,6 @@ features:
     iqts: true
   user_can_have_multiple_organisations: true
   funding: true
-  bulk_placements: true
 
 pagination:
   records_per_page: 30
