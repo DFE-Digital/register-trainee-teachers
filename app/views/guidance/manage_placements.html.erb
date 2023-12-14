@@ -13,29 +13,31 @@
 
     <p class="govuk-body-m">You are now required to have school placement data in Register.</p>
 
-    <p class="govuk-body-m">This new requirement will be tied to trainees who studied in the <%= @previous_academic_cycle.label %> academic year for performance profiles sign off. </p>
+    <p class="govuk-body-m">This new requirement will be tied to trainees who have been awarded QTS or EYTS in the <%= @previous_academic_cycle.label %> academic year.</p>
 
     <p class="govuk-body-m">The performance profile sign off period starts in <%= @performance_profile_sign_off_start_period %> with a deadline of <%= @performance_profile_sign_off_full_deadline %>.</p>
 
     <h2 class="govuk-heading-m">What type of school placement data is required</h2>
 
-    <p class="govuk-body-m">You only need to provide location information about placements – the URN (if known) or the school name and postcode.</p>
+    <p class="govuk-body-m">You only need to provide location information about placements – the URN (if known) or the school/setting name and postcode.</p>
 
-    <p class="govuk-body-m">^ You do not need to provide duration of time spent at each placement</p>
+    <p class="govuk-body-m">You do not need to provide duration of time spent at each placement.</p>
 
     <h2 class="govuk-heading-m">How to include placement data as part of the <%= @previous_academic_cycle.label %> performance profiles sign off period</h2>
 
-    <p class="govuk-body-m">A minimum of 2 placements is required for each registered trainee with a successful course outcome in the <%= @previous_academic_cycle.label %> academic year.</p>
+    <p class="govuk-body-m">A minimum of 2 placements is required for each trainee who have been awarded QTS or EYTS in the <%= @previous_academic_cycle.label %> academic year.</p>
 
-    <p class="govuk-body-m">^ HEI providers will be notified by email in early <%= @performance_profile_sign_off_short_deadline %> when their placement data has been imported into Register for them to check and fill in any missing placement information. We will only import the URN from the student collection. </p>
+    <%= govuk_inset_text do %>
+      <p class="govuk-body-m">HEI providers will be notified by email in early <%= @performance_profile_sign_off_short_deadline %> when their placement data has been imported into Register for them to check and fill in any missing placement information. We will only import the URN from the student collection.</p>
+    <% end %>
 
     <h3 class="govuk-heading-s">Manually record placement data</h3>
 
     <p class="govuk-body-m">Manual input is recommended for providers with a small number of registered trainees.</p>
 
-    <p class="govuk-body-m">You must use manual input if you do not have school placement URNs.</p>
+    <p class="govuk-body-m">You must use manual input if you do not have placement school URNs.</p>
 
-    <p class="govuk-body-m">Find out how to include placement data in trainee records manually.</p>
+    <p class="govuk-body-m">Find out <%= govuk_link_to("how to include placement data in trainee records manually", check_data_guidance_path ) %>.</p>
 
     <% if FeatureService.enabled?(:bulk_placements) %>
       <h3 class="govuk-heading-s">Bulk upload placement data</h3>
@@ -44,7 +46,7 @@
 
       <p class="govuk-body-m">You can only use bulk upload if you have the school placement URN.</p>
 
-      <p class="govuk-body-m">Find out <%= govuk_link_to("how to bulk upload missing placement data", bulk_upload_placement_data_guidance_path ) %></p>
+      <p class="govuk-body-m">Find out <%= govuk_link_to("how to bulk upload missing placement data", bulk_upload_placement_data_guidance_path ) %>.</p>
     <% end %>
 
     <h2 class="govuk-heading-m">Placement data in Register next steps</h2>
