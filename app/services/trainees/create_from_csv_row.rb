@@ -82,7 +82,32 @@ module Trainees
     end
 
     def ethnic_background
-      ::Hesa::CodeSets::Ethnicities::NAME_MAPPING[csv_row["Ethnicity"]]
+      ::Hesa::CodeSets::Ethnicities::NAME_MAPPING[ethnicity_split&.first]
+    end
+
+    def additional_ethnic_background
+      ethnicity_split&.last
+    end
+
+    def ethnicity_split
+      csv_row["Ethnicity"]&.split(":")&.map(&:strip)
+    end
+
+    def ethnicity_attributes
+      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+
+        return {
+          ethnic_group:,
+          ethnic_background:,
+          additional_ethnic_background:,
+        }
+      end
+
+      {
+        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        ethnic_background: Diversities::NOT_PROVIDED,
+      }
     end
 
     def disabilities
