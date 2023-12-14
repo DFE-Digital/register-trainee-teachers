@@ -7,17 +7,8 @@ feature "Add a placement" do
     FormStore.clear_all(@trainee.id) if @trainee.present?
   end
 
-  scenario "Attempt to add new placement when feature flag is inactive", feature_trainee_placement: false do
-    given_i_am_authenticated
-    and_a_trainee_exists_with_trn_received
-    and_a_school_exists
-
-    when_i_navigate_to_the_new_placement_form
-    then_i_see_the_not_found_page
-  end
-
   shared_examples "adding a placement" do |trait|
-    scenario "Add a new placement to an existing trainee in the #{trait} state", feature_trainee_placement: true do
+    scenario "Add a new placement to an existing trainee in the #{trait} state" do
       given_i_am_authenticated
       and_a_postgrad_trainee_exists_with(trait)
       and_a_school_exists
@@ -43,7 +34,7 @@ feature "Add a placement" do
     it_behaves_like "adding a placement", :qts_awarded
   end
 
-  scenario "Add two new placements to an existing trainee", feature_trainee_placement: true do
+  scenario "Add two new placements to an existing trainee" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_a_school_exists

@@ -200,7 +200,7 @@ module Submissions
             expect(subject.errors).to be_empty
           end
 
-          context "without placements", feature_trainee_placement: true do
+          context "without placements" do
             let(:trainee) do
               create(
                 :trainee,

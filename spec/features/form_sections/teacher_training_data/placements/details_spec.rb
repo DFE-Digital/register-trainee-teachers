@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "add placement details", feature_trainee_placement: true do
+feature "add placement details" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(training_route: valid_training_routes.sample)

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Editing a placement", feature_trainee_placement: true do
+feature "Editing a placement" do
   background do
     given_i_am_authenticated
   end

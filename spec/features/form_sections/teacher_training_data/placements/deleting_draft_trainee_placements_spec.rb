@@ -7,7 +7,7 @@ feature "Delete a placement" do
     FormStore.clear_all(@trainee.id)
   end
 
-  scenario "Delete a placement from an existing trainee when feature flag is active" do
+  scenario "Delete a placement from an existing trainee" do
     given_i_am_authenticated
     and_a_draft_trainee_exists_with_a_placement
 
