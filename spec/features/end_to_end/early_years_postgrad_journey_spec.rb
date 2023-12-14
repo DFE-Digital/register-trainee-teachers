@@ -17,6 +17,7 @@ feature "early_years_postgrad end-to-end journey" do
     and_the_degree_details_is_complete
     and_the_ey_course_details_is_complete
     and_the_trainee_id_is_complete
+    and_the_placements_details_is_complete
     and_the_funding_details_with_bursary_is_complete
     and_the_draft_record_has_been_reviewed
     and_all_sections_are_complete
