@@ -41,9 +41,22 @@ module Trainees
 
     # The audited gem creates multiple audits when multiple associations are
     # created e.g. when a user saves more than one disability for a trainee.
-    # For now, just show one 'create' timeline entry.
+    # For now, just show one 'create' timeline entry unless the group contains
+    # placement entries in which case we show all.
     def grouped_audits
-      audits.includes(:user, :auditable).group_by(&:request_uuid).map { |_, audits| audits.first }
+      audits
+        .includes(:user, :auditable)
+        .group_by(&:request_uuid)
+        .map { |_, audits| first_or_placements(audits) }
+        .flatten
+    end
+
+    def first_or_placements(audits)
+      if audits.any? { |audit| audit.auditable_type == Placement.name }
+        audits
+      else
+        audits.first
+      end
     end
 
     def audits
