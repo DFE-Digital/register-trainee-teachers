@@ -83,7 +83,6 @@ const setProviderHiddenField = (value) => {
   idElement.value = value.id
 }
 
-
 const suggestionTemplate = (value) => {
   if (!value) {
     return
@@ -114,6 +113,5 @@ const findProviders = ({ query, populateResults }) => {
     .then(populateResults)
     .catch(console.log)
 }
-
 
 nodeListForEach($allAutocompleteElements, setupAutoComplete)
