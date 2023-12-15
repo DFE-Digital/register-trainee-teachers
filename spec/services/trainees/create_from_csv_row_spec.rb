@@ -202,6 +202,19 @@ module Trainees
           end
         end
 
+        context "when disability is provided as \"Other:\"" do
+          before do
+            csv_row.merge!({ "Disabilities" => "Other: something else" })
+            described_class.call(provider:, csv_row:)
+          end
+
+          it "sets disability to other and records 'something else' to additional_disability" do
+            expect(trainee.disabilities.first.name).to eq("Other")
+            expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+            expect(trainee.trainee_disabilities.first.additional_disability).to eq("something else")
+          end
+        end
+
         context "when disability is provided as No known disability" do
           before do
             csv_row.merge!({ "Disabilities" => "No disabilities" })

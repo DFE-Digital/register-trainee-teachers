@@ -111,10 +111,61 @@ module Trainees
     end
 
     def disabilities
-      return [] if csv_row["Disabilities"].nil?
+      @disabilities ||=
+        if csv_row["Disabilities"].nil?
+          []
+        elsif csv_row["Disabilities"].start_with?(Diversities::OTHER)
+          # Handle the 'Other' disability case
+          other_disability = csv_row["Disabilities"].split(":", 2).last.strip
+          [[Diversities::OTHER, other_disability]]
+        else
+          # Handle standard disabilities
+          csv_row["Disabilities"].split(",").map(&:strip)
+            .map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }
+            .compact
+        end
+    end
 
-      disabilities = csv_row["Disabilities"].split(",").map(&:strip)
-      disabilities.map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
+    def disability_attributes
+      if !disability_disclosed?
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
+        }
+      end
+
+      if disabilities == [Diversities::NO_KNOWN_DISABILITY]
+        return {
+          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
+        }
+      end
+
+      disabilities_hash = disabilities.each_with_index.map do |disability, index|
+        if disability.is_a?(Array) && disability.first == Diversities::OTHER
+          # Handling the 'Other' disability case
+          other_disability = Disability.find_by(name: Diversities::OTHER)
+          {
+            index.to_s => {
+              disability_id: other_disability.id,
+              additional_disability: disability.last,
+            },
+          }
+        else
+          # Handling standard disabilities
+          standard_disability = Disability.find_by(name: disability)
+          if standard_disability
+            {
+              index.to_s => {
+                disability_id: standard_disability.id,
+              },
+            }
+          end
+        end
+      end.compact.reduce({}, :merge)
+
+      {
+        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
+        trainee_disabilities_attributes: disabilities_hash,
+      }
     end
 
     def first_names
