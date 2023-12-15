@@ -17,3 +17,12 @@ Data migrations can/should be tested using production data. To download a copy f
 7. This will have overwritten any migrations you have created for the feature you are working on, if so run
    `bundle exec rails db:migrate`
 8. Finally, **ensure the psql dump is deleted once testing is complete**.
+
+
+## specs
+
+Where a migration has logic beyond looping a list and updating records, it is best practice to include a service within
+the migration and write a spec for the service. See for an example:
+
+- [add_ethnicity_to_teach_first_trainees_spec.rb](spec/data_migrations/add_ethnicity_to_teach_first_trainees_spec.rb)
+- [20231214132713_add_ethnicity_to_teach_first_trainees.rb](db/data/20231214132713_add_ethnicity_to_teach_first_trainees.rb)
