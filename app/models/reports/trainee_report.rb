@@ -75,7 +75,7 @@ module Reports
 
       placement = placements.second
 
-      placement.school.urn
+      placement.school_id.present? ? placement.school.urn : placement.name
     end
 
     def other_placements
