@@ -25,6 +25,9 @@ module "web_application" {
   service_short           = var.service_short
   azure_enable_monitoring = var.enable_container_monitoring
   kubernetes_cluster_id   = module.cluster_data.kubernetes_id
+
+  pod_service_account_name = "workload-identity-sa"
+  use_workload_identity    = "true"
 }
 
 module "worker_application" {
