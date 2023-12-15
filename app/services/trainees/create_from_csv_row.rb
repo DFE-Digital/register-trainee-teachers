@@ -115,56 +115,63 @@ module Trainees
         if csv_row["Disabilities"].nil?
           []
         elsif csv_row["Disabilities"].start_with?(Diversities::OTHER)
-          # Handle the 'Other' disability case
-          other_disability = csv_row["Disabilities"].split(":", 2).last.strip
-          [[Diversities::OTHER, other_disability]]
+          handle_other_disability
         else
-          # Handle standard disabilities
-          csv_row["Disabilities"].split(",").map(&:strip)
-            .map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }
-            .compact
+          parse_standard_disabilities
         end
     end
 
+    def handle_other_disability
+      other_disability = csv_row["Disabilities"].split(":", 2).last.strip
+      [[Diversities::OTHER, other_disability]]
+    end
+
+    def parse_standard_disabilities
+      csv_row["Disabilities"].split(",").map(&:strip)
+        .map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }
+        .compact
+    end
+
     def disability_attributes
-      if !disability_disclosed?
-        return {
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
-        }
-      end
-
-      if disabilities == [Diversities::NO_KNOWN_DISABILITY]
-        return {
-          disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability],
-        }
-      end
-
-      disabilities_hash = disabilities.each_with_index.map do |disability, index|
-        if disability.is_a?(Array) && disability.first == Diversities::OTHER
-          # Handling the 'Other' disability case
-          other_disability = Disability.find_by(name: Diversities::OTHER)
-          {
-            index.to_s => {
-              disability_id: other_disability.id,
-              additional_disability: disability.last,
-            },
-          }
-        else
-          # Handling standard disabilities
-          standard_disability = Disability.find_by(name: disability)
-          if standard_disability
-            {
-              index.to_s => {
-                disability_id: standard_disability.id,
-              },
-            }
-          end
-        end
-      end.compact.reduce({}, :merge)
+      return { disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] } unless disability_disclosed?
+      return { disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] } if disabilities == [Diversities::NO_KNOWN_DISABILITY]
 
       {
         disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
-        trainee_disabilities_attributes: disabilities_hash,
+        trainee_disabilities_attributes: build_disabilities_hash,
+      }
+    end
+
+    def build_disabilities_hash
+      disabilities.each_with_index.map do |disability, index|
+        if other_disability?(disability)
+          build_other_disability_hash(disability, index)
+        else
+          build_standard_disability_hash(disability, index)
+        end
+      end.compact.reduce({}, :merge)
+    end
+
+    def other_disability?(disability)
+      disability.is_a?(Array) && disability.first == Diversities::OTHER
+    end
+
+    def build_other_disability_hash(disability, index)
+      other_disability = Disability.find_by(name: Diversities::OTHER)
+      {
+        index.to_s => {
+          disability_id: other_disability.id,
+          additional_disability: disability.last,
+        },
+      }
+    end
+
+    def build_standard_disability_hash(disability, index)
+      standard_disability = Disability.find_by(name: disability)
+      return nil unless standard_disability
+
+      {
+        index.to_s => { disability_id: standard_disability.id },
       }
     end
 
