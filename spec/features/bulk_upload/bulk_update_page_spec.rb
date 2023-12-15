@@ -7,7 +7,7 @@ feature "bulk update page" do
     given_i_am_authenticated
   end
 
-  context "there are placements to bulk upload", feature_bulk_placements: true do
+  context "there are placements to bulk upload" do
     before do
       given_a_trainee_exists(:without_required_placements)
       and_i_visit_the_bulk_update_page
@@ -19,7 +19,7 @@ feature "bulk update page" do
     end
   end
 
-  context "there are no placements to bulk upload", feature_bulk_placements: true do
+  context "there are no placements to bulk upload" do
     before do
       given_a_trainee_exists(:with_placements)
       and_i_visit_the_bulk_update_page

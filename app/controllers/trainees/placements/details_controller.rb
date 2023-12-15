@@ -3,8 +3,6 @@
 module Trainees
   module Placements
     class DetailsController < BaseController
-      before_action { require_feature_flag(:trainee_placement) }
-
       def edit
         @placement_detail_form = PlacementDetailForm.new(trainee)
       end

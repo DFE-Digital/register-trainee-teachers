@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "confirm placements", feature_trainee_placement: true do
+feature "confirm placements" do
   background do
     given_i_am_authenticated
     given_a_trainee_exists
@@ -23,14 +23,6 @@ feature "confirm placements", feature_trainee_placement: true do
     given_i_am_on_the_confirm_placement_details_page
     when_i_click_on_add_a_placement_button
     then_i_am_redirected_to_add_a_placement_page
-  end
-
-  context "feature flag is off", feature_trainee_placement: false do
-    scenario "error onadding a placements" do
-      given_i_am_on_the_confirm_placement_details_page
-      when_i_click_on_add_a_placement_button
-      then_i_am_redirected_to_404_page
-    end
   end
 
 private

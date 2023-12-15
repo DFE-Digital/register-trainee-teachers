@@ -50,6 +50,7 @@ module Submissions
                   :school_direct_tuition_fee,
                   :with_lead_school,
                   :with_employing_school,
+                  :with_placements,
                   :completed,
                   progress: progress.merge(schools: true),
                 )
@@ -99,6 +100,7 @@ module Submissions
                   :trainee,
                   :school_direct_tuition_fee,
                   :with_lead_school,
+                  :with_placements,
                   :completed,
                   progress: progress.merge(schools: true),
                 )
@@ -120,6 +122,7 @@ module Submissions
                     :with_lead_school,
                     :with_employing_school,
                     :completed,
+                    :with_placements,
                     progress: progress.merge(schools: true),
                   )
                 end
@@ -197,7 +200,7 @@ module Submissions
             expect(subject.errors).to be_empty
           end
 
-          context "without placements", feature_trainee_placement: true do
+          context "without placements" do
             let(:trainee) do
               create(
                 :trainee,

@@ -2,8 +2,6 @@
 
 module BulkUpdate
   class PlacementsController < ApplicationController
-    before_action { require_feature_flag(:bulk_placements) }
-
     helper_method :bulk_placements_count, :organisation_filename
 
     def new

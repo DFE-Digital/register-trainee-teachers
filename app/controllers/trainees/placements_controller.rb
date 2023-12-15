@@ -5,8 +5,6 @@ module Trainees
     include Appliable
     include TraineeHelper
 
-    before_action { require_feature_flag(:trainee_placement) }
-
     def new
       @placement_form = PlacementForm.new(
         placements_form: placements_form,

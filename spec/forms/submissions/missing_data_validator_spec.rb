@@ -26,7 +26,7 @@ module Submissions
         end
       end
 
-      context "when only the placements section is missing data", feature_trainee_placement: true do
+      context "when only the placements section is missing data" do
         let(:trainee) { build(:trainee, :submitted_with_start_date, :early_years_salaried) }
 
         it "is valid" do
@@ -83,7 +83,7 @@ module Submissions
         end
       end
 
-      context "Trainee with missing placements", feature_trainee_placement: true do
+      context "Trainee with missing placements" do
         let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad) }
 
         it "doesn't cause validation errors" do
@@ -91,7 +91,7 @@ module Submissions
         end
       end
 
-      context "non draft trainee", feature_trainee_placement: true do
+      context "non draft trainee" do
         let(:trainee) { Trainee.new(training_route: :provider_led_postgrad, state: :submitted_for_trn) }
 
         it "cause validation errors" do

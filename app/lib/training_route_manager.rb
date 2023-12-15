@@ -47,7 +47,7 @@ class TrainingRouteManager
   end
 
   def requires_placements?
-    PLACEMENTS_ROUTES.keys.include?(training_route) && FeatureService.enabled?(:trainee_placement)
+    PLACEMENTS_ROUTES.keys.include?(training_route)
   end
 
   def undergrad_route?
