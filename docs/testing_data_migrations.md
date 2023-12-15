@@ -24,5 +24,5 @@ Data migrations can/should be tested using production data. To download a copy f
 Where a migration has logic beyond looping a list and updating records, it is best practice to include a service within
 the migration and write a spec for the service. See for an example:
 
-- [add_ethnicity_to_teach_first_trainees_spec.rb](spec/data_migrations/add_ethnicity_to_teach_first_trainees_spec.rb)
-- [20231214132713_add_ethnicity_to_teach_first_trainees.rb](db/data/20231214132713_add_ethnicity_to_teach_first_trainees.rb)
+- [add_ethnicity_to_teach_first_trainees_spec.rb](../spec/data_migrations/add_ethnicity_to_teach_first_trainees_spec.rb)
+- [20231214132713_add_ethnicity_to_teach_first_trainees.rb](../db/data/20231214132713_add_ethnicity_to_teach_first_trainees.rb)
