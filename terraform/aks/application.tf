@@ -20,6 +20,9 @@ module "web_application" {
   replicas    = each.value.replicas
   web_external_hostnames = var.gov_uk_host_names
   probe_path  = each.value.probe_path
+
+  pod_service_account_name = "workload-identity-sa"
+  use_workload_identity = "true"
 }
 
 module "worker_application" {
