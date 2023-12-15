@@ -206,8 +206,8 @@ jobs:
         id: deploy_review
         uses: ./.github/actions/deploy/
         with:
-          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
-          environment: review
+          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_DV_REVIEW }}
+          environment: dv_review_aks
           pr-number: ${{ github.event.pull_request.number }}
           sha: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
