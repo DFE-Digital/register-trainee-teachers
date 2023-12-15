@@ -36,7 +36,7 @@ runs:
       run: |
         if [ ! -z "${{ inputs.pr-number }}" ]; then
           PR_NUMBER=${{ inputs.pr-number }}
-          echo "base_url: https://register-pr-$PR_NUMBER.test.teacherservices.cloud" >> config/settings/review.yml
+          echo "base_url: https://register-pr-$PR_NUMBER.cluster1.development.teacherservices.cloud" >> config/settings/review.yml
         fi;
 
     - name: Bundle smoke test gems
@@ -48,7 +48,7 @@ runs:
 
     - name: Smoke Tests ${{ inputs.environment }}
       shell: bash
-      run: RAILS_ENV=${{ inputs.app-env }} ./bin/bundle exec rspec spec/smoke
+      run: RAILS_ENV=review ./bin/bundle exec rspec spec/smoke
       env:
         SMOKE_TEST_USERNAME: ${{ inputs.smoke-test-username }}
         SMOKE_TEST_PASSWORD: ${{ inputs.smoke-test-password }}
