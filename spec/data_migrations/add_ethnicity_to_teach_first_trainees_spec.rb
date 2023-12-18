@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
+require Rails.root.join("db/data/20231214132713_add_ethnicity_to_teach_first_trainees")
 
 describe AddEthnicityToTeachFirstTrainees::Service do
   let(:teach_first_provider) { create(:provider, :teach_first) }
