@@ -1,15 +1,20 @@
 # frozen_string_literal: true
 
-class BackfillApplicationChoiceId
-  include ServicePattern
+class BackfillApplicationChoiceIdJob < ApplicationJob
+  queue_as :default
 
-  attr_reader :trainee
-
-  def initialize(trainee:)
-    @trainee = trainee
+  def perform
+    academic_cycle = AcademicCycle.for_year(2022)
+    Trainee
+      .where(start_academic_cycle: academic_cycle)
+      .where(application_choice_id: nil).find_each do |trainee|
+      backfill(trainee:)
+    end
   end
 
-  def call
+private
+
+  def backfill(trainee:)
     return if trainee.application_choice_id.present?
 
     if trainee.hesa_record?
@@ -18,8 +23,6 @@ class BackfillApplicationChoiceId
       backfill_from_apply(trainee:)
     end
   end
-
-private
 
   def backfill_from_hesa(trainee:)
     application_choice_id = trainee.hesa_students.last&.application_choice_id
