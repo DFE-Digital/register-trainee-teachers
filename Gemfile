@@ -56,7 +56,7 @@ gem "sidekiq-cron", "~> 1.12"
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
 
-gem "config", "~> 5.0"
+gem "config", "~> 5.1"
 
 gem "httparty", "~> 0.21"
 
