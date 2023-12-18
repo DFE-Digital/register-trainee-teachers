@@ -82,14 +82,97 @@ module Trainees
     end
 
     def ethnic_background
-      ::Hesa::CodeSets::Ethnicities::NAME_MAPPING[csv_row["Ethnicity"]]
+      ::Hesa::CodeSets::Ethnicities::NAME_MAPPING[ethnicity_split&.first]
+    end
+
+    def additional_ethnic_background
+      ethnicity_split&.last
+    end
+
+    def ethnicity_split
+      csv_row["Ethnicity"]&.split(":")&.map(&:strip)
+    end
+
+    def ethnicity_attributes
+      if Diversities::BACKGROUNDS.values.flatten.include?(ethnic_background)
+        ethnic_group = Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+
+        return {
+          ethnic_group:,
+          ethnic_background:,
+          additional_ethnic_background:,
+        }
+      end
+
+      {
+        ethnic_group: Diversities::ETHNIC_GROUP_ENUMS[:not_provided],
+        ethnic_background: Diversities::NOT_PROVIDED,
+      }
     end
 
     def disabilities
-      return [] if csv_row["Disabilities"].nil?
+      @disabilities ||=
+        if csv_row["Disabilities"].nil?
+          []
+        elsif csv_row["Disabilities"].start_with?(Diversities::OTHER)
+          handle_other_disability
+        else
+          parse_standard_disabilities
+        end
+    end
 
-      disabilities = csv_row["Disabilities"].split(",").map(&:strip)
-      disabilities.map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }.compact
+    def handle_other_disability
+      other_disability = csv_row["Disabilities"].split(":", 2).last.strip
+      [[Diversities::OTHER, other_disability]]
+    end
+
+    def parse_standard_disabilities
+      csv_row["Disabilities"].split(",").map(&:strip)
+        .map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }
+        .compact
+    end
+
+    def disability_attributes
+      return { disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] } unless disability_disclosed?
+      return { disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] } if disabilities == [Diversities::NO_KNOWN_DISABILITY]
+
+      {
+        disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled],
+        trainee_disabilities_attributes: build_disabilities_hash,
+      }
+    end
+
+    def build_disabilities_hash
+      disabilities.each_with_index.map do |disability, index|
+        if other_disability?(disability)
+          build_other_disability_hash(disability, index)
+        else
+          build_standard_disability_hash(disability, index)
+        end
+      end.compact.reduce({}, :merge)
+    end
+
+    def other_disability?(disability)
+      disability.is_a?(Array) && disability.first == Diversities::OTHER
+    end
+
+    def build_other_disability_hash(disability, index)
+      other_disability = Disability.find_by(name: Diversities::OTHER)
+      {
+        index.to_s => {
+          disability_id: other_disability.id,
+          additional_disability: disability.last,
+        },
+      }
+    end
+
+    def build_standard_disability_hash(disability, index)
+      standard_disability = Disability.find_by(name: disability)
+      return nil unless standard_disability
+
+      {
+        index.to_s => { disability_id: standard_disability.id },
+      }
     end
 
     def first_names

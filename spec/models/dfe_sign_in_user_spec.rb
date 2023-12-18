@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-# rubocop:disable RSpec/FilePath
+# rubocop:disable RSpec/FilePath, RSpec/SpecFilePathFormat
 describe DfESignInUser do
   describe ".load_from_session" do
     it "returns the DfE User when the user has signed in and has been recently active" do
@@ -37,4 +37,4 @@ describe DfESignInUser do
     end
   end
 end
-# rubocop:enable RSpec/FilePath
+# rubocop:enable RSpec/FilePath, RSpec/SpecFilePathFormat

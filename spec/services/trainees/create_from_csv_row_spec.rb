@@ -176,6 +176,19 @@ module Trainees
           end
         end
 
+        context "when ethnicity is provided with additional ethnic background" do
+          before do
+            csv_row.merge!({ "Ethnicity" => "Any other Black background: Afghan" })
+            described_class.call(provider:, csv_row:)
+          end
+
+          it "sets the ethnic_group, background and additional background" do
+            expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:black])
+            expect(trainee.ethnic_background).to eq(Diversities::ANOTHER_BLACK_BACKGROUND)
+            expect(trainee.additional_ethnic_background).to eq("Afghan")
+          end
+        end
+
         context "when disability is provided" do
           before do
             csv_row.merge!({ "Disabilities" => "Learning difficulty" })
@@ -186,6 +199,19 @@ module Trainees
             expect(trainee.disabilities.first.name).to eq("Learning difficulty")
             expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
             expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
+          end
+        end
+
+        context "when disability is provided as \"Other:\"" do
+          before do
+            csv_row.merge!({ "Disabilities" => "Other: something else" })
+            described_class.call(provider:, csv_row:)
+          end
+
+          it "sets disability to other and records 'something else' to additional_disability" do
+            expect(trainee.disabilities.first.name).to eq("Other")
+            expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+            expect(trainee.trainee_disabilities.first.additional_disability).to eq("something else")
           end
         end
 
