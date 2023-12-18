@@ -17,7 +17,7 @@
         Edit user <%= @user.name %>
       </h1>
 
-      <%= f.govuk_text_field :email, label: { text: "Email address", size: "s" }, width: 20, autocomplete: :off %>
+      <%= f.govuk_text_field :email, label: { text: "Email address", size: "s" }, width: 20, autocomplete: :off, maxlength: 255 %>
 
       <%= f.govuk_submit %>
     <% end %>
