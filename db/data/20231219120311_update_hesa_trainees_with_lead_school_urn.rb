@@ -19,7 +19,7 @@ private
 
   def trainees
     Trainee.left_joins(:hesa_students)
-           .where(lead_school_id: nil, lead_school_not_applicable: true)
+           .where(lead_school_id: nil, lead_school_not_applicable: true, start_academic_cycle_id: AcademicCycle.current)
            .where.not(hesa_students: { lead_school_urn: Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS })
            .where.not(hesa_students: { lead_school_urn: nil })
            .distinct
