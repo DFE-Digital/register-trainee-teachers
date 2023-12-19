@@ -64,7 +64,7 @@ class DfESignInUser
   end
 
   def system_admin?
-    user.present? && user.system_admin?
+    !!user&.system_admin?
   end
 
 private

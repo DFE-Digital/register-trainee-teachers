@@ -54,7 +54,7 @@ describe DfESignInUser do
       let(:system_admin) { false }
 
       it "returns false" do
-        expect(signin_user.system_admin?).to be(false)
+        expect(signin_user).not_to be_system_admin
       end
     end
 
@@ -63,7 +63,7 @@ describe DfESignInUser do
       let(:discarded_at) { 1.day.ago }
 
       it "returns false" do
-        expect(signin_user.system_admin?).to be(false)
+        expect(signin_user).not_to be_system_admin
       end
     end
 
@@ -71,7 +71,7 @@ describe DfESignInUser do
       let(:system_admin) { true }
 
       it "returns true" do
-        expect(signin_user.system_admin?).to be(true)
+        expect(signin_user).to be_system_admin
       end
     end
   end

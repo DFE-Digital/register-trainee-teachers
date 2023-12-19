@@ -41,7 +41,7 @@ class OtpSignInUser
   end
 
   def system_admin?
-    user&.system_admin?
+    !!user&.system_admin?
   end
 
   def end_session!
