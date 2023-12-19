@@ -78,17 +78,110 @@ describe Provider do
   end
 
   describe "#without_required_placements" do
-    before do
-      create(:academic_cycle, previous_cycle: true)
-      create(:academic_cycle, :current)
-      create_list(:trainee, 2, provider:)
+    let!(:this_cycle) { create(:academic_cycle, :current) }
+    let!(:last_cycle) { create(:academic_cycle, previous_cycle: true) }
+    let(:provider) { create(:provider) }
+    let(:other_provider) { create(:provider) }
+    let(:itt_start_date) { this_cycle.start_date }
+    let(:itt_end_date) { this_cycle.end_date }
+    let(:trainee) do
+      create(
+        :trainee, :without_required_placements, provider:, itt_start_date:, itt_end_date:
+      )
+    end
+    let!(:other_provider_trainee) do
+      create(
+        :trainee,
+        :without_required_placements,
+        provider: other_provider,
+        itt_start_date: itt_start_date,
+        itt_end_date: itt_end_date,
+      )
     end
 
-    let(:provider) { create(:provider) }
-    let!(:trainee) { create(:trainee, :without_required_placements, provider:) }
+    context "when the trainee is in the current cycle" do
+      it "pulls the correct trainee(s) back" do
+        expect(provider.without_required_placements).to contain_exactly(trainee)
+      end
 
-    it "pulls the correct trainee(s) back" do
-      expect(provider.without_required_placements).to contain_exactly(trainee)
+      it "does not find trainees for other providers" do
+        expect(provider.without_required_placements).not_to include(other_provider_trainee)
+      end
+    end
+
+    context "when the trainee is in the previous cycle" do
+      let(:itt_start_date) { last_cycle.start_date }
+      let(:itt_end_date) { last_cycle.end_date }
+
+      it "pulls the correct trainee(s) back" do
+        expect(provider.without_required_placements).to contain_exactly(trainee)
+      end
+    end
+
+    context "when the trainee is in training" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :trn_received,
+          provider: provider,
+          training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+        )
+      end
+
+      it "pulls the correct trainee(s) back" do
+        expect(provider.without_required_placements).to contain_exactly(trainee)
+      end
+    end
+
+    context "when the trainee is assessment-only" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :trn_received,
+          provider: provider,
+          training_route: TRAINING_ROUTE_ENUMS[:assessment_only],
+        )
+      end
+
+      it "doesn't include the trainee" do
+        expect(provider.without_required_placements).to be_empty
+      end
+    end
+
+    context "when the trainee is withdrawn" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :withdrawn,
+          provider: provider,
+          training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+        )
+      end
+
+      it "doesn't include the trainee" do
+        expect(provider.without_required_placements).to be_empty
+      end
+    end
+
+    context "when the trainee already has one placement" do
+      before do
+        create(:placement, trainee:)
+      end
+
+      it "pulls the correct trainee(s) back" do
+        expect(provider.without_required_placements).to contain_exactly(trainee)
+      end
+    end
+
+    context "when the trainee already has two placements" do
+      before do
+        create(:placement, trainee:)
+        create(:placement, trainee:)
+      end
+
+      it "doesn't include the trainee" do
+        expect(provider.without_required_placements).to be_empty
+      end
     end
   end
 end
