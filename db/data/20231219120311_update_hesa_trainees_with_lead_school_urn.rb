@@ -3,11 +3,11 @@
 class UpdateHesaTraineesWithLeadSchoolUrn < ActiveRecord::Migration[7.1]
   def up
     trainees.each do |trainee|
-      lead_shcool = find_lead_school(trainee)
+      lead_school = find_lead_school(trainee)
 
-      next unless lead_shcool
+      next unless lead_school
 
-      trainee.update(lead_shcool: lead_shcool, lead_school_not_applicable: false)
+      trainee.update(lead_school: lead_school, lead_school_not_applicable: false)
     end
   end
 
@@ -28,11 +28,11 @@ private
   def find_lead_school(trainee)
     latest_hesa_student_record = trainee.hesa_students.order(updated_at: :desc).first
 
-    return if latest_hesa_student_record&.lead_shcool_urn.blank?
+    return if latest_hesa_student_record&.lead_school_urn.blank?
 
     School.find_by(
       urn: latest_hesa_student_record.lead_school_urn,
-      lead_shcool: true,
+      lead_school: true,
     )
   end
 end
