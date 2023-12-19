@@ -63,6 +63,10 @@ class DfESignInUser
     @user ||= user_by_uid || user_by_email
   end
 
+  def system_admin?
+    !!user&.system_admin?
+  end
+
 private
 
   def user_by_uid

@@ -24,12 +24,28 @@ describe "A user authenticates via Email Sign-in" do
     ).and_return(mailer)
   end
 
-  scenario "signing in successfully", feature_sign_in_method: "otp" do
-    given_i_am_registered_as_a_user
-    and_submit_my_email
-    and_enter_my_otp
-    then_i_am_redirected_to_the_root_path
-    and_i_should_see_the_link_to_sign_out
+  context "as a non-system admin" do
+    scenario "signing in successfully", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_my_email
+      and_enter_my_otp
+      then_i_am_redirected_to_the_root_path
+      and_i_should_see_the_link_to_sign_out
+      and_i_should_not_see_the_link_to_the_support_interface
+    end
+  end
+
+  context "as a system admin" do
+    let!(:user) { create(:user, :system_admin, :with_otp_secret) }
+
+    scenario "signing in successfully", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_my_email
+      and_enter_my_otp
+      then_i_am_redirected_to_the_root_path
+      and_i_should_see_the_link_to_the_support_interface
+      and_i_can_access_the_support_interface
+    end
   end
 
 private
@@ -55,5 +71,17 @@ private
 
   def and_i_should_see_the_link_to_sign_out
     expect(page).to have_content("Sign out")
+  end
+
+  def and_i_should_see_the_link_to_the_support_interface
+    expect(page).to have_content("Support for Register")
+  end
+
+  def and_i_should_not_see_the_link_to_the_support_interface
+    expect(page).not_to have_content("Support for Register")
+  end
+
+  def and_i_can_access_the_support_interface
+    click_link("Support for Register")
   end
 end
