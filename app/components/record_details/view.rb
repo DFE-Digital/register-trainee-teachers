@@ -78,10 +78,6 @@ module RecordDetails
       end
     end
 
-    def trainee_status_tag
-      render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date
-    end
-
     def last_updated_row
       {
         field_label: t(".last_updated"),
