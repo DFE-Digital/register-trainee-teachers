@@ -14,10 +14,10 @@
   <div class="app-summary-card__body">
     <%= render GovukComponent::SummaryListComponent.new do |summary_list| %>
       <% summary_rows.each do |summary_row| %>
-        <% summary_list.row(classes: summary_row[:key].to_s.downcase.gsub(/ /, "-")) do |row|
-          row.key(text: summary_row[:key])
-          row.value(text: summary_row[:value])
-          row.action(text: t(".change_course"), href: summary_row[:action])
+        <% summary_list.with_row(classes: summary_row[:key].to_s.downcase.gsub(/ /, "-")) do |row|
+          row.with_key(text: summary_row[:key])
+          row.with_value(text: summary_row[:value])
+          row.with_action(text: t(".change_course"), href: summary_row[:action])
         end %>
       <% end %>
     <% end %>
