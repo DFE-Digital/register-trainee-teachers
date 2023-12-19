@@ -27,6 +27,6 @@ private
   def login_redirect_path
     return organisations_path if current_user.multiple_organisations? || current_user.no_organisation?
 
-    (session.delete(:requested_path) || root_path)
+    session.delete(:requested_path) || root_path
   end
 end
