@@ -96,7 +96,7 @@ module Trainees
     end
 
     def course_subject_attribute_name(number = position)
-      "course_subject_#{number_in_words(number)}".to_sym
+      :"course_subject_#{number_in_words(number)}"
     end
 
     def number_in_words(number)

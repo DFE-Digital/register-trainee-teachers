@@ -111,7 +111,7 @@ module Funding
                   allow(bursary_form).to receive(:valid?).and_return(false)
                 end
 
-                let(:applying_for_funding_type_error_key) { "applying_for_#{funding_type}".to_sym }
+                let(:applying_for_funding_type_error_key) { :"applying_for_#{funding_type}" }
                 let(:applying_for_funding_type_error_message_key) do
                   "activemodel.errors.models.funding/form_validator.attributes.#{applying_for_funding_type_error_key}.inclusion"
                 end
@@ -152,7 +152,7 @@ module Funding
                   allow(bursary_form).to receive(:valid?).and_return(false)
                 end
 
-                let(:applying_for_funding_type_error_key) { "applying_for_#{funding_type}".to_sym }
+                let(:applying_for_funding_type_error_key) { :"applying_for_#{funding_type}" }
                 let(:applying_for_funding_type_error_message_key) do
                   "activemodel.errors.models.funding/form_validator.attributes.#{applying_for_funding_type_error_key}.inclusion"
                 end

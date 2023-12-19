@@ -129,7 +129,7 @@ class CourseDetailsForm < TraineeForm
 
     attrs = {}
     if age_range.present? && !trainee.early_years_route?
-      attrs["#{age_range[:option]}_age_range".to_sym] = course_age_range.join(" to ")
+      attrs[:"#{age_range[:option]}_age_range"] = course_age_range.join(" to ")
       attrs[:main_age_range] = :other if age_range[:option] == :additional
     end
 
@@ -263,7 +263,7 @@ private
     age_range = AgeRange::MAPPING[trainee.course_age_range]
 
     if age_range.present? && !trainee.early_years_route?
-      attributes["#{age_range[:option]}_age_range".to_sym] = trainee.course_age_range.join(" to ")
+      attributes[:"#{age_range[:option]}_age_range"] = trainee.course_age_range.join(" to ")
       attributes[:main_age_range] = :other if age_range[:option] == :additional
     end
 

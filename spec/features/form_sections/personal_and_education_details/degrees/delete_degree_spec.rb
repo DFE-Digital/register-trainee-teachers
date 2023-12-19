@@ -50,7 +50,7 @@ private
   end
 
   def trainee
-    (@uk_trainee || @non_uk_trainee)
+    @uk_trainee || @non_uk_trainee
   end
 
   def uk_trainee

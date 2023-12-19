@@ -50,7 +50,7 @@ module SystemAdmin
       @dead_job_services ||=
         DeadJobs
           .constants
-          .select { |constant| (DeadJobs.const_get(constant).is_a?(Class) && constant != :Base) }
+          .select { |constant| DeadJobs.const_get(constant).is_a?(Class) && constant != :Base }
           .map { |constant| "::DeadJobs::#{constant}".constantize.new }
     end
   end

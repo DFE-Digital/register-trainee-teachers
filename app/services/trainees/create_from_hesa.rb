@@ -184,7 +184,7 @@ module Trainees
 
     def disabilities
       (1..9).map do |n|
-        ::Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee["disability#{n}".to_sym]]
+        ::Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:"disability#{n}"]]
       end.compact
     end
 
