@@ -82,6 +82,19 @@ module Trainees
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
 
+      context "when lead_school_not_applicable was previously set to true" do
+        before do
+          trainee.update(lead_school_not_applicable: true, lead_school_id: nil)
+          described_class.call(hesa_trainee: student_attributes, record_source: record_source)
+          trainee.reload
+        end
+
+        it "updates the trainee's lead_school and lead_school_not_applicable state" do
+          expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
+          expect(trainee.lead_school_not_applicable).to be false
+        end
+      end
+
       it "updates the trainee's funding details" do
         expect(trainee.applying_for_bursary).to be(false)
         expect(trainee.applying_for_grant).to be(false)
