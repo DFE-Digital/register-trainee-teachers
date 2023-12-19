@@ -10,7 +10,7 @@ module InformationSummary
 
         before do
           render_inline(described_class.new(renderable: true)) do |component|
-            component.header { content }
+            component.with_header { content }
           end
         end
 

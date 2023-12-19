@@ -1,5 +1,5 @@
 <%= render summary_component.new(renderable: render?) do |component| %>
-  <% component.header  do %>
+  <% component.with_header  do %>
     <%= invalid_data_view.summary_content %>
   <% end %>
 

@@ -10,7 +10,7 @@ module InformationSummary
 
     def with_header_content
       render(View.new(renderable: true)) do |component|
-        component.header do
+        component.with_header do
           "Some header content"
         end
 
