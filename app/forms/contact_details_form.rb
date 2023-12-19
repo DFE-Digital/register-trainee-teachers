@@ -6,7 +6,7 @@ class ContactDetailsForm < TraineeForm
   attr_accessor(*FIELDS)
 
   before_validation :sanitise_email
-  validates :email, presence: true
+  validates :email, presence: true, length: { maximum: 255 }
 
   validate do |record|
     EmailFormatValidator.new(record).validate

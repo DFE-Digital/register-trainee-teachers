@@ -16,6 +16,12 @@ describe ContactDetailsForm, type: :model do
   describe "validations" do
     it { is_expected.to validate_presence_of(:email) }
 
+    it "validates length of email" do
+      subject.email = "a" * 256
+      expect(subject).not_to be_valid
+      expect(subject.errors[:email]).to include("is too long (maximum is 255 characters)")
+    end
+
     context "empty form data" do
       let(:params) do
         {

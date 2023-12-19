@@ -29,6 +29,24 @@ feature "Creating a new user" do
         when_i_save_the_form
         then_i_should_see_the_error_summary
       end
+
+      scenario "Failing to add a user with first name exceeding the character limit" do
+        and_i_fill_in_first_name_with_too_many_characters
+        when_i_save_the_form
+        then_i_should_see_the_error_summary
+      end
+
+      scenario "Failing to add a user with last name exceeding the character limit" do
+        and_i_fill_in_last_name_with_too_many_characters
+        when_i_save_the_form
+        then_i_should_see_the_error_summary
+      end
+
+      scenario "Failing to add a user with email exceeding the character limit" do
+        and_i_fill_in_email_with_too_many_characters
+        when_i_save_the_form
+        then_i_should_see_the_error_summary
+      end
     end
   end
 
@@ -60,6 +78,18 @@ private
 
   def and_i_fill_in_dttp_id
     admin_new_user_page.dttp_id.set(dttp_id)
+  end
+
+  def and_i_fill_in_first_name_with_too_many_characters
+    admin_new_user_page.first_name.set("A" * 256)
+  end
+
+  def and_i_fill_in_last_name_with_too_many_characters
+    admin_new_user_page.last_name.set("A" * 256)
+  end
+
+  def and_i_fill_in_email_with_too_many_characters
+    admin_new_user_page.email.set("A" * 256)
   end
 
   def when_i_save_the_form

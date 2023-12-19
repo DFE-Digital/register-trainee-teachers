@@ -3,7 +3,7 @@
 class OtpForm
   include ActiveModel::Model
 
-  validates :email, presence: true
+  validates :email, presence: true, length: { maximum: 255 }
   validate do |record|
     ::EmailFormatValidator.new(record).validate if email.present?
   end

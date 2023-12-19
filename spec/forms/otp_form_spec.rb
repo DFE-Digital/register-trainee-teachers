@@ -32,6 +32,15 @@ describe OtpForm, type: :model do
         expect(form.valid?).to be true
       end
     end
+
+    context "with an email that is too long" do
+      let(:email) { "a" * 256 }
+
+      it "returns the correct error message" do
+        expect(form.valid?).to be false
+        expect(error_message).to include("is too long (maximum is 255 characters)")
+      end
+    end
   end
 
   describe "#email" do
