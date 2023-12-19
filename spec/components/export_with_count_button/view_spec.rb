@@ -41,7 +41,7 @@ module ExportWithCountButton
     describe "no record text" do
       before do
         render_inline(described_class.new(button_text: button_text, count: 0, count_label: count_label, href: href)) do |component|
-          component.no_record_text { "No trainees found" }
+          component.with_no_record_text { "No trainees found" }
         end
       end
 
