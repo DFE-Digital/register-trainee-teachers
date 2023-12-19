@@ -27,7 +27,7 @@
           awardable_rows.each_slice(@table_row_limit).with_index do |(*rows), index|
             heading_text = "#{"Trainee".pluralize(rows.count)} #{from_to((@table_row_limit*index) + 1, (@table_row_limit*index) + rows.count)} you’ll recommend for #{qts_or_eyts(recommendations_upload.awardable_rows)}"
 
-            accordion.section(heading_text: heading_text) do
+            accordion.with_section(heading_text: heading_text) do
               render partial: "table", locals: { rows: rows, caption: heading_text }
             end
           end
