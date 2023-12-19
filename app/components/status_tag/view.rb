@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-class StatusTag::View < GovukComponent::Base
-  def initialize(trainee:, classes: "", hide_progress_tag: false)
-    super(classes: classes, html_attributes: {})
+class StatusTag::View < ViewComponent::Base
+  def initialize(trainee:, hide_progress_tag: false)
     @trainee = trainee
     @hide_progress_tag = hide_progress_tag
   end
@@ -46,10 +45,10 @@ private
     return if hide_progress_tag
     return if trainee.draft? || trainee.submission_ready? || !trainee.awaiting_action?
 
-    { status: "incomplete", status_colour: "grey", classes: classes.push("govuk-tag--white") }
+    { status: "incomplete", status_colour: "grey", classes: default_classes + ["govuk-tag--white"] }
   end
 
   def record_state_tag
-    { status:, status_colour:, classes: }
+    { status: status, status_colour: status_colour, classes: default_classes }
   end
 end
