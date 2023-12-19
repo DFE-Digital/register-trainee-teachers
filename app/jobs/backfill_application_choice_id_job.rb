@@ -5,11 +5,11 @@ class BackfillApplicationChoiceIdJob < ApplicationJob
 
   def perform
     academic_cycle = AcademicCycle.for_year(2022)
-    Trainee
-      .where(start_academic_cycle: academic_cycle)
-      .where(application_choice_id: nil).find_each do |trainee|
-      backfill(trainee:)
-    end
+    Trainee.where(start_academic_cycle: academic_cycle)
+      .where(application_choice_id: nil)
+      .find_each do |trainee|
+        backfill(trainee:)
+      end
   end
 
 private
