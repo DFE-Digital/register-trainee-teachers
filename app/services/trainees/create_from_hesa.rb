@@ -136,7 +136,7 @@ module Trainees
       if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_school_urn])
         attrs.merge!(lead_school_not_applicable: true)
       else
-        attrs.merge!(lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]))
+        attrs.merge!(lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]), lead_school_not_applicable: false)
       end
 
       if hesa_trainee[:employing_school_urn].present?
