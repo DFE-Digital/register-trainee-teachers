@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module NotificationBanner
-  class View < GovukComponent::Base
-    attr_reader :text, :title_id
+  class View < ViewComponent::Base
+    attr_reader :text, :title_id, :classes
 
     SUCCESS_TITLE = "Success"
     DEFAULT_TITLE = "Important"
@@ -21,9 +21,9 @@ module NotificationBanner
       title_id: nil,
       disable_auto_focus: false
     )
-      super(classes: classes, html_attributes: {})
       @title_text = title_text
       @text = text
+      @classes = classes
       @type = type
       @role = role
       @title_id = title_id || "#{DEFAULT_CLASS}-title"
