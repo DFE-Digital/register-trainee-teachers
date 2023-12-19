@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-class TaskList::View < GovukComponent::Base
+class TaskList::View < ViewComponent::Base
   renders_many :rows, "Row"
 
   def any_row_has_status?
     rows.any? { |r| r.status.present? }
-  end
-
-  def initialize(classes: [], html_attributes: {})
-    super
   end
 
 private
@@ -18,10 +14,10 @@ private
   end
 
   class Row < GovukComponent::Base
-    attr_accessor :task_name, :status, :hint_text, :active
+    attr_accessor :task_name, :status, :hint_text, :active, :classes
 
-    def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, active: true, classes: [], html_attributes: {})
-      super(classes:, html_attributes:)
+    def initialize(task_name:, path:, confirm_path: nil, status:, hint_text: nil, active: true, classes: [])
+      @classes = [default_classes, classes]
 
       @task_name = task_name
       @path = path

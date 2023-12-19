@@ -8,7 +8,7 @@ describe TaskList::View do
 
   before do
     render_inline(TaskList::View.new) do |component|
-      component.row(
+      component.with_row(
         task_name: "some key",
         path: "some_path",
         status: status,
