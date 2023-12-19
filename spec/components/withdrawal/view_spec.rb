@@ -28,30 +28,30 @@ describe Withdrawal::View do
 
   context "when showing a withdrawal" do
     it "renders trainee start date" do
-      expect(rendered_component).to have_text(date_for_summary_view(trainee.trainee_start_date))
+      expect(rendered_content).to have_text(date_for_summary_view(trainee.trainee_start_date))
     end
 
     it "renders the date of withdrawal" do
-      expect(rendered_component).to have_text(date_for_summary_view(withdraw_date))
+      expect(rendered_content).to have_text(date_for_summary_view(withdraw_date))
     end
 
     it "renders the withdrawal details" do
-      expect(rendered_component).to have_text(withdraw_reasons_details)
+      expect(rendered_content).to have_text(withdraw_reasons_details)
     end
 
     it "renders the withdrawal dfe details" do
-      expect(rendered_component).to have_text(withdraw_reasons_dfe_details)
+      expect(rendered_content).to have_text(withdraw_reasons_dfe_details)
     end
 
     it "renders the reason for withdrawal" do
-      expect(rendered_component).to have_text(I18n.t("components.withdrawal_details.reasons.#{withdrawal_reasons.first.name}"))
+      expect(rendered_content).to have_text(I18n.t("components.withdrawal_details.reasons.#{withdrawal_reasons.first.name}"))
     end
 
     context "with no withdrawal date present" do
       let(:withdraw_date) { nil }
 
       it "renders no date of withdrawal" do
-        expect(rendered_component).to have_css("#date-the-trainee-withdrew", text: "-")
+        expect(rendered_content).to have_css("#date-the-trainee-withdrew", text: "-")
       end
     end
   end

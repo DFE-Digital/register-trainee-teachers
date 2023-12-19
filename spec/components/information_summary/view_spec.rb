@@ -15,7 +15,7 @@ module InformationSummary
         end
 
         it "renders the given content from the block" do
-          expect(rendered_component).to have_css("p", text: content)
+          expect(rendered_content).to have_css("p", text: content)
         end
       end
 
@@ -31,7 +31,7 @@ module InformationSummary
         end
 
         it "renders the given content from the block" do
-          expect(rendered_component).to have_css("li", count: 1)
+          expect(rendered_content).to have_css("li", count: 1)
         end
       end
     end
@@ -42,7 +42,7 @@ module InformationSummary
       end
 
       it "does not render" do
-        expect(rendered_component).not_to have_css(".govuk-notification-banner")
+        expect(rendered_content).not_to have_css(".govuk-notification-banner")
       end
     end
   end

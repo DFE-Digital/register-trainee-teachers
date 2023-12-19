@@ -24,12 +24,12 @@ module Funding
           let(:applying_for_bursary) { true }
 
           it "renders grant text" do
-            expect(rendered_component).to have_text("Not grant funded")
+            expect(rendered_content).to have_text("Not grant funded")
           end
 
           it "renders tiered bursary text" do
-            expect(rendered_component).to have_text("Applied for Tier 1")
-            expect(rendered_component).to have_text("£5,000 estimated bursary")
+            expect(rendered_content).to have_text("Applied for Tier 1")
+            expect(rendered_content).to have_text("£5,000 estimated bursary")
           end
         end
 
@@ -38,13 +38,13 @@ module Funding
           let(:applying_for_bursary) { true }
 
           it "renders grant text" do
-            expect(rendered_component).to have_text("Grant applied for")
-            expect(rendered_component).to have_text("£5,000 estimated grant")
+            expect(rendered_content).to have_text("Grant applied for")
+            expect(rendered_content).to have_text("£5,000 estimated grant")
           end
 
           it "renders tiered bursary text" do
-            expect(rendered_component).to have_text("Applied for Tier 1")
-            expect(rendered_component).to have_text("£5,000 estimated bursary")
+            expect(rendered_content).to have_text("Applied for Tier 1")
+            expect(rendered_content).to have_text("£5,000 estimated bursary")
           end
 
           context "applying without grant and without tiered bursary" do
@@ -53,11 +53,11 @@ module Funding
             let(:bursary_tier) { nil }
 
             it "renders grant text" do
-              expect(rendered_component).to have_text("Not grant funded")
+              expect(rendered_content).to have_text("Not grant funded")
             end
 
             it "renders tiered bursary text" do
-              expect(rendered_component).to have_text("Not funded")
+              expect(rendered_content).to have_text("Not funded")
             end
           end
         end
@@ -69,12 +69,12 @@ module Funding
         end
 
         it "does not renders grant text" do
-          expect(rendered_component).not_to have_text("grant")
+          expect(rendered_content).not_to have_text("grant")
         end
 
         it "renders tiered bursary text" do
-          expect(rendered_component).to have_text("Applied for Tier 1")
-          expect(rendered_component).to have_text("£5,000 estimated bursary")
+          expect(rendered_content).to have_text("Applied for Tier 1")
+          expect(rendered_content).to have_text("£5,000 estimated bursary")
         end
       end
     end
@@ -115,7 +115,7 @@ module Funding
         end
 
         it "renders if the trainee selects mathematics" do
-          expect(rendered_component).to have_text("£9,000 estimated bursary")
+          expect(rendered_content).to have_text("£9,000 estimated bursary")
         end
       end
 
@@ -125,7 +125,7 @@ module Funding
         end
 
         it "doesn't render if the trainee selects drama" do
-          expect(rendered_component).not_to have_text("Bursary applied for")
+          expect(rendered_content).not_to have_text("Bursary applied for")
         end
       end
     end
@@ -154,11 +154,11 @@ module Funding
         let(:training_initiative) { ROUTE_INITIATIVES.keys.first }
 
         it "renders" do
-          expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
+          expect(rendered_content).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
         end
 
         it "has correct change link" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
         end
 
         describe "has no bursary" do
@@ -168,7 +168,7 @@ module Funding
           end
 
           it "doesnt not render bursary row" do
-            expect(rendered_component).not_to have_text("Bursary applied for")
+            expect(rendered_content).not_to have_text("Bursary applied for")
           end
 
           context "and it non-draft" do
@@ -179,7 +179,7 @@ module Funding
             end
 
             it "renders bursary not available" do
-              expect(rendered_component).to have_text("Not applicable")
+              expect(rendered_content).to have_text("Not applicable")
             end
           end
         end
@@ -203,12 +203,12 @@ module Funding
             let(:applying_for_bursary) { true }
 
             it "renders" do
-              expect(rendered_component).to have_text("Bursary applied for")
-              expect(rendered_component).to have_text("£24,000 estimated bursary")
+              expect(rendered_content).to have_text("Bursary applied for")
+              expect(rendered_content).to have_text("£24,000 estimated bursary")
             end
 
             it "has correct change link" do
-              expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
+              expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
             end
           end
 
@@ -216,12 +216,12 @@ module Funding
             let(:applying_for_bursary) { false }
 
             it "renders" do
-              expect(rendered_component).to have_text("Not funded")
-              expect(rendered_component).not_to have_text("£24,000 estimated bursary")
+              expect(rendered_content).to have_text("Not funded")
+              expect(rendered_content).not_to have_text("£24,000 estimated bursary")
             end
 
             it "has correct change link" do
-              expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
+              expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit")
             end
           end
         end
@@ -231,11 +231,11 @@ module Funding
         let(:training_initiative) { "no_initiative" }
 
         it "renders" do
-          expect(rendered_component).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
+          expect(rendered_content).to have_text(t("activerecord.attributes.trainee.training_initiatives.#{training_initiative}"))
         end
 
         it "has correct change links" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/training-initiative/edit")
         end
       end
     end
@@ -252,8 +252,8 @@ module Funding
         let(:applying_for_grant) { true }
 
         it "renders grant text" do
-          expect(rendered_component).to have_text("Grant applied for")
-          expect(rendered_component).to have_text("£25,000 estimated grant")
+          expect(rendered_content).to have_text("Grant applied for")
+          expect(rendered_content).to have_text("£25,000 estimated grant")
         end
       end
 
@@ -261,11 +261,11 @@ module Funding
         let(:applying_for_grant) { false }
 
         it "renders grant text" do
-          expect(rendered_component).to have_text("Not grant funded")
+          expect(rendered_content).to have_text("Not grant funded")
         end
 
         it "has correct change link" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Change")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Change")
         end
       end
 
@@ -273,11 +273,11 @@ module Funding
         let(:applying_for_grant) { nil }
 
         it "renders grant text" do
-          expect(rendered_component).to have_text("Funding method is missing")
+          expect(rendered_content).to have_text("Funding method is missing")
         end
 
         it "has correct change link" do
-          expect(rendered_component).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/funding/bursary/edit", text: "Enter an answer")
         end
       end
     end
@@ -287,7 +287,7 @@ module Funding
         context "when applying for bursary" do
           let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: true) }
 
-          subject { rendered_component }
+          subject { rendered_content }
 
           it { is_expected.to have_text("Yes") }
         end
@@ -295,7 +295,7 @@ module Funding
         context "when not applying for bursary" do
           let(:trainee) { create(:trainee, :imported_from_hesa, applying_for_bursary: false) }
 
-          subject { rendered_component }
+          subject { rendered_content }
 
           it { is_expected.to have_text("No") }
         end
@@ -306,7 +306,7 @@ module Funding
         let(:hesa_bursary_code) { trainee.hesa_students.first.bursary_level }
 
         it "renders the hesa bursary level along with the code" do
-          expect(rendered_component).to have_text("#{hesa_bursary_code} - #{Hesa::CodeSets::BursaryLevels::VALUES[hesa_bursary_code]}")
+          expect(rendered_content).to have_text("#{hesa_bursary_code} - #{Hesa::CodeSets::BursaryLevels::VALUES[hesa_bursary_code]}")
         end
       end
     end
@@ -315,7 +315,7 @@ module Funding
       let(:trainee) { create(:trainee, :with_start_date, applying_for_bursary: true, start_academic_cycle: start_academic_cycle) }
 
       it "doesn't render the funding row" do
-        expect(rendered_component).not_to have_text("Funding method")
+        expect(rendered_content).not_to have_text("Funding method")
       end
     end
   end

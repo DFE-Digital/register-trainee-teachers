@@ -19,8 +19,8 @@ module ProviderCard
       end
 
       it "render the correct provider details" do
-        expect(rendered_component).to have_text("University of Wantage")
-        expect(rendered_component).to have_text("2 users")
+        expect(rendered_content).to have_text("University of Wantage")
+        expect(rendered_content).to have_text("2 users")
       end
     end
   end

@@ -22,11 +22,11 @@ describe TaskList::View do
 
     context status do
       it "renders the correct tag status" do
-        expect(rendered_component).to have_text(I18n.t(status))
+        expect(rendered_content).to have_text(I18n.t(status))
       end
 
       it "renders the correct tag colour" do
-        expect(rendered_component).to have_selector(".govuk-tag--#{colour}")
+        expect(rendered_content).to have_selector(".govuk-tag--#{colour}")
       end
     end
   end
@@ -34,11 +34,11 @@ describe TaskList::View do
   context "when task data is provided" do
     context "rendered tasks" do
       it "renders a list of tasks" do
-        expect(rendered_component).to have_css(".app-task-list__item")
+        expect(rendered_content).to have_css(".app-task-list__item")
       end
 
       it "renders the task name" do
-        expect(rendered_component).to have_link("some key", href: "some_path")
+        expect(rendered_content).to have_link("some key", href: "some_path")
       end
     end
 
@@ -52,8 +52,8 @@ describe TaskList::View do
     let(:active) { false }
 
     it "does not render a link" do
-      expect(rendered_component).not_to have_link("some key", href: "some_path")
-      expect(rendered_component).to have_text("some key")
+      expect(rendered_content).not_to have_link("some key", href: "some_path")
+      expect(rendered_content).to have_text("some key")
     end
   end
 
