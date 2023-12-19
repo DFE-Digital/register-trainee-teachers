@@ -3,11 +3,11 @@
 class UpdateHesaTraineesWithLeadSchoolUrn < ActiveRecord::Migration[7.1]
   def up
     trainees.each do |trainee|
-      lead_shool = find_lead_school(trainee)
+      lead_shcool = find_lead_school(trainee)
 
-      next unless lead_shool
+      next unless lead_shcool
 
-      trainee.update(lead_shool: lead_shool, lead_school_not_applicable: false)
+      trainee.update(lead_shcool: lead_shcool, lead_school_not_applicable: false)
     end
   end
 
@@ -19,8 +19,8 @@ private
 
   def trainees
     Trainee.left_joins(:hesa_students)
-           .where(lead_school_id: nil)
-           .where.not(hesa_students: { lead_school_urn: %w[900000 900010 900020 900030] })
+           .where(lead_school_id: nil, lead_school_not_applicable: true)
+           .where.not(hesa_students: { lead_school_urn: Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS })
            .where.not(hesa_students: { lead_school_urn: nil })
            .distinct
   end
@@ -28,11 +28,11 @@ private
   def find_lead_school(trainee)
     latest_hesa_student_record = trainee.hesa_students.order(updated_at: :desc).first
 
-    return if latest_hesa_student_record&.lead_shool_urn.blank?
+    return if latest_hesa_student_record&.lead_shcool_urn.blank?
 
     School.find_by(
       urn: latest_hesa_student_record.lead_school_urn,
-      lead_shool: true,
+      lead_shcool: true,
     )
   end
 end
