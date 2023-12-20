@@ -440,7 +440,7 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
-    omniauth (2.1.1)
+    omniauth (2.1.2)
       hashie (>= 3.4.6)
       rack (>= 2.2.3)
       rack-protection
@@ -500,8 +500,8 @@ GEM
       httpclient
       json-jwt (>= 1.11.0)
       rack (>= 2.1.0)
-    rack-protection (3.0.6)
-      rack
+    rack-protection (3.1.0)
+      rack (~> 2.2, >= 2.2.4)
     rack-session (1.0.2)
       rack (< 3)
     rack-test (2.1.0)
