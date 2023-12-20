@@ -103,7 +103,7 @@ module Degrees
       return @other_degree_grade if defined?(@other_degree_grade)
 
       @other_degree_grade =
-        if csv_row["Degree: UK grade"].starts_with?("#{Diversities::OTHER}:")
+        if csv_row["Degree: UK grade"]&.starts_with?("#{Diversities::OTHER}:")
           csv_row["Degree: UK grade"].split("#{Diversities::OTHER}:").last.strip
         end
     end
