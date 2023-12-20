@@ -16,6 +16,7 @@ feature "pending TRNs" do
     scenario "shows pending TRNs page" do
       then_i_see_the_pending_trns_page
       and_i_see_the_trainee
+      and_i_see_the_trn_request_details
     end
 
     scenario "can check for TRN" do
@@ -78,6 +79,10 @@ feature "pending TRNs" do
   def and_i_see_the_trainee
     expect(admin_pending_trns_page).to have_text(trainee.first_names)
     expect(admin_pending_trns_page).to have_text(trainee.last_name)
+  end
+
+  def and_i_see_the_trn_request_details
+    expect(admin_pending_trns_page).to have_text(trn_request.response)
   end
 
   def when_i_click_check_for_trn

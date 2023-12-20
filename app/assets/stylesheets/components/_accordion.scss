@@ -1,0 +1,10 @@
+.govuk-accordion__section-content .system-admin-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include govuk-media-query($from: tablet) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
