@@ -55,7 +55,7 @@ module Schools
       MappableFieldRow.new(
         field_value: field_value,
         field_label: field_label,
-        text: t("components.confirmation.missing"),
+        text: "missing",
         action_url: section_url,
         has_errors: has_errors,
         editable: editable,

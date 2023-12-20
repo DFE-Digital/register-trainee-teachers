@@ -19,7 +19,7 @@ module IqtsCountry
         MappableFieldRow.new(
           field_value: data_model.iqts_country,
           field_label: t(".iqts_country"),
-          text: t("components.confirmation.missing"),
+          text: "missing",
           action_url: edit_trainee_iqts_country_path(trainee),
           has_errors: has_errors,
           editable: editable,

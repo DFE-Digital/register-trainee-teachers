@@ -20,7 +20,7 @@ module TrainingDetails
         MappableFieldRow.new(
           field_value: trainee.trainee_id,
           field_label: t(".title"),
-          text: t("components.confirmation.missing"),
+          text: "missing",
           action_url: edit_trainee_training_details_path(trainee),
           has_errors: has_errors,
           editable: editable,
