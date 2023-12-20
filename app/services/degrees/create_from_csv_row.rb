@@ -7,6 +7,7 @@ module Degrees
     class Error < StandardError; end
 
     HESA_UK_COUNTRY = "United Kingdom, not otherwise specified"
+    OTHER = "Other:"
 
     def initialize(trainee:, csv_row:)
       @trainee = trainee
@@ -34,6 +35,13 @@ module Degrees
         grade: degree_grade&.name,
         grade_uuid: degree_grade&.id,
       }
+
+      if other_degree_grade
+        attrs.merge!({
+          grade: "Other",
+          other_grade: other_degree_grade,
+        })
+      end
 
       if uk_country?(country)
         attrs.merge!({
@@ -89,6 +97,15 @@ module Degrees
 
     def degree_grade
       @degree_grade ||= DfEReference::DegreesQuery.find_grade(name: csv_row["Degree: UK grade"])
+    end
+
+    def other_degree_grade
+      return @other_degree_grade if defined?(@other_degree_grade)
+
+      @other_degree_grade =
+        if csv_row["Degree: UK grade"].starts_with?("#{Diversities::OTHER}:")
+          csv_row["Degree: UK grade"].split("#{Diversities::OTHER}:").last.strip
+        end
     end
 
     def uk_degree_type

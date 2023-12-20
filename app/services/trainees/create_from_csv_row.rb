@@ -114,7 +114,7 @@ module Trainees
       @disabilities ||=
         if csv_row["Disabilities"].nil?
           []
-        elsif csv_row["Disabilities"].start_with?(Diversities::OTHER)
+        elsif csv_row["Disabilities"].start_with?("#{Diversities::OTHER}:")
           handle_other_disability
         else
           parse_standard_disabilities
