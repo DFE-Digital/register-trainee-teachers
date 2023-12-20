@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NoticeBanner
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     renders_one :header
 
     def initialize; end

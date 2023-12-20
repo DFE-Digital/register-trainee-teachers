@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Funding
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SanitizeHelper
     include FundingHelper
 

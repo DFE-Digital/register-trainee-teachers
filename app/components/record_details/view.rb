@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RecordDetails
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SanitizeHelper
     include SummaryHelper
 

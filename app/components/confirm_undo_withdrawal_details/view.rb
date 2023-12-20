@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ConfirmUndoWithdrawalDetails
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     State = Struct.new(:state, :award_type)
 
     include SanitizeHelper

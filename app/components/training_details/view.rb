@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TrainingDetails
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SummaryHelper
 
     def initialize(data_model:, has_errors: false, editable: false)

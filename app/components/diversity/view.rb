@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Diversity
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SanitizeHelper
 
     def initialize(data_model:, has_errors: false, editable: false)

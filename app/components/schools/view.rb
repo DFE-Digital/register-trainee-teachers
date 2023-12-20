@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Schools
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SummaryHelper
     include SchoolHelper
 

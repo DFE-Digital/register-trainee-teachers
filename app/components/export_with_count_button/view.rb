@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ExportWithCountButton
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     renders_one :no_record_text
 
     def initialize(button_text:, count:, count_label:, href:)
