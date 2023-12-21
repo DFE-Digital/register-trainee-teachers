@@ -15,15 +15,15 @@ describe OtpVerificationsForm, type: :model do
 
   let(:otp_salt) { ROTP::Base32.random(16) }
   let(:otp_email) { Faker::Internet.email }
-  let(:otp_attempts) { 0 }
-  let(:otp_last_attempt) { Time.zone.now }
+  let(:otp_verifications_form_attempts) { 0 }
+  let(:otp_verifications_form_last_attempt) { Time.zone.now }
 
   let(:session) do
     {
       otp_salt:,
       otp_email:,
-      otp_attempts:,
-      otp_last_attempt:,
+      otp_verifications_form_attempts:,
+      otp_verifications_form_last_attempt:,
     }
   end
 
@@ -33,13 +33,13 @@ describe OtpVerificationsForm, type: :model do
 
       describe "validating cool down" do
         context "when should not cool down" do
-          let(:otp_attempts) { 0 }
+          let(:otp_verifications_form_attempts) { 0 }
 
           it { expect(error_message).not_to include "Please wait 1 minute before trying again" }
         end
 
         context "when should cool down" do
-          let(:otp_attempts) { 5 }
+          let(:otp_verifications_form_attempts) { 5 }
 
           it { expect(error_message).to include "Please wait 1 minute before trying again" }
         end
@@ -80,13 +80,13 @@ describe OtpVerificationsForm, type: :model do
     context "without a user" do
       describe "validating cool down" do
         context "when should not cool down" do
-          let(:otp_attempts) { 0 }
+          let(:otp_verifications_form_attempts) { 0 }
 
           it { expect(error_message).not_to include "Please wait 1 minute before trying again" }
         end
 
         context "when should cool down" do
-          let(:otp_attempts) { 5 }
+          let(:otp_verifications_form_attempts) { 5 }
 
           it { expect(error_message).to include "Please wait 1 minute before trying again" }
         end

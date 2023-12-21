@@ -5,8 +5,17 @@ require "rails_helper"
 describe OtpForm, type: :model do
   let(:email) { Faker::Internet.email }
   let(:error_message) { form.errors.full_messages.first }
+  let(:otp_form_attempts) { 0 }
+  let(:otp_form_last_attempt) { Time.zone.now }
 
-  subject(:form) { described_class.new(email) }
+  let(:session) do
+    {
+      otp_form_attempts:,
+      otp_form_last_attempt:,
+    }
+  end
+
+  subject(:form) { described_class.new(session:, email:) }
 
   describe "#valid?" do
     context "with a blank email" do
@@ -39,6 +48,25 @@ describe OtpForm, type: :model do
       it "returns the correct error message" do
         expect(form.valid?).to be false
         expect(error_message).to include("is too long (maximum is 255 characters)")
+      end
+    end
+
+    describe "validating cool down" do
+      context "when should not cool down" do
+        let(:otp_form_attempts) { 0 }
+
+        it "is valid" do
+          expect(form.valid?).to be true
+        end
+      end
+
+      context "when should cool down" do
+        let(:otp_form_attempts) { 5 }
+
+        it "returns the correct error message" do
+          expect(form.valid?).to be false
+          expect(error_message).to include "Please wait 1 minute before trying again"
+        end
       end
     end
   end

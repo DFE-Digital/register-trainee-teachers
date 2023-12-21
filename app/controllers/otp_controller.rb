@@ -18,7 +18,7 @@ class OtpController < ApplicationController
 private
 
   def otp_form
-    @otp_form ||= OtpForm.new(email)
+    @otp_form ||= OtpForm.new(session:, email:)
   end
 
   def email
