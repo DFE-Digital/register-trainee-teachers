@@ -23,8 +23,12 @@ FactoryBot.define do
       state { "importable" }
     end
 
-    trait :imported do
-      state { "imported" }
+    trait :importable do
+      state { "importable" }
+    end
+
+    trait :non_importable_duplicate do
+      state { "non_importable_duplicate" }
     end
 
     trait :with_invalid_data do
