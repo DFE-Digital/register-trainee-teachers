@@ -20,6 +20,11 @@ module "web_application" {
   replicas    = each.value.replicas
   web_external_hostnames = var.gov_uk_host_names
   probe_path  = each.value.probe_path
+
+  azure_resource_prefix   = var.azure_resource_prefix
+  service_short           = var.service_short
+  azure_enable_monitoring = var.enable_container_monitoring
+  kubernetes_cluster_id   = module.cluster_data.kubernetes_id
 }
 
 module "worker_application" {
