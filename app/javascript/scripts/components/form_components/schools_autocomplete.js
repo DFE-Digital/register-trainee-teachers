@@ -45,14 +45,16 @@ const inputTemplate = (value) => {
   return value && value.name
 }
 
-const suggestionTemplate = (value) => {
-  if (!value) {
-    return
-  }
+const suggestionTemplate = (result) => {
+  if (result) {
+    if (typeof result === 'string') {
+      return result
+    } else if (typeof result === 'object') {
+      const hints = [`URN ${result.urn}`, result.town, result.postcode].filter(Boolean)
 
-  const hints = [`URN ${value.urn}`, value.town, value.postcode].filter(Boolean)
-
-  return `${value.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
+      return `${result.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
+    }
+  } else return ''
 }
 
 const renderTemplate = {
