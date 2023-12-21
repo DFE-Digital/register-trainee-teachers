@@ -28,6 +28,26 @@ module BulkUpdate
             )
           end
         end
+
+        context "given a valid CSV where user has added extra URN columns" do
+          let(:file) { file_fixture("bulk_update/placements/complete-with-extra-placements.csv") }
+
+          it "creates the rows with the correct row numbers" do
+            expect(bulk_placement.rows.pluck(:trn, :csv_row_number, :urn)).to eql(
+              [
+                ["1234567", 3, "7823614827346"],
+                ["1234567", 3, "723894747382"],
+                ["7654321", 4, "8721398474987"],
+                ["7654321", 4, "273489724897"],
+                ["7654321", 4, "999745281883"],
+                ["4929008", 5, "562982561839"],
+                ["4929008", 5, "668741619393"],
+                ["4929008", 5, "878892930276"],
+                ["4929008", 5, "853226807662"],
+              ],
+            )
+          end
+        end
       end
     end
   end

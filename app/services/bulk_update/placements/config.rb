@@ -9,7 +9,8 @@ module BulkUpdate
       VALID_URN = /^\d{6}$/ # 123456
 
       # constants
-      MAX_PLACEMENTS = 2 # number of "Placement <n> URN" columns given to user to fill
+      DEFAULT_NUM_PLACEMENTS = 2 # number of "Placement <n> URN" columns given to user to fill
+      MAX_PLACEMENTS = 5 # number of "Placement <n> URN" columns we allow in the CSV
       ENCODING = "UTF-8"
       FIRST_CSV_ROW_NUMBER = 2
       CSV_ARGS = { headers: true, header_converters: :downcase, strip: true, encoding: ENCODING }.freeze
