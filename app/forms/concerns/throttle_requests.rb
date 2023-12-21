@@ -23,7 +23,7 @@ private
     # cool off time.
     if Time.zone.now < (last_attempt + cool_down_time)
       raise_throttle_error
-    # Otherwise incement their attempts and reset the last attempt
+    # Otherwise increment their attempts and reset the last attempt
     # if they submitted a code
     else
       session[attempts_key] += 1
