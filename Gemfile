@@ -37,6 +37,7 @@ gem "discard", "~> 1.3"
 gem "sentry-rails"
 gem "sentry-ruby"
 gem "sentry-sidekiq"
+gem "stackprof"
 
 # Logging
 gem "amazing_print", "~> 1.5"
@@ -188,7 +189,6 @@ group :development do
   gem "flamegraph"
   gem "memory_profiler"
   gem "rack-mini-profiler", require: false
-  gem "stackprof"
 end
 
 group :test do
