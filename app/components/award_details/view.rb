@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AwardDetails
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SummaryHelper
 
     attr_reader :trainee

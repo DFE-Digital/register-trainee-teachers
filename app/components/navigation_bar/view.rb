@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NavigationBar::View < GovukComponent::Base
+class NavigationBar::View < ViewComponent::Base
   attr_reader :items, :current_path, :current_user
 
   def initialize(items:, current_path:, current_user: {})

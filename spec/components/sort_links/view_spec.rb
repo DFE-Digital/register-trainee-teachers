@@ -6,7 +6,6 @@ describe SortLinks::View do
   alias_method :component, :page
 
   before do
-    allow(controller).to receive(:params).and_return(params)
     render_inline(described_class.new)
   end
 

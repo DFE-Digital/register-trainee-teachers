@@ -18,7 +18,7 @@ module HesaWarningInset
       it "renders nothing" do
         render_inline(component)
 
-        expect(rendered_component).to be_blank
+        expect(rendered_content).to be_blank
       end
     end
 
@@ -38,13 +38,13 @@ module HesaWarningInset
         it "renders HESA warning message" do
           render_inline(component)
 
-          expect(rendered_component).to include("This trainee was imported from HESA. You can recommend, defer or withdraw them. You need to enable editing to make other changes.")
+          expect(rendered_content).to include("This trainee was imported from HESA. You can recommend, defer or withdraw them. You need to enable editing to make other changes.")
         end
 
         it "renders last update date and time" do
           render_inline(component)
 
-          expect(rendered_component).to include("Last updated from HESA on 11 January 2023 at 12:34pm")
+          expect(rendered_content).to include("Last updated from HESA on 11 January 2023 at 12:34pm")
         end
       end
 
@@ -54,13 +54,13 @@ module HesaWarningInset
         it "renders HESA warning message" do
           render_inline(component)
 
-          expect(rendered_component).to include("Editing has been enabled for this trainee. The record is still linked to the HESA service. If you update it using HESA then any changes you’ve made in this service will be replaced by the data from HESA.")
+          expect(rendered_content).to include("Editing has been enabled for this trainee. The record is still linked to the HESA service. If you update it using HESA then any changes you’ve made in this service will be replaced by the data from HESA.")
         end
 
         it "renders last update date and time" do
           render_inline(component)
 
-          expect(rendered_component).to include("Last updated from HESA on 11 January 2023 at 12:34pm")
+          expect(rendered_content).to include("Last updated from HESA on 11 January 2023 at 12:34pm")
         end
       end
     end

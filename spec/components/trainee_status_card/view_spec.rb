@@ -11,19 +11,19 @@ describe TraineeStatusCard::View do
 
   describe "rendered component" do
     it "renders the correct css colour" do
-      expect(rendered_component).to have_css(".app-status-card--yellow")
+      expect(rendered_content).to have_css(".app-status-card--yellow")
     end
 
     it "renders the correct text" do
-      expect(rendered_component).to have_text("Currently deferred")
+      expect(rendered_content).to have_text("Currently deferred")
     end
 
     it "renders the trainee count" do
-      expect(rendered_component).to have_text("1")
+      expect(rendered_content).to have_text("1")
     end
 
     it "renders the correct filter link" do
-      expect(rendered_component).to have_link(href: "some_path")
+      expect(rendered_content).to have_link(href: "some_path")
     end
   end
 end

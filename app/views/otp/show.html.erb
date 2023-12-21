@@ -11,7 +11,7 @@
 
     <div class="govuk-!-margin-bottom-0">
       <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
-        <% notification_banner.heading(text: 'DfE Sign-in is currently unavailable') %>
+        <% notification_banner.with_heading(text: 'DfE Sign-in is currently unavailable') %>
       <% end %>
     </div>
 

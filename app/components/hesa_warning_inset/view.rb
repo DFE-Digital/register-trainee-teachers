@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HesaWarningInset
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     def initialize(trainee:, current_user:)
       @trainee = trainee
       @current_user = current_user

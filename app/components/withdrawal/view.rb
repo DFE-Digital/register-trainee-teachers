@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Withdrawal
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SanitizeHelper
 
     def initialize(data_model:, editable: false, undo_withdrawal: false)

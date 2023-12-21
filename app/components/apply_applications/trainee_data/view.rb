@@ -2,7 +2,7 @@
 
 module ApplyApplications
   module TraineeData
-    class View < GovukComponent::Base
+    class View < ViewComponent::Base
       include ApplicationHelper
       include TraineeHelper
 

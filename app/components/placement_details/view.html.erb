@@ -5,7 +5,7 @@
   editable: false,
   has_errors: has_errors,
   ) do |component| %>
-  <% component.header_actions do %>
+  <% component.with_header_actions do %>
     <% if editable %>
       <%= govuk_link_to("Manage placements", trainee_placements_confirm_path(trainee)) %>
     <% end %>

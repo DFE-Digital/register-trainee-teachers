@@ -1,6 +1,6 @@
-<%= tag.ol(class: classes, **html_attributes) do %>
+<%= tag.ol(class: default_classes) do %>
   <% rows.each do |row| %>
-    <%= tag.li(class: row.classes, **row.html_attributes) do %>
+    <%= tag.li(class: row.classes) do %>
       <% if row.active %>
         <a href="<%= row.get_path %>" class="govuk-link app-task-list__key" aria-describedby="<%= row.status_id %>">
           <%= row.task_name %>

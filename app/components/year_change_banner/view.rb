@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 module YearChangeBanner
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     DEFAULT_ACADEMIC_CYCLE_START_DATE = "1 August"
 
     def initialize
       @today = Time.zone.today
-      super(classes: "", html_attributes: "")
     end
 
     def render?

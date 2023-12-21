@@ -11,11 +11,11 @@ describe ContactDetails::View do
     end
 
     it "renders a blank row for email" do
-      expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
+      expect(rendered_content).to have_css(".govuk-summary-list__row", count: 1)
     end
 
     it "tells the user that the email is missing" do
-      expect(rendered_component).to have_css(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 1)
+      expect(rendered_content).to have_css(".govuk-summary-list__value", text: t("components.confirmation.missing"), count: 1)
     end
   end
 
@@ -25,16 +25,16 @@ describe ContactDetails::View do
     end
 
     it "renders rows for email" do
-      expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
+      expect(rendered_content).to have_css(".govuk-summary-list__row", count: 1)
     end
 
     it "renders the contact details change link" do
-      expect(rendered_component)
+      expect(rendered_content)
         .to have_link(t("change"), href: "/trainees/#{mock_trainee.slug}/contact-details/edit")
     end
 
     it "renders the email address" do
-      expect(rendered_component)
+      expect(rendered_content)
         .to have_text(mock_trainee.email)
     end
   end
@@ -46,11 +46,11 @@ describe ContactDetails::View do
     end
 
     it "does not render rows for address, only email" do
-      expect(rendered_component).to have_css(".govuk-summary-list__row", count: 1)
+      expect(rendered_content).to have_css(".govuk-summary-list__row", count: 1)
     end
 
     it "renders the email address" do
-      expect(rendered_component).to have_text(mock_trainee.email)
+      expect(rendered_content).to have_text(mock_trainee.email)
     end
   end
 

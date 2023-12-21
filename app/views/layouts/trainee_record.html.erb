@@ -14,7 +14,7 @@
 
   <% if @missing_data_view %>
     <%= render NoticeBanner::View.new do |component| %>
-      <% component.header { @missing_data_view.header } %>
+      <% component.with_header { @missing_data_view.header } %>
       <%= @missing_data_view.content %>
     <% end %>
   <% end %>

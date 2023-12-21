@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RouteIndicator
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include TraineeHelper
 
     attr_reader :trainee

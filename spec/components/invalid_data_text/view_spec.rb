@@ -16,8 +16,8 @@ module InvalidDataText
       let(:form_section) { :institution }
 
       it "renders the correct css" do
-        expect(rendered_component).to have_css(".app-inset-text__title")
-        expect(rendered_component).to have_text("The trainee entered ‘Unknown institution’, which was not recognised. You need to search for the closest match.")
+        expect(rendered_content).to have_css(".app-inset-text__title")
+        expect(rendered_content).to have_text("The trainee entered ‘Unknown institution’, which was not recognised. You need to search for the closest match.")
       end
     end
 
@@ -26,8 +26,8 @@ module InvalidDataText
       let(:form_section) { :subject }
 
       it "does not render the inset css" do
-        expect(rendered_component).not_to have_css(".app-inset-text__title")
-        expect(rendered_component).to be_blank
+        expect(rendered_content).not_to have_css(".app-inset-text__title")
+        expect(rendered_content).to be_blank
       end
     end
   end

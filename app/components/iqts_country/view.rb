@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module IqtsCountry
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SummaryHelper
 
     def initialize(data_model:, has_errors: false, editable: false)
@@ -19,7 +19,7 @@ module IqtsCountry
         MappableFieldRow.new(
           field_value: data_model.iqts_country,
           field_label: t(".iqts_country"),
-          text: t("components.confirmation.missing"),
+          text: "missing",
           action_url: edit_trainee_iqts_country_path(trainee),
           has_errors: has_errors,
           editable: editable,

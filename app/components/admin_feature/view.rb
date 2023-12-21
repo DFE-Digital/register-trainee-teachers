@@ -2,11 +2,12 @@
 
 module AdminFeature
   class View < GovukComponent::Base
-    attr_reader :title
+    attr_reader :title, :classes
 
     def initialize(title: nil, classes: [], html_attributes: {})
-      @title = title || t("components.admin_feature.title")
-      super(classes: classes, html_attributes: default_html_attributes.merge(html_attributes))
+      @title = title
+      @classes = [default_classes, classes]
+      super(classes: @classes, html_attributes: default_attributes.merge(html_attributes))
     end
 
   private
@@ -15,7 +16,7 @@ module AdminFeature
       %w[app-status-box app-status-box--admin]
     end
 
-    def default_html_attributes
+    def default_attributes
       {}
     end
   end

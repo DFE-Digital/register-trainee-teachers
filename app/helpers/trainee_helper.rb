@@ -62,9 +62,11 @@ module TraineeHelper
   def invalid_data_message(form_section, degree)
     data = degree&.trainee&.apply_application&.invalid_data
 
-    return if data&.dig("degrees", degree.slug, form_section).blank?
+    query = data&.dig("degrees", degree.slug, form_section)
 
-    t("components.invalid_data_text.static_text", query: data["degrees"][degree.slug][form_section])
+    return if query.blank?
+
+    "The trainee entered ‘#{query}’, which was not recognised. You need to search for the closest match."
   end
 
   def invalid_data_class(form:, field:)

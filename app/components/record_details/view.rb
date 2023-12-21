@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RecordDetails
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include SanitizeHelper
     include SummaryHelper
 
@@ -76,10 +76,6 @@ module RecordDetails
           field_value: submission_date,
         }
       end
-    end
-
-    def trainee_status_tag
-      render(StatusTag::View.new(trainee: trainee, classes: "govuk-!-margin-bottom-2")) + tag.br + status_date
     end
 
     def last_updated_row

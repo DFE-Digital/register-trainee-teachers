@@ -43,7 +43,7 @@ module MappableSummary
       MappableFieldRow.new(
         field_value: field_value,
         field_label: field_label,
-        text: t("components.confirmation.missing"),
+        text: "missing",
         action_url: action_url,
         has_errors: has_errors,
         apply_draft: trainee.apply_application?,
@@ -58,7 +58,7 @@ module MappableSummary
         field_name: field_name,
         field_value: field_value || degree.public_send(field_name),
         field_label: field_label,
-        text: t("components.confirmation.missing"),
+        text: "missing",
         action_url: edit_trainee_degree_path(trainee, degree),
         has_errors: has_errors,
         apply_draft: trainee.apply_application?,

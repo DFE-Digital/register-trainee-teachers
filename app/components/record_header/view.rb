@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RecordHeader
-  class View < GovukComponent::Base
+  class View < ViewComponent::Base
     include TraineeHelper
 
     attr_reader :trainee, :hide_progress_tag
