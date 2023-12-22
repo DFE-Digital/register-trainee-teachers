@@ -179,7 +179,7 @@ jobs:
 
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_AKS_TEST }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_STAGING_AKS }}
 
     - name: Download Sanitised Backup
       uses: actions/download-artifact@v3
