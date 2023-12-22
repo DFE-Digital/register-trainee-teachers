@@ -14,9 +14,10 @@ feature "Viewing duplicate apply applications" do
   end
 
   def and_there_are_duplicate_apply_applications
+    application = JSON.parse(ApiStubs::RecruitsApi.application)
     @importable_apply_application = create(:apply_application, :importable)
     @imported_apply_application = create(:apply_application, :imported)
-    @duplicate_apply_application = create(:apply_application, :non_importable_duplicate)
+    @duplicate_apply_application = create(:apply_application, :non_importable_duplicate, application:)
   end
 
   def when_i_visit_the_duplicate_apply_applications_index_page
@@ -26,5 +27,9 @@ feature "Viewing duplicate apply applications" do
 
   def then_i_should_see_the_duplicate_apply_applications
     expect(page).to have_current_path(duplicate_apply_applications_path)
+    candidate_attributes = @duplicate_apply_application.application.dig("attributes", "candidate")
+    expect(page).to have_content(candidate_attributes["first_name"])
+    expect(page).to have_content(candidate_attributes["last_name"])
+    expect(page).to have_content(@duplicate_apply_application.created_at.to_date.to_fs(:govuk_short))
   end
 end

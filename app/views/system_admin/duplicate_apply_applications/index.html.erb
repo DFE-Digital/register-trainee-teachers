@@ -1,1 +1,37 @@
-apply applications go here
+<%= render PageTitle::View.new(i18n_key: "duplicate_apply_applications.index") %>
+
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-full">
+    <%= render "system_admin/tab_nav" %>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Duplicate apply applications</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">First names</th>
+          <th scope="col" class="govuk-table__header">Last name</th>
+          <th scope="col" class="govuk-table__header">Created on</th>
+          <th scope="col" class="govuk-table__header"></th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <% @apply_applications.each do |apply_application| %>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell"><%= apply_application.application&.dig("attributes", "candidate", "first_name") %></td>
+            <td class="govuk-table__cell"><%= apply_application.application&.dig("attributes", "candidate", "last_name") %></td>
+            <td class="govuk-table__cell"><%= apply_application.created_at.to_date.to_fs(:govuk_short) %></td>
+            <td class="govuk-table__cell">
+              <%=
+                govuk_link_to(
+                  "View",
+                  '#',
+                  class: "govuk-!-margin-0 govuk-button",
+                )
+              %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
