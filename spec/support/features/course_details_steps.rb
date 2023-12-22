@@ -76,7 +76,7 @@ module Features
     end
 
     def and_i_see_itt_end_date_missing_error
-      expect(confirm_publish_course_details_page).to have_content("ITT end date is missing")
+      expect(confirm_publish_course_details_page).to have_content("Expected end date is missing")
     end
 
     def and_i_click_enter_answer_for_itt_end_date

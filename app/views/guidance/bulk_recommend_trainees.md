@@ -30,14 +30,14 @@ Once you have signed into Register, you can [access the bulk recommendation feat
 
 The CSV file includes data for all trainees who have both a teacher reference number (TRN) and either:
 
-- an estimated end date in the past 6 months or the next 6 months
-- no estimated end date
+- an expected end date in the past 6 months or the next 6 months
+- no expected end date
 
 The CSV file does not include trainees who have deferred or withdrawn.
 
-If a trainee’s estimated end date is not in the period covered by the CSV file, you can choose to either:
+If a trainee’s expected end date is not in the period covered by the CSV file, you can choose to either:
 
-- update their estimated end date so that it’s in the past 6 months or the next 6 months
+- update their expected end date so that it’s in the past 6 months or the next 6 months
 - recommend them for QTS or EYTS from within their individual trainee record
 
 ### 3. Fill in the date when each trainee met QTS or EYTS standards
@@ -48,7 +48,7 @@ You can only bulk recommend trainees who met the QTS or EYTS standards in the pa
 
 If a trainee has not met the standards, you can choose to either:
 
-- delete the row 
+- delete the row
 - leave the date blank in the CSV file
 
 Do not make any other changes to the CSV file.
@@ -60,11 +60,11 @@ You’ll get an error message when you upload the CSV file if you:
 - entered a date which cannot be accepted, such as a date in the future
 - edited any data in the CSV (you cannot change trainee or course details using this process)
 
-If there are any errors in the CSV file, you’ll be able to download a version showing the errors. 
+If there are any errors in the CSV file, you’ll be able to download a version showing the errors.
 
 You can choose to either:
 
-- fix the errors 
+- fix the errors
 - skip the errors and continue
 
 If you skip the errors, you’ll only be able to recommend trainees whose data does not have errors. You can fix the
@@ -74,4 +74,4 @@ errors later and recommend the trainees.
 
 After you submit your recommendations, the Teaching Regulation Agency (TRA) will award the trainees with QTS or EYTS within 3 working days.
 
-The DfE will later send an email to the trainees to tell them that their certificates are available to download from the Access your Teacher Qualifications service. 
+The DfE will later send an email to the trainees to tell them that their certificates are available to download from the Access your Teacher Qualifications service.
