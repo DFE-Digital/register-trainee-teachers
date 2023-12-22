@@ -46,7 +46,7 @@ module CourseDetails
       end
 
       it "renders missing hint for ITT end date" do
-        expect(rendered_component).to have_css(".govuk-summary-list__value", text: "Expected end date is missing")
+        expect(rendered_content).to have_css(".govuk-summary-list__value", text: "Expected end date is missing")
       end
     end
 
