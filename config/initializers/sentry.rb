@@ -6,7 +6,8 @@ Sentry.init do |config|
     filter.filter(event.to_hash)
   end
 
-  config.traces_sample_rate = 0.1
-  config.profiles_sample_rate = 0.1
+  config.enabled_patches += [:sidekiq_cron]
+  config.traces_sample_rate = 0.05
+  config.profiles_sample_rate = 0.05
   config.release = ENV.fetch("COMMIT_SHA", nil)
 end
