@@ -83,14 +83,16 @@ const setProviderHiddenField = (value) => {
   idElement.value = value.id
 }
 
-const suggestionTemplate = (value) => {
-  if (!value) {
-    return
-  }
+const suggestionTemplate = (result) => {
+  if (result) {
+    if (typeof result === 'string') {
+      return result
+    } else if (typeof result === 'object') {
+      const hints = [`Code ${result.code}`, result.name, result.ukprn].filter(Boolean)
 
-  const hints = [`Code ${value.code}`, value.name, value.ukprn].filter(Boolean)
-
-  return `${value.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
+      return `${result.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
+    }
+  } else return ''
 }
 
 const renderTemplate = {
