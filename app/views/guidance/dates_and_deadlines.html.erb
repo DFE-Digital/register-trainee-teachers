@@ -11,69 +11,69 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Dates and deadlines for training providers for the <span class="nowrap">2023 to 2024</span> academic year</h1>
     <%= govuk_table do |table| %>
-      <% table.caption(size: 'm', text: 'Deadlines for all training providers') %>
-      <% table.head do |head|%>
-        <% head.row do |row| %>
-          <% row.cell(header: true, text: "Date", width: "one-third") %>
-          <% row.cell(header: true, text: "What happens") %>
+      <% table.with_caption(size: 'm', text: 'Deadlines for all training providers') %>
+      <% table.with_head do |head|%>
+        <% head.with_row do |row| %>
+          <% row.with_cell(header: true, text: "Date", width: "one-third") %>
+          <% row.with_cell(header: true, text: "What happens") %>
         <% end %>
       <% end %>
-      <% table.body do |body| %>
-        <% body.row do |row| %>
-          <% row.cell do %>
+      <% table.with_body do |body| %>
+        <% body.with_row do |row| %>
+          <% row.with_cell do %>
               <span class="no-wrap">11 October 2023</span>
           <% end %>
-          <% row.cell(text: "The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training.")%>
+          <% row.with_cell(text: "The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training.")%>
         <% end %>
-        <% body.row do |row| %>
-            <% row.cell do %>
+        <% body.with_row do |row| %>
+            <% row.with_cell do %>
               <span class="no-wrap">31 October 2023 </span>
             <% end %>
-          <% row.cell(text: "A senior person from your organisation must sign off your new trainee data on or before this date. This should be a different person to the one who submitted the data. This data will be used for the ITT census publication.")%>
+          <% row.with_cell(text: "A senior person from your organisation must sign off your new trainee data on or before this date. This should be a different person to the one who submitted the data. This data will be used for the ITT census publication.")%>
         <% end %>
-        <% body.row do |row| %>
-            <% row.cell do %>
+        <% body.with_row do |row| %>
+            <% row.with_cell do %>
               <span class="no-wrap">31 January 2024</span>
             <% end %>
-          <% row.cell(text: "A senior person from your organisation must sign off your 2022 to 2023 trainee outcomes on or before this date. This should be a different person to the one who submitted the data. Some of this data will be used for the ITT performance profiles publication.")%>
+          <% row.with_cell(text: "A senior person from your organisation must sign off your 2022 to 2023 trainee outcomes on or before this date. This should be a different person to the one who submitted the data. Some of this data will be used for the ITT performance profiles publication.")%>
         <% end %>
       <% end %>
     <% end %>
 
     <%= govuk_table do |table| %>
-      <% table.caption(size: 'm', text: "Deadlines for higher education institutions (HEIs) that use HESA") %>
-      <% table.head do |head|%>
-        <% head.row do |row| %>
-          <% row.cell(header: true, text: "Date", width: "one-third") %>
-          <% row.cell(header: true, text: "What happens") %>
+      <% table.with_caption(size: 'm', text: "Deadlines for higher education institutions (HEIs) that use HESA") %>
+      <% table.with_head do |head|%>
+        <% head.with_row do |row| %>
+          <% row.with_cell(header: true, text: "Date", width: "one-third") %>
+          <% row.with_cell(header: true, text: "What happens") %>
         <% end %>
       <% end %>
-      <% table.body do |body| %>
-        <% body.row do |row| %>
-            <% row.cell do %>
+      <% table.with_body do |body| %>
+        <% body.with_row do |row| %>
+            <% row.with_cell do %>
               <span class="no-wrap">7 September 2023</span>
             <% end %>
-          <% row.cell(text: "HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA. ")%>
+          <% row.with_cell(text: "HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA. ")%>
         <% end %>
-        <% body.row do |row| %>
-            <% row.cell do %>
+        <% body.with_row do |row| %>
+            <% row.with_cell do %>
               <span class="no-wrap">17 October 2023</span>
             <% end %>
-          <% row.cell(text: "First data submission required to HESA. Training providers should have started submitting data by this date. ")%>
+          <% row.with_cell(text: "First data submission required to HESA. Training providers should have started submitting data by this date. ")%>
         <% end %>
-        <% body.row do |row| %>
-            <% row.cell do %>
+        <% body.with_row do |row| %>
+            <% row.with_cell do %>
               <span class="no-wrap">31 October 2023</span>
             <% end %>
-          <% row.cell(text: "HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication.")%>
+          <% row.with_cell(text: "HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication.")%>
         <% end %>
-        <% body.row do |row| %>
-          <% row.cell do %>
+        <% body.with_row do |row| %>
+          <% row.with_cell do %>
             <div class="no-wrap">15 to 31 January 2024</div>
             <div class="no-wrap">15 to 30 April 2024</div>
             <div class="no-wrap">15 to 31 July 2024</div>
           <% end %>
-          <% row.cell(text: "ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods.")%>
+          <% row.with_cell(text: "ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods.")%>
         <% end %>
       <% end %>
     <% end %>
