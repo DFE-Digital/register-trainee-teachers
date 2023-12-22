@@ -40,7 +40,7 @@ private
   end
 
   def and_i_fill_in_my_lead_school_without_js
-    edit_lead_school_page.no_js_lead_school.fill_in with: my_lead_school_name
+    edit_lead_school_page.lead_school_no_js.fill_in with: my_lead_school_name
   end
 
   def and_i_click_the_first_item_in_the_list
