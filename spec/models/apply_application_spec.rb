@@ -39,4 +39,20 @@ describe ApplyApplication do
       it { is_expected.to eq(course) }
     end
   end
+
+  describe "#candidate_full_name" do
+    subject { apply_application.candidate_full_name }
+
+    context "when candidate name is present" do
+      let(:apply_application) { create(:apply_application, :importable, application: JSON.parse(ApiStubs::RecruitsApi.application)) }
+
+      it { is_expected.to eq("Martin Wells") }
+    end
+
+    context "when application data is missing" do
+      let(:apply_application) { create(:apply_application, :importable, application: { attributes: {} }) }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end

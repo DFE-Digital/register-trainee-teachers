@@ -1,0 +1,44 @@
+<%= render PageTitle::View.new(text: "Duplicate apply application record - #{@candidate_name}") %>
+
+<span class="govuk-caption-l"><%= @candidate_name %></span>
+<h1 class="govuk-heading-l">Duplicate apply application record</h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Full name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @candidate_name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Created on
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @apply_application.created_at.to_date.to_fs(:govuk_short) %>
+    </dd>
+  </div>
+  <% if @duplicate_trainees.present? %>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <%= @exact_duplicates ? "Duplicates" : "Potential duplicates" %>
+      </dt>
+      <dd class="govuk-summary-list__value">
+          <%= render ApplicationRecordCard::View.with_collection(
+            @duplicate_trainees,
+            current_user: @current_user,
+          ) %>
+      </dd>
+    </div>
+  <% end %>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Application data
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <pre><%= JSON.pretty_generate(@apply_application.application) %></pre>
+    </dd>
+  </div>
+</dl>

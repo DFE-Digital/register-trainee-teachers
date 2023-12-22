@@ -47,7 +47,22 @@ class ApplyApplication < ApplicationRecord
     provider.courses.find_by(uuid: course_uuid) if course_uuid.present?
   end
 
+  def candidate_full_name
+    [
+      first_name,
+      last_name,
+    ].select(&:present?).join(" ").presence
+  end
+
 private
+
+  def first_name
+    application&.dig("attributes", "candidate", "first_name")
+  end
+
+  def last_name
+    application&.dig("attributes", "candidate", "last_name")
+  end
 
   def course_uuid
     application_attributes.dig("course", "course_uuid")
