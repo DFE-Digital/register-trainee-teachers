@@ -12,7 +12,7 @@ module BulkUpdate
 
       let(:content) { "This is some text" }
       let(:file) do
-        Tempfile.new("utf8").tap do |f|
+        Tempfile.new.tap do |f|
           f.write(content)
           f.rewind
         end
@@ -39,11 +39,11 @@ module BulkUpdate
       end
 
       context "given a non-utf8 file type" do
-        let(:content) { "This is some text".encode("ISO-8859-1") }
+        let(:content) { "This is some text".encode("Windows-1252") }
 
         it "adds the correct error message" do
           service.validate!
-          expect(error_message).to include "The selected file must be UTF-8 encoded"
+          expect(error_message).to include "File The selected file must be UTF-8 or ISO-8859-1 encoded (detected: ISO-8859-2)"
         end
       end
     end

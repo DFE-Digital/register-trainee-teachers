@@ -13,7 +13,7 @@ module BulkUpdate
       def validate!
         if file
           file_size_within_range?
-          file_type_is_utf8?
+          file_encoding_is_accepted?
         else
           record.errors.add(:file, :missing)
         end
@@ -23,10 +23,10 @@ module BulkUpdate
 
       attr_reader :file, :record
 
-      def file_type_is_utf8?
-        return true if detection&.dig(:encoding) == "UTF-8"
+      def file_encoding_is_accepted?
+        return true if %w[UTF-8 ISO-8859-1].include?(encoding)
 
-        record.errors.add(:file, :non_utf_8) # rubocop:disable Naming/VariableNumber
+        record.errors.add(:file, :encoding_not_accepted, encoding:)
       end
 
       def detection
@@ -34,6 +34,10 @@ module BulkUpdate
           contents = File.read(file)
           CharlockHolmes::EncodingDetector.detect(contents)
         end
+      end
+
+      def encoding
+        @encoding ||= detection&.dig(:encoding)
       end
 
       def file_size_within_range?
