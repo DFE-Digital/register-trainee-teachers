@@ -1615,6 +1615,7 @@ en:
               blank: Enter a school name
             urn:
               unique: "Choose another URN as this has already been used"
+              invalid_format: "Enter a valid school unique reference number (URN). It should be 6 digits long."
         study_modes_form:
           attributes:
             study_mode:
