@@ -7,6 +7,7 @@ module SystemAdmin
         .non_importable_duplicate
         .where(recruitment_cycle_year: Settings.current_recruitment_cycle_year)
         .order(created_at: :desc)
+        .page(params[:page] || 1)
     end
 
     def show

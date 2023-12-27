@@ -33,5 +33,7 @@
         <% end %>
       </tbody>
     </table>
+
+    <%= render Paginator::View.new(scope: @apply_applications) %>
   </div>
 </div>
