@@ -1434,6 +1434,7 @@ en:
               missing: Select a CSV file
               empty: The selected file is empty
               too_large: The selected file must be smaller than 1MB
+              non_utf_8: The selected file must be UTF-8 encoded
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID

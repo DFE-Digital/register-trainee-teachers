@@ -8,19 +8,43 @@ module BulkUpdate
       subject(:service) { described_class.new(file:, record:) }
 
       let(:record) { ::BulkUpdate::RecommendationsUploadForm.new }
+      let(:error_message) { record.errors.full_messages.first }
 
-      before { service.validate! }
+      let(:content) { "This is some text" }
+      let(:file) do
+        Tempfile.new("utf8").tap do |f|
+          f.write(content)
+          f.rewind
+        end
+      end
+
+      after { file.close! }
 
       context "given a file that is empty" do
-        let(:file) { double("file", size: 0) }
+        before { file.truncate(0) } # Make the file empty
 
-        it { expect(record.errors.first.message).to eql "The selected file is empty" }
+        it "adds the correct error message" do
+          service.validate!
+          expect(error_message).to include "The selected file is empty"
+        end
       end
 
       context "given a file that is greater than 1MB" do
-        let(:file) { double("file", size: 2.megabytes) }
+        before { file.write("a" * 2.megabytes) } # Make the file larger than 1MB
 
-        it { expect(record.errors.first.message).to eql "The selected file must be smaller than 1MB" }
+        it "adds the correct error message" do
+          service.validate!
+          expect(error_message).to include "The selected file must be smaller than 1MB"
+        end
+      end
+
+      context "given a non-utf8 file type" do
+        let(:content) { "This is some text".encode("ISO-8859-1") }
+
+        it "adds the correct error message" do
+          service.validate!
+          expect(error_message).to include "The selected file must be UTF-8 encoded"
+        end
       end
     end
   end
