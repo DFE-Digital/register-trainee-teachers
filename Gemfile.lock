@@ -100,7 +100,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    addressable (2.8.5)
+    addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
     amazing_print (1.5.0)
@@ -415,6 +415,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.0218.1)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.5)
     minitest (5.20.0)
     msgpack (1.7.2)
     multi_json (1.15.0)
@@ -435,6 +436,7 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.15.5)
+      mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
@@ -676,11 +678,11 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    site_prism (4.0.3)
-      addressable (~> 2.8)
-      capybara (~> 3.27)
-      site_prism-all_there (~> 2.0)
-    site_prism-all_there (2.0.1)
+    site_prism (5.0)
+      addressable (~> 2.8, >= 2.8.1)
+      capybara (~> 3.31)
+      site_prism-all_there (> 2, < 5)
+    site_prism-all_there (3.0.2)
     skylight (6.0.1)
       activesupport (>= 5.2.0)
     slack-notifier (2.4.0)
@@ -836,7 +838,7 @@ DEPENDENCIES
   sidekiq (~> 6.5)
   sidekiq-cron (~> 1.12)
   simplecov (~> 0.22.0)
-  site_prism (~> 4.0)
+  site_prism (~> 5.0)
   skylight
   slack-notifier
   spring

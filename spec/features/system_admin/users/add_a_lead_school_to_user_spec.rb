@@ -89,7 +89,7 @@ private
   end
 
   def and_i_fill_in_my_lead_school_without_js
-    add_lead_school_to_user_page.no_js_lead_school.fill_in with: my_lead_school.name
+    add_lead_school_to_user_page.lead_school_no_js.fill_in with: my_lead_school.name
   end
 
   def and_i_click_the_first_item_in_the_list

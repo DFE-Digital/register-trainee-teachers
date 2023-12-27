@@ -66,7 +66,7 @@ private
   end
 
   def and_i_choose_not_to_disclose
-    disability_disclosure_page.public_send(%w[disability_not_provided no_disability].sample).choose
+    disability_disclosure_page.public_send(%w[disability_not_provided disability_no].sample).choose
   end
 
   def and_i_submit_the_form

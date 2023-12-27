@@ -28,7 +28,7 @@ module PageObjects
 
       element :export_link, ".app-trainee-export"
 
-      element :no_records_found, "h2", text: "No records found"
+      element :zero_records_found, "h2", text: "No records found"
     end
 
     class Index < Base

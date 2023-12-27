@@ -47,7 +47,7 @@ private
   end
 
   def and_i_should_see_a_search_again_field
-    expect(lead_schools_search_page).to have_no_results_search_again_input
+    expect(lead_schools_search_page).to have_zero_results_search_again_input
   end
 
   def and_i_continue

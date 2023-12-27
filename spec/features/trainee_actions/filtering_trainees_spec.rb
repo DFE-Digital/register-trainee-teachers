@@ -75,7 +75,7 @@ feature "Filtering trainees" do
 
     scenario "no matches" do
       when_i_filter_by_a_subject_which_returns_no_matches
-      then_i_see_a_no_records_found_message
+      then_i_see_a_zero_records_found_message
       then_i_should_not_see_sort_links
     end
 
@@ -304,8 +304,8 @@ private
     when_i_filter_by_subject(@subject_specialism.name.capitalize)
   end
 
-  def then_i_see_a_no_records_found_message
-    expect(trainee_index_page.no_records_found).to have_text("No records found")
+  def then_i_see_a_zero_records_found_message
+    expect(trainee_index_page.zero_records_found).to have_text("No records found")
   end
 
   def then_i_should_not_see_sort_links
