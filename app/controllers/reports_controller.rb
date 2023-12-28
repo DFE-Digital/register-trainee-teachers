@@ -98,7 +98,7 @@ private
   end
 
   def bulk_recommend_export_filename
-    "#{time_now}_bulk-recommend_register-trainee-teachers.csv"
+    "#{current_user.organisation.name.parameterize}-trainees-to-recommend-prepopulated.csv"
   end
 
   def census_date(year)
