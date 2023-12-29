@@ -30,6 +30,9 @@ gem "foreman"
 # Canonical meta tag
 gem "canonical-rails"
 
+# For determining file encoding
+gem "charlock_holmes"
+
 # Soft delete records
 gem "discard", "~> 1.3"
 
