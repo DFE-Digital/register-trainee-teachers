@@ -25,18 +25,48 @@
       <h2 class="govuk-heading-l">How to recommend trainees</h2>
 
       <h3 class="govuk-heading-m">
-        1. Export a template file
+        1. Choose a file to download
       </h3>
 
-      <p class="govuk-body">This file contains all <%= pluralize(bulk_recommend_count, "trainee")  %> that can be recommended for QTS or EYTS.</p>
+      <p class="govuk-body">
+        Download and add trainee information to one of these files.
+      </p>
 
-      <p class="govuk-body">Delete any trainees you do not want to recommened.</p>
+      <h4 class="govuk-heading-m">Prepopulated file</h4>
+
+      <p class="govuk-body">
+      This file contains all <%= pluralize(bulk_recommend_count, "trainee")  %> that can be recommended for QTS or EYTS.
+      </p>
+
+      <p class="govuk-body">
+        Delete any trainees you do not want to recommend.
+      </p>
 
       <p class="govuk-body">
         <%= govuk_link_to("Download a prepopulated file to recommend trainees for QTS or EYTS", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
       </p>
 
-      <p class="govuk-hint govuk-!-margin-bottom-4">File name: <span class="app-nowrap"><%= organisation_filename_prepopulated %></span></p>
+      <p class="govuk-body">
+        File name: <%= bulk_recommend_export_reports_path(:csv) %>
+      </p>
+
+      <h4 class="govuk-heading-m">Empty template file</h4>
+
+      <p class="govuk-body">
+        This file has the column headings ‘TRN’, ‘Provider trainee ID’ and ‘Date standards met’.
+      </p>
+
+      <p class="govuk-body">
+        Add the trainees you want to recommend for QTS or EYTS.
+      </p>
+
+      <p class="govuk-body">
+        <%= govuk_link_to("Download an empty template file to recommend trainees for QTS or EYTS", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
+      </p>
+
+      <p class="govuk-body">
+        File name: <%= bulk_recommend_export_reports_path(:csv) %>
+      </p>
 
       <h3 class="govuk-heading-m">
         2. Add the date each trainee met QTS or EYTS
