@@ -71,6 +71,16 @@ class ReportsController < BaseTraineeController
     )
   end
 
+  def bulk_recommend_empty_export
+    authorize(current_user, :bulk_recommend?)
+
+    send_data(
+      Exports::BulkRecommendEmptyExport.call,
+      filename: bulk_recommend_export_filename,
+      disposition: :attachment,
+    )
+  end
+
 private
 
   def itt_new_starter_trainees
@@ -99,6 +109,10 @@ private
 
   def bulk_recommend_export_filename
     "#{current_user.organisation.name.parameterize}-trainees-to-recommend-prepopulated.csv"
+  end
+
+  def bulk_recommend_empty_export_filename
+    "#{current_user.organisation.name.parameterize}-trainees-to-recommend-empty.csv"
   end
 
   def census_date(year)
