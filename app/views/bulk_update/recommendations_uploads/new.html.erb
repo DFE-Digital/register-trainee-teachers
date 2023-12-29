@@ -47,13 +47,13 @@
       </p>
 
       <p class="govuk-body">
-        File name: <%= bulk_recommend_export_reports_path(:csv) %>
+        File name: <span class="app-nowrap"><%= organisation_filename_prepopulated %></span>
       </p>
 
       <h4 class="govuk-heading-m">Empty template file</h4>
 
       <p class="govuk-body">
-        This file has the column headings ‘TRN’, ‘Provider trainee ID’ and ‘Date standards met’.
+        This file has the column headings ‘TRN’, ‘Provider trainee ID’ and ‘Date QTS or EYTS standards met’.
       </p>
 
       <p class="govuk-body">
@@ -61,11 +61,11 @@
       </p>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download an empty template file to recommend trainees for QTS or EYTS", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
+        <%= govuk_link_to("Download an empty template file to recommend trainees for QTS or EYTS", bulk_recommend_empty_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
       </p>
 
       <p class="govuk-body">
-        File name: <%= bulk_recommend_export_reports_path(:csv) %>
+        File name: <span class="app-nowrap"><%= organisation_filename_empty %></span>
       </p>
 
       <h3 class="govuk-heading-m">
