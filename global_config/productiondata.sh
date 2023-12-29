@@ -1,4 +1,4 @@
-CONFIG=productiondata_aks
+CONFIG=productiondata
 APP_ENV=${CONFIG}
 CONFIG_SHORT=pdt
 AZ_SUBSCRIPTION=s189-teacher-services-cloud-production

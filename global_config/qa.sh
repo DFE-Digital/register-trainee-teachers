@@ -1,4 +1,4 @@
-CONFIG=qa_aks
+CONFIG=qa
 APP_ENV=${CONFIG}
 CONFIG_SHORT=qa
 AZ_SUBSCRIPTION=s189-teacher-services-cloud-test

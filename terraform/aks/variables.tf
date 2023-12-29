@@ -5,15 +5,12 @@ variable "postgres_version" { default = 13 }
 variable "app_name" { default = null }
 
 # PaaS variables
-variable "paas_sso_code" { default = "" }
 
-variable "paas_app_environment" {}
+variable "app_environment" {}
 
-variable "paas_app_docker_image" {}
+variable "app_docker_image" {}
 
 variable "snapshot_databases_to_deploy" { default = 0 }
-
-variable "prometheus_app" { default = null }
 
 # Key Vault variables
 variable "azure_credentials" { default = null }
@@ -69,7 +66,7 @@ variable "pdb_min_available" { default = null }
 variable "config_short" {}
 variable "service_short" {}
 
-variable paas_app_config_file { default = "workspace-variables/app_config.yml" }
+variable app_config_file { default = "workspace-variables/app_config.yml" }
 variable env_config {}
 
 variable "service_name" {}
@@ -103,20 +100,18 @@ variable "azure_enable_backup_storage" { default = true }
 variable "enable_container_monitoring" { default = false }
 
 locals {
-  app_name_suffix  = var.app_name == null ? var.paas_app_environment : var.app_name
+  app_name_suffix  = var.app_name == null ? var.app_environment : var.app_name
 
   cf_api_url        = "https://api.london.cloud.service.gov.uk"
   azure_credentials = try(jsondecode(var.azure_credentials), null)
   kv_app_secrets    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
   infra_secrets     = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
-  app_config        = yamldecode(file(var.paas_app_config_file))[var.env_config]
-  base_url_env_var  = var.paas_app_environment == "review" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${module.cluster_data.configuration_map.dns_zone_prefix}.teacherservices.cloud" } : {}
+  app_config        = yamldecode(file(var.app_config_file))[var.env_config]
+  base_url_env_var  = var.app_environment == "review" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${module.cluster_data.configuration_map.dns_zone_prefix}.teacherservices.cloud" } : {}
 
   app_env_values = merge(
     local.base_url_env_var,
     local.app_config,
-  #  var.app_name_suffix != null ? local.review_url_vars : {},
-  #  sslmode not defined in register database.yml?
     { DB_SSLMODE = var.db_sslmode }
   )
 
@@ -136,37 +131,6 @@ locals {
     var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {}
   )
 }
-
-#Possibly required for register
-
-#variable paas_app_start_timeout {}
-
-#variable paas_snapshot_databases_to_deploy { default = 0 }
-
-#variable paas_dttp_portal {
-#  default = []
-#  type = list
-#}
-
-#variable paas_app_config_file { default = "workspace-variables/app_config.yml" }
-
-#variable env_config {}
-
-#variable paas_restore_from_db_guid {
-#  default = ""
-#}
-
-#variable paas_db_backup_before_point_in_time {
-#  default = ""
-#}
-
-# "env_config": "review",
-
-# "paas_app_start_timeout": 180,
-
-# Azure Resource Variables
-
-### variable resource_group_name {}
 
 variable azure_resource_group_name { default = null }
 

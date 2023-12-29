@@ -50,7 +50,7 @@ jobs:
     - name: Set KV environment variables
       run: |
         # tag build to the review env for vars and secrets
-        tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
+        tf_vars_file=terraform/aks/workspace-variables/review.tfvars.json
         echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
 
@@ -63,7 +63,7 @@ jobs:
 
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
     - uses: DFE-Digital/keyvault-yaml-secret@v1
       id: get-secret
@@ -88,7 +88,7 @@ jobs:
         build-args: COMMIT_SHA=${{ github.sha }}
 
     - name: Push ${{ env.DOCKER_IMAGE }} images for review
-      if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy_v2') }}
+      if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Run Snyk to check Docker image for vulnerabilities
@@ -104,7 +104,7 @@ jobs:
           args: --file=Dockerfile --severity-threshold=high --exclude-app-vulns
 
     - name: Push ${{ env.DOCKER_IMAGE }} images
-      if: ${{ success() && !contains(github.event.pull_request.labels.*.name, 'deploy_v2') }}
+      if: ${{ success() && !contains(github.event.pull_request.labels.*.name, 'deploy') }}
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Check for Failure
@@ -150,7 +150,7 @@ jobs:
       - name: Bring docker image up
         uses: ./.github/actions/bring-docker-image-up/
         with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
           docker-image: ${{needs.build.outputs.docker-image}}
           image-tag: ${{ needs.build.outputs.image-tag }}
 
@@ -187,18 +187,18 @@ jobs:
       image-tag: ${{ needs.build.outputs.image-tag }}
       use-next-academic-year: true
 
-  deploy-v2-review-app:
-    name: Deployment To Review v2
-    concurrency: deploy_v2_review_${{ github.event.pull_request.number }}
-    if: ${{ github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'deploy_v2') || contains(github.event.pull_request.labels.*.name, 'dependencies')) }}
+  deploy-review-app:
+    name: Deployment To Review
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
+    if: ${{ github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies')) }}
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Start review_aks-${{ github.event.pull_request.number }} Deployment
+      - name: Start review-${{ github.event.pull_request.number }} Deployment
         uses: bobheadxi/deployments@v1
         id: deployment
         with:
-          env: review_aks-${{ github.event.pull_request.number }}
+          env: review-${{ github.event.pull_request.number }}
           ref: ${{ github.head_ref }}
           step:  start
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -206,33 +206,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy App to Review v2
-        id: deploy_v2_review
-        uses: ./.github/actions/deploy_v2/
+      - name: Deploy App to Review
+        id: deploy_review
+        uses: ./.github/actions/deploy/
         with:
-          arm-access-key: ${{ secrets.ARM_ACCESS_KEY_REVIEW_AKS }}
-          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
-          environment: review_aks
+          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          environment: review
           pr-number: ${{ github.event.pull_request.number }}
           sha: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
-      - name: Update review_aks-${{ github.event.pull_request.number }} status
+      - name: Update review-${{ github.event.pull_request.number }} status
         if: always()
         uses: bobheadxi/deployments@v1
         with:
-          env:  review_aks-${{ github.event.pull_request.number }}
+          env:  review-${{ github.event.pull_request.number }}
           ref: ${{ github.head_ref }}
           step: finish
           token:  ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: ${{ steps.deploy_v2_review.outputs.deploy-url }}
+          env_url: ${{ steps.deploy_review.outputs.deploy-url }}
 
   merge-dependabot:
     name: Merge dependabot
     if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'dependencies') }}
-    needs: [lint, test, next_academic_year_test, deploy-v2-review-app]
+    needs: [lint, test, next_academic_year_test, deploy-review-app]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -246,72 +245,69 @@ jobs:
           exclude: 'govuk-components,govuk_design_system_formbuilder,govuk-frontend,@ministryofjustice/frontend,dfe-analytics'
           merge-method: merge
 
-  deploy-aks-before-production:
-    name: Parallel deployment before production v2
+  deploy-before-production:
+    name: Parallel deployment before production
     environment:
       name: ${{ matrix.environment }}
-      url: ${{ steps.deploy_app_before_production_v2.outputs.deploy-url }}
+      url: ${{ steps.deploy_app_before_production.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [test, next_academic_year_test]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        environment: [qa_aks,staging_aks]
+        environment: [qa,staging]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Deploy app to ${{ matrix.environment }} v2
-      id: deploy_app_before_production_v2
-      uses: ./.github/actions/deploy_v2/
+    - name: Deploy app to ${{ matrix.environment }}
+      id: deploy_app_before_production
+      uses: ./.github/actions/deploy/
       with:
-        arm-access-key: ${{ secrets[format('ARM_ACCESS_KEY_{0}', matrix.environment)] }}
         azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
         environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
-  deploy-aks-production:
-    name: Production deployment v2
+  deploy-production:
+    name: Production deployment
     environment:
-      name: production_aks
-      url: ${{ steps.deploy_app_v2.outputs.deploy-url }}
+      name: production
+      url: ${{ steps.deploy_app.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
-    needs: [deploy-aks-before-production]
+    needs: [deploy-before-production]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Deploy app to production v2
-      id: deploy_app_v2
-      uses: ./.github/actions/deploy_v2/
+    - name: Deploy app to production
+      id: deploy_app
+      uses: ./.github/actions/deploy/
       with:
-        arm-access-key: ${{ secrets.ARM_ACCESS_KEY_PRODUCTION_AKS }}
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION_AKS }}
-        environment: production_aks
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+        environment: production
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
-  deploy-aks-after-production:
-    name: Deployment after production v2
+  deploy-after-production:
+    name: Deployment after production
     environment:
-      name: productiondata_aks
-      url: ${{ steps.deploy_app_after_production_v2.outputs.deploy-url }}
+      name: productiondata
+      url: ${{ steps.deploy_app_after_production.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
-    needs: [deploy-aks-production]
+    needs: [deploy-production]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Deploy app to productiondata v2
-      id: deploy_app_after_production_v2
-      uses: ./.github/actions/deploy_v2/
+    - name: Deploy app to productiondata
+      id: deploy_app_after_production
+      uses: ./.github/actions/deploy/
       with:
-        arm-access-key: ${{ secrets.ARM_ACCESS_KEY_PRODUCTIONDATA_AKS }}
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTIONDATA_AKS }}
-        environment: productiondata_aks
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTIONDATA }}
+        environment: productiondata
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}

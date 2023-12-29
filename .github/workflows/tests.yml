@@ -52,7 +52,7 @@ jobs:
     - name: Bring docker image up
       uses: ./.github/actions/bring-docker-image-up/
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
         docker-image: ${{ inputs.docker-image}}
         image-tag: ${{ inputs.image-tag }}
 

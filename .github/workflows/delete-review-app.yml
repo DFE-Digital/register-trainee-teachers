@@ -1,4 +1,4 @@
-name: Delete v2 Review App
+name: Delete Review App
 
 on:
   pull_request:
@@ -9,10 +9,10 @@ permissions:
   deployments: write
 
 jobs:
-  delete-v2-review-app:
-    name: Delete v2 Review App ${{ github.event.pull_request.number }}
-    concurrency: deploy_v2_review_${{ github.event.pull_request.number }}
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy_v2') || contains(github.event.pull_request.labels.*.name, 'dependencies') }}
+  delete-review-app:
+    name: Delete Review App ${{ github.event.pull_request.number }}
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,7 +23,7 @@ jobs:
           terraform_version=$(awk '/{/{f=/^terraform/;next}f' terraform/aks/provider.tf | grep -o [0-9\.]*)
           PR_NUMBER=${{ github.event.pull_request.number }}
           TF_STATE_FILE=pr-$PR_NUMBER.tfstate
-          echo "DEPLOY_ENV=review_aks-$PR_NUMBER" >> $GITHUB_ENV
+          echo "DEPLOY_ENV=review-$PR_NUMBER" >> $GITHUB_ENV
           echo "APP_NAME=pr-$PR_NUMBER" >> $GITHUB_ENV
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
@@ -35,22 +35,27 @@ jobs:
 
           if [ ! -z "$pr_state_file" ]; then echo "TF_STATE_EXISTS=true" >> $GITHUB_ENV; fi;
 
-          tf_vars_file=terraform/aks/workspace-variables/review_aks.tfvars.json
+          tf_vars_file=terraform/aks/workspace-variables/review.tfvars.json
           echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
           echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
           echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         env:
-          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING_REVIEW_AKS }}
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING_REVIEW }}
 
       - name: Use Terraform ${{ env.TERRAFORM_VERSION }}
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
 
+      - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+        if: env.TF_STATE_EXISTS == 'true'
+        with:
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+
       - uses: azure/login@v1
         if: env.TF_STATE_EXISTS == 'true'
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
       - name: Validate Azure Key Vault secrets
         if: env.TF_STATE_EXISTS == 'true'
@@ -63,10 +68,9 @@ jobs:
 
       - name: Terraform destroy
         if: env.TF_STATE_EXISTS == 'true'
-        run: make review_aks ci destroy
+        run: make review ci destroy
         env:
-          ARM_ACCESS_KEY:               ${{ secrets.ARM_ACCESS_KEY_REVIEW_AKS }}
-          TF_VAR_azure_credentials:     ${{ secrets.AZURE_CREDENTIALS_REVIEW_AKS }}
+          TF_VAR_azure_credentials:     ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
       - name: Delete tf state file
         if: env.TF_STATE_EXISTS == 'true'
@@ -74,7 +78,7 @@ jobs:
             az storage blob delete -c rtt-tfstate --name ${{ env.TF_STATE_FILE }} \
             --connection-string $AZURE_STORAGE_CONNECTION_STRING
         env:
-          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING_REVIEW_AKS }}
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING_REVIEW }}
 
       - name: Update ${{ matrix.environment }} status
         id: deactivate-env
@@ -83,7 +87,7 @@ jobs:
         with:
           step:   deactivate-env
           token:  ${{ secrets.GITHUB_TOKEN }}
-          env:    review_aks-${{ env.PR_NUMBER }}
+          env:    review-${{ env.PR_NUMBER }}
 
       - name: Delete review-${{ env.PR_NUMBER }} environment
         if:   always() && (steps.deactivate-env.outcome == 'success')
@@ -91,4 +95,4 @@ jobs:
         with:
           step:   delete-env
           token:  ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
-          env:    review_aks-${{ env.PR_NUMBER }}
+          env:    review-${{ env.PR_NUMBER }}
