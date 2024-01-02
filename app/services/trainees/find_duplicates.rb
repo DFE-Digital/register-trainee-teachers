@@ -36,7 +36,7 @@ module Trainees
     end
 
     def matching_qualification_type?(trainee)
-      course && trainee.training_route == course["route"]
+      course.present? && trainee.training_route == course["route"]
     end
 
     def at_least_one_match_identifying_attribute?(trainee)
