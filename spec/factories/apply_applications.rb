@@ -19,18 +19,6 @@ FactoryBot.define do
       degree_attributes { { institution_details: invalid_institution } }
     end
 
-    trait :importable do
-      state { "importable" }
-    end
-
-    trait :importable do
-      state { "importable" }
-    end
-
-    trait :non_importable_duplicate do
-      state { "non_importable_duplicate" }
-    end
-
     trait :with_invalid_data do
       invalid
       invalid_data do

@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-feature "Viewing duplicate apply applications" do
+feature "Viewing duplicate Apply applications" do
   let(:user) { create(:user, system_admin: true) }
 
-  scenario "shows the duplicate apply applications" do
+  scenario "shows the duplicate Apply applications" do
     given_i_am_authenticated(user:)
     and_there_are_duplicate_apply_applications
     when_i_visit_the_duplicate_apply_applications_index_page
@@ -37,7 +37,7 @@ feature "Viewing duplicate apply applications" do
 
   def when_i_visit_the_duplicate_apply_applications_index_page
     visit users_path
-    click_link "Duplicate apply applications"
+    click_link "Duplicate Apply applications"
   end
 
   def then_i_should_see_the_duplicate_apply_applications
