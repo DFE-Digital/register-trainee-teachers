@@ -4,35 +4,33 @@
   <div class ="govuk-grid-column-full">
     <%= render "system_admin/tab_nav" %>
 
-    <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m">Duplicate apply applications</caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">First names</th>
-          <th scope="col" class="govuk-table__header">Last name</th>
-          <th scope="col" class="govuk-table__header">Created on</th>
-          <th scope="col" class="govuk-table__header"></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @apply_applications.each do |apply_application| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= apply_application.application&.dig("attributes", "candidate", "first_name") %></td>
-            <td class="govuk-table__cell"><%= apply_application.application&.dig("attributes", "candidate", "last_name") %></td>
-            <td class="govuk-table__cell"><%= apply_application.created_at.to_date.to_fs(:govuk_short) %></td>
-            <td class="govuk-table__cell">
-              <%=
-                govuk_link_to(
-                  "View",
-                  duplicate_apply_application_path(apply_application.id),
-                  class: "govuk-!-margin-0 govuk-button",
-                )
-              %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= govuk_table do |table|
+      table.with_caption(size: "m", text: "Duplicate apply applications")
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: "First names")
+          row.with_cell(text: "Last name")
+          row.with_cell(text: "Created on")
+          row.with_cell(text: "")
+        end
+      end
+      table.with_body do |body|
+        @apply_applications.each do |apply_application|
+          body.with_row do |row|
+            row.with_cell(text: apply_application.application&.dig("attributes", "candidate", "first_name"))
+            row.with_cell(text: apply_application.application&.dig("attributes", "candidate", "last_name"))
+            row.with_cell(text: apply_application.created_at.to_date.to_fs(:govuk_short))
+            row.with_cell do |cell|
+              govuk_button_link_to(
+                "View",
+                duplicate_apply_application_path(apply_application.id),
+                class: "govuk-!-margin-0",
+              )
+            end
+          end
+        end
+      end
+    end %>
 
     <%= render Paginator::View.new(scope: @apply_applications) %>
   </div>
