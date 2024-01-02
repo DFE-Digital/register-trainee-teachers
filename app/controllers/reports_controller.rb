@@ -76,7 +76,7 @@ class ReportsController < BaseTraineeController
 
     send_data(
       Exports::BulkRecommendEmptyExport.call,
-      filename: bulk_recommend_export_filename,
+      filename: bulk_recommend_empty_export_filename,
       disposition: :attachment,
     )
   end
