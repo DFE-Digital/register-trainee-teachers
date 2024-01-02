@@ -179,7 +179,7 @@ private
 
   def then_i_can_pick_a_course_from_the_next_cycle
     expect(publish_course_details_page.title).to include(
-      "Your school direct salaried courses starting in #{Time.zone.today.year} to #{1.year.from_now.year}",
+      "Your school direct salaried courses starting in #{Settings.current_recruitment_cycle_year} to #{Settings.current_recruitment_cycle_year + 1}",
     )
   end
 end
