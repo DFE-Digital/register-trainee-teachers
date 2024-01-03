@@ -14,29 +14,29 @@
       <%= dqt_error %>
     <% end %>
 
-    <%= govuk_accordion do |accordion|
-      @trainees.each do |trainee|
-        accordion.section(heading_text: "#{trainee.first_names} #{trainee.last_name}") do
-          tag.div(class: "govuk-body") do
-            concat(
-              tag.p((Date.current - trainee.dqt_trn_request.created_at.to_date).to_i)
-            ) if trainee.dqt_trn_request.present?
+    <%= govuk_accordion do |accordion| %>
+      <% @trainees.each do |trainee| %>
+        <% accordion.with_section(heading_text: trainee.short_name) do  %>
 
-            concat(
-              govuk_details(summary_text: "Request Details") { concat(trainee.dqt_trn_request.response) }
-            ) if trainee.dqt_trn_request.present?
+          <div class="govuk-body">
 
-            concat(
-              tag.div(class: "system-admin-actions") do
-                concat(govuk_link_to "View trainee", trainee_personal_details_path(trainee), class: "govuk-button govuk-!-margin-bottom-0")
-                concat(govuk_button_to "Check for TRN", pending_trns_retrieve_trn_path(trainee), method: :put, class: "govuk-!-margin-0 govuk-button--secondary")
-                concat(govuk_button_to "Re-submit for TRN", pending_trns_request_trn_path(trainee), method: :put, class: "govuk-!-margin-0 govuk-button--secondary")
-              end
-            )
-          end
-        end
-      end
-    end %>
+            <% if trainee.dqt_trn_request.present? %>
+              <%= tag.p("#{(Date.current - trainee.dqt_trn_request.created_at.to_date).to_i} Days waiting") %>
+
+              <%= govuk_details(summary_text: "Request Details") do %>
+                <%= content_tag(:pre, JSON.pretty_generate(trainee.dqt_trn_request.response))  %>
+              <% end %>
+            <% end %>
+
+            <div class="system-admin-actions">
+              <%= govuk_button_link_to("View trainee", trainee_personal_details_path(trainee), class: "govuk-!-margin-bottom-0") %>
+              <%= govuk_button_to("Check for TRN", pending_trns_retrieve_trn_path(trainee), method: :put, class: "govuk-!-margin-0", secondary: true) %>
+              <%= govuk_button_to("Re-submit for TRN", pending_trns_request_trn_path(trainee), method: :put, class: "govuk-!-margin-0", secondary: true) %>
+            </div>
+          </div>
+        <% end %>
+      <% end  %>
+    <% end %>
   </div>
 </div>
 

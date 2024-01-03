@@ -82,7 +82,7 @@ feature "pending TRNs" do
   end
 
   def and_i_see_the_trn_request_details
-    expect(admin_pending_trns_page).to have_text(trn_request.response)
+    expect(admin_pending_trns_page).to have_text(JSON.pretty_generate(trn_request.response))
   end
 
   def when_i_click_check_for_trn
