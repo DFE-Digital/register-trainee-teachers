@@ -2,7 +2,8 @@
 
 module Reports
   class BulkPlacementReport < TemplateClassCsv
-    PLACEMENT_HEADERS = Array.new(BulkUpdate::Placements::Config::DEFAULT_NUM_PLACEMENTS) { |i| "Placement #{i + 1} URN" }.freeze
+    PLACEMENT_HEADERS = (1..BulkUpdate::Placements::Config::DEFAULT_NUM_PLACEMENTS).map { |i| "Placement #{i} URN" }.freeze
+    OPTIONAL_HEADERS = ((BulkUpdate::Placements::Config::DEFAULT_NUM_PLACEMENTS + 1)..BulkUpdate::Placements::Config::MAX_PLACEMENTS).map { |i| "Placement #{i} URN" }
 
     HEADERS = [
       "TRN",
