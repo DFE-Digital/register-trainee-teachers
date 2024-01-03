@@ -21,10 +21,10 @@
           <div class="govuk-body">
 
             <% if trainee.dqt_trn_request.present? %>
-              <%= tag.p("#{(Date.current - trainee.dqt_trn_request.created_at.to_date).to_i} Days waiting") %>
+              <%= tag.p("#{pluralize(trainee.dqt_trn_request.days_waiting, "day")} waiting") %>
 
               <%= govuk_details(summary_text: "Request Details") do %>
-                <%= content_tag(:pre, JSON.pretty_generate(trainee.dqt_trn_request.response))  %>
+                <%= content_tag(:pre, formatted_dqt_trn_response(trainee.dqt_trn_request.response))  %>
               <% end %>
             <% end %>
 

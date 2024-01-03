@@ -13,5 +13,13 @@ module Dqt
     describe "validations" do
       it { is_expected.to validate_presence_of(:request_id) }
     end
+
+    describe "#days_waiting" do
+      let(:trn_request) { create(:dqt_trn_request, created_at: 2.days.ago) }
+
+      it "returns the number of days since the request was created" do
+        expect(trn_request.days_waiting).to eq(2)
+      end
+    end
   end
 end
