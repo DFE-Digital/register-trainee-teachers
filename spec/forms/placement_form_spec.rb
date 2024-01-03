@@ -284,6 +284,32 @@ describe PlacementForm, type: :model do
           expect(subject.errors.messages[:school]).not_to include("Choose another URN as this has already been used")
         end
       end
+
+      context "when the URN is too long" do
+        let(:placement_attributes) { { urn: "1234567" } }
+
+        it "adds errors" do
+          expect(subject.errors).to be_empty
+          subject.urn_valid
+          expect(subject.errors).not_to be_empty
+          expect(subject.errors.messages[:urn]).to include(
+            I18n.t("activemodel.errors.models.placement.attributes.urn.invalid_format"),
+          )
+        end
+      end
+
+      context "when the URN is not numeric" do
+        let(:placement_attributes) { { urn: "123a56" } }
+
+        it "adds errors" do
+          expect(subject.errors).to be_empty
+          subject.urn_valid
+          expect(subject.errors).not_to be_empty
+          expect(subject.errors.messages[:urn]).to include(
+            I18n.t("activemodel.errors.models.placement.attributes.urn.invalid_format"),
+          )
+        end
+      end
     end
 
     describe "#school_urn_valid" do
@@ -313,10 +339,24 @@ describe PlacementForm, type: :model do
     end
 
     context "postcode is set" do
-      let(:placement) { Placement.new(postcode: "BN1 1AA") }
+      let(:placement_attributes) { { postcode: "BN1 1AA" } }
+      let(:placement) { Placement.new(placement_attributes) }
 
       it "validates presence" do
         expect(subject).to validate_presence_of(:name).with_message("Enter a school name")
+      end
+
+      context "when the postcode is badly formatted" do
+        let(:placement_attributes) { { postcode: "567abc" } }
+
+        it "add errors" do
+          expect(subject.errors).to be_empty
+          subject.postcode_valid
+          expect(subject.errors).not_to be_empty
+          expect(subject.errors.messages[:postcode]).to include(
+            I18n.t("activemodel.errors.validators.postcode.invalid"),
+          )
+        end
       end
     end
   end

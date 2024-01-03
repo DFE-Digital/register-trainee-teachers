@@ -6,6 +6,7 @@ class PlacementForm
   include ActiveModel::Validations::Callbacks
 
   FIELDS = %i[slug school_id name urn postcode].freeze
+  URN_REGEX = /^[0-9]{6}$/
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
@@ -13,6 +14,7 @@ class PlacementForm
   validate :school_urn_valid
   validates :name, presence: true, if: -> { school_id.blank? }
   validate :urn_valid
+  validate :postcode_valid
 
   delegate :persisted?, :school, to: :placement
 
@@ -134,6 +136,16 @@ class PlacementForm
   def urn_valid
     if urn.present? && existing_urns.any?(urn)
       errors.add(:urn, :unique)
+    end
+
+    if urn.present? && !urn.match?(URN_REGEX)
+      errors.add(:urn, :invalid_format)
+    end
+  end
+
+  def postcode_valid
+    if postcode.present? && !UKPostcode.parse(postcode).valid?
+      errors.add(:postcode, I18n.t("activemodel.errors.validators.postcode.invalid"))
     end
   end
 
