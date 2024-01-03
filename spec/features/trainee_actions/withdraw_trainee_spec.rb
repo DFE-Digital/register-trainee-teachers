@@ -339,11 +339,11 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_details_too_long
-    expect(withdrawal_reason_page).to have_content("Details about why the trainee withdrew must be 500 characters or less")
+    expect(withdrawal_reason_page).to have_content("Details about why the trainee withdrew must be 1000 characters or less")
   end
 
   def then_i_see_the_error_message_for_dfe_details_too_long
-    expect(withdrawal_reason_page).to have_content("What the Department for Education could have done must be x characters or less")
+    expect(withdrawal_reason_page).to have_content("What the Department for Education could have done must be 1000 characters or less")
   end
 
   def then_i_see_the_error_message_for_missing_additional_reason
