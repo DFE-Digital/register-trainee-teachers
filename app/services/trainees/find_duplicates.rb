@@ -27,7 +27,7 @@ module Trainees
 
     def confirmed_duplicate?(trainee)
       matching_recruitment_cycle_year?(trainee) &&
-      matching_qualification_type?(trainee) &&
+      matching_course_route?(trainee) &&
       at_least_one_match_identifying_attribute?(trainee)
     end
 
@@ -35,8 +35,8 @@ module Trainees
       trainee.start_academic_cycle&.start_date&.year == raw_course["recruitment_cycle_year"]
     end
 
-    def matching_qualification_type?(trainee)
-      trainee.training_route == course["route"]
+    def matching_course_route?(trainee)
+      course.present? && trainee.training_route == course["route"]
     end
 
     def at_least_one_match_identifying_attribute?(trainee)

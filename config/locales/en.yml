@@ -337,6 +337,8 @@ en:
       dead_jobs:
         index: Dead Jobs
         show: Dead Jobs
+      duplicate_apply_applications:
+        index: Duplicate Apply applications
       otp:
         show: Sign in
         verify: Check your email
