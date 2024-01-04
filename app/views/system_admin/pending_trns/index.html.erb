@@ -1,4 +1,10 @@
-<%= render PageTitle::View.new(i18n_key: "dead_jobs.index") %>
+<div class="govuk-grid-row">
+  <div class ="govuk-grid-column-two-thirds-from-desktop">
+    <%= render PageTitle::View.new(i18n_key: "pending_trns.index") %>
+
+    <h1 class="govuk-heading-l">Trainees Pending TRN</h1>
+  </div>
+</div>
 
 <div class="govuk-grid-row">
   <div class ="govuk-grid-column-full">
@@ -8,43 +14,29 @@
       <%= dqt_error %>
     <% end %>
 
-    <table class="govuk-table">
-      <caption class="govuk-table__caption govuk-table__caption--m">Trainees Pending TRN</caption>
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">First names</th>
-          <th scope="col" class="govuk-table__header">Last name</th>
-          <th scope="col" class="govuk-table__header">Days waiting</th>
-          <th scope="col" class="govuk-table__header" colspan="3"></th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <% @trainees.each do |trainee| %>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><%= trainee.first_names %></td>
-            <td class="govuk-table__cell"><%= trainee.last_name %></td>
-            <td class="govuk-table__cell">
-              <%= (Date.current - trainee.dqt_trn_request.created_at.to_date).to_i if trainee.dqt_trn_request.present? %>
-            </td>
-            <td class="govuk-table__cell">
-              <%= govuk_link_to "View", trainee_personal_details_path(trainee), class: "govuk-!-margin-0 govuk-button" %>
-            </td>
-            <td class="govuk-table__cell">
-              <%= govuk_button_to "Check for TRN",
-                                  pending_trns_retrieve_trn_path(trainee),
-                                  method: :put,
-                                  class: "govuk-!-margin-0 govuk-button--secondary" %>
-            </td>
-            <td class="govuk-table__cell">
-              <%= govuk_button_to "Re-submit for TRN",
-                                  pending_trns_request_trn_path(trainee),
-                                  method: :put,
-                                  class: "govuk-!-margin-0 govuk-button--secondary" %>
-            </td>
-          </tr>
+    <%= govuk_accordion do |accordion| %>
+      <% @trainees.each do |trainee| %>
+        <% accordion.with_section(heading_text: trainee.short_name) do  %>
+
+          <div class="govuk-body">
+
+            <% if trainee.dqt_trn_request.present? %>
+              <%= tag.p("#{pluralize(trainee.dqt_trn_request.days_waiting, "day")} waiting") %>
+
+              <%= govuk_details(summary_text: "Request Details") do %>
+                <%= content_tag(:pre, formatted_dqt_trn_response(trainee.dqt_trn_request.response))  %>
+              <% end %>
+            <% end %>
+
+            <div class="system-admin-actions">
+              <%= govuk_button_link_to("View trainee", trainee_personal_details_path(trainee), class: "govuk-!-margin-bottom-0") %>
+              <%= govuk_button_to("Check for TRN", pending_trns_retrieve_trn_path(trainee), method: :put, class: "govuk-!-margin-0", secondary: true) %>
+              <%= govuk_button_to("Re-submit for TRN", pending_trns_request_trn_path(trainee), method: :put, class: "govuk-!-margin-0", secondary: true) %>
+            </div>
+          </div>
         <% end %>
-      </tbody>
-    </table>
+      <% end  %>
+    <% end %>
   </div>
 </div>
 

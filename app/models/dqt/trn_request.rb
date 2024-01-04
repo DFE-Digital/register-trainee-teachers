@@ -34,5 +34,9 @@ module Dqt
     }
 
     validates :request_id, presence: true
+
+    def days_waiting
+      (Date.current - created_at.to_date).to_i
+    end
   end
 end

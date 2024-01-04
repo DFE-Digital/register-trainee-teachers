@@ -339,6 +339,8 @@ en:
         show: Dead Jobs
       duplicate_apply_applications:
         index: Duplicate Apply applications
+      pending_trns:
+        index: Trainees Pending TRN
       otp:
         show: Sign in
         verify: Check your email
