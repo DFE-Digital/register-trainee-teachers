@@ -268,6 +268,7 @@ namespace :example_data do
               trainee.trn = Faker::Number.number(digits: 7)
             end
 
+            FormStore.clear_all(trainee.id)
             trainee.save!
 
             # Make *roughly* 75% of submitted_for_trn trainees have trainee withdraw reason
