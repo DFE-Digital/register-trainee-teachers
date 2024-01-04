@@ -6,6 +6,8 @@ FactoryBot.define do
 
     with_school
 
+    slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
+
     trait :with_school do
       school
     end
