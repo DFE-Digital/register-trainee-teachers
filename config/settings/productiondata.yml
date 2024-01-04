@@ -39,6 +39,7 @@ features:
   hesa_import:
     test_mode: true
     sync_trn_data: false
+  upload_funding: true
 
 environment:
   name: productiondata
