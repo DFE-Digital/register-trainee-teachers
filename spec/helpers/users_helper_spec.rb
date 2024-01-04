@@ -78,4 +78,46 @@ describe UsersHelper do
       end
     end
   end
+
+  describe "#can_view_upload_funding?" do
+    subject { can_view_upload_funding? }
+
+    context "with nil current_user" do
+      let(:current_user) { nil }
+
+      it "returns false" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context "without a current_user as system admin" do
+      let(:current_user) { double(UserWithOrganisationContext, system_admin: false) }
+
+      it "returns false" do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context "with a current_user as system admin" do
+      let(:current_user) { double(UserWithOrganisationContext, system_admin: true) }
+
+      it "returns true" do
+        expect(subject).to be_truthy
+      end
+    end
+
+    context "upload funding feature flag is disabled", feature_upload_funding: false do
+      it "returns false" do
+        expect(subject).to be_falsey
+      end
+
+      context "with a current_user as system admin" do
+        let(:current_user) { double(UserWithOrganisationContext, system_admin: true) }
+
+        it "returns false" do
+          expect(subject).to be_falsey
+        end
+      end
+    end
+  end
 end
