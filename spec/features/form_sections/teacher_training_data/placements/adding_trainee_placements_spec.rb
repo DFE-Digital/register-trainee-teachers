@@ -100,10 +100,6 @@ private
   end
   alias_method :and_i_navigate_to_the_new_placement_form, :when_i_navigate_to_the_new_placement_form
 
-  def then_i_see_the_not_found_page
-    expect(page).to have_current_path(not_found_path)
-  end
-
   def then_i_see_the_new_placement_form
     expect(page).to have_content("First placement")
   end
