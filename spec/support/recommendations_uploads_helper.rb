@@ -29,4 +29,27 @@ module RecommendationsUploadHelper
     tempfile.rewind
     tempfile.path
   end
+
+  def create_simplified_recommendations_upload_csv!(trainees:, write_to_disk:, recommended_for_award_date:)
+    # create a CSV with only the columns that are required for the upload form
+    csv_string = CSV.generate do |rows|
+      rows << Reports::BulkRecommendEmptyReport::DEFAULT_HEADERS
+      trainees.each do |trainee|
+        rows << [
+          trainee.trn,
+          trainee.trainee_id,
+          recommended_for_award_date&.strftime("%d/%m/%Y"),
+        ]
+      end
+    end
+
+    # return a CSV object
+    return csv_string unless write_to_disk
+
+    # or return the path to a temp file on disk
+    tempfile = Tempfile.new("csv")
+    tempfile.write(csv_string)
+    tempfile.rewind
+    tempfile.path
+  end
 end

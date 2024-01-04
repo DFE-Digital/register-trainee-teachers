@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
     get "performance-profiles", to: "reports#performance_profiles", on: :collection
     get :bulk_recommend_export, on: :collection
+    get :bulk_recommend_empty_export, on: :collection
     get :bulk_placement_export, on: :collection
   end
 

@@ -2,7 +2,10 @@
 
 module BulkUpdate
   class RecommendationsUploadsController < RecommendationsBaseController
+    helper_method :organisation_filename_prepopulated, :organisation_filename_empty
+
     def new
+      navigation_view
       @recommendations_upload_form = RecommendationsUploadForm.new
     end
 
@@ -38,6 +41,14 @@ module BulkUpdate
 
     def file
       @file ||= params.dig(:bulk_update_recommendations_upload_form, :file)
+    end
+
+    def organisation_filename_prepopulated
+      "#{provider.name.parameterize}-trainees-to-recommend-prepopulated.csv"
+    end
+
+    def organisation_filename_empty
+      "#{provider.name.parameterize}-trainees-to-recommend-empty.csv"
     end
 
     # for now, if anything goes wrong during creation of trainees

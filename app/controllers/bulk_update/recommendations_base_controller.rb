@@ -10,6 +10,10 @@ module BulkUpdate
 
   private
 
+    def navigation_view
+      @navigation_view = ::Funding::NavigationView.new(organisation: provider)
+    end
+
     def provider
       @provider ||= current_user.organisation
     end

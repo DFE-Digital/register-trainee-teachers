@@ -21,67 +21,93 @@ feature "recommending trainees" do
     before do
       given_two_trainees_exist_to_recommend
       given_i_am_on_the_recommendations_upload_page
-      then_i_see_how_many_trainees_i_can_recommend
-      and_i_upload_a_csv(create_recommendations_upload_csv!(write_to_disk:, overwrite:))
     end
 
-    context "and I upload a complete CSV" do
-      scenario "I can upload trainees for recommendation" do
-        then_i_see_count_complete
-        and_i_check_who_ill_recommend
-        and_i_see_a_list_of_trainees_to_check
+    context "when I use the empty template" do
+      before do
+        then_i_see_the_option_to_download_the_empty_template
+        and_i_upload_a_csv(
+          create_simplified_recommendations_upload_csv!(
+            trainees: @trainees,
+            write_to_disk: true,
+            recommended_for_award_date: Time.zone.today,
+          ),
+        )
       end
 
-      scenario "I can cancel my upload" do
-        and_i_click_cancel
-        and_i_click_confirm_cancel
-        then_i_am_taken_back_to_the_upload_page
-      end
-    end
-
-    context "and I upload a CSV missing dates" do
-      let(:overwrite) do # a valid date for the first trainee created in `given_two_trainees_exist_to_recommend`
-        [
-          { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
-        ]
-      end
-
-      scenario "I can upload trainees for recommendation" do
-        then_i_see_count_missing_dates
-        and_i_check_who_ill_recommend
+      context "and I upload a complete CSV" do
+        scenario "I can upload trainees for recommendation" do
+          then_i_see_count_complete
+          and_i_check_who_ill_recommend
+          and_i_see_a_list_of_trainees_to_check
+        end
       end
     end
 
-    context "I can change who I want to recommend" do
-      scenario "I see the form to change upload" do
-        and_i_check_who_ill_recommend
-        and_i_click_change_link
-        then_i_see_the_form_to_change_upload
+    context "when I use the pre-popuated template" do
+      before do
+        then_i_see_how_many_trainees_i_can_recommend
+        and_i_upload_a_csv(create_recommendations_upload_csv!(write_to_disk:, overwrite:))
       end
 
-      scenario "I get redirected to the correct page when no CSV is uploaded" do
-        and_i_check_who_ill_recommend
-        and_i_click_change_link
-        then_i_see_the_form_to_change_upload
-        and_i_submit_form_with_no_file
-        then_i_see_validation_errors
-        and_i_remain_on_the_change_upload_page
-      end
-    end
+      context "and I upload a complete CSV" do
+        scenario "I can upload trainees for recommendation" do
+          then_i_see_count_complete
+          and_i_check_who_ill_recommend
+          and_i_see_a_list_of_trainees_to_check
+        end
 
-    context "and I upload a CSV with an error" do
-      let(:overwrite) do # one valid, and one invalid date for trainees created in `given_two_trainees_exist_to_recommend`
-        [
-          { Reports::BulkRecommendReport::DATE => Date.tomorrow.strftime("%d/%m/%Y") },
-          { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
-        ]
+        scenario "I can cancel my upload" do
+          and_i_click_cancel
+          and_i_click_confirm_cancel
+          then_i_am_taken_back_to_the_upload_page
+        end
       end
 
-      scenario "I am shown the error count and am told to fix errors" do
-        then_i_see_count_errors
-        then_i_click_review_errors
-        when_i_submit_form_with_no_file_attached
-        then_i_see_validation_errors
+      context "and I upload a CSV missing dates" do
+        let(:overwrite) do # a valid date for the first trainee created in `given_two_trainees_exist_to_recommend`
+          [
+            { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
+          ]
+        end
+
+        scenario "I can upload trainees for recommendation" do
+          then_i_see_count_missing_dates
+          and_i_check_who_ill_recommend
+        end
+      end
+
+      context "I can change who I want to recommend" do
+        scenario "I see the form to change upload" do
+          and_i_check_who_ill_recommend
+          and_i_click_change_link
+          then_i_see_the_form_to_change_upload
+        end
+
+        scenario "I get redirected to the correct page when no CSV is uploaded" do
+          and_i_check_who_ill_recommend
+          and_i_click_change_link
+          then_i_see_the_form_to_change_upload
+          and_i_submit_form_with_no_file
+          then_i_see_validation_errors
+          and_i_remain_on_the_change_upload_page
+        end
+      end
+
+      context "and I upload a CSV with an error" do
+        let(:overwrite) do # one valid, and one invalid date for trainees created in `given_two_trainees_exist_to_recommend`
+          [
+            { Reports::BulkRecommendReport::DATE => Date.tomorrow.strftime("%d/%m/%Y") },
+            { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
+          ]
+        end
+
+        scenario "I am shown the error count and am told to fix errors" do
+          then_i_see_count_errors
+          then_i_click_review_errors
+          when_i_submit_form_with_no_file_attached
+          then_i_see_validation_errors
+        end
       end
     end
   end
@@ -101,6 +127,10 @@ private
 
   def then_i_see_how_many_trainees_i_can_recommend
     expect(recommendations_upload_page).to have_text("2 trainees")
+  end
+
+  def then_i_see_the_option_to_download_the_empty_template
+    expect(recommendations_upload_page).to have_link("Download an empty template file to recommend trainees for QTS or EYTS")
   end
 
   def and_i_upload_a_csv(csv_path)
