@@ -24,6 +24,11 @@
         )
       end
     end
+  else
+    summary_list.with_row do |row|
+      row.with_key { "Duplicates" }
+      row.with_value { "None found" }
+    end
   end
 
   summary_list.with_row do |row|
