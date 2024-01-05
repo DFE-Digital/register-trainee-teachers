@@ -49,10 +49,6 @@ private
     click_link "Delete placement"
   end
 
-  def then_i_see_the_not_found_page
-    expect(page).to have_current_path(not_found_path)
-  end
-
   def then_i_see_the_delete_placement_form
     expect(page).to have_content("Are you sure you want to delete this placement?")
   end
