@@ -71,7 +71,7 @@ feature "Undo trainee withdrawal" do
     given_a_trainee_exists(:withdrawn_for_specific_reason)
     and_i_am_on_the_trainee_record_page
     record_page.undo_withdrawal.click
-    click_link "Continue"
+    click_on "Continue"
   end
 
   def then_i_expect_the_page_to_show_url_error

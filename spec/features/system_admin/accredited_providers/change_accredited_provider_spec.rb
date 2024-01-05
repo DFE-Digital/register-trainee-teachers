@@ -74,7 +74,7 @@ feature "Change a trainee's accredited provider" do
 
   def and_i_click_the_change_provider_link
     within ".govuk-summary-list__row.accredited-provider" do
-      click_link "Change"
+      click_on "Change"
     end
   end
 
@@ -141,15 +141,15 @@ feature "Change a trainee's accredited provider" do
   end
 
   def when_i_click_to_change_the_accredited_provider
-    click_link "Change accredited provider"
+    click_on "Change accredited provider"
   end
 
   def when_i_click_to_change_the_zendesk_ticket_url
-    click_link "Change zendesk ticket url"
+    click_on "Change zendesk ticket url"
   end
 
   def when_i_click_back
-    click_link "Back"
+    click_on "Back"
   end
   alias_method :and_i_click_back, :when_i_click_back
 

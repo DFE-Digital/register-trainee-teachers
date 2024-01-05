@@ -57,7 +57,7 @@ private
   end
 
   def when_i_click_on_add_a_placement_button
-    page.click_link("Add a placement", class: "govuk-button--secondary govuk-button")
+    page.click_on("Add a placement", class: "govuk-button--secondary govuk-button")
   end
 
   def then_i_am_redirected_to_add_a_placement_page

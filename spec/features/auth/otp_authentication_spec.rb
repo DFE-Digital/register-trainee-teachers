@@ -82,6 +82,6 @@ private
   end
 
   def and_i_can_access_the_support_interface
-    click_link("Support for Register")
+    click_on("Support for Register")
   end
 end

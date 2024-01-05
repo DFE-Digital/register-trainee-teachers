@@ -89,7 +89,7 @@ private
   end
 
   def when_i_click_on_the_change_link
-    page.click_link("Change")
+    page.click_on("Change")
   end
 
   def given_i_have_one_placement
@@ -124,7 +124,7 @@ private
   end
 
   def and_i_click_on_add_a_placement_button
-    page.click_link("Add a placement", class: "govuk-button--secondary govuk-button")
+    page.click_on("Add a placement", class: "govuk-button--secondary govuk-button")
   end
 
   def then_i_see_the_confirmation_page

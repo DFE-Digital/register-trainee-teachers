@@ -49,7 +49,7 @@ private
   end
 
   def when_i_click_on_the_download_link
-    click_link "Download trainees with missing details"
+    click_on "Download trainees with missing details"
   end
 
   def then_i_receive_the_file

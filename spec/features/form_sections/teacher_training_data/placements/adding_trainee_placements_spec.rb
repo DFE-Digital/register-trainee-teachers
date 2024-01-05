@@ -92,7 +92,7 @@ private
   end
 
   def and_i_click_to_enter_first_placement
-    click_link "Enter first placement"
+    click_on "Enter first placement"
   end
 
   def when_i_navigate_to_the_new_placement_form
@@ -117,7 +117,7 @@ private
   end
 
   def when_i_click_add_a_placement
-    click_link "Add a placement"
+    click_on "Add a placement"
   end
 
   def then_i_see_the_confirmation_page

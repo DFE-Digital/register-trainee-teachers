@@ -61,7 +61,7 @@ feature "Viewing duplicate Apply applications" do
 
   def when_i_visit_the_duplicate_apply_applications_index_page
     visit users_path
-    click_link "Duplicate Apply applications"
+    click_on "Duplicate Apply applications"
   end
 
   def then_i_should_see_the_duplicate_apply_applications
@@ -73,7 +73,7 @@ feature "Viewing duplicate Apply applications" do
   end
 
   def when_i_click_on_a_duplicate_apply_application
-    click_link "View"
+    click_on "View"
   end
 
   def then_i_should_see_the_candidate_name
@@ -89,7 +89,7 @@ feature "Viewing duplicate Apply applications" do
 
   def when_i_click_on_the_trainee_link
     within(".application-record-card") do
-      click_link @duplicate_apply_application.candidate_full_name
+      click_on @duplicate_apply_application.candidate_full_name
     end
   end
 
@@ -103,6 +103,6 @@ feature "Viewing duplicate Apply applications" do
 
   def then_i_should_see_the_trainee_page
     expect(page).to have_current_path(trainee_path(@trainee))
-    expect(page).not_to have_css(".application-record-card")
+    expect(page).to have_no_css(".application-record-card")
   end
 end

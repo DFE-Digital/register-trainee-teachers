@@ -42,7 +42,7 @@ private
 
   def when_i_visit_the_placement_details_page
     given_i_am_on_the_review_draft_page
-    click_link("Placements")
+    click_on("Placements")
   end
 
   def and_i_have_the_placement_detail
@@ -70,7 +70,7 @@ private
   end
 
   def when_i_click_back
-    click_link "Back"
+    click_on "Back"
   end
 
   def then_i_see_the_placements_form_page
@@ -78,7 +78,7 @@ private
   end
 
   def when_i_click_placements
-    click_link("Placements")
+    click_on("Placements")
   end
 
   def then_i_see_the_confirmation_page
