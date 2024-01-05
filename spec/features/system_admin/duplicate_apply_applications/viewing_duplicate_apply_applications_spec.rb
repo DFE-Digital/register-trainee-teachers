@@ -103,6 +103,6 @@ feature "Viewing duplicate Apply applications" do
 
   def then_i_should_see_the_trainee_page
     expect(page).to have_current_path(trainee_path(@trainee))
-    expect(page).to have_no_css(".application-record-card")
+    expect(page).not_to have_css(".application-record-card")
   end
 end
