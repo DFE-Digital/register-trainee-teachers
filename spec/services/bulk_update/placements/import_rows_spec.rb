@@ -13,7 +13,7 @@ module BulkUpdate
 
         before do
           create_rows_for_bulk_placement(trns)
-          allow(ImportRowJob).to receive(:perform_later)
+          allow(ImportRow).to receive(:call)
         end
 
         context "when there is a valid trainee for each row" do
@@ -23,7 +23,7 @@ module BulkUpdate
           before { service }
 
           it "imports rows without errors" do
-            expect(ImportRowJob).to have_received(:perform_later).exactly(trns.size).times
+            expect(ImportRow).to have_received(:call).exactly(trns.size).times
           end
         end
 
@@ -33,7 +33,7 @@ module BulkUpdate
           before { service }
 
           it "marks rows as failed and adds error messages" do
-            expect(ImportRowJob).to have_received(:perform_later).exactly(0).times
+            expect(ImportRow).to have_received(:call).exactly(0).times
             check_rows_for_errors("No trainee was found for TRN:", "failed")
           end
         end
@@ -47,8 +47,24 @@ module BulkUpdate
           end
 
           it "marks rows as failed and adds error messages" do
-            expect(ImportRowJob).to have_received(:perform_later).exactly(0).times
+            expect(ImportRow).to have_received(:call).exactly(0).times
             check_rows_for_errors("More than one trainee was found for TRN:", "failed")
+          end
+        end
+
+        context "when importing a row raises an error" do
+          let(:trainees) { create_list(:trainee, 2, :trn_received, provider:) }
+          let(:trns) { trainees.map(&:trn) }
+          let(:error) { StandardError.new("runtime error") }
+
+          before do
+            allow(ImportRow).to receive(:call).and_raise(error)
+            service
+          end
+
+          it "rescues the error, marks the row as failed, and records the error message" do
+            expect(ImportRow).to have_received(:call).exactly(trns.size).times
+            check_rows_for_errors("runtime failure: #{error.message}", "failed")
           end
         end
       end
