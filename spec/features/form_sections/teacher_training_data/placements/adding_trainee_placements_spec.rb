@@ -113,7 +113,7 @@ private
   end
 
   def and_i_click_continue
-    click_button "Continue"
+    click_on "Continue"
   end
 
   def when_i_click_add_a_placement
@@ -146,7 +146,7 @@ private
   end
 
   def when_i_click_update
-    click_button "Update record"
+    click_on "Update record"
   end
   alias_method :and_i_click_update, :when_i_click_update
 

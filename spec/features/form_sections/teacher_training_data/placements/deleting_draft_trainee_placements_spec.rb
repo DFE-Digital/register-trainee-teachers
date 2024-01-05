@@ -66,11 +66,11 @@ private
   end
 
   def and_i_click_the_confirm_button
-    click_button "Yes I’m sure — delete this placement"
+    click_on "Yes I’m sure — delete this placement"
   end
 
   def when_i_click_update
-    click_button "Update record"
+    click_on "Update record"
   end
 
   def then_i_see_the_confirmation_page

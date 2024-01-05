@@ -87,7 +87,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def and_click_continue
-    click_button "Continue"
+    click_on "Continue"
   end
   alias_method :when_i_click_continue, :and_click_continue
 
@@ -111,7 +111,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def when_i_click_update
-    click_button "Update"
+    click_on "Update"
   end
 
   def then_i_see_a_flash_message

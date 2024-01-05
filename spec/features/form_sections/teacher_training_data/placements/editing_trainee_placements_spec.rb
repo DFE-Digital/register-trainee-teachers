@@ -120,7 +120,7 @@ private
   alias_method :and_i_select_an_existing_school, :when_i_select_an_existing_school
 
   def and_i_click_continue
-    click_button "Continue"
+    click_on "Continue"
   end
 
   def and_i_click_on_add_a_placement_button
@@ -149,7 +149,7 @@ private
   end
 
   def and_i_click_update
-    click_button "Update record"
+    click_on "Update record"
   end
 
   def and_one_placement_are_created

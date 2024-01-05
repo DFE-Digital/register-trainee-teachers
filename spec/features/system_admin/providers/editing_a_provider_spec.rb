@@ -52,7 +52,7 @@ private
   end
 
   def and_i_click_on_the_delete_button
-    page.click_button("Delete this provider")
+    page.click_on("Delete this provider")
   end
 
   def and_i_am_on_the_confirmation_page
@@ -60,7 +60,7 @@ private
   end
 
   def and_i_click_on_the_delete_confirmation_button
-    expect { page.click_button("Delete this provider") }.to change(provider.users, :count).from(1).to(0)
+    expect { page.click_on("Delete this provider") }.to change(provider.users, :count).from(1).to(0)
   end
 
   def then_i_am_on_the_providers_listing_page

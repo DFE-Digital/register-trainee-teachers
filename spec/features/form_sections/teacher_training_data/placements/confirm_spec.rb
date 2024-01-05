@@ -49,7 +49,7 @@ private
   end
 
   def when_i_click_on_continue
-    page.click_button("Continue")
+    page.click_on("Continue")
   end
 
   def then_i_am_redirected_to_review_draft

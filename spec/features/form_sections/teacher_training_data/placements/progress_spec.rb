@@ -54,7 +54,7 @@ private
   end
 
   def and_i_continue
-    click_button(t("continue"))
+    click_on(t("continue"))
   end
 
   def then_the_placements_section_should_be(status)
