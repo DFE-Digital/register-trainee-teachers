@@ -59,7 +59,10 @@ module BulkUpdate
 
       def import_rows(rows)
         rows.each do |row|
-          ImportRowJob.perform_later(row)
+          ImportRow.call(row)
+        rescue StandardError => e
+          row.failed!
+          row.row_errors.create(message: "runtime failure: #{e.message}")
         end
       end
 
