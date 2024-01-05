@@ -1,0 +1,49 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(
+        model: @select_placement_school_form,
+        url: trainee_placements_path,
+        method: :post
+      ) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Find school</span>
+        <%= "#{pluralize(@select_placement_school_form.search_results.schools.size, 'result')} found" %>
+      </h1>
+
+      <p class="govuk-body">
+        <!-- TODO: generalise for updates and new trainees -->
+        <%= govuk_link_to(
+          'Change your search',
+          new_trainee_placement_path(trainee_id: @select_placement_school_form.trainee.slug),
+        ) %>
+        if the school you’re looking for is not listed
+      </p>
+
+      <% unless @select_placement_school_form.search_results.schools.empty? %>
+        <%= f.govuk_radio_buttons_fieldset(:school_id, legend: { text: "TODO:", size: "m" }) do %>
+          <% @select_placement_school_form.search_results.schools.each_with_index do |school, index| %>
+            <%= f.govuk_radio_button(
+              :school_id,
+              school.id,
+              label: { text: school.name },
+              link_errors: index.zero?,
+              hint: { text: school_urn_and_location(school) },
+            ) %>
+          <% end %>
+        <% end %>
+        <%= f.hidden_field(
+          :school_search,
+          value: @select_placement_school_form.query,
+        ) %>
+        <%= f.govuk_submit t("continue") %>
+      <% end %>
+    <% end %>
+     <% unless @select_placement_school_form.search_results.schools.empty? %>
+      <p class="govuk-body">
+        TODO: govuk_link_to(t("cancel"), publish_provider_recruitment_cycle_schools_path)
+      </p>
+    <% end %>
+  </div>
+</div>

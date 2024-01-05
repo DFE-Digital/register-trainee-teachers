@@ -198,6 +198,7 @@ Rails.application.routes.draw do
 
       resources :placements, only: %i[new create edit update destroy] do
         get "delete", on: :member, to: "placements#delete", as: "delete"
+        get "search", on: :collection, to: "placements#search", as: "search"
 
         collection do
           scope module: :placements, as: :placements do

@@ -5,14 +5,14 @@ class PlacementForm
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  FIELDS = %i[slug school_id name urn postcode].freeze
+  FIELDS = %i[slug school_search school_id name urn postcode].freeze
   URN_REGEX = /^[0-9]{6}$/
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
   validate :school_valid
   validate :school_urn_valid
-  validates :name, presence: true, if: -> { school_id.blank? }
+  validates :name, presence: true, if: -> { school_id.blank? && school_search.blank? }
   validate :urn_valid
   validate :postcode_valid
 
@@ -27,6 +27,7 @@ class PlacementForm
     @placement = placement
     @destroy = destroy
     self.attributes = placement.attributes.symbolize_keys.slice(*FIELDS)
+    self.school_search = placement.school_search
   end
 
   def self.model_name
@@ -118,7 +119,7 @@ class PlacementForm
   end
 
   def school_valid
-    if school_id.blank? && (name.blank? && urn.blank? && postcode.blank?)
+    if school_id.blank? && school_search.blank? && (name.blank? && urn.blank? && postcode.blank?)
       errors.add(:school, :blank)
     end
   end
@@ -147,6 +148,10 @@ class PlacementForm
     if postcode.present? && !UKPostcode.parse(postcode).valid?
       errors.add(:postcode, I18n.t("activemodel.errors.validators.postcode.invalid"))
     end
+  end
+
+  def still_searching?
+    school_search.present? && school_id.blank? && urn.blank?
   end
 
 private

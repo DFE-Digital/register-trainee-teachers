@@ -22,7 +22,14 @@ module Trainees
         placement: Placement.new(placement_params),
       )
 
-      if @placement_form.save_or_stash
+      if @placement_form.still_searching?
+        redirect_to(
+          search_trainee_placements_path(
+            trainee_id: @trainee.slug,
+            school_search: @placement_form.school_search,
+          ),
+        )
+      elsif @placement_form.save_or_stash
         redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
       else
         render(:new)
@@ -59,6 +66,13 @@ module Trainees
       redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
     end
 
+    def search
+      @select_placement_school_form = SelectPlacementSchoolForm.new(
+        trainee: trainee,
+        query: params[:school_search],
+      )
+    end
+
   private
 
     def authorize_trainee
@@ -78,7 +92,11 @@ module Trainees
     end
 
     def placement_params
-      params.fetch(:placement, {}).permit(:school_id, :urn, :name, :address, :postcode)
+      if params[:placement].present?
+        params.fetch(:placement, {}).permit(:school_id, :school_search, :urn, :name, :address, :postcode)
+      elsif params[:select_placement_school_form].present?
+        params.fetch(:select_placement_school_form, {}).permit(:school_id)
+      end
     end
   end
 end
