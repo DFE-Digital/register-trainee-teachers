@@ -18,7 +18,7 @@ module SystemAdmin
       @exact_duplicates = @duplicate_trainees.present?
       @duplicate_trainees = Trainees::FindPotentialDuplicates.call(application_record: @apply_application) if @duplicate_trainees.blank?
 
-      @duplicate_trainees = [Trainee.last]
+      @duplicate_trainees = [@duplicate_trainees.last].compact
     end
   end
 end

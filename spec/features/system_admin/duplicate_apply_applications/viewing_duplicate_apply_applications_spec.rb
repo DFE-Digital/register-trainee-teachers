@@ -19,6 +19,18 @@ feature "Viewing duplicate Apply applications" do
     then_i_should_see_the_trainee_page
   end
 
+  scenario "shows the duplicate Apply applications with no matching trainee record" do
+    given_i_am_authenticated(user:)
+    and_there_are_duplicate_apply_applications_without_matching_trainee
+    when_i_visit_the_duplicate_apply_applications_index_page
+    then_i_should_see_the_duplicate_apply_applications
+
+    when_i_click_on_a_duplicate_apply_application
+    then_i_should_see_the_candidate_name
+    and_i_should_see_the_application_details
+    and_i_should_not_see_the_trainee_link
+  end
+
   def and_there_are_duplicate_apply_applications
     @application = JSON.parse(ApiStubs::RecruitsApi.application)
     @importable_apply_application = create(:apply_application, :importable)
@@ -27,10 +39,22 @@ feature "Viewing duplicate Apply applications" do
     @application["attributes"]["candidate"]["first_name"] = @trainee.first_names
     @application["attributes"]["candidate"]["last_name"] = @trainee.last_name
     @application["attributes"]["candidate"]["date_of_birth"] = @trainee.date_of_birth.iso8601
+    @non_matching_trainee = create(:trainee, :trn_received)
     @duplicate_apply_application = create(
       :apply_application,
       :non_importable_duplicate,
       provider: @trainee.provider,
+      application: @application,
+    )
+  end
+
+  def and_there_are_duplicate_apply_applications_without_matching_trainee
+    @application = JSON.parse(ApiStubs::RecruitsApi.application)
+    @importable_apply_application = create(:apply_application, :importable)
+    @imported_apply_application = create(:apply_application, :imported)
+    @duplicate_apply_application = create(
+      :apply_application,
+      :non_importable_duplicate,
       application: @application,
     )
   end
@@ -64,10 +88,21 @@ feature "Viewing duplicate Apply applications" do
   end
 
   def when_i_click_on_the_trainee_link
-    click_link @duplicate_apply_application.candidate_full_name
+    within(".application-record-card") do
+      click_link @duplicate_apply_application.candidate_full_name
+    end
   end
 
   def then_i_should_see_the_trainee_page
     expect(page).to have_current_path(trainee_path(@trainee))
+  end
+
+  def and_i_should_not_see_the_trainee_link
+    expect(page).to have_content("None found")
+  end
+
+  def then_i_should_see_the_trainee_page
+    expect(page).to have_current_path(trainee_path(@trainee))
+    expect(page).not_to have_css(".application-record-card")
   end
 end
