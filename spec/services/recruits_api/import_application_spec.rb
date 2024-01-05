@@ -78,7 +78,7 @@ module RecruitsApi
       context "when there is missing data" do
         let(:application_data) { { "attributes" => { "course" => nil } } }
 
-        it "will not create apply application" do
+        it "does not create apply application" do
           expect { subject }.to raise_error RecruitsApi::ImportApplication::RecruitsApiMissingDataError
         end
       end

@@ -26,7 +26,7 @@ describe TaskList::View do
       end
 
       it "renders the correct tag colour" do
-        expect(rendered_content).to have_selector(".govuk-tag--#{colour}")
+        expect(rendered_content).to have_css(".govuk-tag--#{colour}")
       end
     end
   end
