@@ -18,7 +18,7 @@ A service for training providers in England to register trainees with the Depart
 | Name        | URL                                                                    | Description
 | ----------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------
 | Production  | [www](https://www.register-trainee-teachers.service.gov.uk/)   | Public site
-| Production Data  | [www](https://register-productiondata.london.cloudapps.digital/)   | For internal use by DFE to validate Register data workflows
+| Production Data  | [www](https://register-productiondata.teacherservices.cloud/)   | For internal use by DFE to validate Register data workflows
 | Staging     | [staging](https://staging.register-trainee-teachers.service.gov.uk/)| For internal use by DfE to test deploys and integrations
 | QA          | [qa](https://qa.register-trainee-teachers.service.gov.uk/)     | For internal use by DfE for testing. Automatically deployed from main
 

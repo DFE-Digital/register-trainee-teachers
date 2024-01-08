@@ -7,10 +7,10 @@ TERRAFILE_VERSION=0.8
 
 help:
 	@echo "Environment setup targets:"
-	@echo "  review_aks     - configure for review app"
-	@echo "  qa_aks"
-	@echo "  staging_aks"
-	@echo "  production_aks"
+	@echo "  review     - configure for review app"
+	@echo "  qa"
+	@echo "  staging"
+	@echo "  production"
 	@echo ""
 	@echo "Commands:"
 	@echo "  deploy-plan - Print out the plan for the deploy, does not deploy."
@@ -23,7 +23,7 @@ help:
 	@echo "  Create a review app"
 	@echo "  Run deploy-plan to test:"
 	@echo ""
-	@echo "        make review_aks APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF"
+	@echo "        make review APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF"
 
 .PHONY: install-konduit
 install-konduit: ## Install the konduit script, for accessing backend services
@@ -45,52 +45,52 @@ local: ## Configure local dev environment
 ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 
-review_aks:
+review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
-	$(eval include global_config/review_aks.sh)
-	$(eval DEPLOY_ENV=review_aks)
+	$(eval include global_config/review.sh)
+	$(eval DEPLOY_ENV=review)
 	$(eval export TF_VAR_app_name=$(APP_NAME))
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).test.teacherservices.cloud will be created in aks
 
-dv_review_aks: ## make dv_review_aks deploy APP_NAME=2222 CLUSTER=cluster1
+dv_review: ## make dv_review deploy APP_NAME=2222 CLUSTER=cluster1
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
 	$(if $(CLUSTER), , $(error Missing environment variable "CLUSTER", Please specify a dev cluster name (eg 'cluster1')))
-	$(eval include global_config/dv_review_aks.sh)
-	$(eval DEPLOY_ENV=dv_review_aks)
+	$(eval include global_config/dv_review.sh)
+	$(eval DEPLOY_ENV=dv_review)
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VAR_cluster=$(CLUSTER))
 	$(eval export TF_VAR_app_name=$(APP_NAME))
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).$(CLUSTER).development.teacherservices.cloud will be created in aks
 
-qa_aks:
-	$(eval include global_config/qa_aks.sh)
-	$(eval DEPLOY_ENV=qa_aks)
+qa:
+	$(eval include global_config/qa.sh)
+	$(eval DEPLOY_ENV=qa)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
 	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
-staging_aks:
-	$(eval include global_config/staging_aks.sh)
-	$(eval DEPLOY_ENV=staging_aks)
+staging:
+	$(eval include global_config/staging.sh)
+	$(eval DEPLOY_ENV=staging)
 	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
-production_aks:
-	$(eval include global_config/production_aks.sh)
+production:
+	$(eval include global_config/production.sh)
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
-	$(eval DEPLOY_ENV=production_aks)
+	$(eval DEPLOY_ENV=production)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
 	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
-productiondata_aks:
-	$(eval include global_config/productiondata_aks.sh)
+productiondata:
+	$(eval include global_config/productiondata.sh)
 	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
-	$(eval DEPLOY_ENV=productiondata_aks)
+	$(eval DEPLOY_ENV=productiondata)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
 set-azure-account:
@@ -158,7 +158,7 @@ destroy: terraform-init
 
 terraform-init: install-terrafile
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=main))
-	$(eval export TF_VAR_paas_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
+	$(eval export TF_VAR_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 
 	az account set -s $(AZ_SUBSCRIPTION) && az account show
 	[ "${RUN_TERRAFILE}" = "yes" ] && ./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile || true
@@ -167,49 +167,25 @@ terraform-init: install-terrafile
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
 	az aks get-credentials --overwrite-existing -g ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER_SHORT}-rg -n ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER}-aks
 
-aks-console: get-cluster-credentials
+console: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID} -- /bin/sh -c "cd /app && /usr/local/bin/bundle exec rails c"
 
-aks-logs: get-cluster-credentials
+logs: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID} --tail=-1 --timestamps=true
 
-aks-worker-logs: get-cluster-credentials
+worker-logs: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} logs -l app=register-${APP_ID}-worker --tail=-1 --timestamps=true
 
-aks-ssh: get-cluster-credentials
+ssh: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID} -- /bin/sh
 
-aks-worker-ssh: get-cluster-credentials
+worker-ssh: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID}-worker -- /bin/sh
-
-enable-maintenance: read-tf-config ## make qa enable-maintenance / make production enable-maintenance CONFIRM_PRODUCTION=y
-	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
-	cf target -s ${space}
-	cd service_unavailable_page && cf push
-	cf map-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
-	cf map-route register-unavailable register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
-	cf map-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
-	echo Waiting 5s for route to be registered... && sleep 5
-	cf unmap-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
-	cf unmap-route register-${DEPLOY_ENV} register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
-	cf unmap-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
-
-disable-maintenance: read-tf-config ## make qa disable-maintenance / make production disable-maintenance CONFIRM_PRODUCTION=y
-	$(if $(HOST_NAME), $(eval REAL_HOSTNAME=${HOST_NAME}), $(eval REAL_HOSTNAME=${DEPLOY_ENV}))
-	cf target -s ${space}
-	cf map-route register-${DEPLOY_ENV} register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
-	cf map-route register-${DEPLOY_ENV} register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
-	cf map-route register-${DEPLOY_ENV} education.gov.uk --hostname ${DTTP_HOSTNAME}
-	echo Waiting 5s for route to be registered... && sleep 5
-	cf unmap-route register-unavailable register-trainee-teachers.education.gov.uk --hostname ${REAL_HOSTNAME}
-	cf unmap-route register-unavailable register-trainee-teachers.service.gov.uk --hostname ${REAL_HOSTNAME}
-	cf unmap-route register-unavailable education.gov.uk --hostname ${DTTP_HOSTNAME}
-	cf delete register-unavailable -r -f
 
 get-image-tag:
 	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${paas_env} | awk -F : '$$1 == "docker image" {print $$3}'))
@@ -290,7 +266,7 @@ domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resou
 
 validate-domain-resources: set-what-if domain-azure-resources # make register validate-domain-resources
 
-action-group-resources: set-azure-account # make env_aks action-group-resources ACTION_GROUP_EMAIL=notificationemail@domain.com . Must be run before setting enable_monitoring=true for each subscription
+action-group-resources: set-azure-account # make env action-group-resources ACTION_GROUP_EMAIL=notificationemail@domain.com . Must be run before setting enable_monitoring=true for each subscription
 	$(if $(ACTION_GROUP_EMAIL), , $(error Please specify a notification email for the action group))
 	echo ${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-mn-rg
 	az group create -l uksouth -g ${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-mn-rg --tags "Product=Register trainee teachers" "Environment=Test" "Service Offering=Teacher services cloud"

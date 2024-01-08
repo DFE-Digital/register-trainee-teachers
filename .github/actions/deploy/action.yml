@@ -2,8 +2,6 @@ name: deploy
 description: deploys application
 
 inputs:
-  arm-access-key:
-    required: true
   azure-credentials:
     required: true
   environment:
@@ -32,7 +30,7 @@ runs:
         tf_vars_file=terraform/aks/workspace-variables/${{ inputs.environment }}.tfvars.json
         terraform_version=$(awk '/{/{f=/^terraform/;next}f' terraform/aks/provider.tf | grep -o [0-9\.]*)
         echo "cluster=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "aks_app_environment=$(jq -r '.paas_app_environment' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "app_environment=$(jq -r '.app_environment' ${tf_vars_file})" >> $GITHUB_ENV
         echo "TERRAFORM_VERSION=$terraform_version" >> $GITHUB_ENV
         echo "namespace=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
@@ -44,16 +42,16 @@ runs:
           echo "deploy_url=https://register-${APP_NAME}.test.teacherservices.cloud" >> $GITHUB_OUTPUT
           echo "DEPLOY_REF=${{ github.head_ref }}" >> $GITHUB_ENV
         else
-          aks_app_environment=$(jq -r '.paas_app_environment' ${tf_vars_file})
+          app_environment=$(jq -r '.app_environment' ${tf_vars_file})
           echo "DEPLOY_REF=${{ github.ref }}" >> $GITHUB_ENV
           hostname=$(jq -r '.gov_uk_host_names[0]' ${tf_vars_file})
           if [[ $hostname != null ]]; then
             echo "deploy_url=https://${hostname}" >> $GITHUB_OUTPUT
           else
             if [[ $cluster == 'production' ]]; then
-              echo "deploy_url=https://register-${aks_app_environment}.teacherservices.cloud" >> $GITHUB_OUTPUT
+              echo "deploy_url=https://register-${app_environment}.teacherservices.cloud" >> $GITHUB_OUTPUT
             else
-              echo "deploy_url=https://register-${aks_app_environment}.${cluster}.teacherservices.cloud" >> $GITHUB_OUTPUT
+              echo "deploy_url=https://register-${app_environment}.${cluster}.teacherservices.cloud" >> $GITHUB_OUTPUT
             fi
           fi
         fi
@@ -63,6 +61,10 @@ runs:
       uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
+
+    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+      with:
+        azure-credentials: ${{ inputs.azure-credentials }}
 
     - uses: azure/login@v1
       with:
@@ -80,7 +82,6 @@ runs:
       shell: bash
       run: make ${{ inputs.environment }} ci deploy
       env:
-        ARM_ACCESS_KEY: ${{ inputs.arm-access-key }}
         IMAGE_TAG: ${{ inputs.sha }}
         APP_NAME: ${{ env.APP_NAME }}
         TF_VAR_azure_credentials: ${{ inputs.azure-credentials }}
@@ -116,26 +117,26 @@ runs:
 
     - name: Run data migrations
       shell: bash
-      if: inputs.environment == 'staging_aks' || inputs.environment == 'productiondata_aks' || inputs.environment == 'production_aks'
-      run: kubectl exec -n ${{ env.namespace }} deployment/register-${{ env.aks_app_environment }} -- /bin/sh -c "cd /app && bundle exec rails data:migrate"
+      if: inputs.environment == 'staging' || inputs.environment == 'productiondata' || inputs.environment == 'production'
+      run: kubectl exec -n ${{ env.namespace }} deployment/register-${{ env.app_environment }} -- /bin/sh -c "cd /app && bundle exec rails data:migrate"
 
     - name: Generate example data
       shell: bash
-      if: inputs.environment == 'review_aks'
+      if: inputs.environment == 'review'
       run: kubectl exec -n ${{ env.namespace }} deployment/register-${APP_NAME} -- /bin/sh -c "cd /app && bundle exec rails db:seed example_data:generate"
 
     - name: Delete redis queues for productiondata
       shell: bash
-      if: ${{ inputs.environment == 'productiondata_aks' && env.worker_app_instances == 0 }}
+      if: ${{ inputs.environment == 'productiondata' && env.worker_app_instances == 0 }}
       run: |
         sudo apt-get install -y redis-tools redis-server
         bin/konduit.sh -r REDIS_QUEUE_URL register-productiondata -- redis-cli del queues
 
     - name: Run Smoke Tests for ${{ inputs.environment }}
-      uses: ./.github/actions/smoke-test_v2/
+      uses: ./.github/actions/smoke-test/
       with:
         environment: ${{ inputs.environment }}
-        app-env: ${{ env.aks_app_environment }}
+        app-env: ${{ env.app_environment }}
         pr-number: ${{ inputs.pr-number }}
         slack-webhook: ${{ inputs.slack-webhook }}
 

@@ -43,16 +43,16 @@ jobs:
 
     - name: Set KV environment variables
       run: |
-        tf_vars_file=terraform/aks/workspace-variables/production_aks.tfvars.json
+        tf_vars_file=terraform/aks/workspace-variables/production.tfvars.json
         echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         echo "namespace=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
         echo "cluster=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "aks_app_environment=$(jq -r '.paas_app_environment' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "app_environment=$(jq -r '.app_environment' ${tf_vars_file})" >> $GITHUB_ENV
 
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION_AKS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
 
     - name: Install kubectl
       uses: azure/setup-kubectl@v3
@@ -169,7 +169,7 @@ jobs:
 
   restore_staging:
     needs: [backup]
-    name: restore Database (staging_aks)
+    name: restore Database (staging)
     if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToStagingEnv == 'true') }}
     runs-on: ubuntu-latest
 
@@ -179,7 +179,7 @@ jobs:
 
     - uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_STAGING_AKS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
 
     - name: Download Sanitised Backup
       uses: actions/download-artifact@v4
