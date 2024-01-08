@@ -151,7 +151,7 @@ class PlacementForm
   end
 
   def still_searching?
-    school_search.present? && school_id.blank? && urn.blank?
+    school_search.present?
   end
 
 private

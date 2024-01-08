@@ -2,8 +2,8 @@
   <div class="govuk-grid-column-two-thirds">
     <%= form_with(
         model: @select_placement_school_form,
-        url: trainee_placements_path,
-        method: :post
+        url: @select_placement_school_form.form_path,
+        method: @select_placement_school_form.form_method,
       ) do |f| %>
       <%= f.govuk_error_summary %>
 
@@ -22,7 +22,7 @@
       </p>
 
       <% unless @select_placement_school_form.search_results.schools.empty? %>
-        <%= f.govuk_radio_buttons_fieldset(:school_id, legend: { text: "TODO:", size: "m" }) do %>
+        <%= f.govuk_radio_buttons_fieldset(:school_id, legend: { text: "School", size: "m" }) do %>
           <% @select_placement_school_form.search_results.schools.each_with_index do |school, index| %>
             <%= f.govuk_radio_button(
               :school_id,

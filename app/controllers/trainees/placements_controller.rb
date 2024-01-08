@@ -45,12 +45,21 @@ module Trainees
     end
 
     def update
-      placement_form.update_placement(placement_params)
-
-      if placement_form.save_or_stash
-        redirect_to(relevant_redirect_path)
+      if placement_params[:school_search].present?
+        redirect_to(
+          edit_search_trainee_placement_path(
+            trainee_id: @trainee.slug,
+            id: placement_form.placement.slug,
+            school_search: placement_params[:school_search],
+          ),
+        )
       else
-        render(:edit)
+        placement_form.update_placement(placement_params)
+        if placement_form.save_or_stash
+          redirect_to(relevant_redirect_path)
+        else
+          render(:edit)
+        end
       end
     end
 
@@ -71,6 +80,16 @@ module Trainees
         trainee: trainee,
         query: params[:school_search],
       )
+    end
+
+    def edit_search
+      @select_placement_school_form = SelectPlacementSchoolForm.new(
+        trainee: trainee,
+        placement_slug: params[:id],
+        query: params[:school_search],
+      )
+
+      render(:search)
     end
 
   private

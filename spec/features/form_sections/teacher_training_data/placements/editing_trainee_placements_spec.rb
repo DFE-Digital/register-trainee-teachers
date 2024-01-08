@@ -72,6 +72,27 @@ feature "Editing a placement" do
       and_i_click_update
       and_one_placement_are_created
     end
+
+    scenario "editing an existing placement without JS" do
+      given_a_trainee_exists(:submitted_for_trn)
+
+      given_i_have_one_placement
+      and_two_schools_exist
+      and_i_am_on_the_confirm_placement_details_page
+
+      when_i_click_on_the_change_link
+      then_i_am_taken_to_the_placement_edit_page
+      and_it_is_prepopulated_with_existing_placement
+
+      when_i_enter_a_search_term
+      and_i_click_continue
+      then_i_see_the_search_results_page
+
+      when_i_select_an_existing_school_from_the_search_results
+      and_i_click_continue
+      then_i_see_the_confirmation_page
+      and_i_see_the_updated_placement
+    end
   end
 
 private
@@ -93,15 +114,16 @@ private
   end
 
   def given_i_have_one_placement
-    create(:placement, trainee:)
+    school = create(:school, name: "Edinburgh Academy")
+    @placement = create(:placement, trainee:, school:)
   end
 
   def school_one
-    @school_one ||= create(:school)
+    @school_one ||= create(:school, name: "London School")
   end
 
   def school_two
-    @school_two ||= create(:school)
+    @school_two ||= create(:school, name: "Cardiff College")
   end
   alias_method :and_a_school_exists, :school_one
 
@@ -135,7 +157,9 @@ private
 
   def and_i_see_the_updated_placement(school: school_one)
     expect(page).to have_content("First placement")
+    expect(page).not_to have_content("Second placement")
     expect(page).to have_content(school.name)
+    expect(page).not_to have_content("Edinburgh Academy")
     expect(page).to have_content(school.postcode)
     expect(page).to have_content("URN #{school.urn}")
   end
@@ -154,5 +178,31 @@ private
 
   def and_one_placement_are_created
     expect(trainee.reload.placements.count).to eq(1)
+  end
+
+  def when_i_enter_a_search_term
+    fill_in(
+      "Search for a school by its unique reference number (URN), name or postcode",
+      with: "Lond",
+    )
+  end
+
+  def then_i_see_the_search_results_page
+    expect(page).to have_current_path(
+      edit_search_trainee_placement_path(
+        trainee_id: @trainee.slug,
+        id: @placement.slug,
+        school_search: "Lond",
+      ),
+    )
+    expect(page).to have_content("1 result found")
+    expect(page).to have_content("Change your search if the school you’re looking for is not listed")
+    expect(page).to have_content("London School")
+    expect(page).not_to have_content("Edinburgh Academy")
+    expect(page).not_to have_content("Cardiff College")
+  end
+
+  def when_i_select_an_existing_school_from_the_search_results
+    choose("London School")
   end
 end
