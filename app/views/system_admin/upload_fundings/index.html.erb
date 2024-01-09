@@ -1,11 +1,10 @@
-<% page_title = "Upload funding information" %>
-
+<% page_title = t("components.page_titles.upload_funding.index") %>
 
 <div class="govuk-grid-row">
   <div class ="govuk-grid-column-two-thirds-from-desktop">
     <%= render PageTitle::View.new(text: page_title) %>
 
-    <h1 class="govuk-heading-l"><%=page_title%></h1>
+  <h1 class="govuk-heading-l"><%= page_title %></h1>
   </div>
 </div>
 
@@ -13,9 +12,6 @@
   <div class ="govuk-grid-column-full">
     <%= render "system_admin/tab_nav" %>
 
-
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body">Funding information for all providers and lead schools can be uploaded to Register at the beginning of every month.</p>
     <p class="govuk-body">There are 4 x CSV files to upload separately:</p>
 
@@ -36,52 +32,54 @@
       <li>payment types</li>
     </ul>
 
-<%= govuk_table do |table|
-    table.with_caption(size: 'm', text: 'Lead schools')
+    <%= govuk_table do |table|
+      table.with_caption(size: "m", text: "Lead schools")
 
-    table.with_head do |head|
-      head.with_row do |row|
-        row.with_cell(text: "Task")
-        row.with_cell(text: "Last completed")
-        row.with_cell(text: "For month")
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: "Task")
+          row.with_cell(text: "Last completed")
+          row.with_cell(text: "For month")
+        end
       end
-    end
 
-    table.with_body do |body|
-      body.with_row do |row|
-        row.with_cell(text: govuk_link_to("Upload trainee summary", "#"))
-        row.with_cell(text: "15 December 2023")
-        row.with_cell(text: "November")
+      table.with_body do |body|
+        body.with_row do |row|
+          row.with_cell(text: govuk_link_to("Upload trainee summary", "#"))
+          row.with_cell(text: "15 December 2023")
+          row.with_cell(text: "November")
+        end
+        body.with_row do |row|
+          row.with_cell(text: govuk_link_to("Upload payment schedule", "#"))
+          row.with_cell(text: "Never completed")
+          row.with_cell
+        end
       end
-      body.with_row do |row|
-        row.with_cell(text: govuk_link_to("Upload payment schedule", "#"))
-        row.with_cell(text: "Never completed")
-        row.with_cell
-      end
-    end
-  end %>
+    end %>
 
-<%= govuk_table do |table|
-    table.with_caption(size: 'm', text: 'Providers')
+    <%= govuk_table do |table|
+      table.with_caption(size: "m", text: "Providers")
 
-    table.with_head do |head|
-      head.with_row do |row|
-        row.with_cell(text: "Task")
-        row.with_cell(text: "Last completed")
-        row.with_cell(text: "For month")
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: "Task")
+          row.with_cell(text: "Last completed")
+          row.with_cell(text: "For month")
+        end
       end
-    end
 
-    table.with_body do |body|
-      body.with_row do |row|
-        row.with_cell(text: govuk_link_to("Upload trainee summary", "#"))
-        row.with_cell(text: "10 December 2023")
-        row.with_cell(text: "November")
+      table.with_body do |body|
+        body.with_row do |row|
+          row.with_cell(text: govuk_link_to("Upload trainee summary", "#"))
+          row.with_cell(text: "10 December 2023")
+          row.with_cell(text: "November")
+        end
+        body.with_row do |row|
+          row.with_cell(text: govuk_link_to("Upload payment schedule", "#"))
+          row.with_cell(text: "10 December 2023")
+          row.with_cell(text: "November")
+        end
       end
-      body.with_row do |row|
-        row.with_cell(text: govuk_link_to("Upload payment schedule", "#"))
-        row.with_cell(text: "10 December 2023")
-        row.with_cell(text: "November")
-      end
-    end
-  end %>
+    end %>
+  </div>
+</div>

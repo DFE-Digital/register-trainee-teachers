@@ -9,23 +9,23 @@ feature "Viewing upload funding" do
     and_i_click_on_support_for_register
   end
 
-  context "user is a system admin" do
-    let(:user) { create(:user, :system_admin) }
+  scenario "upload funding feature flag is disabled", feature_upload_funding: false do
+    then_i_do_not_see_any_funding_links
+    when_i_visit_the_upload_funding_page
+    then_i_see_the_not_found_page
+  end
 
-    scenario "upload funding feature flag is disabled", feature_upload_funding: false do
-      then_i_do_not_see_any_funding_links
-      when_i_visit_the_upload_funding_page
-      then_i_see_the_not_found_page
-    end
-
-    scenario "navigate to the upload funding page" do
-      when_i_click_on_the_funding_link
-      then_i_am_on_the_upload_funding_page
-      and_there_are_four_upload_funding_links
-    end
+  scenario "navigate to the upload funding page" do
+    when_i_click_on_the_funding_link
+    then_i_am_on_the_upload_funding_page
+    and_there_are_four_upload_funding_links
   end
 
 private
+
+  def user
+    create(:user, :system_admin)
+  end
 
   def when_i_visit_the_root_page
     visit "/"
