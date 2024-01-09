@@ -6,6 +6,7 @@ feature "Viewing upload funding" do
   before do
     given_i_am_authenticated(user:)
     when_i_visit_the_root_page
+    and_i_click_on_support_for_register
   end
 
   context "user is a system admin" do
@@ -21,14 +22,6 @@ feature "Viewing upload funding" do
       when_i_click_on_the_funding_link
       then_i_am_on_the_upload_funding_page
       and_there_are_four_upload_funding_links
-    end
-  end
-
-  context "user is a non system admin" do
-    let(:user) { create(:user) }
-
-    scenario "the system admin funding link is not available" do
-      then_i_only_see_payment_schedule_funding_links
     end
   end
 
@@ -54,6 +47,10 @@ private
   def when_i_click_on_the_funding_link
     expect(page).not_to have_link("Funding", href: "/funding/payment-schedule")
     click_on("Funding")
+  end
+
+  def and_i_click_on_support_for_register
+    click_on("Support for Register")
   end
 
   def then_i_am_on_the_upload_funding_page
