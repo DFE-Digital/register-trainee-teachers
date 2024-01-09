@@ -115,5 +115,5 @@ RSpec/SpecFilePathFormat:
   Exclude:
     - 'spec/data_migrations/*'
 
-RSpec/Capybara/NegationMatcher:
+Capybara/NegationMatcher:
   EnforcedStyle: not_to
