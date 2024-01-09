@@ -4,11 +4,10 @@ class SelectPlacementSchoolForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
+  include ActionView::Helpers::TextHelper
   include Rails.application.routes.url_helpers
 
   attr_accessor :slug, :school_id, :query, :trainee
-
-  # alias_method :to_param, :slug
 
   def initialize(trainee:, query:, placement_slug: nil)
     @trainee = trainee
@@ -30,5 +29,13 @@ class SelectPlacementSchoolForm
 
   def form_method
     slug.present? ? :patch : :post
+  end
+
+  def title
+    if search_results.schools.empty?
+      "No results found for ‘#{query}’"
+    else
+      "#{pluralize(search_results.schools.size, 'result')} found"
+    end
   end
 end

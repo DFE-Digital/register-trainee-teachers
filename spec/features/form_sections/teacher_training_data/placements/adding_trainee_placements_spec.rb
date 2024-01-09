@@ -38,7 +38,12 @@ feature "Add a placement" do
       and_i_click_to_enter_first_placement
       then_i_see_the_new_placement_form
 
-      when_i_enter_a_search_for_a_school
+      when_i_enter_a_non_matching_search_for_a_school
+      and_i_click_continue
+      then_i_see_the_no_search_results_page
+
+      when_i_click_back_to_the_new_placement_page
+      and_i_enter_a_search_for_a_school
       and_i_click_continue
       then_i_see_the_search_results_page
 
@@ -203,7 +208,22 @@ private
     visit trainee_placements_confirm_path(trainee_id: @trainee.slug)
   end
 
-  def when_i_enter_a_search_for_a_school
+  def when_i_enter_a_non_matching_search_for_a_school
+    fill_in(
+      "Search for a school by its unique reference number (URN), name or postcode",
+      with: "Birmingham",
+    )
+  end
+
+  def then_i_see_the_no_search_results_page
+    expect(page).to have_content("No results found for ‘Birmingham’")
+  end
+
+  def when_i_click_back_to_the_new_placement_page
+    click_link "Change your search"
+  end
+
+  def and_i_enter_a_search_for_a_school
     fill_in(
       "Search for a school by its unique reference number (URN), name or postcode",
       with: "Lond",
