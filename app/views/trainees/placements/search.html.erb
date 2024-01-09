@@ -12,14 +12,7 @@
         <%= @select_placement_school_form.title %>
       </h1>
 
-      <p class="govuk-body">
-        <!-- TODO: generalise for updates and new trainees -->
-        <%= govuk_link_to(
-          'Change your search',
-          new_trainee_placement_path(trainee_id: @select_placement_school_form.trainee.slug),
-        ) %>
-        if the school you’re looking for is not listed
-      </p>
+      <%= @select_placement_school_form.hint_text %>
 
       <% unless @select_placement_school_form.search_results.schools.empty? %>
         <%= f.govuk_radio_buttons_fieldset(:school_id, legend: { text: "School", size: "m" }) do %>
@@ -42,7 +35,7 @@
     <% end %>
      <% unless @select_placement_school_form.search_results.schools.empty? %>
       <p class="govuk-body">
-        TODO: govuk_link_to(t("cancel"), publish_provider_recruitment_cycle_schools_path)
+        <%= govuk_link_to(t("cancel"), trainee_path(@select_placement_school_form.trainee)) %>
       </p>
     <% end %>
   </div>

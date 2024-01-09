@@ -2,11 +2,12 @@
 
 class SchoolSearch
   class Result
-    attr_reader :schools, :limit
+    attr_reader :schools, :limit, :total_count
 
-    def initialize(schools:, limit:)
+    def initialize(schools:, limit:, total_count:)
       @schools = schools
       @limit = limit
+      @total_count = total_count
     end
   end
 
@@ -22,15 +23,23 @@ class SchoolSearch
   end
 
   def call
-    Result.new(schools: specified_schools, limit: limit)
+    Result.new(schools: specified_schools, limit: limit, total_count: total_count)
+  end
+
+  def all_schools
+    schools = School.open
+    schools = schools.search(query) if query
+    schools = schools.lead_only if lead_schools_only
+    schools.reorder(:name)
   end
 
   def specified_schools
-    schools = School.open
-    schools = schools.search(query) if query
-    schools = schools.limit(limit) if limit
-    schools = schools.lead_only if lead_schools_only
-    schools.reorder(:name)
+    schools = all_schools
+    schools.limit(limit) if limit
+  end
+
+  def total_count
+    all_schools.count
   end
 
 private
