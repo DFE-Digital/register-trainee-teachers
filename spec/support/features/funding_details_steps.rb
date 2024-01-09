@@ -16,7 +16,7 @@ module Features
       edit_funding_page.continue_button.click
       page.choose("funding-grant-and-tiered-bursary-form-custom-applying-for-grant-yes-field")
       page.choose("funding-grant-and-tiered-bursary-form-custom-bursary-tier-tier-one-field")
-      page.click_button("Continue")
+      page.click_on("Continue")
       confirm_funding_page.confirm.check
       confirm_funding_page.continue.click
     end

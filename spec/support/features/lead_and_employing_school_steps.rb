@@ -48,7 +48,7 @@ module Features
     end
 
     def and_i_continue
-      click_button("Continue")
+      click_on("Continue")
     end
 
     def and_the_lead_and_employing_schools_section_is_marked_completed

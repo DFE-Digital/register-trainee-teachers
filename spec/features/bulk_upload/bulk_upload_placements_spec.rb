@@ -49,7 +49,7 @@ private
   end
 
   def when_i_click_on_the_download_link
-    click_link "Download trainees with missing details"
+    click_on "Download trainees with missing details"
   end
 
   def then_i_receive_the_file
@@ -59,12 +59,12 @@ private
 
   def when_i_upload_the_file
     attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/complete.csv"))
-    click_button "Upload records"
+    click_on "Upload records"
   end
 
   def when_i_upload_the_unreadable_file
     attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/un-readable.csv"))
-    click_button "Upload records"
+    click_on "Upload records"
   end
 
   def then_i_see_a_success_message

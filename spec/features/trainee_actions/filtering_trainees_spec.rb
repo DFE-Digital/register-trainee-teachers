@@ -266,7 +266,7 @@ private
   end
 
   def when_i_remove_a_tag_for(value)
-    click_link(value)
+    click_on(value)
     trainee_index_page.apply_filters.click
   end
 

@@ -77,8 +77,8 @@ private
 
   def when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
     visit trainee_path(id: @trainee.slug)
-    click_link "Manage placements"
-    click_link "Delete placement"
+    click_on "Manage placements"
+    click_on "Delete placement"
   end
 
   def then_i_see_the_delete_placement_form
@@ -86,7 +86,7 @@ private
   end
 
   def when_i_click_cancel
-    click_link "Cancel"
+    click_on "Cancel"
   end
 
   def then_the_placement_is_not_deleted
@@ -99,11 +99,11 @@ private
   end
 
   def and_i_click_the_confirm_button
-    click_button "Yes I’m sure — delete this placement"
+    click_on "Yes I’m sure — delete this placement"
   end
 
   def when_i_click_update
-    click_button "Update record"
+    click_on "Update record"
   end
 
   def then_i_see_the_confirmation_page
@@ -132,7 +132,7 @@ private
   end
 
   def and_i_click_continue
-    click_button "Continue"
+    click_on "Continue"
   end
 
   def and_i_see_the_new_placement_ready_for_confirmation
@@ -147,7 +147,7 @@ private
   end
 
   def and_i_click_the_delete_placement_link
-    click_link "Delete placement"
+    click_on "Delete placement"
   end
 
   def and_i_see_a_placement_removed_flash_message

@@ -89,7 +89,7 @@ private
   end
 
   def when_i_click_on_the_change_link
-    page.click_link("Change")
+    page.click_on("Change")
   end
 
   def given_i_have_one_placement
@@ -120,11 +120,11 @@ private
   alias_method :and_i_select_an_existing_school, :when_i_select_an_existing_school
 
   def and_i_click_continue
-    click_button "Continue"
+    click_on "Continue"
   end
 
   def and_i_click_on_add_a_placement_button
-    page.click_link("Add a placement", class: "govuk-button--secondary govuk-button")
+    page.click_on("Add a placement", class: "govuk-button--secondary govuk-button")
   end
 
   def then_i_see_the_confirmation_page
@@ -149,7 +149,7 @@ private
   end
 
   def and_i_click_update
-    click_button "Update record"
+    click_on "Update record"
   end
 
   def and_one_placement_are_created

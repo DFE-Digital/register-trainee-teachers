@@ -43,7 +43,7 @@ private
   end
 
   def when_i_click_update
-    click_button "Update record"
+    click_on "Update record"
   end
 
   def when_i_enter_details_for_a_new_school
@@ -59,7 +59,7 @@ private
 
   def when_i_visit_the_placement_details_page
     given_i_am_on_the_review_draft_page
-    click_link("Placements")
+    click_on("Placements")
   end
 
   def and_i_have_the_placement_details
@@ -71,7 +71,7 @@ private
   end
 
   def and_i_click_continue
-    click_button(t("continue"))
+    click_on(t("continue"))
   end
 
   def then_i_am_taken_to_the_placement_form_page
