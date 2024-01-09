@@ -86,13 +86,14 @@ describe Provider do
     let(:itt_end_date) { this_cycle.end_date }
     let(:trainee) do
       create(
-        :trainee, :without_required_placements, provider:, itt_start_date:, itt_end_date:
+        :trainee, :provider_led_postgrad, :awarded, provider:, itt_start_date:, itt_end_date:
       )
     end
     let!(:other_provider_trainee) do
       create(
         :trainee,
-        :without_required_placements,
+        :provider_led_postgrad,
+        :awarded,
         provider: other_provider,
         itt_start_date: itt_start_date,
         itt_end_date: itt_end_date,
@@ -118,13 +119,26 @@ describe Provider do
       end
     end
 
+    context "when the trainee is from the distant past" do
+      let(:old_cycle) do
+        create(
+          :academic_cycle,
+          start_date: Date.new(2021, 8, 1),
+          end_date: Date.new(2022, 7, 31),
+        )
+      end
+      let(:itt_start_date) { old_cycle.start_date }
+      let(:itt_end_date) { old_cycle.end_date }
+
+      it "doesn't include the trainee" do
+        expect(provider.without_required_placements).to be_empty
+      end
+    end
+
     context "when the trainee is in training" do
       let(:trainee) do
         create(
-          :trainee,
-          :trn_received,
-          provider: provider,
-          training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+          :trainee, :provider_led_postgrad, :trn_received, provider:, itt_start_date:, itt_end_date:
         )
       end
 
