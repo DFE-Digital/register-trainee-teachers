@@ -13,7 +13,6 @@ feature "Viewing upload funding" do
 
     scenario "upload funding feature flag is disabled", feature_upload_funding: false do
       then_i_do_not_see_any_funding_links
-
       when_i_visit_the_upload_funding_page
       then_i_see_the_not_found_page
     end
