@@ -55,5 +55,9 @@ module Features
     def and_i_see_my_date(date)
       expect(page).to have_text(date_for_summary_view(date))
     end
+
+    def then_i_see_the_not_found_page
+      expect(page).to have_current_path(not_found_path)
+    end
   end
 end

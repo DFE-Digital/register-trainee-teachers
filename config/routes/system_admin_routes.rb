@@ -46,6 +46,7 @@ module SystemAdminRoutes
 
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
+        resources :upload_fundings, only: %i[index], path: "/upload-funding"
 
         resources :lead_schools, path: "lead-schools", only: %i[index show] do
           resources :users, controller: "lead_schools/users", only: %i[edit update]
