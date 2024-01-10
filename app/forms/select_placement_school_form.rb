@@ -36,7 +36,7 @@ class SelectPlacementSchoolForm
   end
 
   def title
-    if search_results.schools.empty?
+    if search_results.total_count.zero?
       "No results found for ‘#{query}’"
     else
       "#{pluralize(search_results.total_count, 'result')} found"

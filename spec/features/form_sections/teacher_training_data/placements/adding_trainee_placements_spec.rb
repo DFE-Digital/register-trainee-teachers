@@ -226,7 +226,7 @@ private
   end
 
   def when_i_click_back_to_the_new_placement_page
-    click_link("Change your search")
+    click_on "Change your search"
   end
 
   def then_i_see_an_error_message
