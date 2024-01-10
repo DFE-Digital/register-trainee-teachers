@@ -10,7 +10,8 @@ class PlacementForm
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
-  validate :school_valid
+  validate :school_valid, on: %i[create update]
+  validate :school_or_search_valid
   validate :school_urn_valid
   validates :name, presence: true, if: -> { school_id.blank? && school_search.blank? }
   validate :urn_valid
@@ -119,6 +120,12 @@ class PlacementForm
   end
 
   def school_valid
+    if school_id.blank? && (name.blank? && urn.blank? && postcode.blank?)
+      errors.add(:school_id, :blank)
+    end
+  end
+
+  def school_or_search_valid
     if school_id.blank? && school_search.blank? && (name.blank? && urn.blank? && postcode.blank?)
       errors.add(:school, :blank)
     end

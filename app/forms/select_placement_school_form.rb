@@ -11,6 +11,8 @@ class SelectPlacementSchoolForm
 
   attr_accessor :slug, :school_id, :query, :trainee
 
+  validates :school_id, presence: true
+
   def initialize(trainee:, query:, placement_slug: nil)
     @trainee = trainee
     @query = query
@@ -23,9 +25,9 @@ class SelectPlacementSchoolForm
 
   def form_path
     if slug.present?
-      trainee_placement_path(trainee_id: trainee.slug, id: slug)
+      trainee_placement_school_search_path(trainee_id: trainee.slug, id: slug)
     else
-      trainee_placements_path(trainee_id: trainee.slug)
+      trainee_placement_school_search_index_path(trainee_id: trainee.slug)
     end
   end
 

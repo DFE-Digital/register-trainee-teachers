@@ -198,8 +198,6 @@ Rails.application.routes.draw do
 
       resources :placements, only: %i[new create edit update destroy] do
         get "delete", on: :member, to: "placements#delete", as: "delete"
-        get "search", on: :collection, to: "placements#search", as: "search"
-        get "edit_search", on: :member, to: "placements#edit_search", as: "edit_search"
 
         collection do
           scope module: :placements, as: :placements do
@@ -209,6 +207,8 @@ Rails.application.routes.draw do
           end
         end
       end
+
+      resources :placement_school_search, only: %i[new create edit update], controller: "placement_school_searches"
     end
   end
 

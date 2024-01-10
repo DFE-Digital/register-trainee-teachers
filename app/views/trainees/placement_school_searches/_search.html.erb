@@ -1,0 +1,43 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with(
+        model: @select_placement_school_form,
+        url: @select_placement_school_form.form_path,
+        method: @select_placement_school_form.form_method,
+      ) do |f| %>
+
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-l">Find school</span>
+        <%= @select_placement_school_form.title %>
+      </h1>
+
+      <%= @select_placement_school_form.hint_text %>
+
+      <% unless @select_placement_school_form.search_results.schools.empty? %>
+        <%= f.govuk_radio_buttons_fieldset(:school_id, legend: { text: "School", size: "m" }) do %>
+          <% @select_placement_school_form.search_results.schools.each_with_index do |school, index| %>
+            <%= f.govuk_radio_button(
+              :school_id,
+              school.id,
+              label: { text: school.name },
+              link_errors: index.zero?,
+              hint: { text: school_urn_and_location(school) },
+            ) %>
+          <% end %>
+        <% end %>
+        <%= f.hidden_field(
+          :school_search,
+          value: @select_placement_school_form.query,
+        ) %>
+        <%= f.govuk_submit t("continue") %>
+      <% end %>
+    <% end %>
+     <% unless @select_placement_school_form.search_results.schools.empty? %>
+      <p class="govuk-body">
+        <%= govuk_link_to(t("cancel"), trainee_path(@select_placement_school_form.trainee)) %>
+      </p>
+    <% end %>
+  </div>
+</div>

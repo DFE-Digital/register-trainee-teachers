@@ -189,7 +189,7 @@ private
 
   def then_i_see_the_search_results_page
     expect(page).to have_current_path(
-      edit_search_trainee_placement_path(
+      edit_trainee_placement_school_search_path(
         trainee_id: @trainee.slug,
         id: @placement.slug,
         school_search: "Lond",

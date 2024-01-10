@@ -24,7 +24,7 @@ module Trainees
 
       if @placement_form.still_searching?
         redirect_to(
-          search_trainee_placements_path(
+          new_trainee_placement_school_search_path(
             trainee_id: @trainee.slug,
             school_search: @placement_form.school_search,
           ),
@@ -47,7 +47,7 @@ module Trainees
     def update
       if placement_params[:school_search].present?
         redirect_to(
-          edit_search_trainee_placement_path(
+          edit_trainee_placement_school_search_path(
             trainee_id: @trainee.slug,
             id: placement_form.placement.slug,
             school_search: placement_params[:school_search],

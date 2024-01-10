@@ -61,6 +61,7 @@ describe PlacementForm, type: :model do
         name: "Test name",
         postcode: "GU1 1AA",
         urn: 123456,
+        school_search: nil,
       })
     end
   end
@@ -264,7 +265,7 @@ describe PlacementForm, type: :model do
         expect(subject.errors).to be_empty
         subject.school_valid
         expect(subject.errors).not_to be_empty
-        expect(subject.errors.messages[:school]).to include("Select an existing school or enter the details for a new school")
+        expect(subject.errors.messages[:school_id]).to include("Select an existing school or enter the details for a new school")
       end
     end
 

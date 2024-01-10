@@ -43,9 +43,14 @@ feature "Add a placement" do
       then_i_see_the_no_search_results_page
 
       when_i_click_back_to_the_new_placement_page
-      and_i_enter_a_search_for_a_school
+      and_i_click_continue
+
+      when_i_enter_a_search_for_a_school
       and_i_click_continue
       then_i_see_the_search_results_page
+
+      when_i_click_continue
+      then_i_see_an_error_message
 
       when_i_select_an_existing_school_from_the_search_results
       and_i_click_continue
@@ -152,6 +157,7 @@ private
   def and_i_click_continue
     click_on "Continue"
   end
+  alias_method :when_i_click_continue, :and_i_click_continue
 
   def when_i_click_add_a_placement
     click_on "Add a placement"
@@ -220,10 +226,17 @@ private
   end
 
   def when_i_click_back_to_the_new_placement_page
-    click_link "Change your search"
+    click_link("Change your search")
   end
 
-  def and_i_enter_a_search_for_a_school
+  def then_i_see_an_error_message
+    expect(page).to have_current_path(
+      trainee_placement_school_search_index_path(trainee_id: @trainee.slug),
+    )
+    expect(page).to have_content("Select a placement school")
+  end
+
+  def when_i_enter_a_search_for_a_school
     fill_in(
       "Search for a school by its unique reference number (URN), name or postcode",
       with: "Lond",
@@ -232,7 +245,7 @@ private
 
   def then_i_see_the_search_results_page
     expect(page).to have_current_path(
-      search_trainee_placements_path(trainee_id: @trainee.slug, school_search: "Lond"),
+      new_trainee_placement_school_search_path(trainee_id: @trainee.slug, school_search: "Lond"),
     )
     expect(page).to have_content("1 result found")
     expect(page).to have_content("Change your search if the school you’re looking for is not listed")
