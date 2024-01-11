@@ -18,7 +18,13 @@ module SystemAdminRoutes
         resources :pending_awards, only: %i[index show]
         resources :duplicate_apply_applications, only: %i[index show]
 
-        resources :funding_uploads, only: %i[index], path: "/funding-uploads"
+        get "funding-uploads", to: "funding_uploads#index", as: :funding_uploads
+
+        resource :funding_uploads, only: %i[new create], path: "/funding-uploads" do
+          scope module: :funding_uploads do
+            resource :confirmation, only: %i[show], path: "/confirm-upload"
+          end
+        end
 
         resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]

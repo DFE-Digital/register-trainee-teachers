@@ -341,6 +341,12 @@ en:
         index: Duplicate Apply applications
       funding_uploads:
         index: Upload funding information
+        confirmation: File processed successfully
+        new:
+          lead_school_trainee_summary: Upload lead school trainee funding payments
+          lead_school_payment_schedule: Upload lead school funding payments
+          provider_trainee_summary: Upload provider funding payments
+          provider_payment_schedule: Upload provider funding payments
       pending_trns:
         index: Trainees Pending TRN
       otp:
@@ -1414,6 +1420,14 @@ en:
               blank: Select an accredited provider
             audit_comment:
               blank: Enter an audit comment
+        system_admin/funding_upload_form:
+          attributes:
+            funding_type:
+              blank: Funding type is required
+            month:
+              blank: Select month
+            file:
+              blank: Select a CSV file
         contact_details_form:
           attributes:
             locale_code:
@@ -1861,6 +1875,12 @@ en:
       confirmations:
         show:
           heading: Confirm deletion of trainee record
+    funding_uploads:
+      new:
+        lead_school_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead schools.
+        lead_school_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead schools.
+        provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
+        provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
   api:
     errors:
       bad_request: The query param needs to be at least %{length} characters

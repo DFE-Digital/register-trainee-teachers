@@ -1,0 +1,26 @@
+<% page_title = t("components.page_titles.funding_uploads.confirmation") %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="govuk-panel govuk-panel--confirmation trn-submission-success-panel govuk-!-margin-bottom-6">
+      <h1 class="govuk-panel__title">
+        <%= page_title %>
+      </h1>
+    </div>
+
+    <p class="govuk-body">Providers and lead schools can now view their monthly funding payments.</p>
+
+    <p class="govuk-body">You should check if the correct monthly funding payments were processed. You can do this by:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>viewing the ‘Last completed’ column on Upload funding information page to see how current the upload date is</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Next steps</h2>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li><%= govuk_link_to("Upload more funding information", funding_uploads_path) %></li>
+      <li><%= govuk_link_to("Support home", users_path) %></li>
+    </ul>
+  </div>
+</div>

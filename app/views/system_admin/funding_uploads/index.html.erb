@@ -45,12 +45,12 @@
 
       table.with_body do |body|
         body.with_row do |row|
-          row.with_cell(text: govuk_link_to("Upload trainee summary", "#"))
+          row.with_cell(text: govuk_link_to("Upload trainee summary", new_funding_uploads_path(funding_type: :lead_school_trainee_summary)))
           row.with_cell(text: "15 December 2023")
           row.with_cell(text: "November")
         end
         body.with_row do |row|
-          row.with_cell(text: govuk_link_to("Upload payment schedule", "#"))
+          row.with_cell(text: govuk_link_to("Upload payment schedule", new_funding_uploads_path(funding_type: :lead_school_payment_schedule)))
           row.with_cell(text: "Never completed")
           row.with_cell
         end
@@ -70,12 +70,12 @@
 
       table.with_body do |body|
         body.with_row do |row|
-          row.with_cell(text: govuk_link_to("Upload trainee summary", "#"))
+          row.with_cell(text: govuk_link_to("Upload trainee summary", new_funding_uploads_path(funding_type: :provider_trainee_summary)))
           row.with_cell(text: "10 December 2023")
           row.with_cell(text: "November")
         end
         body.with_row do |row|
-          row.with_cell(text: govuk_link_to("Upload payment schedule", "#"))
+          row.with_cell(text: govuk_link_to("Upload payment schedule", new_funding_uploads_path(funding_type: :provider_payment_schedule)))
           row.with_cell(text: "10 December 2023")
           row.with_cell(text: "November")
         end
