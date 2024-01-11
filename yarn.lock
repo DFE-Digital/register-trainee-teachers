@@ -777,12 +777,12 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@ministryofjustice/frontend@^1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-1.8.1.tgz#6bac39524ba406533d1ce51c55d4c8ff96ad358e"
-  integrity sha512-HNl8XXbNje/NtQRlGM57CTLlAGBTW+ziGTBkxXHDn7VauKNz418PnErDlKRWeaHIyc6V9twI5EbOj4lFCsvasw==
+"@ministryofjustice/frontend@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-2.0.0.tgz#79a855416f309080fbad210427569123ebab7773"
+  integrity sha512-JbYtMKjbR3fe8l5y/cgWXHFPJbLg2y0nlRuibM6Vdn9WYWayB8VJkoCoeAh04Jz20QBhzL4lag7KpcP7xQjbqw==
   dependencies:
-    govuk-frontend "^3.0.0 || ^4.0.0"
+    govuk-frontend "^5.0.0"
     moment "^2.27.0"
 
 "@nodelib/fs.scandir@2.1.5":
@@ -2669,10 +2669,10 @@ govuk-country-and-territory-autocomplete@^1.0.2:
     core-js "3.2.1"
     openregister-picker-engine "^1.2.1"
 
-"govuk-frontend@^3.0.0 || ^4.0.0", govuk-frontend@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.7.0.tgz#69950b6c2e69f435ffe9aa60d8dee232dac977de"
-  integrity sha512-0OsdCusF5qvLWwKziU8zqxiC0nq6WP0ZQuw51ymZ/1V0tO71oIKMlSLN2S9bm8RcEGSoidPt2A34gKxePrLjvg==
+govuk-frontend@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.0.0.tgz#c08a4d1115fb31eb39b6d19979c627f816185dd7"
+  integrity sha512-3WSfvQ+3kw/q/m8jrq/t8XnMUA8D2r0uhGyZaDbIh1gWTJBQzJBHbHiKYI9nc9ixIXdCFsc9RozkgEm57a795g==
 
 graceful-fs@^4.1.15, graceful-fs@^4.2.4, graceful-fs@^4.2.9:
   version "4.2.11"
