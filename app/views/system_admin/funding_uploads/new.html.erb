@@ -17,7 +17,10 @@
 
       <ol class="govuk-list govuk-list--number">
         <li>
-          <%= f.govuk_select :month, options_for_select([["Choose month", nil]] + Date::MONTHNAMES.compact.map.with_index(1) { |month, index| [month, index] }), label: { text: "Select applicable month" }, hint: { text: "Please select the month you are uploading funding information for." } %>
+          <%= f.govuk_select :month,
+              options_for_select([["Choose month", nil]] + Date::MONTHNAMES.compact.map.with_index(1) { |month, index| [month, index] }, selected: f.object.month),
+              label: { text: "Select applicable month" },
+              hint: { text: "Please select the month you are uploading funding information for." } %>
         </li>
         <li>
           <%= f.govuk_file_field(:file, label: { text: "Upload the CSV file" }, accept: ".csv") %>

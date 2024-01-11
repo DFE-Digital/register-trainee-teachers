@@ -39,11 +39,6 @@ private
     expect(page).not_to have_link("Funding")
   end
 
-  def then_i_only_see_payment_schedule_funding_links
-    expect(page).to have_link("Funding", href: "/funding/payment-schedule")
-    expect(page).not_to have_link("Funding", href: "/system-admin/funding-uploads")
-  end
-
   def when_i_click_on_the_funding_link
     expect(page).not_to have_link("Funding", href: "/funding/payment-schedule")
     click_on("Funding")
@@ -58,11 +53,17 @@ private
   end
 
   def and_there_are_four_funding_upload_links
-    expect(page.all(".govuk-table__cell > .govuk-link").map(&:text)).to match(
-      ["Upload trainee summary",
-       "Upload payment schedule",
-       "Upload trainee summary",
-       "Upload payment schedule"],
-    )
+    expected_links = [
+      { text: "Upload trainee summary", href: funding_type_url_for("lead_school_trainee_summary") },
+      { text: "Upload payment schedule", href: funding_type_url_for("lead_school_payment_schedule") },
+      { text: "Upload trainee summary", href: funding_type_url_for("provider_trainee_summary") },
+      { text: "Upload payment schedule", href: funding_type_url_for("provider_payment_schedule") },
+    ]
+
+    actual_links = page.all(".govuk-table__cell > .govuk-link").map { |link| { text: link.text, href: link[:href] } }
+
+    expect(actual_links).to match(expected_links)
   end
+
+  def funding_type_url_for(funding_type) = "/system-admin/funding-uploads/new?funding_type=#{funding_type}"
 end
