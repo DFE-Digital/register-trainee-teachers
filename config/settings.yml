@@ -85,7 +85,7 @@ features:
   show_draft_trainee_course_year_choice: true
   maintenance_banner: false
   change_accredited_provider: true
-  upload_funding: false
+  funding_uploads: false
 
 dfe_sign_in:
   # Our service name

@@ -79,8 +79,8 @@ describe UsersHelper do
     end
   end
 
-  describe "#can_view_upload_funding?" do
-    subject { can_view_upload_funding? }
+  describe "#can_view_funding_uploads?" do
+    subject { can_view_funding_uploads? }
 
     context "with nil current_user" do
       let(:current_user) { nil }
@@ -106,7 +106,7 @@ describe UsersHelper do
       end
     end
 
-    context "upload funding feature flag is disabled", feature_upload_funding: false do
+    context "upload funding feature flag is disabled", feature_funding_uploads: false do
       it "returns false" do
         expect(subject).to be_falsey
       end

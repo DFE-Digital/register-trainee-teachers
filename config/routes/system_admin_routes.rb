@@ -18,6 +18,8 @@ module SystemAdminRoutes
         resources :pending_awards, only: %i[index show]
         resources :duplicate_apply_applications, only: %i[index show]
 
+        resources :funding_uploads, only: %i[index], path: "/funding-uploads"
+
         resources :providers, only: %i[index new create show edit update destroy] do
           resources :users, controller: "providers/users", only: %i[index edit update]
 
@@ -46,7 +48,6 @@ module SystemAdminRoutes
 
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
-        resources :upload_fundings, only: %i[index], path: "/upload-funding"
 
         resources :lead_schools, path: "lead-schools", only: %i[index show] do
           resources :users, controller: "lead_schools/users", only: %i[edit update]

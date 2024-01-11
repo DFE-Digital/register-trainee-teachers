@@ -17,8 +17,8 @@ module UsersHelper
     FeatureService.enabled?("funding") && defined?(current_user) && !current_user&.system_admin
   end
 
-  def can_view_upload_funding?
-    FeatureService.enabled?("upload_funding") && defined?(current_user) && current_user&.system_admin
+  def can_view_funding_uploads?
+    FeatureService.enabled?("funding_uploads") && defined?(current_user) && current_user&.system_admin
   end
 
   def can_bulk_update?

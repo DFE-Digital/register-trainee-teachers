@@ -339,7 +339,7 @@ en:
         show: Dead Jobs
       duplicate_apply_applications:
         index: Duplicate Apply applications
-      upload_funding:
+      funding_uploads:
         index: Upload funding information
       pending_trns:
         index: Trainees Pending TRN
