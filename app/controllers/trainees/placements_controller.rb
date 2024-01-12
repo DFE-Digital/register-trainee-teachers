@@ -75,23 +75,6 @@ module Trainees
       redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
     end
 
-    def search
-      @select_placement_school_form = SelectPlacementSchoolForm.new(
-        trainee: trainee,
-        query: params[:school_search],
-      )
-    end
-
-    def edit_search
-      @select_placement_school_form = SelectPlacementSchoolForm.new(
-        trainee: trainee,
-        placement_slug: params[:id],
-        query: params[:school_search],
-      )
-
-      render(:search)
-    end
-
   private
 
     def authorize_trainee
