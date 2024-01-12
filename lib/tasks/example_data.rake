@@ -106,7 +106,7 @@ namespace :example_data do
       )
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
       FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
-      FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_rows, payable: provider)
+      FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)
 
       if persona_attributes[:lead_school]
         lead_school = School.lead_only.sample
