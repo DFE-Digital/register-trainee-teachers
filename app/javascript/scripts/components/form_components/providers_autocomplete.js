@@ -1,5 +1,4 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
-import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
 import tracker from './tracker.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-providers-autocomplete"]')
@@ -116,4 +115,4 @@ const findProviders = ({ query, populateResults }) => {
     .catch(console.log)
 }
 
-nodeListForEach($allAutocompleteElements, setupAutoComplete)
+$allAutocompleteElements.forEach(setupAutoComplete)
