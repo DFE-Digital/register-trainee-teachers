@@ -104,7 +104,11 @@ module CourseDetails
     end
 
     def primary_course_subject
-      PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[data_model.primary_course_subjects].first
+      if data_model.primary_course_subjects == :other
+        CourseSubjects::PRIMARY_TEACHING
+      else
+        PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[data_model.primary_course_subjects].first
+      end
     end
 
     def subject_names
