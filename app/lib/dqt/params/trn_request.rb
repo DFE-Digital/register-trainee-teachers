@@ -66,6 +66,11 @@ module Dqt
         "Masters, not by research" => "MastersNotByResearch",
       }.freeze
 
+      COUNTY_CODE_EXCEPTIONS = {
+        "CY" => "XC",
+        /^AE\-/ => "AE",
+      }.freeze
+
       attr_reader :params
 
       def initialize(trainee:)
@@ -191,8 +196,24 @@ module Dqt
       def find_country_code(country)
         return if country.blank?
 
-        DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
-        Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+        country_code =
+          DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
+          Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+
+        apply_special_case_country_code_mappings(country_code)
+      end
+
+      def apply_special_case_country_code_mappings(country_code)
+        mapped_country_code = country_code
+
+        COUNTY_CODE_EXCEPTIONS.each do |pattern, replacement|
+          if (pattern.is_a?(String) && country_code == pattern) || country_code.match?(pattern)
+            mapped_country_code = replacement
+            break
+          end
+        end
+
+        mapped_country_code
       end
     end
   end
