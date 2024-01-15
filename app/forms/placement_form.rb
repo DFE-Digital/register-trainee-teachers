@@ -28,7 +28,7 @@ class PlacementForm
     @placement = placement
     @destroy = destroy
     self.attributes = placement.attributes.symbolize_keys.slice(*FIELDS)
-    self.school_search = placement.school_search
+    self.school_search = placement.school_search || placement.school&.name
   end
 
   def self.model_name
