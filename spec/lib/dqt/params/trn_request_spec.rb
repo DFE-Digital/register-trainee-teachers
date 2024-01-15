@@ -213,13 +213,11 @@ module Dqt
 
         context "when trainee has an international degree" do
           let(:country) { "Albania" }
-          let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country: country) }
+          let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details, country:) }
           let(:trainee) { create(:trainee, :completed, degrees: [non_uk_degree]) }
 
           it "maps the degree country to HESA countryCode" do
-            expect(subject["qualification"]).to include({
-              "countryCode" => "AL",
-            })
+            expect(subject["qualification"]).to include("countryCode" => "AL")
           end
 
           context "country has extra information" do
@@ -227,7 +225,7 @@ module Dqt
             let(:trainee) { create(:trainee, :completed, degrees: [non_uk_degree]) }
 
             it "maps the degree country to HESA countryCode" do
-              expect(subject["qualification"]).to include({ "countryCode" => "HK" })
+              expect(subject["qualification"]).to include("countryCode" => "HK")
             end
           end
 
@@ -235,7 +233,7 @@ module Dqt
             let(:country) { "Cyprus (European Union)" }
 
             it "sets the training country code appropriately" do
-              expect(subject["qualification"]).to include({ "countryCode" => "XA" })
+              expect(subject["qualification"]).to include("countryCode" => "XA")
             end
           end
 
@@ -243,7 +241,7 @@ module Dqt
             let(:country) { "Cyprus (non European Union)" }
 
             it "sets the training country code appropriately" do
-              expect(subject["qualification"]).to include({ "countryCode" => "XB" })
+              expect(subject["qualification"]).to include("countryCode" => "XB")
             end
           end
 
@@ -251,7 +249,7 @@ module Dqt
             let(:country) { "Cyprus" }
 
             it "sets the training country code appropriately" do
-              expect(subject["qualification"]).to include({ "countryCode" => "XC" })
+              expect(subject["qualification"]).to include("countryCode" => "XC")
             end
           end
 
@@ -259,7 +257,7 @@ module Dqt
             let(:country) { "Abu Dhabi" }
 
             it "sets the training country code appropriately" do
-              expect(subject["qualification"]).to include({ "countryCode" => "AE" })
+              expect(subject["qualification"]).to include("countryCode" => "AE")
             end
           end
         end
