@@ -12,8 +12,8 @@ module Funding
           raise(NotImplementedError("implement in subclass"))
         end
 
-        def to_attributes(file_path:)
-          csv = CSV.open(file_path, headers: true)
+        def to_attributes(funding_upload)
+          csv = funding_upload.csv_data
 
           validate_headers(csv:)
 
