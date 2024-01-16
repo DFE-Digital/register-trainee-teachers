@@ -66,9 +66,8 @@ module Dqt
         "Masters, not by research" => "MastersNotByResearch",
       }.freeze
 
-      COUNTY_CODE_EXCEPTIONS = {
+      COUNTRY_CODE_EXCEPTIONS = {
         "CY" => "XC",
-        /^AE\-/ => "AE",
       }.freeze
 
       attr_reader :params
@@ -204,16 +203,11 @@ module Dqt
       end
 
       def apply_special_case_country_code_mappings(country_code)
-        mapped_country_code = country_code
+        # Apply special cases for country codes that DQT doesn't recognise
+        country_code = COUNTRY_CODE_EXCEPTIONS[country_code] if COUNTRY_CODE_EXCEPTIONS.key?(country_code)
 
-        COUNTY_CODE_EXCEPTIONS.each do |pattern, replacement|
-          if (pattern.is_a?(String) && country_code == pattern) || country_code.match?(pattern)
-            mapped_country_code = replacement
-            break
-          end
-        end
-
-        mapped_country_code
+        # Remove region from country code
+        country_code.gsub(/-\w+$/, "")
       end
     end
   end
