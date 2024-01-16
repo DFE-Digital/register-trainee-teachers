@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_12_160255) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_11_072604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -530,6 +530,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_12_160255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["funding_trainee_summary_id"], name: "index_trainee_summary_rows_on_trainee_summary_id"
+  end
+
+  create_table "funding_uploads", force: :cascade do |t|
+    t.integer "month"
+    t.integer "funding_type"
+    t.integer "status", default: 0
+    t.text "csv_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["funding_type"], name: "index_funding_uploads_on_funding_type"
+    t.index ["month"], name: "index_funding_uploads_on_month"
+    t.index ["status"], name: "index_funding_uploads_on_status"
   end
 
   create_table "hesa_collection_requests", force: :cascade do |t|

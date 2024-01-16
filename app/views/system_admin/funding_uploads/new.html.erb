@@ -1,0 +1,33 @@
+<%= render PageTitle::View.new(i18n_key: "funding_uploads.new.#{funding_type}", has_errors: @funding_upload_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Upload funding information", href: funding_uploads_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <%= register_form_with(model: @funding_upload_form, url: funding_uploads_path) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.hidden_field :funding_type, value: funding_type %>
+
+      <h1 class="govuk-heading-l"><%= t("components.page_titles.funding_uploads.new.#{funding_type}") %></h1>
+
+      <p class="govuk-body"><%= t(".#{funding_type}") %></p>
+
+      <ol class="govuk-list govuk-list--number">
+        <li>
+          <%= f.govuk_select :month,
+              funding_upload_month_options(f.object.month),
+              label: { text: "Select applicable month" },
+              hint: { text: "Please select the month you are uploading funding information for." } %>
+        </li>
+        <li>
+          <%= f.govuk_file_field(:file, label: { text: "Upload the CSV file" }, accept: ".csv") %>
+        </li>
+      </ol>
+
+      <%= f.govuk_submit("Upload the file") %>
+    <% end %>
+  </div>
+</div>

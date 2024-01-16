@@ -187,6 +187,14 @@
   - number_of_trainees
   - created_at
   - updated_at
+  :funding_uploads:
+  - id
+  - month
+  - funding_type
+  - status
+  - csv_data
+  - created_at
+  - updated_at
   :hesa_collection_requests:
   - id
   - collection_reference

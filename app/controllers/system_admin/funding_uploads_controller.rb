@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+module SystemAdmin
+  class FundingUploadsController < ApplicationController
+    before_action { require_feature_flag(:funding_uploads) }
+    before_action :redirect_if_no_funding_type, only: [:new]
+
+    helper_method :funding_type
+
+    def index; end
+
+    def new
+      @funding_upload_form = FundingUploadForm.new
+    end
+
+    def create
+      @funding_upload_form = FundingUploadForm.new(funding_upload_params)
+      if @funding_upload_form.valid?
+        redirect_to(funding_uploads_confirmation_path)
+      else
+        render(:new)
+      end
+    end
+
+  private
+
+    def redirect_if_no_funding_type
+      redirect_to(funding_uploads_path) unless funding_type
+    end
+
+    def funding_type = params[:funding_type] || @funding_upload_form.funding_type
+
+    def funding_upload_params = params.require(:system_admin_funding_upload_form).permit(:funding_type, :month, :file)
+  end
+end

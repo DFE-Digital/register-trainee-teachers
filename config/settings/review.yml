@@ -20,7 +20,7 @@ features:
     iqts: true
   user_can_have_multiple_organisations: true
   funding: true
-  upload_funding: true
+  funding_uploads: true
 
 pagination:
   records_per_page: 30
