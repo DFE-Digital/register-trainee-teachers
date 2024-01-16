@@ -6,7 +6,8 @@ module Funding
   module Parsers
     describe ProviderPaymentSchedules do
       context "valid csv" do
-        subject { described_class.to_attributes(file_path: Rails.root.join("spec/support/fixtures/provider_payment_schedules.csv")) }
+        let(:funding_upload) { create(:funding_upload, :provider_payment_schedules) }
+        subject { described_class.to_attributes(funding_upload) }
 
         let(:expected_accreditation_ids) { %w[5635 5610 5660 5697] }
 
@@ -102,7 +103,8 @@ module Funding
       end
 
       context "invalid csv" do
-        subject { described_class.to_attributes(file_path: Rails.root.join("spec/support/fixtures/invalid_provider_payment_schedules.csv")) }
+        let(:funding_upload) { create(:funding_upload, :invalid_provider_payment_schedules) }
+        subject { described_class.to_attributes(funding_upload) }
 
         it "is expected to raise error" do
           expect { subject }.to raise_error(NameError, "Column headings: Provider thingy, Augustus not recognised")

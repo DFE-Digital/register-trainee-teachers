@@ -6,7 +6,8 @@ module Funding
   module Parsers
     describe LeadSchoolTraineeSummaries do
       context "valid csv" do
-        subject { described_class.to_attributes(file_path: Rails.root.join("spec/support/fixtures/lead_school_trainee_summaries.csv")) }
+        let(:funding_upload) { create(:funding_upload, :lead_school_trainee_summaries) }
+        subject { described_class.to_attributes(funding_upload) }
 
         let(:expected_lead_school_1111_result) do
           [
@@ -59,7 +60,8 @@ module Funding
       end
 
       context "invalid csv" do
-        subject { described_class.to_attributes(file_path: Rails.root.join("spec/support/fixtures/invalid_lead_school_trainee_summaries.csv")) }
+        let(:funding_upload) { create(:funding_upload, :invalid_lead_school_trainee_summaries) }
+        subject { described_class.to_attributes(funding_upload) }
 
         it "is expected to raise error" do
           expect { subject }.to raise_error(NameError, "Column headings: Pubject, Tootal Funding not recognised")

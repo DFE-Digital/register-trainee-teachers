@@ -13,9 +13,9 @@ module Funding
         end
 
         def to_attributes(funding_upload)
-          csv = funding_upload.csv_data
+          csv = CSV.parse(funding_upload.csv_data, headers: true)
 
-          validate_headers(csv:)
+          validate_headers(csv: csv)
 
           csv.each_with_object({}) do |row, to_return|
             to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_h
@@ -24,7 +24,6 @@ module Funding
 
         def validate_headers(csv:)
           csv_headers = csv.first.to_h.keys
-          csv.rewind
           unrecognised_headers = csv_headers.select { |header| expected_headers.exclude?(header) }
           if unrecognised_headers.any?
             raise(NameError, "Column headings: #{unrecognised_headers.join(', ')} not recognised")
