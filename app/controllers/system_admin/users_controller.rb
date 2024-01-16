@@ -18,7 +18,8 @@ module SystemAdmin
     def create
       @user = authorize(User.new(permitted_attributes(User)))
       if @user.save
-        User.find_or_create_by!(email: @user.email)
+        user = User.find_or_create_by!(email: @user.email)
+        SendWelcomeEmailService.call(user:)
         redirect_to(user_path(user), flash: { success: t(".success") })
       else
         render(:new)
