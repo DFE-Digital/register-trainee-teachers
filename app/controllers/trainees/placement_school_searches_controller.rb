@@ -34,7 +34,6 @@ module Trainees
       if @select_placement_school_form.valid?(:create) && @placement_form.save_or_stash
         redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
       else
-        # TODO: `params[:school_search]` is not being passed through to this method
         render(:new)
       end
     end
