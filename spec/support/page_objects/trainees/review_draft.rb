@@ -8,7 +8,7 @@ module PageObjects
     class ReviewDraft < PageObjects::Base
       set_url "/trainees/{id}/review-draft"
 
-      STATUS_COMPLETED = "Status completed"
+      STATUS_COMPLETED = "Status Completed"
 
       section :personal_details, PageObjects::Sections::PersonalDetails, ".app-task-list__item.personal-details"
       section :apply_trainee_data, PageObjects::Sections::ApplyTraineeData, ".app-task-list__item.trainee-data"

@@ -1,6 +1,6 @@
 <% tags.each do |tag| %>
   <%= render GovukComponent::TagComponent.new(
-    text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + tag[:status],
+    text: "<span class='govuk-visually-hidden'>Status </span>".html_safe + t("components.state_tag.trainee.state.#{tag[:status]}"),
     colour: tag[:status_colour],
     classes: tag[:classes],
   ) %>

@@ -43,7 +43,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :trn_received, :not_submission_ready) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("incomplete")
+      expect(rendered_content).to have_text("Incomplete")
     end
   end
 
@@ -55,7 +55,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :trn_received, :not_submission_ready) }
 
     it "does not render the incomplete progress tag" do
-      expect(rendered_content).not_to have_text("incomplete")
+      expect(rendered_content).not_to have_text("Incomplete")
     end
   end
 end
