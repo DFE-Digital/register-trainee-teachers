@@ -6,10 +6,10 @@
     <%= csp_meta_tag %>
     <%= canonical_tag %>
 
-    <%= tag :meta, name: "viewport", content: "width=device-width, initial-scale=1" %>
-    <%= tag :meta, property: "og:image", content: asset_path("govuk-frontend/govuk/assets/images/govuk-opengraph-image.png") %>
-    <%= tag :meta, name: "theme-color", content: "#0b0c0c" %>
-    <%= tag :meta, name: "format-detection", content: "telephone=no" %>
+    <%= tag.meta(name: "viewport", content: "width=device-width, initial-scale=1") %>
+    <%= tag.meta(property: "og:image", content: image_path('govuk-opengraph-image.png')) %>
+    <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
+    <%= tag.meta(name: "format-detection", content: "telephone=no") %>
 
     <%= favicon_link_tag image_path('favicon.ico'), type: nil, sizes: "48x48" %>
     <%= favicon_link_tag image_path('favicon.svg'), type: 'image/svg+xml', sizes: "any" %>
