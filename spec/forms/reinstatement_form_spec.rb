@@ -93,5 +93,16 @@ describe ReinstatementForm, type: :model do
         expect { subject.save! }.to change(trainee, :trainee_start_date).to(Date.new(*expected_date_params))
       end
     end
+
+    context "trainee with funding" do
+      let(:trainee) { create(:trainee, :reinstated, :with_grant_and_tiered_bursary) }
+
+      it "clears the funding information" do
+        expect(form_store).to receive(:set).with(trainee.id, :reinstatement, nil)
+
+        expect { subject.save! }.to change(trainee, :applying_for_bursary).from(true).to(nil)
+          .and change(trainee, :bursary_tier).from("tier_one").to(nil)
+      end
+    end
   end
 end
