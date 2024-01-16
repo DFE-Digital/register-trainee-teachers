@@ -5,9 +5,20 @@ module SystemAdmin
     include ActiveModel::Model
 
     attr_accessor :funding_type, :month, :file
+    attr_reader :funding_upload
 
     validates :funding_type, presence: true
     validates :month, presence: true
     validates :file, presence: true
+
+    def save!
+      return false unless valid?
+
+      @funding_upload = FundingUpload.create!(
+        funding_type: funding_type,
+        month: month,
+        file: file
+      )
+    end
   end
 end

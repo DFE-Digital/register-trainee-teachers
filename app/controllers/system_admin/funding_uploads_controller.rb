@@ -15,7 +15,8 @@ module SystemAdmin
 
     def create
       @funding_upload_form = FundingUploadForm.new(funding_upload_params)
-      if @funding_upload_form.valid?
+      if @funding_upload_form.save!
+        ProcessFundingCsvJob.perform_later(@funding_upload_form.funding_upload)
         redirect_to(funding_uploads_confirmation_path)
       else
         render(:new)
