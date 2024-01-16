@@ -16,7 +16,7 @@ class FundingDataImporter
     when /TB_Profile/
       import_lead_school_trainee_summaries
     else
-      # Handle the case when the file name doesn't match any pattern
+      return false
     end
   end
 
