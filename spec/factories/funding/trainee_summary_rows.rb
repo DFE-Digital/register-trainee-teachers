@@ -35,5 +35,15 @@ FactoryBot.define do
         [build(:trainee_summary_row_amount, :with_tiered_bursary)]
       end
     end
+
+    trait :with_multiple_amounts do
+      route { "Early years graduate employment based" }
+      amounts do
+        [
+          build(:trainee_summary_row_amount, :with_bursary),
+          build(:trainee_summary_row_amount, :with_scholarship),
+        ]
+      end
+    end
   end
 end
