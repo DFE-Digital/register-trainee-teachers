@@ -66,6 +66,10 @@ module Dqt
         "Masters, not by research" => "MastersNotByResearch",
       }.freeze
 
+      COUNTRY_CODE_EXCEPTIONS = {
+        "CY" => "XC",
+      }.freeze
+
       attr_reader :params
 
       def initialize(trainee:)
@@ -191,8 +195,20 @@ module Dqt
       def find_country_code(country)
         return if country.blank?
 
-        DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
-        Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+        country_territory_code =
+          DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
+          Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+
+        country_code = strip_territory_component(country_territory_code)
+        apply_special_case_country_code_mappings(country_code)
+      end
+
+      def strip_territory_component(country_territory_code)
+        country_territory_code.gsub(/-\w+$/, "")
+      end
+
+      def apply_special_case_country_code_mappings(country_code)
+        COUNTRY_CODE_EXCEPTIONS.key?(country_code) ? COUNTRY_CODE_EXCEPTIONS[country_code] : country_code
       end
     end
   end
