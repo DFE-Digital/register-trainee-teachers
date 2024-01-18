@@ -7,10 +7,7 @@ module Funding
     describe LeadSchoolPaymentSchedules do
       context "valid csv" do
         let(:funding_upload) { create(:funding_upload, :lead_school_payment_schedules) }
-        subject { described_class.to_attributes(funding_upload) }
-
         let(:expected_urns) { %w[103527 105491 131238 135438] }
-
         let(:expected_school_131948_result) do
           [
             {
@@ -73,6 +70,8 @@ module Funding
           ]
         end
 
+        subject { described_class.to_attributes(funding_upload) }
+
         it "returns an hash with key for each school" do
           keys = subject.keys
           expect(keys).to match_array(expected_urns)
@@ -85,6 +84,7 @@ module Funding
 
       context "invalid csv" do
         let(:funding_upload) { create(:funding_upload, :invalid_lead_school_payment_schedules) }
+
         subject { described_class.to_attributes(funding_upload) }
 
         it "is expected to raise error" do

@@ -7,10 +7,7 @@ module Funding
     describe ProviderPaymentSchedules do
       context "valid csv" do
         let(:funding_upload) { create(:funding_upload, :provider_payment_schedules) }
-        subject { described_class.to_attributes(funding_upload) }
-
         let(:expected_accreditation_ids) { %w[5635 5610 5660 5697] }
-
         let(:expected_provider_5635_result) do
           [
             {
@@ -92,6 +89,8 @@ module Funding
           ]
         end
 
+        subject { described_class.to_attributes(funding_upload) }
+
         it "returns an hash with key for each provider" do
           keys = subject.keys
           expect(keys).to match_array(expected_accreditation_ids)
@@ -104,6 +103,7 @@ module Funding
 
       context "invalid csv" do
         let(:funding_upload) { create(:funding_upload, :invalid_provider_payment_schedules) }
+
         subject { described_class.to_attributes(funding_upload) }
 
         it "is expected to raise error" do
