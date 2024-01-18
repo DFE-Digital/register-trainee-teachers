@@ -15,8 +15,8 @@ module SystemAdmin
       return false unless valid?
 
       @funding_upload = FundingUpload.create!(
-        funding_type:,
-        month:,
+        funding_type: funding_type,
+        month: month,
         csv_data: file.read,
       )
     end
