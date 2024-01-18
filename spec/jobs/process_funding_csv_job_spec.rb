@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ProcessFundingCsvJob, type: :job do
+RSpec.describe ProcessFundingCsvJob do
   let(:funding_upload) { create(:funding_upload) }
 
   it "initializes FundingDataImporter with the correct funding_upload object" do
