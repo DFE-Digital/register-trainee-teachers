@@ -17,7 +17,7 @@ module SystemAdmin
       @funding_upload = FundingUpload.create!(
         funding_type:,
         month:,
-        file:,
+        csv_data: file.read,
       )
     end
   end
