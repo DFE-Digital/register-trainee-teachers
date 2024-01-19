@@ -12,10 +12,13 @@ module Funding
           raise(NotImplementedError("implement in subclass"))
         end
 
-        def to_attributes(funding_upload)
-          csv = CSV.parse(funding_upload.csv_data, headers: true)
+        def to_attributes(funding_upload = nil, file_path = nil)
+          csv_data = file_path ? File.read(file_path) : funding_upload&.csv_data
+          raise ArgumentError, "Either funding_upload or file_path must be provided" unless csv_data
 
-          validate_headers(csv:)
+          csv = CSV.parse(csv_data, headers: true)
+
+          validate_headers(csv: csv)
 
           csv.each_with_object({}) do |row, to_return|
             to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_h
