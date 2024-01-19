@@ -14,11 +14,11 @@ module Funding
 
         def to_attributes(funding_upload = nil, file_path = nil)
           csv_data = file_path ? File.read(file_path) : funding_upload&.csv_data
-          raise ArgumentError, "Either funding_upload or file_path must be provided" unless csv_data
+          raise(ArgumentError, "Either funding_upload or file_path must be provided") unless csv_data
 
           csv = CSV.parse(csv_data, headers: true)
 
-          validate_headers(csv: csv)
+          validate_headers(csv:)
 
           csv.each_with_object({}) do |row, to_return|
             to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_h
