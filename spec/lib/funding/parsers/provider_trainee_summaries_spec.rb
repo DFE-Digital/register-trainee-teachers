@@ -6,8 +6,7 @@ module Funding
   module Parsers
     describe ProviderTraineeSummaries do
       context "valid csv" do
-        subject { described_class.to_attributes(file_path: Rails.root.join("spec/support/fixtures/provider_trainee_summaries.csv")) }
-
+        let(:funding_upload) { create(:funding_upload, :provider_trainee_summaries) }
         let(:expected_provider_1111_result) do
           [
             {
@@ -52,7 +51,6 @@ module Funding
             },
           ]
         end
-
         let(:expected_provider_2222_result) do
           [
             {
@@ -78,6 +76,8 @@ module Funding
           ]
         end
 
+        subject { described_class.to_attributes(funding_upload) }
+
         it "returns an hash with key for each provider" do
           expect(subject.keys).to match_array(%w[1111 2222])
         end
@@ -89,7 +89,9 @@ module Funding
       end
 
       context "invalid csv" do
-        subject { described_class.to_attributes(file_path: Rails.root.join("spec/support/fixtures/invalid_provider_trainee_summaries.csv")) }
+        let(:funding_upload) { create(:funding_upload, :invalid_provider_trainee_summaries) }
+
+        subject { described_class.to_attributes(funding_upload) }
 
         it "is expected to raise error" do
           expect { subject }.to raise_error(NameError, "Column headings: Provider thingy not recognised")
