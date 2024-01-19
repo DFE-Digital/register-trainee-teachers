@@ -8,13 +8,13 @@ class FundingDataImporter
   def import_data
     @funding_upload.pending!
     case @funding_upload.funding_type
-    when :provider_payment_schedule
+    when "provider_payment_schedule"
       import_provider_payment_schedules
-    when :lead_school_payment_schedule
+    when "lead_school_payment_schedule"
       import_lead_school_payment_schedules
-    when :provider_trainee_summary
+    when "provider_trainee_summary"
       import_provider_trainee_summaries
-    when :lead_school_trainee_summary
+    when "lead_school_trainee_summary"
       import_lead_school_trainee_summaries
     else
       return false
