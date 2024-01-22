@@ -13,7 +13,7 @@ module Placements
       table = CSV.parse(upload.file.download, headers: true)
       table.each do |row|
         next unless (school = School.find_by(urn: row["urn"]))
-        next unless (trainee = Trainee.find_by(hesa_id: row["hesa_id"]))
+        next unless (trainee = matching_trainee_in_previous_cycle(row["hesa_id"]))
 
         Placement.find_or_create_by(trainee:, school:)
       end
@@ -22,5 +22,9 @@ module Placements
   private
 
     attr_reader :upload
+
+    def matching_trainee_in_previous_cycle(hesa_id)
+      AcademicCycle.previous.total_trainees.find_by(hesa_id:)
+    end
   end
 end
