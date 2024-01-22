@@ -168,3 +168,7 @@ sign_off_period: # census_period, performance_period, outside_period. See app/se
 
 trainee_export:
   record_limit: 100
+
+smoke_test:
+  username: do-not-store-here
+  password: do-not-store-here
