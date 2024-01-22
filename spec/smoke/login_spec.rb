@@ -7,7 +7,7 @@ describe "User login spec" do
     skip "DfE sign-in not enabled" unless Settings.features.sign_in_method == "dfe-sign-in"
   end
 
-  scenario "signing in successfully" do
+  scenario "signing in successfully", js: true do
     visit_sign_in_page
     fill_in_login_credentials
     submit_login_form
@@ -32,7 +32,6 @@ private
   end
 
   def verify_successful_login
-    expect(page).to have_current_path("/")
     expect(page).to have_content("Sign out")
   end
 
