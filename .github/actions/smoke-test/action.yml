@@ -41,6 +41,11 @@ runs:
     - name: Smoke Tests ${{ inputs.environment }}
       shell: bash
       run: RAILS_ENV=${{ inputs.app-env }} ./bin/bundle exec rspec spec/smoke
+      env:
+        SMOKE_TEST_USERNAME: ${{ secrets.SMOKE_TEST_USERNAME }}
+        SMOKE_TEST_PASSWORD: ${{ secrets.SMOKE_TEST_PASSWORD }}
+        BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
+        BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
 #    - name: 'Nofiy #twd_publish_register_tech on failure'
 #      if: ${{ failure() && inputs.environment != 'review' }}
