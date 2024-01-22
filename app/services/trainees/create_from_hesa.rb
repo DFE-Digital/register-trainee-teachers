@@ -121,7 +121,7 @@ module Trainees
     def deferral_attributes
       return { defer_date: nil } unless mapped_trainee_state == :deferred
 
-      { defer_date: hesa_trainee[:end_date] }
+      { defer_date: itt_end_date || hesa_trainee[:hesa_updated_at] }
     end
 
     def submitted_for_trn_attributes

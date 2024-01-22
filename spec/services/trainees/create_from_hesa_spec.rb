@@ -123,6 +123,14 @@ module Trainees
         expect(trainee.hesa_metadatum.year_of_course).to eq("0")
       end
 
+      context "when the trainee is deferred and there is no end_date" do
+        let(:hesa_stub_attributes) { { itt_end_date: nil, mode: "63" } }
+
+        it "sets the the trainee's defer_date to the hesa_updated_at" do
+          expect(trainee.defer_date).to eq(Date.parse(student_attributes[:hesa_updated_at]))
+        end
+      end
+
       context "leading and employing schools not applicable" do
         let(:not_applicable_or_not_available_hesa_code) { "900010" }
         let(:establishment_outside_england_and_wales_hesa_code) { "900000" }
