@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "dotenv/load"
+require 'dotenv/load'
 
 ENV["RAILS_ENV"] ||= "test"
 
