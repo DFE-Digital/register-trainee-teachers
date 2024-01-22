@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dotenv/load'
-
 ENV["RAILS_ENV"] ||= "test"
 
 require "rspec/core"
