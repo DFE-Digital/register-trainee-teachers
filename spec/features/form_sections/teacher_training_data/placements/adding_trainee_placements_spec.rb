@@ -28,10 +28,47 @@ feature "Add a placement" do
     end
   end
 
-  context "with a trn_received state" do
-    it_behaves_like "adding a placement", :trn_received
-    it_behaves_like "adding a placement", :qts_recommended
-    it_behaves_like "adding a placement", :qts_awarded
+  shared_examples "adding a placement with non-JS flow" do |trait|
+    scenario "Add a new placement to an existing trainee in the #{trait} state" do
+      given_i_am_authenticated
+      and_a_postgrad_trainee_exists_with(trait)
+      and_a_school_exists
+      and_two_other_schools_exist
+      and_i_navigate_to_the_trainee_dashboard
+      and_i_click_to_enter_first_placement
+      then_i_see_the_new_placement_form
+
+      when_i_enter_a_non_matching_search_for_a_school
+      and_i_click_continue
+      then_i_see_the_no_search_results_page
+
+      when_i_click_back_to_the_new_placement_page
+      and_i_click_continue
+
+      when_i_enter_a_search_for_a_school
+      and_i_click_continue
+      then_i_see_the_search_results_page
+
+      when_i_click_continue
+      then_i_see_an_error_message
+
+      when_i_select_an_existing_school_from_the_search_results
+      and_i_click_continue
+      then_i_see_the_confirmation_page
+      and_i_see_the_new_placement_ready_for_confirmation
+      and_no_placements_are_created
+
+      when_i_click_update
+      then_i_see_a_flash_message
+      and_a_new_placement_is_created
+    end
+  end
+
+  %i[trn_received qts_recommended qts_awarded].each do |trait|
+    context "with a #{trait} state" do
+      it_behaves_like "adding a placement", trait
+      it_behaves_like "adding a placement with non-JS flow", trait
+    end
   end
 
   scenario "Add two new placements to an existing trainee" do
@@ -84,7 +121,12 @@ private
   end
 
   def and_a_school_exists
-    @school ||= create(:school)
+    @school ||= create(:school, name: "London School for Children")
+  end
+
+  def and_two_other_schools_exist
+    create(:school, name: "Cardiff College for Teenagers")
+    create(:school, name: "Edinburgh Academy for Infants")
   end
 
   def and_i_navigate_to_the_trainee_dashboard
@@ -115,6 +157,7 @@ private
   def and_i_click_continue
     click_on "Continue"
   end
+  alias_method :when_i_click_continue, :and_i_click_continue
 
   def when_i_click_add_a_placement
     click_on "Add a placement"
@@ -169,5 +212,49 @@ private
 
   def when_i_revisit_the_placements_confirmation_page
     visit trainee_placements_confirm_path(trainee_id: @trainee.slug)
+  end
+
+  def when_i_enter_a_non_matching_search_for_a_school
+    fill_in(
+      "Search for a school by its unique reference number (URN), name or postcode",
+      with: "Birmingham",
+    )
+  end
+
+  def then_i_see_the_no_search_results_page
+    expect(page).to have_content("No results found for ‘Birmingham’")
+  end
+
+  def when_i_click_back_to_the_new_placement_page
+    click_on "Change your search"
+  end
+
+  def then_i_see_an_error_message
+    expect(page).to have_current_path(
+      trainee_placement_school_search_index_path(trainee_id: @trainee.slug),
+    )
+    expect(page).to have_content("Select a placement school")
+  end
+
+  def when_i_enter_a_search_for_a_school
+    fill_in(
+      "Search for a school by its unique reference number (URN), name or postcode",
+      with: "Lond",
+    )
+  end
+
+  def then_i_see_the_search_results_page
+    expect(page).to have_current_path(
+      new_trainee_placement_school_search_path(trainee_id: @trainee.slug, school_search: "Lond"),
+    )
+    expect(page).to have_content("1 result found")
+    expect(page).to have_content("Change your search if the school you’re looking for is not listed")
+    expect(page).to have_content("London School for Children")
+    expect(page).not_to have_content("Cardiff College for Teenagers")
+    expect(page).not_to have_content("Edinburgh Academy for Infants")
+  end
+
+  def when_i_select_an_existing_school_from_the_search_results
+    choose("London School for Children")
   end
 end

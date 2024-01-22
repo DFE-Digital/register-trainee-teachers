@@ -77,7 +77,7 @@ class PlacementsForm
 
   def stash_placement_on_store(slug, fields)
     stored_placements = fetch_store
-    stored_placements[slug] = fields
+    stored_placements[slug] = fields.except(:school_search)
     save_store(stored_placements)
   end
 

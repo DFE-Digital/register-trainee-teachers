@@ -24,6 +24,7 @@
 class Placement < ApplicationRecord
   include Sluggable
 
+  attr_accessor :school_search
   default_scope { order(created_at: :asc) }
 
   belongs_to :trainee

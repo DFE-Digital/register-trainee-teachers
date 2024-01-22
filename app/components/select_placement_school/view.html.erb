@@ -1,0 +1,41 @@
+<%= register_form_with(
+    model: model,
+    url: form_path,
+    method: form_method,
+    builder: GOVUKDesignSystemFormBuilder::FormBuilder
+  ) do |f| %>
+
+  <%= f.govuk_error_summary %>
+
+  <h1 class="govuk-heading-l">
+    <span class="govuk-caption-l">Find school</span>
+    <%= title %>
+  </h1>
+
+  <%= hint_text %>
+
+  <% unless search_results.schools.empty? %>
+    <%= f.govuk_radio_buttons_fieldset(:school_id, legend: { text: "School", size: "m" }) do %>
+      <% search_results.schools.each_with_index do |school, index| %>
+        <%= f.govuk_radio_button(
+          :school_id,
+          school.id,
+          label: { text: school.name },
+          link_errors: index.zero?,
+          hint: { text: school_urn_and_location(school) },
+        ) %>
+      <% end %>
+    <% end %>
+    <%= f.hidden_field(
+      :school_search,
+      value: query,
+    ) %>
+    <%= f.govuk_submit t("continue") %>
+  <% end %>
+<% end %>
+ <% unless search_results.schools.empty? %>
+  <p class="govuk-body">
+    <%= govuk_link_to(t("cancel"), trainee_path(trainee)) %>
+  </p>
+<% end %>
+

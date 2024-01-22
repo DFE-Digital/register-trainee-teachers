@@ -1385,6 +1385,10 @@ en:
             placement_ids:
               too_short: Enter at least 2 placements
               invalid: Some placements are invalid
+        select_placement_school_form:
+          attributes:
+            school_id:
+              blank: Select a placement school
         cookie_preferences_form:
           attributes:
             consent:
@@ -1626,6 +1630,8 @@ en:
               blank: If you have an additional nationality, select it from the list
         placement:
           attributes:
+            school_id:
+              blank: Select an existing school or enter the details for a new school
             school:
               blank: Select an existing school or enter the details for a new school
               unique: "Choose another URN as this has already been used"

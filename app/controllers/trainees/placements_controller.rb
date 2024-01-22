@@ -22,7 +22,14 @@ module Trainees
         placement: Placement.new(placement_params),
       )
 
-      if @placement_form.save_or_stash
+      if @placement_form.still_searching?
+        redirect_to(
+          new_trainee_placement_school_search_path(
+            trainee_id: @trainee.slug,
+            school_search: @placement_form.school_search,
+          ),
+        )
+      elsif @placement_form.save_or_stash
         redirect_to(trainee_placements_confirm_path(trainee_id: @trainee.slug))
       else
         render(:new)
@@ -38,12 +45,21 @@ module Trainees
     end
 
     def update
-      placement_form.update_placement(placement_params)
-
-      if placement_form.save_or_stash
-        redirect_to(relevant_redirect_path)
+      if placement_params[:school_search].present?
+        redirect_to(
+          edit_trainee_placement_school_search_path(
+            trainee_id: @trainee.slug,
+            id: placement_form.placement.slug,
+            school_search: placement_params[:school_search],
+          ),
+        )
       else
-        render(:edit)
+        placement_form.update_placement(placement_params)
+        if placement_form.save_or_stash
+          redirect_to(relevant_redirect_path)
+        else
+          render(:edit)
+        end
       end
     end
 
@@ -78,7 +94,11 @@ module Trainees
     end
 
     def placement_params
-      params.fetch(:placement, {}).permit(:school_id, :urn, :name, :address, :postcode)
+      if params[:placement].present?
+        params.fetch(:placement, {}).permit(:school_id, :school_search, :urn, :name, :address, :postcode)
+      elsif params[:select_placement_school_form].present?
+        params.fetch(:select_placement_school_form, {}).permit(:school_id)
+      end
     end
   end
 end

@@ -207,6 +207,8 @@ Rails.application.routes.draw do
           end
         end
       end
+
+      resources :placement_school_search, only: %i[new create edit update], controller: "placement_school_searches"
     end
   end
 

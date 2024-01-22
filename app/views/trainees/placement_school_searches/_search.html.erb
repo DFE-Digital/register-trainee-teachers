@@ -1,0 +1,8 @@
+<div class="govuk-grid-row">
+  <%= render SelectPlacementSchool::View.new(
+    model: @select_placement_school_form,
+    slug: @select_placement_school_form.slug,
+    query: @select_placement_school_form.query,
+    trainee: @select_placement_school_form.trainee,
+  ) %>
+</div>
