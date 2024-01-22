@@ -33,3 +33,7 @@ jobs:
           app_env: ${{ github.event.inputs.environment }}
           pr-number: ${{ github.event.inputs.pr }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
+          smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
+          basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
+          basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}

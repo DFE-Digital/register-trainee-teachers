@@ -13,6 +13,14 @@ inputs:
     required: false
   slack-webhook:
     required: true
+  smoke-test-username:
+    required: true
+  smoke-test-password:
+    required: true
+  basic-auth-username:
+    required: true
+  basic-auth-password:
+    required: true
 
 runs:
   using: composite
@@ -42,10 +50,10 @@ runs:
       shell: bash
       run: RAILS_ENV=${{ inputs.app-env }} ./bin/bundle exec rspec spec/smoke
       env:
-        SMOKE_TEST_USERNAME: ${{ secrets.SMOKE_TEST_USERNAME }}
-        SMOKE_TEST_PASSWORD: ${{ secrets.SMOKE_TEST_PASSWORD }}
-        BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
-        BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}
+        SMOKE_TEST_USERNAME: ${{ inputs.smoke-test-username }}
+        SMOKE_TEST_PASSWORD: ${{ inputs.smoke-test-password }}
+        BASIC_AUTH_USERNAME: ${{ inputs.basic-auth-username }}
+        BASIC_AUTH_PASSWORD: ${{ inputs.basic-auth-password }}
 
 #    - name: 'Nofiy #twd_publish_register_tech on failure'
 #      if: ${{ failure() && inputs.environment != 'review' }}
