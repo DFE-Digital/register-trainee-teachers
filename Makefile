@@ -44,6 +44,7 @@ local: ## Configure local dev environment
 
 ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
+	$(eval export TF_VAR_spn_authentication=true)
 
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
@@ -166,6 +167,7 @@ terraform-init: install-terrafile
 
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
 	az aks get-credentials --overwrite-existing -g ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER_SHORT}-rg -n ${RESOURCE_NAME_PREFIX}-tsc-${CLUSTER}-aks
+	kubelogin convert-kubeconfig -l $(if ${TF_VAR_spn_authentication},spn,azurecli)
 
 console: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))

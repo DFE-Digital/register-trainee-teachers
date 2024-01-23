@@ -10,7 +10,7 @@ terraform {
       version = "2.1.0"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "2.20.0"
     }
   }
@@ -31,10 +31,54 @@ provider "azurerm" {
 provider "statuscake" {
   api_token = local.infra_secrets.STATUSCAKE_PASSWORD
 }
+data "azurerm_client_config" "current" {
+}
 
+variable "spn_authentication" {
+  default = false
+}
+
+variable "enable_azure_RBAC" {
+  default = false
+}
+
+locals {
+  kubelogin_args_map = {
+    spn = [
+      "get-token",
+      "--login",
+      "spn",
+      "--environment",
+      "AzurePublicCloud",
+      "--tenant-id",
+      data.azurerm_client_config.current.tenant_id,
+      "--server-id",
+      "6dae42f8-4368-4678-94ff-3960e28e3630"
+    ],
+    azurecli = [
+      "get-token",
+      "--login",
+      "azurecli",
+      "--server-id",
+      "6dae42f8-4368-4678-94ff-3960e28e3630" # See https://azure.github.io/kubelogin/concepts/aks.html
+    ]
+  }
+
+  kubelogin_args = var.spn_authentication ? local.kubelogin_args_map["spn"] : local.kubelogin_args_map["azurecli"]
+}
 provider "kubernetes" {
   host                   = module.cluster_data.kubernetes_host
-  client_certificate     = module.cluster_data.kubernetes_client_certificate
-  client_key             = module.cluster_data.kubernetes_client_key
   cluster_ca_certificate = module.cluster_data.kubernetes_cluster_ca_certificate
+  client_certificate     = var.enable_azure_RBAC ? null : module.cluster_data.kubernetes_client_certificate
+  client_key             = var.enable_azure_RBAC ? null : module.cluster_data.kubernetes_client_key
+
+  dynamic "exec" {
+    for_each = var.enable_azure_RBAC ? [1] : []
+    content {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "kubelogin"
+      args        = local.kubelogin_args
+    }
+  }
+
 }
