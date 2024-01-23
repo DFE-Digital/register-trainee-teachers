@@ -290,14 +290,28 @@ describe Reports::TraineeReport do
 
     context "when placement data is available" do
       context "when there are 2 placements" do
-        let!(:placements) { create_list(:placement, 2, trainee:).reverse }
+        let!(:placements) { create_list(:placement, 2, trainee:) }
 
-        it "adds the first placement school urn under placement_one" do
-          expect(subject.placement_one).to eq(placements.first.school.urn)
+        context "when the trainee was NOT imported from HESA" do
+          let(:trainee) { create(:trainee, :in_progress, course_uuid: create(:course).uuid) }
+
+          it "adds the first placement school urn under placement_one" do
+            expect(subject.placement_one).to eq(placements.first.school.urn)
+          end
+
+          it "adds the second placement school urn under placement_two" do
+            expect(subject.placement_two).to eq(placements.second.school.urn)
+          end
         end
 
-        it "adds the second placement school urn under placement_two" do
-          expect(subject.placement_two).to eq(placements.second.school.urn)
+        context "when the trainee was imported from HESA" do
+          it "adds the first placement school urn under placement_two" do
+            expect(subject.placement_two).to eq(placements.first.school.urn)
+          end
+
+          it "adds the second placement school urn under placement_one" do
+            expect(subject.placement_one).to eq(placements.second.school.urn)
+          end
         end
       end
 
