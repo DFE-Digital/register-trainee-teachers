@@ -30,7 +30,7 @@ jobs:
         uses: ./.github/actions/smoke-test/
         with:
           environment: ${{ github.event.inputs.environment }}
-          app_env: ${{ github.event.inputs.environment }}
+          app-env: ${{ github.event.inputs.environment }}
           pr-number: ${{ github.event.inputs.pr }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
           smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}

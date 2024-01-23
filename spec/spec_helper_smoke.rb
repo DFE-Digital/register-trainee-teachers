@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
-ENV["RAILS_ENV"] ||= "test"
+require "dotenv/load"
+
+ENV["RAILS_ENV"] ||= "staging"
 
 require "rspec/core"
 require "config"
 require "httparty"
 require "capybara/rspec"
 require "selenium-webdriver"
+require "byebug"
 
 Config.load_and_set_settings(Config.setting_files("config", ENV.fetch("RAILS_ENV", nil)))
 
@@ -20,7 +23,7 @@ end
 
 Capybara.default_driver = :selenium_headless
 Capybara.javascript_driver = :selenium_headless
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 20
 
 RSpec.configure do |config|
   config.include Capybara::DSL
