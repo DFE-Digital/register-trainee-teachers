@@ -4,7 +4,7 @@ on:
     inputs:
       environment:
         description: 'The environment to run tests against (qa, staging , production, productiondata or review)'
-        default: staging
+        default: qa
         required: true
         type: choice
         options:
