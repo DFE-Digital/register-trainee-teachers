@@ -289,8 +289,14 @@ describe Reports::TraineeReport do
     end
 
     context "when placement data is available" do
+      let(:audit_user) { nil }
+
       context "when there are 2 placements" do
-        let!(:placements) { create_list(:placement, 2, trainee:) }
+        let!(:placements) do
+          Audited.audit_class.as_user(audit_user) do
+            create_list(:placement, 2, trainee:)
+          end
+        end
 
         context "when the trainee was NOT imported from HESA" do
           let(:trainee) { create(:trainee, :in_progress, course_uuid: create(:course).uuid) }
@@ -305,6 +311,8 @@ describe Reports::TraineeReport do
         end
 
         context "when the trainee was imported from HESA" do
+          let(:audit_user) { "HESA" }
+
           it "adds the first placement school urn under placement_two" do
             expect(subject.placement_two).to eq(placements.first.school.urn)
           end
@@ -324,10 +332,10 @@ describe Reports::TraineeReport do
       end
 
       context "when there are over two placements" do
-        let!(:placements) { create_list(:placement, 4, trainee:).reverse }
+        let!(:placements) { create_list(:placement, 4, trainee:) }
 
         it "adds the rest of the placement school urns under other_placements" do
-          expect(subject.other_placements).to eq("#{placements[3].school.urn}, #{placements[2].school.urn}")
+          expect(subject.other_placements).to eq("#{placements[2].school.urn}, #{placements[3].school.urn}")
         end
       end
     end
