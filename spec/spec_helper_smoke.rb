@@ -9,7 +9,6 @@ require "config"
 require "httparty"
 require "capybara/rspec"
 require "selenium-webdriver"
-require "byebug"
 
 Config.load_and_set_settings(Config.setting_files("config", ENV.fetch("RAILS_ENV", nil)))
 
