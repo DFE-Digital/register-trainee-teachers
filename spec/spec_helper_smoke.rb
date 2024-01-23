@@ -9,12 +9,13 @@ require "config"
 require "httparty"
 require "capybara/rspec"
 require "selenium-webdriver"
+require "byebug"
 
 Config.load_and_set_settings(Config.setting_files("config", ENV.fetch("RAILS_ENV", nil)))
 
 Capybara.register_driver :selenium_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument("--headless")
+  # options.add_argument("--headless")
   options.add_argument("--disable-gpu")
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
