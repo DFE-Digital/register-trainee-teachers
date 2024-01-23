@@ -12,8 +12,8 @@ describe SessionsController do
 
   describe "#callback" do
     context "existing database user" do
-      it "calls send welcome email service" do
-        expect(SendWelcomeEmailService).to receive(:call).once
+      it "does not call send welcome email service" do
+        expect(SendWelcomeEmailService).not_to receive(:call)
         request_callback
       end
 

@@ -17,7 +17,7 @@ describe SendWelcomeEmailService do
 
   context "when the user has not logged in before" do
     context "lead school user" do
-      let(:current_user) do
+      let(:user) do
         spy(
           first_name: "Meowington",
           email: "meowington@cat.net",
@@ -28,11 +28,11 @@ describe SendWelcomeEmailService do
 
       before do
         allow(WelcomeEmailMailer).to receive_message_chain(:generate, :deliver_later)
-        described_class.call(current_user:)
+        described_class.call(user:)
       end
 
       it "sets their welcome email date to now" do
-        expect(current_user).to have_received(:update!).with(hash_including(welcome_email_sent_at: Time.zone.now))
+        expect(user).to have_received(:update!).with(hash_including(welcome_email_sent_at: Time.zone.now))
       end
 
       it "sends the welcome email" do
@@ -49,7 +49,7 @@ describe SendWelcomeEmailService do
     end
 
     context "not a lead school user" do
-      let(:current_user) do
+      let(:user) do
         spy(
           first_name: "Meowington",
           email: "meowington@cat.net",
@@ -59,17 +59,17 @@ describe SendWelcomeEmailService do
       end
 
       before do
-        described_class.call(current_user:)
+        described_class.call(user:)
       end
 
       it "does not update welcome_email_sent_at field" do
-        expect(current_user).not_to have_received(:update!)
+        expect(user).not_to have_received(:update!)
       end
     end
   end
 
   context "when a lead school user has logged in before" do
-    let(:current_user) do
+    let(:user) do
       spy(
         first_name: "Meowington",
         welcome_email_sent_at: Time.zone.local(2021, 1, 1),
@@ -79,12 +79,12 @@ describe SendWelcomeEmailService do
 
     before do
       allow(WelcomeEmailMailer).to receive_message_chain(:generate, :deliver_later)
-      described_class.call(current_user:)
+      described_class.call(user:)
     end
 
     context "and has received a welcome email" do
       it "does not update their welcome email date" do
-        expect(current_user).not_to have_received(:update!).with(hash_including(welcome_email_sent_at: Time.zone.now))
+        expect(user).not_to have_received(:update!).with(hash_including(welcome_email_sent_at: Time.zone.now))
       end
 
       it "does not send the welcome email" do
