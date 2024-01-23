@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ENV["RAILS_ENV"] ||= "test"
+ENV["RAILS_ENV"] ||= "staging"
 
 require "rspec/core"
 require "config"
