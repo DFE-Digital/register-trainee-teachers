@@ -28,8 +28,6 @@ describe PlacementsImportedFromHesa do
       end
     end
 
-    it "returns true" do
-      expect(subject).to be(true)
-    end
+    it { is_expected.to be(true) }
   end
 end
