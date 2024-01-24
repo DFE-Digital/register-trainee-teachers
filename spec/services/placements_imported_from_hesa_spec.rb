@@ -14,9 +14,7 @@ describe PlacementsImportedFromHesa do
   context "when the trainee is imported from HESA but not all placements are" do
     let(:trainee) { create(:trainee, :with_placements, :imported_from_hesa) }
 
-    it "returns false" do
-      expect(subject).to be(false)
-    end
+    it { is_expected.to be(false) }
   end
 
   context "when the trainee and all it's placements is imported from HESA but not all placements are" do
