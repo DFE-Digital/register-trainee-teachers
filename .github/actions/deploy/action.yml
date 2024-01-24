@@ -66,10 +66,6 @@ runs:
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
 
-    # - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
-    #   with:
-    #     azure-credentials: ${{ inputs.azure-credentials }}
-
     - uses: azure/login@v1
       with:
         creds: ${{ inputs.azure-credentials }}
@@ -81,16 +77,6 @@ runs:
         SECRETS: |
           ${{ env.key_vault_app_secret_name }}
           ${{ env.key_vault_infra_secret_name }}
-
-    - uses: azure/use-kubelogin@v1
-      with:
-        kubelogin-version: 'v0.0.33'
-
-    - name: Set kubelogin variables
-      shell: bash
-      run: |
-        echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_ENV
-        echo "AAD_SERVICE_PRINCIPAL_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_ENV
 
     - name: Terraform init, plan & apply
       shell: bash
