@@ -8,9 +8,7 @@ describe PlacementsImportedFromHesa do
   subject { described_class.call(trainee:) }
 
   context "when the trainee is not imported from HESA" do
-    it "returns false" do
-      expect(subject).to be(false)
-    end
+    it { is_expected.to be(false) }
   end
 
   context "when the trainee is imported from HESA but not all placements are" do
