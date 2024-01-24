@@ -47,7 +47,7 @@ jobs:
         with:
           terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-      - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+      - uses: DFE-Digital/github-actions/set-kubelogin-environment@925-rbac-migrate-clusters-development
         if: env.TF_STATE_EXISTS == 'true'
         with:
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
