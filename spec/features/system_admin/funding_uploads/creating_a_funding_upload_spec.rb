@@ -11,6 +11,13 @@ feature "Creating a funding upload" do
     then_i_am_on_the_correct_funding_upload_page
   end
 
+  around do |example|
+    original_adapter = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = :inline
+    example.run
+    ActiveJob::Base.queue_adapter = original_adapter
+  end
+
   scenario "can submit a valid funding upload for processing" do
     when_i_submit_a_valid_funding_upload
     and_i_return_to_the_funding_uploads_page
