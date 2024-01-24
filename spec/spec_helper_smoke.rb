@@ -5,6 +5,7 @@ require "dotenv/load"
 ENV["RAILS_ENV"] ||= "staging"
 
 require "rspec/core"
+require "rspec/retry"
 require "config"
 require "httparty"
 require "capybara/rspec"
@@ -27,4 +28,10 @@ Capybara.default_max_wait_time = 20
 
 RSpec.configure do |config|
   config.include Capybara::DSL
+  config.verbose_retry = true
+  config.display_try_failure_messages = true
+
+  config.around :each, :js do |ex|
+    ex.run_with_retry retry: 3
+  end
 end
