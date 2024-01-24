@@ -12,13 +12,6 @@ class PlacementsImportedFromHesa
   def call
     return false if @trainee.placements.blank?
 
-    @trainee.hesa_record? &&
-      @trainee.placements.all? { |placement| created_by_hesa?(placement) }
-  end
-
-private
-
-  def created_by_hesa?(placement)
-    placement.audits.exists?(action: "create", username: "HESA")
+    @trainee.hesa_record? && @trainee.placements.all?(&:created_by_hesa?)
   end
 end
