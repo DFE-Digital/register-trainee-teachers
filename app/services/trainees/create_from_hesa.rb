@@ -304,7 +304,7 @@ module Trainees
     end
 
     def itt_start_date_changed_for?(trainee)
-      Date.parse(itt_start_date) != trainee.itt_start_date
+      (trainee.itt_start_date - Date.parse(itt_start_date)).abs > 30
     end
 
     def awarded_or_withdrawn?(trainee)

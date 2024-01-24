@@ -419,9 +419,9 @@ module Trainees
       end
     end
 
-    context "when the trainee's itt start date has changed" do
+    context "when the trainee's itt start date has changed by more than 30 days" do
       before do
-        trainee.update(itt_start_date: DateTime.new(2022, 9, 20))
+        trainee.update(itt_start_date: DateTime.new(2023, 9, 20))
       end
 
       context "when the trainee is withdrawn" do
@@ -457,7 +457,7 @@ module Trainees
       end
     end
 
-    context "when the trainee's itt start date has not changed" do
+    context "when the trainee's itt start date has not changed by more than 30 days" do
       context "when the trainee is withdrawn" do
         before do
           trainee.update(state: :withdrawn)
