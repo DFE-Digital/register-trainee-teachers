@@ -66,12 +66,12 @@ variable "pdb_min_available" { default = null }
 variable "config_short" {}
 variable "service_short" {}
 
-variable app_config_file { default = "workspace-variables/app_config.yml" }
-variable env_config {}
+variable "app_config_file" { default = "workspace-variables/app_config.yml" }
+variable "env_config" {}
 
 variable "service_name" {}
 variable "worker_apps" {
-  type    = map(
+  type = map(
     object({
       startup_command = optional(list(string), [])
       probe_command   = optional(list(string), [])
@@ -82,7 +82,7 @@ variable "worker_apps" {
   default = {}
 }
 variable "main_app" {
-  type    = map(
+  type = map(
     object({
       startup_command = optional(list(string), [])
       probe_path      = optional(string, null)
@@ -99,8 +99,10 @@ variable "postgres_enable_high_availability" { default = false }
 variable "azure_enable_backup_storage" { default = true }
 variable "enable_container_monitoring" { default = false }
 
+variable "spn_authentication" { default = false }
+
 locals {
-  app_name_suffix  = var.app_name == null ? var.app_environment : var.app_name
+  app_name_suffix = var.app_name == null ? var.app_environment : var.app_name
 
   cf_api_url        = "https://api.london.cloud.service.gov.uk"
   azure_credentials = try(jsondecode(var.azure_credentials), null)
@@ -115,7 +117,7 @@ locals {
     { DB_SSLMODE = var.db_sslmode }
   )
 
-  cluster_name = "${module.cluster_data.configuration_map.resource_prefix}-aks"
+  cluster_name            = "${module.cluster_data.configuration_map.resource_prefix}-aks"
   app_resource_group_name = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"
 
   # added for app module
@@ -123,21 +125,21 @@ locals {
   app_secrets = merge(
     local.kv_app_secrets,
     {
-      DATABASE_URL                    = module.postgres.url
-      SETTINGS__BLAZER_DATABASE_URL   = module.postgres.url
-      REDIS_QUEUE_URL                 = module.redis-queue.url
-      REDIS_CACHE_URL                 = module.redis-cache.url
+      DATABASE_URL                  = module.postgres.url
+      SETTINGS__BLAZER_DATABASE_URL = module.postgres.url
+      REDIS_QUEUE_URL               = module.redis-queue.url
+      REDIS_CACHE_URL               = module.redis-cache.url
     },
     var.snapshot_databases_to_deploy == 1 ? { ANALYSIS_DATABASE_URL = module.postgres_snapshot[0].url } : {}
   )
 }
 
-variable azure_resource_group_name { default = null }
+variable "azure_resource_group_name" { default = null }
 
-variable azure_tempdata_storage_account_name { default = null }
+variable "azure_tempdata_storage_account_name" { default = null }
 
-variable azure_storage_account_replication_type { default = "LRS" }
+variable "azure_storage_account_replication_type" { default = "LRS" }
 
-variable azure_region_name { default = "uk south" }
+variable "azure_region_name" { default = "uk south" }
 
 variable "deploy_temp_data_storage_account" { default = true }
