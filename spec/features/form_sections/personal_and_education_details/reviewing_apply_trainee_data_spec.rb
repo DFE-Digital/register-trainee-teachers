@@ -59,7 +59,7 @@ feature "edit training details" do
   end
 
   def and_the_relevant_sections_are_completed
-    expect(review_draft_page.apply_trainee_data.status.text).to eq("Status completed")
+    expect(review_draft_page.apply_trainee_data.status.text).to eq("Status Completed")
   end
 
   def then_i_see_error_messages

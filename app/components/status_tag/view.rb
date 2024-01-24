@@ -14,11 +14,11 @@ class StatusTag::View < ViewComponent::Base
   end
 
   def status
-    {
-      submitted_for_trn: "pending trn",
-      recommended_for_award: "#{trainee.award_type} recommended",
-      awarded: "#{trainee.award_type} awarded",
-    }[trainee.state.to_sym] || trainee.state.gsub("_", " ")
+    if %w[recommended_for_award awarded].include?(trainee.state)
+      "#{trainee.award_type}_#{trainee.state}"
+    else
+      trainee.state
+    end
   end
 
 private

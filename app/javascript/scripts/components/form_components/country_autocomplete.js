@@ -1,10 +1,9 @@
-import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
 import openregisterLocationPicker from 'govuk-country-and-territory-autocomplete'
 
 const $allCountryAutoCompleteElements = document.querySelectorAll('[data-module="app-country-autocomplete"]')
 const defaultValueOption = component => component.getAttribute('data-default-value') || ''
 
-nodeListForEach($allCountryAutoCompleteElements, (component) => {
+$allCountryAutoCompleteElements.forEach((component) => {
   const selectEl = component.querySelector('select')
   const inError = component.querySelector('div.govuk-form-group').className.includes('error')
   const inputValue = defaultValueOption(component)

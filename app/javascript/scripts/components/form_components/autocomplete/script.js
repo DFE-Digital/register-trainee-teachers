@@ -1,5 +1,4 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
-import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
 import sort from './sort'
 import tracker from '../tracker'
 
@@ -64,4 +63,4 @@ const setupAutoComplete = (component) => {
   }
 }
 
-nodeListForEach($allAutocompleteElements, setupAutoComplete)
+$allAutocompleteElements.forEach(setupAutoComplete)

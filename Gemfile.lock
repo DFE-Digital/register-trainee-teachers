@@ -802,7 +802,7 @@ DEPENDENCIES
   foreman
   front_matter_parser
   google-cloud-bigquery
-  govuk-components (= 4.1.2)
+  govuk-components
   govuk_design_system_formbuilder
   govuk_markdown
   govuk_notify_rails
