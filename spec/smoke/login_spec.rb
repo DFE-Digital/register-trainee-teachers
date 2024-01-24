@@ -32,7 +32,7 @@ private
 
   def visit_sign_in_page
     visit "#{url_with_basic_auth}/sign-in"
-    click_on "Sign in using DfE Sign-in"
+    find_button("Sign in using DfE Sign-in").click
   end
 
   def fill_in_login_credentials
@@ -41,7 +41,7 @@ private
   end
 
   def submit_login_form
-    click_on "Sign in"
+    find_button("Sign in").click
   end
 
   def verify_successful_login
@@ -49,7 +49,7 @@ private
   end
 
   def sign_out
-    click_on "Sign out"
+    find_link("Sign out").click
     expect(page).to have_content("Sign in")
   end
 

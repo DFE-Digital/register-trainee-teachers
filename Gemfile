@@ -210,6 +210,8 @@ group :test do
 
   # Clean out the database between tests
   gem "database_cleaner-active_record"
+
+  gem "rspec-retry"
 end
 
 # Required for example_data so needed in review, qa and pen too
