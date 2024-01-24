@@ -6,6 +6,14 @@ FactoryBot.define do
     month { 0 }
     status { :pending }
 
+    trait :processed do
+      status { :processed }
+    end
+
+    trait :failed do
+      status { :failed }
+    end
+
     trait :provider_payment_schedules do
       csv_data { Rails.root.join("spec/support/fixtures/provider_payment_schedules.csv").read }
       funding_type { :provider_payment_schedule }
