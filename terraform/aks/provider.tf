@@ -38,9 +38,9 @@ variable "spn_authentication" {
 
 provider "kubernetes" {
   host                   = module.cluster_data.kubernetes_host
-  cluster_ca_certificate = module.cluster_data.kubernetes_cluster_ca_certificate
   client_certificate     = module.cluster_data.kubernetes_client_certificate
   client_key             = module.cluster_data.kubernetes_client_key
+  cluster_ca_certificate = module.cluster_data.kubernetes_cluster_ca_certificate
 
   dynamic "exec" {
     for_each = module.cluster_data.azure_RBAC_enabled ? [1] : []
