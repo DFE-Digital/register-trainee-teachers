@@ -62,9 +62,13 @@ runs:
       with:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@925-rbac-migrate-clusters-development
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
+
+    # - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    #   with:
+    #     azure-credentials: ${{ inputs.azure-credentials }}
 
     - uses: azure/login@v1
       with:
