@@ -606,6 +606,8 @@ GEM
       rspec-expectations (~> 3.12)
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
+    rspec-retry (0.6.2)
+      rspec-core (> 3.3)
     rspec-support (3.12.1)
     rubocop (1.59.0)
       json (~> 2.3)
@@ -800,7 +802,7 @@ DEPENDENCIES
   foreman
   front_matter_parser
   google-cloud-bigquery
-  govuk-components (= 4.1.2)
+  govuk-components
   govuk_design_system_formbuilder
   govuk_markdown
   govuk_notify_rails
@@ -830,6 +832,7 @@ DEPENDENCIES
   rotp
   rspec-benchmark
   rspec-rails (~> 6.1.0)
+  rspec-retry
   rubocop-rails
   rubocop-rspec
   ruby-progressbar

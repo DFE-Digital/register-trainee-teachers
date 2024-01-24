@@ -2,18 +2,22 @@
 
 .app-phase-banner__env--development .govuk-tag {
   background: govuk-colour("dark-grey");
+  color: govuk-colour("white");
 }
 
 .app-phase-banner__env--qa .govuk-tag {
   background-color: govuk-colour("orange");
+  color: govuk-colour("white");
 }
 
 .app-phase-banner__env--staging .govuk-tag {
   background-color: govuk-colour("red");
+  color: govuk-colour("white");
 }
 
 .app-phase-banner__env--review .govuk-tag {
   background-color: govuk-colour("purple");
+  color: govuk-colour("white");
 }
 
 .app-header__env--development,

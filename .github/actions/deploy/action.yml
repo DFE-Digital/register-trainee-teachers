@@ -15,6 +15,14 @@ inputs:
     required: true
   slack-webhook:
     required: true
+  smoke-test-username:
+    required: true
+  smoke-test-password:
+    required: true
+  basic-auth-username:
+    required: true
+  basic-auth-password:
+    required: true
 
 outputs:
   deploy-url:
@@ -139,6 +147,10 @@ runs:
         app-env: ${{ env.app_environment }}
         pr-number: ${{ inputs.pr-number }}
         slack-webhook: ${{ inputs.slack-webhook }}
+        smoke-test-username: ${{ inputs.smoke-test-username }}
+        smoke-test-password: ${{ inputs.smoke-test-password }}
+        basic-auth-username: ${{ inputs.basic-auth-username }}
+        basic-auth-password: ${{ inputs.basic-auth-password }}
 
     - name: Notify Slack channel on job failure
       if: ${{ failure() && github.ref == 'refs/heads/main' }}

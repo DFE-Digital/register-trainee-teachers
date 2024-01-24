@@ -50,7 +50,7 @@ gem "rails_semantic_logger", "4.14.0"
 gem "request_store", "~> 1.5"
 
 # Used to build our forms and style them using govuk-frontend class names
-gem "govuk-components", "4.1.2"
+gem "govuk-components"
 gem "govuk_design_system_formbuilder"
 
 # Background job processor
@@ -210,6 +210,8 @@ group :test do
 
   # Clean out the database between tests
   gem "database_cleaner-active_record"
+
+  gem "rspec-retry"
 end
 
 # Required for example_data so needed in review, qa and pen too

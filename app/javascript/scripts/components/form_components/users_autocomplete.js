@@ -1,5 +1,4 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
-import { nodeListForEach } from 'govuk-frontend/govuk/common/index.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-users-autocomplete"]')
 
@@ -128,4 +127,4 @@ const setupAutoComplete = (form) => {
   }
 }
 
-nodeListForEach($allAutocompleteElements, setupAutoComplete)
+$allAutocompleteElements.forEach(setupAutoComplete)

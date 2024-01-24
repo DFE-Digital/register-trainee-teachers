@@ -9,16 +9,18 @@ require "spec_helper_smoke"
 # BASIC_AUTH_USERNAME
 # BASIC_AUTH_PASSWORD
 #
-# These are stored as secrets in github https://github.com/DFE-Digital/register-trainee-teachers/settings/secrets/actions
+# you can get the credentials from another Dave G, or another dev
 #
 # When running, pass in the remote environment name, for example:
 #
 # RAILS_ENV=production bundle exec rspec spec/smoke/login_spec.rb
+#
+# The ENV variable are passed eventually to the `.github/actions/smoke-test/action.yml` action
+# via either the `.github/workflows/deploy.yml` or `.github/workflows/build-and-deploy.yml` workflows
 
 describe "User login spec" do
   before do
-    # skip "DfE sign-in not enabled" unless Settings.features.sign_in_method == "dfe-sign-in"
-    skip "Temporary skipping to unblock pipeline"
+    skip "DfE sign-in not enabled" unless Settings.features.sign_in_method == "dfe-sign-in"
   end
 
   scenario "signing in successfully", js: true do
@@ -33,7 +35,7 @@ private
 
   def visit_sign_in_page
     visit "#{url_with_basic_auth}/sign-in"
-    click_on "Sign in using DfE Sign-in"
+    find_button("Sign in using DfE Sign-in").click
   end
 
   def fill_in_login_credentials
@@ -42,7 +44,7 @@ private
   end
 
   def submit_login_form
-    click_on "Sign in"
+    find_button("Sign in").click
   end
 
   def verify_successful_login
@@ -50,7 +52,7 @@ private
   end
 
   def sign_out
-    click_on "Sign out"
+    find_link("Sign out").click
     expect(page).to have_content("Sign in")
   end
 

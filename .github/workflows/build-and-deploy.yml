@@ -227,6 +227,10 @@ jobs:
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.deploy_review.outputs.deploy-url }}
+          smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
+          smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
+          basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
+          basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
   merge-dependabot:
     name: Merge dependabot
@@ -269,6 +273,10 @@ jobs:
         environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
+        smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
+        basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
+        basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
   deploy-production:
     name: Production deployment
@@ -290,6 +298,10 @@ jobs:
         environment: production
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
+        smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
+        basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
+        basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
   deploy-after-production:
     name: Deployment after production
@@ -311,3 +323,7 @@ jobs:
         environment: productiondata
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
+        smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
+        basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
+        basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}

@@ -42,3 +42,7 @@ jobs:
           environment: ${{ github.event.inputs.environment }}
           sha: ${{ github.event.inputs.sha }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
+          smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
+          basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
+          basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}

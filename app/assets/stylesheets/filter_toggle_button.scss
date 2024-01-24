@@ -53,7 +53,7 @@ $shadow-color: #0b0c0c;
   background: none;
 }
 
-@media (width >= 48.0625em) {
+@include govuk-media-query($from: desktop) {
   .moj-filter-layout__filter {
     max-width: 300px;
     margin-bottom: govuk-spacing(2);
