@@ -13,7 +13,7 @@ module Trainees
     end
 
     def edit
-      placement_form
+      placement_form.initialise_school_search_for_edit
     end
 
     def create
