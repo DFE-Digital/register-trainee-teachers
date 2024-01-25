@@ -12,6 +12,8 @@ module Trainees
 
     VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
 
+    MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE = 30
+
     class HesaImportError < StandardError; end
 
     def initialize(hesa_trainee:, record_source:)
@@ -77,7 +79,7 @@ module Trainees
 
       # if the trainee is either awarded or withdrawn and the ITT start date is different to the existing record,
       # we need to create a new record because the provider is submitting the trainee for a new course
-      new_trainee_record(hesa_id) if itt_start_date_changed_for?(trainee)
+      new_trainee_record(hesa_id) if itt_start_date_significantly_changed_for?(trainee)
 
       # if the trainee's ITT start date has not changed, and the trainee is either awarded or withdrawn,
       # then we do nothing (we don't create a new record, nor update the existing one), therefore we
@@ -303,8 +305,8 @@ module Trainees
       Trainee.new(hesa_id:)
     end
 
-    def itt_start_date_changed_for?(trainee)
-      Date.parse(itt_start_date) != trainee.itt_start_date
+    def itt_start_date_significantly_changed_for?(trainee)
+      (trainee.itt_start_date - Date.parse(itt_start_date)).abs > MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE
     end
 
     def awarded_or_withdrawn?(trainee)
