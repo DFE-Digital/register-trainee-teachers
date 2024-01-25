@@ -70,7 +70,7 @@ runs:
       with:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-    - uses: DFE-Digital/github-actions/set-kubelogin-environment@925-rbac-migrate-clusters-development
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
 
