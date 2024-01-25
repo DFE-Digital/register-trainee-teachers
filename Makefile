@@ -44,7 +44,6 @@ local: ## Configure local dev environment
 
 ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
-	$(eval export TF_VAR_spn_authentication=true)
 
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
