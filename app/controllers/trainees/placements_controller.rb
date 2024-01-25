@@ -22,7 +22,7 @@ module Trainees
         placement: Placement.new(placement_params),
       )
 
-      if @placement_form.still_searching?
+      if use_non_js_flow?
         redirect_to(
           new_trainee_placement_school_search_path(
             trainee_id: @trainee.slug,
@@ -45,7 +45,7 @@ module Trainees
     end
 
     def update
-      if placement_params[:school_search].present?
+      if use_non_js_flow?
         redirect_to(
           edit_trainee_placement_school_search_path(
             trainee_id: @trainee.slug,
@@ -99,6 +99,10 @@ module Trainees
       elsif params[:select_placement_school_form].present?
         params.fetch(:select_placement_school_form, {}).permit(:school_id)
       end
+    end
+
+    def use_non_js_flow?
+      placement_params[:school_search].present?
     end
   end
 end
