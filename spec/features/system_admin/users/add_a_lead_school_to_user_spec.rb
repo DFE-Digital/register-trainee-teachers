@@ -15,6 +15,8 @@ feature "creating a new lead school for a user" do
   let!(:user_to_be_updated) { create(:user, first_name: "James", last_name: "Rodney") }
 
   before do
+    @welcome_mailer_service = class_spy(SendWelcomeEmailService).as_stubbed_const
+
     given_i_am_authenticated(user:)
     and_a_number_of_lead_schools_exist
     when_i_visit_the_user_index_page
@@ -32,6 +34,7 @@ feature "creating a new lead school for a user" do
         and_i_continue
         then_i_am_taken_to_the_user_show_page
         and_i_see_the_new_lead_school
+        and_the_user_is_sent_a_welcome_email
       end
 
       context "when a lead school is not selected" do
@@ -39,6 +42,7 @@ feature "creating a new lead school for a user" do
           and_i_fill_in_my_lead_school
           and_i_continue
           then_i_am_redirected_to_the_lead_schools_page
+          and_the_user_is_not_sent_a_welcome_email
         end
       end
     end
@@ -48,6 +52,7 @@ feature "creating a new lead school for a user" do
         and_i_fill_in_my_lead_school_without_js
         and_i_continue
         then_i_am_redirected_to_the_lead_schools_page
+        and_the_user_is_not_sent_a_welcome_email
       end
     end
   end
@@ -108,5 +113,13 @@ private
 
   def then_i_am_redirected_to_the_lead_schools_page
     expect(user_lead_schools_page).to be_displayed
+  end
+
+  def and_the_user_is_sent_a_welcome_email
+    expect(@welcome_mailer_service).to have_received(:call).with(user: user_to_be_updated)
+  end
+
+  def and_the_user_is_not_sent_a_welcome_email
+    expect(@welcome_mailer_service).not_to have_received(:call).with(user: user_to_be_updated)
   end
 end

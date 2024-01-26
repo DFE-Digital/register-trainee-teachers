@@ -23,6 +23,7 @@ module SystemAdmin
       end
 
       if @lead_school_form.save
+        SendWelcomeEmailService.call(user: @user)
         redirect_to(user_path(@user), flash: { success: "Lead school added" })
       else
         @school_search = SchoolSearch.call(query: params[:query], lead_schools_only: true)
