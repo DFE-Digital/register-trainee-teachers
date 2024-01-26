@@ -70,7 +70,7 @@ runs:
       with:
         terraform_version: ${{ env.TERRAFORM_VERSION }}
 
-    - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
 
@@ -120,7 +120,7 @@ runs:
     - name: K8 setup
       shell: bash
       run: |
-        az aks get-credentials -g ${{ env.cluster_rg }} -n ${{ env.cluster_name }}
+        make ci ${{inputs.environment}} get-cluster-credentials
         make install-konduit
 
     - name: Run data migrations
