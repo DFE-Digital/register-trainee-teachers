@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module RegisterApi
-  class InfoController < RegisterApi::ApplicationController
+module Api
+  class InfoController < Api::BaseController
     def show
       render(json: { status: "ok" })
     end
