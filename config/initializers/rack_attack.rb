@@ -2,12 +2,12 @@
 
 # Block requests from IP blacklist
 Rack::Attack.blocklist("block requests from IP blacklist") do |req|
-  request.path.start_with?("/api") && req.ip.in?(Settings.api.blacklist.ip)
+  req.path.start_with?("/api") && req.ip.in?(Settings.api.blacklist.ip)
 end
 
 # Block requests from UA blacklist
 Rack::Attack.blocklist("block requests from UA blacklist") do |req|
-  request.path.start_with?("/api") && req.user_agent.in?(Settings.api.blacklist.ua)
+  req.path.start_with?("/api") && req.user_agent.in?(Settings.api.blacklist.ua)
 end
 
 # Throttle high volumes of API requests by IP address
