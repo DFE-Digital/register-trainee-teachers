@@ -12,8 +12,8 @@ module SystemAdmin
       describe ".recently_processed_upload_for" do
         let!(:older_processed_funding_upload) { create(:funding_upload, :processed, :lead_school_trainee_summaries, created_at: 1.day.ago) }
         let!(:recently_processed_funding_upload) { create(:funding_upload, :lead_school_trainee_summaries, :processed) }
-        let!(:pending_funding_upload) { create(:funding_upload) }
-        let!(:failed_funding_upload) { create(:funding_upload, :failed) }
+        let!(:pending_funding_upload) { create(:funding_upload, :lead_school_trainee_summaries) }
+        let!(:failed_funding_upload) { create(:funding_upload, :failed, :lead_school_trainee_summaries) }
 
         it "returns recently processed funding uploads" do
           expect(described_class.recently_processed_upload_for(:lead_school_trainee_summary)).to eq(recently_processed_funding_upload)
