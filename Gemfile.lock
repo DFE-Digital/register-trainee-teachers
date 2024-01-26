@@ -498,6 +498,8 @@ GEM
     raabro (1.4.0)
     racc (1.7.3)
     rack (2.2.8)
+    rack-attack (6.7.0)
+      rack (>= 1.0, < 4)
     rack-mini-profiler (3.3.0)
       rack (>= 1.2.0)
     rack-oauth2 (1.21.3)
@@ -822,6 +824,7 @@ DEPENDENCIES
   pry-byebug
   puma (~> 6.4)
   pundit
+  rack-attack
   rack-mini-profiler
   rails (~> 7.1)
   rails-controller-testing

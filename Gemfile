@@ -131,6 +131,7 @@ gem "progress_bar" # useful to track progress of long running data migrations us
 gem "azure-storage-blob", "~> 2"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
+gem "rack-attack"
 gem "strong_migrations"
 
 group :qa, :review, :staging, :production do
