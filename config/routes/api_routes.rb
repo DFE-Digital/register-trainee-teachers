@@ -10,7 +10,8 @@ module ApiRoutes
       end
 
       namespace :api, path: "api/:api_version", api_version: /v[.0-9]+/ do
-        resource :info, only: :show, controller: "info"
+        resource :info, only: :show, controller: "info", constraints: ValidRegisterApiRoute
+        match "*url" => "base#not_found", via: :all
       end
     end
   end
