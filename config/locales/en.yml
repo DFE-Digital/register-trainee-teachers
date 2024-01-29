@@ -1763,6 +1763,13 @@ en:
               too_old: Trainee start date cannot be more than 10 years in the past
             commencement_status:
               blank: Select if the trainee started on time
+        itt_end_date_form:
+          attributes:
+            itt_end_date:
+              blank: Enter an expected end date
+              future: Enter an expected end date closer to today
+              invalid: Enter a valid expected end date
+              return_date: The expected end date must be after the return date
         training_details_form:
           attributes:
             trainee_id:
