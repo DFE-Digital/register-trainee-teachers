@@ -6,7 +6,7 @@ module Hesa
 
     HESA_FIELDS_TO_CODESETS_MAP = {
       bursary_level: Hesa::CodeSets::BursaryLevels,
-      course_age_range: DfE::ReferenceData::AgeRanges::HESA_CODE_SETS,
+      course_age_range: Hesa::CodeSets::AgeRanges,
       course_subject_one: Hesa::CodeSets::CourseSubjects,
       course_subject_three: Hesa::CodeSets::CourseSubjects,
       course_subject_two: Hesa::CodeSets::CourseSubjects,
