@@ -23,7 +23,7 @@ feature "Creating a new user" do
         and_i_fill_in_dttp_id
         when_i_save_the_form
         then_i_am_taken_to_the_user_show_page
-        and_the_user_is_sent_a_welcome_email
+        and_the_user_is_not_sent_a_welcome_email
       end
     end
 
@@ -103,7 +103,7 @@ private
     expect(admin_new_user_page.error_summary).to be_visible
   end
 
-  def and_the_user_is_sent_a_welcome_email
-    expect(@welcome_mailer_service).to have_received(:call).with(user: User.last)
+  def and_the_user_is_not_sent_a_welcome_email
+    expect(@welcome_mailer_service).not_to have_received(:call).with(user: User.last)
   end
 end
