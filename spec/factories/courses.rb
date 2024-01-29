@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :course do
     transient do
       age_range do
-        DfE::ReferenceData::AgeRanges::AGE_RANGES.select do |_, v|
+        DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(level)
         end.keys.sample
       end
