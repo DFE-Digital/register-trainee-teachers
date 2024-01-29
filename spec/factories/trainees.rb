@@ -191,7 +191,8 @@ FactoryBot.define do
       course_subject_two { primary_specialism_subjects.second }
       course_subject_three { primary_specialism_subjects.third }
       course_age_range do
-        AgeRange::MAPPING.select do |_, v|
+        age_ranges = DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash
+        age_ranges.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
@@ -211,7 +212,8 @@ FactoryBot.define do
       course_subject_two { nil }
       course_subject_three { nil }
       course_age_range do
-        AgeRange::MAPPING.select do |_, v|
+        age_ranges = DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash
+        age_ranges.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end

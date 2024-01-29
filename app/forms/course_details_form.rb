@@ -125,7 +125,7 @@ class CourseDetailsForm < TraineeForm
   end
 
   def attrs_from_course_age_range(course_age_range)
-    age_range = AgeRange::MAPPING[course_age_range]
+    age_range = DfE::ReferenceData::AgeRanges::AGE_RANGES.one(course_age_range)
 
     attrs = {}
     if age_range.present? && !trainee.early_years_route?
@@ -260,7 +260,7 @@ private
       })
     end
 
-    age_range = AgeRange::MAPPING[trainee.course_age_range]
+    age_range = DfE::ReferenceData::AgeRanges::AGE_RANGES.one(trainee.course_age_range)
 
     if age_range.present? && !trainee.early_years_route?
       attributes[:"#{age_range[:option]}_age_range"] = trainee.course_age_range.join(" to ")

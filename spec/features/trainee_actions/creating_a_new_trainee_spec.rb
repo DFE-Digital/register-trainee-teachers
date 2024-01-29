@@ -132,8 +132,9 @@ private
   end
 
   def and_trainee_course_subject_one_set_to_early_years_teaching
-    expect(Trainee.last.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
-    expect(Trainee.last.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+    byebug
+    expect(Trainee.last.course_subject_one).to eq(DfE::ReferenceData::AgeRanges::CourseSubjects::EARLY_YEARS_TEACHING)
+    expect(Trainee.last.course_age_range).to eq(DfE::ReferenceData::AgeRanges::ZERO_TO_FIVE)
   end
 
   def and_trainee_record_source_is_set_to_manual

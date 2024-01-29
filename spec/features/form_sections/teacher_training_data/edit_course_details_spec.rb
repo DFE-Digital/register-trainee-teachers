@@ -85,7 +85,7 @@ private
     course_details_page.set_date_fields("itt_start_date", trainee.itt_start_date.strftime("%d/%m/%Y"))
     course_details_page.set_date_fields("itt_end_date", trainee.itt_end_date.strftime("%d/%m/%Y"))
 
-    age_range = AgeRange::MAPPING[trainee.course_age_range]
+    age_range = DfE::ReferenceData::AgeRanges::AGE_RANGES.one(trainee.course_age_range)
 
     if age_range[:option] == :main
       course_details_page.public_send("main_age_range_#{trainee.course_age_range.join('_to_')}").choose
@@ -110,7 +110,7 @@ private
     expect(course_details_page.itt_end_date_month.value).to eq(trainee.itt_end_date.month.to_s)
     expect(course_details_page.itt_end_date_year.value).to eq(trainee.itt_end_date.year.to_s)
 
-    age_range = AgeRange::MAPPING[trainee.course_age_range]
+    age_range = DfE::ReferenceData::AgeRanges::AGE_RANGES.one(trainee.course_age_range)
 
     if age_range[:option] == :main
       expect(course_details_page.public_send("main_age_range_#{trainee.course_age_range.join('_to_')}")).to be_checked

@@ -185,7 +185,7 @@ private
     @trn_received_trainee ||= create(:trainee, :submitted_for_trn, :trn_received)
     @withdrawn_trainee ||= create(:trainee, :withdrawn)
     @early_years_trainee ||= create(:trainee, :submitted_for_trn, :early_years_undergrad)
-    @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: AgeRange::THREE_TO_EIGHT)
+    @primary_trainee ||= create(:trainee, :submitted_for_trn, course_age_range: DfE::ReferenceData::AgeRanges::THREE_TO_EIGHT)
     @apply_non_draft_trainee ||= create(:trainee, :submitted_for_trn, :with_apply_application)
     @dttp_import_trainee ||= create(:trainee, :submitted_for_trn, :created_from_dttp)
     Trainee.update_all(provider_id: @current_user.organisation.id)

@@ -6,7 +6,7 @@ class RemoveAgeRangeFromIncompatibleCourses < ActiveRecord::Migration[6.1]
     # The provider will have to enter a compatible age range after selecting the course.
     # Note: Publish doesn't currently validate age ranges.
     Course.where(level: :primary)
-          .where("max_age > ?", AgeRange::UPPER_BOUND_PRIMARY_AGE)
+          .where("max_age > ?", DfE::ReferenceData::AgeRanges::UPPER_BOUND_PRIMARY_AGE)
           .update_all(min_age: nil, max_age: nil)
   end
 

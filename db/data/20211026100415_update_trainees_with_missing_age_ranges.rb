@@ -1,19 +1,20 @@
 # frozen_string_literal: true
 
 class UpdateTraineesWithMissingAgeRanges < ActiveRecord::Migration[6.1]
+  AGE_RANGES = DfE::ReferenceData::AgeRanges
   MISSING_AGE_RANGES = [
-    AgeRange::TWO_TO_SEVEN,
-    AgeRange::TWO_TO_ELEVEN,
-    AgeRange::TWO_TO_NINETEEN,
-    AgeRange::THREE_TO_SIXTEEN,
-    AgeRange::FOUR_TO_ELEVEN,
-    AgeRange::FOUR_TO_NINETEEN,
-    AgeRange::FIVE_TO_EIGHTEEN,
-    AgeRange::SEVEN_TO_EIGHTEEN,
-    AgeRange::NINE_TO_THIRTEEN,
-    AgeRange::ELEVEN_TO_EIGHTEEN,
-    AgeRange::THIRTEEN_TO_EIGHTEEN,
-    AgeRange::FOURTEEN_TO_EIGHTEEN,
+    AGE_RANGES::TWO_TO_SEVEN,
+    AGE_RANGES::TWO_TO_ELEVEN,
+    AGE_RANGES::TWO_TO_NINETEEN,
+    AGE_RANGES::THREE_TO_SIXTEEN,
+    AGE_RANGES::FOUR_TO_ELEVEN,
+    AGE_RANGES::FOUR_TO_NINETEEN,
+    AGE_RANGES::FIVE_TO_EIGHTEEN,
+    AGE_RANGES::SEVEN_TO_EIGHTEEN,
+    AGE_RANGES::NINE_TO_THIRTEEN,
+    AGE_RANGES::ELEVEN_TO_EIGHTEEN,
+    AGE_RANGES::THIRTEEN_TO_EIGHTEEN,
+    AGE_RANGES::FOURTEEN_TO_EIGHTEEN,
   ].freeze
 
   # Finding all mis-mapped trainees and update them in DTTP. Call the update job

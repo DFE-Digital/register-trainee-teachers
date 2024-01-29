@@ -632,7 +632,7 @@ describe Trainee do
     it "sets course_subject_one to early years teaching and age range to 0-5" do
       trainee.set_early_years_course_details
       expect(trainee.course_subject_one).to eq(CourseSubjects::EARLY_YEARS_TEACHING)
-      expect(trainee.course_age_range).to eq(AgeRange::ZERO_TO_FIVE)
+      expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::ZERO_TO_FIVE)
       expect(trainee.course_allocation_subject).to eq(AllocationSubject.find_by(name: AllocationSubjects::EARLY_YEARS_ITT))
       expect(trainee.course_education_phase).to eq(COURSE_EDUCATION_PHASE_ENUMS[:early_years])
     end

@@ -20,7 +20,7 @@ module HasCourseAttributes
   end
 
   def primary_education_phase?
-    course_max_age && course_max_age <= AgeRange::UPPER_BOUND_PRIMARY_AGE
+    course_max_age && course_max_age <= DfE::ReferenceData::AgeRanges::UPPER_BOUND_PRIMARY_AGE
   end
 
   def course_max_age

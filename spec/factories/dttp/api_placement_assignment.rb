@@ -18,7 +18,7 @@ FactoryBot.define do
     dfe_programmestartdate { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_START_MONTH, year: current_academic_year).strftime("%Y-%m-%d") }
     dfe_programmeeenddate { Faker::Date.in_date_period(month: ACADEMIC_CYCLE_END_MONTH, year: current_academic_year + 1).strftime("%Y-%m-%d") }
     dfe_commencementdate { Faker::Date.between(from: dfe_programmestartdate, to: dfe_programmeeenddate).strftime("%Y-%m-%d") }
-    _dfe_coursephaseid_value { AgeRange::MAPPING.to_a.sample[1][:entity_id] }
+    _dfe_coursephaseid_value { DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash.to_a.sample[1][:entity_id] }
     _dfe_studymodeid_value { Dttp::CodeSets::CourseStudyModes::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_initiative1id_value { Dttp::CodeSets::TrainingInitiatives::MAPPING[ROUTE_INITIATIVES_ENUMS[:now_teach]][:entity_id] }
     dfe_trnassessmentdate { dfe_programmestartdate }
