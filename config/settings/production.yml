@@ -43,6 +43,7 @@ features:
     sync_trn_data: true
   dqt_import:
     sync_teachers: true
+  register_api: false
 environment:
   name: beta
 

@@ -86,6 +86,7 @@ features:
   maintenance_banner: false
   change_accredited_provider: true
   funding_uploads: false
+  register_api: true
 
 dfe_sign_in:
   # Our service name
