@@ -4,7 +4,6 @@ module Api
   class GuideController < ::ApplicationController
     skip_before_action :authenticate
 
-    def show
-    end
+    def show; end
   end
 end
