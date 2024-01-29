@@ -28,5 +28,9 @@ module SystemAdmin
     }
 
     enum status: { pending: 0, processed: 1, failed: 2 }
+
+    def self.recently_processed_upload_for(funding_type)
+      where(funding_type: funding_type, status: :processed).order(created_at: :desc).first
+    end
   end
 end

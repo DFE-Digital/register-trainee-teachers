@@ -7,7 +7,12 @@ module SystemAdmin
 
     helper_method :funding_type
 
-    def index; end
+    def index
+      @lead_school_trainee_summary = FundingUpload.recently_processed_upload_for(:lead_school_trainee_summary)
+      @lead_school_payment_schedule = FundingUpload.recently_processed_upload_for(:lead_school_payment_schedule)
+      @provider_trainee_summary = FundingUpload.recently_processed_upload_for(:provider_trainee_summary)
+      @provider_payment_schedule = FundingUpload.recently_processed_upload_for(:provider_payment_schedule)
+    end
 
     def new
       @funding_upload_form = FundingUploadForm.new
