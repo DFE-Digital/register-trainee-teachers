@@ -28,7 +28,15 @@ class PlacementForm
     @placement = placement
     @destroy = destroy
     self.attributes = placement.attributes.symbolize_keys.slice(*FIELDS)
-    self.school_search = placement.school_search || placement.school&.name
+    self.school_search = placement.school_search
+  end
+
+  # This method is called by PlacementsController#edit to populate the school
+  # search field with the name of the currently selected school. It shouldn't
+  # be called elsewhere as the presence of the `school_search` field triggers
+  # the non-JS flow in other actions (e.g. `create` and `update`).
+  def initialise_school_search_for_edit
+    self.school_search ||= @placement&.school&.name
   end
 
   def self.model_name
@@ -155,10 +163,6 @@ class PlacementForm
     if postcode.present? && !UKPostcode.parse(postcode).valid?
       errors.add(:postcode, I18n.t("activemodel.errors.validators.postcode.invalid"))
     end
-  end
-
-  def still_searching?
-    school_search.present?
   end
 
 private
