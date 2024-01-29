@@ -258,6 +258,7 @@ en:
         nationality: &nationality Nationality
       reinstatement_details:
         reinstate_date_label: Date of return
+        itt_end_date_label: Expected end date
         summary_title: Reinstatement details
       flash:
         diversity: disclosure
@@ -446,6 +447,8 @@ en:
           confirm: Check deferral details
         reinstatement:
           show: When did the trainee return?
+        update_end_date:
+          show: What is the expected end date for their course?
         confirm_reinstatement:
           show: Check reinstatement details
         confirm_publish_course:
@@ -906,6 +909,10 @@ en:
           no_placement_detail: "No, I’ll add them later"
       reinstatement:
         heading: When did the trainee return?
+      update_end_date:
+        heading: What is the expected end date for their course?
+        itt_end_date:
+          hint: They were expected to end their course on %{itt_end_date} before they deferred. If this is still the same, you can enter that date again.
       withdrawal_date:
         duplicate_record_notice: Do not withdraw duplicate records. If you need to remove a duplicate record, contact us at %{contact_link}.
         deferral_notice_heading: Withdrawal date

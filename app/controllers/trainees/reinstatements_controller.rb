@@ -12,7 +12,7 @@ module Trainees
       @reinstatement_form = ReinstatementForm.new(trainee, params: trainee_params, user: current_user)
 
       if @reinstatement_form.stash
-        redirect_to_confirm_reinstatement
+        redirect_to(trainee_reinstatement_update_end_date_path(trainee))
       else
         render(:show)
       end
@@ -26,10 +26,6 @@ module Trainees
         .transform_keys do |key|
           MultiDateForm::PARAM_CONVERSION.fetch(key, key)
         end
-    end
-
-    def redirect_to_confirm_reinstatement
-      redirect_to(trainee_confirm_reinstatement_path(trainee))
     end
 
     def authorize_trainee
