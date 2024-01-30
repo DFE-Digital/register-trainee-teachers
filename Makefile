@@ -44,6 +44,7 @@ local: ## Configure local dev environment
 
 ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
+	$(eval SKIP_CONFIRM=true)
 
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
@@ -80,7 +81,7 @@ staging:
 
 production:
 	$(eval include global_config/production.sh)
-	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+	$(if $(or ${SKIP_CONFIRM}, ${CONFIRM_PRODUCTION}), , $(error Missing CONFIRM_PRODUCTION=yes))
 	$(eval DEPLOY_ENV=production)
 	$(eval HOST_NAME=www)
 	$(eval DTTP_HOSTNAME=traineeteacherportal)
@@ -89,7 +90,7 @@ production:
 
 productiondata:
 	$(eval include global_config/productiondata.sh)
-	$(if $(CONFIRM_PRODUCTION), , $(error Can only run with CONFIRM_PRODUCTION))
+	$(if $(or ${SKIP_CONFIRM}, ${CONFIRM_PRODUCTION}), , $(error Missing CONFIRM_PRODUCTION=yes))
 	$(eval DEPLOY_ENV=productiondata)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
