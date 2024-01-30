@@ -9,6 +9,10 @@ module ApiRoutes
         resource :guide, only: :show, controller: "guide", constraints: RouteConstraints::RegisterApiConstraint
         match "*url" => "base#not_found", via: :all
       end
+
+      namespace :api_docs, path: "api-docs" do
+        get "/" => "pages#home", as: :home
+      end
     end
   end
 end
