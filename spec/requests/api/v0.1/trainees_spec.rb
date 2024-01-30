@@ -1,0 +1,47 @@
+# spec/requests/api/trainees_spec.rb
+
+require "rails_helper"
+
+describe "Trainees API", type: :request do
+  describe "GET /api/v0.1/trainees/:id" do
+    let(:trainee) { create(:trainee) }
+
+    context "when the register_api feature flag is on", feature_register_api: true do
+      before do
+        get "/api/v0.1/trainees/#{trainee.slug}", headers: { Authorization: "Bearer bat" }
+      end
+
+      it "returns the trainee" do
+        expect(JSON.parse(response.body)).to eq(JSON.parse(trainee.to_json))
+      end
+
+      it "returns status code 200" do
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context "when the register_api feature flag is off", feature_register_api: false do
+      before do
+        get "/api/v0.1/trainees/#{trainee.slug}", headers: { Authorization: "Bearer bat" }
+      end
+
+      it "returns status code 404" do
+        expect(response).to have_http_status(404)
+      end
+    end
+
+    context "when the trainee does not exist", feature_register_api: true do
+      before do
+        get "/api/v0.1/trainees/nonexistent", headers: { Authorization: "Bearer bat" }
+      end
+
+      it "returns status code 404" do
+        expect(response).to have_http_status(404)
+      end
+
+      it "returns a not found message" do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+end
