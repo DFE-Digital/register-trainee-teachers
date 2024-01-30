@@ -9,7 +9,7 @@ module ReinstatementDetails
     delegate :trainee, to: :reinstatement_form
     delegate :itt_end_date, to: :itt_end_date_form
 
-    def initialize(reinstatement_form, itt_end_date_form)
+    def initialize(reinstatement_form:, itt_end_date_form:)
       @reinstatement_form = reinstatement_form
       @itt_end_date_form = itt_end_date_form
     end
