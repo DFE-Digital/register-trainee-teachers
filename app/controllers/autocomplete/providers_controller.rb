@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Api
-  class ProvidersController < Api::ApplicationController
+module Autocomplete
+  class ProvidersController < Autocomplete::ApplicationController
     def index
       return error_response if invalid_query?
 

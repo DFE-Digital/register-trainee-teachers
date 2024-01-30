@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-module Api
+module Autocomplete
   describe ProvidersController do
     describe "#index" do
       context "default response" do

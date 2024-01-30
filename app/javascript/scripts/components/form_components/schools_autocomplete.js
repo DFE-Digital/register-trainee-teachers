@@ -31,7 +31,7 @@ const findSchools = ({ query, populateResults, onlyLeadSchools }) => {
 
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/api/schools?query=${encodedQuery}&lead_school=${onlyLeadSchools ? 'true' : 'false'}`)
+  window.fetch(`/autocomplete/schools?query=${encodedQuery}&lead_school=${onlyLeadSchools ? 'true' : 'false'}`)
     .then(response => response.json())
     .then(guard)
     .then(mapToSchools)

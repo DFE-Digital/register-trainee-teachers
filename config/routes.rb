@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   extend SystemAdminRoutes
   extend ApiRoutes
+  extend AutocompleteRoutes
 
   if Settings.dttp.portal_host.present?
     constraints(->(req) { req.host == Settings.dttp.portal_host }) do

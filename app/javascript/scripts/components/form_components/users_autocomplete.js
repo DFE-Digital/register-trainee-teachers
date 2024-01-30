@@ -51,7 +51,7 @@ const findUsers = ({ query, populateResults }) => {
 
   statusMessage = 'Loading...'
 
-  window.fetch(`/api/users?query=${encodedQuery}`)
+  window.fetch(`/autocomplete/users?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
     .then(data => data.users)

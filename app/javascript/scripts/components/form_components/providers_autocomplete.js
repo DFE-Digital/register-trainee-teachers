@@ -106,7 +106,7 @@ const findProviders = ({ query, populateResults }) => {
 
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/api/providers?query=${encodedQuery}`)
+  window.fetch(`/autocomplete/providers?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
     .then(mapToProviders)
