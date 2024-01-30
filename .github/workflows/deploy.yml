@@ -30,10 +30,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: DFE-Digital/github-actions/set-arm-environment-variables@master
-        with:
-          azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', github.event.inputs.environment)] }}
-
       - name: Deploy App to ${{ github.event.inputs.environment }}
         id: deploy_app
         uses: ./.github/actions/deploy/

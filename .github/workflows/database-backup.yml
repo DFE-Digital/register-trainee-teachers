@@ -62,7 +62,7 @@ jobs:
     - name: K8 setup
       shell: bash
       run: |
-        az aks get-credentials -g s189p01-tsc-pd-rg -n s189p01-tsc-production-aks
+        make ci production get-cluster-credentials
         make install-konduit
 
     - name: Setup postgres client
@@ -194,7 +194,7 @@ jobs:
     - name: K8 setup
       shell: bash
       run: |
-        az aks get-credentials -g s189t01-tsc-ts-rg -n s189t01-tsc-test-aks
+        make ci test get-cluster-credentials
         make install-konduit
 
     - name: Restore backup to aks env database
