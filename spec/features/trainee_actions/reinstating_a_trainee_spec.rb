@@ -12,7 +12,7 @@ feature "Reinstating a trainee" do
     and_i_click_on_reinstate
   end
 
-  context "trainee reinstatement date" do
+  context "trainee reinstatement date and expected itt end date" do
     scenario "submit empty form" do
       and_i_continue
       then_i_see_the_error_message_for_date_not_chosen
@@ -21,19 +21,25 @@ feature "Reinstating a trainee" do
     scenario "choosing today" do
       when_i_choose_today
       and_i_continue
+      and_i_am_on_the_update_end_date_page
+      and_i_put_in_the_expected_end_date
+      and_i_continue
       then_i_am_redirected_to_reinstatement_confirmation_page
-      and_i_see_my_date(Time.zone.today)
+      and_i_see_my_dates(Time.zone.today)
       when_i_reinstate
-      then_the_reinstate_date_is_updated
+      then_the_dates_are_updated
     end
 
     scenario "choosing yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
       when_i_choose_yesterday
       and_i_continue
+      and_i_am_on_the_update_end_date_page
+      and_i_put_in_the_expected_end_date
+      and_i_continue
       then_i_am_redirected_to_reinstatement_confirmation_page
-      and_i_see_my_date(Time.zone.yesterday)
+      and_i_see_my_dates(Time.zone.yesterday)
       when_i_reinstate
-      then_the_reinstate_date_is_updated
+      then_the_dates_are_updated
     end
 
     context "choosing another day" do
@@ -44,10 +50,13 @@ feature "Reinstating a trainee" do
       scenario "and filling out a valid date" do
         and_i_enter_a_valid_date
         and_i_continue
+        and_i_am_on_the_update_end_date_page
+        and_i_put_in_the_expected_end_date
+        and_i_continue
         then_i_am_redirected_to_reinstatement_confirmation_page
-        and_i_see_my_date(@chosen_date)
+        and_i_see_my_dates(@chosen_date)
         when_i_reinstate
-        then_the_reinstate_date_is_updated
+        then_the_dates_are_updated
       end
 
       scenario "and not filling out the date displays the correct error" do
@@ -63,14 +72,17 @@ feature "Reinstating a trainee" do
     end
   end
 
-  scenario "cancelling changes" do
+  scenario "cancelling changes after settng the dates" do
     when_i_choose_today
     and_i_continue
+    and_i_am_on_the_update_end_date_page
+    and_i_put_in_the_expected_end_date
+    and_i_continue
     then_i_am_redirected_to_reinstatement_confirmation_page
-    and_i_see_my_date(Time.zone.today)
+    and_i_see_my_dates(Time.zone.today)
     when_i_cancel_my_changes
     then_i_am_redirected_to_the_record_page
-    and_the_reinstate_date_i_chose_is_cleared
+    and_the_dates_is_cleared
   end
 
   def when_i_choose_today
@@ -105,7 +117,7 @@ feature "Reinstating a trainee" do
   end
 
   def and_i_continue
-    reinstatement_page.continue.click
+    click_on("Continue")
   end
 
   def then_i_see_the_error_message_for_invalid_date
@@ -134,8 +146,9 @@ feature "Reinstating a trainee" do
     given_a_trainee_exists(:deferred)
   end
 
-  def then_the_reinstate_date_is_updated
+  def then_the_dates_are_updated
     expect(trainee.reload.reinstate_date).not_to be_nil
+    expect(trainee.reload.itt_end_date).not_to be_nil
   end
 
   def when_i_cancel_my_changes
@@ -146,7 +159,23 @@ feature "Reinstating a trainee" do
     expect(record_page).to be_displayed(id: trainee.slug)
   end
 
-  def and_the_reinstate_date_i_chose_is_cleared
-    expect(trainee.reload.reinstate_date).to be_nil
+  def and_the_dates_is_cleared
+    expect { trainee.reload }.not_to change(trainee, :reinstate_date)
+    expect { trainee.reload }.not_to change(trainee, :itt_end_date)
+  end
+
+  def and_i_am_on_the_update_end_date_page
+    expect(page).to have_current_path("/trainees/#{trainee.slug}/reinstate/update-end-date")
+  end
+
+  def and_i_put_in_the_expected_end_date(date: 1.year.since(Time.zone.now))
+    fill_in "Day", with: date.day
+    fill_in "Month", with: date.month
+    fill_in "Year", with: date.year
+  end
+
+  def and_i_see_my_dates(reinstated_date, expected_end_date: 1.year.since(Time.zone.now))
+    and_i_see_my_date(reinstated_date)
+    and_i_see_my_date(expected_end_date)
   end
 end

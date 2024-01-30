@@ -10,10 +10,14 @@ describe Trainees::ConfirmReinstatementsController do
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
-    allow(ReinstatementForm).to receive(:new).with(trainee).and_return(double(save!: true))
   end
 
   describe "#update" do
+    before do
+      allow(ReinstatementForm).to receive(:new).with(trainee).and_return(double(save!: true, date: 1.day.ago))
+      allow(IttDatesForm).to receive(:new).with(trainee).and_return(double(save!: true))
+    end
+
     context "with a trainee with a trn" do
       let(:trn) { "trn" }
 
