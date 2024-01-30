@@ -230,7 +230,7 @@ namespace :example_data do
             if route.to_s.include?(EARLY_YEARS_ROUTE_NAME_PREFIX)
               attrs.merge!(
                 course_subject_one: CourseSubjects::EARLY_YEARS_TEACHING,
-                course_age_range: AgeRange::ZERO_TO_FIVE,
+                course_age_range: DfE::ReferenceData::AgeRanges::ZERO_TO_FIVE,
                 course_education_phase: nil,
               )
             end

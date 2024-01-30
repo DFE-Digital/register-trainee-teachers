@@ -12,7 +12,7 @@ module Trainees
     let(:hesa_trn) { Faker::Number.number(digits: 7).to_s }
     let(:trainee_degree) { trainee.degrees.first }
     let(:hesa_course_subject_codes) { ::Hesa::CodeSets::CourseSubjects::MAPPING.invert }
-    let(:hesa_age_range_codes) { ::Hesa::CodeSets::AgeRanges::MAPPING.invert }
+    let(:hesa_age_range_codes) { DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.invert }
     let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2022) }
     let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2023) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
@@ -67,7 +67,7 @@ module Trainees
         expect(trainee.course_subject_one).to eq(::CourseSubjects::PRIMARY_TEACHING)
         expect(trainee.course_subject_two).to eq(::CourseSubjects::BIOLOGY)
         expect(trainee.course_subject_three).to be_nil
-        expect(trainee.course_age_range).to eq(AgeRange::THREE_TO_SEVEN)
+        expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::THREE_TO_SEVEN)
         expect(trainee.study_mode).to eq("full_time")
         expect(trainee.itt_start_date).to eq(Date.parse(student_attributes[:itt_start_date]))
         expect(trainee.itt_end_date).to eq(Date.parse(student_attributes[:itt_end_date]))
@@ -392,7 +392,7 @@ module Trainees
       context "trainee's course is in the primary age but subject isn't" do
         let(:hesa_stub_attributes) do
           {
-            course_age_range: hesa_age_range_codes[AgeRange::SEVEN_TO_ELEVEN],
+            course_age_range: hesa_age_range_codes[DfE::ReferenceData::AgeRanges::SEVEN_TO_ELEVEN],
             course_subject_one: hesa_course_subject_codes[CourseSubjects::DESIGN],
           }
         end
@@ -406,7 +406,7 @@ module Trainees
       context "trainee's course is in the primary age but primary subject not the first subject" do
         let(:hesa_stub_attributes) do
           {
-            course_age_range: hesa_age_range_codes[AgeRange::SEVEN_TO_ELEVEN],
+            course_age_range: hesa_age_range_codes[DfE::ReferenceData::AgeRanges::SEVEN_TO_ELEVEN],
             course_subject_one: hesa_course_subject_codes[CourseSubjects::DESIGN],
             course_subject_two: hesa_course_subject_codes[CourseSubjects::PRIMARY_TEACHING],
           }

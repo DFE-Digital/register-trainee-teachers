@@ -85,7 +85,7 @@
         <%= t("views.trainees.index.filters.level") %>
       </legend>
       <div class="govuk-checkboxes govuk-checkboxes--small">
-        <% COURSE_LEVELS.keys.map do |level| %>
+        <% DfE::ReferenceData::AgeRanges::COURSE_LEVELS.keys.map do |level| %>
           <div class="govuk-checkboxes__item">
             <%= check_box_tag "level[]", level, checked?(filters, :level, level.to_s), id: "level-#{level}", class: "govuk-checkboxes__input" %>
             <%= label_tag "level-#{level}", label_for("level", level), class: "govuk-label govuk-checkboxes__label" %>

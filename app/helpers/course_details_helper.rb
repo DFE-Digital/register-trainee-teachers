@@ -91,7 +91,8 @@ private
   end
 
   def age_ranges(option:, level:)
-    AgeRange::MAPPING.select { |_, attributes| attributes[:option] == option && attributes[:levels]&.include?(level&.to_sym) }.keys.map do |age_range|
+    age_ranges = DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash
+    age_ranges.select { |_, attributes| attributes[:option] == option && attributes[:levels]&.include?(level&.to_sym) }.keys.map do |age_range|
       age_range.join(" to ")
     end
   end

@@ -45,7 +45,7 @@ module TeacherTrainingApi
     attr_reader :course_data, :provider_data, :course_attributes
 
     def course_age_attributes
-      return {} if primary_level_course? && course_attributes[:age_maximum].to_i > AgeRange::UPPER_BOUND_PRIMARY_AGE
+      return {} if primary_level_course? && course_attributes[:age_maximum].to_i > DfE::ReferenceData::AgeRanges::UPPER_BOUND_PRIMARY_AGE
 
       { min_age: course_attributes[:age_minimum], max_age: course_attributes[:age_maximum] }
     end

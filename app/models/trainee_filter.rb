@@ -73,7 +73,7 @@ private
   end
 
   def level_options
-    COURSE_LEVELS.keys.map(&:to_s).each_with_object([]) do |option, arr|
+    DfE::ReferenceData::AgeRanges::COURSE_LEVELS.keys.map(&:to_s).each_with_object([]) do |option, arr|
       arr << option if params[:level]&.include?(option)
     end
   end

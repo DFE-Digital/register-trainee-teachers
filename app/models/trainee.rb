@@ -461,7 +461,7 @@ class Trainee < ApplicationRecord
     if early_years_route?
       course_subject = CourseSubjects::EARLY_YEARS_TEACHING
       self.course_subject_one = course_subject
-      self.course_age_range = AgeRange::ZERO_TO_FIVE
+      self.course_age_range = DfE::ReferenceData::AgeRanges::ZERO_TO_FIVE
       self.course_allocation_subject = SubjectSpecialism.find_by(name: course_subject)&.allocation_subject
       self.course_education_phase = COURSE_EDUCATION_PHASE_ENUMS[:early_years]
     end

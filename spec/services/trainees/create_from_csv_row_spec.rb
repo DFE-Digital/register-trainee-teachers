@@ -87,7 +87,7 @@ module Trainees
           expect(trainee.course_subject_one).to eq(::CourseSubjects::BIOLOGY)
           expect(trainee.course_subject_two).to be_nil
           expect(trainee.course_subject_three).to be_nil
-          expect(trainee.course_age_range).to eq(AgeRange::ELEVEN_TO_SIXTEEN)
+          expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::ELEVEN_TO_SIXTEEN)
           expect(trainee.study_mode).to eq("full_time")
           expect(trainee.itt_start_date).to eq(Date.parse(csv_row["Course ITT start date"]))
           expect(trainee.itt_end_date).to eq(Date.parse(csv_row["Course Expected End Date"]))

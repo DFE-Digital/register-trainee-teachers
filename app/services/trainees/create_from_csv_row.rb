@@ -279,8 +279,8 @@ module Trainees
 
     def valid_age_ranges
       Set.new.tap do |set|
-        AgeRange.constants.each do |constant|
-          set.add(AgeRange.const_get(constant))
+        DfE::ReferenceData::AgeRanges.constants.each do |constant|
+          set.add(DfE::ReferenceData::AgeRanges.const_get(constant))
         end
       end
     end

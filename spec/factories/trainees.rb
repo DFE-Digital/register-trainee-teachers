@@ -191,7 +191,8 @@ FactoryBot.define do
       course_subject_two { primary_specialism_subjects.second }
       course_subject_three { primary_specialism_subjects.third }
       course_age_range do
-        AgeRange::MAPPING.select do |_, v|
+        age_ranges = DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash
+        age_ranges.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
@@ -211,7 +212,8 @@ FactoryBot.define do
       course_subject_two { nil }
       course_subject_three { nil }
       course_age_range do
-        AgeRange::MAPPING.select do |_, v|
+        age_ranges = DfE::ReferenceData::AgeRanges::AGE_RANGES.all_as_hash
+        age_ranges.select do |_, v|
           v[:option] == :main && v[:levels]&.include?(course_education_phase.to_sym)
         end.keys.sample
       end
@@ -339,7 +341,7 @@ FactoryBot.define do
 
     trait :with_early_years_course_details do
       course_subject_one { CourseSubjects::EARLY_YEARS_TEACHING }
-      course_age_range { AgeRange::ZERO_TO_FIVE }
+      course_age_range { DfE::ReferenceData::AgeRanges::ZERO_TO_FIVE }
       with_study_mode_and_course_dates
       course_education_phase { COURSE_EDUCATION_PHASE_ENUMS[:early_years] }
     end

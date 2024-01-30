@@ -254,7 +254,7 @@ module Trainees
     end
 
     def course_age_range
-      ::Hesa::CodeSets::AgeRanges::MAPPING[hesa_trainee[:course_age_range]]
+      DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[hesa_trainee[:course_age_range]]
     end
 
     def create_degrees!
