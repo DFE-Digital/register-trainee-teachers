@@ -9,9 +9,7 @@
     <%= register_form_with(model: @reinstatement_form, url: trainee_reinstatement_path(@trainee), local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <span class="govuk-caption-l">
-        <%= trainee_name(@trainee) %>
-      </span>
+      <%= render TraineeName::View.new(@trainee) %>
 
       <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: t("views.forms.reinstatement.heading"), tag: "h1", size: "l" }) do %>
         <%= f.govuk_radio_button :date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>

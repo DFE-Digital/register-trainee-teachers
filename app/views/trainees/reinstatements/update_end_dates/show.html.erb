@@ -1,0 +1,23 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.update_end_date.show", has_errors: @itt_end_date_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back)) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @itt_end_date_form, url: trainee_reinstatement_update_end_date_path, local: true) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= render TraineeName::View.new(@trainee) %>
+
+      <%= f.govuk_date_field(:itt_end_date,
+            legend: { text: t("views.forms.update_end_date.heading"), size: "l", tag: "h1" },
+            hint: { text: t("views.forms.update_end_date.itt_end_date.hint", itt_end_date: @trainee.itt_end_date.to_fs(:govuk)) } )%>
+      <%= f.govuk_submit %>
+
+    <% end %>
+
+    <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>
+  </div>
+</div>
