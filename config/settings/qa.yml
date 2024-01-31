@@ -29,7 +29,6 @@ features:
     iqts: true
   google:
     send_data_to_big_query: true
-  funding_uploads: true
 
 pagination:
   records_per_page: 30
