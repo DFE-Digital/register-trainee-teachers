@@ -4,9 +4,11 @@ require "rails_helper"
 
 describe "Trainees API", type: :request do
   describe "GET /api/v0.1/trainees/:id" do
-    let(:trainee) { create(:trainee) }
+    let!(:trainee) { create(:trainee, slug: '12345') }
 
-    context "when the register_api feature flag is on", feature_register_api: true do
+    it_behaves_like "a register API endpoint", "/api/v0.1/trainees/12345"
+
+    context "when the trainee exists", feature_register_api: true do
       before do
         get "/api/v0.1/trainees/#{trainee.slug}", headers: { Authorization: "Bearer bat" }
       end
@@ -17,16 +19,6 @@ describe "Trainees API", type: :request do
 
       it "returns status code 200" do
         expect(response).to have_http_status(200)
-      end
-    end
-
-    context "when the register_api feature flag is off", feature_register_api: false do
-      before do
-        get "/api/v0.1/trainees/#{trainee.slug}", headers: { Authorization: "Bearer bat" }
-      end
-
-      it "returns status code 404" do
-        expect(response).to have_http_status(404)
       end
     end
 
