@@ -4,6 +4,7 @@ module ApiRoutes
   def self.extended(router)
     router.instance_exec do
       namespace :api, path: "api/:api_version", api_version: /v[.0-9]+/ do
+        resources :trainees, only: :index, controller: "trainees", constraints: RouteConstraints::RegisterApiConstraint
         resource :info, only: :show, controller: "info", constraints: RouteConstraints::RegisterApiConstraint
         resources :trainees, only: :show, controller: "trainees", constraints: RouteConstraints::RegisterApiConstraint
         resource :guide, only: :show, controller: "guide", constraints: RouteConstraints::RegisterApiConstraint
