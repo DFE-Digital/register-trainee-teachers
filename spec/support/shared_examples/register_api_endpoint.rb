@@ -33,7 +33,7 @@ RSpec.shared_examples "a register API endpoint" do |url|
 
   context "with an invalid version" do
     it "returns status 404" do
-      invalid_version_url = url.sub(/v[.0-9]+/, 'v0.0')
+      invalid_version_url = url.sub(/v[.0-9]+/, "v0.0")
       get invalid_version_url, headers: { Authorization: "Bearer bat" }
       expect(response).to have_http_status(:not_found)
     end
