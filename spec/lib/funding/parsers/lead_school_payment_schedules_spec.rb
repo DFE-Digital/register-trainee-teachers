@@ -70,7 +70,7 @@ module Funding
           ]
         end
 
-        subject { described_class.to_attributes(funding_upload) }
+        subject { described_class.to_attributes(funding_upload:) }
 
         it "returns an hash with key for each school" do
           keys = subject.keys
@@ -85,7 +85,7 @@ module Funding
       context "invalid csv" do
         let(:funding_upload) { create(:funding_upload, :invalid_lead_school_payment_schedules) }
 
-        subject { described_class.to_attributes(funding_upload) }
+        subject { described_class.to_attributes(funding_upload:) }
 
         it "is expected to raise error" do
           expect { subject }.to raise_error(NameError, "Column headings: Augustus not recognised")
