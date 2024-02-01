@@ -12,7 +12,7 @@ module Funding
           raise(NotImplementedError("implement in subclass"))
         end
 
-        def to_attributes(funding_upload = nil, file_path = nil)
+        def to_attributes(funding_upload: nil, file_path: nil)
           csv_data = file_path ? File.read(file_path) : funding_upload&.csv_data
           raise(ArgumentError, "Either funding_upload or file_path must be provided") unless csv_data
 
