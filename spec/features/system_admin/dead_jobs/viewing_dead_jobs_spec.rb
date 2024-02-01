@@ -31,7 +31,7 @@ feature "Viewing sidekiq dead jobs" do
   end
 
   before do
-    allow_any_instance_of(SystemAdmin::DeadJobsController).to receive(:job).and_return(nil) # rubocop:disable RSpec/AnyInstance
+    allow_any_instance_of(SystemAdmin::DeadJobsController).to receive(:job).and_return(nil)
     given_i_am_authenticated(user:)
     and_dead_jobs_exist
     when_i_visit_the_dead_jobs_tab
