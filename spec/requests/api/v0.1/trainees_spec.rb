@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # spec/requests/api/trainees_spec.rb
 
 require "rails_helper"
 
-describe "Trainees API", type: :request do
+describe "Trainees API" do
   describe "GET /api/v0.1/trainees/:id" do
-    let!(:trainee) { create(:trainee, slug: '12345') }
+    let!(:trainee) { create(:trainee, slug: "12345") }
 
     it_behaves_like "a register API endpoint", "/api/v0.1/trainees/12345"
 
@@ -14,11 +16,11 @@ describe "Trainees API", type: :request do
       end
 
       it "returns the trainee" do
-        expect(JSON.parse(response.body)).to eq(JSON.parse(trainee.to_json))
+        expect(response.parsed_body).to eq(JSON.parse(trainee.to_json))
       end
 
       it "returns status code 200" do
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
     end
 
@@ -28,7 +30,7 @@ describe "Trainees API", type: :request do
       end
 
       it "returns status code 404" do
-        expect(response).to have_http_status(404)
+        expect(response).to have_http_status(:not_found)
       end
 
       it "returns a not found message" do
