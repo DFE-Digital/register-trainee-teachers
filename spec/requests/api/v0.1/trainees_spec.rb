@@ -6,6 +6,10 @@ describe "Trainees API" do
   describe "GET /api/v0.1/trainees/:id" do
     let!(:trainee) { create(:trainee, slug: "12345") }
 
+    before do
+      allow_any_instance_of(Api::TraineesController).to receive(:current_provider).and_return(trainee.provider)
+    end
+
     it_behaves_like "a register API endpoint", "/api/v0.1/trainees/12345"
 
     context "when the trainee exists", feature_register_api: true do
