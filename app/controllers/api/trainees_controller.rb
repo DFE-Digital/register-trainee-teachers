@@ -3,9 +3,11 @@
 module Api
   class TraineesController < Api::BaseController
     def index
-      trainees = provider.trainees # .where(academic_cycle:)
-                         .updated_since(since)
-                         .order(updated_at: sort_by)
+      trainees = provider.trainees
+                         .joins(:start_academic_cycle)
+                         .where(academic_cycles: { id: academic_cycle.id })
+                         .where("trainees.updated_at > ?", since)
+                         .order("trainees.updated_at #{sort_by}")
                          .page(page)
                          .per(pagination_per_page)
 
