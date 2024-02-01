@@ -27,7 +27,7 @@ module Funding
 
         def validate_headers(csv:)
           csv_headers = csv.first.to_h.keys
-          unrecognised_headers = csv_headers.select { |header| expected_headers.exclude?(header) }
+          unrecognised_headers = csv_headers.map { |header| header.gsub(/^\W+/, "") }.select { |header| expected_headers.exclude?(header) }
           if unrecognised_headers.any?
             raise(NameError, "Column headings: #{unrecognised_headers.join(', ')} not recognised")
           end
