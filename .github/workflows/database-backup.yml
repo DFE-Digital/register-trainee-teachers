@@ -202,7 +202,7 @@ jobs:
     - name: K8 setup
       shell: bash
       run: |
-        make ci test get-cluster-credentials
+        make ci staging get-cluster-credentials
         make install-konduit
 
     - name: Restore backup to aks env database
