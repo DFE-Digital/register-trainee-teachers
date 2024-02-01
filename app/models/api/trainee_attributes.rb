@@ -27,5 +27,9 @@ module Api
     attr_accessor(*ATTRIBUTES)
 
     validates(*ATTRIBUTES, presence: true)
+    validates :first_names, :last_name, length: { maximum: 50 }
+    validates :middle_names, length: { maximum: 50 }, allow_nil: true
+    validates :date_of_birth, date_of_birth: true
+    validates :sex, inclusion: { in: Trainee.sexes.keys }
   end
 end
