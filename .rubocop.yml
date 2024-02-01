@@ -117,7 +117,7 @@ RSpec/SpecFilePathFormat:
 
 RSpec/AnyInstance:
   Exclude:
-    - 'spec/requests/**/*'
+    - 'spec/**/*'
 
 Capybara/NegationMatcher:
   EnforcedStyle: not_to
