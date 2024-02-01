@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/support/shared_examples/register_api_endpoint_examples.rb
 
 RSpec.shared_examples "a register API endpoint" do |url|
@@ -7,7 +9,7 @@ RSpec.shared_examples "a register API endpoint" do |url|
     end
 
     it "returns status code 404" do
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
     end
   end
 
@@ -17,7 +19,7 @@ RSpec.shared_examples "a register API endpoint" do |url|
     end
 
     it "returns status code 200" do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 

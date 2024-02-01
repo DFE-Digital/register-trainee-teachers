@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# spec/requests/api/trainees_spec.rb
-
 require "rails_helper"
 
 describe "Trainees API" do
@@ -34,7 +32,7 @@ describe "Trainees API" do
       end
 
       it "returns a not found message" do
-        expect(response).to have_http_status(:not_found)
+        expect(response.parsed_body["error"]).to eq("Trainee not found")
       end
     end
   end
