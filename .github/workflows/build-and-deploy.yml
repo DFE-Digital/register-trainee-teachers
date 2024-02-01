@@ -304,23 +304,27 @@ jobs:
         basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
   deploy-after-production:
-    name: Deployment after production
+    name: Parallel deployment after production
     environment:
-      name: productiondata
+      name: ${{ matrix.environment }}
       url: ${{ steps.deploy_app_after_production.outputs.deploy-url }}
     if: ${{ success() && github.ref == 'refs/heads/main' }}
     needs: [deploy-production]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [sandbox, productiondata]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Deploy app to productiondata
+    - name: Deploy app to ${{ matrix.environment }}
       id: deploy_app_after_production
       uses: ./.github/actions/deploy/
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTIONDATA }}
-        environment: productiondata
+        azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
+        environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
         smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}

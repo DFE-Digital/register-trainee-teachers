@@ -79,6 +79,7 @@ Style/OpenStructUse:
 Rails/UnknownEnv:
   Environments:
     - productiondata
+    - sandbox
     - production
     - development
     - test

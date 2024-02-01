@@ -21,6 +21,11 @@ production:
   RAILS_ENV: production
   RACK_ENV: production
 
+sandbox:
+  <<: *default
+  RAILS_ENV: sandbox
+  RACK_ENV: sandbox
+
 productiondata:
   <<: *default
   RAILS_ENV: productiondata
