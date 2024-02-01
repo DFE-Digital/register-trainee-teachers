@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# spec/support/shared_examples/register_api_endpoint_examples.rb
-
 RSpec.shared_examples "a register API endpoint" do |url|
   context "when the register_api feature flag is off", feature_register_api: false do
     before do
