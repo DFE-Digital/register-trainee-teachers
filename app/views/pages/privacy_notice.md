@@ -38,7 +38,8 @@ title: Register trainee teachers privacy notice
 
 
 <h2 class='govuk-heading-m'>The data we collect from trainee teachers</h2>
-<p class='govuk-body'>We collect your personal data to register you with the DfE as a trainee teacher. We collect your:</p>
+
+<p class='govuk-body'>We collect your personal data to register you with the DfE as a trainee teacher. Your personal data is shared with the DfE by Jisc (formerly the Higher Education Statistics Agency). We collect your:</p>
 <ul class='govuk-list govuk-list--bullet'>
   <li>full name</li>
   <li>sex (female, male, other or not provided)</li>
@@ -49,6 +50,7 @@ title: Register trainee teachers privacy notice
   <li>equality and diversity information</li>
   <li>National Insurance number</li>
 </ul>
+<p class='govuk-body'>Find out more about <a class='govuk-link' href='https://www.hesa.ac.uk/about/regulation/data-protection/notices'>how Jisc processes your personal data as an independent Controller</a>.</p>
 
 <h2 class='govuk-heading-m'>The data we collect from all users</h2>
 <p class='govuk-body'>

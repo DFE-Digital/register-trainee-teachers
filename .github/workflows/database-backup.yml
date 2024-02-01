@@ -59,6 +59,10 @@ jobs:
       with:
         version: "v1.26.1" # default is latest stable
 
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+
     - name: K8 setup
       shell: bash
       run: |
@@ -190,6 +194,10 @@ jobs:
       uses: azure/setup-kubectl@v3
       with:
         version: "v1.26.1" # default is latest stable
+
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
 
     - name: K8 setup
       shell: bash

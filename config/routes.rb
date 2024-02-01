@@ -165,7 +165,11 @@ Rails.application.routes.draw do
       resource :deferral, only: %i[show update], path: "/defer"
 
       resource :confirm_reinstatement, only: %i[show update], path: "/reinstate/confirm"
-      resource :reinstatement, only: %i[show update], path: "/reinstate"
+      resource :reinstatement, only: %i[show update], path: "/reinstate" do
+        scope module: :reinstatements do
+          resource :update_end_date, only: %i[show update], path: "/update-end-date"
+        end
+      end
 
       resources :lead_schools, only: %i[index], path: "/lead-schools"
       resource :lead_schools, only: %i[update edit], path: "/lead-schools"
