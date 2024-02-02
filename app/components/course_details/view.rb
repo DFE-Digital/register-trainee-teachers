@@ -104,7 +104,7 @@ module CourseDetails
     end
 
     def primary_course_subject
-      if data_model.primary_course_subjects == :other
+      if data_model.primary_course_subjects&.to_sym == :other
         CourseSubjects::PRIMARY_TEACHING
       else
         PUBLISH_PRIMARY_SUBJECT_SPECIALISM_MAPPING[data_model.primary_course_subjects].first
