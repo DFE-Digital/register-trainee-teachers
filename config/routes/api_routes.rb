@@ -12,6 +12,8 @@ module ApiRoutes
 
       namespace :api_docs, path: "api-docs" do
         get "/" => "pages#home", as: :home
+        get "/release-notes" => "pages#release_notes", as: :release_notes
+        get "/reference" => "pages#reference", as: :reference
       end
     end
   end
