@@ -21,7 +21,7 @@ module Funding
           validate_headers(csv:)
 
           csv.each_with_object({}) do |row, to_return|
-            to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_h
+            to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_hash.transform_keys { |header| header.gsub(/^\W+/, "") }
           end
         end
 
