@@ -2,7 +2,6 @@
 
 class PersonalDetailsForm < TraineeForm
   include DatesHelper
-  include DateOfBirthValidatable
 
   FIELDS = %i[
     first_names
@@ -29,6 +28,8 @@ class PersonalDetailsForm < TraineeForm
   validates :first_names, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :middle_names, length: { maximum: 50 }, allow_nil: true
+  validates :date_of_birth, presence: true
+  validate :date_of_birth_valid
   validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys }
   validates :other_nationality1,
             :other_nationality2,
@@ -37,6 +38,13 @@ class PersonalDetailsForm < TraineeForm
             allow_nil: true,
             if: :other_is_selected?
   validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? }
+
+  def date_of_birth
+    date_hash = { year:, month:, day: }
+    date_args = date_hash.values.map(&:to_i)
+
+    valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)
+  end
 
   def save!
     if valid?
@@ -124,6 +132,20 @@ private
           other_nationality3: nationality3,
         }
       end
+  end
+
+  def date_of_birth_valid
+    if !date_of_birth.is_a?(Date)
+      errors.add(:date_of_birth, :invalid)
+    elsif date_of_birth > Time.zone.today
+      errors.add(:date_of_birth, :future)
+    elsif date_of_birth.year.digits.length != 4
+      errors.add(:date_of_birth, :invalid_year)
+    elsif date_of_birth > 16.years.ago
+      errors.add(:date_of_birth, :under16)
+    elsif date_of_birth < 100.years.ago
+      errors.add(:date_of_birth, :past)
+    end
   end
 
   def calculate_other
