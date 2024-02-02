@@ -20,6 +20,7 @@ module BulkUpdate
         create_rows!
         redirect_to(bulk_update_recommendations_upload_summary_path(@recommendations_upload_form.recommendations_upload))
       else
+        navigation_view
         render(:new)
       end
     end

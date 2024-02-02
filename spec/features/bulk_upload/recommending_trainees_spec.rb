@@ -33,6 +33,7 @@ feature "recommending trainees" do
             recommended_for_award_date: Time.zone.today,
           ),
         )
+        and_i_can_see_that_i_have_two_trainees_to_recommend
       end
 
       context "and I upload a complete CSV" do
@@ -48,6 +49,7 @@ feature "recommending trainees" do
       before do
         then_i_see_how_many_trainees_i_can_recommend
         and_i_upload_a_csv(create_recommendations_upload_csv!(write_to_disk:, overwrite:))
+        and_i_can_see_that_i_have_two_trainees_to_recommend
       end
 
       context "and I upload a complete CSV" do
@@ -110,6 +112,17 @@ feature "recommending trainees" do
         end
       end
     end
+
+    context "when I try to upload an invalid CSV" do
+      before do
+        then_i_see_how_many_trainees_i_can_recommend
+      end
+
+      scenario "I cannot upload trainees for recommendation" do
+        and_i_upload_a_csv(create_invalid_recommendations_upload_csv)
+        then_i_see_an_error_message_about_file_encoding
+      end
+    end
   end
 
 private
@@ -136,6 +149,9 @@ private
   def and_i_upload_a_csv(csv_path)
     attach_file("bulk_update_recommendations_upload_form[file]", csv_path)
     recommendations_upload_page.upload_button.click
+  end
+
+  def and_i_can_see_that_i_have_two_trainees_to_recommend
     expect(BulkUpdate::RecommendationsUploadRow.count).to be 2
   end
 
@@ -204,5 +220,10 @@ private
       expect(recommendations_checks_show_page).to have_text("TRN: #{trainee.trn}")
       expect(recommendations_checks_show_page).to have_text(training_route)
     end
+  end
+
+  def then_i_see_an_error_message_about_file_encoding
+    expect(page).to have_content("There is a problem")
+    expect(page).to have_content("The selected file must be UTF-8 or ISO-8859-1 encoded")
   end
 end

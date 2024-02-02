@@ -52,4 +52,14 @@ module RecommendationsUploadHelper
     tempfile.rewind
     tempfile.path
   end
+
+  def create_invalid_recommendations_upload_csv
+    tempfile = Tempfile.new("csv")
+
+    File.open(tempfile.path, "w:UTF-16LE") do |file|
+      file.puts "invalid content"
+    end
+
+    tempfile.path
+  end
 end
