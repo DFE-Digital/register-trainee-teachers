@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 module Api
   module PlacementValidations
     extend ActiveSupport::Concern
+
+    URN_REGEX = /^[0-9]{6}$/
 
     included do
       validates :name, presence: true, if: -> { school_id.blank? }
@@ -18,10 +22,6 @@ module Api
     end
 
     def urn_valid
-      if urn.present? && existing_urns.any?(urn)
-        errors.add(:urn, :unique)
-      end
-
       if urn.present? && !urn.match?(URN_REGEX)
         errors.add(:urn, :invalid_format)
       end

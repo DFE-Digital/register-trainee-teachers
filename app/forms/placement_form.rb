@@ -7,12 +7,12 @@ class PlacementForm
   include PlacementValidations
 
   FIELDS = %i[slug school_search school_id name urn postcode].freeze
-  URN_REGEX = /^[0-9]{6}$/
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
   validate :school_or_search_valid
   validate :school_urn_valid
+  validate :urn_unique
 
   delegate :persisted?, :school, to: :placement
 
@@ -137,6 +137,12 @@ class PlacementForm
   def school_urn_valid
     if school_id.present? && existing_urns.any?(School.find(school_id).urn)
       errors.add(:school, :unique)
+    end
+  end
+
+  def urn_unique
+    if urn.present? && existing_urns.any?(urn)
+      errors.add(:urn, :unique)
     end
   end
 
