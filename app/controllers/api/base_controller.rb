@@ -20,8 +20,8 @@ module Api
       render(status: :unauthorized, json: { error: "Unauthorized" })
     end
 
-    def current_provider
-      nil
+    def provider
+      @provider ||= Provider.first
     end
 
   private
