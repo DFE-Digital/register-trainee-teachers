@@ -7,6 +7,7 @@ module Api
       name
       postcode
       urn
+      school_id
     ].freeze
 
     validates :name, presence: true
