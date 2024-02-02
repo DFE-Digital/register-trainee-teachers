@@ -3,6 +3,7 @@
 module Api
   class PlacementAttributes
     include ActiveModel::Model
+    include ActiveModel::Attributes
     include PlacementValidations
 
     ATTRIBUTES = %i[
@@ -13,6 +14,8 @@ module Api
       school_id
     ].freeze
 
-    attr_accessor(*ATTRIBUTES)
+    ATTRIBUTES.each do |attr|
+      attribute attr
+    end
   end
 end

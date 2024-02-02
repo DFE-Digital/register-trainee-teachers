@@ -31,8 +31,8 @@ module Api
       attribute attr
     end
 
-    attribute :placements, array: true, default: []
-    attribute :degrees, array: true, default: []
+    attribute :placements_attributes, array: true, default: []
+    attribute :degrees_attributes, array: true, default: []
 
     validates(*ATTRIBUTES, presence: true)
     validates :first_names, :last_name, length: { maximum: 50 }
@@ -41,15 +41,27 @@ module Api
     validate :date_of_birth_valid
 
     def initialize(attributes = {})
+      super(attributes.except(:placements_attributes, :degrees_attributes))
+
       attributes[:placements_attributes]&.each do |placement_params|
-        placements << PlacementAttributes.new(placement_params)
+        placements_attributes << PlacementAttributes.new(placement_params)
       end
 
       attributes[:degrees_attributes]&.each do |degree_params|
-        degrees << DegreeAttributes.new(degree_params)
+        degrees_attributes << DegreeAttributes.new(degree_params)
       end
+    end
 
-      super(attributes.except(:placements_attributes, :degrees_attributes))
+    def deep_attributes
+      attributes.transform_values do |value|
+        if value.is_a?(Array)
+          value.map { |item| item.respond_to?(:attributes) ? item.attributes : item }
+        elsif value.respond_to?(:attributes)
+          value.attributes
+        else
+          value
+        end
+      end
     end
 
     private

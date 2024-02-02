@@ -3,6 +3,7 @@
 module Api
   class DegreeAttributes
     include ActiveModel::Model
+    include ActiveModel::Attributes
 
     ATTRIBUTES = %i[
       id
@@ -17,7 +18,9 @@ module Api
       other_grade
     ].freeze
 
-    attr_accessor(*ATTRIBUTES)
+    ATTRIBUTES.each do |attr|
+      attribute attr
+    end
 
     validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
     validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) }, allow_nil: true

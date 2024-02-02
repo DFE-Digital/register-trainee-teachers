@@ -66,7 +66,7 @@ describe "Trainees API" do
           study_mode: 'full_time',
           application_choice_id: '123',
           placements_attributes: [{ urn: '123456', name: "Placement" }],
-          degrees_attributes: [{ country: 'UK', grade: 'First', subject: 'Computer Science', institution: 'University of Test', graduation_year: '2012' }]
+          degrees_attributes: [{ country: 'UK', grade: 'First', subject: 'Computer Science', institution: 'University of Test', graduation_year: '2012', locale_code: 'uk' }]
         }
       }
     end
@@ -81,7 +81,7 @@ describe "Trainees API" do
       end
 
       it 'creates associated placements' do
-        expect(response.parsed_body['placements'].first['school_urn']).to eq('123456')
+        expect(response.parsed_body['placements'].first['urn']).to eq('123456')
       end
 
       it 'creates associated degrees' do
@@ -101,7 +101,7 @@ describe "Trainees API" do
       end
 
       it 'returns a validation failure message' do
-        expect(response.body).to match(/Validation failed: First names can't be blank/)
+        expect(response.parsed_body['errors']).to include("First names can't be blank")
       end
     end
   end

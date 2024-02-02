@@ -12,15 +12,14 @@ module Api
     end
 
     def create
-      trainee_attributes = TraineeAttributes.new(trainee_params.to_unsafe_h)
+      trainee_attributes = TraineeAttributes.new(trainee_params)
 
       unless trainee_attributes.valid?
         render json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity
         return
       end
 
-      byebug
-      trainee = current_provider.trainees.new(trainee_attributes.attributes)
+      trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
 
       unless trainee.save
         render json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity
