@@ -2,6 +2,7 @@
 
 class PersonalDetailsForm < TraineeForm
   include DatesHelper
+  include DateOfBirthValidatable
 
   FIELDS = %i[
     first_names
@@ -28,8 +29,6 @@ class PersonalDetailsForm < TraineeForm
   validates :first_names, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
   validates :middle_names, length: { maximum: 50 }, allow_nil: true
-  validates :date_of_birth, presence: true
-  validates :date_of_birth, date_of_birth: true
   validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys }
   validates :other_nationality1,
             :other_nationality2,
@@ -38,13 +37,6 @@ class PersonalDetailsForm < TraineeForm
             allow_nil: true,
             if: :other_is_selected?
   validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? }
-
-  def date_of_birth
-    date_hash = { year:, month:, day: }
-    date_args = date_hash.values.map(&:to_i)
-
-    valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)
-  end
 
   def save!
     if valid?
