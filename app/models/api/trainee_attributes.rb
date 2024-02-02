@@ -26,10 +26,14 @@ module Api
 
     attr_accessor(*ATTRIBUTES)
 
+    attribute :placements, array: PlacementAttributes
+
     validates(*ATTRIBUTES, presence: true)
     validates :first_names, :last_name, length: { maximum: 50 }
     validates :middle_names, length: { maximum: 50 }, allow_nil: true
     validates :date_of_birth, date_of_birth: true
     validates :sex, inclusion: { in: Trainee.sexes.keys }
+
+    accepts_nested_attributes_for :placements
   end
 end

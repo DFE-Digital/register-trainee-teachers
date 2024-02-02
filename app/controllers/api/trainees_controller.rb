@@ -18,7 +18,7 @@ module Api
         trainee = Trainee.new(trainee_attributes.to_h)
 
         if trainee.save
-          render json: Api::TraineeSerializer.new(trainee).as_json, status: :ok
+          render json: TraineeSerializer.new(trainee).as_json, status: :ok
         else
           render json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity
         end
@@ -30,8 +30,11 @@ module Api
     private
 
     def trainee_params
-      params.require(:trainee).permit(TraineeAttributes::ATTRIBUTES)
+      params.require(:trainee)
+        .permit(
+          TraineeAttributes::ATTRIBUTES,
+          placements_attributes: PlacementAttributes::ATTRIBUTES
+          )
     end
-
   end
 end
