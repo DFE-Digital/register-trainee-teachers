@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   class TraineeAttributes
     include ActiveModel::Model
@@ -27,6 +29,7 @@ module Api
     attr_accessor(*ATTRIBUTES)
 
     attribute :placements, array: PlacementAttributes
+    attribute :degrees, array: DegreeAttributes
 
     validates(*ATTRIBUTES, presence: true)
     validates :first_names, :last_name, length: { maximum: 50 }
@@ -34,6 +37,6 @@ module Api
     validates :date_of_birth, date_of_birth: true
     validates :sex, inclusion: { in: Trainee.sexes.keys }
 
-    accepts_nested_attributes_for :placements
+    accepts_nested_attributes_for :placements, :degrees
   end
 end

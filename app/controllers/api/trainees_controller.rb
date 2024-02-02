@@ -33,8 +33,9 @@ module Api
       params.require(:trainee)
         .permit(
           TraineeAttributes::ATTRIBUTES,
-          placements_attributes: PlacementAttributes::ATTRIBUTES
-          )
+          placements_attributes: PlacementAttributes::ATTRIBUTES,
+          degrees_attributes: DegreeAttributes::ATTRIBUTES
+        )
     end
   end
 end
