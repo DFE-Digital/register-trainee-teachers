@@ -1,6 +1,7 @@
 module Api
   class PlacementAttributes
     include ActiveModel::Model
+    include PlacementValidations
 
     ATTRIBUTES = %i[
       address
@@ -10,6 +11,6 @@ module Api
       school_id
     ].freeze
 
-    validates :name, presence: true
+    attr_accessor(*ATTRIBUTES)
   end
 end
