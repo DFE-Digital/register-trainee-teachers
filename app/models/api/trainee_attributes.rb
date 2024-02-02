@@ -4,7 +4,6 @@ module Api
   class TraineeAttributes
     include ActiveModel::Model
     include ActiveModel::Attributes
-    include DateOfBirthValidatable
 
     ATTRIBUTES = %i[
       first_names
@@ -28,7 +27,9 @@ module Api
       application_choice_id
     ].freeze
 
-    attr_accessor(*ATTRIBUTES)
+    ATTRIBUTES.each do |attr|
+      attribute attr
+    end
 
     attribute :placements, array: PlacementAttributes
     attribute :degrees, array: DegreeAttributes
@@ -37,6 +38,13 @@ module Api
     validates :first_names, :last_name, length: { maximum: 50 }
     validates :middle_names, length: { maximum: 50 }, allow_nil: true
     validates :sex, inclusion: { in: Trainee.sexes.keys }
+    validate :date_of_birth_valid
+
+    def initialize(attributes = {})
+      super
+      self.placements ||= []
+      self.degrees ||= []
+    end
 
     def placements_attributes=(attributes)
       @placements = attributes.map do |placement_attributes|
@@ -47,6 +55,24 @@ module Api
     def degrees_attributes=(attributes)
       @degrees = attributes.map do |degree_attributes|
         DegreeAttributes.new(degree_attributes)
+      end
+    end
+
+    private
+
+    def date_of_birth_valid
+      value = Date.parse(date_of_birth) rescue nil
+
+      if !value.is_a?(Date)
+        errors.add(:date_of_birth, :invalid)
+      elsif value > Time.zone.today
+        errors.add(:date_of_birth, :future)
+      elsif value.year.digits.length != 4
+        errors.add(:date_of_birth, :invalid_year)
+      elsif value > 16.years.ago
+        errors.add(:date_of_birth, :under16)
+      elsif value < 100.years.ago
+        errors.add(:date_of_birth, :past)
       end
     end
   end

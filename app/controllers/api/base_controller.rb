@@ -21,7 +21,7 @@ module Api
     end
 
     def current_provider
-      nil
+      @provider ||= Provider.first
     end
 
   private

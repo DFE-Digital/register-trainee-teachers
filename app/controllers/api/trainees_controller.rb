@@ -3,7 +3,7 @@
 module Api
   class TraineesController < Api::BaseController
     def show
-      trainee = current_provider&.trainees&.find_by(slug: params[:id])
+      trainee = current_provider.trainees.find_by(slug: params[:id])
       if trainee.present?
         render(json: TraineeSerializer.new(trainee).as_json)
       else
@@ -19,7 +19,7 @@ module Api
         return
       end
 
-      trainee = Trainee.new(trainee_attributes.to_h)
+      trainee = current_provider.trainees.new(trainee_attributes.attributes)
 
       unless trainee.save
         render json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity
