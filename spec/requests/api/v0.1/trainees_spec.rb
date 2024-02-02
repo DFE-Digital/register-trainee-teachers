@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-describe "GET /trainees", type: :request, feature_register_api: true do
-  it_behaves_like "a register API endpoint", "/api/v0.1/trainees"
-
+describe "GET /trainees", feature_register_api: true do
   let!(:provider) { create(:provider) }
   let!(:academic_cycle) { create(:academic_cycle) }
   let!(:trainees) { create_list(:trainee, 10, provider: provider, start_academic_cycle: academic_cycle) }
+
+  include_examples "API: authentication and feature flags", 0.1, :trainees
 
   context "filtering by academic cycle" do
     it "returns trainees for the specified academic cycle" do
@@ -31,7 +31,8 @@ describe "GET /trainees", type: :request, feature_register_api: true do
   end
 
   context "with pagination parameters" do
-    let(:per_page){ 5 }
+    let(:per_page) { 5 }
+
     it "paginates the results according to 'page' and 'per_page' parameters" do
       api_get 0.1, :trainees, params: { page: 1, per_page: per_page }
 

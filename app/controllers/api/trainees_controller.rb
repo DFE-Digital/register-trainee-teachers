@@ -3,16 +3,10 @@
 module Api
   class TraineesController < Api::BaseController
     def index
-      trainees = provider.trainees
-                         .joins(:start_academic_cycle)
-                         .where(academic_cycles: { id: academic_cycle.id })
-                         .where("trainees.updated_at > ?", since)
-                         .order("trainees.updated_at #{sort_by}")
-                         .page(page)
-                         .per(pagination_per_page)
+      trainees = GetTraineesService.call(provider:, params:)
 
       if trainees.exists?
-        render(json: AppendMetadata.new(trainees).call, status: :ok)
+        render(json: AppendMetadata.call(trainees), status: :ok)
       else
         render(json: { error: "No trainees found" }, status: :not_found)
       end

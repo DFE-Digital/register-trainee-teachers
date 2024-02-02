@@ -2,6 +2,8 @@
 
 module Api
   class AppendMetadata
+    include ServicePattern
+
     def initialize(dataset)
       @dataset = dataset
     end
