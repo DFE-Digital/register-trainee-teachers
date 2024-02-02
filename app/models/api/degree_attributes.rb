@@ -17,8 +17,6 @@ module Api
       other_grade
     ].freeze
 
-    enum locale_code: { uk: 0, non_uk: 1 }
-
     attr_accessor(*ATTRIBUTES)
 
     validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
