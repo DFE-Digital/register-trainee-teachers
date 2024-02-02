@@ -55,6 +55,15 @@ review:
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).test.teacherservices.cloud will be created in aks
 
+pt_review:
+	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
+	$(eval include global_config/pt_review.sh)
+	$(eval DEPLOY_ENV=pt_review)
+	$(eval export TF_VAR_app_name=$(APP_NAME))
+	$(eval backend_key=-backend-config=key=pt-$(APP_NAME).tfstate)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+	echo https://register-$(APP_NAME).test.teacherservices.cloud will be created in aks
+
 dv_review: ## make dv_review deploy APP_NAME=2222 CLUSTER=cluster1
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
 	$(if $(CLUSTER), , $(error Missing environment variable "CLUSTER", Please specify a dev cluster name (eg 'cluster1')))
