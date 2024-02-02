@@ -12,13 +12,14 @@ module Api
     end
 
     def create
-      trainee_attributes = TraineeAttributes.new(trainee_params)
+      trainee_attributes = TraineeAttributes.new(trainee_params.to_unsafe_h)
 
       unless trainee_attributes.valid?
         render json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity
         return
       end
 
+      byebug
       trainee = current_provider.trainees.new(trainee_attributes.attributes)
 
       unless trainee.save
@@ -35,8 +36,8 @@ module Api
       params.require(:trainee)
         .permit(
           TraineeAttributes::ATTRIBUTES,
-          placements_attributes: PlacementAttributes::ATTRIBUTES,
-          degrees_attributes: DegreeAttributes::ATTRIBUTES
+          placements_attributes: [PlacementAttributes::ATTRIBUTES],
+          degrees_attributes: [DegreeAttributes::ATTRIBUTES]
         )
     end
   end
