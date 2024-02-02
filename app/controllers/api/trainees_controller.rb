@@ -14,17 +14,19 @@ module Api
     def create
       trainee_attributes = TraineeAttributes.new(trainee_params)
 
-      if trainee_attributes.valid?
-        trainee = Trainee.new(trainee_attributes.to_h)
-
-        if trainee.save
-          render json: TraineeSerializer.new(trainee).as_json, status: :ok
-        else
-          render json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity
-        end
-      else
+      unless trainee_attributes.valid?
         render json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity
+        return
       end
+
+      trainee = Trainee.new(trainee_attributes.to_h)
+
+      unless trainee.save
+        render json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity
+        return
+      end
+
+      render json: TraineeSerializer.new(trainee).as_json, status: :ok
     end
 
     private
