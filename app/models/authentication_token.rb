@@ -21,9 +21,8 @@
 
 class AuthenticationToken < ApplicationRecord
   belongs_to :provider
-  has_secure_token :hashed_token
 
-  before_save :hash_token
+  before_save :hash_token, if: :hashed_token_changed?
 
   validates :hashed_token, presence: true, uniqueness: true
 
