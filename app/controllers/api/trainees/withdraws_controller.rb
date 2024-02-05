@@ -7,12 +7,19 @@ module Api
         if trainee.blank?
           render(json: { error: "Trainee not found" }, status: :not_found)
         else
-          trainee.update(withdrawal_params) if withdraw_allowed?
+          withdraw_trainee if withdraw_allowed?
+
           render(json: { status: "Trainee withdrawal request accepted", trainee: trainee }, status: :accepted)
         end
       end
 
     private
+
+      def withdraw_trainee
+        trainee.update(withdrawal_params)
+        trainee.withdraw!
+        ::Trainees::Withdraw.call(trainee:)
+      end
 
       def trainee
         @trainee ||= current_provider&.trainees&.find_by(slug:)
@@ -23,7 +30,7 @@ module Api
       end
 
       def withdraw_allowed?
-        !trainee.starts_course_in_the_future? && !trainee.itt_not_yet_started? && trainee.awaiting_action?
+        !trainee.starts_course_in_the_future? && !trainee.itt_not_yet_started? && trainee.awaiting_action? && %w[submitted_for_trn trn_received deferred].any?(trainee.state)
       end
 
       def withdrawal_params
