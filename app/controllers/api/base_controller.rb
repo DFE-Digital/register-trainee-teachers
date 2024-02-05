@@ -21,7 +21,7 @@ module Api
     end
 
     def current_provider
-      @provider ||= Provider.first
+      @current_provider ||= Provider.first
     end
 
   private

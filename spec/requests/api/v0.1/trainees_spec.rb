@@ -8,7 +8,7 @@ describe "Trainees API" do
 
     before do
       create(:provider)
-      allow_any_instance_of(Api::TraineesController).to receive(:current_provider).and_return(trainee.provider)
+      allow_any_instance_of(Api::TraineesController).to receive(:current_provider).and_return(trainee.provider) # rubocop:disable RSpec/AnyInstance
     end
 
     it_behaves_like "a register API endpoint", "/api/v0.1/trainees/12345"
