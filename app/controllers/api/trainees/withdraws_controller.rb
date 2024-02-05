@@ -8,7 +8,7 @@ module Api
           render(json: { error: "Trainee not found" }, status: :not_found)
         else
           trainee.update(withdrawal_params) if withdraw_allowed?
-          render(json: { status: "Trainee withdrawal request accpeted", trainee: trainee }, status: :accepted)
+          render(json: { status: "Trainee withdrawal request accepted", trainee: trainee }, status: :accepted)
         end
       end
 
