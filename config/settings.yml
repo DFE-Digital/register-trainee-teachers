@@ -173,3 +173,11 @@ trainee_export:
 smoke_test:
   username: do-not-store-here
   password: do-not-store-here
+
+api:
+  throttling:
+    max_requests: 100
+    interval: 60
+  blacklist:
+    ua: []
+    ip: []
