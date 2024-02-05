@@ -122,7 +122,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_180248) do
 
   create_table "authentication_tokens", force: :cascade do |t|
     t.string "hashed_token"
-    t.boolean "enabled", default: true
+    t.boolean "enabled", default: true, null: false
     t.bigint "provider_id"
     t.date "expires_at"
     t.datetime "created_at", null: false
