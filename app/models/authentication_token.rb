@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: authentication_tokens
@@ -30,7 +32,7 @@ class AuthenticationToken < ApplicationRecord
     find_by(hashed_token: Digest::SHA256.hexdigest(unhashed_token))
   end
 
-  private
+private
 
   def hash_token
     self.hashed_token = Digest::SHA256.hexdigest(hashed_token)

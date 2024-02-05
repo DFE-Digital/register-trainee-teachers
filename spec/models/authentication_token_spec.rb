@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe AuthenticationToken, type: :model do
+RSpec.describe AuthenticationToken do
   let(:plain_token) { "plain_token" }
   let(:hashed_token) { Digest::SHA256.hexdigest(plain_token) }
   let(:provider) { create(:provider) }

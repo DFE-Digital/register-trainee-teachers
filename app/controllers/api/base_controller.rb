@@ -33,9 +33,11 @@ module Api
     def auth_token
       @auth_token ||= begin
         bearer_token = request.headers["Authorization"]
-        return unless bearer_token.present?
+        raise("Bearer token is blank") if bearer_token.blank?
 
         AuthenticationToken.authenticate(bearer_token)
+      rescue StandardError
+        nil
       end
     end
   end

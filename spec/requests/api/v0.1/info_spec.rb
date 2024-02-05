@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe "info endpoint" do
   let!(:auth_token) { create(:authentication_token, hashed_token: "valid_token") }
+
   it_behaves_like "a register API endpoint", "/api/v0.1/info", "valid_token"
 
   context "with a valid authentication token and the feature flag on" do

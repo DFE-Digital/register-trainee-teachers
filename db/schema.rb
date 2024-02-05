@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_05_141443) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_05_180248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -127,6 +127,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_141443) do
     t.date "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["hashed_token"], name: "index_authentication_tokens_on_hashed_token", unique: true
     t.index ["provider_id"], name: "index_authentication_tokens_on_provider_id"
   end
 
