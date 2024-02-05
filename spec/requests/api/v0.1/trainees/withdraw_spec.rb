@@ -43,6 +43,13 @@ describe "info endpoint" do
         post("/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }, params: params)
       end
 
+      it "uses the trainee serializer" do
+        expect(TraineeSerializer).to receive(:new).with(trainee).and_return(trainee).at_least(:once)
+        expect(trainee).to receive(:as_json).at_least(:once)
+
+        post("/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }, params: params)
+      end
+
       context "with invalid params" do
         let(:params) { { withdraw_reasons_details: nil, withdraw_date: nil } }
 

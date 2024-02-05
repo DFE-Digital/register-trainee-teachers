@@ -9,7 +9,7 @@ module Api
         else
           withdraw_trainee if withdraw_allowed?
 
-          render(json: { status: "Trainee withdrawal request accepted", trainee: trainee }, status: :accepted)
+          render(json: { status: "Trainee withdrawal request accepted", trainee: TraineeSerializer.new(trainee).as_json }, status: :accepted)
         end
       end
 
