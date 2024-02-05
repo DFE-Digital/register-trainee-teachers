@@ -160,4 +160,5 @@ For example, after version 1.1 is released you can use:
 
 # Testing
 
-To get familiar with our system and perform testing, you can use our sandbox environment.
+To get familiar with our system and perform testing, you can use our
+[sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
