@@ -22,4 +22,18 @@
 class AuthenticationToken < ApplicationRecord
   belongs_to :provider
   has_secure_token :hashed_token
+
+  before_save :hash_token
+
+  validates :hashed_token, presence: true, uniqueness: true
+
+  def self.authenticate(unhashed_token)
+    find_by(hashed_token: Digest::SHA256.hexdigest(unhashed_token))
+  end
+
+  private
+
+  def hash_token
+    self.hashed_token = Digest::SHA256.hexdigest(hashed_token)
+  end
 end

@@ -21,14 +21,22 @@ module Api
     end
 
     def current_provider
-      @current_provider ||= Provider.first
+      @current_provider ||= auth_token.provider
     end
 
   private
 
     def valid_authentication_token?
-      # TODO: Replace this with a proper authentication check
-      request.headers["Authorization"] == "Bearer bat"
+      auth_token.present? && auth_token.enabled?
+    end
+
+    def auth_token
+      @auth_token ||= begin
+        bearer_token = request.headers["Authorization"]
+        return unless bearer_token.present?
+
+        AuthenticationToken.authenticate(bearer_token)
+      end
     end
   end
 end
