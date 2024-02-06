@@ -26,14 +26,6 @@ shared:
     - id
     - name
     - updated_at
-  authentication_tokens:
-    - id
-    - hashed_token
-    - enabled
-    - provider_id
-    - expires_at
-    - created_at
-    - updated_at
   courses:
     - accredited_body_code
     - code
