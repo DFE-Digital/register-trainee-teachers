@@ -20,15 +20,16 @@ module Api
       render(status: :unauthorized, json: { error: "Unauthorized" })
     end
 
-    def current_provider
-      @current_provider ||= Provider.first
-    end
-
   private
 
     def valid_authentication_token?
       # TODO: Replace this with a proper authentication check
       request.headers["Authorization"] == "Bearer bat"
+    end
+
+    def current_provider
+      # TODO: - extract provider via authentication
+      @current_provider ||= Provider.first
     end
   end
 end
