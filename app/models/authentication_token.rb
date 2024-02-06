@@ -31,6 +31,7 @@ class AuthenticationToken < ApplicationRecord
     hashed_token = hash_token(token)
 
     create(attributes.merge(hashed_token: hashed_token))
+    token
   end
 
   def self.hash_token(token)
