@@ -20,10 +20,6 @@ module Api
       render(status: :unauthorized, json: { error: "Unauthorized" })
     end
 
-    def current_provider
-      @current_provider ||= Provider.first
-    end
-
   private
 
     def valid_authentication_token?
