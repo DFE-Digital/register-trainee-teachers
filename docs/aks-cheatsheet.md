@@ -29,7 +29,7 @@ s189p01-tsc-production-aks
 - in s189-teacher-services-cloud-production subscription
 - in s189p01-tsc-pd-rg resource group
 - contains bat-production namespace
-- will hold register-production and register-productiondata
+- will hold register-production, register-sandbox and register-productiondata
 - PIM approval required
 
 ## Authentication
