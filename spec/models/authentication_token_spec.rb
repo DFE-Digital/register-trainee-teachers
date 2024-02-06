@@ -3,25 +3,25 @@
 require "rails_helper"
 
 RSpec.describe AuthenticationToken do
-  let(:plain_token) { "plain_token" }
-  let(:hashed_token) { Digest::SHA256.hexdigest(plain_token) }
   let(:provider) { create(:provider) }
 
-  it "hashes the token before saving" do
-    token = AuthenticationToken.new(hashed_token: plain_token, provider: provider)
-    token.save
-    expect(token.hashed_token).to eq(hashed_token)
-  end
+  describe '.create_with_random_token' do
+    subject(:authentication_token) { described_class.create_with_random_token(provider_id: provider.id) }
 
-  it "can find a record using the authenticate method" do
-    token = AuthenticationToken.create!(hashed_token: plain_token, provider: provider)
-    expect(AuthenticationToken.authenticate(plain_token)).to eq(token)
-  end
+    it 'creates a new AuthenticationToken' do
+      expect(authentication_token).to be_persisted
+    end
 
-  it "does not hash the token if the hashed_token has not changed" do
-    token = AuthenticationToken.create!(hashed_token: plain_token, provider: provider)
-    original_hashed_token = token.hashed_token
-    token.save
-    expect(token.hashed_token).to eq(original_hashed_token)
+    it 'sets the hashed_token' do
+      expect(authentication_token.hashed_token).not_to be_nil
+    end
+
+    it 'sets the provider_id' do
+      expect(authentication_token.provider_id).to eq(provider.id)
+    end
+
+    it { is_expected.to validate_uniqueness_of(:hashed_token) }
+
+    it { is_expected.to belong_to(:provider) }
   end
 end

@@ -24,17 +24,20 @@
 class AuthenticationToken < ApplicationRecord
   belongs_to :provider
 
-  before_save :hash_token, if: :hashed_token_changed?
-
   validates :hashed_token, presence: true, uniqueness: true
+
+  def self.create_with_random_token(attributes = {})
+    token = SecureRandom.hex(10)
+    hashed_token = hash_token(token)
+
+    create(attributes.merge(hashed_token: hashed_token))
+  end
+
+  def self.hash_token(token)
+    Digest::SHA256.hexdigest(token)
+  end
 
   def self.authenticate(unhashed_token)
     find_by(hashed_token: Digest::SHA256.hexdigest(unhashed_token))
-  end
-
-private
-
-  def hash_token
-    self.hashed_token = Digest::SHA256.hexdigest(hashed_token)
   end
 end
