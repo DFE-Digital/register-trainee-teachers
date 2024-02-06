@@ -31,9 +31,9 @@ module Api
       request.headers["Authorization"] == "Bearer bat"
     end
 
-    def provider
+    def current_provider
       # TODO: - extract provider via authentication
-      @provider ||= Provider.first
+      @current_provider ||= Provider.first
     end
   end
 end

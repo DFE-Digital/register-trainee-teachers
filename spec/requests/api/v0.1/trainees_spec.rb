@@ -14,7 +14,7 @@ describe "GET /trainees", feature_register_api: true do
       api_get 0.1, :trainees, params: { academic_cycle: academic_cycle.start_year }
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["trainees"].count).to eq(trainees.count)
+      expect(response.parsed_body["data"].count).to eq(trainees.count)
     end
   end
 
@@ -26,7 +26,7 @@ describe "GET /trainees", feature_register_api: true do
       api_get 0.1, :trainees, params: { since: since_date }
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["trainees"].count).to be >= 5
+      expect(response.parsed_body["data"].count).to be >= 5
     end
   end
 
@@ -37,8 +37,8 @@ describe "GET /trainees", feature_register_api: true do
       api_get 0.1, :trainees, params: { page: 1, per_page: per_page }
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["trainees"].count).to eq(per_page)
-      expect(response.parsed_body["metadata"]["total_count"]).to eq(trainees.count)
+      expect(response.parsed_body["data"].count).to eq(per_page)
+      expect(response.parsed_body["meta"]["total_count"]).to eq(trainees.count)
     end
   end
 end

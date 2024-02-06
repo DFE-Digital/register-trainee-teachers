@@ -3,7 +3,7 @@
 module Api
   class TraineesController < Api::BaseController
     def index
-      trainees = GetTraineesService.call(provider:, params:)
+      trainees = GetTraineesService.call(provider: current_provider, params: params)
 
       if trainees.exists?
         render(json: AppendMetadata.call(trainees), status: :ok)

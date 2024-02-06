@@ -4,32 +4,28 @@ module Api
   class AppendMetadata
     include ServicePattern
 
-    def initialize(dataset)
-      @dataset = dataset
+    def initialize(data)
+      @data = data
     end
 
     def call
       {
-        set_name => dataset,
-        "metadata" => metadata,
+        data:,
+        meta:,
       }
     end
 
   private
 
-    attr_reader :dataset
+    attr_reader :data
 
-    def metadata
-      {
-        current_page: dataset.current_page,
-        total_pages: dataset.total_pages,
-        total_count: dataset.total_count,
-        per_page: dataset.limit_value,
+    def meta
+      @meta ||= {
+        current_page: data.current_page,
+        total_pages: data.total_pages,
+        total_count: data.total_count,
+        per_page: data.limit_value,
       }
-    end
-
-    def set_name
-      @set_name ||= dataset.klass.table_name
     end
   end
 end
