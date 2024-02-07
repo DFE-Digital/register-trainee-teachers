@@ -8,7 +8,7 @@ module Api
       if trainees.exists?
         render(json: AppendMetadata.call(trainees), status: :ok)
       else
-        render_not_found(message: "No trainees not found")
+        render_not_found(message: "No trainees found")
       end
     end
 
