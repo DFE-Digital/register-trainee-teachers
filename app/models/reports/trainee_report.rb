@@ -365,6 +365,7 @@ module Reports
     end
 
     def complete? = trainee.submission_ready?
+    alias_method :is_complete, :complete?
 
     def trainee_start_date
       trainee.trainee_start_date&.iso8601

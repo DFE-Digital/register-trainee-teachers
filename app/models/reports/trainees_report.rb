@@ -4,7 +4,7 @@ module Reports
   class TraineesReport < TemplateClassCsv
     def self.headers
       %w[register_id
-         complete?
+         is_complete
          trainee_url
          record_source
          apply_id
