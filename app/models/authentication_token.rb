@@ -30,7 +30,7 @@ class AuthenticationToken < ApplicationRecord
     token = SecureRandom.hex(10)
     hashed_token = hash_token(token)
 
-    create(attributes.merge(hashed_token: hashed_token))
+    create(attributes.merge(hashed_token:))
     token
   end
 

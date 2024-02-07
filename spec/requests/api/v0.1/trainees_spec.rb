@@ -13,7 +13,7 @@ describe "Trainees API" do
 
     context "when the trainee exists", feature_register_api: true do
       before do
-        api_get 0.1, "/trainees/#{trainee.slug}", token: token
+        api_get 0.1, "/trainees/#{trainee.slug}", token:
       end
 
       it "returns the trainee" do
@@ -27,7 +27,7 @@ describe "Trainees API" do
 
     context "when the trainee does not exist", feature_register_api: true do
       before do
-        api_get 0.1, "/trainees/nonexistent", token: token
+        api_get 0.1, "/trainees/nonexistent", token:
       end
 
       it "returns status code 404" do
@@ -42,7 +42,7 @@ describe "Trainees API" do
 
   describe "GET /trainees", feature_register_api: true do
     let!(:start_academic_cycle) { create(:academic_cycle) }
-    let!(:trainees) { create_list(:trainee, 10, provider: auth_token.provider, start_academic_cycle:) }
+    let!(:trainees) { create_list(:trainee, 10, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 
     it_behaves_like "a register API endpoint", "/api/v0.1/trainees", "trainee_token"
 
