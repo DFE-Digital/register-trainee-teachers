@@ -9,7 +9,7 @@ module ApiDocs
       @version = api_version_param.nil? ? CURRENT_VERSION : api_version_param
 
       if VERSIONS.include?(@version)
-        render#("api_docs/reference/v#{@version}/reference")
+        render
       else
         redirect_to(not_found_path)
       end
