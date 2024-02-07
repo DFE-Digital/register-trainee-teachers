@@ -8,7 +8,7 @@ module Api
       if trainees.exists?
         render(json: AppendMetadata.call(trainees), status: :ok)
       else
-        render(json: { error: "No trainees found" }, status: :not_found)
+        render_not_found(message: "No trainees not found")
       end
     end
 
@@ -17,7 +17,7 @@ module Api
       if trainee.present?
         render(json: TraineeSerializer.new(trainee).as_json)
       else
-        render(json: { error: "Trainee not found" }, status: :not_found)
+        render_not_found(message: "Trainee not found")
       end
     end
   end

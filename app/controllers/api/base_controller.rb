@@ -2,16 +2,13 @@
 
 module Api
   class BaseController < ActionController::API
+    include Api::ValidationsAndErrorHandling
     before_action :check_feature_flag!, :authenticate!
-
-    def not_found
-      render(status: :not_found, json: { error: "Not found" })
-    end
 
     def check_feature_flag!
       return if FeatureService.enabled?(:register_api)
 
-      not_found
+      render_not_found
     end
 
     def authenticate!

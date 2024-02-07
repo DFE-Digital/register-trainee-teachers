@@ -5,11 +5,7 @@ module Api
     class WithdrawsController < Api::BaseController
       def create
         if trainee.blank?
-          render(json: { error: "Trainee not found" }, status: :not_found)
-        else
-          withdraw_trainee if withdraw_allowed?
-
-          render(json: { status: "Trainee withdrawal request accepted", trainee: TraineeSerializer.new(trainee).as_json }, status: :accepted)
+          render_not_found(message: "Trainee not found")
         end
       end
 

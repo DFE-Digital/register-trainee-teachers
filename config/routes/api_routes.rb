@@ -14,7 +14,7 @@ module ApiRoutes
         resource :guide, only: :show, controller: "guide", constraints: RouteConstraints::RegisterApiConstraint
 
         # NOTE: catch all route
-        match "*url" => "base#not_found", via: :all
+        match "*url" => "base#render_not_found", via: :all
       end
     end
   end
