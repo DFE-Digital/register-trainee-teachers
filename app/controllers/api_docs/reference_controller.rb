@@ -2,14 +2,14 @@
 
 module ApiDocs
   class ReferenceController < ApiDocs::BaseController
-    VERSIONS = %w[0.1 1.0].freeze
-    CURRENT_VERSION = "0.1"
+    VERSIONS = %w[v0.1 v1.0].freeze
+    CURRENT_VERSION = "v0.1"
 
     def show
-      version = api_version_param.nil? ? CURRENT_VERSION : api_version_param
+      @version = api_version_param.nil? ? CURRENT_VERSION : api_version_param
 
-      if VERSIONS.include?(version)
-        render("api_docs/reference/v#{version}/reference")
+      if VERSIONS.include?(@version)
+        render#("api_docs/reference/v#{@version}/reference")
       else
         redirect_to(not_found_path)
       end

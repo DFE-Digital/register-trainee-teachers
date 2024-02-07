@@ -14,6 +14,7 @@ module ApiRoutes
         get "/" => "pages#home", as: :home
         get "/release-notes" => "pages#release_notes", as: :release_notes
         get "/reference" => "reference#show", as: :reference
+        get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+/ }, as: :versioned_reference
       end
     end
   end

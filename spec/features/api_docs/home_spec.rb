@@ -15,9 +15,6 @@ feature "Home page for Register API documentation" do
     when_i_navigate_to_the_release_notes
     then_i_should_see_the_release_notes_for_the_current_and_earlier_versions
 
-    when_i_navigate_to_the_api_reference
-    then_i_should_see_the_api_reference_for_the_current_and_earlier_versions
-
     when_i_navigate_back
     then_i_should_see_the_register_home_page
   end
@@ -41,14 +38,6 @@ feature "Home page for Register API documentation" do
 
   def then_i_should_see_the_release_notes_for_the_current_and_earlier_versions
     expect(page).to have_content("Register API release notes")
-  end
-
-  def when_i_navigate_to_the_api_reference
-    click_on "API reference"
-  end
-
-  def then_i_should_see_the_api_reference_for_the_current_and_earlier_versions
-    expect(page).to have_content("Register API reference")
   end
 
   def when_i_navigate_back
