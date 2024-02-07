@@ -72,10 +72,10 @@ describe "info endpoint" do
       let(:trainee) { create(:trainee, :itt_start_date_in_the_future) }
       let(:slug) { trainee.slug }
 
-      it "returns status 202 with a valid JSON response" do
+      it "returns status 422 with a valid JSON response" do
         post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }
-        expect(response).to have_http_status(:accepted)
-        expect(response.parsed_body["status"]).to eq("Trainee withdrawal request accepted")
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly({ error: "StateTransitionError", message: "It's not possible to perform this action while the trainee is in its current state" })
       end
 
       it "did not change the trainee" do

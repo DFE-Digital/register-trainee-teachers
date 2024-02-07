@@ -6,6 +6,8 @@ module Api
       def create
         if trainee.blank?
           render_not_found(message: "Trainee not found")
+        else
+          render_transition_error
         end
       end
 
