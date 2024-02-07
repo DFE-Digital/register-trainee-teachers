@@ -8,6 +8,7 @@ class CustomLogFormatter < SemanticLogger::Formatters::Raw
     format_json_message_context
     format_backtrace
     remove_post_params
+    filter_authorization_header
     hash.to_json
   end
 
@@ -48,6 +49,12 @@ private
   def remove_post_params
     if method_is_post_or_put? && hash.dig(:payload, :params).present?
       hash[:payload][:params].clear
+    end
+  end
+
+  def filter_authorization_header
+    if hash.dig(:payload, :headers)&.key?("Authorization")
+      hash[:payload][:headers].delete("Authorization")
     end
   end
 
