@@ -10,7 +10,7 @@ module Api
           else
             withdraw_trainee
 
-            render(json: { status: "Trainee withdrawal request accepted", trainee: TraineeSerializer.new(trainee).as_json }, status: :accepted)
+            render(json: { data: TraineeSerializer.new(trainee).as_json }, status: :accepted)
           end
         else
           render_transition_error

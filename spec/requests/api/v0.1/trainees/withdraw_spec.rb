@@ -30,7 +30,7 @@ describe "info endpoint" do
       it "returns status 202 with a valid JSON response" do
         post("/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }, params: params)
         expect(response).to have_http_status(:accepted)
-        expect(response.parsed_body["status"]).to eq("Trainee withdrawal request accepted")
+        expect(response.parsed_body["data"]).to be_present
       end
 
       it "change the trainee" do
