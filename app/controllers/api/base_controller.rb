@@ -31,13 +31,14 @@ module Api
     end
 
     def auth_token
-      @auth_token ||= begin
-        bearer_token = request.headers["Authorization"]
-        raise("Bearer token is blank") if bearer_token.blank?
+      return @auth_token if defined?(@auth_token)
 
-        AuthenticationToken.authenticate(bearer_token)
-      rescue StandardError
-        nil
+      bearer_token = request.headers["Authorization"]
+
+      if bearer_token.blank?
+        @auth_token = nil
+      else
+        @auth_token = AuthenticationToken.authenticate(bearer_token)
       end
     end
   end
