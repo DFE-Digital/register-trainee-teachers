@@ -4,9 +4,7 @@ module Api
   module Trainees
     class WithdrawsController < Api::BaseController
       def create
-        if trainee.blank?
-          render_not_found(message: "Trainee not found")
-        elsif withdraw_allowed?
+        if withdraw_allowed?
           if errored_params.any?
             render_parameter_invalid(parameter_keys: errored_params)
           else
@@ -28,7 +26,7 @@ module Api
       end
 
       def trainee
-        @trainee ||= current_provider&.trainees&.find_by(slug:)
+        @trainee ||= current_provider.trainees.find_by!(slug:)
       end
 
       def slug

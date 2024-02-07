@@ -7,10 +7,14 @@ describe "info endpoint" do
     context "non existant trainee" do
       let(:slug) { "non-existant" }
 
+      before do
+        create(:provider)
+      end
+
       it "returns status 404 with a valid JSON response" do
         post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }
         expect(response).to have_http_status(:not_found)
-        expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Trainee not found" })
+        expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Trainee(s) not found" })
       end
     end
 

@@ -5,6 +5,10 @@ module Api
     include Api::ValidationsAndErrorHandling
     before_action :check_feature_flag!, :authenticate!
 
+    rescue_from ActiveRecord::RecordNotFound do |e|
+      render_not_found(message: "#{e.model}(s) not found")
+    end
+
     def check_feature_flag!
       return if FeatureService.enabled?(:register_api)
 
