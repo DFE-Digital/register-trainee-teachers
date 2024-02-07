@@ -10,6 +10,13 @@ module Api
       })
     end
 
+    def render_parameter_invalid(parameter_keys:)
+      render(status: :unprocessable_entity, json: {
+        errors: errors("ParameterInvalid",
+                       "Please ensure valid values are provided for #{parameter_keys.to_sentence}"),
+      })
+    end
+
     def render_transition_error(model_name: "trainee")
       render(status: :unprocessable_entity, json: {
         errors: errors("StateTransitionError",

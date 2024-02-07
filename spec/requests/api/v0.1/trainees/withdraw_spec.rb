@@ -53,11 +53,11 @@ describe "info endpoint" do
       context "with invalid params" do
         let(:params) { { withdraw_reasons_details: nil, withdraw_date: nil } }
 
-        it "returns status 202 with a valid JSON response" do
+        it "returns status 422 with a valid JSON response" do
           post("/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }, params: params)
 
-          expect(response).to have_http_status(:accepted)
-          expect(response.parsed_body["status"]).to eq("Trainee withdrawal request accepted")
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly({ error: "ParameterInvalid", message: "Please ensure valid values are provided for withdraw_reasons_details and withdraw_date" })
         end
 
         it "did not change the trainee" do
