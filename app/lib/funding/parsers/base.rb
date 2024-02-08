@@ -12,7 +12,7 @@ module Funding
           raise(NotImplementedError("implement in subclass"))
         end
 
-        def to_attributes(funding_upload = nil, file_path = nil)
+        def to_attributes(funding_upload: nil, file_path: nil)
           csv_data = file_path ? File.read(file_path) : funding_upload&.csv_data
           raise(ArgumentError, "Either funding_upload or file_path must be provided") unless csv_data
 
@@ -21,13 +21,13 @@ module Funding
           validate_headers(csv:)
 
           csv.each_with_object({}) do |row, to_return|
-            to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_h
+            to_return[row[id_column]] = Array(to_return[row[id_column]]) << row.to_hash.transform_keys { |header| header.gsub(/^\W+/, "") }
           end
         end
 
         def validate_headers(csv:)
           csv_headers = csv.first.to_h.keys
-          unrecognised_headers = csv_headers.select { |header| expected_headers.exclude?(header) }
+          unrecognised_headers = csv_headers.map { |header| header.gsub(/^\W+/, "") }.select { |header| expected_headers.exclude?(header) }
           if unrecognised_headers.any?
             raise(NameError, "Column headings: #{unrecognised_headers.join(', ')} not recognised")
           end

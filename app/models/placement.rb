@@ -53,4 +53,8 @@ class Placement < ApplicationRecord
 
     full_address.join(", ")
   end
+
+  def created_by_hesa?
+    audits.exists?(action: "create", username: Trainees::CreateFromHesa::USERNAME)
+  end
 end

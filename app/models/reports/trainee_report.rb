@@ -411,7 +411,7 @@ module Reports
   private
 
     def placements
-      @placements ||= trainee.placements.reverse
+      @placements ||= PlacementsImportedFromHesa.call(trainee:) ? trainee.placements.reverse : trainee.placements
     end
   end
 end
