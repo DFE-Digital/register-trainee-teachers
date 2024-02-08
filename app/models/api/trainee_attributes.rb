@@ -31,8 +31,8 @@ module Api
       attribute attr
     end
 
-    attribute :placements_attributes, array: true, default: []
-    attribute :degrees_attributes, array: true, default: []
+    attribute :placements_attributes, array: true, default: -> { [] }
+    attribute :degrees_attributes, array: true, default: -> { [] }
 
     validates(*ATTRIBUTES, presence: true)
     validates :first_names, :last_name, length: { maximum: 50 }
@@ -64,10 +64,14 @@ module Api
       end
     end
 
-    private
+  private
 
     def date_of_birth_valid
-      value = Date.parse(date_of_birth) rescue nil
+      value = begin
+        Date.parse(date_of_birth)
+      rescue StandardError
+        nil
+      end
 
       if !value.is_a?(Date)
         errors.add(:date_of_birth, :invalid)

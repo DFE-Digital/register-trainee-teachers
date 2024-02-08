@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Api::TraineeAttributes, type: :model do
+RSpec.describe Api::TraineeAttributes do
   subject { described_class.new }
 
   Api::TraineeAttributes::ATTRIBUTES.each do |attribute|
@@ -13,19 +13,19 @@ RSpec.describe Api::TraineeAttributes, type: :model do
   end
 
   it "validates length of first_names" do
-    subject.first_names = 'a' * 51
+    subject.first_names = "a" * 51
     subject.valid?
     expect(subject.errors.details[:first_names]).to include(error: :too_long, count: 50)
   end
 
   it "validates length of last_name" do
-    subject.last_name = 'a' * 51
+    subject.last_name = "a" * 51
     subject.valid?
     expect(subject.errors.details[:last_name]).to include(error: :too_long, count: 50)
   end
 
   it "validates length of middle_names" do
-    subject.middle_names = 'a' * 51
+    subject.middle_names = "a" * 51
     subject.valid?
     expect(subject.errors.details[:middle_names]).to include(error: :too_long, count: 50)
   end
@@ -37,7 +37,7 @@ RSpec.describe Api::TraineeAttributes, type: :model do
   end
 
   it "validates inclusion of sex in Trainee.sexes.keys" do
-    invalid_sex = 'invalid'
+    invalid_sex = "invalid"
     subject.sex = invalid_sex
     subject.valid?
     expect(subject.errors.details[:sex]).to include(error: :inclusion, value: invalid_sex)
