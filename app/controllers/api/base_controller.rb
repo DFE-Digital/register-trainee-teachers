@@ -34,6 +34,10 @@ module Api
       render(**not_found_response(message:))
     end
 
+    def current_version
+      params[:api_version]
+    end
+
   private
 
     def valid_authentication_token?

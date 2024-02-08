@@ -35,6 +35,20 @@ module Api
       render(json: TraineeSerializer.new(trainee).as_json, status: :created)
     end
 
+    def update
+      trainee = current_provider&.trainees&.find_by(slug: params[:id])
+      if trainee.present?
+        if update_trainee_service.call(trainee: trainee, attributes: trainee_attributes_service.new(trainee_update_params))
+          render(json: TraineeSerializer.new(trainee).as_json)
+        else
+          # TODO: Add error messages to the response
+          render(json: { error: "Trainee not updated" }, status: :unprocessable_entity)
+        end
+      else
+        render(json: { error: "Trainee not found" }, status: :not_found)
+      end
+    end
+
   private
 
     def trainee_params
@@ -44,6 +58,22 @@ module Api
           placements_attributes: [PlacementAttributes::ATTRIBUTES],
           degrees_attributes: [DegreeAttributes::ATTRIBUTES],
         )
+    end
+
+    def update_trainee_service
+      Object.const_get("Api::UpdateTraineeService::#{current_version_class_name}")
+    end
+
+    def trainee_attributes_service
+      Object.const_get("Api::TraineeAttributes::#{current_version_class_name}")
+    end
+
+    def current_version_class_name
+      current_version.gsub(".", "").camelize
+    end
+
+    def trainee_update_params
+      params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
     end
   end
 end

@@ -4,7 +4,7 @@ module ApiRoutes
   def self.extended(router)
     router.instance_exec do
       namespace :api, path: "api/:api_version", api_version: /v[.0-9]+/ do
-        resources :trainees, only: %i[index show create], controller: "trainees", constraints: RouteConstraints::RegisterApiConstraint do
+        resources :trainees, only: %i[index show update create], controller: "trainees", constraints: RouteConstraints::RegisterApiConstraint do
           scope module: :trainees do
             resource :withdraw, only: %i[create], path: "/withdraw"
           end
