@@ -30,8 +30,8 @@ RSpec.describe Api::TraineeAttributes, type: :model do
     expect(subject.errors.details[:middle_names]).to include(error: :too_long, count: 50)
   end
 
-  it "validates date_of_birth with DateOfBirthValidator" do
-    subject.date_of_birth = Time.zone.today + 1.day
+  it "validates date_of_birth with" do
+    subject.date_of_birth = (Time.zone.today + 1.day).to_s
     subject.valid?
     expect(subject.errors.details[:date_of_birth]).to include(error: :future)
   end
