@@ -4,15 +4,18 @@ class PlacementForm
   include ActiveModel::Model
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
-  include PlacementValidations
 
   FIELDS = %i[slug school_search school_id name urn postcode].freeze
+  URN_REGEX = /^[0-9]{6}$/
 
   attr_accessor(*FIELDS, :placements_form, :placement, :trainee, :destroy)
 
+  validate :school_valid, on: %i[create update]
   validate :school_or_search_valid
   validate :school_urn_valid
-  validate :urn_unique
+  validates :name, presence: true, if: -> { school_id.blank? && school_search.blank? }
+  validate :urn_valid
+  validate :postcode_valid
 
   delegate :persisted?, :school, to: :placement
 
@@ -124,6 +127,12 @@ class PlacementForm
     save_or_stash && invalid_data
   end
 
+  def school_valid
+    if school_id.blank? && [name, urn, postcode].all?(&:blank?)
+      errors.add(:school_id, :blank)
+    end
+  end
+
   def school_or_search_valid
     if school_id.blank? && school_search.blank? && (name.blank? && urn.blank? && postcode.blank?)
       errors.add(:school, :blank)
@@ -140,9 +149,19 @@ class PlacementForm
     end
   end
 
-  def urn_unique
+  def urn_valid
     if urn.present? && existing_urns.any?(urn)
       errors.add(:urn, :unique)
+    end
+
+    if urn.present? && !urn.match?(URN_REGEX)
+      errors.add(:urn, :invalid_format)
+    end
+  end
+
+  def postcode_valid
+    if postcode.present? && !UKPostcode.parse(postcode).valid?
+      errors.add(:postcode, I18n.t("activemodel.errors.validators.postcode.invalid"))
     end
   end
 
