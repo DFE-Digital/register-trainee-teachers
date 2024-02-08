@@ -25,7 +25,7 @@ module Api
       @current_provider ||= auth_token.provider
     end
 
-    def authenticated_user
+    def audit_user
       current_provider
     end
 
