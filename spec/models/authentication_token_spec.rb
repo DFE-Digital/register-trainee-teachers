@@ -6,7 +6,7 @@ RSpec.describe AuthenticationToken do
   let(:provider) { create(:provider) }
 
   describe ".create_with_random_token" do
-    let(:token) { described_class.create_with_random_token(provider_id: provider.id) }
+    let(:token) { "Bearer #{described_class.create_with_random_token(provider_id: provider.id)}" }
 
     subject(:authentication_token) { AuthenticationToken.authenticate(token) }
 

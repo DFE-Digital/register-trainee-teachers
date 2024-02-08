@@ -39,6 +39,7 @@ class AuthenticationToken < ApplicationRecord
   end
 
   def self.authenticate(unhashed_token)
-    find_by(hashed_token: Digest::SHA256.hexdigest(unhashed_token))
+    token_without_prefix = unhashed_token.split.last
+    find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
   end
 end
