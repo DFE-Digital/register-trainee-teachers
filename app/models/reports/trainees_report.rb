@@ -118,7 +118,7 @@ module Reports
       trainee_report = Reports::TraineeReport.new(trainee)
       [
         trainee_report.register_id,
-        trainee_report.complete?,
+        trainee_report.completed,
         trainee_report.trainee_url,
         trainee_report.record_source,
         trainee_report.apply_id,
