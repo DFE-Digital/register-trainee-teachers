@@ -24,9 +24,6 @@ Providers can use the API for:
 - Withdrawing and deferring a trainee.
 - Looking up reference data such as country code, school URNs etc.
 
-# What the API doesn't support
-
-
 # How do I connect to this API?
 
 ## Authentication and authorisation

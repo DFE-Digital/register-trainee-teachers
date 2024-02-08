@@ -11,10 +11,10 @@ module ApiRoutes
       end
 
       namespace :api_docs, path: "api-docs" do
-        get "/" => "pages#home", as: :home
-        get "/release-notes" => "pages#release_notes", as: :release_notes
+        get "/" => "pages#show", as: :home
         get "/reference" => "reference#show", as: :reference
         get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+/ }, as: :versioned_reference
+        get "/:page" => "pages#show", as: :page
       end
     end
   end

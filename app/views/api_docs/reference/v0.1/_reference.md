@@ -20,7 +20,7 @@ Status: 200 OK
 }
 ```
 
-### GET /Trainee
+### GET /trainee
 
 This endpoint retrieves information about trainees.
 

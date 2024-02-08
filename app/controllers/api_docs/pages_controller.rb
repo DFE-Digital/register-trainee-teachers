@@ -2,8 +2,10 @@
 
 module ApiDocs
   class PagesController < ApiDocs::BaseController
-    def home; end
+    DEFAULT_PAGE = "home"
 
-    def release_notes; end
+    def show
+      render(params[:page] || DEFAULT_PAGE)
+    end
   end
 end
