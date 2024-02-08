@@ -25,7 +25,7 @@ module Api
     validate :postcode_valid
   end
 
-  private
+private
 
   def school_valid
     if school_id.blank? && [name, urn, postcode].all?(&:blank?)
