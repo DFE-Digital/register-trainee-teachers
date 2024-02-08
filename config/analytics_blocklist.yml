@@ -67,6 +67,14 @@
   - created_at
   - recruitment_cycle_year
   - updated_at
+  :authentication_tokens:
+  - id
+  - hashed_token
+  - enabled
+  - provider_id
+  - expires_at
+  - created_at
+  - updated_at
   :disabilities:
   - name
   - description

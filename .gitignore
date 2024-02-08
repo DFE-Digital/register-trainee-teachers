@@ -46,7 +46,6 @@ yarn-debug.log*
 tfplan
 *.tfplan
 *.plan
-**/*token*
 *secret*.tfvars
 terraform/**/*.yml
 terraform/**/*.base64
