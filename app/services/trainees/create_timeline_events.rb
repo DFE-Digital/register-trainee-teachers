@@ -254,7 +254,9 @@ module Trainees
     def username
       return unless user && !user.is_a?(String)
 
-      return "DfE administrator" if user.system_admin?
+      return "DfE administrator" if user.is_a?(User) && user.system_admin?
+
+      return "#{user.name} (via Register API)" if user.is_a?(Provider)
 
       return "#{user.name} (#{provider_name})" if current_user&.system_admin?
 
