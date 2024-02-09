@@ -11,7 +11,7 @@ module Dqt
           "husid" => trainee.hesa_id,
           "initialTeacherTraining" => initial_teacher_training_params.merge(outcome_params),
           "qualification" => qualification_params,
-        }
+        }.merge(pii_update_params)
       end
 
       def outcome_params
@@ -28,6 +28,19 @@ module Dqt
             "InTraining"
           end
         end
+      end
+
+      def pii_update_params
+        {} unless trainee&.dqt_teacher&.allowed_pii_updates?
+
+        {
+          "firstName" => trainee.first_names,
+          "middleName" => trainee.middle_names,
+          "lastName" => trainee.last_name,
+          "emailAddress" => trainee.email,
+          "genderCode" => TrnRequest::GENDER_CODES[trainee.sex.to_sym],
+          "dateOfBirth" => trainee.date_of_birth.iso8601,
+        }
       end
 
       def in_training?

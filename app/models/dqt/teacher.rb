@@ -5,6 +5,7 @@
 # Table name: dqt_teachers
 #
 #  id                       :bigint           not null, primary key
+#  allowed_pii_updates      :boolean          default(FALSE), not null
 #  date_of_birth            :string
 #  early_years_status_name  :string
 #  early_years_status_value :string
@@ -16,6 +17,10 @@
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  hesa_id                  :string
+#
+# Indexes
+#
+#  index_dqt_teachers_on_allowed_pii_updates  (allowed_pii_updates)
 #
 module Dqt
   class Teacher < ApplicationRecord

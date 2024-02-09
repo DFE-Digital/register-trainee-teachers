@@ -388,6 +388,7 @@
   - early_years_status_value
   - created_at
   - updated_at
+  - allowed_pii_updates
   :dqt_teacher_trainings:
   - id
   - dqt_teacher_id

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_05_180248) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_08_131836) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -345,6 +345,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_05_180248) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "hesa_id"
+    t.boolean "allowed_pii_updates", default: false, null: false
+    t.index ["allowed_pii_updates"], name: "index_dqt_teachers_on_allowed_pii_updates"
   end
 
   create_table "dqt_trn_requests", force: :cascade do |t|

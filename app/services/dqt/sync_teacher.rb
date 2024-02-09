@@ -29,7 +29,8 @@ module Dqt
                                     qts_date: dqt_data["qtsDate"],
                                     eyts_date: dqt_data["eytsDate"],
                                     early_years_status_name: dqt_data.dig("earlyYearsStatus", "name"),
-                                    early_years_status_value: dqt_data.dig("earlyYearsStatus", "value"))
+                                    early_years_status_value: dqt_data.dig("earlyYearsStatus", "value"),
+                                    allowed_pii_updates: dqt_data["allowPIIUpdates"])
 
       dqt_teacher.dqt_trainings = dqt_data["initialTeacherTraining"].map do |training_data|
         TeacherTraining.new(dqt_teacher: dqt_teacher,

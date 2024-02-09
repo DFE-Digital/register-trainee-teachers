@@ -78,6 +78,23 @@ module Dqt
           end
         end
 
+        context "is allowed to update PII" do
+          let(:trainee) do
+            create(:trainee, :completed, :assessment_only, sex: :male, dqt_teacher: create(:dqt_teacher, allowed_pii_updates: true))
+          end
+
+          it "returns a hash including personal attributes" do
+            expect(subject).to include({
+              "firstName" => trainee.first_names,
+              "middleName" => trainee.middle_names,
+              "lastName" => trainee.last_name,
+              "emailAddress" => trainee.email,
+              "genderCode" => "Male",
+              "dateOfBirth" => trainee.date_of_birth.iso8601,
+            })
+          end
+        end
+
         context "trainee is not deferred or in training" do
           let(:trainee) { create(:trainee, :completed, :withdrawn) }
 
