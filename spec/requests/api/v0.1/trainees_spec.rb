@@ -73,7 +73,9 @@ describe "Trainees API" do
     before { create(:provider) }
 
     context "when the request is valid", feature_register_api: true do
-      before { post "/api/v0.1/trainees", params: valid_attributes, headers: { Authorization: "Bearer bat" } }
+      before do
+        api_post 0.1, :trainees, params: valid_attributes, token: "Bearer #{token}"
+      end
 
       it "creates a trainee" do
         expect(response.parsed_body["first_names"]).to eq("John")
@@ -93,7 +95,9 @@ describe "Trainees API" do
     end
 
     context "when the request is invalid", feature_register_api: true do
-      before { post "/api/v0.1/trainees", params: { trainee: { last_name: "Doe" } }, headers: { Authorization: "Bearer bat" } }
+      before do
+        api_post 0.1, :trainees, params: { trainee: { last_name: "Doe" } }, token: "Bearer #{token}"
+      end
 
       it "returns status code 422" do
         expect(response).to have_http_status(:unprocessable_entity)
