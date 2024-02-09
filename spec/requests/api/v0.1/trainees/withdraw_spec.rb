@@ -12,7 +12,6 @@ describe "info endpoint" do
       let(:slug) { "non-existant" }
 
       it "returns status 404 with a valid JSON response" do
-        # post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }
         api_post(0.1, "/trainees/#{slug}/withdraw", token:)
 
         expect(response).to have_http_status(:not_found)
@@ -22,11 +21,15 @@ describe "info endpoint" do
 
     context "with a withdrawable trainee" do
       let(:trainee) { create(:trainee, :trn_received, provider:) }
-      let(:withdraw_params) do
-        build(:trainee, :withdrawn_for_specific_reason)
-          .attributes.symbolize_keys.slice(:withdraw_reasons_details, :withdraw_date)
+      let(:unknown) { create(:withdrawal_reason, :unknown) }
+      let(:params) do
+        {
+          reasons: [unknown.name],
+          withdraw_date: Time.zone.now.to_s,
+          withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
+          withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+        }
       end
-      let(:params) { withdraw_params }
       let(:slug) { trainee.slug }
 
       it "returns status 202 with a valid JSON response" do
@@ -38,8 +41,8 @@ describe "info endpoint" do
       it "change the trainee" do
         expect {
           api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
-        } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(withdraw_params[:withdraw_reasons_details])
-        .and change { trainee.reload.withdraw_date }.from(nil).to(withdraw_params[:withdraw_date])
+        } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:withdraw_reasons_details])
+        .and change { trainee.reload.withdraw_date }.from(nil)
         .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
       end
 
@@ -63,7 +66,11 @@ describe "info endpoint" do
           api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
 
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly({ error: "ParameterInvalid", message: "Please ensure valid values are provided for withdraw_reasons_details and withdraw_date" })
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
+            { error: "UnprocessableEntity", message: "Reasons Select why the trainee withdrew from the course or select \"Unknown\"" },
+          )
         end
 
         it "did not change the trainee" do

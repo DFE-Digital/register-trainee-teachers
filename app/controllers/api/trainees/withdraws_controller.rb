@@ -5,12 +5,10 @@ module Api
     class WithdrawsController < Api::BaseController
       def create
         if withdraw_allowed?
-          if errored_params.any?
-            render_parameter_invalid(parameter_keys: errored_params)
-          else
-            withdraw_trainee
-
+          if withdraw_trainee
             render(json: { data: TraineeSerializer.new(trainee).as_json }, status: :accepted)
+          else
+            render_validation_errors(errors: withdrawal_attributes.errors)
           end
         else
           render_transition_error
@@ -20,9 +18,8 @@ module Api
     private
 
       def withdraw_trainee
-        trainee.update(withdrawal_params)
-        trainee.withdraw!
-        ::Trainees::Withdraw.call(trainee:)
+        withdrawal_attributes.assign_attributes(withdrawal_params)
+        withdrawal_attributes.save!
       end
 
       def trainee
@@ -37,16 +34,12 @@ module Api
         !trainee.starts_course_in_the_future? && !trainee.itt_not_yet_started? && trainee.awaiting_action? && %w[submitted_for_trn trn_received deferred].any?(trainee.state)
       end
 
-      def withdrawal_params_keys
-        %i[withdraw_reasons_details withdraw_date]
-      end
-
       def withdrawal_params
-        params.permit(*withdrawal_params_keys)
+        params.permit(:withdraw_date, :withdraw_reasons_details, :withdraw_reasons_dfe_details, reasons: [])
       end
 
-      def errored_params
-        withdrawal_params.to_h.filter_map { |key, value| key if value.blank? }
+      def withdrawal_attributes
+        @withdrawal_attributes ||= Api::WithdrawalAttributes.new(trainee:)
       end
     end
   end

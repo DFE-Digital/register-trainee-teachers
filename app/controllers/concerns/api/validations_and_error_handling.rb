@@ -10,10 +10,11 @@ module Api
       })
     end
 
-    def render_parameter_invalid(parameter_keys:)
+    def render_validation_errors(errors:)
+      error_responses = errors.full_messages.map { |message| { error: "UnprocessableEntity", message: message } }
+
       render(status: :unprocessable_entity, json: {
-        errors: errors("ParameterInvalid",
-                       "Please ensure valid values are provided for #{parameter_keys.to_sentence}"),
+        errors: error_responses,
       })
     end
 
