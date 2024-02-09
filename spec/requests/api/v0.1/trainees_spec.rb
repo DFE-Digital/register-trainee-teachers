@@ -35,7 +35,7 @@ describe "Trainees API" do
       end
 
       it "returns a not found message" do
-        expect(response.parsed_body["error"]).to eq("Trainee not found")
+        expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Trainee(s) not found" })
       end
     end
   end
