@@ -31,4 +31,5 @@ Rails.application.config.filter_parameters += [
   :postcode,
   :region,
   :town_city,
+  :trn,
 ]

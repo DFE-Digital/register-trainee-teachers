@@ -29,7 +29,7 @@ describe Reports::TraineeReport do
     end
 
     it "includes whether the trainee is complete" do
-      expect(subject.complete?).to eq(trainee.submission_ready?)
+      expect(subject.completed).to eq(trainee.submission_ready?)
     end
 
     it "sets the correct course" do

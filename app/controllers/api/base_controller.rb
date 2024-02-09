@@ -2,16 +2,17 @@
 
 module Api
   class BaseController < ActionController::API
+    include Api::ValidationsAndErrorHandling
     before_action :check_feature_flag!, :authenticate!
 
-    def not_found
-      render(status: :not_found, json: { error: "Not found" })
+    rescue_from ActiveRecord::RecordNotFound do |e|
+      render_not_found(message: "#{e.model}(s) not found")
     end
 
     def check_feature_flag!
       return if FeatureService.enabled?(:register_api)
 
-      not_found
+      render_not_found
     end
 
     def authenticate!
@@ -21,14 +22,25 @@ module Api
     end
 
     def current_provider
-      @current_provider ||= Provider.first
+      @current_provider ||= auth_token.provider
     end
 
   private
 
     def valid_authentication_token?
-      # TODO: Replace this with a proper authentication check
-      request.headers["Authorization"] == "Bearer bat"
+      auth_token.present? && auth_token.enabled?
+    end
+
+    def auth_token
+      return @auth_token if defined?(@auth_token)
+
+      bearer_token = request.headers["Authorization"]
+
+      if bearer_token.blank?
+        @auth_token = nil
+      else
+        @auth_token = AuthenticationToken.authenticate(bearer_token)
+      end
     end
   end
 end

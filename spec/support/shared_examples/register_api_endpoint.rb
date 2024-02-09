@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "a register API endpoint" do |url|
+RSpec.shared_examples "a register API endpoint" do |url, token|
   context "when the register_api feature flag is off", feature_register_api: false do
     before do
-      get url, headers: { Authorization: "Bearer bat" }
+      get url, headers: { Authorization: token }
     end
 
     it "returns status code 404" do
@@ -13,7 +13,7 @@ RSpec.shared_examples "a register API endpoint" do |url|
 
   context "when the register_api feature flag is on", feature_register_api: true do
     before do
-      get url, headers: { Authorization: "Bearer bat" }
+      get url, headers: { Authorization: token }
     end
 
     it "returns status code 200" do
@@ -34,7 +34,7 @@ RSpec.shared_examples "a register API endpoint" do |url|
   context "with an invalid version" do
     it "returns status 404" do
       invalid_version_url = url.sub(/v[.0-9]+/, "v0.0")
-      get invalid_version_url, headers: { Authorization: "Bearer bat" }
+      get invalid_version_url, headers: { Authorization: token }
       expect(response).to have_http_status(:not_found)
     end
   end
