@@ -61,7 +61,6 @@ module Trainees
        .merge(provider_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
-       .merge(deferral_attributes)
        .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
        .merge(school_attributes)
@@ -118,12 +117,6 @@ module Trainees
     def provider_attributes
       provider = Provider.find_by(ukprn: hesa_trainee[:ukprn])
       provider ? { provider: } : {}
-    end
-
-    def deferral_attributes
-      return { defer_date: nil } unless mapped_trainee_state == :deferred
-
-      { defer_date: itt_end_date || hesa_trainee[:hesa_updated_at] }
     end
 
     def submitted_for_trn_attributes
