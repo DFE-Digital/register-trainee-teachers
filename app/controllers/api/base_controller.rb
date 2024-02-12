@@ -25,6 +25,10 @@ module Api
       @current_provider ||= auth_token.provider
     end
 
+    def audit_user
+      current_provider
+    end
+
   private
 
     def valid_authentication_token?
