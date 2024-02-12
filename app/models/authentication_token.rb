@@ -5,16 +5,17 @@
 # Table name: authentication_tokens
 #
 #  id           :bigint           not null, primary key
-#  enabled      :boolean          default(TRUE)
+#  enabled      :boolean          default(TRUE), not null
 #  expires_at   :date
-#  hashed_token :string
+#  hashed_token :string           not null
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  provider_id  :bigint
+#  provider_id  :bigint           not null
 #
 # Indexes
 #
-#  index_authentication_tokens_on_provider_id  (provider_id)
+#  index_authentication_tokens_on_hashed_token  (hashed_token) UNIQUE
+#  index_authentication_tokens_on_provider_id   (provider_id)
 #
 # Foreign Keys
 #
