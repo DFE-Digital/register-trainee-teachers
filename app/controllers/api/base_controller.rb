@@ -2,7 +2,8 @@
 
 module Api
   class BaseController < ActionController::API
-    include Api::ValidationsAndErrorHandling
+    include Api::ErrorResponse
+
     before_action :check_feature_flag!, :authenticate!
 
     rescue_from ActiveRecord::RecordNotFound do |e|
@@ -27,6 +28,10 @@ module Api
 
     def audit_user
       current_provider
+    end
+
+    def render_not_found(message: "Not found")
+      render(**not_found_response(message:))
     end
 
   private
