@@ -6,7 +6,7 @@ module Api
       def create
         if withdraw_allowed?
           if withdraw_trainee
-            render(json: { data: TraineeSerializer.new(trainee).as_json }, status: :accepted)
+            render(json: { data: TraineeSerializer.new(trainee).as_json }, status: :ok)
           else
             render_validation_errors(errors: withdrawal_attributes.errors)
           end

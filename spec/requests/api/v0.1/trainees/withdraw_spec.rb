@@ -32,9 +32,9 @@ describe "info endpoint" do
       end
       let(:slug) { trainee.slug }
 
-      it "returns status 202 with a valid JSON response" do
+      it "returns status 200 with a valid JSON response" do
         api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
-        expect(response).to have_http_status(:accepted)
+        expect(response).to have_http_status(:ok)
         expect(response.parsed_body["data"]).to be_present
       end
 

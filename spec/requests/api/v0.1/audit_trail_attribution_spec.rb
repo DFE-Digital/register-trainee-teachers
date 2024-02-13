@@ -24,7 +24,7 @@ describe "audit trail attribution" do
         headers: { Authorization: "Bearer #{token}" },
         params: params,
       )
-      expect(response).to have_http_status(:accepted)
+      expect(response).to have_http_status(:ok)
 
       last_audit_entry = trainee.reload.audits.last
       expect(last_audit_entry.user).to eq(provider)
