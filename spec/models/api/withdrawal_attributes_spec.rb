@@ -8,63 +8,6 @@ describe Api::WithdrawalAttributes do
 
   subject { withdrawal_attributes }
 
-  describe "#save!" do
-    subject {
-      withdrawal_attributes.save!
-    }
-
-    context "invalid" do
-      it "did not update traine" do
-        expect {
-          subject
-
-          trainee.reload
-        }.not_to change(trainee, :withdraw_date)
-      end
-
-      it "return false" do
-        expect(subject).to be_falsey
-      end
-
-      it "did not call dqt withdraw service" do
-        expect(Trainees::Withdraw).not_to receive(:call).with(trainee:)
-        subject
-      end
-    end
-
-    context "valid" do
-      let(:unknown) { create(:withdrawal_reason, :unknown) }
-      let(:attributes) {
-        {
-          reasons: [unknown.name],
-          withdraw_date: Time.zone.now.to_s,
-          withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
-          withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
-        }
-      }
-
-      before do
-        withdrawal_attributes.assign_attributes(attributes)
-      end
-
-      it "has updated trainee" do
-        expect {
-          subject
-          trainee.reload
-        }.to change(trainee, :withdraw_date)
-        .and change(trainee, :withdraw_reasons_details)
-        .and change(trainee, :withdraw_reasons_dfe_details)
-        .and change(trainee, :withdrawal_reasons)
-        .and change(trainee, :state).from("trn_received").to("withdrawn")
-      end
-
-      it "call dqt withdraw service" do
-        expect(Trainees::Withdraw).to receive(:call).with(trainee:).once
-        subject
-      end
-    end
-  end
-
   describe "validations" do
     it { is_expected.to validate_length_of(:withdraw_reasons_details).is_at_most(1000).with_message("Details about why the trainee withdrew must be 1000 characters or less") }
     it { is_expected.to validate_length_of(:withdraw_reasons_dfe_details).is_at_most(1000).with_message("What the Department for Education could have done must be 1000 characters or less") }

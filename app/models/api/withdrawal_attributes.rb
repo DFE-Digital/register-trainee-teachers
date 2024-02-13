@@ -33,15 +33,8 @@ module Api
       super
     end
 
-    def save!
-      if valid?
-        trainee.update!(attributes.symbolize_keys.except(:reasons).merge(withdrawal_reasons:))
-        trainee.withdraw!
-        ::Trainees::Withdraw.call(trainee:)
-        true
-      else
-        false
-      end
+    def attributes_to_save
+      attributes.symbolize_keys.except(:reasons).merge(withdrawal_reasons:)
     end
 
   private
@@ -81,7 +74,7 @@ module Api
     end
 
     def withdrawal_reasons
-      WithdrawalReason.where(name: reasons)
+      @withdrawal_reasons ||= WithdrawalReason.where(name: reasons)
     end
   end
 end
