@@ -17,6 +17,13 @@ module ApiRoutes
         # NOTE: catch all route
         match "*url" => "base#render_not_found", via: :all
       end
+
+      namespace :api_docs, path: "api-docs" do
+        get "/" => "pages#show", as: :home
+        get "/reference" => "reference#show", as: :reference
+        get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+/ }, as: :versioned_reference
+        get "/:page" => "pages#show", as: :page
+      end
     end
   end
 end

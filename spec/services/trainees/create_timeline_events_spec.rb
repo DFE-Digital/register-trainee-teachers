@@ -103,6 +103,22 @@ module Trainees
           end
         end
 
+        context "with a provider user" do
+          let(:provider) { create(:provider, name: "South Oxfordshire Academy") }
+
+          before do
+            trainee.own_and_associated_audits.first.update!(user: provider)
+          end
+
+          it "returns a timeline event that reflects the update" do
+            expect(subject.first.title).to eq("First names updated")
+          end
+
+          it "returns a timeline event with the provider name and indicating that it happened via the API" do
+            expect(subject.first.username).to eq("South Oxfordshire Academy (via Register API)")
+          end
+        end
+
         context "made in HESA" do
           before do
             trainee.own_and_associated_audits.first.update!(username: "HESA")

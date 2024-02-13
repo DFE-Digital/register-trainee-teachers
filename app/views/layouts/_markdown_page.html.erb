@@ -1,5 +1,5 @@
 <%= extends_layout :application do %>
-  <%= render PageTitle::View.new(text: page_title)%>
+  <%= render PageTitle::View.new(text: page_title) if page_title.present? %>
 
   <%= content_for(:breadcrumbs) do %>
     <%= render GovukComponent::BackLinkComponent.new(
@@ -10,7 +10,7 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-        <%= tag.h1(title, class: "govuk-heading-l") %>
+        <%= tag.h1(title, class: "govuk-heading-l") if title.present? %>
         <%= yield %>
     </div>
   </div>

@@ -1,4 +1,5 @@
 name: Backup Database to Azure Storage
+concurrency: build_and_deploy_main
 
 on:
   workflow_dispatch:

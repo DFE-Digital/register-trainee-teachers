@@ -1,0 +1,15 @@
+<%= render PageTitle::View.new(text: "Register API reference") %>
+
+<%= tag.h1("Register API reference", class: "govuk-heading-l") %>
+
+<%= render TabNavigation::View.new(
+  items: ApiDocs::ReferenceController::VERSIONS.map do |version|
+    {
+      url: api_docs_versioned_reference_path(version),
+      name: version,
+      current: version == @version,
+    }
+  end
+) %>
+
+<%= render("api_docs/reference/#{@version}/reference") %>
