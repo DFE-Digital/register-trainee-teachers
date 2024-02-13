@@ -44,7 +44,7 @@ describe "Trainees API" do
   describe "POST /api/v0.1/trainees" do
     let(:valid_attributes) do
       {
-        trainee: {
+        data: {
           first_names: "John",
           middle_names: "James",
           last_name: "Doe",
@@ -89,14 +89,14 @@ describe "Trainees API" do
         expect(response.parsed_body["degrees"].first["country"]).to eq("UK")
       end
 
-      it "returns status code 200" do
-        expect(response).to have_http_status(:ok)
+      it "returns status code 201" do
+        expect(response).to have_http_status(:created)
       end
     end
 
     context "when the request is invalid", feature_register_api: true do
       before do
-        api_post 0.1, :trainees, params: { trainee: { last_name: "Doe" } }, token: "Bearer #{token}"
+        api_post 0.1, :trainees, params: { data: { last_name: "Doe" } }, token: "Bearer #{token}"
       end
 
       it "returns status code 422" do

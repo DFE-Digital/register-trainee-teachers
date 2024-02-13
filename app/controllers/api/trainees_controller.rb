@@ -32,13 +32,13 @@ module Api
         return
       end
 
-      render(json: TraineeSerializer.new(trainee).as_json, status: :ok)
+      render(json: TraineeSerializer.new(trainee).as_json, status: :created)
     end
 
   private
 
     def trainee_params
-      params.require(:trainee)
+      params.require(:data)
         .permit(
           TraineeAttributes::ATTRIBUTES,
           placements_attributes: [PlacementAttributes::ATTRIBUTES],
