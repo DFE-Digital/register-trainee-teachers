@@ -38,10 +38,16 @@ module Api
     def update
       trainee = current_provider&.trainees&.find_by(slug: params[:id])
       if trainee.present?
-        if update_trainee_service.call(trainee: trainee, attributes: trainee_attributes_service.new(trainee_update_params))
-          render(json: TraineeSerializer.new(trainee).as_json)
-        else
-          # TODO: Add error messages to the response
+        begin
+          attributes = trainee_attributes_service.from_trainee(trainee)
+          attributes.assign_attributes(trainee_update_params)
+          if update_trainee_service.call(trainee:, attributes:)
+            render(json: TraineeSerializer.new(trainee).as_json)
+          else
+            # TODO: Add error messages to the response
+            render(json: { error: trainee.errors.full_messages }, status: :unprocessable_entity)
+          end
+        rescue ActionController::ParameterMissing
           render(json: { error: "Trainee not updated" }, status: :unprocessable_entity)
         end
       else

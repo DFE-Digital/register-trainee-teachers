@@ -55,5 +55,9 @@ module Api
         @auth_token = AuthenticationToken.authenticate(bearer_token)
       end
     end
+
+    def current_version_class_name
+      current_version.gsub(".", "").camelize
+    end
   end
 end

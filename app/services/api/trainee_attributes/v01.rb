@@ -28,6 +28,21 @@ module Api
         application_choice_id
       ].freeze
 
+      REQUIRED_ATTRIBUTES = %i[
+        first_names
+        middle_names
+        last_name
+        date_of_birth
+        email
+        sex
+        training_route
+        itt_start_date
+        itt_end_date
+        diversity_disclosure
+        course_subject_one
+        study_mode
+      ].freeze
+
       ATTRIBUTES.each do |attr|
         attribute attr
       end
@@ -35,14 +50,14 @@ module Api
       # attribute :placements_attributes, array: true, default: -> { [] }
       # attribute :degrees_attributes, array: true, default: -> { [] }
 
-      validates(*ATTRIBUTES, presence: true)
+      validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :first_names, :last_name, length: { maximum: 50 }
       validates :middle_names, length: { maximum: 50 }, allow_nil: true
       validates :sex, inclusion: { in: ::Trainee.sexes.keys }
       validate :date_of_birth_valid
 
       def initialize(attributes = {})
-        super(attributes)#.except(:placements_attributes, :degrees_attributes))
+        super(attributes.except(:placements_attributes, :degrees_attributes))
 
         # attributes[:placements_attributes]&.each do |placement_params|
         #   placements_attributes << PlacementAttributes.new(placement_params)
@@ -51,6 +66,10 @@ module Api
         # attributes[:degrees_attributes]&.each do |degree_params|
         #   degrees_attributes << DegreeAttributes.new(degree_params)
         # end
+      end
+
+      def self.from_trainee(trainee)
+        new(trainee.attributes.select { |k, _v| Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym) })
       end
 
       def deep_attributes
@@ -68,11 +87,15 @@ module Api
     private
 
       def date_of_birth_valid
-        value = begin
-                  Date.parse(date_of_birth)
-                rescue StandardError
-                  nil
-                end
+        value = date_of_birth
+        if value.is_a?(String)
+          value =
+            begin
+              Date.parse(value)
+            rescue StandardError
+              nil
+            end
+        end
 
         if !value.is_a?(Date)
           errors.add(:date_of_birth, :invalid)

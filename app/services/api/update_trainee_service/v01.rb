@@ -11,7 +11,9 @@ module Api
       end
 
       def call
-        @trainee.update!(@attributes.attributes.select { |_k, v| v.present? })
+        if @attributes.valid?
+          @trainee.update(@attributes.attributes.select { |_k, v| v.present? })
+        end
       end
     end
   end

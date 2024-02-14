@@ -4,8 +4,8 @@ require "rails_helper"
 
 describe "Trainees API" do
   describe "PUT /api/v0.1/trainees/:id" do
-    let(:trainee) { create(:trainee, first_names: "Bob") }
-    let(:other_trainee) { create(:trainee, first_names: "Bob") }
+    let(:trainee) { create(:trainee, :in_progress, first_names: "Bob") }
+    let(:other_trainee) { create(:trainee, :in_progress, first_names: "Bob") }
     let(:provider) { trainee.provider }
 
     context "with a valid authentication token and the feature flag on" do
@@ -20,11 +20,20 @@ describe "Trainees API" do
         expect(response).to have_http_status(:not_found)
       end
 
-      it "returns status 422 if the request body is invalid (if not a serialised trainee)" do
+      it "returns status 422 if the request body is invalid (not a serialised trainee)" do
         put(
           "/api/v0.1/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}" },
           params: { foo: { bar: "Alice" } },
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "returns status 422 if the request data is invalid (has an invalid attribute value)" do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: { data: { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch" } },
         )
         expect(response).to have_http_status(:unprocessable_entity)
       end
