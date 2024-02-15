@@ -149,7 +149,7 @@ en:
     view:
       defer_date_label: Date of deferral
       deferred_before_itt_started: Trainee deferred before their ITT started
-      itt_started_but_trainee_did_not_start: The trainee deferred before starting their ITT
+      itt_started_but_trainee_did_not_start: Deferral date not provided
       summary_title: Deferral details
       start_date_label: *trainee_start_date
   reinstatement_details:
