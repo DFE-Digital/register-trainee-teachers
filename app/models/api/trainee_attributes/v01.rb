@@ -47,25 +47,25 @@ module Api
         attribute attr
       end
 
-      # attribute :placements_attributes, array: true, default: -> { [] }
-      # attribute :degrees_attributes, array: true, default: -> { [] }
+      attribute :placements_attributes, array: true, default: -> { [] }
+      attribute :degrees_attributes, array: true, default: -> { [] }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :first_names, :last_name, length: { maximum: 50 }
       validates :middle_names, length: { maximum: 50 }, allow_nil: true
-      validates :sex, inclusion: { in: ::Trainee.sexes.keys }
+      validates :sex, inclusion: { in: Trainee.sexes.keys }
       validate :date_of_birth_valid
 
       def initialize(attributes = {})
         super(attributes.except(:placements_attributes, :degrees_attributes))
 
-        # attributes[:placements_attributes]&.each do |placement_params|
-        #   placements_attributes << PlacementAttributes.new(placement_params)
-        # end
+        attributes[:placements_attributes]&.each do |placement_params|
+          placements_attributes << PlacementAttributes.new(placement_params)
+        end
 
-        # attributes[:degrees_attributes]&.each do |degree_params|
-        #   degrees_attributes << DegreeAttributes.new(degree_params)
-        # end
+        attributes[:degrees_attributes]&.each do |degree_params|
+          degrees_attributes << DegreeAttributes.new(degree_params)
+        end
       end
 
       def self.from_trainee(trainee)

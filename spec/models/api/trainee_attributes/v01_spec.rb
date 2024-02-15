@@ -2,10 +2,10 @@
 
 require "rails_helper"
 
-RSpec.describe Api::TraineeAttributes do
+RSpec.describe Api::TraineeAttributes::V01 do
   subject { described_class.new }
 
-  Api::TraineeAttributes::ATTRIBUTES.each do |attribute|
+  Api::TraineeAttributes::V01::REQUIRED_ATTRIBUTES.each do |attribute|
     it "validates presence of #{attribute}" do
       subject.valid?
       expect(subject.errors.details[attribute]).to include(error: :blank)
@@ -30,8 +30,14 @@ RSpec.describe Api::TraineeAttributes do
     expect(subject.errors.details[:middle_names]).to include(error: :too_long, count: 50)
   end
 
-  it "validates date_of_birth with" do
+  it "validates date_of_birth given as a string" do
     subject.date_of_birth = (Time.zone.today + 1.day).to_s
+    subject.valid?
+    expect(subject.errors.details[:date_of_birth]).to include(error: :future)
+  end
+
+  it "validates date_of_birth given as a date" do
+    subject.date_of_birth = Time.zone.today + 1.day
     subject.valid?
     expect(subject.errors.details[:date_of_birth]).to include(error: :future)
   end

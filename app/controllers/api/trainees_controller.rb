@@ -18,7 +18,7 @@ module Api
     end
 
     def create
-      trainee_attributes = TraineeAttributes.new(trainee_params)
+      trainee_attributes = trainee_attributes_service.new(trainee_params)
 
       unless trainee_attributes.valid?
         render(json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity)
@@ -60,7 +60,7 @@ module Api
     def trainee_params
       params.require(:data)
         .permit(
-          TraineeAttributes::ATTRIBUTES,
+          trainee_attributes_service::ATTRIBUTES,
           placements_attributes: [PlacementAttributes::ATTRIBUTES],
           degrees_attributes: [DegreeAttributes::ATTRIBUTES],
         )
