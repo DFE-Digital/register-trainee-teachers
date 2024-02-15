@@ -27,6 +27,7 @@ describe "Trainees API" do
           params: { foo: { bar: "Alice" } },
         )
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("Request could not be parsed")
       end
 
       it "returns status 422 if the request data is invalid (has an invalid attribute value)" do
@@ -36,6 +37,9 @@ describe "Trainees API" do
           params: { data: { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch" } },
         )
         expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "First names is too long (maximum is 50 characters)",
+        )
       end
 
       it "returns 404 if the trainee does not belong to the authenticated provider" do

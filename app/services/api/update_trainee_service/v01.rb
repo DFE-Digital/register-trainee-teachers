@@ -12,7 +12,9 @@ module Api
 
       def call
         if @attributes.valid?
-          @trainee.update(@attributes.attributes.select { |_k, v| v.present? })
+          [@trainee.update(@attributes.attributes), @trainee.errors&.full_messages]
+        else
+          [false, @attributes.errors.full_messages]
         end
       end
     end

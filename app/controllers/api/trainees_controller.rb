@@ -41,17 +41,20 @@ module Api
         begin
           attributes = trainee_attributes_service.from_trainee(trainee)
           attributes.assign_attributes(trainee_update_params)
-          if update_trainee_service.call(trainee:, attributes:)
+          succeeded, errors = update_trainee_service_class.call(trainee:, attributes:)
+          if succeeded
             render(json: TraineeSerializer.new(trainee).as_json)
           else
-            # TODO: Add error messages to the response
-            render(json: { error: trainee.errors.full_messages }, status: :unprocessable_entity)
+            render(json: { errors: }, status: :unprocessable_entity)
           end
         rescue ActionController::ParameterMissing
-          render(json: { error: "Trainee not updated" }, status: :unprocessable_entity)
+          render(
+            json: { errors: ["Request could not be parsed"] },
+            status: :unprocessable_entity,
+          )
         end
       else
-        render(json: { error: "Trainee not found" }, status: :not_found)
+        render(json: { errors: ["Trainee not found"] }, status: :not_found)
       end
     end
 
@@ -66,7 +69,7 @@ module Api
         )
     end
 
-    def update_trainee_service
+    def update_trainee_service_class
       Object.const_get("Api::UpdateTraineeService::#{current_version_class_name}")
     end
 
