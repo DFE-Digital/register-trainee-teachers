@@ -7,9 +7,7 @@ class AddEthnicityToBestPracticeNetwork < ActiveRecord::Migration[7.1]
     Service.new.call
   end
 
-  def down
-    raise ActiveRecord::IrreversibleMigration
-  end
+  def down; end
 
   class Service
     def call
@@ -44,12 +42,14 @@ class AddEthnicityToBestPracticeNetwork < ActiveRecord::Migration[7.1]
 
       ethnic_background = ::Hesa::CodeSets::Ethnicities::NAME_MAPPING[ethnicity_split.first]
       ethnic_group = ::Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }.keys.first
-      additional_ethnic_background = ethnicity_split.last
+      additional_ethnic_background = ethnicity_split.length == 1 ? nil : ethnicity_split.last
+      diversity_disclosure = ["Prefer not to say", "Not available"].include?(ethnic_background) ? :diversity_not_disclosed : :diversity_disclosed
 
       trainee.update(
         ethnic_group:,
         ethnic_background:,
         additional_ethnic_background:,
+        diversity_disclosure:,
       )
     end
   end

@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require Rails.root.join("db/data/20240208151204_add_ethnicity_to_best_practice_network")
 
-RSpec.describe AddEthnicityToBestPracticeNetwork::Service do
+RSpec.describe AddEthnicityFromCsv do
   let!(:provider) { create(:provider, code: "6B1") }
   let!(:trainee) { create(:trainee, provider:) }
   let!(:upload) { create(:upload, user: create(:user), name: "bpn-ethnicity.csv") }
   let(:ethnicity) { "Any other ethnic background: romanian" }
   let(:csv_content) { "trainee_id,ethnicity\n#{trainee.trainee_id},#{ethnicity}" }
-  let(:service) { described_class.new }
+  let(:service) { described_class.new(file_name: "bpn-ethnicity.csv", provider_code: "6B1") }
 
   before do
     csv_file = Tempfile.new(["test", ".csv"])
