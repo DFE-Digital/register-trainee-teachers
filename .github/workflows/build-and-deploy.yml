@@ -92,7 +92,7 @@ jobs:
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Run Snyk to check Docker image for vulnerabilities
-      uses: Wandalen/wretry.action@v1.3.0
+      uses: Wandalen/wretry.action@v1.4.4
       env:
         SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
       with:
