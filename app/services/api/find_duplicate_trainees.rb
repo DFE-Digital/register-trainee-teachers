@@ -3,6 +3,7 @@
 module Api
   class FindDuplicateTrainees
     include ServicePattern
+    include FindDuplicatesBase
 
     attr_accessor :provider, :attributes
 
@@ -17,60 +18,32 @@ module Api
 
   private
 
-    # attr_reader :application_record, :raw_trainee, :raw_course, :course
-  
     def date_of_birth
       attributes.date_of_birth
     end
-  
+
     def last_name
       attributes.last_name
     end
 
-    def potential_duplicates
-      provider.trainees.not_withdrawn.or(Trainee.not_awarded)
-        .where(date_of_birth: date_of_birth)
-        .where("last_name ILIKE ?", last_name)
+    def first_names
+      attributes.first_names
     end
 
-    def confirmed_duplicate?(trainee)
-      matching_recruitment_cycle_year?(trainee) &&
-      matching_course_route?(trainee) &&
-      at_least_one_match_identifying_attribute?(trainee)
+    def email
+      attributes.email
     end
 
-    def matching_recruitment_cycle_year?(trainee)
-      trainee.start_academic_cycle&.start_date&.year == raw_course["recruitment_cycle_year"]
+    def training_route
+      attributes.training_route
     end
 
-    def matching_course_route?(trainee)
-      course.present? && trainee.training_route == course["route"]
-    end
+    def recruitment_cycle_year
+      if attributes.itt_start_date.is_a?(String)
+        attributes.itt_start_date = Date.parse(attributes.itt_start_date)
+      end
 
-    def at_least_one_match_identifying_attribute?(trainee)
-      matching_first_name?(trainee) ||
-        matching_email?(trainee)
-    end
-
-    def matching_first_name?(trainee)
-      extract_first_name(trainee.first_names) ==
-        extract_first_name(raw_trainee["first_name"])
-    end
-
-    def matching_email?(trainee)
-      normalise_name(trainee.email) == normalise_name(raw_trainee["email"])
-    end
-
-    def normalise_name(name)
-      name&.strip&.downcase
-    end
-
-    def normalise_and_remove_punctuation(name)
-      normalise_name(name)&.gsub(/[^a-z ]/, "")
-    end
-
-    def extract_first_name(names)
-      normalise_and_remove_punctuation(names)&.partition(" ")&.first
+      attributes.itt_start_date&.year
     end
   end
 end

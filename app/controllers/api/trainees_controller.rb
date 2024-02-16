@@ -25,12 +25,18 @@ module Api
         return
       end
 
-      potential_duplicate = Api::FindDuplicateTrainee.call(
+      potential_duplicates = Api::FindDuplicateTrainees.call(
         provider: current_provider,
         attributes: trainee_attributes,
       )
-      if potential_duplicate.present?
-        render(json: { errors: "Looks like this trainee is already in Register" }, status: :unprocessable_entity)
+      if potential_duplicates.present?
+        render(
+          json: {
+            errors: "This trainee is already in Register",
+            data: potential_duplicates,
+          },
+          status: :conflict,
+        )
         return
       end
 
