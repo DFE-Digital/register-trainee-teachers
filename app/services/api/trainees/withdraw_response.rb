@@ -14,7 +14,7 @@ module Api
       def call
         if withdraw_allowed?
           if save!
-            { json: { data: TraineeSerializer.new(trainee).as_json }, status: :ok }
+            { json: { data: TraineeSerializer.new(trainee).as_hash }, status: :ok }
           else
             validation_errors_response(errors: withdrawal_attributes.errors)
           end
