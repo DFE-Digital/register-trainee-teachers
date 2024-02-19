@@ -43,7 +43,7 @@ module Api
           attributes.assign_attributes(trainee_update_params)
           succeeded, errors = update_trainee_service_class.call(trainee:, attributes:)
           if succeeded
-            render(json: TraineeSerializer.new(trainee).as_json)
+            render(json: { data: TraineeSerializer.new(trainee).as_hash })
           else
             render(json: { errors: }, status: :unprocessable_entity)
           end
