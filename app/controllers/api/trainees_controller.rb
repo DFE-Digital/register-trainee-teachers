@@ -14,7 +14,7 @@ module Api
 
     def show
       trainee = current_provider.trainees.find_by!(slug: params[:id])
-      render(json: TraineeSerializer.new(trainee).as_json)
+      render(json: TraineeSerializer.new(trainee).as_hash)
     end
 
     def create
@@ -32,7 +32,7 @@ module Api
         return
       end
 
-      render(json: TraineeSerializer.new(trainee).as_json, status: :created)
+      render(json: TraineeSerializer.new(trainee).as_hash, status: :created)
     end
 
   private

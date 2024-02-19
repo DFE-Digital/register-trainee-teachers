@@ -17,7 +17,7 @@ describe "Trainees API" do
       end
 
       it "returns the trainee" do
-        parsed_trainee = JSON.parse(TraineeSerializer.new(trainee).as_json)
+        parsed_trainee = JSON.parse(TraineeSerializer.new(trainee).as_hash.to_json)
         expect(response.parsed_body).to eq(parsed_trainee)
       end
 
