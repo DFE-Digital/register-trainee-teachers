@@ -20,6 +20,8 @@
   <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m"><%= dead_job_service.name %></caption>
     <thead class="govuk-table__head">
+      <%= render SortBy::View.new(items: sort_by_items) %>
+
       <tr class="govuk-table__row">
         <% dead_job_service.headers&.each do |header| %>
           <% next if header == :job_id %>
@@ -31,8 +33,7 @@
     </thead>
 
     <tbody class="govuk-table__body">
-      <% trainees.each do |trainee| %>
-        <% row = dead_job_service.rows.select{|row| row[:register_id] == trainee.id}.first %>
+      <% rows.each do |row| %>
           <tr class="govuk-table__row">
             <% row.each do |data| %>
               <% next if data[0] == :job_id %>
@@ -53,5 +54,5 @@
 
 <% end %>
 
-<%= render Paginator::View.new(scope: trainees) %>
+<%= render Paginator::View.new(scope: rows) %>
 

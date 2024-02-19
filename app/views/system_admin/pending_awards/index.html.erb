@@ -11,6 +11,9 @@
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--m">Trainees Pending Award</caption>
       <thead class="govuk-table__head">
+        <tr>
+          <%= render SortBy::View.new(items: sort_by_items) %>
+        </tr>
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">First names</th>
           <th scope="col" class="govuk-table__header">Last name</th>

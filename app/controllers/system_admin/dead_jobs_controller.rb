@@ -2,7 +2,8 @@
 
 module SystemAdmin
   class DeadJobsController < ApplicationController
-    helper_method :dead_job_service, :dead_job_services, :trainees
+    helper_method :dead_job_service, :dead_job_services, :rows, :sort_by_items
+    before_action :redirect_to_default_sort, only: :show
 
     def index; end
 
@@ -29,6 +30,20 @@ module SystemAdmin
 
   private
 
+    def redirect_to_default_sort
+      if params[:sort_by].blank? && request.format.html?
+        redirect_to(action: :show, id: params[:id], sort_by: default_sort_by, status: :temporary_redirect)
+      end
+    end
+
+    def default_sort_by
+      "days_waiting"
+    end
+
+    def sort_by_items
+      ["Days waiting", "TRN", "Register"]
+    end
+
     def job
       Sidekiq::DeadSet.new.find_job(params[:id])
     end
@@ -37,8 +52,16 @@ module SystemAdmin
       @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status:)
     end
 
-    def trainees
-      @trainees = Kaminari.paginate_array(dead_job_service.trainees).page(params[:page] || 1)
+    def sorted_rows
+      @sorted_rows ||= dead_job_service.rows.sort_by { |row| row[sort_by] }.reverse
+    end
+
+    def sort_by
+      @sort_by ||= params.fetch(:sort_by, default_sort_by).to_sym
+    end
+
+    def rows
+      @rows ||= Kaminari.paginate_array(sorted_rows).page(params[:page] || 1)
     end
 
     def include_dqt_status

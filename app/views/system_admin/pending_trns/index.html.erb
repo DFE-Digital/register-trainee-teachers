@@ -14,6 +14,10 @@
       <%= dqt_error %>
     <% end %>
 
+    <div class="govuk-!-padding-bottom-3 govuk-!-padding-top-2">
+      <%= render SortBy::View.new(items: sort_by_items) %>
+    </div>
+
     <%= govuk_accordion do |accordion| %>
       <% @trainees.each do |trainee| %>
         <% accordion.with_section(heading_text: trainee.short_name) do  %>
