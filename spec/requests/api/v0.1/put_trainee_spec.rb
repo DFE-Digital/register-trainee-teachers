@@ -8,6 +8,34 @@ describe "Trainees API" do
     let(:other_trainee) { create(:trainee, :in_progress, first_names: "Bob") }
     let(:provider) { trainee.provider }
 
+    context "with an invalid authentication token and the feature flag on" do
+      let(:token) { "not-a-valid-token" }
+
+      it "returns status 401 unauthorized" do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: { data: { first_names: "Alice" } },
+        )
+        expect(response).to have_http_status(:unauthorized)
+        expect(trainee.reload.first_names).to eq("Bob")
+      end
+    end
+
+    context "with an valid authentication token and the feature flag off", feature_register_api: false do
+      let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+
+      it "returns status 404 not found" do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: { data: { first_names: "Alice" } },
+        )
+        expect(response).to have_http_status(:not_found)
+        expect(trainee.reload.first_names).to eq("Bob")
+      end
+    end
+
     context "with a valid authentication token and the feature flag on" do
       let(:token) { AuthenticationToken.create_with_random_token(provider:) }
 
