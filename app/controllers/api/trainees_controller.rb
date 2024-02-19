@@ -36,25 +36,21 @@ module Api
     end
 
     def update
-      trainee = current_provider&.trainees&.find_by(slug: params[:id])
-      if trainee.present?
-        begin
-          attributes = trainee_attributes_service.from_trainee(trainee)
-          attributes.assign_attributes(trainee_update_params)
-          succeeded, errors = update_trainee_service_class.call(trainee:, attributes:)
-          if succeeded
-            render(json: { data: TraineeSerializer.new(trainee).as_hash })
-          else
-            render(json: { errors: }, status: :unprocessable_entity)
-          end
-        rescue ActionController::ParameterMissing
-          render(
-            json: { errors: ["Request could not be parsed"] },
-            status: :unprocessable_entity,
-          )
+      trainee = current_provider&.trainees&.find_by!(slug: params[:id])
+      begin
+        attributes = trainee_attributes_service.from_trainee(trainee)
+        attributes.assign_attributes(trainee_update_params)
+        succeeded, errors = update_trainee_service_class.call(trainee:, attributes:)
+        if succeeded
+          render(json: { data: TraineeSerializer.new(trainee).as_hash })
+        else
+          render(json: { errors: }, status: :unprocessable_entity)
         end
-      else
-        render(json: { errors: ["Trainee not found"] }, status: :not_found)
+      rescue ActionController::ParameterMissing
+        render(
+          json: { errors: ["Request could not be parsed"] },
+          status: :unprocessable_entity,
+        )
       end
     end
 
