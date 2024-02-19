@@ -17,10 +17,11 @@
 
 <% else %>
 
+  <%= render SortBy::View.new(items: sort_by_items) %>
+
   <table class="govuk-table">
     <caption class="govuk-table__caption govuk-table__caption--m"><%= dead_job_service.name %></caption>
     <thead class="govuk-table__head">
-      <%= render SortBy::View.new(items: sort_by_items) %>
 
       <tr class="govuk-table__row">
         <% dead_job_service.headers&.each do |header| %>
