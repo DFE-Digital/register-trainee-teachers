@@ -4,7 +4,7 @@ class RollbackBackfillMissingHesaDeferralDates < ActiveRecord::Migration[7.1]
   def up
     # Reset the defer_date of all trainees that are deferred and have a hesa student record where
     # defer_date matches their itt_end_date, or their itt_end_date is nil and defer_date matches their hesa_updated_at
-    Trainee.deferred.find_each do |trainee|
+    Trainee.deferred.where.not(hesa_id: nil).find_each do |trainee|
       most_recent_itt_record = trainee.hesa_students.max_by(&:created_at)
       next unless most_recent_itt_record
 
