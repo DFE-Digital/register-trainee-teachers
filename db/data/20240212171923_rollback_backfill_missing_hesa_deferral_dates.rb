@@ -23,7 +23,14 @@ class RollbackBackfillMissingHesaDeferralDates < ActiveRecord::Migration[7.1]
 private
 
   def defer_date_matches_criteria?(trainee, most_recent_itt_record)
-    trainee.defer_date == most_recent_itt_record.itt_end_date ||
-      (most_recent_itt_record.itt_end_date.nil? && trainee.defer_date == most_recent_itt_record.hesa_updated_at)
+    defer_date = standardised_date(trainee.defer_date)
+    itt_end_date = standardised_date(most_recent_itt_record.itt_end_date)
+    hesa_updated_at = standardised_date(most_recent_itt_record.hesa_updated_at)
+
+    defer_date == itt_end_date || (itt_end_date.nil? && defer_date == hesa_updated_at)
+  end
+
+  def standardised_date(date)
+    date&.to_date&.iso8601
   end
 end
