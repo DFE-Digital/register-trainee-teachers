@@ -67,6 +67,9 @@ module Funding
     def grant_and_bursary_funding_row
       funding_text = [grant_text, "<br>", funding_method].join.html_safe
 
+      # Set funding_text to nil if applying_for_grant is nil, which means not all the fields were set for the GrantAndTieredBursaryForm
+      funding_text = nil if data_model.applying_for_grant.nil?
+
       mappable_field(
         funding_text,
         t(".funding_method"),
