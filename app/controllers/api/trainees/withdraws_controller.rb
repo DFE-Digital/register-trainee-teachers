@@ -18,7 +18,7 @@ module Api
       end
 
       def slug
-        @slug ||= params[:trainee_id]
+        @slug ||= params[:trainee_slug]
       end
 
       def withdrawal_params
