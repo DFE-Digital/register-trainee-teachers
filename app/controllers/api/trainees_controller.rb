@@ -13,7 +13,7 @@ module Api
     end
 
     def show
-      trainee = current_provider.trainees.find_by!(slug: params[:id])
+      trainee = current_provider.trainees.find_by!(slug: params[:slug])
       render(json: TraineeSerializer.new(trainee).as_hash)
     end
 
@@ -36,7 +36,7 @@ module Api
     end
 
     def update
-      trainee = current_provider&.trainees&.find_by!(slug: params[:id])
+      trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
       begin
         attributes = trainee_attributes_service.from_trainee(trainee)
         attributes.assign_attributes(trainee_update_params)
