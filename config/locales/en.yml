@@ -718,6 +718,7 @@ en:
         applying_for_bursary: &funding_method_path edit_trainee_funding_bursary_path
         applying_for_grant: *funding_method_path
         custom_bursary_tier: *funding_method_path
+        custom_applying_for_grant: *funding_method_path
         applying_for_scholarship: *funding_method_path
         funding_type: *funding_method_path
         institution: &degree_path degree_path
@@ -772,6 +773,7 @@ en:
         applying_for_grant: *funding_method
         applying_for_scholarship: *funding_method
         custom_bursary_tier: *funding_method
+        custom_applying_for_grant: *funding_method
         funding_type: *funding_method
         institution: *institution
         subject: *subject
