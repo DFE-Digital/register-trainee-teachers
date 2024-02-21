@@ -23,6 +23,8 @@ module ApiRoutes
         get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+/ }, as: :versioned_reference
         get "/:page" => "pages#show", as: :page
       end
+
+      mount Yabeda::Prometheus::Exporter => "/metrics"
     end
   end
 end

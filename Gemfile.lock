@@ -107,6 +107,8 @@ GEM
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
+    anyway_config (2.6.3)
+      ruby-next-core (~> 1.0)
     ast (2.4.2)
     attr_required (1.0.1)
     audited (5.4.3)
@@ -484,6 +486,7 @@ GEM
     progress_bar (1.3.3)
       highline (>= 1.6, < 3)
       options (~> 2.3.0)
+    prometheus-client (4.2.2)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -640,6 +643,7 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-graphviz (1.2.5)
       rexml
+    ruby-next-core (1.0.1)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyntlm (0.6.3)
@@ -761,6 +765,19 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yabeda (0.12.0)
+      anyway_config (>= 1.0, < 3)
+      concurrent-ruby
+      dry-initializer
+    yabeda-prometheus (0.9.1)
+      prometheus-client (>= 3.0, < 5.0)
+      rack
+      yabeda (~> 0.10)
+    yabeda-rails (0.9.0)
+      activesupport
+      anyway_config (>= 1.3, < 3)
+      railties
+      yabeda (~> 0.8)
     zeitwerk (2.6.13)
 
 PLATFORMS
@@ -823,6 +840,7 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   pg_search (~> 2.3)
   progress_bar
+  prometheus-client
   pry-byebug
   puma (~> 6.4)
   pundit
@@ -865,6 +883,8 @@ DEPENDENCIES
   uk_postcode
   webdrivers (~> 5.3)
   webmock
+  yabeda-prometheus
+  yabeda-rails
 
 RUBY VERSION
    ruby 3.2.2p53

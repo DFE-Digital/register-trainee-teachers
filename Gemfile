@@ -96,8 +96,11 @@ gem "activerecord-session_store"
 # Zip file extracting
 gem "rubyzip"
 
-# End-user application performance monitoring
+# Monitoring
+gem "prometheus-client"
 gem "skylight"
+gem "yabeda-prometheus"
+gem "yabeda-rails"
 
 # Run data migrations alongside schema migrations
 gem "data_migrate"
