@@ -2,7 +2,7 @@
 
 module Api
   module Trainees
-    class WithdrawsController < Api::BaseController
+    class WithdrawController < Api::BaseController
       def create
         render(**withdraw_response)
       end
