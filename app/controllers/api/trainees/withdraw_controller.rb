@@ -2,7 +2,7 @@
 
 module Api
   module Trainees
-    class WithdrawsController < Api::BaseController
+    class WithdrawController < Api::BaseController
       def create
         render(**withdraw_response)
       end
@@ -18,7 +18,7 @@ module Api
       end
 
       def slug
-        @slug ||= params[:trainee_id]
+        @slug ||= params[:trainee_slug]
       end
 
       def withdrawal_params

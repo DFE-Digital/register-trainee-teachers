@@ -5,10 +5,10 @@ class TraineeSerializer
     @trainee = trainee
   end
 
-  def as_json
+  def as_hash
     @trainee.attributes.merge(
       placements: @trainee.placements.map(&:attributes),
       degrees: @trainee.degrees.map(&:attributes),
-    ).to_json
+    )
   end
 end

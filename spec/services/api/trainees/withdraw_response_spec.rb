@@ -33,8 +33,7 @@ describe Api::Trainees::WithdrawResponse do
     end
 
     it "uses the trainee serializer" do
-      expect(TraineeSerializer).to receive(:new).with(trainee).and_return(trainee).at_least(:once)
-      expect(trainee).to receive(:as_json).at_least(:once)
+      expect(TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
       subject
     end

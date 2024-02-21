@@ -35,7 +35,8 @@ describe "info endpoint" do
       it "returns status 200 with a valid JSON response" do
         api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body["data"]).to be_present
+
+        expect(response.parsed_body.dig(:data, :slug)).to eql(slug)
       end
 
       it "change the trainee" do
@@ -53,8 +54,7 @@ describe "info endpoint" do
       end
 
       it "uses the trainee serializer" do
-        expect(TraineeSerializer).to receive(:new).with(trainee).and_return(trainee).at_least(:once)
-        expect(trainee).to receive(:as_json).at_least(:once)
+        expect(TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
         api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
       end
