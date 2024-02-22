@@ -26,6 +26,10 @@ module Api
       validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
       validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) }, allow_nil: true
       validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_nil: true
+
+      def self.from_degree(degree)
+        new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) })
+      end
     end
   end
 end
