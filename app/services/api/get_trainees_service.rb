@@ -8,13 +8,17 @@ module Api
     end
 
     def call
-      provider.trainees
-              .joins(:start_academic_cycle)
-              .where(academic_cycles: { id: academic_cycle.id })
-              .where("trainees.updated_at > ?", since)
-              .order("trainees.updated_at #{sort_by}")
-              .page(page)
-              .per(pagination_per_page)
+      trainees = provider.trainees
+                .joins(:start_academic_cycle)
+                .where(academic_cycles: { id: academic_cycle.id })
+                .where("trainees.updated_at > ?", since)
+                .order("trainees.updated_at #{sort_by}")
+                .page(page)
+                .per(pagination_per_page)
+
+      trainees = trainees.where(state: params[:state]) if params[:state].present?
+
+      trainees
     end
 
   private
