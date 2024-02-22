@@ -5,6 +5,9 @@ module Api
     class V01
       include ActiveModel::Model
       include ActiveModel::Attributes
+      include ActiveModel::Validations::Callbacks
+
+      before_validation :set_course_allocation_subject
 
       ATTRIBUTES = %i[
         first_names
@@ -24,6 +27,7 @@ module Api
         course_subject_one
         course_subject_two
         course_subject_three
+        course_allocation_subject
         study_mode
         application_choice_id
       ].freeze
@@ -108,6 +112,11 @@ module Api
         elsif value < 100.years.ago
           errors.add(:date_of_birth, :past)
         end
+      end
+
+      def set_course_allocation_subject
+        self.course_allocation_subject ||=
+          SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
       end
     end
   end

@@ -48,4 +48,11 @@ RSpec.describe Api::TraineeAttributes::V01 do
     subject.valid?
     expect(subject.errors.details[:sex]).to include(error: :inclusion, value: invalid_sex)
   end
+
+  it "derives course_allocation_subject from course_subject_one_name before validation" do
+    subject.course_subject_one = "biology"
+    create(:subject_specialism, name: subject.course_subject_one)
+    subject.valid?
+    expect(subject.course_allocation_subject).to be_present
+  end
 end
