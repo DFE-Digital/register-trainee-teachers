@@ -59,6 +59,17 @@ module Api
         end
       end
 
+      def destroy
+        trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
+        degree = trainee.degrees.find_by!(slug: params[:slug])
+
+        if degree.destroy
+          render(json: { data: degree_serializer_class.new(degree).as_hash })
+        else
+          render(json: { errors: degree.errors.full_messages }, status: :unprocessable_entity)
+        end
+      end
+
     private
 
       def degree_params
