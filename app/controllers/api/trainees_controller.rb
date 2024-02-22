@@ -21,10 +21,7 @@ module Api
       trainee_attributes = trainee_attributes_service.new(trainee_params)
 
       render(
-        Api::CreateTrainee.call(
-          current_provider:,
-          trainee_attributes:,
-        ),
+        CreateTrainee.call(current_provider:, trainee_attributes:),
       )
     end
 
@@ -63,7 +60,7 @@ module Api
     end
 
     def trainee_attributes_service
-      Api::TraineeAttributes.for(current_version)
+      Object.const_get("Api::TraineeAttributes::#{current_version_class_name}")
     end
 
     def current_version_class_name
