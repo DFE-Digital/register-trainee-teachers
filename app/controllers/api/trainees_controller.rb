@@ -20,34 +20,12 @@ module Api
     def create
       trainee_attributes = trainee_attributes_service.new(trainee_params)
 
-      unless trainee_attributes.valid?
-        render(json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity)
-        return
-      end
-
-      duplicate_trainees = Api::FindDuplicateTrainees.call(
-        provider: current_provider,
-        attributes: trainee_attributes,
+      render(
+        Api::CreateTrainee.call(
+          current_provider:,
+          trainee_attributes:,
+        ),
       )
-      if duplicate_trainees.present?
-        render(
-          json: {
-            errors: "This trainee is already in Register",
-            data: duplicate_trainees,
-          },
-          status: :conflict,
-        )
-        return
-      end
-
-      trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
-
-      unless trainee.save
-        render(json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity)
-        return
-      end
-
-      render(json: TraineeSerializer.new(trainee).as_hash, status: :created)
     end
 
     def update

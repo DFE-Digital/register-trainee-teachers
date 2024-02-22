@@ -5,45 +5,45 @@ module Api
     include ServicePattern
     include FindDuplicatesBase
 
-    attr_accessor :provider, :attributes
+    attr_accessor :current_provider, :trainee_attributes
 
-    def initialize(provider:, attributes:)
-      @provider = provider
-      @attributes = attributes
+    def initialize(current_provider:, trainee_attributes:)
+      @current_provider = current_provider
+      @trainee_attributes = trainee_attributes
     end
 
     def call
-      potential_duplicates.select { |trainee| confirmed_duplicate?(trainee) }
+      potential_duplicates(current_provider).select { |trainee| confirmed_duplicate?(trainee) }
     end
 
   private
 
     def date_of_birth
-      attributes.date_of_birth
+      trainee_attributes.date_of_birth
     end
 
     def last_name
-      attributes.last_name
+      trainee_attributes.last_name
     end
 
     def first_names
-      attributes.first_names
+      trainee_attributes.first_names
     end
 
     def email
-      attributes.email
+      trainee_attributes.email
     end
 
     def training_route
-      attributes.training_route
+      trainee_attributes.training_route
     end
 
     def recruitment_cycle_year
-      if attributes.itt_start_date.is_a?(String)
-        attributes.itt_start_date = Date.parse(attributes.itt_start_date)
+      if trainee_attributes.itt_start_date.is_a?(String)
+        trainee_attributes.itt_start_date = Date.parse(trainee_attributes.itt_start_date)
       end
 
-      attributes.itt_start_date&.year
+      trainee_attributes.itt_start_date&.year
     end
   end
 end

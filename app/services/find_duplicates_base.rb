@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FindDuplicatesBase
-  def potential_duplicates
+  def potential_duplicates(provider)
     provider.trainees.not_withdrawn.or(provider.trainees.not_awarded)
       .where(date_of_birth:)
       .where("last_name ILIKE ?", last_name)
