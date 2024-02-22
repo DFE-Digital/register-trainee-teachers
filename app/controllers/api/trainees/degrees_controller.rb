@@ -4,7 +4,7 @@ module Api
   module Trainees
     class DegreesController < Api::BaseController
       def index
-        trainee = current_provider.trainees.find_by!(slug: params[:trainee_id])
+        trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
         trainee.degrees
 
         render(
@@ -14,7 +14,7 @@ module Api
       end
 
       def create
-        trainee = current_provider.trainees.find_by!(slug: params[:trainee_id])
+        trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
 
         # TODO: Refactor this into a service?
         degree_attributes = Api::DegreeAttributes.for(current_version).new(degree_params)

@@ -7,7 +7,7 @@ module ApiRoutes
         resources :trainees, param: :slug, only: %i[index show update create], constraints: RouteConstraints::RegisterApiConstraint do
           scope module: :trainees do
             resource :withdraw, controller: :withdraw, only: :create
-            resources :degrees, only: %i[index create update destroy], constraints: RouteConstraints::RegisterApiConstraint
+            resources :degrees, param: :slug, only: %i[index create update destroy], constraints: RouteConstraints::RegisterApiConstraint
           end
         end
 
