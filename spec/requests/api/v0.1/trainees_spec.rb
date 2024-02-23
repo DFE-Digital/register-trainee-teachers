@@ -152,21 +152,21 @@ describe "Trainees API" do
       let!(:submitted_trainees) { create_list(:trainee, 5, :submitted_for_trn, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 
       it "returns trainees with the specified state when a valid state is provided" do
-        api_get 0.1, :trainees, params: { state: 'submitted_for_trn' }, token: token
+        api_get 0.1, :trainees, params: { state: "submitted_for_trn" }, token: token
 
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body["data"].count).to eq(submitted_trainees.count)
       end
 
       it "returns no trainees when an invalid state is provided" do
-        api_get 0.1, :trainees, params: { state: 'invalid_state' }, token: token
+        api_get 0.1, :trainees, params: { state: "invalid_state" }, token: token
 
         expect(response).to have_http_status(:not_found)
         expect(response.parsed_body["data"]).to be_nil
       end
 
       it "returns all trainees when no state is provided" do
-        api_get 0.1, :trainees, token: token
+        api_get(0.1, :trainees, token:)
 
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body["data"].count).to eq(trainees.count + submitted_trainees.count)
