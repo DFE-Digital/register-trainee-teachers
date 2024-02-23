@@ -19,7 +19,7 @@ module SystemAdmin
 
       case sort_by
       when :days_waiting
-        trainees.sort_by { |t| Date.current - t.recommended_for_award_at.to_date }.reverse
+        trainees.order(recommended_for_award_at: :asc)
       when :trn
         trainees.order(:trn)
       when :register

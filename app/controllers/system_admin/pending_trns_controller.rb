@@ -20,8 +20,6 @@ module SystemAdmin
       case sort_by
       when :days_waiting
         trainees.sort_by { |t| t.dqt_trn_request&.days_waiting || 0 }.reverse
-      when :trn
-        trainees.sort_by { |t| t.trn || 0 }
       when :register
         trainees.sort_by(&:id)
       else
@@ -30,7 +28,7 @@ module SystemAdmin
     end
 
     def sort_by_items
-      ["Days waiting", "TRN", "Register"]
+      ["Days waiting", "Register"]
     end
 
     def default_sort_by
