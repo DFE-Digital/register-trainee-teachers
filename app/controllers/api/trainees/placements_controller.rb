@@ -11,6 +11,9 @@ module Api
       end
 
       def show
+        render(json: { data: serializer_class.new(placement).as_hash }, status: :ok)
+      end
+
       def destroy
         placement.destroy
         render({ json: { data: TraineeSerializer.new(trainee).as_hash }, status: :ok })
