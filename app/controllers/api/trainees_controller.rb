@@ -20,19 +20,9 @@ module Api
     def create
       trainee_attributes = trainee_attributes_service.new(trainee_params)
 
-      unless trainee_attributes.valid?
-        render(json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity)
-        return
-      end
-
-      trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
-
-      unless trainee.save
-        render(json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity)
-        return
-      end
-
-      render(json: TraineeSerializer.new(trainee).as_hash, status: :created)
+      render(
+        CreateTrainee.call(current_provider:, trainee_attributes:),
+      )
     end
 
     def update
