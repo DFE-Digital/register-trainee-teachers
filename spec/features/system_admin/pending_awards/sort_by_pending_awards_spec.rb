@@ -25,8 +25,9 @@ feature "sort by pending awards" do
   end
 
   context "with multiple jobs ordered by TRN" do
-    let!(:trainee_two) { create(:trainee, :recommended_for_award, trn: "000002") }
-    let!(:trainee_one) { create(:trainee, :recommended_for_award, trn: "000001") }
+    let(:trn) { Faker::Number.number(digits: 6) }
+    let!(:trainee_two) { create(:trainee, :recommended_for_award, trn: trn + 1) }
+    let!(:trainee_one) { create(:trainee, :recommended_for_award, trn:) }
 
     before { admin_pending_awards_page.sort_by.trn.click }
 
@@ -41,10 +42,13 @@ feature "sort by pending awards" do
   end
 
   context "with multiple jobs ordered by Register ID" do
-    let!(:trainee_two) { create(:trainee, :recommended_for_award, id: 2000) }
-    let!(:trainee_one) { create(:trainee, :recommended_for_award, id: 1000) }
+    let(:id) { Faker::Number.number(digits: 5) }
+    let!(:trainee_two) { create(:trainee, :recommended_for_award, id: id + 1) }
+    let!(:trainee_one) { create(:trainee, :recommended_for_award, id:) }
 
-    before { admin_pending_awards_page.sort_by.register_id.click }
+    before do
+      admin_pending_awards_page.sort_by.register_id.click
+    end
 
     it "sorts trainees correctly" do
       expect(admin_pending_awards_page.sort_by).to have_link "Days waiting"
