@@ -19,7 +19,7 @@
             <%= govuk_link_to(
               t(".draft_trainees_link", count: @home_view.draft_trainees_count),
               drafts_path,
-              { class: "govuk-link--no-visited-state" }
+              no_visited_state: true,
             )%>
           </li>
         <% end %>
@@ -28,7 +28,7 @@
             <%= govuk_link_to(
               @home_view.apply_drafts_link_text,
               drafts_path("record_source[]": :apply),
-              { class: "govuk-link--no-visited-state" }
+              no_visited_state: true,
             )%>
           </li>
         <% end %>
@@ -37,7 +37,7 @@
             <%= govuk_link_to(
               t(".new_trainee_link"),
               new_trainee_path,
-              { class: "govuk-link--no-visited-state" }
+              no_visited_state: true,
             ) %>
           </li>
         <% end %>
@@ -80,35 +80,35 @@
         <%= govuk_link_to(
           "View all guidance for Register trainee teachers",
           guidance_path,
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
         )%>
       </li>
       <li>
         <%= govuk_link_to(
           "Dates and deadlines for the 2023 to 2024 academic year",
           dates_and_deadlines_guidance_path,
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
         )%>
       </li>
       <li>
         <%= govuk_link_to(
           "Register trainees manually in this service",
           manually_registering_trainees_guidance_path,
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
         )%>
       </li>
       <li>
         <%= govuk_link_to(
           "Register trainees through HESA",
           registering_trainees_through_hesa_guidance_path,
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
         )%>
       </li>
       <li>
         <%= govuk_link_to(
           "Check the data mapping between HESA and Register trainee teachers",
           hesa_register_data_mapping_guidance_url("trainee-progress"),
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
           )%>
       </li>
     </ul>
@@ -120,14 +120,14 @@
       <li>
         <%= govuk_link_to("View news and updates",
           service_updates_path,
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
         )%>
       </li>
       <li>
         <%= govuk_link_to(
           t(".data_sharing_agreement_link"),
           data_sharing_agreement_path,
-          { class: "govuk-link--no-visited-state" }
+          no_visited_state: true,
         )%>
       </li>
       <% if FeatureService.enabled?("enable_feedback_link") %>
@@ -135,7 +135,7 @@
           <%= govuk_link_to(
             t(".give_feedback_link"),
             Settings.feedback_link_url,
-            { class: "govuk-link--no-visited-state" }
+            no_visited_state: true,
           )%>
         </li>
       <% end%>
