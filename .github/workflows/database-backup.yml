@@ -78,7 +78,7 @@ jobs:
 
     - name: Backup Prod DB
       run: |
-        bin/konduit.sh register-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
+        bin/konduit.sh -t 7200 register-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
         tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
 
     - name: Set Connection String
