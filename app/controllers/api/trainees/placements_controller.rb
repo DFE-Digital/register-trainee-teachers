@@ -3,6 +3,14 @@
 module Api
   module Trainees
     class PlacementsController < Api::BaseController
+      def index
+        render(
+          json: { data: trainee.placements.map { |placement| serializer_class.new(placement).as_hash } },
+          status: :ok,
+        )
+      end
+
+      def show
       def destroy
         placement.destroy
         render({ json: { data: TraineeSerializer.new(trainee).as_hash }, status: :ok })
@@ -21,6 +29,10 @@ module Api
       end
 
       def slug = params[:slug]
+
+      def serializer_class
+        Serializer.for(model: :placement, version: current_version)
+      end
     end
   end
 end
