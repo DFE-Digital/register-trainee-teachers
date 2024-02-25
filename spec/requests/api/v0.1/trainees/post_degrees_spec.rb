@@ -82,5 +82,28 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         expect(trainee.reload.degrees.count).to eq(0)
       end
     end
+
+    context "with a duplicate degree" do
+      let!(:existing_degree) do
+        create(
+          :degree,
+          :uk_degree_with_details,
+          trainee: trainee,
+          subject: "Applied linguistics",
+        )
+      end
+
+      it "does not create a new degree and returns a 409 status (conflict) status" do
+        post(
+          "/api/v0.1/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}" },
+          params: {
+            data: degrees_attributes,
+          },
+        )
+        expect(response).to have_http_status(:conflict)
+        expect(trainee.reload.degrees.count).to eq(1)
+      end
+    end
   end
 end

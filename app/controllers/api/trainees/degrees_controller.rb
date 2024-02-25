@@ -15,26 +15,10 @@ module Api
 
       def create
         trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
-
-        # TODO: Refactor this into a service?
         degree_attributes = Api::DegreeAttributes.for(current_version).new(degree_params)
-        unless degree_attributes.valid?
-          render(json: { errors: degree_attributes.errors.full_messages }, status: :unprocessable_entity)
-          return
-        end
-
-        new_degree = trainee.degrees.new(degree_attributes.attributes)
-
-        # TODO: Duplicate matching?
-
-        unless new_degree.save
-          render(json: { errors: new_degree.errors.full_messages }, status: :unprocessable_entity)
-          return
-        end
 
         render(
-          json: { data: degree_serializer_class.new(new_degree).as_hash },
-          status: :created,
+          Api::CreateDegree.call(trainee:, degree_attributes:, current_version:),
         )
       end
 
