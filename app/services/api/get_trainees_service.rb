@@ -16,9 +16,8 @@ module Api
                 .page(page)
                 .per(pagination_per_page)
 
-      trainees = trainees.where(state: params[:state]) if params[:state].present?
-
-      trainees
+      filtered_trainees = ::Trainees::Filter.call(trainees: trainees, filters: filters)
+      filtered_trainees
     end
 
   private
@@ -27,6 +26,10 @@ module Api
 
     def academic_cycle
       @academic_cycle ||= AcademicCycle.for_year(params[:academic_cycle]) || AcademicCycle.current
+    end
+
+    def filters
+      @filters ||= TraineeFilter.new(params: params).filters
     end
   end
 end
