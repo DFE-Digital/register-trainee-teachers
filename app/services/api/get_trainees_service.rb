@@ -16,7 +16,7 @@ module Api
                 .page(page)
                 .per(pagination_per_page)
 
-      filtered_trainees = ::Trainees::Filter.call(trainees: trainees, filters: filters)
+      filtered_trainees = ::Trainees::Filter.call(trainees:, filters:)
       filtered_trainees
     end
 
@@ -29,7 +29,7 @@ module Api
     end
 
     def filters
-      @filters ||= TraineeFilter.new(params: params).filters
+      @filters ||= TraineeFilter.new(params:).filters
     end
   end
 end
