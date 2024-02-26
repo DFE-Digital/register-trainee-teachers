@@ -4,6 +4,9 @@ require "rails_helper"
 
 describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
   context "with a valid authentication token and the feature flag on" do
+    let(:accountancy_subject_uuid) { "917f70f0-5dce-e911-a985-000d3ab79618" }
+    let(:accounting_subject_uuid) { "937f70f0-5dce-e911-a985-000d3ab79618" }
+
     let(:provider) { trainee.provider }
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:auth_token) do
@@ -18,11 +21,11 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         :degree,
         :uk_degree_with_details,
         trainee: trainee,
-        subject_uuid: DfEReference::DegreesQuery::SUBJECTS.all.first.id,
+        subject_uuid: accountancy_subject_uuid,
       )
     end
     let!(:original_subject) { degree.subject }
-    let(:new_subject) { DfEReference::DegreesQuery::SUBJECTS.all.second.name }
+    let(:new_subject) { "Accounting" }
 
     context "with a valid trainee and degree" do
       it "updates a new degree and returns a 200 status (ok)" do
