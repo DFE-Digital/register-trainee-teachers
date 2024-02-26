@@ -43,7 +43,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
     context "with an invalid trainee" do
       let(:trainee_for_another_provider) { create(:trainee) }
 
-      it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
+      it "does not create a new degree and returns a 404 status (not_found) status" do
         post(
           "/api/v0.1/trainees/#{trainee_for_another_provider.slug}/degrees",
           headers: { Authorization: "Bearer #{token}" },

@@ -72,5 +72,20 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         expect(trainee.reload.degrees.first.subject).to eq(original_subject)
       end
     end
+
+    context "with an invalid request structure" do
+      it "does not update the degree and returns a 422 status (unprocessable_entity)" do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: {
+            foo: { subject: "new_subject" },
+          },
+        )
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to eq(["Request could not be parsed"])
+        expect(trainee.reload.degrees.first.subject).to eq(original_subject)
+      end
+    end
   end
 end
