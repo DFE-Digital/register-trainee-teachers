@@ -8,14 +8,14 @@ module Api
         trainee.degrees
 
         render(
-          json: { data: trainee.degrees.map { |degree| degree_serializer_class.for(current_version).new(degree).as_hash } },
+          json: { data: trainee.degrees.map { |degree| degree_serializer_class.new(degree).as_hash } },
           status: :ok,
         )
       end
 
       def create
         trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
-        degree_attributes = Api::DegreeAttributes.for(current_version).new(degree_params)
+        degree_attributes = degree_attributes_service.new(degree_params)
 
         render(
           Api::CreateDegree.call(trainee:, degree_attributes:, current_version:),
@@ -27,7 +27,7 @@ module Api
         degree = trainee.degrees.find_by!(slug: params[:slug])
 
         begin
-          attributes = Api::DegreeAttributes.for(current_version).from_degree(degree)
+          attributes = degree_attributes_service.from_degree(degree)
           attributes.assign_attributes(degree_update_params)
           succeeded, errors = update_degree_service_class.call(degree:, attributes:)
           if succeeded
@@ -58,7 +58,7 @@ module Api
 
       def degree_params
         params.require(:data)
-          .permit(Api::DegreeAttributes.for(current_version)::ATTRIBUTES)
+          .permit(degree_attributes_service::ATTRIBUTES)
       end
 
       def degree_update_params
@@ -71,6 +71,10 @@ module Api
 
       def degree_serializer_class
         DegreeSerializer.for(current_version)
+      end
+
+      def degree_attributes_service
+        Api::DegreeAttributes.for(current_version)
       end
     end
   end
