@@ -6,7 +6,12 @@ module SystemAdmin
     before_action :user, only: %i[show delete destroy]
 
     def index
-      @users = filtered_users(policy_scope(User.kept.includes(:providers, :lead_schools), policy_scope_class: UserPolicy).order_by_last_name.page(params[:page] || 1))
+      @users = filtered_users(
+        policy_scope(
+          User.kept.includes(:providers, :lead_schools),
+          policy_scope_class: UserPolicy,
+        ).order_by_last_name.page(params[:page] || 1).per(UserSearch::DEFAULT_LIMIT),
+      )
     end
 
     def show; end
