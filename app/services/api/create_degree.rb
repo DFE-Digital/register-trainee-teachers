@@ -15,8 +15,6 @@ module Api
     def call
       return validation_error_response(degree_attributes) unless degree_attributes.valid?
 
-      return duplicate_degrees_response(duplicate_degrees) if duplicate_degrees.present?
-
       degree = trainee.degrees.new(degree_attributes.attributes)
       unless degree.save
         return save_errors_response(degree)
@@ -26,23 +24,6 @@ module Api
     end
 
   private
-
-    def duplicate_degrees
-      @duplicate_degrees ||= FindDuplicateDegrees.call(
-        trainee:,
-        degree_attributes:,
-      )
-    end
-
-    def duplicate_degrees_response(duplicate_degrees)
-      {
-        json: {
-          errors: "This degree is already in Register",
-          data: duplicate_degrees,
-        },
-        status: :conflict,
-      }
-    end
 
     def save_errors_response(degree)
       { json: { errors: degree.errors.full_messages }, status: :unprocessable_entity }
