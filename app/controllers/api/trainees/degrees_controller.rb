@@ -5,7 +5,6 @@ module Api
     class DegreesController < Api::BaseController
       def index
         trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
-        trainee.degrees
 
         render(
           json: { data: trainee.degrees.map { |degree| degree_serializer_class.new(degree).as_hash } },
@@ -61,16 +60,14 @@ module Api
           .permit(degree_attributes_service::ATTRIBUTES)
       end
 
-      def degree_update_params
-        degree_params
-      end
+      alias_method :degree_update_params, :degree_params
 
       def update_degree_service_class
         Api::UpdateDegreeService.for(current_version)
       end
 
       def degree_serializer_class
-        DegreeSerializer.for(current_version)
+        Api::DegreeSerializer.for(current_version)
       end
 
       def degree_attributes_service

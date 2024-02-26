@@ -64,7 +64,7 @@ module Api
     end
 
     def degree_attributes_service
-      Object.const_get("Api::DegreeAttributes::#{current_version_class_name}")
+      Api::DegreeAttributes.for(current_version)
     end
 
     def current_version_class_name
