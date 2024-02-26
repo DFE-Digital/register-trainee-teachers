@@ -17,6 +17,8 @@ private
     return {} if years.blank?
 
     years.each_with_object({}) do |year, hash|
+      next if year.blank?
+
       year_int = year.split("/").first.to_i
       hash["#{year_int} to #{year_int + 1}"] = funding_trainee_summary_path(year_int)
     end
