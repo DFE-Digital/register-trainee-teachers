@@ -29,6 +29,19 @@ module Api
         end
       end
 
+      def update
+        placement_attributes = attributes_class.new(placement_params)
+        placement.assign_attributes(placement_attributes.attributes)
+
+        if placement_attributes.valid? && placement.save
+          render(json: { data: serializer_class.new(placement).as_hash }, status: :ok)
+        else
+          errors = placement_attributes.errors || placement.errors
+          render(json: { errors: errors.full_messages }, status: :unprocessable_entity)
+
+        end
+      end
+
       def destroy
         placement.destroy
         render({ json: { data: TraineeSerializer.new(trainee).as_hash }, status: :ok })
