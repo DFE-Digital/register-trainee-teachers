@@ -87,7 +87,7 @@ private
   end
 
   def set_sentry_organisation_context
-    return unless defined?(current_user) && current_user.present? && current_user.organisation.present?
+    return unless defined?(current_user) && current_user&.organisation.present?
 
     Sentry.set_tags(organisation: current_user.organisation.name)
   end
