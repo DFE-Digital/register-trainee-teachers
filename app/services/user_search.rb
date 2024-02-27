@@ -13,7 +13,7 @@ class UserSearch
   end
 
   MIN_QUERY_LENGTH = 2
-  DEFAULT_LIMIT = 15
+  DEFAULT_LIMIT = Settings.pagination.records_per_page
 
   def initialize(query: nil, limit: DEFAULT_LIMIT, scope: User.all)
     @query = ReplaceAbbreviation.call(string: StripPunctuation.call(string: query))
