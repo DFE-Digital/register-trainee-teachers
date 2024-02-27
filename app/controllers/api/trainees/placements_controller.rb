@@ -15,31 +15,11 @@ module Api
       end
 
       def create
-        placement_attributes = attributes_class.new(placement_params)
-        new_placement = trainee.placements.new(placement_attributes.attributes)
-
-        if placement_attributes.valid? && new_placement.save
-          render(
-            json: { data: serializer_class.new(new_placement).as_hash },
-            status: :created,
-          )
-        else
-          errors = placement_attributes.errors || new_placement.errors
-          render(json: { errors: errors.full_messages }, status: :unprocessable_entity)
-        end
+        render(**PlacementResponse.call(placement: new_placement, params: placement_params, version: version))
       end
 
       def update
-        placement_attributes = attributes_class.new(placement_params)
-        placement.assign_attributes(placement_attributes.attributes)
-
-        if placement_attributes.valid? && placement.save
-          render(json: { data: serializer_class.new(placement).as_hash }, status: :ok)
-        else
-          errors = placement_attributes.errors || placement.errors
-          render(json: { errors: errors.full_messages }, status: :unprocessable_entity)
-
-        end
+        render(**PlacementResponse.call(placement: placement, params: placement_params, version: version))
       end
 
       def destroy
@@ -76,6 +56,10 @@ module Api
       def placement_params
         params.require(:data)
           .permit(attributes_class::ATTRIBUTES)
+      end
+
+      def new_placement
+        @new_placement = trainee.placements.new
       end
     end
   end
