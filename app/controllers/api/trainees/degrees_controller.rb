@@ -67,7 +67,7 @@ module Api
       end
 
       def degree_serializer_class
-        Api::DegreeSerializer.for(current_version)
+        DegreeSerializer.for(current_version)
       end
 
       def degree_attributes_service

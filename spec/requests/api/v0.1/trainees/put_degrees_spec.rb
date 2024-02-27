@@ -44,7 +44,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
     context "with an invalid trainee" do
       let(:trainee_for_another_provider) { create(:trainee) }
 
-      it "does not update the degree and returns a 422 status (unprocessable_entity)" do
+      it "does not update the degree and returns a 404 status (not_found)" do
         put(
           "/api/v0.1/trainees/#{trainee_for_another_provider.slug}/degrees/#{degree.slug}",
           headers: { Authorization: "Bearer #{token}" },
