@@ -68,7 +68,7 @@ module Api
         end
 
         attributes[:degrees_attributes]&.each do |degree_params|
-          degrees_attributes << DegreeAttributes.new(degree_params)
+          degrees_attributes << DegreeAttributes::V01.new(degree_params)
         end
       end
 
