@@ -21,6 +21,7 @@ class AcademicCycle < ApplicationRecord
   validate :start_date_before_end_date
 
   scope :trainees_filter, -> { order(start_date: :desc).limit(3) }
+  scope :since_year, ->(year) { where("start_date >= ?", Date.new(year)) }
 
   def self.for_year(year)
     where("extract(year from start_date) = ?", year.to_i).first
