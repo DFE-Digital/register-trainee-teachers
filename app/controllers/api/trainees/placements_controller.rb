@@ -15,11 +15,11 @@ module Api
       end
 
       def create
-        render(**PlacementResponse.call(placement: new_placement, params: placement_params, version: version))
+        render(**SavePlacementResponse.call(placement: new_placement, params: placement_params, version: version))
       end
 
       def update
-        render(**PlacementResponse.call(placement: placement, params: placement_params, version: version))
+        render(**SavePlacementResponse.call(placement: placement, params: placement_params, version: version))
       end
 
       def destroy

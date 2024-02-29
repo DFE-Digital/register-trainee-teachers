@@ -8,7 +8,7 @@ module ApiRoutes
           scope module: :trainees do
             resource :withdraw, controller: :withdraw, only: :create
             resources :degrees, param: :slug, only: %i[index create update destroy]
-            resources :placements, param: :slug
+            resources :placements, param: :slug, only: %I[index show create update destroy]
           end
         end
 

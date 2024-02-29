@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::Trainees::PlacementResponse do
+describe Api::Trainees::SavePlacementResponse do
   let(:placement_response) { described_class.call(placement:, params:, version:) }
   let(:params) do
     {}

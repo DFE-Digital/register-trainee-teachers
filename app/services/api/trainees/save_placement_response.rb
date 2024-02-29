@@ -2,7 +2,7 @@
 
 module Api
   module Trainees
-    class PlacementResponse
+    class SavePlacementResponse
       include ServicePattern
       include Api::ErrorResponse
 
@@ -14,24 +14,24 @@ module Api
       end
 
       def call
-        if save!
+        if save
           { json: { data: serializer_class.new(placement).as_hash }, status: status }
         else
           validation_errors_response(errors:)
         end
       end
 
-      delegate :assign_attributes, :save, :new_record?, to: :placement
+      delegate :assign_attributes, :new_record?, to: :placement
       delegate :valid?, :attributes, to: :placement_attributes
 
     private
 
       attr_reader :placement, :params, :version, :status
 
-      def save!
+      def save
         assign_attributes(attributes)
 
-        if valid? && save
+        if valid? && placement.save
           true
         else
           false
