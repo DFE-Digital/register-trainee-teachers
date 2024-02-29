@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "post /trainees/:trainee_slug/placements/` endpoint" do
+describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
   context "with a valid authentication token" do
     let(:provider) { trainee.provider }
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }

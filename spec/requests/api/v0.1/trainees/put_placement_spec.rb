@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "put /trainees/:trainee_slug/placements/:slug` endpoint" do
+describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
   context "with a valid authentication token" do
     let(:provider) { trainee.provider }
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }

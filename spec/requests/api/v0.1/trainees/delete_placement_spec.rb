@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
+describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
   context "with a valid authentication token" do
     let(:token) { "trainee_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
