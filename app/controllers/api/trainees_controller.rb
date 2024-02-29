@@ -50,9 +50,13 @@ module Api
       params.require(:data)
         .permit(
           trainee_attributes_service::ATTRIBUTES,
-          placements_attributes: [PlacementAttributes::ATTRIBUTES],
+          placements_attributes: [placements_attributes],
           degrees_attributes: [degree_attributes_service::ATTRIBUTES],
         )
+    end
+
+    def placements_attributes
+      Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
     end
 
     def update_trainee_service_class
@@ -74,5 +78,7 @@ module Api
     def trainee_update_params
       params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
     end
+
+    alias_method :version, :current_version
   end
 end

@@ -64,7 +64,7 @@ module Api
         super(attributes.except(:placements_attributes, :degrees_attributes))
 
         attributes[:placements_attributes]&.each do |placement_params|
-          placements_attributes << PlacementAttributes.new(placement_params)
+          placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
         end
 
         attributes[:degrees_attributes]&.each do |degree_params|
