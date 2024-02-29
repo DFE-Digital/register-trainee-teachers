@@ -123,13 +123,17 @@ module Api
 
       def set_progress
         if errors.blank?
-          require 'pry'; binding.pry
           self.progress ||= {}
           progress[:personal_details] = true
           progress[:contact_details] = true
           progress[:diversity] = true
-          progress[:degrees] = true
+          progress[:course_details] = true
+          progress[:training_details] = true
+          progress[:trainee_start_status] = true
           progress[:trainee_data] = true
+          progress[:schools] = true
+          progress[:funding] = true
+          progress[:iqts_country] = true
         end
       end
     end
