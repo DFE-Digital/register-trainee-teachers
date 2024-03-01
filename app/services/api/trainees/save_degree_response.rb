@@ -15,6 +15,7 @@ module Api
 
       def call
         if save
+          update_progress
           { json: { data: serializer_class.new(degree).as_hash }, status: status }
         else
           validation_errors_response(errors:)
@@ -35,6 +36,13 @@ module Api
           true
         else
           false
+        end
+      end
+
+      def update_progress
+        if degree.trainee.degrees.present?
+          degree.trainee.progress[:degrees] = true
+          degree.trainee.save!
         end
       end
 

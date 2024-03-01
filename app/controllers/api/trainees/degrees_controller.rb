@@ -65,10 +65,6 @@ module Api
 
       alias_method :degree_update_params, :degree_params
 
-      # def update_degree_service_class
-      #   Api::UpdateDegreeService.for(current_version)
-      # end
-
       def degree_serializer_class
         DegreeSerializer.for(current_version)
       end
