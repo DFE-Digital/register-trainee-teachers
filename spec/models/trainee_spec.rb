@@ -349,7 +349,9 @@ describe Trainee do
   end
 
   context "instance methods" do
-    subject { create(:trainee) }
+    subject { trainee }
+
+    let(:trainee) { create(:trainee) }
 
     describe "#sha" do
       context "when a field value has changed" do
@@ -380,7 +382,7 @@ describe Trainee do
       context "when the dttp_update_sha is updated" do
         it "doesn't alter the sha" do
           expect {
-            subject.update(dttp_update_sha: subject.sha)
+            trainee.update(dttp_update_sha: subject.sha)
           }.not_to(change { subject.sha })
         end
       end
