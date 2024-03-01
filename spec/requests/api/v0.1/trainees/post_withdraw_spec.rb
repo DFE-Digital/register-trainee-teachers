@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "withdraw endpoint" do
+describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
   context "with a valid authentication token" do
     let(:token) { "trainee_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
@@ -12,7 +12,10 @@ describe "withdraw endpoint" do
       let(:slug) { "non-existant" }
 
       it "returns status 404 with a valid JSON response" do
-        api_post(0.1, "/trainees/#{slug}/withdraw", token:)
+        post(
+          "/api/v0.1/trainees/#{slug}/withdraw",
+          headers: { Authorization: "Bearer #{token}" },
+        )
 
         expect(response).to have_http_status(:not_found)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Trainee(s) not found" })
@@ -33,7 +36,11 @@ describe "withdraw endpoint" do
       let(:slug) { trainee.slug }
 
       it "returns status 200 with a valid JSON response" do
-        api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
+        post(
+          "/api/v0.1/trainees/#{slug}/withdraw",
+          headers: { Authorization: "Bearer #{token}" },
+          params: params,
+        )
         expect(response).to have_http_status(:ok)
 
         expect(response.parsed_body.dig(:data, :slug)).to eql(slug)
@@ -41,7 +48,11 @@ describe "withdraw endpoint" do
 
       it "change the trainee" do
         expect {
-          api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
+          post(
+            "/api/v0.1/trainees/#{slug}/withdraw",
+            headers: { Authorization: "Bearer #{token}" },
+            params: params,
+          )
         } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:withdraw_reasons_details])
         .and change { trainee.reload.withdraw_date }.from(nil)
         .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
@@ -50,20 +61,32 @@ describe "withdraw endpoint" do
       it "calls the dqt withdraw service" do
         expect(Trainees::Withdraw).to receive(:call).with(trainee:).at_least(:once)
 
-        api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
+        post(
+          "/api/v0.1/trainees/#{slug}/withdraw",
+          headers: { Authorization: "Bearer #{token}" },
+          params: params,
+        )
       end
 
       it "uses the trainee serializer" do
         expect(TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
-        api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
+        post(
+          "/api/v0.1/trainees/#{slug}/withdraw",
+          headers: { Authorization: "Bearer #{token}" },
+          params: params,
+        )
       end
 
       context "with invalid params" do
         let(:params) { { withdraw_reasons_details: nil, withdraw_date: nil } }
 
         it "returns status 422 with a valid JSON response" do
-          api_post(0.1, "/trainees/#{slug}/withdraw", token:, params:)
+          post(
+            "/api/v0.1/trainees/#{slug}/withdraw",
+            headers: { Authorization: "Bearer #{token}" },
+            params: params,
+          )
 
           expect(response).to have_http_status(:unprocessable_entity)
 
@@ -86,7 +109,10 @@ describe "withdraw endpoint" do
       let(:slug) { trainee.slug }
 
       it "returns status 422 with a valid JSON response" do
-        api_post(0.1, "/trainees/#{slug}/withdraw", token:)
+        post(
+          "/api/v0.1/trainees/#{slug}/withdraw",
+          headers: { Authorization: "Bearer #{token}" },
+        )
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "StateTransitionError", message: "It's not possible to perform this action while the trainee is in its current state" })
       end

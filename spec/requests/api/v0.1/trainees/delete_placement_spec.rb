@@ -13,8 +13,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
       let(:slug) { "non-existant" }
 
       it "returns status 404 with a valid JSON response" do
-        api_delete(0.1, "/trainees/#{trainee_slug}/placements/#{slug}", token:)
-
+        delete "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token }
         expect(response).to have_http_status(:not_found)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Trainee(s) not found" })
       end
@@ -26,7 +25,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
       let(:slug) { "non-existant" }
 
       it "returns status 404 with a valid JSON response" do
-        api_delete(0.1, "/trainees/#{trainee_slug}/placements/#{slug}", token:)
+        delete "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token }
 
         expect(response).to have_http_status(:not_found)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Placement(s) not found" })
@@ -39,15 +38,15 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
       let(:slug) { trainee.placements.last.slug }
 
       it "returns status 200 with a valid JSON response" do
-        api_delete(0.1, "/trainees/#{trainee_slug}/placements/#{slug}", token:)
-        expect(response).to have_http_status(:ok)
+        delete "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token }
 
+        expect(response).to have_http_status(:ok)
         expect(response.parsed_body.dig(:data, :slug)).to eql(trainee_slug)
       end
 
       it "removes the specified placement" do
         expect {
-          api_delete(0.1, "/trainees/#{trainee_slug}/placements/#{slug}", token:)
+          delete "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token }
         } .to change { trainee.reload.placements.count }.from(2).to(1)
         .and change { trainee.reload.placements.exists?(slug:) }.from(true).to(false)
       end
