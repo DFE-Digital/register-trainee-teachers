@@ -94,7 +94,7 @@ describe "Trainees API" do
       end
 
       it "sets the progress data structure" do
-        expect(trainee.progress.personal_details).to be(true)
+        expect(Trainee.last.progress.personal_details).to be(true)
       end
     end
 
