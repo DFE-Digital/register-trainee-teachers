@@ -30,11 +30,6 @@ module Api
             version: current_version,
           ),
         )
-      rescue ActionController::ParameterMissing
-        render(
-          json: { errors: ["Request could not be parsed"] },
-          status: :unprocessable_entity,
-        )
       end
 
       def destroy
