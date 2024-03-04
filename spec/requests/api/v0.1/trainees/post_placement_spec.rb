@@ -29,6 +29,11 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           expect(trainee.reload.placements.first.postcode).to be_blank
           expect(trainee.reload.placements.first.urn).to be_blank
         end
+
+        it "updates the progress attribute on the trainee" do
+          api_post(0.1, "/trainees/#{trainee_slug}/placements", token:, params:)
+          expect(trainee.reload.progress[:placements]).to be(true)
+        end
       end
 
       context "create placement without school_id" do

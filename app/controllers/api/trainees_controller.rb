@@ -36,11 +36,6 @@ module Api
         else
           render(json: { errors: }, status: :unprocessable_entity)
         end
-      rescue ActionController::ParameterMissing
-        render(
-          json: { errors: ["Request could not be parsed"] },
-          status: :unprocessable_entity,
-        )
       end
     end
 

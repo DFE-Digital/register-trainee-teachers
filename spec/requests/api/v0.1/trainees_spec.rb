@@ -92,6 +92,10 @@ describe "Trainees API" do
       it "returns status code 201" do
         expect(response).to have_http_status(:created)
       end
+
+      it "sets the progress data structure" do
+        expect(Trainee.last.progress.personal_details).to be(true)
+      end
     end
 
     context "when the request is invalid", feature_register_api: true do

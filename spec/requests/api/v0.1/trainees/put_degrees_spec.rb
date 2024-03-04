@@ -36,6 +36,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
             data: { subject: new_subject },
           },
         )
+        expect(response).to have_http_status(:ok)
         expect(response.parsed_body["data"]).to be_present
         expect(trainee.reload.degrees.first.subject).to eq(new_subject)
       end

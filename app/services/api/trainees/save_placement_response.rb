@@ -15,6 +15,7 @@ module Api
 
       def call
         if save
+          update_progress
           { json: { data: serializer_class.new(placement).as_hash }, status: status }
         else
           validation_errors_response(errors:)
@@ -53,6 +54,13 @@ module Api
       end
 
       def errors = placement_attributes.errors || placement.errors
+
+      def update_progress
+        if placement.trainee.placements.present?
+          placement.trainee.progress[:placements] = true
+          placement.trainee.save!
+        end
+      end
     end
   end
 end

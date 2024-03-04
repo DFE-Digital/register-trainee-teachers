@@ -38,6 +38,17 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         expect(response.parsed_body["data"]).to be_present
         expect(trainee.reload.degrees.count).to eq(1)
       end
+
+      it "updates the progress attribute on the trainee" do
+        post(
+          "/api/v0.1/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}" },
+          params: {
+            data: degrees_attributes,
+          },
+        )
+        expect(trainee.reload.progress[:degrees]).to be(true)
+      end
     end
 
     context "with an invalid trainee" do
