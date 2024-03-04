@@ -14,9 +14,10 @@ describe Api::FindDuplicateTrainees do
     )
   end
   let(:version) { "v0.1" }
+  let(:trainee_attributes) { Api::Attributes.for(model: :Trainee, version: version) }
 
   it "does not return trainees for a different provider" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bob",
       last_name: "Roberts",
       date_of_birth: trainee.date_of_birth,
@@ -28,7 +29,7 @@ describe Api::FindDuplicateTrainees do
   end
 
   it "does not return trainees with a different date of birth" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bob",
       last_name: "Roberts",
       date_of_birth: trainee.date_of_birth + 1.day,
@@ -40,7 +41,7 @@ describe Api::FindDuplicateTrainees do
   end
 
   it "does not return trainees with a different last name" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bob",
       last_name: "Jones",
       date_of_birth: trainee.date_of_birth,
@@ -52,7 +53,7 @@ describe Api::FindDuplicateTrainees do
   end
 
   it "returns trainees that are an exact match" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bob",
       last_name: "Roberts",
       date_of_birth: trainee.date_of_birth,
@@ -64,7 +65,7 @@ describe Api::FindDuplicateTrainees do
   end
 
   it "returns trainees that are an inexact match (different email)" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bob",
       last_name: "Roberts",
       date_of_birth: trainee.date_of_birth,
@@ -77,7 +78,7 @@ describe Api::FindDuplicateTrainees do
   end
 
   it "returns trainees that are an inexact match (different first name)" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bobbie",
       last_name: "Roberts",
       date_of_birth: trainee.date_of_birth,
@@ -90,7 +91,7 @@ describe Api::FindDuplicateTrainees do
   end
 
   it "doesn't return trainees that are have a different first name and email" do
-    attributes = Api::TraineeAttributes.for(version).new(
+    attributes = trainee_attributes.new(
       first_names: "Bobbie",
       last_name: "Roberts",
       date_of_birth: trainee.date_of_birth,

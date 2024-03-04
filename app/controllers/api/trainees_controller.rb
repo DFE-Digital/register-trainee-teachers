@@ -59,7 +59,7 @@ module Api
     end
 
     def trainee_attributes_service
-      Object.const_get("Api::TraineeAttributes::#{current_version_class_name}")
+      Api::Attributes.for(model: :trainee, version: version)
     end
 
     def degree_attributes
