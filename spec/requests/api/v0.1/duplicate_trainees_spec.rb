@@ -8,7 +8,7 @@ describe "Trainees API" do
   let(:provider) { trainee.provider }
   let(:token) { AuthenticationToken.create_with_random_token(provider:) }
 
-  describe "POST /api/v0.1/trainees" do
+  describe "`POST /api/v0.1/trainees` endpoint" do
     let(:valid_attributes) do
       {
         data: {
@@ -29,9 +29,12 @@ describe "Trainees API" do
       }
     end
 
-    context "when the request attempts to create a duplicate record", feature_register_api: true do
+    context "when the request attempts to create a duplicate record" do
       it "returns status 409 (conflict) with the potential duplicates and does not create a trainee record" do
-        expect { api_post 0.1, :trainees, params: valid_attributes, token: "Bearer #{token}" }.not_to change { Trainee.count }
+        expect {
+          post "/api/v0.1/trainees", params: valid_attributes, headers: { Authorization: token }
+        }.not_to change { Trainee.count }
+
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body[:data].count).to be(1)
       end

@@ -13,10 +13,9 @@ describe "`GET /trainees/:trainee_slug/placements` endpoint" do
       let(:trainee) { create(:trainee, :with_placements) }
 
       it "returns status 200 with a valid JSON response" do
-        api_get(0.1, "/trainees/#{trainee_slug}/placements", token:)
+        get "/api/v0.1//trainees/#{trainee_slug}/placements", headers: { Authorization: token }
 
         expect(response).to have_http_status(:ok)
-
         expect(response.parsed_body[:data]&.map { |x| x["slug"] }).to match_array(placements_slugs)
       end
     end
@@ -25,7 +24,7 @@ describe "`GET /trainees/:trainee_slug/placements` endpoint" do
       let(:trainee) { create(:trainee) }
 
       it "returns status 200 with a valid JSON response" do
-        api_get(0.1, "/trainees/#{trainee_slug}/placements", token:)
+        get "/api/v0.1//trainees/#{trainee_slug}/placements", headers: { Authorization: token }
 
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body["data"]).to be_empty
