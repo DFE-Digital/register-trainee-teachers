@@ -7,7 +7,7 @@ module Api
         trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
 
         render(
-          json: { data: trainee.degrees.map { |degree| degree_serializer_class.new(degree).as_hash } },
+          json: { data: trainee.degrees.map { |degree| serializer_class.new(degree).as_hash } },
           status: :ok,
         )
       end
@@ -33,11 +33,8 @@ module Api
       end
 
       def destroy
-        trainee = current_provider.trainees.find_by!(slug: params[:trainee_slug])
-        degree = trainee.degrees.find_by!(slug: params[:slug])
-
         if degree.destroy
-          render(json: { data: degree_serializer_class.new(degree).as_hash })
+          render(json: { data: serializer_class.new(degree).as_hash })
         else
           render(json: { errors: degree.errors.full_messages }, status: :unprocessable_entity)
         end
@@ -58,10 +55,8 @@ module Api
         @degree ||= trainee.degrees.find_by!(slug: params[:slug])
       end
 
-      alias_method :degree_update_params, :degree_params
-
-      def degree_serializer_class
-        DegreeSerializer.for(current_version)
+      def serializer_class
+        Serializer.for(model:, version:)
       end
 
       def attributes_class
@@ -75,6 +70,7 @@ module Api
       def model = :degree
 
       alias_method :version, :current_version
+      alias_method :degree_update_params, :degree_params
     end
   end
 end
