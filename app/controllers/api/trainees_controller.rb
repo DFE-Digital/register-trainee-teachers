@@ -20,19 +20,9 @@ module Api
     def create
       trainee_attributes = trainee_attributes_service.new(trainee_params)
 
-      unless trainee_attributes.valid?
-        render(json: { errors: trainee_attributes.errors.full_messages }, status: :unprocessable_entity)
-        return
-      end
-
-      trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
-
-      unless trainee.save
-        render(json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity)
-        return
-      end
-
-      render(json: TraineeSerializer.new(trainee).as_hash, status: :created)
+      render(
+        CreateTrainee.call(current_provider:, trainee_attributes:),
+      )
     end
 
     def update
@@ -46,11 +36,6 @@ module Api
         else
           render(json: { errors: }, status: :unprocessable_entity)
         end
-      rescue ActionController::ParameterMissing
-        render(
-          json: { errors: ["Request could not be parsed"] },
-          status: :unprocessable_entity,
-        )
       end
     end
 
@@ -60,9 +45,13 @@ module Api
       params.require(:data)
         .permit(
           trainee_attributes_service::ATTRIBUTES,
-          placements_attributes: [PlacementAttributes::ATTRIBUTES],
-          degrees_attributes: [DegreeAttributes::ATTRIBUTES],
+          placements_attributes: [placements_attributes],
+          degrees_attributes: [degree_attributes],
         )
+    end
+
+    def placements_attributes
+      Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
     end
 
     def update_trainee_service_class
@@ -70,7 +59,11 @@ module Api
     end
 
     def trainee_attributes_service
-      Object.const_get("Api::TraineeAttributes::#{current_version_class_name}")
+      Api::Attributes.for(model: :trainee, version: version)
+    end
+
+    def degree_attributes
+      Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
     end
 
     def current_version_class_name
@@ -80,5 +73,7 @@ module Api
     def trainee_update_params
       params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
     end
+
+    alias_method :version, :current_version
   end
 end

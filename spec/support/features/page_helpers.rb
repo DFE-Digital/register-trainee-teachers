@@ -418,6 +418,10 @@ module Features
       @admin_pending_trns_page ||= PageObjects::SystemAdmin::PendingTrns::PendingTrnsSummary.new
     end
 
+    def admin_pending_awards_page
+      @admin_pending_awards_page ||= PageObjects::SystemAdmin::PendingAwards::PendingAwardsSummary.new
+    end
+
     def admin_users_index_page
       @admin_users_index_page ||= PageObjects::SystemAdmin::Users::Index.new
     end

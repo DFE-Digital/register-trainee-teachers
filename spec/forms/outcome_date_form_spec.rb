@@ -17,13 +17,11 @@ describe OutcomeDateForm, type: :model do
     }
   end
 
-  subject do
-    described_class.new(
-      trainee,
-      params: params.stringify_keys,
-      store: form_store,
-    )
+  let(:outcome_date_form) do
+    described_class.new(trainee, params: params.stringify_keys, store: form_store)
   end
+
+  subject { outcome_date_form }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -106,8 +104,8 @@ describe OutcomeDateForm, type: :model do
     it "calls update trainee on DQT API" do
       expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
 
-      expect(subject).to be_valid
-      expect { subject.save! }.to have_enqueued_job(Dqt::UpdateTraineeJob)
+      expect(outcome_date_form).to be_valid
+      expect { outcome_date_form.save! }.to have_enqueued_job(Dqt::UpdateTraineeJob)
     end
 
     context "when we opt-out of DQT API call" do

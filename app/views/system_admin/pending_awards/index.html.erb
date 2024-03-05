@@ -8,6 +8,8 @@
       <%= dqt_error %>
     <% end %>
 
+    <%= render SortBy::View.new(items: sort_by_items) %>
+
     <table class="govuk-table">
       <caption class="govuk-table__caption govuk-table__caption--m">Trainees Pending Award</caption>
       <thead class="govuk-table__head">

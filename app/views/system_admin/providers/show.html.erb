@@ -12,7 +12,7 @@
 </h1>
 
 <% if @provider.kept? %>
-  <p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), { class: "govuk-link govuk-link--no-visited-state" } %></p>
+  <p><%= govuk_link_to "Edit this provider", edit_provider_path(@provider), no_visited_state: true%></p>
 <% end %>
 
 <dl class="govuk-summary-list">

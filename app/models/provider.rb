@@ -75,6 +75,7 @@ class Provider < ApplicationRecord
                   }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
+  START_MANDATING_PLACEMENT_DATA_CYCLE = 2022
 
   def code=(cde)
     self[:code] = cde.to_s.upcase
@@ -90,12 +91,13 @@ class Provider < ApplicationRecord
   end
 
   def without_required_placements
-    trainees.awarded
+    trainees.awarded.or(trainees.in_training)
       .where.not(trn: nil)
       .where(training_route: PLACEMENTS_ROUTES.keys)
       .joins("LEFT JOIN (SELECT trainee_id, COUNT(*) as placement_count FROM placements GROUP BY trainee_id) placements_counts ON placements_counts.trainee_id = trainees.id")
       .where("placements_counts.placement_count < 2 OR placements_counts.placement_count IS NULL")
-      .merge(AcademicCycle.previous.total_trainees)
+      .joins(:end_academic_cycle)
+      .where(academic_cycles: { id: AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE).select(:id) })
   end
 
 private

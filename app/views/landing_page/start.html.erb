@@ -12,6 +12,7 @@
     <% ServiceUpdate.recent_updates.each do |service_update| %>
       <%= render ServiceUpdate::View.new(service_update: service_update, title_tag: "h3") %>
     <% end %>
-    <%= govuk_link_to(t(".service_updates_link"), service_updates_path, { class: "govuk-body" }) %>
+
+    <%= govuk_link_to(t(".service_updates_link"), service_updates_path, class: "govuk-body" ) %>
   </div>
 </div>

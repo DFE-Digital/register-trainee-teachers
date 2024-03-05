@@ -8,6 +8,7 @@ module Api
       include ActiveModel::Validations::Callbacks
 
       before_validation :set_course_allocation_subject
+      after_validation :set_progress
 
       ATTRIBUTES = %i[
         first_names
@@ -30,6 +31,7 @@ module Api
         course_allocation_subject
         study_mode
         application_choice_id
+        progress
       ].freeze
 
       REQUIRED_ATTRIBUTES = %i[
@@ -64,11 +66,11 @@ module Api
         super(attributes.except(:placements_attributes, :degrees_attributes))
 
         attributes[:placements_attributes]&.each do |placement_params|
-          placements_attributes << PlacementAttributes.new(placement_params)
+          placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
         end
 
         attributes[:degrees_attributes]&.each do |degree_params|
-          degrees_attributes << DegreeAttributes.new(degree_params)
+          degrees_attributes << DegreeAttributes::V01.new(degree_params)
         end
       end
 
@@ -117,6 +119,22 @@ module Api
       def set_course_allocation_subject
         self.course_allocation_subject ||=
           SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
+      end
+
+      def set_progress
+        if errors.blank?
+          self.progress ||= {}
+          progress[:personal_details] = true
+          progress[:contact_details] = true
+          progress[:diversity] = true
+          progress[:course_details] = true
+          progress[:training_details] = true
+          progress[:trainee_start_status] = true
+          progress[:trainee_data] = true
+          progress[:schools] = true
+          progress[:funding] = true
+          progress[:iqts_country] = true
+        end
       end
     end
   end

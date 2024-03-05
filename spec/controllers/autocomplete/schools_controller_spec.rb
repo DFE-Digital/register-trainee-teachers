@@ -5,6 +5,8 @@ require "rails_helper"
 module Autocomplete
   describe SchoolsController do
     describe "#index" do
+      let(:json_response) { response.parsed_body }
+
       context "default response" do
         before do
           create(:school)

@@ -10,6 +10,9 @@ dfe_sign_in:
   # URL of the users profile
   profile: https://profile.signin.education.gov.uk
 
+recruits_api:
+  base_url: "https://sandbox.apply-for-teacher-training.service.gov.uk/register-api"
+
 features:
   basic_auth: false
   sign_in_method: dfe-sign-in

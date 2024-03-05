@@ -33,8 +33,6 @@ end
 RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
-  config.include ApiRequestHelpers, type: :controller
-  config.include RequestHelpers, type: :request
 
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
