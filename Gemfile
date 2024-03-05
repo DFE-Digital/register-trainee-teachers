@@ -60,12 +60,12 @@ gem "sidekiq-cron", "~> 1.12"
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
 
-gem "config", "~> 5.1"
+gem "config", "~> 5.3"
 
 gem "httparty", "~> 0.21"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 2.2"
+gem "store_model", "~> 2.3"
 
 gem "pundit"
 
@@ -118,7 +118,7 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.1.4"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.2.0"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.11.7"
@@ -182,7 +182,7 @@ end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "listen", ">= 3.0.5", "< 3.9"
+  gem "listen", ">= 3.0.5", "< 3.10"
   # gem "web-console", ">= 3.3.0"
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

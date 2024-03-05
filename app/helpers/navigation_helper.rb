@@ -9,7 +9,7 @@ module NavigationHelper
       trainees: -> { url.include?("/#{segment}") && !trainee&.draft? },
       bulk: -> { url.include?(segment) },
       reports: -> { url.include?("reports") },
-      funding: -> { ["/funding/monthly-payments", "/funding/trainee-summary"].include?(url) },
+      funding: -> { url.include?("funding") },
     }[segment.to_sym].call
   end
 end

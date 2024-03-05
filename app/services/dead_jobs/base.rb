@@ -2,9 +2,10 @@
 
 module DeadJobs
   class Base
-    def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false)
+    def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false, sort_by: :register)
       @dead_set = dead_set
       @include_dqt_status = include_dqt_status
+      @sort_by = sort_by
     end
 
     def to_csv
@@ -42,7 +43,7 @@ module DeadJobs
 
   private
 
-    attr_reader :dead_set, :include_dqt_status
+    attr_reader :dead_set, :include_dqt_status, :sort_by
 
     def csv_headers
       build_csv_row(trainees.first).keys

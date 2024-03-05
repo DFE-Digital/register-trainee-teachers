@@ -979,7 +979,7 @@ en:
             tier_three:
               label: Yes - Tier 3 (£2,000)
               hint: 2:2 honours degree
-          guidance_link_text: check the funding rules for this academic year (opens in a new tab)
+          guidance_link_text: check the funding rules for this academic year
           guidance_url: https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-
         funding_type:
           bursary:

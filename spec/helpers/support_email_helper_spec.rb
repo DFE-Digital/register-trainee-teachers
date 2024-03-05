@@ -11,7 +11,7 @@ describe SupportEmailHelper do
       subject { helper.support_email }
 
       it has_correct_formatting do
-        expected_output = "<a class=\"govuk-link app-!-overflow-break-word \" href=\"mailto:becomingateacher@digital.education.gov.uk\">becomingateacher@digital.education.gov.uk</a>"
+        expected_output = "<a class=\"govuk-link app-!-overflow-break-word\" href=\"mailto:becomingateacher@digital.education.gov.uk\">becomingateacher@digital.education.gov.uk</a>"
         expect(subject).to eq(expected_output)
       end
     end
@@ -20,7 +20,8 @@ describe SupportEmailHelper do
       subject { helper.support_email(subject: "Register trainee teachers support") }
 
       it has_correct_formatting do
-        expected_output = "<a class=\"govuk-link app-!-overflow-break-word \" href=\"mailto:becomingateacher@digital.education.gov.uk?subject=Register%20trainee%20teachers%20support\">becomingateacher@digital.education.gov.uk</a>"
+        expected_output = "<a class=\"govuk-link app-!-overflow-break-word\" href=\"mailto:becomingateacher@digital.education.gov.uk?subject=Register%20trainee%20teachers%20support\">becomingateacher@digital.education.gov.uk</a>"
+
         expect(subject).to eq(expected_output)
       end
 
@@ -28,7 +29,7 @@ describe SupportEmailHelper do
         subject { helper.support_email(name: "give feedback or report a problem", subject: "Register trainee teachers feedback") }
 
         it "has the correct formatting" do
-          expected_output = "<a class=\"govuk-link app-!-overflow-break-word \" href=\"mailto:becomingateacher@digital.education.gov.uk?subject=Register%20trainee%20teachers%20feedback\">give feedback or report a problem</a>"
+          expected_output = "<a class=\"govuk-link app-!-overflow-break-word\" href=\"mailto:becomingateacher@digital.education.gov.uk?subject=Register%20trainee%20teachers%20feedback\">give feedback or report a problem</a>"
           expect(subject).to eq(expected_output)
         end
 

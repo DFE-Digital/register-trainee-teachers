@@ -17,7 +17,8 @@ class NavigationBar::View < ViewComponent::Base
   def item_link(item)
     link_params = { class: "moj-primary-navigation__link" }
     link_params.merge!(aria: { current: "page" }) if show_current_link?(item)
-    govuk_link_to(item[:name], item[:url], link_params)
+
+    govuk_link_to(item[:name], item[:url], **link_params)
   end
 
   def list_item_classes(item)

@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate
   before_action :track_page
   before_action :check_organisation_context_is_set
+  before_action :set_sentry_organisation_context, unless: -> { Rails.env.local? }
   after_action :save_origin_path
   include Pundit::Authorization
   include DfE::Analytics::Requests
@@ -83,6 +84,12 @@ private
     return unless authenticated?
 
     redirect_to_organisation_contexts unless current_user.organisation.present? || current_user.system_admin?
+  end
+
+  def set_sentry_organisation_context
+    return unless defined?(current_user) && current_user&.organisation.present?
+
+    Sentry.set_tags(organisation: current_user.organisation.name)
   end
 
   def redirect_to_organisation_contexts

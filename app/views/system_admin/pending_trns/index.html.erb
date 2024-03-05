@@ -1,7 +1,6 @@
 <div class="govuk-grid-row">
   <div class ="govuk-grid-column-two-thirds-from-desktop">
     <%= render PageTitle::View.new(i18n_key: "pending_trns.index") %>
-
     <h1 class="govuk-heading-l">Trainees Pending TRN</h1>
   </div>
 </div>
@@ -13,6 +12,8 @@
     <%= render ErrorSummary::View.new(renderable: dqt_error.present?) do %>
       <%= dqt_error %>
     <% end %>
+
+    <%= render SortBy::View.new(items: sort_by_items) %>
 
     <%= govuk_accordion do |accordion| %>
       <% @trainees.each do |trainee| %>

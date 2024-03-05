@@ -15,11 +15,9 @@
   </div>
 </div>
 
-<%= govuk_button_to t("views.confirm_delete.delete_button", record_type: t(:provider)),
+<%= govuk_button_to(t("views.confirm_delete.delete_button", record_type: t(:provider)),
                     provider_path(@provider),
-                    {
-                      warning: true,
-                      method: :delete,
-                    } %>
+                    warning: true,
+                    method: :delete) %>
 
 <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), edit_provider_path(@provider)) %></p>

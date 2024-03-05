@@ -11,6 +11,13 @@ module Api
       render_not_found(message: "#{e.model}(s) not found")
     end
 
+    rescue_from ActionController::ParameterMissing do
+      render(
+        json: { errors: ["Request could not be parsed"] },
+        status: :unprocessable_entity,
+      )
+    end
+
     def check_feature_flag!
       return if FeatureService.enabled?(:register_api)
 

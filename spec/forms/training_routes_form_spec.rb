@@ -7,7 +7,9 @@ describe TrainingRoutesForm do
   let(:trainee) { create(:trainee, :incomplete) }
   let(:form_store) { class_double(FormStore) }
 
-  subject { described_class.new(trainee, params: params, store: form_store) }
+  let(:trainee_routes_form) { described_class.new(trainee, params: params, store: form_store) }
+
+  subject { trainee_routes_form }
 
   before do
     allow(form_store).to receive(:get).and_return(nil)
@@ -37,7 +39,7 @@ describe TrainingRoutesForm do
     it "does not save to the database" do
       expect(form_store).to receive(:set).with(trainee.id, :training_routes, subject.params)
 
-      expect { subject.stash }.not_to change(trainee, :training_route)
+      expect { trainee_routes_form.stash }.not_to change(trainee, :training_route)
     end
   end
 
