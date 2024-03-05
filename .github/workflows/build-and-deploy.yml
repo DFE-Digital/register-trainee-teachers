@@ -206,7 +206,7 @@ jobs:
         id: deploy_review
         uses: ./.github/actions/deploy/
         with:
-          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_DV_REVIEW }}
+          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_DV_REVIEW_AKS }}
           environment: dv_review
           pr-number: ${{ github.event.pull_request.number }}
           sha: ${{ needs.build.outputs.image-tag }}
