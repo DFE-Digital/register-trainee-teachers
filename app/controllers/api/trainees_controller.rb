@@ -46,7 +46,7 @@ module Api
         .permit(
           trainee_attributes_service::ATTRIBUTES,
           placements_attributes: [placements_attributes],
-          degrees_attributes: [degree_attributes_service::ATTRIBUTES],
+          degrees_attributes: [degree_attributes],
         )
     end
 
@@ -59,11 +59,11 @@ module Api
     end
 
     def trainee_attributes_service
-      Object.const_get("Api::TraineeAttributes::#{current_version_class_name}")
+      Api::Attributes.for(model: :trainee, version: version)
     end
 
-    def degree_attributes_service
-      Api::DegreeAttributes.for(current_version)
+    def degree_attributes
+      Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
     end
 
     def current_version_class_name
