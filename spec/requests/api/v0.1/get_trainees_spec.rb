@@ -84,7 +84,7 @@ describe "`GET /trainees` endpoint" do
     it "returns all trainees when no state is provided" do
       get(
         "/api/v0.1/trainees",
-        headers: { Authorization: "Bearer #{token}" }
+        headers: { Authorization: "Bearer #{token}" },
       )
 
       expect(response).to have_http_status(:ok)
