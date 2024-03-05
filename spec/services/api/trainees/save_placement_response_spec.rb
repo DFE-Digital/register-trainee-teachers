@@ -101,4 +101,39 @@ describe Api::Trainees::SavePlacementResponse do
       end
     end
   end
+
+  context "with a new but duplicate placement" do
+    let(:trainee) { create(:trainee, placements: [existing_placement]) }
+    let(:placement) { trainee.placements.new }
+
+    let(:placement_attribute_keys) { Api::PlacementAttributes::V01::ATTRIBUTES.map(&:to_s) }
+
+    let(:params) do
+      existing_placement.attributes.slice(*placement_attribute_keys).with_indifferent_access
+    end
+
+    context "with same name" do
+      let(:existing_placement) { create(:placement, :manual, name: "existing placement") }
+
+      it "returns status unprocessable entity with error response" do
+        expect(subject[:status]).to be(:unprocessable_entity)
+        expect(subject[:json][:data]).to be_blank
+        expect(subject[:json][:errors]).to include(
+          { error: "UnprocessableEntity", message: "Urn has already been taken" },
+        )
+      end
+    end
+
+    context "with same address and postcode" do
+      let(:existing_placement) { create(:placement, :manual, address: "1 Hogwarts drive", postcode: "BN1 1AA") }
+
+      it "returns status unprocessable entity with error response" do
+        expect(subject[:status]).to be(:unprocessable_entity)
+        expect(subject[:json][:data]).to be_blank
+        expect(subject[:json][:errors]).to include(
+          { error: "UnprocessableEntity", message: "Address has already been taken" },
+        )
+      end
+    end
+  end
 end

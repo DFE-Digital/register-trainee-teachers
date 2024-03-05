@@ -17,9 +17,11 @@
 #
 # Indexes
 #
-#  index_placements_on_school_id            (school_id)
-#  index_placements_on_slug_and_trainee_id  (slug,trainee_id) UNIQUE
-#  index_placements_on_trainee_id           (trainee_id)
+#  index_placements_on_school_id                            (school_id)
+#  index_placements_on_slug_and_trainee_id                  (slug,trainee_id) UNIQUE
+#  index_placements_on_trainee_id                           (trainee_id)
+#  index_placements_on_trainee_id_and_address_and_postcode  (trainee_id,address,postcode) UNIQUE WHERE (school_id IS NULL)
+#  index_placements_on_trainee_id_and_urn                   (trainee_id,urn) UNIQUE WHERE (school_id IS NULL)
 #
 class Placement < ApplicationRecord
   include Sluggable
@@ -31,6 +33,8 @@ class Placement < ApplicationRecord
   belongs_to :school, optional: true
 
   validates :name, presence: true, if: -> { school.blank? }
+  validates :urn, uniqueness: { scope: :trainee_id }, allow_nil: true
+  validates :address, uniqueness: { scope: %i[trainee_id postcode] }, allow_nil: true
 
   audited associated_with: :trainee
 

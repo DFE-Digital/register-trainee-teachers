@@ -33,6 +33,28 @@ RSpec.describe Placement do
         it { is_expected.not_to be_valid }
       end
     end
+
+    context "when a placement with the same urn and trainee_id already exists" do
+      let(:placement) { create(:placement) }
+      let(:trainee) { placement.trainee }
+
+      subject {
+        described_class.new(trainee: trainee, urn: placement.urn)
+      }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when a placement with the same address and postcode and trainee_id already exists" do
+      let(:placement) { create(:placement) }
+      let(:trainee) { placement.trainee }
+
+      subject {
+        described_class.new(trainee: trainee, address: placement.address, postcode: placement.postcode)
+      }
+
+      it { is_expected.not_to be_valid }
+    end
   end
 
   describe "#name" do

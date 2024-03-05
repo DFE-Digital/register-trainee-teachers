@@ -53,7 +53,7 @@ module Api
         @placement_attributes ||= attributes_class.new(params)
       end
 
-      def errors = placement_attributes.errors || placement.errors
+      def errors = placement_attributes.errors.presence || placement.errors
 
       def update_progress
         if placement.trainee.placements.present?

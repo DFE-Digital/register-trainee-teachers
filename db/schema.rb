@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_08_131836) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_05_115708) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -706,6 +706,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_08_131836) do
     t.citext "slug"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["slug", "trainee_id"], name: "index_placements_on_slug_and_trainee_id", unique: true
+    t.index ["trainee_id", "address", "postcode"], name: "index_placements_on_trainee_id_and_address_and_postcode", unique: true, where: "(school_id IS NULL)"
+    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "(school_id IS NULL)"
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
   end
 
