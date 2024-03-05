@@ -120,7 +120,7 @@ runs:
 
     - name: Generate example data
       shell: bash
-      if: inputs.environment == 'dv_review_aks'
+      if: inputs.environment == 'dv_review'
       run: kubectl exec -n ${{ env.namespace }} deployment/register-${APP_NAME} -- /bin/sh -c "cd /app && bundle exec rails db:seed example_data:generate"
 
     - name: Delete redis queues for productiondata
