@@ -55,4 +55,40 @@ describe "`GET /trainees` endpoint" do
       expect(response.parsed_body["meta"]["total_count"]).to eq(trainees.count)
     end
   end
+
+  context "filtering by state" do
+    let!(:submitted_trainees) { create_list(:trainee, 5, :deferred, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
+
+    it "returns trainees with the specified state when a valid state is provided" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { status: "deferred" },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].count).to eq(submitted_trainees.count)
+    end
+
+    it "returns all trainees when an invalid state is provided" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { status: "invalid_state" },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].count).to eq(trainees.count + submitted_trainees.count)
+    end
+
+    it "returns all trainees when no state is provided" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].count).to eq(trainees.count + submitted_trainees.count)
+    end
+  end
 end
