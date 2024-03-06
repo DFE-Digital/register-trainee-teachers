@@ -412,6 +412,8 @@ GEM
     nkf (0.2.0)
     nokogiri (1.16.2-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.16.2-x86_64-linux)
+      racc (~> 1.4)
     notifications-ruby-client (5.4.0)
       jwt (>= 1.5, < 3)
     omniauth (2.1.2)
@@ -747,6 +749,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   activerecord-session_store
