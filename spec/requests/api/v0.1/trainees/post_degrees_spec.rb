@@ -51,6 +51,31 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       end
     end
 
+    context "with duplicate degree" do
+      let(:trainee) { create(:trainee, :with_degree) }
+      let(:degrees_attributes) do
+        trainee.degrees.first.attributes.symbolize_keys.slice(
+          :country, :grade, :subject, :institution, :uk_degree, :graduation_year, :locale_code
+        )
+      end
+
+      it "returns a 409 (conflict) status" do
+        post(
+          "/api/v0.1/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}" },
+          params: {
+            data: degrees_attributes,
+          },
+        )
+        expect(response).to have_http_status(:conflict)
+        expect(response.parsed_body["errors"].first).to match(
+          { error: "Conflict",
+            message: "This is a duplicate degree" },
+        )
+        expect(trainee.reload.degrees.count).to eq(1)
+      end
+    end
+
     context "with an invalid trainee" do
       let(:trainee_for_another_provider) { create(:trainee) }
 

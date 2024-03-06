@@ -1884,6 +1884,8 @@ en:
               too_long: Details about why the trainee withdrew must be 1000 characters or less
             withdraw_reasons_dfe_details:
               too_long: What the Department for Education could have done must be 1000 characters or less
+        api/degree_attributes/v01:
+          duplicates: This is a duplicate degree
   page_headings:
     start_page: Register trainee teachers
   service_updates:

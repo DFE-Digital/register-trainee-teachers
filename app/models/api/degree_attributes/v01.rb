@@ -23,12 +23,30 @@ module Api
         attribute attr
       end
 
+      attr_reader :existing_degrees
+
+      def initialize(attributes, existing_degrees: Degree)
+        super(attributes)
+        @existing_degrees = existing_degrees
+      end
+
       validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
       validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) }, allow_nil: true
       validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_nil: true
+      validate :check_for_duplicates
 
-      def self.from_degree(degree)
-        new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) })
+      def self.from_degree(degree, existing_degrees:)
+        new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) }, existing_degrees:)
+      end
+
+      def duplicates?
+        existing_degrees.exists?(attributes.symbolize_keys.except(:id))
+      end
+
+    private
+
+      def check_for_duplicates
+        errors.add(:base, :duplicates) if duplicates?
       end
     end
   end

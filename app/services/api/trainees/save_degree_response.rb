@@ -17,13 +17,16 @@ module Api
         if save
           update_progress
           { json: { data: serializer_class.new(degree).as_hash }, status: status }
+        elsif duplicates?
+          conflict_errors_response(errors:)
         else
           validation_errors_response(errors:)
         end
       end
 
-      delegate :assign_attributes, :new_record?, to: :degree
-      delegate :valid?, :attributes, to: :degree_attributes
+      delegate :assign_attributes, :new_record?, :trainee, to: :degree
+      delegate :valid?, :attributes, :duplicates?, to: :degree_attributes
+      delegate :degrees, to: :trainee
 
     private
 
@@ -59,11 +62,20 @@ module Api
       def degree_attributes
         @degree_attributes ||=
           if new_record?
-            attributes_class.new(params)
+            attributes_class.new(params, existing_degrees:)
           else
-            attributes = attributes_class.from_degree(degree)
+            attributes = attributes_class.from_degree(degree, existing_degrees:)
             attributes.assign_attributes(params)
             attributes
+          end
+      end
+
+      def existing_degrees
+        @existing_degrees ||=
+          if new_record?
+            degrees
+          else
+            degrees.where.not(id: degree.id)
           end
       end
 
