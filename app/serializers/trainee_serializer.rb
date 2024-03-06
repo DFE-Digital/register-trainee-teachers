@@ -38,6 +38,7 @@ class TraineeSerializer
       course_education_phase:,
       course_study_mode:,
       course_itt_start_date:,
+      course_age_range:,
     }
   end
 
@@ -85,5 +86,9 @@ class TraineeSerializer
   end
 
   def course_itt_start_date
+  end
+
+  def course_age_range
+    @trainee.course_age_range
   end
 end

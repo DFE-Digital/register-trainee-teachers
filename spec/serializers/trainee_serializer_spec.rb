@@ -29,6 +29,7 @@ RSpec.describe TraineeSerializer do
     updated_at
     employing_school_urn
     lead_partner_urn_ukprn
+    course_age_range
   ].freeze
 
   MORE_FIELDS = %i[
@@ -38,8 +39,6 @@ RSpec.describe TraineeSerializer do
     other_disability_details
 
     expected_end_date
-    course_year
-    course_age_range
     trainee_start_date
     pga_apprenticeship_start_date
 
@@ -50,12 +49,16 @@ RSpec.describe TraineeSerializer do
     training_initiative_1
     training_initiative_2
     hesa_husid
-    nino
     course_title
     candidate_id
 
-    trainee_previous_surname
   ].freeze
+
+  NOT_NEEDED_OR_NOT_SUPPORTED = %i[
+    course_year
+    nino
+    trainee_previous_surname
+  ]
 
   DEGREE_FIELDS = %i[
     degree_uk_type
