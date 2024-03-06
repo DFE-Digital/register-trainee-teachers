@@ -19,17 +19,20 @@ RSpec.describe TraineeSerializer do
     nationality
     email
     training_route
+    submitted_for_trn_at
+    updated_at
     course_qualification
     course_level
+    course_title
     course_itt_subject
     course_education_phase
     course_study_mode
     course_itt_start_date
-    submitted_for_trn_at
-    updated_at
+    course_age_range
+    expected_end_date
     employing_school_urn
     lead_partner_urn_ukprn
-    course_age_range
+    trainee_start_date
   ].freeze
 
   MORE_FIELDS = %i[
@@ -38,8 +41,6 @@ RSpec.describe TraineeSerializer do
     disability
     other_disability_details
 
-    expected_end_date
-    trainee_start_date
     pga_apprenticeship_start_date
 
     fund_code

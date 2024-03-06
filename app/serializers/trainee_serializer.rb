@@ -33,12 +33,14 @@ class TraineeSerializer
   def course_attributes
     {
       course_qualification:,
+      course_title:,
       course_level:,
       course_itt_subject:,
       course_education_phase:,
       course_study_mode:,
       course_itt_start_date:,
       course_age_range:,
+      expected_end_date:,
     }
   end
 
@@ -76,6 +78,10 @@ class TraineeSerializer
   def course_level
   end
 
+  def course_title
+    @trainee.published_course&.name
+  end
+
   def course_itt_subject
   end
 
@@ -86,6 +92,11 @@ class TraineeSerializer
   end
 
   def course_itt_start_date
+    @trainee.itt_start_date&.iso8601
+  end
+
+  def expected_end_date
+    @trainee.itt_end_date&.iso8601
   end
 
   def course_age_range
