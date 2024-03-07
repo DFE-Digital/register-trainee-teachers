@@ -3,10 +3,12 @@
 require "rails_helper"
 
 RSpec.describe Api::DegreeAttributes::V01 do
-  let(:v01) { described_class.new(attributes, existing_degrees:) }
-  let(:existing_degrees) { Degree }
+  let(:v01) { described_class.new(attributes, trainee:) }
+  let(:attributes_with_id) { degree.attributes.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
   let(:degree) { build(:degree) }
-  let(:attributes) { degree.attributes.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
+
+  let(:attributes) { attributes_with_id }
+  let(:trainee) { create(:trainee, :with_degree) }
 
   subject { v01 }
 
@@ -16,9 +18,10 @@ RSpec.describe Api::DegreeAttributes::V01 do
     it { expect(subject).to validate_inclusion_of(:uk_degree).in_array(DfEReference::DegreesQuery::TYPES.all.map(&:name)).allow_nil }
 
     context "with duplicate" do
-      let(:degree) { create(:degree) }
-
       before { subject.valid? }
+
+      let(:attributes) { attributes_with_id.except(:id) }
+      let(:degree) { trainee.degrees.first }
 
       describe "validations" do
         it "returns an error for base duplicates" do
@@ -42,7 +45,8 @@ RSpec.describe Api::DegreeAttributes::V01 do
     subject { v01.duplicates? }
 
     context "with duplicate" do
-      let(:degree) { create(:degree) }
+      let(:attributes) { attributes_with_id.except(:id) }
+      let(:degree) { trainee.degrees.first }
 
       it "returns true" do
         expect(subject).to be_truthy

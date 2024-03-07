@@ -43,9 +43,9 @@ module Api
       end
 
       def update_progress
-        if degree.trainee.degrees.present?
-          degree.trainee.progress[:degrees] = true
-          degree.trainee.save!
+        if degrees.present?
+          trainee.progress[:degrees] = true
+          trainee.save!
         end
       end
 
@@ -62,20 +62,11 @@ module Api
       def degree_attributes
         @degree_attributes ||=
           if new_record?
-            attributes_class.new(params, existing_degrees:)
+            attributes_class.new(params, trainee:)
           else
-            attributes = attributes_class.from_degree(degree, existing_degrees:)
+            attributes = attributes_class.from_degree(degree, trainee:)
             attributes.assign_attributes(params)
             attributes
-          end
-      end
-
-      def existing_degrees
-        @existing_degrees ||=
-          if new_record?
-            degrees
-          else
-            degrees.where.not(id: degree.id)
           end
       end
 
