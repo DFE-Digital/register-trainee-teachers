@@ -6,7 +6,12 @@ module Api
       include ActiveModel::Model
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
-      include PersonalDetailsValidations
+
+      # validation modules are conditionally included
+      include(PersonalDetailsValidations) # if should_include_personal_details?
+      # include(ContactDetailsValidation) unless draft?
+      # include(DiversitiesValidations) unless draft?
+      # include(DegreesValidation) if requires_degree?
 
       before_validation :set_course_allocation_subject
       after_validation :set_progress
@@ -64,6 +69,19 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
 
+      delegate :award_type,
+               :requires_schools?,
+               :requires_placements?,
+               :requires_employing_school?,
+               :early_years_route?,
+               :undergrad_route?,
+               :requires_itt_start_date?,
+               :requires_study_mode?,
+               :requires_degree?,
+               :requires_funding?,
+               :requires_iqts_country?,
+               to: :training_route_manager
+
       def initialize(attributes = {})
         super(attributes.except(:placements_attributes, :degrees_attributes))
 
@@ -93,6 +111,14 @@ module Api
       end
 
     private
+
+      def validate_degree?
+        requires_degree?
+      end
+
+      def training_route_manager
+        @training_route_manager ||= TrainingRouteManager.new(self)
+      end
 
       def set_course_allocation_subject
         self.course_allocation_subject ||=
