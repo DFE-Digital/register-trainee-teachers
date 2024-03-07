@@ -59,24 +59,6 @@ RSpec.describe TraineeSerializer do
     candidate_id
   ]
 
-  DEGREE_FIELDS = %i[
-    degree_uk_type
-    degree_non_uk_type
-    degree_graduation_year
-    degree_subjects
-    degree_uk_grade
-    degree_uk_awarding_institution
-    degree_country
-    degree_non_uk_grade
-  ].freeze
-
-  PLACEMENT_FIELDS = %i[
-    placement_urn
-    placement_school_name
-    placement_school_postcode
-    placement_urn_free
-  ].freeze
-
   describe "serialization" do
     TRAINEE_FIELDS.each do |field|
       it "serializes the #{field} field from the specification" do
