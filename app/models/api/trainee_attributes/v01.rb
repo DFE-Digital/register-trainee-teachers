@@ -6,6 +6,7 @@ module Api
       include ActiveModel::Model
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
+      include PersonalDetailsValidations
 
       before_validation :set_course_allocation_subject
       after_validation :set_progress
@@ -55,12 +56,9 @@ module Api
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
+      attribute :date_of_birth, :date
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
-      validates :first_names, :last_name, length: { maximum: 50 }
-      validates :middle_names, length: { maximum: 50 }, allow_nil: true
-      validates :sex, inclusion: { in: Trainee.sexes.keys }
-      validate :date_of_birth_valid
 
       def initialize(attributes = {})
         super(attributes.except(:placements_attributes, :degrees_attributes))
@@ -91,30 +89,6 @@ module Api
       end
 
     private
-
-      def date_of_birth_valid
-        value = date_of_birth
-        if value.is_a?(String)
-          value =
-            begin
-              Date.parse(value)
-            rescue StandardError
-              nil
-            end
-        end
-
-        if !value.is_a?(Date)
-          errors.add(:date_of_birth, :invalid)
-        elsif value > Time.zone.today
-          errors.add(:date_of_birth, :future)
-        elsif value.year.digits.length != 4
-          errors.add(:date_of_birth, :invalid_year)
-        elsif value > 16.years.ago
-          errors.add(:date_of_birth, :under16)
-        elsif value < 100.years.ago
-          errors.add(:date_of_birth, :past)
-        end
-      end
 
       def set_course_allocation_subject
         self.course_allocation_subject ||=
