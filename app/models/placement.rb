@@ -33,6 +33,9 @@ class Placement < ApplicationRecord
   belongs_to :school, optional: true
 
   validates :name, presence: true, if: -> { school.blank? }
+  # rubocop:disable Rails/UniqueValidationWithoutIndex
+  validates :school, uniqueness: { scope: :trainee_id }, allow_nil: true
+  # rubocop:enable Rails/UniqueValidationWithoutIndex
   validates :urn, uniqueness: { scope: :trainee_id }, allow_nil: true
   validates :address, uniqueness: { scope: %i[trainee_id postcode] }, allow_nil: true
 

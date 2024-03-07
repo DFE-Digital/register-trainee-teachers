@@ -55,6 +55,17 @@ RSpec.describe Placement do
 
       it { is_expected.not_to be_valid }
     end
+
+    context "when a placement with the same school and trainee_id already exists" do
+      let(:placement) { create(:placement) }
+      let(:trainee) { placement.trainee }
+
+      subject {
+        described_class.new(trainee: trainee, school: placement.school)
+      }
+
+      it { is_expected.not_to be_valid }
+    end
   end
 
   describe "#name" do

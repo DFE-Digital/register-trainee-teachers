@@ -116,10 +116,10 @@ describe Api::Trainees::SavePlacementResponse do
       let(:existing_placement) { create(:placement, :manual, name: "existing placement") }
 
       it "returns status unprocessable entity with error response" do
-        expect(subject[:status]).to be(:unprocessable_entity)
+        expect(subject[:status]).to be(:conflict)
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to include(
-          { error: "UnprocessableEntity", message: "Urn has already been taken" },
+          { error: "Conflict", message: "Urn has already been taken" },
         )
       end
     end
@@ -128,10 +128,10 @@ describe Api::Trainees::SavePlacementResponse do
       let(:existing_placement) { create(:placement, :manual, address: "1 Hogwarts drive", postcode: "BN1 1AA") }
 
       it "returns status unprocessable entity with error response" do
-        expect(subject[:status]).to be(:unprocessable_entity)
+        expect(subject[:status]).to be(:conflict)
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to include(
-          { error: "UnprocessableEntity", message: "Address has already been taken" },
+          { error: "Conflict", message: "Address has already been taken" },
         )
       end
     end

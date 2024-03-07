@@ -17,6 +17,8 @@ module Api
         if save
           update_progress
           { json: { data: serializer_class.new(placement).as_hash }, status: status }
+        elsif duplicate?
+          conflict_errors_response(errors:)
         else
           validation_errors_response(errors:)
         end
@@ -54,6 +56,10 @@ module Api
       end
 
       def errors = placement_attributes.errors.presence || placement.errors
+
+      def duplicate?
+        placement.errors.details.values.flatten.any? { |error| error[:error] == :taken }
+      end
 
       def update_progress
         if placement.trainee.placements.present?
