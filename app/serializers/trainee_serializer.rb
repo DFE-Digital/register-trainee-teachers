@@ -12,6 +12,7 @@ class TraineeSerializer
       course_attributes,
       school_attributes,
       nationality: nationality,
+      training_initiative: training_initiative,
       placements: @trainee.placements.map(&:attributes),
       degrees: @trainee.degrees.map(&:attributes),
     )
@@ -41,6 +42,7 @@ class TraineeSerializer
       course_itt_start_date:,
       course_age_range:,
       expected_end_date:,
+      trainee_start_date:,
     }
   end
 
@@ -95,11 +97,20 @@ class TraineeSerializer
     @trainee.itt_start_date&.iso8601
   end
 
+  def trainee_start_date
+    @trainee.trainee_start_date
+  end
+
   def expected_end_date
     @trainee.itt_end_date&.iso8601
   end
 
   def course_age_range
     @trainee.course_age_range
+  end
+
+  def training_initiative
+    # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
+    # `::Hesa::CodeSets::TrainingInitiatives::MAPPING`
   end
 end

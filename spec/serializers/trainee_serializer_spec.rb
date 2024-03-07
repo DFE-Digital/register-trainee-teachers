@@ -33,32 +33,30 @@ RSpec.describe TraineeSerializer do
     employing_school_urn
     lead_partner_urn_ukprn
     trainee_start_date
+    training_initiative
+    hesa_id
   ].freeze
 
   MORE_FIELDS = %i[
     ethnicity
     other_ethnicity_details
+
     disability
     other_disability_details
 
-    pga_apprenticeship_start_date
-
     fund_code
     funding_option
-
-
-    training_initiative_1
-    training_initiative_2
-    hesa_husid
-    course_title
-    candidate_id
-
   ].freeze
 
   NOT_NEEDED_OR_NOT_SUPPORTED = %i[
     course_year
     nino
     trainee_previous_surname
+    pga_apprenticeship_start_date
+    training_initiative_1
+    training_initiative_2
+    hesa_husid
+    candidate_id
   ]
 
   DEGREE_FIELDS = %i[
