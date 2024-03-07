@@ -42,6 +42,35 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       end
     end
 
+    context "with duplicate degree" do
+      let(:uk_degree) { build(:degree, :uk_degree_with_details) }
+      let(:non_uk_degree) { build(:degree, :non_uk_degree_with_details) }
+      let(:trainee) { create(:trainee, degrees: [uk_degree, non_uk_degree]) }
+      let(:degrees_attributes) do
+        non_uk_degree.attributes.symbolize_keys.slice(
+          :country, :grade, :subject, :institution, :uk_degree, :non_uk_degree, :graduation_year, :locale_code
+        )
+      end
+
+      it "returns a 409 (conflict) status" do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: {
+            data: degrees_attributes,
+          },
+        )
+        expect(response).to have_http_status(:conflict)
+        expect(response.parsed_body["errors"].first).to match(
+          { error: "Conflict",
+            message: "This is a duplicate degree" },
+        )
+        expect {
+          uk_degree.reload
+        }.not_to change(uk_degree, :attributes)
+      end
+    end
+
     context "with an invalid trainee" do
       let(:trainee_for_another_provider) { create(:trainee) }
 
