@@ -35,15 +35,11 @@ RSpec.describe TraineeSerializer do
     trainee_start_date
     training_initiative
     hesa_id
-  ].freeze
-
-  MORE_FIELDS = %i[
     ethnicity
+    ethnicity_background
     other_ethnicity_details
-
     disability
     other_disability_details
-
     fund_code
     funding_option
   ].freeze

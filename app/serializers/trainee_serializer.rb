@@ -27,7 +27,10 @@ class TraineeSerializer
   def diversity_attributes
     {
       ethnicity:,
-      other_ethnicity:,
+      ethnicity_background:,
+      other_ethnicity_details:,
+      disability:,
+      other_disability_details:,
     }
   end
 
@@ -65,33 +68,31 @@ class TraineeSerializer
     @trainee.lead_school&.urn
   end
 
-  def ethnicity
-  end
+  def ethnicity; end
 
-  def other_ethnicity
-  end
+  def ethnicity_background; end
 
-  def training_route
-  end
+  def other_ethnicity_details; end
 
-  def course_qualification
-  end
+  def disability; end
 
-  def course_level
-  end
+  def other_disability_details; end
+
+  def training_route; end
+
+  def course_qualification; end
+
+  def course_level; end
 
   def course_title
     @trainee.published_course&.name
   end
 
-  def course_itt_subject
-  end
+  def course_itt_subject; end
 
-  def course_education_phase
-  end
+  def course_education_phase; end
 
-  def course_study_mode
-  end
+  def course_study_mode; end
 
   def course_itt_start_date
     @trainee.itt_start_date&.iso8601
