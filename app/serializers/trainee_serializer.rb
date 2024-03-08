@@ -11,6 +11,7 @@ class TraineeSerializer
       diversity_attributes,
       course_attributes,
       school_attributes,
+      funding_attributes,
       nationality: nationality,
       training_initiative: training_initiative,
       placements: @trainee.placements.map(&:attributes),
@@ -53,6 +54,13 @@ class TraineeSerializer
     {
       employing_school_urn:,
       lead_partner_urn_ukprn:,
+    }
+  end
+
+  def funding_attributes
+    {
+      fund_code:,
+      funding_option:,
     }
   end
 
@@ -109,6 +117,10 @@ class TraineeSerializer
   def course_age_range
     @trainee.course_age_range
   end
+
+  def fund_code; end
+
+  def funding_option; end
 
   def training_initiative
     # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
