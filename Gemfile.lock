@@ -103,7 +103,7 @@ GEM
     addressable (2.8.6)
       public_suffix (>= 2.0.2, < 6.0)
     aes_key_wrap (1.1.0)
-    amazing_print (1.5.0)
+    amazing_print (1.6.0)
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
       rake (>= 10.4, < 14.0)
@@ -757,7 +757,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-session_store
-  amazing_print (~> 1.5)
+  amazing_print (~> 1.6)
   annotate
   audited (~> 5.4)
   auto_strip_attributes
