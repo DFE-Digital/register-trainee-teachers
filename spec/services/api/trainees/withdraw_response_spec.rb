@@ -3,7 +3,8 @@
 require "rails_helper"
 
 describe Api::Trainees::WithdrawResponse do
-  let(:withdraw_response) { described_class.call(trainee:, params:) }
+  let(:version) { "v0.1" }
+  let(:withdraw_response) { described_class.call(trainee:, params:, version:) }
   let(:params) do
     {
       reasons: [unknown.name],
