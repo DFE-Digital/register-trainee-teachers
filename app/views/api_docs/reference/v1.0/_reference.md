@@ -1,3 +1,15 @@
-Welcome to the Register API! This API allows you to access information about trainees and provides endpoints to update and create trainee data. 
+This API allows you to access information about trainees and provides endpoints to update and create trainee data.
 
-Below are the available endpoints.
+## API versioning strategy
+
+Find out about [how we make updates to the API](/api-docs#api-versioning-strategy), including:
+
+- the difference between breaking and non-breaking changes
+- how the API version number reflects changes
+- using the correct version of the API
+
+## Version 1.0
+
+Version 1.0 will be the first published version API which will be released in production.
+
+It has not been released yet.
