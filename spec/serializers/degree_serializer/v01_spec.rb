@@ -6,7 +6,7 @@ RSpec.describe DegreeSerializer::V01 do
   let(:degree) { create(:degree) }
   let(:json) { described_class.new(degree).as_hash.with_indifferent_access }
 
-  let(:expected_fields) do
+  expected_fields =
     %i[
       uk_degree
       non_uk_degree
@@ -17,10 +17,9 @@ RSpec.describe DegreeSerializer::V01 do
       country
       other_grade
     ].freeze
-  end
 
   describe "serialization" do
-    DEGREE_FIELDS.each do |field|
+    expected_fields.each do |field|
       it "serializes the #{field} field from the specification" do
         expect(json).to have_key(field)
       end

@@ -6,13 +6,12 @@ RSpec.describe PlacementSerializer::V01 do
   let(:placement) { create(:placement) }
   let(:json) { described_class.new(placement).as_hash.with_indifferent_access }
 
-  let(:expected_fields) do
+  expected_fields =
     %i[
       urn
       name
       postcode
     ].freeze
-  end
 
   describe "serialization" do
     expected_fields.each do |field|

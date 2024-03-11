@@ -2,12 +2,11 @@
 
 require "rails_helper"
 
-RSpec.describe TraineeSerializer do
-  let(:version) { "0.1" }
+RSpec.describe TraineeSerializer::V01 do
   let(:trainee) { create(:trainee, :in_progress, :with_placements) }
   let(:json) { described_class.new(trainee).as_hash.with_indifferent_access }
 
-  let(:expected_fields) do
+  expected_fields =
     %i[
       id
       ukprn
@@ -46,20 +45,6 @@ RSpec.describe TraineeSerializer do
       fund_code
       funding_option
     ].freeze
-  end
-
-  let(:not_supported_or_not_needed_fields) do
-    %i[
-      course_year
-      nino
-      trainee_previous_surname
-      pga_apprenticeship_start_date
-      training_initiative1
-      training_initiative2
-      hesa_husid
-      candidate_id
-    ].freeze
-  end
 
   describe "serialization" do
     expected_fields.each do |field|

@@ -18,7 +18,7 @@ describe "`GET /api/v0.1/trainees/:id` endpoint" do
     end
 
     it "returns the trainee" do
-      parsed_trainee = JSON.parse(TraineeSerializer.new(trainee).as_hash.to_json)
+      parsed_trainee = JSON.parse(Serializer.for(model: :trainee, version: "v0.1").new(trainee).as_hash.to_json)
       expect(response.parsed_body).to eq(parsed_trainee)
     end
 
