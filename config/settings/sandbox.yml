@@ -34,6 +34,8 @@ features:
     iqts: true
   integrate_with_dqt: true
   register_api: true
+  google:
+    send_data_to_big_query: false
 
 environment:
   name: sandbox
