@@ -6,7 +6,7 @@ title: Register API documentation
 This is API documentation for the Department for Education (DfE)’s Register
 trainee teachers service.
 
-Register has replaced the HESA service for teacher trainees. All vendors of
+The Register API is replacing the HESA service for teacher trainees. All vendors of
 student record systems (SRS) and some training providers will need to make
 changes to integrate with Register.
 
@@ -22,7 +22,6 @@ Providers can use the API for:
 - Creating new trainee records.
 - Updating individual trainee records.
 - Withdrawing and deferring a trainee.
-- Looking up reference data such as country code, school URNs etc.
 
 # How do I connect to this API?
 
@@ -32,9 +31,9 @@ Requests to the API must be accompanied by an authentication token.
 
 Each token is associated with a single provider. It will grant access to
 trainee records registered by that provider. You can get a token by writing to
-becomingateacher@digital.education.gov.uk.
+[registertraineeteachers@education.gov.uk](mailto:registertraineeteachers@education.gov.uk).
 
-For instructions on how to authenticate see the <API reference>.
+For instructions on how to authenticate see the [API reference](/api-docs/reference#authentication).
 
 # Design principles
 
@@ -44,11 +43,11 @@ value. The API uses the `id` to specify a particular trainee record. For
 example, the API endpoint that updates a single trainee record requires that
 `id` value as part of it's URL.
 
-For example, the following request updates the trainee record with `id` value
+For example, the following request updates the trainee record identified by `id` value
 `gQGecNYwLCqPMTgzW7N2bURi`.
 
 ```
-PUT https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainee/gQGecNYwLCqPMTgzW7N2bURi
+PUT https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainees/gQGecNYwLCqPMTgzW7N2bURi
 ```
 
 You can obtain `id` values from the following request which returns the list of
@@ -61,7 +60,7 @@ GET https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainees
 Alternatively an `id` value is given as part of the response to a request to create a new trainee record:
 
 ```
-POST https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainee
+POST https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainees
 ```
 
 ## Reference data and data encoding
@@ -81,7 +80,7 @@ Nationality is expressed as an [ISO 3166-2](https://www.iso.org/iso-3166-country
 ### Degrees
 A list of valid values for the subject, degree type, institution and grade
 attributes can be obtained from the reference data endpoint. Details are
-provided in the API reference.
+provided in the [API reference](/api-docs/reference).
 
 ### Placements
 Placement schools are identified by their URN (unique reference number).
@@ -137,17 +136,18 @@ incremented each time non-breaking changes are made, for example `1.2` changes t
 
 The current version of this API is `0.1`. The next minor version will be `0.2`.
 
-Changes are documented in our release notes.
+Changes are documented in our [release notes](/api-docs/release-notes).
 
 ## Using the correct version of the API
 
 When an API version is officially released, minor version updates will be made
 available:
 
-- on their own minor version URL, for example `v1.1` on a major version URL which
-- does not indicate a minor version, for example `v1` This means that if you use
-  the major version URL, you do not need to update student record systems every
-  time we make a minor update.
+- on their own minor version URL, for example `v1.1`
+- on a major version URL which does not indicate a minor version, for example `v1`
+
+This means that if you use the major version URL, you do not need to update student
+record systems every time we make a minor update.
 
 For example, after version 1.1 is released you can use:
 
@@ -157,5 +157,5 @@ For example, after version 1.1 is released you can use:
 
 # Testing
 
-To get familiar with our system and perform testing, you can use our
-[sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
+To get familiar with our system and perform testing, you can use
+[our sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
