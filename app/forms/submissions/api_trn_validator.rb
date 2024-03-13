@@ -6,6 +6,8 @@ module Submissions
 
     class_attribute :extra_validators, instance_writer: false, default: {}
 
+    validator :personal_details, form: "Api::PersonalDetailsForm", unless: :apply_application_and_draft?
+
     class << self
       def missing_data_validator(name, options)
         extra_validators[name] = options

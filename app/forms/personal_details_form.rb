@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PersonalDetailsForm < TraineeForm
-  include PersonalDetailsValidations
+  include DatesHelper
 
   FIELDS = %i[
     first_names
@@ -25,13 +25,19 @@ class PersonalDetailsForm < TraineeForm
 
   before_validation :set_nationalities_from_raw_values
 
+  validates :first_names, presence: true, length: { maximum: 50 }
+  validates :last_name, presence: true, length: { maximum: 50 }
+  validates :middle_names, length: { maximum: 50 }, allow_nil: true
+  validates :date_of_birth, presence: true
+  validate :date_of_birth_valid
+  validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys }
   validates :other_nationality1,
             :other_nationality2,
             :other_nationality3,
             autocomplete: true,
             allow_nil: true,
             if: :other_is_selected?
-  validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? || trainee.api_record? }
+  validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? }
 
   def date_of_birth
     date_hash = { year:, month:, day: }
