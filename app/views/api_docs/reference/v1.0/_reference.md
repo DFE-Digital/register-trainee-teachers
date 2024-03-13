@@ -10,6 +10,6 @@ Find out about [how we make updates to the API](/api-docs#api-versioning-strateg
 
 ## Version 1.0
 
-Version 1.0 will be the first published version API which will be released in production.
+Version 1.0 will be the first published version API to be released in production.
 
-It has not been released yet.
+When it is released, the details of the API will be documented here.
