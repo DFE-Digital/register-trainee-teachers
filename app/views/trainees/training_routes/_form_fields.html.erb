@@ -7,7 +7,7 @@
   <% end %>
     <%= f.govuk_radio_button :training_route, TRAINING_ROUTE_ENUMS[:assessment_only], label: { text: t("activerecord.attributes.trainee.training_routes.assessment_only") }, link_errors: true %>
 
-    <% training_routes_options.each do |option| %>
+    <% training_routes_options(trainee:).each do |option| %>
       <%= f.govuk_radio_button(
         :training_route,
         option[:name],

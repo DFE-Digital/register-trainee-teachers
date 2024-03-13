@@ -19,6 +19,9 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
+    postgrad_fee_funded: true
+    postgrad_salaried: true
+    undergrad_fee_funded: true
   funding: true
 
 pagination:

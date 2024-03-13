@@ -3,8 +3,8 @@
 module TrainingRoutesHelper
   include ApplicationHelper
 
-  def training_routes_options
-    enabled_routes.map do |training_route|
+  def training_routes_options(trainee:)
+    enabled_routes(trainee:).map do |training_route|
       {
         name: TRAINING_ROUTE_ENUMS[training_route],
         hint: hint(training_route),
@@ -15,9 +15,9 @@ module TrainingRoutesHelper
 
 private
 
-  def enabled_routes
+  def enabled_routes(trainee:)
     TRAINING_ROUTE_FEATURE_FLAGS.select do |route|
-      FeatureService.enabled?("routes.#{route}")
+      FeatureService.enabled?("routes.#{route}") && TrainingRouteAvailability.call(trainee:, route:)
     end
   end
 
