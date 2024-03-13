@@ -31,7 +31,7 @@ class PersonalDetailsForm < TraineeForm
             autocomplete: true,
             allow_nil: true,
             if: :other_is_selected?
-  validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? }
+  validate :nationalities_cannot_be_empty, unless: -> { trainee.hesa_record? || trainee.api_record? }
 
   def date_of_birth
     date_hash = { year:, month:, day: }

@@ -45,6 +45,10 @@ class ProgressService
     @validator.valid? && marked_as_completed
   end
 
+  def errors
+    validator.errors.full_messages
+  end
+
 private
 
   attr_reader :validator, :marked_as_completed

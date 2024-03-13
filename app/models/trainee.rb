@@ -530,6 +530,10 @@ class Trainee < ApplicationRecord
     "manual"
   end
 
+  def api_record?
+    record_source == RecordSources::API
+  end
+
   def estimated_end_date
     start_date + estimated_course_duration
   end

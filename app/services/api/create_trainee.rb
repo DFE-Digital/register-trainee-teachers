@@ -46,8 +46,8 @@ module Api
       }
     end
 
-    def save_errors_response(trainee)
-      { json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity }
+    def save_errors_response(errors)
+      { json: { errors: }, status: :unprocessable_entity }
     end
 
     def success_response(trainee)
