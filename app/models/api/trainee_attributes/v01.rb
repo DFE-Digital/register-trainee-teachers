@@ -17,6 +17,11 @@ module Api
         last_name
         date_of_birth
         email
+        nationalities
+        course_education_phase
+        course_min_age
+        course_max_age
+        trainee_start_date
         sex
         trn
         training_route
@@ -37,7 +42,6 @@ module Api
 
       REQUIRED_ATTRIBUTES = %i[
         first_names
-        middle_names
         last_name
         date_of_birth
         email

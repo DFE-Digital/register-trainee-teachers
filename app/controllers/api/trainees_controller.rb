@@ -41,13 +41,27 @@ module Api
 
   private
 
-    def trainee_params
+    def register_data_params
       params.require(:data)
         .permit(
           trainee_attributes_service::ATTRIBUTES,
           placements_attributes: [placements_attributes],
           degrees_attributes: [degree_attributes],
         )
+    end
+
+    def hesa_mapped_params
+      Hesa::MapTraineeAttributes.call(
+        params: params.require(:data).permit(Hesa::MapTraineeAttributes::ATTRIBUTES),
+      )
+    end
+
+    def contains_hesa_data?
+      params.key?(:hesa_data)
+    end
+
+    def trainee_params
+      contains_hesa_data? ? hesa_mapped_params : register_data_params
     end
 
     def placements_attributes
