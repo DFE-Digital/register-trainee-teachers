@@ -24,7 +24,7 @@ module Api
 
       def destroy
         placement.destroy
-        render({ json: { data: TraineeSerializer.new(trainee).as_hash }, status: :ok })
+        render({ json: { data: trainee_serializer_class.new(trainee).as_hash }, status: :ok })
       end
 
     private
@@ -43,6 +43,10 @@ module Api
 
       def serializer_class
         Serializer.for(model:, version:)
+      end
+
+      def trainee_serializer_class
+        Serializer.for(model: :trainee, version: version)
       end
 
       def attributes_class

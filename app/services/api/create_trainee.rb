@@ -4,11 +4,12 @@ module Api
   class CreateTrainee
     include ServicePattern
 
-    attr_accessor :current_provider, :trainee_attributes
+    attr_accessor :current_provider, :trainee_attributes, :version
 
-    def initialize(current_provider:, trainee_attributes:)
+    def initialize(current_provider:, trainee_attributes:, version:)
       @current_provider = current_provider
       @trainee_attributes = trainee_attributes
+      @version = version
     end
 
     def call
@@ -48,7 +49,7 @@ module Api
     end
 
     def success_response(trainee)
-      { json: TraineeSerializer.new(trainee).as_hash, status: :created }
+      { json: Serializer.for(model:, version:).new(trainee).as_hash, status: :created }
     end
 
     def validation_error_response(trainee_attributes)
@@ -57,5 +58,7 @@ module Api
         status: :unprocessable_entity,
       }
     end
+
+    def model = :trainee
   end
 end

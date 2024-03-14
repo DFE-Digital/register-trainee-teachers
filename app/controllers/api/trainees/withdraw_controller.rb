@@ -10,7 +10,11 @@ module Api
     private
 
       def withdraw_response
-        @withdraw_response ||= Api::Trainees::WithdrawResponse.call(trainee: trainee, params: withdrawal_params)
+        @withdraw_response ||= Api::Trainees::WithdrawResponse.call(
+          trainee: trainee,
+          params: withdrawal_params,
+          version: version,
+        )
       end
 
       def trainee
@@ -24,6 +28,8 @@ module Api
       def withdrawal_params
         params.permit(:withdraw_date, :withdraw_reasons_details, :withdraw_reasons_dfe_details, reasons: [])
       end
+
+      alias_method :version, :current_version
     end
   end
 end

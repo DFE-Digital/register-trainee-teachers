@@ -14,14 +14,14 @@ module Api
 
     def show
       trainee = current_provider.trainees.find_by!(slug: params[:slug])
-      render(json: TraineeSerializer.new(trainee).as_hash)
+      render(json: Serializer.for(model:, version:).new(trainee).as_hash)
     end
 
     def create
       trainee_attributes = trainee_attributes_service.new(trainee_params)
 
       render(
-        CreateTrainee.call(current_provider:, trainee_attributes:),
+        CreateTrainee.call(current_provider:, trainee_attributes:, version:),
       )
     end
 
@@ -32,7 +32,7 @@ module Api
         attributes.assign_attributes(trainee_update_params)
         succeeded, errors = update_trainee_service_class.call(trainee:, attributes:)
         if succeeded
-          render(json: { data: TraineeSerializer.new(trainee).as_hash })
+          render(json: { data: Serializer.for(model:, version:).new(trainee).as_hash })
         else
           render(json: { errors: }, status: :unprocessable_entity)
         end
@@ -73,6 +73,8 @@ module Api
     def trainee_update_params
       params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
     end
+
+    def model = :trainee
 
     alias_method :version, :current_version
   end

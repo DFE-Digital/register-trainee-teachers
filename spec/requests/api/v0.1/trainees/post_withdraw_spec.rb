@@ -69,7 +69,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       end
 
       it "uses the trainee serializer" do
-        expect(TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
+        expect(TraineeSerializer::V01).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
         post(
           "/api/v0.1/trainees/#{slug}/withdraw",
