@@ -54,7 +54,7 @@ Unauthenticated requests will receive an `UnauthorizedResponse` with a `401` sta
 
 ### `GET /info`
 
-This endpoint provides general information about the API.
+Provides general information about the API.
 
 #### Request
 
@@ -88,11 +88,22 @@ This endpoint provides general information about the API.
 
 ### `GET /trainees`
 
-This endpoint retrieves information about trainees.
+Get many trainees.
 
 #### Request
 
 `GET /api/v0.1/trainees`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **academic_cycle** | query | string | false | The academic cycle year |
+| **status** | query | string | false | Include only trainees with a particular status. Valid values are `draft`, `submitted_for_trn`, `trn_received`, `recommended_for_award`, `withdrawn`, `deferred`, `awarded` |
+| **since** | query | string | false | Include only trainees changed or created on or since a date. Dates should be in ISO 8601 format. |
+| **page** | query | integer | false | Page number |
+| **per_page** | query | integer | false | Number of records to return per page (default is 50) |
+| **sort_by** | query | string | false | Sort in ascending or descending order. Valid values are `asc` or `desc` (default is `desc`) |
 
 #### Possible responses
 
@@ -200,6 +211,22 @@ This endpoint retrieves information about trainees.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre>
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "No trainees found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre>
@@ -214,11 +241,17 @@ This endpoint retrieves information about trainees.
 
 ### `GET /trainees/{trainee_id}`
 
-This endpoint retrieves information about a single trainee.
+Get a single trainee.
 
 #### Request
 
 `GET /api/v0.1/trainees/{trainee_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
 
 #### Possible responses
 
@@ -359,6 +392,22 @@ This endpoint retrieves information about a single trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre>
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Trainee(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre>
@@ -373,7 +422,7 @@ This endpoint retrieves information about a single trainee.
 
 ### `GET /trainees/{trainee_id}/placements/{placement_id}`
 
-This endpoint retrieves information about a single trainee.
+Get a single placement for a trainee.
 
 #### Request
 
@@ -405,7 +454,7 @@ This endpoint retrieves information about a single trainee.
 
 ### `GET /trainees/{trainee_id}/placements`
 
-This endpoint retrieves information about a single trainee.
+Get many placements for a trainee.
 
 #### Request
 
@@ -436,7 +485,7 @@ This endpoint retrieves information about a single trainee.
 
 ### `GET /trainees/{trainee_id}/degrees/{degree_id}`
 
-This endpoint retrieves information about a single trainee.
+Get a single degrees for a trainee.
 
 #### Request
 
@@ -467,7 +516,7 @@ This endpoint retrieves information about a single trainee.
 
 ### `GET /trainees/{trainee_id}/degrees`
 
-This endpoint retrieves information about a single trainee.
+Get many degrees for a trainee.
 
 #### Request
 
