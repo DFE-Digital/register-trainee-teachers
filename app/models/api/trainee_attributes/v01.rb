@@ -17,7 +17,6 @@ module Api
         last_name
         date_of_birth
         email
-        nationalities
         course_education_phase
         course_min_age
         course_max_age
@@ -60,6 +59,7 @@ module Api
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
+      attribute :nationalities, array: true, default: -> { [] }
       attribute :date_of_birth, :date
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
