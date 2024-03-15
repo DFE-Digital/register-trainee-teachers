@@ -18,7 +18,7 @@ feature "References documentation page for Register API" do
   end
 
   def and_i_navigate_to_the_api_reference
-    click_on "API reference"
+    click_on("API reference", class: "moj-primary-navigation__link")
   end
 
   def then_i_should_see_the_api_reference_for_the_current_version
