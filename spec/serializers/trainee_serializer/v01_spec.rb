@@ -44,6 +44,14 @@ RSpec.describe TraineeSerializer::V01 do
       other_disability_details
       fund_code
       funding_option
+      course_age_range
+      course_study_mode
+      course_year
+      funding_method
+      itt_aim
+      ni_number
+      postgrad_apprenticeship_start_date
+      previous_last_name
     ].freeze
 
   describe "serialization" do
