@@ -19,9 +19,10 @@ module Submissions
     def all_errors
       sections.map do |section|
         validation = validator(section)
-        validation.validate
-        validation.errors.full_messages
-      end.flatten
+        next if validation.validate
+
+        { section => validation.errors.messages }
+      end.compact
     end
 
   private
