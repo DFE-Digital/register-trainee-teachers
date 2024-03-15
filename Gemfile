@@ -203,7 +203,7 @@ group :test do
   gem "cuprite", "~> 0.15"
   gem "webdrivers", "~> 5.3"
 
-  gem "shoulda-matchers", "~> 6.1"
+  gem "shoulda-matchers", "~> 6.2"
   # Code coverage reporter
   gem "simplecov", "~> 0.22.0", require: false
 
