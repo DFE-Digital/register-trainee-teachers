@@ -10,10 +10,10 @@ This API allows you to access information about trainees and provides endpoints 
         - [`GET /info`](#code-get-info-code)
         - [`GET /trainees`](#code-get-trainees-code)
         - [`GET /trainees/{trainee_id}`](#code-get-trainees-trainee_id-code)
-        - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
         - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
-        - [`GET /trainees/{trainee_id}/degrees/{degree_id}`](#code-get-trainees-trainee_id-degrees-degree_id-code)
+        - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
         - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
+        - [`GET /trainees/{trainee_id}/degrees/{degree_id}`](#code-get-trainees-trainee_id-degrees-degree_id-code)
 
 ---
 
