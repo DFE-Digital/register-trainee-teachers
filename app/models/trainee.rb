@@ -151,6 +151,7 @@ class Trainee < ApplicationRecord
   belongs_to :end_academic_cycle, optional: true, class_name: "AcademicCycle"
   belongs_to :hesa_trn_submission, optional: true, class_name: "Hesa::TrnSubmission"
 
+  has_one :hesa_trainee_detail, class_name: "Hesa::TraineeDetail"
   has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
   has_one :dqt_trn_request, class_name: "Dqt::TrnRequest", dependent: :destroy
   has_one :dqt_teacher,
