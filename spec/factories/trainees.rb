@@ -668,5 +668,9 @@ FactoryBot.define do
         end
       end
     end
+
+    trait :with_hesa_trainee_detail do
+      hesa_trainee_detail { build(:hesa_trainee_detail) }
+    end
   end
 end

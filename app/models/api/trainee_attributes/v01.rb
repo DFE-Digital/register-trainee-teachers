@@ -58,6 +58,7 @@ module Api
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
       attribute :nationalisations_attributes, array: true, default: -> { [] }
+      attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :date_of_birth, :date
       attribute :record_source, default: -> { RecordSources::API }
 
@@ -69,7 +70,12 @@ module Api
       end
 
       def initialize(attributes = {})
-        super(attributes.except(:placements_attributes, :degrees_attributes, :nationalisations_attributes))
+        super(attributes.slice(TraineeAttributes::V01::ATTRIBUTES).except(
+          :placements_attributes,
+          :degrees_attributes,
+          :nationalisations_attributes,
+          :hesa_trainee_detail_attributes,
+        ))
 
         attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
@@ -82,10 +88,23 @@ module Api
         attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
+
+        self.hesa_trainee_detail_attributes ||=
+          HesaTraineeDetailAttributes::V01.new(
+            attributes.with_indifferent_access.slice(
+              *HesaTraineeDetailAttributes::V01::ATTRIBUTES,
+            ),
+          )
       end
 
       def self.from_trainee(trainee)
-        new(trainee.attributes.select { |k, _v| Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym) })
+        new(trainee.attributes.select { |k, _v|
+          Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+        }.merge(
+          trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
+            Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+          } || {},
+        ))
       end
 
       def deep_attributes
