@@ -18,11 +18,13 @@ module Api
       return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
 
       trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
-      unless trainee.save
-        return save_errors_response(trainee)
-      end
 
-      success_response(trainee)
+      if trainee.save
+        ::Trainees::SubmitForTrn.call(trainee:)
+        success_response(trainee)
+      else
+        save_errors_response(trainee)
+      end
     end
 
   private
