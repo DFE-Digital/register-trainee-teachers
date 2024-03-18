@@ -13,6 +13,7 @@ This API allows you to access information about trainees and provides endpoints 
         - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
         - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
         - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
+        - [`PUT|PATCH /trainees/{trainee_id}/degrees`](#code-put-patch-trainees-trainee_id-degrees-code)
 
 ---
 
@@ -635,4 +636,88 @@ Get many degrees for a trainee.
 </details>
 
 ---
+
+### `PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`
+
+Updates an existing degree for this trainee.
+
+#### Request
+
+`PUT /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
+
+or
+
+`PATCH /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - An array of degrees</span></summary>
+  <div class="govuk-details__text">
+    <pre>
+    {
+      "data": [
+        {
+          "id": 492440,
+          "locale_code": "uk",
+          "uk_degree": "Bachelor of Arts",
+          "non_uk_degree": null,
+          "trainee_id": 644065,
+          "created_at": "2024-01-18T08:02:41.955Z",
+          "updated_at": "2024-01-18T08:02:41.955Z",
+          "subject": "Childhood studies",
+          "institution": "University of Bristol",
+          "graduation_year": 2022,
+          "grade": "Upper second-class honours (2:1)",
+          "country": null,
+          "other_grade": null,
+          "slug": "E1phsAcP3hDFMhx19qVGhchR",
+          "dttp_id": null,
+          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+          "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre>
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Degree(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre>
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+---
+
+
 
