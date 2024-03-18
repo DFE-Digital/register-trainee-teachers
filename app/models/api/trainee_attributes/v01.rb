@@ -17,6 +17,10 @@ module Api
         last_name
         date_of_birth
         email
+        course_education_phase
+        course_min_age
+        course_max_age
+        trainee_start_date
         sex
         trn
         training_route
@@ -37,7 +41,6 @@ module Api
 
       REQUIRED_ATTRIBUTES = %i[
         first_names
-        middle_names
         last_name
         date_of_birth
         email
@@ -56,6 +59,7 @@ module Api
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
+      attribute :nationalities, array: true, default: -> { [] }
       attribute :date_of_birth, :date
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
