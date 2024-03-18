@@ -19,7 +19,7 @@ module HesaTraineeDetailSerializer
 
     def as_hash
       SERIALIZABLE_ATTRIBUTES.index_with do |attr|
-        @trainee_details&.attributes&.send(attr)
+        @trainee_details&.attributes&.[](attr)
       end
     end
   end

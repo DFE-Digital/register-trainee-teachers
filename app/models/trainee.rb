@@ -373,6 +373,7 @@ class Trainee < ApplicationRecord
     :placements,
     :degrees,
     :nationalisations,
+    :hesa_trainee_detail,
   )
 
   def hesa_student_for_collection(collection_reference)

@@ -11,7 +11,7 @@ module Api
       end
 
       def call
-        trainee.assign_attributes(attributes.attributes)
+        trainee.assign_attributes(attributes.deep_attributes)
 
         if validation.all_errors.any?
           [false, validation]

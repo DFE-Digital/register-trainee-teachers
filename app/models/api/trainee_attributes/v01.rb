@@ -70,7 +70,9 @@ module Api
       end
 
       def initialize(attributes = {})
-        super(attributes.slice(TraineeAttributes::V01::ATTRIBUTES).except(
+        attributes = attributes.to_h.with_indifferent_access
+
+        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES).except(
           :placements_attributes,
           :degrees_attributes,
           :nationalisations_attributes,
@@ -91,9 +93,7 @@ module Api
 
         self.hesa_trainee_detail_attributes ||=
           HesaTraineeDetailAttributes::V01.new(
-            attributes.with_indifferent_access.slice(
-              *HesaTraineeDetailAttributes::V01::ATTRIBUTES,
-            ),
+            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
       end
 
