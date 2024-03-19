@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 51f075158aaf444d2d8cd874dc8dbcd276a35b06
-  tag: v3.2.0
+  revision: 358631ad9ed80c826a224fddeff2144962931478
+  tag: v3.3.0
   specs:
-    dfe-reference-data (3.2.0)
+    dfe-reference-data (3.1.4)
       activesupport
       tzinfo
 
@@ -138,7 +138,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bindata (2.5.0)
     blazer (3.0.3)
       activerecord (>= 6.1)
@@ -393,7 +393,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2023.1205)
     mini_mime (1.1.5)
-    minitest (5.22.2)
+    minitest (5.22.3)
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
