@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddExtraAttributesForApi < ActiveRecord::Migration[7.1]
   def change
     create_table :hesa_trainee_details do |t|
