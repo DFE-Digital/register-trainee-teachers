@@ -143,6 +143,8 @@ shared:
     - postgrad_apprenticeship_start_date
     - funding_method
     - ni_number
+    - hesa_disabilities
+    - additional_training_initiative
     - trainee_id
     - created_at
     - updated_at

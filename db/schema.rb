@@ -664,6 +664,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_14_234421) do
     t.date "postgrad_apprenticeship_start_date"
     t.string "funding_method"
     t.string "ni_number"
+    t.string "hesa_disabilities", default: [], array: true
+    t.string "additional_training_initiative"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trainee_id"], name: "index_hesa_trainee_details_on_trainee_id"

@@ -11,6 +11,8 @@ class AddExtraAttributesForApi < ActiveRecord::Migration[7.1]
       t.date :postgrad_apprenticeship_start_date
       t.string :funding_method
       t.string :ni_number
+      t.string :hesa_disabilities, array: true, default: []
+      t.string :additional_training_initiative
 
       t.timestamps
     end
