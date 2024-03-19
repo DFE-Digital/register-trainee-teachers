@@ -4,3 +4,15 @@ code {
   background-color: govuk-colour("light-grey");
   color: govuk-colour("red");
 }
+
+.json-code-sample {
+  padding: 3px 5px;
+  font-family: Monaco,Consolas,Lucida Console,monospace;
+  font-size: 15px;
+  color: $govuk-text-colour;
+  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: break-spaces;
+  background: govuk-colour("light-grey");
+}
