@@ -279,6 +279,21 @@
   - application_choice_id
   - itt_start_date
   - trainee_start_date
+  hesa_trainee_details:
+  - id
+  - previous_last_name
+  - itt_aim
+  - course_study_mode
+  - course_year
+  - course_age_range
+  - postgrad_apprenticeship_start_date
+  - funding_method
+  - ni_number
+  - hesa_disabilities
+  - additional_training_initiative
+  - trainee_id
+  - created_at
+  - updated_at
   :hesa_trn_requests:
   - id
   - collection_reference
