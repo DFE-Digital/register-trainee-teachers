@@ -1,28 +1,14 @@
 # frozen_string_literal: true
 
 module Api
-  module Hesa
-    class MapTraineeAttributes
+  module MapHesaAttributes
+    class V01
       include ServicePattern
       include HasDiversityAttributes
       include HasCourseAttributes
 
       ATTRIBUTES = %i[
-        first_names
-        last_name
-        email
-        date_of_birth
-        ethnic_background
-        sex
-        course_subject_one
-        course_subject_two
-        course_subject_three
-        itt_end_date
-        study_mode
-        training_route
         nationality
-        itt_start_date
-        trainee_start_date
       ].freeze
 
       def initialize(params:)
@@ -38,15 +24,13 @@ module Api
       attr_reader :params
 
       def mapped_params
-        {
-          first_names: params[:first_names],
-          last_name: params[:last_name],
-          date_of_birth: params[:date_of_birth],
-          email: params[:email],
-          sex: sex,
-          training_route: training_route,
-          nationalities: nationalities,
-        }
+        additional_params = params.except(*ATTRIBUTES)
+
+        additional_params.merge({
+          sex:,
+          training_route:,
+          nationalities:,
+        })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
       end

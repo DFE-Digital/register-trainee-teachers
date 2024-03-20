@@ -22,23 +22,22 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
         study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       },
-      hesa_data: true,
     }
   end
 
   context "when the request is valid", feature_register_api: true do
     before do
-      allow(Api::Hesa::MapTraineeAttributes).to receive(:call).and_call_original
+      allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
 
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
 
-    it "calls the Hesa::MapTraineeAttributes service" do
+    it "calls the Hesa::MapHesaAttributes service" do
       expected_params = ActionController::Parameters.new(
-        params[:data].slice(*Api::Hesa::MapTraineeAttributes::ATTRIBUTES),
+        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES)),
       ).permit!
 
-      expect(Api::Hesa::MapTraineeAttributes).to have_received(:call).with(params: expected_params)
+      expect(Api::MapHesaAttributes::V01).to have_received(:call).with(params: expected_params)
     end
 
     it "creates a trainee" do
@@ -55,6 +54,20 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "sets the progress data structure" do
       expect(Trainee.last.progress.personal_details).to be(true)
+    end
+  end
+
+  context "when the request is invalid", feature_register_api: true do
+    before do
+      post "/api/v0.1/trainees", params: { data: { last_name: "Doe" } }, headers: { Authorization: token }
+    end
+
+    it "returns status code 422" do
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "returns a validation failure message" do
+      expect(response.parsed_body["errors"]).to include("First names can't be blank")
     end
   end
 end
