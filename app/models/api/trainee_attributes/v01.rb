@@ -58,14 +58,15 @@ module Api
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
-      attribute :nationalities, array: true, default: -> { [] }
+      attribute :nationalisations_attributes, array: true, default: -> { [] }
       attribute :date_of_birth, :date
       attribute :record_source, default: -> { RecordSources::API }
 
-      # validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates :sex, inclusion: { in: Trainee.sexes.keys }
 
       def initialize(attributes = {})
-        super(attributes.except(:placements_attributes, :degrees_attributes))
+        super(attributes.except(:placements_attributes, :degrees_attributes, :nationalisations_attributes))
 
         attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
@@ -73,6 +74,10 @@ module Api
 
         attributes[:degrees_attributes]&.each do |degree_params|
           degrees_attributes << DegreeAttributes::V01.new(degree_params)
+        end
+
+        attributes[:nationalisations_attributes]&.each do |nationalisation_params|
+          nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
       end
 

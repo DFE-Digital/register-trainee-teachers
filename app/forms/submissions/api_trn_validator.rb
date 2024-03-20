@@ -6,8 +6,6 @@ module Submissions
 
     class_attribute :extra_validators, instance_writer: false, default: {}
 
-    validator :personal_details, form: "Api::PersonalDetailsForm", unless: :apply_application_and_draft?
-
     class << self
       def missing_data_validator(name, options)
         extra_validators[name] = options
@@ -17,12 +15,18 @@ module Submissions
     missing_data_validator :placements, form: "PlacementDetailForm", if: :requires_placements?
 
     def all_errors
-      sections.map do |section|
+      @all_errors ||= sections.each_with_object({}) do |section, errors_hash|
+        next unless validator_keys.include?(section)
+
         validation = validator(section)
         next if validation.validate
 
-        { section => validation.errors.messages }
-      end.compact
+        errors_hash[section] = validation.errors.messages
+      end
+    end
+
+    def errors_count
+      @errors_count ||= all_errors.values.sum { |section| section.values.sum(&:length) }
     end
 
   private
@@ -31,7 +35,7 @@ module Submissions
       [
         :personal_details, :contact_details, :diversity,
         *(:degrees if @trainee.requires_degree?),
-        :course_details, :training_details,
+        :course_details, # `:training_details` seems unnecessary as it only details trainee_id which according to DD is not needed
         *(:schools if trainee.requires_schools?),
         *(:placements if trainee.requires_placements?),
         *(:funding if trainee.requires_funding?),

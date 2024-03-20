@@ -11,11 +11,21 @@ module Api
       end
 
       def call
-        if @attributes.valid?
-          [@trainee.update(@attributes.attributes), @trainee.errors&.full_messages]
+        trainee.assign_attributes(attributes.attributes)
+
+        if validation.all_errors.any?
+          [false, validation]
         else
-          [false, @attributes.errors.full_messages]
+          [trainee.save, nil]
         end
+      end
+
+    private
+
+      attr_reader :trainee, :attributes
+
+      def validation
+        @validation ||= Submissions::ApiTrnValidator.new(trainee:)
       end
     end
   end

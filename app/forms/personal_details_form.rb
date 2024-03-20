@@ -161,6 +161,8 @@ private
   end
 
   def nationalities_cannot_be_empty
+    return if trainee.record_source == RecordSources::API
+
     if nationality_ids.empty?
       errors.add(:nationality_names, :empty_nationalities)
     end
