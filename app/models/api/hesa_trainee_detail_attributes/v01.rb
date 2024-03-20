@@ -15,6 +15,8 @@ module Api
         ni_number
         postgrad_apprenticeship_start_date
         previous_last_name
+        hesa_disabilities
+        additional_training_initiative
       ].freeze
 
       ATTRIBUTES.each do |attr|

@@ -72,7 +72,7 @@ module Api
       def initialize(attributes = {})
         attributes = attributes.to_h.with_indifferent_access
 
-        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES).except(
+        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
           :placements_attributes,
           :degrees_attributes,
           :nationalisations_attributes,

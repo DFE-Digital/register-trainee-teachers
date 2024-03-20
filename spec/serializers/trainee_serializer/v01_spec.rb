@@ -52,6 +52,8 @@ RSpec.describe TraineeSerializer::V01 do
       ni_number
       postgrad_apprenticeship_start_date
       previous_last_name
+      hesa_disabilities
+      additional_training_initiative
     ].freeze
 
   describe "serialization" do
