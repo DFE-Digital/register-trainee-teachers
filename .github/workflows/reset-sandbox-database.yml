@@ -52,7 +52,7 @@ jobs:
     - name: Swap providers to vendor
       shell: bash
       run: |
-        (kubectl -n bat-qa exec -ti deployment/register-sandbox -- bundle exec rake vendor:create) >> vendor_create.txt
+        (kubectl -n bat-production exec -ti deployment/register-sandbox -- bundle exec rake vendor:create) >> vendor_create.txt
 
     - name: Check for Failure
       if: ${{ failure() }}
