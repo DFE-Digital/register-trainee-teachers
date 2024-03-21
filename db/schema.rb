@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_05_115708) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_14_234421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -654,6 +654,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_115708) do
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
 
+  create_table "hesa_trainee_details", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.string "previous_last_name"
+    t.string "itt_aim"
+    t.string "course_study_mode"
+    t.integer "course_year"
+    t.string "course_age_range"
+    t.date "postgrad_apprenticeship_start_date"
+    t.string "funding_method"
+    t.string "ni_number"
+    t.string "hesa_disabilities", default: [], array: true
+    t.string "additional_training_initiative"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trainee_id"], name: "index_hesa_trainee_details_on_trainee_id"
+  end
+
   create_table "hesa_trn_requests", force: :cascade do |t|
     t.string "collection_reference"
     t.integer "state"
@@ -964,6 +981,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_05_115708) do
   add_foreign_key "degrees", "trainees"
   add_foreign_key "dqt_trn_requests", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
+  add_foreign_key "hesa_trainee_details", "trainees"
   add_foreign_key "lead_school_users", "schools", column: "lead_school_id"
   add_foreign_key "lead_school_users", "users"
   add_foreign_key "nationalisations", "nationalities"

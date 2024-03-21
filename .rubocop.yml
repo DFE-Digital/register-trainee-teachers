@@ -24,6 +24,7 @@ AllCops:
   Exclude:
     - "bin/*"
     - "db/schema.rb"
+    - "db/data_schema.rb"
     - "node_modules/**/*"
 
 Style/MethodCallWithArgsParentheses:
