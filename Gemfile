@@ -218,8 +218,8 @@ group :test do
   gem "rspec-retry"
 end
 
-# Required for example_data so needed in review, qa and pen too
-group :development, :test, :review, :qa, :audit, :pen do
+# Required for example_data and vendor:swap so needed in stated environments
+group :development, :test, :review, :qa, :audit, :pen, :sandbox do
   gem "bundle-audit", require: false
   gem "factory_bot_rails"
   gem "faker"
