@@ -65,7 +65,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       )
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).to contain_exactly(
-        "First names is too long (maximum is 50 characters)",
+        ["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }],
       )
     end
 

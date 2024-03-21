@@ -10,7 +10,8 @@ module Funding
 
     validates :training_initiative,
               presence: true,
-              inclusion: { in: ROUTE_INITIATIVES_ENUMS.values }
+              inclusion: { in: ROUTE_INITIATIVES_ENUMS.values },
+              if: :training_initiative_required?
 
   private
 
@@ -20,6 +21,10 @@ module Funding
 
     def form_store_key
       :training_initiative
+    end
+
+    def training_initiative_required?
+      trainee.record_source != RecordSources::API
     end
   end
 end

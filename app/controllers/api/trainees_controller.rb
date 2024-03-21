@@ -30,11 +30,17 @@ module Api
       begin
         attributes = trainee_attributes_service.from_trainee(trainee)
         attributes.assign_attributes(trainee_update_params)
-        succeeded, errors = update_trainee_service_class.call(trainee:, attributes:)
+        succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
         if succeeded
           render(json: { data: Serializer.for(model:, version:).new(trainee).as_hash })
         else
-          render(json: { errors: }, status: :unprocessable_entity)
+          render(
+            json: {
+              message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this user from being saved",
+              errors: validation.all_errors,
+            },
+            status: :unprocessable_entity,
+          )
         end
       end
     end
@@ -47,6 +53,7 @@ module Api
           hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
           placements_attributes: [placements_attributes],
           degrees_attributes: [degree_attributes],
+          nationalisations_attributes: [nationality_attributes],
         ),
       )
     end
@@ -57,6 +64,10 @@ module Api
 
     def placements_attributes
       Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
+    end
+
+    def nationality_attributes
+      Api::Attributes.for(model: :nationality, version: version)::ATTRIBUTES
     end
 
     def update_trainee_service_class

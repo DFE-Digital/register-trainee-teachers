@@ -367,7 +367,12 @@ class Trainee < ApplicationRecord
 
   after_touch :set_submission_ready
 
-  accepts_nested_attributes_for :trainee_disabilities, :placements, :degrees
+  accepts_nested_attributes_for(
+    :trainee_disabilities,
+    :placements,
+    :degrees,
+    :nationalisations,
+  )
 
   def hesa_student_for_collection(collection_reference)
     Hesa::Student.where(hesa_id:, collection_reference:).order(created_at: :asc).first
@@ -528,6 +533,10 @@ class Trainee < ApplicationRecord
     return "dttp" if  created_from_dttp?
 
     "manual"
+  end
+
+  def api_record?
+    record_source == RecordSources::API
   end
 
   def estimated_end_date

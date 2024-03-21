@@ -23,11 +23,19 @@ module Api
         ::Trainees::SubmitForTrn.call(trainee:)
         success_response(trainee)
       else
-        save_errors_response(trainee)
+        save_errors_response(validation)
       end
     end
 
   private
+
+    def trainee
+      @trainee ||= current_provider.trainees.new(trainee_attributes.deep_attributes)
+    end
+
+    def validation
+      @validation ||= Submissions::ApiTrnValidator.new(trainee:)
+    end
 
     def duplicate_trainees
       @duplicate_trainees ||= FindDuplicateTrainees.call(
@@ -46,8 +54,14 @@ module Api
       }
     end
 
-    def save_errors_response(trainee)
-      { json: { errors: trainee.errors.full_messages }, status: :unprocessable_entity }
+    def save_errors_response(validation)
+      {
+        json: {
+          message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this user from being saved",
+          errors: validation.all_errors,
+        },
+        status: :unprocessable_entity,
+      }
     end
 
     def success_response(trainee)
