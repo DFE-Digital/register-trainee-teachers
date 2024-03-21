@@ -27,9 +27,9 @@ module Api
         additional_params = params.except(*ATTRIBUTES)
 
         additional_params.merge({
-          sex: sex,
-          training_route: training_route,
-          nationalisations_attributes: nationalisations_attributes,
+          sex:,
+          training_route:,
+          nationalisations_attributes:,
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)

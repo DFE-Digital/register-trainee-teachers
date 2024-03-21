@@ -41,8 +41,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "creates a trainee" do
-      puts response.parsed_body
-      byebug
       expect(response.parsed_body["first_names"]).to eq("John")
     end
 

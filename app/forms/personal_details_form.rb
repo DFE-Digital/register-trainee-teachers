@@ -30,7 +30,7 @@ class PersonalDetailsForm < TraineeForm
   validates :middle_names, length: { maximum: 50 }, allow_nil: true
   validates :date_of_birth, presence: true
   validate :date_of_birth_valid
-  validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys }
+  validates :sex, presence: true, inclusion: { in: Trainee.sexes.keys + Trainee.sexes.values }
   validates :other_nationality1,
             :other_nationality2,
             :other_nationality3,

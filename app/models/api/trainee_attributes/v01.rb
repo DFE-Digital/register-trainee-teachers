@@ -63,7 +63,6 @@ module Api
       attribute :record_source, default: -> { RecordSources::API }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
-      validates :sex, inclusion: { in: Trainee.sexes.keys }
 
       def initialize(attributes = {})
         super(attributes.except(:placements_attributes, :degrees_attributes, :nationalisations_attributes))
