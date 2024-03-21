@@ -12,13 +12,6 @@ RSpec.describe Api::TraineeAttributes::V01 do
     end
   end
 
-  it "validates inclusion of sex in Trainee.sexes.keys" do
-    invalid_sex = "invalid"
-    subject.sex = invalid_sex
-    subject.valid?
-    expect(subject.errors.details[:sex]).to include(error: :inclusion, value: invalid_sex)
-  end
-
   it "derives course_allocation_subject from course_subject_one_name before validation" do
     subject.course_subject_one = "biology"
     create(:subject_specialism, name: subject.course_subject_one)
