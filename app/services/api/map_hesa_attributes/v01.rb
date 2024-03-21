@@ -27,9 +27,9 @@ module Api
         additional_params = params.except(*ATTRIBUTES)
 
         additional_params.merge({
-          sex:,
-          training_route:,
-          nationalities:,
+          sex: sex,
+          training_route: training_route,
+          nationalisations_attributes: nationalisations_attributes,
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
@@ -43,8 +43,10 @@ module Api
         ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
       end
 
-      def nationalities
-        Nationality.where(name: nationality_name)
+      def nationalisations_attributes
+        return [] unless nationality_name
+
+        [{ name: nationality_name }]
       end
 
       def nationality_name
