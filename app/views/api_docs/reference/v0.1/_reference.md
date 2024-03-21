@@ -42,6 +42,8 @@ Version 0.1 is a draft version of the API. It is not yet officially released.
 
 It is designed for testing and feedback purposes only.
 
+It will have some seed data to help you test the API.
+
 It will only be available on the `sandbox` environment.
 
 ---
@@ -55,6 +57,8 @@ All requests must be accompanied by an `Authorization` request header (not as pa
 `Authorization: Bearer {token}`
 
 Unauthenticated requests will receive an `UnauthorizedResponse` with a `401` status code.
+
+Authentication tokens will be provided by the Register team.
 
 ---
 

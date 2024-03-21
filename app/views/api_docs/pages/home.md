@@ -4,11 +4,11 @@ title: Register API documentation
 ---
 
 This is API documentation for the Department for Education (DfE)’s Register
-trainee teachers service.
+trainee teachers (Register) service.
 
-The Register API is replacing the HESA service for teacher trainees. All vendors of
-student record systems (SRS) and some training providers will need to make
-changes to integrate with Register.
+The Register API is replacing the HESA service for teacher trainees from the
+2025/26 collection cycle. All vendors of student record systems (SRS) and some
+training providers will need to make changes to integrate with Register.
 
 # What this API is for
 
@@ -17,11 +17,11 @@ record systems and to keep those records synchronised as they are modified.
 
 Providers can use the API for:
 
-- Looking up a trainee record in Register and returning details about that trainee.
-- Retrieving a list of trainee records in Register for a given academic year.
-- Creating new trainee records.
-- Updating individual trainee records.
-- Withdrawing and deferring a trainee.
+- looking up a trainee record in Register and returning details about that trainee.
+- retrieving a list of trainee records in Register for a given academic year.
+- creating new trainee records.
+- updating individual trainee records.
+- withdrawing and deferring a trainee.
 
 # How do I connect to this API?
 
@@ -41,7 +41,7 @@ For instructions on how to authenticate see the [API reference](/api-docs/refere
 Trainees are identified in the API by an internally generated unique `id`
 value. The API uses the `id` to specify a particular trainee record. For
 example, the API endpoint that updates a single trainee record requires that
-`id` value as part of it's URL.
+`id` value as part of its URL.
 
 For example, the following request updates the trainee record identified by `id` value
 `gQGecNYwLCqPMTgzW7N2bURi`.
@@ -134,8 +134,6 @@ The number after the decimal point indicates a minor version. This is
 incremented each time non-breaking changes are made, for example `1.2` changes to
 `1.3`.
 
-The current version of this API is `0.1`. The next minor version will be `0.2`.
-
 Changes are documented in our [release notes](/api-docs/release-notes).
 
 ## Using the correct version of the API
@@ -153,9 +151,13 @@ For example, after version 1.1 is released you can use:
 
 - <https://www.register-trainee-teachers.service.gov.uk/api/v1.0> for version `1.0`
 - <https://www.register-trainee-teachers.service.gov.uk/api/v1.1> for version `1.1`
-- <https://www.register-trainee-teachers.service.gov.uk/api/v1> for version `1.1` - but if version `1.2` is released then this URL will give you version `1.2` instead
+- <https://www.register-trainee-teachers.service.gov.uk/api/v1> for version `1.1` - but
+if version `1.2` is released then this URL will give you version `1.2` instead
 
 # Testing
 
 To get familiar with our system and perform testing, you can use
 [our sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
+
+You will need an [authentication token](http://localhost:3000/api-docs/reference#authentication)
+for the sandbox environment. These will be provided by the Register team.
