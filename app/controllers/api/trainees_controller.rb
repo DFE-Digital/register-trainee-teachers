@@ -18,7 +18,7 @@ module Api
     end
 
     def create
-      trainee_attributes = trainee_attributes_service.new(trainee_params)
+      trainee_attributes = trainee_attributes_service.new(hesa_mapped_params)
 
       render(
         CreateTrainee.call(current_provider:, trainee_attributes:, version:),
@@ -41,27 +41,18 @@ module Api
 
   private
 
-    def register_data_params
-      params.require(:data)
-        .permit(
-          trainee_attributes_service::ATTRIBUTES,
+    def hesa_mapped_params
+      hesa_mapper_class.call(
+        params: params.require(:data).permit(
+          hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
           placements_attributes: [placements_attributes],
           degrees_attributes: [degree_attributes],
-        )
-    end
-
-    def hesa_mapped_params
-      Hesa::MapTraineeAttributes.call(
-        params: params.require(:data).permit(Hesa::MapTraineeAttributes::ATTRIBUTES),
+        ),
       )
     end
 
-    def contains_hesa_data?
-      params.key?(:hesa_data)
-    end
-
-    def trainee_params
-      contains_hesa_data? ? hesa_mapped_params : register_data_params
+    def hesa_mapper_class
+      Object.const_get("Api::MapHesaAttributes::#{current_version_class_name}")
     end
 
     def placements_attributes

@@ -4,9 +4,19 @@ require "rails_helper"
 
 describe "Trainees API" do
   let(:academic_cycle) { create(:academic_cycle, :current) }
-  let!(:trainee) { create(:trainee, :in_progress, itt_start_date: academic_cycle.start_date) }
   let(:provider) { trainee.provider }
   let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+
+  let!(:trainee) do
+    create(
+      :trainee,
+      :male,
+      :provider_led_undergrad,
+      :in_progress,
+      itt_start_date: academic_cycle.start_date,
+      course_subject_one: CourseSubjects::BIOLOGY,
+    )
+  end
 
   describe "`POST /api/v0.1/trainees` endpoint" do
     let(:valid_attributes) do
@@ -16,15 +26,15 @@ describe "Trainees API" do
           middle_names: trainee.middle_names,
           last_name: trainee.last_name,
           date_of_birth: trainee.date_of_birth.iso8601,
-          sex: trainee.sex,
+          sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
           email: trainee.email,
           trn: "123456",
-          training_route: trainee.training_route,
+          training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
           itt_start_date: trainee.itt_start_date,
           itt_end_date: trainee.itt_end_date,
           diversity_disclosure: "diversity_disclosed",
-          course_subject_one: trainee.course_subject_one,
-          study_mode: trainee.study_mode,
+          course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+          study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
         },
       }
     end
