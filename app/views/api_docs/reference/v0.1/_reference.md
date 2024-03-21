@@ -1047,7 +1047,7 @@ Degree details
     {
       "data": {
         "graduation_year": 2022,
-        "grade": "Lower second-class honours (2:2)",
+        "grade": "Lower second-class honours (2:2)"
       }
     }
     </pre>
@@ -1453,7 +1453,7 @@ Trainee details
         "study_mode": "full_time",
         "application_choice_id": "123",
         "placements_attributes": [{ "urn": "123456", "name": "Placement" }],
-        "degrees_attributes": [{ "country": "UK", "grade": "First", "subject": "Computer Science", "institution": "University of Test", "graduation_year": "2012", "locale_code": "uk" }],
+        "degrees_attributes": [{ "country": "UK", "grade": "First", "subject": "Computer Science", "institution": "University of Test", "graduation_year": "2012", "locale_code": "uk" }]
       }
     }
     </pre>
@@ -1819,7 +1819,7 @@ Degree details
         "institution": "University of Oxford",
         "uk_degree": "Bachelor of Arts",
         "graduation_year": "2012",
-        "locale_code": "uk",
+        "locale_code": "uk"
       }
     }
     </pre>
