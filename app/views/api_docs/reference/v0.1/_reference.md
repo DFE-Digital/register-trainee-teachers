@@ -2128,7 +2128,7 @@ Deletes an existing degree for this trainee.
 
 ## Objects
 
-### The Trainee object
+### Trainee object
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
@@ -2147,7 +2147,7 @@ Deletes an existing degree for this trainee.
   </div>
 </dl>
 
-### The Placement object
+### Placement object
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
@@ -2194,5 +2194,138 @@ Deletes an existing degree for this trainee.
   </div>
 </dl>
 
-### The Degree object
+### Degree object
 
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>degree_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 24 characters)
+      </p>
+      <p class="govuk-body">
+        The unique ID of the degree in the Register system. Used to identify the degree when <a href="/api-docs/reference#code-put-patch-trainees-trainee_id-degrees-degree_id-code">updating</a> or <a href="/api-docs/reference#code-delete-trainees-trainee_id-degrees-degree_id-code">deleting</a>.
+      </p>
+      <p class="govuk-body">
+        Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>country</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degctry">HESA degree country field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>US</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>grade</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>02</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        Whether the degree was awarded in the UK or not.
+      </p>
+      <p class="govuk-body">
+        Example: <code>uk</code>
+      </p>
+      <p class="govuk-body">Possible values:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li><code>uk</code></li>
+        <li><code>non_uk</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>uk_degree</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required if <code>locale_code</code> is <code>uk</code>
+      </p>
+      <p class="govuk-body">
+        The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>083</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>non_uk_degree</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required if <code>locale_code</code> is <code>non_uk</code>
+      </p>
+      <p class="govuk-body">
+        The UK ENIC comparable degree type for non-UK degrees.
+      </p>
+      <p class="govuk-body">
+        Example: <code>Ordinary bachelor degree</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>subject</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsubj">HESA degree subject field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>100425</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>institution</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required if <code>locale_code</code> is <code>uk</code>
+      </p>
+      <p class="govuk-body">
+        The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degest">HESA degree establishment field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>0116</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>graduation_year</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>2012-06-30</code>
+      </p>
+    </dd>
+  </div>
+</dl>
