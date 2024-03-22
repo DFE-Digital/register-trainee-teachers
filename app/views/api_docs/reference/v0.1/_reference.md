@@ -2126,4 +2126,29 @@ Deletes an existing degree for this trainee.
 ---
 
 
+## Objects
+
+### The Trainee object
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>first_names</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The first names of the trainee.
+      </p>
+      <p class="govuk-body">
+        Example: <code>"Ruby Joy"</code>
+      </p>
+    </dd>
+  </div>
+</dl>
+
+### The Placement object
+
+
+### The Degree object
 
