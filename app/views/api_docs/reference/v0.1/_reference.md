@@ -13,15 +13,15 @@ This API allows you to access information about trainees and provides endpoints 
         - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
         - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
         - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
+        - [`POST /trainees`](#code-post-trainees-code)
+        - [`POST /trainees/{trainee_id}/placements`](#code-post-trainees-trainee_id-placements-code)
+        - [`POST /trainees/{trainee_id}/degrees`](#code-post-trainees-trainee_id-degrees-code)
+        - [`POST /trainees/{trainee_id}/withdraw`](#code-post-trainees-trainee_id-withdraw-code)
         - [`PUT|PATCH /trainees/{trainee_id}/{trainee_id}`](#code-put-patch-trainees-trainee_id-trainee_id-code)
         - [`PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
         - [`PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
         - [`DELETE /trainees/{trainee_id}/placements/{placement_id}`](#code-delete-trainees-trainee_id-placements-placement_id-code)
         - [`DELETE /trainees/{trainee_id}/degrees/{degree_id}`](#code-delete-trainees-trainee_id-degrees-degree_id-code)
-        - [`POST /trainees`](#code-post-trainees-code)
-        - [`POST /trainees/{trainee_id}/placements`](#code-post-trainees-trainee_id-placements-code)
-        - [`POST /trainees/{trainee_id}/degrees`](#code-post-trainees-trainee_id-degrees-code)
-        - [`POST /trainees/{trainee_id}/withdraw`](#code-post-trainees-trainee_id-withdraw-code)
 
 
 ---
@@ -618,756 +618,6 @@ Get many degrees for a trainee.
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
           "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Degree(s) not found"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }
-    </pre>
-  </div>
-</details>
-
----
-
-### `PUT|PATCH /trainees/{trainee_id}/{trainee_id}`
-
-Updates an existing trainee.
-
-#### Request
-
-`PUT /api/v0.1/trainees/{trainee_id}/{trainee_id}`
-
-or
-
-`PATCH /api/v0.1/trainees/{trainee_id}/{trainee_id}`
-
-#### Parameters
-
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
-
-#### Request body
-
-Trainee details
-
-<dl class="govuk-summary-list">
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>data</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        <a class="govuk-link" href="#trainee-object">Trainee</a> object
-      </p>
-    </dd>
-  </div>
-</dl>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">Example request body</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "first_names": "Ruby Joy"
-      }
-    }
-    </pre>
-  </div>
-</details>
-
-#### Possible responses
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": [
-        {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
-          "first_names": "Ruby Joy",
-          "last_name": "TraineeUser644065",
-          "date_of_birth": "2000-01-01",
-          "created_at": "2023-10-20T14:54:47.374Z",
-          "updated_at": "2024-01-24T16:03:28.721Z",
-          "email": "trainee_644065@example.com",
-          "dttp_id": null,
-          "middle_names": null,
-          "training_route": "provider_led_postgrad",
-          "sex": "female",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "mixed_ethnic_group",
-          "ethnic_background": "Another Mixed background",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
-          "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": "2023-09-04",
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": 5,
-          "course_max_age": 11,
-          "course_subject_two": null,
-          "course_subject_three": null,
-          "awarded_at": null,
-          "training_initiative": "no_initiative",
-          "applying_for_bursary": false,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": false,
-          "course_education_phase": "primary",
-          "applying_for_grant": false,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": true,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
-          "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
-          "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774,
-          "placements": [
-            {
-              "id": 270180,
-              "trainee_id": 644065,
-              "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "address": null,
-              "postcode": null,
-              "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z",
-              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
-            }
-          ],
-          "degrees": [
-            {
-              "id": 492440,
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
-              "non_uk_degree": null,
-              "trainee_id": 644065,
-              "created_at": "2024-01-18T08:02:41.955Z",
-              "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
-              "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
-              "country": null,
-              "other_grade": null,
-              "slug": "E1phsAcP3hDFMhx19qVGhchR",
-              "dttp_id": null,
-              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-            }
-          ]
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Trainee(s) not found"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "First names is too long (maximum is 50 characters)"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
----
-
-### `PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`
-
-Updates an existing placement for this trainee.
-
-#### Request
-
-`PUT /api/v0.1/trainees/{trainee_id}/placements/{placement_id}`
-
-or
-
-`PATCH /api/v0.1/trainees/{trainee_id}/placements/{placement_id}`
-
-#### Parameters
-
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
-| **placement_id** | path | string | true | The unique ID of the placement |
-
-#### Request body
-
-Placement details
-
-<dl class="govuk-summary-list">
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>data</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        <a class="govuk-link" href="#placement-object">Placement</a> object
-      </p>
-    </dd>
-  </div>
-</dl>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">Example request body</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "urn": "137523",
-        "name": "Wellsway School"
-      }
-    }
-    </pre>
-  </div>
-</details>
-
-#### Possible responses
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A placement</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "trainee_id": 644065,
-        "address": null,
-        "name": "Wellsway School",
-        "postcode": null,
-        "urn": "137523",
-        "school_id": null,
-        "id": 270180,
-        "created_at": "2024-01-18T08:02:42.672Z",
-        "updated_at": "2024-03-18T22:31:08.340Z",
-        "slug": "BFsRAS4LfwZZXvSX7aAfNUj3"
-      }
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Placement(s) not found"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "Name can't be blank"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-
-
----
-
-### `PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`
-
-Updates an existing degree for this trainee.
-
-#### Request
-
-`PUT /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
-
-or
-
-`PATCH /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
-
-#### Parameters
-
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
-| **degree_id** | path | string | true | The unique ID of the degree |
-
-#### Request body
-
-Degree details
-
-<dl class="govuk-summary-list">
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>data</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        <a class="govuk-link" href="#degree-object">Degree</a> object
-      </p>
-    </dd>
-  </div>
-</dl>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">Example request body</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "graduation_year": 2022,
-        "grade": "Lower second-class honours (2:2)"
-      }
-    }
-    </pre>
-  </div>
-</details>
-
-
-#### Possible responses
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": [
-        {
-          "id": 492440,
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
-          "non_uk_degree": null,
-          "trainee_id": 644065,
-          "created_at": "2024-01-18T08:02:41.955Z",
-          "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
-          "country": null,
-          "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
-          "dttp_id": null,
-          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Degree(s) not found"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 409</code><span> - Conflict</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "Conflict",
-          "message": "This is a duplicate degree"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "Subject is not included in the list"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-
----
-
-### `DELETE /trainees/{trainee_id}/placements/{placement_id}`
-
-Deletes an existing placement for this trainee.
-
-#### Request
-
-`DELETE /api/v0.1/trainees/{trainee_id}/placements/{placement_id}`
-
-#### Parameters
-
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
-| **placement_id** | path | string | true | The unique ID of the placement |
-
-#### Possible responses
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": [
-        {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
-          "first_names": "Trainee",
-          "last_name": "TraineeUser644065",
-          "date_of_birth": "2000-01-01",
-          "created_at": "2023-10-20T14:54:47.374Z",
-          "updated_at": "2024-01-24T16:03:28.721Z",
-          "email": "trainee_644065@example.com",
-          "dttp_id": null,
-          "middle_names": null,
-          "training_route": "provider_led_postgrad",
-          "sex": "female",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "mixed_ethnic_group",
-          "ethnic_background": "Another Mixed background",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
-          "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": "2023-09-04",
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": 5,
-          "course_max_age": 11,
-          "course_subject_two": null,
-          "course_subject_three": null,
-          "awarded_at": null,
-          "training_initiative": "no_initiative",
-          "applying_for_bursary": false,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": false,
-          "course_education_phase": "primary",
-          "applying_for_grant": false,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": true,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
-          "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
-          "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774,
-          "placements": null,
-          "degrees": [
-            {
-              "id": 492440,
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
-              "non_uk_degree": null,
-              "trainee_id": 644065,
-              "created_at": "2024-01-18T08:02:41.955Z",
-              "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
-              "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
-              "country": null,
-              "other_grade": null,
-              "slug": "E1phsAcP3hDFMhx19qVGhchR",
-              "dttp_id": null,
-              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-            }
-          ]
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "NotFound",
-          "message": "Placement(s) not found"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
-    }
-    </pre>
-  </div>
-</details>
-
----
-
-### `DELETE /trainees/{trainee_id}/degrees/{degree_id}`
-
-Deletes an existing degree for this trainee.
-
-#### Request
-
-`DELETE /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
-
-#### Parameters
-
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
-| **degree_id** | path | string | true | The unique ID of the degree |
-
-#### Possible responses
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": [
-        {
-          "id": 492440,
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
-          "non_uk_degree": null,
-          "trainee_id": 644065,
-          "created_at": "2024-01-18T08:02:41.955Z",
-          "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
-          "country": null,
-          "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
-          "dttp_id": null,
-          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
         }
       ]
     }
@@ -2119,6 +1369,756 @@ Withdraw a trainee.
           "message": "Withdraw date Choose a withdrawal date"
         }
       ]
+    }
+    </pre>
+  </div>
+</details>
+
+---
+
+### `PUT|PATCH /trainees/{trainee_id}/{trainee_id}`
+
+Updates an existing trainee.
+
+#### Request
+
+`PUT /api/v0.1/trainees/{trainee_id}/{trainee_id}`
+
+or
+
+`PATCH /api/v0.1/trainees/{trainee_id}/{trainee_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
+
+#### Request body
+
+Trainee details
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>data</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        <a class="govuk-link" href="#trainee-object">Trainee</a> object
+      </p>
+    </dd>
+  </div>
+</dl>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">Example request body</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "first_names": "Ruby Joy"
+      }
+    }
+    </pre>
+  </div>
+</details>
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": [
+        {
+          "id": 644065,
+          "trainee_id": "trainee-644065",
+          "first_names": "Ruby Joy",
+          "last_name": "TraineeUser644065",
+          "date_of_birth": "2000-01-01",
+          "created_at": "2023-10-20T14:54:47.374Z",
+          "updated_at": "2024-01-24T16:03:28.721Z",
+          "email": "trainee_644065@example.com",
+          "dttp_id": null,
+          "middle_names": null,
+          "training_route": "provider_led_postgrad",
+          "sex": "female",
+          "diversity_disclosure": "diversity_disclosed",
+          "ethnic_group": "mixed_ethnic_group",
+          "ethnic_background": "Another Mixed background",
+          "additional_ethnic_background": null,
+          "disability_disclosure": "no_disability",
+          "course_subject_one": "primary teaching",
+          "itt_start_date": "2023-09-04",
+          "progress": {
+            "personal_details": false,
+            "contact_details": false,
+            "degrees": false,
+            "placements": false,
+            "diversity": false,
+            "course_details": false,
+            "training_details": false,
+            "trainee_start_status": false,
+            "trainee_data": false,
+            "schools": false,
+            "funding": false,
+            "iqts_country": false,
+            "placement_details": false
+          },
+          "provider_id": 30,
+          "outcome_date": null,
+          "itt_end_date": "2023-10-17",
+          "placement_assignment_dttp_id": null,
+          "trn": "6440650",
+          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+          "state": "deferred",
+          "withdraw_date": null,
+          "withdraw_reasons_details": null,
+          "defer_date": "2023-10-17",
+          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
+          "recommended_for_award_at": null,
+          "dttp_update_sha": null,
+          "trainee_start_date": "2023-09-04",
+          "reinstate_date": null,
+          "dormancy_dttp_id": null,
+          "lead_school_id": null,
+          "employing_school_id": null,
+          "apply_application_id": null,
+          "course_min_age": 5,
+          "course_max_age": 11,
+          "course_subject_two": null,
+          "course_subject_three": null,
+          "awarded_at": null,
+          "training_initiative": "no_initiative",
+          "applying_for_bursary": false,
+          "bursary_tier": null,
+          "study_mode": "full_time",
+          "ebacc": false,
+          "region": null,
+          "applying_for_scholarship": false,
+          "course_education_phase": "primary",
+          "applying_for_grant": false,
+          "course_uuid": null,
+          "lead_school_not_applicable": false,
+          "employing_school_not_applicable": false,
+          "submission_ready": true,
+          "commencement_status": null,
+          "discarded_at": null,
+          "created_from_dttp": false,
+          "hesa_id": "87960005710003282",
+          "additional_dttp_data": null,
+          "created_from_hesa": true,
+          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+          "course_allocation_subject_id": 21,
+          "start_academic_cycle_id": 15,
+          "end_academic_cycle_id": 15,
+          "record_source": "hesa_collection",
+          "hesa_trn_submission_id": 910,
+          "iqts_country": null,
+          "hesa_editable": false,
+          "withdraw_reasons_dfe_details": null,
+          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
+          "placement_detail": null,
+          "application_choice_id": 452774,
+          "placements": [
+            {
+              "id": 270180,
+              "trainee_id": 644065,
+              "school_id": 26214,
+              "urn": null,
+              "name": null,
+              "address": null,
+              "postcode": null,
+              "created_at": "2024-01-18T08:02:42.672Z",
+              "updated_at": "2024-01-18T08:02:42.672Z",
+              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
+            }
+          ],
+          "degrees": [
+            {
+              "id": 492440,
+              "locale_code": "uk",
+              "uk_degree": "Bachelor of Arts",
+              "non_uk_degree": null,
+              "trainee_id": 644065,
+              "created_at": "2024-01-18T08:02:41.955Z",
+              "updated_at": "2024-01-18T08:02:41.955Z",
+              "subject": "Childhood studies",
+              "institution": "University of Bristol",
+              "graduation_year": 2022,
+              "grade": "Upper second-class honours (2:1)",
+              "country": null,
+              "other_grade": null,
+              "slug": "E1phsAcP3hDFMhx19qVGhchR",
+              "dttp_id": null,
+              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+            }
+          ]
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Trainee(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "UnprocessableEntity",
+          "message": "First names is too long (maximum is 50 characters)"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+---
+
+### `PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`
+
+Updates an existing placement for this trainee.
+
+#### Request
+
+`PUT /api/v0.1/trainees/{trainee_id}/placements/{placement_id}`
+
+or
+
+`PATCH /api/v0.1/trainees/{trainee_id}/placements/{placement_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
+| **placement_id** | path | string | true | The unique ID of the placement |
+
+#### Request body
+
+Placement details
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>data</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        <a class="govuk-link" href="#placement-object">Placement</a> object
+      </p>
+    </dd>
+  </div>
+</dl>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">Example request body</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "urn": "137523",
+        "name": "Wellsway School"
+      }
+    }
+    </pre>
+  </div>
+</details>
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A placement</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "trainee_id": 644065,
+        "address": null,
+        "name": "Wellsway School",
+        "postcode": null,
+        "urn": "137523",
+        "school_id": null,
+        "id": 270180,
+        "created_at": "2024-01-18T08:02:42.672Z",
+        "updated_at": "2024-03-18T22:31:08.340Z",
+        "slug": "BFsRAS4LfwZZXvSX7aAfNUj3"
+      }
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Placement(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "UnprocessableEntity",
+          "message": "Name can't be blank"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+
+
+---
+
+### `PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`
+
+Updates an existing degree for this trainee.
+
+#### Request
+
+`PUT /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
+
+or
+
+`PATCH /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
+| **degree_id** | path | string | true | The unique ID of the degree |
+
+#### Request body
+
+Degree details
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>data</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        <a class="govuk-link" href="#degree-object">Degree</a> object
+      </p>
+    </dd>
+  </div>
+</dl>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">Example request body</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "graduation_year": 2022,
+        "grade": "Lower second-class honours (2:2)"
+      }
+    }
+    </pre>
+  </div>
+</details>
+
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": [
+        {
+          "id": 492440,
+          "locale_code": "uk",
+          "uk_degree": "Bachelor of Arts",
+          "non_uk_degree": null,
+          "trainee_id": 644065,
+          "created_at": "2024-01-18T08:02:41.955Z",
+          "updated_at": "2024-01-18T08:02:41.955Z",
+          "subject": "Childhood studies",
+          "institution": "University of Bristol",
+          "graduation_year": 2023,
+          "grade": "Lower second-class honours (2:2)",
+          "country": null,
+          "other_grade": null,
+          "slug": "E1phsAcP3hDFMhx19qVGhchR",
+          "dttp_id": null,
+          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Degree(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 409</code><span> - Conflict</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "Conflict",
+          "message": "This is a duplicate degree"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "UnprocessableEntity",
+          "message": "Subject is not included in the list"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+
+---
+
+### `DELETE /trainees/{trainee_id}/placements/{placement_id}`
+
+Deletes an existing placement for this trainee.
+
+#### Request
+
+`DELETE /api/v0.1/trainees/{trainee_id}/placements/{placement_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
+| **placement_id** | path | string | true | The unique ID of the placement |
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": [
+        {
+          "id": 644065,
+          "trainee_id": "trainee-644065",
+          "first_names": "Trainee",
+          "last_name": "TraineeUser644065",
+          "date_of_birth": "2000-01-01",
+          "created_at": "2023-10-20T14:54:47.374Z",
+          "updated_at": "2024-01-24T16:03:28.721Z",
+          "email": "trainee_644065@example.com",
+          "dttp_id": null,
+          "middle_names": null,
+          "training_route": "provider_led_postgrad",
+          "sex": "female",
+          "diversity_disclosure": "diversity_disclosed",
+          "ethnic_group": "mixed_ethnic_group",
+          "ethnic_background": "Another Mixed background",
+          "additional_ethnic_background": null,
+          "disability_disclosure": "no_disability",
+          "course_subject_one": "primary teaching",
+          "itt_start_date": "2023-09-04",
+          "progress": {
+            "personal_details": false,
+            "contact_details": false,
+            "degrees": false,
+            "placements": false,
+            "diversity": false,
+            "course_details": false,
+            "training_details": false,
+            "trainee_start_status": false,
+            "trainee_data": false,
+            "schools": false,
+            "funding": false,
+            "iqts_country": false,
+            "placement_details": false
+          },
+          "provider_id": 30,
+          "outcome_date": null,
+          "itt_end_date": "2023-10-17",
+          "placement_assignment_dttp_id": null,
+          "trn": "6440650",
+          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+          "state": "deferred",
+          "withdraw_date": null,
+          "withdraw_reasons_details": null,
+          "defer_date": "2023-10-17",
+          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
+          "recommended_for_award_at": null,
+          "dttp_update_sha": null,
+          "trainee_start_date": "2023-09-04",
+          "reinstate_date": null,
+          "dormancy_dttp_id": null,
+          "lead_school_id": null,
+          "employing_school_id": null,
+          "apply_application_id": null,
+          "course_min_age": 5,
+          "course_max_age": 11,
+          "course_subject_two": null,
+          "course_subject_three": null,
+          "awarded_at": null,
+          "training_initiative": "no_initiative",
+          "applying_for_bursary": false,
+          "bursary_tier": null,
+          "study_mode": "full_time",
+          "ebacc": false,
+          "region": null,
+          "applying_for_scholarship": false,
+          "course_education_phase": "primary",
+          "applying_for_grant": false,
+          "course_uuid": null,
+          "lead_school_not_applicable": false,
+          "employing_school_not_applicable": false,
+          "submission_ready": true,
+          "commencement_status": null,
+          "discarded_at": null,
+          "created_from_dttp": false,
+          "hesa_id": "87960005710003282",
+          "additional_dttp_data": null,
+          "created_from_hesa": true,
+          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+          "course_allocation_subject_id": 21,
+          "start_academic_cycle_id": 15,
+          "end_academic_cycle_id": 15,
+          "record_source": "hesa_collection",
+          "hesa_trn_submission_id": 910,
+          "iqts_country": null,
+          "hesa_editable": false,
+          "withdraw_reasons_dfe_details": null,
+          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
+          "placement_detail": null,
+          "application_choice_id": 452774,
+          "placements": null,
+          "degrees": [
+            {
+              "id": 492440,
+              "locale_code": "uk",
+              "uk_degree": "Bachelor of Arts",
+              "non_uk_degree": null,
+              "trainee_id": 644065,
+              "created_at": "2024-01-18T08:02:41.955Z",
+              "updated_at": "2024-01-18T08:02:41.955Z",
+              "subject": "Childhood studies",
+              "institution": "University of Bristol",
+              "graduation_year": 2022,
+              "grade": "Upper second-class honours (2:1)",
+              "country": null,
+              "other_grade": null,
+              "slug": "E1phsAcP3hDFMhx19qVGhchR",
+              "dttp_id": null,
+              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+            }
+          ]
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Placement(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+---
+
+### `DELETE /trainees/{trainee_id}/degrees/{degree_id}`
+
+Deletes an existing degree for this trainee.
+
+#### Request
+
+`DELETE /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
+
+#### Parameters
+
+| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| ------------- | ------- | -------- | ------------ | --------------- |
+| **trainee_id** | path | string | true | The unique ID of the trainee |
+| **degree_id** | path | string | true | The unique ID of the degree |
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": [
+        {
+          "id": 492440,
+          "locale_code": "uk",
+          "uk_degree": "Bachelor of Arts",
+          "non_uk_degree": null,
+          "trainee_id": 644065,
+          "created_at": "2024-01-18T08:02:41.955Z",
+          "updated_at": "2024-01-18T08:02:41.955Z",
+          "subject": "Childhood studies",
+          "institution": "University of Bristol",
+          "graduation_year": 2023,
+          "grade": "Lower second-class honours (2:2)",
+          "country": null,
+          "other_grade": null,
+          "slug": "E1phsAcP3hDFMhx19qVGhchR",
+          "dttp_id": null,
+          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Degree(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
     }
     </pre>
   </div>
