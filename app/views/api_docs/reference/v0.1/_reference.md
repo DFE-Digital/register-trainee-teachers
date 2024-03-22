@@ -5,23 +5,22 @@ This API allows you to access information about trainees and provides endpoints 
 - [API versioning strategy](#api-versioning-strategy)
 - [Draft version 0.1](#draft-version-0-1)
 - [Developing on the API](#developing-on-the-api)
-    - [Authentication](#authentication)
-    - [Endpoints](#endpoints)
-        - [`GET /info`](#code-get-info-code)
-        - [`GET /trainees`](#code-get-trainees-code)
-        - [`GET /trainees/{trainee_id}`](#code-get-trainees-trainee_id-code)
-        - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
-        - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
-        - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
-        - [`POST /trainees`](#code-post-trainees-code)
-        - [`POST /trainees/{trainee_id}/placements`](#code-post-trainees-trainee_id-placements-code)
-        - [`POST /trainees/{trainee_id}/degrees`](#code-post-trainees-trainee_id-degrees-code)
-        - [`POST /trainees/{trainee_id}/withdraw`](#code-post-trainees-trainee_id-withdraw-code)
-        - [`PUT|PATCH /trainees/{trainee_id}/{trainee_id}`](#code-put-patch-trainees-trainee_id-trainee_id-code)
-        - [`PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
-        - [`PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
-        - [`DELETE /trainees/{trainee_id}/placements/{placement_id}`](#code-delete-trainees-trainee_id-placements-placement_id-code)
-        - [`DELETE /trainees/{trainee_id}/degrees/{degree_id}`](#code-delete-trainees-trainee_id-degrees-degree_id-code)
+- [Endpoints](#endpoints)
+    - [`GET /info`](#code-get-info-code)
+    - [`GET /trainees`](#code-get-trainees-code)
+    - [`GET /trainees/{trainee_id}`](#code-get-trainees-trainee_id-code)
+    - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
+    - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
+    - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
+    - [`POST /trainees`](#code-post-trainees-code)
+    - [`POST /trainees/{trainee_id}/placements`](#code-post-trainees-trainee_id-placements-code)
+    - [`POST /trainees/{trainee_id}/degrees`](#code-post-trainees-trainee_id-degrees-code)
+    - [`POST /trainees/{trainee_id}/withdraw`](#code-post-trainees-trainee_id-withdraw-code)
+    - [`PUT|PATCH /trainees/{trainee_id}/{trainee_id}`](#code-put-patch-trainees-trainee_id-trainee_id-code)
+    - [`PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
+    - [`PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
+    - [`DELETE /trainees/{trainee_id}/placements/{placement_id}`](#code-delete-trainees-trainee_id-placements-placement_id-code)
+    - [`DELETE /trainees/{trainee_id}/degrees/{degree_id}`](#code-delete-trainees-trainee_id-degrees-degree_id-code)
 
 
 ---
@@ -2125,3 +2124,6 @@ Deletes an existing degree for this trainee.
 </details>
 
 ---
+
+
+
