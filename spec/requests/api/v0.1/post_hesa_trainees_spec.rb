@@ -55,6 +55,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     it "sets the progress data structure" do
       expect(Trainee.last.progress.personal_details).to be(true)
     end
+
+    it "sets the record source to `api`" do
+      expect(Trainee.last.record_source).to eq("api")
+    end
   end
 
   context "when the request is invalid", feature_register_api: true do
