@@ -42,7 +42,6 @@ module Api
         first_names
         last_name
         date_of_birth
-        email
         sex
         training_route
         itt_start_date
@@ -63,7 +62,11 @@ module Api
       attribute :record_source, default: -> { RecordSources::API }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates :email, presence: true, length: { maximum: 255 }
 
+      validate do |record|
+        EmailFormatValidator.new(record).validate
+      end
       def initialize(attributes = {})
         super(attributes.except(:placements_attributes, :degrees_attributes, :nationalisations_attributes))
 

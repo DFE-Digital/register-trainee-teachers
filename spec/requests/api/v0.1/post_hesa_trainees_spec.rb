@@ -59,7 +59,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   context "when the request is invalid", feature_register_api: true do
     before do
-      post "/api/v0.1/trainees", params: { data: { last_name: "Doe" } }, headers: { Authorization: token }
+      post "/api/v0.1/trainees", params: { data: { email: "Doe" } }, headers: { Authorization: token }
     end
 
     it "returns status code 422" do
@@ -68,6 +68,15 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "returns a validation failure message" do
       expect(response.parsed_body["errors"]).to include("First names can't be blank")
+      expect(response.parsed_body["errors"]).to include("Last name can't be blank")
+      expect(response.parsed_body["errors"]).to include("Date of birth can't be blank")
+      expect(response.parsed_body["errors"]).to include("Sex can't be blank")
+      expect(response.parsed_body["errors"]).to include("Training route can't be blank")
+      expect(response.parsed_body["errors"]).to include("Itt start date can't be blank")
+      expect(response.parsed_body["errors"]).to include("Itt end date can't be blank")
+      expect(response.parsed_body["errors"]).to include("Course subject one can't be blank")
+      expect(response.parsed_body["errors"]).to include("Study mode can't be blank")
+      expect(response.parsed_body["errors"]).to include("Email Enter an email address in the correct format, like name@example.com")
     end
   end
 end
