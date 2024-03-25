@@ -12,7 +12,7 @@ FactoryBot.define do
     postgrad_apprenticeship_start_date { Time.zone.today }
     funding_method { DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys.sample }
     ni_number { "QQ 12 34 56 C" }
-    hesa_disabilities { [] }
-    additional_training_initiative { nil }
+    hesa_disabilities { ["95"] }
+    additional_training_initiative { "026" }
   end
 end
