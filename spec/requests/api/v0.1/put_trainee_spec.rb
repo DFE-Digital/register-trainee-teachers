@@ -61,10 +61,11 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch" } },
+        params: { data: { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } },
       )
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).to contain_exactly(
+        ["contact_details", { "email" => ["Enter an email address in the correct format, like name@example.com"] }],
         ["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }],
       )
     end
