@@ -67,6 +67,7 @@ module Api
       validate do |record|
         EmailFormatValidator.new(record).validate
       end
+
       def initialize(attributes = {})
         super(attributes.except(:placements_attributes, :degrees_attributes, :nationalisations_attributes))
 
