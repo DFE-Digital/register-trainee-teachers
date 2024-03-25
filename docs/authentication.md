@@ -27,3 +27,7 @@ dqt:
   base_url: https://qualified-teachers-api-dev.london.cloudapps.digital
   api_key: dev password
 ```
+
+## Google BigQuery
+
+The Register Azure environments uses workload identity federation to access BigQuery

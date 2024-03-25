@@ -5,6 +5,7 @@ review:
   <<: *default
   RAILS_ENV: review
   RACK_ENV: review
+  GOOGLE_CLOUD_CREDENTIALS: '{ "type": "external_account", "audience": "//iam.googleapis.com/projects/712009772377/locations/global/workloadIdentityPools/cip-gcp-spike/providers/cip-cgp-spike", "subject_token_type": "urn:ietf:params:oauth:token-type:jwt", "token_url": "https://sts.googleapis.com/v1/token", "service_account_impersonation_url": "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/cip-gcp-spike@rugged-abacus-218110.iam.gserviceaccount.com:generateAccessToken", "credential_source": { "url": "https://login.microsoftonline.com/9c7d9dd3-840c-4b3f-818e-552865082e16/oauth2/v2.0/token", "headers": {}, "format": { "type": "json", "subject_token_field_name": "access_token" } } }'
 
 qa:
   <<: *default
