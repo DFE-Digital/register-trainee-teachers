@@ -9,6 +9,7 @@ module Api
 
     def call
       trainees = provider.trainees
+                .not_draft
                 .joins(:start_academic_cycle)
                 .where(academic_cycles: { id: academic_cycle.id })
                 .where("trainees.updated_at > ?", since)
