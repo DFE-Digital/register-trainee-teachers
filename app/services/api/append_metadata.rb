@@ -4,8 +4,10 @@ module Api
   class AppendMetadata
     include ServicePattern
 
-    def initialize(data)
-      @data = data
+    def initialize(objects, model, version)
+      @objects = objects
+      @model = model
+      @version = version
     end
 
     def call
@@ -17,15 +19,21 @@ module Api
 
   private
 
-    attr_reader :data
+    attr_reader :objects, :model, :version
 
     def meta
       @meta ||= {
-        current_page: data.current_page,
-        total_pages: data.total_pages,
-        total_count: data.total_count,
-        per_page: data.limit_value,
+        current_page: objects.current_page,
+        total_pages: objects.total_pages,
+        total_count: objects.total_count,
+        per_page: objects.limit_value,
       }
+    end
+
+    def data
+      @data ||= objects.each do |object|
+        Serializer.for(model:, version:).new(object).as_hash
+      end
     end
   end
 end

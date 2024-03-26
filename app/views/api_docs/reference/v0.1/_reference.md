@@ -113,7 +113,7 @@ current academic cycle.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **academic_cycle** | query | string | false | The academic cycle year (default is the current academic cycle). |
 | **status** | query | string | false | Include only trainees with a particular status. Valid values are `draft`, `submitted_for_trn`, `trn_received`, `recommended_for_award`, `withdrawn`, `deferred`, `awarded` |
@@ -131,8 +131,7 @@ current academic cycle.
     {
       "data": [
         {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
+          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -175,7 +174,6 @@ current academic cycle.
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
           "recommended_for_award_at": null,
           "dttp_update_sha": null,
           "trainee_start_date": "2023-09-04",
@@ -266,7 +264,7 @@ Get a single trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
@@ -279,8 +277,7 @@ Get a single trainee.
     {
       "data": [
         {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
+          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -323,7 +320,6 @@ Get a single trainee.
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
           "recommended_for_award_at": null,
           "dttp_update_sha": null,
           "trainee_start_date": "2023-09-04",
@@ -370,25 +366,22 @@ Get a single trainee.
           "application_choice_id": 452774,
           "placements": [
             {
-              "id": 270180,
-              "trainee_id": 644065,
+              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
               "urn": null,
               "name": null,
               "address": null,
               "postcode": null,
               "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z",
-              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
+              "updated_at": "2024-01-18T08:02:42.672Z"
             }
           ],
           "degrees": [
             {
-              "id": 492440,
+              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
               "locale_code": "uk",
               "uk_degree": "Bachelor of Arts",
               "non_uk_degree": null,
-              "trainee_id": 644065,
               "created_at": "2024-01-18T08:02:41.955Z",
               "updated_at": "2024-01-18T08:02:41.955Z",
               "subject": "Childhood studies",
@@ -397,8 +390,6 @@ Get a single trainee.
               "grade": "Upper second-class honours (2:1)",
               "country": null,
               "other_grade": null,
-              "slug": "E1phsAcP3hDFMhx19qVGhchR",
-              "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
               "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
@@ -451,7 +442,7 @@ Get many placements for a trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
@@ -464,16 +455,14 @@ Get many placements for a trainee.
     {
       "data": [
         {
-          "id": 270180,
-          "trainee_id": 644065,
+          "placement_id": "WQsRAS4LfwZZXvSX7aAfNUx3",
           "school_id": 26214,
           "urn": null,
           "name": null,
           "address": null,
           "postcode": null,
           "created_at": "2024-01-18T08:02:42.672Z",
-          "updated_at": "2024-01-18T08:02:42.672Z",
-          "slug": "WQsRAS4LfwZZXvSX7aAfNUx3"
+          "updated_at": "2024-01-18T08:02:42.672Z"
         }
       ]
     }
@@ -520,7 +509,7 @@ Get a single placement for a trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **placement_id** | path | string | true | The unique ID of the placement |
@@ -534,16 +523,14 @@ Get a single placement for a trainee.
     {
       "data": [
         {
-          "id": 270180,
-          "trainee_id": 644065,
+          "placement_id": "WQsRAS4LfwZZXvSX7aAfNUx3",
           "school_id": 26214,
           "urn": null,
           "name": null,
           "address": null,
           "postcode": null,
           "created_at": "2024-01-18T08:02:42.672Z",
-          "updated_at": "2024-01-18T08:02:42.672Z",
-          "slug": "WQsRAS4LfwZZXvSX7aAfNUx3"
+          "updated_at": "2024-01-18T08:02:42.672Z"
         }
       ]
     }
@@ -590,7 +577,7 @@ Get many degrees for a trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
@@ -603,11 +590,10 @@ Get many degrees for a trainee.
     {
       "data": [
         {
-          "id": 492440,
+          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
           "locale_code": "uk",
           "uk_degree": "Bachelor of Arts",
           "non_uk_degree": null,
-          "trainee_id": 644065,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
           "subject": "Childhood studies",
@@ -616,7 +602,6 @@ Get many degrees for a trainee.
           "grade": "Upper second-class honours (2:1)",
           "country": null,
           "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
           "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
@@ -672,7 +657,7 @@ or
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
@@ -713,8 +698,7 @@ Trainee details
     {
       "data": [
         {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
+          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
           "first_names": "Ruby Joy",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -757,7 +741,6 @@ Trainee details
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
           "recommended_for_award_at": null,
           "dttp_update_sha": null,
           "trainee_start_date": "2023-09-04",
@@ -804,21 +787,19 @@ Trainee details
           "application_choice_id": 452774,
           "placements": [
             {
-              "id": 270180,
-              "trainee_id": 644065,
+              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
               "urn": null,
               "name": null,
               "address": null,
               "postcode": null,
               "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z",
-              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
+              "updated_at": "2024-01-18T08:02:42.672Z"
             }
           ],
           "degrees": [
             {
-              "id": 492440,
+              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
               "locale_code": "uk",
               "uk_degree": "Bachelor of Arts",
               "non_uk_degree": null,
@@ -831,7 +812,6 @@ Trainee details
               "grade": "Upper second-class honours (2:1)",
               "country": null,
               "other_grade": null,
-              "slug": "E1phsAcP3hDFMhx19qVGhchR",
               "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
@@ -905,7 +885,7 @@ or
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **placement_id** | path | string | true | The unique ID of the placement |
@@ -947,7 +927,7 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "trainee_id": 644065,
+        "trainee_id": "BFsRAS4LfwZZXvSX7aAfNUj3",
         "address": null,
         "name": "Wellsway School",
         "postcode": null,
@@ -955,8 +935,7 @@ Placement details
         "school_id": null,
         "id": 270180,
         "created_at": "2024-01-18T08:02:42.672Z",
-        "updated_at": "2024-03-18T22:31:08.340Z",
-        "slug": "BFsRAS4LfwZZXvSX7aAfNUj3"
+        "updated_at": "2024-03-18T22:31:08.340Z"
       }
     }
     </pre>
@@ -1024,7 +1003,7 @@ or
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **degree_id** | path | string | true | The unique ID of the degree |
@@ -1068,7 +1047,7 @@ Degree details
     {
       "data": [
         {
-          "id": 492440,
+          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
           "locale_code": "uk",
           "uk_degree": "Bachelor of Arts",
           "non_uk_degree": null,
@@ -1081,7 +1060,6 @@ Degree details
           "grade": "Lower second-class honours (2:2)",
           "country": null,
           "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
           "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
@@ -1166,7 +1144,7 @@ Deletes an existing placement for this trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **placement_id** | path | string | true | The unique ID of the placement |
@@ -1180,8 +1158,7 @@ Deletes an existing placement for this trainee.
     {
       "data": [
         {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
+          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -1224,7 +1201,6 @@ Deletes an existing placement for this trainee.
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
           "recommended_for_award_at": null,
           "dttp_update_sha": null,
           "trainee_start_date": "2023-09-04",
@@ -1272,7 +1248,7 @@ Deletes an existing placement for this trainee.
           "placements": null,
           "degrees": [
             {
-              "id": 492440,
+              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
               "locale_code": "uk",
               "uk_degree": "Bachelor of Arts",
               "non_uk_degree": null,
@@ -1285,7 +1261,6 @@ Deletes an existing placement for this trainee.
               "grade": "Upper second-class honours (2:1)",
               "country": null,
               "other_grade": null,
-              "slug": "E1phsAcP3hDFMhx19qVGhchR",
               "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
@@ -1339,7 +1314,7 @@ Deletes an existing degree for this trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **degree_id** | path | string | true | The unique ID of the degree |
@@ -1353,7 +1328,7 @@ Deletes an existing degree for this trainee.
     {
       "data": [
         {
-          "id": 492440,
+          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
           "locale_code": "uk",
           "uk_degree": "Bachelor of Arts",
           "non_uk_degree": null,
@@ -1366,7 +1341,6 @@ Deletes an existing degree for this trainee.
           "grade": "Lower second-class honours (2:2)",
           "country": null,
           "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
           "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
@@ -1473,8 +1447,7 @@ Trainee details
     {
       "data": [
         {
-          "id": 202901,
-          "trainee_id": null,
+          "trainee_id": "GJGu9X8YSewEzPuJPyNFsbes",
           "first_names": "John",
           "last_name": "Doe",
           "date_of_birth": "1990-01-01",
@@ -1516,7 +1489,6 @@ Trainee details
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": null,
-          "slug": "GJGu9X8YSewEzPuJPyNFsbes",
           "recommended_for_award_at": null,
           "dttp_update_sha": null,
           "trainee_start_date": null,
@@ -1582,25 +1554,22 @@ Trainee details
           "nationality": null,
           "placements": [
             {
-              "id": 373781,
-              "trainee_id": 202901,
+              "placement_id": "BWUDxpWVqdFeeMVcnmVY1s67",
               "school_id": null,
               "urn": "123456",
               "name": "Placement",
               "address": null,
               "postcode": null,
               "created_at": "2024-03-19T22:07:12.572Z",
-              "updated_at": "2024-03-19T22:07:12.572Z",
-              "slug": "BWUDxpWVqdFeeMVcnmVY1s67"
+              "updated_at": "2024-03-19T22:07:12.572Z"
             }
           ],
           "degrees": [
             {
-              "id": 533194,
+              "degree_id": "W98C6yWChUwhFSEsN5idGgCx",
               "locale_code": "uk",
               "uk_degree": null,
               "non_uk_degree": null,
-              "trainee_id": 202901,
               "created_at": "2024-03-19T22:07:12.553Z",
               "updated_at": "2024-03-19T22:07:12.553Z",
               "subject": "Computer Science",
@@ -1609,7 +1578,6 @@ Trainee details
               "grade": "First",
               "country": "UK",
               "other_grade": null,
-              "slug": "W98C6yWChUwhFSEsN5idGgCx",
               "dttp_id": null,
               "institution_uuid": null,
               "uk_degree_uuid": null,
@@ -1663,7 +1631,7 @@ Create a placement for this trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
@@ -1704,16 +1672,14 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "id": 373782,
-        "trainee_id": 194065,
+        "placement_id": "4QVvufb2UJM1gdhKnsyKiVkj",
         "school_id": null,
         "urn": "123456",
         "name": "Placement",
         "address": null,
         "postcode": null,
         "created_at": "2024-03-19T22:23:48.619Z",
-        "updated_at": "2024-03-19T22:23:48.619Z",
-        "slug": "4QVvufb2UJM1gdhKnsyKiVkj"
+        "updated_at": "2024-03-19T22:23:48.619Z"
       }
     }
     </pre>
@@ -1792,7 +1758,7 @@ Create a degree for this trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 
@@ -1838,11 +1804,10 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "id": 533195,
+        "degree_id": "vxAnSsSM91Ys2NhLYS8MC2CL",
         "locale_code": "uk",
         "uk_degree": "Bachelor of Arts",
         "non_uk_degree": null,
-        "trainee_id": 194065,
         "created_at": "2024-03-20T12:23:23.092Z",
         "updated_at": "2024-03-20T12:23:23.092Z",
         "subject": "Applied linguistics",
@@ -1851,7 +1816,6 @@ Degree details
         "grade": "First",
         "country": "UK",
         "other_grade": null,
-        "slug": "vxAnSsSM91Ys2NhLYS8MC2CL",
         "dttp_id": null,
         "institution_uuid": null,
         "uk_degree_uuid": null,
@@ -1935,7 +1899,7 @@ Withdraw a trainee.
 
 #### Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
 | **reasons** | query | array of strings | true | The reason(s) for the withdrawal |
@@ -1952,8 +1916,7 @@ Withdraw a trainee.
     {
       "data": [
         {
-          "id": 644065,
-          "trainee_id": "trainee-644065",
+          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -1996,7 +1959,6 @@ Withdraw a trainee.
           "withdraw_date": "2024-02-15T15:17:09.000Z",
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
-          "slug": "vcGjpBCn987jJSqMQxjhdv9Y",
           "recommended_for_award_at": null,
           "dttp_update_sha": null,
           "trainee_start_date": "2023-09-04",
@@ -2043,25 +2005,22 @@ Withdraw a trainee.
           "application_choice_id": 452774,
           "placements": [
             {
-              "id": 270180,
-              "trainee_id": 644065,
+              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
               "urn": null,
               "name": null,
               "address": null,
               "postcode": null,
               "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z",
-              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
+              "updated_at": "2024-01-18T08:02:42.672Z"
             }
           ],
           "degrees": [
             {
-              "id": 492440,
+              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
               "locale_code": "uk",
               "uk_degree": "Bachelor of Arts",
               "non_uk_degree": null,
-              "trainee_id": 644065,
               "created_at": "2024-01-18T08:02:41.955Z",
               "updated_at": "2024-01-18T08:02:41.955Z",
               "subject": "Childhood studies",
@@ -2070,7 +2029,6 @@ Withdraw a trainee.
               "grade": "Upper second-class honours (2:1)",
               "country": null,
               "other_grade": null,
-              "slug": "E1phsAcP3hDFMhx19qVGhchR",
               "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
