@@ -7,9 +7,23 @@ describe "`GET /trainees` endpoint" do
   let(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
 
   let!(:start_academic_cycle) { create(:academic_cycle) }
-  let!(:trainees) { create_list(:trainee, 10, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
+  let!(:trainees) { create_list(:trainee, 10, :trn_received, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 
   it_behaves_like "a register API endpoint", "/api/v0.1/trainees", "trainee_token"
+
+  context "filtering out draft trainees" do
+    let!(:draft_trainee) { create(:trainee, :draft) }
+
+    it "only returns non-draft trainees" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].count).to eq(trainees.count)
+    end
+  end
 
   context "filtering by academic cycle" do
     it "returns trainees for the specified academic cycle" do

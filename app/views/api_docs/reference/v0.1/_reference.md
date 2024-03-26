@@ -103,6 +103,10 @@ Provides general information about the API.
 
 Get many trainees.
 
+Note that this endpoint always returns the trainees for a single academic
+cycle. If no academic cycle parameter is specified we return trainees in the
+current academic cycle.
+
 #### Request
 
 `GET /api/v0.1/trainees`
@@ -111,10 +115,10 @@ Get many trainees.
 
 | **Parameter**	| **In**	| **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
-| **academic_cycle** | query | string | false | The academic cycle year |
+| **academic_cycle** | query | string | false | The academic cycle year (default is the current academic cycle). |
 | **status** | query | string | false | Include only trainees with a particular status. Valid values are `draft`, `submitted_for_trn`, `trn_received`, `recommended_for_award`, `withdrawn`, `deferred`, `awarded` |
 | **since** | query | string | false | Include only trainees changed or created on or since a date. Dates should be in ISO 8601 format. |
-| **page** | query | integer | false | Page number |
+| **page** | query | integer | false | Page number (defaults to 1, the first page). |
 | **per_page** | query | integer | false | Number of records to return per page (default is 50) |
 | **sort_by** | query | string | false | Sort in ascending or descending order. Valid values are `asc` or `desc` (default is `desc`) |
 
