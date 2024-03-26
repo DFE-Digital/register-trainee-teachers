@@ -43,7 +43,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         )
         expect(response).to have_http_status(:ok)
 
-        expect(response.parsed_body.dig(:data, :slug)).to eql(slug)
+        expect(response.parsed_body.dig(:data, :trainee_id)).to eql(slug)
       end
 
       it "change the trainee" do
