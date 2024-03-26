@@ -13,6 +13,7 @@ module TraineeSerializer
         course_attributes,
         school_attributes,
         funding_attributes,
+        hesa_trainee_attributes,
         nationality: nationality,
         training_initiative: training_initiative,
         placements: @trainee.placements.map(&:attributes),
@@ -63,6 +64,10 @@ module TraineeSerializer
         fund_code:,
         funding_option:,
       }
+    end
+
+    def hesa_trainee_attributes
+      HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
     end
 
     def nationality
