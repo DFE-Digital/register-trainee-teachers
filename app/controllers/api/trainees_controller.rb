@@ -6,7 +6,7 @@ module Api
       trainees = GetTraineesService.call(provider: current_provider, params: params)
 
       if trainees.exists?
-        render(json: AppendMetadata.call(trainees), status: :ok)
+        render(json: AppendMetadata.call(trainees, model, version), status: :ok)
       else
         render_not_found(message: "No trainees found")
       end
