@@ -7,6 +7,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
   let!(:nationality) { create(:nationality, :british) }
 
+  let!(:course_allocation_subject) do
+    create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
+  end
+
   let(:params) do
     {
       data: {
@@ -50,6 +54,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "creates the nationalities" do
       expect(Trainee.last.nationalities.first.name).to eq("british")
+    end
+
+    it "sets the correct course allocation subject" do
+      expect(Trainee.last.course_allocation_subject).to eq(course_allocation_subject)
     end
 
     it "sets the progress data structure" do

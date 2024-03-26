@@ -7,7 +7,7 @@ module Api
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
 
-      before_validation :set_course_allocation_subject
+      before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
       ATTRIBUTES = %i[
@@ -32,7 +32,7 @@ module Api
         course_subject_one
         course_subject_two
         course_subject_three
-        course_allocation_subject
+        course_allocation_subject_id
         study_mode
         application_choice_id
         progress
@@ -102,9 +102,9 @@ module Api
 
     private
 
-      def set_course_allocation_subject
-        self.course_allocation_subject ||=
-          SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
+      def set_course_allocation_subject_id
+        self.course_allocation_subject_id ||=
+          SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject&.id
       end
 
       def set_progress

@@ -16,6 +16,6 @@ RSpec.describe Api::TraineeAttributes::V01 do
     subject.course_subject_one = "biology"
     create(:subject_specialism, name: subject.course_subject_one)
     subject.valid?
-    expect(subject.course_allocation_subject).to be_present
+    expect(subject.course_allocation_subject_id).to be_present
   end
 end
