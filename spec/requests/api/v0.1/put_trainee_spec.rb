@@ -87,7 +87,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       )
       expect(response).to have_http_status(:ok)
       expect(trainee.reload.first_names).to eq("Alice")
-      expect(response.parsed_body[:data]["slug"]).to eq(trainee.slug)
+      expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
     end
   end
 end

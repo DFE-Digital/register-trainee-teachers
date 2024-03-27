@@ -22,7 +22,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
 
           expect(response).to have_http_status(:ok)
-          expect(response.parsed_body["data"]["slug"]).to eql(slug)
+          expect(response.parsed_body["data"]["placement_id"]).to eql(slug)
           expect(trainee.reload.placements.count).to eq(2)
 
           expect(placement.reload.school_id).to eq(params.dig(:data, :school_id))
@@ -42,7 +42,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
 
           expect(response).to have_http_status(:ok)
-          expect(response.parsed_body["data"]["slug"]).to eql(slug)
+          expect(response.parsed_body["data"]["placement_id"]).to eql(slug)
           expect(trainee.reload.placements.count).to eq(2)
 
           expect(placement.reload.school_id).to be_blank

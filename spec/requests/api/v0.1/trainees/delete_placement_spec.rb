@@ -39,9 +39,8 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
 
       it "returns status 200 with a valid JSON response" do
         delete "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token }
-
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.dig(:data, :slug)).to eql(trainee_slug)
+        expect(response.parsed_body.dig(:data, :trainee_id)).to eql(trainee_slug)
       end
 
       it "removes the specified placement" do
