@@ -18,7 +18,7 @@ module Api
                 .per(pagination_per_page)
 
       filtered_trainees = ::Trainees::Filter.call(trainees:, filters:)
-      filtered_trainees.includes(%i[published_course employing_school lead_school placements degrees])
+      filtered_trainees.includes(%i[published_course employing_school lead_school placements degrees hesa_trainee_detail])
     end
 
   private
