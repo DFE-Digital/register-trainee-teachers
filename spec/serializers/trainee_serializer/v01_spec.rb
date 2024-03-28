@@ -9,6 +9,7 @@ RSpec.describe TraineeSerializer::V01 do
   expected_fields =
     %i[
       id
+      status
       ukprn
       trainee_id
       apply_application_id

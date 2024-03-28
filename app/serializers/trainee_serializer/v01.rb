@@ -6,8 +6,12 @@ module TraineeSerializer
       @trainee = trainee
     end
 
+    EXCLUDED_ATTRIBUTES = %i[
+      state
+    ].freeze
+
     def as_hash
-      @trainee.attributes.merge(
+      @trainee.attributes.except(*EXCLUDED_ATTRIBUTES).merge(
         provider_attribues,
         diversity_attributes,
         course_attributes,
@@ -18,6 +22,7 @@ module TraineeSerializer
         training_initiative: training_initiative,
         placements: @trainee.placements.map(&:attributes),
         degrees: @trainee.degrees.map(&:attributes),
+        status: @trainee.state,
       )
     end
 
@@ -131,6 +136,10 @@ module TraineeSerializer
     def training_initiative
       # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
       # `::Hesa::CodeSets::TrainingInitiatives::MAPPING`
+    end
+
+    def status
+      @trainee.state
     end
   end
 end
