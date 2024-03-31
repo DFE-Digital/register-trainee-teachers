@@ -12,6 +12,10 @@ module Api
         )
       end
 
+      def show
+        render(json: { data: serializer_class.new(degree).as_hash }, status: :ok)
+      end
+
       def create
         render(
           **SaveDegreeResponse.call(
