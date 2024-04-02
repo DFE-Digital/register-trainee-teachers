@@ -127,7 +127,7 @@ module Api
       end
 
       def funding_attributes
-        MapFundingFromDttpEntityId.call(funding_entity_id:)
+        ::Trainees::MapFundingFromDttpEntityId.call(funding_entity_id:)
       end
 
       def funding_entity_id
