@@ -37,7 +37,6 @@ module Api
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
-        .merge(provider)
         .merge(funding_attributes)
         .merge(school_attributes)
         .compact
@@ -119,11 +118,6 @@ module Api
         attributes[:course_allocation_subject_id] = attributes.delete(:course_allocation_subject)&.id
 
         attributes
-      end
-
-      def provider
-        provider = Provider.find_by(ukprn: params[:ukprn])
-        provider ? { provider: } : {}
       end
 
       def funding_attributes

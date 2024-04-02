@@ -32,6 +32,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   context "when the request is valid", feature_register_api: true do
     before do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
+      allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
@@ -46,6 +47,21 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "creates a trainee" do
       expect(response.parsed_body["first_names"]).to eq("John")
+    end
+
+    it "sets the correct state" do
+      expect(response.parsed_body["state"]).to eq("submitted_for_trn")
+    end
+
+    it "sets the correct funding attributes" do
+      expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
+    end
+
+    it "sets the correct school attributes" do
+      expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
+      expect(response.parsed_body["lead_school"]).to be_nil
+      expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
+      expect(response.parsed_body["employing_school"]).to be_nil
     end
 
     it "returns status code 201" do
