@@ -13,6 +13,8 @@ module Api
 
       NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
 
+      VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
+
       def initialize(params:)
         @params = params
       end
@@ -152,6 +154,20 @@ module Api
         end
 
         attrs
+      end
+
+      def training_initiative_attributes
+        { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
+      end
+
+      def training_initiative
+        return ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] if veteran_teaching_undergraduate_bursary?
+
+        ::Hesa::CodeSets::TrainingInitiatives::MAPPING[params[:training_initiative]]
+      end
+
+      def veteran_teaching_undergraduate_bursary?
+        params[:bursary_level] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
       end
     end
   end
