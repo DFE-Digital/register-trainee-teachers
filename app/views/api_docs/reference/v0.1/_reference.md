@@ -2132,6 +2132,62 @@ Deletes an existing degree for this trainee.
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>trainee_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 24 characters)
+      </p>
+      <p class="govuk-body">
+        The unique ID of the trainee in the Register system. Used to identify the trainee when using <a href="/api-docs/reference#contents">endpoints</a> which require a <code>trainee_id</code>.
+      </p>
+      <p class="govuk-body">
+        Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>provider_trainee_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 24 characters)
+      </p>
+      <p class="govuk-body">
+        The unique ID of the trainee in the Provider's student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ownstu">HESA provider's own identifier for student field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>99157234</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>apply_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The unique ID of the application Apply system.
+      </p>
+      <p class="govuk-body">
+        Example: <code>11fc0d3b2f</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>trn</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The reference number allocated to each trainee prior to course completion.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2248531</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>first_names</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
@@ -2141,10 +2197,305 @@ Deletes an existing degree for this trainee.
         The first names of the trainee.
       </p>
       <p class="govuk-body">
-        Example: <code>"Ruby Joy"</code>
+        Example: <code>Ruby Joy</code>
       </p>
     </dd>
   </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>last_name</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The last name of the trainee.
+      </p>
+      <p class="govuk-body">
+        Example: <code>Smith</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>previous_surname</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The last name of the trainee immediately before their current last name.
+      </p>
+      <p class="govuk-body">
+        Example: <code>Jones</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>date_of_birth</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The date of birth of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/birthdte">HESA date of birth field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>2000-01-01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>sex</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The sex of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/sexid">HESA sex identifier field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>10</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>nationality</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nation">HESA nationality field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>US</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>email</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The email address of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nqtemail">HESA email addresses field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>trainee123@example.com</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>ethnicity</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>120</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>disability1</code> to <code>disability9</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The type of disabilities that the trainee has. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/disable">HESA disability field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>58</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>itt_aim</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittaim">HESA ITT qualification aim field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>201</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>training_route</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The training route that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/entryrte">HESA entry route field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>itt_qualification_aim</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The qualification aim of the trainee's course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/qlaim">HESA qualification aim field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>004</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_subject_one</code>, <code>course_subject_two</code>, <code>course_subject_three</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, <code>course_subject_one</code> is required
+      </p>
+      <p class="govuk-body">
+        The subjects included in the trainee's course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/sbjca">HESA subject of ITT course field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>100425</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>study_mode</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        This indicates whether the trainee's course is full time or part time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/mode">HESA mode of study field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>itt_start_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The start date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2024-03-11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>itt_end_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The end date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2025-03-11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>year_of_course</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The year number of the course that the trainee is currently studying. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/yearprg">HESA year of course field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>2</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_age_range</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The age range of the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittphsc">HESA ITT phase/scope field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>13918</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>trainee_start_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The start date of the trainee on their ITT course. Dates should be in ISO 8601 format.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2024-03-11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>pg_apprenticeship_start_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The start date of a trainee's postgraduate teaching apprenticeship. Dates should be in ISO 8601 format.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2024-03-11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>employing_school_urn</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The Unique Reference Number (URN) of the employing school for School Direct salaried trainees.
+      </p>
+      <p class="govuk-body">
+        Example: <code>123456</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>lead_school_urn</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The Unique Reference Number (URN) of the lead school for School Direct trainees.
+      </p>
+      <p class="govuk-body">
+        Example: <code>123456</code>
+      </p>
+    </dd>
+  </div>
+
 </dl>
 
 ### Placement object
@@ -2265,7 +2616,7 @@ Deletes an existing degree for this trainee.
         string, required if <code>locale_code</code> is <code>uk</code>
       </p>
       <p class="govuk-body">
-        The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
+        The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degtype">HESA degree type field</a>
       </p>
       <p class="govuk-body">
         Example: <code>083</code>
@@ -2325,6 +2676,90 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>2012-06-30</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>fund_code</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/fundcode">HESA fundability code field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>7</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>funding_method</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/burslev">HESA bursary level award field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>4</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>training_initiative</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>009</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>additional_training_initiative</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>025</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>hesa_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/husid">HESA unique student identifier field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>1210007145123456</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>ni_number</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee's National Insurance Number.
+      </p>
+      <p class="govuk-body">
+        Example: <code>BX5867459C</code>
       </p>
     </dd>
   </div>
