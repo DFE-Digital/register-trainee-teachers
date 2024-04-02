@@ -32,7 +32,9 @@ module Api
           nationalisations_attributes:,
         })
         .merge(course_attributes)
-        .merge(ethnicity_and_disability_attributes).compact
+        .merge(ethnicity_and_disability_attributes)
+        .merge(provider)
+        .compact
       end
 
       def sex
@@ -111,6 +113,11 @@ module Api
         attributes[:course_allocation_subject_id] = attributes.delete(:course_allocation_subject)&.id
 
         attributes
+      end
+
+      def provider
+        provider = Provider.find_by(ukprn: params[:ukprn])
+        provider ? { provider: } : {}
       end
     end
   end
