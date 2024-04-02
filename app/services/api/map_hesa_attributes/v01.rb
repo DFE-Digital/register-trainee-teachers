@@ -11,6 +11,8 @@ module Api
         nationality
       ].freeze
 
+      NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
+
       def initialize(params:)
         @params = params
       end
@@ -35,6 +37,7 @@ module Api
         .merge(ethnicity_and_disability_attributes)
         .merge(provider)
         .merge(funding_attributes)
+        .merge(school_attributes)
         .compact
       end
 
@@ -127,6 +130,28 @@ module Api
 
       def funding_entity_id
         ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:bursary_level]]
+      end
+
+      def school_attributes
+        attrs = {}
+
+        return attrs if params[:lead_school_urn].blank?
+
+        if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_school_urn])
+          attrs.merge!(lead_school_not_applicable: true)
+        else
+          attrs.merge!(lead_school: School.find_by(urn: params[:lead_school_urn]), lead_school_not_applicable: false)
+        end
+
+        if params[:employing_school_urn].present?
+          if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
+            attrs.merge!(employing_school_not_applicable: true)
+          else
+            attrs.merge!(employing_school: School.find_by(urn: params[:employing_school_urn]))
+          end
+        end
+
+        attrs
       end
     end
   end
