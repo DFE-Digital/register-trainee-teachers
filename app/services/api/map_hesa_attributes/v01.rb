@@ -34,6 +34,7 @@ module Api
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
         .merge(provider)
+        .merge(funding_attributes)
         .compact
       end
 
@@ -118,6 +119,14 @@ module Api
       def provider
         provider = Provider.find_by(ukprn: params[:ukprn])
         provider ? { provider: } : {}
+      end
+
+      def funding_attributes
+        MapFundingFromDttpEntityId.call(funding_entity_id:)
+      end
+
+      def funding_entity_id
+        ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:bursary_level]]
       end
     end
   end
