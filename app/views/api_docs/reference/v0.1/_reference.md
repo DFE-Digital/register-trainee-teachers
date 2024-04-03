@@ -2152,7 +2152,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>provider_trainee_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 24 characters)
+        string
       </p>
       <p class="govuk-body">
         The unique ID of the trainee in the Provider's student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ownstu">HESA provider's own identifier for student field</a>
@@ -2498,6 +2498,90 @@ Deletes an existing degree for this trainee.
       </p>
     </dd>
   </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>fund_code</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/fundcode">HESA fundability code field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>7</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>funding_method</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/burslev">HESA bursary level award field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>4</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>training_initiative</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>009</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>additional_training_initiative</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>025</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>hesa_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/husid">HESA unique student identifier field</a>
+      </p>
+      <p class="govuk-body">
+        Example: <code>1210007145123456</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>ni_number</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee's National Insurance Number.
+      </p>
+      <p class="govuk-body">
+        Example: <code>BX5867459C</code>
+      </p>
+    </dd>
+  </div>
 
 </dl>
 
@@ -2679,90 +2763,6 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>2012-06-30</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>fund_code</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string, required
-      </p>
-      <p class="govuk-body">
-        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/fundcode">HESA fundability code field</a>
-      </p>
-      <p class="govuk-body">
-        Example: <code>7</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>funding_method</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string, required
-      </p>
-      <p class="govuk-body">
-        The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/burslev">HESA bursary level award field</a>
-      </p>
-      <p class="govuk-body">
-        Example: <code>4</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>training_initiative</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string
-      </p>
-      <p class="govuk-body">
-        The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
-      </p>
-      <p class="govuk-body">
-        Example: <code>009</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>additional_training_initiative</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string
-      </p>
-      <p class="govuk-body">
-        The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
-      </p>
-      <p class="govuk-body">
-        Example: <code>025</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>hesa_id</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string, required
-      </p>
-      <p class="govuk-body">
-        The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/husid">HESA unique student identifier field</a>
-      </p>
-      <p class="govuk-body">
-        Example: <code>1210007145123456</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>ni_number</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string
-      </p>
-      <p class="govuk-body">
-        The trainee's National Insurance Number.
-      </p>
-      <p class="govuk-body">
-        Example: <code>BX5867459C</code>
       </p>
     </dd>
   </div>
