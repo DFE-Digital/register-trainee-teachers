@@ -54,7 +54,7 @@ bundle exec rails lint:ruby
 or
 
 ```
-docker-compose exec web /bin/sh -c "bundle exec rails lint:ruby"
+docker compose exec web /bin/sh -c "bundle exec rails lint:ruby"
 ```
 
 To fix Rubocop issues:
