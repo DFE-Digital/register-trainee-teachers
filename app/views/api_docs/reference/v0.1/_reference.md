@@ -136,6 +136,7 @@ current academic cycle.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+          "provider_trainee_id": "abc1234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -282,6 +283,7 @@ Get a single trainee.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+          "provider_trainee_id": "abc1234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -793,12 +795,13 @@ Trainee details
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "first_names": "John",
-          "last_name": "Doe",
-          "date_of_birth": "1990-01-01",
-          "created_at": "2024-03-19T22:07:12.529Z",
-          "updated_at": "2024-03-19T22:07:12.561Z",
-          "email": "john.doe@example.com",
+          "provider_trainee_id": "abc1234",
+          "first_names": "Ruby Joy",
+          "last_name": "TraineeUser644065",
+          "date_of_birth": "2000-01-01",
+          "created_at": "2023-10-20T14:54:47.374Z",
+          "updated_at": "2024-01-24T16:03:28.721Z",
+          "email": "trainee_644065@example.com",
           "dttp_id": null,
           "middle_names": "James",
           "training_route": "assessment_only",
@@ -1267,6 +1270,7 @@ Withdraw a trainee.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+          "provider_trainee_id": "abc1234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -1532,6 +1536,7 @@ Trainee details
       "data": [
         {
           "trainee_id": "GJGu9X8YSewEzPuJPyNFsbes",
+          "provider_trainee_id": "abc1234",
           "first_names": "John",
           "last_name": "Doe",
           "date_of_birth": "1990-01-01",
@@ -1987,6 +1992,7 @@ Deletes an existing placement for this trainee.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+          "provider_trainee_id": "abc1234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
