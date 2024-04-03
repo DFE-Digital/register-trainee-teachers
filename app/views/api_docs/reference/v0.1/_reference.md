@@ -21,7 +21,10 @@ This API allows you to access information about trainees and provides endpoints 
     - [`PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
     - [`DELETE /trainees/{trainee_id}/placements/{placement_id}`](#code-delete-trainees-trainee_id-placements-placement_id-code)
     - [`DELETE /trainees/{trainee_id}/degrees/{degree_id}`](#code-delete-trainees-trainee_id-degrees-degree_id-code)
-
+- [Objects](#objects)
+    - [Trainee](#trainee-object)
+    - [Placement](#placement-object)
+    - [Degree](#degree-object)
 
 ---
 
