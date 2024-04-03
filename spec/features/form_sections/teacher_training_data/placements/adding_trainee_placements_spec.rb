@@ -11,7 +11,7 @@ feature "Add a placement" do
     scenario "Add a new placement to an existing trainee in the #{trait} state" do
       given_i_am_authenticated
       and_a_postgrad_trainee_exists_with(trait)
-      and_a_school_exists
+      and_two_schools_exist
       and_i_navigate_to_the_trainee_dashboard
       and_i_click_to_enter_first_placement
       then_i_see_the_new_placement_form
@@ -32,7 +32,7 @@ feature "Add a placement" do
     scenario "Add a new placement to an existing trainee in the #{trait} state" do
       given_i_am_authenticated
       and_a_postgrad_trainee_exists_with(trait)
-      and_a_school_exists
+      and_two_schools_exist
       and_two_other_schools_exist
       and_i_navigate_to_the_trainee_dashboard
       and_i_click_to_enter_first_placement
@@ -74,7 +74,7 @@ feature "Add a placement" do
   scenario "Add two new placements to an existing trainee" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
-    and_a_school_exists
+    and_two_schools_exist
     and_i_navigate_to_the_new_placement_form
     then_i_see_the_new_placement_form
 
@@ -104,6 +104,39 @@ feature "Add a placement" do
     then_i_see_the_trainee_page
   end
 
+  scenario "Add two new placements for to an existing trainee" do
+    given_i_am_authenticated
+    and_a_trainee_exists_with_trn_received
+    and_two_schools_exist
+    and_i_navigate_to_the_new_placement_form
+    then_i_see_the_new_placement_form
+
+    when_i_select_an_existing_school
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_new_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_add_a_placement
+    then_i_see_the_second_new_placement_form
+
+    when_i_select_another_existing_school
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_other_existing_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_update
+    then_i_see_a_flash_message
+    and_two_new_placements_are_created
+
+    when_i_revisit_the_placements_confirmation_page
+    and_i_click_update
+    and_no_new_placements_are_created
+
+    then_i_see_the_trainee_page
+  end
+
 private
 
   def then_i_see_the_trainee_page
@@ -120,8 +153,9 @@ private
     FormStore.clear_all(@trainee.id)
   end
 
-  def and_a_school_exists
+  def and_two_schools_exist
     @school ||= create(:school, name: "London School for Children")
+    @other_school ||= create(:school, name: "Edinburgh School for Infants")
   end
 
   def and_two_other_schools_exist
@@ -152,6 +186,10 @@ private
 
   def when_i_select_an_existing_school
     find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@school.id)
+  end
+
+  def when_i_select_another_existing_school
+    find(:xpath, "//input[@name='placement[school_id]']", visible: false).set(@other_school.id)
   end
 
   def and_i_click_continue
@@ -186,6 +224,10 @@ private
     expect(page).to have_content("St. Alice's Primary School")
     expect(page).to have_content("OX1 1AA")
     expect(page).to have_content("URN 654321")
+  end
+
+  def and_i_see_the_other_existing_placement_ready_for_confirmation
+    expect(page).to have_content("Edinburgh School")
   end
 
   def when_i_click_update
