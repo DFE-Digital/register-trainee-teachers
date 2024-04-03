@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_14_234421) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_02_115801) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -821,7 +821,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_14_234421) do
   end
 
   create_table "trainees", force: :cascade do |t|
-    t.text "trainee_id"
     t.text "first_names"
     t.text "last_name"
     t.date "date_of_birth"
@@ -895,6 +894,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_14_234421) do
     t.datetime "slug_sent_to_dqt_at"
     t.integer "placement_detail"
     t.integer "application_choice_id"
+    t.text "provider_trainee_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"

@@ -19,7 +19,7 @@ module Trainees
   private
 
     def trainee_params
-      params.require(:training_details_form).permit(:trainee_id)
+      params.require(:training_details_form).permit(:provider_trainee_id)
     end
   end
 end

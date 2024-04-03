@@ -77,8 +77,8 @@
 #  lead_school_id                  :bigint
 #  placement_assignment_dttp_id    :uuid
 #  provider_id                     :bigint           not null
+#  provider_trainee_id             :text
 #  start_academic_cycle_id         :bigint
-#  trainee_id                      :text
 #
 # Indexes
 #
@@ -119,7 +119,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns += %w[withdraw_reason previous_hesa_id address_line_one address_line_two town_city postcode international_address locale_code] # rubocop:disable Rails/UnusedIgnoredColumns
+  self.ignored_columns += %w[trainee_id] # rubocop:disable Rails/UnusedIgnoredColumns
 
   include Sluggable
   include PgSearch::Model
@@ -304,8 +304,8 @@ class Trainee < ApplicationRecord
   COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
   IN_TRAINING_STATES = %w[submitted_for_trn trn_received recommended_for_award].freeze
 
-  pg_search_scope :with_name_trainee_id_or_trn_like,
-                  against: %i[first_names middle_names last_name trainee_id trn],
+  pg_search_scope :with_name_provider_trainee_id_or_trn_like,
+                  against: %i[first_names middle_names last_name provider_trainee_id trn],
                   using: { tsearch: { prefix: true } }
 
   scope :ordered_by_updated_at, -> { order(updated_at: :desc) }

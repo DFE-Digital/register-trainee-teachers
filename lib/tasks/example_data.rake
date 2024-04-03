@@ -221,7 +221,7 @@ namespace :example_data do
                 submission_ready: false,
                 itt_start_date: nil,
                 itt_end_date: nil,
-                trainee_id: nil,
+                provider_trainee_id: nil,
                 lead_school: nil,
                 employing_school: nil,
               )

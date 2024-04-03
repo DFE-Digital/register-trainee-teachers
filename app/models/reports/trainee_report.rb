@@ -27,6 +27,7 @@ module Reports
              :course_subject_one,
              :course_subject_two,
              :course_subject_three,
+             :provider_trainee_id,
              to: :trainee,
              allow_nil: true
 
@@ -319,10 +320,6 @@ module Reports
 
     def provider_name
       trainee.provider&.name
-    end
-
-    def provider_trainee_id
-      trainee.trainee_id
     end
 
     def record_created_at

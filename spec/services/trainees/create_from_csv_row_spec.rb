@@ -65,7 +65,7 @@ module Trainees
         end
 
         it "updates the Trainee ID, route, region and record_source" do
-          expect(trainee.trainee_id).to eq(csv_row["Provider trainee ID"])
+          expect(trainee.provider_trainee_id).to eq(csv_row["Provider trainee ID"])
           expect(trainee.record_source).to eq(RecordSources::MANUAL)
           expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:hpitt_postgrad])
           expect(trainee.region).to eq(csv_row["Region"])

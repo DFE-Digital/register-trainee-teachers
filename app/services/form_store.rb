@@ -8,7 +8,7 @@ class FormStore
     publish_course_details
     course_details
     personal_details
-    trainee_id
+    provider_trainee_id
     trainee_start_date
     trainee_start_status
     deferral

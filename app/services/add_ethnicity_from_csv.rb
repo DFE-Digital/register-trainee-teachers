@@ -11,9 +11,9 @@ class AddEthnicityFromCsv
 
     upload.file.download do |csv|
       CSV.parse(csv, headers: true) do |row|
-        trainee_id = row["trainee_id"]
+        provider_trainee_id = row["provider_trainee_id"]
         ethnicity = row["ethnicity"]
-        trainee = provider.trainees.where(trainee_id:).first
+        trainee = provider.trainees.where(provider_trainee_id:).first
 
         next unless trainee
 

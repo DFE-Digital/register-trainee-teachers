@@ -4,9 +4,9 @@ module Reports
   class BulkRecommendEmptyReport < TemplateClassCsv
     # required headers
     TRN = "TRN"
-    TRAINEE_ID = "Provider trainee ID"
+    PROVIDER_TRAINEE_ID = "Provider trainee ID"
 
-    IDENTIFIERS = [TRN, TRAINEE_ID].freeze
+    IDENTIFIERS = [TRN, PROVIDER_TRAINEE_ID].freeze
     DATE = "Date QTS or EYTS standards met"
 
     DEFAULT_HEADERS = [

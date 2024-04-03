@@ -60,7 +60,7 @@ module Hesa
     attr_reader :hesa_trainee, :record_source
 
     def broken_mapping_message(unmapped_fields)
-      "Unmapped fields #{unmapped_fields} on trainee - id: #{hesa_trainee[:trainee_id]} - record source: #{record_source}"
+      "Unmapped fields #{unmapped_fields} on trainee - id: #{hesa_trainee[:provider_trainee_id]} - record source: #{record_source}"
     end
   end
 end

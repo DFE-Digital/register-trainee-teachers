@@ -19,7 +19,7 @@
   :data_migrations:
   - version
   :trainees:
-  - trainee_id
+  - provider_trainee_id
   - first_names
   - last_name
   - date_of_birth

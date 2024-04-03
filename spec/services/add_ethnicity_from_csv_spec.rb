@@ -7,7 +7,7 @@ RSpec.describe AddEthnicityFromCsv do
   let!(:trainee) { create(:trainee, provider:) }
   let!(:upload) { create(:upload, user: create(:user), name: "bpn-ethnicity.csv") }
   let(:ethnicity) { "Any other ethnic background: romanian" }
-  let(:csv_content) { "trainee_id,ethnicity\n#{trainee.trainee_id},#{ethnicity}" }
+  let(:csv_content) { "trainee_id,ethnicity\n#{trainee.provider_trainee_id},#{ethnicity}" }
   let(:service) { described_class.new(file_name: "bpn-ethnicity.csv", provider_code: "6B1") }
 
   before do

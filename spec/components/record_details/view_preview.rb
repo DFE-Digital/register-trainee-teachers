@@ -58,11 +58,11 @@ module RecordDetails
 
   private
 
-    def mock_trainee(trainee_id, state = :draft, training_route = TRAINING_ROUTE_ENUMS[:assessment_only], commencement_status = :itt_started_later)
+    def mock_trainee(provider_trainee_id, state = :draft, training_route = TRAINING_ROUTE_ENUMS[:assessment_only], commencement_status = :itt_started_later)
       @mock_trainee ||= Trainee.new(
         id: 1,
         training_route: training_route,
-        trainee_id: trainee_id,
+        provider_trainee_id: provider_trainee_id,
         created_at: Time.zone.today,
         state: state,
         submitted_for_trn_at: Time.zone.today,

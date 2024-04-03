@@ -5,7 +5,6 @@ module TraineeSerializer
     EXCLUDE_ATTRIBUTES = %w[
       id
       slug
-      trainee_id
     ].freeze
 
     def initialize(trainee)

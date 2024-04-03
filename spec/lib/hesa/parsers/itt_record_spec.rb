@@ -21,7 +21,7 @@ module Hesa
             ethnic_background: "899",
             sex: "11",
             ukprn: "10007713",
-            trainee_id: "99157234/2/01",
+            provider_trainee_id: "99157234/2/01",
             course_subject_one: "100346",
             course_subject_two: nil,
             course_subject_three: nil,

@@ -96,7 +96,7 @@ module RecordDetails
 
     context "when any data has not been provided" do
       before do
-        trainee.trainee_id = nil
+        trainee.provider_trainee_id = nil
         render_inline(View.new(trainee: trainee, last_updated_event: timeline_event, editable: true))
       end
 
@@ -111,7 +111,7 @@ module RecordDetails
       end
 
       it "renders the trainee ID" do
-        expect(rendered_content).to have_text(trainee.trainee_id)
+        expect(rendered_content).to have_text(trainee.provider_trainee_id)
       end
 
       it "renders the trainee's last timeline event date" do
@@ -134,7 +134,7 @@ module RecordDetails
         let(:trainee) { create(:trainee, :withdrawn, trn: nil, submitted_for_trn_at: nil) }
 
         it "renders the page" do
-          expect(rendered_content).to have_text(trainee.trainee_id)
+          expect(rendered_content).to have_text(trainee.provider_trainee_id)
         end
       end
 

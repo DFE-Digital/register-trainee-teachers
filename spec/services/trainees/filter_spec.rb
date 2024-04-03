@@ -366,7 +366,7 @@ module Trainees
       end
 
       let(:subject_name) { CourseSubjects::BIOLOGY }
-      let!(:trainee_with_subject) { create(:trainee, trainee_id: "bug", course_subject_one: subject_name) }
+      let!(:trainee_with_subject) { create(:trainee, provider_trainee_id: "bug", course_subject_one: subject_name) }
       let(:filters) { { subject: subject_name, text_search: "bug" } }
 
       it { expect { trigger } .not_to raise_error }

@@ -11,6 +11,7 @@ RSpec.describe TraineeSerializer::V01 do
       %w[
         ukprn
         trainee_id
+        provider_trainee_id
         apply_application_id
         trn
         first_names

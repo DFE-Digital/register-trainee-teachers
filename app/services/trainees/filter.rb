@@ -135,7 +135,7 @@ module Trainees
     def text_search(trainees, text_search)
       return trainees if text_search.blank?
 
-      trainees.with_name_trainee_id_or_trn_like(text_search)
+      trainees.with_name_provider_trainee_id_or_trn_like(text_search)
     end
 
     def provider(trainees, provider)
