@@ -220,7 +220,7 @@
   - ethnic_background
   - sex
   - ukprn
-  - trainee_id
+  - provider_trainee_id
   - course_subject_one
   - course_subject_two
   - course_subject_three

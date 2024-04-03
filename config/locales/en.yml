@@ -112,6 +112,7 @@ en:
     view:
       provider: Accredited provider
       provider_trainee_id: &trainee_id Trainee ID
+      trainee_id: *trainee_id
       region: &region Region
       submitted_for_trn: Submitted for TRN
       trainee_status: Trainee status

@@ -15,7 +15,7 @@ class RenameTraineeIdToProviderTraineeId < ActiveRecord::Migration[6.0]
   end
 
   def down
-    add_column :trainees, :trainee_id, :tex
+    add_column :trainees, :trainee_id, :text
 
     safety_assured {
       execute <<-SQL.squish

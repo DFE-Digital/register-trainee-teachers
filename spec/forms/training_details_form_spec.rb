@@ -182,7 +182,7 @@ describe TrainingDetailsForm, type: :model do
 
     it "returns short_name" do
       subject.valid?
-      expect(subject.trainee_id).to eql("TEST123")
+      expect(subject.provider_trainee_id).to eql("TEST123")
     end
   end
 end

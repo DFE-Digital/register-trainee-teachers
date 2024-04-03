@@ -11,8 +11,8 @@ class AddEthnicityToTeachFirstTrainees < ActiveRecord::Migration[7.1]
 
   class Service
     def call
-      entries.each do |trainee_id, ethnicity|
-        trainee = teach_first_trainees.where(trainee_id:).first
+      entries.each do |provider_trainee_id, ethnicity|
+        trainee = teach_first_trainees.where(provider_trainee_id:).first
 
         next unless trainee
 
