@@ -122,22 +122,22 @@ jobs:
         linter-type: [rubocop, scss, dfe_analytics, javascript_lint_and_test]
         include:
           - linter-type: rubocop
-            command: docker-compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
+            command: docker compose exec -T web /bin/sh -c 'bundle exec rubocop app config db lib spec Gemfile --format clang'
           - linter-type: scss
             command: |
-              docker-compose exec -T web /bin/sh -c "yarn add stylelint@15.11.0"
-              docker-compose exec -T web /bin/sh -c "yarn add stylelint-scss@5.3.1"
-              docker-compose exec -T web /bin/sh -c "yarn add stylelint-config-gds@1.1.0"
-              docker-compose exec -T web /bin/sh -c "yarn run scss:lint"
+              docker compose exec -T web /bin/sh -c "yarn add stylelint@15.11.0"
+              docker compose exec -T web /bin/sh -c "yarn add stylelint-scss@5.3.1"
+              docker compose exec -T web /bin/sh -c "yarn add stylelint-config-gds@1.1.0"
+              docker compose exec -T web /bin/sh -c "yarn run scss:lint"
           - linter-type: dfe_analytics
             command: |
-              docker-compose exec -T web /bin/sh -c "bundle exec rails db:setup"
-              docker-compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
+              docker compose exec -T web /bin/sh -c "bundle exec rails db:setup"
+              docker compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
           - linter-type: javascript_lint_and_test
             command: |
-              docker-compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
-              docker-compose exec -T web /bin/sh -c "yarn run standard $(git ls-files '**.js' | tr '\n' ' ')"
-              docker-compose exec -T web /bin/sh -c 'yarn run test'
+              docker compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
+              docker compose exec -T web /bin/sh -c "yarn run standard $(git ls-files '**.js' | tr '\n' ' ')"
+              docker compose exec -T web /bin/sh -c 'yarn run test'
 
     steps:
       - name: Checkout

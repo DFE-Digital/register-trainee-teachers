@@ -32,7 +32,7 @@ module Api
           nationalisations_attributes:,
         })
         .merge(course_attributes)
-        .merge(ethnicity_and_disability_attributes)
+        .merge(ethnicity_and_disability_attributes).compact
       end
 
       def sex
@@ -103,6 +103,14 @@ module Api
 
       def course_age_range
         DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
+      end
+
+      def course_attributes
+        attributes = super
+
+        attributes[:course_allocation_subject_id] = attributes.delete(:course_allocation_subject)&.id
+
+        attributes
       end
     end
   end

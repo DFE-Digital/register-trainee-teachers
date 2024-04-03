@@ -7,7 +7,7 @@ module Api
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
 
-      before_validation :set_course_allocation_subject
+      before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
       ATTRIBUTES = %i[
@@ -32,7 +32,7 @@ module Api
         course_subject_one
         course_subject_two
         course_subject_three
-        course_allocation_subject
+        course_allocation_subject_id
         study_mode
         application_choice_id
         progress
@@ -42,7 +42,6 @@ module Api
         first_names
         last_name
         date_of_birth
-        email
         sex
         training_route
         itt_start_date
@@ -59,13 +58,26 @@ module Api
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
       attribute :nationalisations_attributes, array: true, default: -> { [] }
+      attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :date_of_birth, :date
       attribute :record_source, default: -> { RecordSources::API }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+      validates :email, presence: true, length: { maximum: 255 }
+
+      validate do |record|
+        EmailFormatValidator.new(record).validate
+      end
 
       def initialize(attributes = {})
-        super(attributes.except(:placements_attributes, :degrees_attributes, :nationalisations_attributes))
+        attributes = attributes.to_h.with_indifferent_access
+
+        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
+          :placements_attributes,
+          :degrees_attributes,
+          :nationalisations_attributes,
+          :hesa_trainee_detail_attributes,
+        ))
 
         attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
@@ -78,10 +90,21 @@ module Api
         attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
+
+        self.hesa_trainee_detail_attributes ||=
+          HesaTraineeDetailAttributes::V01.new(
+            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
+          )
       end
 
       def self.from_trainee(trainee)
-        new(trainee.attributes.select { |k, _v| Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym) })
+        new(trainee.attributes.select { |k, _v|
+          Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+        }.merge(
+          trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
+            Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+          } || {},
+        ))
       end
 
       def deep_attributes
@@ -98,9 +121,9 @@ module Api
 
     private
 
-      def set_course_allocation_subject
-        self.course_allocation_subject ||=
-          SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
+      def set_course_allocation_subject_id
+        self.course_allocation_subject_id ||=
+          SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject&.id
       end
 
       def set_progress
