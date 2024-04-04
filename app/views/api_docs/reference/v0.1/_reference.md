@@ -7,22 +7,22 @@ This API allows you to access information about trainees and provides endpoints 
 - [Developing on the API](#developing-on-the-api)
 - [Authentication](#authentication)
 - [Endpoints](#endpoints)
-    - [`GET /info`](#code-get-info-code)
-    - [`GET /trainees`](#code-get-trainees-code)
-    - [`GET /trainees/{trainee_id}`](#code-get-trainees-trainee_id-code)
-    - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
-    - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
-    - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
-    - [`GET /trainees/{trainee_id}/degrees/{degree_id}`](#code-get-trainees-trainee_id-degrees-degree_id-code)
-    - [`POST /trainees`](#code-post-trainees-code)
-    - [`POST /trainees/{trainee_id}/placements`](#code-post-trainees-trainee_id-placements-code)
-    - [`POST /trainees/{trainee_id}/degrees`](#code-post-trainees-trainee_id-degrees-code)
-    - [`POST /trainees/{trainee_id}/withdraw`](#code-post-trainees-trainee_id-withdraw-code)
-    - [`PUT|PATCH /trainees/{trainee_id}/{trainee_id}`](#code-put-patch-trainees-trainee_id-trainee_id-code)
-    - [`PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
-    - [`PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
-    - [`DELETE /trainees/{trainee_id}/placements/{placement_id}`](#code-delete-trainees-trainee_id-placements-placement_id-code)
-    - [`DELETE /trainees/{trainee_id}/degrees/{degree_id}`](#code-delete-trainees-trainee_id-degrees-degree_id-code)
+    - [GET /info](#code-get-info-code)
+    - [GET /trainees](#code-get-trainees-code)
+    - [GET /trainees/{trainee_id}](#code-get-trainees-trainee_id-code)
+    - [GET /trainees/{trainee_id}/placements](#code-get-trainees-trainee_id-placements-code)
+    - [GET /trainees/{trainee_id}/placements/{placement_id}](#code-get-trainees-trainee_id-placements-placement_id-code)
+    - [GET /trainees/{trainee_id}/degrees](#code-get-trainees-trainee_id-degrees-code)
+    - [GET /trainees/{trainee_id}/degrees/{degree_id}](#code-get-trainees-trainee_id-degrees-degree_id-code)
+    - [POST /trainees](#code-post-trainees-code)
+    - [POST /trainees/{trainee_id}/placements](#code-post-trainees-trainee_id-placements-code)
+    - [POST /trainees/{trainee_id}/degrees](#code-post-trainees-trainee_id-degrees-code)
+    - [POST /trainees/{trainee_id}/withdraw](#code-post-trainees-trainee_id-withdraw-code)
+    - [PUT|PATCH /trainees/{trainee_id}/{trainee_id}](#code-put-patch-trainees-trainee_id-trainee_id-code)
+    - [PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
+    - [PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
+    - [DELETE /trainees/{trainee_id}/placements/{placement_id}](#code-delete-trainees-trainee_id-placements-placement_id-code)
+    - [DELETE /trainees/{trainee_id}/degrees/{degree_id}](#code-delete-trainees-trainee_id-degrees-degree_id-code)
 - [Objects](#objects)
     - [Trainee](#trainee-object)
     - [Placement](#placement-object)
@@ -80,7 +80,7 @@ Provides general information about the API.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - Information about the API status</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - Information about the API status</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -91,7 +91,7 @@ Provides general information about the API.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -129,7 +129,7 @@ current academic cycle.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - An array of trainees</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - An array of trainees</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -232,7 +232,7 @@ current academic cycle.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -248,7 +248,7 @@ current academic cycle.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -277,7 +277,7 @@ Get a single trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -417,7 +417,7 @@ Get a single trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -433,7 +433,7 @@ Get a single trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -462,7 +462,7 @@ Get many placements for a trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - An array of placements</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - An array of placements</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -486,7 +486,7 @@ Get many placements for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -502,7 +502,7 @@ Get many placements for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -532,7 +532,7 @@ Get a single placement for a trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A placement</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A placement</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -556,7 +556,7 @@ Get a single placement for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -572,7 +572,7 @@ Get a single placement for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -601,7 +601,7 @@ Get many degrees for a trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - An array of degrees</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - An array of degrees</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -634,7 +634,7 @@ Get many degrees for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -650,7 +650,7 @@ Get many degrees for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -680,7 +680,7 @@ Get a single degree for a trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A degree</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -704,7 +704,7 @@ Get a single degree for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -720,7 +720,7 @@ Get a single degree for a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -791,7 +791,7 @@ Trainee details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 201</code><span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 201<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -949,7 +949,7 @@ Trainee details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -960,7 +960,7 @@ Trainee details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1023,7 +1023,7 @@ Placement details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 201</code><span> - A placement</span></summary>
+  <summary class="govuk-details__summary">HTTP 201<span> - A placement</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1045,7 +1045,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1056,7 +1056,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1072,7 +1072,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 409</code><span> - Conflict</span></summary>
+  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1088,7 +1088,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1157,7 +1157,7 @@ Degree details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 201</code><span> - A degree</span></summary>
+  <summary class="govuk-details__summary">HTTP 201<span> - A degree</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1188,7 +1188,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1199,7 +1199,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1215,7 +1215,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 409</code><span> - Conflict</span></summary>
+  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1231,7 +1231,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1270,7 +1270,7 @@ Withdraw a trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1410,7 +1410,7 @@ Withdraw a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1421,7 +1421,7 @@ Withdraw a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1437,7 +1437,7 @@ Withdraw a trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1503,7 +1503,7 @@ Trainee details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1643,7 +1643,7 @@ Trainee details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1659,7 +1659,7 @@ Trainee details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1670,7 +1670,7 @@ Trainee details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1738,7 +1738,7 @@ Placement details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A placement</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A placement</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1760,7 +1760,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1776,7 +1776,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1787,7 +1787,7 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1858,7 +1858,7 @@ Degree details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A degree</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1891,7 +1891,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1907,7 +1907,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1918,7 +1918,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 409</code><span> - Conflict</span></summary>
+  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1934,7 +1934,7 @@ Degree details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 422</code><span> - Unprocessable Entity</span></summary>
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -1970,7 +1970,7 @@ Deletes an existing placement for this trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -2097,7 +2097,7 @@ Deletes an existing placement for this trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -2113,7 +2113,7 @@ Deletes an existing placement for this trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -2143,7 +2143,7 @@ Deletes an existing degree for this trainee.
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A degree</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -2176,7 +2176,7 @@ Deletes an existing degree for this trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -2192,7 +2192,7 @@ Deletes an existing degree for this trainee.
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
