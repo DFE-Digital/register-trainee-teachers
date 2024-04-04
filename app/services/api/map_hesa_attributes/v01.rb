@@ -34,12 +34,22 @@ module Api
           sex:,
           training_route:,
           nationalisations_attributes:,
+          degrees_attributes:,
+          placements_attributes:,
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
         .merge(funding_attributes)
         .merge(school_attributes)
         .compact
+      end
+
+      def degrees_attributes
+        params[:degrees].map { |degree| Api::MapHesaAttributes::Degrees::V01.new(degree).call }
+      end
+
+      def placements_attributes
+        params[:placements].map { |placement| Api::MapHesaAttributes::Placements::V01.new(placement).call }
       end
 
       def sex
@@ -76,6 +86,14 @@ module Api
 
       def itt_end_date
         params[:itt_end_date]
+      end
+
+      def itt_qualification_aim
+        ::Hesa::CodeSets::IttQualificationAims::MAPPING[params[:itt_qualification_aim]]
+      end
+
+      def fundability
+        ::Hesa::CodeSets::FundCodes::MAPPING[params[:fund_code]]
       end
 
       def trainee_start_date
