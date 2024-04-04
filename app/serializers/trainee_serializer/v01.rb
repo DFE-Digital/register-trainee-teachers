@@ -6,7 +6,7 @@ module TraineeSerializer
       @trainee = trainee
     end
 
-    EXCLUDED_ATTRIBUTES = %i[
+    EXCLUDED_ATTRIBUTES = %w[
       state
     ].freeze
 
@@ -136,10 +136,6 @@ module TraineeSerializer
     def training_initiative
       # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
       # `::Hesa::CodeSets::TrainingInitiatives::MAPPING`
-    end
-
-    def status
-      @trainee.state
     end
   end
 end
