@@ -25,6 +25,16 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         itt_end_date: "2023-10-01",
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
         study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+        degrees_attributes: [
+          {
+            subject: "Law",
+            institution: nil,
+            graduation_date: "2003-06-01",
+            subject_one: "100485",
+            grade: "02",
+            country: "XF",
+          },
+        ]
       },
     }
   end
@@ -39,7 +49,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "calls the Hesa::MapHesaAttributes service" do
       expected_params = ActionController::Parameters.new(
-        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES)),
+        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES + [:degrees_attributes])),
       ).permit!
 
       expect(Api::MapHesaAttributes::V01).to have_received(:call).with(params: expected_params)
@@ -62,6 +72,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body["lead_school"]).to be_nil
       expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
       expect(response.parsed_body["employing_school"]).to be_nil
+    end
+
+    it "creates the degrees if provided in the request body" do
+      degree_attributes = response.parsed_body["degrees"]&.first
+
+      expect(degree_attributes["subject"]).to eq("Law")
+      expect(degree_attributes["institution"]).to eq("Other UK institution")
+      expect(degree_attributes["graduation_year"]).to eq(2003)
     end
 
     it "returns status code 201" do

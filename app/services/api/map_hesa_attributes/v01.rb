@@ -45,11 +45,11 @@ module Api
       end
 
       def degrees_attributes
-        params[:degrees].map { |degree| Api::MapHesaAttributes::Degrees::V01.new(degree).call }
+        params[:degrees_attributes]&.map { |degree| Api::MapHesaAttributes::Degrees::V01.new(degree).call }
       end
 
       def placements_attributes
-        params[:placements].map { |placement| Api::MapHesaAttributes::Placements::V01.new(placement).call }
+        params[:placements]&.map { |placement| Api::MapHesaAttributes::Placements::V01.new(placement).call }
       end
 
       def sex

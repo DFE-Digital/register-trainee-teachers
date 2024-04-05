@@ -10,11 +10,15 @@ module Api
         id
         country
         grade
+        grade_uuid
         locale_code
         uk_degree
+        uk_degree_uuid
         non_uk_degree
         subject
+        subject_uuid
         institution
+        institution_uuid
         graduation_year
         other_grade
       ].freeze
