@@ -9,6 +9,7 @@ RSpec.describe TraineeSerializer::V01 do
   expected_fields =
     %i[
       id
+      status
       ukprn
       trainee_id
       apply_application_id
@@ -56,10 +57,21 @@ RSpec.describe TraineeSerializer::V01 do
       additional_training_initiative
     ].freeze
 
+  excluded_attributes =
+    %i[
+      state
+    ].freeze
+
   describe "serialization" do
     expected_fields.each do |field|
       it "serializes the #{field} field from the specification" do
         expect(json).to have_key(field)
+      end
+    end
+
+    excluded_attributes.each do |field|
+      it "does not serializes the #{field} field" do
+        expect(json).not_to have_key(field)
       end
     end
   end
