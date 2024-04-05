@@ -2239,13 +2239,13 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>apply_id</code></dt>
+    <dt class="govuk-summary-list__key"><code>application_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string
       </p>
       <p class="govuk-body">
-        The unique ID of the application Apply system.
+        The unique ID of the application in the Apply system.
       </p>
       <p class="govuk-body">
         Example: <code>11fc0d3b2f</code>
