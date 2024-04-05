@@ -49,7 +49,7 @@ module Api
       end
 
       def placements_attributes
-        params[:placements]&.map { |placement| Api::MapHesaAttributes::Placements::V01.new(placement).call }
+        params[:placements_attributes]&.map { |placement| Api::MapHesaAttributes::Placements::V01.new(placement).call }
       end
 
       def sex

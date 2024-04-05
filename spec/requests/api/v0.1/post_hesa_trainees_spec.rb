@@ -34,7 +34,13 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             grade: "02",
             country: "XF",
           },
-        ]
+        ],
+        placements_attributes: [
+          {
+            school_urn: "900020",
+            placement_days: "160",
+          },
+        ],
       },
     }
   end
@@ -49,7 +55,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "calls the Hesa::MapHesaAttributes service" do
       expected_params = ActionController::Parameters.new(
-        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES + [:degrees_attributes])),
+        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES + [:degrees_attributes] + [:placements_attributes])),
       ).permit!
 
       expect(Api::MapHesaAttributes::V01).to have_received(:call).with(params: expected_params)
@@ -80,6 +86,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(degree_attributes["subject"]).to eq("Law")
       expect(degree_attributes["institution"]).to eq("Other UK institution")
       expect(degree_attributes["graduation_year"]).to eq(2003)
+    end
+
+    it "creates the placements if provided in the request body" do
+      placement_attributes = response.parsed_body["placements"]&.first
+
+      expect(placement_attributes["school_id"]).to be_nil
+      expect(placement_attributes["name"]).to eq("Establishment does not have a URN")
+      expect(placement_attributes["urn"]).to eq("900020")
     end
 
     it "returns status code 201" do

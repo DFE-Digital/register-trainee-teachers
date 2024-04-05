@@ -63,7 +63,9 @@ module Api
     end
 
     def placements_attributes
-      Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
+      hesa_attributes = Object.const_get("Api::MapHesaAttributes::Placements::#{current_version_class_name}")::ATTRIBUTES
+      standard_attributes = Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
+      standard_attributes + hesa_attributes
     end
 
     def nationality_attributes
