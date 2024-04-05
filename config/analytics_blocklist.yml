@@ -294,6 +294,8 @@
   - trainee_id
   - created_at
   - updated_at
+  - itt_qualification_aim
+  - fund_code
   :hesa_trn_requests:
   - id
   - collection_reference

@@ -14,5 +14,7 @@ FactoryBot.define do
     ni_number { "QQ 12 34 56 C" }
     hesa_disabilities { ["95"] }
     additional_training_initiative { "026" }
+    itt_qualification_aim { "F_QLAIM" }
+    fund_code { "F_FUNDCODE" }
   end
 end
