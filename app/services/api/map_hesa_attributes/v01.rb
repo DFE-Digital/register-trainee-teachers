@@ -41,6 +41,7 @@ module Api
         .merge(ethnicity_and_disability_attributes)
         .merge(funding_attributes)
         .merge(school_attributes)
+        .merge(training_initiative_attributes)
         .compact
       end
 
