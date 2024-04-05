@@ -43,7 +43,7 @@ runs:
     - name: Bring image up
       shell: bash
       run: |
-        docker-compose up --no-build -d
-        docker-compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
+        docker compose up --no-build -d
+        docker compose exec -T web /bin/sh -c "./wait-for-command.sh -c 'nc -z db 5432' -s 0 -t 20"
       env:
         SENTRY_DSN: ${{ steps.get-secret.outputs.sentry_dsn }}

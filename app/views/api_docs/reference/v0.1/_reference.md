@@ -13,6 +13,7 @@ This API allows you to access information about trainees and provides endpoints 
         - [`GET /trainees/{trainee_id}/placements`](#code-get-trainees-trainee_id-placements-code)
         - [`GET /trainees/{trainee_id}/placements/{placement_id}`](#code-get-trainees-trainee_id-placements-placement_id-code)
         - [`GET /trainees/{trainee_id}/degrees`](#code-get-trainees-trainee_id-degrees-code)
+        - [`GET /trainees/{trainee_id}/degrees/{degree_id}`](#code-get-trainees-trainee_id-degrees-degree_id-code)
         - [`PUT|PATCH /trainees/{trainee_id}/{trainee_id}`](#code-put-patch-trainees-trainee_id-trainee_id-code)
         - [`PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
         - [`PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
@@ -171,7 +172,7 @@ current academic cycle.
           "placement_assignment_dttp_id": null,
           "trn": "6440650",
           "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
+          "status": "deferred",
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
@@ -319,7 +320,7 @@ Get a single trainee.
           "placement_assignment_dttp_id": null,
           "trn": "6440650",
           "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
+          "status": "deferred",
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
@@ -658,6 +659,76 @@ Get many degrees for a trainee.
 
 ---
 
+### `GET /trainees/{trainee_id}/degrees/{degree_id}`
+
+Get a single degree for a trainee.
+
+#### Request
+
+`GET /api/v0.1/trainees/{trainee_id}/degrees/{degree_id}`
+
+#### Parameters
+
+| **Parameter**	 | **In**  | **Type** | **Required** | **Description** 				|
+| -------------  | ------- | -------- | ------------ | ---------------------------- |
+| **trainee_id** | path    | string   | true         | The unique ID of the trainee |
+| **degree_id**  | path    | string   | true         | The unique ID of the degree  |
+
+#### Possible responses
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 200</code><span> - A degree</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": [
+        {
+          "id": 270180,
+          "trainee_id": 644065,
+          "school_id": 26214,
+          "urn": null,
+          "name": null,
+          "address": null,
+          "postcode": null,
+          "created_at": "2024-01-18T08:02:42.672Z",
+          "updated_at": "2024-01-18T08:02:42.672Z",
+          "slug": "WQsRAS4LfwZZXvSX7aAfNUx3"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 404</code><span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Degree(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary"><code>HTTP 401</code><span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+---
+
 ### `PUT|PATCH /trainees/{trainee_id}/{trainee_id}`
 
 Updates an existing trainee.
@@ -753,7 +824,7 @@ Trainee details
           "placement_assignment_dttp_id": null,
           "trn": "6440650",
           "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
+          "status": "deferred",
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
@@ -1220,7 +1291,7 @@ Deletes an existing placement for this trainee.
           "placement_assignment_dttp_id": null,
           "trn": "6440650",
           "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
+          "status": "deferred",
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
@@ -1512,7 +1583,7 @@ Trainee details
           "placement_assignment_dttp_id": null,
           "trn": "123456",
           "submitted_for_trn_at": null,
-          "state": "draft",
+          "status": "draft",
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": null,
@@ -1992,7 +2063,7 @@ Withdraw a trainee.
           "placement_assignment_dttp_id": null,
           "trn": "6440650",
           "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "withdrawn",
+          "status": "withdrawn",
           "withdraw_date": "2024-02-15T15:17:09.000Z",
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",

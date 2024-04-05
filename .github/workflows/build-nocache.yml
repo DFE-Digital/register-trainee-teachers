@@ -108,13 +108,13 @@ jobs:
 
       - name: Bring images up
         run: |
-          docker-compose up --no-build -d
+          docker compose up --no-build -d
 
       - name: Install git
-        run: docker-compose exec -T web /bin/sh -c 'apk add git'
+        run: docker compose exec -T web /bin/sh -c 'apk add git'
 
       - name: Bundle audit
-        run: docker-compose exec -T web /bin/sh -c 'bundle-audit check --update'
+        run: docker compose exec -T web /bin/sh -c 'bundle-audit check --update'
 
       - name: Check for Failure
         if: ${{ failure() }}
