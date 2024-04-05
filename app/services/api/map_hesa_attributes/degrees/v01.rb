@@ -21,12 +21,6 @@ module Api
         end
 
         def call
-          mapped_params
-        end
-
-      private
-
-        def mapped_params
           {
             subject:,
             subject_uuid:,
@@ -51,10 +45,6 @@ module Api
           def_reference_subject&.id
         end
 
-        def def_reference_subject
-          DfEReference::DegreesQuery.find_subject(hecos_code: @params[:subject_one])
-        end
-
         def graduation_year
           @params[:graduation_date]&.to_date&.year
         end
@@ -69,6 +59,46 @@ module Api
           return unless uk_country_or_uk_institution_present?
 
           find_institution&.id
+        end
+
+        def locale_code
+          uk_country_or_uk_institution_present? ? "uk" : "non_uk"
+        end
+
+        def country
+          uk_country_or_uk_institution_present? ? nil : country_from_mapping
+        end
+
+        def uk_degree
+          return unless uk_country_or_uk_institution_present?
+
+          degree_type&.name
+        end
+
+        def uk_degree_uuid
+          return unless uk_country_or_uk_institution_present?
+
+          degree_type&.id
+        end
+
+        def non_uk_degree
+          return if uk_country_or_uk_institution_present?
+
+          degree_type&.name
+        end
+
+        def grade
+          grade_from_hesa_code&.name
+        end
+
+        def grade_uuid
+          grade_from_hesa_code&.id
+        end
+
+      private
+
+        def def_reference_subject
+          DfEReference::DegreesQuery.find_subject(hecos_code: @params[:subject_one])
         end
 
         def find_institution
@@ -98,43 +128,9 @@ module Api
           @country_from_mapping ||= Hesa::CodeSets::Countries::MAPPING[@params[:country]]
         end
 
-        def locale_code
-          uk_country_or_uk_institution_present? ? "uk" : "non_uk"
-        end
-
-        def country
-          uk_country_or_uk_institution_present? ? nil : country_from_mapping
-        end
-
-        def uk_degree
-          return unless uk_country_or_uk_institution_present?
-
-          degree_type&.name
-        end
-
-        def uk_degree_uuid
-          return unless uk_country_or_uk_institution_present?
-
-          degree_type&.id
-        end
-
         def degree_type
           hesa_code = HONOURS_TO_NON_HONOURS_HESA_CODE_MAP[@params[:degree_type]] || @params[:degree_type]
           @degree_type = DfEReference::DegreesQuery.find_type(hesa_code:)
-        end
-
-        def non_uk_degree
-          return if uk_country_or_uk_institution_present?
-
-          degree_type&.name
-        end
-
-        def grade
-          grade_from_hesa_code&.name
-        end
-
-        def grade_uuid
-          grade_from_hesa_code&.id
         end
 
         def grade_from_hesa_code
