@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module Api
   module MapHesaAttributes
     module Degrees
       class V01
         ATTRIBUTES = %i[graduation_date subject_one].freeze
-        INSTITUTE_OF_EDUCATION_HESA_CODE = "0133".freeze
-        UNIVERSITY_COLLEGE_LONDON_HESA_CODE = "0149".freeze
-        PASS_WITHOUT_HONOURS_HESA_CODE = "09".freeze
-        NEAREST_EQUIVALENT_GRADE_HESA_CODE = "14".freeze
+        INSTITUTE_OF_EDUCATION_HESA_CODE = "0133"
+        UNIVERSITY_COLLEGE_LONDON_HESA_CODE = "0149"
+        PASS_WITHOUT_HONOURS_HESA_CODE = "09"
+        NEAREST_EQUIVALENT_GRADE_HESA_CODE = "14"
         HONOURS_TO_NON_HONOURS_HESA_CODE_MAP = {
           "002" => "001",
           "004" => "003",
