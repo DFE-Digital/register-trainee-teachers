@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Api
   module TraineeAttributes
     class V01
@@ -95,6 +93,15 @@ module Api
           HesaTraineeDetailAttributes::V01.new(
             attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
+      end
+
+      def assign_attributes(attributes)
+        super
+
+        self.nationalisations_attributes = []
+        attributes[:nationalisations_attributes]&.each do |nationalisation_params|
+          self.nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params.permit(:name))
+        end
       end
 
       def self.from_trainee(trainee)
