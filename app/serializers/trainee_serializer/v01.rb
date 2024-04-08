@@ -79,22 +79,36 @@ module TraineeSerializer
       }
     end
 
-    def course_qualification; end
+    def course_qualification
+      @trainee.award_type
+    end
 
-    def course_level; end
+    def course_level
+      trainee.undergrad_route? ? "undergrad" : "postgrad"
+    end
 
     def course_title
       @trainee.published_course&.name
     end
 
-    def course_itt_subject; end
+    def course_itt_subject
+      @trainee.course_subject_one
+    end
 
-    def course_education_phase; end
+    def course_education_phase
+      @trainee.course_education_phase
+    end
 
-    def course_study_mode; end
+    def course_study_mode
+      @trainee.hesa_trainee_detail.course_study_mode
+    end
 
     def course_itt_start_date
       @trainee.itt_start_date&.iso8601
+    end
+
+    def course_age_range
+      @trainee.hesa_trainee_detail.course_age_range
     end
 
     def expected_end_date
@@ -146,10 +160,6 @@ module TraineeSerializer
     end
 
     def training_route; end
-
-    def course_age_range
-      @trainee.course_age_range
-    end
 
     def training_initiative
       # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
