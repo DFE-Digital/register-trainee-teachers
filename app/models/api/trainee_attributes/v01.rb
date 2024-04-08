@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module TraineeAttributes
     class V01
@@ -100,7 +102,7 @@ module Api
 
         self.nationalisations_attributes = []
         attributes[:nationalisations_attributes]&.each do |nationalisation_params|
-          self.nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params.permit(:name))
+          nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
       end
 
