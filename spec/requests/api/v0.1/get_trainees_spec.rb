@@ -36,6 +36,16 @@ describe "`GET /trainees` endpoint" do
       expect(response).to have_http_status(:ok)
       expect(response.parsed_body["data"].count).to eq(trainees.count)
     end
+
+    it "returns 422 if academic cycle filter is invalid" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { academic_cycle: "not-a-number" },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 
   context "filtering by 'since' date" do
@@ -51,6 +61,16 @@ describe "`GET /trainees` endpoint" do
 
       expect(response).to have_http_status(:ok)
       expect(response.parsed_body["data"].count).to be >= 5
+    end
+
+    it "returns 422 if since filter is an invalid date" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { since: "2023-13-01" },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
@@ -84,15 +104,14 @@ describe "`GET /trainees` endpoint" do
       expect(response.parsed_body["data"].count).to eq(submitted_trainees.count)
     end
 
-    it "returns all trainees when an invalid state is provided" do
+    it "returns 422 when an invalid state is provided" do
       get(
         "/api/v0.1/trainees",
         headers: { Authorization: "Bearer #{token}" },
         params: { status: "invalid_state" },
       )
 
-      expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["data"].count).to eq(trainees.count + submitted_trainees.count)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it "returns all trainees when no state is provided" do
