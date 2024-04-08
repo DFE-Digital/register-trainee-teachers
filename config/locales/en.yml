@@ -111,8 +111,7 @@ en:
   record_details:
     view:
       provider: Accredited provider
-      provider_trainee_id: &trainee_id Trainee ID
-      trainee_id: *trainee_id
+      provider_trainee_id: &provider_trainee_id Trainee ID
       region: &region Region
       submitted_for_trn: Submitted for TRN
       trainee_status: Trainee status
@@ -140,7 +139,7 @@ en:
       end_year: End year
   training_details:
     view:
-      title: *trainee_id
+      title: *provider_trainee_id
       region: *region
   iqts_country:
     view:
@@ -735,7 +734,6 @@ en:
         school_id: *lead_school_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
         trainee_start_date_radio_option: *trainee_start_date_path
-        trainee_id: edit_trainee_training_details_path
         provider_trainee_id: edit_trainee_training_details_path
         study_mode: *course_path
         primary_course_subjects: *course_path
@@ -790,8 +788,7 @@ en:
         school_id: *lead_school
         trainee_start_date: *trainee_start_date
         trainee_start_date_radio_option: Trainee’s start date
-        trainee_id: *trainee_id
-        provider_trainee_id: *trainee_id
+        provider_trainee_id: *provider_trainee_id
         study_mode: *study_mode
         primary_course_subjects: *course_subject
         iqts_country: Country or territory of training
@@ -932,7 +929,7 @@ en:
         headings:
           delete_reason: Reason for deletion
       training_details:
-        title: *trainee_id
+        title: *provider_trainee_id
         provider_trainee_id:
           label: Assign a trainee ID
           hint:
@@ -1258,7 +1255,7 @@ en:
           dttp: Imported from DTTP
           hesa: Imported from HESA
           manual: Added manually
-        provider_trainee_id: *trainee_id
+        provider_trainee_id: *provider_trainee_id
         training_routes:
           assessment_only: Assessment only
           early_years_assessment_only: Early years assessment only
@@ -1789,7 +1786,7 @@ en:
               blank: Enter a trainee ID
               max_char_exceeded: Your entry must not exceed 100 characters
               uniqueness: The trainee ID has already been used for another trainee
-              uniqueness_explanation: The ID ‘<span class="no-wrap">%{trainee_id}</span>’ has already been used for <span class="no-wrap">%{short_name}</span> (created <span class="no-wrap">%{created}</span>). Choose a new one or check if this is a duplicate trainee record.
+              uniqueness_explanation: The ID ‘<span class="no-wrap">%{provider_trainee_id}</span>’ has already been used for <span class="no-wrap">%{short_name}</span> (created <span class="no-wrap">%{created}</span>). Choose a new one or check if this is a duplicate trainee record.
         training_routes_form:
           attributes:
             training_route:

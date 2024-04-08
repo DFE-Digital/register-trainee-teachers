@@ -50,7 +50,6 @@ module BulkUpdate
       def row_attribute(lookup_key)
         case lookup_key
         when :hesa_id then :sanitised_hesa_id
-        when :provider_trainee_id then :provider_trainee_id
         else lookup_key
         end
       end

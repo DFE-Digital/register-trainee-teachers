@@ -53,7 +53,7 @@ module RecordDetails
     end
 
     def trainee_id_row
-      mappable_field(trainee.provider_trainee_id.presence, t(".trainee_id"), edit_trainee_training_details_path(trainee))
+      mappable_field(trainee.provider_trainee_id.presence, t(".provider_trainee_id"), edit_trainee_training_details_path(trainee))
     end
 
     def region

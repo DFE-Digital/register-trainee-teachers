@@ -11,7 +11,7 @@
         <div class="govuk-error-summary__item-description">
           <%= I18n.t(
             "activemodel.errors.models.training_details_form.attributes.provider_trainee_id.uniqueness_explanation",
-            trainee_id: form.object.trainee_id.strip,
+            provider_trainee_id: form.object.provider_trainee_id.strip,
             short_name: form.object.existing_short_name,
             created: form.object.existing_created,
           ).html_safe %>
