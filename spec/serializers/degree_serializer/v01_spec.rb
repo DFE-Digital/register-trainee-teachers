@@ -10,14 +10,21 @@ RSpec.describe DegreeSerializer::V01 do
     it "includes all expected fields" do
       %w[
         degree_id
+        locale_code
         uk_degree
         non_uk_degree
-        graduation_year
+        created_at
+        updated_at
         subject
-        grade
         institution
+        graduation_year
+        grade
         country
         other_grade
+        institution_uuid
+        uk_degree_uuid
+        subject_uuid
+        grade_uuid
       ].each do |field|
         expect(json.keys).to include(field)
       end
@@ -26,6 +33,7 @@ RSpec.describe DegreeSerializer::V01 do
     it "does not include excluded fields" do
       %w[
         id
+        trainee_id
         slug
         dttp_id
       ].each do |field|

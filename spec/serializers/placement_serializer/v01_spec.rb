@@ -13,6 +13,8 @@ RSpec.describe PlacementSerializer::V01 do
         urn
         name
         postcode
+        created_at
+        updated_at
       ].each do |field|
         expect(json.keys).to include(field)
       end
@@ -22,6 +24,8 @@ RSpec.describe PlacementSerializer::V01 do
       %w[
         id
         slug
+        trainee_id
+        school_id
       ].each do |field|
         expect(json.keys).not_to include(field)
       end

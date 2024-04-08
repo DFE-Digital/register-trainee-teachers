@@ -5,15 +5,28 @@ module TraineeSerializer
     EXCLUDE_ATTRIBUTES = %w[
       id
       slug
+      trainee_id
+      state
+      progress
+      provider_id
+      dttp_id
+      placement_assignment_dttp_id
+      dttp_update_sha
+      dormancy_dttp_id
+      lead_school_id
+      employing_school_id
+      apply_application_id
+      hesa_id
+      course_allocation_subject_id
+      start_academic_cycle_id
+      end_academic_cycle_id
+      hesa_trn_submission_id
+      application_choice_id
     ].freeze
 
     def initialize(trainee)
       @trainee = trainee
     end
-
-    EXCLUDED_ATTRIBUTES = %w[
-      state
-    ].freeze
 
     def as_hash
       @trainee.attributes.except(*EXCLUDE_ATTRIBUTES).merge(

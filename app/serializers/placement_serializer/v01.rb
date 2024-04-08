@@ -6,6 +6,7 @@ module PlacementSerializer
       id
       slug
       trainee_id
+      school_id
     ].freeze
 
     def initialize(placement)
