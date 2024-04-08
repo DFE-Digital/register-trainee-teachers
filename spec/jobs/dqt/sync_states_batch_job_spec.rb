@@ -6,9 +6,12 @@ module Dqt
   describe SyncStatesBatchJob do
     let!(:trainee) { create(:trainee) }
 
-    before { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false }
-
-    after { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true }
+    around do |example|
+      original_perform_enqueued_jobs = ActiveJob::Base.queue_adapter.perform_enqueued_jobs
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+      example.run
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = original_perform_enqueued_jobs
+    end
 
     it "enqueues a SyncTraineeStateJob per trainee", feature_integrate_with_dqt: true do
       expect {

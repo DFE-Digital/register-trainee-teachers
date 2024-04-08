@@ -18,7 +18,7 @@ module Hesa
     end
 
     context "feature flag is on" do
-      let(:trainee) { build(:trainee) }
+      let(:trainee) { create(:trainee) }
       let(:current_reference) { "C123" }
       let(:from_date) { "2022-04-01" }
       let(:expected_url) { "https://datacollection.hesa.ac.uk/apis/itt/1.1/CensusData/#{current_reference}/#{from_date}" }
