@@ -135,21 +135,24 @@ module TraineeSerializer
       @trainee.lead_school&.urn
     end
 
-    def lead_school_urn; end
+    def lead_school_urn
+      @trainee.lead_school&.urn
+    end
 
     def funding_attributes
       {
         fund_code:,
-        funding_option:,
         bursary_level:,
       }
     end
 
-    def fund_code; end
+    def fund_code
+      @trainee.fund_code
+    end
 
-    def funding_option; end
-
-    def bursary_level; end
+    def bursary_level
+      @trainee.hesa_trainee_detail.funding_method
+    end
 
     def hesa_trainee_attributes
       HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
@@ -159,13 +162,16 @@ module TraineeSerializer
       @trainee.nationalities.first&.name
     end
 
-    def training_route; end
-
-    def training_initiative
-      # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
-      # `::Hesa::CodeSets::TrainingInitiatives::MAPPING`
+    def training_route
+      ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(@trainee.training_route)
     end
 
-    def sex; end
+    def training_initiative
+      ::Hesa::CodeSets::TrainingInitiatives::MAPPING.key(@trainee.training_initiative)
+    end
+
+    def sex
+      ::Hesa::CodeSets::Sexes::MAPPING.key(@trainee.sex)
+    end
   end
 end
