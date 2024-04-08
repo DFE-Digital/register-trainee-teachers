@@ -33,13 +33,35 @@ module TraineeSerializer
     end
 
     def diversity_attributes
-      {
-        ethnicity:,
+      attributes = {
+        ethnic_group:,
         ethnicity_background:,
-        other_ethnicity_details:,
-        disability:,
+        disability_disclosure:,
         other_disability_details:,
       }
+      assign_disabilities(attributes)
+
+      attributes
+    end
+
+    def assign_disabilities(attributes)
+      @trainee.hesa_trainee_detail.hesa_disabilities.each_with_index do |disability, index|
+        key = "disability#{index + 1}"
+        attributes[key] = disability
+      end
+      attributes
+    end
+
+    def ethnic_group
+      @trainee.ethnic_group
+    end
+
+    def ethnic_background
+      Hesa::CodeSets::EthnicBackgrounds::MAPPING.key(@trainee.ethnic_background)
+    end
+
+    def disability_disclosure
+      @trainee.disability_disclosure
     end
 
     def course_attributes
@@ -56,48 +78,6 @@ module TraineeSerializer
         trainee_start_date:,
       }
     end
-
-    def school_attributes
-      {
-        employing_school_urn:,
-        lead_partner_urn_ukprn:,
-      }
-    end
-
-    def funding_attributes
-      {
-        fund_code:,
-        funding_option:,
-      }
-    end
-
-    def hesa_trainee_attributes
-      HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
-    end
-
-    def nationality
-      @trainee.nationalities.first&.name
-    end
-
-    def employing_school_urn
-      @trainee.employing_school&.urn
-    end
-
-    def lead_partner_urn_ukprn
-      @trainee.lead_school&.urn
-    end
-
-    def ethnicity; end
-
-    def ethnicity_background; end
-
-    def other_ethnicity_details; end
-
-    def disability; end
-
-    def other_disability_details; end
-
-    def training_route; end
 
     def course_qualification; end
 
@@ -117,25 +97,65 @@ module TraineeSerializer
       @trainee.itt_start_date&.iso8601
     end
 
-    def trainee_start_date
-      @trainee.trainee_start_date
-    end
-
     def expected_end_date
       @trainee.itt_end_date&.iso8601
     end
 
-    def course_age_range
-      @trainee.course_age_range
+    def trainee_start_date
+      @trainee.trainee_start_date
+    end
+
+    def school_attributes
+      {
+        employing_school_urn:,
+        lead_partner_urn_ukprn:,
+        lead_school_urn:,
+      }
+    end
+
+    def employing_school_urn
+      @trainee.employing_school&.urn
+    end
+
+    def lead_partner_urn_ukprn
+      @trainee.lead_school&.urn
+    end
+
+    def lead_school_urn; end
+
+    def funding_attributes
+      {
+        fund_code:,
+        funding_option:,
+        bursary_level:,
+      }
     end
 
     def fund_code; end
 
     def funding_option; end
 
+    def bursary_level; end
+
+    def hesa_trainee_attributes
+      HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
+    end
+
+    def nationality
+      @trainee.nationalities.first&.name
+    end
+
+    def training_route; end
+
+    def course_age_range
+      @trainee.course_age_range
+    end
+
     def training_initiative
       # TODO: reverse map from `ROUTE_INITIATIVES_ENUMS` or
       # `::Hesa::CodeSets::TrainingInitiatives::MAPPING`
     end
+
+    def sex; end
   end
 end
