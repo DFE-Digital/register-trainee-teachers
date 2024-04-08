@@ -7,7 +7,9 @@ module PlacementSerializer
     end
 
     def as_hash
-      @placment.attributes
+      @placment.attributes.merge({
+        school_urn: @placement.school.urn,
+      })
     end
   end
 end

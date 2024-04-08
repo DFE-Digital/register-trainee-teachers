@@ -20,8 +20,8 @@ module TraineeSerializer
         hesa_trainee_attributes,
         nationality: nationality,
         training_initiative: training_initiative,
-        placements: @trainee.placements.map(&:attributes),
-        degrees: @trainee.degrees.map(&:attributes),
+        placements: @trainee.placements.map { |placement| PlacementSerializer::V01.new(placement).as_hash },
+        degrees: @trainee.degrees.map { |degree| DegreeSerializer::V01.new(degree).as_hash },
         status: @trainee.state,
       )
     end
