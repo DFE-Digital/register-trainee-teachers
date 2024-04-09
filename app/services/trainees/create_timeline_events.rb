@@ -9,6 +9,7 @@ module Trainees
 
     FIELDS = %w[
       trainee_id
+      provider_trainee_id
       first_names
       last_name
       date_of_birth

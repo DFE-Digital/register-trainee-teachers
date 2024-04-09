@@ -123,7 +123,7 @@ module BulkUpdate
         context "and a row with only Provider Trainee ID" do
           let(:row) do
             Row.new({
-              "provider trainee id" => trainee.trainee_id,
+              "provider trainee id" => trainee.provider_trainee_id,
             })
           end
 
@@ -217,11 +217,11 @@ module BulkUpdate
         end
 
         context "and a row with only Provider Trainee ID" do
-          let!(:trainee_two) { create(:trainee, provider: trainee.provider, trainee_id: trainee.trainee_id, state: :trn_received) }
+          let!(:trainee_two) { create(:trainee, provider: trainee.provider, provider_trainee_id: trainee.provider_trainee_id, state: :trn_received) }
 
           let(:row) do
             Row.new({
-              "provider trainee id" => trainee.trainee_id,
+              "provider trainee id" => trainee.provider_trainee_id,
             })
           end
 

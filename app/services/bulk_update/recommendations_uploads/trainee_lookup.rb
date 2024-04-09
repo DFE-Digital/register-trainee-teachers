@@ -36,7 +36,7 @@ module BulkUpdate
       end
 
       def trainees_trainee_id_map
-        @trainees_trainee_id_map ||= build_trainee_hash_map(:trainee_id)
+        @trainees_trainee_id_map ||= build_trainee_hash_map(:provider_trainee_id)
       end
 
       def build_trainee_hash_map(key)
@@ -50,7 +50,6 @@ module BulkUpdate
       def row_attribute(lookup_key)
         case lookup_key
         when :hesa_id then :sanitised_hesa_id
-        when :trainee_id then :provider_trainee_id
         else lookup_key
         end
       end

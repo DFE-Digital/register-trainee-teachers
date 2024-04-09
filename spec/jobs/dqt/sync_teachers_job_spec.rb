@@ -7,9 +7,8 @@ module Dqt
     let!(:trainee1) { create(:trainee, :trn_received) }
     let!(:trainee2) { create(:trainee, :trn_received) }
 
-    before do
-      enable_features("dqt_import.sync_teachers")
-    end
+    before { enable_features("dqt_import.sync_teachers") }
+    after  { disable_features("dqt_import.sync_teachers") }
 
     it "queues up at intervals with the trainee batches" do
       Timecop.freeze(Time.zone.now) do

@@ -16,7 +16,7 @@ describe "`GET /trainees/:trainee_slug/placements` endpoint" do
         get "/api/v0.1//trainees/#{trainee_slug}/placements", headers: { Authorization: token }
 
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body[:data]&.map { |x| x["slug"] }).to match_array(placements_slugs)
+        expect(response.parsed_body[:data]&.map { |x| x["placement_id"] }).to match_array(placements_slugs)
       end
     end
 

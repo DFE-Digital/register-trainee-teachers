@@ -34,7 +34,7 @@ module Trainees
 
     let(:trainee_attributes) do
       {
-        trainee_id: nil,
+        provider_trainee_id: nil,
         first_names: candidate_info["first_name"],
         last_name: candidate_info["last_name"],
         date_of_birth: candidate_info["date_of_birth"].to_date,

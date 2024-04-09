@@ -43,7 +43,7 @@ module Trainees
 
     describe "HESA information imported from XML" do
       it "updates the Trainee ID, HESA ID and record_source" do
-        expect(trainee.trainee_id).to eq(student_attributes[:trainee_id])
+        expect(trainee.provider_trainee_id).to eq(student_attributes[:provider_trainee_id])
         expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
         expect(trainee.record_source).to eq(record_source)
       end
@@ -305,7 +305,7 @@ module Trainees
         end
 
         it "raises an error" do
-          expect(Sentry).to have_received(:capture_message).with("Unmapped fields [:course_subject_one] on trainee - id: #{trainee.trainee_id} - record source: #{trainee.record_source}")
+          expect(Sentry).to have_received(:capture_message).with("Unmapped fields [:course_subject_one] on trainee - id: #{trainee.provider_trainee_id} - record source: #{trainee.record_source}")
         end
       end
 
@@ -317,7 +317,7 @@ module Trainees
         end
 
         it "raises an error" do
-          expect(Sentry).to have_received(:capture_message).with("Unmapped fields [:disability1] on trainee - id: #{trainee.trainee_id} - record source: #{trainee.record_source}")
+          expect(Sentry).to have_received(:capture_message).with("Unmapped fields [:disability1] on trainee - id: #{trainee.provider_trainee_id} - record source: #{trainee.record_source}")
         end
       end
 

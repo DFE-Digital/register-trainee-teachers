@@ -11,7 +11,7 @@ module Hesa
         ethnic_background: "F_ETHNIC",
         sex: "F_SEXID",
         ukprn: "F_UKPRN",
-        trainee_id: "F_OWNSTU",
+        provider_trainee_id: "F_OWNSTU",
         course_subject_one: "F_SBJCA1",
         course_subject_two: "F_SBJCA2",
         course_subject_three: "F_SBJCA3",

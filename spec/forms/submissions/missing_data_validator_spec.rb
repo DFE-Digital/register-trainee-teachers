@@ -111,7 +111,7 @@ module Submissions
                                                             :study_mode,
                                                             :itt_start_date,
                                                             :itt_end_date,
-                                                            :trainee_id,
+                                                            :provider_trainee_id,
                                                             :training_initiative,
                                                             :placements,
                                                             :trainee_start_date)

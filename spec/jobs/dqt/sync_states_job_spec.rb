@@ -12,13 +12,17 @@ module Dqt
       enable_features(:integrate_with_dqt)
     end
 
+    after do
+      disable_features(:integrate_with_dqt)
+    end
+
     context "with no trn_received trainees" do
       let(:state) { "awarded" }
 
       it "doesn't queue a batch job" do
         expect {
           sync_states_job
-        }.not_to enqueue_job(SyncStatesBatchJob)
+        }.not_to have_enqueued_job(SyncStatesBatchJob)
       end
     end
 
@@ -28,30 +32,26 @@ module Dqt
       it "calls the SyncStatesBatchJob" do
         expect {
           sync_states_job
-        }.to enqueue_job(SyncStatesBatchJob).with([trainee.id])
+        }.to have_enqueued_job(SyncStatesBatchJob).with([trainee.id])
       end
 
       context "but not from HESA" do
-        before do
-          trainee.update!(hesa_id: nil)
-        end
+        before { trainee.update!(hesa_id: nil) }
 
         it "doesn't queue a batch job" do
           expect {
             sync_states_job
-          }.not_to enqueue_job(SyncStatesBatchJob)
+          }.not_to have_enqueued_job(SyncStatesBatchJob)
         end
       end
 
       context "but the TRN is not 7-digits" do
-        before do
-          trainee.update!(trn: "123456")
-        end
+        before { trainee.update!(trn: "123456") }
 
         it "doesn't queue a batch job" do
           expect {
             sync_states_job
-          }.not_to enqueue_job(SyncStatesBatchJob)
+          }.not_to have_enqueued_job(SyncStatesBatchJob)
         end
       end
 
@@ -61,9 +61,8 @@ module Dqt
         it "queues up SyncStatesBatchJob at intervals with the trainee batches" do
           Timecop.freeze(Time.zone.now) do
             described_class.perform_now(1)
-            expect(SyncStatesBatchJob).to have_been_enqueued.with([trainee.id])
-            expect(SyncStatesBatchJob).to have_been_enqueued.at(30.seconds.from_now)
-              .with([trainee2.id])
+            expect(SyncStatesBatchJob).to have_been_enqueued.exactly(:once).with([trainee.id])
+            expect(SyncStatesBatchJob).to have_been_enqueued.exactly(:once).at(30.seconds.from_now).with([trainee2.id])
           end
         end
       end

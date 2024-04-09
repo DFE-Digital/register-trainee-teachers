@@ -106,7 +106,7 @@ module BulkUpdate
       end
 
       def provider_trainee_id
-        return unless column_exists?(Reports::BulkRecommendReport::TRAINEE_ID)
+        return unless column_exists?(Reports::BulkRecommendReport::PROVIDER_TRAINEE_ID)
 
         @messages << error_message(:provider_trainee_id) if trainee.provider_trainee_id&.downcase != row.provider_trainee_id&.downcase
       end

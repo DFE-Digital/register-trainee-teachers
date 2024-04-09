@@ -21,7 +21,7 @@ module BulkUpdate
                :trn_received,
                trn: row.trn,
                hesa_id: row.sanitised_hesa_id,
-               trainee_id: row.provider_trainee_id)
+               provider_trainee_id: row.provider_trainee_id)
       end
 
       subject { described_class.new(rows, trainee.provider) }
@@ -35,7 +35,7 @@ module BulkUpdate
       end
 
       it "returns the trainees with matching Trainee ID" do
-        expect(subject[trainee.trainee_id]).to eq([trainee])
+        expect(subject[trainee.provider_trainee_id]).to eq([trainee])
       end
     end
   end
