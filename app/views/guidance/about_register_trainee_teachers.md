@@ -8,8 +8,8 @@ Register trainee teachers (Register) is the service that Initial Teacher Trainin
 The DfE uses this trainee data to:
 
 * allocate the correct amount of funding to training providers and eligible trainees
-* <a href="/guidance/census-sign-off" class="govuk-link">create the ITT census publication</a>
-* <a href="/guidance/performance-profiles" class="govuk-link">create the ITT performance profiles publication</a>
+* [create the ITT census publication](/guidance/census-sign-off)
+* [create the ITT performance profiles publication](/guidance/performance-profiles)
 * inform policy development
 
 ## Access to Register
