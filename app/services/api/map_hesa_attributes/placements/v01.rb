@@ -25,27 +25,27 @@ module Api
         end
 
         def school_id
-          school_urn = @params[:school_urn]
-          return if school_urn.blank?
+          urn = @params[:urn]
+          return if urn.blank?
 
-          school = School.find_by(urn: school_urn)
+          school = School.find_by(urn:)
           return if school.blank?
 
           school.id
         end
 
         def urn
-          school_urn = @params[:school_urn]
-          return if school_urn_applicable?(school_urn)
+          urn = @params[:urn]
+          return if school_urn_applicable?(urn)
 
-          school_urn
+          urn
         end
 
         def name
-          school_urn = @params[:school_urn]
-          return if school_urn_applicable?(school_urn)
+          urn = @params[:urn]
+          return if school_urn_applicable?(urn)
 
-          I18n.t("components.placement_detail.magic_urn.#{school_urn}")
+          I18n.t("components.placement_detail.magic_urn.#{urn}")
         end
 
         def school_urn_applicable?(urn)
