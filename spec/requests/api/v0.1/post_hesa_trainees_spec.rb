@@ -38,7 +38,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         placements_attributes: [
           {
             school_urn: "900020",
-            placement_days: "160",
           },
         ],
       },

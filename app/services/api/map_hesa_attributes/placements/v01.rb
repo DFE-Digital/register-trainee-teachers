@@ -4,7 +4,7 @@ module Api
   module MapHesaAttributes
     module Placements
       class V01
-        ATTRIBUTES = %i[school_urn placement_days].freeze
+        ATTRIBUTES = %i[school_urn].freeze
 
         def initialize(params)
           @params = params
