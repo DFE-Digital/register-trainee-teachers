@@ -5,10 +5,10 @@ module TraineeSerializer
     EXCLUDE_ATTRIBUTES = %w[
       id
       slug
-      trainee_id
       state
       progress
       provider_id
+      provider_trainee_id
       dttp_id
       placement_assignment_dttp_id
       dttp_update_sha
@@ -30,7 +30,7 @@ module TraineeSerializer
 
     def as_hash
       @trainee.attributes.except(*EXCLUDE_ATTRIBUTES).merge(
-        provider_attribues,
+        provider_attributes,
         diversity_attributes,
         course_attributes,
         school_attributes,
@@ -45,18 +45,18 @@ module TraineeSerializer
     end
 
     def degrees
-      @trainee.degrees.map do |degree|
+      @degrees ||= @trainee.degrees.map do |degree|
         DegreeSerializer::V01.new(degree).as_hash
       end
     end
 
     def placements
-      @trainee.placements.map do |placement|
+      @placements ||= @trainee.placements.map do |placement|
         PlacementSerializer::V01.new(placement).as_hash
       end
     end
 
-    def provider_attribues
+    def provider_attributes
       {
         ukprn: @trainee.provider&.ukprn,
       }
@@ -102,7 +102,7 @@ module TraineeSerializer
     end
 
     def hesa_trainee_attributes
-      HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
+      @hesa_trainee_attributes ||= HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
     end
 
     def nationality

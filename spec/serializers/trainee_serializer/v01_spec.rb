@@ -107,6 +107,7 @@ RSpec.describe TraineeSerializer::V01 do
         state
         progress
         provider_id
+        provider_trainee_id
         dttp_id
         placement_assignment_dttp_id
         dttp_update_sha
@@ -122,6 +123,26 @@ RSpec.describe TraineeSerializer::V01 do
         application_choice_id
       ].each do |field|
         expect(json.keys).not_to include(field)
+      end
+    end
+
+    describe "placements" do
+      let(:placements) do
+        trainee.placements.map { |placement| PlacementSerializer::V01.new(placement).as_hash.with_indifferent_access }
+      end
+
+      it "serializes with PlacementSerializer::V01" do
+        expect(json[:placements]).to eq(placements)
+      end
+    end
+
+    describe "degrees" do
+      let(:degrees) do
+        trainee.degrees.map { |degree| DegreeSerializer::V01.new(degree).as_hash.with_indifferent_access }
+      end
+
+      it "serializes with DegreeSerializer::V01" do
+        expect(json[:degrees]).to eq(degrees)
       end
     end
   end
