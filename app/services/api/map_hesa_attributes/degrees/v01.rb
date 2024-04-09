@@ -40,11 +40,11 @@ module Api
         end
 
         def subject
-          def_reference_subject&.name
+          dfe_reference_subject&.name
         end
 
         def subject_uuid
-          def_reference_subject&.id
+          dfe_reference_subject&.id
         end
 
         def graduation_year
@@ -99,7 +99,7 @@ module Api
 
       private
 
-        def def_reference_subject
+        def dfe_reference_subject
           DfEReference::DegreesQuery.find_subject(hecos_code: @params[:subject_one])
         end
 
