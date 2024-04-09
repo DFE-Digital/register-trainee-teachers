@@ -41,6 +41,7 @@ module Api
       @duplicate_trainees ||= FindDuplicateTrainees.call(
         current_provider:,
         trainee_attributes:,
+        serializer:,
       )
     end
 
@@ -65,7 +66,7 @@ module Api
     end
 
     def success_response(trainee)
-      { json: Serializer.for(model:, version:).new(trainee).as_hash, status: :created }
+      { json: serializer.new(trainee).as_hash, status: :created }
     end
 
     def validation_error_response(trainee_attributes)
@@ -76,5 +77,9 @@ module Api
     end
 
     def model = :trainee
+
+    def serializer
+      @serializer ||= Serializer.for(model:, version:)
+    end
   end
 end
