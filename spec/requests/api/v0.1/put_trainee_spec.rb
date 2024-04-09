@@ -89,5 +89,16 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(trainee.reload.first_names).to eq("Alice")
       expect(response.parsed_body[:data]["slug"]).to eq(trainee.slug)
     end
+
+    it "returns status 200 and updates nationality" do
+      create(:nationality, :irish)
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { nationality: "IE" } },
+      )
+      expect(response).to have_http_status(:ok)
+      expect(trainee.reload.nationalities.first.name).to eq("irish")
+    end
   end
 end

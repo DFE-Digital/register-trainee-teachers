@@ -97,6 +97,15 @@ module Api
           )
       end
 
+      def assign_attributes(attributes)
+        super
+
+        self.nationalisations_attributes = []
+        attributes[:nationalisations_attributes]&.each do |nationalisation_params|
+          nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
+        end
+      end
+
       def self.from_trainee(trainee)
         new(trainee.attributes.select { |k, _v|
           Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym)
