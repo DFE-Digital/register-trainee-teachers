@@ -68,11 +68,5 @@ RSpec.describe TraineeSerializer::V01 do
         expect(json.keys).not_to include(field)
       end
     end
-
-    excluded_attributes.each do |field|
-      it "does not serializes the #{field} field" do
-        expect(json).not_to have_key(field)
-      end
-    end
   end
 end
