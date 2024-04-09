@@ -144,7 +144,7 @@ module Api
       end
 
       def funding_entity_id
-        ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:bursary_level]]
+        ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:funding_method]]
       end
 
       def school_attributes
