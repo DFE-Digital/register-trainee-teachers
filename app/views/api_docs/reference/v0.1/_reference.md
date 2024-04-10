@@ -2777,29 +2777,10 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string, required
-      </p>
-      <p class="govuk-body">
-        Whether the degree was awarded in the UK or not.
-      </p>
-      <p class="govuk-body">
-        Example: <code>uk</code>
-      </p>
-      <p class="govuk-body">Possible values:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li><code>uk</code></li>
-        <li><code>non_uk</code></li>
-      </ul>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if <code>locale_code</code> is <code>uk</code>
+        string, required if degree is from the UK
       </p>
       <p class="govuk-body">
         The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degtype">HESA degree type field</a>
@@ -2813,7 +2794,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>non_uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if <code>locale_code</code> is <code>non_uk</code>
+        string, required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
         The UK ENIC comparable degree type for non-UK degrees.
@@ -2841,7 +2822,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>institution</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if <code>locale_code</code> is <code>uk</code>
+        string, required if degree is from the UK
       </p>
       <p class="govuk-body">
         The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degest">HESA degree establishment field</a>
