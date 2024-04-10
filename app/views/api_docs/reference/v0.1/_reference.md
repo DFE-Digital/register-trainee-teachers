@@ -2861,7 +2861,7 @@ Deletes an existing degree for this trainee.
         The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>2012-06-30</code>
+        Example: <code>2012</code>
       </p>
     </dd>
   </div>
