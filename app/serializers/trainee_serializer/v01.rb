@@ -2,7 +2,7 @@
 
 module TraineeSerializer
   class V01
-    EXCLUDE_ATTRIBUTES = %w[
+    EXCLUDED_ATTRIBUTES = %w[
       id
       slug
       state
@@ -29,7 +29,7 @@ module TraineeSerializer
     end
 
     def as_hash
-      @trainee.attributes.except(*EXCLUDE_ATTRIBUTES).merge(
+      @trainee.attributes.except(*EXCLUDED_ATTRIBUTES).merge(
         provider_attributes,
         diversity_attributes,
         course_attributes,
