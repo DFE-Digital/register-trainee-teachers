@@ -65,7 +65,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the correct state" do
-      expect(response.parsed_body["status"]).to eq("submitted_for_trn")
+      expect(response.parsed_body["state"]).to eq("submitted_for_trn")
     end
 
     it "sets the correct funding attributes" do

@@ -33,13 +33,13 @@ module TraineeSerializer
 
     def degrees
       @trainee.degrees.map do |degree|
-        DegreeSerializer::V01.new(degree)
+        DegreeSerializer::V01.new(degree).as_hash
       end
     end
 
     def placements
       @trainee.placements.map do |placement|
-        PlacementSerializer::V01.new(placement)
+        PlacementSerializer::V01.new(placement).as_hash
       end
     end
 
