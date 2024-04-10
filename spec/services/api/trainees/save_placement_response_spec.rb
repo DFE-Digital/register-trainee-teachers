@@ -82,14 +82,14 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the attributes" do
-        expect(Api::PlacementAttributes::V01).to receive(:new).with(params).and_return(double(attributes: placement.attributes, valid?: true, errors: nil)).at_least(:once)
+        expect(Api::PlacementAttributes::V01).to receive(:from_placement).with(placement).and_return(double(attributes: placement.attributes, assign_attributes: true, valid?: true, errors: nil)).at_least(:once)
 
         subject
       end
     end
 
     context "with invalid params" do
-      let(:params) { {} }
+      let(:params) { { name: "", school_id: "" } }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
