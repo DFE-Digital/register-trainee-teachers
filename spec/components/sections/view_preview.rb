@@ -45,7 +45,7 @@ module Sections
 
     def continue_sections_trainee(section)
       @continue_sections_trainee ||= Trainee.new(
-        id: 1000, trainee_id: "trainee_id",
+        id: 1000, provider_trainee_id: "trainee_id",
         first_names: "first_names",
         last_name: "last_name",
         email: "email",

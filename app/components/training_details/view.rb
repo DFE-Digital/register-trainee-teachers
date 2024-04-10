@@ -18,7 +18,7 @@ module TrainingDetails
       [
         region,
         MappableFieldRow.new(
-          field_value: trainee.trainee_id,
+          field_value: trainee.provider_trainee_id,
           field_label: t(".title"),
           text: "missing",
           action_url: edit_trainee_training_details_path(trainee),

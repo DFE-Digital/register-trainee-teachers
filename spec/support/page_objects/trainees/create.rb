@@ -5,7 +5,7 @@ module PageObjects
     class Create < PageObjects::Base
       set_url "/trainees/new"
 
-      element :trainee_id_field, "#trainee-trainee-id-field"
+      element :trainee_id_field, "#trainee-provider-trainee-id-field"
       element :continue, "button[type='submit']"
     end
   end

@@ -29,7 +29,7 @@ describe "trainees:create_from_csv" do
 
     it "sets the trainee's personal details" do
       trainee = Trainee.first
-      expect(trainee.reload.trainee_id).to eq("A1")
+      expect(trainee.reload.provider_trainee_id).to eq("A1")
       expect(trainee.first_names).to eq("Abz")
       expect(trainee.middle_names).to be_nil
       expect(trainee.last_name).to eq("McPhee")
@@ -92,7 +92,7 @@ describe "trainees:create_from_csv" do
 
     it "sets the trainee's personal details" do
       trainee = Trainee.first
-      expect(trainee.reload.trainee_id).to eq("TF2022-123")
+      expect(trainee.reload.provider_trainee_id).to eq("TF2022-123")
       expect(trainee.first_names).to eq("Fred")
       expect(trainee.middle_names).to eq("Rock")
       expect(trainee.last_name).to eq("Flintstone")

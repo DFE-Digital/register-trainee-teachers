@@ -6,12 +6,16 @@ module Dqt
   describe SyncTeachersBatchJob do
     let!(:trainee) { create(:trainee) }
 
-    before do
-      enable_features("dqt_import.sync_teachers")
+    before { enable_features("dqt_import.sync_teachers") }
+
+    around do |example|
+      original_perform_enqueued_jobs = ActiveJob::Base.queue_adapter.perform_enqueued_jobs
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+      example.run
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = original_perform_enqueued_jobs
     end
 
-    after { ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true }
+    after { disable_features("dqt_import.sync_teachers") }
 
     it "enqueues job per trainee" do
       expect {

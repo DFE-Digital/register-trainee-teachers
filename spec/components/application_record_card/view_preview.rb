@@ -58,7 +58,7 @@ module ApplicationRecordCard
         course_subject_one: "Primary",
         provider: mock_provider,
         trn: 1234567,
-        trainee_id: "xxxx - yy/zz",
+        provider_trainee_id: "xxxx - yy/zz",
       )
     end
 

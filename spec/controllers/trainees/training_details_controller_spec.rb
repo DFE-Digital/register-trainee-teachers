@@ -14,7 +14,7 @@ describe Trainees::TrainingDetailsController do
       let(:trainee) { create(:trainee, :incomplete_draft, :with_apply_application, provider: user.organisation) }
 
       it "redirects to /training-details/confirm after update" do
-        expect(put(:update, params: { trainee_id: trainee.slug, training_details_form: { trainee_id: "test" } })).to redirect_to("/trainees/#{trainee.slug}/training-details/confirm")
+        expect(put(:update, params: { trainee_id: trainee.slug, training_details_form: { provider_trainee_id: "test" } })).to redirect_to("/trainees/#{trainee.slug}/training-details/confirm")
       end
     end
   end

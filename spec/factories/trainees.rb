@@ -7,7 +7,7 @@ FactoryBot.define do
       potential_itt_start_date { itt_start_date || compute_valid_past_itt_start_date }
     end
 
-    sequence :trainee_id do |n|
+    sequence :provider_trainee_id do |n|
       year = potential_itt_start_date.strftime("%y").to_i
       "#{year}/#{year + 1}-#{n}"
     end
@@ -91,7 +91,7 @@ FactoryBot.define do
     end
 
     trait :incomplete do
-      trainee_id { nil }
+      provider_trainee_id { nil }
       first_names { nil }
       middle_names { nil }
       last_name { nil }

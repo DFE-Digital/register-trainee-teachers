@@ -11,7 +11,7 @@ module Features
     end
 
     def and_i_fill_in_the_training_details_form
-      training_details_page.trainee_id.set("123")
+      training_details_page.provider_trainee_id.set("123")
       training_details_page.continue.click
     end
   end

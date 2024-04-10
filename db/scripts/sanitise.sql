@@ -39,7 +39,7 @@ SET
   middle_names = null,
   last_name = concat('TraineeUser', id),
   email = concat('trainee_', id, '@example.com'),
-  trainee_id = concat('trainee-', id),
+  provider_trainee_id = concat('trainee-', id),
   trn = CASE WHEN trn IS NULL THEN NULL ELSE rpad(id::text, 7, '0') END,
   additional_dttp_data = NULL;
 

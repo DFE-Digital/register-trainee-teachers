@@ -70,7 +70,8 @@ module Hesa
     end
 
     def find_by_id(hesa_trainee)
-      Student.find_by(hesa_id: hesa_trainee[:hesa_id], rec_id: hesa_trainee[:rec_id]) || Student.find_by(previous_hesa_id: hesa_trainee[:hesa_id], rec_id: hesa_trainee[:rec_id])
+      Student.find_by(hesa_id: hesa_trainee[:hesa_id], rec_id: hesa_trainee[:rec_id]) ||
+        Student.find_by(previous_hesa_id: hesa_trainee[:hesa_id], rec_id: hesa_trainee[:rec_id])
     end
 
     def find_by_biographic_details(hesa_trainee)
@@ -78,7 +79,7 @@ module Hesa
         first_names: hesa_trainee[:first_names],
         last_name: hesa_trainee[:last_name],
         date_of_birth: hesa_trainee[:date_of_birth],
-        trainee_id: hesa_trainee[:trainee_id],
+        provider_trainee_id: hesa_trainee[:provider_trainee_id],
         ukprn: hesa_trainee[:ukprn],
         itt_commencement_date: hesa_trainee[:itt_start_date],
         numhus: hesa_trainee[:numhus],

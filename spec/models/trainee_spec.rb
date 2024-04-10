@@ -469,13 +469,13 @@ describe Trainee do
     end
   end
 
-  describe "#with_name_trainee_id_or_trn_like" do
+  describe "#with_name_provider_trainee_id_or_trn_like" do
     let(:other_trainee) { create(:trainee) }
     let(:matching_trainee) do
       create(:trainee, middle_names: "Firstmiddle Secondmiddle", trn: "123")
     end
 
-    subject { described_class.with_name_trainee_id_or_trn_like(search_term) }
+    subject { described_class.with_name_provider_trainee_id_or_trn_like(search_term) }
 
     shared_examples_for "a working search" do
       it "returns the matching trainee" do

@@ -50,7 +50,7 @@ module Trainees
 
     def mapped_attributes
       {
-        trainee_id: hesa_trainee[:trainee_id],
+        provider_trainee_id: hesa_trainee[:provider_trainee_id],
         training_route: training_route,
         state: mapped_trainee_state,
         hesa_updated_at: hesa_trainee[:hesa_updated_at],

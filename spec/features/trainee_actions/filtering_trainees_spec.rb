@@ -136,8 +136,8 @@ feature "Filtering trainees" do
         it_behaves_like "a working search"
       end
 
-      context "by trainee_id" do
-        let(:search_term) { @searchable_trainee.trainee_id }
+      context "by provider_trainee_id" do
+        let(:search_term) { @searchable_trainee.provider_trainee_id }
 
         it_behaves_like "a working search"
       end
@@ -422,19 +422,19 @@ private
   end
 
   def then_i_see_my_trainee_search_results
-    expect(csv_output).to include(@assessment_only_trainee.trainee_id)
-    expect(csv_output).to include(@provider_led_postgrad_trainee.trainee_id)
-    expect(csv_output).to include(@biology_trainee.trainee_id)
-    expect(csv_output).to include(@history_trainee.trainee_id)
+    expect(csv_output).to include(@assessment_only_trainee.provider_trainee_id)
+    expect(csv_output).to include(@provider_led_postgrad_trainee.provider_trainee_id)
+    expect(csv_output).to include(@biology_trainee.provider_trainee_id)
+    expect(csv_output).to include(@history_trainee.provider_trainee_id)
   end
 
   def then_i_see_my_filtered_trainee_search_results
-    expect(csv_output).to include(@biology_trainee.trainee_id)
+    expect(csv_output).to include(@biology_trainee.provider_trainee_id)
 
-    expect(csv_output).not_to include(@assessment_only_trainee.trainee_id)
-    expect(csv_output).not_to include(@provider_led_postgrad_trainee.trainee_id)
-    expect(csv_output).not_to include(@searchable_trainee.trainee_id)
-    expect(csv_output).not_to include(@history_trainee.trainee_id)
+    expect(csv_output).not_to include(@assessment_only_trainee.provider_trainee_id)
+    expect(csv_output).not_to include(@provider_led_postgrad_trainee.provider_trainee_id)
+    expect(csv_output).not_to include(@searchable_trainee.provider_trainee_id)
+    expect(csv_output).not_to include(@history_trainee.provider_trainee_id)
   end
 
   def csv_output

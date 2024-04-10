@@ -57,7 +57,7 @@ describe Reports::TraineeReport do
     end
 
     it "includes the provider_trainee_id" do
-      expect(subject.provider_trainee_id).to eq(trainee.trainee_id)
+      expect(subject.provider_trainee_id).to eq(trainee.provider_trainee_id)
     end
 
     it "includes the trn" do
