@@ -4,6 +4,7 @@ module Api
   module Trainees
     class SavePlacementResponse
       include ServicePattern
+      include Api::Attributable
       include Api::Serializable
       include Api::ErrorResponse
 
@@ -42,18 +43,14 @@ module Api
         end
       end
 
-      def attributes_class
-        Api::Attributes.for(model:, version:)
-      end
-
       def model = :placement
 
       def placement_attributes
         @placement_attributes ||=
           if new_record?
-            attributes_class.new(params)
+            attributes_klass.new(params)
           else
-            attributes = attributes_class.from_placement(placement)
+            attributes = attributes_klass.from_placement(placement)
             attributes.assign_attributes(params)
             attributes
           end

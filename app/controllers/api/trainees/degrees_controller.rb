@@ -3,6 +3,7 @@
 module Api
   module Trainees
     class DegreesController < Api::BaseController
+      include Api::Attributable
       include Api::Serializable
 
       def index
@@ -50,7 +51,7 @@ module Api
 
       def degree_params
         params.require(:data)
-          .permit(attributes_class::ATTRIBUTES)
+          .permit(attributes_klass::ATTRIBUTES)
       end
 
       def trainee
@@ -61,9 +62,6 @@ module Api
         @degree ||= trainee.degrees.find_by!(slug: params[:slug])
       end
 
-      def attributes_class
-        Api::Attributes.for(model:, version:)
-      end
       def new_degree
         @new_degree ||= trainee.degrees.new
       end

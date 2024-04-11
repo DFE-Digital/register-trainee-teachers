@@ -4,6 +4,7 @@ module Api
   module Trainees
     class PlacementsController < Api::BaseController
       include Api::Serializable
+      include Api::Attributable
 
       def index
         render(
@@ -47,15 +48,11 @@ module Api
         Serializer.for(model: :trainee, version: version)
       end
 
-      def attributes_class
-        Api::Attributes.for(model:, version:)
-      end
-
       def model = :placement
 
       def placement_params
         params.require(:data)
-          .permit(attributes_class::ATTRIBUTES)
+          .permit(attributes_klass::ATTRIBUTES)
       end
 
       def new_placement
