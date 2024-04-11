@@ -61,7 +61,7 @@ module TraineeSerializer
     end
 
     def assign_disabilities(attributes)
-      @trainee.hesa_trainee_detail.hesa_disabilities.each_with_index do |disability, index|
+      @trainee.hesa_trainee_detail&.hesa_disabilities&.each_with_index do |disability, index|
         key = "disability#{index + 1}"
         attributes[key] = disability
       end

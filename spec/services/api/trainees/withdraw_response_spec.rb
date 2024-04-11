@@ -18,7 +18,7 @@ describe Api::Trainees::WithdrawResponse do
   subject { withdraw_response }
 
   context "with a withdrawable trainee" do
-    let(:trainee) { create(:trainee, :trn_received) }
+    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received) }
 
     it "returns status ok with data" do
       expect(subject[:status]).to be(:ok)
@@ -59,7 +59,7 @@ describe Api::Trainees::WithdrawResponse do
   end
 
   context "with a non-withdrawable trainee" do
-    let(:trainee) { create(:trainee, :itt_start_date_in_the_future) }
+    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :itt_start_date_in_the_future) }
 
     it "returns status unprocessable entity with error response" do
       expect(subject[:status]).to be(:unprocessable_entity)
