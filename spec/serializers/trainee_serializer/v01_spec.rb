@@ -10,6 +10,9 @@ RSpec.describe TraineeSerializer::V01 do
     it "includes all the expected fields" do
       %w[
         trainee_id
+        provider_trainee_id
+        apply_application_id
+        hesa_id
         first_names
         last_name
         date_of_birth
@@ -107,15 +110,12 @@ RSpec.describe TraineeSerializer::V01 do
         state
         progress
         provider_id
-        provider_trainee_id
         dttp_id
         placement_assignment_dttp_id
         dttp_update_sha
         dormancy_dttp_id
         lead_school_id
         employing_school_id
-        apply_application_id
-        hesa_id
         course_allocation_subject_id
         start_academic_cycle_id
         end_academic_cycle_id
