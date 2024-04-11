@@ -4,6 +4,7 @@ module Api
   module Trainees
     class SaveDegreeResponse
       include ServicePattern
+      include Api::Serializable
       include Api::ErrorResponse
 
       def initialize(degree:, params:, version:)
@@ -16,7 +17,7 @@ module Api
       def call
         if save
           update_progress
-          { json: { data: serializer_class.new(degree).as_hash }, status: status }
+          { json: { data: serializer_klass.new(degree).as_hash }, status: status }
         elsif duplicates?
           conflict_errors_response(errors:)
         else
@@ -49,14 +50,9 @@ module Api
         end
       end
 
-      def serializer_class
-        Serializer.for(model:, version:)
-      end
-
       def attributes_class
         Api::Attributes.for(model:, version:)
       end
-
       def model = :degree
 
       def degree_attributes

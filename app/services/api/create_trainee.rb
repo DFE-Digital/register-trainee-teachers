@@ -3,6 +3,7 @@
 module Api
   class CreateTrainee
     include ServicePattern
+    include Serializable
 
     attr_accessor :current_provider, :trainee_attributes, :version
 
@@ -41,7 +42,7 @@ module Api
       @duplicate_trainees ||= FindDuplicateTrainees.call(
         current_provider:,
         trainee_attributes:,
-        serializer:,
+        serializer_klass:,
       )
     end
 
@@ -66,7 +67,7 @@ module Api
     end
 
     def success_response(trainee)
-      { json: serializer.new(trainee).as_hash, status: :created }
+      { json: serializer_klass.new(trainee).as_hash, status: :created }
     end
 
     def validation_error_response
@@ -95,9 +96,5 @@ module Api
     end
 
     def model = :trainee
-
-    def serializer
-      @serializer ||= Serializer.for(model:, version:)
-    end
   end
 end

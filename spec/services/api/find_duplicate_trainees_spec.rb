@@ -15,7 +15,7 @@ describe Api::FindDuplicateTrainees do
   end
   let(:version) { "v0.1" }
   let(:trainee_attributes) { Api::Attributes.for(model: :Trainee, version: version) }
-  let(:serializer) { TraineeSerializer::V01 }
+  let(:serializer_klass) { TraineeSerializer::V01 }
 
   it "does not return trainees for a different provider" do
     attributes = trainee_attributes.new(
@@ -30,7 +30,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: create(:provider),
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to be_empty
   end
@@ -48,7 +48,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: trainee.provider,
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to be_empty
   end
@@ -66,7 +66,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: trainee.provider,
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to be_empty
   end
@@ -84,7 +84,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: trainee.provider,
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
   end
@@ -103,7 +103,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: trainee.provider,
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
   end
@@ -122,7 +122,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: trainee.provider,
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
   end
@@ -141,7 +141,7 @@ describe Api::FindDuplicateTrainees do
       described_class.call(
         current_provider: trainee.provider,
         trainee_attributes: attributes,
-        serializer: serializer,
+        serializer_klass: serializer_klass,
       ),
     ).to be_empty
   end

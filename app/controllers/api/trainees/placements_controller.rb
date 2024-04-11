@@ -3,15 +3,17 @@
 module Api
   module Trainees
     class PlacementsController < Api::BaseController
+      include Api::Serializable
+
       def index
         render(
-          json: { data: trainee.placements.map { |placement| serializer_class.new(placement).as_hash } },
+          json: { data: trainee.placements.map { |placement| serializer_klass.new(placement).as_hash } },
           status: :ok,
         )
       end
 
       def show
-        render(json: { data: serializer_class.new(placement).as_hash }, status: :ok)
+        render(json: { data: serializer_klass.new(placement).as_hash }, status: :ok)
       end
 
       def create
@@ -40,10 +42,6 @@ module Api
       end
 
       def slug = params[:slug]
-
-      def serializer_class
-        Serializer.for(model:, version:)
-      end
 
       def trainee_serializer_class
         Serializer.for(model: :trainee, version: version)

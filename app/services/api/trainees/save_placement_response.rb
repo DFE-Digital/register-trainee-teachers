@@ -4,6 +4,7 @@ module Api
   module Trainees
     class SavePlacementResponse
       include ServicePattern
+      include Api::Serializable
       include Api::ErrorResponse
 
       def initialize(placement:, params:, version:)
@@ -16,7 +17,7 @@ module Api
       def call
         if save
           update_progress
-          { json: { data: serializer_class.new(placement).as_hash }, status: status }
+          { json: { data: serializer_klass.new(placement).as_hash }, status: status }
         elsif duplicate?
           conflict_errors_response(errors:)
         else
@@ -39,10 +40,6 @@ module Api
         else
           false
         end
-      end
-
-      def serializer_class
-        Serializer.for(model:, version:)
       end
 
       def attributes_class
