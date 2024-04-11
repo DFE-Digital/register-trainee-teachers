@@ -37,6 +37,7 @@ module Api
         application_choice_id
         progress
         training_initiative
+        hesa_id
       ].freeze
 
       REQUIRED_ATTRIBUTES = %i[
@@ -50,6 +51,7 @@ module Api
         diversity_disclosure
         course_subject_one
         study_mode
+        hesa_id
       ].freeze
 
       ATTRIBUTES.each do |attr|

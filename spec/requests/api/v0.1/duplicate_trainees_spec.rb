@@ -38,7 +38,7 @@ describe "Trainees API" do
           nationality: "GB",
           itt_aim: 202,
           itt_qualification_aim: "001",
-          year_of_course: "2012",
+          course_year: "2012",
           course_age_range: "13915",
           fund_code: "7",
           funding_method: "4",

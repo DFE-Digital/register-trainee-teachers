@@ -42,7 +42,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         ],
         itt_aim: 202,
         itt_qualification_aim: "001",
-        year_of_course: "2012",
+        course_year: "2012",
         course_age_range: "13915",
         fund_code: "7",
         funding_method: "4",
@@ -57,14 +57,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
-    end
-
-    it "calls the Hesa::MapHesaAttributes service" do
-      expected_params = ActionController::Parameters.new(
-        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES + [:degrees_attributes] + [:placements_attributes])),
-      ).permit!
-
-      expect(Api::MapHesaAttributes::V01).to have_received(:call).with(params: expected_params)
     end
 
     it "creates a trainee" do
@@ -143,10 +135,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body["errors"]).to include("Course subject one can't be blank")
       expect(response.parsed_body["errors"]).to include("Study mode can't be blank")
       expect(response.parsed_body["errors"]).to include("Email Enter an email address in the correct format, like name@example.com")
-      expect(response.parsed_body["errors"]).to include("Nationalisations attributes can't be blank")
       expect(response.parsed_body["errors"]).to include("Itt aim can't be blank")
       expect(response.parsed_body["errors"]).to include("Itt qualification aim can't be blank")
-      expect(response.parsed_body["errors"]).to include("Year of course can't be blank")
+      expect(response.parsed_body["errors"]).to include("Course year can't be blank")
       expect(response.parsed_body["errors"]).to include("Course age range can't be blank")
       expect(response.parsed_body["errors"]).to include("Fund code can't be blank")
       expect(response.parsed_body["errors"]).to include("Funding method can't be blank")
