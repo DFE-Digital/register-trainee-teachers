@@ -36,6 +36,7 @@ module Api
         study_mode
         application_choice_id
         progress
+        training_initiative
       ].freeze
 
       REQUIRED_ATTRIBUTES = %i[
@@ -99,7 +100,6 @@ module Api
 
       def assign_attributes(attributes)
         super
-
         self.nationalisations_attributes = []
         attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)

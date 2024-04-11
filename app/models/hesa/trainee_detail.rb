@@ -9,9 +9,11 @@
 #  course_age_range                   :string
 #  course_study_mode                  :string
 #  course_year                        :integer
+#  fund_code                          :string
 #  funding_method                     :string
 #  hesa_disabilities                  :string           default([]), is an Array
 #  itt_aim                            :string
+#  itt_qualification_aim              :string
 #  ni_number                          :string
 #  postgrad_apprenticeship_start_date :date
 #  previous_last_name                 :string

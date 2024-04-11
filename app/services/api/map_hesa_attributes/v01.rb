@@ -11,6 +11,10 @@ module Api
         nationality
       ].freeze
 
+      NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
+
+      VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
+
       def initialize(params:)
         @params = params
       end
@@ -30,9 +34,23 @@ module Api
           sex:,
           training_route:,
           nationalisations_attributes:,
+          degrees_attributes:,
+          placements_attributes:,
         })
         .merge(course_attributes)
-        .merge(ethnicity_and_disability_attributes).compact
+        .merge(ethnicity_and_disability_attributes)
+        .merge(funding_attributes)
+        .merge(school_attributes)
+        .merge(training_initiative_attributes)
+        .compact
+      end
+
+      def degrees_attributes
+        params[:degrees_attributes]&.map { |degree| Api::MapHesaAttributes::Degrees::V01.new(degree).call }
+      end
+
+      def placements_attributes
+        params[:placements_attributes]&.map { |placement| Api::MapHesaAttributes::Placements::V01.new(placement).call }
       end
 
       def sex
@@ -69,6 +87,14 @@ module Api
 
       def itt_end_date
         params[:itt_end_date]
+      end
+
+      def itt_qualification_aim
+        ::Hesa::CodeSets::IttQualificationAims::MAPPING[params[:itt_qualification_aim]]
+      end
+
+      def fundability
+        ::Hesa::CodeSets::FundCodes::MAPPING[params[:fund_code]]
       end
 
       def trainee_start_date
@@ -111,6 +137,50 @@ module Api
         attributes[:course_allocation_subject_id] = attributes.delete(:course_allocation_subject)&.id
 
         attributes
+      end
+
+      def funding_attributes
+        ::Trainees::MapFundingFromDttpEntityId.call(funding_entity_id:)
+      end
+
+      def funding_entity_id
+        ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:funding_method]]
+      end
+
+      def school_attributes
+        attrs = {}
+
+        return attrs if params[:lead_school_urn].blank?
+
+        if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_school_urn])
+          attrs.merge!(lead_school_not_applicable: true)
+        else
+          attrs.merge!(lead_school: School.find_by(urn: params[:lead_school_urn]), lead_school_not_applicable: false)
+        end
+
+        if params[:employing_school_urn].present?
+          if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
+            attrs.merge!(employing_school_not_applicable: true)
+          else
+            attrs.merge!(employing_school: School.find_by(urn: params[:employing_school_urn]))
+          end
+        end
+
+        attrs
+      end
+
+      def training_initiative_attributes
+        { training_initiative: training_initiative || ROUTE_INITIATIVES_ENUMS[:no_initiative] }
+      end
+
+      def training_initiative
+        return ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] if veteran_teaching_undergraduate_bursary?
+
+        ::Hesa::CodeSets::TrainingInitiatives::MAPPING[params[:training_initiative]]
+      end
+
+      def veteran_teaching_undergraduate_bursary?
+        params[:bursary_level] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
       end
     end
   end

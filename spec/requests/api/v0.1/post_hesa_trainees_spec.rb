@@ -25,6 +25,21 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         itt_end_date: "2023-10-01",
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
         study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+        degrees_attributes: [
+          {
+            subject: "Law",
+            institution: nil,
+            graduation_date: "2003-06-01",
+            subject_one: "100485",
+            grade: "02",
+            country: "XF",
+          },
+        ],
+        placements_attributes: [
+          {
+            urn: "900020",
+          },
+        ],
       },
     }
   end
@@ -32,13 +47,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   context "when the request is valid", feature_register_api: true do
     before do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
+      allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
 
     it "calls the Hesa::MapHesaAttributes service" do
       expected_params = ActionController::Parameters.new(
-        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES)),
+        params[:data].slice(*(Api::MapHesaAttributes::V01::ATTRIBUTES + Api::TraineeAttributes::V01::ATTRIBUTES + [:degrees_attributes] + [:placements_attributes])),
       ).permit!
 
       expect(Api::MapHesaAttributes::V01).to have_received(:call).with(params: expected_params)
@@ -46,6 +62,37 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "creates a trainee" do
       expect(response.parsed_body["first_names"]).to eq("John")
+    end
+
+    it "sets the correct state" do
+      expect(response.parsed_body["state"]).to eq("submitted_for_trn")
+    end
+
+    it "sets the correct funding attributes" do
+      expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
+    end
+
+    it "sets the correct school attributes" do
+      expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
+      expect(response.parsed_body["lead_school"]).to be_nil
+      expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
+      expect(response.parsed_body["employing_school"]).to be_nil
+    end
+
+    it "creates the degrees if provided in the request body" do
+      degree_attributes = response.parsed_body["degrees"]&.first
+
+      expect(degree_attributes["subject"]).to eq("Law")
+      expect(degree_attributes["institution"]).to eq("Other UK institution")
+      expect(degree_attributes["graduation_year"]).to eq(2003)
+    end
+
+    it "creates the placements if provided in the request body" do
+      placement_attributes = response.parsed_body["placements"]&.first
+
+      expect(placement_attributes["school_id"]).to be_nil
+      expect(placement_attributes["name"]).to eq("Establishment does not have a URN")
+      expect(placement_attributes["urn"]).to eq("900020")
     end
 
     it "returns status code 201" do

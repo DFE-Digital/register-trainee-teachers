@@ -48,7 +48,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       let(:trainee) { create(:trainee, degrees: [uk_degree, non_uk_degree]) }
       let(:degrees_attributes) do
         non_uk_degree.attributes.symbolize_keys.slice(
-          :country, :grade, :subject, :institution, :uk_degree, :non_uk_degree, :graduation_year, :locale_code
+          :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :locale_code, :non_uk_degree
         )
       end
 
