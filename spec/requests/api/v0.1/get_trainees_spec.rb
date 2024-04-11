@@ -7,12 +7,12 @@ describe "`GET /trainees` endpoint" do
   let(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
 
   let!(:start_academic_cycle) { create(:academic_cycle) }
-  let!(:trainees) { create_list(:trainee, 10, :trn_received, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
+  let!(:trainees) { create_list(:trainee, 10, :with_hesa_trainee_detail, :trn_received, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 
   it_behaves_like "a register API endpoint", "/api/v0.1/trainees", "trainee_token"
 
   context "filtering out draft trainees" do
-    let!(:draft_trainee) { create(:trainee, :draft) }
+    let!(:draft_trainee) { create(:trainee, :draft, :with_hesa_trainee_detail) }
 
     it "only returns non-draft trainees" do
       get(
@@ -71,7 +71,7 @@ describe "`GET /trainees` endpoint" do
   end
 
   context "filtering by state" do
-    let!(:submitted_trainees) { create_list(:trainee, 5, :deferred, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
+    let!(:submitted_trainees) { create_list(:trainee, 5, :with_hesa_trainee_detail, :deferred, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 
     it "returns trainees with the specified state when a valid state is provided" do
       get(
