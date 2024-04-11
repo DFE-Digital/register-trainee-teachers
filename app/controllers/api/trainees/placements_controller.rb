@@ -55,8 +55,6 @@ module Api
 
       def model = :placement
 
-      alias_method :version, :current_version
-
       def placement_params
         params.require(:data)
           .permit(attributes_class::ATTRIBUTES)

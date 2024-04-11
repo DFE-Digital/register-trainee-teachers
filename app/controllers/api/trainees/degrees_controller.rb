@@ -73,7 +73,6 @@ module Api
 
       def model = :degree
 
-      alias_method :version, :current_version
       alias_method :degree_update_params, :degree_params
     end
   end

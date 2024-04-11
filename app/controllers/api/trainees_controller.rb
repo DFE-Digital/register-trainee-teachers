@@ -111,11 +111,8 @@ module Api
     end
 
     def model = :trainee
-
     def serializer
       @serializer ||= Serializer.for(model:, version:)
     end
-
-    alias_method :version, :current_version
   end
 end
