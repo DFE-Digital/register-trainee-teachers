@@ -10,7 +10,7 @@ module TrainingDetails
       let(:trainee) { build(:trainee) }
 
       before do
-        trainee.trainee_id = nil
+        trainee.provider_trainee_id = nil
         render_inline(View.new(data_model: trainee, editable: true))
       end
 
@@ -23,12 +23,12 @@ module TrainingDetails
       let(:trainee) { build(:trainee) }
 
       before do
-        trainee.trainee_id = "some id"
+        trainee.provider_trainee_id = "some id"
         render_inline(View.new(data_model: trainee))
       end
 
-      it "renders the trainee_id" do
-        expect(rendered_content).to have_text(trainee.trainee_id)
+      it "renders the provider_trainee_id" do
+        expect(rendered_content).to have_text(trainee.provider_trainee_id)
       end
 
       context "when trainee has a hpitt_provider" do

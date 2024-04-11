@@ -37,7 +37,7 @@ module RecommendationsUploadHelper
       trainees.each do |trainee|
         rows << [
           trainee.trn,
-          trainee.trainee_id,
+          trainee.provider_trainee_id,
           recommended_for_award_date&.strftime("%d/%m/%Y"),
         ]
       end

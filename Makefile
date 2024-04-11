@@ -69,14 +69,17 @@ dv_review: ## make dv_review deploy APP_NAME=2222 CLUSTER=cluster1
 qa:
 	$(eval include global_config/qa.sh)
 	$(eval DEPLOY_ENV=qa)
-	$(eval DTTP_HOSTNAME=traineeteacherportal-dv)
 	$(eval BACKUP_CONTAINER_NAME=qa-db-backup)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
 staging:
 	$(eval include global_config/staging.sh)
 	$(eval DEPLOY_ENV=staging)
-	$(eval DTTP_HOSTNAME=traineeteacherportal-pp)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
+pen:
+	$(eval include global_config/pen.sh)
+	$(eval DEPLOY_ENV=pen)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
 production:
@@ -84,7 +87,6 @@ production:
 	$(if $(or ${SKIP_CONFIRM}, ${CONFIRM_PRODUCTION}), , $(error Missing CONFIRM_PRODUCTION=yes))
 	$(eval DEPLOY_ENV=production)
 	$(eval HOST_NAME=www)
-	$(eval DTTP_HOSTNAME=traineeteacherportal)
 	$(eval BACKUP_CONTAINER_NAME=prod-db-backup)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
@@ -98,6 +100,8 @@ sandbox:
 	$(eval include global_config/sandbox.sh)
 	$(eval DEPLOY_ENV=sandbox)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
+
 
 set-azure-account:
 	echo "Logging on to ${AZ_SUBSCRIPTION}"
@@ -118,6 +122,10 @@ arm-deployment: set-azure-account set-azure-template-tag set-azure-resource-grou
 		--parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${SERVICE_SHORT}tfstate${CONFIG_SHORT}sa" "tfStorageContainerName=${SERVICE_SHORT}-tfstate" \
 			"keyVaultName=${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-kv" ${WHAT_IF}
+
+deploy-arm-resources: arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
+
+validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
 
 install-fetch-config:
 	[ ! -f bin/fetch_config.rb ] \

@@ -6,7 +6,7 @@ module Api
       trainees = GetTraineesService.call(provider: current_provider, params: params)
 
       if trainees.exists?
-        render(json: AppendMetadata.call(trainees), status: :ok)
+        render(json: AppendMetadata.call(trainees, model, version), status: :ok)
       else
         render_not_found(message: "No trainees found")
       end
@@ -29,7 +29,7 @@ module Api
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
       begin
         attributes = trainee_attributes_service.from_trainee(trainee)
-        attributes.assign_attributes(trainee_update_params)
+        attributes.assign_attributes(hesa_mapped_params_for_update)
         succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
         if succeeded
           render(json: { data: Serializer.for(model:, version:).new(trainee).as_hash })
@@ -58,12 +58,23 @@ module Api
       )
     end
 
+    def hesa_mapped_params_for_update
+      hesa_mapper_class.call(
+        params: params.require(:data).permit(
+          hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
+          nationalisations_attributes: [nationality_attributes],
+        ),
+      )
+    end
+
     def hesa_mapper_class
       Object.const_get("Api::MapHesaAttributes::#{current_version_class_name}")
     end
 
     def placements_attributes
-      Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
+      hesa_attributes = Object.const_get("Api::MapHesaAttributes::Placements::#{current_version_class_name}")::ATTRIBUTES
+      standard_attributes = Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
+      standard_attributes + hesa_attributes
     end
 
     def nationality_attributes
@@ -79,7 +90,9 @@ module Api
     end
 
     def degree_attributes
-      Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
+      hesa_attributes = Object.const_get("Api::MapHesaAttributes::Degrees::#{current_version_class_name}")::ATTRIBUTES
+      standard_attributes = Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
+      standard_attributes + hesa_attributes
     end
 
     def current_version_class_name

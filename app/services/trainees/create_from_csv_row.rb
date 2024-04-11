@@ -34,7 +34,7 @@ module Trainees
     def initialize(provider:, csv_row:)
       @csv_row = csv_row
       @provider = provider
-      @trainee = @provider.trainees.find_or_initialize_by(trainee_id: csv_row["Provider trainee ID"])
+      @trainee = @provider.trainees.find_or_initialize_by(provider_trainee_id: csv_row["Provider trainee ID"])
     end
 
     def call

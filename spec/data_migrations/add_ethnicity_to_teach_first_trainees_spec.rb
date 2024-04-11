@@ -10,7 +10,7 @@ describe AddEthnicityToTeachFirstTrainees::Service do
   let(:service) { described_class.new }
 
   before do
-    allow(service).to receive(:entries).and_return([[trainee.trainee_id, ethnicity]])
+    allow(service).to receive(:entries).and_return([[trainee.provider_trainee_id, ethnicity]])
   end
 
   it "updates the trainee with the correct ethnicity" do

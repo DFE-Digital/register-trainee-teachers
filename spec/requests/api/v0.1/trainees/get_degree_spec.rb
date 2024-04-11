@@ -14,7 +14,7 @@ describe "`GET /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "returns status 200 with a valid JSON response" do
         get "/api/v0.1//trainees/#{trainee_slug}/degrees/#{slug}", headers: { Authorization: token }
         expect(response).to have_http_status(:ok)
-        expect(response.parsed_body.dig(:data, :slug)).to eql(slug)
+        expect(response.parsed_body.dig(:data, :degree_id)).to eql(slug)
       end
     end
 

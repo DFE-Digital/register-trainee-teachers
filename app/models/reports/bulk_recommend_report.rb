@@ -7,10 +7,10 @@ module Reports
 
     # required headers
     TRN = "TRN"
-    TRAINEE_ID = "Provider trainee ID"
+    PROVIDER_TRAINEE_ID = "Provider trainee ID"
     HESA_ID = "HESA ID"
 
-    IDENTIFIERS = [TRN, TRAINEE_ID, HESA_ID].freeze
+    IDENTIFIERS = [TRN, PROVIDER_TRAINEE_ID, HESA_ID].freeze
     DATE        = "Date QTS or EYTS standards met"
 
     # additional headers

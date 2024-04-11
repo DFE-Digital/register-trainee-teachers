@@ -55,7 +55,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       let(:trainee) { create(:trainee, :with_degree) }
       let(:degrees_attributes) do
         trainee.degrees.first.attributes.symbolize_keys.slice(
-          :country, :grade, :subject, :institution, :uk_degree, :graduation_year, :locale_code
+          :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :locale_code
         )
       end
 

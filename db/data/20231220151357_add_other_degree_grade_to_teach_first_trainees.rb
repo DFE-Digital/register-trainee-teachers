@@ -11,8 +11,8 @@ class AddOtherDegreeGradeToTeachFirstTrainees < ActiveRecord::Migration[7.1]
 
   class Service
     def call
-      entries.each do |trainee_id, grade|
-        trainee = teach_first_trainees.find_by(trainee_id:)
+      entries.each do |provider_trainee_id, grade|
+        trainee = teach_first_trainees.find_by(provider_trainee_id:)
         degree = trainee&.degrees&.first
 
         update_degree(degree, grade) if degree

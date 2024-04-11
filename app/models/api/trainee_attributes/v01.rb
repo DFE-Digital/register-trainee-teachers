@@ -36,6 +36,7 @@ module Api
         study_mode
         application_choice_id
         progress
+        training_initiative
       ].freeze
 
       REQUIRED_ATTRIBUTES = %i[
@@ -95,6 +96,14 @@ module Api
           HesaTraineeDetailAttributes::V01.new(
             attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
+      end
+
+      def assign_attributes(attributes)
+        super
+        self.nationalisations_attributes = []
+        attributes[:nationalisations_attributes]&.each do |nationalisation_params|
+          nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
+        end
       end
 
       def self.from_trainee(trainee)

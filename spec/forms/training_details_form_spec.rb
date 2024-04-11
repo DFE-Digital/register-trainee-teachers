@@ -10,7 +10,7 @@ describe TrainingDetailsForm, type: :model do
   subject { described_class.new(trainee, params:) }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:trainee_id) }
+    it { is_expected.to validate_presence_of(:provider_trainee_id) }
   end
 
   describe "error messages" do
@@ -20,28 +20,28 @@ describe TrainingDetailsForm, type: :model do
 
     context "trainee ID" do
       context "not present" do
-        let(:trainee) { build(:trainee, trainee_id: nil) }
+        let(:trainee) { build(:trainee, provider_trainee_id: nil) }
 
         it "returns a blank error message" do
-          expect(subject.errors[:trainee_id]).to include(
-            I18n.t("#{error_attr}.trainee_id.blank"),
+          expect(subject.errors[:provider_trainee_id]).to include(
+            I18n.t("#{error_attr}.provider_trainee_id.blank"),
           )
         end
       end
 
       context "over 100 characters" do
-        let(:trainee) { build(:trainee, trainee_start_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(101)) }
+        let(:trainee) { build(:trainee, trainee_start_date: Time.zone.today, provider_trainee_id: SecureRandom.alphanumeric(101)) }
 
         it "returns a max character exceeded message" do
           expect(subject).not_to be_valid
-          expect(subject.errors[:trainee_id]).to include(
-            I18n.t("#{error_attr}.trainee_id.max_char_exceeded"),
+          expect(subject.errors[:provider_trainee_id]).to include(
+            I18n.t("#{error_attr}.provider_trainee_id.max_char_exceeded"),
           )
         end
       end
 
       context "under 100 characters" do
-        let(:trainee) { build(:trainee, trainee_start_date: Time.zone.today, trainee_id: SecureRandom.alphanumeric(99)) }
+        let(:trainee) { build(:trainee, trainee_start_date: Time.zone.today, provider_trainee_id: SecureRandom.alphanumeric(99)) }
 
         it "is valid" do
           expect(subject).to be_valid
@@ -49,11 +49,11 @@ describe TrainingDetailsForm, type: :model do
       end
 
       context "duplicate active trainee" do
-        let!(:existing_trainee) { create(:trainee, trainee_id: "Test123") }
+        let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123") }
         let(:trainee) do
           build(:trainee,
                 provider: existing_trainee.provider,
-                trainee_id: existing_trainee.trainee_id,
+                provider_trainee_id: existing_trainee.provider_trainee_id,
                 state: "submitted_for_trn")
         end
 
@@ -62,52 +62,52 @@ describe TrainingDetailsForm, type: :model do
         end
 
         it "returns a duplicate error message" do
-          expect(subject.errors[:trainee_id]).to include(
-            I18n.t("#{error_attr}.trainee_id.uniqueness"),
+          expect(subject.errors[:provider_trainee_id]).to include(
+            I18n.t("#{error_attr}.provider_trainee_id.uniqueness"),
           )
           expect(subject.duplicate_error?).to be_truthy
         end
       end
 
       context "duplicate id from a discarded trainee" do
-        let!(:existing_trainee) { create(:trainee, :discarded, trainee_id: "Test123") }
-        let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: existing_trainee.trainee_id) }
+        let!(:existing_trainee) { create(:trainee, :discarded, provider_trainee_id: "Test123") }
+        let(:trainee) { build(:trainee, provider: existing_trainee.provider, provider_trainee_id: existing_trainee.provider_trainee_id) }
 
         it "existing trainee remains active" do
           expect(existing_trainee.inactive?).to be(false)
         end
 
         it "returns no duplicate error message" do
-          expect(subject.errors[:trainee_id]).not_to include(
-            I18n.t("#{error_attr}.trainee_id.uniqueness"),
+          expect(subject.errors[:provider_trainee_id]).not_to include(
+            I18n.t("#{error_attr}.provider_trainee_id.uniqueness"),
           )
           expect(subject.duplicate_error?).to be(false)
         end
       end
 
       context "duplicate inactive trainee" do
-        let!(:existing_trainee) { create(:trainee, trainee_id: "Test123", state: "withdrawn") }
-        let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: existing_trainee.trainee_id) }
+        let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123", state: "withdrawn") }
+        let(:trainee) { build(:trainee, provider: existing_trainee.provider, provider_trainee_id: existing_trainee.provider_trainee_id) }
 
         it "existing trainee is inactive" do
           expect(existing_trainee.inactive?).to be(true)
         end
 
         it "returns a duplicate error message" do
-          expect(subject.errors[:trainee_id]).not_to include(
-            I18n.t("#{error_attr}.trainee_id.uniqueness"),
+          expect(subject.errors[:provider_trainee_id]).not_to include(
+            I18n.t("#{error_attr}.provider_trainee_id.uniqueness"),
           )
           expect(subject.duplicate_error?).to be(false)
         end
       end
 
       context "same id but different provider" do
-        let!(:existing_trainee) { create(:trainee, trainee_id: "Test123") }
-        let(:trainee) { build(:trainee, trainee_id: "TEST123") }
+        let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123") }
+        let(:trainee) { build(:trainee, provider_trainee_id: "TEST123") }
 
         it "returns a duplicate error message" do
-          expect(subject.errors[:trainee_id]).not_to include(
-            I18n.t("#{error_attr}.trainee_id.uniqueness"),
+          expect(subject.errors[:provider_trainee_id]).not_to include(
+            I18n.t("#{error_attr}.provider_trainee_id.uniqueness"),
           )
           expect(subject.duplicate_error?).to be_falsey
         end
@@ -117,8 +117,8 @@ describe TrainingDetailsForm, type: :model do
 
   describe "#existing_trainee_with_id" do
     context "same provider and id" do
-      let!(:existing_trainee) { create(:trainee, trainee_id: "Test123") }
-      let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: "TEST123") }
+      let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123") }
+      let(:trainee) { build(:trainee, provider: existing_trainee.provider, provider_trainee_id: "TEST123") }
 
       it "returns existing_trainee" do
         expect(subject.send(:existing_trainee_with_id)).to eql(existing_trainee)
@@ -126,8 +126,8 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "different provider and same id" do
-      let!(:existing_trainee) { create(:trainee, trainee_id: "Test123") }
-      let(:trainee) { build(:trainee, trainee_id: "TEST123") }
+      let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123") }
+      let(:trainee) { build(:trainee, provider_trainee_id: "TEST123") }
 
       it "returns existing_trainee" do
         expect(subject.send(:existing_trainee_with_id)).not_to eql(existing_trainee)
@@ -136,8 +136,8 @@ describe TrainingDetailsForm, type: :model do
   end
 
   describe "#existing_short_name" do
-    let!(:existing_trainee) { create(:trainee, trainee_id: "Test123") }
-    let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: "TEST123") }
+    let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123") }
+    let(:trainee) { build(:trainee, provider: existing_trainee.provider, provider_trainee_id: "TEST123") }
 
     it "returns short_name" do
       expect(subject.existing_short_name).to eql(existing_trainee.short_name)
@@ -146,8 +146,8 @@ describe TrainingDetailsForm, type: :model do
 
   describe "#existing_created" do
     context "today" do
-      let!(:existing_trainee) { create(:trainee, trainee_id: "Test123", created_at: Time.zone.now) }
-      let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: "TEST123") }
+      let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123", created_at: Time.zone.now) }
+      let(:trainee) { build(:trainee, provider: existing_trainee.provider, provider_trainee_id: "TEST123") }
 
       it "returns today" do
         expect(subject.existing_created).to eql("today")
@@ -155,11 +155,11 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "yesterday" do
-      let!(:existing_trainee) { create(:trainee, trainee_id: "Test123", created_at: 1.day.ago) }
+      let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123", created_at: 1.day.ago) }
       let(:trainee) do
         build(:trainee,
               provider: existing_trainee.provider,
-              trainee_id: "TEST123")
+              provider_trainee_id: "TEST123")
       end
 
       it "returns yesterday" do
@@ -168,8 +168,8 @@ describe TrainingDetailsForm, type: :model do
     end
 
     context "other dates" do
-      let!(:existing_trainee) { create(:trainee, trainee_id: "Test123", created_at: 10.days.ago) }
-      let(:trainee) { build(:trainee, provider: existing_trainee.provider, trainee_id: "TEST123") }
+      let!(:existing_trainee) { create(:trainee, provider_trainee_id: "Test123", created_at: 10.days.ago) }
+      let(:trainee) { build(:trainee, provider: existing_trainee.provider, provider_trainee_id: "TEST123") }
 
       it "returns date formatted" do
         expect(subject.existing_created).to eql(existing_trainee.created_at.strftime("%-d %B %Y"))
@@ -178,11 +178,11 @@ describe TrainingDetailsForm, type: :model do
   end
 
   describe "remove white space" do
-    let(:trainee) { build(:trainee, trainee_id: "  TEST123  ") }
+    let(:trainee) { build(:trainee, provider_trainee_id: "  TEST123  ") }
 
     it "returns short_name" do
       subject.valid?
-      expect(subject.trainee_id).to eql("TEST123")
+      expect(subject.provider_trainee_id).to eql("TEST123")
     end
   end
 end

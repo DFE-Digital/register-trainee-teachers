@@ -12,6 +12,8 @@ module Api
         course_year
         funding_method
         itt_aim
+        itt_qualification_aim
+        fund_code
         ni_number
         postgrad_apprenticeship_start_date
         previous_last_name

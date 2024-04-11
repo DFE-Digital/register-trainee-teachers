@@ -28,7 +28,7 @@ module TrainingDetails
 
       {
         id: 1,
-        trainee_id: "#{date.year}/#{date.year + 1}-1",
+        provider_trainee_id: "#{date.year}/#{date.year + 1}-1",
       }
     end
   end
