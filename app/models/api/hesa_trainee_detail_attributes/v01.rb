@@ -19,6 +19,10 @@ module Api
         previous_last_name
         hesa_disabilities
         additional_training_initiative
+        itt_qualification_aim
+        year_of_course
+        fund_code
+        hesa_id
       ].freeze
 
       ATTRIBUTES.each do |attr|

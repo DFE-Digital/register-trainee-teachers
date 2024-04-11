@@ -40,6 +40,13 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             urn: "900020",
           },
         ],
+        itt_aim: 202,
+        itt_qualification_aim: "001",
+        year_of_course: "2012",
+        course_age_range: "13915",
+        fund_code: "7",
+        funding_method: "4",
+        hesa_id: "0310261553101",
       },
     }
   end
@@ -136,6 +143,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body["errors"]).to include("Course subject one can't be blank")
       expect(response.parsed_body["errors"]).to include("Study mode can't be blank")
       expect(response.parsed_body["errors"]).to include("Email Enter an email address in the correct format, like name@example.com")
+      expect(response.parsed_body["errors"]).to include("Nationalisations attributes can't be blank")
+      expect(response.parsed_body["errors"]).to include("Itt aim can't be blank")
+      expect(response.parsed_body["errors"]).to include("Itt qualification aim can't be blank")
+      expect(response.parsed_body["errors"]).to include("Year of course can't be blank")
+      expect(response.parsed_body["errors"]).to include("Course age range can't be blank")
+      expect(response.parsed_body["errors"]).to include("Fund code can't be blank")
+      expect(response.parsed_body["errors"]).to include("Funding method can't be blank")
+      expect(response.parsed_body["errors"]).to include("Hesa can't be blank")
     end
   end
 end
