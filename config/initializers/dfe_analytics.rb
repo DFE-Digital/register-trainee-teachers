@@ -11,7 +11,7 @@ DfE::Analytics.configure do |config|
 
   # Whether to run entity table checksum job.
   #
-  config.entity_table_checks_enabled = true
+  config.entity_table_checks_enabled = Settings.google.big_query.entity_table_checks_enabled
 
   # Which ActiveJob queue to put events on
   #
