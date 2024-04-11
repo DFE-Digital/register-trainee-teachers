@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe TraineeSerializer::V01 do
-  let(:trainee) { create(:trainee, :in_progress, :with_placements) }
+  let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :in_progress, :with_placements) }
   let(:json) { described_class.new(trainee).as_hash.with_indifferent_access }
 
   describe "serialization" do
@@ -38,13 +38,9 @@ RSpec.describe TraineeSerializer::V01 do
         trainee_start_date
         training_initiative
         hesa_id
-        ethnicity
-        ethnicity_background
-        other_ethnicity_details
-        disability
-        other_disability_details
+        ethnic_group
+        ethnic_background
         fund_code
-        funding_option
         course_age_range
         course_study_mode
         course_year

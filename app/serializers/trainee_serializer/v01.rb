@@ -52,9 +52,8 @@ module TraineeSerializer
     def diversity_attributes
       attributes = {
         ethnic_group:,
-        ethnicity_background:,
+        ethnic_background:,
         disability_disclosure:,
-        other_disability_details:,
       }
       assign_disabilities(attributes)
 
@@ -74,7 +73,7 @@ module TraineeSerializer
     end
 
     def ethnic_background
-      Hesa::CodeSets::EthnicBackgrounds::MAPPING.key(@trainee.ethnic_background)
+      Hesa::CodeSets::Ethnicities::MAPPING.key(@trainee.ethnic_background)
     end
 
     def disability_disclosure
@@ -101,7 +100,7 @@ module TraineeSerializer
     end
 
     def course_level
-      trainee.undergrad_route? ? "undergrad" : "postgrad"
+      @trainee.undergrad_route? ? "undergrad" : "postgrad"
     end
 
     def course_title
@@ -164,7 +163,7 @@ module TraineeSerializer
     end
 
     def fund_code
-      @trainee.fund_code
+      @trainee.hesa_trainee_detail.fund_code
     end
 
     def bursary_level
