@@ -5,13 +5,13 @@ module Api
     include ActiveModel::Model
     include ActiveModel::Attributes
 
-    ATTRIBUTES = %i[status since academic_cycle page per_page sort_by].freeze
+    ATTRIBUTES = %i[status since academic_cycle page per_page sort_order].freeze
     ATTRIBUTES.each { |attr| attribute attr }
 
     validate :check_statuses
     validate :check_since
     validate :check_academic_cycle
-    validates :sort_by, inclusion: %w[desc asc], allow_blank: true
+    validates :sort_order, inclusion: %w[desc asc], allow_blank: true
 
   private
 

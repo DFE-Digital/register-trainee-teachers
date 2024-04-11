@@ -21,8 +21,8 @@ module Api
       params.fetch(:page, 1).to_i
     end
 
-    def sort_by
-      params.fetch(:sort_by, SORT_BY)
+    def sort_order
+      params.fetch(:sort_order, SORT_ORDER)
     end
 
     def since

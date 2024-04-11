@@ -90,6 +90,29 @@ describe "`GET /trainees` endpoint" do
     end
   end
 
+  context "with sort order" do
+    it "sorts the results in descending order by default" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].map { |trainee| trainee[:slug] }).to eq(trainees.map(&:slug).reverse)
+    end
+
+    it "sorts the results in ascending order when specified" do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { sort_order: "asc" },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].map { |trainee| trainee[:slug] }).to eq(trainees.map(&:slug))
+    end
+  end
+
   context "filtering by state" do
     let!(:submitted_trainees) { create_list(:trainee, 5, :deferred, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 

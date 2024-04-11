@@ -124,7 +124,7 @@ current academic cycle.
 | **since** | query | string | false | Include only trainees changed or created on or since a date. Dates should be in ISO 8601 format. |
 | **page** | query | integer | false | Page number (defaults to 1, the first page). |
 | **per_page** | query | integer | false | Number of records to return per page (default is 50) |
-| **sort_by** | query | string | false | Sort in ascending or descending order. Valid values are `asc` or `desc` (default is `desc`) |
+| **sort_order** | query | string | false | Sort in ascending or descending order. Valid values are `asc` or `desc` (default is `desc`) |
 
 #### Possible responses
 

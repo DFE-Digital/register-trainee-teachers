@@ -16,7 +16,7 @@ module Api
                 .joins(:start_academic_cycle)
                 .where(academic_cycles: { id: academic_cycle.id })
                 .where("trainees.updated_at > ?", since)
-                .order("trainees.updated_at #{sort_by}")
+                .order("trainees.updated_at #{sort_order}")
                 .page(page)
                 .per(pagination_per_page)
 
@@ -37,7 +37,7 @@ module Api
     end
 
     def filter_params
-      params.permit(:status, :since, :academic_cycle, :page, :per_page, :sort_by)
+      params.permit(:status, :since, :academic_cycle, :page, :per_page, :sort_order)
     end
   end
 end
