@@ -6,7 +6,7 @@ module Api
       trainees = GetTraineesService.call(provider: current_provider, params: params)
 
       if trainees.exists?
-        render(json: AppendMetadata.call(trainees, model, version), status: :ok)
+        render(json: AppendMetadata.call(objects: trainees, serializer: serializer), status: :ok)
       else
         render_not_found(message: "No trainees found")
       end
@@ -14,7 +14,7 @@ module Api
 
     def show
       trainee = current_provider.trainees.find_by!(slug: params[:slug])
-      render(json: Serializer.for(model:, version:).new(trainee).as_hash)
+      render(json: serializer.new(trainee).as_hash)
     end
 
     def create
@@ -31,8 +31,9 @@ module Api
         attributes = trainee_attributes_service.from_trainee(trainee)
         attributes.assign_attributes(hesa_mapped_params_for_update)
         succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
+
         if succeeded
-          render(json: { data: Serializer.for(model:, version:).new(trainee).as_hash })
+          render(json: { data: serializer.new(trainee).as_hash })
         else
           render(
             json: {
@@ -110,6 +111,10 @@ module Api
     end
 
     def model = :trainee
+
+    def serializer
+      @serializer ||= Serializer.for(model:, version:)
+    end
 
     alias_method :version, :current_version
   end

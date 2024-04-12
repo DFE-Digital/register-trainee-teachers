@@ -2,11 +2,12 @@
 
 module DegreeSerializer
   class V01
-    EXCLUDE_ATTRIBUTES = %w[
+    EXCLUDED_ATTRIBUTES = %w[
       id
       slug
       trainee_id
       dttp_id
+      locale_code
     ].freeze
 
     def initialize(degree)
@@ -14,7 +15,7 @@ module DegreeSerializer
     end
 
     def as_hash
-      @degree.attributes.except(*EXCLUDE_ATTRIBUTES).merge(degree_id: @degree.slug)
+      @degree.attributes.except(*EXCLUDED_ATTRIBUTES).merge(degree_id: @degree.slug)
     end
   end
 end

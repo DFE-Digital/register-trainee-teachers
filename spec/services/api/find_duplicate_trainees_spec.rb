@@ -15,6 +15,7 @@ describe Api::FindDuplicateTrainees do
   end
   let(:version) { "v0.1" }
   let(:trainee_attributes) { Api::Attributes.for(model: :Trainee, version: version) }
+  let(:serializer) { TraineeSerializer::V01 }
 
   it "does not return trainees for a different provider" do
     attributes = trainee_attributes.new(
@@ -25,7 +26,13 @@ describe Api::FindDuplicateTrainees do
       itt_start_date: trainee.itt_start_date,
     )
 
-    expect(described_class.call(current_provider: create(:provider), trainee_attributes: attributes)).to be_empty
+    expect(
+      described_class.call(
+        current_provider: create(:provider),
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to be_empty
   end
 
   it "does not return trainees with a different date of birth" do
@@ -37,7 +44,13 @@ describe Api::FindDuplicateTrainees do
       itt_start_date: trainee.itt_start_date,
     )
 
-    expect(described_class.call(current_provider: trainee.provider, trainee_attributes: attributes)).to be_empty
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to be_empty
   end
 
   it "does not return trainees with a different last name" do
@@ -49,7 +62,13 @@ describe Api::FindDuplicateTrainees do
       itt_start_date: trainee.itt_start_date,
     )
 
-    expect(described_class.call(current_provider: trainee.provider, trainee_attributes: attributes)).to be_empty
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to be_empty
   end
 
   it "returns trainees that are an exact match" do
@@ -61,7 +80,13 @@ describe Api::FindDuplicateTrainees do
       itt_start_date: trainee.itt_start_date,
     )
 
-    expect(described_class.call(current_provider: trainee.provider, trainee_attributes: attributes)).not_to be_empty
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
   end
 
   it "returns trainees that are an inexact match (different email)" do
@@ -74,7 +99,13 @@ describe Api::FindDuplicateTrainees do
       email: "rob@example.com",
     )
 
-    expect(described_class.call(current_provider: trainee.provider, trainee_attributes: attributes)).not_to be_empty
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
   end
 
   it "returns trainees that are an inexact match (different first name)" do
@@ -87,7 +118,13 @@ describe Api::FindDuplicateTrainees do
       email: trainee.email,
     )
 
-    expect(described_class.call(current_provider: trainee.provider, trainee_attributes: attributes)).not_to be_empty
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
   end
 
   it "doesn't return trainees that are have a different first name and email" do
@@ -100,6 +137,12 @@ describe Api::FindDuplicateTrainees do
       email: "robbie@example.com",
     )
 
-    expect(described_class.call(current_provider: trainee.provider, trainee_attributes: attributes)).to be_empty
+    expect(
+      described_class.call(
+        current_provider: trainee.provider,
+        trainee_attributes: attributes,
+        serializer: serializer,
+      ),
+    ).to be_empty
   end
 end

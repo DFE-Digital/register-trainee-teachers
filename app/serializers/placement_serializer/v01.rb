@@ -2,10 +2,12 @@
 
 module PlacementSerializer
   class V01
-    EXCLUDE_ATTRIBUTES = %w[
+    EXCLUDED_ATTRIBUTES = %w[
       id
       slug
       trainee_id
+      school_id
+      address
     ].freeze
 
     def initialize(placement)
@@ -13,7 +15,7 @@ module PlacementSerializer
     end
 
     def as_hash
-      @placement.attributes.except(*EXCLUDE_ATTRIBUTES).merge(placement_id: @placement.slug)
+      @placement.attributes.except(*EXCLUDED_ATTRIBUTES).merge(placement_id: @placement.slug)
     end
   end
 end
