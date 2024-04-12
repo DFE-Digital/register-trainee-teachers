@@ -4,10 +4,9 @@ module Api
   class AppendMetadata
     include ServicePattern
 
-    def initialize(objects, model, version)
-      @objects = objects
-      @model = model
-      @version = version
+    def initialize(objects:, serializer_klass:)
+      @objects          = objects
+      @serializer_klass = serializer_klass
     end
 
     def call
@@ -19,7 +18,7 @@ module Api
 
   private
 
-    attr_reader :objects, :model, :version
+    attr_reader :objects, :serializer_klass
 
     def meta
       @meta ||= {
@@ -31,8 +30,8 @@ module Api
     end
 
     def data
-      @data ||= objects.each do |object|
-        Serializer.for(model:, version:).new(object).as_hash
+      @data ||= objects.map do |object|
+        serializer_klass.new(object).as_hash
       end
     end
   end

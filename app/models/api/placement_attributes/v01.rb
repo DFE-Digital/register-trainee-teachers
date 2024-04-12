@@ -25,6 +25,10 @@ module Api
       validate :urn_valid
       validate :postcode_valid
 
+      def self.from_placement(placement)
+        new(placement.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) })
+      end
+
     private
 
       def school_valid

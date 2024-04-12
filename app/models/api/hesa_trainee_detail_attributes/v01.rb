@@ -7,23 +7,35 @@ module Api
       include ActiveModel::Attributes
 
       ATTRIBUTES = %i[
-        course_age_range
         course_study_mode
         course_year
-        funding_method
-        itt_aim
-        itt_qualification_aim
-        fund_code
         ni_number
         postgrad_apprenticeship_start_date
         previous_last_name
         hesa_disabilities
         additional_training_initiative
+        itt_aim
+        itt_qualification_aim
+        course_year
+        course_age_range
+        fund_code
+        funding_method
+      ].freeze
+
+      REQUIRED_ATTRIBUTES = %i[
+        itt_aim
+        itt_qualification_aim
+        course_year
+        course_age_range
+        fund_code
+        funding_method
       ].freeze
 
       ATTRIBUTES.each do |attr|
         attribute attr
       end
+
+      validates(*REQUIRED_ATTRIBUTES, presence: true)
     end
   end
 end

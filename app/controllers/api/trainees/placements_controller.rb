@@ -3,15 +3,18 @@
 module Api
   module Trainees
     class PlacementsController < Api::BaseController
+      include Api::Serializable
+      include Api::Attributable
+
       def index
         render(
-          json: { data: trainee.placements.map { |placement| serializer_class.new(placement).as_hash } },
+          json: { data: trainee.placements.map { |placement| serializer_klass.new(placement).as_hash } },
           status: :ok,
         )
       end
 
       def show
-        render(json: { data: serializer_class.new(placement).as_hash }, status: :ok)
+        render(json: { data: serializer_klass.new(placement).as_hash }, status: :ok)
       end
 
       def create
@@ -24,7 +27,7 @@ module Api
 
       def destroy
         placement.destroy
-        render({ json: { data: trainee_serializer_class.new(trainee).as_hash }, status: :ok })
+        render({ json: { data: trainee_serializer_klass.new(trainee).as_hash }, status: :ok })
       end
 
     private
@@ -41,25 +44,15 @@ module Api
 
       def slug = params[:slug]
 
-      def serializer_class
-        Serializer.for(model:, version:)
-      end
-
-      def trainee_serializer_class
+      def trainee_serializer_klass
         Serializer.for(model: :trainee, version: version)
-      end
-
-      def attributes_class
-        Api::Attributes.for(model:, version:)
       end
 
       def model = :placement
 
-      alias_method :version, :current_version
-
       def placement_params
         params.require(:data)
-          .permit(attributes_class::ATTRIBUTES)
+          .permit(attributes_klass::ATTRIBUTES)
       end
 
       def new_placement

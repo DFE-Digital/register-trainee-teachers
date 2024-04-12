@@ -39,3 +39,7 @@ features:
 
 environment:
   name: sandbox
+
+google:
+  big_query:
+    entity_table_checks_enabled: false

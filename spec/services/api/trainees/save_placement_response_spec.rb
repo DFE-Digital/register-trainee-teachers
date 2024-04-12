@@ -24,10 +24,12 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status created with data" do
         expect(subject[:status]).to be(:created)
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params)
+
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
 
         expect(placement.reload.id).to be_present
-        expect(placement.reload.slug).to be_present
+        expect(placement.slug).to be_present
+        expect(placement.school_id).to eq(params[:school_id])
       end
 
       it "uses the serializer" do
@@ -69,10 +71,11 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status ok with data" do
         expect(subject[:status]).to be(:ok)
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params)
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
 
         expect(placement.reload.id).to be_present
-        expect(placement.reload.slug).to be_present
+        expect(placement.slug).to be_present
+        expect(placement.school_id).to eq(params[:school_id])
       end
 
       it "uses the serializer" do
@@ -82,14 +85,14 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the attributes" do
-        expect(Api::PlacementAttributes::V01).to receive(:new).with(params).and_return(double(attributes: placement.attributes, valid?: true, errors: nil)).at_least(:once)
+        expect(Api::PlacementAttributes::V01).to receive(:from_placement).with(placement).and_return(double(attributes: placement.attributes, assign_attributes: true, valid?: true, errors: nil)).at_least(:once)
 
         subject
       end
     end
 
     context "with invalid params" do
-      let(:params) { {} }
+      let(:params) { { name: "", school_id: "" } }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)

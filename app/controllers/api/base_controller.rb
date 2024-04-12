@@ -48,6 +48,8 @@ module Api
 
   private
 
+    alias_method :version, :current_version
+
     def valid_authentication_token?
       auth_token.present? && auth_token.enabled?
     end

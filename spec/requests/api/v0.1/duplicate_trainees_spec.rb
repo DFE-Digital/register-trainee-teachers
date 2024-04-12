@@ -35,6 +35,14 @@ describe "Trainees API" do
           diversity_disclosure: "diversity_disclosed",
           course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
           study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+          nationality: "GB",
+          itt_aim: 202,
+          itt_qualification_aim: "001",
+          course_year: "2012",
+          course_age_range: "13915",
+          fund_code: "7",
+          funding_method: "4",
+          hesa_id: "0310261553101",
         },
       }
     end
@@ -44,7 +52,6 @@ describe "Trainees API" do
         expect {
           post "/api/v0.1/trainees", params: valid_attributes, headers: { Authorization: token }
         }.not_to change { Trainee.count }
-
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body[:data].count).to be(1)
       end
