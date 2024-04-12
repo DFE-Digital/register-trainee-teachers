@@ -208,6 +208,7 @@ current academic cycle.
           "dormancy_dttp_id": null,
           "lead_school_id": null,
           "employing_school_id": null,
+          "apply_application_id": null,
           "course_min_age": 5,
           "course_max_age": 11,
           "course_subject_two": null,
@@ -354,6 +355,7 @@ Get a single trainee.
           "dormancy_dttp_id": null,
           "lead_school_id": null,
           "employing_school_id": null,
+          "apply_application_id": null,
           "course_min_age": 5,
           "course_max_age": 11,
           "course_subject_two": null,
@@ -394,9 +396,9 @@ Get a single trainee.
             {
               "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "postcode": null,
+              "urn": "123456",
+              "name": "Meadow Creek School",
+              "postcode": "AB1 2CD",
               "created_at": "2024-01-18T08:02:42.672Z",
               "updated_at": "2024-01-18T08:02:42.672Z"
             }
@@ -480,11 +482,11 @@ Get many placements for a trainee.
     {
       "data": [
         {
-          "placement_id": "WQsRAS4LfwZZXvSX7aAfNUx3",
+          "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
           "school_id": 26214,
-          "urn": null,
-          "name": null,
-          "postcode": null,
+          "urn": "123456",
+          "name": "Meadow Creek School",
+          "postcode": "AB1 2CD",
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z"
         }
@@ -547,11 +549,11 @@ Get a single placement for a trainee.
     {
       "data": [
         {
-          "placement_id": "WQsRAS4LfwZZXvSX7aAfNUx3",
+          "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
           "school_id": 26214,
-          "urn": null,
-          "name": null,
-          "postcode": null,
+          "urn": "123456",
+          "name": "Meadow Creek School",
+          "postcode": "AB1 2CD",
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z"
         }
@@ -860,6 +862,7 @@ Trainee details
           "dormancy_dttp_id": null,
           "lead_school_id": null,
           "employing_school_id": null,
+          "apply_application_id": null,
           "course_min_age": null,
           "course_max_age": null,
           "course_subject_two": "Science",
@@ -919,9 +922,9 @@ Trainee details
             {
               "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "postcode": null,
+              "urn": "123456",
+              "name": "Meadow Creek School",
+              "postcode": "AB1 2CD",
               "created_at": "2024-01-18T08:02:42.672Z",
               "updated_at": "2024-01-18T08:02:42.672Z"
             }
@@ -1035,14 +1038,13 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "placement_id": "BFsRAS4LfwZZXvSX7aAfNUj3",
-        "name": "Wellsway School",
-        "postcode": null,
-        "urn": "137523",
-        "school_id": null,
-        "id": 270180,
+        "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+        "school_id": 26214,
+        "urn": "123456",
+        "name": "Meadow Creek School",
+        "postcode": "AB1 2CD",
         "created_at": "2024-01-18T08:02:42.672Z",
-        "updated_at": "2024-03-18T22:31:08.340Z"
+        "updated_at": "2024-01-18T08:02:42.672Z"
       }
     }
     </pre>
@@ -1333,6 +1335,7 @@ Withdraw a trainee.
           "dormancy_dttp_id": null,
           "lead_school_id": null,
           "employing_school_id": null,
+          "apply_application_id": null,
           "course_min_age": 5,
           "course_max_age": 11,
           "course_subject_two": null,
@@ -1371,15 +1374,13 @@ Withdraw a trainee.
           "application_choice_id": 452774,
           "placements": [
             {
-              "id": 270180,
-              "trainee_id": 644065,
+              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "postcode": null,
+              "urn": "123456",
+              "name": "Meadow Creek School",
+              "postcode": "AB1 2CD",
               "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z",
-              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
+              "updated_at": "2024-01-18T08:02:42.672Z"
             }
           ],
           "degrees": [
@@ -1597,6 +1598,7 @@ Trainee details
           "dormancy_dttp_id": null,
           "lead_school_id": null,
           "employing_school_id": null,
+          "apply_application_id": null,
           "course_min_age": 5,
           "course_max_age": 11,
           "course_subject_two": null,
@@ -1635,13 +1637,13 @@ Trainee details
           "application_choice_id": 452774,
           "placements": [
             {
-              "placement_id": "BWUDxpWVqdFeeMVcnmVY1s67",
-              "school_id": null,
+              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+              "school_id": 26214,
               "urn": "123456",
-              "name": "Placement",
-              "postcode": null,
-              "created_at": "2024-03-19T22:07:12.572Z",
-              "updated_at": "2024-03-19T22:07:12.572Z"
+              "name": "Meadow Creek School",
+              "postcode": "AB1 2CD",
+              "created_at": "2024-01-18T08:02:42.672Z",
+              "updated_at": "2024-01-18T08:02:42.672Z"
             }
           ],
           "degrees": [
@@ -1773,10 +1775,9 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "placement_id": "4QVvufb2UJM1gdhKnsyKiVkj",
-        "school_id": null,
-        "urn": "123456",
-        "name": "Placement",
+        "trainee_id": 644065,
+        "address": null,
+        "name": "Wellsway School",
         "postcode": null,
         "created_at": "2024-03-19T22:23:48.619Z",
         "updated_at": "2024-03-19T22:23:48.619Z"
@@ -2050,6 +2051,7 @@ Deletes an existing placement for this trainee.
           "dormancy_dttp_id": null,
           "lead_school_id": null,
           "employing_school_id": null,
+          "apply_application_id": null,
           "course_min_age": 5,
           "course_max_age": 11,
           "course_subject_two": null,
@@ -2090,10 +2092,9 @@ Deletes an existing placement for this trainee.
             {
               "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
               "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "address": null,
-              "postcode": null,
+              "urn": "123456",
+              "name": "Meadow Creek School",
+              "postcode": "AB1 2CD",
               "created_at": "2024-01-18T08:02:42.672Z",
               "updated_at": "2024-01-18T08:02:42.672Z"
             }
@@ -2265,6 +2266,20 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>99157234</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>application_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The unique ID of the application in the Apply system.
+      </p>
+      <p class="govuk-body">
+        Example: <code>11fc0d3b2f</code>
       </p>
     </dd>
   </div>
