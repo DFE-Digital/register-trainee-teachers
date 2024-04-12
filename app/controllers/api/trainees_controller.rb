@@ -50,7 +50,9 @@ module Api
     def hesa_mapped_params
       hesa_mapper_class.call(
         params: params.require(:data).permit(
-          hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
+          hesa_mapper_class::ATTRIBUTES +
+          trainee_attributes_service::ATTRIBUTES +
+          hesa_trainee_details_attributes_service::ATTRIBUTES,
           placements_attributes: [placements_attributes],
           degrees_attributes: [degree_attributes],
           nationalisations_attributes: [nationality_attributes],
@@ -87,6 +89,10 @@ module Api
 
     def trainee_attributes_service
       Api::Attributes.for(model: :trainee, version: version)
+    end
+
+    def hesa_trainee_details_attributes_service
+      Api::Attributes.for(model: :hesa_trainee_detail, version: version)
     end
 
     def degree_attributes

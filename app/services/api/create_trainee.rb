@@ -13,7 +13,7 @@ module Api
     end
 
     def call
-      return validation_error_response(trainee_attributes) unless trainee_attributes.valid?
+      return validation_error_response if validation_errors.any?
 
       return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
 
@@ -68,11 +68,29 @@ module Api
       { json: Serializer.for(model:, version:).new(trainee).as_hash, status: :created }
     end
 
-    def validation_error_response(trainee_attributes)
+    def validation_error_response
       {
-        json: { errors: trainee_attributes.errors.full_messages },
+        json: { errors: validation_errors },
         status: :unprocessable_entity,
       }
+    end
+
+    def validation_errors
+      [*trainee_errors, *hesa_trainee_detail_attributes_errors].compact.flatten
+    end
+
+    def trainee_errors
+      @trainee_errors ||= begin
+        trainee_attributes.validate
+        trainee_attributes.errors&.full_messages
+      end
+    end
+
+    def hesa_trainee_detail_attributes_errors
+      @hesa_trainee_detail_attributes_errors ||= begin
+        trainee_attributes.hesa_trainee_detail_attributes.validate
+        trainee_attributes.hesa_trainee_detail_attributes.errors&.full_messages
+      end
     end
 
     def model = :trainee
