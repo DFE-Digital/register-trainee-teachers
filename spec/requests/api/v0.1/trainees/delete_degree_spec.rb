@@ -29,6 +29,9 @@ describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
         )
         expect(response.parsed_body["data"]).to be_present
         expect(trainee.reload.degrees.count).to be_zero
+        expect(response.parsed_body.dig(*%w[data trainee_id])).to eq(trainee.slug)
+        expect(response.parsed_body.dig(*%w[data first_names])).to eq(trainee.first_names)
+        expect(response.parsed_body.dig(*%w[data last_name])).to eq(trainee.last_name)
       end
     end
 

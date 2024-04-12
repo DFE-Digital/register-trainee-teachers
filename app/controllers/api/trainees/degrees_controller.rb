@@ -41,7 +41,7 @@ module Api
 
       def destroy
         if degree.destroy
-          render(json: { data: serializer_klass.new(degree).as_hash })
+          render(json: { data: trainee_serializer_klass.new(trainee).as_hash })
         else
           render(json: { errors: degree.errors.full_messages }, status: :unprocessable_entity)
         end
@@ -60,6 +60,14 @@ module Api
 
       def degree
         @degree ||= trainee.degrees.find_by!(slug: params[:slug])
+      end
+
+      def trainee_serializer_klass
+        Serializer.for(model: :trainee, version: version)
+      end
+
+      def attributes_class
+        Api::Attributes.for(model:, version:)
       end
 
       def new_degree
