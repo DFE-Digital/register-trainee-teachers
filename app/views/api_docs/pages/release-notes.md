@@ -9,8 +9,4 @@ The draft version of the Register API was released on 15 April 2024. This is the
 
 ### Known issues
 
-* **Some Trainee fields aren't required** - When POSTing a Trainee, some fields are not required when they should be.
-* **Inconsistent responses for deleting degrees and placements** - When deleting a Placement the API responds with a Trainee object, when deleting a Degree the API responds with the Degree object.
-* **Placement `name` is required on PUT/PATCH even if name doesn't need updating**
-
-
+* The `application_id` field is not currently supported but will be added in a future release.
