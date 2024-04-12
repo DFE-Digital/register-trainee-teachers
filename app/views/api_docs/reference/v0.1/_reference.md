@@ -406,15 +406,14 @@ Get a single trainee.
           "degrees": [
             {
               "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
+              "uk_degree": "083",
               "non_uk_degree": null,
               "created_at": "2024-01-18T08:02:41.955Z",
               "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
+              "subject": "100425",
+              "institution": "0116",
               "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
+              "grade": "02",
               "country": null,
               "other_grade": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
@@ -616,18 +615,16 @@ Get many degrees for a trainee.
       "data": [
         {
           "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
+          "uk_degree": "083",
           "non_uk_degree": null,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
+          "subject": "100425",
+          "institution": "0116",
           "graduation_year": 2022,
-          "grade": "Upper second-class honours (2:1)",
+          "grade": "02",
           "country": null,
           "other_grade": null,
-          "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
@@ -932,23 +929,20 @@ Trainee details
           "degrees": [
             {
               "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": null,
+              "uk_degree": "083",
               "non_uk_degree": null,
-              "trainee_id": 202901,
-              "created_at": "2024-03-19T22:07:12.553Z",
-              "updated_at": "2024-03-19T22:07:12.553Z",
-              "subject": "Computer Science",
-              "institution": "University of Test",
-              "graduation_year": 2012,
-              "grade": "First",
-              "country": "UK",
+              "created_at": "2024-01-18T08:02:41.955Z",
+              "updated_at": "2024-01-18T08:02:41.955Z",
+              "subject": "100425",
+              "institution": "0116",
+              "graduation_year": 2022,
+              "grade": "02",
+              "country": null,
               "other_grade": null,
-              "dttp_id": null,
-              "institution_uuid": null,
-              "uk_degree_uuid": null,
-              "subject_uuid": null,
-              "grade_uuid": null
+              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
             }
           ]
         }
@@ -1149,12 +1143,11 @@ Degree details
     {
       "data": {
         "country": "UK",
-        "grade": "First",
-        "subject": "Applied linguistics",
-        "institution": "University of Oxford",
-        "uk_degree": "Bachelor of Arts",
-        "graduation_year": "2012",
-        "locale_code": "uk"
+        "grade": "02",
+        "subject": "100425",
+        "institution": "0116",
+        "uk_degree": "083",
+        "graduation_year": "2012"
       }
     }
     </pre>
@@ -1171,23 +1164,20 @@ Degree details
       "data": [
         {
           "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
+          "uk_degree": "083",
           "non_uk_degree": null,
-          "trainee_id": 644065,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
+          "subject": "100425",
+          "institution": "0116",
+          "graduation_year": 2022,
+          "grade": "02",
           "country": null,
           "other_grade": null,
-          "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+          "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
         }
       ]
     }
@@ -1386,19 +1376,16 @@ Withdraw a trainee.
           "degrees": [
             {
               "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
+              "uk_degree": "083",
               "non_uk_degree": null,
-              "trainee_id": 644065,
               "created_at": "2024-01-18T08:02:41.955Z",
               "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
+              "subject": "100425",
+              "institution": "0116",
               "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
+              "grade": "02",
               "country": null,
               "other_grade": null,
-              "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
               "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
@@ -1449,24 +1436,8 @@ Deletes an existing degree for this trainee.
     {
       "errors": [
         {
-          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
-          "non_uk_degree": null,
-          "trainee_id": 644065,
-          "created_at": "2024-01-18T08:02:41.955Z",
-          "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
-          "country": null,
-          "other_grade": null,
-          "dttp_id": null,
-          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+          "error": "NotFound",
+          "message": "Degree(s) not found"
         }
       ]
     }
@@ -1648,19 +1619,17 @@ Trainee details
           ],
           "degrees": [
             {
-              "degree_id": "W98C6yWChUwhFSEsN5idGgCx",
-              "locale_code": "uk",
-              "uk_degree": null,
+              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+              "uk_degree": "083",
               "non_uk_degree": null,
-              "created_at": "2024-03-19T22:07:12.553Z",
-              "updated_at": "2024-03-19T22:07:12.553Z",
-              "subject": "Computer Science",
-              "institution": "University of Test",
-              "graduation_year": 2012,
-              "grade": "First",
-              "country": "UK",
+              "created_at": "2024-01-18T08:02:41.955Z",
+              "updated_at": "2024-01-18T08:02:41.955Z",
+              "subject": "100425",
+              "institution": "0116",
+              "graduation_year": 2022,
+              "grade": "02",
+              "country": null,
               "other_grade": null,
-              "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
               "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
@@ -1891,23 +1860,21 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "degree_id": "vxAnSsSM91Ys2NhLYS8MC2CL",
-        "locale_code": "uk",
-        "uk_degree": "Bachelor of Arts",
+        "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+        "uk_degree": "083",
         "non_uk_degree": null,
-        "created_at": "2024-03-20T12:23:23.092Z",
-        "updated_at": "2024-03-20T12:23:23.092Z",
-        "subject": "Applied linguistics",
-        "institution": "University of Oxford",
-        "graduation_year": 2012,
-        "grade": "First",
-        "country": "UK",
+        "created_at": "2024-01-18T08:02:41.955Z",
+        "updated_at": "2024-01-18T08:02:41.955Z",
+        "subject": "100425",
+        "institution": "0116",
+        "graduation_year": 2022,
+        "grade": "02",
+        "country": null,
         "other_grade": null,
-        "dttp_id": null,
-        "institution_uuid": null,
-        "uk_degree_uuid": null,
-        "subject_uuid": null,
-        "grade_uuid": null
+        "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+        "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+        "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+        "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
       }
     }
     </pre>
@@ -2102,18 +2069,16 @@ Deletes an existing placement for this trainee.
           "degrees": [
             {
               "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
+              "uk_degree": "083",
               "non_uk_degree": null,
               "created_at": "2024-01-18T08:02:41.955Z",
               "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
+              "subject": "100425",
+              "institution": "0116",
               "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
+              "grade": "02",
               "country": null,
               "other_grade": null,
-              "dttp_id": null,
               "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
               "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
               "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
@@ -2180,25 +2145,21 @@ Deletes an existing degree for this trainee.
     {
       "data": [
         {
-          "id": 492440,
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
+          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+          "uk_degree": "083",
           "non_uk_degree": null,
-          "trainee_id": 644065,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
+          "subject": "100425",
+          "institution": "0116",
+          "graduation_year": 2022,
+          "grade": "02",
           "country": null,
           "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
-          "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+          "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
         }
       ]
     }
