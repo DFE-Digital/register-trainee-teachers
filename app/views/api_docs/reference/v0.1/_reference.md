@@ -2280,7 +2280,7 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>year_of_course</code></dt>
+    <dt class="govuk-summary-list__key"><code>course_year</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string, required
