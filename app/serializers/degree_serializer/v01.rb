@@ -14,15 +14,21 @@ module DegreeSerializer
     end
 
     def as_hash
-      @degree.attributes.except(*EXCLUDE_ATTRIBUTES).merge(degree_id: @degree.slug)
+      @degree.attributes.except(*EXCLUDE_ATTRIBUTES).merge({
+        subject:,
+        institution:,
+        country:,
+        degree_type:,
+        grade:,
+      })
     end
 
-    def subject_one
+    def subject
       @degree.subject_one
     end
 
     def institution
-      DfEReference::DegreesQuery.find_institution(name: @degree.institution)
+      DfEReference::DegreesQuery.find_institution(name: @degree.institution)[:hesa_itt_code]
     end
 
     def country

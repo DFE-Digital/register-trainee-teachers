@@ -27,6 +27,7 @@ module TraineeSerializer
         training_initiative: training_initiative,
         placements: placements,
         degrees: degrees,
+        state: @trainee.state,
         trainee_id: @trainee.slug,
       )
     end
