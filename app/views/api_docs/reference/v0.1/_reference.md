@@ -2710,6 +2710,20 @@ Deletes an existing degree for this trainee.
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>placement_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 24 characters)
+      </p>
+      <p class="govuk-body">
+        The unique ID of the placement in the Register system. Used to identify the placement when <a href="/api-docs/reference#code-put-patch-trainees-trainee_id-placements-placement_id-code">updating</a> or <a href="/api-docs/reference#code-delete-trainees-trainee_id-placements-placement_id-code">deleting</a>.
+      </p>
+      <p class="govuk-body">
+        Example: <code>4QWdpfb2UJM1gdhKnsyKiVkj</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
