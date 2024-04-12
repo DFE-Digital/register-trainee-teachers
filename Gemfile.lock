@@ -266,7 +266,7 @@ GEM
       websocket-driver (>= 0.6, < 0.8)
     ffi (1.16.3)
     flamegraph (0.9.5)
-    foreman (0.87.2)
+    foreman (0.88.1)
     front_matter_parser (1.0.1)
     fugit (1.9.0)
       et-orbi (~> 1, >= 1.2.7)
