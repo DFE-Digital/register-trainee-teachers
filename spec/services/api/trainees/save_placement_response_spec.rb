@@ -25,7 +25,7 @@ describe Api::Trainees::SavePlacementResponse do
       it "returns status created with data" do
         expect(subject[:status]).to be(:created)
 
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id))
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
@@ -71,7 +71,7 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status ok with data" do
         expect(subject[:status]).to be(:ok)
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id))
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
