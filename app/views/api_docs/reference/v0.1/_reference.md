@@ -158,7 +158,7 @@ current academic cycle.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "abc1234",
+          "provider_trainee_id": "99157234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -2271,20 +2271,6 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>99157234</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>application_id</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string
-      </p>
-      <p class="govuk-body">
-        The unique ID of the application in the Apply system.
-      </p>
-      <p class="govuk-body">
-        Example: <code>11fc0d3b2f</code>
       </p>
     </dd>
   </div>
