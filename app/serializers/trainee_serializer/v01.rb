@@ -53,7 +53,7 @@ module TraineeSerializer
     def diversity_attributes
       attributes = {
         ethnic_group:,
-        ethnic_background:,
+        ethnicity:,
         disability_disclosure:,
       }
       assign_disabilities(attributes)
@@ -73,7 +73,7 @@ module TraineeSerializer
       @trainee.ethnic_group
     end
 
-    def ethnic_background
+    def ethnicity
       Hesa::CodeSets::Ethnicities::MAPPING.key(@trainee.ethnic_background)
     end
 

@@ -9,6 +9,7 @@ module Api
 
       ATTRIBUTES = %i[
         nationality
+        ethnicity
       ].freeze
 
       NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
@@ -72,7 +73,7 @@ module Api
       end
 
       def ethnic_background
-        ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnic_background]]
+        ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
       end
 
       def disabilities

@@ -39,7 +39,7 @@ RSpec.describe TraineeSerializer::V01 do
         training_initiative
         hesa_id
         ethnic_group
-        ethnic_background
+        ethnicity
         fund_code
         course_age_range
         course_study_mode
