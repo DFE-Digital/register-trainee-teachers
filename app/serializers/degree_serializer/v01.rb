@@ -7,6 +7,7 @@ module DegreeSerializer
       slug
       trainee_id
       dttp_id
+      locale_code
     ].freeze
 
     def initialize(degree)

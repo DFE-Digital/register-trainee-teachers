@@ -11,7 +11,6 @@ RSpec.describe TraineeSerializer::V01 do
       %w[
         trainee_id
         provider_trainee_id
-        apply_application_id
         hesa_id
         first_names
         last_name
@@ -121,6 +120,7 @@ RSpec.describe TraineeSerializer::V01 do
         end_academic_cycle_id
         hesa_trn_submission_id
         application_choice_id
+        apply_application_id
       ].each do |field|
         expect(json.keys).not_to include(field)
       end

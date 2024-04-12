@@ -19,6 +19,7 @@ module TraineeSerializer
       end_academic_cycle_id
       hesa_trn_submission_id
       application_choice_id
+      apply_application_id
     ].freeze
 
     def initialize(trainee)

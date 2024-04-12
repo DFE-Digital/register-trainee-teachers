@@ -26,6 +26,7 @@ RSpec.describe PlacementSerializer::V01 do
         slug
         trainee_id
         school_id
+        address
       ].each do |field|
         expect(json.keys).not_to include(field)
       end
