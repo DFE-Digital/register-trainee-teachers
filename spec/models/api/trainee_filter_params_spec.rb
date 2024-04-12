@@ -32,8 +32,8 @@ describe Api::TraineeFilterParams do
 
     describe "status validation" do
       it "validates known statuses" do
-        expect(described_class.new(status: "trn_received").valid?).to be(true)
-        expect(described_class.new(status: %w[trn_received withdrawn]).valid?).to be(true)
+        expect(described_class.new(status: "in_training").valid?).to be(true)
+        expect(described_class.new(status: %w[in_training withdrawn]).valid?).to be(true)
       end
 
       it "validates status" do

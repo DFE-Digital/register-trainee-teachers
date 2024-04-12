@@ -19,7 +19,7 @@ module Api
       return if status.blank?
 
       (status.is_a?(Array) ? status : [status]).each do |status_value|
-        errors.add(:status, "#{status_value} is not a valid status") unless Trainee.states.include?(status_value)
+        errors.add(:status, "#{status_value} is not a valid status") unless TraineeFilter::STATUSES.include?(status_value)
       end
     end
 
