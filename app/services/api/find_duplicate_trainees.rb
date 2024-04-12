@@ -5,21 +5,21 @@ module Api
     include ServicePattern
     include FindDuplicatesBase
 
-    def initialize(current_provider:, trainee_attributes:, serializer:)
+    def initialize(current_provider:, trainee_attributes:, serializer_klass:)
       @current_provider   = current_provider
       @trainee_attributes = trainee_attributes
-      @serializer         = serializer
+      @serializer_klass   = serializer_klass
     end
 
     def call
       potential_duplicates(current_provider)
         .select { |trainee| confirmed_duplicate?(trainee) }
-        .map { |trainee| serializer.new(trainee).as_hash }
+        .map { |trainee| serializer_klass.new(trainee).as_hash }
     end
 
   private
 
-    attr_reader :current_provider, :trainee_attributes, :serializer
+    attr_reader :current_provider, :trainee_attributes, :serializer_klass
 
     def date_of_birth
       trainee_attributes.date_of_birth

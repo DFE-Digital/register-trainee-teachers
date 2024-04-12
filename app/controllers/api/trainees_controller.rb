@@ -2,11 +2,13 @@
 
 module Api
   class TraineesController < Api::BaseController
+    include Api::Serializable
+
     def index
       trainees = GetTraineesService.call(provider: current_provider, params: params)
 
       if trainees.exists?
-        render(json: AppendMetadata.call(objects: trainees, serializer: serializer), status: :ok)
+        render(json: AppendMetadata.call(objects: trainees, serializer_klass: serializer_klass), status: :ok)
       else
         render_not_found(message: "No trainees found")
       end
@@ -14,7 +16,7 @@ module Api
 
     def show
       trainee = current_provider.trainees.find_by!(slug: params[:slug])
-      render(json: serializer.new(trainee).as_hash)
+      render(json: serializer_klass.new(trainee).as_hash)
     end
 
     def create
@@ -33,7 +35,7 @@ module Api
         succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
 
         if succeeded
-          render(json: { data: serializer.new(trainee).as_hash })
+          render(json: { data: serializer_klass.new(trainee).as_hash })
         else
           render(
             json: {
@@ -111,11 +113,5 @@ module Api
     end
 
     def model = :trainee
-
-    def serializer
-      @serializer ||= Serializer.for(model:, version:)
-    end
-
-    alias_method :version, :current_version
   end
 end

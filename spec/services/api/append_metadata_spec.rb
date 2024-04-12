@@ -18,11 +18,11 @@ RSpec.describe Api::AppendMetadata do
       Trainee.page(1).per(25)
     end
 
-    let(:serializer) { TraineeSerializer::V01 }
+    let(:serializer_klass) { TraineeSerializer::V01 }
 
     it do
       expect(
-        described_class.call(objects: trainees, serializer: serializer),
+        described_class.call(objects: trainees, serializer_klass: serializer_klass),
       ).to eq(
         data: trainees.map { |trainee| TraineeSerializer::V01.new(trainee).as_hash },
         meta: {

@@ -4,6 +4,7 @@ module Api
   module Trainees
     class WithdrawResponse
       include ServicePattern
+      include Api::Serializable
       include Api::ErrorResponse
 
       def initialize(trainee:, params:, version:)
@@ -15,7 +16,7 @@ module Api
       def call
         if withdraw_allowed?
           if save!
-            { json: { data: Serializer.for(model: :trainee, version: version).new(trainee).as_hash }, status: :ok }
+            { json: { data: serializer_klass.new(trainee).as_hash }, status: :ok }
           else
             validation_errors_response(errors: withdrawal_attributes.errors)
           end
@@ -30,6 +31,8 @@ module Api
     private
 
       attr_reader :trainee, :params, :version
+
+      def model = :trainee
 
       def withdraw_allowed?
         !starts_course_in_the_future? && !itt_not_yet_started? && awaiting_action? && %w[submitted_for_trn trn_received deferred].any?(state)

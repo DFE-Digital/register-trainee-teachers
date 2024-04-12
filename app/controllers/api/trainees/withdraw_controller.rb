@@ -28,8 +28,6 @@ module Api
       def withdrawal_params
         params.permit(:withdraw_date, :withdraw_reasons_details, :withdraw_reasons_dfe_details, reasons: [])
       end
-
-      alias_method :version, :current_version
     end
   end
 end
