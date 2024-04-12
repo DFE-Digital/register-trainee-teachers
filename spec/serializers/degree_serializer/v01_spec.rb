@@ -9,7 +9,6 @@ RSpec.describe DegreeSerializer::V01 do
   describe "serialization" do
     it "includes all expected fields" do
       %w[
-        degree_id
         uk_degree
         non_uk_degree
         created_at
