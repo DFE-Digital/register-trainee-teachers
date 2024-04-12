@@ -128,7 +128,7 @@ module TraineeSerializer
     end
 
     def course_study_mode
-      @trainee.hesa_trainee_detail.course_study_mode
+      @trainee&.hesa_trainee_detail&.course_study_mode
     end
 
     def course_itt_start_date
@@ -136,7 +136,7 @@ module TraineeSerializer
     end
 
     def course_age_range
-      @trainee.hesa_trainee_detail.course_age_range
+      @trainee&.hesa_trainee_detail&.course_age_range
     end
 
     def expected_end_date
@@ -175,15 +175,15 @@ module TraineeSerializer
     end
 
     def fund_code
-      @trainee.hesa_trainee_detail.fund_code
+      @trainee&.hesa_trainee_detail&.fund_code
     end
 
     def bursary_level
-      @trainee.hesa_trainee_detail.funding_method
+      @trainee&.hesa_trainee_detail&.funding_method
     end
 
     def hesa_trainee_attributes
-      HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
+      HesaTraineeDetailSerializer::V01.new(@trainee&.hesa_trainee_detail)&.as_hash
     end
 
     def nationality
