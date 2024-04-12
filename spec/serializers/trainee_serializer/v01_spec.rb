@@ -23,8 +23,7 @@ RSpec.describe TraineeSerializer::V01 do
         sex
         diversity_disclosure
         ethnic_group
-        ethnic_background
-        additional_ethnic_background
+        ethnicity
         disability_disclosure
         course_subject_one
         itt_start_date
@@ -69,11 +68,6 @@ RSpec.describe TraineeSerializer::V01 do
         slug_sent_to_dqt_at
         placement_detail
         ukprn
-        ethnicity
-        ethnicity_background
-        other_ethnicity_details
-        disability
-        other_disability_details
         course_qualification
         course_title
         course_level
@@ -85,9 +79,7 @@ RSpec.describe TraineeSerializer::V01 do
         employing_school_urn
         lead_partner_urn_ukprn
         fund_code
-        funding_option
         course_year
-        funding_method
         itt_aim
         ni_number
         postgrad_apprenticeship_start_date
@@ -106,7 +98,6 @@ RSpec.describe TraineeSerializer::V01 do
       %w[
         id
         slug
-        state
         progress
         provider_id
         dttp_id
