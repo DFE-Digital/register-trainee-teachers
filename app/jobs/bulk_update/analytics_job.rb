@@ -3,6 +3,8 @@
 module BulkUpdate
   class AnalyticsJob < ApplicationJob
     def perform(model:, ids:)
+      return unless DfE::Analytics.enabled?
+
       @model = model
       @ids = ids
 
