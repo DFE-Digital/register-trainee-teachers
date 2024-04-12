@@ -398,7 +398,6 @@ Get a single trainee.
               "school_id": 26214,
               "urn": null,
               "name": null,
-              "address": null,
               "postcode": null,
               "created_at": "2024-01-18T08:02:42.672Z",
               "updated_at": "2024-01-18T08:02:42.672Z"
@@ -487,7 +486,6 @@ Get many placements for a trainee.
           "school_id": 26214,
           "urn": null,
           "name": null,
-          "address": null,
           "postcode": null,
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z"
@@ -555,7 +553,6 @@ Get a single placement for a trainee.
           "school_id": 26214,
           "urn": null,
           "name": null,
-          "address": null,
           "postcode": null,
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z"
@@ -700,7 +697,6 @@ Get a single degree for a trainee.
           "school_id": 26214,
           "urn": null,
           "name": null,
-          "address": null,
           "postcode": null,
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z",
@@ -928,7 +924,6 @@ Trainee details
               "school_id": 26214,
               "urn": null,
               "name": null,
-              "address": null,
               "postcode": null,
               "created_at": "2024-01-18T08:02:42.672Z",
               "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1044,7 +1039,6 @@ Placement details
     {
       "data": {
         "placement_id": "BFsRAS4LfwZZXvSX7aAfNUj3",
-        "address": null,
         "name": "Wellsway School",
         "postcode": null,
         "urn": "137523",
@@ -1386,7 +1380,6 @@ Withdraw a trainee.
               "school_id": 26214,
               "urn": null,
               "name": null,
-              "address": null,
               "postcode": null,
               "created_at": "2024-01-18T08:02:42.672Z",
               "updated_at": "2024-01-18T08:02:42.672Z",
@@ -1651,7 +1644,6 @@ Trainee details
               "school_id": null,
               "urn": "123456",
               "name": "Placement",
-              "address": null,
               "postcode": null,
               "created_at": "2024-03-19T22:07:12.572Z",
               "updated_at": "2024-03-19T22:07:12.572Z"
@@ -1790,7 +1782,6 @@ Placement details
         "school_id": null,
         "urn": "123456",
         "name": "Placement",
-        "address": null,
         "postcode": null,
         "created_at": "2024-03-19T22:23:48.619Z",
         "updated_at": "2024-03-19T22:23:48.619Z"
