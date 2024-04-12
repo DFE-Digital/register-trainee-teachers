@@ -38,6 +38,10 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           { data: create(:placement, :manual).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
         end
 
+        let(:params_to_update_postcode) do
+          { data: { postcode: "GU1 1AA" }.with_indifferent_access }
+        end
+
         it "creates a new placement and returns a 200 (ok) status" do
           put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
 
@@ -50,6 +54,16 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           expect(placement.reload.name).to eq(params.dig(:data, :name))
           expect(placement.reload.postcode).to eq(params.dig(:data, :postcode))
           expect(placement.reload.urn).to eq(params.dig(:data, :urn))
+        end
+
+        it "partial update of an existing placement returns 200 (ok) status" do
+          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params_to_update_postcode, headers: { Authorization: token }
+
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["data"]["placement_id"]).to eql(slug)
+          expect(trainee.reload.placements.count).to eq(2)
+
+          expect(placement.reload.postcode).to eq("GU1 1AA")
         end
 
         context "with different trainee" do
