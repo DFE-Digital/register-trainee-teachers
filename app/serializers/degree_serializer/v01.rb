@@ -29,7 +29,7 @@ module DegreeSerializer
     end
 
     def institution
-      institutions =  DfEReference::DegreesQuery::INSTITUTIONS.constituent_lists.first.all_as_hash
+      institutions = DfEReference::DegreesQuery::INSTITUTIONS.constituent_lists.first.all_as_hash
       institution = institutions.find { |_, item| item[:name] == @degree.institution }&.last
       return if institution.blank?
 
