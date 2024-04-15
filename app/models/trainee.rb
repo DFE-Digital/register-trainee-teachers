@@ -373,8 +373,9 @@ class Trainee < ApplicationRecord
     :placements,
     :degrees,
     :nationalisations,
-    :hesa_trainee_detail,
   )
+
+  accepts_nested_attributes_for :hesa_trainee_detail, update_only: true
 
   def hesa_student_for_collection(collection_reference)
     Hesa::Student.where(hesa_id:, collection_reference:).order(created_at: :asc).first

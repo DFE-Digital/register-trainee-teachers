@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe "`PUT /api/v0.1/trainees/:id` endpoint" do
-  let(:trainee) { create(:trainee, :in_progress, first_names: "Bob") }
+  let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, first_names: "Bob") }
   let(:other_trainee) { create(:trainee, :in_progress, first_names: "Bob") }
   let(:provider) { trainee.provider }
 
