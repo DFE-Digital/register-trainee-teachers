@@ -11,14 +11,12 @@ Rack::Attack.blocklist("block requests from UA blacklist") do |req|
 end
 
 # Throttle high volumes of API requests by IP address
-unless Rails.env.local?
-  Rack::Attack.throttle(
-    "req/ip",
-    limit: Settings.api.throttling.max_requests,
-    period: Settings.api.throttling.interval.to_i.seconds,
-  ) do |req|
-    req.ip if req.path.starts_with?("/api")
-  end
+Rack::Attack.throttle(
+  "req/ip",
+  limit: Settings.api.throttling.max_requests,
+  period: Settings.api.throttling.interval.to_i.seconds,
+) do |req|
+  req.ip if req.path.starts_with?("/api")
 end
 
 # Return how many seconds to wait before retrying request to well-behaved clients
