@@ -30,7 +30,11 @@ module DegreeSerializer
     end
 
     def subject
-      @degree.subject
+      subjects = DfEReference::DegreesQuery::SUBJECTS.constituent_lists.first.all_as_hash
+      subject = subjects.find { |_, item| item[:name] == @degree.subject }&.last
+      return if subject.blank?
+
+      subject[:hecos_code]
     end
 
     def institution
