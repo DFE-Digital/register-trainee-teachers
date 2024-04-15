@@ -19,7 +19,7 @@ This API allows you to access information about trainees and provides endpoints 
     - [POST /trainees/{trainee_id}/placements](#code-post-trainees-trainee_id-placements-code)
     - [POST /trainees/{trainee_id}/degrees](#code-post-trainees-trainee_id-degrees-code)
     - [POST /trainees/{trainee_id}/withdraw](#code-post-trainees-trainee_id-withdraw-code)
-    - [PUT|PATCH /trainees/{trainee_id}/{trainee_id}](#code-put-patch-trainees-trainee_id-trainee_id-code)
+    - [PUT|PATCH /trainees/{trainee_id}](#code-put-patch-trainees-trainee_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
     - [DELETE /trainees/{trainee_id}/placements/{placement_id}](#code-delete-trainees-trainee_id-placements-placement_id-code)
@@ -682,17 +682,7 @@ Create a trainee.
 
 #### Request
 
-`PUT /api/v0.1/trainees/{trainee_id}/{trainee_id}`
-
-or
-
-`PATCH /api/v0.1/trainees/{trainee_id}/{trainee_id}`
-
-#### Parameters
-
-| **Parameter** | **In**  | **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
+`POST /api/v0.1/trainees`
 
 #### Request body
 
@@ -1322,17 +1312,17 @@ Deletes an existing degree for this trainee.
 
 ---
 
-### `PUT|PATCH /trainees/{trainee_id}/{trainee_id}`
+### `PUT|PATCH /trainees/{trainee_id}`
 
 Updates an existing trainee.
 
 #### Request
 
-`PUT /api/v0.1/trainees/{trainee_id}/{trainee_id}`
+`PUT /api/v0.1/trainees/{trainee_id}`
 
 or
 
-`PATCH /api/v0.1/trainees/{trainee_id}/{trainee_id}`
+`PATCH /api/v0.1/trainees/{trainee_id}`
 
 #### Parameters
 
