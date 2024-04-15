@@ -193,11 +193,11 @@ module TraineeSerializer
     end
 
     def training_route
-      ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(::Trainee.training_routes[@trainee.training_route])
+      ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(@trainee.training_route)
     end
 
     def training_initiative
-      ::Hesa::CodeSets::TrainingInitiatives::MAPPING.key(::Trainee.training_initiatives[@trainee.training_initiative])
+      ::Hesa::CodeSets::TrainingInitiatives::MAPPING.key(@trainee.training_initiative)
     end
 
     def sex
