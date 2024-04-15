@@ -81,8 +81,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     it "creates the degrees if provided in the request body" do
       degree_attributes = response.parsed_body["degrees"]&.first
 
-      expect(degree_attributes["subject"]).to eq("Law")
-      expect(degree_attributes["institution"]).to eq("Other UK institution")
+      expect(degree_attributes["subject"]).to eq("100485")
+      expect(degree_attributes["institution"]).to be_nil
       expect(degree_attributes["graduation_year"]).to eq(2003)
     end
 

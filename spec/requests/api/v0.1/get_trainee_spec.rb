@@ -5,7 +5,7 @@ require "rails_helper"
 describe "`GET /api/v0.1/trainees/:id` endpoint" do
   let(:token) { "trainee_token" }
   let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
-  let!(:trainee) { create(:trainee, slug: "12345", provider: auth_token.provider) }
+  let!(:trainee) { create(:trainee, :with_hesa_trainee_detail, slug: "12345", provider: auth_token.provider) }
 
   it_behaves_like "a register API endpoint", "/api/v0.1/trainees/12345", "trainee_token"
 

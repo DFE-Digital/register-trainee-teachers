@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe "audit trail attribution" do
-  let(:trainee) { create(:trainee, :trn_received) }
+  let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received) }
   let(:provider) { trainee.provider }
 
   context "with a valid authentication token and the feature flag on" do

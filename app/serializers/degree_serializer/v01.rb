@@ -15,7 +15,54 @@ module DegreeSerializer
     end
 
     def as_hash
-      @degree.attributes.except(*EXCLUDED_ATTRIBUTES).merge(degree_id: @degree.slug)
+      @degree.attributes.except(*EXCLUDED_ATTRIBUTES).merge({
+        degree_id:,
+        subject:,
+        institution:,
+        country:,
+        degree_type:,
+        grade:,
+      })
+    end
+
+    def degree_id
+      @degree.slug
+    end
+
+    def subject
+      subjects = DfEReference::DegreesQuery::SUBJECTS.constituent_lists.first.all_as_hash
+      subject = subjects.find { |_, item| item[:name] == @degree.subject }&.last
+      return if subject.blank?
+
+      subject[:hecos_code]
+    end
+
+    def institution
+      institutions = DfEReference::DegreesQuery::INSTITUTIONS.constituent_lists.first.all_as_hash
+      institution = institutions.find { |_, item| item[:name] == @degree.institution }&.last
+      return if institution.blank?
+
+      institution[:hesa_itt_code]
+    end
+
+    def country
+      Hesa::CodeSets::Countries::MAPPING.key(@degree.country)
+    end
+
+    def degree_type
+      types = DfE::ReferenceData::Degrees::TYPES.all_as_hash
+      matching_type = types.find { |_, item| item[:name] == (@degree.uk_degree || @degree.non_uk_degree) }&.last
+      return if matching_type.blank?
+
+      matching_type[:hesa_itt_code]
+    end
+
+    def grade
+      grades = DfE::ReferenceData::Degrees::GRADES.all_as_hash
+      matching_grade = grades.find { |_, item| item[:name] == @degree.grade }&.last
+      return if matching_grade.blank?
+
+      matching_grade[:hesa_code]
     end
   end
 end

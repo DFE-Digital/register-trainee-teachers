@@ -23,7 +23,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
     end
 
     context "with a withdrawable trainee" do
-      let(:trainee) { create(:trainee, :trn_received, provider:) }
+      let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received, provider:) }
       let(:unknown) { create(:withdrawal_reason, :unknown) }
       let(:params) do
         {

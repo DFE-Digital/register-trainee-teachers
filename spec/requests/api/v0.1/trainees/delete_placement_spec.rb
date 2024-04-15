@@ -33,7 +33,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
     end
 
     context "with a deleteable a placements" do
-      let(:trainee) { create(:trainee, :with_placements, provider:) }
+      let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_placements, provider:) }
       let(:trainee_slug) { trainee.slug }
       let(:slug) { trainee.placements.last.slug }
 
