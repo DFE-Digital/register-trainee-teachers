@@ -16,12 +16,17 @@ module DegreeSerializer
 
     def as_hash
       @degree.attributes.except(*EXCLUDED_ATTRIBUTES).merge({
+        degree_id:,
         subject:,
         institution:,
         country:,
         degree_type:,
         grade:,
       })
+    end
+
+    def degree_id
+      @degree.slug
     end
 
     def subject
