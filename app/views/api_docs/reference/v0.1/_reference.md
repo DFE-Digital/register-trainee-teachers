@@ -5,7 +5,8 @@ This API allows you to access information about trainees and provides endpoints 
 - [API versioning strategy](#api-versioning-strategy)
 - [Draft version 0.1](#draft-version-0-1)
 - [Developing on the API](#developing-on-the-api)
-- [Authentication](#authentication)
+    - [Reference spreadsheet](#reference-spreadsheet)
+    - [Authentication](#authentication)
 - [Endpoints](#endpoints)
     - [GET /info](#code-get-info-code)
     - [GET /trainees](#code-get-trainees-code)
@@ -18,7 +19,7 @@ This API allows you to access information about trainees and provides endpoints 
     - [POST /trainees/{trainee_id}/placements](#code-post-trainees-trainee_id-placements-code)
     - [POST /trainees/{trainee_id}/degrees](#code-post-trainees-trainee_id-degrees-code)
     - [POST /trainees/{trainee_id}/withdraw](#code-post-trainees-trainee_id-withdraw-code)
-    - [PUT|PATCH /trainees/{trainee_id}/{trainee_id}](#code-put-patch-trainees-trainee_id-trainee_id-code)
+    - [PUT|PATCH /trainees/{trainee_id}](#code-put-patch-trainees-trainee_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
     - [DELETE /trainees/{trainee_id}/placements/{placement_id}](#code-delete-trainees-trainee_id-placements-placement_id-code)
@@ -42,7 +43,7 @@ Find out about [how we make updates to the API](/api-docs#api-versioning-strateg
 
 ## Draft version 0.1
 
-Version 0.1 is a draft version of the API. It is not yet officially released.
+Version 0.1 is a draft version of the API. It was released on 15 April 2024.
 
 It is designed for testing and feedback purposes only.
 
@@ -53,6 +54,27 @@ It will only be available on the `sandbox` environment.
 ---
 
 ## Developing on the API
+
+### Reference spreadsheet
+
+You can use the Register API reference spreadsheet to map trainee data from your student record system into the Register service via the Register API.
+
+Register API reference spreadsheet contains the following information:
+
+- field requirement
+- entity
+- description
+- whether a field is optional or mandatory
+- whether it allows multiple values
+- minimum and maximum instances
+- character length
+- format rules
+- HESA data type, alignment, code examples, labels, link to their data reference webpage and confirmation if the HESA validation is applicable
+
+You must only use the reference spreadsheet v0.1 for use in testing and feedback of API v0.1 within the sandbox environment.
+
+Download [Register API reference spreadsheet v0.1 (Excel)](/api-docs/reference/Register_API_Reference_v0.1.xlsx)
+
 
 ### Authentication
 
@@ -120,7 +142,7 @@ current academic cycle.
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **academic_cycle** | query | string | false | The academic cycle year (default is the current academic cycle). |
-| **status** | query | string | false | Include only trainees with a particular status. Valid values are `draft`, `submitted_for_trn`, `trn_received`, `recommended_for_award`, `withdrawn`, `deferred`, `awarded` |
+| **status** | query | string | false | Include only trainees with a particular status. Valid values are `course_not_yet_started`, `in_training`,  `deferred`, `awarded`,  `withdrawn` |
 | **since** | query | string | false | Include only trainees changed or created on or since a date. Dates should be in ISO 8601 format. |
 | **page** | query | integer | false | Page number (defaults to 1, the first page). |
 | **per_page** | query | integer | false | Number of records to return per page (default is 50) |
@@ -136,66 +158,43 @@ current academic cycle.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "abc1234",
+          "provider_trainee_id": "99157234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
           "created_at": "2023-10-20T14:54:47.374Z",
           "updated_at": "2024-01-24T16:03:28.721Z",
           "email": "trainee_644065@example.com",
-          "dttp_id": null,
           "middle_names": null,
-          "training_route": "provider_led_postgrad",
-          "sex": "female",
+          "training_route": "11",
+          "sex": "10",
           "diversity_disclosure": "diversity_disclosed",
           "ethnic_group": "mixed_ethnic_group",
           "ethnic_background": "Another Mixed background",
           "additional_ethnic_background": null,
           "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
+          "course_subject_one": "100425",
           "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
           "outcome_date": null,
           "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
           "trn": "6440650",
           "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "status": "deferred",
+          "state": "deferred",
           "withdraw_date": null,
           "withdraw_reasons_details": null,
           "defer_date": "2023-10-17",
           "recommended_for_award_at": null,
-          "dttp_update_sha": null,
           "trainee_start_date": "2023-09-04",
           "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
           "course_min_age": 5,
           "course_max_age": 11,
           "course_subject_two": null,
           "course_subject_three": null,
           "awarded_at": null,
-          "training_initiative": "no_initiative",
+          "training_initiative": "009",
           "applying_for_bursary": false,
           "bursary_tier": null,
-          "study_mode": "full_time",
+          "study_mode": "01",
           "ebacc": false,
           "region": null,
           "applying_for_scholarship": false,
@@ -208,21 +207,15 @@ current academic cycle.
           "commencement_status": null,
           "discarded_at": null,
           "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
+          "hesa_id": "87960005710008762",
           "additional_dttp_data": null,
           "created_from_hesa": true,
           "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
           "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
           "iqts_country": null,
           "hesa_editable": false,
           "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774
+          "placement_detail": null
         }
       ]
     }
@@ -280,130 +273,97 @@ Get a single trainee.
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "abc1234",
-          "first_names": "Trainee",
-          "last_name": "TraineeUser644065",
-          "date_of_birth": "2000-01-01",
-          "created_at": "2023-10-20T14:54:47.374Z",
-          "updated_at": "2024-01-24T16:03:28.721Z",
-          "email": "trainee_644065@example.com",
-          "dttp_id": null,
-          "middle_names": null,
-          "training_route": "provider_led_postgrad",
-          "sex": "female",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "mixed_ethnic_group",
-          "ethnic_background": "Another Mixed background",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
-          "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "status": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": "2023-10-17",
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": "2023-09-04",
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": 5,
-          "course_max_age": 11,
-          "course_subject_two": null,
-          "course_subject_three": null,
-          "awarded_at": null,
-          "training_initiative": "no_initiative",
-          "applying_for_bursary": false,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": false,
-          "course_education_phase": "primary",
-          "applying_for_grant": false,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": true,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
-          "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
-          "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774,
-          "placements": [
-            {
-              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-              "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "address": null,
-              "postcode": null,
-              "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z"
-            }
-          ],
-          "degrees": [
-            {
-              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
-              "non_uk_degree": null,
-              "created_at": "2024-01-18T08:02:41.955Z",
-              "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
-              "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
-              "country": null,
-              "other_grade": null,
-              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-            }
-          ]
-        }
-      ]
+      "data": {
+        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+        "provider_trainee_id": "abc1234",
+        "first_names": "Trainee",
+        "last_name": "TraineeUser644065",
+        "date_of_birth": "2000-01-01",
+        "created_at": "2023-10-20T14:54:47.374Z",
+        "updated_at": "2024-01-24T16:03:28.721Z",
+        "email": "trainee_644065@example.com",
+        "middle_names": null,
+        "training_route": "11",
+        "sex": "female",
+        "diversity_disclosure": "diversity_disclosed",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Another Mixed background",
+        "additional_ethnic_background": null,
+        "disability_disclosure": "no_disability",
+        "course_subject_one": "100425",
+        "itt_start_date": "2023-09-04",
+        "outcome_date": null,
+        "itt_end_date": "2023-10-17",
+        "trn": "6440650",
+        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+        "state": "deferred",
+        "withdraw_date": null,
+        "withdraw_reasons_details": null,
+        "defer_date": "2023-10-17",
+        "recommended_for_award_at": null,
+        "trainee_start_date": "2023-09-04",
+        "reinstate_date": null,
+        "course_min_age": 5,
+        "course_max_age": 11,
+        "course_subject_two": null,
+        "course_subject_three": null,
+        "awarded_at": null,
+        "training_initiative": "009",
+        "applying_for_bursary": false,
+        "bursary_tier": null,
+        "study_mode": "01",
+        "ebacc": false,
+        "region": null,
+        "applying_for_scholarship": false,
+        "course_education_phase": "primary",
+        "applying_for_grant": false,
+        "course_uuid": null,
+        "lead_school_not_applicable": false,
+        "employing_school_not_applicable": false,
+        "submission_ready": true,
+        "commencement_status": null,
+        "discarded_at": null,
+        "created_from_dttp": false,
+        "hesa_id": "87960005710008762",
+        "additional_dttp_data": null,
+        "created_from_hesa": true,
+        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+        "record_source": "hesa_collection",
+        "iqts_country": null,
+        "hesa_editable": false,
+        "withdraw_reasons_dfe_details": null,
+        "placement_detail": null,
+        "placements": [
+          {
+            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+            "school_id": 26214,
+            "urn": "123456",
+            "name": "Meadow Creek School",
+            "postcode": "AB1 2CD",
+            "created_at": "2024-01-18T08:02:42.672Z",
+            "updated_at": "2024-01-18T08:02:42.672Z"
+          }
+        ],
+        "degrees": [
+          {
+            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+            "uk_degree": "083",
+            "non_uk_degree": null,
+            "created_at": "2024-01-18T08:02:41.955Z",
+            "updated_at": "2024-01-18T08:02:41.955Z",
+            "subject": "100425",
+            "institution": "0116",
+            "graduation_year": 2022,
+            "grade": "02",
+            "country": null,
+            "other_grade": null,
+            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+          }
+        ]
+      }
     }
     </pre>
   </div>
@@ -461,12 +421,11 @@ Get many placements for a trainee.
     {
       "data": [
         {
-          "placement_id": "WQsRAS4LfwZZXvSX7aAfNUx3",
+          "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
           "school_id": 26214,
-          "urn": null,
-          "name": null,
-          "address": null,
-          "postcode": null,
+          "urn": "123456",
+          "name": "Meadow Creek School",
+          "postcode": "AB1 2CD",
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z"
         }
@@ -527,18 +486,15 @@ Get a single placement for a trainee.
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "placement_id": "WQsRAS4LfwZZXvSX7aAfNUx3",
-          "school_id": 26214,
-          "urn": null,
-          "name": null,
-          "address": null,
-          "postcode": null,
-          "created_at": "2024-01-18T08:02:42.672Z",
-          "updated_at": "2024-01-18T08:02:42.672Z"
-        }
-      ]
+      "data": {
+        "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+        "school_id": 26214,
+        "urn": "123456",
+        "name": "Meadow Creek School",
+        "postcode": "AB1 2CD",
+        "created_at": "2024-01-18T08:02:42.672Z",
+        "updated_at": "2024-01-18T08:02:42.672Z"
+      }
     }
     </pre>
   </div>
@@ -597,18 +553,16 @@ Get many degrees for a trainee.
       "data": [
         {
           "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
+          "uk_degree": "083",
           "non_uk_degree": null,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
+          "subject": "100425",
+          "institution": "0116",
           "graduation_year": 2022,
-          "grade": "Upper second-class honours (2:1)",
+          "grade": "02",
           "country": null,
           "other_grade": null,
-          "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
@@ -671,20 +625,23 @@ Get a single degree for a trainee.
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "id": 270180,
-          "trainee_id": 644065,
-          "school_id": 26214,
-          "urn": null,
-          "name": null,
-          "address": null,
-          "postcode": null,
-          "created_at": "2024-01-18T08:02:42.672Z",
-          "updated_at": "2024-01-18T08:02:42.672Z",
-          "slug": "WQsRAS4LfwZZXvSX7aAfNUx3"
-        }
-      ]
+      "data": {
+        "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+        "uk_degree": "083",
+        "non_uk_degree": null,
+        "created_at": "2024-01-18T08:02:41.955Z",
+        "updated_at": "2024-01-18T08:02:41.955Z",
+        "subject": "100425",
+        "institution": "0116",
+        "graduation_year": 2022,
+        "grade": "02",
+        "country": null,
+        "other_grade": null,
+        "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+        "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+        "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+        "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+      }
     }
     </pre>
   </div>
@@ -725,17 +682,7 @@ Create a trainee.
 
 #### Request
 
-`PUT /api/v0.1/trainees/{trainee_id}/{trainee_id}`
-
-or
-
-`PATCH /api/v0.1/trainees/{trainee_id}/{trainee_id}`
-
-#### Parameters
-
-| **Parameter** | **In**  | **Type** | **Required** | **Description** |
-| ------------- | ------- | -------- | ------------ | --------------- |
-| **trainee_id** | path | string | true | The unique ID of the trainee |
+`POST /api/v0.1/trainees`
 
 #### Request body
 
@@ -765,17 +712,14 @@ Trainee details
         "sex": "male",
         "email": "john.doe@example.com",
         "trn": "123456",
-        "training_route": "assessment_only",
+        "training_route": "11",
         "itt_start_date": "2022-09-01",
         "itt_end_date": "2023-07-01",
         "diversity_disclosure": "diversity_disclosed",
         "ethnic_group": "white_ethnic_group",
         "ethnic_background": "Background 1",
-        "disability_disclosure": "no_disability",
-        "course_subject_one": "Maths",
-        "course_subject_two": "Science",
-        "course_subject_three": "English",
-        "study_mode": "full_time",
+        "course_subject_one": "100425",
+        "study_mode": "01",
         "application_choice_id": "123",
         "placements_attributes": [{ "urn": "123456", "name": "Placement" }],
         "degrees_attributes": [{ "country": "UK", "grade": "First", "subject": "Computer Science", "institution": "University of Test", "graduation_year": "2012", "locale_code": "uk" }]
@@ -788,154 +732,101 @@ Trainee details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 201<span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "abc1234",
-          "first_names": "Ruby Joy",
-          "last_name": "TraineeUser644065",
-          "date_of_birth": "2000-01-01",
-          "created_at": "2023-10-20T14:54:47.374Z",
-          "updated_at": "2024-01-24T16:03:28.721Z",
-          "email": "trainee_644065@example.com",
-          "dttp_id": null,
-          "middle_names": "James",
-          "training_route": "assessment_only",
-          "sex": "male",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "white_ethnic_group",
-          "ethnic_background": "Background 1",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "Maths",
-          "itt_start_date": "2022-09-01",
-          "progress": {
-            "personal_details": true,
-            "contact_details": true,
-            "degrees": false,
-            "placements": false,
-            "diversity": true,
-            "course_details": true,
-            "training_details": true,
-            "trainee_start_status": true,
-            "trainee_data": true,
-            "schools": true,
-            "funding": true,
-            "iqts_country": true
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-07-01",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "status": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": "2023-10-17",
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": null,
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": null,
-          "course_max_age": null,
-          "course_subject_two": "Science",
-          "course_subject_three": "English",
-          "awarded_at": null,
-          "training_initiative": null,
-          "applying_for_bursary": null,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": null,
-          "course_education_phase": null,
-          "applying_for_grant": null,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": false,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": null,
-          "additional_dttp_data": null,
-          "created_from_hesa": false,
-          "hesa_updated_at": null,
-          "course_allocation_subject_id": null,
-          "start_academic_cycle_id": 8,
-          "end_academic_cycle_id": 8,
-          "record_source": null,
-          "hesa_trn_submission_id": null,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": null,
-          "placement_detail": null,
-          "application_choice_id": 123,
-          "ukprn": "10000571",
-          "ethnicity": null,
-          "ethnicity_background": null,
-          "other_ethnicity_details": null,
-          "disability": null,
-          "other_disability_details": null,
-          "course_qualification": null,
-          "course_title": null,
-          "course_level": null,
-          "course_itt_subject": null,
-          "course_study_mode": null,
-          "course_itt_start_date": "2022-09-01",
-          "course_age_range": [],
-          "expected_end_date": "2023-07-01",
-          "employing_school_urn": null,
-          "lead_partner_urn_ukprn": null,
-          "fund_code": null,
-          "funding_option": null,
-          "nationality": null,
-          "placements": [
-            {
-              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-              "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "address": null,
-              "postcode": null,
-              "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z"
-            }
-          ],
-          "degrees": [
-            {
-              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": null,
-              "non_uk_degree": null,
-              "trainee_id": 202901,
-              "created_at": "2024-03-19T22:07:12.553Z",
-              "updated_at": "2024-03-19T22:07:12.553Z",
-              "subject": "Computer Science",
-              "institution": "University of Test",
-              "graduation_year": 2012,
-              "grade": "First",
-              "country": "UK",
-              "other_grade": null,
-              "dttp_id": null,
-              "institution_uuid": null,
-              "uk_degree_uuid": null,
-              "subject_uuid": null,
-              "grade_uuid": null
-            }
-          ]
-        }
-      ]
+      "data": {
+        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+        "provider_trainee_id": "abc1234",
+        "first_names": "Trainee",
+        "last_name": "TraineeUser644065",
+        "date_of_birth": "2000-01-01",
+        "created_at": "2023-10-20T14:54:47.374Z",
+        "updated_at": "2024-01-24T16:03:28.721Z",
+        "email": "trainee_644065@example.com",
+        "middle_names": null,
+        "training_route": "11",
+        "sex": "female",
+        "diversity_disclosure": "diversity_disclosed",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Another Mixed background",
+        "additional_ethnic_background": null,
+        "disability_disclosure": "no_disability",
+        "course_subject_one": "100425",
+        "itt_start_date": "2023-09-04",
+        "outcome_date": null,
+        "itt_end_date": "2023-10-17",
+        "trn": "6440650",
+        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+        "state": "deferred",
+        "withdraw_date": null,
+        "withdraw_reasons_details": null,
+        "defer_date": "2023-10-17",
+        "recommended_for_award_at": null,
+        "trainee_start_date": "2023-09-04",
+        "reinstate_date": null,
+        "course_min_age": 5,
+        "course_max_age": 11,
+        "course_subject_two": null,
+        "course_subject_three": null,
+        "awarded_at": null,
+        "training_initiative": "009",
+        "applying_for_bursary": false,
+        "bursary_tier": null,
+        "study_mode": "01",
+        "ebacc": false,
+        "region": null,
+        "applying_for_scholarship": false,
+        "course_education_phase": "primary",
+        "applying_for_grant": false,
+        "course_uuid": null,
+        "lead_school_not_applicable": false,
+        "employing_school_not_applicable": false,
+        "submission_ready": true,
+        "commencement_status": null,
+        "discarded_at": null,
+        "created_from_dttp": false,
+        "hesa_id": "87960005710008762",
+        "additional_dttp_data": null,
+        "created_from_hesa": true,
+        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+        "record_source": "hesa_collection",
+        "iqts_country": null,
+        "hesa_editable": false,
+        "withdraw_reasons_dfe_details": null,
+        "placement_detail": null,
+        "placements": [
+          {
+            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+            "school_id": 26214,
+            "urn": "123456",
+            "name": "Meadow Creek School",
+            "postcode": "AB1 2CD",
+            "created_at": "2024-01-18T08:02:42.672Z",
+            "updated_at": "2024-01-18T08:02:42.672Z"
+          }
+        ],
+        "degrees": [
+          {
+            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+            "uk_degree": "083",
+            "non_uk_degree": null,
+            "created_at": "2024-01-18T08:02:41.955Z",
+            "updated_at": "2024-01-18T08:02:41.955Z",
+            "subject": "100425",
+            "institution": "0116",
+            "graduation_year": 2022,
+            "grade": "02",
+            "country": null,
+            "other_grade": null,
+            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+          }
+        ]
+      }
     }
     </pre>
   </div>
@@ -1021,15 +912,13 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "placement_id": "BFsRAS4LfwZZXvSX7aAfNUj3",
-        "address": null,
-        "name": "Wellsway School",
-        "postcode": null,
-        "urn": "137523",
-        "school_id": null,
-        "id": 270180,
+        "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+        "school_id": 26214,
+        "urn": "123456",
+        "name": "Meadow Creek School",
+        "postcode": "AB1 2CD",
         "created_at": "2024-01-18T08:02:42.672Z",
-        "updated_at": "2024-03-18T22:31:08.340Z"
+        "updated_at": "2024-01-18T08:02:42.672Z"
       }
     }
     </pre>
@@ -1134,12 +1023,11 @@ Degree details
     {
       "data": {
         "country": "UK",
-        "grade": "First",
-        "subject": "Applied linguistics",
-        "institution": "University of Oxford",
-        "uk_degree": "Bachelor of Arts",
-        "graduation_year": "2012",
-        "locale_code": "uk"
+        "grade": "02",
+        "subject": "100425",
+        "institution": "0116",
+        "uk_degree": "083",
+        "graduation_year": "2012"
       }
     }
     </pre>
@@ -1156,23 +1044,20 @@ Degree details
       "data": [
         {
           "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
+          "uk_degree": "083",
           "non_uk_degree": null,
-          "trainee_id": 644065,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
+          "subject": "100425",
+          "institution": "0116",
+          "graduation_year": 2022,
+          "grade": "02",
           "country": null,
           "other_grade": null,
-          "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+          "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
         }
       ]
     }
@@ -1267,134 +1152,97 @@ Withdraw a trainee.
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "abc1234",
-          "first_names": "Trainee",
-          "last_name": "TraineeUser644065",
-          "date_of_birth": "2000-01-01",
-          "created_at": "2023-10-20T14:54:47.374Z",
-          "updated_at": "2024-01-24T16:03:28.721Z",
-          "email": "trainee_644065@example.com",
-          "dttp_id": null,
-          "middle_names": null,
-          "training_route": "provider_led_postgrad",
-          "sex": "female",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "mixed_ethnic_group",
-          "ethnic_background": "Another Mixed background",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
-          "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "status": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": "2023-10-17",
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": "2023-09-04",
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": 5,
-          "course_max_age": 11,
-          "course_subject_two": null,
-          "course_subject_three": null,
-          "awarded_at": null,
-          "training_initiative": "no_initiative",
-          "applying_for_bursary": false,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": false,
-          "course_education_phase": "primary",
-          "applying_for_grant": false,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": true,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
-          "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
-          "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774,
-          "placements": [
-            {
-              "id": 270180,
-              "trainee_id": 644065,
-              "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "address": null,
-              "postcode": null,
-              "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z",
-              "slug": "AXsRAS4LfwZZXvSX7aAfNUb4"
-            }
-          ],
-          "degrees": [
-            {
-              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
-              "non_uk_degree": null,
-              "trainee_id": 644065,
-              "created_at": "2024-01-18T08:02:41.955Z",
-              "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
-              "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
-              "country": null,
-              "other_grade": null,
-              "dttp_id": null,
-              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-            }
-          ]
-        }
-      ]
+      "data": {
+        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+        "provider_trainee_id": "abc1234",
+        "first_names": "Trainee",
+        "last_name": "TraineeUser644065",
+        "date_of_birth": "2000-01-01",
+        "created_at": "2023-10-20T14:54:47.374Z",
+        "updated_at": "2024-01-24T16:03:28.721Z",
+        "email": "trainee_644065@example.com",
+        "middle_names": null,
+        "training_route": "11",
+        "sex": "female",
+        "diversity_disclosure": "diversity_disclosed",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Another Mixed background",
+        "additional_ethnic_background": null,
+        "disability_disclosure": "no_disability",
+        "course_subject_one": "100425",
+        "itt_start_date": "2023-09-04",
+        "outcome_date": null,
+        "itt_end_date": "2023-10-17",
+        "trn": "6440650",
+        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+        "state": "deferred",
+        "withdraw_date": null,
+        "withdraw_reasons_details": null,
+        "defer_date": "2023-10-17",
+        "recommended_for_award_at": null,
+        "trainee_start_date": "2023-09-04",
+        "reinstate_date": null,
+        "course_min_age": 5,
+        "course_max_age": 11,
+        "course_subject_two": null,
+        "course_subject_three": null,
+        "awarded_at": null,
+        "training_initiative": "009",
+        "applying_for_bursary": false,
+        "bursary_tier": null,
+        "study_mode": "01",
+        "ebacc": false,
+        "region": null,
+        "applying_for_scholarship": false,
+        "course_education_phase": "primary",
+        "applying_for_grant": false,
+        "course_uuid": null,
+        "lead_school_not_applicable": false,
+        "employing_school_not_applicable": false,
+        "submission_ready": true,
+        "commencement_status": null,
+        "discarded_at": null,
+        "created_from_dttp": false,
+        "hesa_id": "87960005710008762",
+        "additional_dttp_data": null,
+        "created_from_hesa": true,
+        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+        "record_source": "hesa_collection",
+        "iqts_country": null,
+        "hesa_editable": false,
+        "withdraw_reasons_dfe_details": null,
+        "placement_detail": null,
+        "placements": [
+          {
+            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+            "school_id": 26214,
+            "urn": "123456",
+            "name": "Meadow Creek School",
+            "postcode": "AB1 2CD",
+            "created_at": "2024-01-18T08:02:42.672Z",
+            "updated_at": "2024-01-18T08:02:42.672Z"
+          }
+        ],
+        "degrees": [
+          {
+            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+            "uk_degree": "083",
+            "non_uk_degree": null,
+            "created_at": "2024-01-18T08:02:41.955Z",
+            "updated_at": "2024-01-18T08:02:41.955Z",
+            "subject": "100425",
+            "institution": "0116",
+            "graduation_year": 2022,
+            "grade": "02",
+            "country": null,
+            "other_grade": null,
+            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+          }
+        ]
+      }
     }
     </pre>
   </div>
@@ -1437,24 +1285,8 @@ Deletes an existing degree for this trainee.
     {
       "errors": [
         {
-          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
-          "non_uk_degree": null,
-          "trainee_id": 644065,
-          "created_at": "2024-01-18T08:02:41.955Z",
-          "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
-          "country": null,
-          "other_grade": null,
-          "dttp_id": null,
-          "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-          "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-          "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+          "error": "NotFound",
+          "message": "Degree(s) not found"
         }
       ]
     }
@@ -1480,17 +1312,17 @@ Deletes an existing degree for this trainee.
 
 ---
 
-### `PUT|PATCH /trainees/{trainee_id}/{trainee_id}`
+### `PUT|PATCH /trainees/{trainee_id}`
 
 Updates an existing trainee.
 
 #### Request
 
-`PUT /api/v0.1/trainees/{trainee_id}/{trainee_id}`
+`PUT /api/v0.1/trainees/{trainee_id}`
 
 or
 
-`PATCH /api/v0.1/trainees/{trainee_id}/{trainee_id}`
+`PATCH /api/v0.1/trainees/{trainee_id}`
 
 #### Parameters
 
@@ -1533,131 +1365,97 @@ Trainee details
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "trainee_id": "GJGu9X8YSewEzPuJPyNFsbes",
-          "provider_trainee_id": "abc1234",
-          "first_names": "John",
-          "last_name": "Doe",
-          "date_of_birth": "1990-01-01",
-          "created_at": "2024-03-19T22:07:12.529Z",
-          "updated_at": "2024-03-19T22:07:12.561Z",
-          "email": "john.doe@example.com",
-          "dttp_id": null,
-          "middle_names": "James",
-          "training_route": "assessment_only",
-          "sex": "male",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "white_ethnic_group",
-          "ethnic_background": "Background 1",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
-          "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": null,
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": "2023-09-04",
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": 5,
-          "course_max_age": 11,
-          "course_subject_two": null,
-          "course_subject_three": null,
-          "awarded_at": null,
-          "training_initiative": "no_initiative",
-          "applying_for_bursary": false,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": false,
-          "course_education_phase": "primary",
-          "applying_for_grant": false,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": true,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
-          "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
-          "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774,
-          "placements": [
-            {
-              "placement_id": "BWUDxpWVqdFeeMVcnmVY1s67",
-              "school_id": null,
-              "urn": "123456",
-              "name": "Placement",
-              "address": null,
-              "postcode": null,
-              "created_at": "2024-03-19T22:07:12.572Z",
-              "updated_at": "2024-03-19T22:07:12.572Z"
-            }
-          ],
-          "degrees": [
-            {
-              "degree_id": "W98C6yWChUwhFSEsN5idGgCx",
-              "locale_code": "uk",
-              "uk_degree": null,
-              "non_uk_degree": null,
-              "created_at": "2024-03-19T22:07:12.553Z",
-              "updated_at": "2024-03-19T22:07:12.553Z",
-              "subject": "Computer Science",
-              "institution": "University of Test",
-              "graduation_year": 2012,
-              "grade": "First",
-              "country": "UK",
-              "other_grade": null,
-              "dttp_id": null,
-              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-            }
-          ]
-        }
-      ]
+      "data": {
+        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+        "provider_trainee_id": "abc1234",
+        "first_names": "Trainee",
+        "last_name": "TraineeUser644065",
+        "date_of_birth": "2000-01-01",
+        "created_at": "2023-10-20T14:54:47.374Z",
+        "updated_at": "2024-01-24T16:03:28.721Z",
+        "email": "trainee_644065@example.com",
+        "middle_names": null,
+        "training_route": "11",
+        "sex": "female",
+        "diversity_disclosure": "diversity_disclosed",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Another Mixed background",
+        "additional_ethnic_background": null,
+        "disability_disclosure": "no_disability",
+        "course_subject_one": "100425",
+        "itt_start_date": "2023-09-04",
+        "outcome_date": null,
+        "itt_end_date": "2023-10-17",
+        "trn": "6440650",
+        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+        "state": "deferred",
+        "withdraw_date": null,
+        "withdraw_reasons_details": null,
+        "defer_date": "2023-10-17",
+        "recommended_for_award_at": null,
+        "trainee_start_date": "2023-09-04",
+        "reinstate_date": null,
+        "course_min_age": 5,
+        "course_max_age": 11,
+        "course_subject_two": null,
+        "course_subject_three": null,
+        "awarded_at": null,
+        "training_initiative": "009",
+        "applying_for_bursary": false,
+        "bursary_tier": null,
+        "study_mode": "01",
+        "ebacc": false,
+        "region": null,
+        "applying_for_scholarship": false,
+        "course_education_phase": "primary",
+        "applying_for_grant": false,
+        "course_uuid": null,
+        "lead_school_not_applicable": false,
+        "employing_school_not_applicable": false,
+        "submission_ready": true,
+        "commencement_status": null,
+        "discarded_at": null,
+        "created_from_dttp": false,
+        "hesa_id": "87960005710008762",
+        "additional_dttp_data": null,
+        "created_from_hesa": true,
+        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+        "record_source": "hesa_collection",
+        "iqts_country": null,
+        "hesa_editable": false,
+        "withdraw_reasons_dfe_details": null,
+        "placement_detail": null,
+        "placements": [
+          {
+            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+            "school_id": 26214,
+            "urn": "123456",
+            "name": "Meadow Creek School",
+            "postcode": "AB1 2CD",
+            "created_at": "2024-01-18T08:02:42.672Z",
+            "updated_at": "2024-01-18T08:02:42.672Z"
+          }
+        ],
+        "degrees": [
+          {
+            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+            "uk_degree": "083",
+            "non_uk_degree": null,
+            "created_at": "2024-01-18T08:02:41.955Z",
+            "updated_at": "2024-01-18T08:02:41.955Z",
+            "subject": "100425",
+            "institution": "0116",
+            "graduation_year": 2022,
+            "grade": "02",
+            "country": null,
+            "other_grade": null,
+            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+          }
+        ]
+      }
     }
     </pre>
   </div>
@@ -1764,11 +1562,9 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "placement_id": "4QVvufb2UJM1gdhKnsyKiVkj",
-        "school_id": null,
-        "urn": "123456",
-        "name": "Placement",
+        "trainee_id": 644065,
         "address": null,
+        "name": "Wellsway School",
         "postcode": null,
         "created_at": "2024-03-19T22:23:48.619Z",
         "updated_at": "2024-03-19T22:23:48.619Z"
@@ -1882,23 +1678,21 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "degree_id": "vxAnSsSM91Ys2NhLYS8MC2CL",
-        "locale_code": "uk",
-        "uk_degree": "Bachelor of Arts",
+        "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+        "uk_degree": "083",
         "non_uk_degree": null,
-        "created_at": "2024-03-20T12:23:23.092Z",
-        "updated_at": "2024-03-20T12:23:23.092Z",
-        "subject": "Applied linguistics",
-        "institution": "University of Oxford",
-        "graduation_year": 2012,
-        "grade": "First",
-        "country": "UK",
+        "created_at": "2024-01-18T08:02:41.955Z",
+        "updated_at": "2024-01-18T08:02:41.955Z",
+        "subject": "100425",
+        "institution": "0116",
+        "graduation_year": 2022,
+        "grade": "02",
+        "country": null,
         "other_grade": null,
-        "dttp_id": null,
-        "institution_uuid": null,
-        "uk_degree_uuid": null,
-        "subject_uuid": null,
-        "grade_uuid": null
+        "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+        "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+        "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+        "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
       }
     }
     </pre>
@@ -1989,131 +1783,97 @@ Deletes an existing placement for this trainee.
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": [
-        {
-          "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "abc1234",
-          "first_names": "Trainee",
-          "last_name": "TraineeUser644065",
-          "date_of_birth": "2000-01-01",
-          "created_at": "2023-10-20T14:54:47.374Z",
-          "updated_at": "2024-01-24T16:03:28.721Z",
-          "email": "trainee_644065@example.com",
-          "dttp_id": null,
-          "middle_names": null,
-          "training_route": "provider_led_postgrad",
-          "sex": "female",
-          "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "mixed_ethnic_group",
-          "ethnic_background": "Another Mixed background",
-          "additional_ethnic_background": null,
-          "disability_disclosure": "no_disability",
-          "course_subject_one": "primary teaching",
-          "itt_start_date": "2023-09-04",
-          "progress": {
-            "personal_details": false,
-            "contact_details": false,
-            "degrees": false,
-            "placements": false,
-            "diversity": false,
-            "course_details": false,
-            "training_details": false,
-            "trainee_start_status": false,
-            "trainee_data": false,
-            "schools": false,
-            "funding": false,
-            "iqts_country": false,
-            "placement_details": false
-          },
-          "provider_id": 30,
-          "outcome_date": null,
-          "itt_end_date": "2023-10-17",
-          "placement_assignment_dttp_id": null,
-          "trn": "6440650",
-          "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-          "state": "deferred",
-          "withdraw_date": null,
-          "withdraw_reasons_details": null,
-          "defer_date": "2023-10-17",
-          "recommended_for_award_at": null,
-          "dttp_update_sha": null,
-          "trainee_start_date": "2023-09-04",
-          "reinstate_date": null,
-          "dormancy_dttp_id": null,
-          "lead_school_id": null,
-          "employing_school_id": null,
-          "apply_application_id": null,
-          "course_min_age": 5,
-          "course_max_age": 11,
-          "course_subject_two": null,
-          "course_subject_three": null,
-          "awarded_at": null,
-          "training_initiative": "no_initiative",
-          "applying_for_bursary": false,
-          "bursary_tier": null,
-          "study_mode": "full_time",
-          "ebacc": false,
-          "region": null,
-          "applying_for_scholarship": false,
-          "course_education_phase": "primary",
-          "applying_for_grant": false,
-          "course_uuid": null,
-          "lead_school_not_applicable": false,
-          "employing_school_not_applicable": false,
-          "submission_ready": true,
-          "commencement_status": null,
-          "discarded_at": null,
-          "created_from_dttp": false,
-          "hesa_id": "87960005710003282",
-          "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "course_allocation_subject_id": 21,
-          "start_academic_cycle_id": 15,
-          "end_academic_cycle_id": 15,
-          "record_source": "hesa_collection",
-          "hesa_trn_submission_id": 910,
-          "iqts_country": null,
-          "hesa_editable": false,
-          "withdraw_reasons_dfe_details": null,
-          "slug_sent_to_dqt_at": "2023-10-20T14:55:02.636Z",
-          "placement_detail": null,
-          "application_choice_id": 452774,
-          "placements": [
-            {
-              "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-              "school_id": 26214,
-              "urn": null,
-              "name": null,
-              "address": null,
-              "postcode": null,
-              "created_at": "2024-01-18T08:02:42.672Z",
-              "updated_at": "2024-01-18T08:02:42.672Z"
-            }
-          ],
-          "degrees": [
-            {
-              "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-              "locale_code": "uk",
-              "uk_degree": "Bachelor of Arts",
-              "non_uk_degree": null,
-              "created_at": "2024-01-18T08:02:41.955Z",
-              "updated_at": "2024-01-18T08:02:41.955Z",
-              "subject": "Childhood studies",
-              "institution": "University of Bristol",
-              "graduation_year": 2022,
-              "grade": "Upper second-class honours (2:1)",
-              "country": null,
-              "other_grade": null,
-              "dttp_id": null,
-              "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-              "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-              "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-            }
-          ]
-        }
-      ]
+      "data": {
+        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+        "provider_trainee_id": "abc1234",
+        "first_names": "Trainee",
+        "last_name": "TraineeUser644065",
+        "date_of_birth": "2000-01-01",
+        "created_at": "2023-10-20T14:54:47.374Z",
+        "updated_at": "2024-01-24T16:03:28.721Z",
+        "email": "trainee_644065@example.com",
+        "middle_names": null,
+        "training_route": "11",
+        "sex": "female",
+        "diversity_disclosure": "diversity_disclosed",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Another Mixed background",
+        "additional_ethnic_background": null,
+        "disability_disclosure": "no_disability",
+        "course_subject_one": "100425",
+        "itt_start_date": "2023-09-04",
+        "outcome_date": null,
+        "itt_end_date": "2023-10-17",
+        "trn": "6440650",
+        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+        "state": "deferred",
+        "withdraw_date": null,
+        "withdraw_reasons_details": null,
+        "defer_date": "2023-10-17",
+        "recommended_for_award_at": null,
+        "trainee_start_date": "2023-09-04",
+        "reinstate_date": null,
+        "course_min_age": 5,
+        "course_max_age": 11,
+        "course_subject_two": null,
+        "course_subject_three": null,
+        "awarded_at": null,
+        "training_initiative": "009",
+        "applying_for_bursary": false,
+        "bursary_tier": null,
+        "study_mode": "01",
+        "ebacc": false,
+        "region": null,
+        "applying_for_scholarship": false,
+        "course_education_phase": "primary",
+        "applying_for_grant": false,
+        "course_uuid": null,
+        "lead_school_not_applicable": false,
+        "employing_school_not_applicable": false,
+        "submission_ready": true,
+        "commencement_status": null,
+        "discarded_at": null,
+        "created_from_dttp": false,
+        "hesa_id": "87960005710008762",
+        "additional_dttp_data": null,
+        "created_from_hesa": true,
+        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
+        "record_source": "hesa_collection",
+        "iqts_country": null,
+        "hesa_editable": false,
+        "withdraw_reasons_dfe_details": null,
+        "placement_detail": null,
+        "placements": [
+          {
+            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+            "school_id": 26214,
+            "urn": "123456",
+            "name": "Meadow Creek School",
+            "postcode": "AB1 2CD",
+            "created_at": "2024-01-18T08:02:42.672Z",
+            "updated_at": "2024-01-18T08:02:42.672Z"
+          }
+        ],
+        "degrees": [
+          {
+            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+            "uk_degree": "083",
+            "non_uk_degree": null,
+            "created_at": "2024-01-18T08:02:41.955Z",
+            "updated_at": "2024-01-18T08:02:41.955Z",
+            "subject": "100425",
+            "institution": "0116",
+            "graduation_year": 2022,
+            "grade": "02",
+            "country": null,
+            "other_grade": null,
+            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+          }
+        ]
+      }
     }
     </pre>
   </div>
@@ -2172,25 +1932,21 @@ Deletes an existing degree for this trainee.
     {
       "data": [
         {
-          "id": 492440,
-          "locale_code": "uk",
-          "uk_degree": "Bachelor of Arts",
+          "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+          "uk_degree": "083",
           "non_uk_degree": null,
-          "trainee_id": 644065,
           "created_at": "2024-01-18T08:02:41.955Z",
           "updated_at": "2024-01-18T08:02:41.955Z",
-          "subject": "Childhood studies",
-          "institution": "University of Bristol",
-          "graduation_year": 2023,
-          "grade": "Lower second-class honours (2:2)",
+          "subject": "100425",
+          "institution": "0116",
+          "graduation_year": 2022,
+          "grade": "02",
           "country": null,
           "other_grade": null,
-          "slug": "E1phsAcP3hDFMhx19qVGhchR",
-          "dttp_id": null,
           "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
           "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
           "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-          "grade_uuid": "377a46ea-d6c6-4e87-9728-c1f0dd0ef109"
+          "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
         }
       ]
     }
@@ -2514,7 +2270,7 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>year_of_course</code></dt>
+    <dt class="govuk-summary-list__key"><code>course_year</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string, required
@@ -2688,6 +2444,20 @@ Deletes an existing degree for this trainee.
 
 <dl class="govuk-summary-list">
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>placement_id</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 24 characters)
+      </p>
+      <p class="govuk-body">
+        The unique ID of the placement in the Register system. Used to identify the placement when <a href="/api-docs/reference#code-put-patch-trainees-trainee_id-placements-placement_id-code">updating</a> or <a href="/api-docs/reference#code-delete-trainees-trainee_id-placements-placement_id-code">deleting</a>.
+      </p>
+      <p class="govuk-body">
+        Example: <code>4QWdpfb2UJM1gdhKnsyKiVkj</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
@@ -2777,29 +2547,10 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string, required
-      </p>
-      <p class="govuk-body">
-        Whether the degree was awarded in the UK or not.
-      </p>
-      <p class="govuk-body">
-        Example: <code>uk</code>
-      </p>
-      <p class="govuk-body">Possible values:</p>
-      <ul class="govuk-list govuk-list--bullet">
-        <li><code>uk</code></li>
-        <li><code>non_uk</code></li>
-      </ul>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if <code>locale_code</code> is <code>uk</code>
+        string, required if degree is from the UK
       </p>
       <p class="govuk-body">
         The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degtype">HESA degree type field</a>
@@ -2813,7 +2564,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>non_uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if <code>locale_code</code> is <code>non_uk</code>
+        string, required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
         The UK ENIC comparable degree type for non-UK degrees.
@@ -2830,7 +2581,7 @@ Deletes an existing degree for this trainee.
         string, required
       </p>
       <p class="govuk-body">
-        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsubj">HESA degree subject field</a>
+        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsbj">HESA degree subject field</a>
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -2841,7 +2592,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>institution</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if <code>locale_code</code> is <code>uk</code>
+        string, required if degree is from the UK
       </p>
       <p class="govuk-body">
         The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degest">HESA degree establishment field</a>
@@ -2861,7 +2612,7 @@ Deletes an existing degree for this trainee.
         The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>2012-06-30</code>
+        Example: <code>2012</code>
       </p>
     </dd>
   </div>
