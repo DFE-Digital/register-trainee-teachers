@@ -8,17 +8,20 @@ module Api
     end
 
     def call
+      trainee_filter_params = Api::TraineeFilterParams.new(filter_params)
+      return [[], trainee_filter_params.errors] unless trainee_filter_params.valid?
+
       trainees = provider.trainees
                 .not_draft
                 .joins(:start_academic_cycle)
                 .where(academic_cycles: { id: academic_cycle.id })
                 .where("trainees.updated_at > ?", since)
-                .order("trainees.updated_at #{sort_by}")
+                .order("trainees.updated_at #{sort_order}")
                 .page(page)
                 .per(pagination_per_page)
 
       filtered_trainees = ::Trainees::Filter.call(trainees:, filters:)
-      filtered_trainees.includes(%i[published_course employing_school lead_school placements degrees hesa_trainee_detail])
+      [filtered_trainees.includes(%i[published_course employing_school lead_school placements degrees hesa_trainee_detail]), nil]
     end
 
   private
@@ -31,6 +34,10 @@ module Api
 
     def filters
       @filters ||= TraineeFilter.new(params:).filters
+    end
+
+    def filter_params
+      params.permit(:status, :since, :academic_cycle, :page, :per_page, :sort_order)
     end
   end
 end

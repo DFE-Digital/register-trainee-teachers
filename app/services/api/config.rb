@@ -3,6 +3,6 @@
 module Api
   module Config
     PAGINATION_PER_PAGE = 50
-    SORT_BY = "desc"
+    SORT_ORDER = "desc"
   end
 end

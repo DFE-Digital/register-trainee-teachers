@@ -5,12 +5,25 @@ module Api
     include Api::Serializable
 
     def index
-      trainees = GetTraineesService.call(provider: current_provider, params: params)
+      trainees, errors = GetTraineesService.call(
+        provider: current_provider,
+        params: params,
+      )
 
-      if trainees.exists?
-        render(json: AppendMetadata.call(objects: trainees, serializer_klass: serializer_klass), status: :ok)
+      if errors.blank?
+        if trainees.exists?
+          render(json: AppendMetadata.call(objects: trainees, serializer_klass: serializer_klass), status: :ok)
+        else
+          render_not_found(message: "No trainees found")
+        end
       else
-        render_not_found(message: "No trainees found")
+        render(
+          json: {
+            message: "Validation failed: #{errors.count} #{'error'.pluralize(errors.count)} prohibited this request being run",
+            errors: errors,
+          },
+          status: :unprocessable_entity,
+        )
       end
     end
 
@@ -39,7 +52,7 @@ module Api
         else
           render(
             json: {
-              message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this user from being saved",
+              message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this trainee from being saved",
               errors: validation.all_errors,
             },
             status: :unprocessable_entity,
