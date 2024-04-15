@@ -113,7 +113,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           },
         )
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to eq(["Request could not be parsed"])
+        expect(response.parsed_body["errors"]).to eq(["Param is missing or the value is empty: data"])
         expect(trainee.reload.degrees.first.subject).to eq(original_subject)
       end
     end

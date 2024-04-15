@@ -11,9 +11,9 @@ module Api
       render_not_found(message: "#{e.model}(s) not found")
     end
 
-    rescue_from ActionController::ParameterMissing do
+    rescue_from ActionController::ParameterMissing do |e|
       render(
-        json: { errors: ["Request could not be parsed"] },
+        json: { errors: [e.message.capitalize] },
         status: :unprocessable_entity,
       )
     end
