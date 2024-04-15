@@ -98,7 +98,7 @@ describe "`GET /trainees` endpoint" do
       )
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["data"].map { |trainee| trainee[:slug] }).to eq(trainees.map(&:slug).reverse)
+      expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] }).to eq(trainees.map(&:slug).reverse)
     end
 
     it "sorts the results in ascending order when specified" do
@@ -109,7 +109,7 @@ describe "`GET /trainees` endpoint" do
       )
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["data"].map { |trainee| trainee[:slug] }).to eq(trainees.map(&:slug))
+      expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] }).to eq(trainees.map(&:slug))
     end
   end
 
