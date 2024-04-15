@@ -20,7 +20,7 @@ module Api
 
       trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
 
-      if trainee.save
+      if validation.all_errors.empty? && trainee.save
         ::Trainees::SubmitForTrn.call(trainee:)
         success_response(trainee)
       else

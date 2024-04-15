@@ -4,16 +4,6 @@ module Submissions
   class ApiTrnValidator < BaseValidator
     include FundingHelper
 
-    class_attribute :extra_validators, instance_writer: false, default: {}
-
-    class << self
-      def missing_data_validator(name, options)
-        extra_validators[name] = options
-      end
-    end
-
-    missing_data_validator :placements, form: "PlacementDetailForm", if: :requires_placements?
-
     def all_errors
       @all_errors ||= sections.each_with_object({}) do |section, errors_hash|
         next unless validator_keys.include?(section)
