@@ -2830,7 +2830,7 @@ Deletes an existing degree for this trainee.
         string, required
       </p>
       <p class="govuk-body">
-        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsubj">HESA degree subject field</a>
+        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsbj">HESA degree subject field</a>
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
