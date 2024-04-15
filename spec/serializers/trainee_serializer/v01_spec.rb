@@ -71,7 +71,7 @@ RSpec.describe TraineeSerializer::V01 do
         course_qualification
         course_title
         course_level
-        course_itt_subject
+        course_subject_one
         course_study_mode
         course_itt_start_date
         course_age_range

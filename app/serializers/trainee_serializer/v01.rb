@@ -34,6 +34,10 @@ module TraineeSerializer
         school_attributes,
         funding_attributes,
         hesa_trainee_attributes,
+        sex: sex,
+        study_mode: course_study_mode,
+        course_subject_one: course_subject_one,
+        training_route: training_route,
         nationality: nationality,
         training_initiative: training_initiative,
         placements: placements,
@@ -97,9 +101,7 @@ module TraineeSerializer
         course_qualification:,
         course_title:,
         course_level:,
-        course_itt_subject:,
         course_education_phase:,
-        course_study_mode:,
         course_itt_start_date:,
         course_age_range:,
         expected_end_date:,
@@ -119,8 +121,8 @@ module TraineeSerializer
       @trainee.published_course&.name
     end
 
-    def course_itt_subject
-      @trainee.course_subject_one
+    def course_subject_one
+      ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_one)
     end
 
     def course_education_phase
