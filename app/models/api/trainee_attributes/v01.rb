@@ -38,6 +38,10 @@ module Api
         progress
         training_initiative
         hesa_id
+        applying_for_bursary
+        applying_for_grant
+        applying_for_scholarship
+        bursary_tier
       ].freeze
 
       REQUIRED_ATTRIBUTES = %i[
