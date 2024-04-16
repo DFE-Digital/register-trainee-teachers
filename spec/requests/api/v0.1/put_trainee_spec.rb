@@ -54,7 +54,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         params: { foo: { bar: "Alice" } },
       )
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body[:errors]).to contain_exactly("Request could not be parsed")
+      expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
     end
 
     it "returns status 422 if the request data is invalid (has an invalid attribute value)" do
