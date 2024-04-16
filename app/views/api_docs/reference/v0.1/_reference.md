@@ -705,22 +705,27 @@ Trainee details
     <pre class="json-code-sample">
     {
       "data": {
+        "provider_trainee_id": "12345678",
         "first_names": "John",
-        "middle_names": "James",
         "last_name": "Doe",
         "date_of_birth": "1990-01-01",
-        "sex": "male",
+        "sex": "11",
         "email": "john.doe@example.com",
-        "trn": "123456",
         "training_route": "11",
-        "itt_start_date": "2022-09-01",
-        "itt_end_date": "2023-07-01",
-        "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "white_ethnic_group",
-        "ethnic_background": "Background 1",
+        "itt_start_date": "2023-09-01",
+        "itt_end_date": "2024-07-01",
         "course_subject_one": "100425",
         "study_mode": "01",
-        "application_choice_id": "123",
+        "nationality": "GB",
+        "ethnicity": "120",
+        "disability1": "58",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "course_year": "2",
+        "course_age_range": "13918",
+        "fund_code": "7",
+        "funding_method": "4",
+        "hesa_id": "1210007145123456",
         "placements_attributes": [{ "urn": "123456", "name": "Placement" }],
         "degrees_attributes": [{ "grade": "02", "subject": "100425", "institution": "0116", "uk_degree": "083", "graduation_year": "2012-06-31"}]
       }
@@ -2123,7 +2128,7 @@ Deletes an existing degree for this trainee.
         The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nation">HESA nationality field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>US</code>
+        Example: <code>GB</code>
       </p>
     </dd>
   </div>
