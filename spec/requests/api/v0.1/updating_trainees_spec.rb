@@ -89,32 +89,16 @@ describe "Updating a newly created trainee", feature_register_api: true do
       context "when updating a newly created trainee with valid params" do
         let(:params_for_update) { { data: { first_names: "Alice" } } }
 
-        if cs == CourseSubjects::PHYSICS
-          it "fails to updates the trainee" do
-            put(
-              "/api/v0.1/trainees/#{slug}",
-              params: params_for_update,
-              headers: headers,
-            )
+        it "updates the trainee" do
+          put(
+            "/api/v0.1/trainees/#{slug}",
+            params: params_for_update,
+            headers: headers,
+          )
 
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body).to match(
-              { "message" => "Validation failed: 2 errors prohibited this trainee from being saved",
-                "errors" => { "funding" => { "applying_for_bursary" => ["Select if you are applying for a funding for this trainee"], "applying_for_grant" => ["Select if you are applying for a funding for this trainee"] } } },
-            )
-          end
-        else
-          it "updates the trainee" do
-            put(
-              "/api/v0.1/trainees/#{slug}",
-              params: params_for_update,
-              headers: headers,
-            )
-
-            expect(response).to have_http_status(:ok)
-            expect(trainee.first_names).to eq("Alice")
-            expect(response.parsed_body[:data]["trainee_id"]).to eq(slug)
-          end
+          expect(response).to have_http_status(:ok)
+          expect(trainee.first_names).to eq("Alice")
+          expect(response.parsed_body[:data]["trainee_id"]).to eq(slug)
         end
       end
     end
