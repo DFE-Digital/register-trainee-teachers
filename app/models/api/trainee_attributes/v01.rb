@@ -38,6 +38,7 @@ module Api
         progress
         training_initiative
         hesa_id
+        provider_trainee_id
       ].freeze
 
       REQUIRED_ATTRIBUTES = %i[

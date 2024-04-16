@@ -83,10 +83,11 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Alice" } },
+        params: { data: { first_names: "Alice", provider_trainee_id: "99157234/2/01" } },
       )
       expect(response).to have_http_status(:ok)
       expect(trainee.reload.first_names).to eq("Alice")
+      expect(trainee.provider_trainee_id).to eq("99157234/2/01")
       expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
     end
 
