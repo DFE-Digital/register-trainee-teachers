@@ -693,7 +693,7 @@ Trainee details
     <dt class="govuk-summary-list__key"><code>data</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        <a class="govuk-link" href="#trainee-object">Trainee</a> object
+        <a class="govuk-link" href="#trainee-object">Trainee</a> object with nested <a class="govuk-link" href="#placement-object">Placement</a> and <a class="govuk-link" href="#degree-object">Degree</a> objects
       </p>
     </dd>
   </div>
