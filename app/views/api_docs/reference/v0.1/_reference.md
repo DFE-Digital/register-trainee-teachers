@@ -1231,7 +1231,7 @@ Degree details
       "errors": [
         {
           "error": "UnprocessableEntity",
-          "message": "Request could not be parsed"
+          "message": "Param is missing or the value is empty: data"
         }
       ]
     }
