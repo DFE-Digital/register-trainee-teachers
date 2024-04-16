@@ -722,7 +722,7 @@ Trainee details
         "study_mode": "01",
         "application_choice_id": "123",
         "placements_attributes": [{ "urn": "123456", "name": "Placement" }],
-        "degrees_attributes": [{ "country": "UK", "grade": "First", "subject": "Computer Science", "institution": "University of Test", "graduation_year": "2012", "locale_code": "uk" }]
+        "degrees_attributes": [{ "grade": "02", "subject": "100425", "institution": "0116", "uk_degree": "083", "graduation_year": "2012-06-31"}]
       }
     }
     </pre>
@@ -1022,12 +1022,11 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "country": "UK",
         "grade": "02",
         "subject": "100425",
         "institution": "0116",
         "uk_degree": "083",
-        "graduation_year": "2012"
+        "graduation_year": "2012-06-31"
       }
     }
     </pre>
@@ -1661,7 +1660,6 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "graduation_year": 2022,
         "grade": "Lower second-class honours (2:2)"
       }
     }
@@ -2522,7 +2520,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>country</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string, required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
         The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degctry">HESA degree country field</a>
@@ -2536,7 +2534,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>grade</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string, required if degree is from the UK
       </p>
       <p class="govuk-body">
         The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
@@ -2612,7 +2610,7 @@ Deletes an existing degree for this trainee.
         The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>2012</code>
+        Example: <code>2012-06-31</code>
       </p>
     </dd>
   </div>
