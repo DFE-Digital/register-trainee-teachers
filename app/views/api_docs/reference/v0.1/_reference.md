@@ -768,8 +768,21 @@ Trainee details
         "fund_code": "7",
         "funding_method": "4",
         "hesa_id": "1210007145123456",
-        "placements_attributes": [{ "urn": "123456", "name": "Placement" }],
-        "degrees_attributes": [{ "grade": "02", "subject": "100425", "institution": "0116", "uk_degree": "083", "graduation_year": "2012-06-31"}]
+        "placements_attributes": [
+          {
+            "urn": "123456",
+            "name": "Placement"
+          }
+        ],
+        "degrees_attributes": [
+          {
+            "grade": "02",
+            "subject": "100425",
+            "institution": "0116",
+            "uk_degree": "083",
+            "graduation_year": "2012-07-31"
+          }
+        ]
       }
     }
     </pre>
@@ -1094,7 +1107,7 @@ Degree details
         "subject": "100425",
         "institution": "0116",
         "uk_degree": "083",
-        "graduation_year": "2012-06-31"
+        "graduation_year": "2012-07-31"
       }
     }
     </pre>
@@ -2741,7 +2754,7 @@ Deletes an existing degree for this trainee.
         The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>2012-06-31</code>
+        Example: <code>2012-07-31</code>
       </p>
     </dd>
   </div>
