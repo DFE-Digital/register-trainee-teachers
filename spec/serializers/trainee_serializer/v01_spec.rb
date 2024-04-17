@@ -42,15 +42,11 @@ RSpec.describe TraineeSerializer::V01 do
         course_subject_two
         course_subject_three
         awarded_at
-        applying_for_bursary
         training_initiative
-        bursary_tier
         study_mode
         ebacc
         region
         course_education_phase
-        applying_for_scholarship
-        applying_for_grant
         course_uuid
         lead_school_not_applicable
         employing_school_not_applicable
@@ -112,6 +108,10 @@ RSpec.describe TraineeSerializer::V01 do
         hesa_trn_submission_id
         application_choice_id
         apply_application_id
+        applying_for_bursary
+        applying_for_grant
+        applying_for_scholarship
+        bursary_tier
       ].each do |field|
         expect(json.keys).not_to include(field)
       end
