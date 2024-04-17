@@ -216,6 +216,7 @@ group :test do
   gem "database_cleaner-active_record"
 
   gem "rspec-retry"
+  gem "rspec-openapi"
 end
 
 # Required for example_data and vendor:swap so needed in stated environments
