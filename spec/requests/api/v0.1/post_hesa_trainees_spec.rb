@@ -47,6 +47,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         fund_code: "7",
         funding_method: "4",
         hesa_id: "0310261553101",
+        provider_trainee_id: "99157234/2/01",
       },
     }
   end
@@ -112,6 +113,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "sets the record source to `api`" do
       expect(Trainee.last.record_source).to eq("api")
+    end
+
+    it "sets the provider_trainee_id" do
+      expect(Trainee.last.provider_trainee_id).to eq("99157234/2/01")
     end
   end
 
