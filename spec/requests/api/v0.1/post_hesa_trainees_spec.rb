@@ -25,6 +25,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         itt_end_date: "2023-10-01",
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
         study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+        disability1: "58",
+        disability2: "57",
         degrees_attributes: [
           {
             subject: "Law",
@@ -57,6 +59,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
+      create(:disability, name: "Blind")
+      create(:disability, name: "Deaf")
+
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
 
@@ -66,6 +71,12 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "sets the correct state" do
       expect(Trainee.last.state).to eq("submitted_for_trn")
+    end
+
+    it "sets the correct disabilities" do
+      expect(response.parsed_body["disability_disclosure"]).to eq("disabled")
+      expect(response.parsed_body["disability1"]).to eq("58")
+      expect(response.parsed_body["disability2"]).to eq("57")
     end
 
     it "sets the correct funding attributes" do
