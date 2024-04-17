@@ -70,6 +70,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "sets the correct funding attributes" do
       expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
+      expect(Trainee.last.applying_for_scholarship).to be(true)
+      expect(Trainee.last.applying_for_bursary).to be(false)
+      expect(Trainee.last.applying_for_grant).to be(false)
+      expect(response.parsed_body["fund_code"]).to eq("7")
+      expect(response.parsed_body["bursary_level"]).to eq("4")
+      expect(response.parsed_body["applying_for_scholarship"]).to be_nil
+      expect(response.parsed_body["applying_for_bursary"]).to be_nil
+      expect(response.parsed_body["applying_for_grant"]).to be_nil
     end
 
     it "sets the correct school attributes" do
