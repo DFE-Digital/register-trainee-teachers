@@ -27,7 +27,8 @@ module Diversities
     end
 
     def disabilities
-      Disability.where(id: disability_ids)
+      ids = (disability_ids + trainee.trainee_disabilities.map(&:disability_id)).uniq
+      Disability.where(id: ids)
     end
 
   private
