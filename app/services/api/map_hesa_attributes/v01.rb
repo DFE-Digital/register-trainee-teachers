@@ -13,8 +13,12 @@ module Api
       ].freeze
 
       NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
-
       VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
+      DISABILITY_PARAM_REGEX = /\Adisability\d+\z/.freeze
+
+      def self.disability_attributes(params)
+        params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
+      end
 
       def initialize(params:)
         @params = params
@@ -37,6 +41,7 @@ module Api
           nationalisations_attributes:,
           degrees_attributes:,
           placements_attributes:,
+          hesa_disabilities:,
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
@@ -74,6 +79,10 @@ module Api
 
       def ethnic_background
         ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
+      end
+
+      def hesa_disabilities
+        params.select { |k, v| k.to_s.match(DISABILITY_PARAM_REGEX) }
       end
 
       def disabilities
