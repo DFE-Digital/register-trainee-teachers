@@ -18,9 +18,7 @@ module Api
 
       return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
 
-      trainee = current_provider.trainees.new(trainee_attributes.deep_attributes)
-
-      if validation.all_errors.empty? && trainee.save
+      if trainee.save && validation.all_errors.empty?
         ::Trainees::SubmitForTrn.call(trainee:)
         success_response(trainee)
       else
@@ -31,11 +29,11 @@ module Api
   private
 
     def trainee
-      @trainee ||= current_provider.trainees.new(trainee_attributes.deep_attributes)
+      @trainee ||= current_provider.trainees.build(trainee_attributes.deep_attributes)
     end
 
     def validation
-      @validation ||= Submissions::ApiTrnValidator.new(trainee:)
+      Submissions::ApiTrnValidator.new(trainee:)
     end
 
     def duplicate_trainees

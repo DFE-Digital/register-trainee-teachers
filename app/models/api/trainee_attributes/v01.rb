@@ -63,6 +63,7 @@ module Api
       attribute :degrees_attributes, array: true, default: -> { [] }
       attribute :nationalisations_attributes, array: true, default: -> { [] }
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
+      attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
       attribute :date_of_birth, :date
       attribute :record_source, default: -> { RecordSources::API }
 
@@ -81,6 +82,7 @@ module Api
           :degrees_attributes,
           :nationalisations_attributes,
           :hesa_trainee_detail_attributes,
+          :trainee_disabilities_attributes
         ))
 
         attributes[:placements_attributes]&.each do |placement_params|
@@ -99,6 +101,10 @@ module Api
           HesaTraineeDetailAttributes::V01.new(
             attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
+
+        self.trainee_disabilities_attributes = attributes[:disabilities]&.map do |disability|
+          { disability_id: disability.id }
+        end
       end
 
       def assign_attributes(attributes)
