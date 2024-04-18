@@ -97,9 +97,9 @@ module Api
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
 
-        self.hesa_trainee_detail_attributes ||=
-          HesaTraineeDetailAttributes::V01.new(
-            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
+        self.hesa_trainee_detail_attributes =
+        HesaTraineeDetailAttributes::V01.new(
+          attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
 
         self.trainee_disabilities_attributes = []
@@ -122,7 +122,7 @@ module Api
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
 
-        self.hesa_trainee_detail_attributes ||=
+        self.hesa_trainee_detail_attributes =
           HesaTraineeDetailAttributes::V01.new(
             attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
