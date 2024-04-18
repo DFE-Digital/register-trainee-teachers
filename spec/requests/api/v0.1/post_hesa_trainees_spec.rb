@@ -77,6 +77,11 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body["disability_disclosure"]).to eq("disabled")
       expect(response.parsed_body["disability1"]).to eq("58")
       expect(response.parsed_body["disability2"]).to eq("57")
+
+      trainee_id = response.parsed_body["trainee_id"]
+      trainee = Trainee.find_by(slug: trainee_id)
+      expect(trainee.disabilities.count).to eq(2)
+      expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
     end
 
     it "sets the correct funding attributes" do
