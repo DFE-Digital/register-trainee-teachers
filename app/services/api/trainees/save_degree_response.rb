@@ -10,7 +10,6 @@ module Api
       include Api::ErrorResponse
 
       include ActiveModel::Validations
-      include ActiveModel::Translation
 
       def initialize(degree:, params:, version:)
         @degree = degree
@@ -31,7 +30,7 @@ module Api
       end
 
       delegate :assign_attributes, :new_record?, :trainee, to: :degree
-      delegate :attributes, :duplicates?, to: :degree_attributes
+      delegate :valid?, :attributes, :duplicates?, to: :degree_attributes
       delegate :degrees, to: :trainee
 
     private
@@ -39,9 +38,15 @@ module Api
       attr_reader :degree, :params, :version, :status
 
       def save
-        assign_attributes(attributes)
+        if valid?
+          assign_attributes(
+            Api::MapHesaAttributes::Degrees::V01.new(attributes.with_indifferent_access).call,
+          )
 
-        valid? && degree.save
+          degree.save
+        else
+          false
+        end
       end
 
       def update_progress
@@ -62,10 +67,6 @@ module Api
             attributes.assign_attributes(params)
             attributes
           end
-      end
-
-      def valid?
-        degree_attributes.valid? && degree.valid?
       end
 
       def errors
