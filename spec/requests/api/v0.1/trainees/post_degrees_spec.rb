@@ -15,12 +15,12 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
     let(:trainee) { create(:trainee) }
     let(:degrees_attributes) do
       {
-        country: "UK",
-        grade: "First",
-        subject: "Applied linguistics",
-        institution: "University of Oxford",
-        uk_degree: "Bachelor of Arts",
-        graduation_year: "2012",
+        grade: "02",
+        subject: "100425",
+        institution: "0117",
+        uk_degree: "083",
+        graduation_year: "2015-01-01",
+        country: "XF",
         locale_code: "uk",
       }
     end
@@ -34,29 +34,42 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
             data: degrees_attributes,
           },
         )
-        expect(response).to have_http_status(:created)
-        expect(response.parsed_body["data"]).to be_present
-        expect(trainee.reload.degrees.count).to eq(1)
-      end
 
-      it "updates the progress attribute on the trainee" do
-        post(
-          "/api/v0.1/trainees/#{trainee.slug}/degrees",
-          headers: { Authorization: "Bearer #{token}" },
-          params: {
-            data: degrees_attributes,
-          },
-        )
+        expect(response).to have_http_status(:created)
+
+        degree_attributes = response.parsed_body["data"]
+
+        expect(degree_attributes["grade"]).to eq("02")
+        expect(degree_attributes["subject"]).to eq("100425")
+        expect(degree_attributes["institution"]).to eq("0117")
+        expect(degree_attributes["uk_degree"]).to eq("083")
+        expect(degree_attributes["graduation_year"]).to eq(2015)
+        expect(degree_attributes["country"]).to be_nil
+        expect(degree_attributes["locale_code"]).to be_nil
+
         expect(trainee.reload.progress[:degrees]).to be(true)
+        expect(trainee.degrees.count).to eq(1)
+
+        degree = trainee.degrees.last
+
+        expect(degree.grade).to eq("Upper second-class honours (2:1)")
+        expect(degree.subject).to eq("Physics")
+        expect(degree.institution).to eq("University of East Anglia")
+        expect(degree.uk_degree).to eq("Bachelor of Science")
+        expect(degree.graduation_year).to eq(2015)
+        expect(degree.country).to be_nil
+        expect(degree.locale_code).to eq("uk")
       end
     end
 
     context "with duplicate degree" do
       let(:trainee) { create(:trainee, :with_degree) }
       let(:degrees_attributes) do
-        trainee.degrees.first.attributes.symbolize_keys.slice(
+        attributes = DegreeSerializer::V01.new(trainee.degrees.first).as_hash.symbolize_keys.slice(
           :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :locale_code
         )
+        attributes[:graduation_year] = Date.new(attributes[:graduation_year]).to_s
+        attributes
       end
 
       it "returns a 409 (conflict) status" do
@@ -92,7 +105,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       end
     end
 
-    context "with an invalid degree" do
+    context "with invalid degree attributes" do
       let(:degrees_attributes) do
         {
           country: "UK",
@@ -100,7 +113,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
           subject: "Practical Magic",
           institution: "University of Oxford",
           uk_degree: "Bachelor of Witchcraft & Wizardry",
-          graduation_year: "2012",
+          graduation_year: "01-01-2012",
           locale_code: "uk",
         }
       end
@@ -113,8 +126,9 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
             data: degrees_attributes,
           },
         )
+
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]&.count).to eq(2)
+        expect(response.parsed_body["errors"]&.count).to eq(3)
         expect(trainee.reload.degrees.count).to eq(0)
       end
     end

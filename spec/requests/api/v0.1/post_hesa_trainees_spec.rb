@@ -35,7 +35,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           graduation_year: "2003-06-01",
           grade: "02",
           uk_degree: "083",
-          country: "XF"
+          country: "XF",
         },
       ],
       placements_attributes: [

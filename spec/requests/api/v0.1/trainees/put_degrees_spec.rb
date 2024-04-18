@@ -25,7 +25,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       )
     end
     let!(:original_subject) { degree.subject }
-    let(:new_subject) { "Accounting" }
+    let(:new_subject) { "100105" }
 
     context "with a valid trainee and degree" do
       it "updates a new degree and returns a 200 status (ok)" do
@@ -38,7 +38,44 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         )
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body["data"]).to be_present
-        expect(trainee.reload.degrees.first.subject).to eq(new_subject)
+        expect(response.parsed_body["data"]["subject"]).to eq(new_subject)
+        expect(trainee.reload.degrees.first.subject).to eq("Accounting")
+      end
+
+      context "when using HESA attributes" do
+        let(:degrees_attributes) do
+          {
+            grade: "02",
+            subject: "100425",
+            institution: "0117",
+            uk_degree: "083",
+            graduation_year: "2015-01-01",
+            country: "XF",
+            locale_code: "uk",
+          }
+        end
+
+        it "creates a new degree and returns a 201 (created) status" do
+          put(
+            "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}" },
+            params: {
+              data: degrees_attributes,
+            },
+          )
+
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["data"]).to be_present
+          degree = trainee.reload.degrees.first
+
+          expect(degree.grade).to eq("Upper second-class honours (2:1)")
+          expect(degree.subject).to eq("Physics")
+          expect(degree.institution).to eq("University of East Anglia")
+          expect(degree.uk_degree).to eq("Bachelor of Science")
+          expect(degree.graduation_year).to eq(2015)
+          expect(degree.country).to be_nil
+          expect(degree.locale_code).to eq("uk")
+        end
       end
     end
 
