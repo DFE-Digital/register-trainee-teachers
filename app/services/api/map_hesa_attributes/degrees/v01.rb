@@ -40,6 +40,8 @@ module Api
 
         def graduation_year
           @params[:graduation_year]&.to_date&.year
+        rescue NoMethodError
+          @params[:graduation_year]
         end
 
         def institution
