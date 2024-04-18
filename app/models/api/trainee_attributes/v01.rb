@@ -102,16 +102,34 @@ module Api
             attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
 
-        self.trainee_disabilities_attributes = attributes[:disabilities]&.map do |disability|
-          { disability_id: disability.id }
+        self.trainee_disabilities_attributes = []
+        attributes[:disabilities]&.each do |disability|
+          trainee_disabilities_attributes << { disability_id: disability.id }
         end
       end
 
       def assign_attributes(attributes)
-        super
+        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
+          :placements_attributes,
+          :degrees_attributes,
+          :nationalisations_attributes,
+          :hesa_trainee_detail_attributes,
+          :trainee_disabilities_attributes
+        ))
+
         self.nationalisations_attributes = []
         attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
+        end
+
+        self.hesa_trainee_detail_attributes ||=
+          HesaTraineeDetailAttributes::V01.new(
+            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
+          )
+
+        self.trainee_disabilities_attributes = []
+        attributes[:disabilities]&.each do |disability|
+          trainee_disabilities_attributes << { disability_id: disability.id }
         end
       end
 
