@@ -59,8 +59,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
-      create(:disability, name: "Blind")
-      create(:disability, name: "Deaf")
+      create(:disability, :blind)
+      create(:disability, :deaf)
 
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end

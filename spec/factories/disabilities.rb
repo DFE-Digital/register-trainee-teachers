@@ -4,5 +4,13 @@ FactoryBot.define do
   factory :disability do
     sequence(:name) { |n| "disability #{n}" }
     description { "some disability text" }
+
+    trait :blind do
+      name { "Blind" }
+    end
+
+    trait :deaf do
+      name { "Deaf" }
+    end
   end
 end
