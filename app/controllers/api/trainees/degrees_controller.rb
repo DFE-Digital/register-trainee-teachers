@@ -66,10 +66,6 @@ module Api
         Serializer.for(model: :trainee, version: version)
       end
 
-      def attributes_class
-        Api::Attributes.for(model:, version:)
-      end
-
       def new_degree
         @new_degree ||= trainee.degrees.new
       end
