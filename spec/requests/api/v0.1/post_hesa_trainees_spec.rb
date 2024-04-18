@@ -30,12 +30,12 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       disability2: "57",
       degrees_attributes: [
         {
-          subject: "Law",
-          institution: nil,
-          graduation_date: "2003-06-01",
-          subject_one: "100485",
+          subject: "100485",
+          institution: "0117",
+          graduation_year: "2003-06-01",
           grade: "02",
-          country: "XF",
+          uk_degree: "083",
+          country: "XF"
         },
       ],
       placements_attributes: [
@@ -107,8 +107,22 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       degree_attributes = response.parsed_body["degrees"]&.first
 
       expect(degree_attributes["subject"]).to eq("100485")
-      expect(degree_attributes["institution"]).to be_nil
+      expect(degree_attributes["institution"]).to eq("0117")
       expect(degree_attributes["graduation_year"]).to eq(2003)
+      expect(degree_attributes["subject"]).to eq("100485")
+      expect(degree_attributes["grade"]).to eq("02")
+      expect(degree_attributes["uk_degree"]).to eq("083")
+      expect(degree_attributes["country"]).to be_nil
+
+      degree = Degree.last
+
+      expect(degree.locale_code).to eq("uk")
+      expect(degree.subject).to eq("Law")
+      expect(degree.institution).to eq("University of East Anglia")
+      expect(degree.graduation_year).to eq(2003)
+      expect(degree.grade).to eq("Upper second-class honours (2:1)")
+      expect(degree.uk_degree).to eq("Bachelor of Science")
+      expect(degree.country).to be_nil
     end
 
     it "creates the placements if provided in the request body" do
