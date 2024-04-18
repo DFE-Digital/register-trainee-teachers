@@ -43,7 +43,7 @@ Find out about [how we make updates to the API](/api-docs#api-versioning-strateg
 
 ## Draft version 0.1
 
-Version 0.1 is a draft version of the API. It was released on 19 April 2024.
+Version 0.1 is a draft version of the API. It was released on 22 April 2024.
 
 It is designed for testing and feedback purposes only.
 
