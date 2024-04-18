@@ -24,14 +24,14 @@ module Api
         ::Trainees::SubmitForTrn.call(trainee:)
         success_response(trainee)
       else
-        save_errors_response trn_validator(trainee)
+        save_errors_response(trn_validator(trainee))
       end
     end
 
   private
 
     def trn_validator(trainee)
-      Submissions::ApiTrnValidator.new(trainee: trainee)
+      Submissions::ApiTrnValidator.new(trainee:)
     end
 
     def duplicate_trainees

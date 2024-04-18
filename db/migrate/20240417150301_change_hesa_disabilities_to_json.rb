@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeHesaDisabilitiesToJson < ActiveRecord::Migration[7.1]
   def up
     safety_assured { remove_column :hesa_trainee_details, :hesa_disabilities }

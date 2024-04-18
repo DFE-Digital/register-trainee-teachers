@@ -82,7 +82,7 @@ module Api
           :degrees_attributes,
           :nationalisations_attributes,
           :hesa_trainee_detail_attributes,
-          :trainee_disabilities_attributes
+          :trainee_disabilities_attributes,
         ))
 
         attributes[:placements_attributes]&.each do |placement_params|
@@ -98,8 +98,8 @@ module Api
         end
 
         self.hesa_trainee_detail_attributes =
-        HesaTraineeDetailAttributes::V01.new(
-          attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
+          HesaTraineeDetailAttributes::V01.new(
+            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
           )
 
         self.trainee_disabilities_attributes = []
@@ -114,7 +114,7 @@ module Api
           :degrees_attributes,
           :nationalisations_attributes,
           :hesa_trainee_detail_attributes,
-          :trainee_disabilities_attributes
+          :trainee_disabilities_attributes,
         ))
 
         self.nationalisations_attributes = []

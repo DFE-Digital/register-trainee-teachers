@@ -14,7 +14,7 @@ module Api
 
       NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
       VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
-      DISABILITY_PARAM_REGEX = /\Adisability\d+\z/.freeze
+      DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
 
       def self.disability_attributes(params)
         params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
@@ -82,7 +82,7 @@ module Api
       end
 
       def hesa_disabilities
-        params.select { |k, v| k.to_s.match(DISABILITY_PARAM_REGEX) }
+        params.select { |k, _v| k.to_s.match(DISABILITY_PARAM_REGEX) }
       end
 
       def disabilities
