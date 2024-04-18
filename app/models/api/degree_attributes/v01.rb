@@ -31,6 +31,7 @@ module Api
 
       def initialize(attributes, trainee: nil)
         super(attributes)
+
         @existing_degrees = if trainee.present?
                               if id.present?
                                 trainee.degrees.where.not(id:)
@@ -40,13 +41,19 @@ module Api
                             end
       end
 
-      validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
-      validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) }, allow_nil: true
-      validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_nil: true
+      with_options allow_nil: true do
+        validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code) }
+        validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:hecos_code) }
+        validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code) }
+      end
+
       validate :check_for_duplicates
 
       def self.from_degree(degree, trainee:)
-        new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) }, trainee:)
+        new(
+          DegreeSerializer::V01.new(degree).as_hash.select { |k, _v| ATTRIBUTES.include?(k.to_sym) },
+          trainee:,
+        )
       end
 
       def duplicates?
