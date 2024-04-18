@@ -25,7 +25,7 @@ module Api
         ::Trainees::SubmitForTrn.call(trainee:)
         success_response(trainee)
       else
-        save_errors_response(validator)
+        save_errors_response
       end
     end
 
@@ -63,7 +63,7 @@ module Api
       trainee.errors.full_messages
     end
 
-    def save_errors_response(validation)
+    def save_errors_response
       {
         json: {
           message: "Validation failed: #{error_count} #{'error'.pluralize(error_count)} prohibited this trainee from being saved",
