@@ -31,7 +31,7 @@ module Api
   private
 
     def trn_validator(trainee)
-      Submissions::ApiTrnValidator.new(trainee:)
+      @trn_validator ||= Submissions::ApiTrnValidator.new(trainee:)
     end
 
     def duplicate_trainees
