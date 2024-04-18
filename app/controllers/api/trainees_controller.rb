@@ -70,9 +70,9 @@ module Api
           hesa_mapper_class.disability_attributes(params),
           trainee_attributes_service::ATTRIBUTES +
           hesa_trainee_details_attributes_service::ATTRIBUTES,
-          placements_attributes: [placements_attributes],
-          degrees_attributes: [degree_attributes],
-          nationalisations_attributes: [nationality_attributes],
+          placements_attributes: placements_attributes,
+          degrees_attributes: degree_attributes,
+          nationalisations_attributes: nationality_attributes,
         ),
       )
     end
@@ -114,9 +114,7 @@ module Api
     end
 
     def degree_attributes
-      hesa_attributes = Object.const_get("Api::MapHesaAttributes::Degrees::#{current_version_class_name}")::ATTRIBUTES
-      standard_attributes = Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
-      standard_attributes + hesa_attributes
+      @degree_attributes ||= Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
     end
 
     def current_version_class_name
