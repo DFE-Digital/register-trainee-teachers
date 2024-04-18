@@ -144,7 +144,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
   end
 
-  context "when the request is invalid", feature_register_api: true do
+  context "when the trainee record is invalid", feature_register_api: true do
     before do
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
@@ -165,6 +165,19 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       it "returns a validation failure message" do
         expect(response.parsed_body["errors"]).to include({ personal_details: { date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"] } })
       end
+    end
+  end
+
+  context "when a placement is invalid", feature_register_api: true do
+    before do
+      params[:data][:placements_attributes] = [{ not_an_attribute: "invalid" }]
+      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
+    end
+
+    it "return status code 422 if placement is invalid with meaningful error message" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
+      expect(response.parsed_body["errors"]).to include("Placements name can't be blank")
     end
   end
 end

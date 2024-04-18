@@ -49,11 +49,25 @@ module Api
       }
     end
 
+    def error_count
+      return validation.errors_count if validation.errors_count.positive?
+
+      trainee.validate
+      trainee.errors.count
+    end
+
+    def error_messages
+      return validation.all_errors if validation.errors_count.positive?
+
+      trainee.validate
+      trainee.errors.full_messages
+    end
+
     def save_errors_response(validation)
       {
         json: {
-          message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this user from being saved",
-          errors: validation.all_errors,
+          message: "Validation failed: #{error_count} #{'error'.pluralize(error_count)} prohibited this trainee from being saved",
+          errors: error_messages,
         },
         status: :unprocessable_entity,
       }
