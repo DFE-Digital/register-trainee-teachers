@@ -1,4 +1,6 @@
-require 'rspec/openapi'
+# frozen_string_literal: true
 
-RSpec::OpenAPI.path = 'public/openapi.json'
-RSpec::OpenAPI.title = 'Register API'
+require "rspec/openapi"
+
+RSpec::OpenAPI.path = "public/openapi.json"
+RSpec::OpenAPI.title = "Register API"
