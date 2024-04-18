@@ -70,8 +70,4 @@ RSpec.configure do |config|
       Bullet.end_request
     end
   end
-
-  # config.after do
-  #   Rspec::Openapi.generate_docs if ENV["OPENAPI"] == "true"
-  # end
 end
