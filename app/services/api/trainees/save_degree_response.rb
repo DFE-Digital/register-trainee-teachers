@@ -4,9 +4,13 @@ module Api
   module Trainees
     class SaveDegreeResponse
       include ServicePattern
+
       include Api::Attributable
       include Api::Serializable
       include Api::ErrorResponse
+
+      include ActiveModel::Validations
+      include ActiveModel::Translation
 
       def initialize(degree:, params:, version:)
         @degree = degree
@@ -27,7 +31,7 @@ module Api
       end
 
       delegate :assign_attributes, :new_record?, :trainee, to: :degree
-      delegate :valid?, :attributes, :duplicates?, to: :degree_attributes
+      delegate :attributes, :duplicates?, to: :degree_attributes
       delegate :degrees, to: :trainee
 
     private
@@ -37,11 +41,7 @@ module Api
       def save
         assign_attributes(attributes)
 
-        if valid? && degree.save
-          true
-        else
-          false
-        end
+        valid? && degree.save
       end
 
       def update_progress
@@ -64,7 +64,23 @@ module Api
           end
       end
 
-      def errors = degree_attributes.errors || degree.errors
+      def valid?
+        degree_attributes.valid? && degree.valid?
+      end
+
+      def errors
+        super.clear
+
+        degree_attributes.errors.each do |error|
+          super.add(:base, error.full_message)
+        end
+
+        degree.errors.each do |error|
+          super.add(:base, error.full_message)
+        end
+
+        super
+      end
     end
   end
 end
