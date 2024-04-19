@@ -51,16 +51,33 @@ module Api
 
       def self.from_degree(degree, trainee:)
         new(
-          DegreeSerializer::V01.new(degree).as_hash.select { |k, _v| ATTRIBUTES.include?(k.to_sym) },
+          DegreeSerializer::V01.new(degree)
+            .as_hash
+            .merge(id: degree.id).select { |k, _v| ATTRIBUTES.include?(k.to_sym) }
+            .as_json,
           trainee:,
         )
       end
 
       def duplicates?
-        existing_degrees&.exists?(attributes.symbolize_keys.except(:id))
+        existing_degrees&.exists?(
+          hesa_mapped_degree_attributes.slice(
+            :subject,
+            :graduation_year,
+            :locale_code,
+            :country,
+            :uk_degree,
+            :non_uk_degree,
+            :grade
+          )
+        )
       end
 
     private
+
+      def hesa_mapped_degree_attributes
+        Api::MapHesaAttributes::Degrees::V01.new(attributes.symbolize_keys).call
+      end
 
       def check_for_duplicates
         errors.add(:base, :duplicates) if duplicates?

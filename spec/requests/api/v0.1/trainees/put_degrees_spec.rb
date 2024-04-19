@@ -119,7 +119,11 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       let(:degrees_attributes) do
         non_uk_degree.attributes.symbolize_keys.slice(
           :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :non_uk_degree
-        )
+        ).merge(DegreeSerializer::V01.new(non_uk_degree).as_hash.symbolize_keys)
+      end
+
+      before do
+        degrees_attributes[:graduation_year] = Date.new(degrees_attributes[:graduation_year]).to_s
       end
 
       it "returns a 409 (conflict) status" do
