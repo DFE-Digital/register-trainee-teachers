@@ -11,46 +11,46 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
   end
 
-  let(:params) do
+  let(:params) { { data: } }
+
+  let(:data) do
     {
-      data: {
-        first_names: "John",
-        last_name: "Doe",
-        date_of_birth: "1990-01-01",
-        sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
-        email: "john.doe@example.com",
-        nationality: "GB",
-        training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
-        itt_start_date: "2023-01-01",
-        itt_end_date: "2023-10-01",
-        course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
-        study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
-        disability1: "58",
-        disability2: "57",
-        degrees_attributes: [
-          {
-            subject: "Law",
-            institution: nil,
-            graduation_date: "2003-06-01",
-            subject_one: "100485",
-            grade: "02",
-            country: "XF",
-          },
-        ],
-        placements_attributes: [
-          {
-            urn: "900020",
-          },
-        ],
-        itt_aim: 202,
-        itt_qualification_aim: "001",
-        course_year: "2012",
-        course_age_range: "13915",
-        fund_code: "7",
-        funding_method: "4",
-        hesa_id: "0310261553101",
-        provider_trainee_id: "99157234/2/01",
-      },
+      first_names: "John",
+      last_name: "Doe",
+      date_of_birth: "1990-01-01",
+      sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
+      email: "john.doe@example.com",
+      nationality: "GB",
+      training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
+      itt_start_date: "2023-01-01",
+      itt_end_date: "2023-10-01",
+      course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+      study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+      disability1: "58",
+      disability2: "57",
+      degrees_attributes: [
+        {
+          subject: "Law",
+          institution: nil,
+          graduation_date: "2003-06-01",
+          subject_one: "100485",
+          grade: "02",
+          country: "XF",
+        },
+      ],
+      placements_attributes: [
+        {
+          urn: "900020",
+        },
+      ],
+      itt_aim: 202,
+      itt_qualification_aim: "001",
+      course_year: "2012",
+      course_age_range: "13915",
+      fund_code: "7",
+      funding_method: "4",
+      hesa_id: "0310261553101",
+      provider_trainee_id: "99157234/2/01",
     }
   end
 
@@ -86,6 +86,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "sets the correct funding attributes" do
       expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
+      expect(Trainee.last.applying_for_scholarship).to be(true)
+      expect(Trainee.last.applying_for_bursary).to be(false)
+      expect(Trainee.last.applying_for_grant).to be(false)
+      expect(response.parsed_body["fund_code"]).to eq("7")
+      expect(response.parsed_body["bursary_level"]).to eq("4")
+      expect(response.parsed_body["applying_for_scholarship"]).to be_nil
+      expect(response.parsed_body["applying_for_bursary"]).to be_nil
+      expect(response.parsed_body["applying_for_grant"]).to be_nil
     end
 
     it "sets the correct school attributes" do
@@ -138,31 +146,25 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   context "when the request is invalid", feature_register_api: true do
     before do
-      post "/api/v0.1/trainees", params: { data: { email: "Doe" } }, headers: { Authorization: token }
+      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
+
+    let(:params) { { data: { email: "Doe" } } }
 
     it "returns status code 422" do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it "returns a validation failure message" do
-      expect(response.parsed_body["errors"]).to include("First names can't be blank")
-      expect(response.parsed_body["errors"]).to include("Last name can't be blank")
-      expect(response.parsed_body["errors"]).to include("Date of birth can't be blank")
-      expect(response.parsed_body["errors"]).to include("Sex can't be blank")
-      expect(response.parsed_body["errors"]).to include("Training route can't be blank")
-      expect(response.parsed_body["errors"]).to include("Itt start date can't be blank")
-      expect(response.parsed_body["errors"]).to include("Itt end date can't be blank")
-      expect(response.parsed_body["errors"]).to include("Course subject one can't be blank")
-      expect(response.parsed_body["errors"]).to include("Study mode can't be blank")
-      expect(response.parsed_body["errors"]).to include("Email Enter an email address in the correct format, like name@example.com")
-      expect(response.parsed_body["errors"]).to include("Itt aim can't be blank")
-      expect(response.parsed_body["errors"]).to include("Itt qualification aim can't be blank")
-      expect(response.parsed_body["errors"]).to include("Course year can't be blank")
-      expect(response.parsed_body["errors"]).to include("Course age range can't be blank")
-      expect(response.parsed_body["errors"]).to include("Fund code can't be blank")
-      expect(response.parsed_body["errors"]).to include("Funding method can't be blank")
-      expect(response.parsed_body["errors"]).to include("Hesa can't be blank")
+      expect(response.parsed_body["errors"]).to contain_exactly("First names can't be blank", "Last name can't be blank", "Date of birth can't be blank", "Sex can't be blank", "Training route can't be blank", "Itt start date can't be blank", "Itt end date can't be blank", "Course subject one can't be blank", "Study mode can't be blank", "Email Enter an email address in the correct format, like name@example.com", "Itt aim can't be blank", "Itt qualification aim can't be blank", "Course year can't be blank", "Course age range can't be blank", "Fund code can't be blank", "Funding method can't be blank", "Hesa can't be blank")
+    end
+
+    context "date of birth is in the future" do
+      let(:params) { { data: data.merge({ date_of_birth: "2990-01-01" }) } }
+
+      it "returns a validation failure message" do
+        expect(response.parsed_body["errors"]).to include({ personal_details: { date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"] } })
+      end
     end
   end
 end

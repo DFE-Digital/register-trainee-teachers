@@ -20,6 +20,10 @@ module TraineeSerializer
       hesa_trn_submission_id
       application_choice_id
       apply_application_id
+      applying_for_bursary
+      applying_for_grant
+      applying_for_scholarship
+      bursary_tier
     ].freeze
 
     def initialize(trainee)
