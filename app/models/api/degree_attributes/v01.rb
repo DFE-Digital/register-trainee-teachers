@@ -68,8 +68,8 @@ module Api
             :country,
             :uk_degree,
             :non_uk_degree,
-            :grade
-          )
+            :grade,
+          ),
         )
       end
 
