@@ -19,8 +19,8 @@
           caption: "Trainees you’ll recommend for #{qts_or_eyts(recommendations_upload.awardable_rows)}"
         } %>
       <% else %>
-        <%= govuk_accordion(id: "recommendations-upload-#{recommendations_upload.id}",
-                            html_attributes: {
+        <%= govuk_accordion(html_attributes: {
+                              id: "recommendations-upload-#{recommendations_upload.id}",
                               "data-i18n.show-all-sections" => "Show all trainees you’ll recommend",
                               "data-i18n.hide-all-sections" => "Hide all trainees you’ll recommend",
                             }) do |accordion|
