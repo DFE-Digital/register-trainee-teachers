@@ -2,7 +2,7 @@
 
 module HesaTraineeDetailSerializer
   class V01
-    SERIALIZABLE_ATTRIBUTES = %i[
+    SERIALIZABLE_ATTRIBUTES = %w[
       course_age_range
       course_study_mode
       course_year
