@@ -19,7 +19,7 @@ module Api
       return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
 
       trainee = current_provider.trainees.build(trainee_attributes.deep_attributes)
-      validator = Submissions::ApiTrnValidator.new(trainee: trainee)
+      validator = Submissions::ApiTrnValidator.new(trainee:)
 
       if validator.all_errors.empty? && trainee.save
         ::Trainees::SubmitForTrn.call(trainee:)
