@@ -79,7 +79,7 @@ module Api
         def non_uk_degree
           return if uk_country_or_uk_institution_present?
 
-          degree_type&.name
+          @params[:non_uk_degree]
         end
 
         def grade
@@ -124,7 +124,7 @@ module Api
         end
 
         def degree_type
-          @degree_type ||= DfEReference::DegreesQuery.find_type(hesa_code: @params[:uk_degree] || @params[:non_uk_degree])
+          @degree_type ||= DfEReference::DegreesQuery.find_type(hesa_code: @params[:uk_degree])
         end
 
         def grade_from_hesa_code
