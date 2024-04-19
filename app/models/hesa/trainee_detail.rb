@@ -11,7 +11,7 @@
 #  course_year                        :integer
 #  fund_code                          :string
 #  funding_method                     :string
-#  hesa_disabilities                  :string           default([]), is an Array
+#  hesa_disabilities                  :jsonb
 #  itt_aim                            :string
 #  itt_qualification_aim              :string
 #  ni_number                          :string

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_05_151728) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -664,12 +664,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_151728) do
     t.date "postgrad_apprenticeship_start_date"
     t.string "funding_method"
     t.string "ni_number"
-    t.string "hesa_disabilities", default: [], array: true
     t.string "additional_training_initiative"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "itt_qualification_aim"
     t.string "fund_code"
+    t.jsonb "hesa_disabilities", default: {}
     t.index ["trainee_id"], name: "index_hesa_trainee_details_on_trainee_id"
   end
 
