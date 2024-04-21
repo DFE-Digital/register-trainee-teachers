@@ -5,6 +5,7 @@ module HesaTraineeDetailSerializer
     EXCLUDED_ATTRIBUTES = %w[
       id
       trainee_id
+      fund_code
     ].freeze
 
     def initialize(trainee_details)
