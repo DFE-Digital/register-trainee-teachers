@@ -199,7 +199,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   context "when a degree is invalid", feature_register_api: true do
     before do
-      params[:data][:degrees_attributes].first[:graduation_date] = "3000-01-01"
+      params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
 
