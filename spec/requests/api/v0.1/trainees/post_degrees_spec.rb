@@ -53,9 +53,14 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         degree = trainee.degrees.last
 
         expect(degree.grade).to eq("Upper second-class honours (2:1)")
+        expect(degree.grade_uuid).to eq("e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f")
         expect(degree.subject).to eq("Physics")
+        expect(degree.subject_uuid).to eq("918170f0-5dce-e911-a985-000d3ab79618")
         expect(degree.institution).to eq("University of East Anglia")
+        expect(degree.institution_uuid).to eq("1271f34a-2887-e711-80d8-005056ac45bb")
         expect(degree.uk_degree).to eq("Bachelor of Science")
+        expect(degree.uk_degree_uuid).to eq("1b6a5652-c197-e711-80d8-005056ac45bb")
+
         expect(degree.graduation_year).to eq(2015)
         expect(degree.country).to be_nil
         expect(degree.locale_code).to eq("uk")

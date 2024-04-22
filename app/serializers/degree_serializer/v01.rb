@@ -51,7 +51,7 @@ module DegreeSerializer
 
     def uk_degree
       types = DfE::ReferenceData::Degrees::TYPES.all_as_hash
-      matching_type = types.find { |_, item| item[:name] == (@degree.uk_degree || @degree.non_uk_degree) }&.last
+      matching_type = types.find { |_, item| item[:name] == @degree.uk_degree }&.last
 
       return if matching_type.blank?
 

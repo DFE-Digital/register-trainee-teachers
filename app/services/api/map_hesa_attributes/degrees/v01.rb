@@ -39,9 +39,11 @@ module Api
         end
 
         def graduation_year
-          @params[:graduation_year]&.to_date&.year
-        rescue NoMethodError
-          @params[:graduation_year]
+          if @params[:graduation_year].is_a?(String)
+            @params[:graduation_year]&.to_date&.year
+          else
+            @params[:graduation_year]
+          end
         end
 
         def institution
@@ -98,6 +100,7 @@ module Api
 
         def find_institution
           hesa_code = institution_hesa_code
+
           institution = DfEReference::DegreesQuery.find_institution(hesa_code:)
 
           institution || DfEReference::DegreesQuery.find_institution(name: "Other UK institution")
