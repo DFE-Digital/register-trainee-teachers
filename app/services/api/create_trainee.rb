@@ -25,7 +25,7 @@ module Api
         ::Trainees::SubmitForTrn.call(trainee:)
         success_response(trainee)
       else
-        save_errors_response(validator)
+        save_errors_response(validator, trainee)
       end
     end
 
@@ -49,11 +49,13 @@ module Api
       }
     end
 
-    def save_errors_response(validation)
+    def save_errors_response(trn_validator, trainee)
+      validation_errors = trn_validator.all_errors.presence || trainee.errors.full_messages
+
       {
         json: {
-          message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this user from being saved",
-          errors: validation.all_errors,
+          message: "Validation failed: #{validation_errors.count} #{'error'.pluralize(validation_errors.count)} prohibited this trainee from being saved",
+          errors: validation_errors,
         },
         status: :unprocessable_entity,
       }

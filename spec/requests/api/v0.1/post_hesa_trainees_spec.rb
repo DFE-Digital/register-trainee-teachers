@@ -54,13 +54,15 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     }
   end
 
+  before do
+    create(:disability, :blind)
+    create(:disability, :deaf)
+  end
+
   context "when the request is valid", feature_register_api: true do
     before do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
-
-      create(:disability, :blind)
-      create(:disability, :deaf)
 
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
@@ -144,7 +146,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
   end
 
-  context "when the request is invalid", feature_register_api: true do
+  context "when the trainee record is invalid", feature_register_api: true do
     before do
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
@@ -165,6 +167,33 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       it "returns a validation failure message" do
         expect(response.parsed_body["errors"]).to include({ personal_details: { date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"] } })
       end
+    end
+  end
+
+  context "when a placement is invalid", feature_register_api: true do
+    before do
+      params[:data][:placements_attributes] = [{ not_an_attribute: "invalid" }]
+      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
+    end
+
+    it "return status code 422 with a meaningful error message" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
+      expect(response.parsed_body["errors"]).to include("Placements name can't be blank")
+    end
+  end
+
+  context "when a degree is invalid", feature_register_api: true do
+    before do
+      params[:data][:degrees_attributes].first[:graduation_date] = "3000-01-01"
+      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
+    end
+
+    it "return status code 422 with a meaningful error message" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["message"]).to include("Validation failed: 2 errors prohibited this trainee from being saved")
+      expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a graduation year that is in the past, for example 2014")
+      expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a valid graduation year")
     end
   end
 end
