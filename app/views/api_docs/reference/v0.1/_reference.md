@@ -43,7 +43,7 @@ Find out about [how we make updates to the API](/api-docs#api-versioning-strateg
 
 ## Draft version 0.1
 
-Version 0.1 is a draft version of the API. It was released on 15 April 2024.
+Version 0.1 is a draft version of the API. It was released on 22 April 2024.
 
 It is designed for testing and feedback purposes only.
 
@@ -158,7 +158,7 @@ current academic cycle.
       "data": [
         {
           "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-          "provider_trainee_id": "99157234",
+          "provider_trainee_id": "abc1234",
           "first_names": "Trainee",
           "last_name": "TraineeUser644065",
           "date_of_birth": "2000-01-01",
@@ -169,8 +169,8 @@ current academic cycle.
           "training_route": "11",
           "sex": "10",
           "diversity_disclosure": "diversity_disclosed",
-          "ethnic_group": "mixed_ethnic_group",
-          "ethnic_background": "Another Mixed background",
+          "ethnic_group": "black_ethnic_group",
+          "ethnic_background": "African",
           "additional_ethnic_background": null,
           "disability_disclosure": "no_disability",
           "course_subject_one": "100425",
@@ -209,13 +209,34 @@ current academic cycle.
           "created_from_dttp": false,
           "hesa_id": "87960005710008762",
           "additional_dttp_data": null,
-          "created_from_hesa": true,
-          "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-          "record_source": "hesa_collection",
+          "created_from_hesa": false,
+          "hesa_updated_at": null
+          "record_source": "api",
           "iqts_country": null,
-          "hesa_editable": false,
+          "hesa_editable": true,
           "withdraw_reasons_dfe_details": null,
-          "placement_detail": null
+          "placement_detail": null,
+          "ukprn": "10000571",
+          "ethnicity": "120",
+          "course_qualification": "QTS",
+          "course_title": null,
+          "course_level": "undergrad",
+          "course_itt_start_date": "2022-09-01",
+          "course_age_range": null,
+          "expected_end_date": "2023-07-01",
+          "employing_school_urn": null,
+          "lead_partner_urn_ukprn": null,
+          "lead_school_urn": null,
+          "fund_code": "7",
+          "bursary_level": "4",
+          "course_year": "2",
+          "funding_method": "4",
+          "itt_aim": "201",
+          "itt_qualification_aim": "004",
+          "ni_number": null,
+          "previous_last_name": null,
+          "hesa_disabilities": null,
+          "additional_training_initiative": null,
         }
       ]
     }
@@ -284,10 +305,10 @@ Get a single trainee.
         "email": "trainee_644065@example.com",
         "middle_names": null,
         "training_route": "11",
-        "sex": "female",
+        "sex": "10",
         "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "mixed_ethnic_group",
-        "ethnic_background": "Another Mixed background",
+        "ethnic_group": "black_ethnic_group",
+        "ethnic_background": "African",
         "additional_ethnic_background": null,
         "disability_disclosure": "no_disability",
         "course_subject_one": "100425",
@@ -326,13 +347,34 @@ Get a single trainee.
         "created_from_dttp": false,
         "hesa_id": "87960005710008762",
         "additional_dttp_data": null,
-        "created_from_hesa": true,
-        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-        "record_source": "hesa_collection",
+        "created_from_hesa": false,
+        "hesa_updated_at": null
+        "record_source": "api",
         "iqts_country": null,
-        "hesa_editable": false,
+        "hesa_editable": true,
         "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
+        "ukprn": "10000571",
+        "ethnicity": "120",
+        "course_qualification": "QTS",
+        "course_title": null,
+        "course_level": "undergrad",
+        "course_itt_start_date": "2022-09-01",
+        "course_age_range": null,
+        "expected_end_date": "2023-07-01",
+        "employing_school_urn": null,
+        "lead_partner_urn_ukprn": null,
+        "lead_school_urn": null,
+        "fund_code": "7",
+        "bursary_level": "4",
+        "course_year": "2",
+        "funding_method": "4",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "ni_number": null,
+        "previous_last_name": null,
+        "hesa_disabilities": null,
+        "additional_training_initiative": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
@@ -693,7 +735,7 @@ Trainee details
     <dt class="govuk-summary-list__key"><code>data</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        <a class="govuk-link" href="#trainee-object">Trainee</a> object
+        <a class="govuk-link" href="#trainee-object">Trainee</a> object with nested <a class="govuk-link" href="#placement-object">Placement</a> and <a class="govuk-link" href="#degree-object">Degree</a> objects
       </p>
     </dd>
   </div>
@@ -705,24 +747,42 @@ Trainee details
     <pre class="json-code-sample">
     {
       "data": {
+        "provider_trainee_id": "12345678",
         "first_names": "John",
-        "middle_names": "James",
         "last_name": "Doe",
         "date_of_birth": "1990-01-01",
-        "sex": "male",
+        "sex": "11",
         "email": "john.doe@example.com",
-        "trn": "123456",
         "training_route": "11",
-        "itt_start_date": "2022-09-01",
-        "itt_end_date": "2023-07-01",
-        "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "white_ethnic_group",
-        "ethnic_background": "Background 1",
+        "itt_start_date": "2023-09-01",
+        "itt_end_date": "2024-07-01",
         "course_subject_one": "100425",
         "study_mode": "01",
-        "application_choice_id": "123",
-        "placements_attributes": [{ "urn": "123456", "name": "Placement" }],
-        "degrees_attributes": [{ "country": "UK", "grade": "First", "subject": "Computer Science", "institution": "University of Test", "graduation_year": "2012", "locale_code": "uk" }]
+        "nationality": "GB",
+        "ethnicity": "120",
+        "disability1": "58",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "course_year": "2",
+        "course_age_range": "13918",
+        "fund_code": "7",
+        "funding_method": "4",
+        "hesa_id": "1210007145123456",
+        "placements_attributes": [
+          {
+            "urn": "123456",
+            "name": "Placement"
+          }
+        ],
+        "degrees_attributes": [
+          {
+            "grade": "02",
+            "subject": "100425",
+            "institution": "0116",
+            "uk_degree": "083",
+            "graduation_year": "2012-07-31"
+          }
+        ]
       }
     }
     </pre>
@@ -747,10 +807,10 @@ Trainee details
         "email": "trainee_644065@example.com",
         "middle_names": null,
         "training_route": "11",
-        "sex": "female",
+        "sex": "10",
         "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "mixed_ethnic_group",
-        "ethnic_background": "Another Mixed background",
+        "ethnic_group": "black_ethnic_group",
+        "ethnic_background": "African",
         "additional_ethnic_background": null,
         "disability_disclosure": "no_disability",
         "course_subject_one": "100425",
@@ -789,13 +849,34 @@ Trainee details
         "created_from_dttp": false,
         "hesa_id": "87960005710008762",
         "additional_dttp_data": null,
-        "created_from_hesa": true,
-        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-        "record_source": "hesa_collection",
+        "created_from_hesa": false,
+        "hesa_updated_at": null
+        "record_source": "api",
         "iqts_country": null,
-        "hesa_editable": false,
+        "hesa_editable": true,
         "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
+        "ukprn": "10000571",
+        "ethnicity": "120",
+        "course_qualification": "QTS",
+        "course_title": null,
+        "course_level": "undergrad",
+        "course_itt_start_date": "2022-09-01",
+        "course_age_range": null,
+        "expected_end_date": "2023-07-01",
+        "employing_school_urn": null,
+        "lead_partner_urn_ukprn": null,
+        "lead_school_urn": null,
+        "fund_code": "7",
+        "bursary_level": "4",
+        "course_year": "2",
+        "funding_method": "4",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "ni_number": null,
+        "previous_last_name": null,
+        "hesa_disabilities": null,
+        "additional_training_initiative": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
@@ -1022,12 +1103,11 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "country": "UK",
         "grade": "02",
         "subject": "100425",
         "institution": "0116",
         "uk_degree": "083",
-        "graduation_year": "2012"
+        "graduation_year": "2012-07-31"
       }
     }
     </pre>
@@ -1163,10 +1243,10 @@ Withdraw a trainee.
         "email": "trainee_644065@example.com",
         "middle_names": null,
         "training_route": "11",
-        "sex": "female",
+        "sex": "10",
         "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "mixed_ethnic_group",
-        "ethnic_background": "Another Mixed background",
+        "ethnic_group": "black_ethnic_group",
+        "ethnic_background": "African",
         "additional_ethnic_background": null,
         "disability_disclosure": "no_disability",
         "course_subject_one": "100425",
@@ -1205,13 +1285,34 @@ Withdraw a trainee.
         "created_from_dttp": false,
         "hesa_id": "87960005710008762",
         "additional_dttp_data": null,
-        "created_from_hesa": true,
-        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-        "record_source": "hesa_collection",
+        "created_from_hesa": false,
+        "hesa_updated_at": null
+        "record_source": "api",
         "iqts_country": null,
-        "hesa_editable": false,
+        "hesa_editable": true,
         "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
+        "ukprn": "10000571",
+        "ethnicity": "120",
+        "course_qualification": "QTS",
+        "course_title": null,
+        "course_level": "undergrad",
+        "course_itt_start_date": "2022-09-01",
+        "course_age_range": null,
+        "expected_end_date": "2023-07-01",
+        "employing_school_urn": null,
+        "lead_partner_urn_ukprn": null,
+        "lead_school_urn": null,
+        "fund_code": "7",
+        "bursary_level": "4",
+        "course_year": "2",
+        "funding_method": "4",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "ni_number": null,
+        "previous_last_name": null,
+        "hesa_disabilities": null,
+        "additional_training_initiative": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
@@ -1376,10 +1477,10 @@ Trainee details
         "email": "trainee_644065@example.com",
         "middle_names": null,
         "training_route": "11",
-        "sex": "female",
+        "sex": "10",
         "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "mixed_ethnic_group",
-        "ethnic_background": "Another Mixed background",
+        "ethnic_group": "black_ethnic_group",
+        "ethnic_background": "African",
         "additional_ethnic_background": null,
         "disability_disclosure": "no_disability",
         "course_subject_one": "100425",
@@ -1418,13 +1519,34 @@ Trainee details
         "created_from_dttp": false,
         "hesa_id": "87960005710008762",
         "additional_dttp_data": null,
-        "created_from_hesa": true,
-        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-        "record_source": "hesa_collection",
+        "created_from_hesa": false,
+        "hesa_updated_at": null
+        "record_source": "api",
         "iqts_country": null,
-        "hesa_editable": false,
+        "hesa_editable": true,
         "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
+        "ukprn": "10000571",
+        "ethnicity": "120",
+        "course_qualification": "QTS",
+        "course_title": null,
+        "course_level": "undergrad",
+        "course_itt_start_date": "2022-09-01",
+        "course_age_range": null,
+        "expected_end_date": "2023-07-01",
+        "employing_school_urn": null,
+        "lead_partner_urn_ukprn": null,
+        "lead_school_urn": null,
+        "fund_code": "7",
+        "bursary_level": "4",
+        "course_year": "2",
+        "funding_method": "4",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "ni_number": null,
+        "previous_last_name": null,
+        "hesa_disabilities": null,
+        "additional_training_initiative": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
@@ -1661,7 +1783,6 @@ Degree details
     <pre class="json-code-sample">
     {
       "data": {
-        "graduation_year": 2022,
         "grade": "Lower second-class honours (2:2)"
       }
     }
@@ -1794,10 +1915,10 @@ Deletes an existing placement for this trainee.
         "email": "trainee_644065@example.com",
         "middle_names": null,
         "training_route": "11",
-        "sex": "female",
+        "sex": "10",
         "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "mixed_ethnic_group",
-        "ethnic_background": "Another Mixed background",
+        "ethnic_group": "black_ethnic_group",
+        "ethnic_background": "African",
         "additional_ethnic_background": null,
         "disability_disclosure": "no_disability",
         "course_subject_one": "100425",
@@ -1836,13 +1957,34 @@ Deletes an existing placement for this trainee.
         "created_from_dttp": false,
         "hesa_id": "87960005710008762",
         "additional_dttp_data": null,
-        "created_from_hesa": true,
-        "hesa_updated_at": "2024-01-17T13:49:59.000Z",
-        "record_source": "hesa_collection",
+        "created_from_hesa": false,
+        "hesa_updated_at": null
+        "record_source": "api",
         "iqts_country": null,
-        "hesa_editable": false,
+        "hesa_editable": true,
         "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
+        "ukprn": "10000571",
+        "ethnicity": "120",
+        "course_qualification": "QTS",
+        "course_title": null,
+        "course_level": "undergrad",
+        "course_itt_start_date": "2022-09-01",
+        "course_age_range": null,
+        "expected_end_date": "2023-07-01",
+        "employing_school_urn": null,
+        "lead_partner_urn_ukprn": null,
+        "lead_school_urn": null,
+        "fund_code": "7",
+        "bursary_level": "4",
+        "course_year": "2",
+        "funding_method": "4",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "ni_number": null,
+        "previous_last_name": null,
+        "hesa_disabilities": null,
+        "additional_training_initiative": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
@@ -2125,7 +2267,7 @@ Deletes an existing degree for this trainee.
         The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nation">HESA nationality field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>US</code>
+        Example: <code>GB</code>
       </p>
     </dd>
   </div>
@@ -2522,7 +2664,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>country</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string, required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
         The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degctry">HESA degree country field</a>
@@ -2536,7 +2678,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>grade</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string, required if degree is from the UK
       </p>
       <p class="govuk-body">
         The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
@@ -2612,7 +2754,7 @@ Deletes an existing degree for this trainee.
         The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>2012</code>
+        Example: <code>2012-07-31</code>
       </p>
     </dd>
   </div>
