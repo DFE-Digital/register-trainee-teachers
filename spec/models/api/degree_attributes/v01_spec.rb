@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Api::DegreeAttributes::V01 do
   let(:v01) { described_class.new(attributes, trainee:) }
-  let(:attributes_with_id) { degree.attributes.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
+  let(:attributes_with_id) { DegreeSerializer::V01.new(degree).as_hash.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
   let(:degree) { build(:degree) }
 
   let(:attributes) { attributes_with_id }
@@ -13,9 +13,9 @@ RSpec.describe Api::DegreeAttributes::V01 do
   subject { v01 }
 
   describe "validations" do
-    it { expect(subject).to validate_inclusion_of(:institution).in_array(DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name)).allow_nil }
-    it { expect(subject).to validate_inclusion_of(:subject).in_array(DfEReference::DegreesQuery::SUBJECTS.all.map(&:name)).allow_nil }
-    it { expect(subject).to validate_inclusion_of(:uk_degree).in_array(DfEReference::DegreesQuery::TYPES.all.map(&:name)).allow_nil }
+    it { expect(subject).to validate_inclusion_of(:institution).in_array(DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code)).allow_nil }
+    it { expect(subject).to validate_inclusion_of(:subject).in_array(DfEReference::DegreesQuery::SUBJECTS.all.map(&:hecos_code)).allow_nil }
+    it { expect(subject).to validate_inclusion_of(:uk_degree).in_array(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code)).allow_nil }
 
     context "with duplicate" do
       before { subject.valid? }

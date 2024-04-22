@@ -4,19 +4,10 @@ module Api
   module MapHesaAttributes
     module Degrees
       class V01
-        ATTRIBUTES = %i[graduation_date subject_one].freeze
         INSTITUTE_OF_EDUCATION_HESA_CODE = "0133"
         UNIVERSITY_COLLEGE_LONDON_HESA_CODE = "0149"
         PASS_WITHOUT_HONOURS_HESA_CODE = "09"
         NEAREST_EQUIVALENT_GRADE_HESA_CODE = "14"
-        HONOURS_TO_NON_HONOURS_HESA_CODE_MAP = {
-          "002" => "001",
-          "004" => "003",
-          "006" => "005",
-          "008" => "007",
-          "010" => "009",
-          "014" => "012",
-        }.freeze
 
         def initialize(params)
           @params = params
@@ -48,7 +39,11 @@ module Api
         end
 
         def graduation_year
-          @params[:graduation_date]&.to_date&.year
+          if @params[:graduation_year].is_a?(String)
+            @params[:graduation_year]&.to_date&.year
+          else
+            @params[:graduation_year]
+          end
         end
 
         def institution
@@ -86,7 +81,7 @@ module Api
         def non_uk_degree
           return if uk_country_or_uk_institution_present?
 
-          degree_type&.name
+          @params[:non_uk_degree]
         end
 
         def grade
@@ -100,11 +95,12 @@ module Api
       private
 
         def dfe_reference_subject
-          DfEReference::DegreesQuery.find_subject(hecos_code: @params[:subject_one])
+          DfEReference::DegreesQuery.find_subject(hecos_code: @params[:subject])
         end
 
         def find_institution
           hesa_code = institution_hesa_code
+
           institution = DfEReference::DegreesQuery.find_institution(hesa_code:)
 
           institution || DfEReference::DegreesQuery.find_institution(name: "Other UK institution")
@@ -131,8 +127,7 @@ module Api
         end
 
         def degree_type
-          hesa_code = HONOURS_TO_NON_HONOURS_HESA_CODE_MAP[@params[:degree_type]] || @params[:degree_type]
-          @degree_type = DfEReference::DegreesQuery.find_type(hesa_code:)
+          @degree_type ||= DfEReference::DegreesQuery.find_type(hesa_code: @params[:uk_degree])
         end
 
         def grade_from_hesa_code

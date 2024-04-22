@@ -4,9 +4,12 @@ module Api
   module Trainees
     class SaveDegreeResponse
       include ServicePattern
+
       include Api::Attributable
       include Api::Serializable
       include Api::ErrorResponse
+
+      include ActiveModel::Validations
 
       def initialize(degree:, params:, version:)
         @degree = degree
@@ -35,10 +38,14 @@ module Api
       attr_reader :degree, :params, :version, :status
 
       def save
-        assign_attributes(attributes)
+        if valid?
+          assign_attributes(
+            Api::MapHesaAttributes::Degrees::V01.new(
+              attributes.with_indifferent_access,
+            ).call,
+          )
 
-        if valid? && degree.save
-          true
+          degree.save
         else
           false
         end
@@ -64,7 +71,19 @@ module Api
           end
       end
 
-      def errors = degree_attributes.errors || degree.errors
+      def errors
+        super.clear
+
+        degree_attributes.errors.each do |error|
+          super.add(:base, error.full_message)
+        end
+
+        degree.errors.each do |error|
+          super.add(:base, error.full_message)
+        end
+
+        super
+      end
     end
   end
 end

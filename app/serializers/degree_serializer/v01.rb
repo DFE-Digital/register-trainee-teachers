@@ -20,7 +20,7 @@ module DegreeSerializer
         subject:,
         institution:,
         country:,
-        degree_type:,
+        uk_degree:,
         grade:,
       })
     end
@@ -49,9 +49,10 @@ module DegreeSerializer
       Hesa::CodeSets::Countries::MAPPING.key(@degree.country)
     end
 
-    def degree_type
+    def uk_degree
       types = DfE::ReferenceData::Degrees::TYPES.all_as_hash
-      matching_type = types.find { |_, item| item[:name] == (@degree.uk_degree || @degree.non_uk_degree) }&.last
+      matching_type = types.find { |_, item| item[:name] == @degree.uk_degree }&.last
+
       return if matching_type.blank?
 
       matching_type[:hesa_itt_code]

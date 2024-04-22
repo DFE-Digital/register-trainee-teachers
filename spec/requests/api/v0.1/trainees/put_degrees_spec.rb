@@ -22,23 +22,93 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         :uk_degree_with_details,
         trainee: trainee,
         subject_uuid: accountancy_subject_uuid,
+        grade: "Third-class honours",
+        institution: "Ravensbourne University London",
+        uk_degree: "Bachelor of Arts",
+        graduation_year: 1978,
       )
     end
     let!(:original_subject) { degree.subject }
-    let(:new_subject) { "Accounting" }
+    let(:new_subject) { "100105" }
 
     context "with a valid trainee and degree" do
-      it "updates a new degree and returns a 200 status (ok)" do
-        put(
-          "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
-          params: {
-            data: { subject: new_subject },
-          },
-        )
-        expect(response).to have_http_status(:ok)
-        expect(response.parsed_body["data"]).to be_present
-        expect(trainee.reload.degrees.first.subject).to eq(new_subject)
+      context "when using partial HESA attributes" do
+        it "updates the degree and returns a 200 status (ok)" do
+          put(
+            "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}" },
+            params: {
+              data: { subject: new_subject },
+            },
+          )
+
+          expect(response).to have_http_status(:ok)
+
+          degree_attributes = response.parsed_body["data"]
+
+          expect(degree_attributes["grade"]).to eq("05")
+          expect(degree_attributes["subject"]).to eq(new_subject)
+          expect(degree_attributes["institution"]).to eq("0030")
+          expect(degree_attributes["uk_degree"]).to eq("051")
+          expect(degree_attributes["graduation_year"]).to eq(1978)
+          expect(degree_attributes["country"]).to be_nil
+          expect(degree_attributes["locale_code"]).to be_nil
+
+          degree.reload
+
+          expect(degree.grade).to eq("Third-class honours")
+          expect(degree.subject).to eq("Accounting")
+          expect(degree.institution).to eq("Ravensbourne University London")
+          expect(degree.uk_degree).to eq("Bachelor of Arts")
+          expect(degree.graduation_year).to eq(1978)
+          expect(degree.country).to be_nil
+          expect(degree.locale_code).to eq("uk")
+        end
+      end
+
+      context "when using multiple HESA attributes" do
+        let(:degrees_attributes) do
+          {
+            grade: "02",
+            subject: "100425",
+            institution: "0117",
+            uk_degree: "083",
+            graduation_year: "2015-01-01",
+            country: "XF",
+          }
+        end
+
+        it "updates the degree and returns a 200 status (ok)" do
+          put(
+            "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}" },
+            params: {
+              data: degrees_attributes,
+            },
+          )
+
+          expect(response).to have_http_status(:ok)
+
+          degree_attributes = response.parsed_body["data"]
+
+          expect(degree_attributes["grade"]).to eq("02")
+          expect(degree_attributes["subject"]).to eq("100425")
+          expect(degree_attributes["institution"]).to eq("0117")
+          expect(degree_attributes["uk_degree"]).to eq("083")
+          expect(degree_attributes["graduation_year"]).to eq(2015)
+          expect(degree_attributes["country"]).to be_nil
+          expect(degree_attributes["locale_code"]).to be_nil
+
+          degree.reload
+
+          expect(degree.grade).to eq("Upper second-class honours (2:1)")
+          expect(degree.subject).to eq("Physics")
+          expect(degree.institution).to eq("University of East Anglia")
+          expect(degree.uk_degree).to eq("Bachelor of Science")
+          expect(degree.graduation_year).to eq(2015)
+          expect(degree.country).to be_nil
+          expect(degree.locale_code).to eq("uk")
+        end
       end
     end
 
@@ -48,8 +118,12 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       let(:trainee) { create(:trainee, degrees: [uk_degree, non_uk_degree]) }
       let(:degrees_attributes) do
         non_uk_degree.attributes.symbolize_keys.slice(
-          :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :locale_code, :non_uk_degree
-        )
+          :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :non_uk_degree
+        ).merge(DegreeSerializer::V01.new(non_uk_degree).as_hash.symbolize_keys)
+      end
+
+      before do
+        degrees_attributes[:graduation_year] = Date.new(degrees_attributes[:graduation_year]).to_s
       end
 
       it "returns a 409 (conflict) status" do
@@ -60,6 +134,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
             data: degrees_attributes,
           },
         )
+
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body["errors"].first).to match(
           { error: "Conflict",

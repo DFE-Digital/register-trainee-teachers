@@ -31,6 +31,7 @@ module Api
 
       def initialize(attributes, trainee: nil)
         super(attributes)
+
         @existing_degrees = if trainee.present?
                               if id.present?
                                 trainee.degrees.where.not(id:)
@@ -40,20 +41,41 @@ module Api
                             end
       end
 
-      validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:name) }, allow_nil: true
-      validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:name) }, allow_nil: true
-      validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_nil: true
+      validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code) }, allow_nil: true
+      validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:hecos_code) }, allow_nil: true
+      validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code) }, allow_nil: true
+
       validate :check_for_duplicates
 
       def self.from_degree(degree, trainee:)
-        new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) }, trainee:)
+        new(
+          DegreeSerializer::V01.new(degree)
+            .as_hash
+            .merge(id: degree.id).select { |k, _v| ATTRIBUTES.include?(k.to_sym) }
+            .as_json,
+          trainee:,
+        )
       end
 
       def duplicates?
-        existing_degrees&.exists?(attributes.symbolize_keys.except(:id))
+        existing_degrees&.exists?(
+          hesa_mapped_degree_attributes.slice(
+            :subject,
+            :graduation_year,
+            :locale_code,
+            :country,
+            :uk_degree,
+            :non_uk_degree,
+            :grade,
+          ),
+        )
       end
 
     private
+
+      def hesa_mapped_degree_attributes
+        Api::MapHesaAttributes::Degrees::V01.new(attributes.symbolize_keys).call
+      end
 
       def check_for_duplicates
         errors.add(:base, :duplicates) if duplicates?
