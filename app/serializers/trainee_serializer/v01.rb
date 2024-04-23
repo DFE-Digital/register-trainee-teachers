@@ -188,7 +188,9 @@ module TraineeSerializer
     end
 
     def hesa_trainee_attributes
-      HesaTraineeDetailSerializer::V01.new(@trainee&.hesa_trainee_detail)&.as_hash
+      return {} unless @trainee.hesa_trainee_detail
+
+      HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
     end
 
     def nationality
