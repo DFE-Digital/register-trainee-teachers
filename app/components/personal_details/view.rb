@@ -4,12 +4,13 @@ module PersonalDetails
   class View < ViewComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false, editable: false, minimal: false)
+    def initialize(data_model:, has_errors: false, editable: false, minimal: false, header_level: 2)
       @data_model = data_model
       @nationalities = Nationality.where(id: data_model.nationality_ids)
       @has_errors = has_errors
       @editable = editable
       @minimal = minimal
+      @header_level = header_level
     end
 
     def personal_detail_rows
@@ -23,7 +24,7 @@ module PersonalDetails
 
   private
 
-    attr_accessor :data_model, :nationalities, :has_errors, :editable, :minimal
+    attr_accessor :data_model, :nationalities, :has_errors, :editable, :minimal, :header_level
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee

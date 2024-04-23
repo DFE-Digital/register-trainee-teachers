@@ -4,10 +4,11 @@ module ContactDetails
   class View < ViewComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
       @editable = editable
+      @header_level = header_level
     end
 
     def contact_detail_rows
@@ -16,7 +17,7 @@ module ContactDetails
 
   private
 
-    attr_accessor :data_model, :has_errors, :editable
+    attr_accessor :data_model, :has_errors, :editable, :header_level
 
     def trainee
       data_model.is_a?(Trainee) ? data_model : data_model.trainee

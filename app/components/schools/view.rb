@@ -5,12 +5,13 @@ module Schools
     include SummaryHelper
     include SchoolHelper
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
       @editable = editable
       @lead_school = fetch_lead_school
       @employing_school = fetch_employing_school
+      @header_level = header_level
     end
 
     def trainee
@@ -26,7 +27,7 @@ module Schools
 
   private
 
-    attr_accessor :data_model, :lead_school, :employing_school, :has_errors, :editable
+    attr_accessor :data_model, :lead_school, :employing_school, :has_errors, :editable, :header_level
 
     def lead_school_not_applicable?
       if data_model.is_a?(Schools::FormValidator)

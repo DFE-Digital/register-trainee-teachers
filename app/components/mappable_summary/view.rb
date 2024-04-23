@@ -4,13 +4,14 @@ module MappableSummary
   class View < ViewComponent::Base
     renders_one :header_actions
 
-    def initialize(trainee:, title:, rows:, editable:, has_errors:, id_suffix: nil)
+    def initialize(trainee:, title:, rows:, editable:, has_errors:, id_suffix: nil, header_level: 3)
       @trainee = trainee
       @title = title
       @rows = rows
       @editable = editable
       @has_errors = has_errors
       @id_suffix = id_suffix
+      @header_level = header_level
     end
 
     def mappable_rows
@@ -37,7 +38,7 @@ module MappableSummary
 
   private
 
-    attr_reader :title, :rows, :editable, :trainee, :has_errors, :id_suffix
+    attr_reader :title, :rows, :editable, :trainee, :has_errors, :id_suffix, :header_level
 
     def mappable_field(field_value, field_label, action_url)
       MappableFieldRow.new(

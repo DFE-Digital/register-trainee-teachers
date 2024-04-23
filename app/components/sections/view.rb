@@ -32,6 +32,7 @@ module Sections
         if section == :degrees
           view_args.merge!(show_add_another_degree_button: true, show_delete_button: true)
         end
+        view_args.merge!(header_level: 3)
         view_args
       end
     end

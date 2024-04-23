@@ -4,10 +4,11 @@ module Diversity
   class View < ViewComponent::Base
     include SanitizeHelper
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
       @editable = editable
+      @header_level = header_level
     end
 
     def trainee
@@ -28,7 +29,7 @@ module Diversity
 
   private
 
-    attr_accessor :data_model, :has_errors, :editable
+    attr_accessor :data_model, :has_errors, :editable, :header_level
 
     def diversity_disclosure_row
       field_value = data_model.diversity_disclosure ? t("components.confirmation.diversity.diversity_disclosure.#{data_model.diversity_disclosure}") : nil
