@@ -3,7 +3,7 @@
 module RouteConstraints
   class RegisterApiConstraint
     def self.matches?(request)
-      request[:api_version] == "v0.1"
+      request.path_parameters[:api_version] == "v0.1"
     end
   end
 end

@@ -202,6 +202,22 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
             expect(response.parsed_body[:data]["trainee_id"]).to eq(slug)
           end
         end
+
+        context "when request body is not valid JSON" do
+          let(:params_for_update) { "{ \"data\": { \"first_names\": \"Alice\", \"last_name\": \"Roberts\", } }" }
+
+          it "does not update the trainee and returns a meaningful error" do
+            put(
+              "/api/v0.1/trainees/#{slug}",
+              headers: headers.merge("Content-Type" => "application/json"),
+              params: params_for_update,
+            )
+
+            expect(response).to have_http_status(:bad_request)
+            expect(trainee.reload.first_names).to eq("John")
+            expect(response.parsed_body).to have_key("errors")
+          end
+        end
       end
     end
   end
