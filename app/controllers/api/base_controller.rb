@@ -18,6 +18,13 @@ module Api
       )
     end
 
+    rescue_from JSON::ParserError do |e|
+      render(
+        json: { errors: [e.message.capitalize] },
+        status: :bad_request,
+      )
+    end
+
     def check_feature_flag!
       return if FeatureService.enabled?(:register_api)
 
