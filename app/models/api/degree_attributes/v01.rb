@@ -62,12 +62,11 @@ module Api
           hesa_mapped_degree_attributes.slice(
             :subject,
             :graduation_year,
-            :locale_code,
             :country,
             :uk_degree,
             :non_uk_degree,
             :grade,
-          ),
+          ).compact,
         )
       end
 
