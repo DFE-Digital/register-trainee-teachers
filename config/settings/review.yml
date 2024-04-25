@@ -30,4 +30,4 @@ environment:
 google:
   big_query:
     send_data_to_big_query: true
-    azure_federated_auth: true
+    azure_federated_auth: false
