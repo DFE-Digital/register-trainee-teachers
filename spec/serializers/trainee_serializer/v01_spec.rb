@@ -136,5 +136,15 @@ RSpec.describe TraineeSerializer::V01 do
         expect(json[:degrees]).to eq(degrees)
       end
     end
+
+    describe "HESA trainee details" do
+      let(:hesa_trainee_detail) do
+        HesaTraineeDetailSerializer::V01.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
+      end
+
+      it "serializes with HesaTraineeDetailSerializer::V01" do
+        expect(trainee.hesa_trainee_detail.attributes.except(*HesaTraineeDetailSerializer::V01::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
+      end
+    end
   end
 end

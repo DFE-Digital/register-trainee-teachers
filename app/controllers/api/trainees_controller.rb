@@ -117,10 +117,6 @@ module Api
       @degree_attributes ||= Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
     end
 
-    def current_version_class_name
-      current_version.gsub(".", "").camelize
-    end
-
     def trainee_update_params
       params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
     end
