@@ -4,10 +4,11 @@ module IqtsCountry
   class View < ViewComponent::Base
     include SummaryHelper
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @has_errors = has_errors
       @editable = editable
+      @header_level = header_level
     end
 
     def trainee
@@ -29,6 +30,6 @@ module IqtsCountry
 
   private
 
-    attr_accessor :data_model, :has_errors, :editable
+    attr_accessor :data_model, :has_errors, :editable, :header_level
   end
 end

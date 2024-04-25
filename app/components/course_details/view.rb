@@ -6,11 +6,12 @@ module CourseDetails
     include CourseDetailsHelper
     include TraineeHelper
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false, header_level: 3)
       @data_model = data_model
       @trainee = data_model.is_a?(Trainee) ? data_model : data_model.trainee
       @has_errors = has_errors
       @editable = editable
+      @header_level = header_level
     end
 
     def summary_title
@@ -31,7 +32,7 @@ module CourseDetails
 
   private
 
-    attr_accessor :data_model, :trainee, :has_errors, :editable
+    attr_accessor :data_model, :trainee, :has_errors, :editable, :header_level
 
     def route_and_course_details_row
       {

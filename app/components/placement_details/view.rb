@@ -4,12 +4,13 @@ module PlacementDetails
   class View < ViewComponent::Base
     include SummaryHelper
 
-    attr_accessor :data_model, :editable, :has_errors
+    attr_accessor :data_model, :editable, :has_errors, :header_level
 
-    def initialize(data_model:, has_errors: false, editable: false)
+    def initialize(data_model:, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @editable = editable
       @has_errors = has_errors
+      @header_level = header_level
     end
 
     def summary_title

@@ -4,13 +4,14 @@ module Degrees
   class View < ViewComponent::Base
     include ApplicationHelper
 
-    def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true, has_errors: false, editable: false)
+    def initialize(data_model:, show_add_another_degree_button: true, show_delete_button: true, has_errors: false, editable: false, header_level: 2)
       @data_model = data_model
       @degrees = @data_model.degrees
       @has_errors = has_errors
       @editable = editable
       @show_add_another_degree_button = show_button(show_add_another_degree_button)
       @show_delete_button = show_button(show_delete_button)
+      @header_level = header_level
     end
 
     def trainee
@@ -60,7 +61,7 @@ module Degrees
 
   private
 
-    attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button, :has_errors, :editable
+    attr_accessor :degrees, :data_model, :show_add_another_degree_button, :show_delete_button, :has_errors, :editable, :header_level
 
     def non_uk_degree_type(degree)
       degree.non_uk_degree == NON_ENIC ? "UK ENIC not provided" : degree.non_uk_degree
