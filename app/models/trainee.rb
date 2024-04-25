@@ -372,9 +372,8 @@ class Trainee < ApplicationRecord
     :trainee_disabilities,
     :placements,
     :degrees,
-    :nationalisations,
   )
-
+  accepts_nested_attributes_for :nationalisations, allow_destroy: true
   accepts_nested_attributes_for :hesa_trainee_detail, update_only: true
 
   def hesa_student_for_collection(collection_reference)

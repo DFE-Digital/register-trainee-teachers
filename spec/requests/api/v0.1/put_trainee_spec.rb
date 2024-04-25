@@ -43,6 +43,18 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     before do
       create(:nationality, :irish)
+
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { nationality: "IE" } },
+      )
+      expect(response).to have_http_status(:ok)
+      expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
+    end
+
+    it "we can update nationality without creating a dual nationality" do
+      create(:nationality, :irish)
       create(:nationality, :french)
 
       put(

@@ -12,10 +12,14 @@ module Api
 
       def call
         trainee_attributes_validation = TraineeAttributesValidation.new(trainee_attributes:)
+
+        attributes_to_save = attributes.deep_attributes.with_indifferent_access
+        trainee.nationalities.destroy_all if attributes_to_save[:nationalisations_attributes].present?
+
         if trainee_attributes_validation.invalid?
           [false, trainee_attributes_validation]
         else
-          trainee.assign_attributes(attributes.deep_attributes)
+          trainee.assign_attributes(attributes_to_save)
 
           if validation.all_errors.any?
             [false, validation]
