@@ -32,7 +32,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         {
           subject: "100485",
           institution: "0117",
-          graduation_year: "2003-06-01",
+          graduation_year: "2003",
           grade: "02",
           uk_degree: "083",
           country: "XF",

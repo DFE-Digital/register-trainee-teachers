@@ -39,7 +39,7 @@ module Api
         end
 
         def graduation_year
-          if @params[:graduation_year].is_a?(String)
+          if valid_date?(@params[:graduation_year])
             @params[:graduation_year]&.to_date&.year
           else
             @params[:graduation_year]
@@ -140,6 +140,15 @@ module Api
           else
             @params[:grade]
           end
+        end
+
+        def valid_date?(date)
+          return false if date.is_a?(String)
+
+          Date.parse(date)
+          true
+        rescue ArgumentError
+          false
         end
       end
     end
