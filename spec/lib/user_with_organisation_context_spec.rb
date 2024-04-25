@@ -13,7 +13,7 @@ describe UserWithOrganisationContext do
   end
 
   before do
-    disable_features("google.send_data_to_big_query")
+    disable_dfe_analytics
   end
 
   it "delegates missing methods to user" do

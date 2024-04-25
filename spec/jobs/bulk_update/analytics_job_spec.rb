@@ -10,6 +10,8 @@ RSpec.describe BulkUpdate::AnalyticsJob do
   let(:model) { Trainee }
 
   describe "#perform" do
+    before { disable_dfe_analytics }
+
     it "does not calls the SendEvents.do method" do
       allow(DfE::Analytics::SendEvents).to receive(:do)
 
@@ -21,6 +23,8 @@ RSpec.describe BulkUpdate::AnalyticsJob do
 
   context "when the feature flag is turned on", "feature_google.send_data_to_big_query": true do
     describe "#perform" do
+      before { enable_dfe_analytics }
+
       it "calls the SendEvents.do method" do
         allow(DfE::Analytics::SendEvents).to receive(:do)
 

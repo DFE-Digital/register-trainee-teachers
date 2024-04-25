@@ -7,7 +7,7 @@ feature "dfe analytics integration" do
 
   context "clicking return to draft record later" do
     scenario "sends dfe analytics events" do
-      given_the_send_to_big_query_feature_is_enabled
+      given_dfe_analytics_is_enabled
       and_i_am_authenticated
       when_i_visit_the_trainee_index_page
       then_dfe_analytics_events_are_sent
@@ -16,8 +16,8 @@ feature "dfe analytics integration" do
 
 private
 
-  def given_the_send_to_big_query_feature_is_enabled
-    enable_features("google.send_data_to_big_query")
+  def given_dfe_analytics_is_enabled
+    enable_dfe_analytics
   end
 
   def and_i_am_authenticated
