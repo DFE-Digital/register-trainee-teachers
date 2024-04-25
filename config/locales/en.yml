@@ -1590,6 +1590,9 @@ en:
           attributes:
             date_string:
               blank: Choose a withdrawal date
+            date:
+              blank: &withdrawal_date_blank The withdrawal date must have a day, month and year
+              invalid: *withdrawal_date_blank
         withdrawal/extra_information_form:
           attributes:
             withdraw_reasons_details:
