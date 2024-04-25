@@ -48,7 +48,7 @@ describe "sending request events" do
   end
 
   context "feature is enabled" do
-    before { enable_features("google.send_data_to_big_query") }
+    before { enable_dfe_analytics }
 
     it "does send to big query" do
       expect {
@@ -66,9 +66,7 @@ describe "sending request events" do
   end
 
   context "feature is disabled", feature_sign_in_method: "persona" do
-    before {
-      disable_features("google.send_data_to_big_query")
-    }
+    before { disable_dfe_analytics }
 
     it "doesn't send to big query" do
       expect {
