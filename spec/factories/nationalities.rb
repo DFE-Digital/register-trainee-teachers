@@ -12,6 +12,10 @@ FactoryBot.define do
       name { Dttp::CodeSets::Nationalities::IRISH }
     end
 
+    trait :french do
+      name { Dttp::CodeSets::Nationalities::FRENCH }
+    end
+
     trait :other do
       name { Dttp::CodeSets::Nationalities::OTHER }
     end
