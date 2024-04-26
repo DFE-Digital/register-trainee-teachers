@@ -13,6 +13,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   let(:params) { { data: } }
 
+  let(:graduation_year) { "2003" }
+
   let(:data) do
     {
       first_names: "John",
@@ -32,7 +34,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         {
           subject: "100485",
           institution: "0117",
-          graduation_year: "2003",
+          graduation_year: graduation_year,
           grade: "02",
           uk_degree: "083",
           country: "XF",
@@ -125,6 +127,44 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(degree.grade).to eq("Upper second-class honours (2:1)")
       expect(degree.uk_degree).to eq("Bachelor of Science")
       expect(degree.country).to be_nil
+    end
+
+    context "when graduation_year is in 'yyyy-mm-dd' format" do
+      let(:graduation_year) { "2003-01-01" }
+
+      it "creates the degrees with the correct graduation_year" do
+        degree_attributes = response.parsed_body["degrees"]&.first
+
+        expect(degree_attributes["graduation_year"]).to eq(2003)
+      end
+    end
+
+    context "when graduation_year is a valid 4-digit integer" do
+      let(:graduation_year) { 2003 }
+
+      it "creates the degrees with the correct graduation_year" do
+        degree_attributes = response.parsed_body["degrees"]&.first
+
+        expect(degree_attributes["graduation_year"]).to eq(2003)
+      end
+    end
+
+    context "when graduation_year is an invalid 3-digit integer" do
+      let(:graduation_year) { 200 }
+
+      it "does not create a degree" do
+        expect(response.parsed_body["degrees"]).to be_nil
+        expect(response.parsed_body["errors"].first).to include("Enter a valid graduation year")
+      end
+    end
+
+    context "when graduation_year is in an invalid format" do
+      let(:graduation_year) { "abc" }
+
+      it "does not create a degree" do
+        expect(response.parsed_body["degrees"]).to be_nil
+        expect(response.parsed_body["errors"].first).to include("Enter a valid graduation year")
+      end
     end
 
     it "creates the placements if provided in the request body" do
