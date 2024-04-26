@@ -42,22 +42,20 @@ module Api
 
     def update
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
-      begin
-        attributes = trainee_attributes_service.from_trainee(trainee)
-        attributes.assign_attributes(hesa_mapped_params_for_update)
-        succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
+      attributes = trainee_attributes_service.from_trainee(trainee)
+      attributes.assign_attributes(hesa_mapped_params_for_update)
+      succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
 
-        if succeeded
-          render(json: { data: serializer_klass.new(trainee).as_hash })
-        else
-          render(
-            json: {
-              message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this trainee from being saved",
-              errors: validation.all_errors,
-            },
-            status: :unprocessable_entity,
-          )
-        end
+      if succeeded
+        render(json: { data: serializer_klass.new(trainee).as_hash })
+      else
+        render(
+          json: {
+            message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this trainee from being saved",
+            errors: validation.all_errors,
+          },
+          status: :unprocessable_entity,
+        )
       end
     end
 
