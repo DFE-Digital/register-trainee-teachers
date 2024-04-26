@@ -272,7 +272,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
             ethnicity:,
             ethnic_group:,
             ethnic_background:,
-          }
+          },
         }
       end
 
@@ -280,7 +280,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         put(
           "/api/v0.1/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}" },
-          params:,
+          params: params,
         )
       end
 

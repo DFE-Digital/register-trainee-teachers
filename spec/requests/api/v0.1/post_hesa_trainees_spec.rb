@@ -237,7 +237,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             trn:,
             ethnicity:,
             ethnic_group:,
-            ethnic_background:
+            ethnic_background:,
           ),
         }
       end
