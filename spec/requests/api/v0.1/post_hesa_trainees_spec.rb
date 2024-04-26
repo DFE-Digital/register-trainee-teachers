@@ -205,6 +205,40 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     it "sets the provider_trainee_id" do
       expect(Trainee.last.provider_trainee_id).to eq("99157234/2/01")
     end
+
+    context "when read only attributes are been submitted" do
+      let(:trn) { "567899" }
+      let(:ethnicity) { "899" }
+      let(:ethnic_group) { "not_provided_ethnic_group" }
+      let(:ethnic_background) { "Another Mixed background" }
+      let(:params) do
+        {
+          data: data.merge(
+            trn:,
+            ethnicity:,
+            ethnic_group:,
+            ethnic_background:
+          ),
+        }
+      end
+
+      it "does not set the attributes" do
+        expect(response).to have_http_status(:created)
+
+        trainee = Trainee.last
+
+        expect(trainee.trn).to be_nil
+        expect(trainee.ethnic_group).to eq("other_ethnic_group")
+        expect(trainee.ethnic_background).to eq("Another ethnic background")
+
+        parsed_body = response.parsed_body[:data]
+
+        expect(parsed_body[:ethnicity]).to eq(ethnicity)
+        expect(parsed_body[:trn]).to be_nil
+        expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
+        expect(parsed_body[:ethnic_background]).to eq(trainee.ethnic_background)
+      end
+    end
   end
 
   context "when the trainee record is invalid", feature_register_api: true do
