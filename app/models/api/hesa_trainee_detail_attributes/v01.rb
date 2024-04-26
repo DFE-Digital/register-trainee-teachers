@@ -36,6 +36,8 @@ module Api
       end
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+
+      validates(:course_age_range, inclusion: Hesa::CodeSets::AgeRanges::MAPPING.keys, allow_blank: true)
     end
   end
 end
