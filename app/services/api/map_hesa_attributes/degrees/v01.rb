@@ -143,7 +143,7 @@ module Api
         end
 
         def valid_date?(date)
-          return false if date.is_a?(String)
+          return false unless date.is_a?(String)
 
           Date.parse(date)
           true
