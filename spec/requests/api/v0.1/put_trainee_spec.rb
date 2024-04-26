@@ -266,7 +266,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         end
 
         let(:course_subject) { cs }
-        let(:slug) { response.parsed_body["trainee_id"] }
+        let(:slug) { response.parsed_body[:data][:trainee_id] }
         let(:trainee) { Trainee.last.reload }
 
         before do
@@ -296,7 +296,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
             expect(response).to have_http_status(:ok)
             expect(trainee.first_names).to eq("Alice")
-            expect(response.parsed_body[:data]["trainee_id"]).to eq(slug)
+            expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
           end
         end
 
@@ -312,7 +312,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
             expect(response).to have_http_status(:bad_request)
             expect(trainee.reload.first_names).to eq("John")
-            expect(response.parsed_body).to have_key("errors")
+            expect(response.parsed_body).to have_key(:errors)
           end
         end
       end

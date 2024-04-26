@@ -62,7 +62,7 @@ module Api
     end
 
     def success_response(trainee)
-      { json: serializer_klass.new(trainee).as_hash, status: :created }
+      { json: { data: serializer_klass.new(trainee).as_hash }, status: :created }
     end
 
     def validation_error_response

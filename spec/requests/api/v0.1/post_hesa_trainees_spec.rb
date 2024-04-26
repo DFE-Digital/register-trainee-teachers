@@ -75,9 +75,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "creates a trainee" do
-      expect(response.parsed_body["first_names"]).to eq("John")
-      expect(response.parsed_body["last_name"]).to eq("Doe")
-      expect(response.parsed_body["previous_last_name"]).to eq("Smith")
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:previous_last_name]).to eq("Smith")
     end
 
     it "sets the correct state" do
@@ -85,45 +85,51 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the correct disabilities" do
-      expect(response.parsed_body["disability_disclosure"]).to eq("disabled")
-      expect(response.parsed_body["disability1"]).to eq("58")
-      expect(response.parsed_body["disability2"]).to eq("57")
+      parsed_body = response.parsed_body[:data]
 
-      trainee_id = response.parsed_body["trainee_id"]
+      expect(parsed_body[:disability_disclosure]).to eq("disabled")
+      expect(parsed_body[:disability1]).to eq("58")
+      expect(parsed_body[:disability2]).to eq("57")
+
+      trainee_id = parsed_body[:trainee_id]
       trainee = Trainee.find_by(slug: trainee_id)
       expect(trainee.disabilities.count).to eq(2)
       expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
     end
 
     it "sets the correct funding attributes" do
+      parsed_body = response.parsed_body[:data]
+
       expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
       expect(Trainee.last.applying_for_scholarship).to be(true)
       expect(Trainee.last.applying_for_bursary).to be(false)
       expect(Trainee.last.applying_for_grant).to be(false)
-      expect(response.parsed_body["fund_code"]).to eq("7")
-      expect(response.parsed_body["bursary_level"]).to eq("4")
-      expect(response.parsed_body["applying_for_scholarship"]).to be_nil
-      expect(response.parsed_body["applying_for_bursary"]).to be_nil
-      expect(response.parsed_body["applying_for_grant"]).to be_nil
+      expect(parsed_body[:fund_code]).to eq("7")
+      expect(parsed_body[:bursary_level]).to eq("4")
+      expect(parsed_body[:applying_for_scholarship]).to be_nil
+      expect(parsed_body[:applying_for_bursary]).to be_nil
+      expect(parsed_body[:applying_for_grant]).to be_nil
     end
 
     it "sets the correct school attributes" do
-      expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
-      expect(response.parsed_body["lead_school"]).to be_nil
-      expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
-      expect(response.parsed_body["employing_school"]).to be_nil
+      parsed_body = response.parsed_body[:data]
+
+      expect(parsed_body[:lead_school_not_applicable]).to be(false)
+      expect(parsed_body[:lead_school]).to be_nil
+      expect(parsed_body[:employing_school_not_applicable]).to be(false)
+      expect(parsed_body[:employing_school]).to be_nil
     end
 
     it "creates the degrees if provided in the request body" do
-      degree_attributes = response.parsed_body["degrees"]&.first
+      degree_attributes = response.parsed_body[:data][:degrees]&.first
 
-      expect(degree_attributes["subject"]).to eq("100485")
-      expect(degree_attributes["institution"]).to eq("0117")
-      expect(degree_attributes["graduation_year"]).to eq(2003)
-      expect(degree_attributes["subject"]).to eq("100485")
-      expect(degree_attributes["grade"]).to eq("02")
-      expect(degree_attributes["uk_degree"]).to eq("083")
-      expect(degree_attributes["country"]).to be_nil
+      expect(degree_attributes[:subject]).to eq("100485")
+      expect(degree_attributes[:institution]).to eq("0117")
+      expect(degree_attributes[:graduation_year]).to eq(2003)
+      expect(degree_attributes[:subject]).to eq("100485")
+      expect(degree_attributes[:grade]).to eq("02")
+      expect(degree_attributes[:uk_degree]).to eq("083")
+      expect(degree_attributes[:country]).to be_nil
 
       degree = Degree.last
 
@@ -175,11 +181,11 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "creates the placements if provided in the request body" do
-      placement_attributes = response.parsed_body["placements"]&.first
+      placement_attributes = response.parsed_body[:data][:placements]&.first
 
-      expect(placement_attributes["school_id"]).to be_nil
-      expect(placement_attributes["name"]).to eq("Establishment does not have a URN")
-      expect(placement_attributes["urn"]).to eq("900020")
+      expect(placement_attributes[:school_id]).to be_nil
+      expect(placement_attributes[:name]).to eq("Establishment does not have a URN")
+      expect(placement_attributes[:urn]).to eq("900020")
     end
 
     it "returns status code 201" do
