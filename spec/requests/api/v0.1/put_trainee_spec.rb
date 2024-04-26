@@ -259,6 +259,48 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
     end
+
+    context "when read only attributes are been submitted" do
+      let(:trn) { "567899" }
+      let(:ethnicity) { "899" }
+      let(:ethnic_group) { "not_provided_ethnic_group" }
+      let(:ethnic_background) { "Another Mixed background" }
+      let(:params) do
+        {
+          data: {
+            trn:,
+            ethnicity:,
+            ethnic_group:,
+            ethnic_background:,
+          }
+        }
+      end
+
+      before do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params:,
+        )
+      end
+
+      it "does not set the attributes" do
+        expect(response).to have_http_status(:ok)
+
+        trainee.reload
+
+        expect(trainee.trn).to be_nil
+        expect(trainee.ethnic_group).to eq("other_ethnic_group")
+        expect(trainee.ethnic_background).to eq("Another ethnic background")
+
+        parsed_body = response.parsed_body[:data]
+
+        expect(parsed_body[:ethnicity]).to eq(ethnicity)
+        expect(parsed_body[:trn]).to be_nil
+        expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
+        expect(parsed_body[:ethnic_background]).to eq(trainee.ethnic_background)
+      end
+    end
   end
 
   context "Updating a newly created trainee", feature_register_api: true do
@@ -287,7 +329,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
           degrees_attributes: [
             {
-              subject: "Law",
+              subject: "100485",
               institution: nil,
               graduation_date: "2003-06-01",
               subject_one: "100485",

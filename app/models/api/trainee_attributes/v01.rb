@@ -21,7 +21,6 @@ module Api
         course_max_age
         trainee_start_date
         sex
-        trn
         training_route
         itt_start_date
         itt_end_date
