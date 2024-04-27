@@ -71,7 +71,7 @@ module Api
       def nationalisations_attributes
         return [] unless nationality_name
 
-        [{ name: nationality_name }]
+        [{ hesa_nationality_code: params[:nationality], name: nationality_name }]
       end
 
       def nationality_name

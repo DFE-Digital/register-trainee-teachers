@@ -13,13 +13,28 @@ module Api
       def initialize(attributes = {})
         super({})
 
-        nationality = attributes[:name].present? ? Nationality.find_by("LOWER(name) = ?", attributes[:name].strip.downcase) : nil
+        nationality =
+          if attributes[:name].present?
+            lookup_nationality_by_name(attributes[:name])
+          elsif attributes[:hesa_nationality_code].present?
+            lookup_nationality_by_name(
+              RecruitsApi::CodeSets::Nationalities::MAPPING[attributes[:hesa_nationality_code]],
+            )
+          end
 
         if nationality
           self.nationality_id = nationality.id
-        else
+        elsif attributes[:name].present?
           errors.add(:name, "Could not find a nationality with the name #{attributes[:name]}")
+        else
+          errors.add(:name, "Could not find a nationality with the HESA code #{attributes[:hesa_nationalality_code]}")
         end
+      end
+
+    private
+
+      def lookup_nationality_by_name(name)
+        Nationality.find_by("LOWER(name) = ?", name.strip.downcase)
       end
     end
   end

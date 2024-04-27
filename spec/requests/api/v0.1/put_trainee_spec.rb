@@ -215,6 +215,16 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         expect(trainee.reload.nationalities.map(&:name)).to be_empty
       end
     end
+
+    it "invalid HESA nationality codes are rejected and the trainee is not updated" do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { nationality: "XX" } },
+      )
+      expect(response).to have_http_status(:ok)
+      expect(trainee.reload.nationalities.map(&:name)).to be_empty
+    end
   end
 
   context "Updating a newly created trainee", feature_register_api: true do
