@@ -194,7 +194,9 @@ module TraineeSerializer
     end
 
     def nationality
-      @trainee.nationalities.first&.name
+      RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[
+        @trainee.nationalities.first.name,
+      ]
     end
 
     def training_route

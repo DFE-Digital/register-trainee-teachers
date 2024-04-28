@@ -90,6 +90,10 @@ FactoryBot.define do
       nationalities { [Nationality.all.sample || build(:nationality)] }
     end
 
+    trait :with_french_nationality do
+      nationalities { [build(:nationality, :french)] }
+    end
+
     trait :incomplete do
       provider_trainee_id { nil }
       first_names { nil }
