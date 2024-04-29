@@ -42,6 +42,7 @@ module Api
           degrees_attributes:,
           placements_attributes:,
           hesa_disabilities:,
+          course_study_mode:,
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
