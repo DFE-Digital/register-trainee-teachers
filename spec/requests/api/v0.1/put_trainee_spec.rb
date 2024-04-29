@@ -261,44 +261,77 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
 
     context "when read only attributes are been submitted" do
-      let(:trn) { "567899" }
-      let(:ethnicity) { "899" }
-      let(:ethnic_group) { "not_provided_ethnic_group" }
-      let(:ethnic_background) { "Another Mixed background" }
-      let(:params) do
-        {
-          data: {
-            trn:,
-            ethnicity:,
-            ethnic_group:,
-            ethnic_background:,
-          },
-        }
-      end
+      let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
+      let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
+      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, ethnic_group:, ethnic_background:) }
 
       before do
         put(
           "/api/v0.1/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}" },
           params: params,
+          as: :json,
         )
       end
 
-      it "does not set the attributes" do
-        expect(response).to have_http_status(:ok)
+      context "when the ethnicity is provided" do
+        let(:params) do
+          {
+            data: {
+              trn: "567899",
+              ethnicity: "899",
+              ethnic_group: "mixed_ethnic_group",
+              ethnic_background: "Another Mixed background",
+            },
+          }
+        end
 
-        trainee.reload
+        it "sets the enthnic attributes based on ethnicity" do
+          expect(response).to have_http_status(:ok)
 
-        expect(trainee.trn).to be_nil
-        expect(trainee.ethnic_group).to eq("other_ethnic_group")
-        expect(trainee.ethnic_background).to eq("Another ethnic background")
+          trainee.reload
 
-        parsed_body = response.parsed_body[:data]
+          expect(trainee.trn).to be_nil
+          expect(trainee.ethnic_group).to eq("other_ethnic_group")
+          expect(trainee.ethnic_background).to eq("Another ethnic background")
 
-        expect(parsed_body[:ethnicity]).to eq(ethnicity)
-        expect(parsed_body[:trn]).to be_nil
-        expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
-        expect(parsed_body[:ethnic_background]).to eq(trainee.ethnic_background)
+          parsed_body = response.parsed_body[:data]
+
+          expect(parsed_body[:ethnicity]).to eq("899")
+          expect(parsed_body[:trn]).to be_nil
+          expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
+          expect(parsed_body[:ethnic_background]).to eq(trainee.ethnic_background)
+        end
+      end
+
+      context "when the ethnicity is not provided" do
+        let(:params) do
+          {
+            data: {
+              trn: "567899",
+              ethnic_group: "mixed_ethnic_group",
+              ethnic_background: "Another Mixed background",
+            },
+          }
+        end
+
+        it "does not update the ethnic attributes" do
+          expect(response).to have_http_status(:ok)
+
+          trainee.reload
+
+          expect(trainee.trn).to be_nil
+
+          expect(trainee.ethnic_group).to eq(ethnic_group)
+          expect(trainee.ethnic_background).to eq(ethnic_background)
+
+          parsed_body = response.parsed_body[:data]
+
+          expect(parsed_body[:trn]).to be_nil
+          expect(parsed_body[:ethnicity]).to eq(Hesa::CodeSets::Ethnicities::MAPPING.key(ethnic_background))
+          expect(parsed_body[:ethnic_group]).to eq(ethnic_group)
+          expect(parsed_body[:ethnic_background]).to eq(ethnic_background)
+        end
       end
     end
   end
