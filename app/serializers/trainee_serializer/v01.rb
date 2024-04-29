@@ -194,6 +194,8 @@ module TraineeSerializer
     end
 
     def nationality
+      return if @trainee.nationalities.blank?
+
       RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[
         @trainee.nationalities.first.name,
       ]

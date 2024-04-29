@@ -14,6 +14,7 @@ module Api
       trainees = provider.trainees
                 .not_draft
                 .joins(:start_academic_cycle)
+                .includes([:nationalities])
                 .where(academic_cycles: { id: academic_cycle.id })
                 .where("trainees.updated_at > ?", since)
                 .order("trainees.updated_at #{sort_order}")
