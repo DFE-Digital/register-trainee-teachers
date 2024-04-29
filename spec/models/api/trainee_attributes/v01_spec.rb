@@ -5,6 +5,24 @@ require "rails_helper"
 RSpec.describe Api::TraineeAttributes::V01 do
   subject { described_class.new }
 
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:first_names) }
+    it { is_expected.to validate_presence_of(:last_name) }
+    it { is_expected.to validate_presence_of(:date_of_birth) }
+    it { is_expected.to validate_presence_of(:sex) }
+    it { is_expected.to validate_presence_of(:training_route) }
+    it { is_expected.to validate_presence_of(:itt_start_date) }
+    it { is_expected.to validate_presence_of(:itt_end_date) }
+    it { is_expected.to validate_presence_of(:diversity_disclosure) }
+    it { is_expected.to validate_presence_of(:course_subject_one) }
+    it { is_expected.to validate_presence_of(:study_mode) }
+    it { is_expected.to validate_presence_of(:hesa_id) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_length_of(:email).is_at_most(255) }
+
+    it { is_expected.to validate_inclusion_of(:sex).in_array(Hesa::CodeSets::Sexes::MAPPING.values) }
+  end
+
   describe ".from_trainee" do
     let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :completed) }
 

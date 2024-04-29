@@ -78,6 +78,8 @@ module Api
         EmailFormatValidator.new(record).validate
       end
 
+      validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
+
       def initialize(attributes = {})
         attributes = attributes.to_h.with_indifferent_access
 
