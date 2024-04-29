@@ -9,6 +9,7 @@ module HasCourseAttributes
       course_subject_three: course_subject_three_name,
       course_min_age: course_age_range && course_age_range[0],
       course_max_age: course_max_age,
+      course_study_mode: course_study_mode,
       study_mode: study_mode,
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
