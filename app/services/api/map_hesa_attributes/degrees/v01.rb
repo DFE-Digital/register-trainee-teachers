@@ -39,10 +39,12 @@ module Api
         end
 
         def graduation_year
-          if @params[:graduation_year].is_a?(String)
-            @params[:graduation_year]&.to_date&.year
+          year = @params[:graduation_year]
+
+          if valid_date?(year)
+            year.to_date.year
           else
-            @params[:graduation_year]
+            year
           end
         end
 
@@ -140,6 +142,15 @@ module Api
           else
             @params[:grade]
           end
+        end
+
+        def valid_date?(date)
+          return false unless date.is_a?(String)
+
+          Date.strptime(date, "%Y-%m-%d")
+          true
+        rescue ArgumentError
+          false
         end
       end
     end
