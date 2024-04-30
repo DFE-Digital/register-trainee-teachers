@@ -649,7 +649,7 @@ FactoryBot.define do
     end
 
     trait :created_from_api do
-      record_source { ::RecordSources::API }
+      record_source { RecordSources::API }
     end
 
     trait :imported_from_hesa do
