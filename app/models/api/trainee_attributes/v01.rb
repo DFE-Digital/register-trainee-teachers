@@ -25,6 +25,7 @@ module Api
         itt_start_date
         itt_end_date
         diversity_disclosure
+        ethnicity
         ethnic_group
         ethnic_background
         disability_disclosure
@@ -72,6 +73,7 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
+      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.keys
 
       validate do |record|
         EmailFormatValidator.new(record).validate
