@@ -14,6 +14,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
+  let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
 
   let(:data) do
     {
@@ -49,7 +50,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       itt_aim: 202,
       itt_qualification_aim: "001",
       course_year: "2012",
-      course_age_range: "13915",
+      course_age_range: course_age_range,
       fund_code: "7",
       funding_method: "4",
       hesa_id: "0310261553101",
@@ -210,19 +211,39 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     let(:params) { { data: { email: "Doe" } } }
 
-    it "returns status code 422" do
+    it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-    end
-
-    it "returns a validation failure message" do
       expect(response.parsed_body["errors"]).to contain_exactly("First names can't be blank", "Last name can't be blank", "Date of birth can't be blank", "Sex can't be blank", "Training route can't be blank", "Itt start date can't be blank", "Itt end date can't be blank", "Course subject one can't be blank", "Study mode can't be blank", "Email Enter an email address in the correct format, like name@example.com", "Itt aim can't be blank", "Itt qualification aim can't be blank", "Course year can't be blank", "Course age range can't be blank", "Fund code can't be blank", "Funding method can't be blank", "Hesa can't be blank")
     end
 
     context "date of birth is in the future" do
       let(:params) { { data: data.merge({ date_of_birth: "2990-01-01" }) } }
 
-      it "returns a validation failure message" do
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include({ personal_details: { date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"] } })
+      end
+    end
+
+    context "course_age_range is empty" do
+      let(:params) { { data: } }
+
+      let(:course_age_range) { "" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Course age range can't be blank")
+      end
+    end
+
+    context "course_age_range is invalid" do
+      let(:params) { { data: } }
+
+      let(:course_age_range) { "invalid" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
       end
     end
   end
