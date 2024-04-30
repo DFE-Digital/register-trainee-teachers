@@ -648,6 +648,10 @@ FactoryBot.define do
       created_from_dttp { true }
     end
 
+    trait :created_from_api do
+      record_source { ::RecordSources::API }
+    end
+
     trait :imported_from_hesa do
       transient do
         itt_aim { Hesa::CodeSets::IttAims::MAPPING.values.sample }
