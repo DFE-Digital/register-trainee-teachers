@@ -37,69 +37,113 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
   context "with a valid authentication token" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+    let(:slug) { trainee.slug }
+    let(:endpoint) { "/api/v0.1/trainees/#{slug}" }
+    let(:params) { { data: } }
 
-    it "returns status 404 if the trainee does not exist" do
-      put(
-        "/api/v0.1/trainees/missing-trainee-slug",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Alice" } },
-      )
-      expect(response).to have_http_status(:not_found)
-    end
-
-    it "returns status 422 if the request body is invalid (not a serialised trainee)" do
-      put(
-        "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { foo: { bar: "Alice" } },
-      )
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
-    end
-
-    it "returns status 422 if the request data is invalid (has an invalid attribute value)" do
-      put(
-        "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } },
-      )
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body[:errors]).to contain_exactly(
-        ["contact_details", { "email" => ["Enter an email address in the correct format, like name@example.com"] }],
-        ["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }],
-      )
-    end
-
-    it "returns 404 if the trainee does not belong to the authenticated provider" do
-      put(
-        "/api/v0.1/trainees/#{other_trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Alice" } },
-      )
-      expect(response).to have_http_status(:not_found)
-    end
-
-    it "returns status 200 with a valid JSON response" do
-      put(
-        "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Alice", provider_trainee_id: "99157234/2/01" } },
-      )
-      expect(response).to have_http_status(:ok)
-      expect(trainee.reload.first_names).to eq("Alice")
-      expect(trainee.provider_trainee_id).to eq("99157234/2/01")
-      expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
-    end
-
-    it "returns status 200 and updates nationality" do
+    before do
       create(:nationality, :irish)
+
       put(
-        "/api/v0.1/trainees/#{trainee.slug}",
+        endpoint,
         headers: { Authorization: "Bearer #{token}" },
-        params: { data: { nationality: "IE" } },
+        params: params,
       )
-      expect(response).to have_http_status(:ok)
-      expect(trainee.reload.nationalities.first.name).to eq("irish")
+    end
+
+    context "when the trainee does not exist" do
+      let(:slug) { "missing-trainee-slug" }
+      let(:data) { { first_names: "Alice" } }
+
+      it "returns status 404" do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when request body is invalid (not a serialised trainee)" do
+      let(:params) { { foo: { bar: "Alice" } } }
+
+      it "returns status 422" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
+      end
+    end
+
+    context "when the request data is invalid (has an invalid attribute value)" do
+      let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } }
+
+      it "returns status 422" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          ["contact_details", { "email" => ["Enter an email address in the correct format, like name@example.com"] }],
+          ["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }],
+        )
+      end
+    end
+
+    context "when the trainee does not belong to the authenticated provider" do
+      let(:slug) { other_trainee.slug }
+      let(:data) { { first_names: "Alice" } }
+
+      it "returns 404" do
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when updating with valid params" do
+      let(:data) { { first_names: "Alice", provider_trainee_id: "99157234/2/01" } }
+
+      it "returns status 200 with a valid JSON response" do
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.first_names).to eq("Alice")
+        expect(trainee.provider_trainee_id).to eq("99157234/2/01")
+        expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
+      end
+    end
+
+    context "when updating with valid nationality" do
+      let(:data) { { nationality: "IE" } }
+
+      it "returns status 200" do
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.nationalities.first.name).to eq("irish")
+      end
+    end
+
+    context "when course_age_range is empty" do
+      let(:data) { { course_age_range: "" } }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Course age range can't be blank")
+      end
+    end
+
+    context "when course_age_range is invalid" do
+      let(:data) { { course_age_range: "invalid" } }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
+      end
+    end
+
+    context "when sex is empty" do
+      let(:data) { { sex: "" } }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex can't be blank")
+      end
+    end
+
+    context "when sex is invalid" do
+      let(:data) { { sex: "invalid" } }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
+      end
     end
   end
 
