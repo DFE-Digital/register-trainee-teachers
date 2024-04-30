@@ -19,6 +19,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     {
       first_names: "John",
       last_name: "Doe",
+      previous_last_name: "Smith",
       date_of_birth: "1990-01-01",
       sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
       email: "john.doe@example.com",
@@ -71,6 +72,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "creates a trainee" do
       expect(response.parsed_body["first_names"]).to eq("John")
+      expect(response.parsed_body["last_name"]).to eq("Doe")
+      expect(response.parsed_body["previous_last_name"]).to eq("Smith")
     end
 
     it "sets the correct state" do
