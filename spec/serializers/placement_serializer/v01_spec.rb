@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe PlacementSerializer::V01 do
-  let(:placement) { create(:placement) }
+  let(:placement) { create(:placement, :manual) }
   let(:json) { described_class.new(placement).as_hash.with_indifferent_access }
 
   describe "serialization" do
-    it "includes all expected fields" do
+    it "includes all expected fields and they all have values" do
       %w[
         placement_id
         urn
@@ -17,6 +17,7 @@ RSpec.describe PlacementSerializer::V01 do
         updated_at
       ].each do |field|
         expect(json.keys).to include(field)
+        expect(json[field]).to be_present
       end
     end
 
