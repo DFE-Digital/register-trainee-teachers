@@ -126,15 +126,20 @@ module Api
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
 
-        self.hesa_trainee_detail_attributes =
-          HesaTraineeDetailAttributes::V01.new(
-            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
-          )
+        update_hesa_trainee_detail_attributes(attributes)
 
         self.trainee_disabilities_attributes = []
         attributes[:disabilities]&.each do |disability|
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
+      end
+
+      def update_hesa_trainee_detail_attributes(attributes)
+        existing_hesa_attributes = self.hesa_trainee_detail_attributes&.attributes || {}
+        new_hesa_attributes = HesaTraineeDetailAttributes::V01.new(
+          attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
+        )
+        self.hesa_trainee_detail_attributes = new_hesa_attributes.assign_attributes(existing_hesa_attributes)
       end
 
       def self.from_trainee(trainee)
