@@ -18,6 +18,15 @@ module Api
 
         if trainee_attributes_validation.invalid?
           [false, trainee_attributes_validation]
+        # return [false, @attributes] if attribute_validation_errors.any?
+
+        # attributes_to_save = attributes.deep_attributes.with_indifferent_access
+        # trainee.nationalities.destroy_all if attributes_to_save[:nationalisations_attributes].present?
+
+        # trainee.assign_attributes(attributes_to_save)
+
+        # if validation.all_errors.any?
+        #   [false, validation]
         else
           trainee.assign_attributes(attributes_to_save)
 
@@ -61,6 +70,12 @@ module Api
 
       def validation
         @validation ||= Submissions::ApiTrnValidator.new(trainee:)
+      end
+
+      def attribute_validation_errors
+        return [] if @attributes.valid?
+
+        @attributes.errors
       end
     end
   end

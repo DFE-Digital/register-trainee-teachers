@@ -39,6 +39,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:slug) { trainee.slug }
     let(:endpoint) { "/api/v0.1/trainees/#{slug}" }
+    let(:data) { { first_names: "Alice" } }
     let(:params) { { data: } }
 
     before do
@@ -189,6 +190,26 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           expect(trainee.reload.nationalities.map(&:name)).to be_empty
         end
       end
+    end
+
+    it "returns status 422 with an invalid `itt_start_date` and the trainee is not updated" do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_start_date: "2023-02-30" } },
+      )
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+    end
+
+    it "returns status 422 with an invalid `itt_end_date` and the trainee is not updated" do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { hesa_id: nil, itt_start_date: "2023-02-28", itt_end_date: "2023-13-13" } },
+      )
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
     end
   end
 

@@ -78,6 +78,8 @@ module Api
         EmailFormatValidator.new(record).validate
       end
 
+      validate :validate_itt_start_and_end_dates
+
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
 
       def initialize(new_attributes = {})
@@ -173,7 +175,36 @@ module Api
         end
       end
 
+      def errors_count
+        errors.count
+      end
+
+      def all_errors
+        errors
+      end
+
     private
+
+      def validate_itt_start_and_end_dates
+        if itt_start_date.present? && !valid_date_string?(itt_start_date)
+          errors.add(:itt_start_date, :invalid)
+        end
+
+        if itt_end_date.present? && !valid_date_string?(itt_end_date)
+          errors.add(:itt_end_date, :invalid)
+        end
+      end
+
+      def valid_date_string?(date)
+        return true if date.is_a?(Date) || date.is_a?(DateTime)
+
+        begin
+          DateTime.parse(date)
+          true
+        rescue StandardError
+          false
+        end
+      end
 
       def set_course_allocation_subject_id
         self.course_allocation_subject_id ||=

@@ -15,8 +15,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   let(:graduation_year) { "2003" }
   let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
-
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
+  let(:itt_start_date) { "2023-01-01" }
+  let(:itt_end_date) { "2023-10-01" }
 
   let(:data) do
     {
@@ -28,8 +29,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       email: "john.doe@example.com",
       nationality: "GB",
       training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
-      itt_start_date: "2023-01-01",
-      itt_end_date: "2023-10-01",
+      itt_start_date: itt_start_date,
+      itt_end_date: itt_end_date,
       course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       disability1: "58",
@@ -138,6 +139,15 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(degree.grade).to eq("Upper second-class honours (2:1)")
       expect(degree.uk_degree).to eq("Bachelor of Science")
       expect(degree.country).to be_nil
+    end
+
+    context "when `itt_start_date` is an invalid date" do
+      let(:itt_start_date) { "2023-02-30" }
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"].first).to include("Foo")
+      end
     end
 
     context "when graduation_year is in 'yyyy-mm-dd' format" do
