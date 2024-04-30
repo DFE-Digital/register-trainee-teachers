@@ -135,7 +135,7 @@ module Api
       end
 
       def update_hesa_trainee_detail_attributes(attributes)
-        existing_hesa_attributes = self.hesa_trainee_detail_attributes&.attributes || {}
+        existing_hesa_attributes = hesa_trainee_detail_attributes&.attributes || {}
         new_hesa_attributes = HesaTraineeDetailAttributes::V01.new(
           attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
         )
