@@ -193,9 +193,9 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
               data:
                 {
                   first_names: "Alice",
-                  study_mode: "63"
-                }
-              }
+                  study_mode: "63",
+                },
+            }
           end
 
           it "updates the trainee" do
