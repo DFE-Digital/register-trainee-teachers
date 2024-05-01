@@ -289,8 +289,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       let(:params) do
         {
           data: data.merge(
-            ethnicity:
-          )
+            ethnicity:,
+          ),
         }
       end
 
@@ -313,8 +313,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       let(:params) do
         {
           data: data.merge(
-            ethnicity: "1000"
-          )
+            ethnicity: "1000",
+          ),
         }
       end
 

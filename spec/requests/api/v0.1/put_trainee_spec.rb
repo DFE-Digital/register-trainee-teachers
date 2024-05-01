@@ -240,8 +240,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}" },
-        params:,
-        as: :json
+        params: params,
+        as: :json,
       )
     end
 
@@ -249,8 +249,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       let(:params) do
         {
           data: {
-            ethnicity:
-          }
+            ethnicity:,
+          },
         }
       end
 
@@ -266,8 +266,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       let(:params) do
         {
           data: {
-            first_names: "Alice"
-          }
+            first_names: "Alice",
+          },
         }
       end
 
@@ -281,8 +281,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       let(:params) do
         {
           data: {
-            ethnicity: "1000"
-          }
+            ethnicity: "1000",
+          },
         }
       end
 
