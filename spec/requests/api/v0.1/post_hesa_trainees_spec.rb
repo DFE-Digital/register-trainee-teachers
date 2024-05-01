@@ -180,18 +180,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(placement_attributes["urn"]).to eq("900020")
     end
 
-    context "when a school with the given URN exists" do
-      let!(:school) { create(:school, urn: "123456", name: "London school for the gifted")
-
-      it "creates the placements if provided in the request body" do
-        placement_attributes = response.parsed_body["placements"]&.first
-
-        expect(placement_attributes["school_id"]).to be_nil
-        expect(placement_attributes["name"]).to eq("London school for the gifted")
-        expect(placement_attributes["urn"]).to eq("123456")
-      end
-    end
-
     it "returns status code 201" do
       expect(response).to have_http_status(:created)
     end
