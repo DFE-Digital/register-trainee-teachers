@@ -15,7 +15,22 @@ module PlacementSerializer
     end
 
     def as_hash
-      @placement.attributes.except(*EXCLUDED_ATTRIBUTES).merge(placement_id: @placement.slug)
+      @placement.attributes.except(*EXCLUDED_ATTRIBUTES).merge(
+        placement_id: @placement.slug,
+        **school_attributes,
+      )
+    end
+
+  private
+
+    def school_attributes
+      return {} if @placement.school.blank?
+
+      {
+        urn: @placement.school.urn,
+        name: @placement.school.name,
+        postcode: @placement.school.postcode,
+      }
     end
   end
 end
