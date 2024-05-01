@@ -551,7 +551,7 @@ GEM
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
       uber (< 0.2.0)
-    request_store (1.6.0)
+    request_store (1.7.0)
       rack (>= 1.4)
     request_store_rails (2.0.0)
       concurrent-ruby (~> 1.0)
@@ -828,7 +828,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rails_semantic_logger (= 4.14.0)
-  request_store (~> 1.6)
+  request_store (~> 1.7)
   rotp
   rspec-benchmark
   rspec-rails (~> 6.1.2)
