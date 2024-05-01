@@ -9,7 +9,6 @@ module Api
 
       ATTRIBUTES = %i[
         nationality
-        ethnicity
         ethnic_group
         ethnic_background
       ].freeze
