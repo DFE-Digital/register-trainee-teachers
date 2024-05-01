@@ -654,10 +654,9 @@ FactoryBot.define do
         hesa_student_application_choice_id { nil }
       end
 
-      hesa_id { Faker::Number.number(digits: 13) }
+      with_hesa_student
       created_from_hesa { true }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
-      hesa_students { create_list(:hesa_student, 1, hesa_id:) }
 
       after(:create) do |trainee, evaluator|
         create(:hesa_metadatum, trainee: trainee, itt_aim: evaluator.itt_aim)
@@ -670,7 +669,14 @@ FactoryBot.define do
     end
 
     trait :with_hesa_trainee_detail do
+      with_hesa_student
       hesa_trainee_detail
+    end
+
+    trait :with_hesa_student do
+      hesa_id { Faker::Number.number(digits: 13) }
+
+      hesa_students { create_list(:hesa_student, 1, hesa_id:) }
     end
   end
 end

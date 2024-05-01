@@ -70,14 +70,24 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
 
     context "when the request data is invalid (has an invalid attribute value)" do
-      let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } }
+      context "attribute errors supersede" do
+        let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } }
 
-      it "returns status 422" do
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly(
-          ["contact_details", { "email" => ["Enter an email address in the correct format, like name@example.com"] }],
-          ["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }],
-        )
+        it "returns status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly("Email Enter an email address in the correct format, like name@example.com")
+        end
+      end
+
+      context "validator errors" do
+        let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch" } }
+
+        it "returns status 422" do
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }])
+        end
       end
     end
 
@@ -95,6 +105,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       it "returns status 200 with a valid JSON response" do
         expect(response).to have_http_status(:ok)
+
         expect(trainee.reload.first_names).to eq("Alice")
         expect(trainee.provider_trainee_id).to eq("99157234/2/01")
         expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
