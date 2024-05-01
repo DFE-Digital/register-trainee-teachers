@@ -509,7 +509,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         context "when request body is not valid JSON" do
           let(:params_for_update) { "{ \"data\": { \"first_names\": \"Alice\", \"last_name\": \"Roberts\", } }" }
 
-          it "does not update the trainee and returns a meaningful error" do
+          it "does not update the trainee and returns a meaningful error", openapi: false do
             put(
               "/api/v0.1/trainees/#{slug}",
               headers: headers.merge("Content-Type" => "application/json"),

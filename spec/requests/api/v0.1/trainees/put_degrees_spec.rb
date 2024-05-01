@@ -126,7 +126,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         degrees_attributes[:graduation_year] = Date.new(degrees_attributes[:graduation_year]).to_s
       end
 
-      it "returns a 409 (conflict) status" do
+      it "returns a 409 (conflict) status", openapi: false do
         put(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
           headers: { Authorization: "Bearer #{token}" },
