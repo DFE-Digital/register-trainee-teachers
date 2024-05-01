@@ -332,7 +332,7 @@ module Reports
         "apply" => "Apply",
         "dttp" => "DTTP",
         "hesa" => "HESA",
-      }[trainee.derived_record_source]
+      }[trainee.record_source]
     end
 
     def register_id

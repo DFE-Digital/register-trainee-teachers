@@ -45,7 +45,7 @@ describe Reports::TraineeReport do
     end
 
     it "includes the record_source" do
-      expect(subject.record_source.downcase).to eq(trainee.derived_record_source.downcase)
+      expect(subject.record_source.downcase).to eq(trainee.record_source.downcase)
     end
 
     it "includes the apply_id" do
