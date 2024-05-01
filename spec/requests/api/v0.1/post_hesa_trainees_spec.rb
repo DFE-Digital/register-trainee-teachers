@@ -280,6 +280,51 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
   end
 
+  describe "ethnicity" do
+    before do
+      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+    end
+
+    context "when present" do
+      let(:params) do
+        {
+          data: data.merge(
+            ethnicity:
+          )
+        }
+      end
+
+      let(:ethnicity) { "142" }
+
+      it do
+        expect(response).to have_http_status(:created)
+        expect(response.parsed_body[:data][:ethnicity]).to eq(ethnicity)
+      end
+    end
+
+    context "when not present" do
+      it do
+        expect(response).to have_http_status(:created)
+        expect(response.parsed_body[:data][:ethnicity]).to eq("997")
+      end
+    end
+
+    context "when invalid" do
+      let(:params) do
+        {
+          data: data.merge(
+            ethnicity: "1000"
+          )
+        }
+      end
+
+      it do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+      end
+    end
+  end
+
   context "when the trainee record is invalid", feature_register_api: true do
     before do
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json

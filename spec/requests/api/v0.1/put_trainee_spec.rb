@@ -233,6 +233,66 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
   end
 
+  describe "ethnicity" do
+    let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+
+    before do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params:,
+        as: :json
+      )
+    end
+
+    context "when present" do
+      let(:params) do
+        {
+          data: {
+            ethnicity:
+          }
+        }
+      end
+
+      let(:ethnicity) { "142" }
+
+      it do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:ethnicity]).to eq(ethnicity)
+      end
+    end
+
+    context "when not present" do
+      let(:params) do
+        {
+          data: {
+            first_names: "Alice"
+          }
+        }
+      end
+
+      it do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:ethnicity]).to eq("997")
+      end
+    end
+
+    context "when invalid" do
+      let(:params) do
+        {
+          data: {
+            ethnicity: "1000"
+          }
+        }
+      end
+
+      it do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+      end
+    end
+  end
+
   context "Updating a newly created trainee", feature_register_api: true do
     let(:token) { "trainee_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
