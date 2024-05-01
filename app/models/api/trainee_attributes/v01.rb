@@ -80,10 +80,9 @@ module Api
 
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
 
-      def initialize(attributes = {})
-        attributes = attributes.to_h.with_indifferent_access
-
-        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
+      def initialize(new_attributes = {})
+        new_attributes = new_attributes.to_h.with_indifferent_access
+        super(new_attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
           :placements_attributes,
           :degrees_attributes,
           :nationalisations_attributes,
@@ -91,31 +90,33 @@ module Api
           :trainee_disabilities_attributes,
         ))
 
-        attributes[:placements_attributes]&.each do |placement_params|
+        new_attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
         end
 
-        attributes[:degrees_attributes]&.each do |degree_params|
+        new_attributes[:degrees_attributes]&.each do |degree_params|
           degrees_attributes << DegreeAttributes::V01.new(degree_params)
         end
 
-        attributes[:nationalisations_attributes]&.each do |nationalisation_params|
+        new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
 
+        hesa_trainee_detail_attributes_raw = new_attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES)
+
         self.hesa_trainee_detail_attributes =
           HesaTraineeDetailAttributes::V01.new(
-            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
+            hesa_trainee_detail_attributes_raw,
           )
 
         self.trainee_disabilities_attributes = []
-        attributes[:disabilities]&.each do |disability|
+        new_attributes[:disabilities]&.each do |disability|
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
       end
 
-      def assign_attributes(attributes)
-        super(attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
+      def assign_attributes(new_attributes)
+        super(new_attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
           :placements_attributes,
           :degrees_attributes,
           :nationalisations_attributes,
@@ -124,29 +125,33 @@ module Api
         ))
 
         self.nationalisations_attributes = []
-        attributes[:nationalisations_attributes]&.each do |nationalisation_params|
+        new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
           nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
         end
 
-        self.hesa_trainee_detail_attributes =
-          HesaTraineeDetailAttributes::V01.new(
-            attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES),
-          )
+        hesa_trainee_detail_attributes_raw = new_attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES)
+
+        hesa_trainee_detail_attributes.assign_attributes(hesa_trainee_detail_attributes_raw) if hesa_trainee_detail_attributes_raw.present?
 
         self.trainee_disabilities_attributes = []
-        attributes[:disabilities]&.each do |disability|
+        new_attributes[:disabilities]&.each do |disability|
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
       end
 
       def self.from_trainee(trainee)
-        new(trainee.attributes.select { |k, _v|
+        trainee_attributes = trainee.attributes.select { |k, _v|
           Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym)
-        }.merge(
-          trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
-            Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
-          } || {},
-        ))
+        }
+
+        hesa_trainee_detail_attributes = trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
+          Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+        } || {}
+
+        trainee_attributes = trainee_attributes.merge(hesa_trainee_detail_attributes)
+        trainee_attributes["sex"] = Trainee.sexes[trainee.sex]
+
+        new(trainee_attributes)
       end
 
       def deep_attributes

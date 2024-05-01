@@ -24,7 +24,7 @@ RSpec.describe Api::TraineeAttributes::V01 do
   end
 
   describe ".from_trainee" do
-    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :completed) }
+    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :completed, sex: :prefer_not_to_say) }
 
     subject(:attributes) { described_class.from_trainee(trainee) }
 
@@ -34,6 +34,10 @@ RSpec.describe Api::TraineeAttributes::V01 do
       Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.each do |attr|
         expect(attributes.hesa_trainee_detail_attributes.send(attr)).to be_present
       end
+    end
+
+    it "correctly sets the sex attribute as an integer" do
+      expect(attributes.sex).to eq(Trainee.sexes[:prefer_not_to_say])
     end
   end
 
@@ -73,6 +77,67 @@ RSpec.describe Api::TraineeAttributes::V01 do
       deep_attributes = attributes.deep_attributes.with_indifferent_access
 
       expect(deep_attributes).to have_key(:hesa_trainee_detail_attributes)
+    end
+  end
+
+  describe "assign_attributes" do
+    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :completed, sex: :prefer_not_to_say) }
+    let(:trainee_attributes) { described_class.from_trainee(trainee) }
+
+    subject(:attributes) {
+      trainee_attributes
+    }
+
+    it "correctly sets the sex attribute as an integer" do
+      expect(attributes.sex).to eq(Trainee.sexes[trainee.sex])
+
+      expect {
+        attributes.assign_attributes(sex: 3)
+      }.to change {
+        attributes.sex
+      }.from(4).to(3)
+    end
+
+    context "hesa trainee detail attributes" do
+      context "changing a non hesa trainee detail attributes" do
+        it "does not change the hesa trainee detail attributes" do
+          expect(attributes.sex).to eq(Trainee.sexes[:prefer_not_to_say])
+
+          expect {
+            attributes.assign_attributes(sex: 3)
+          }.not_to change {
+            attributes.hesa_trainee_detail_attributes
+          }
+        end
+      end
+
+      context "changing a single hesa trainee detail attribute" do
+        let(:trainee) { create(:trainee, :with_hesa_student, :completed, sex: :prefer_not_to_say, hesa_trainee_detail: hesa_trainee_detail) }
+
+        let(:hesa_trainee_detail) {
+          build(:hesa_trainee_detail, course_age_range: "13909")
+        }
+
+        let(:hesa_trainee_detail_attributes) {
+          hesa_trainee_detail.attributes.select { |k, _v|
+            Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+          }
+        }
+
+        let(:updated_hesa_trainee_detail_attributes) {
+          hesa_trainee_detail_attributes.merge("course_age_range" => "13919")
+        }
+
+        it "does not change the other hesa trainee detail attributes" do
+          expect(attributes.hesa_trainee_detail_attributes.attributes).to match(hesa_trainee_detail_attributes)
+
+          expect {
+            attributes.assign_attributes(course_age_range: "13919")
+          }.to change {
+            attributes.hesa_trainee_detail_attributes.attributes
+          }.from(hesa_trainee_detail_attributes).to(updated_hesa_trainee_detail_attributes)
+        end
+      end
     end
   end
 end
