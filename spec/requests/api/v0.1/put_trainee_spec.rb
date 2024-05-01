@@ -188,7 +188,15 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         end
 
         context "when updating a newly created trainee with valid params" do
-          let(:params_for_update) { { data: { first_names: "Alice" } } }
+          let(:params_for_update) do
+            {
+              data:
+                {
+                  first_names: "Alice",
+                  study_mode: "63"
+                }
+              }
+          end
 
           it "updates the trainee" do
             put(
