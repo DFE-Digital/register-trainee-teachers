@@ -73,7 +73,7 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
-      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.keys
+      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.keys, allow_nil: true
 
       validate do |record|
         EmailFormatValidator.new(record).validate

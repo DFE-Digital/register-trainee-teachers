@@ -21,7 +21,7 @@ RSpec.describe Api::TraineeAttributes::V01 do
     it { is_expected.to validate_length_of(:email).is_at_most(255) }
 
     it { is_expected.to validate_inclusion_of(:sex).in_array(Hesa::CodeSets::Sexes::MAPPING.values) }
-    it { is_expected.to validate_inclusion_of(:ethnicity).in_array(Hesa::CodeSets::Ethnicities::MAPPING.keys) }
+    it { is_expected.to validate_inclusion_of(:ethnicity).in_array(Hesa::CodeSets::Ethnicities::MAPPING.keys).allow_nil }
   end
 
   describe ".from_trainee" do
