@@ -559,6 +559,10 @@ class Trainee < ApplicationRecord
     10.months
   end
 
+  def all_errors
+    errors
+  end
+
 private
 
   def value_digest

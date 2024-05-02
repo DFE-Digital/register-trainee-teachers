@@ -24,7 +24,7 @@ module Api
           if validation.all_errors.any?
             [false, validation]
           else
-            [trainee.save, nil]
+            [trainee.save, trainee]
           end
         end
       end

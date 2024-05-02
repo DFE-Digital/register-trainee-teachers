@@ -52,7 +52,7 @@ module Api
         else
           render(
             json: {
-              message: "Validation failed: #{validation.errors_count} #{'error'.pluralize(validation.errors_count)} prohibited this trainee from being saved",
+              message: "Validation failed: #{validation.all_errors.count} #{'error'.pluralize(validation.all_errors.count)} prohibited this trainee from being saved",
               errors: validation.all_errors,
             },
             status: :unprocessable_entity,
