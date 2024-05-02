@@ -14,13 +14,17 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
+  let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
+
+  let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
 
   let(:data) do
     {
       first_names: "John",
       last_name: "Doe",
+      previous_last_name: "Smith",
       date_of_birth: "1990-01-01",
-      sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
+      sex: sex,
       email: "john.doe@example.com",
       nationality: "GB",
       training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
@@ -42,13 +46,14 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       ],
       placements_attributes: [
         {
+          name: "Placement",
           urn: "900020",
         },
       ],
       itt_aim: 202,
       itt_qualification_aim: "001",
       course_year: "2012",
-      course_age_range: "13915",
+      course_age_range: course_age_range,
       fund_code: "7",
       funding_method: "4",
       hesa_id: "0310261553101",
@@ -71,6 +76,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "creates a trainee" do
       expect(response.parsed_body["first_names"]).to eq("John")
+      expect(response.parsed_body["last_name"]).to eq("Doe")
+      expect(response.parsed_body["previous_last_name"]).to eq("Smith")
     end
 
     it "sets the correct state" do
@@ -211,28 +218,71 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     let(:params) { { data: { email: "Doe" } } }
 
-    it "returns status code 422" do
+    it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-    end
-
-    it "returns a validation failure message" do
       expect(response.parsed_body["errors"]).to contain_exactly("First names can't be blank", "Last name can't be blank", "Date of birth can't be blank", "Sex can't be blank", "Training route can't be blank", "Itt start date can't be blank", "Itt end date can't be blank", "Course subject one can't be blank", "Study mode can't be blank", "Email Enter an email address in the correct format, like name@example.com", "Itt aim can't be blank", "Itt qualification aim can't be blank", "Course year can't be blank", "Course age range can't be blank", "Fund code can't be blank", "Funding method can't be blank", "Hesa can't be blank")
     end
 
     context "date of birth is in the future" do
       let(:params) { { data: data.merge({ date_of_birth: "2990-01-01" }) } }
 
-      it "returns a validation failure message" do
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include({ personal_details: { date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"] } })
+      end
+    end
+
+    context "when course_age_range is empty" do
+      let(:params) { { data: } }
+
+      let(:course_age_range) { "" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Course age range can't be blank")
+      end
+    end
+
+    context "when course_age_range is invalid" do
+      let(:params) { { data: } }
+
+      let(:course_age_range) { "invalid" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
+      end
+    end
+
+    context "when sex is empty" do
+      let(:params) { { data: } }
+
+      let(:sex) { "" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex can't be blank")
+      end
+    end
+
+    context "when sex is invalid" do
+      let(:params) { { data: } }
+
+      let(:sex) { "invalid" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
       end
     end
   end
 
   context "when a placement is invalid", feature_register_api: true do
     before do
-      params[:data][:placements_attributes] = [{ not_an_attribute: "invalid" }]
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
+
+    let(:params) { { data: data.merge({ placements_attributes: [{ not_an_attribute: "invalid" }] }) } }
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)

@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 3e078f9fdd0e890449f90e7cd2f151c392d570ac
-  tag: v1.12.4
+  revision: 12c184d079420ebc7fd29990c9aa6a44575ff4c0
+  tag: v1.12.5
   specs:
-    dfe-analytics (1.12.4)
+    dfe-analytics (1.12.5)
       google-cloud-bigquery (~> 1.38)
       request_store_rails (~> 2)
 
@@ -193,7 +193,7 @@ GEM
     cuprite (0.15)
       capybara (~> 3.0)
       ferrum (~> 0.14.0)
-    data_migrate (9.3.0)
+    data_migrate (9.4.0)
       activerecord (>= 6.1)
       railties (>= 6.1)
     database_cleaner-active_record (2.1.0)
@@ -211,9 +211,9 @@ GEM
       activerecord (>= 4.2, < 8)
     docile (1.4.0)
     domain_name (0.6.20240107)
-    dotenv (3.1.0)
-    dotenv-rails (3.1.0)
-      dotenv (= 3.1.0)
+    dotenv (3.1.1)
+    dotenv-rails (3.1.1)
+      dotenv (= 3.1.1)
       railties (>= 6.1)
     drb (2.2.1)
     dry-initializer (3.1.1)
@@ -273,7 +273,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.67.0)
+    google-apis-bigquery_v2 (0.68.0)
       google-apis-core (>= 0.14.0, < 2.a)
     google-apis-core (0.14.1)
       addressable (~> 2.5, >= 2.5.1)
@@ -325,7 +325,8 @@ GEM
       activesupport (>= 6.1.4.4)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
-    httparty (0.21.0)
+    httparty (0.22.0)
+      csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
@@ -544,13 +545,13 @@ GEM
     redcarpet (3.6.0)
     redis (4.8.1)
     regexp_parser (2.9.0)
-    reline (0.5.1)
+    reline (0.5.4)
       io-console (~> 0.5)
     representable (3.2.0)
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
       uber (< 0.2.0)
-    request_store (1.6.0)
+    request_store (1.7.0)
       rack (>= 1.4)
     request_store_rails (2.0.0)
       concurrent-ruby (~> 1.0)
@@ -803,7 +804,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   govuk_markdown
   govuk_notify_rails
-  httparty (~> 0.21)
+  httparty (~> 0.22)
   jsbundling-rails
   kaminari
   launchy
@@ -827,7 +828,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rails_semantic_logger (= 4.14.0)
-  request_store (~> 1.6)
+  request_store (~> 1.7)
   rotp
   rspec-benchmark
   rspec-rails (~> 6.1.2)

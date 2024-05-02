@@ -47,7 +47,7 @@ gem "amazing_print", "~> 1.6"
 gem "rails_semantic_logger", "4.14.0"
 
 # Thread-safe global state
-gem "request_store", "~> 1.6"
+gem "request_store", "~> 1.7"
 
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk-components"
@@ -62,7 +62,7 @@ gem "uk_postcode"
 
 gem "config", "~> 5.4"
 
-gem "httparty", "~> 0.21"
+gem "httparty", "~> 0.22"
 
 # Wrap jsonb columns with activemodel-like classes
 gem "store_model", "~> 2.4"
@@ -121,7 +121,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.3.0"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.4"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.5"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
