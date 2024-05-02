@@ -13,21 +13,12 @@ module Api
       def initialize(attributes = {})
         super({})
 
-        nationality =
-          if attributes[:name].present?
-            lookup_nationality_by_name(attributes[:name])
-          elsif attributes[:hesa_nationality_code].present?
-            lookup_nationality_by_name(
-              RecruitsApi::CodeSets::Nationalities::MAPPING[attributes[:hesa_nationality_code]],
-            )
-          end
+        nationality = lookup_nationality_by_name(attributes[:name])
 
         if nationality
           self.nationality_id = nationality.id
         elsif attributes[:name].present?
           errors.add(:name, "Could not find a nationality with the name #{attributes[:name]}")
-        else
-          errors.add(:name, "Could not find a nationality with the HESA code #{attributes[:hesa_nationalality_code]}")
         end
       end
 
