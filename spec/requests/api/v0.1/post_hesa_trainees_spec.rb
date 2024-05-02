@@ -44,6 +44,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       ],
       placements_attributes: [
         {
+          name: "Placement",
           urn: "900020",
         },
       ],
