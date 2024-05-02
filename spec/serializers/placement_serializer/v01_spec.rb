@@ -4,29 +4,29 @@ require "rails_helper"
 
 RSpec.describe PlacementSerializer::V01 do
   shared_examples_for "a placement serialiser" do
-    it "includes all expected fields and they all have values" do
-      %w[
-        placement_id
-        urn
-        name
-        postcode
-        created_at
-        updated_at
-      ].each do |field|
-        expect(json.keys).to include(field), "Expected key '#{field}' to be present, but it was not"
-        expect(json[field]).to be_present, "Expected field '#{field}' to have a value, but it was '#{json[field]}'"
+    %w[
+      placement_id
+      urn
+      name
+      postcode
+      created_at
+      updated_at
+    ].each do |field|
+      it "`#{field}` is present in the output and has a value" do
+        expect(json.keys).to include(field)
+        expect(json[field]).to be_present
       end
     end
 
-    it "does not include excluded fields" do
-      %w[
-        id
-        slug
-        trainee_id
-        school_id
-        address
-      ].each do |field|
-        expect(json.keys).not_to include(field), "Expected key '#{field}' NOT to be present, but it was not"
+    %w[
+      id
+      slug
+      trainee_id
+      school_id
+      address
+    ].each do |field|
+      it "`#{field}` is not present in the output" do
+        expect(json.keys).not_to include(field)
       end
     end
   end
