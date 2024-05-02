@@ -205,6 +205,8 @@ class Trainee < ApplicationRecord
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
 
+  enum record_source: %i[apply dttp hesa_collection hesa_trn_data manual api].index_with(&:to_s), _suffix: :record
+
   enum training_route: TRAINING_ROUTES
 
   enum training_initiative: ROUTE_INITIATIVES
