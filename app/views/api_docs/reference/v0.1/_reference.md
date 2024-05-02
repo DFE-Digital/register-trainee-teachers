@@ -271,6 +271,21 @@ current academic cycle.
   </div>
 </details>
 
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "message": "Validation failed: 1 error prohibited this request being run",
+      "errors": {
+        "status": [
+          "busy is not a valid status"
+        ]
+      }
+    } 
+    </pre>
+  </div>
+</details>
 ---
 
 ### `GET /trainees/{trainee_id}`
