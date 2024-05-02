@@ -500,9 +500,9 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
             expect(response).to have_http_status(:ok)
             expect(trainee.first_names).to eq("Alice")
-            i
-            expect(response.parsed_body[:data][:study_mode]).to eq("63")
+
             expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
+            expect(response.parsed_body[:data][:study_mode]).to eq("63")
           end
         end
 
