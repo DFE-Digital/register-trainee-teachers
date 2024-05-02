@@ -226,7 +226,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(Trainee.last.provider_trainee_id).to eq("99157234/2/01")
     end
 
-    context "when read only attributes are been submitted" do
+    context "when read only attributes are submitted" do
       let(:trn) { "567899" }
       let(:ethnic_group) { "mixed_ethnic_group" }
       let(:ethnic_background) { "Another Mixed background" }
