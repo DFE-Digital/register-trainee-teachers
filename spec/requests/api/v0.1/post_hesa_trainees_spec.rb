@@ -16,13 +16,15 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let(:graduation_year) { "2003" }
   let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
 
+  let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
+
   let(:data) do
     {
       first_names: "John",
       last_name: "Doe",
       previous_last_name: "Smith",
       date_of_birth: "1990-01-01",
-      sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
+      sex: sex,
       email: "john.doe@example.com",
       nationality: "GB",
       training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
@@ -226,7 +228,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       end
     end
 
-    context "course_age_range is empty" do
+    context "when course_age_range is empty" do
       let(:params) { { data: } }
 
       let(:course_age_range) { "" }
@@ -237,7 +239,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       end
     end
 
-    context "course_age_range is invalid" do
+    context "when course_age_range is invalid" do
       let(:params) { { data: } }
 
       let(:course_age_range) { "invalid" }
@@ -247,13 +249,36 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
       end
     end
+
+    context "when sex is empty" do
+      let(:params) { { data: } }
+
+      let(:sex) { "" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex can't be blank")
+      end
+    end
+
+    context "when sex is invalid" do
+      let(:params) { { data: } }
+
+      let(:sex) { "invalid" }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
+      end
+    end
   end
 
   context "when a placement is invalid", feature_register_api: true do
     before do
-      params[:data][:placements_attributes] = [{ not_an_attribute: "invalid" }]
       post "/api/v0.1/trainees", params: params, headers: { Authorization: token }
     end
+
+    let(:params) { { data: data.merge({ placements_attributes: [{ not_an_attribute: "invalid" }] }) } }
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)

@@ -60,7 +60,7 @@ module Api
       end
 
       def sex
-        ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]]
+        ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]] || params[:sex]
       end
 
       def training_route
