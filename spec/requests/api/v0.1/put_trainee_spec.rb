@@ -260,7 +260,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(response.parsed_body).to have_key("errors")
     end
 
-    context "when read only attributes are been submitted" do
+    context "when read only attributes are submitted" do
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
       let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, ethnic_group:, ethnic_background:) }
