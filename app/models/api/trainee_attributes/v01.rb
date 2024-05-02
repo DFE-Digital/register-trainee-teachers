@@ -138,9 +138,12 @@ module Api
       end
 
       def update_hesa_trainee_detail_attributes(attributes)
-        existing_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes::V01.new({})
         new_hesa_attributes = attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES)
-        self.hesa_trainee_detail_attributes = existing_hesa_attributes.assign_attributes(new_hesa_attributes)
+        return if new_hesa_attributes.blank?
+
+        updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes::V01.new({})
+        updated_hesa_attributes.assign_attributes(new_hesa_attributes)
+        updated_hesa_attributes
       end
 
       def self.from_trainee(trainee)
