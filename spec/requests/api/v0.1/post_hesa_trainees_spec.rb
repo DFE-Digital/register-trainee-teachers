@@ -84,6 +84,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(Trainee.last.state).to eq("submitted_for_trn")
     end
 
+    it "sets the correct study_mode" do
+      expect(response.parsed_body["study_mode"]).to eq("63")
+    end
+
     it "sets the correct disabilities" do
       expect(response.parsed_body["disability_disclosure"]).to eq("disabled")
       expect(response.parsed_body["disability1"]).to eq("58")

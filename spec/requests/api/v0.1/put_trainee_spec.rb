@@ -243,7 +243,15 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         end
 
         context "when updating a newly created trainee with valid params" do
-          let(:params_for_update) { { data: { first_names: "Alice" } } }
+          let(:params_for_update) do
+            {
+              data:
+                {
+                  first_names: "Alice",
+                  study_mode: "63",
+                },
+            }
+          end
 
           it "updates the trainee" do
             put(
@@ -254,6 +262,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
             expect(response).to have_http_status(:ok)
             expect(trainee.first_names).to eq("Alice")
+            expect(response.parsed_body[:data][:study_mode]).to eq("63")
             expect(response.parsed_body[:data]["trainee_id"]).to eq(slug)
           end
         end
