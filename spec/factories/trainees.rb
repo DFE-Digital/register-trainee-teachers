@@ -669,13 +669,12 @@ FactoryBot.define do
     end
 
     trait :with_hesa_trainee_detail do
-      with_hesa_student
+      hesa_id { Faker::Number.number(digits: 13) }
       hesa_trainee_detail
     end
 
     trait :with_hesa_student do
       hesa_id { Faker::Number.number(digits: 13) }
-
       hesa_students { create_list(:hesa_student, 1, hesa_id:) }
     end
   end
