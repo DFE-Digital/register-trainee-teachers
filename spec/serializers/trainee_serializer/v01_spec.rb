@@ -92,7 +92,7 @@ RSpec.describe TraineeSerializer::V01 do
     end
 
     it "includes the correct disability values" do
-      expect(json["disability1"]).to_not be_nil
+      expect(json["disability1"]).not_to be_nil
       expect(json["disability1"]).to eq(trainee.hesa_trainee_detail.hesa_disabilities["disability1"])
     end
 
