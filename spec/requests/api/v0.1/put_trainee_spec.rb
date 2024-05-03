@@ -43,18 +43,6 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     before do
       create(:nationality, :irish)
-
-      put(
-        "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { nationality: "IE" } },
-      )
-      expect(response).to have_http_status(:ok)
-      expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
-    end
-
-    it "we can update nationality without creating a dual nationality" do
-      create(:nationality, :irish)
       create(:nationality, :french)
 
       put(
@@ -62,7 +50,6 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         headers: { Authorization: "Bearer #{token}" },
         params: params,
       )
-<<<<<<< HEAD
     end
 
     context "when the trainee does not exist" do
@@ -172,30 +159,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
 
     context "when modifying nationality" do
-      it "returns status 200 and updates nationality" do
-        create(:nationality, :irish)
+      let(:data) { { nationality: "IE" } }
 
-        put(
-          "/api/v0.1/trainees/#{trainee.slug}",
-          headers: { Authorization: "Bearer #{token}" },
-          params: { data: { nationality: "IE" } },
-        )
+      it "returns status 200 and updates nationality" do
         expect(response).to have_http_status(:ok)
         expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
       end
 
       it "we can update nationality without creating a dual nationality" do
-        create(:nationality, :irish)
-        create(:nationality, :french)
-
-        put(
-          "/api/v0.1/trainees/#{trainee.slug}",
-          headers: { Authorization: "Bearer #{token}" },
-          params: { data: { nationality: "IE" } },
-        )
-        expect(response).to have_http_status(:ok)
-        expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
-
         put(
           "/api/v0.1/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}" },
@@ -205,25 +176,19 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("french")
       end
 
-      it "invalid HESA nationality codes are rejected and the trainee is not updated" do
-        put(
-          "/api/v0.1/trainees/#{trainee.slug}",
-          headers: { Authorization: "Bearer #{token}" },
-          params: { data: { nationality: "XX" } },
-        )
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(trainee.reload.nationalities.map(&:name)).to be_empty
-      end
-    end
+      context "with an invalid HESA nationality code" do
+        let(:data) { { nationality: "XX" } }
 
-    it "invalid HESA nationality codes are rejected and the trainee is not updated" do
-      put(
-        "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { nationality: "XX" } },
-      )
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(trainee.reload.nationalities.map(&:name)).to be_empty
+        it "return status is 422 and the trainee is not updated" do
+          put(
+            "/api/v0.1/trainees/#{trainee.slug}",
+            headers: { Authorization: "Bearer #{token}" },
+            params: { data: { nationality: "XX" } },
+          )
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(trainee.reload.nationalities.map(&:name)).to be_empty
+        end
+      end
     end
   end
 
