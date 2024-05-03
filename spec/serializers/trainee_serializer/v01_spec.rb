@@ -85,9 +85,15 @@ RSpec.describe TraineeSerializer::V01 do
         nationality
         placements
         degrees
+        disability1
       ].each do |field|
         expect(json.keys).to include(field)
       end
+    end
+
+    it "includes the correct disability values" do
+      expect(json["disability1"]).not_to be_nil
+      expect(json["disability1"]).to eq(trainee.hesa_trainee_detail.hesa_disabilities["disability1"])
     end
 
     it "does not include excluded fields" do
