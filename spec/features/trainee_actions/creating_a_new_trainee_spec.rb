@@ -137,6 +137,6 @@ private
   end
 
   def and_trainee_record_source_is_set_to_manual
-    expect(Trainee.last.record_source).to eq(RecordSources::MANUAL)
+    expect(Trainee.last.manual_record?).to be(true)
   end
 end
