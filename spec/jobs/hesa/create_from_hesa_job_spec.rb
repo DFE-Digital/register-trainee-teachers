@@ -7,7 +7,7 @@ module Hesa
     include ActiveJob::TestHelper
 
     let(:hesa_trainee) { ApiStubs::HesaApi.new.student_attributes }
-    let(:record_source) { RecordSources::HESA_COLLECTION }
+    let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
 
     describe "#perform" do
       context "Hesa import is enabled" do

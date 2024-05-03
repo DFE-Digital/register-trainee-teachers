@@ -90,8 +90,8 @@ module Trainees
     # trainees who have ONLY ever been submitted over the TRN data endpoint
     # should have the record_source "HESA TRN data"
     def trainee_record_source
-      if record_source == RecordSources::HESA_TRN_DATA && trainee.record_source == RecordSources::HESA_COLLECTION
-        return RecordSources::HESA_COLLECTION
+      if record_source == Trainee::HESA_TRN_DATA_SOURCE && trainee.hesa_collection_record?
+        return Trainee::HESA_COLLECTION_SOURCE
       end
 
       record_source

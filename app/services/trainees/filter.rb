@@ -25,7 +25,7 @@ module Trainees
     end
 
     def remove_hesa_trn_data_trainees(trainees)
-      visible_sources = RecordSources::ALL - [RecordSources::HESA_TRN_DATA]
+      visible_sources = Trainee::NON_TRN_SOURCES
       trainees.where(record_source: visible_sources.push(nil))
     end
 

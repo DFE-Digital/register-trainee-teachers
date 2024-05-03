@@ -45,7 +45,7 @@ describe FindNewStarterTrainees do
              state: 1,
              itt_start_date: 2.months.ago,
              start_academic_cycle: AcademicCycle.current,
-             record_source: RecordSources::HESA_TRN_DATA)
+             record_source: Trainee::HESA_TRN_DATA_SOURCE)
     end
 
     it { is_expected.to be_empty }

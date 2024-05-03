@@ -63,7 +63,7 @@ module Trainees
 
     def mapped_attributes
       {
-        record_source: RecordSources::MANUAL,
+        record_source: Trainee::MANUAL_SOURCE,
         region: csv_row["Region"],
         training_route: training_route,
         first_names: first_names,

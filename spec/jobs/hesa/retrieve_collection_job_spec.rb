@@ -39,7 +39,7 @@ module Hesa
       end
 
       it "calls the CreateFromHesaJob" do
-        expect(CreateFromHesaJob).to receive(:perform_later).with(hesa_trainee: hesa_api_stub.student_attributes, record_source: RecordSources::HESA_COLLECTION)
+        expect(CreateFromHesaJob).to receive(:perform_later).with(hesa_trainee: hesa_api_stub.student_attributes, record_source: Trainee::HESA_COLLECTION_SOURCE)
 
         described_class.new.perform
       end

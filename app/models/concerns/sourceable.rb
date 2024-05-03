@@ -7,6 +7,15 @@ module Sourceable
   HESA_TRN_DATA_SOURCE = "hesa_trn_data".freeze
   MANUAL_SOURCE = "manual".freeze
   API_SOURCE = "api".freeze
+  ALL = [
+    APPLY_SOURCE,
+    DTTP_SOURCE,
+    HESA_COLLECTION_SOURCE,
+    HESA_TRN_DATA_SOURCE,
+    MANUAL_SOURCE,
+    API_SOURCE
+  ].freeze
+  NON_TRN_SOURCES = ALL - [HESA_TRN_DATA_SOURCE].freeze
 
   included do
     enum record_source: {

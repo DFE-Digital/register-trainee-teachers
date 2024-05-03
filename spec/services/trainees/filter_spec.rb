@@ -27,13 +27,13 @@ module Trainees
     end
 
     context "when HESA TRN data trainee exists" do
-      let!(:hesa_trn_data_trainee) { create(:trainee, record_source: RecordSources::HESA_TRN_DATA) }
+      let!(:hesa_trn_data_trainee) { create(:trainee, record_source: Trainee::HESA_TRN_DATA_SOURCE) }
 
       it { is_expected.not_to include(hesa_trn_data_trainee) }
     end
 
     context "when a HESA collection trainee exists" do
-      let!(:hesa_collection_trainee) { create(:trainee, record_source: RecordSources::HESA_COLLECTION) }
+      let!(:hesa_collection_trainee) { create(:trainee, record_source: Trainee::HESA_COLLECTION_SOURCE) }
 
       it { is_expected.to include(hesa_collection_trainee) }
     end
