@@ -121,7 +121,8 @@
 class Trainee < ApplicationRecord
   self.ignored_columns += %w[trainee_id] # rubocop:disable Rails/UnusedIgnoredColumns
 
-  include Sluggable, Sourceable
+  include Sluggable
+  include Sourceable
   include PgSearch::Model
   include Discard::Model
 
