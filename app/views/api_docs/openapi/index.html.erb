@@ -9,10 +9,9 @@
 </head>
 <body>
   <div id="redoc-container"></div>
-  <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"
-          integrity="sha384-R8e5ippgVo+kphHRsZE026R4rLIN/ORakEnRnOJ3S7BauiXHeD2EnvDpCcPYV4O/"
-          crossorigin="anonymous">
-  </script>
+
+  <script src="https://cdn.redoc.ly/redoc/v2.1.4/bundles/redoc.standalone.js" integrity="sha384-18dIkv/vYLN5DYqrdbQr0J0VPcs5k2KUkSxAK31PYKsy+l0a9chct7ZwLDiNaBET" crossorigin="anonymous"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       Redoc.init("/openapi/<%=version%>.json", {}, document.getElementById('redoc-container'));
