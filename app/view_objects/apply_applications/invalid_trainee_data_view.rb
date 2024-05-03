@@ -36,10 +36,8 @@ module ApplyApplications
                 :trainee_data_form
 
     def invalid_fields_list
-      items = []
-
-      invalid_fields[:non_degree_fields].each do |field|
-        items << tag.li(
+      items = invalid_fields[:non_degree_fields].map do |field|
+        tag.li(
           link_to(
             compute_link_text(field),
             "##{get_field_name(field).parameterize}",

@@ -19,16 +19,12 @@ module DqtDataSummary
     end
 
     def summarise(data)
-      summary = []
-
-      data.each do |key, value|
-        summary << {
+      data.map do |key, value|
+        {
           key: { text: key, classes: "no-wrap govuk-!-width-one-third" },
           value: { text: value.presence || "-" },
         }
       end
-
-      summary
     end
   end
 end
