@@ -121,7 +121,7 @@
 class Trainee < ApplicationRecord
   self.ignored_columns += %w[trainee_id] # rubocop:disable Rails/UnusedIgnoredColumns
 
-  include Sluggable
+  include Sluggable, Sourceable
   include PgSearch::Model
   include Discard::Model
 
@@ -204,8 +204,6 @@ class Trainee < ApplicationRecord
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
-
-  enum record_source: %i[apply dttp hesa_collection hesa_trn_data manual api].index_with(&:to_s), _suffix: :record
 
   enum training_route: TRAINING_ROUTES
 
@@ -334,7 +332,7 @@ class Trainee < ApplicationRecord
   # Even though some records imported from DTTP will have a HESA ID, their original source is HESA so we chose this implementation
   scope :imported_from_hesa, -> { where.not(hesa_id: nil) }
 
-  scope :imported_from_hesa_trn_data, -> { where(record_source: RecordSources::HESA_TRN_DATA) }
+  scope :imported_from_hesa_trn_data, -> { hesa_trn_data_record }
 
   scope :complete, -> { where(submission_ready: true).or(where(state: COMPLETE_STATES)) }
   scope :incomplete, -> { where(submission_ready: false).where.not(state: COMPLETE_STATES) }
@@ -538,10 +536,6 @@ class Trainee < ApplicationRecord
     return "dttp" if  created_from_dttp?
 
     "manual"
-  end
-
-  def api_record?
-    record_source == RecordSources::API
   end
 
   def estimated_end_date
