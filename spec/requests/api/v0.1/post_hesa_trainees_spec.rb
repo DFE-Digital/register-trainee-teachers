@@ -86,7 +86,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the correct study_mode" do
-      expect(response.parsed_body["study_mode"]).to eq("63")
+      expect(response.parsed_body[:data][:study_mode]).to eq("63")
     end
 
     it "sets the correct disabilities" do
