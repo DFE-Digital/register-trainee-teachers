@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe TraineeSerializer::V01 do
-  let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :in_progress, :with_placements) }
+  let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :in_progress, :with_placements, :with_french_nationality) }
   let(:json) { described_class.new(trainee).as_hash.with_indifferent_access }
 
   describe "serialization" do
@@ -150,6 +150,12 @@ RSpec.describe TraineeSerializer::V01 do
 
       it "serializes with HesaTraineeDetailSerializer::V01" do
         expect(trainee.hesa_trainee_detail.attributes.except(*HesaTraineeDetailSerializer::V01::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
+      end
+    end
+
+    describe "nationality" do
+      it "serializes nationality to HESA code" do
+        expect(json[:nationality]).to eq("FR")
       end
     end
   end

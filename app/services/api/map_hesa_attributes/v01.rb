@@ -69,9 +69,9 @@ module Api
       end
 
       def nationalisations_attributes
-        return [] unless nationality_name
+        return [] unless nationality_name || params[:nationality]
 
-        [{ name: nationality_name }]
+        [{ name: nationality_name || params[:nationality] }]
       end
 
       def nationality_name

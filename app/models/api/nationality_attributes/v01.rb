@@ -13,13 +13,19 @@ module Api
       def initialize(attributes = {})
         super({})
 
-        nationality = attributes[:name].present? ? Nationality.find_by("LOWER(name) = ?", attributes[:name].strip.downcase) : nil
+        nationality = lookup_nationality_by_name(attributes[:name])
 
         if nationality
           self.nationality_id = nationality.id
-        else
+        elsif attributes[:name].present?
           errors.add(:name, "Could not find a nationality with the name #{attributes[:name]}")
         end
+      end
+
+    private
+
+      def lookup_nationality_by_name(name)
+        Nationality.find_by("LOWER(name) = ?", name.strip.downcase)
       end
     end
   end

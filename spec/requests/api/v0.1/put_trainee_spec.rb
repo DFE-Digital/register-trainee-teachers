@@ -43,6 +43,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     before do
       create(:nationality, :irish)
+      create(:nationality, :french)
 
       put(
         endpoint,
@@ -154,6 +155,39 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
+      end
+    end
+
+    context "when modifying nationality" do
+      let(:data) { { nationality: "IE" } }
+
+      it "returns status 200 and updates nationality" do
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
+      end
+
+      it "we can update nationality without creating a dual nationality" do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: { data: { nationality: "FR" } },
+        )
+        expect(response).to have_http_status(:ok)
+        expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("french")
+      end
+
+      context "with an invalid HESA nationality code" do
+        let(:data) { { nationality: "XX" } }
+
+        it "return status is 422 and the trainee is not updated" do
+          put(
+            "/api/v0.1/trainees/#{trainee.slug}",
+            headers: { Authorization: "Bearer #{token}" },
+            params: { data: { nationality: "XX" } },
+          )
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(trainee.reload.nationalities.map(&:name)).to be_empty
+        end
       end
     end
   end
