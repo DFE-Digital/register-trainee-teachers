@@ -304,8 +304,6 @@ class Trainee < ApplicationRecord
   COMPLETE_STATES = %w[recommended_for_award withdrawn awarded].freeze
   IN_TRAINING_STATES = %w[submitted_for_trn trn_received recommended_for_award].freeze
 
-  attr_accessor :ethnicity
-
   pg_search_scope :with_name_provider_trainee_id_or_trn_like,
                   against: %i[first_names middle_names last_name provider_trainee_id trn],
                   using: { tsearch: { prefix: true } }
