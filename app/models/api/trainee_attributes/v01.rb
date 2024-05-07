@@ -166,7 +166,7 @@ module Api
       end
 
       def deep_attributes
-        attributes.transform_values do |value|
+        attributes.except("ethnicity").transform_values do |value|
           if value.is_a?(Array)
             value.map { |item| item.respond_to?(:attributes) ? item.attributes : item }
           elsif value.respond_to?(:attributes)
