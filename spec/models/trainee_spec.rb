@@ -431,6 +431,50 @@ describe Trainee do
         end
       end
     end
+
+    describe "#derived_record_source" do
+      subject { trainee.derived_record_source }
+
+      context "manual record source" do
+        let(:trainee) { create(:trainee) }
+
+        it "returns manual record source" do
+          expect(subject).to eql("manual")
+        end
+      end
+
+      context "dttp record source" do
+        let(:trainee) { create(:trainee, :created_from_dttp) }
+
+        it "returns dttp record source" do
+          expect(subject).to eql("dttp")
+        end
+      end
+
+      context "apply record source" do
+        let(:trainee) { create(:trainee, :with_apply_application) }
+
+        it "returns apply record source" do
+          expect(subject).to eql("apply")
+        end
+      end
+
+      context "hesa record source" do
+        let(:trainee) { create(:trainee, :imported_from_hesa) }
+
+        it "returns hesa record source" do
+          expect(subject).to eql("hesa")
+        end
+      end
+
+      context "api record source" do
+        let(:trainee) { create(:trainee, :created_from_api) }
+
+        it "returns api record source" do
+          expect(subject).to eql("api")
+        end
+      end
+    end
   end
 
   describe "#with_name_provider_trainee_id_or_trn_like" do

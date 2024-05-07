@@ -528,6 +528,18 @@ class Trainee < ApplicationRecord
     hesa_id.present?
   end
 
+  def derived_record_source
+    return "api" if api_record?
+
+    return "hesa" if hesa_record?
+
+    return "apply" if apply_application?
+
+    return "dttp" if  created_from_dttp?
+
+    "manual"
+  end
+
   def api_record?
     record_source == RecordSources::API
   end

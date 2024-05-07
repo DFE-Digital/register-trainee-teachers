@@ -34,8 +34,6 @@ FactoryBot.define do
     email { "#{first_names}.#{last_name}@example.com" }
     applying_for_bursary { nil }
 
-    record_source { RecordSources::MANUAL }
-
     after(:create) do |trainee, _evaluator|
       # NOTE: some of the tests circumvent the proper expectations with associations.
       trainee.reload if trainee.disability_ids.blank? && trainee.trainee_disabilities.present?
