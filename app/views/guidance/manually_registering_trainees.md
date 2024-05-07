@@ -21,9 +21,9 @@ When you sign into Register you will see ‘Draft trainees’ and ‘Registered 
 
 ## Get a teacher reference number (TRN)
 
-Once a draft is complete, you can request a TRN for each trainee record. This is when the trainee becomes registered with the Department for Education (DfE).
+Once a draft is complete, you can register and request a TRN for each trainee record. This is when the trainee becomes registered with the Department for Education (DfE).
 
-Trainees will receive their TRN by email.
+Trainees will receive their TRN from the DfE by email.
 
 ## Trainee records imported from the Apply for teacher training (Apply) service
 
