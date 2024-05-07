@@ -8,7 +8,7 @@ module Api
 
       def index
         render(
-          json: { data: trainee.placements.map { |placement| serializer_klass.new(placement).as_hash } },
+          json: { data: trainee.placements.includes([:school]).map { |placement| serializer_klass.new(placement).as_hash } },
           status: :ok,
         )
       end
@@ -39,7 +39,7 @@ module Api
       def trainee_slug = params[:trainee_slug]
 
       def placement
-        @placement ||= trainee.placements.find_by!(slug:)
+        @placement ||= trainee.placements.includes([:school]).find_by!(slug:)
       end
 
       def slug = params[:slug]

@@ -38,8 +38,9 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
       end
 
       context "create placement without school_id" do
+        let(:placement) { create(:placement, :manual) }
         let(:params) do
-          { data: create(:placement, :manual).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
+          { data: placement.attributes.slice(*placement_attribute_keys) }.with_indifferent_access
         end
 
         it "creates a new placement and returns a 201 (created) status" do
@@ -54,6 +55,9 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           expect(trainee.reload.placements.first.name).to eq(params.dig(:data, :name))
           expect(trainee.reload.placements.first.postcode).to eq(params.dig(:data, :postcode))
           expect(trainee.reload.placements.first.urn).to eq(params.dig(:data, :urn))
+
+          expect(response.parsed_body["data"]["urn"]).to eq(placement.urn)
+          expect(response.parsed_body["data"]["name"]).to eq(placement.name)
         end
 
         context "with different trainee" do

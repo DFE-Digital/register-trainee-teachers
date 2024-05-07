@@ -42,6 +42,7 @@ module Api
           degrees_attributes:,
           placements_attributes:,
           hesa_disabilities:,
+          course_study_mode:,
         })
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
@@ -60,7 +61,7 @@ module Api
       end
 
       def sex
-        ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]]
+        ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]] || params[:sex]
       end
 
       def training_route
@@ -139,6 +140,10 @@ module Api
 
       def course_age_range
         DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
+      end
+
+      def course_study_mode
+        params[:study_mode]
       end
 
       def course_attributes

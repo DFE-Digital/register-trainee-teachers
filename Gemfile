@@ -47,7 +47,7 @@ gem "amazing_print", "~> 1.6"
 gem "rails_semantic_logger", "4.14.0"
 
 # Thread-safe global state
-gem "request_store", "~> 1.6"
+gem "request_store", "~> 1.7"
 
 # Used to build our forms and style them using govuk-frontend class names
 gem "govuk-components"

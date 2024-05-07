@@ -51,13 +51,9 @@ module HesaStudentSummary
     end
 
     def summarise(data)
-      summary = []
-
-      data.each do |key, value|
-        summary << { key: { text: humanise(key) }, value: { text: value.presence || "-" } }
+      data.map do |key, value|
+        { key: { text: humanise(key) }, value: { text: value.presence || "-" } }
       end
-
-      summary
     end
 
     def humanise(key)
