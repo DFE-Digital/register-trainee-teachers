@@ -25,7 +25,7 @@ describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "deletes the degree and returns a 200 status (ok)" do
         delete(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
         )
         expect(response.parsed_body["data"]).to be_present
         expect(trainee.reload.degrees.count).to be_zero
@@ -41,7 +41,7 @@ describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "does not delete the degree and returns a 404 status (not_found)" do
         delete(
           "/api/v0.1/trainees/#{trainee_for_another_provider.slug}/degrees/#{degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
         )
         expect(response).to have_http_status(:not_found)
         expect(trainee.reload.degrees.count).to eq(1)
@@ -54,7 +54,7 @@ describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "does not delete the degree and returns a 404 status (not_found)" do
         delete(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree_for_another_trainee.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
         )
         expect(response).to have_http_status(:not_found)
         expect(trainee.reload.degrees.count).to eq(1)

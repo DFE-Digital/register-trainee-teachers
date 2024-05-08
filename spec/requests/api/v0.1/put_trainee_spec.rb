@@ -13,8 +13,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     it "returns status 401 unauthorized" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Alice" } },
+        headers: { Authorization: "Bearer #{token}", **json_headers },
+        params: { data: { first_names: "Alice" } }.to_json,
       )
       expect(response).to have_http_status(:unauthorized)
       expect(trainee.reload.first_names).to eq("Bob")
@@ -27,8 +27,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     it "returns status 404 not found" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
-        headers: { Authorization: "Bearer #{token}" },
-        params: { data: { first_names: "Alice" } },
+        headers: { Authorization: "Bearer #{token}", **json_headers },
+        params: { data: { first_names: "Alice" } }.to_json,
       )
       expect(response).to have_http_status(:not_found)
       expect(trainee.reload.first_names).to eq("Bob")
@@ -48,8 +48,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       put(
         endpoint,
-        headers: { Authorization: "Bearer #{token}" },
-        params: params,
+        headers: { Authorization: "Bearer #{token}", **json_headers },
+        params: params.to_json,
       )
     end
 
@@ -170,8 +170,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       it "we can update nationality without creating a dual nationality" do
         put(
           "/api/v0.1/trainees/#{trainee.slug}",
-          headers: { Authorization: "Bearer #{token}" },
-          params: { data: { nationality: "FR" } },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: { data: { nationality: "FR" } }.to_json,
         )
         expect(response).to have_http_status(:ok)
         expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("french")
@@ -401,7 +401,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
     let!(:nationality) { create(:nationality, :british) }
 
-    let(:headers) { { Authorization: token } }
+    let(:headers) { { Authorization: token, **json_headers } }
 
     let(:start_academic_cycle) { create(:academic_cycle, :current) }
     let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }
@@ -469,7 +469,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
           allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
-          post "/api/v0.1/trainees", params: params_for_create, headers: headers
+          post "/api/v0.1/trainees", params: params_for_create.to_json, headers: headers
         end
 
         it "creates a trainee" do
@@ -494,7 +494,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           it "updates the trainee" do
             put(
               "/api/v0.1/trainees/#{slug}",
-              params: params_for_update,
+              params: params_for_update.to_json,
               headers: headers,
             )
 
@@ -512,7 +512,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           it "does not update the trainee and returns a meaningful error", openapi: false do
             put(
               "/api/v0.1/trainees/#{slug}",
-              headers: headers.merge("Content-Type" => "application/json"),
+              headers: headers,
               params: params_for_update,
             )
 

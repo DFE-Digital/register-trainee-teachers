@@ -72,7 +72,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
-      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "creates a trainee" do
@@ -341,7 +341,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   context "when the trainee record is invalid", feature_register_api: true do
     before do
-      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     let(:params) { { data: { email: "Doe" } } }
@@ -407,7 +407,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   context "when a placement is invalid", feature_register_api: true do
     before do
-      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     let(:params) { { data: data.merge({ placements_attributes: [{ not_an_attribute: "invalid" }] }) } }
@@ -422,7 +422,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   context "when a degree is invalid", feature_register_api: true do
     before do
       params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
-      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "return status code 422 with a meaningful error message" do

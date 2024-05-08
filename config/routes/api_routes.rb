@@ -3,7 +3,7 @@
 module ApiRoutes
   def self.extended(router)
     router.instance_exec do
-      namespace :api, path: "api/:api_version", api_version: /v[.0-9]+/ do
+      namespace :api, path: "api/:api_version", api_version: /v[.0-9]+/, defaults: { format: :json } do
         resources :trainees, param: :slug, only: %i[index show update create], constraints: RouteConstraints::RegisterApiConstraint do
           scope module: :trainees do
             resource :withdraw, controller: :withdraw, only: :create

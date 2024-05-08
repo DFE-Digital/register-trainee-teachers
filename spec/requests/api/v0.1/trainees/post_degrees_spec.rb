@@ -29,10 +29,10 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       it "creates a new degree and returns a 201 (created) status" do
         post(
           "/api/v0.1/trainees/#{trainee.slug}/degrees",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: degrees_attributes,
-          },
+          }.to_json,
         )
 
         expect(response).to have_http_status(:created)
@@ -80,10 +80,10 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       it "returns a 409 (conflict) status" do
         post(
           "/api/v0.1/trainees/#{trainee.slug}/degrees",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: degrees_attributes,
-          },
+          }.to_json,
         )
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body["errors"].first).to match(
@@ -100,10 +100,10 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       it "does not create a new degree and returns a 404 status (not_found) status" do
         post(
           "/api/v0.1/trainees/#{trainee_for_another_provider.slug}/degrees",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: degrees_attributes,
-          },
+          }.to_json,
         )
         expect(response).to have_http_status(:not_found)
         expect(trainee.reload.degrees.count).to eq(0)
@@ -126,10 +126,10 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
         post(
           "/api/v0.1/trainees/#{trainee.slug}/degrees",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: degrees_attributes,
-          },
+          }.to_json,
         )
 
         expect(response).to have_http_status(:unprocessable_entity)

@@ -50,7 +50,7 @@ describe "Trainees API" do
     context "when the request attempts to create a duplicate record" do
       it "returns status 409 (conflict) with the potential duplicates and does not create a trainee record" do
         expect {
-          post "/api/v0.1/trainees", params: valid_attributes, headers: { Authorization: token }
+          post "/api/v0.1/trainees", params: valid_attributes.to_json, headers: { Authorization: token, **json_headers }
         }.not_to change { Trainee.count }
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body[:data].count).to be(1)

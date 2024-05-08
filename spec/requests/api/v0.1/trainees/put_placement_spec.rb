@@ -19,7 +19,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
         end
 
         it "updates an existing placement and returns a 200 (ok) status" do
-          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
+          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body["data"]["placement_id"]).to eql(slug)
@@ -43,7 +43,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
         end
 
         it "creates a new placement and returns a 200 (ok) status" do
-          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
+          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body["data"]["placement_id"]).to eql(slug)
@@ -57,7 +57,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
         end
 
         it "partial update of an existing placement returns 200 (ok) status" do
-          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params_to_update_postcode, headers: { Authorization: token }
+          put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params_to_update_postcode.to_json, headers: { Authorization: token, **json_headers }
 
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body["data"]["placement_id"]).to eql(slug)
@@ -74,7 +74,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           end
 
           it "does not create a new placement and returns a 422 status (unprocessable_entity) status" do
-            put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
+            put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
 
             expect(response).to have_http_status(:not_found)
             expect(trainee.reload.placements.count).to eq(2)
@@ -87,7 +87,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           end
 
           it "does not create a new placements and returns a 422 status (unprocessable_entity) status" do
-            put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params, headers: { Authorization: token }
+            put "/api/v0.1//trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
 
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"].count).to eq(2)
