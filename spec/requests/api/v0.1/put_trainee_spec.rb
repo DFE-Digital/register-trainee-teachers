@@ -183,8 +183,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         it "return status is 422 and the trainee is not updated" do
           put(
             "/api/v0.1/trainees/#{trainee.slug}",
-            headers: { Authorization: "Bearer #{token}" },
-            params: { data: { nationality: "XX" } },
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: { data: { nationality: "XX" } }.to_json,
           )
           expect(response).to have_http_status(:unprocessable_entity)
           expect(trainee.reload.nationalities.map(&:name)).to be_empty
