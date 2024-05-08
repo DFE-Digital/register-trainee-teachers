@@ -20,13 +20,6 @@ module Sourceable
   NON_TRN_SOURCES = ALL - [HESA_TRN_DATA_SOURCE].freeze
 
   included do
-    enum record_source: {
-      apply: APPLY_SOURCE,
-      dttp: DTTP_SOURCE,
-      hesa_collection: HESA_COLLECTION_SOURCE,
-      hesa_trn_data: HESA_TRN_DATA_SOURCE,
-      manual: MANUAL_SOURCE,
-      api: API_SOURCE,
-    }, _suffix: :record
+    enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
   end
 end
