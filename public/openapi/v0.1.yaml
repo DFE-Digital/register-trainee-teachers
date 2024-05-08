@@ -2942,7 +2942,7 @@ paths:
                 funding_method: '4'
                 hesa_id: '0310261553101'
                 provider_trainee_id: 99157234/2/01
-  "/api/{api_version}/trainees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -2954,12 +2954,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: nonexistent
+        example: 4n23875f97f2hn9v2fjjf
       responses:
         '200':
           description: returns status code 200
@@ -3346,7 +3346,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3903,7 +3903,7 @@ paths:
                 provider_trainee_id: 99157234/2/01
                 nationality: FR
                 study_mode: '63'
-  "/api/{api_version}/trainees/{trainee_slug}/degrees":
+  "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
       tags:
@@ -3915,7 +3915,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3995,7 +3995,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4200,7 +4200,7 @@ paths:
                   message: Subject is not included in the list
                 - error: UnprocessableEntity
                   message: Uk degree is not included in the list
-  "/api/{api_version}/trainees/{trainee_slug}/degrees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -4212,13 +4212,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
         example: WdNsrTBSruaHt5UWodx8djYu
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4573,13 +4573,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: non-existant
-      - name: trainee_slug
+        example: 20938nc02qd9048dk09q
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4697,13 +4697,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
         example: rpMjTSXSfFFjF5DytERSRPci
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4867,7 +4867,7 @@ paths:
               example:
                 errors:
                 - 'Param is missing or the value is empty: data'
-  "/api/{api_version}/trainees/{trainee_slug}/placements":
+  "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index
       tags:
@@ -4879,7 +4879,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4932,7 +4932,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5071,7 +5071,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -5083,13 +5083,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: Y8qGh1x6rwy2GgvY1GYG7hiX
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5521,13 +5521,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
-        example: non-existant
-      - name: trainee_slug
+        example: 28nc8028cfk302kd
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5609,13 +5609,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: 3AjxLhTEWZUoLK22MstY6dai
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5750,7 +5750,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/withdraw":
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
     post:
       summary: create
       tags:
@@ -5762,7 +5762,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
