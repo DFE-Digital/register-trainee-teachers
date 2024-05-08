@@ -123,6 +123,7 @@ en:
         dttp: Imported from DTTP
         hesa: Imported from HESA
         manual: Added manually
+        api: Added with API
       trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
       progress_date_prefix:
@@ -175,6 +176,7 @@ en:
         dttp: DTTP
         hesa: HESA
         manual: Manual
+        api: API
       route:
         blank: No route provided
       trainee_name:
@@ -1255,6 +1257,7 @@ en:
           dttp: Imported from DTTP
           hesa: Imported from HESA
           manual: Added manually
+          api: Added with API
         provider_trainee_id: *provider_trainee_id
         training_routes:
           assessment_only: Assessment only
