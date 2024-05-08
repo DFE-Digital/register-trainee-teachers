@@ -185,7 +185,9 @@ module Api
     private
 
       def validate_trainee_start_date
-        if trainee_start_date.present? && !valid_date_string?(trainee_start_date)
+        return if trainee_start_date.blank?
+
+        if !valid_date_string?(trainee_start_date)
           errors.add(:trainee_start_date, :invalid)
           return
         end

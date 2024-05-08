@@ -146,7 +146,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "does not create a trainee record and returns a 422 status with meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"].first).to include("Foo")
+        expect(response.parsed_body["errors"]).to include("Itt start date is invalid")
       end
     end
 
