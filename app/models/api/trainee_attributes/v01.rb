@@ -176,9 +176,7 @@ module Api
         end
       end
 
-      def errors_count
-        errors.count
-      end
+      delegate :count, to: :errors, prefix: true
 
       def all_errors
         errors
