@@ -2,7 +2,7 @@ This API allows you to access information about trainees and provides endpoints 
 
 <div class="govuk-inset-text">
   Open API specifications can be viewed and downloaded here:
-  <a href="/api-docs/openapi?version=v0.1" target="_blank">Open API</a>
+  <a href="/api-docs/v0.1/openapi" target="_blank">Open API</a>
 </div>
 
 ## Contents
