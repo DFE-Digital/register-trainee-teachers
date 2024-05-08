@@ -3805,6 +3805,19 @@ paths:
                     degree_id: bSr3KiacPtMTVEovCKgpFYTM
                   state: submitted_for_trn
                   trainee_id: f4WhoCXGL3tefTxCYJsZu74n
+        '400':
+          description: returns status 400 bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Unauthorized
         '401':
           description: returns status 401 unauthorized
           content:
@@ -3819,7 +3832,7 @@ paths:
               example:
                 error: Unauthorized
         '404':
-          description: returns 404
+          description: returns 404 not found
           content:
             application/json:
               schema:

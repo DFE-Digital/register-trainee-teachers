@@ -515,7 +515,6 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
               headers: headers,
               params: params_for_update,
             )
-
             expect(response).to have_http_status(:bad_request)
             expect(trainee.reload.first_names).to eq("John")
             expect(response.parsed_body).to have_key(:errors)
