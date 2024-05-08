@@ -79,6 +79,7 @@ module Api
       end
 
       validate :validate_itt_start_and_end_dates
+      validate :validate_trainee_start_date
 
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
 
@@ -184,6 +185,20 @@ module Api
       end
 
     private
+
+      def validate_trainee_start_date
+        if trainee_start_date.present? && !valid_date_string?(trainee_start_date)
+          errors.add(:trainee_start_date, :invalid)
+          return
+        end
+
+        start_date = trainee_start_date.is_a?(String) ? Date.parse(trainee_start_date) : trainee_start_date
+        if start_date < 10.years.ago
+          errors.add(:trainee_start_date, :too_old)
+        elsif start_date.future?
+          errors.add(:trainee_start_date, :future)
+        end
+      end
 
       def validate_itt_start_and_end_dates
         if itt_start_date.present? && !valid_date_string?(itt_start_date)
