@@ -466,6 +466,14 @@ describe Trainee do
           expect(subject).to eql("hesa")
         end
       end
+
+      context "api record source" do
+        let(:trainee) { create(:trainee, :created_from_api) }
+
+        it "returns api record source" do
+          expect(subject).to eql("api")
+        end
+      end
     end
   end
 

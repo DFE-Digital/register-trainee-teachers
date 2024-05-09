@@ -529,6 +529,8 @@ class Trainee < ApplicationRecord
   end
 
   def derived_record_source
+    return "api" if api_record?
+
     return "hesa" if hesa_record?
 
     return "apply" if apply_application?
