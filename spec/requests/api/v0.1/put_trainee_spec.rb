@@ -201,6 +201,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       )
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body["errors"]).to include("Itt start date is invalid")
       expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
     end
 
@@ -215,6 +216,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body["errors"]).to include("Itt end date is invalid")
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end
 
@@ -230,6 +232,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body[:errors]).to contain_exactly(["course_details", { "itt_end_date" => ["The Expected end date must be after the start date"] }])
       expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end
@@ -242,6 +245,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       )
 
       expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["errors"]).to include("Trainee start date is invalid")
       expect(response.parsed_body).to have_key("errors")
     end
 
