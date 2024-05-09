@@ -18,7 +18,12 @@ RSpec.describe "verify:record_sources" do
     create(:trainee, :record_source_manual, apply_application_id: nil, created_from_dttp: false, hesa_id: nil)
 
     expect { Rake::Task["verify:record_sources"].invoke }.to output(
-      a_string_including("Progress: 33.33%", "Progress: 66.67%", "Progress: 100.0%", "Mismatch counts:"),
+      a_string_including(
+        "\rProgress: 33.33%",
+        "\rProgress: 66.67%",
+        "\rProgress: 100.0%",
+        "\nMismatch counts:",
+      ),
     ).to_stdout
   end
 end

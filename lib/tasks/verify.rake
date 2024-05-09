@@ -4,7 +4,7 @@ namespace :verify do
   desc "Verify record sources"
   task record_sources: :environment do
     total = Trainee.count
-    mismatches = {}
+    mismatches = Hash.new { |h, k| h[k] = { count: 0, ids: [] } }
     mapping_rules = {
       Sourceable::DTTP_SOURCE => ->(t) { t.created_from_dttp? },
       Sourceable::HESA_COLLECTION_SOURCE => ->(t) { t.hesa_id.present? },
@@ -15,15 +15,18 @@ namespace :verify do
 
     Trainee.find_each.with_index do |trainee, index|
       source = trainee.record_source
-      mismatches[source] += 1 unless mapping_rules[source]&.call(trainee)
+      unless mapping_rules[source]&.call(trainee)
+        mismatches[source][:count] += 1
+        mismatches[source][:ids] << trainee.id
+      end
 
       progress = ((index + 1).to_f / total * 100).round(2)
-      puts "Progress: #{progress}%"
+      print "\rProgress: #{progress}%"
     end
 
-    puts "Mismatch counts:"
-    mismatches.each do |source, count|
-      puts "#{source}: #{count}"
+    puts "\nMismatch counts:"
+    mismatches.each do |source, data|
+      puts "#{source}: #{data[:count]}, IDs: #{data[:ids].join(', ')}"
     end
   end
 end
