@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 namespace :verify do
-  desc 'Verify record sources'
+  desc "Verify record sources"
   task record_sources: :environment do
     total = Trainee.count
     mismatches = {}
@@ -8,7 +10,7 @@ namespace :verify do
       Sourceable::HESA_COLLECTION_SOURCE => ->(t) { t.hesa_id.present? },
       Sourceable::HESA_TRN_DATA_SOURCE => ->(t) { t.hesa_id.present? },
       Sourceable::APPLY_SOURCE => ->(t) { t.apply_application_id.present? },
-      Sourceable::MANUAL_SOURCE => ->(t) { t.apply_application_id.nil? && !t.created_from_dttp? && !t.hesa_id? }
+      Sourceable::MANUAL_SOURCE => ->(t) { t.apply_application_id.nil? && !t.created_from_dttp? && !t.hesa_id? },
     }
 
     Trainee.find_each.with_index do |trainee, index|
