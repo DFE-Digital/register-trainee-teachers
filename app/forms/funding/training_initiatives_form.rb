@@ -24,7 +24,7 @@ module Funding
     end
 
     def training_initiative_required?
-      trainee.record_source != RecordSources::API
+      trainee.api_record? == false
     end
   end
 end

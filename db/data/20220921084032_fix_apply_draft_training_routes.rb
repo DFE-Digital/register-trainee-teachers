@@ -2,7 +2,7 @@
 
 class FixApplyDraftTrainingRoutes < ActiveRecord::Migration[6.1]
   def up
-    Trainee.draft.where(record_source: RecordSources::APPLY).where.not(course_uuid: nil).find_each do |trainee|
+    Trainee.draft.apply_record.where.not(course_uuid: nil).find_each do |trainee|
       if trainee.published_course && trainee.training_route != trainee.published_course.route
         trainee.without_auditing do
           trainee.progress.funding = false

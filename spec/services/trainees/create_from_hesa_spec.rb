@@ -20,7 +20,7 @@ module Trainees
     let!(:first_disability) { create(:disability, name: first_disability_name) }
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
-    let(:record_source) { RecordSources::HESA_COLLECTION }
+    let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -156,29 +156,29 @@ module Trainees
     context "when the trainee was originally created via the TRN data endpoint" do
       let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
       let(:create_custom_state) do
-        create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: RecordSources::HESA_TRN_DATA)
+        create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: Trainee::HESA_TRN_DATA_SOURCE)
       end
 
       it "updates the trainee record source to be HESA collection" do
-        expect(trainee.record_source).to eq(RecordSources::HESA_COLLECTION)
+        expect(trainee.hesa_collection_record?).to be(true)
       end
     end
 
     context "when the trainee is submitted via TRN data" do
-      let(:record_source) { RecordSources::HESA_TRN_DATA }
+      let(:record_source) { Trainee::HESA_TRN_DATA_SOURCE }
 
       it "sets record source to HESA_TRN_DATA" do
-        expect(trainee.record_source).to eq(RecordSources::HESA_TRN_DATA)
+        expect(trainee.hesa_trn_data_record?).to be(true)
       end
 
       context "but was originally created via the collection endpoint" do
         let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
         let(:create_custom_state) do
-          create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: RecordSources::HESA_COLLECTION)
+          create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: Trainee::HESA_COLLECTION_SOURCE)
         end
 
         it "does not update the trainee record source" do
-          expect(trainee.record_source).to eq(RecordSources::HESA_COLLECTION)
+          expect(trainee.hesa_collection_record?).to be(true)
         end
       end
     end

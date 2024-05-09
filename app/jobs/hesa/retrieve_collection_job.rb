@@ -20,7 +20,7 @@ module Hesa
     end
 
     def record_source
-      RecordSources::HESA_COLLECTION
+      Trainee::HESA_COLLECTION_SOURCE
     end
   end
 end

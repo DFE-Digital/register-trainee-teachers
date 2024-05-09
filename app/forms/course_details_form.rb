@@ -109,7 +109,7 @@ class CourseDetailsForm < TraineeForm
   end
 
   def require_age_range?
-    return false if trainee.record_source == RecordSources::API
+    return false if trainee.api_record?
 
     EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)
   end

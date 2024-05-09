@@ -203,7 +203,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the record source to `api`" do
-      expect(Trainee.last.record_source).to eq("api")
+      expect(Trainee.last.api_record?).to be(true)
     end
 
     it "sets the provider_trainee_id" do

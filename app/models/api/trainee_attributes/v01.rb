@@ -69,7 +69,7 @@ module Api
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
       attribute :date_of_birth, :date
-      attribute :record_source, default: -> { RecordSources::API }
+      attribute :record_source, default: -> { Trainee::API_SOURCE }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
