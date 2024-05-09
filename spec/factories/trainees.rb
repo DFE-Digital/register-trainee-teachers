@@ -652,8 +652,20 @@ FactoryBot.define do
       created_from_dttp { true }
     end
 
+    trait :record_source_dttp do
+      record_source { Sourceable::DTTP_SOURCE }
+    end
+
     trait :created_from_api do
-      record_source { RecordSources::API }
+      record_source { Sourceable::API_SOURCE }
+    end
+
+    trait :record_source_hesa_collection do
+      record_source { Sourceable::HESA_COLLECTION_SOURCE }
+    end
+
+    trait :record_source_manual do
+      record_source { Sourceable::MANUAL_SOURCE }
     end
 
     trait :imported_from_hesa do
