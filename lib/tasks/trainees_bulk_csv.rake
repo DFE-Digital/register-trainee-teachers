@@ -2,6 +2,7 @@
 
 namespace :trainees do
   desc "Bulk import trainees from a CSV file"
+  # Pass in a provider code and a path to a CSV file, e.g. for the test file: "rake trainees:bulk_csv[B20,test.csv]"
   task :bulk_csv, %i[provider_code csv_path] => :environment do |_, args|
     provider = Provider.find_by!(code: args.fetch(:provider_code))
 
