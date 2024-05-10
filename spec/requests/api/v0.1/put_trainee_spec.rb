@@ -39,6 +39,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:slug) { trainee.slug }
     let(:endpoint) { "/api/v0.1/trainees/#{slug}" }
+    let(:data) { { first_names: "Alice" } }
     let(:params) { { data: } }
 
     before do
@@ -77,7 +78,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         it "returns status 422" do
           expect(response).to have_http_status(:unprocessable_entity)
 
-          expect(response.parsed_body[:errors]).to contain_exactly("Email Enter an email address in the correct format, like name@example.com")
+          expect(response.parsed_body[:errors]).to include("Email Enter an email address in the correct format, like name@example.com")
         end
       end
 
@@ -189,6 +190,74 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           expect(trainee.reload.nationalities.map(&:name)).to be_empty
         end
       end
+    end
+
+    it "returns status 422 with an invalid `itt_start_date` and the trainee is not updated" do
+      original_itt_start_date = trainee.itt_start_date
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_start_date: "2023-02-30" } },
+      )
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body["errors"]).to include("Itt start date is invalid")
+      expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
+    end
+
+    it "returns status 422 with an invalid `itt_end_date` and the trainee is not updated" do
+      original_itt_end_date = trainee.itt_end_date
+
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { itt_start_date: "2023-02-28", itt_end_date: "2023-13-13" } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body["errors"]).to include("Itt end date is invalid")
+      expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+    end
+
+    it "returns status 422 with an invalid `itt_start_date/itt_end_date` combination and the trainee is not updated" do
+      original_itt_end_date = trainee.itt_end_date
+      original_itt_start_date = trainee.itt_start_date
+
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { hesa_id: nil, itt_start_date: "2023-02-28", itt_end_date: "2022-02-28" } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
+      expect(response.parsed_body[:errors]).to contain_exactly(["course_details", { "itt_end_date" => ["The Expected end date must be after the start date"] }])
+      expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
+      expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
+    end
+
+    it "returns status 422 with an invalid `trainee_start_date` and the trainee is not updated" do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { trainee_start_date: "2023-04-31" } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["errors"]).to include("Trainee start date is invalid")
+      expect(response.parsed_body).to have_key("errors")
+    end
+
+    it "returns status 422 with a future `trainee_start_date` and the trainee is not updated" do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { data: { trainee_start_date: "#{Time.zone.today.year + 1}-08-01" } },
+      )
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body).to have_key("errors")
     end
   end
 

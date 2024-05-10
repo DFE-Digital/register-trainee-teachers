@@ -1049,6 +1049,10 @@ en:
       heading: Sorry, something went wrong
       body: Try again later.
       support_message_html: If you continue to get this message, email the Register trainee teachers team at %{link}.
+    attributes:
+      trainee_start_date:
+        future: Must be in the past
+        too_old: Cannot be more than 10 years in the past
   apply_trainee_data:
     view:
       heading_1_name: Draft record for %{name}
