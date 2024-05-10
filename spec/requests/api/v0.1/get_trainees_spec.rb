@@ -50,8 +50,11 @@ describe "`GET /trainees` endpoint" do
 
   context "filtering by 'since' date" do
     it "returns trainees updated after the specified date" do
-      trainees.first(5).each { |t| t.touch(:updated_at) }
-      since_date = 1.day.ago.to_date
+      since_date = "2024-03-15T13:15:37.880Z"
+
+      trainees.first(2).each { |t| t.update!(updated_at: "2024-03-15T12:15:37.879Z") }
+
+      expected_trainees = trainees.drop(2).each_with_index { |t, i| t.update!(updated_at: "2024-03-15T13:15:37.88#{i + 1}Z") }
 
       get(
         "/api/v0.1/trainees",
@@ -60,7 +63,32 @@ describe "`GET /trainees` endpoint" do
       )
 
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body["data"].count).to be >= 5
+      expect(response.parsed_body["data"].count).to be 8
+
+      expected_trainees.each do |trainee|
+        expect(response.parsed_body["data"]).to include(include("trainee_id" => trainee.slug))
+      end
+    end
+
+    it "returns trainees updated on the specified date" do
+      since_date = "2024-03-15T13:15:37.880Z"
+
+      trainees.first(2).each { |t| t.update!(updated_at: "2024-03-15T12:15:37.879Z") }
+
+      expected_trainees = trainees.drop(2).each { |t| t.update!(updated_at: since_date) }
+
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: { since: since_date },
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body["data"].count).to be 8
+
+      expected_trainees.each do |trainee|
+        expect(response.parsed_body["data"]).to include(include("trainee_id" => trainee.slug))
+      end
     end
 
     it "returns 422 if since filter is an invalid date" do

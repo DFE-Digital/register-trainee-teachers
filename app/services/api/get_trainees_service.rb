@@ -16,7 +16,7 @@ module Api
                 .joins(:start_academic_cycle)
                 .includes([:nationalities])
                 .where(academic_cycles: { id: academic_cycle.id })
-                .where("trainees.updated_at > ?", since)
+                .where("trainees.updated_at >= ?", since)
                 .order("trainees.updated_at #{sort_order}")
                 .page(page)
                 .per(pagination_per_page)
