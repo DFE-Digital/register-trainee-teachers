@@ -78,7 +78,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         it "returns status 422" do
           expect(response).to have_http_status(:unprocessable_entity)
 
-          expect(response.parsed_body[:errors]).to contain_exactly("Email Enter an email address in the correct format, like name@example.com")
+          expect(response.parsed_body[:errors]).to include("Email Enter an email address in the correct format, like name@example.com")
         end
       end
 

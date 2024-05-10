@@ -268,7 +268,10 @@ FactoryBot.define do
     trait :with_start_date do
       trainee_start_date do
         if itt_start_date.present?
-          Faker::Date.between(from: itt_start_date, to: itt_start_date + rand(20).days)
+          Faker::Date.between(
+            from: itt_start_date,
+            to: [itt_start_date + rand(20).days, Time.zone.today].min,
+          )
         else
           compute_valid_past_itt_start_date
         end
