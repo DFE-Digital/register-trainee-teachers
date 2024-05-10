@@ -13,8 +13,9 @@ module Sidekiq
 
     def call
       dead_jobs.each do |job|
-        error = job.item["error_message"].split(",").first
-        trainee_id = job.args[0]["arguments"][0]["_aj_globalid"].split("/").last
+        error = job.item["error_message"]&.split(",")&.first
+        trainee_id = job.args.dig(0, "arguments", 0, "_aj_globalid")&.split("/")&.last
+        next unless error && trainee_id
 
         digest = [error, job.display_class, trainee_id].join
 
