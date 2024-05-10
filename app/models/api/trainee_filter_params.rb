@@ -26,14 +26,7 @@ module Api
     def check_since
       return if since.blank?
 
-      date_since =
-        begin
-          Date.parse(since)
-        rescue Date::Error
-          nil
-        end
-
-      errors.add(:since, "#{since} is not a valid date") unless date_since
+      errors.add(:since, "#{since} is not a valid date") unless iso8601?(since)
     end
 
     def check_academic_cycle
@@ -45,6 +38,10 @@ module Api
           "#{academic_cycle} is not a valid academic cycle year",
         )
       end
+    end
+
+    def iso8601?(string)
+      string.match?(/\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|(\+|\-)\d{2}:\d{2})?\z/)
     end
   end
 end

@@ -26,7 +26,7 @@ module Api
     end
 
     def since
-      params.fetch(:since, Date.new)
+      params.fetch(:since, DateTime.iso8601)
     end
   end
 end
