@@ -1,10 +1,8 @@
 ---
 openapi: 3.0.3
 info:
-  title: Send Trainee Data Direct API
+  title: Register API
   version: v0.1
-servers:
-- url: http://sandbox.register-trainee-teachers.service.gov.uk
 paths:
   "/api/{api_version}/trainees":
     get:

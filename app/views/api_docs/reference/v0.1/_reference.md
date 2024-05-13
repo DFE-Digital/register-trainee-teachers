@@ -1,10 +1,5 @@
 This API allows you to access information about trainees and provides endpoints to update and create trainee data.
 
-<div class="govuk-inset-text">
-  Open API specifications can be viewed and downloaded here:
-  <a href="/api-docs/v0.1/openapi" target="_blank">Open API</a>
-</div>
-
 ## Contents
 
 - [API versioning strategy](#api-versioning-strategy)
@@ -80,6 +75,9 @@ You must only use the reference spreadsheet v0.1 for use in testing and feedback
 
 Download [Register API reference spreadsheet v0.1 (Excel)](/api-docs/reference/Register_API_Reference_v0.1.xlsx)
 
+### OpenAPI
+
+An OpenAPI schema can be viewed and downloaded here: <a href="/api-docs/v0.1/openapi" target="_blank">Open API</a>
 
 ### Authentication
 

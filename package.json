@@ -9,9 +9,7 @@
     "scss:lint:fix": "stylelint 'app/assets/stylesheets/**/*.scss' --fix",
     "test": "jest",
     "test:ci": "jest --ci --runInBand --coverage",
-    "build:redoc": "esbuild app/javascript/redoc.js --bundle --sourcemap --outfile=app/assets/builds/redoc.js --loader:.js=jsx",
-    "build:app": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --loader:.js=jsx",
-    "build": "npm run build:app && npm run build:redoc",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --loader:.js=jsx",
     "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=. --quiet-deps"
   },
   "dependencies": {

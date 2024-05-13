@@ -9,5 +9,3 @@ RSpec::OpenAPI.path = lambda { |example|
     "public/openapi/#{match[1]}.yaml"
   end
 }
-
-RSpec::OpenAPI.servers = [{ url: "http://sandbox.register-trainee-teachers.service.gov.uk" }]
