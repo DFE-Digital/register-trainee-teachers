@@ -94,7 +94,7 @@ describe Trainee do
     end
 
     describe ".with_manual_application" do
-      let!(:manual_trainee) { create(:trainee) }
+      let!(:manual_trainee) { create(:trainee, :created_manually) }
       let!(:apply_trainee) { create(:trainee, :with_apply_application) }
       let!(:dttp_trainee) { create(:trainee, :created_from_dttp) }
       let!(:hesa_trainee) { create(:trainee, :imported_from_hesa) }

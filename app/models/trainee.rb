@@ -325,7 +325,7 @@ class Trainee < ApplicationRecord
 
   scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
 
-  scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false, hesa_id: nil) }
+  scope :with_manual_application, -> { manual_record }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
 
   # We only look for the HESA ID to determine if a trainee record came from HESA.

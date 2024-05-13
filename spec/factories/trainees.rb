@@ -659,6 +659,10 @@ FactoryBot.define do
       record_source { Sourceable::API_SOURCE }
     end
 
+    trait :created_manually do
+      record_source { Sourceable::MANUAL_SOURCE }
+    end
+
     trait :imported_from_hesa do
       transient do
         itt_aim { Hesa::CodeSets::IttAims::MAPPING.values.sample }
