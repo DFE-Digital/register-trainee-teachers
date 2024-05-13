@@ -215,7 +215,7 @@ private
 
   def given_all_trainees_are_from_a_single_source
     Trainee.with_apply_application.destroy_all
-    Trainee.created_from_dttp.destroy_all
+    Trainee.dttp_record.destroy_all
   end
 
   def then_the_record_source_filter_is_visible
@@ -262,7 +262,7 @@ private
   end
 
   def when_dttp_trainees_do_not_exist
-    Trainee.created_from_dttp.destroy_all
+    Trainee.dttp_record.destroy_all
   end
 
   def when_i_remove_a_tag_for(value)

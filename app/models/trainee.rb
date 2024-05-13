@@ -327,7 +327,6 @@ class Trainee < ApplicationRecord
 
   scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false, hesa_id: nil) }
   scope :with_apply_application, -> { where.not(apply_application: nil) }
-  scope :created_from_dttp, -> { where(created_from_dttp: true) }
 
   # We only look for the HESA ID to determine if a trainee record came from HESA.
   # Even though some records imported from DTTP will have a HESA ID, their original source is HESA so we chose this implementation
@@ -535,7 +534,7 @@ class Trainee < ApplicationRecord
 
     return "apply" if apply_application?
 
-    return "dttp" if  created_from_dttp?
+    return "dttp" if  dttp_record?
 
     "manual"
   end

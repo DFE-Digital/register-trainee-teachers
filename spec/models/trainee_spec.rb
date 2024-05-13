@@ -104,15 +104,6 @@ describe Trainee do
       end
     end
 
-    describe ".created_from_dttp" do
-      let!(:draft_trainee) { create(:trainee) }
-      let!(:dttp_trainee) { create(:trainee, :created_from_dttp) }
-
-      it "returns trainees created from dttp" do
-        expect(described_class.created_from_dttp).to contain_exactly(dttp_trainee)
-      end
-    end
-
     describe ".imported_from_hesa" do
       let!(:draft_trainee) { create(:trainee) }
       let!(:hesa_trainee) { create(:trainee, :imported_from_hesa) }

@@ -58,7 +58,7 @@ module Trainees
 
     def record_source(trainees, record_source_values)
       scope_map = {
-        "dttp" => :created_from_dttp,
+        "dttp" => :dttp_record,
         "manual" => :with_manual_application,
         "apply" => :with_apply_application,
         "hesa" => :imported_from_hesa,

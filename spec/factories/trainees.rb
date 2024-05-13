@@ -652,11 +652,11 @@ FactoryBot.define do
     end
 
     trait :created_from_dttp do
-      created_from_dttp { true }
+      record_source { Sourceable::DTTP_SOURCE }
     end
 
     trait :created_from_api do
-      record_source { RecordSources::API }
+      record_source { Sourceable::API_SOURCE }
     end
 
     trait :imported_from_hesa do
