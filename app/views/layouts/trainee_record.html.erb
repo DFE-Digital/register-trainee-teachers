@@ -19,12 +19,43 @@
     <% end %>
   <% end %>
 
-  <%= render TabNavigation::View.new(items: [
-    { name: "About their teacher training", url: trainee_path(@trainee) },
-    { name: @trainee.requires_degree? ? "Personal details and education" : "Personal details", url: trainee_personal_details_path(@trainee) },
-    { name: "Timeline", url: trainee_timeline_path(@trainee) },
-    ({ name: "Admin", url: trainee_admin_path(@trainee) } if current_user.system_admin?),
-  ]) %>
+  <%# <%= render TabNavigation::View.new(items: [ %>
+  <%#   { name: "About their teacher training", url: trainee_path(@trainee) }, %>
+  <%#   { name: @trainee.requires_degree? ? "Personal details and education" : "Personal details", url: trainee_personal_details_path(@trainee) }, %>
+  <%#   { name: "Timeline", url: trainee_timeline_path(@trainee) }, %>
+  <%#   ({ name: "Admin", url: trainee_admin_path(@trainee) } if current_user.system_admin?), %>
+  <%# ]) %1> %>
 
-  <%= yield %>
+  <div class="govuk-tabs" data-module="govuk-tabs">
+    <h2 class="govuk-tabs__title">
+      Contents
+    </h2>
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="govuk-tabs__tab" href="#about">
+          About their teacher training
+        </a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="#about">
+          <%= @trainee.requires_degree? ? "Personal details and education" : "Personal details" %>
+        </a>
+      </li>
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="#about">
+          Timeline
+        </a>
+      </li>
+      <% if current_user.system_admin? %>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#about">
+            Admin
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="govuk-tabs__panel" id="about">
+    <%= yield %>
+  </div>
 <% end %>
