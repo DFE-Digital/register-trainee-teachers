@@ -8,14 +8,8 @@
   <%= csp_meta_tag %>
 </head>
 <body>
-  <div id="redoc-container"></div>
-
-  <script src="https://cdn.redoc.ly/redoc/v2.1.4/bundles/redoc.standalone.js" integrity="sha384-18dIkv/vYLN5DYqrdbQr0J0VPcs5k2KUkSxAK31PYKsy+l0a9chct7ZwLDiNaBET" crossorigin="anonymous"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      Redoc.init("/openapi/<%=api_version%>.yaml", {}, document.getElementById('redoc-container'));
-    });
-  </script>
+  <div id="redoc-container" data-api-version="<%= api_version %>"></div>
+  
+  <%= javascript_include_tag 'redoc', 'data-turbolinks-track': 'reload' %>
 </body>
 </html>
