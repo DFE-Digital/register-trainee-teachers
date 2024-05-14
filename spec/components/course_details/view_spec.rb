@@ -85,11 +85,11 @@ module CourseDetails
     context "with an apply draft, hesa trainee missing itt end date" do
       let(:trainee) do
         create(:trainee,
+               :imported_from_hesa,
                :provider_led_postgrad,
                :with_publish_course_details,
                :with_apply_application,
-               itt_end_date: nil,
-               hesa_id: 1)
+               itt_end_date: nil)
       end
       let(:data_model) { ::ApplyApplications::ConfirmCourseForm.new(trainee, specialisms, { uuid: course.uuid }) }
 
