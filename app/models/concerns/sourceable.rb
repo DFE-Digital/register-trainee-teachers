@@ -24,7 +24,7 @@ module Sourceable
 
     before_save :set_record_source
 
-    private
+  private
 
     def set_record_source
       if record_source.nil? && hesa_id.nil? && apply_application.nil?
