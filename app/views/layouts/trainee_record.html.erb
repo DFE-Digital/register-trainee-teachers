@@ -37,25 +37,36 @@
         </a>
       </li>
       <li class="govuk-tabs__list-item">
-        <a class="govuk-tabs__tab" href="#about">
+        <a class="govuk-tabs__tab" href="#personal-details">
           <%= @trainee.requires_degree? ? "Personal details and education" : "Personal details" %>
         </a>
       </li>
       <li class="govuk-tabs__list-item">
-        <a class="govuk-tabs__tab" href="#about">
+        <a class="govuk-tabs__tab" href="#timeline">
           Timeline
         </a>
       </li>
       <% if current_user.system_admin? %>
         <li class="govuk-tabs__list-item">
-          <a class="govuk-tabs__tab" href="#about">
+          <a class="govuk-tabs__tab" href="#admin">
             Admin
           </a>
         </li>
       <% end %>
     </ul>
-  </div>
-  <div class="govuk-tabs__panel" id="about">
-    <%= yield %>
+    <div class="govuk-tabs__panel" id="about">
+      <%= render TraineeAbout::View.new(trainee: @trainee, current_user: current_user) %>
+    </div>
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="personal-details">
+      <%= render TraineePersonalDetails::View.new(trainee: @trainee) %>
+    </div>
+    <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="timeline">
+      <%= render Timeline::View.new(events: @timeline_events) %>
+    </div>
+    <% if current_user.system_admin? %>
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="admin">
+        <%= render TraineeAdmin::View.new(trainee: @trainee) %>
+      </div>
+    <% end %>
   </div>
 <% end %>
