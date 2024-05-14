@@ -522,10 +522,6 @@ class Trainee < ApplicationRecord
     Trainee.where(first_names:, last_name:, date_of_birth:, email:).count > 1
   end
 
-  def hesa_record?
-    hesa_id.present?
-  end
-
   def derived_record_source
     return "api" if api_record?
 

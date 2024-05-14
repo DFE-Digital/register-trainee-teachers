@@ -22,14 +22,20 @@ module Sourceable
   included do
     enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
 
-    before_save :set_record_source
+    before_save :set_manual_record_source, if: :record_source_missing?
+
+    def hesa_record?
+      hesa_collection_record? || hesa_trn_data_record?
+    end
 
   private
 
-    def set_record_source
-      if record_source.nil? && hesa_id.nil? && apply_application.nil?
-        self.record_source = MANUAL_SOURCE
-      end
+    def set_manual_record_source
+      self.record_source = MANUAL_SOURCE
+    end
+
+    def record_source_missing?
+      record_source.nil? && hesa_id.nil? && apply_application.nil?
     end
   end
 end
