@@ -113,9 +113,7 @@ runs:
         esac
 
     - name: Install kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: "v1.26.1" # default is latest stable
+      uses: DFE-Digital/github-actions/set-kubectl@1633-create-setup-kubectl-github-action
 
     - name: K8 setup
       shell: bash
