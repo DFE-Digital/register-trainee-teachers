@@ -670,7 +670,7 @@ FactoryBot.define do
       end
 
       with_hesa_student
-      created_from_hesa { true }
+      record_source { Sourceable::HESA_COLLECTION_SOURCE }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
 
       after(:create) do |trainee, evaluator|
