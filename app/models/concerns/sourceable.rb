@@ -21,5 +21,15 @@ module Sourceable
 
   included do
     enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
+
+    before_save :set_record_source
+
+    private
+
+    def set_record_source
+      if record_source.nil? && hesa_id.nil? && apply_application.nil?
+        self.record_source = MANUAL_SOURCE
+      end
+    end
   end
 end
