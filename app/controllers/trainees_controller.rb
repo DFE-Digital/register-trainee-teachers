@@ -14,7 +14,7 @@ class TraineesController < BaseTraineeController
     page_tracker.save_as_origin!
     @timeline_events = Trainees::CreateTimeline.call(trainee:, current_user:)
 
-    render(layout: "trainee_record")
+    render
   end
 
   def new

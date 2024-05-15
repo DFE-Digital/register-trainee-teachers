@@ -7,7 +7,7 @@ module Trainees
     def show
       return redirect_to(trainees_path) unless current_user.system_admin?
 
-      render(layout: "trainee_record")
+      render("trainees/show")
     end
 
   private

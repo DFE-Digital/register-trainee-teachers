@@ -18,7 +18,7 @@ module Trainees
       clear_form_stash(trainee)
       @timeline_events = Trainees::CreateTimeline.call(trainee:, current_user:)
 
-      render(layout: "trainee_record")
+      render("trainees/show")
     end
 
     def edit
