@@ -58,14 +58,14 @@
       <%= render TraineeAbout::View.new(trainee: @trainee, current_user: current_user) %>
     </div>
     <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="personal-details">
-      <%= render TraineePersonalDetails::View.new(trainee: @trainee) %>
+      <%= render TraineePersonalDetails::View.new(trainee: @trainee, current_user: current_user) %>
     </div>
     <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="timeline">
       <%= render Timeline::View.new(events: @timeline_events) %>
     </div>
     <% if current_user.system_admin? %>
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="admin">
-        <%= render TraineeAdmin::View.new(trainee: @trainee) %>
+        <%= render TraineeAdmin::View.new(trainee: @trainee, current_user: current_user) %>
       </div>
     <% end %>
   </div>

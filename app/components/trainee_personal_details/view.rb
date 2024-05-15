@@ -2,10 +2,18 @@
 
 module TraineePersonalDetails
   class View < ViewComponent::Base
-    attr_reader :trainee
+    include Pundit::Authorization
+    include UsersHelper
 
-    def initialize(trainee)
+    attr_reader :trainee, :current_user
+
+    def initialize(trainee:, current_user:)
       @trainee = trainee
+      @current_user = current_user
+    end
+
+    def trainee_editable?
+      @trainee_editable ||= policy(trainee).update?
     end
   end
 end
