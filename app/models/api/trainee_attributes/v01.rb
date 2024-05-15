@@ -59,7 +59,18 @@ module Api
         hesa_id
       ].freeze
 
+      INTERNAL_ATTRIBUTES = %i[
+        lead_school_id
+        lead_school_not_applicable
+        employing_school_id
+        employing_school_not_applicable
+      ].freeze
+
       ATTRIBUTES.each do |attr|
+        attribute attr
+      end
+
+      INTERNAL_ATTRIBUTES.each do |attr|
         attribute attr
       end
 
@@ -86,13 +97,17 @@ module Api
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
-        super(new_attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
-          :placements_attributes,
-          :degrees_attributes,
-          :nationalisations_attributes,
-          :hesa_trainee_detail_attributes,
-          :trainee_disabilities_attributes,
-        ))
+
+        super(
+          new_attributes.slice(
+            *(ATTRIBUTES + INTERNAL_ATTRIBUTES) + %i[nationalities],
+          ).except(
+            :placements_attributes,
+            :degrees_attributes,
+            :nationalisations_attributes,
+            :hesa_trainee_detail_attributes,
+            :trainee_disabilities_attributes,
+          ))
 
         new_attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
@@ -120,13 +135,16 @@ module Api
       end
 
       def assign_attributes(new_attributes)
-        super(new_attributes.slice(*TraineeAttributes::V01::ATTRIBUTES + [:nationalities]).except(
-          :placements_attributes,
-          :degrees_attributes,
-          :nationalisations_attributes,
-          :hesa_trainee_detail_attributes,
-          :trainee_disabilities_attributes,
-        ))
+        super(
+          new_attributes.slice(
+            *(ATTRIBUTES + INTERNAL_ATTRIBUTES) + %i[nationalities],
+          ).except(
+            :placements_attributes,
+            :degrees_attributes,
+            :nationalisations_attributes,
+            :hesa_trainee_detail_attributes,
+            :trainee_disabilities_attributes,
+          ))
 
         self.nationalisations_attributes = []
         new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|

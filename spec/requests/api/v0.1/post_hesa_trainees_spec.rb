@@ -149,6 +149,110 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(degree.country).to be_nil
     end
 
+    context "with school_attributes" do
+      context "when lead_school_urn is blank" do
+        before do
+          data.merge(
+            lead_school_urn: "",
+            employing_school_urn: "900021",
+          )
+        end
+
+        it do
+          expect(response.parsed_body["lead_school_urn"]).to be_nil
+          expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
+          expect(response.parsed_body["employing_school_urn"]).to be_nil
+          expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
+        end
+      end
+
+      context "when lead_school_urn is present" do
+        context "when is included in NOT_APPLICABLE_SCHOOL_URNS" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_school_urn: "900020",
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          it do
+            expect(response.parsed_body["lead_school_urn"]).to be_nil
+            expect(response.parsed_body["employing_school_urn"]).to be_nil
+            expect(response.parsed_body["lead_school_not_applicable"]).to be(true)
+          end
+        end
+
+        context "when is not included in NOT_APPLICABLE_SCHOOL_URNS" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_school_urn: lead_school.urn,
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          context "when the lead_school exists" do
+            let(:lead_school) { create(:school, :lead) }
+
+            it do
+              expect(response.parsed_body["lead_school_urn"]).to eq(lead_school.urn)
+              expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
+              expect(response.parsed_body["employing_school_urn"]).to be_nil
+            end
+          end
+
+          context "when the lead_school does not exist" do
+            let(:lead_school) { build(:school, :lead) }
+
+            it do
+              expect(response.parsed_body["lead_school_urn"]).to be_nil
+              expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
+              expect(response.parsed_body["employing_school_urn"]).to be_nil
+            end
+          end
+        end
+
+        context "when employing_school_urn is present" do
+          context "when is included in NOT_APPLICABLE_SCHOOL_URN" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_school_urn: "900020",
+                  employing_school_urn: "900030",
+                ),
+              }
+            end
+
+            it do
+              expect(response.parsed_body["employing_school_urn"]).to be_nil
+              expect(response.parsed_body["employing_school_not_applicable"]).to be(true)
+            end
+          end
+
+          context "when is not included in NOT_APPLICABLE_SCHOOL_URN" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_school_urn: "900020",
+                  employing_school_urn: employing_school.urn,
+                ),
+              }
+            end
+
+            let(:employing_school) { create(:school) }
+
+            it do
+              expect(response.parsed_body["employing_school_urn"]).to eq(employing_school.urn)
+              expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
+            end
+          end
+        end
+      end
+    end
+
     context "when `itt_start_date` is an invalid date" do
       let(:itt_start_date) { "2023-02-30" }
 
