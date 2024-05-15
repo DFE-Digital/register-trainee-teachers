@@ -143,7 +143,7 @@ current academic cycle.
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **academic_cycle** | query | string | false | The academic cycle year (default is the current academic cycle). |
 | **status** | query | string | false | Include only trainees with a particular status. Valid values are `course_not_yet_started`, `in_training`,  `deferred`, `awarded`,  `withdrawn` |
-| **since** | query | string | false | Include only trainees changed or created on or since a date. Dates should be in ISO 8601 format. |
+| **since** | query | string | false | Include only trainees changed or created on or since a date and time. DateTimes should be in ISO 8601 format. |
 | **page** | query | integer | false | Page number (defaults to 1, the first page). |
 | **per_page** | query | integer | false | Number of records to return per page (default is 50) |
 | **sort_order** | query | string | false | Sort in ascending or descending order. Valid values are `asc` or `desc` (default is `desc`) |
