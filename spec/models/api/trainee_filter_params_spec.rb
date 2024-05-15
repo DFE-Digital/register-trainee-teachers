@@ -7,7 +7,7 @@ describe Api::TraineeFilterParams do
     context "when in ISO 8601" do
       it "correctly formatted dates are valid" do
         %w[2024-03-15T12:15:37.879Z 12345 2024-01-01].each do |since|
-          expect(described_class.new(since: since).valid?).to be(true)
+          expect(described_class.new(since:).valid?).to be(true)
         end
       end
     end
