@@ -1,5 +1,7 @@
 FROM ruby:3.2.2-alpine3.18
 
+RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
+
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
@@ -33,6 +35,10 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
+
+RUN chown -hR appuser:appgroup ${APP_HOME}
+
+USER 10001
 
 CMD bundle exec rails db:migrate && \
     bundle exec rails server -b 0.0.0.0
