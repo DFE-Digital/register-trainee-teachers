@@ -6,19 +6,21 @@ describe Api::TraineeFilterParams do
   describe "since validation" do
     context "when in ISO 8601" do
       it "correctly formatted dates are valid" do
-        expect(described_class.new(since: "2024-03-15T12:15:37.879Z").valid?).to be(true)
+        %w[2024-03-15T12:15:37.879Z 12345 2024-01-01].each do |since|
+          expect(described_class.new(since: since).valid?).to be(true)
+        end
       end
     end
 
     context "when not in ISO 8601" do
       it "is not valid" do
-        expect(described_class.new(since: "2020-01-01").valid?).to be(false)
+        expect(described_class.new(since: "01-01-2020").valid?).to be(false)
       end
     end
 
     context "when non dates" do
       it "non-dates are not valid and return an error message" do
-        %w[2020-01-32 123 12345 date].each do |since|
+        %w[2020-01-32 123 date].each do |since|
           filter_params = described_class.new(since:)
           expect(filter_params.valid?).to be(false)
           expect(filter_params.errors[:since]).to include("#{since} is not a valid date")
