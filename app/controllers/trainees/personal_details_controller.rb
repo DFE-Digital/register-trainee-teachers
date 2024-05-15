@@ -16,6 +16,8 @@ module Trainees
     def show
       page_tracker.save_as_origin!
       clear_form_stash(trainee)
+      @timeline_events = Trainees::CreateTimeline.call(trainee:, current_user:)
+
       render(layout: "trainee_record")
     end
 
