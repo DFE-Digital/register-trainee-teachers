@@ -2,28 +2,22 @@
 
 require "rails_helper"
 
-describe "trainees/show", "feature_routes.provider_led_postgrad": true do
+describe TraineeAbout::View do
   before do
-    assign(:trainee, trainee)
-    assign(:current_user, current_user)
-    without_partial_double_verification do
-      allow(view).to receive_messages(trainee_editable?: true, display_record_actions?: true)
-    end
     create(:academic_cycle)
     create(:academic_cycle, next_cycle: true)
+    render_inline(
+      described_class.new(trainee:, current_user:),
+    )
   end
 
   context "placements enabled", feature_placements: true do
-    before do
-      render
-    end
-
     context "with an Assessment only trainee" do
       let(:trainee) { create(:trainee, :submitted_for_trn) }
       let(:current_user) { create(:user, :system_admin) }
 
       it "does not render the placement details component" do
-        expect(rendered).not_to have_text("Placement details")
+        expect(rendered_content).not_to have_text("Placement details")
       end
     end
 
@@ -33,7 +27,7 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
       let(:current_user) { create(:user, :system_admin) }
 
       it "renders the correct text on the button" do
-        expect(rendered).to have_text("Recommend trainee for QTS")
+        expect(rendered_content).to have_text("Recommend trainee for QTS")
       end
     end
 
@@ -43,21 +37,17 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
       let(:trainee) { create(:trainee, :trn_received, early_years_trainees.sample) }
 
       it "renders the correct text on the button" do
-        expect(rendered).to have_text("Recommend trainee for EYTS")
+        expect(rendered_content).to have_text("Recommend trainee for EYTS")
       end
     end
   end
 
   context "no placement data exists" do
-    before do
-      render
-    end
-
     let(:current_user) { create(:user, :system_admin) }
     let(:trainee) { create(:trainee, :submitted_for_trn) }
 
     it "doesn't render the placement details component" do
-      expect(rendered).not_to have_text("Placement details")
+      expect(rendered_content).not_to have_text("Placement details")
     end
   end
 
@@ -65,13 +55,11 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
     let(:trainee) { create(:trainee, state) }
     let(:current_user) { create(:user, :system_admin) }
 
-    before { render }
-
     context "withdrawn trainee" do
       let(:state) { :withdrawn }
 
       it "renders the check withdrawn component" do
-        expect(rendered).to have_text("Withdrawal details")
+        expect(rendered_content).to have_text("Withdrawal details")
       end
     end
 
@@ -79,7 +67,7 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
       let(:state) { :deferred }
 
       it "renders the check withdrawn component" do
-        expect(rendered).to have_text("Deferral details")
+        expect(rendered_content).to have_text("Deferral details")
       end
     end
 
@@ -87,7 +75,7 @@ describe "trainees/show", "feature_routes.provider_led_postgrad": true do
       let(:state) { :awarded }
 
       it "renders the check withdrawn component" do
-        expect(rendered).to have_text("QTS details")
+        expect(rendered_content).to have_text("QTS details")
       end
     end
   end
