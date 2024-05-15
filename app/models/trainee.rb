@@ -527,7 +527,7 @@ class Trainee < ApplicationRecord
 
     return "hesa" if hesa_record?
 
-    return "apply" if apply_application?
+    return "apply" if apply_record?
 
     return "dttp" if  dttp_record?
 
