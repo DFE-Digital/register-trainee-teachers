@@ -532,6 +532,7 @@ FactoryBot.define do
     end
 
     trait :with_apply_application do
+      record_source { Sourceable::APPLY_SOURCE }
       apply_application
     end
 
