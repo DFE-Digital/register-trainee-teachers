@@ -325,11 +325,11 @@ class Trainee < ApplicationRecord
 
   scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
 
-  scope :with_apply_application, -> { where.not(apply_application: nil) }
+  scope :with_apply_application, -> { apply_record }
 
   # We only look for the HESA ID to determine if a trainee record came from HESA.
   # Even though some records imported from DTTP will have a HESA ID, their original source is HESA so we chose this implementation
-  scope :imported_from_hesa, -> { where.not(hesa_id: nil) }
+  scope :imported_from_hesa, -> { where(record_source: HESA_SOURCES) }
 
   scope :imported_from_hesa_trn_data, -> { hesa_trn_data_record }
 

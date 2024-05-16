@@ -18,6 +18,7 @@ module Sourceable
     API_SOURCE,
   ].freeze
   NON_TRN_SOURCES = ALL - [HESA_TRN_DATA_SOURCE].freeze
+  HESA_SOURCES = [HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE].freeze
 
   included do
     enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
