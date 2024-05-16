@@ -53,8 +53,8 @@ module Api
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
         .merge(funding_attributes)
-        .merge(school_attributes)
         .merge(training_initiative_attributes)
+        .merge(school_attributes)
         .compact
       end
 
@@ -170,18 +170,18 @@ module Api
       end
 
       def school_attributes
-        attrs = {
-          lead_school_not_applicable: false,
-          employing_school_not_applicable: false,
-        }
+        attrs = {}
 
         return attrs if params[:lead_school_urn].blank?
 
         if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_school_urn])
           attrs.merge!(lead_school_not_applicable: true)
         else
+          lead_school_id = School.find_by(urn: params[:lead_school_urn], lead_school: true)&.id
+
           attrs.merge!(
-            lead_school_id: School.find_by(urn: params[:lead_school_urn], lead_school: true)&.id,
+            lead_school_id: lead_school_id,
+            lead_school_not_applicable: lead_school_id.nil?,
           )
         end
 
@@ -189,8 +189,11 @@ module Api
           if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
             attrs.merge!(employing_school_not_applicable: true)
           else
+            employing_school_id = School.find_by(urn: params[:employing_school_urn], lead_school: false)&.id
+
             attrs.merge!(
-              employing_school_id: School.find_by(urn: params[:employing_school_urn], lead_school: false)&.id,
+              employing_school_id: employing_school_id,
+              employing_school_not_applicable: employing_school_id.nil?,
             )
           end
         end

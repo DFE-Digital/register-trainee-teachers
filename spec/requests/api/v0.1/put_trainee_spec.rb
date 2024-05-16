@@ -3,7 +3,16 @@
 require "rails_helper"
 
 describe "`PUT /api/v0.1/trainees/:id` endpoint" do
-  let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, first_names: "Bob") }
+  let(:trainee) do
+    create(
+      :trainee,
+      :in_progress,
+      :with_hesa_trainee_detail,
+      :with_lead_school,
+      :with_employing_school,
+      first_names: "Bob",
+    )
+  end
   let(:other_trainee) { create(:trainee, :in_progress, first_names: "Bob") }
   let(:provider) { trainee.provider }
 
@@ -260,6 +269,154 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(response.parsed_body).to have_key("errors")
     end
 
+    context "with school_attributes" do
+      let(:lead_school) { trainee.lead_school }
+      let(:employing_school) { trainee.employing_school }
+
+      context "when lead_school_urn is blank" do
+        before do
+          data.merge(
+            lead_school_urn: "",
+            employing_school_urn: "900021",
+          )
+        end
+
+        it do
+          expect(response.parsed_body[:data][:lead_school_urn]).to eq(lead_school.urn)
+          expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+          expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+        end
+
+        context "when schools are not applicable" do
+          let(:trainee) do
+            create(
+              :trainee,
+              :in_progress,
+              :with_hesa_trainee_detail,
+              lead_school_not_applicable: true,
+              employing_school_not_applicable: true,
+            )
+          end
+
+          it do
+            expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+            expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+            expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+          end
+        end
+      end
+
+      context "when lead_school_urn is present" do
+        context "when is included in NOT_APPLICABLE_SCHOOL_URNS" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_school_urn: "900020",
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          it do
+            expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+            expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+            expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+            expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+          end
+        end
+
+        context "when is not included in NOT_APPLICABLE_SCHOOL_URNS" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_school_urn: new_lead_school.urn,
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          context "when the lead_school exists" do
+            let(:new_lead_school) { create(:school, :lead) }
+
+            it do
+              expect(response.parsed_body[:data][:lead_school_urn]).to eq(new_lead_school.urn)
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+              expect(response.parsed_body[:data][:employing_school_urn]).to eq(trainee.employing_school.urn)
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+            end
+          end
+
+          context "when the lead_school does not exist" do
+            let(:new_lead_school) { build(:school, :lead) }
+
+            it do
+              expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+              expect(response.parsed_body[:data][:employing_school_urn]).to eq(trainee.employing_school.urn)
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+            end
+          end
+        end
+
+        context "when employing_school_urn is present" do
+          context "when is included in NOT_APPLICABLE_SCHOOL_URN" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_school_urn: "900020",
+                  employing_school_urn: "900030",
+                ),
+              }
+            end
+
+            it do
+              expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+            end
+          end
+
+          context "when is not included in NOT_APPLICABLE_SCHOOL_URN" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_school_urn: "900020",
+                  employing_school_urn: new_employing_school.urn,
+                ),
+              }
+            end
+
+            # rubocop:disable RSpec/NestedGroups
+            context "when the employing_school exists" do
+              let(:new_employing_school) { create(:school) }
+
+              it do
+                expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+                expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+                expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+                expect(response.parsed_body[:data][:employing_school_urn]).to eq(new_employing_school.urn)
+              end
+            end
+
+            context "when the employing_school does not exist" do
+              let(:new_employing_school) { build(:school) }
+
+              it do
+                expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+                expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+                expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+                expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+              end
+            end
+            # rubocop:enable RSpec/NestedGroups
+          end
+        end
+      end
+    end
+
     context "when read only attributes are submitted" do
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
@@ -394,6 +551,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
       end
     end
+
   end
 
   context "Updating a newly created trainee", feature_register_api: true do

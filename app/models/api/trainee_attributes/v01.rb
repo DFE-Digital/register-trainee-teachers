@@ -170,7 +170,7 @@ module Api
 
       def self.from_trainee(trainee)
         trainee_attributes = trainee.attributes.select { |k, _v|
-          Api::TraineeAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+          ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
         }
 
         hesa_trainee_detail_attributes = trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
