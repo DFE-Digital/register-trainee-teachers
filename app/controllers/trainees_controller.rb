@@ -13,8 +13,6 @@ class TraineesController < BaseTraineeController
     clear_form_stash(trainee)
     page_tracker.save_as_origin!
     @timeline_events = Trainees::CreateTimeline.call(trainee:, current_user:)
-
-    render
   end
 
   def new
