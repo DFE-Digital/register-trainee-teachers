@@ -2438,7 +2438,7 @@ Deletes an existing degree for this trainee.
         string
       </p>
       <p class="govuk-body">
-        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>. The <code>ethnic_background</code> and <code>ethnic_group</code> will be determined by the API based on the <code>ethnicity</code> value.
+        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
       </p>
       <p class="govuk-body">
         Example: <code>120</code>
