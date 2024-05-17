@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_15_134857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -646,10 +646,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
@@ -661,7 +661,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
     t.string "course_study_mode"
     t.integer "course_year"
     t.string "course_age_range"
-    t.date "postgrad_apprenticeship_start_date"
+    t.date "pg_apprenticeship_start_date"
     t.string "funding_method"
     t.string "ni_number"
     t.string "additional_training_initiative"

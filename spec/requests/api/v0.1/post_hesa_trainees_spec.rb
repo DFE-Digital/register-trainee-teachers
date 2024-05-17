@@ -59,6 +59,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       funding_method: "4",
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",
+      pg_apprenticeship_start_date: "2024-03-11",
     }
   end
 
@@ -79,6 +80,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
       expect(response.parsed_body[:data][:previous_last_name]).to eq("Smith")
+      expect(response.parsed_body[:data][:pg_apprenticeship_start_date]).to eq("2024-03-11")
     end
 
     it "sets the correct state" do

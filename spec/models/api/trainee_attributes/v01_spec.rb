@@ -66,7 +66,7 @@ RSpec.describe Api::TraineeAttributes::V01 do
         course_study_mode: "01",
         course_year: 2024,
         course_age_range: "13918",
-        postgrad_apprenticeship_start_date: 2.months.from_now.iso8601,
+        pg_apprenticeship_start_date: 2.months.from_now.iso8601,
         funding_method: "13919",
         ni_number: "QQ 12 34 56 C",
       }
