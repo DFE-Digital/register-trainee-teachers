@@ -77,7 +77,7 @@ Download [Register API reference spreadsheet v0.1 (Excel)](/api-docs/reference/R
 
 ### OpenAPI
 
-An OpenAPI schema can be viewed and downloaded here: <a href="/api-docs/v0.1/openapi" target="_blank">Open API</a>
+The OpenAPI spec for this API is <a href="/api-docs/v0.1/openapi" target="_blank">available in YAML format</a>.
 
 ### Authentication
 
