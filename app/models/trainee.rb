@@ -523,15 +523,18 @@ class Trainee < ApplicationRecord
   end
 
   def derived_record_source
-    return "api" if api_record?
-
-    return "hesa" if hesa_record?
-
-    return "apply" if apply_record?
-
-    return "dttp" if  dttp_record?
-
-    "manual"
+    case record_source
+    when API_SOURCE
+      "api"
+    when HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE
+      "hesa"
+    when APPLY_SOURCE
+      "apply"
+    when DTTP_SOURCE
+      "dttp"
+    else
+      "manual"
+    end
   end
 
   def estimated_end_date
