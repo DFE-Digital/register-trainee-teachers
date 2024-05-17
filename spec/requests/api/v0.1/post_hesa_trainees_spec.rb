@@ -160,9 +160,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
         it do
           expect(response.parsed_body["lead_school_urn"]).to be_nil
-          expect(response.parsed_body["lead_school_not_applicable"]).to be_nil
+          expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
           expect(response.parsed_body["employing_school_urn"]).to be_nil
-          expect(response.parsed_body["employing_school_not_applicable"]).to be_nil
+          expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
         end
       end
 

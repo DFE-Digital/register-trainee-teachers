@@ -70,9 +70,10 @@ module Api
         attribute attr
       end
 
-      INTERNAL_ATTRIBUTES.each do |attr|
-        attribute attr
-      end
+      attribute :lead_school_id
+      attribute :employing_school_id
+      attribute :lead_school_not_applicable, :boolean, default: false
+      attribute :employing_school_not_applicable, :boolean, default: false
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
