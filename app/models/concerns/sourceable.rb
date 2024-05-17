@@ -23,7 +23,7 @@ module Sourceable
   included do
     enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
 
-    before_save :set_manual_record_source, if: -> { record_source.nil? }
+    after_initialize :set_manual_record_source, if: -> { record_source.nil? }
 
     def hesa_record?
       hesa_collection_record? || hesa_trn_data_record?
