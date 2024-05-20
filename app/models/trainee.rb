@@ -119,7 +119,7 @@
 #  fk_rails_...  (start_academic_cycle_id => academic_cycles.id)
 #
 class Trainee < ApplicationRecord
-  self.ignored_columns += %w[trainee_id] # rubocop:disable Rails/UnusedIgnoredColumns
+  self.ignored_columns += %w[trainee_id]
 
   include Sluggable
   include Sourceable

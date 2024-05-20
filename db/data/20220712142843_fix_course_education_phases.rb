@@ -10,7 +10,7 @@ class FixCourseEducationPhases < ActiveRecord::Migration[6.1]
     trainees = Trainee.where.not(training_route: EARLY_YEARS_ROUTES).imported_from_hesa
 
     secondary_trainees_with_primary_age_age = trainees.where(course_education_phase: secondary_enum)
-                                                      .where("course_max_age <= ?", upper_bound_age)
+                                                      .where(course_max_age: ..upper_bound_age)
 
     trainees_with_primary_teaching_subject_only = secondary_trainees_with_primary_age_age.where(
       course_subject_one: CourseSubjects::PRIMARY_TEACHING,
