@@ -159,10 +159,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         end
 
         it do
-          expect(response.parsed_body["lead_school_urn"]).to be_nil
-          expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
-          expect(response.parsed_body["employing_school_urn"]).to be_nil
-          expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
+          expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+          expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+          expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
         end
       end
 
@@ -178,9 +178,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           end
 
           it do
-            expect(response.parsed_body["lead_school_urn"]).to be_nil
-            expect(response.parsed_body["employing_school_urn"]).to be_nil
-            expect(response.parsed_body["lead_school_not_applicable"]).to be(true)
+            expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+            expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
           end
         end
 
@@ -198,9 +198,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             let(:lead_school) { create(:school, :lead) }
 
             it do
-              expect(response.parsed_body["lead_school_urn"]).to eq(lead_school.urn)
-              expect(response.parsed_body["lead_school_not_applicable"]).to be(false)
-              expect(response.parsed_body["employing_school_urn"]).to be_nil
+              expect(response.parsed_body[:data][:lead_school_urn]).to eq(lead_school.urn)
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
           end
 
@@ -208,9 +208,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             let(:lead_school) { build(:school, :lead) }
 
             it do
-              expect(response.parsed_body["lead_school_urn"]).to be_nil
-              expect(response.parsed_body["lead_school_not_applicable"]).to be(true)
-              expect(response.parsed_body["employing_school_urn"]).to be_nil
+              expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
           end
         end
@@ -227,8 +227,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
 
             it do
-              expect(response.parsed_body["employing_school_urn"]).to be_nil
-              expect(response.parsed_body["employing_school_not_applicable"]).to be(true)
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
             end
           end
 
@@ -245,8 +245,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             let(:employing_school) { create(:school) }
 
             it do
-              expect(response.parsed_body["employing_school_urn"]).to eq(employing_school.urn)
-              expect(response.parsed_body["employing_school_not_applicable"]).to be(false)
+              expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
             end
           end
         end
