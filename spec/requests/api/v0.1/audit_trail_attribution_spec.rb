@@ -21,8 +21,8 @@ describe "audit trail attribution" do
     it "returns status 200 with a valid JSON response" do
       post(
         "/api/v0.1/trainees/#{trainee.slug}/withdraw",
-        headers: { Authorization: "Bearer #{token}" },
-        params: params,
+        headers: { Authorization: "Bearer #{token}", **json_headers },
+        params: params.to_json,
       )
       expect(response).to have_http_status(:ok)
 

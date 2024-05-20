@@ -117,6 +117,7 @@ GEM
       activesupport (>= 5.2, < 7.2)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
+    awesome_print (1.9.2)
     azure-storage-blob (2.0.3)
       azure-storage-common (~> 2.0)
       nokogiri (~> 1, >= 1.10.8)
@@ -578,6 +579,10 @@ GEM
     rspec-mocks (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
+    rspec-openapi (0.17.0)
+      actionpack (>= 5.2.0)
+      rails-dom-testing
+      rspec-core
     rspec-rails (6.1.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
@@ -771,6 +776,7 @@ DEPENDENCIES
   annotate
   audited (~> 5.6)
   auto_strip_attributes
+  awesome_print
   azure-storage-blob (~> 2)
   azure-storage-common (~> 2.0, >= 2.0.4)
   base32
@@ -835,6 +841,7 @@ DEPENDENCIES
   request_store (~> 1.7)
   rotp
   rspec-benchmark
+  rspec-openapi
   rspec-rails (~> 6.1.2)
   rspec-retry
   rubocop-rails

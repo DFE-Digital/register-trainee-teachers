@@ -36,10 +36,10 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         it "updates the degree and returns a 200 status (ok)" do
           put(
             "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
-            headers: { Authorization: "Bearer #{token}" },
+            headers: { Authorization: "Bearer #{token}", **json_headers },
             params: {
               data: { subject: new_subject },
-            },
+            }.to_json,
           )
 
           expect(response).to have_http_status(:ok)
@@ -81,10 +81,10 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         it "updates the degree and returns a 200 status (ok)" do
           put(
             "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
-            headers: { Authorization: "Bearer #{token}" },
+            headers: { Authorization: "Bearer #{token}", **json_headers },
             params: {
               data: degrees_attributes,
-            },
+            }.to_json,
           )
 
           expect(response).to have_http_status(:ok)
@@ -126,13 +126,13 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         degrees_attributes[:graduation_year] = Date.new(degrees_attributes[:graduation_year]).to_s
       end
 
-      it "returns a 409 (conflict) status" do
+      it "returns a 409 (conflict) status", openapi: false do
         put(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{uk_degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: degrees_attributes,
-          },
+          }.to_json,
         )
 
         expect(response).to have_http_status(:conflict)
@@ -152,10 +152,10 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "does not update the degree and returns a 404 status (not_found)" do
         put(
           "/api/v0.1/trainees/#{trainee_for_another_provider.slug}/degrees/#{degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: { subject: new_subject },
-          },
+          }.to_json,
         )
         expect(response).to have_http_status(:not_found)
         expect(trainee.reload.degrees.count).to eq(1)
@@ -167,10 +167,10 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "does not update the degree and returns a 422 status (unprocessable_entity)" do
         put(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             data: { subject: "Practical Magic" },
-          },
+          }.to_json,
         )
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]&.count).to eq(1)
@@ -182,10 +182,10 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       it "does not update the degree and returns a 422 status (unprocessable_entity)" do
         put(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
             foo: { subject: "new_subject" },
-          },
+          }.to_json,
         )
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to eq(["Param is missing or the value is empty: data"])

@@ -14,7 +14,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       it "returns status 404 with a valid JSON response" do
         post(
           "/api/v0.1/trainees/#{slug}/withdraw",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
         )
 
         expect(response).to have_http_status(:not_found)
@@ -38,8 +38,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       it "returns status 200 with a valid JSON response" do
         post(
           "/api/v0.1/trainees/#{slug}/withdraw",
-          headers: { Authorization: "Bearer #{token}" },
-          params: params,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
         )
         expect(response).to have_http_status(:ok)
 
@@ -50,8 +50,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         expect {
           post(
             "/api/v0.1/trainees/#{slug}/withdraw",
-            headers: { Authorization: "Bearer #{token}" },
-            params: params,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
           )
         } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:withdraw_reasons_details])
         .and change { trainee.reload.withdraw_date }.from(nil)
@@ -63,8 +63,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
         post(
           "/api/v0.1/trainees/#{slug}/withdraw",
-          headers: { Authorization: "Bearer #{token}" },
-          params: params,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
         )
       end
 
@@ -73,8 +73,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
         post(
           "/api/v0.1/trainees/#{slug}/withdraw",
-          headers: { Authorization: "Bearer #{token}" },
-          params: params,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
         )
       end
 
@@ -84,8 +84,8 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         it "returns status 422 with a valid JSON response" do
           post(
             "/api/v0.1/trainees/#{slug}/withdraw",
-            headers: { Authorization: "Bearer #{token}" },
-            params: params,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
           )
 
           expect(response).to have_http_status(:unprocessable_entity)
@@ -98,7 +98,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
         it "did not change the trainee" do
           expect {
-            post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }
+            post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
           }.not_to change(trainee, :withdraw_date)
         end
       end
@@ -111,7 +111,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       it "returns status 422 with a valid JSON response" do
         post(
           "/api/v0.1/trainees/#{slug}/withdraw",
-          headers: { Authorization: "Bearer #{token}" },
+          headers: { Authorization: "Bearer #{token}", **json_headers },
         )
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "StateTransitionError", message: "It's not possible to perform this action while the trainee is in its current state" })
@@ -119,7 +119,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
       it "did not change the trainee" do
         expect {
-          post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat" }
+          post "/api/v0.1/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
         }.not_to change(trainee, :withdraw_date)
       end
     end

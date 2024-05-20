@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+</head>
+<body>
+  <div id="redoc-container"></div>
+
+  <script
+    src="https://cdn.redoc.ly/redoc/v2.1.4/bundles/redoc.standalone.js"
+    integrity="sha384-18dIkv/vYLN5DYqrdbQr0J0VPcs5k2KUkSxAK31PYKsy+l0a9chct7ZwLDiNaBET"
+    crossorigin="anonymous">
+  </script>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      Redoc.init("/openapi/<%= api_version %>.yaml", {}, document.getElementById('redoc-container'));
+    });
+  </script>
+</body>
+</html>

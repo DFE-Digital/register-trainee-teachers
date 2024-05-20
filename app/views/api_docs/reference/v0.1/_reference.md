@@ -75,6 +75,9 @@ You must only use the reference spreadsheet v0.1 for use in testing and feedback
 
 Download [Register API reference spreadsheet v0.1 (Excel)](/api-docs/reference/Register_API_Reference_v0.1.xlsx)
 
+### OpenAPI
+
+The OpenAPI spec for this API is <a href="/api-docs/v0.1/openapi" target="_blank">available in YAML format</a>.
 
 ### Authentication
 
