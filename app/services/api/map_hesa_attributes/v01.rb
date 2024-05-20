@@ -11,6 +11,8 @@ module Api
         nationality
         ethnic_group
         ethnic_background
+        employing_school_urn
+        lead_school_urn
       ].freeze
 
       NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
@@ -51,8 +53,8 @@ module Api
         .merge(course_attributes)
         .merge(ethnicity_and_disability_attributes)
         .merge(funding_attributes)
-        .merge(school_attributes)
         .merge(training_initiative_attributes)
+        .merge(school_attributes)
         .compact
       end
 
@@ -175,14 +177,24 @@ module Api
         if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_school_urn])
           attrs.merge!(lead_school_not_applicable: true)
         else
-          attrs.merge!(lead_school: School.find_by(urn: params[:lead_school_urn]), lead_school_not_applicable: false)
+          lead_school_id = School.find_by(urn: params[:lead_school_urn], lead_school: true)&.id
+
+          attrs.merge!(
+            lead_school_id: lead_school_id,
+            lead_school_not_applicable: lead_school_id.nil?,
+          )
         end
 
         if params[:employing_school_urn].present?
           if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
             attrs.merge!(employing_school_not_applicable: true)
           else
-            attrs.merge!(employing_school: School.find_by(urn: params[:employing_school_urn]))
+            employing_school_id = School.find_by(urn: params[:employing_school_urn], lead_school: false)&.id
+
+            attrs.merge!(
+              employing_school_id: employing_school_id,
+              employing_school_not_applicable: employing_school_id.nil?,
+            )
           end
         end
 

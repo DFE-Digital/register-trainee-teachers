@@ -10,7 +10,7 @@ module Api
         course_study_mode
         course_year
         ni_number
-        postgrad_apprenticeship_start_date
+        pg_apprenticeship_start_date
         previous_last_name
         hesa_disabilities
         additional_training_initiative

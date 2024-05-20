@@ -76,7 +76,7 @@ RSpec.describe TraineeSerializer::V01 do
         course_year
         itt_aim
         ni_number
-        postgrad_apprenticeship_start_date
+        pg_apprenticeship_start_date
         previous_last_name
         hesa_disabilities
         additional_training_initiative

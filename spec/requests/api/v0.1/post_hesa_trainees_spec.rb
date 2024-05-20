@@ -59,6 +59,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       funding_method: "4",
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",
+      pg_apprenticeship_start_date: "2024-03-11",
     }
   end
 
@@ -79,6 +80,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
       expect(response.parsed_body[:data][:previous_last_name]).to eq("Smith")
+      expect(response.parsed_body[:data][:pg_apprenticeship_start_date]).to eq("2024-03-11")
     end
 
     it "sets the correct state" do
@@ -145,6 +147,128 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(degree.grade).to eq("Upper second-class honours (2:1)")
       expect(degree.uk_degree).to eq("Bachelor of Science")
       expect(degree.country).to be_nil
+    end
+
+    context "with school_attributes" do
+      context "when lead_school_urn is blank" do
+        before do
+          data.merge(
+            lead_school_urn: "",
+            employing_school_urn: "900021",
+          )
+        end
+
+        it "sets lead_school_urn and employing_school_urn to nil" do
+          expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+          expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+        end
+
+        it "sets lead_school_not_applicable and employing_school_not_applicable to false" do
+          expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+        end
+      end
+
+      context "when lead_school_urn is present" do
+        context "when lead_school_urn is not an applicable shool urn" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_school_urn: "900020",
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          it "sets lead_school_urn and employing_school_urn to nil" do
+            expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+            expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+          end
+
+          it "sets lead_school_not_applicable to true" do
+            expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+          end
+        end
+
+        context "when lead_school_urn is an applicable school urn" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_school_urn: lead_school.urn,
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          context "when lead_school exists" do
+            let(:lead_school) { create(:school, :lead) }
+
+            it "sets lead_school_urn to lead_school#urn and employing_school_urn to nil" do
+              expect(response.parsed_body[:data][:lead_school_urn]).to eq(lead_school.urn)
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            end
+
+            it "sets lead_school_not_applicable to false" do
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+            end
+          end
+
+          context "when lead_school does not exist" do
+            let(:lead_school) { build(:school, :lead) }
+
+            it "sets lead_school_urn and employing_school_urn to nil" do
+              expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            end
+
+            it "sets lead_school_not_applicable to true" do
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+            end
+          end
+        end
+
+        context "when employing_school_urn is present" do
+          context "when lead_school_urn is not an applicable school urn" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_school_urn: "900020",
+                  employing_school_urn: "900030",
+                ),
+              }
+            end
+
+            it "sets employing_school_urn to nil" do
+              expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            end
+
+            it "sets employing_school_not_applicable to true" do
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+            end
+          end
+
+          context "when lead_school_urn is an applicable school urn" do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_school_urn: "900020",
+                  employing_school_urn: employing_school.urn,
+                ),
+              }
+            end
+
+            let(:employing_school) { create(:school) }
+
+            it "sets employing_school_urn to employing_school#urn" do
+              expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+            end
+
+            it "sets employing_school_not_applicable to false" do
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+            end
+          end
+        end
+      end
     end
 
     context "when `itt_start_date` is an invalid date" do
