@@ -158,16 +158,19 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           )
         end
 
-        it do
+        it "sets lead_school_urn and employing_school_urn to nil" do
           expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
-          expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
           expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+        end
+
+        it "sets lead_school_not_applicable and employing_school_not_applicable to false" do
+          expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
           expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
         end
       end
 
       context "when lead_school_urn is present" do
-        context "when is included in NOT_APPLICABLE_SCHOOL_URNS" do
+        context "when lead_school_urn is not an applicable shool urn" do
           let(:params) do
             {
               data: data.merge(
@@ -177,14 +180,17 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             }
           end
 
-          it do
+          it "sets lead_school_urn and employing_school_urn to nil" do
             expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+          end
+
+          it "sets lead_school_not_applicable to true" do
             expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
           end
         end
 
-        context "when is not included in NOT_APPLICABLE_SCHOOL_URNS" do
+        context "when lead_school_urn is an applicable school urn" do
           let(:params) do
             {
               data: data.merge(
@@ -194,29 +200,35 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             }
           end
 
-          context "when the lead_school exists" do
+          context "when lead_school exists" do
             let(:lead_school) { create(:school, :lead) }
 
-            it do
+            it "sets lead_school_urn to lead_school#urn and employing_school_urn to nil" do
               expect(response.parsed_body[:data][:lead_school_urn]).to eq(lead_school.urn)
-              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            end
+
+            it "sets lead_school_not_applicable to false" do
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
             end
           end
 
-          context "when the lead_school does not exist" do
+          context "when lead_school does not exist" do
             let(:lead_school) { build(:school, :lead) }
 
-            it do
+            it "sets lead_school_urn and employing_school_urn to nil" do
               expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
-              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            end
+
+            it "sets lead_school_not_applicable to true" do
+              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
             end
           end
         end
 
         context "when employing_school_urn is present" do
-          context "when is included in NOT_APPLICABLE_SCHOOL_URN" do
+          context "when lead_school_urn is not an applicable school urn" do
             let(:params) do
               {
                 data: data.merge(
@@ -226,13 +238,16 @@ describe "`POST /api/v0.1/trainees` endpoint" do
               }
             end
 
-            it do
+            it "sets employing_school_urn to nil" do
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+            end
+
+            it "sets employing_school_not_applicable to true" do
               expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
             end
           end
 
-          context "when is not included in NOT_APPLICABLE_SCHOOL_URN" do
+          context "when lead_school_urn is an applicable school urn" do
             let(:params) do
               {
                 data: data.merge(
@@ -244,8 +259,11 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
             let(:employing_school) { create(:school) }
 
-            it do
+            it "sets employing_school_urn to employing_school#urn" do
               expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+            end
+
+            it "sets employing_school_not_applicable to false" do
               expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
             end
           end
