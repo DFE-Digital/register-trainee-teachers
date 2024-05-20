@@ -325,13 +325,11 @@ class Trainee < ApplicationRecord
 
   scope :in_training, -> { where(state: IN_TRAINING_STATES, itt_start_date: Date.new..Time.zone.now) }
 
-  scope :with_manual_application, -> { where(apply_application: nil, created_from_dttp: false, hesa_id: nil) }
-  scope :with_apply_application, -> { where.not(apply_application: nil) }
-  scope :created_from_dttp, -> { where(created_from_dttp: true) }
+  scope :with_apply_application, -> { apply_record }
 
   # We only look for the HESA ID to determine if a trainee record came from HESA.
   # Even though some records imported from DTTP will have a HESA ID, their original source is HESA so we chose this implementation
-  scope :imported_from_hesa, -> { where.not(hesa_id: nil) }
+  scope :imported_from_hesa, -> { where(record_source: HESA_SOURCES) }
 
   scope :imported_from_hesa_trn_data, -> { hesa_trn_data_record }
 
@@ -524,20 +522,19 @@ class Trainee < ApplicationRecord
     Trainee.where(first_names:, last_name:, date_of_birth:, email:).count > 1
   end
 
-  def hesa_record?
-    hesa_id.present?
-  end
-
   def derived_record_source
-    return "api" if api_record?
-
-    return "hesa" if hesa_record?
-
-    return "apply" if apply_application?
-
-    return "dttp" if  created_from_dttp?
-
-    "manual"
+    case record_source
+    when API_SOURCE
+      "api"
+    when HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE
+      "hesa"
+    when APPLY_SOURCE
+      "apply"
+    when DTTP_SOURCE
+      "dttp"
+    else
+      "manual"
+    end
   end
 
   def estimated_end_date

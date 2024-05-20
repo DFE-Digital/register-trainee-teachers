@@ -183,25 +183,11 @@ module Trainees
       end
     end
 
-    context "trainee doesn't exist" do
-      describe "#created_from_hesa" do
-        subject { trainee.created_from_hesa }
-
-        it { is_expected.to be(true) }
-      end
-    end
-
     context "trainee already exists and didn't come from HESA" do
       let(:existing_trn) { Faker::Number.number(digits: 7).to_s }
       let(:hesa_disability_codes) { ::Hesa::CodeSets::Disabilities::MAPPING.invert }
       let(:hesa_ethnicity_codes) { ::Hesa::CodeSets::Ethnicities::MAPPING.invert }
       let(:create_custom_state) { create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn) }
-
-      describe "#created_from_hesa" do
-        subject { trainee.created_from_hesa }
-
-        it { is_expected.to be(false) }
-      end
 
       context "when ethnicity is missing" do
         let(:hesa_stub_attributes) { { ethnic_background: nil } }

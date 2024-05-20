@@ -248,7 +248,7 @@ namespace :example_data do
             if provider.name.include?(PROVIDER_C) && HESA_TRAINING_ROUTES.include?(route.to_s) && state != :draft
               trainee = FactoryBot.create(:trainee, route, state, :imported_from_hesa, attrs)
               if sample_index < sample_size * 50.0 / 100
-                trainee.created_from_dttp = true
+                trainee.record_source = Sourceable::DTTP_SOURCE
                 trainee.created_from_hesa = false
               end
             else

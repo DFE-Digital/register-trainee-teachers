@@ -53,9 +53,7 @@ RSpec.describe TraineeSerializer::V01 do
         submission_ready
         commencement_status
         discarded_at
-        created_from_dttp
         additional_dttp_data
-        created_from_hesa
         hesa_updated_at
         record_source
         iqts_country

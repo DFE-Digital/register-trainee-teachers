@@ -28,7 +28,7 @@ module PersonalDetails
     end
 
     context "when data has been provided with hesa optional fields" do
-      let(:trainee) { create(:trainee, nationalities: [], created_from_hesa: true, hesa_id: 1) }
+      let(:trainee) { create(:trainee, :imported_from_hesa, nationalities: []) }
 
       before do
         render_inline(View.new(data_model: personal_details_form))

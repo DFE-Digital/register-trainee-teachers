@@ -7,7 +7,7 @@ class FixIncorrectlyAssignedPhilosophySubjectSpecialisms < ActiveRecord::Migrati
     trainees = Trainee.where(course_subject_one: CourseSubjects::PHILOSOPHY)
                       .or(Trainee.where(course_subject_two: CourseSubjects::PHILOSOPHY))
                       .or(Trainee.where(course_subject_three: CourseSubjects::PHILOSOPHY))
-                      .where(created_from_dttp: true)
+                      .dttp_record
 
     trainees.each do |trainee|
       if trainee.dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject1id_value"] == RELIGIOUS_STUDIES_ENTITY_ID

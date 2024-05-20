@@ -36,7 +36,7 @@ module Dqt
       end
 
       context "but not from HESA" do
-        before { trainee.update!(hesa_id: nil) }
+        before { trainee.manual_record! }
 
         it "doesn't queue a batch job" do
           expect {

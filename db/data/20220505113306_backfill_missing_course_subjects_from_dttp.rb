@@ -3,7 +3,7 @@
 class BackfillMissingCourseSubjectsFromDttp < ActiveRecord::Migration[6.1]
   def up
     # Currently, there are ~800 of these in production
-    trainees = Trainee.where(created_from_dttp: true, course_subject_one: nil)
+    trainees = Trainee.dttp_record.where(course_subject_one: nil)
 
     trainees.each { |trainee| fix_course_subject(trainee) }
   end

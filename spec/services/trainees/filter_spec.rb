@@ -6,7 +6,7 @@ module Trainees
   describe Filter do
     subject { described_class.call(trainees:, filters:) }
 
-    let(:draft_trainee) { create(:trainee, :incomplete_draft, first_names: "Draft") }
+    let(:draft_trainee) { create(:trainee, :incomplete_draft, :created_manually, first_names: "Draft") }
     let(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
