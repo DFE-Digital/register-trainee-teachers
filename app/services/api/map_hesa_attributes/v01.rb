@@ -9,7 +9,8 @@ module Api
 
       ATTRIBUTES = %i[
         nationality
-        ethnicity
+        ethnic_group
+        ethnic_background
       ].freeze
 
       NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
@@ -20,8 +21,9 @@ module Api
         params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
       end
 
-      def initialize(params:)
-        @params = params
+      def initialize(trainee: nil, params:)
+        @trainee = trainee
+        @params  = params
       end
 
       def call
@@ -30,7 +32,9 @@ module Api
 
     private
 
-      attr_reader :params
+      attr_reader :trainee, :params
+
+      delegate :ethnic_background, to: :trainee, prefix: true, allow_nil: true
 
       def mapped_params
         additional_params = params.except(*ATTRIBUTES)
@@ -79,7 +83,8 @@ module Api
       end
 
       def ethnic_background
-        ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
+        ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]] ||
+          trainee_ethnic_background
       end
 
       def hesa_disabilities

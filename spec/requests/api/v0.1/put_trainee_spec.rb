@@ -259,6 +259,141 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
     end
+
+    context "when read only attributes are submitted" do
+      let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
+      let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
+      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, ethnic_group:, ethnic_background:) }
+
+      before do
+        put(
+          "/api/v0.1/trainees/#{trainee.slug}",
+          headers: { Authorization: "Bearer #{token}" },
+          params: params,
+          as: :json,
+        )
+      end
+
+      context "when the ethnicity is provided" do
+        let(:params) do
+          {
+            data: {
+              trn: "567899",
+              ethnicity: "899",
+              ethnic_group: "mixed_ethnic_group",
+              ethnic_background: "Another Mixed background",
+            },
+          }
+        end
+
+        it "sets the enthnic attributes based on ethnicity" do
+          expect(response).to have_http_status(:ok)
+
+          trainee.reload
+
+          expect(trainee.trn).to be_nil
+          expect(trainee.ethnic_group).to eq("other_ethnic_group")
+          expect(trainee.ethnic_background).to eq("Another ethnic background")
+
+          parsed_body = response.parsed_body[:data]
+
+          expect(parsed_body[:ethnicity]).to eq("899")
+          expect(parsed_body[:trn]).to be_nil
+          expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
+          expect(parsed_body[:ethnic_background]).to eq(trainee.ethnic_background)
+        end
+      end
+
+      context "when the ethnicity is not provided" do
+        let(:params) do
+          {
+            data: {
+              trn: "567899",
+              ethnic_group: "mixed_ethnic_group",
+              ethnic_background: "Another Mixed background",
+            },
+          }
+        end
+
+        it "does not update the ethnic attributes" do
+          expect(response).to have_http_status(:ok)
+
+          trainee.reload
+
+          expect(trainee.trn).to be_nil
+
+          expect(trainee.ethnic_group).to eq(ethnic_group)
+          expect(trainee.ethnic_background).to eq(ethnic_background)
+
+          parsed_body = response.parsed_body[:data]
+
+          expect(parsed_body[:trn]).to be_nil
+          expect(parsed_body[:ethnicity]).to eq(Hesa::CodeSets::Ethnicities::MAPPING.key(ethnic_background))
+          expect(parsed_body[:ethnic_group]).to eq(ethnic_group)
+          expect(parsed_body[:ethnic_background]).to eq(ethnic_background)
+        end
+      end
+    end
+  end
+
+  describe "ethnicity" do
+    let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+
+    before do
+      put(
+        "/api/v0.1/trainees/#{trainee.slug}",
+        headers: { Authorization: "Bearer #{token}" },
+        params: params,
+        as: :json,
+      )
+    end
+
+    context "when present" do
+      let(:params) do
+        {
+          data: {
+            ethnicity:,
+          },
+        }
+      end
+
+      let(:ethnicity) { "142" }
+
+      it do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:ethnicity]).to eq(ethnicity)
+      end
+    end
+
+    context "when not present" do
+      let(:params) do
+        {
+          data: {
+            first_names: "Alice",
+          },
+        }
+      end
+
+      it do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:ethnicity]).to eq("997")
+      end
+    end
+
+    context "when invalid" do
+      let(:params) do
+        {
+          data: {
+            ethnicity: "1000",
+          },
+        }
+      end
+
+      it do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+      end
+    end
   end
 
   context "Updating a newly created trainee", feature_register_api: true do
@@ -287,7 +422,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
           degrees_attributes: [
             {
-              subject: "Law",
+              subject: "100485",
               institution: nil,
               graduation_date: "2003-06-01",
               subject_one: "100485",
@@ -327,7 +462,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         end
 
         let(:course_subject) { cs }
-        let(:slug) { response.parsed_body["trainee_id"] }
+        let(:slug) { response.parsed_body[:data][:trainee_id] }
         let(:trainee) { Trainee.last.reload }
 
         before do
@@ -365,8 +500,9 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
             expect(response).to have_http_status(:ok)
             expect(trainee.first_names).to eq("Alice")
+
+            expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
             expect(response.parsed_body[:data][:study_mode]).to eq("63")
-            expect(response.parsed_body[:data]["trainee_id"]).to eq(slug)
           end
         end
 
@@ -382,7 +518,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
             expect(response).to have_http_status(:bad_request)
             expect(trainee.reload.first_names).to eq("John")
-            expect(response.parsed_body).to have_key("errors")
+            expect(response.parsed_body).to have_key(:errors)
           end
         end
       end

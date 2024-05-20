@@ -21,11 +21,11 @@ module Api
         course_max_age
         trainee_start_date
         sex
-        trn
         training_route
         itt_start_date
         itt_end_date
         diversity_disclosure
+        ethnicity
         ethnic_group
         ethnic_background
         disability_disclosure
@@ -73,6 +73,7 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
+      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.keys, allow_nil: true
 
       validate do |record|
         EmailFormatValidator.new(record).validate
@@ -165,7 +166,7 @@ module Api
       end
 
       def deep_attributes
-        attributes.transform_values do |value|
+        attributes.except("ethnicity").transform_values do |value|
           if value.is_a?(Array)
             value.map { |item| item.respond_to?(:attributes) ? item.attributes : item }
           elsif value.respond_to?(:attributes)

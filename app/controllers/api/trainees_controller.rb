@@ -42,22 +42,21 @@ module Api
 
     def update
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
-      begin
-        attributes = trainee_attributes_service.from_trainee(trainee)
-        attributes.assign_attributes(hesa_mapped_params_for_update)
-        succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
+      attributes = trainee_attributes_service.from_trainee(trainee)
+      attributes.assign_attributes(hesa_mapped_params_for_update(trainee))
 
-        if succeeded
-          render(json: { data: serializer_klass.new(trainee).as_hash })
-        else
-          render(
-            json: {
-              message: "Validation failed: #{validation.all_errors.count} #{'error'.pluralize(validation.all_errors.count)} prohibited this trainee from being saved",
-              errors: validation.all_errors,
-            },
-            status: :unprocessable_entity,
-          )
-        end
+      succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
+
+      if succeeded
+        render(json: { data: serializer_klass.new(trainee).as_hash })
+      else
+        render(
+          json: {
+            message: "Validation failed: #{validation.all_errors.count} #{'error'.pluralize(validation.all_errors.count)} prohibited this trainee from being saved",
+            errors: validation.all_errors,
+          },
+          status: :unprocessable_entity,
+        )
       end
     end
 
@@ -77,8 +76,9 @@ module Api
       )
     end
 
-    def hesa_mapped_params_for_update
+    def hesa_mapped_params_for_update(trainee)
       hesa_mapper_class.call(
+        trainee: trainee,
         params: params.require(:data).permit(
           hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
           hesa_mapper_class.disability_attributes(params),
@@ -115,10 +115,6 @@ module Api
 
     def degree_attributes
       @degree_attributes ||= Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
-    end
-
-    def trainee_update_params
-      params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
     end
 
     def model = :trainee
