@@ -25,7 +25,6 @@ RSpec.describe TraineeSerializer::V01 do
         ethnic_group
         ethnicity
         disability_disclosure
-        course_subject_one
         itt_start_date
         outcome_date
         itt_end_date
@@ -39,6 +38,7 @@ RSpec.describe TraineeSerializer::V01 do
         reinstate_date
         course_min_age
         course_max_age
+        course_subject_one
         course_subject_two
         course_subject_three
         awarded_at
@@ -65,7 +65,6 @@ RSpec.describe TraineeSerializer::V01 do
         course_qualification
         course_title
         course_level
-        course_subject_one
         course_study_mode
         course_itt_start_date
         course_age_range

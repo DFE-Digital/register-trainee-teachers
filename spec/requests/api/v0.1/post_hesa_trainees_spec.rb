@@ -72,11 +72,11 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     before do
       allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
-
-      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "creates a trainee" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
       expect(response.parsed_body[:data][:previous_last_name]).to eq("Smith")
@@ -84,14 +84,20 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the correct state" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(Trainee.last.state).to eq("submitted_for_trn")
     end
 
     it "sets the correct study_mode" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(response.parsed_body[:data][:study_mode]).to eq("63")
     end
 
     it "sets the correct disabilities" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       parsed_body = response.parsed_body[:data]
 
       expect(parsed_body[:disability_disclosure]).to eq("disabled")
@@ -105,6 +111,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the correct funding attributes" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       parsed_body = response.parsed_body[:data]
 
       expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
@@ -119,6 +127,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "sets the correct school attributes" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       parsed_body = response.parsed_body[:data]
 
       expect(parsed_body[:lead_school_not_applicable]).to be(false)
@@ -128,6 +138,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "creates the degrees if provided in the request body" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       degree_attributes = response.parsed_body[:data][:degrees]&.first
 
       expect(degree_attributes[:subject]).to eq("100485")
@@ -150,6 +162,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     context "with school_attributes" do
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
       context "when lead_school_urn is blank" do
         before do
           data.merge(
@@ -274,6 +290,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     context "when `itt_start_date` is an invalid date" do
       let(:itt_start_date) { "2023-02-30" }
 
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
       it "does not create a trainee record and returns a 422 status with meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include("Itt start date is invalid")
@@ -282,6 +302,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     context "when graduation_year is in 'yyyy-mm-dd' format" do
       let(:graduation_year) { "2003-01-01" }
+
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
 
       it "creates the degrees with the correct graduation_year" do
         degree_attributes = response.parsed_body[:data][:degrees]&.first
@@ -293,6 +317,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     context "when graduation_year is a valid 4-digit integer" do
       let(:graduation_year) { 2003 }
 
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
       it "creates the degrees with the correct graduation_year" do
         degree_attributes = response.parsed_body[:data][:degrees]&.first
 
@@ -303,6 +331,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     context "when graduation_year is an invalid 3-digit integer" do
       let(:graduation_year) { 200 }
 
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
       it "does not create a degree" do
         expect(response.parsed_body[:data]).to be_nil
         expect(response.parsed_body[:errors].first).to include("Enter a valid graduation year")
@@ -312,6 +344,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     context "when graduation_year is in an invalid format" do
       let(:graduation_year) { "abc" }
 
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
       it "does not create a degree" do
         expect(response.parsed_body[:data]).to be_nil
         expect(response.parsed_body[:errors].first).to include("Enter a valid graduation year")
@@ -319,6 +355,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "creates the placements if provided in the request body" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       placement_attributes = response.parsed_body[:data][:placements]&.first
 
       expect(placement_attributes[:school_id]).to be_nil
@@ -327,26 +365,38 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     end
 
     it "returns status code 201" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(response).to have_http_status(:created)
     end
 
     it "creates the nationalities" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(Trainee.last.nationalities.first.name).to eq("british")
     end
 
     it "sets the correct course allocation subject" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(Trainee.last.course_allocation_subject).to eq(course_allocation_subject)
     end
 
     it "sets the progress data structure" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(Trainee.last.progress.personal_details).to be(true)
     end
 
     it "sets the record source to `api`" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(Trainee.last.api_record?).to be(true)
     end
 
     it "sets the provider_trainee_id" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
       expect(Trainee.last.provider_trainee_id).to eq("99157234/2/01")
     end
 
@@ -354,6 +404,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       let(:trn) { "567899" }
       let(:ethnic_group) { "mixed_ethnic_group" }
       let(:ethnic_background) { "Another Mixed background" }
+
+      before do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
 
       context "when the ethnicity is provided" do
         let(:params) do
@@ -416,49 +470,135 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         end
       end
     end
-  end
 
-  describe "ethnicity" do
-    before do
-      post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+    context "with course subjects" do
+      context "when HasCourseAttributes#primary_education_phase? is true" do
+        before do
+          post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        end
+
+        context "when '100511' is not present" do
+          let(:params) do
+            {
+              data: data.merge(
+                course_subject_one: "100346",
+                course_subject_two: "101410",
+                course_subject_three: "100366",
+                course_max_age: 11,
+              ),
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee = Trainee.last
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to eq("biology")
+            expect(trainee.course_subject_three).to eq("historical linguistics")
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
+          end
+        end
+
+        context "when '100511' is present" do
+          let(:params) do
+            {
+              data: data.merge(
+                course_subject_one: "100511",
+                course_subject_two: "101410",
+                course_subject_three: "100366",
+                course_max_age: 11,
+              ),
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee = Trainee.last
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to eq("historical linguistics")
+            expect(trainee.course_subject_three).to eq("computer science")
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          end
+        end
+      end
+
+      context "when HasCourseAttributes#primary_education_phase? is false" do
+        let(:params) do
+          {
+            data: data.merge(
+              course_subject_one: "100346",
+              course_subject_two: "101410",
+              course_subject_three: "100366",
+            ),
+          }
+        end
+
+        before do
+          post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it "sets the correct subjects" do
+          trainee = Trainee.last
+
+          expect(trainee.course_subject_one).to eq("biology")
+          expect(trainee.course_subject_two).to eq("historical linguistics")
+          expect(trainee.course_subject_three).to eq("computer science")
+
+          expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
+          expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
+          expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+        end
+      end
     end
 
-    context "when present" do
-      let(:params) do
-        {
-          data: data.merge(
-            ethnicity:,
-          ),
-        }
+    context "with ethnicity" do
+      before do
+        post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
       end
 
-      let(:ethnicity) { "142" }
+      context "when present" do
+        let(:params) do
+          {
+            data: data.merge(
+              ethnicity:,
+            ),
+          }
+        end
 
-      it do
-        expect(response).to have_http_status(:created)
-        expect(response.parsed_body[:data][:ethnicity]).to eq(ethnicity)
-      end
-    end
+        let(:ethnicity) { "142" }
 
-    context "when not present" do
-      it do
-        expect(response).to have_http_status(:created)
-        expect(response.parsed_body[:data][:ethnicity]).to eq("997")
-      end
-    end
-
-    context "when invalid" do
-      let(:params) do
-        {
-          data: data.merge(
-            ethnicity: "1000",
-          ),
-        }
+        it do
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body[:data][:ethnicity]).to eq(ethnicity)
+        end
       end
 
-      it do
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+      context "when not present" do
+        it do
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body[:data][:ethnicity]).to eq("997")
+        end
+      end
+
+      context "when invalid" do
+        let(:params) do
+          {
+            data: data.merge(
+              ethnicity: "1000",
+            ),
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+        end
       end
     end
   end
