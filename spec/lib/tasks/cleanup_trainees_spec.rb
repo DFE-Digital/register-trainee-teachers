@@ -4,7 +4,7 @@ require "rails_helper"
 require "rake"
 
 describe "cleanup:discard_trainees" do
-  before :all do
+  before do
     Rake.application.rake_require "tasks/cleanup"
     Rake::Task.define_task(:environment)
   end
