@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "View the timeline" do
+feature "View the timeline", js: true do
   background do
     given_i_am_authenticated
     given_a_trainee_exists(:submitted_for_trn)
@@ -29,5 +29,10 @@ feature "View the timeline" do
 
   def then_i_should_see_the_trainee_timeline
     expect(timeline_page).to be_displayed(id: trainee.slug)
+
+    expect(timeline_page.tab_title.text).to eq("Timeline")
+    within("div.app-timeline") do
+      expect(page).to have_content("Record created")
+    end
   end
 end

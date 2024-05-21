@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
-module Trainees
-  class AdminsController < BaseController
-    helper_method :trainee, :collections, :dqt_data
+module TraineeAdmin
+  class View < ViewComponent::Base
+    include Pundit::Authorization
 
-    def show
-      return redirect_to(trainees_path) unless current_user.system_admin?
+    attr_reader :trainee, :current_user
 
-      render("trainees/show")
+    def initialize(trainee:, current_user:)
+      @trainee = trainee
+      @current_user = current_user
     end
-
-  private
 
     def collections
       @collections ||= ::Hesa::Student.where

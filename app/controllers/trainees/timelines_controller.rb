@@ -4,7 +4,7 @@ module Trainees
   class TimelinesController < BaseController
     def show
       @timeline_events = Trainees::CreateTimeline.call(trainee:, current_user:)
-      render(layout: "trainee_record")
+      render("trainees/show")
     end
   end
 end

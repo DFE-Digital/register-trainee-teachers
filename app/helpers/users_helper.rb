@@ -2,7 +2,7 @@
 
 module UsersHelper
   def lead_school_user?
-    defined?(current_user) && current_user&.lead_school?
+    defined?(current_user) && current_user.respond_to?(:lead_school?) && current_user&.lead_school?
   end
 
   def can_view_drafts?
