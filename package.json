@@ -17,7 +17,7 @@
     "accessible-autocomplete": "^3.0.0",
     "esbuild": "^0.21.3",
     "govuk-country-and-territory-autocomplete": "^1.0.2",
-    "govuk-frontend": "^5.3.1",
+    "govuk-frontend": "^5.4.0",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8",
     "sass": "^1.77.2",
