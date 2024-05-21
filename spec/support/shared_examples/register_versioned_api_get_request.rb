@@ -2,18 +2,14 @@
 
 require "rails_helper"
 
-paths_to_exclude = ["/api-docs/:api_version/openapi", "/api-docs/:api_version/reference", "/api/:api_version/info"]
-paths = Rails.application.routes.routes.select { |route| route.verb == "GET" && route.parts.include?(:api_version) }
-  .map { |route| route.path.spec.to_s.gsub("(.:format)", "") }
-  .select { |path| paths_to_exclude.exclude?(path) }
-  .map { |path| path.gsub(":api_version", "v0.1") }
+RSpec.shared_examples "register versioned api GET request" do |version, path, completed|
+  url = path.gsub(":api_version", version)
 
-paths.each do |url|
   describe "`GET #{url}` endpoint" do
     let(:token) { "info_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
 
-    let(:trainee_with_trainee_slug) do
+    let(:trainee_with_slug_placements_and_degrees) do
       create(:trainee,
              :trn_received,
              provider: auth_token.provider,
@@ -29,12 +25,19 @@ paths.each do |url|
     before do
       academic_cycle
       trainee_with_slug
-      trainee_with_trainee_slug
+      trainee_with_slug_placements_and_degrees
       get url, headers: { Authorization: token }
     end
 
-    it "has http status ok" do
-      expect(response).to have_http_status(:ok)
+    if completed
+      it "has http status ok" do
+        expect(response).to have_http_status(:ok)
+      end
+    else
+      it "has http status bad request with error message" do
+        expect(response).to have_http_status(:bad_request)
+        expect(response.parsed_body).to eql({ "errors" => ["Version '#{version}' not available"] })
+      end
     end
   end
 end
