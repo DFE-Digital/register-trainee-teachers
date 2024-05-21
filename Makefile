@@ -63,6 +63,9 @@ dv_review: ## make dv_review deploy APP_NAME=2222 CLUSTER=cluster1
 	$(eval backend_key=-backend-config=key=$(APP_NAME).tfstate)
 	$(eval export TF_VAR_cluster=$(CLUSTER))
 	$(eval export TF_VAR_app_name=$(APP_NAME))
+	$(eval export TF_VAR_azure_resource_group_name=s189d01-tsc-dv-rg)
+	$(eval export TF_VAR_azure_tempdata_storage_account_name=s189d01registervtmp)
+	$(eval export TF_VAR_deploy_temp_data_storage_account=true)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 	echo https://register-$(APP_NAME).$(CLUSTER).development.teacherservices.cloud will be created in aks
 

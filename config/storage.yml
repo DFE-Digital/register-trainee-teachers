@@ -11,6 +11,8 @@ microsoft:
   storage_account_name: <%= ENV.fetch('SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCOUNT', nil) %>
   storage_access_key: <%= ENV.fetch('SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCESS_KEY', nil) %>
   container: tempdata
+  storage_blob_host: https://s189d01registervtmp.blob.core.windows.net
+
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:

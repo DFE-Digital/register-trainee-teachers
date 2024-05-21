@@ -1,0 +1,101 @@
+resource "azurerm_storage_account" "tempdata" {
+  count                           = 1
+  name                            = var.tempdata_storage_account_name
+  resource_group_name             = var.backend_resource_group_name
+  location                        = var.region_name
+  account_replication_type        = var.storage_account_replication_type
+  account_tier                    = "Standard"
+  allow_nested_items_to_be_public = false
+
+  blob_properties {
+    delete_retention_policy {
+      days = 7
+    }
+    container_delete_retention_policy {
+      days = 7
+    }
+  }
+
+  # network_rules {
+  #   default_action             = "Deny"
+  #   ip_rules                   = []
+  #   virtual_network_subnet_ids = [azurerm_subnet.private_endpoint_subnet.id]
+  #   bypass         = ["Logging", "AzureServices"]
+  # }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+
+  depends_on = [azurerm_subnet.private_endpoint_subnet, data.azurerm_resource_group.group]
+
+}
+
+resource "azurerm_storage_container" "tempdata" {
+  count                 = 1
+  name                  = "tempdata"
+  storage_account_name  = var.tempdata_storage_account_name
+  container_access_type = "private"
+  depends_on = [azurerm_storage_account.tempdata]
+}
+
+resource "azurerm_storage_account_network_rules" "networkrule" {
+  storage_account_id = azurerm_storage_account.tempdata[0].id
+
+  default_action = "Deny"
+  ip_rules       = ["78.151.120.42"]
+  bypass         = ["Logging", "AzureServices"]
+}
+
+# to be created by TSC 
+resource "azurerm_subnet" "private_endpoint_subnet" {
+  name                 = "privateEndpointSubnet"
+  resource_group_name  = "s189d01-tsc-dv-rg"
+  virtual_network_name = var.virtual_network_name
+  address_prefixes     = ["10.0.1.0/24"]
+  service_endpoints = ["Microsoft.Storage"]
+}
+
+resource "azurerm_private_endpoint" "storage_private_endpoint" {
+  name                = "tempdata-storage-private-endpoint"
+  location            = var.region_name
+  resource_group_name = var.backend_resource_group_name
+  subnet_id           = azurerm_subnet.private_endpoint_subnet.id
+
+  private_service_connection {
+    name                           = "tempdata-storage-private-service-connection"
+    private_connection_resource_id = resource.azurerm_storage_account.tempdata[0].id
+    is_manual_connection           = false
+    subresource_names              = ["blob"]
+  }
+}
+
+# Create a Private DNS Zone to associate with Storage PE
+resource "azurerm_private_dns_zone" "storage_dns_zone" {
+  name                = var.private_link_name_shared_vnet
+  resource_group_name = var.backend_resource_group_name
+}
+
+# Link AKS VNet to the Private DNS Zone
+resource "azurerm_private_dns_zone_virtual_network_link" "aks_dns_link" {
+  name                  = "AksPrivateDnsLink"
+  resource_group_name   = var.backend_resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.storage_dns_zone.name
+  virtual_network_id    = "/subscriptions/5c83eb53-a94f-4778-b258-1f33efe49655/resourceGroups/s189d01-tsc-dv-rg/providers/Microsoft.Network/virtualNetworks/s189d01-tsc-cluster3-vnet"
+  registration_enabled  = false
+}
+
+# Get the Private IP Address of the Storage Private Endpoint
+data "azurerm_private_endpoint_connection" "storage_pe_connection" {
+  name                = azurerm_private_endpoint.storage_private_endpoint.name
+  resource_group_name = var.backend_resource_group_name
+}
+
+# Add the A-Record of Storage PE to the Private DNS Zone table
+resource "azurerm_private_dns_a_record" "storage_pe_a_record" {
+  name                = var.tempdata_storage_account_name
+  zone_name           = azurerm_private_dns_zone.storage_dns_zone.name
+  resource_group_name = var.backend_resource_group_name
+  ttl                 = 300
+  records             = [data.azurerm_private_endpoint_connection.storage_pe_connection.private_service_connection.0.private_ip_address]
+}

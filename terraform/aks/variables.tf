@@ -141,3 +141,6 @@ variable azure_storage_account_replication_type { default = "LRS" }
 variable azure_region_name { default = "uk south" }
 
 variable "deploy_temp_data_storage_account" { default = true }
+
+variable "virtual_network_name" { default = "s189d01-tsc-cluster3-vnet" }
+
