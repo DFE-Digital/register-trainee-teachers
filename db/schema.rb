@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_15_134857) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_20_150321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -646,10 +646,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134857) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
+    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
-    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
@@ -686,6 +686,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134857) do
     t.datetime "submitted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "lead_partners", force: :cascade do |t|
+    t.citext "urn", null: false
+    t.string "record_type", null: false
+    t.string "name"
+    t.citext "ukprn"
+    t.bigint "school_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_lead_partners_on_provider_id"
+    t.index ["school_id"], name: "index_lead_partners_on_school_id"
+    t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
+    t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
   end
 
   create_table "lead_school_users", force: :cascade do |t|
@@ -984,6 +999,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_15_134857) do
   add_foreign_key "dqt_trn_requests", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "hesa_trainee_details", "trainees"
+  add_foreign_key "lead_partners", "providers"
+  add_foreign_key "lead_partners", "schools"
   add_foreign_key "lead_school_users", "schools", column: "lead_school_id"
   add_foreign_key "lead_school_users", "users"
   add_foreign_key "nationalisations", "nationalities"
