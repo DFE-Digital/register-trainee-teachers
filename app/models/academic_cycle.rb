@@ -21,7 +21,7 @@ class AcademicCycle < ApplicationRecord
   validate :start_date_before_end_date
 
   scope :trainees_filter, -> { order(start_date: :desc).limit(3) }
-  scope :since_year, ->(year) { where("start_date >= ?", Date.new(year)) }
+  scope :since_year, ->(year) { where(start_date: Date.new(year)..) }
 
   def self.for_year(year)
     where("extract(year from start_date) = ?", year.to_i).first
@@ -40,7 +40,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def total_trainees
-    trainees_starting.or(trainees_ending).or(Trainee.where("start_cycle.start_date < ?", start_date)
+    trainees_starting.or(trainees_ending).or(Trainee.where(start_cycle: { start_date: ...start_date })
     .where("end_cycle.start_date > ?", start_date))
     .joins("INNER JOIN academic_cycles start_cycle ON trainees.start_academic_cycle_id = start_cycle.id")
     .joins("INNER JOIN academic_cycles end_cycle ON trainees.end_academic_cycle_id = end_cycle.id")
