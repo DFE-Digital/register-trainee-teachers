@@ -28,6 +28,8 @@ This API allows you to access information about trainees and provides endpoints 
     - [Trainee](#trainee-object)
     - [Placement](#placement-object)
     - [Degree](#degree-object)
+- [Field lengths summary](#field-lengths-summary)
+
 
 ---
 
@@ -285,7 +287,7 @@ current academic cycle.
           "busy is not a valid status"
         ]
       }
-    } 
+    }
     </pre>
   </div>
 </details>
@@ -2298,7 +2300,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>provider_trainee_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 20 characters)
       </p>
       <p class="govuk-body">
         The unique ID of the trainee in the Provider's student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ownstu">HESA provider's own identifier for student field</a>
@@ -2312,7 +2314,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>application_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 10 characters)
       </p>
       <p class="govuk-body">
         The unique ID of the application in the Apply system.
@@ -2326,7 +2328,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>trn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 7 characters)
       </p>
       <p class="govuk-body">
         The reference number allocated to each trainee prior to course completion.
@@ -2340,7 +2342,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>first_names</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 60 characters), required
       </p>
       <p class="govuk-body">
         The first names of the trainee.
@@ -2354,7 +2356,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>last_name</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 60 characters), required
       </p>
       <p class="govuk-body">
         The last name of the trainee.
@@ -2368,7 +2370,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>previous_last_name</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 60 characters)
       </p>
       <p class="govuk-body">
         The last name of the trainee immediately before their current last name.
@@ -2396,7 +2398,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>sex</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
         The sex of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/sexid">HESA sex identifier field</a>
@@ -2410,7 +2412,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>nationality</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
         The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nation">HESA nationality field</a>
@@ -2424,7 +2426,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>email</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 80 characters), required
       </p>
       <p class="govuk-body">
         The email address of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nqtemail">HESA email addresses field</a>
@@ -2438,7 +2440,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>ethnicity</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 3 characters)
       </p>
       <p class="govuk-body">
         The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
@@ -2452,7 +2454,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>disability1</code> to <code>disability9</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 2 characters)
       </p>
       <p class="govuk-body">
         The type of disabilities that the trainee has. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/disable">HESA disability field</a>
@@ -2466,7 +2468,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>itt_aim</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
         The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittaim">HESA ITT qualification aim field</a>
@@ -2480,7 +2482,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>training_route</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
         The training route that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/entryrte">HESA entry route field</a>
@@ -2494,7 +2496,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>itt_qualification_aim</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
         The qualification aim of the trainee's course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/qlaim">HESA qualification aim field</a>
@@ -2508,7 +2510,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>course_subject_one</code>, <code>course_subject_two</code>, <code>course_subject_three</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, <code>course_subject_one</code> is required
+        string (limited to 6 characters), <code>course_subject_one</code> is required
       </p>
       <p class="govuk-body">
         The subjects included in the trainee's course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/sbjca">HESA subject of ITT course field</a>
@@ -2522,7 +2524,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>study_mode</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
         This indicates whether the trainee's course is full time or part time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/mode">HESA mode of study field</a>
@@ -2564,7 +2566,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>course_year</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
         The year number of the course that the trainee is currently studying. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/yearprg">HESA year of course field</a>
@@ -2578,7 +2580,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>course_age_range</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 5 characters), required
       </p>
       <p class="govuk-body">
         The age range of the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittphsc">HESA ITT phase/scope field</a>
@@ -2620,7 +2622,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>employing_school_urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 6 characters)
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the employing school for School Direct salaried trainees.
@@ -2634,7 +2636,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>lead_school_urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 6 characters)
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the lead school for School Direct trainees.
@@ -2648,7 +2650,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>fund_code</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
         The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/fundcode">HESA fundability code field</a>
@@ -2662,7 +2664,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>funding_method</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
         The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/burslev">HESA bursary level award field</a>
@@ -2676,7 +2678,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>training_initiative</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 3 characters)
       </p>
       <p class="govuk-body">
         The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
@@ -2690,7 +2692,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>additional_training_initiative</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 3 characters)
       </p>
       <p class="govuk-body">
         The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
@@ -2704,7 +2706,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>hesa_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 17 characters), required
       </p>
       <p class="govuk-body">
         The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/husid">HESA unique student identifier field</a>
@@ -2718,7 +2720,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>ni_number</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 9 characters)
       </p>
       <p class="govuk-body">
         The trainee's National Insurance Number.
@@ -2752,7 +2754,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 6 characters)
       </p>
       <p class="govuk-body">
         The URN of the school. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/plmntsch">HESA placement school field</a>
@@ -2780,7 +2782,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>postcode</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 8 characters)
       </p>
       <p class="govuk-body">
         The postcode of the placement school or setting.
@@ -2813,7 +2815,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>country</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if degree is <strong>not</strong> from the UK
+        string (limited to 2 characters), required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
         The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degctry">HESA degree country field</a>
@@ -2827,7 +2829,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>grade</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if degree is from the UK
+        string (limited to 2 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
         The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
@@ -2841,7 +2843,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if degree is from the UK
+        string (limited to 6 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
         The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degtype">HESA degree type field</a>
@@ -2869,7 +2871,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>subject</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string (limited to 6 characters), required
       </p>
       <p class="govuk-body">
         The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsbj">HESA degree subject field</a>
@@ -2883,7 +2885,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>institution</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if degree is from the UK
+        string (limited to 4 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
         The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degest">HESA degree establishment field</a>
@@ -2908,3 +2910,200 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
 </dl>
+
+## Field lengths summary
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Rule</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric">Limit</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.trainee_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">24</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.provider_trainee_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.application_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.trn.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">7</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.first_names.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">60</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.last_name.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">60</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.previous_last_name.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">60</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.sex.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.nationality.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.email.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">80</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.ethnicity.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability1.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+        <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability2.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability3.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability4.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability5.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability6.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+        <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability7.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability8.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.disability9.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.itt_aim.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.training_route.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.itt_qualification_aim.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.course_subject_one.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.course_subject_two.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.course_subject_three.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.study_mode.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.course_year.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.course_age_range.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">5</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.employing_school_urn.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.lead_school_urn.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.fund_code.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.funding_method.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">1</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.training_initiative.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.additional_training_initiative.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.hesa_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">17</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.ni_number.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">9</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Placement.properties.placement_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">24</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Placement.properties.urn.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Placement.properties.postcode.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.degree_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">24</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.country.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.grade.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">2</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.uk_degree.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.subject.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.institution.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">4</td>
+    </tr>
+  </tbody>
+</table>
