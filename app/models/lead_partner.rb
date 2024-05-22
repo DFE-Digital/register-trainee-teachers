@@ -1,5 +1,31 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: lead_partners
+#
+#  id          :bigint           not null, primary key
+#  name        :string
+#  record_type :string           not null
+#  ukprn       :citext
+#  urn         :citext           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  provider_id :bigint
+#  school_id   :bigint
+#
+# Indexes
+#
+#  index_lead_partners_on_provider_id  (provider_id)
+#  index_lead_partners_on_school_id    (school_id)
+#  index_lead_partners_on_ukprn        (ukprn) UNIQUE
+#  index_lead_partners_on_urn          (urn) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (school_id => schools.id)
+#
 class LeadPartner < ApplicationRecord
   RECORD_TYPES = [
     LEAD_SCHOOL = "lead_school",
