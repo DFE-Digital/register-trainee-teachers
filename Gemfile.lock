@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 51d2e6c1d07a7f69c6e0e9c7abaf13b006f9413b
-  ref: 51d2e6c1d07a7f69c6e0e9c7abaf13b006f9413b
+  revision: 1eefb72cc21ac155694a90fac18f88dbbb616739
+  branch: hidden-pii-updates
   specs:
     dfe-analytics (1.12.6)
       google-cloud-bigquery (~> 1.38)
@@ -417,6 +417,8 @@ GEM
     nkf (0.2.0)
     nokogiri (1.16.5-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.16.5-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.5-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (5.4.0)
@@ -761,6 +763,7 @@ PLATFORMS
   arm64-darwin-21
   arm64-darwin-22
   arm64-darwin-23
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES
