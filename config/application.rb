@@ -39,7 +39,14 @@ module RegisterTraineeTeachers
     config.middleware.use(Rack::Deflater)
     config.active_job.queue_adapter = :sidekiq
 
-    config.session_store(:active_record_store, key: "_register_trainee_teachers_session")
+    # Configure session store to use ActiveRecord.
+    # - key: Sets the name of the session cookie.
+    # - httponly: Prevents client-side scripts from accessing the cookie.
+    # - secure: Ensures the cookie is only sent over HTTPS in non-development and non-test environments.
+    config.session_store(:active_record_store,
+                         key: "_register_trainee_teachers_session",
+                         httponly: true,
+                         secure: !Rails.env.development? && !Rails.env.test?)
 
     config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
 
