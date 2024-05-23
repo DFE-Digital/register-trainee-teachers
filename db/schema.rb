@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_20_150321) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_143519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -688,6 +688,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_150321) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lead_partner_users", force: :cascade do |t|
+    t.bigint "lead_partner_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_partner_id"], name: "index_lead_partner_users_on_lead_partner_id"
+    t.index ["user_id"], name: "index_lead_partner_users_on_user_id"
+  end
+
   create_table "lead_partners", force: :cascade do |t|
     t.citext "urn", null: false
     t.string "record_type", null: false
@@ -999,6 +1008,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_150321) do
   add_foreign_key "dqt_trn_requests", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "hesa_trainee_details", "trainees"
+  add_foreign_key "lead_partner_users", "lead_partners"
+  add_foreign_key "lead_partner_users", "users"
   add_foreign_key "lead_partners", "providers"
   add_foreign_key "lead_partners", "schools"
   add_foreign_key "lead_school_users", "schools", column: "lead_school_id"

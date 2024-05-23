@@ -148,6 +148,12 @@ shared:
     - provider_id
     - created_at
     - updated_at
+  lead_partner_users:
+    - id
+    - lead_partner_id
+    - user_id
+    - created_at
+    - updated_at
   lead_school_users:
     - created_at
     - id

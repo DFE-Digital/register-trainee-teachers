@@ -36,6 +36,9 @@ class LeadPartner < ApplicationRecord
   belongs_to :school, optional: true
   belongs_to :provider, optional: true
 
+  has_many :lead_partner_users, inverse_of: :lead_partner
+  has_many :users, through: :lead_partner_users
+
   validates :urn, presence: true, uniqueness: { case_sensitive: false, allow_nil: true }
   validates :record_type, presence: true, inclusion: { in: RECORD_TYPES }
   validates :ukprn, presence: true, if: -> { hei? }, uniqueness: { case_sensitive: false, allow_nil: true }
