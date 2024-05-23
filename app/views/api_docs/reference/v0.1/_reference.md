@@ -1769,7 +1769,7 @@ Trainee details
       "errors": [
         {
           "error": "UnprocessableEntity",
-          "message": "First names is too long (maximum is 50 characters)"
+          "message": "First names is too long (maximum is 60 characters)"
         }
       ]
     }

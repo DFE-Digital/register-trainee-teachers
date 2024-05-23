@@ -100,7 +100,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       end
 
       context "attribute errors supersede" do
-        let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } }
+        let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogocwhereisthecookie", email: "invalid" } }
 
         it "returns status 422" do
           expect(response).to have_http_status(:unprocessable_entity)
@@ -110,12 +110,12 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       end
 
       context "validator errors" do
-        let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch" } }
+        let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogocwhereisthecookie" } }
 
         it "returns status 422" do
           expect(response).to have_http_status(:unprocessable_entity)
 
-          expect(response.parsed_body[:errors]).to contain_exactly(["personal_details", { "first_names" => ["First name must be 50 characters or fewer"] }])
+          expect(response.parsed_body[:errors]).to contain_exactly(["personal_details", { "first_names" => ["First name must be 60 characters or fewer"] }])
         end
       end
     end
