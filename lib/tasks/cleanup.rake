@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 namespace :cleanup do
-  desc "Destroy trainees based on email list"
-  task :discard_trainees, [:file_path] => :environment do |_t, args|
+  desc "Discard users based on email list"
+  task :discard_users, [:file_path] => :environment do |_t, args|
     raise "You must provide a file path" unless args[:file_path]
 
-    emails = File.readlines(args[:file_path]).map(&:chomp)
-    trainees = Trainee.where(email: emails)
-    trainees.discard_all
-    puts "Discarded #{trainees.count} trainee(s)"
+    emails = File.readlines(args[:file_path]).map(&:chomp).reject(&:empty?)
+    users = User.where(email: emails)
+    users.discard_all!
+    puts "Discarded #{users.count} user(s)"
   end
 end
