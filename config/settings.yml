@@ -87,6 +87,7 @@ features:
   change_accredited_provider: true
   funding_uploads: true
   register_api: true
+  lead_partners: false
 
 dfe_sign_in:
   # Our service name
