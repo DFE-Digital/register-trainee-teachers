@@ -2843,7 +2843,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 6 characters), required if degree is from the UK
+        string (limited to 3 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
         The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degtype">HESA degree type field</a>
@@ -3095,7 +3095,7 @@ Deletes an existing degree for this trainee.
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Degree.properties.uk_degree.maxLength</th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Degree.properties.subject.maxLength</th>
