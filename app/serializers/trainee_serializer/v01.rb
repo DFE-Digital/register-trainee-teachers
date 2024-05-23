@@ -41,6 +41,8 @@ module TraineeSerializer
         sex: sex,
         study_mode: course_study_mode,
         course_subject_one: course_subject_one,
+        course_subject_two: course_subject_two,
+        course_subject_three: course_subject_three,
         training_route: training_route,
         nationality: nationality,
         training_initiative: training_initiative,
@@ -126,6 +128,14 @@ module TraineeSerializer
 
     def course_subject_one
       ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_one)
+    end
+
+    def course_subject_two
+      ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_two)
+    end
+
+    def course_subject_three
+      ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_three)
     end
 
     def course_education_phase

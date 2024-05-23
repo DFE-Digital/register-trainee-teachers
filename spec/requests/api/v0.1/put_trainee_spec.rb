@@ -54,17 +54,19 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     before do
       create(:nationality, :irish)
       create(:nationality, :french)
-
-      put(
-        endpoint,
-        headers: { Authorization: "Bearer #{token}", **json_headers },
-        params: params.to_json,
-      )
     end
 
     context "when the trainee does not exist" do
       let(:slug) { "missing-trainee-slug" }
       let(:data) { { first_names: "Alice" } }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
 
       it "returns status 404" do
         expect(response).to have_http_status(:not_found)
@@ -74,6 +76,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     context "when request body is invalid (not a serialised trainee)" do
       let(:params) { { foo: { bar: "Alice" } } }
 
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       it "returns status 422" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
@@ -81,6 +91,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
 
     context "when the request data is invalid (has an invalid attribute value)" do
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       context "attribute errors supersede" do
         let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogoch", email: "invalid" } }
 
@@ -106,6 +124,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       let(:slug) { other_trainee.slug }
       let(:data) { { first_names: "Alice" } }
 
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       it "returns 404" do
         expect(response).to have_http_status(:not_found)
       end
@@ -113,6 +139,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     context "when updating with valid params" do
       let(:data) { { first_names: "Alice", provider_trainee_id: "99157234/2/01" } }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
 
       it "returns status 200 with a valid JSON response" do
         expect(response).to have_http_status(:ok)
@@ -126,6 +160,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     context "when updating with valid nationality" do
       let(:data) { { nationality: "IE" } }
 
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       it "returns status 200" do
         expect(response).to have_http_status(:ok)
         expect(trainee.reload.nationalities.first.name).to eq("irish")
@@ -134,6 +176,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     context "when course_age_range is empty" do
       let(:data) { { course_age_range: "" } }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -144,6 +194,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     context "when course_age_range is invalid" do
       let(:data) { { course_age_range: "invalid" } }
 
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
@@ -152,6 +210,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     context "when sex is empty" do
       let(:data) { { sex: "" } }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -162,6 +228,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     context "when sex is invalid" do
       let(:data) { { sex: "invalid" } }
 
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
@@ -170,6 +244,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     context "when modifying nationality" do
       let(:data) { { nationality: "IE" } }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
 
       it "returns status 200 and updates nationality" do
         expect(response).to have_http_status(:ok)
@@ -272,6 +354,14 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     context "with school_attributes" do
       let(:lead_school) { trainee.lead_school }
       let(:employing_school) { trainee.employing_school }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
 
       context "when lead_school_urn is blank" do
         before do
@@ -512,7 +602,15 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       end
     end
 
-    describe "ethnicity" do
+    describe "with ethnicity" do
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
       context "when present" do
         let(:params) do
           {
@@ -557,6 +655,102 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+        end
+      end
+    end
+
+    context "with course subjects" do
+      let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+
+      context "when HasCourseAttributes#primary_education_phase? is true" do
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        context "when '100511' is not present" do
+          let(:params) do
+            {
+              data: {
+                course_subject_one: "100346",
+                course_subject_two: "101410",
+                course_subject_three: "100366",
+                course_max_age: 11,
+              },
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to eq("biology")
+            expect(trainee.course_subject_three).to eq("historical linguistics")
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
+          end
+        end
+
+        context "when '100511' is present" do
+          let(:params) do
+            {
+              data: {
+                course_subject_one: "100511",
+                course_subject_two: "101410",
+                course_subject_three: "100366",
+                course_max_age: 11,
+              },
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to eq("historical linguistics")
+            expect(trainee.course_subject_three).to eq("computer science")
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          end
+        end
+      end
+
+      context "when HasCourseAttributes#primary_education_phase? is false" do
+        let(:params) do
+          {
+            data: {
+              course_subject_one: "100346",
+              course_subject_two: "101410",
+              course_subject_three: "100366",
+            },
+          }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "sets the correct subjects" do
+          trainee.reload
+
+          expect(trainee.course_subject_one).to eq("biology")
+          expect(trainee.course_subject_two).to eq("historical linguistics")
+          expect(trainee.course_subject_three).to eq("computer science")
+
+          expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
+          expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
+          expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
         end
       end
     end

@@ -149,6 +149,10 @@ module Api
         DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
       end
 
+      def course_max_age
+        params[:course_max_age]
+      end
+
       def course_study_mode
         params[:study_mode]
       end
