@@ -5,7 +5,8 @@ class Serializer
     module_name = module_name_for(model)
     constant_module = Object.const_get(module_name)
     class_name = class_name_for(version)
-    if constant_module.const_defined?(class_name)
+
+    if constant_module.const_defined?(class_name) && Settings.api.allowed_versions.include?(version)
       constant_module.const_get(class_name)
     else
       raise(NotImplementedError, "#{module_name}::#{class_name}")
