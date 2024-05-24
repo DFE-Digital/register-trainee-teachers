@@ -57,26 +57,22 @@ module Api
         hesa_id
       ].freeze
 
-      INTERNAL_ATTRIBUTES = %i[
-        lead_school_id
-        lead_school_not_applicable
-        employing_school_id
-        employing_school_not_applicable
-        ethnic_group
-        ethnic_background
-      ].freeze
-
       ATTRIBUTES.each do |attr|
         attribute attr
       end
 
-      attribute :ethnic_group, :string,  default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided]
-      attribute :ethnic_background, :string, default: Diversities::NOT_PROVIDED
-
-      attribute :lead_school_id
-      attribute :employing_school_id
-      attribute :lead_school_not_applicable, :boolean, default: false
-      attribute :employing_school_not_applicable, :boolean, default: false
+      INTERNAL_ATTRIBUTES = {
+        lead_school_id: [:integer],
+        lead_school_not_applicable: [:boolean, default: false],
+        employing_school_id: [:integer],
+        employing_school_not_applicable: [:boolean, { default: false }],
+        ethnic_group: [:string, { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] }],
+        ethnic_background: [:string, { default: Diversities::NOT_PROVIDED }]
+      }.freeze.each do |name, config|
+        type, options = config
+        options ||= {}
+        attribute name, type, **options
+      end
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
@@ -104,7 +100,7 @@ module Api
 
         super(
           new_attributes.slice(
-            *(ATTRIBUTES + INTERNAL_ATTRIBUTES) + %i[nationalities],
+            *(ATTRIBUTES + INTERNAL_ATTRIBUTES.keys) + %i[nationalities],
           ).except(
             :placements_attributes,
             :degrees_attributes,
@@ -141,7 +137,7 @@ module Api
       def assign_attributes(new_attributes)
         super(
           new_attributes.slice(
-            *(ATTRIBUTES + INTERNAL_ATTRIBUTES) + %i[nationalities],
+            *(ATTRIBUTES + INTERNAL_ATTRIBUTES.keys) + %i[nationalities],
           ).except(
             :placements_attributes,
             :degrees_attributes,
