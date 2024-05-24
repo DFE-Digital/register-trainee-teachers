@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe TraineeSerializer::V01 do
+RSpec.describe Api::TraineeSerializer::V01 do
   let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :in_progress, :with_placements, :with_french_nationality) }
   let(:json) { described_class.new(trainee).as_hash.with_indifferent_access }
 
@@ -122,31 +122,31 @@ RSpec.describe TraineeSerializer::V01 do
 
     describe "placements" do
       let(:placements) do
-        trainee.placements.map { |placement| PlacementSerializer::V01.new(placement).as_hash.with_indifferent_access }
+        trainee.placements.map { |placement| Api::PlacementSerializer::V01.new(placement).as_hash.with_indifferent_access }
       end
 
-      it "serializes with PlacementSerializer::V01" do
+      it "serializes with Api::PlacementSerializer::V01" do
         expect(json[:placements]).to eq(placements)
       end
     end
 
     describe "degrees" do
       let(:degrees) do
-        trainee.degrees.map { |degree| DegreeSerializer::V01.new(degree).as_hash.with_indifferent_access }
+        trainee.degrees.map { |degree| Api::DegreeSerializer::V01.new(degree).as_hash.with_indifferent_access }
       end
 
-      it "serializes with DegreeSerializer::V01" do
+      it "serializes with Api::DegreeSerializer::V01" do
         expect(json[:degrees]).to eq(degrees)
       end
     end
 
     describe "HESA trainee details" do
       let(:hesa_trainee_detail) do
-        HesaTraineeDetailSerializer::V01.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
+        Api::HesaTraineeDetailSerializer::V01.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
       end
 
-      it "serializes with HesaTraineeDetailSerializer::V01" do
-        expect(trainee.hesa_trainee_detail.attributes.except(*HesaTraineeDetailSerializer::V01::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
+      it "serializes with Api::HesaTraineeDetailSerializer::V01" do
+        expect(trainee.hesa_trainee_detail.attributes.except(*Api::HesaTraineeDetailSerializer::V01::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
       end
     end
 
