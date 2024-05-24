@@ -62,16 +62,14 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
-        lead_school_id: {type: :integer},
-        lead_school_not_applicable: {type: :boolean, options: {default: false}},
+        lead_school_id: { type: :integer },
+        lead_school_not_applicable: { type: :boolean, options: { default: false } },
         employing_school_id: { type: :integer },
-        employing_school_not_applicable: { :boolean, { default: false } },
+        employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
         ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
       }.freeze.each do |name, config|
-        type, options = config
-        options ||= {}
-        attribute name, type, **options
+        attribute(name, config[:type], **config.fetch(:options, {}))
       end
 
       attribute :placements_attributes, array: true, default: -> { [] }

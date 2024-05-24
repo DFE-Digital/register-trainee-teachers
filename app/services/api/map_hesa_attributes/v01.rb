@@ -24,7 +24,7 @@ module Api
       end
 
       def initialize(params:)
-        @params  = params
+        @params = params
       end
 
       def call
