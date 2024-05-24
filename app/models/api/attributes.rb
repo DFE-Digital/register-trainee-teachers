@@ -3,7 +3,15 @@
 module Api
   class Attributes
     def self.for(model:, version:)
-      Object.const_get("Api::#{module_name_for(model)}::#{class_name_for(version)}")
+      module_name = "Api::#{module_name_for(model)}"
+
+      constant_module = Object.const_get(module_name)
+      class_name = class_name_for(version)
+      if constant_module.const_defined?(class_name) && Settings.api.allowed_versions.include?(version)
+        constant_module.const_get(class_name)
+      else
+        raise(NotImplementedError, "#{module_name}::#{class_name}")
+      end
     end
 
     def self.class_name_for(version)
