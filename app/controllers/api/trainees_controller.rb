@@ -44,7 +44,7 @@ module Api
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
       attributes = trainee_attributes_service.from_trainee(trainee)
 
-      attributes.assign_attributes(hesa_mapped_params_for_update(trainee))
+      attributes.assign_attributes(hesa_mapped_params_for_update)
 
       succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
 
@@ -77,9 +77,8 @@ module Api
       )
     end
 
-    def hesa_mapped_params_for_update(trainee)
+    def hesa_mapped_params_for_update
       hesa_mapper_class.call(
-        trainee: trainee,
         params: params.require(:data).permit(
           hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
           hesa_mapper_class.disability_attributes(params),

@@ -23,8 +23,7 @@ module Api
         params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
       end
 
-      def initialize(trainee: nil, params:)
-        @trainee = trainee
+      def initialize(params:)
         @params  = params
       end
 
@@ -34,9 +33,7 @@ module Api
 
     private
 
-      attr_reader :trainee, :params
-
-      delegate :ethnic_background, to: :trainee, prefix: true, allow_nil: true
+      attr_reader :params
 
       def mapped_params
         additional_params = params.except(*ATTRIBUTES)
@@ -56,6 +53,23 @@ module Api
         .merge(training_initiative_attributes)
         .merge(school_attributes)
         .compact
+      end
+
+      def ethnicity_attributes
+        {
+          ethnic_group:,
+          ethnic_background:,
+        }
+      end
+
+      def ethnic_group
+        Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first
+      end
+
+      def ethnic_background
+        return Diversities::NOT_PROVIDED if params.key?(:ethnicity) && params[:ethnicity].blank?
+
+        ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
       end
 
       def degrees_attributes
@@ -82,11 +96,6 @@ module Api
 
       def nationality_name
         RecruitsApi::CodeSets::Nationalities::MAPPING[params[:nationality]]
-      end
-
-      def ethnic_background
-        ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]] ||
-          trainee_ethnic_background
       end
 
       def hesa_disabilities

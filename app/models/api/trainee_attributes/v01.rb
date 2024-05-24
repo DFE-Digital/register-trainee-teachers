@@ -26,8 +26,6 @@ module Api
         itt_end_date
         diversity_disclosure
         ethnicity
-        ethnic_group
-        ethnic_background
         disability_disclosure
         course_subject_one
         course_subject_two
@@ -64,11 +62,16 @@ module Api
         lead_school_not_applicable
         employing_school_id
         employing_school_not_applicable
+        ethnic_group
+        ethnic_background
       ].freeze
 
       ATTRIBUTES.each do |attr|
         attribute attr
       end
+
+      attribute :ethnic_group, :string,  default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided]
+      attribute :ethnic_background, :string, default: Diversities::NOT_PROVIDED
 
       attribute :lead_school_id
       attribute :employing_school_id
