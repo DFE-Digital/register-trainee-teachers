@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::WithdrawalAttributes do
+describe Api::WithdrawalAttributes::V01 do
   let(:trainee) { create(:trainee, :trn_received) }
   let(:withdrawal_attributes) { described_class.new(trainee:) }
 
