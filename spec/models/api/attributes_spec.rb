@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Api::Attributes do
-  attributes = %i[degree hesa_trainee_detail nationality placement trainee map_hesa]
+  attributes = %i[degree hesa_trainee_detail nationality placement trainee map_hesa withdrawal]
   context "v0.1" do
     attributes.each do |attribute|
       it "#{attribute} has been implemented" do

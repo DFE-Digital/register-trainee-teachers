@@ -39,7 +39,7 @@ module Api
       end
 
       def withdrawal_attributes
-        @withdrawal_attributes ||= Api::WithdrawalAttributes.new(trainee:)
+        @withdrawal_attributes ||= Api::Attributes.for(model: :withdrawal, version: version).new(trainee:)
       end
 
       def save!
