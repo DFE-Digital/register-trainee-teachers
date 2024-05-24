@@ -8,6 +8,7 @@ module Api
       trainees, errors = GetTraineesService.call(
         provider: current_provider,
         params: params,
+        version: version,
       )
 
       if errors.blank?
