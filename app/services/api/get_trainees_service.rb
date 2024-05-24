@@ -42,7 +42,7 @@ module Api
     end
 
     def trainee_filter_params_attributes
-      @trainee_filter_params_attributes ||= Api::Attributes.for(model: :trainee_filter_params, version: verions).new(filter_params)
+      @trainee_filter_params_attributes ||= Api::Attributes.for(model: :trainee_filter_params, version: version).new(filter_params)
     end
   end
 end

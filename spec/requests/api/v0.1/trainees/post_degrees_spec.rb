@@ -70,7 +70,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
     context "with duplicate degree" do
       let(:trainee) { create(:trainee, :with_degree) }
       let(:degrees_attributes) do
-        attributes = DegreeSerializer::V01.new(trainee.degrees.first).as_hash.symbolize_keys.slice(
+        attributes = Api::DegreeSerializer::V01.new(trainee.degrees.first).as_hash.symbolize_keys.slice(
           :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :locale_code
         )
         attributes[:graduation_year] = Date.new(attributes[:graduation_year]).to_s
