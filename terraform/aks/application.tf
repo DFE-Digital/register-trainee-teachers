@@ -51,6 +51,7 @@ module "worker_application" {
   replicas    = each.value.replicas
   probe_command = each.value.probe_command
   enable_logit  = var.enable_logit
+  enable_gcp_wif = true
 }
 
 module "application_configuration" {
