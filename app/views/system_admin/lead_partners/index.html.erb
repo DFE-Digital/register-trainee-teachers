@@ -1,0 +1,68 @@
+<%= render PageTitle::View.new(i18n_key: "lead_partners.index") %>
+
+<h1 class="govuk-heading-l">Lead partners</h1>
+
+<%= render "system_admin/tab_nav" %>
+
+<%= register_form_with url: lead_partners_path,
+                       local: true,
+                       method: :get,
+                       html: { data: { module: "app-partners-autocomplete" } } do |f| %>
+  <%= f.hidden_field :lead_partner_id, id: "partner-id" %>
+  <%= f.govuk_text_field(
+    :query,
+    form_group: { class: "govuk-form-group app-js-only" },
+    label: { text: "Search for a lead partner", size: "s" },
+    hint: { text: "Search for a partner by its unique reference number (URN), name or postcode" },
+    value: params[:query],
+    "data-field" => "partners-autocomplete",
+    width: "three-quarters",
+  )%>
+  <div id="partners-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-partners=true
+      data-system-admin-redirect-lead-partner="true"
+      data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_partners_form[query]"></div>
+<% end %>
+
+<table class="govuk-table" summary="Lead partners list">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead partner name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Type</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">URN</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Name</th>
+    </tr>
+  </thead>
+
+  <tbody class="govuk-table__body">
+    <% @lead_partners.each do |lead_partner| %>
+      <tr class="govuk-table__row">
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= govuk_link_to(lead_partner.name, lead_partner_path(lead_partner)) %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= lead_partner.record_type %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1">
+            <%= lead_partner.urn %>
+          </span>
+        </td>
+
+        <td class="govuk-table__cell">
+          <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
+            <%= lead_partner.name %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render Paginator::View.new(scope: @lead_partners) %>
