@@ -14,7 +14,7 @@ describe Api::FindDuplicateTrainees do
     )
   end
   let(:version) { "v0.1" }
-  let(:trainee_attributes) { Api::Attributes.for(model: :Trainee, version: version) }
+  let(:trainee_attributes) { Api::GetVersionedItem.for_attributes(model: :Trainee, version: version) }
   let(:serializer_klass) { Api::TraineeSerializer::V01 }
 
   it "does not return trainees for a different provider" do
