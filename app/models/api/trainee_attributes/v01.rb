@@ -10,40 +10,51 @@ module Api
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
-      ATTRIBUTES = %i[
-        first_names
-        middle_names
-        last_name
-        date_of_birth
-        email
-        course_education_phase
-        course_min_age
-        course_max_age
-        trainee_start_date
-        sex
-        training_route
-        itt_start_date
-        itt_end_date
-        diversity_disclosure
-        ethnicity
-        ethnic_group
-        ethnic_background
-        disability_disclosure
-        course_subject_one
-        course_subject_two
-        course_subject_three
-        course_allocation_subject_id
-        study_mode
-        application_choice_id
-        progress
-        training_initiative
-        hesa_id
-        provider_trainee_id
-        applying_for_bursary
-        applying_for_grant
-        applying_for_scholarship
-        bursary_tier
-      ].freeze
+      ATTRIBUTES = {
+        first_names: {},
+        middle_names: {},
+        last_name: {},
+        date_of_birth: { type: :date },
+        email: {},
+        course_education_phase: {},
+        course_min_age: {},
+        course_max_age: {},
+        trainee_start_date: {},
+        sex: {},
+        training_route: {},
+        itt_start_date: {},
+        itt_end_date: {},
+        diversity_disclosure: {},
+        ethnicity: {},
+        disability_disclosure: {},
+        course_subject_one: {},
+        course_subject_two: {},
+        course_subject_three: {},
+        course_allocation_subject_id: {},
+        study_mode: {},
+        application_choice_id: {},
+        progress: {},
+        training_initiative: {},
+        hesa_id: {},
+        provider_trainee_id: {},
+        applying_for_bursary: {},
+        applying_for_grant: {},
+        applying_for_scholarship: {},
+        bursary_tier: {},
+      }.freeze.each do |name, config|
+        attribute(name, config[:type], **config.fetch(:options, {}))
+      end
+
+      INTERNAL_ATTRIBUTES = {
+        lead_school_id: { type: :integer },
+        lead_school_not_applicable: { type: :boolean, options: { default: false } },
+        employing_school_id: { type: :integer },
+        employing_school_not_applicable: { type: :boolean, options: { default: false } },
+        ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
+        ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
+      }.freeze.each do |name, config|
+        attribute(name, config[:type], **config.fetch(:options, {}))
+      end
 
       REQUIRED_ATTRIBUTES = %i[
         first_names
@@ -59,28 +70,11 @@ module Api
         hesa_id
       ].freeze
 
-      INTERNAL_ATTRIBUTES = %i[
-        lead_school_id
-        lead_school_not_applicable
-        employing_school_id
-        employing_school_not_applicable
-      ].freeze
-
-      ATTRIBUTES.each do |attr|
-        attribute attr
-      end
-
-      attribute :lead_school_id
-      attribute :employing_school_id
-      attribute :lead_school_not_applicable, :boolean, default: false
-      attribute :employing_school_not_applicable, :boolean, default: false
-
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
       attribute :nationalisations_attributes, array: true, default: -> { [] }
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
-      attribute :date_of_birth, :date
       attribute :record_source, default: -> { Trainee::API_SOURCE }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
@@ -101,7 +95,7 @@ module Api
 
         super(
           new_attributes.slice(
-            *(ATTRIBUTES + INTERNAL_ATTRIBUTES) + %i[nationalities],
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys) + %i[nationalities],
           ).except(
             :placements_attributes,
             :degrees_attributes,
@@ -138,7 +132,7 @@ module Api
       def assign_attributes(new_attributes)
         super(
           new_attributes.slice(
-            *(ATTRIBUTES + INTERNAL_ATTRIBUTES) + %i[nationalities],
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys) + %i[nationalities],
           ).except(
             :placements_attributes,
             :degrees_attributes,

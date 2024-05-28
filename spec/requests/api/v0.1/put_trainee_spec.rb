@@ -603,6 +603,10 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
 
     describe "with ethnicity" do
+      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, ethnic_group:, ethnic_background:) }
+      let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
+      let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
+
       before do
         put(
           endpoint,
@@ -628,6 +632,21 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         end
       end
 
+      context "when nil" do
+        let(:params) do
+          {
+            data: {
+              ethnicity: nil,
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body[:data][:ethnicity]).to eq("997")
+        end
+      end
+
       context "when not present" do
         let(:params) do
           {
@@ -639,7 +658,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
         it do
           expect(response).to have_http_status(:ok)
-          expect(response.parsed_body[:data][:ethnicity]).to eq("997")
+          expect(response.parsed_body[:data][:ethnicity]).to eq(Hesa::CodeSets::Ethnicities::MAPPING.key(ethnic_background))
         end
       end
 
