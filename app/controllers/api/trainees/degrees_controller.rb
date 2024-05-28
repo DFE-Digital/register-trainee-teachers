@@ -63,7 +63,7 @@ module Api
       end
 
       def trainee_serializer_klass
-        Api::Serializer.for(model: :trainee, version: version)
+        Api::GetVersionedItem.for_serializer(model: :trainee, version: version)
       end
 
       def new_degree
