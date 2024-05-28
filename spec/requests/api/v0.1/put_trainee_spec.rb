@@ -845,7 +845,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         let(:trainee) { Trainee.last.reload }
 
         before do
-          allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
+          allow(Api::MapHesaAttributesService::V01).to receive(:call).and_call_original
           allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
           post "/api/v0.1/trainees", params: params_for_create.to_json, headers: headers
