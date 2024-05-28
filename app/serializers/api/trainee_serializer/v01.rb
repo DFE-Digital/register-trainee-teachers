@@ -56,13 +56,13 @@ module Api
 
       def degrees
         @degrees ||= @trainee.degrees.map do |degree|
-          DegreeSerializer::V01.new(degree).as_hash
+          Api::DegreeSerializer::V01.new(degree).as_hash
         end
       end
 
       def placements
         @placements ||= @trainee.placements.map do |placement|
-          PlacementSerializer::V01.new(placement).as_hash
+          Api::PlacementSerializer::V01.new(placement).as_hash
         end
       end
 
