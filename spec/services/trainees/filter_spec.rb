@@ -98,6 +98,31 @@ module Trainees
       it { is_expected.to eq([provider_led_postgrad_trainee]) }
     end
 
+    context "with has_trn filter" do
+      let!(:trainee_without_trn) { create(:trainee, :submitted_for_trn) }
+      let!(:trainee_with_trn) { create(:trainee, :trn_received) }
+
+      context "when has_trn is nil" do
+        let(:filters) { { has_trn: nil } }
+
+        it do
+          expect(subject).to contain_exactly(trainee_without_trn, trainee_with_trn)
+        end
+      end
+
+      context "when has_trn is true" do
+        let(:filters) { { has_trn: true } }
+
+        it { is_expected.to contain_exactly(trainee_with_trn) }
+      end
+
+      context "when has_trn is false" do
+        let(:filters) { { has_trn: false } }
+
+        it { is_expected.to contain_exactly(trainee_without_trn) }
+      end
+    end
+
     context "with level filter" do
       let!(:early_years_trainee) { create(:trainee, :early_years_undergrad) }
       let!(:primary_trainee) { create(:trainee, :with_primary_education) }

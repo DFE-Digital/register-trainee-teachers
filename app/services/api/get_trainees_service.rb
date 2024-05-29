@@ -38,7 +38,7 @@ module Api
     end
 
     def filter_params
-      params.permit(:status, :since, :academic_cycle, :page, :per_page, :sort_order)
+      params.permit(:status, :since, :academic_cycle, :has_trn, :page, :per_page, :sort_order)
     end
 
     def trainee_filter_params_attributes

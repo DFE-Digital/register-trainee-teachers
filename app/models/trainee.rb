@@ -338,6 +338,9 @@ class Trainee < ApplicationRecord
 
   scope :on_early_years_routes, -> { where(training_route: EARLY_YEARS_TRAINING_ROUTES.keys) }
 
+  scope :with_trn, -> { where.not(trn: nil) }
+  scope :without_trn, -> { where(trn: nil) }
+
   audited associated_with: :provider
   has_associated_audits
 
