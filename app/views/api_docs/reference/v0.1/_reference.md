@@ -1233,7 +1233,9 @@ Withdraw a trainee.
 
 #### Request
 
-`POST /api/v0.1/trainees/{trainee_id}/withdraw`
+`POST /api/v0.1/trainees/{trainee_id}/withdraw?reasons[]={reasons}&reasons[]={reasons}&withdraw_date={withdraw_date}&withdraw_reasons_details={withdraw_reasons_details}&withdraw_reasons_dfe_details={withdraw_reasons_dfe_details}`
+
+There is no request body for this endpoint.
 
 #### Parameters
 
