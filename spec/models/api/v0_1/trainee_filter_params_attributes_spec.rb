@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe Api::V01::TraineeFilterParamsAttributes do
+  it { is_expected.to validate_inclusion_of(:has_trn).in_array([true, false]) }
+
   describe "since validation" do
     context "when in ISO 8601" do
       it "correctly formatted dates are valid" do
