@@ -46,8 +46,7 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
   config.ssl_options = {
-    hsts: { preload: true },
-    redirect: { exclude: ->(request) { request.path.include?("ping") } },
+    redirect: { exclude: ->(request) { request.path.include?("ping") }, status: 307, port: 81 },
   }
 
   # Include generic and useful information about system operation, but avoid logging too much
