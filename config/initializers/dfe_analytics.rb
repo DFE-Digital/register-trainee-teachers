@@ -53,4 +53,7 @@ DfE::Analytics.configure do |config|
   # to all events we send to BigQuery.
   #
   # config.environment = ENV.fetch('RAILS_ENV', 'development')
+
+  # Enable workload identity federation
+  config.azure_federated_auth = true
 end
