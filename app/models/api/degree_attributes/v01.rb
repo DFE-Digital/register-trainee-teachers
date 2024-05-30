@@ -73,7 +73,7 @@ module Api
     private
 
       def hesa_mapped_degree_attributes
-        Api::MapHesaDegreeAttributesService::V01.new(attributes.symbolize_keys).call
+        Api::MapHesaAttributes::Degree::V01.new(attributes.symbolize_keys).call
       end
 
       def check_for_duplicates

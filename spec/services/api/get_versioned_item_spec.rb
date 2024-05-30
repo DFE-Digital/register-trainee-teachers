@@ -8,11 +8,25 @@ describe Api::GetVersionedItem do
   shared_examples get_versioned_item do |item_type, item_models|
     wrapper_method = "for_#{item_type}"
 
+    def expected_module(item_type, model)
+      if item_type == :service
+        if model == :map_hesa_attributes
+          "Api::MapHesaAttributes"
+        elsif %i[degree placement].include?(model)
+          "Api::MapHesaAttributes::#{model.to_s.camelize}".camelize
+        else
+          "Api::#{"#{model}_#{item_type.capitalize}".camelize}"
+        end
+      else
+        "Api::#{"#{model}_#{item_type.capitalize}".camelize}"
+      end
+    end
+
     describe "#for" do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("Api::#{item_model.camelize}#{item_type.camelize}::V01"))
+            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("#{expected_module(item_type, item_model)}::V01"))
           end
         end
       end
@@ -22,7 +36,7 @@ describe Api::GetVersionedItem do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.public_send(wrapper_method, model: item_model, version: "v0.1")).to be(Object.const_get("Api::#{item_model.camelize}#{item_type.camelize}::V01"))
+            expect(described_class.public_send(wrapper_method, model: item_model, version: "v0.1")).to be(Object.const_get("#{expected_module(item_type, item_model)}::V01"))
           end
         end
       end
@@ -30,7 +44,7 @@ describe Api::GetVersionedItem do
       context "v1.0" do
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "Api::#{item_model.camelize}#{item_type.camelize}::V10")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "#{expected_module(item_type, item_model)}::V10")
           end
         end
       end
@@ -42,14 +56,14 @@ describe Api::GetVersionedItem do
 
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v0.1") }.to raise_error(NotImplementedError, "Api::#{item_model.camelize}#{item_type.camelize}::V01")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v0.1") }.to raise_error(NotImplementedError, "#{expected_module(item_type, item_model)}::V01")
           end
         end
       end
     end
   end
 
-  include_examples get_versioned_item, "service", %w[map_hesa_attributes map_hesa_degree_attributes map_hesa_placement_attributes update_trainee]
-  include_examples get_versioned_item, "attributes", %w[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
-  include_examples get_versioned_item, "serializer", %w[degree hesa_trainee_detail placement trainee]
+  include_examples get_versioned_item, :service, %i[map_hesa_attributes degree placement update_trainee]
+  include_examples get_versioned_item, :attributes, %i[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
+  include_examples get_versioned_item, :serializer, %i[degree hesa_trainee_detail placement trainee]
 end

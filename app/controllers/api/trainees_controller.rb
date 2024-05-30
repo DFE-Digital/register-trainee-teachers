@@ -94,7 +94,7 @@ module Api
 
     def placements_attributes
       @placements_attributes ||= begin
-        hesa_attributes = Api::GetVersionedItem.for_service(model: :map_hesa_placement_attributes, version: version)::ATTRIBUTES
+        hesa_attributes = Api::GetVersionedItem.for_service(model: :placement, version: version)::ATTRIBUTES
         standard_attributes = Api::GetVersionedItem.for_attributes(model: :placement, version: version)::ATTRIBUTES
         standard_attributes + hesa_attributes
       end
