@@ -1882,7 +1882,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/withdrawal_attributes:
+        api/withdrawal_attributes/v01:
           attributes:
             reasons:
               blank: Select why the trainee withdrew from the course or select "Unknown"

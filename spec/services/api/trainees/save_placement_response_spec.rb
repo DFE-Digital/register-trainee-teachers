@@ -8,7 +8,7 @@ describe Api::Trainees::SavePlacementResponse do
     {}
   end
   let(:trainee) { create(:trainee, :with_placements) }
-  let(:version) { "v01" }
+  let(:version) { "v0.1" }
 
   subject { placement_response }
 
@@ -33,7 +33,7 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the serializer" do
-        expect(PlacementSerializer::V01).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
+        expect(Api::PlacementSerializer::V01).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
 
         subject
       end
@@ -79,7 +79,7 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the serializer" do
-        expect(PlacementSerializer::V01).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
+        expect(Api::PlacementSerializer::V01).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
 
         subject
       end

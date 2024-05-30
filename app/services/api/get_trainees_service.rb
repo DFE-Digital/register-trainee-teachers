@@ -2,14 +2,14 @@
 
 module Api
   class GetTraineesService < BaseService
-    def initialize(provider:, params: {})
+    def initialize(provider:, params: {}, version:)
       super(params)
       @provider = provider
+      @version = version
     end
 
     def call
-      trainee_filter_params = Api::TraineeFilterParams.new(filter_params)
-      return [[], trainee_filter_params.errors] unless trainee_filter_params.valid?
+      return [[], trainee_filter_params_attributes.errors] unless trainee_filter_params_attributes.valid?
 
       trainees = provider.trainees
                 .not_draft
@@ -27,7 +27,7 @@ module Api
 
   private
 
-    attr_reader :provider
+    attr_reader :provider, :version
 
     def academic_cycle
       @academic_cycle ||= AcademicCycle.for_year(params[:academic_cycle]) || AcademicCycle.current
@@ -39,6 +39,10 @@ module Api
 
     def filter_params
       params.permit(:status, :since, :academic_cycle, :page, :per_page, :sort_order)
+    end
+
+    def trainee_filter_params_attributes
+      @trainee_filter_params_attributes ||= Api::GetVersionedItem.for_attributes(model: :trainee_filter_params, version: version).new(filter_params)
     end
   end
 end

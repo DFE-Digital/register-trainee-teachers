@@ -2,7 +2,7 @@
 
 module Api
   module MapHesaAttributes
-    module Degrees
+    module Degree
       class V01
         INSTITUTE_OF_EDUCATION_HESA_CODE = "0133"
         UNIVERSITY_COLLEGE_LONDON_HESA_CODE = "0149"

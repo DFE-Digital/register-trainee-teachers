@@ -2,7 +2,7 @@
 
 module Api
   module MapHesaAttributes
-    module Placements
+    module Placement
       class V01
         ATTRIBUTES = %i[school_urn].freeze
 

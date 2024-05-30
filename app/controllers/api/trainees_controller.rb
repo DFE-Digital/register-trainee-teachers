@@ -8,6 +8,7 @@ module Api
       trainees, errors = GetTraineesService.call(
         provider: current_provider,
         params: params,
+        version: version,
       )
 
       if errors.blank?
@@ -88,33 +89,35 @@ module Api
     end
 
     def hesa_mapper_class
-      Object.const_get("Api::MapHesaAttributes::#{current_version_class_name}")
+      Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
     end
 
     def placements_attributes
-      hesa_attributes = Object.const_get("Api::MapHesaAttributes::Placements::#{current_version_class_name}")::ATTRIBUTES
-      standard_attributes = Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
-      standard_attributes + hesa_attributes
+      @placements_attributes ||= begin
+        hesa_attributes = Api::GetVersionedItem.for_service(model: :placement, version: version)::ATTRIBUTES
+        standard_attributes = Api::GetVersionedItem.for_attributes(model: :placement, version: version)::ATTRIBUTES
+        standard_attributes + hesa_attributes
+      end
     end
 
     def nationality_attributes
-      Api::Attributes.for(model: :nationality, version: version)::ATTRIBUTES
+      Api::GetVersionedItem.for_attributes(model: :nationality, version: version)::ATTRIBUTES
     end
 
     def update_trainee_service_class
-      Object.const_get("Api::UpdateTraineeService::#{current_version_class_name}")
+      Api::GetVersionedItem.for_service(model: :update_trainee, version: version)
     end
 
     def trainee_attributes_service
-      Api::Attributes.for(model: :trainee, version: version)
+      Api::GetVersionedItem.for_attributes(model: :trainee, version: version)
     end
 
     def hesa_trainee_details_attributes_service
-      Api::Attributes.for(model: :hesa_trainee_detail, version: version)
+      Api::GetVersionedItem.for_attributes(model: :hesa_trainee_detail, version: version)
     end
 
     def degree_attributes
-      @degree_attributes ||= Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
+      @degree_attributes ||= Api::GetVersionedItem.for_attributes(model: :degree, version: version)::ATTRIBUTES
     end
 
     def model = :trainee

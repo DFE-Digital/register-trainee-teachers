@@ -1,0 +1,228 @@
+# frozen_string_literal: true
+
+module Api
+  module TraineeSerializer
+    class V01
+      EXCLUDED_ATTRIBUTES = %w[
+        id
+        slug
+        state
+        progress
+        provider_id
+        dttp_id
+        placement_assignment_dttp_id
+        dttp_update_sha
+        dormancy_dttp_id
+        lead_school_id
+        employing_school_id
+        course_allocation_subject_id
+        start_academic_cycle_id
+        end_academic_cycle_id
+        hesa_trn_submission_id
+        application_choice_id
+        apply_application_id
+        applying_for_bursary
+        applying_for_grant
+        applying_for_scholarship
+        bursary_tier
+      ].freeze
+
+      def initialize(trainee)
+        @trainee = trainee
+      end
+
+      def as_hash
+        @trainee.attributes.except(*EXCLUDED_ATTRIBUTES).merge(
+          provider_attributes,
+          diversity_attributes,
+          course_attributes,
+          school_attributes,
+          funding_attributes,
+          hesa_trainee_attributes,
+          sex: sex,
+          study_mode: course_study_mode,
+          course_subject_one: course_subject_one,
+          course_subject_two: course_subject_two,
+          course_subject_three: course_subject_three,
+          training_route: training_route,
+          nationality: nationality,
+          training_initiative: training_initiative,
+          placements: placements,
+          degrees: degrees,
+          state: @trainee.state,
+          trainee_id: @trainee.slug,
+        )
+      end
+
+      def degrees
+        @degrees ||= @trainee.degrees.map do |degree|
+          Api::DegreeSerializer::V01.new(degree).as_hash
+        end
+      end
+
+      def placements
+        @placements ||= @trainee.placements.map do |placement|
+          Api::PlacementSerializer::V01.new(placement).as_hash
+        end
+      end
+
+      def provider_attributes
+        {
+          ukprn: @trainee.provider&.ukprn,
+        }
+      end
+
+      def diversity_attributes
+        attributes = {
+          ethnic_group:,
+          ethnicity:,
+          disability_disclosure:,
+        }
+        assign_disabilities(attributes)
+
+        attributes
+      end
+
+      def assign_disabilities(attributes)
+        @trainee.hesa_trainee_detail&.hesa_disabilities&.each do |key, disability|
+          attributes[key] = disability
+        end
+        attributes
+      end
+
+      def ethnic_group
+        @trainee.ethnic_group
+      end
+
+      def ethnicity
+        Hesa::CodeSets::Ethnicities::MAPPING.key(@trainee.ethnic_background)
+      end
+
+      def disability_disclosure
+        @trainee.disability_disclosure
+      end
+
+      def course_attributes
+        {
+          course_qualification:,
+          course_title:,
+          course_level:,
+          course_education_phase:,
+          course_itt_start_date:,
+          course_age_range:,
+          expected_end_date:,
+          trainee_start_date:,
+        }
+      end
+
+      def course_qualification
+        @trainee.award_type
+      end
+
+      def course_level
+        @trainee.undergrad_route? ? "undergrad" : "postgrad"
+      end
+
+      def course_title
+        @trainee.published_course&.name
+      end
+
+      def course_subject_one
+        ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_one)
+      end
+
+      def course_subject_two
+        ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_two)
+      end
+
+      def course_subject_three
+        ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_three)
+      end
+
+      def course_education_phase
+        @trainee.course_education_phase
+      end
+
+      def course_study_mode
+        @trainee&.hesa_trainee_detail&.course_study_mode
+      end
+
+      def course_itt_start_date
+        @trainee.itt_start_date&.iso8601
+      end
+
+      def course_age_range
+        @trainee&.hesa_trainee_detail&.course_age_range
+      end
+
+      def expected_end_date
+        @trainee.itt_end_date&.iso8601
+      end
+
+      def trainee_start_date
+        @trainee.trainee_start_date
+      end
+
+      def school_attributes
+        {
+          employing_school_urn:,
+          lead_partner_urn_ukprn:,
+          lead_school_urn:,
+        }
+      end
+
+      def employing_school_urn
+        @trainee.employing_school&.urn
+      end
+
+      def lead_partner_urn_ukprn
+        @trainee.lead_school&.urn
+      end
+
+      def lead_school_urn
+        @trainee.lead_school&.urn
+      end
+
+      def funding_attributes
+        {
+          fund_code:,
+          bursary_level:,
+        }
+      end
+
+      def fund_code
+        @trainee&.hesa_trainee_detail&.fund_code
+      end
+
+      def bursary_level
+        @trainee&.hesa_trainee_detail&.funding_method
+      end
+
+      def hesa_trainee_attributes
+        return {} unless @trainee.hesa_trainee_detail
+
+        HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
+      end
+
+      def nationality
+        return if @trainee.nationalities.blank?
+
+        RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[
+          @trainee.nationalities.first.name,
+        ]
+      end
+
+      def training_route
+        ::Hesa::CodeSets::TrainingRoutes::MAPPING.key(@trainee.training_route)
+      end
+
+      def training_initiative
+        ::Hesa::CodeSets::TrainingInitiatives::MAPPING.key(@trainee.training_initiative)
+      end
+
+      def sex
+        ::Hesa::CodeSets::Sexes::MAPPING.key(::Trainee.sexes[@trainee.sex])
+      end
+    end
+  end
+end

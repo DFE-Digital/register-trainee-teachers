@@ -45,7 +45,7 @@ module Api
       def slug = params[:slug]
 
       def trainee_serializer_klass
-        Serializer.for(model: :trainee, version: version)
+        Api::GetVersionedItem.for_serializer(model: :trainee, version: version)
       end
 
       def model = :placement

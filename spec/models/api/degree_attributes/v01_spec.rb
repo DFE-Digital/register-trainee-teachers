@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Api::DegreeAttributes::V01 do
   let(:v01) { described_class.new(attributes, trainee:) }
-  let(:attributes_with_id) { DegreeSerializer::V01.new(degree).as_hash.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
+  let(:attributes_with_id) { Api::DegreeSerializer::V01.new(degree).as_hash.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
   let(:degree) { build(:degree) }
 
   let(:attributes) { attributes_with_id }

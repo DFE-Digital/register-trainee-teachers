@@ -14,8 +14,8 @@ describe Api::FindDuplicateTrainees do
     )
   end
   let(:version) { "v0.1" }
-  let(:trainee_attributes) { Api::Attributes.for(model: :Trainee, version: version) }
-  let(:serializer_klass) { TraineeSerializer::V01 }
+  let(:trainee_attributes) { Api::GetVersionedItem.for_attributes(model: :Trainee, version: version) }
+  let(:serializer_klass) { Api::TraineeSerializer::V01 }
 
   it "does not return trainees for a different provider" do
     attributes = trainee_attributes.new(
@@ -86,7 +86,7 @@ describe Api::FindDuplicateTrainees do
         trainee_attributes: attributes,
         serializer_klass: serializer_klass,
       ),
-    ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
+    ).to eq([Api::TraineeSerializer::V01.new(trainee).as_hash])
   end
 
   it "returns trainees that are an inexact match (different email)" do
@@ -105,7 +105,7 @@ describe Api::FindDuplicateTrainees do
         trainee_attributes: attributes,
         serializer_klass: serializer_klass,
       ),
-    ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
+    ).to eq([Api::TraineeSerializer::V01.new(trainee).as_hash])
   end
 
   it "returns trainees that are an inexact match (different first name)" do
@@ -124,7 +124,7 @@ describe Api::FindDuplicateTrainees do
         trainee_attributes: attributes,
         serializer_klass: serializer_klass,
       ),
-    ).to eq([TraineeSerializer::V01.new(trainee).as_hash])
+    ).to eq([Api::TraineeSerializer::V01.new(trainee).as_hash])
   end
 
   it "doesn't return trainees that are have a different first name and email" do

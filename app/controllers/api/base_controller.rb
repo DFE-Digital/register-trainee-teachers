@@ -87,9 +87,5 @@ module Api
       duration = Time.zone.now - start
       Yabeda.register_api.request_duration.measure({}, duration)
     end
-
-    def current_version_class_name
-      current_version.gsub(".", "").camelize
-    end
   end
 end
