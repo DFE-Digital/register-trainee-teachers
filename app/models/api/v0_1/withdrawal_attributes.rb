@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module WithdrawalAttributes
-    class V01
+  module V01
+    class WithdrawalAttributes
       include ActiveModel::AttributeAssignment
       include ActiveModel::Attributes
       include ActiveModel::Model

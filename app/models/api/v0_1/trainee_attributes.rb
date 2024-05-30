@@ -105,21 +105,21 @@ module Api
           ))
 
         new_attributes[:placements_attributes]&.each do |placement_params|
-          placements_attributes << Api::PlacementAttributes::V01.new(placement_params)
+          placements_attributes << PlacementAttributes.new(placement_params)
         end
 
         new_attributes[:degrees_attributes]&.each do |degree_params|
-          degrees_attributes << DegreeAttributes::V01.new(degree_params)
+          degrees_attributes << DegreeAttributes.new(degree_params)
         end
 
         new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
-          nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
+          nationalisations_attributes << NationalityAttributes.new(nationalisation_params)
         end
 
-        hesa_trainee_detail_attributes_raw = new_attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES)
+        hesa_trainee_detail_attributes_raw = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
 
         self.hesa_trainee_detail_attributes =
-          HesaTraineeDetailAttributes::V01.new(
+          HesaTraineeDetailAttributes.new(
             hesa_trainee_detail_attributes_raw,
           )
 
@@ -143,7 +143,7 @@ module Api
 
         self.nationalisations_attributes = []
         new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
-          nationalisations_attributes << NationalityAttributes::V01.new(nationalisation_params)
+          nationalisations_attributes << NationalityAttributes.new(nationalisation_params)
         end
 
         update_hesa_trainee_detail_attributes(new_attributes)
@@ -155,10 +155,10 @@ module Api
       end
 
       def update_hesa_trainee_detail_attributes(attributes)
-        new_hesa_attributes = attributes.slice(*HesaTraineeDetailAttributes::V01::ATTRIBUTES)
+        new_hesa_attributes = attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
         return if new_hesa_attributes.blank?
 
-        updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes::V01.new({})
+        updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes.new({})
         updated_hesa_attributes.assign_attributes(new_hesa_attributes)
         updated_hesa_attributes
       end
@@ -169,7 +169,7 @@ module Api
         }
 
         hesa_trainee_detail_attributes = trainee.hesa_trainee_detail&.attributes&.select { |k, _v|
-          Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+          HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
         } || {}
 
         trainee_attributes = trainee_attributes.merge(hesa_trainee_detail_attributes)

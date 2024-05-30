@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::HesaTraineeDetailAttributes::V01 do
+RSpec.describe Api::V01::HesaTraineeDetailAttributes do
   subject { described_class.new }
 
   describe "validations" do

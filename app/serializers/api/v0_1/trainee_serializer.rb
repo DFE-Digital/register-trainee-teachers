@@ -56,13 +56,13 @@ module Api
 
       def degrees
         @degrees ||= @trainee.degrees.map do |degree|
-          Api::DegreeSerializer::V01.new(degree).as_hash
+          DegreeSerializer.new(degree).as_hash
         end
       end
 
       def placements
         @placements ||= @trainee.placements.map do |placement|
-          Api::PlacementSerializer::V01.new(placement).as_hash
+          PlacementSerializer.new(placement).as_hash
         end
       end
 
@@ -201,7 +201,7 @@ module Api
       def hesa_trainee_attributes
         return {} unless @trainee.hesa_trainee_detail
 
-        HesaTraineeDetailSerializer::V01.new(@trainee.hesa_trainee_detail).as_hash
+        HesaTraineeDetailSerializer.new(@trainee.hesa_trainee_detail).as_hash
       end
 
       def nationality

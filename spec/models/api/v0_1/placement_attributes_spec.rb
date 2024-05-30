@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::PlacementAttributes::V01 do
+RSpec.describe Api::V01::PlacementAttributes do
   context "when school_id is blank" do
     before { subject.school_id = nil }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::TraineeAttributes::V01 do
+RSpec.describe Api::V01::TraineeAttributes do
   subject { described_class.new }
 
   describe "validations" do
@@ -32,7 +32,7 @@ RSpec.describe Api::TraineeAttributes::V01 do
     it "pulls HesaTraineeDetail attributes from association" do
       expect(attributes.hesa_trainee_detail_attributes).to be_present
 
-      Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.each do |attr|
+      Api::V01::HesaTraineeDetailAttributes::ATTRIBUTES.each do |attr|
         expect(attributes.hesa_trainee_detail_attributes.send(attr)).to be_present
       end
     end
@@ -121,7 +121,7 @@ RSpec.describe Api::TraineeAttributes::V01 do
 
         let(:hesa_trainee_detail_attributes) {
           hesa_trainee_detail.attributes.select { |k, _v|
-            Api::HesaTraineeDetailAttributes::V01::ATTRIBUTES.include?(k.to_sym)
+            Api::V01::HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
           }
         }
 

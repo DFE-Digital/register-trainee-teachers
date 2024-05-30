@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::PlacementSerializer::V01 do
+RSpec.describe Api::V01::PlacementSerializer do
   shared_examples_for "a placement serialiser" do
     %w[
       placement_id

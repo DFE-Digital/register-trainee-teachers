@@ -49,7 +49,7 @@ module Api
 
       def self.from_degree(degree, trainee:)
         new(
-          DegreeSerializer::V01.new(degree)
+          DegreeSerializer.new(degree)
             .as_hash
             .merge(id: degree.id).select { |k, _v| ATTRIBUTES.include?(k.to_sym) }
             .as_json,
@@ -73,7 +73,7 @@ module Api
     private
 
       def hesa_mapped_degree_attributes
-        Api::MapHesaAttributes::Degree::V01.new(attributes.symbolize_keys).call
+        MapHesaAttributes::Degree.new(attributes.symbolize_keys).call
       end
 
       def check_for_duplicates

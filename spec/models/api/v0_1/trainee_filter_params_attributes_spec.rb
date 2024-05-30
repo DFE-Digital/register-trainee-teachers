@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::TraineeFilterParamsAttributes::V01 do
+describe Api::V01::TraineeFilterParamsAttributes do
   describe "since validation" do
     context "when in ISO 8601" do
       it "correctly formatted dates are valid" do

@@ -49,7 +49,7 @@ module Api
         end
 
         def school_urn_applicable?(urn)
-          Api::MapHesaAttributes::V01::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
+          ::Api::V01::MapHesaAttributes::NOT_APPLICABLE_SCHOOL_URNS.exclude?(urn)
         end
       end
     end
