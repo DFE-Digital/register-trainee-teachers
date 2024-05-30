@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module DegreeSerializer
-    class V01
+  module V01
+    class DegreeSerializer
       EXCLUDED_ATTRIBUTES = %w[
         id
         slug

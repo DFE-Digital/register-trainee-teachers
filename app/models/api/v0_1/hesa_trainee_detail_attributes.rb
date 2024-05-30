@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module HesaTraineeDetailAttributes
-    class V01
+  module V01
+    class HesaTraineeDetailAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module NationalityAttributes
-    class V01
+  module V01
+    class NationalityAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
 

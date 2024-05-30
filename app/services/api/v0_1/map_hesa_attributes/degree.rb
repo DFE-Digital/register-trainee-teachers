@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Api
-  module MapHesaAttributes
-    module Degree
-      class V01
+  module V01
+    module MapHesaAttributes
+      class Degree
         INSTITUTE_OF_EDUCATION_HESA_CODE = "0133"
         UNIVERSITY_COLLEGE_LONDON_HESA_CODE = "0149"
         PASS_WITHOUT_HONOURS_HESA_CODE = "09"

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module PlacementAttributes
-    class V01
+  module V01
+    class PlacementAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
 

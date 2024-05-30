@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Api
-  module MapHesaAttributes
-    module Placement
-      class V01
+  module V01
+    module MapHesaAttributes
+      class Placement
         ATTRIBUTES = %i[school_urn].freeze
 
         def initialize(params)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module PlacementSerializer
-    class V01
+  module V01
+    class PlacementSerializer
       EXCLUDED_ATTRIBUTES = %w[
         id
         slug

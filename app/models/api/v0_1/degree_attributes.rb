@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module DegreeAttributes
-    class V01
+  module V01
+    class DegreeAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
 

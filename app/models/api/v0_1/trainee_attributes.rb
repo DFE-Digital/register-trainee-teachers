@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module TraineeAttributes
-    class V01
+  module V01
+    class TraineeAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module HesaTraineeDetailSerializer
-    class V01
+  module V01
+    class HesaTraineeDetailSerializer
       EXCLUDED_ATTRIBUTES = %w[
         id
         trainee_id

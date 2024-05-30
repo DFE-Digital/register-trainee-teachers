@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module UpdateTraineeService
-    class V01
+  module V01
+    class UpdateTraineeService
       include ServicePattern
 
       def initialize(trainee:, attributes:)

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module MapHesaAttributes
-    class V01
+  module V01
+    class MapHesaAttributes
       include ServicePattern
       include HasDiversityAttributes
       include HasCourseAttributes

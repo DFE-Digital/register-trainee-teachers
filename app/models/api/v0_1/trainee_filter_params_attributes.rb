@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Api
-  module TraineeFilterParamsAttributes
-    class V01
+  module V01
+    class TraineeFilterParamsAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
 
