@@ -1237,6 +1237,8 @@ Withdraw a trainee.
 
 There is no request body for this endpoint.
 
+Note that multiple values for the reasons parameter can be provided by repeating the parameter in the query string, e.g. `reasons[]=personal_reasons&reasons[]=got_a_job`
+
 #### Parameters
 
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
