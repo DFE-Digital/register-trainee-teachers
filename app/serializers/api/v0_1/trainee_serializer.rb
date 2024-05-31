@@ -62,7 +62,7 @@ module Api
       end
 
       def placements
-        @placements ||= @trainee.placements.map do |placement|
+        @placements ||= @trainee.placements.includes(:school).map do |placement|
           PlacementSerializer.new(placement).as_hash
         end
       end
