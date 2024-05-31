@@ -45,3 +45,4 @@ class LeadPartner < ApplicationRecord
   validates :school, presence: true, if: -> { lead_school? }
   validates :provider, presence: true, if: -> { hei? }
 end
+

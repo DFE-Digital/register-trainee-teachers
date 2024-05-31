@@ -50,6 +50,11 @@ describe User do
 
   describe "associations" do
     it { is_expected.to have_many(:providers) }
+    it { is_expected.to have_many(:provider_users) }
+    it { is_expected.to have_many(:lead_school_users) }
+    it { is_expected.to have_many(:lead_schools).through(:lead_school_users) }
+    it { is_expected.to have_many(:lead_partner_users) }
+    it { is_expected.to have_many(:lead_partners).through(:lead_partner_users) }
   end
 
   describe "indexes" do

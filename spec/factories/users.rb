@@ -18,6 +18,7 @@ FactoryBot.define do
     trait :with_multiple_organisations do
       providers { [build(:provider), build(:provider)] }
       lead_schools { [build(:school, :lead), build(:school, :lead)] }
+      lead_partners { [build(:lead_partner, :lead_school), build(:lead_partner, :lead_school)] }
     end
 
     trait :with_lead_school_organisation do
