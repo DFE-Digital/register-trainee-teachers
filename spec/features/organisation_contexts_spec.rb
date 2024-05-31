@@ -27,9 +27,17 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       then_i_am_redirected_to_the_start_page
     end
 
-    scenario "settings lead partner context" do
-      when_i_click_on_a_lead_partner_link
-      then_i_am_redirected_to_the_start_page
+    context "when the lead_partner feature is enabled", feature_lead_partner: true do
+      scenario "settings lead partner context" do
+        when_i_click_on_a_lead_partner_link
+        then_i_am_redirected_to_the_start_page
+      end
+    end
+
+    context "when the lead_partner feature is disabled" do
+      scenario "settings lead partner context" do
+        expect(page).not_to have_content("Lead partners")
+      end
     end
   end
 

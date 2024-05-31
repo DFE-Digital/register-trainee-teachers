@@ -34,7 +34,7 @@
       </p>
     <%- end -%>
 
-    <%- if @lead_partners.any? -%>
+    <%- if FeatureService.enabled?(:lead_partner) && @lead_partners.any? -%>
       <h2 class="govuk-heading-m">Lead partners</h2>
       <p class="govuk-body">As a lead partner you can only view records. You cannot change them.</p>
       <ul class="govuk-list govuk-!-margin-bottom-7">
