@@ -31,7 +31,9 @@ RSpec.describe Api::V01::TraineeSerializer do
         trn
         submitted_for_trn_at
         withdraw_date
+        withdraw_reasons_dfe_details
         withdraw_reasons_details
+        withdraw_reasons
         defer_date
         recommended_for_award_at
         trainee_start_date
@@ -58,7 +60,6 @@ RSpec.describe Api::V01::TraineeSerializer do
         record_source
         iqts_country
         hesa_editable
-        withdraw_reasons_dfe_details
         slug_sent_to_dqt_at
         placement_detail
         ukprn
