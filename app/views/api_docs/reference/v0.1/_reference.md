@@ -1245,7 +1245,7 @@ Note that multiple values for the reasons parameter can be provided by repeating
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
-| **reasons** | query | array of strings | true | The reason(s) for the withdrawal |
+| **reasons** | query | array of strings | true | The reason(s) for the withdrawal. Valid values are `could_not_give_enough_time`,  `course_was_not_suitable`, `did_not_make_progress`, `did_not_meet_entry_requirements`, `does_not_want_to_become_a_teacher`, `family_problems`, `financial_problems`, `got_a_job`, `problems_with_their_health`, `stopped_responding_to_messages`, `teaching_placement_problems`, `unacceptable_behaviour`, `unhappy_with_course_provider_or_employing_school`, `another_reason`, `unknown` |
 | **withdraw_date** | query | string | true | The date and time of the withdrawal in ISO 8601 format |
 | **withdraw_reasons_details** | query | string | false | Details about why the trainee withdrew |
 | **withdraw_reasons_dfe_details** | query | string | false | What the Department of Education could have done to prevent the trainee withdrawing |

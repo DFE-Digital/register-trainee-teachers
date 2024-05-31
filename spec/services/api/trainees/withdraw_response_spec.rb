@@ -46,7 +46,7 @@ describe Api::Trainees::WithdrawResponse do
         expect(subject[:status]).to be(:unprocessable_entity)
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
-          { error: "UnprocessableEntity", message: "Reasons Select why the trainee withdrew from the course or select \"Unknown\"" },
+          { error: "UnprocessableEntity", message: "Reasons Choose one or more reasons why the trainee withdrew from the course, or select \"Unknown\"" },
         )
       end
 
