@@ -26,7 +26,7 @@ describe Api::GetVersionedItem do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type,item_model)}"))
+            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type, item_model)}"))
           end
         end
       end
@@ -36,7 +36,7 @@ describe Api::GetVersionedItem do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.public_send(wrapper_method, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type,item_model)}"))
+            expect(described_class.public_send(wrapper_method, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type, item_model)}"))
           end
         end
       end
@@ -44,7 +44,7 @@ describe Api::GetVersionedItem do
       context "v1.0" do
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "Api::V10::#{expected_module(item_type,item_model)}")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "Api::V10::#{expected_module(item_type, item_model)}")
           end
         end
       end
@@ -56,7 +56,7 @@ describe Api::GetVersionedItem do
 
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v0.1") }.to raise_error(NotImplementedError, "Api::V01::#{expected_module(item_type,item_model)}")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v0.1") }.to raise_error(NotImplementedError, "Api::V01::#{expected_module(item_type, item_model)}")
           end
         end
       end
