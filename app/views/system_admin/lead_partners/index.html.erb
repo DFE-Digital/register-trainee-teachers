@@ -7,7 +7,7 @@
 <%= register_form_with url: lead_partners_path,
                        local: true,
                        method: :get,
-                       html: { data: { module: "app-partners-autocomplete" } } do |f| %>
+                       html: { data: { module: "app-lead-partners-autocomplete" } } do |f| %>
   <%= f.hidden_field :lead_partner_id, id: "partner-id" %>
   <%= f.govuk_text_field(
     :query,
@@ -15,10 +15,10 @@
     label: { text: "Search for a lead partner", size: "s" },
     hint: { text: "Search for a partner by its unique reference number (URN), name or postcode" },
     value: params[:query],
-    "data-field" => "partners-autocomplete",
+    "data-field" => "lead-partners-autocomplete",
     width: "three-quarters",
   )%>
-  <div id="partners-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-partners=true
+  <div id="lead-partners-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-partners=true
       data-system-admin-redirect-lead-partner="true"
       data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_partners_form[query]"></div>
 <% end %>
