@@ -11,14 +11,14 @@ describe Api::GetVersionedItem do
     def expected_module(item_type, model)
       if item_type == :service
         if model == :map_hesa_attributes
-          "Api::MapHesaAttributes"
+          "MapHesaAttributes"
         elsif %i[degree placement].include?(model)
-          "Api::MapHesaAttributes::#{model.to_s.camelize}".camelize
+          "MapHesa#{model.to_s.camelize}Attributes".camelize
         else
-          "Api::#{"#{model}_#{item_type.capitalize}".camelize}"
+          "#{model}_#{item_type.capitalize}".camelize
         end
       else
-        "Api::#{"#{model}_#{item_type.capitalize}".camelize}"
+        "#{model}_#{item_type.capitalize}".camelize
       end
     end
 
@@ -26,7 +26,7 @@ describe Api::GetVersionedItem do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("#{expected_module(item_type, item_model)}::V01"))
+            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type,item_model)}"))
           end
         end
       end
@@ -36,7 +36,7 @@ describe Api::GetVersionedItem do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.public_send(wrapper_method, model: item_model, version: "v0.1")).to be(Object.const_get("#{expected_module(item_type, item_model)}::V01"))
+            expect(described_class.public_send(wrapper_method, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type,item_model)}"))
           end
         end
       end
@@ -44,7 +44,7 @@ describe Api::GetVersionedItem do
       context "v1.0" do
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "#{expected_module(item_type, item_model)}::V10")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "Api::V10::#{expected_module(item_type,item_model)}")
           end
         end
       end
@@ -56,7 +56,7 @@ describe Api::GetVersionedItem do
 
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v0.1") }.to raise_error(NotImplementedError, "#{expected_module(item_type, item_model)}::V01")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v0.1") }.to raise_error(NotImplementedError, "Api::V01::#{expected_module(item_type,item_model)}")
           end
         end
       end

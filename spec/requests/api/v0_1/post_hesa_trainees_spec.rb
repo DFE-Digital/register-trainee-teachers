@@ -70,7 +70,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
   context "when the request is valid", feature_register_api: true do
     before do
-      allow(Api::MapHesaAttributes::V01).to receive(:call).and_call_original
+      allow(Api::V01::MapHesaAttributes).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
     end
 

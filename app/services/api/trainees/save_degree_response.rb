@@ -40,7 +40,7 @@ module Api
       def save
         if valid?
           assign_attributes(
-            ::Api::V01::MapHesaAttributes::Degree.new(
+            ::Api::V01::MapHesaDegreeAttributes.new(
               attributes.with_indifferent_access,
             ).call,
           )

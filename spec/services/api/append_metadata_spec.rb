@@ -9,7 +9,7 @@ RSpec.describe Api::AppendMetadata do
 
   describe "#call" do
     let(:trainees) { Trainee.page(1).per(25) }
-    let(:serializer_klass) { Api::TraineeSerializer::V01 }
+    let(:serializer_klass) { Api::V01::TraineeSerializer }
 
     before { create_list(:trainee, 2, :with_hesa_trainee_detail) }
 
@@ -17,7 +17,7 @@ RSpec.describe Api::AppendMetadata do
       expect(
         described_class.call(objects: trainees, serializer_klass: serializer_klass),
       ).to eq(
-        data: trainees.map { |trainee| Api::TraineeSerializer::V01.new(trainee).as_hash },
+        data: trainees.map { |trainee| Api::V01::TraineeSerializer.new(trainee).as_hash },
         meta: {
           current_page: trainees.current_page,
           total_pages: trainees.total_pages,

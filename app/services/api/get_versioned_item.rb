@@ -15,7 +15,7 @@ module Api
     end
 
     def self.for(model:, version:, item_type:)
-      class_name = "#{module_name_for(model, item_type)}::#{class_name_for(version)}"
+      class_name = "Api::#{class_name_for(version)}::#{module_name_for(model, item_type)}"
 
       if Object.const_defined?(class_name) && Settings.api.allowed_versions.include?(version)
         Object.const_get(class_name)
@@ -31,14 +31,14 @@ module Api
     def self.module_name_for(model, item_type)
       if item_type == :service
         if model == :map_hesa_attributes
-          "Api::MapHesaAttributes"
+          "MapHesaAttributes"
         elsif %i[degree placement].include?(model)
-          "Api::MapHesaAttributes::#{model.to_s.camelize}".camelize
+          "MapHesa#{model.to_s.camelize}Attributes".camelize
         else
-          "Api::#{"#{model}_#{item_type.capitalize}".camelize}"
+          "#{model}_#{item_type.capitalize}".camelize
         end
       else
-        "Api::#{"#{model}_#{item_type.capitalize}".camelize}"
+        "#{model}_#{item_type.capitalize}".camelize
       end
     end
   end
