@@ -8,7 +8,7 @@
                        local: true,
                        method: :get,
                        html: { data: { module: "app-lead-partners-autocomplete" } } do |f| %>
-  <%= f.hidden_field :lead_partner_id, id: "partner-id" %>
+  <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
   <%= f.govuk_text_field(
     :query,
     form_group: { class: "govuk-form-group app-js-only" },

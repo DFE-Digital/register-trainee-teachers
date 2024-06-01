@@ -4,6 +4,7 @@ import tracker from './tracker.js'
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-lead-partners-autocomplete"]')
 const idElement = document.getElementById('lead-partners-id')
 
+
 let statusMessage = ' '
 
 const guard = (data) => {
@@ -31,7 +32,6 @@ const findLeadPartners = ({ query, populateResults }) => {
 
   statusMessage = 'Loading...' // Shared state
 
-  const.log('fetching lead partners')
   window.fetch(`/autocomplete/lead_partners?query=${encodedQuery} ? 'true' : 'false'}`)
     .then(response => response.json())
     .then(guard)

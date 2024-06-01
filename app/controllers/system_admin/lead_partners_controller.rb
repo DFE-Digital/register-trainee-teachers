@@ -2,6 +2,8 @@
 
 module SystemAdmin
   class LeadPartnersController < ApplicationController
+    before_action { require_feature_flag(:lead_partners) }
+
     def index
       @lead_partners = LeadPartner.order(:name).page(params[:page] || 1)
     end
