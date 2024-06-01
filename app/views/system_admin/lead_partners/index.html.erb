@@ -29,7 +29,6 @@
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead partner name</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Type</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">URN</th>
-      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Name</th>
     </tr>
   </thead>
 
@@ -45,19 +44,13 @@
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-            <%= lead_partner.record_type %>
+            <%= lead_partner.record_type.humanize %>
           </span>
         </td>
 
         <td class="govuk-table__cell">
           <span class="govuk-!-display-block govuk-!-margin-bottom-1">
             <%= lead_partner.urn %>
-          </span>
-        </td>
-
-        <td class="govuk-table__cell">
-          <span class="govuk-!-display-block govuk-!-margin-bottom-1 no-wrap">
-            <%= lead_partner.name %>
           </span>
         </td>
       </tr>

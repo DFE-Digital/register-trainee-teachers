@@ -18,6 +18,15 @@ feature "List lead partners" do
       then_i_see_the_lead_partners_index_page
       and_i_see_the_hei_lead_partner
       and_i_see_the_school_lead_partner
+
+      when_i_click_the_school_lead_partner
+      then_i_see_the_school_lead_partner_detail_page
+
+      when_i_click_the_back_button
+      then_i_see_the_lead_partners_index_page
+
+      when_i_click_the_hei_lead_partner
+      then_i_see_the_hei_lead_partner_detail_page
     end
   end
 
@@ -41,5 +50,32 @@ feature "List lead partners" do
   def and_i_see_the_school_lead_partner
     expect(page).to have_text("School Partner")
     expect(page).to have_text(school_lead_partner.urn)
+  end
+
+  def when_i_click_the_school_lead_partner
+    click_on "School Partner"
+  end
+
+  def then_i_see_the_school_lead_partner_detail_page
+    expect(page).to have_current_path(lead_partner_path(school_lead_partner.id))
+    expect(page).to have_text("School Partner")
+    expect(page).to have_text(school_lead_partner.urn)
+    expect(page).to have_text(school_lead_partner.school.town)
+    expect(page).to have_text(school_lead_partner.school.postcode)
+  end
+
+  def when_i_click_the_back_button
+    click_on "Back"
+  end
+
+  def when_i_click_the_hei_lead_partner
+    click_on "HEI Partner"
+  end
+
+  def then_i_see_the_hei_lead_partner_detail_page
+    expect(page).to have_current_path(lead_partner_path(hei_lead_partner.id))
+    expect(page).to have_text("HEI Partner")
+    expect(page).to have_text(hei_lead_partner.provider.ukprn)
+    expect(page).to have_text(hei_lead_partner.provider.code)
   end
 end
