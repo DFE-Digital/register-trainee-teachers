@@ -3,6 +3,7 @@
   "dockerComposeFile": "./docker-compose.yml",
   "service": "web",
   "workspaceFolder": "/app",
+  "postCreateCommand": ".devcontainer/boot.sh",
   "customizations": {
     "vscode": {
       "settings": {},
