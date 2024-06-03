@@ -3,6 +3,8 @@ services:
   web:
     build:
       context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
     ports:
       - "3000:3000"
     depends_on:
