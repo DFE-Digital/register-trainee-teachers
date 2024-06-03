@@ -11,9 +11,9 @@ describe Api::GetVersionedItem do
     def expected_module(item_type, model)
       if item_type == :service
         if model == :map_hesa_attributes
-          "MapHesaAttributes"
+          "HesaMapper::Attributes"
         elsif %i[degree placement].include?(model)
-          "MapHesa#{model.to_s.camelize}Attributes".camelize
+          "HesaMapper::#{model.to_s.camelize}Attributes".camelize
         else
           "#{model}_#{item_type.capitalize}".camelize
         end
