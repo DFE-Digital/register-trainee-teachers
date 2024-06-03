@@ -4,7 +4,6 @@ import tracker from './tracker.js'
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-lead-partners-autocomplete"]')
 const idElement = document.getElementById('lead-partners-id')
 
-
 let statusMessage = ' '
 
 const guard = (data) => {
@@ -17,12 +16,12 @@ const guard = (data) => {
 
 const mapToLeadPartners = (data) => data.lead_partners
 
-const tryUpdateStatusMessage = (lead_partners) => {
-  if (lead_partners.length === 0) {
+const tryUpdateStatusMessage = (leadPartners) => {
+  if (leadPartners.length === 0) {
     statusMessage = 'No results found'
   }
 
-  return lead_partners
+  return leadPartners
 }
 
 const findLeadPartners = ({ query, populateResults }) => {
