@@ -89,7 +89,7 @@ private
       raise(Pundit::NotAuthorizedError)
     end
 
-    user.providers.first || user.lead_schools.first
+    user.providers.first || user.lead_schools.first || user.lead_partners.first
   end
 
   def user_only_has_lead_school?

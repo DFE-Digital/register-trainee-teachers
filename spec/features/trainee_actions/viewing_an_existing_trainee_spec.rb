@@ -47,6 +47,24 @@ feature "View trainees" do
 
     scenario "viewing the personal details of a registered trainee" do
       and_i_visit_the_trainee
+      and_i_can_see_the_trainee_show_page
+      then_i_should_not_see_any_change_links_on_the(record_page)
+      and_i_should_not_see_any_action_links
+      and_i_should_not_see_any_incomplete_data_prompts_on_the(record_page)
+      and_i_visit_the_personal_details
+      then_i_should_not_see_any_change_links_on_the(personal_details_page)
+      and_i_should_not_see_any_incomplete_data_prompts_on_the(personal_details_page)
+    end
+  end
+
+  context "when i am a lead partner user", feature_user_can_have_multiple_organisations: true, feature_lead_partner: true do
+    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_school: @current_user.lead_partners.lead_school.first.school) }
+
+    background { given_i_am_authenticated_as_a_lead_partner_user }
+
+    scenario "viewing the personal details of a registered trainee" do
+      and_i_visit_the_trainee
+      and_i_can_see_the_trainee_show_page
       then_i_should_not_see_any_change_links_on_the(record_page)
       and_i_should_not_see_any_action_links
       and_i_should_not_see_any_incomplete_data_prompts_on_the(record_page)
@@ -181,6 +199,10 @@ private
   end
 
   def and_i_visit_the_trainee
-    visit(trainee_path(trainee))
+    visit trainee_path(trainee)
+  end
+
+  def and_i_can_see_the_trainee_show_page
+    expect(page).to have_content("Trainee progress")
   end
 end

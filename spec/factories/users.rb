@@ -26,6 +26,11 @@ FactoryBot.define do
       lead_schools { [build(:school, :lead)] }
     end
 
+    trait :with_lead_partner_organisation do
+      providers { [] }
+      lead_partners { [build(:lead_partner, :lead_school)] }
+    end
+
     trait :with_no_organisation_in_db do
       providers { [] }
       lead_schools { [] }

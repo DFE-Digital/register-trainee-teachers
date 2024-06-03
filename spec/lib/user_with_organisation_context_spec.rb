@@ -103,6 +103,12 @@ describe UserWithOrganisationContext do
 
         it { is_expected.to eq(lead_school) }
       end
+
+      context "user has only one lead partner" do
+        let(:user) { create(:user, id: 1, providers: [], lead_partners: [lead_partner]) }
+
+        it { is_expected.to eq(lead_partner) }
+      end
     end
   end
 
