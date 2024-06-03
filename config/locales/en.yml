@@ -1882,7 +1882,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/withdrawal_attributes/v01:
+        api/v01/withdrawal_attributes:
           attributes:
             reasons:
               blank: Select why the trainee withdrew from the course or select "Unknown"
@@ -1895,7 +1895,7 @@ en:
               too_long: Details about why the trainee withdrew must be 1000 characters or less
             withdraw_reasons_dfe_details:
               too_long: What the Department for Education could have done must be 1000 characters or less
-        api/degree_attributes/v01:
+        api/v01/degree_attributes:
           duplicates: This is a duplicate degree
   page_headings:
     start_page: Register trainee teachers
