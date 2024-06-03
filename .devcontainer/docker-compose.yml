@@ -17,3 +17,5 @@ services:
     image: postgres:13
     environment:
       - POSTGRES_PASSWORD=developmentpassword
+  redis:
+    image: redis
