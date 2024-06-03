@@ -31,7 +31,7 @@ const findLeadPartners = ({ query, populateResults }) => {
 
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/autocomplete/lead_partners?query=${encodedQuery} ? 'true' : 'false'}`)
+  window.fetch(`/autocomplete/lead_partners?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
     .then(mapToLeadPartners)
@@ -92,8 +92,8 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          if (value?.id && element.dataset.systemAdminRedirectLeadPartners) {
-            window.location.assign(`/system-admin/lead-lead-partners/${value.id}`)
+          if (value?.id && element.dataset.systemAdminRedirectLeadPartner) {
+            window.location.assign(`/system-admin/lead-partners/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
             setLeadPartnerHiddenField(value)
