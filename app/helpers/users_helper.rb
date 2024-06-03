@@ -5,6 +5,10 @@ module UsersHelper
     defined?(current_user) && current_user.respond_to?(:lead_school?) && current_user&.lead_school?
   end
 
+  def lead_partner_user?
+    defined?(current_user) && current_user.respond_to?(:lead_partner?) && current_user&.lead_partner?
+  end
+
   def can_view_drafts?
     defined?(current_user).present? && current_user.present? && UserPolicy.new(current_user, nil).drafts?
   end
