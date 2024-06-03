@@ -16,7 +16,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.new }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::PlacementAttributes::V01::ATTRIBUTES.map(&:to_s) }
+      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
       let(:params) do
         create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
@@ -33,13 +33,13 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the serializer" do
-        expect(Api::PlacementSerializer::V01).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
+        expect(Api::V01::PlacementSerializer).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
 
         subject
       end
 
       it "uses the attributes" do
-        expect(Api::PlacementAttributes::V01).to receive(:new).with(params).and_return(double(attributes: placement.attributes, valid?: true, errors: nil)).at_least(:once)
+        expect(Api::V01::PlacementAttributes).to receive(:new).with(params).and_return(double(attributes: placement.attributes, valid?: true, errors: nil)).at_least(:once)
 
         subject
       end
@@ -63,7 +63,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.first }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::PlacementAttributes::V01::ATTRIBUTES.map(&:to_s) }
+      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
       let(:params) do
         create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
@@ -79,13 +79,13 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the serializer" do
-        expect(Api::PlacementSerializer::V01).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
+        expect(Api::V01::PlacementSerializer).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
 
         subject
       end
 
       it "uses the attributes" do
-        expect(Api::PlacementAttributes::V01).to receive(:from_placement).with(placement).and_return(double(attributes: placement.attributes, assign_attributes: true, valid?: true, errors: nil)).at_least(:once)
+        expect(Api::V01::PlacementAttributes).to receive(:from_placement).with(placement).and_return(double(attributes: placement.attributes, assign_attributes: true, valid?: true, errors: nil)).at_least(:once)
 
         subject
       end
@@ -109,7 +109,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:trainee) { create(:trainee, placements: [existing_placement]) }
     let(:placement) { trainee.placements.new }
 
-    let(:placement_attribute_keys) { Api::PlacementAttributes::V01::ATTRIBUTES.map(&:to_s) }
+    let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
     let(:params) do
       existing_placement.attributes.slice(*placement_attribute_keys).with_indifferent_access
