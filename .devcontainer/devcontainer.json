@@ -2,16 +2,7 @@
   "name": "Dev Container",
   "dockerComposeFile": "./docker-compose.yml",
   "service": "web",
-  "shutdownAction": "stopCompose",
-  "extensions": [
-    "rebornix.Ruby",
-    "ms-azuretools.vscode-docker",
-    "yzhang.markdown-all-in-one",
-    "esbenp.prettier-vscode"
-  ],
-  "settings": {
-    "terminal.integrated.defaultProfile.linux": "bash"
-  },
+  "workspaceFolder": "/app",
   "customizations": {
     "vscode": {
       "settings": {},
