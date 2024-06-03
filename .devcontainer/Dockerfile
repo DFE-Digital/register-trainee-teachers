@@ -12,10 +12,16 @@ COPY ../.tool-versions ../Gemfile ../Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
   postgresql-dev build-base git && \
-  apk add --update --no-cache libpq yarn shared-mime-info git libc6-compat && \
+  apk add --update --no-cache libpq yarn shared-mime-info git libc6-compat postgresql-dev && \
   bundle install --jobs=4 && \
   rm -rf /usr/local/bundle/cache && \
   apk del build-dependances
+
+RUN apk add --update --no-cache postgresql && \
+  mkdir /run/postgresql && chown postgres:postgres /run/postgresql && \
+  su - postgres -c "initdb -D /var/lib/postgresql/data"
+
+CMD ["su", "-", "postgres", "-c", "pg_ctl start -D /var/lib/postgresql/data && /bin/sh"]
 
 COPY ../package.json ../yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
