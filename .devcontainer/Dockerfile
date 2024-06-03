@@ -12,7 +12,7 @@ COPY ../.tool-versions ../Gemfile ../Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
   postgresql-dev build-base git && \
-  apk add --update --no-cache libpq yarn shared-mime-info && \
+  apk add --update --no-cache libpq yarn shared-mime-info git libc6-compat && \
   bundle install --jobs=4 && \
   rm -rf /usr/local/bundle/cache && \
   apk del build-dependances
