@@ -2,7 +2,6 @@
   "name": "Dev Container",
   "dockerComposeFile": "./docker-compose.yml",
   "service": "web",
-  "workspaceFolder": ".",
   "shutdownAction": "stopCompose",
   "extensions": [
     "rebornix.Ruby",
@@ -10,7 +9,6 @@
     "yzhang.markdown-all-in-one",
     "esbenp.prettier-vscode"
   ],
-  "postCreateCommand": "bin/setup",
   "settings": {
     "terminal.integrated.defaultProfile.linux": "bash"
   },
