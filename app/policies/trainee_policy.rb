@@ -16,9 +16,13 @@ class TraineePolicy
     attr_reader :user, :scope
 
     def user_scope
-      return lead_school_scope if user.lead_school?
-
-      provider_scope
+      if user.lead_school?
+        lead_school_scope
+      elsif user.lead_partner?
+        lead_partner_scope
+      else
+        provider_scope
+      end
     end
 
     def provider_scope
@@ -27,6 +31,10 @@ class TraineePolicy
 
     def lead_school_scope
       scope.where(lead_school_id: user.organisation.id).kept
+    end
+
+    def lead_partner_scope
+      scope.where(lead_school_id: user.organisation.school&.id).kept
     end
   end
 
@@ -88,7 +96,7 @@ class TraineePolicy
   end
 
   def hide_progress_tag?
-    user.lead_school?
+    user.lead_school? || user.lead_partner?
   end
 
   def allow_actions?
@@ -116,7 +124,10 @@ class TraineePolicy
 private
 
   def read?
-    user_is_system_admin? || user_in_provider_context? || user_in_lead_school_context?
+    user_is_system_admin? ||
+      user_in_provider_context? ||
+      user_in_lead_school_context? ||
+      user_in_lead_partner_context?
   end
 
   def write?
@@ -141,6 +152,12 @@ private
     return false if trainee.lead_school.nil?
 
     user&.organisation == trainee.lead_school
+  end
+
+  def user_in_lead_partner_context?
+    return false if trainee.lead_school.nil?
+
+    user&.organisation.school == trainee.lead_school
   end
 
   def user_is_system_admin?

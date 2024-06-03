@@ -12,12 +12,16 @@ describe TraineePolicy do
   let(:lead_school) { create(:school, :lead) }
   let(:lead_school_user) { user_with_organisation(create(:user, providers: []), lead_school) }
   let(:other_lead_school_user) { user_with_organisation(create(:user, providers: []), create(:school, :lead)) }
+  let(:lead_partner) { create(:lead_partner, :lead_school, school: lead_school) }
+  let(:lead_partner_user) { user_with_organisation(create(:user, providers: []), lead_partner) }
+  let(:other_lead_partner_user) { user_with_organisation(create(:user, providers: []), create(:lead_partner, :lead_school)) }
 
   let(:provider_trainee) { create(:trainee, provider:) }
   let(:lead_school_trainee) { create(:trainee, lead_school:) }
   let(:hesa_trainee) { create(:trainee, provider: provider, hesa_id: "XXX123") }
 
   subject { described_class }
+
 
   def user_with_organisation(user, organisation)
     UserWithOrganisationContext.new(user: user, session: {}).tap do |user_with_org|
@@ -30,6 +34,8 @@ describe TraineePolicy do
     it { is_expected.to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.to permit(lead_school_user, lead_school_trainee) }
 
+    it { is_expected.to permit(lead_partner_user, lead_school_trainee) }
+
     it { is_expected.to permit(system_admin_user, provider_trainee) }
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
 
@@ -40,6 +46,8 @@ describe TraineePolicy do
     it { is_expected.to permit(provider_user, provider_trainee) }
 
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
+    it { is_expected.not_to permit(lead_partner_user, lead_school_trainee) }
+
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.not_to permit(system_admin_user, provider_trainee) }
   end
@@ -50,7 +58,9 @@ describe TraineePolicy do
 
   permissions :update?, :edit?, :destroy?, :confirm? do
     it { is_expected.to permit(provider_user, provider_trainee) }
+
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
+    it { is_expected.not_to permit(lead_partner_user, lead_school_trainee) }
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
@@ -86,6 +96,8 @@ describe TraineePolicy do
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
+
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -97,6 +109,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -108,6 +121,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -119,6 +133,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
   end
@@ -132,6 +147,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.not_to permit(system_admin_user, provider_trainee) }
     end
 
@@ -143,6 +159,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -154,6 +171,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -165,6 +183,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.not_to permit(system_admin_user, provider_trainee) }
     end
   end
@@ -178,6 +197,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -189,6 +209,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.not_to permit(system_admin_user, provider_trainee) }
     end
   end
@@ -202,6 +223,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -213,6 +235,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.not_to permit(system_admin_user, provider_trainee) }
     end
   end
@@ -226,6 +249,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.to permit(system_admin_user, provider_trainee) }
     end
 
@@ -237,6 +261,7 @@ describe TraineePolicy do
       it { is_expected.not_to permit(provider_user, provider_trainee) }
       it { is_expected.not_to permit(other_provider_user, provider_trainee) }
       it { is_expected.not_to permit(lead_school_user, provider_trainee) }
+      it { is_expected.not_to permit(lead_partner_user, provider_trainee) }
       it { is_expected.not_to permit(system_admin_user, provider_trainee) }
     end
   end
@@ -253,19 +278,32 @@ describe TraineePolicy do
     context "when the user is a lead school user" do
       it { is_expected.not_to permit(lead_school_user) }
     end
+
+    context "when the user is a lead partner user" do
+      it { is_expected.not_to permit(lead_partner_user) }
+    end
   end
 
   permissions :hide_progress_tag? do
     it { is_expected.not_to permit(provider_user, provider_trainee) }
     it { is_expected.not_to permit(provider_user, hesa_trainee) }
     it { is_expected.to permit(lead_school_user, lead_school_trainee) }
+    it { is_expected.to permit(lead_partner_user, lead_school_trainee) }
   end
 
   describe TraineePolicy::Scope do
     let(:user_with_organisation) do
-      double(UserWithOrganisationContext, system_admin?: is_system_admin?, organisation: organisation, lead_school?: is_lead_school?, provider?: is_provider?)
+      double(
+        UserWithOrganisationContext,
+        system_admin?: is_system_admin?,
+        organisation: organisation,
+        lead_school?: is_lead_school?,
+        lead_partner?: is_lead_partner?,
+        provider?: is_provider?
+      )
     end
     let(:is_lead_school?) { false }
+    let(:is_lead_partner?) { false }
     let(:is_provider?) { false }
     let(:is_system_admin?) { false }
 
@@ -299,6 +337,31 @@ describe TraineePolicy do
       let(:is_lead_school?) { true }
       let(:lead_school) { create(:school, :lead) }
       let(:organisation) { lead_school }
+
+      context "where the trainee is associated with the provider" do
+        let(:trainee) { create(:trainee, lead_school:) }
+
+        it { is_expected.to contain_exactly(trainee) }
+
+        context "and the trainee is deleted" do
+          let(:trainee) { create(:trainee, :discarded, lead_school:) }
+
+          it { is_expected.not_to contain_exactly(trainee) }
+        end
+      end
+
+      context "where the trainee is associated with another provider" do
+        let(:trainee) { create(:trainee) }
+
+        it { is_expected.not_to contain_exactly(trainee) }
+      end
+    end
+
+    context "user in lead_partner context" do
+      let(:is_lead_partner?) { true }
+      let(:lead_school) { create(:school, :lead) }
+      let(:lead_partner) { create(:lead_partner, :lead_school, school: lead_school) }
+      let(:organisation) { lead_partner }
 
       context "where the trainee is associated with the provider" do
         let(:trainee) { create(:trainee, lead_school:) }
