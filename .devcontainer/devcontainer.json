@@ -1,7 +1,6 @@
 {
   "name": "Dev Container",
-  "dockerFile": "./Dockerfile",
-  "context": "..",
+  "dockerComposeFile": "./docker-compose.yml",
   "workspaceFolder": "/app",
   "customizations": {
     "vscode": {

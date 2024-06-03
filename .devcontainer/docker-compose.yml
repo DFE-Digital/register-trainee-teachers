@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    build:
+      context: ..
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_PASSWORD=developmentpassword

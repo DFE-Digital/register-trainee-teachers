@@ -17,12 +17,6 @@ RUN apk add --update --no-cache --virtual build-dependances \
   rm -rf /usr/local/bundle/cache && \
   apk del build-dependances
 
-RUN apk add --update --no-cache postgresql && \
-  mkdir /run/postgresql && chown postgres:postgres /run/postgresql && \
-  su - postgres -c "initdb -D /var/lib/postgresql/data"
-
-CMD ["su", "-", "postgres", "-c", "pg_ctl start -D /var/lib/postgresql/data && /bin/sh"]
-
 COPY ../package.json ../yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 
