@@ -1,0 +1,29 @@
+{
+  "name": "Dev Container",
+  "dockerComposeFile": "./docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": ".",
+  "shutdownAction": "stopCompose",
+  "extensions": [
+    "rebornix.Ruby",
+    "ms-azuretools.vscode-docker",
+    "yzhang.markdown-all-in-one",
+    "esbenp.prettier-vscode"
+  ],
+  "postCreateCommand": "bin/setup",
+  "remoteUser": "vscode",
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "rebornix.Ruby",
+        "ms-azuretools.vscode-docker",
+        "yzhang.markdown-all-in-one",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
