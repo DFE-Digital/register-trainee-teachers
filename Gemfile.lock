@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 1eefb72cc21ac155694a90fac18f88dbbb616739
-  branch: hidden-pii-updates
+  revision: c3a00b4081ec123939cf4266f60f6d19b64afa65
+  ref: c3a00b4081ec123939cf4266f60f6d19b64afa65
   specs:
-    dfe-analytics (1.12.7)
+    dfe-analytics (1.12.5)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       request_store_rails (~> 2)
@@ -181,7 +181,11 @@ GEM
     coderay (1.1.3)
     colorize (1.1.0)
     concurrent-ruby (1.3.1)
+<<<<<<< HEAD
     config (5.5.1)
+=======
+    config (5.4.0)
+>>>>>>> 3b15c5d59 (Point to latest commit on hidden_pii branch)
       deep_merge (~> 1.2, >= 1.2.1)
     connection_pool (2.4.1)
     crack (1.0.0)
@@ -190,9 +194,14 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
+<<<<<<< HEAD
     csv (3.2.8)
     csv-safe (3.3.1)
       csv (~> 3.0)
+=======
+    csv (3.3.0)
+    csv-safe (3.2.1)
+>>>>>>> 3b15c5d59 (Point to latest commit on hidden_pii branch)
     cuprite (0.15)
       capybara (~> 3.0)
       ferrum (~> 0.14.0)
@@ -276,9 +285,9 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.68.0)
-      google-apis-core (>= 0.14.0, < 2.a)
-    google-apis-core (0.14.1)
+    google-apis-bigquery_v2 (0.70.0)
+      google-apis-core (>= 0.15.0, < 2.a)
+    google-apis-core (0.15.0)
       addressable (~> 2.5, >= 2.5.1)
       googleauth (~> 1.9)
       httpclient (>= 2.8.1, < 3.a)
@@ -400,8 +409,9 @@ GEM
     minitest (5.23.1)
     msgpack (1.7.2)
     multi_json (1.15.0)
-    multi_xml (0.6.0)
-    multipart-post (2.4.0)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
+    multipart-post (2.4.1)
     mutex_m (0.2.0)
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.2)
