@@ -175,4 +175,75 @@ describe "`GET /trainees` endpoint" do
       expect(response.parsed_body["data"].count).to eq(trainees.count + submitted_trainees.count)
     end
   end
+
+  context "filtering by trn" do
+    let!(:trainees_without_trn) { create_list(:trainee, 2, :submitted_for_trn, provider: auth_token.provider) }
+
+    before do
+      get(
+        "/api/v0.1/trainees",
+        headers: { Authorization: "Bearer #{token}" },
+        params: params,
+      )
+    end
+
+    context "with has_trn" do
+      let(:params) { { has_trn: } }
+
+      context "when has_turn is true" do
+        let(:has_trn) { true }
+
+        it "returns the trainees with a trn" do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["data"].count).to eq(10)
+          expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
+            .to match_array(trainees.pluck(:slug))
+        end
+      end
+
+      context "when has_trn is false" do
+        let(:has_trn) { false }
+
+        it "return the trainees without a trn" do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["data"].count).to eq(2)
+          expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
+            .to match_array(trainees_without_trn.pluck(:slug))
+        end
+      end
+
+      context "when has_trn is nil" do
+        let(:has_trn) { nil }
+
+        it "returns all the trainees" do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["data"].count).to eq(12)
+          expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
+            .to match_array(trainees.pluck(:slug) + trainees_without_trn.pluck(:slug))
+        end
+      end
+
+      context "when has_trn is empty" do
+        let(:has_trn) { "" }
+
+        it "returns all the trainees" do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body["data"].count).to eq(12)
+          expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
+            .to match_array(trainees.pluck(:slug) + trainees_without_trn.pluck(:slug))
+        end
+      end
+    end
+
+    context "without has_trn" do
+      let(:params) { {} }
+
+      it "returns all the trainees" do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body["data"].count).to eq(12)
+        expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
+          .to match_array(trainees.pluck(:slug) + trainees_without_trn.pluck(:slug))
+      end
+    end
+  end
 end

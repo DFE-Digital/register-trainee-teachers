@@ -6,13 +6,23 @@ module Api
       include ActiveModel::Model
       include ActiveModel::Attributes
 
-      ATTRIBUTES = %i[status since academic_cycle page per_page sort_order].freeze
-      ATTRIBUTES.each { |attr| attribute attr }
+      ATTRIBUTES = {
+        status: {},
+        since: {},
+        academic_cycle: {},
+        has_trn: { type: :boolean },
+        page: {},
+        per_page: {},
+        sort_order: {},
+      }.freeze.each do |name, config|
+        attribute(name, config[:type], **config.fetch(:options, {}))
+      end
 
       validate :check_statuses
       validate :check_since
       validate :check_academic_cycle
       validates :sort_order, inclusion: %w[desc asc], allow_blank: true
+      validates :has_trn, inclusion: [true, false], allow_nil: true
 
     private
 
