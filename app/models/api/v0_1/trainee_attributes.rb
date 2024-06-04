@@ -160,21 +160,29 @@ module Api
 
         updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes.new({})
 
-        updated_hesa_disabilites = update_hesa_disabilites(updated_hesa_attributes, new_hesa_attributes)
-        updated_hesa_attributes.assign_attributes(new_hesa_attributes.merge(updated_hesa_disabilites))
+        updated_hesa_attributes.assign_attributes(new_hesa_attributes)
 
         updated_hesa_attributes
       end
 
-      def update_hesa_disabilites(original_hesa_attributes, new_hesa_attributes)
-        updated_hesa_disabilites = original_hesa_attributes.hesa_disabilities
+      def self.params_with_updated_disabilities(new_trainee_attributes, params_for_update)
+        updated_hesa_disabilities = update_hesa_disabilities(new_trainee_attributes.hesa_trainee_detail_attributes.hesa_disabilities, params_for_update)
 
-        updated_hesa_disabilites = updated_hesa_disabilites.merge(new_hesa_attributes[:hesa_disabilities]) if new_hesa_attributes[:hesa_disabilities].present?
+        updated_disabilities = updated_hesa_disabilities.map do |_key, value|
+          Disability.find_by(name: ::Hesa::CodeSets::Disabilities::MAPPING[value])
+        end
 
-        { hesa_disabilities: updated_hesa_disabilites }
+        params_for_update.merge(hesa_disabilities: updated_hesa_disabilities, disabilities: updated_disabilities)
       end
 
-      def self.from_trainee(trainee)
+      def self.update_hesa_disabilities(original_hesa_disabilities, params_for_update)
+        updated_hesa_disabilites = original_hesa_disabilities
+        updated_hesa_disabilites = updated_hesa_disabilites.merge(params_for_update[:hesa_disabilities]) if params_for_update[:hesa_disabilities].present?
+
+        updated_hesa_disabilites
+      end
+
+      def self.from_trainee(trainee, params_for_update)
         trainee_attributes = trainee.attributes.select { |k, _v|
           ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
         }
@@ -186,7 +194,12 @@ module Api
         trainee_attributes = trainee_attributes.merge(hesa_trainee_detail_attributes)
         trainee_attributes["sex"] = Trainee.sexes[trainee.sex]
 
-        new(trainee_attributes)
+        new_trainee_attributes = new(trainee_attributes)
+
+        params_with_updated_disabilities = params_with_updated_disabilities(new_trainee_attributes, trainee.disabilities, params_for_update)
+
+        new_trainee_attributes.assign_attributes(params_with_updated_disabilities)
+        new_trainee_attributes
       end
 
       def deep_attributes

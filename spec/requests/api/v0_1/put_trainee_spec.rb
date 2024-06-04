@@ -703,9 +703,31 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
           expect(response.parsed_body[:data][:disability1]).to eq("96")
+          expect(response.parsed_body[:data][:disability2]).to be_nil
 
           expect(trainee.reload.disabilities.count).to eq(1)
           expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Other")
+        end
+      end
+
+      context "when disability1 is set" do
+        let(:params) do
+          {
+            data: {
+              disability1: "57",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("57")
+          expect(response.parsed_body[:data][:disability2]).to be_nil
+
+          expect(trainee.disabilities.count).to eq(1)
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Deaf")
         end
       end
 
@@ -727,6 +749,28 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
           expect(trainee.disabilities.count).to eq(2)
           expect(trainee.disabilities.map(&:name)).to contain_exactly("Other", "Deaf")
+        end
+      end
+
+      context "when disability1 & disability2 is set" do
+        let(:params) do
+          {
+            data: {
+              disability1: "58",
+              disability2: "57",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("58")
+          expect(response.parsed_body[:data][:disability2]).to eq("57")
+
+          expect(trainee.disabilities.count).to eq(2)
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
         end
       end
     end

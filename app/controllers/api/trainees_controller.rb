@@ -43,9 +43,7 @@ module Api
 
     def update
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
-      attributes = trainee_attributes_service.from_trainee(trainee)
-
-      attributes.assign_attributes(hesa_mapped_params_for_update)
+      attributes = trainee_attributes_service.from_trainee(trainee, hesa_mapped_params_for_update)
 
       succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
 

@@ -55,7 +55,7 @@ module Api
           .compact
 
           if update && !disabilities?
-            mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure)
+            mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure, :disabilities)
           end
 
           mapped_params
