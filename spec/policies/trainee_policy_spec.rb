@@ -22,7 +22,6 @@ describe TraineePolicy do
 
   subject { described_class }
 
-
   def user_with_organisation(user, organisation)
     UserWithOrganisationContext.new(user: user, session: {}).tap do |user_with_org|
       allow(user_with_org).to receive(:organisation).and_return(organisation)
@@ -299,7 +298,7 @@ describe TraineePolicy do
         organisation: organisation,
         lead_school?: is_lead_school?,
         lead_partner?: is_lead_partner?,
-        provider?: is_provider?
+        provider?: is_provider?,
       )
     end
     let(:is_lead_school?) { false }
