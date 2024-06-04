@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# spec/services/api_version_generator_spec.rb
 
 require 'rails_helper'
 
@@ -47,7 +48,9 @@ RSpec.describe ApiVersionGenerator do
       allow(File).to receive(:readlines).with(example_file).and_return(file_content.lines)
       allow(File).to receive(:readlines).with(extra_module_file).and_return(extra_module_file_content.lines)
       allow(FileUtils).to receive(:mkdir_p)
-      allow(File).to receive(:write)
+      allow(File).to receive(:write) do |file, content|
+        puts "Writing to #{file}:\n#{content}\n"
+      end
     end
 
     it 'creates the new directory' do
@@ -63,13 +66,15 @@ RSpec.describe ApiVersionGenerator do
         module Api
           module V10
             class TraineeFilterParamsAttributes < Api::V01::TraineeFilterParamsAttributes
-              # ... code
             end
           end
         end
       RUBY
 
-      expect(File).to receive(:write).with(new_file, expected_content)
+      expect(File).to receive(:write).with(new_file, expected_content) do |file, content|
+        puts "Expected content for #{file}:\n#{expected_content}\n"
+        puts "Generated content for #{file}:\n#{content}\n"
+      end
       service.generate_new_version
     end
 
@@ -81,14 +86,16 @@ RSpec.describe ApiVersionGenerator do
           module V10
             module HesaMapper
               class DegreeAttributes < Api::V01::HesaMapper::DegreeAttributes
-                # ... code
               end
             end
           end
         end
       RUBY
 
-      expect(File).to receive(:write).with(new_extra_module_file, expected_extra_module_content)
+      expect(File).to receive(:write).with(new_extra_module_file, expected_extra_module_content) do |file, content|
+        puts "Expected content for #{file}:\n#{expected_extra_module_content}\n"
+        puts "Generated content for #{file}:\n#{content}\n"
+      end
       service.generate_new_version
     end
   end
