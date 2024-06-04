@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ApiVersionGenerator do
-  let(:old_version) { 'v0_1' }
-  let(:new_version) { 'v1_0' }
-  let(:service) { described_class.call(old_version: old_version, new_version: new_version) }
+  let(:old_version) { "v0_1" }
+  let(:new_version) { "v1_0" }
+  let(:service) { described_class.call(old_version:, new_version:) }
 
-  describe '#generate_new_version' do
-    let(:example_file) { 'app/models/api/v0_1/trainee_filter_params_attributes.rb' }
-    let(:new_file) { 'app/models/api/v1_0/trainee_filter_params_attributes.rb' }
+  describe "#generate_new_version" do
+    let(:example_file) { "app/models/api/v0_1/trainee_filter_params_attributes.rb" }
+    let(:new_file) { "app/models/api/v1_0/trainee_filter_params_attributes.rb" }
     let(:file_content) do
       <<~RUBY
         # frozen_string_literal: true
@@ -24,8 +24,8 @@ RSpec.describe ApiVersionGenerator do
       RUBY
     end
 
-    let(:extra_module_file) { 'app/services/api/v0_1/hesa_mapper/degree_attributes.rb' }
-    let(:new_extra_module_file) { 'app/services/api/v1_0/hesa_mapper/degree_attributes.rb' }
+    let(:extra_module_file) { "app/services/api/v0_1/hesa_mapper/degree_attributes.rb" }
+    let(:new_extra_module_file) { "app/services/api/v1_0/hesa_mapper/degree_attributes.rb" }
     let(:extra_module_file_content) do
       <<~RUBY
         # frozen_string_literal: true
@@ -50,13 +50,13 @@ RSpec.describe ApiVersionGenerator do
       allow(File).to receive(:write)
     end
 
-    it 'creates the new directory' do
-      expect(FileUtils).to receive(:mkdir_p).with('app/models/api/v1_0')
-      expect(FileUtils).to receive(:mkdir_p).with('app/services/api/v1_0/hesa_mapper')
+    it "creates the new directory" do
+      expect(FileUtils).to receive(:mkdir_p).with("app/models/api/v1_0")
+      expect(FileUtils).to receive(:mkdir_p).with("app/services/api/v1_0/hesa_mapper")
       service
     end
 
-    it 'writes the new file with updated module and class' do
+    it "writes the new file with updated module and class" do
       expected_content = <<~RUBY
         # frozen_string_literal: true
 
@@ -72,7 +72,7 @@ RSpec.describe ApiVersionGenerator do
       service
     end
 
-    it 'writes the new file with updated module and class for files with extra modules' do
+    it "writes the new file with updated module and class for files with extra modules" do
       expected_extra_module_content = <<~RUBY
         # frozen_string_literal: true
 

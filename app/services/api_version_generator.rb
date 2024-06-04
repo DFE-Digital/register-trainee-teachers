@@ -17,7 +17,7 @@ class ApiVersionGenerator
     end
   end
 
-  private
+private
 
   attr_reader :old_version, :new_version
 
@@ -31,7 +31,7 @@ class ApiVersionGenerator
 
   def create_new_directory(new_file)
     new_dir = File.dirname(new_file)
-    FileUtils.mkdir_p(new_dir) unless Dir.exist?(new_dir)
+    FileUtils.mkdir_p(new_dir)
   end
 
   def generate_new_class_content(file)
@@ -60,15 +60,15 @@ class ApiVersionGenerator
   end
 
   def transform_module_lines(module_lines)
-    module_lines.reject { |line| line =~ /^#\s*frozen_string_literal/ }
+    module_lines.grep_v(/^#\s*frozen_string_literal/)
                 .map { |line| line.sub(old_version.camelize, new_version.camelize) }
                 .join("\n")
                 .strip
   end
 
   def extract_class_name_and_parent_class(class_line, file)
-    relative_path = file.gsub(%r{app/(models|serializers|services)/api/#{old_version}/}, '').gsub('.rb', '')
-    module_path = relative_path.split('/').map(&:camelize).join('::')
+    relative_path = file.gsub(%r{app/(models|serializers|services)/api/#{old_version}/}, "").gsub(".rb", "")
+    module_path = relative_path.split("/").map(&:camelize).join("::")
     parent_class = "Api::#{old_version.camelize}::#{module_path}"
     class_name = class_line.split[1]
 
@@ -77,7 +77,7 @@ class ApiVersionGenerator
 
   def generate_content(module_declarations, class_name, parent_class, module_lines)
     last_module_indent = module_lines.last[/^\s*/]
-    class_indent = last_module_indent + '  '
+    class_indent = "#{last_module_indent}  "
     module_indents = module_lines.map { |line| line[/^\s*/] }.uniq
     indented_endings = module_indents.reverse.map { |indent| "#{indent}end" }.join("\n")
 
