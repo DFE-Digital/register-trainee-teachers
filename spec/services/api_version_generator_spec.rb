@@ -1,12 +1,11 @@
 # frozen_string_literal: true
-# spec/services/api_version_generator_spec.rb
 
 require 'rails_helper'
 
 RSpec.describe ApiVersionGenerator do
   let(:old_version) { 'v0_1' }
   let(:new_version) { 'v1_0' }
-  let(:service) { described_class.new(old_version: old_version, new_version: new_version) }
+  let(:service) { described_class.call(old_version: old_version, new_version: new_version) }
 
   describe '#generate_new_version' do
     let(:example_file) { 'app/models/api/v0_1/trainee_filter_params_attributes.rb' }
@@ -48,15 +47,13 @@ RSpec.describe ApiVersionGenerator do
       allow(File).to receive(:readlines).with(example_file).and_return(file_content.lines)
       allow(File).to receive(:readlines).with(extra_module_file).and_return(extra_module_file_content.lines)
       allow(FileUtils).to receive(:mkdir_p)
-      allow(File).to receive(:write) do |file, content|
-        puts "Writing to #{file}:\n#{content}\n"
-      end
+      allow(File).to receive(:write)
     end
 
     it 'creates the new directory' do
       expect(FileUtils).to receive(:mkdir_p).with('app/models/api/v1_0')
       expect(FileUtils).to receive(:mkdir_p).with('app/services/api/v1_0/hesa_mapper')
-      service.generate_new_version
+      service
     end
 
     it 'writes the new file with updated module and class' do
@@ -71,11 +68,8 @@ RSpec.describe ApiVersionGenerator do
         end
       RUBY
 
-      expect(File).to receive(:write).with(new_file, expected_content) do |file, content|
-        puts "Expected content for #{file}:\n#{expected_content}\n"
-        puts "Generated content for #{file}:\n#{content}\n"
-      end
-      service.generate_new_version
+      expect(File).to receive(:write).with(new_file, expected_content)
+      service
     end
 
     it 'writes the new file with updated module and class for files with extra modules' do
@@ -92,11 +86,8 @@ RSpec.describe ApiVersionGenerator do
         end
       RUBY
 
-      expect(File).to receive(:write).with(new_extra_module_file, expected_extra_module_content) do |file, content|
-        puts "Expected content for #{file}:\n#{expected_extra_module_content}\n"
-        puts "Generated content for #{file}:\n#{content}\n"
-      end
-      service.generate_new_version
+      expect(File).to receive(:write).with(new_extra_module_file, expected_extra_module_content)
+      service
     end
   end
 end
