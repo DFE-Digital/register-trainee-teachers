@@ -680,14 +680,6 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
     end
 
     describe "with disabilities" do
-      let(:params) do
-        {
-          data: {
-            first_names: "Alice",
-          },
-        }
-      end
-
       before do
         create(:disability, :blind)
         create(:disability, :deaf)
@@ -714,6 +706,27 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
           expect(trainee.reload.disabilities.count).to eq(1)
           expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Other")
+        end
+      end
+
+      context "when disability2 is set" do
+        let(:params) do
+          {
+            data: {
+              disability2: "57",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("96")
+          expect(response.parsed_body[:data][:disability2]).to eq("57")
+
+          expect(trainee.disabilities.count).to eq(2)
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Other", "Deaf")
         end
       end
     end

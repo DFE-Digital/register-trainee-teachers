@@ -154,13 +154,24 @@ module Api
         end
       end
 
-      def update_hesa_trainee_detail_attributes(attributes)
-        new_hesa_attributes = attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
+      def update_hesa_trainee_detail_attributes(new_attributes)
+        new_hesa_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
         return if new_hesa_attributes.blank?
 
         updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes.new({})
-        updated_hesa_attributes.assign_attributes(new_hesa_attributes)
+
+        updated_hesa_disabilites = update_hesa_disabilites(updated_hesa_attributes, new_hesa_attributes)
+        updated_hesa_attributes.assign_attributes(new_hesa_attributes.merge(updated_hesa_disabilites))
+
         updated_hesa_attributes
+      end
+
+      def update_hesa_disabilites(original_hesa_attributes, new_hesa_attributes)
+        updated_hesa_disabilites = original_hesa_attributes.hesa_disabilities
+
+        updated_hesa_disabilites = updated_hesa_disabilites.merge(new_hesa_attributes[:hesa_disabilities]) if new_hesa_attributes[:hesa_disabilities].present?
+
+        { hesa_disabilities: updated_hesa_disabilites }
       end
 
       def self.from_trainee(trainee)
