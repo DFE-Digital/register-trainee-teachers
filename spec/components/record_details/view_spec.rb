@@ -13,6 +13,7 @@ module RecordDetails
     let(:trainee) do
       create(
         :trainee,
+        :imported_from_hesa,
         state,
         training_route,
         trn: Faker::Number.number(digits: 10),

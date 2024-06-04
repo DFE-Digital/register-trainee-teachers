@@ -79,7 +79,7 @@
 module Hesa
   class Student < ApplicationRecord
     self.table_name = "hesa_students"
-    self.ignored_columns += %w[student_instance_id] # rubocop:disable Rails/UnusedIgnoredColumns
+    self.ignored_columns += %w[student_instance_id]
 
     belongs_to :trainee,
                foreign_key: :hesa_id,

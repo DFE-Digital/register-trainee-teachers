@@ -67,4 +67,10 @@ RSpec.configure do |config|
   config.after do
     Timecop.return if use_next_academic_year
   end
+
+  config.before do |example|
+    if (match = example.metadata[:file_path].match(%r{spec/requests/api/(v\d+\.\d+)/}))
+      RSpec::OpenAPI.application_version = match[1]
+    end
+  end
 end

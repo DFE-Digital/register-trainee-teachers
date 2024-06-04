@@ -58,8 +58,8 @@ module Trainees
 
     def record_source(trainees, record_source_values)
       scope_map = {
-        "dttp" => :created_from_dttp,
-        "manual" => :with_manual_application,
+        "dttp" => :dttp_record,
+        "manual" => :manual_record,
         "apply" => :with_apply_application,
         "hesa" => :imported_from_hesa,
       }
@@ -162,6 +162,16 @@ module Trainees
       end
     end
 
+    def trn(trainees, has_trn)
+      return trainees if has_trn.nil?
+
+      if has_trn
+        trainees.with_trn
+      else
+        trainees.without_trn
+      end
+    end
+
     def filter_trainees
       filtered_trainees = trainees
 
@@ -176,6 +186,7 @@ module Trainees
       filtered_trainees = provider(filtered_trainees, filters[:provider])
       filtered_trainees = record_completion(filtered_trainees, filters[:record_completion])
       filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])
+      filtered_trainees = trn(filtered_trainees, filters[:has_trn])
 
       record_source(filtered_trainees, filters[:record_source])
     end

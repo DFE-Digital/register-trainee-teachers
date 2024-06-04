@@ -6,7 +6,7 @@ module Trainees
   describe Filter do
     subject { described_class.call(trainees:, filters:) }
 
-    let(:draft_trainee) { create(:trainee, :incomplete_draft, first_names: "Draft") }
+    let(:draft_trainee) { create(:trainee, :incomplete_draft, :created_manually, first_names: "Draft") }
     let(:apply_draft_trainee) { create(:trainee, :with_apply_application, first_names: "Apply") }
     let(:filters) { nil }
     let(:trainees) { Trainee.all }
@@ -96,6 +96,31 @@ module Trainees
       let(:filters) { { training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad] } }
 
       it { is_expected.to eq([provider_led_postgrad_trainee]) }
+    end
+
+    context "with has_trn filter" do
+      let!(:trainee_without_trn) { create(:trainee, :submitted_for_trn) }
+      let!(:trainee_with_trn) { create(:trainee, :trn_received) }
+
+      context "when has_trn is nil" do
+        let(:filters) { { has_trn: nil } }
+
+        it do
+          expect(subject).to contain_exactly(trainee_without_trn, trainee_with_trn)
+        end
+      end
+
+      context "when has_trn is true" do
+        let(:filters) { { has_trn: true } }
+
+        it { is_expected.to contain_exactly(trainee_with_trn) }
+      end
+
+      context "when has_trn is false" do
+        let(:filters) { { has_trn: false } }
+
+        it { is_expected.to contain_exactly(trainee_without_trn) }
+      end
     end
 
     context "with level filter" do

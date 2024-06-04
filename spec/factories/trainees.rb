@@ -532,6 +532,7 @@ FactoryBot.define do
     end
 
     trait :with_apply_application do
+      record_source { Sourceable::APPLY_SOURCE }
       apply_application
     end
 
@@ -652,11 +653,15 @@ FactoryBot.define do
     end
 
     trait :created_from_dttp do
-      created_from_dttp { true }
+      record_source { Sourceable::DTTP_SOURCE }
     end
 
     trait :created_from_api do
-      record_source { RecordSources::API }
+      record_source { Sourceable::API_SOURCE }
+    end
+
+    trait :created_manually do
+      record_source { Sourceable::MANUAL_SOURCE }
     end
 
     trait :imported_from_hesa do
@@ -666,7 +671,7 @@ FactoryBot.define do
       end
 
       with_hesa_student
-      created_from_hesa { true }
+      record_source { Sourceable::HESA_COLLECTION_SOURCE }
       hesa_updated_at { Faker::Time.between(from: 1.month.ago, to: Time.zone.now) }
 
       after(:create) do |trainee, evaluator|

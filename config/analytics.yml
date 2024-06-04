@@ -138,6 +138,22 @@ shared:
     - created_at
     - submitted_at
     - updated_at
+  lead_partners:
+    - id
+    - urn
+    - record_type
+    - name
+    - ukprn
+    - school_id
+    - provider_id
+    - created_at
+    - updated_at
+  lead_partner_users:
+    - id
+    - lead_partner_id
+    - user_id
+    - created_at
+    - updated_at
   lead_school_users:
     - created_at
     - id

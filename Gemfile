@@ -60,7 +60,7 @@ gem "sidekiq-cron", "~> 1.12"
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
 
-gem "config", "~> 5.4"
+gem "config", "~> 5.5"
 
 gem "httparty", "~> 0.22"
 
@@ -144,6 +144,7 @@ group :qa, :review, :staging, :production do
 end
 
 group :development, :test do
+  gem "awesome_print"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 
@@ -177,7 +178,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "timecop", "~> 0.9.8"
+  gem "timecop", "~> 0.9.9"
 end
 
 group :development do
@@ -215,6 +216,7 @@ group :test do
   # Clean out the database between tests
   gem "database_cleaner-active_record"
 
+  gem "rspec-openapi"
   gem "rspec-retry"
 end
 

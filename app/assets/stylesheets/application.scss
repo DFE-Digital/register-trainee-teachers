@@ -1,5 +1,12 @@
 @import "./govuk_style_setup";
-@import "govuk-frontend/dist/govuk/all";
+
+@import "govuk-frontend/dist/govuk/base";
+@import "govuk-frontend/dist/govuk/core";
+@import "govuk-frontend/dist/govuk/objects";
+@import "govuk-frontend/dist/govuk/components";
+@import "govuk-frontend/dist/govuk/utilities";
+@import "govuk-frontend/dist/govuk/overrides";
+
 @import "@ministryofjustice/frontend/moj/all";
 
 $moj-images-path: "@ministryofjustice/frontend/moj/assets/images/";
@@ -129,7 +136,7 @@ body:not(.js-enabled) .app-js-only {
   }
 }
 
-.app-start-page-banner + .govuk-width-container > .govuk-notification-banner {
+.app-start-page-banner+.govuk-width-container>.govuk-notification-banner {
   margin-top: 40px;
 }
 

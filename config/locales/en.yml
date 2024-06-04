@@ -1639,12 +1639,12 @@ en:
           attributes:
             first_names:
               blank: Enter a first name
-              too_long: First name must be 50 characters or fewer
+              too_long: First name must be 60 characters or fewer
             last_name:
               blank: Enter a last name
-              too_long: Last name must be 50 characters or fewer
+              too_long: Last name must be 60 characters or fewer
             middle_names:
-              too_long: Middle name must be 50 characters or fewer
+              too_long: Middle name must be 60 characters or fewer
             date_of_birth:
               blank: Enter a date of birth
               future: Enter a date of birth that is in the past, for example 31 3 1980
@@ -1882,7 +1882,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/withdrawal_attributes:
+        api/v01/withdrawal_attributes:
           attributes:
             reasons:
               blank: Select why the trainee withdrew from the course or select "Unknown"
@@ -1895,7 +1895,7 @@ en:
               too_long: Details about why the trainee withdrew must be 1000 characters or less
             withdraw_reasons_dfe_details:
               too_long: What the Department for Education could have done must be 1000 characters or less
-        api/degree_attributes/v01:
+        api/v01/degree_attributes:
           duplicates: This is a duplicate degree
   page_headings:
     start_page: Register trainee teachers

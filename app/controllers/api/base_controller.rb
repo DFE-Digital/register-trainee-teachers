@@ -25,6 +25,13 @@ module Api
       )
     end
 
+    rescue_from NotImplementedError do |_e|
+      render(
+        json: { errors: ["Version '#{current_version}' not available"] },
+        status: :bad_request,
+      )
+    end
+
     def check_feature_flag!
       return if FeatureService.enabled?(:register_api)
 
@@ -79,10 +86,6 @@ module Api
       yield
       duration = Time.zone.now - start
       Yabeda.register_api.request_duration.measure({}, duration)
-    end
-
-    def current_version_class_name
-      current_version.gsub(".", "").camelize
     end
   end
 end

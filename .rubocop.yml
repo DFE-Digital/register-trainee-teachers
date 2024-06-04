@@ -111,11 +111,19 @@ Rails/RedundantActiveRecordAllMethod:
 
 RSpec/FilePath:
   Exclude:
-    - 'spec/data_migrations/*'
+    - 'spec/data_migrations/**/*'
+    - 'spec/models/api/**/*'
+    - 'spec/services/api/**/*'
+    - 'spec/requests/api/**/*'
+    - 'spec/serializers/api/**/*'
 
 RSpec/SpecFilePathFormat:
   Exclude:
-    - 'spec/data_migrations/*'
+    - 'spec/data_migrations/**/*'
+    - 'spec/models/api/**/*'
+    - 'spec/services/api/**/*'
+    - 'spec/requests/api/**/*'
+    - 'spec/serializers/api/**/*'
 
 Capybara/NegationMatcher:
   EnforcedStyle: not_to

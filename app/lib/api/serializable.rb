@@ -5,7 +5,7 @@ module Api
   private
 
     def serializer_klass
-      @serializer_klass ||= Serializer.for(model:, version:)
+      @serializer_klass ||= Api::GetVersionedItem.for_serializer(model:, version:)
     end
   end
 end

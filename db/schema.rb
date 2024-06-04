@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_143519) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -661,7 +661,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
     t.string "course_study_mode"
     t.integer "course_year"
     t.string "course_age_range"
-    t.date "postgrad_apprenticeship_start_date"
+    t.date "pg_apprenticeship_start_date"
     t.string "funding_method"
     t.string "ni_number"
     t.string "additional_training_initiative"
@@ -686,6 +686,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
     t.datetime "submitted_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "lead_partner_users", force: :cascade do |t|
+    t.bigint "lead_partner_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_partner_id"], name: "index_lead_partner_users_on_lead_partner_id"
+    t.index ["user_id"], name: "index_lead_partner_users_on_user_id"
+  end
+
+  create_table "lead_partners", force: :cascade do |t|
+    t.citext "urn", null: false
+    t.string "record_type", null: false
+    t.string "name"
+    t.citext "ukprn"
+    t.bigint "school_id"
+    t.bigint "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_lead_partners_on_provider_id"
+    t.index ["school_id"], name: "index_lead_partners_on_school_id"
+    t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
+    t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
   end
 
   create_table "lead_school_users", force: :cascade do |t|
@@ -984,6 +1008,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_17_150301) do
   add_foreign_key "dqt_trn_requests", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "hesa_trainee_details", "trainees"
+  add_foreign_key "lead_partner_users", "lead_partners"
+  add_foreign_key "lead_partner_users", "users"
+  add_foreign_key "lead_partners", "providers"
+  add_foreign_key "lead_partners", "schools"
   add_foreign_key "lead_school_users", "schools", column: "lead_school_id"
   add_foreign_key "lead_school_users", "users"
   add_foreign_key "nationalisations", "nationalities"

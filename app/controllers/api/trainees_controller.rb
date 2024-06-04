@@ -8,6 +8,7 @@ module Api
       trainees, errors = GetTraineesService.call(
         provider: current_provider,
         params: params,
+        version: version,
       )
 
       if errors.blank?
@@ -42,22 +43,22 @@ module Api
 
     def update
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
-      begin
-        attributes = trainee_attributes_service.from_trainee(trainee)
-        attributes.assign_attributes(hesa_mapped_params_for_update)
-        succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
+      attributes = trainee_attributes_service.from_trainee(trainee)
 
-        if succeeded
-          render(json: { data: serializer_klass.new(trainee).as_hash })
-        else
-          render(
-            json: {
-              message: "Validation failed: #{validation.all_errors.count} #{'error'.pluralize(validation.all_errors.count)} prohibited this trainee from being saved",
-              errors: validation.all_errors,
-            },
-            status: :unprocessable_entity,
-          )
-        end
+      attributes.assign_attributes(hesa_mapped_params_for_update)
+
+      succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
+
+      if succeeded
+        render(json: { data: serializer_klass.new(trainee).as_hash })
+      else
+        render(
+          json: {
+            message: "Validation failed: #{validation.all_errors.count} #{'error'.pluralize(validation.all_errors.count)} prohibited this trainee from being saved",
+            errors: validation.all_errors,
+          },
+          status: :unprocessable_entity,
+        )
       end
     end
 
@@ -68,7 +69,7 @@ module Api
         params: params.require(:data).permit(
           hesa_mapper_class::ATTRIBUTES +
           hesa_mapper_class.disability_attributes(params),
-          trainee_attributes_service::ATTRIBUTES +
+          trainee_attributes_service::ATTRIBUTES.keys +
           hesa_trainee_details_attributes_service::ATTRIBUTES,
           placements_attributes: placements_attributes,
           degrees_attributes: degree_attributes,
@@ -80,7 +81,7 @@ module Api
     def hesa_mapped_params_for_update
       hesa_mapper_class.call(
         params: params.require(:data).permit(
-          hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES,
+          hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES.keys,
           hesa_mapper_class.disability_attributes(params),
           hesa_trainee_details_attributes_service::ATTRIBUTES,
         ),
@@ -88,37 +89,35 @@ module Api
     end
 
     def hesa_mapper_class
-      Object.const_get("Api::MapHesaAttributes::#{current_version_class_name}")
+      Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
     end
 
     def placements_attributes
-      hesa_attributes = Object.const_get("Api::MapHesaAttributes::Placements::#{current_version_class_name}")::ATTRIBUTES
-      standard_attributes = Api::Attributes.for(model: :placement, version: version)::ATTRIBUTES
-      standard_attributes + hesa_attributes
+      @placements_attributes ||= begin
+        hesa_attributes = Api::GetVersionedItem.for_service(model: :placement, version: version)::ATTRIBUTES
+        standard_attributes = Api::GetVersionedItem.for_attributes(model: :placement, version: version)::ATTRIBUTES
+        standard_attributes + hesa_attributes
+      end
     end
 
     def nationality_attributes
-      Api::Attributes.for(model: :nationality, version: version)::ATTRIBUTES
+      Api::GetVersionedItem.for_attributes(model: :nationality, version: version)::ATTRIBUTES
     end
 
     def update_trainee_service_class
-      Object.const_get("Api::UpdateTraineeService::#{current_version_class_name}")
+      Api::GetVersionedItem.for_service(model: :update_trainee, version: version)
     end
 
     def trainee_attributes_service
-      Api::Attributes.for(model: :trainee, version: version)
+      Api::GetVersionedItem.for_attributes(model: :trainee, version: version)
     end
 
     def hesa_trainee_details_attributes_service
-      Api::Attributes.for(model: :hesa_trainee_detail, version: version)
+      Api::GetVersionedItem.for_attributes(model: :hesa_trainee_detail, version: version)
     end
 
     def degree_attributes
-      @degree_attributes ||= Api::Attributes.for(model: :degree, version: version)::ATTRIBUTES
-    end
-
-    def trainee_update_params
-      params.require(:data).permit(trainee_attributes_service::ATTRIBUTES)
+      @degree_attributes ||= Api::GetVersionedItem.for_attributes(model: :degree, version: version)::ATTRIBUTES
     end
 
     def model = :trainee

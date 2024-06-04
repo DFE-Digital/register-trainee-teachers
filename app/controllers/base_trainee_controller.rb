@@ -192,11 +192,11 @@ private
   end
 
   def records_contain_manual_source?
-    policy_scope(trainee_search_scope).with_manual_application.size.positive?
+    policy_scope(trainee_search_scope).manual_record.size.positive?
   end
 
   def records_contain_dttp_source?
-    policy_scope(trainee_search_scope).created_from_dttp.size.positive?
+    policy_scope(trainee_search_scope).dttp_record.size.positive?
   end
 
   def records_contain_apply_source?

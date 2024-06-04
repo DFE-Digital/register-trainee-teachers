@@ -18,8 +18,21 @@ module Sourceable
     API_SOURCE,
   ].freeze
   NON_TRN_SOURCES = ALL - [HESA_TRN_DATA_SOURCE].freeze
+  HESA_SOURCES = [HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE].freeze
 
   included do
     enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
+
+    after_initialize :set_manual_record_source, if: -> { record_source.nil? }
+
+    def hesa_record?
+      hesa_collection_record? || hesa_trn_data_record?
+    end
+
+  private
+
+    def set_manual_record_source
+      self.record_source = MANUAL_SOURCE
+    end
   end
 end

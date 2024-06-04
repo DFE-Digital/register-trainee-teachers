@@ -30,6 +30,7 @@ module HasCourseAttributes
   def fix_invalid_primary_course_subjects(course_attributes)
     # This always ensures "primary teaching" is the first subject or inserts it if it's missing
     other_subjects = course_subjects - [CourseSubjects::PRIMARY_TEACHING]
+
     course_attributes.merge(course_subject_one: CourseSubjects::PRIMARY_TEACHING,
                             course_subject_two: other_subjects.first,
                             course_subject_three: other_subjects.second)

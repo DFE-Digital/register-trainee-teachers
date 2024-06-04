@@ -7,9 +7,9 @@
     {
       url: api_docs_versioned_reference_path(version),
       name: version,
-      current: version == @version,
+      current: version == api_version,
     }
   end
 ) %>
 
-<%= render("api_docs/reference/#{@version}/reference") %>
+<%= render("api_docs/reference/#{api_version}/reference") %>

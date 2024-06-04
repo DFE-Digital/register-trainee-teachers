@@ -5,7 +5,18 @@ require "rails_helper"
 describe TraineeFilter do
   let(:permitted_params) do
     ActionController::Parameters.new(params)
-    .permit(:provider, :start_year, :subject, :text_search, academic_year: [], training_route: [], state: [], record_source: [], study_mode: [])
+      .permit(
+        :provider,
+        :start_year,
+        :subject,
+        :text_search,
+        :has_trn,
+        academic_year: [],
+        training_route: [],
+        state: [],
+        record_source: [],
+        study_mode: [],
+      )
   end
 
   subject { TraineeFilter.new(params: permitted_params) }
@@ -144,6 +155,44 @@ describe TraineeFilter do
 
       it "returns trainee_start_year in hash" do
         expect(subject.filters).to eq({ "status" => ["in_training"] })
+      end
+    end
+
+    context "with has_trn" do
+      let(:params) { { has_trn: } }
+
+      subject { TraineeFilter.new(params:) }
+
+      context "when has_trn is true" do
+        let(:has_trn) { "true" }
+
+        it "returns has_trn in hash" do
+          expect(subject.filters).to eq({ "has_trn" => true })
+        end
+      end
+
+      context "when has_trn is false" do
+        let(:has_trn) { "false" }
+
+        it "returns has_trn in hash" do
+          expect(subject.filters).to eq({ "has_trn" => false })
+        end
+      end
+
+      context "when has_trn is nil" do
+        let(:has_trn) { nil }
+
+        it "returns has_trn in hash" do
+          expect(subject.filters).to be_nil
+        end
+      end
+
+      context "when has_trn is empty" do
+        let(:has_trn) { "" }
+
+        it "returns has_trn in hash" do
+          expect(subject.filters).to be_nil
+        end
       end
     end
   end

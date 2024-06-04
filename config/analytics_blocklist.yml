@@ -286,7 +286,7 @@
   - course_study_mode
   - course_year
   - course_age_range
-  - postgrad_apprenticeship_start_date
+  - pg_apprenticeship_start_date
   - funding_method
   - ni_number
   - hesa_disabilities

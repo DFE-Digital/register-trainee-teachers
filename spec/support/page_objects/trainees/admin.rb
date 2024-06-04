@@ -5,7 +5,7 @@ module PageObjects
     class Admin < PageObjects::Base
       set_url "/trainees/{id}/admin"
 
-      element :collection_name, ".govuk-summary-list__key"
+      element :collection_name, "#admin .govuk-summary-list__key"
       element :collection, "details"
       element :delete, ".govuk-link.delete"
     end

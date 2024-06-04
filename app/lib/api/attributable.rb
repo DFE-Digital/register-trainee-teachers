@@ -5,7 +5,7 @@ module Api
   private
 
     def attributes_klass
-      @attributes_klass ||= Api::Attributes.for(model:, version:)
+      @attributes_klass ||= Api::GetVersionedItem.for_attributes(model:, version:)
     end
   end
 end

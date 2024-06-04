@@ -2,7 +2,7 @@
 
 class FixLeadSchoolsNotApplicable < ActiveRecord::Migration[6.1]
   def up
-    dttp_trainees = Trainee.created_from_dttp.where(lead_school_id: nil)
+    dttp_trainees = Trainee.dttp_record.where(lead_school_id: nil)
 
     # Teaching apprenticeships that are missing a lead school
     dttp_trainees.pg_teaching_apprenticeship.where.not(employing_school_id: nil).find_each { |trainee| fix_trainee(trainee) }

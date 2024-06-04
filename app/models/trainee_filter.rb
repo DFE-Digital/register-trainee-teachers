@@ -37,7 +37,14 @@ private
       **end_year,
       **trainee_start_years,
       **study_modes,
+      **trn,
     ).with_indifferent_access
+  end
+
+  def trn
+    return {} if params[:has_trn].blank?
+
+    { "has_trn" => params[:has_trn] == "true" }
   end
 
   def academic_year
