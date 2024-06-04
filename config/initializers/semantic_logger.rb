@@ -2,7 +2,7 @@
 
 class CustomLogFormatter < SemanticLogger::Formatters::Raw
   def call(log, logger)
-    super(log, logger)
+    super
     format_job_data
     format_exception
     format_json_message_context

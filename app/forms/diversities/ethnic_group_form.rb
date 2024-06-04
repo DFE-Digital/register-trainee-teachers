@@ -13,9 +13,9 @@ module Diversities
               inclusion: { in: Diversities::ETHNIC_GROUP_ENUMS.values },
               if: -> { disclosure_form.diversity_disclosed? }
 
-    def initialize(trainee, **kwargs)
+    def initialize(trainee, **)
       @disclosure_form = DisclosureForm.new(trainee)
-      super(trainee, **kwargs)
+      super
     end
 
     def not_provided_ethnic_group?

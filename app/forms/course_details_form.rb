@@ -63,7 +63,7 @@ class CourseDetailsForm < TraineeForm
   MAX_END_YEARS = 4
 
   def initialize(...)
-    super(...)
+    super
     @primary_course_subjects ||= set_primary_phase_subjects if is_primary_phase?
     @training_routes_form = TrainingRoutesForm.new(trainee)
     @course_allocation_subject ||= set_early_years_attributes if early_years_route?
