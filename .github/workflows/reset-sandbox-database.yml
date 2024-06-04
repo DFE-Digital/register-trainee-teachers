@@ -24,7 +24,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS_SANDBOX }}
 
     - name: Download Sanitised Backup
-      uses: dawidd6/action-download-artifact@v4
+      uses: dawidd6/action-download-artifact@v5
       with:
         workflow: database-backup.yml
         name: backup_sanitised
