@@ -24,8 +24,9 @@ module Api
           params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
         end
 
-        def initialize(params:)
+        def initialize(params:, update: false)
           @params = params
+          @update = update
         end
 
         def call
@@ -34,12 +35,10 @@ module Api
 
       private
 
-        attr_reader :params
+        attr_reader :params, :update
 
         def mapped_params
-          additional_params = params.except(*ATTRIBUTES)
-
-          additional_params.merge({
+          mapped_params = params.except(*ATTRIBUTES).merge({
             sex:,
             training_route:,
             nationalisations_attributes:,
@@ -54,6 +53,12 @@ module Api
           .merge(training_initiative_attributes)
           .merge(school_attributes)
           .compact
+
+          if update && !disabilities?
+            mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure)
+          end
+
+          mapped_params
         end
 
         def ethnicity_attributes
@@ -97,6 +102,10 @@ module Api
 
         def nationality_name
           RecruitsApi::CodeSets::Nationalities::MAPPING[params[:nationality]]
+        end
+
+        def disabilities?
+          params.to_h.any? { |k, _v| k.to_s.match(DISABILITY_PARAM_REGEX) }
         end
 
         def hesa_disabilities

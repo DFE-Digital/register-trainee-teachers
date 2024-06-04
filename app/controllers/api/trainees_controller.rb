@@ -84,7 +84,7 @@ module Api
           hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES.keys,
           hesa_mapper_class.disability_attributes(params),
           hesa_trainee_details_attributes_service::ATTRIBUTES,
-        ),
+        ), update: true
       )
     end
 

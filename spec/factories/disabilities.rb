@@ -12,5 +12,9 @@ FactoryBot.define do
     trait :deaf do
       name { "Deaf" }
     end
+
+    trait :other do
+      name { "Other" }
+    end
   end
 end
