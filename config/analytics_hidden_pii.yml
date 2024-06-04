@@ -1,0 +1,8 @@
+---
+shared:
+  trainees:
+    - trn
+    - sex
+    - disability_disclosure
+    - lead_school_id
+    - progress
