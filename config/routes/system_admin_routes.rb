@@ -51,6 +51,8 @@ module SystemAdminRoutes
             resource :accessions, controller: "lead_schools/accessions", only: %i[edit destroy]
           end
 
+          resources :lead_partners, controller: "user_lead_partners", only: %i[index new create], path: "lead-partners"
+
           member { get :delete }
         end
 

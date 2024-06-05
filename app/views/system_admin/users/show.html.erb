@@ -93,6 +93,22 @@
                                        url: new_user_lead_school_path(@user),
                                        class_option: "govuk-button--secondary add-user-lead-school") %>
 
+
+<% if FeatureService.enabled?(:lead_partners) %>
+  <h2 class="govuk-heading-m">Lead partners</h2>
+
+  <% if @user.lead_schools.any? %>
+  <% else %>
+    <p class="govuk-body govuk-hint">User is not a member of any lead partners</p>
+  <% end %>
+
+  <%= render GovukButtonLinkTo::View.new(
+    body: "Add user to a lead partner",
+    url: new_user_lead_partner_path(@user),
+    class_option: "govuk-button--secondary add-user-lead-partner",
+  ) %>
+<% end %>
+
 <p class="govuk-body">
   <%= govuk_link_to("Delete this user",
                     delete_user_path(@user),
