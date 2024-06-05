@@ -16,5 +16,9 @@ FactoryBot.define do
     trait :other do
       name { "Other" }
     end
+
+    trait :mental_health_condition do
+      name { "Mental health condition" }
+    end
   end
 end

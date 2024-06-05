@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :trainee_disability, class: "TraineeDisability" do
     trainee
-    disability factory: %i[disability other]
+    disability factory: %i[disability mental_health_condition]
   end
 end
