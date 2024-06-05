@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :check_organisation_context_is_set
   before_action :set_sentry_organisation_context, unless: -> { Rails.env.local? }
   after_action :save_origin_path
+  if Rails.env.development? then skip_before_action :verify_authenticity_token end
   include Pundit::Authorization
   include DfE::Analytics::Requests
 
