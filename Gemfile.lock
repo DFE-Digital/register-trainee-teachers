@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: c3a00b4081ec123939cf4266f60f6d19b64afa65
-  ref: c3a00b4081ec123939cf4266f60f6d19b64afa65
+  revision: 1eefb72cc21ac155694a90fac18f88dbbb616739
+  branch: hidden-pii-updates
   specs:
-    dfe-analytics (1.12.5)
+    dfe-analytics (1.12.6)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       request_store_rails (~> 2)
