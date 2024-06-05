@@ -14,7 +14,7 @@ module Personas
       providers + lead_schools + lead_partners
     end
 
-    private
+  private
 
     def providers
       @_providers ||= persona.providers.map do |provider|
