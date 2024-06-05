@@ -3,9 +3,14 @@
 class ApiVersionGenerator
   include ServicePattern
 
+  VERSION_FORMAT = /^v\d+\.\d+$/
+
   def initialize(old_version:, new_version:)
-    @old_version = old_version
-    @new_version = new_version
+    validate_version_format(old_version)
+    validate_version_format(new_version)
+
+    @old_version = convert_version_format(old_version)
+    @new_version = convert_version_format(new_version)
   end
 
   def call
@@ -17,9 +22,17 @@ class ApiVersionGenerator
     end
   end
 
-private
+  private
 
   attr_reader :old_version, :new_version
+
+  def validate_version_format(version)
+    raise ArgumentError, "Version format is incorrect. Expected format: vx.x" unless version.match?(VERSION_FORMAT)
+  end
+
+  def convert_version_format(version)
+    version.tr('.', '_')
+  end
 
   def files
     Dir.glob("app/{models,serializers,services}/api/#{old_version}/**/*.rb")

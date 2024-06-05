@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe ApiVersionGenerator do
-  let(:old_version) { "v0_1" }
-  let(:new_version) { "v1_0" }
+  let(:old_version) { "v0.1" }
+  let(:new_version) { "v1.0" }
   let(:service) { described_class.call(old_version:, new_version:) }
 
   describe "#generate_new_version" do
