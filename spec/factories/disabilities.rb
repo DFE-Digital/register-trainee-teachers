@@ -20,5 +20,9 @@ FactoryBot.define do
     trait :mental_health_condition do
       name { "Mental health condition" }
     end
+
+    trait :no_known_disability do
+      name { "No disabilities" }
+    end
   end
 end

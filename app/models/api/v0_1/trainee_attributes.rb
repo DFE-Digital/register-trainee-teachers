@@ -149,6 +149,7 @@ module Api
         update_hesa_trainee_detail_attributes(new_attributes)
 
         self.trainee_disabilities_attributes = []
+
         new_attributes[:disabilities]&.each do |disability|
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
@@ -196,7 +197,7 @@ module Api
 
         new_trainee_attributes = new(trainee_attributes)
 
-        params_with_updated_disabilities = params_with_updated_disabilities(new_trainee_attributes, trainee.disabilities, params_for_update)
+        params_with_updated_disabilities = params_with_updated_disabilities(new_trainee_attributes, params_for_update)
 
         new_trainee_attributes.assign_attributes(params_with_updated_disabilities)
         new_trainee_attributes

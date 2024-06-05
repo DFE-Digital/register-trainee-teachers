@@ -681,8 +681,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
     describe "with disabilities" do
       before do
-        create(:disability, :blind)
         create(:disability, :deaf)
+        create(:disability, :blind)
         put(
           endpoint,
           headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -702,11 +702,11 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
-          expect(response.parsed_body[:data][:disability1]).to eq("96")
+          expect(response.parsed_body[:data][:disability1]).to eq("55")
           expect(response.parsed_body[:data][:disability2]).to be_nil
 
           expect(trainee.reload.disabilities.count).to eq(1)
-          expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Other")
+          expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Mental health condition")
         end
       end
 
@@ -744,11 +744,11 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           expect(response).to have_http_status(:ok)
 
           expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
-          expect(response.parsed_body[:data][:disability1]).to eq("96")
+          expect(response.parsed_body[:data][:disability1]).to eq("55")
           expect(response.parsed_body[:data][:disability2]).to eq("57")
 
           expect(trainee.disabilities.count).to eq(2)
-          expect(trainee.disabilities.map(&:name)).to contain_exactly("Other", "Deaf")
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Mental health condition", "Deaf")
         end
       end
 
