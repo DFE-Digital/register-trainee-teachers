@@ -3,7 +3,7 @@
 module ApiDocs
   class BaseController < ::ApplicationController
     VERSIONS = %w[v0.1 v1.0].freeze
-    CURRENT_VERSION = "v0.1"
+    CURRENT_VERSION = "v1.0"
 
     layout "api_docs/pages"
     skip_before_action :authenticate
