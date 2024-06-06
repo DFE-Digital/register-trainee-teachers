@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class NestedAttributesValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     if value.is_a?(Array)
@@ -9,15 +11,15 @@ class NestedAttributesValidator < ActiveModel::EachValidator
     end
   end
 
-  private
+private
 
-    def validate_nested_object(record, attribute, nested_object)
-      return unless nested_object.present?
+  def validate_nested_object(record, attribute, nested_object)
+    return if nested_object.blank?
 
-      unless nested_object.valid?
-        nested_object.errors.each do |error|
-          record.errors.add(attribute, error.full_message)
-        end
+    unless nested_object.valid?
+      nested_object.errors.each do |error|
+        record.errors.add(attribute, error.full_message)
       end
     end
+  end
 end

@@ -12,7 +12,7 @@ module Api
 
       def initialize(attributes = {})
         super({})
-        return unless attributes.present?
+        return if attributes.blank?
 
         nationality = lookup_nationality_by_name(attributes[:name])
 
