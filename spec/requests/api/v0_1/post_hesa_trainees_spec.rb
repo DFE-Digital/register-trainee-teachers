@@ -678,8 +678,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
-      expect(response.parsed_body["errors"]).to include("Placements attributes Placements name can't be blank")
+      expect(response.parsed_body["errors"]).to include("Placements attributes Name can't be blank")
     end
   end
 

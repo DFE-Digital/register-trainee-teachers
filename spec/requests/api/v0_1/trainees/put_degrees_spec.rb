@@ -169,11 +169,11 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
-            data: { subject: "Practical Magic" },
+            data: { graduation_year: (Date.today.year + 2).to_s },
           }.to_json,
         )
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]&.count).to eq(1)
+        expect(response.parsed_body["errors"]&.count).to eq(2)
         expect(trainee.reload.degrees.first.subject).to eq(original_subject)
       end
     end
