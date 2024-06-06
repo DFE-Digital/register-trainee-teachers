@@ -13,9 +13,9 @@ module Diversities
               inclusion: { in: Diversities::DISABILITY_DISCLOSURE_ENUMS.values },
               if: -> { disclosure_form.diversity_disclosed? }
 
-    def initialize(trainee, **kwargs)
+    def initialize(trainee, **)
       @disclosure_form = DisclosureForm.new(trainee)
-      super(trainee, **kwargs)
+      super
     end
 
     def save!

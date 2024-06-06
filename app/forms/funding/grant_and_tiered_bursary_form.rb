@@ -32,7 +32,7 @@ module Funding
              to: :funding_manager
 
     def initialize(trainee, params: {}, user: nil, store: FormStore)
-      super(trainee, params:, user:, store:)
+      super
     end
 
   private

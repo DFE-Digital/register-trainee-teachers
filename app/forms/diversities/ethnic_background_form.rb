@@ -13,10 +13,10 @@ module Diversities
 
     validates :ethnic_background, presence: true, if: :requires_ethnic_background?
 
-    def initialize(trainee, **kwargs)
+    def initialize(trainee, **)
       @disclosure_form = DisclosureForm.new(trainee)
       @ethnic_group_form = EthnicGroupForm.new(trainee)
-      super(trainee, **kwargs)
+      super
     end
 
     def requires_ethnic_background?

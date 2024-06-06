@@ -24,7 +24,7 @@ class IttDatesForm < TraineeForm
   delegate :study_mode, to: :course_details_form
 
   def initialize(...)
-    super(...)
+    super
     @course_details_form = CourseDetailsForm.new(trainee)
     @training_routes_form ||= TrainingRoutesForm.new(trainee)
     @course = trainee.available_courses(@training_routes_form.training_route)&.find_by(uuid: course_uuid)

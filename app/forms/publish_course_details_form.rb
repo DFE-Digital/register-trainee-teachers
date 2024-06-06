@@ -18,7 +18,7 @@ class PublishCourseDetailsForm < TraineeForm
   delegate :course_subject_one, :course_subject_two, :course_subject_three, to: :specialism_form
 
   def initialize(...)
-    super(...)
+    super
     @training_routes_form = TrainingRoutesForm.new(trainee)
   end
 
