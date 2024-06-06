@@ -76,5 +76,6 @@ feature "Add user to lead partners" do
 
   def then_i_see_the_user_added_to_the_lead_partner
     expect(page).to have_content("Lead partner added")
+    expect(page).to have_link("School Partner", href: lead_partner_path(school_lead_partner))
   end
 end
