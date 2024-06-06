@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SpecVersionGenerator
   include ServicePattern
 
@@ -20,12 +22,12 @@ class SpecVersionGenerator
     end
   end
 
-  private
+private
 
   attr_reader :old_version, :new_version
 
   def validate_version_format(version)
-    raise ArgumentError, "Version format is incorrect. Expected format: vx.x" unless version.match?(VERSION_FORMAT)
+    raise(ArgumentError, "Version format is incorrect. Expected format: vx.x") unless version.match?(VERSION_FORMAT)
   end
 
   def spec_files
@@ -46,11 +48,11 @@ class SpecVersionGenerator
 
     replacements = {
       old_version => new_version,                                                     # vx.x -> vy.y
-      old_version.tr('v', 'V') => new_version.tr('v', 'V'),                           # Vx.x -> Vy.y
-      old_version.tr('.', '_') => new_version.tr('.', '_'),                           # vx_x -> vy_y
-      old_version.tr('.', '_').tr('v', 'V') => new_version.tr('.', '_').tr('v', 'V'), # Vx_x -> Vy_y
-      old_version.tr('.', '') => new_version.tr('.', ''),                             # vxx -> vyy
-      old_version.tr('.', '').upcase => new_version.tr('.', '').upcase                # Vxx -> Vyy
+      old_version.tr("v", "V") => new_version.tr("v", "V"),                           # Vx.x -> Vy.y
+      old_version.tr(".", "_") => new_version.tr(".", "_"),                           # vx_x -> vy_y
+      old_version.tr(".", "_").tr("v", "V") => new_version.tr(".", "_").tr("v", "V"), # Vx_x -> Vy_y
+      old_version.tr(".", "") => new_version.tr(".", ""),                             # vxx -> vyy
+      old_version.tr(".", "").upcase => new_version.tr(".", "").upcase, # Vxx -> Vyy
     }
 
     replacements.each do |old, new|
@@ -61,6 +63,6 @@ class SpecVersionGenerator
   end
 
   def convert_version_to_dir(version)
-    version.tr('.', '_')
+    version.tr(".", "_")
   end
 end

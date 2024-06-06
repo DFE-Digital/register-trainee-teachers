@@ -1,13 +1,15 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe SpecVersionGenerator do
-  let(:old_version) { 'v0.1' }
-  let(:new_version) { 'v1.0' }
-  let(:service) { described_class.call(old_version: old_version, new_version: new_version) }
+  let(:old_version) { "v0.1" }
+  let(:new_version) { "v1.0" }
+  let(:service) { described_class.call(old_version:, new_version:) }
 
-  describe '#call' do
-    let(:example_file) { 'spec/models/api/v0_1/trainee_attributes_spec.rb' }
-    let(:new_file) { 'spec/models/api/v1_0/trainee_attributes_spec.rb' }
+  describe "#call" do
+    let(:example_file) { "spec/models/api/v0_1/trainee_attributes_spec.rb" }
+    let(:new_file) { "spec/models/api/v1_0/trainee_attributes_spec.rb" }
     let(:file_content) do
       <<~RUBY
         # frozen_string_literal: true
@@ -20,8 +22,8 @@ RSpec.describe SpecVersionGenerator do
       RUBY
     end
 
-    let(:request_file) { 'spec/requests/api/v0_1/get_trainee_spec.rb' }
-    let(:new_request_file) { 'spec/requests/api/v1_0/get_trainee_spec.rb' }
+    let(:request_file) { "spec/requests/api/v0_1/get_trainee_spec.rb" }
+    let(:new_request_file) { "spec/requests/api/v1_0/get_trainee_spec.rb" }
     let(:request_file_content) do
       <<~RUBY
         # frozen_string_literal: true
@@ -41,8 +43,8 @@ RSpec.describe SpecVersionGenerator do
       RUBY
     end
 
-    let(:serializer_file) { 'spec/serializers/api/v0_1/degree_serializer_spec.rb' }
-    let(:new_serializer_file) { 'spec/serializers/api/v1_0/degree_serializer_spec.rb' }
+    let(:serializer_file) { "spec/serializers/api/v0_1/degree_serializer_spec.rb" }
+    let(:new_serializer_file) { "spec/serializers/api/v1_0/degree_serializer_spec.rb" }
     let(:serializer_file_content) do
       <<~RUBY
         # frozen_string_literal: true
@@ -67,22 +69,22 @@ RSpec.describe SpecVersionGenerator do
       allow(File).to receive(:write)
     end
 
-    it 'creates the new directory for models' do
-      expect(FileUtils).to receive(:mkdir_p).with('spec/models/api/v1_0')
+    it "creates the new directory for models" do
+      expect(FileUtils).to receive(:mkdir_p).with("spec/models/api/v1_0")
       service
     end
 
-    it 'creates the new directory for requests' do
-      expect(FileUtils).to receive(:mkdir_p).with('spec/requests/api/v1_0')
+    it "creates the new directory for requests" do
+      expect(FileUtils).to receive(:mkdir_p).with("spec/requests/api/v1_0")
       service
     end
 
-    it 'creates the new directory for serializers' do
-      expect(FileUtils).to receive(:mkdir_p).with('spec/serializers/api/v1_0')
+    it "creates the new directory for serializers" do
+      expect(FileUtils).to receive(:mkdir_p).with("spec/serializers/api/v1_0")
       service
     end
 
-    it 'writes the new file with updated version references' do
+    it "writes the new file with updated version references" do
       expected_content = <<~RUBY
         # frozen_string_literal: true
 
@@ -97,7 +99,7 @@ RSpec.describe SpecVersionGenerator do
       service
     end
 
-    it 'writes the new request file with updated version references' do
+    it "writes the new request file with updated version references" do
       expected_request_content = <<~RUBY
         # frozen_string_literal: true
 
@@ -119,7 +121,7 @@ RSpec.describe SpecVersionGenerator do
       service
     end
 
-    it 'writes the new serializer file with updated version references' do
+    it "writes the new serializer file with updated version references" do
       expected_serializer_content = <<~RUBY
         # frozen_string_literal: true
 

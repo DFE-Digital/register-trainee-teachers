@@ -22,16 +22,16 @@ class ApiVersionGenerator
     end
   end
 
-  private
+private
 
   attr_reader :old_version, :new_version
 
   def validate_version_format(version)
-    raise ArgumentError, "Version format is incorrect. Expected format: vx.x" unless version.match?(VERSION_FORMAT)
+    raise(ArgumentError, "Version format is incorrect. Expected format: vx.x") unless version.match?(VERSION_FORMAT)
   end
 
   def convert_version_format(version)
-    version.tr('.', '_')
+    version.tr(".", "_")
   end
 
   def files

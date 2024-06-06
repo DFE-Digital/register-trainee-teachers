@@ -41,10 +41,10 @@ describe Api::GetVersionedItem do
         end
       end
 
-      context "v1.0" do
+      context "v2.0" do
         item_models.each do |item_model|
           it "#{item_model} has not been implemented" do
-            expect { described_class.public_send(wrapper_method, model: item_model, version: "v1.0") }.to raise_error(NotImplementedError, "Api::V10::#{expected_module(item_type, item_model)}")
+            expect { described_class.public_send(wrapper_method, model: item_model, version: "v2.0") }.to raise_error(NotImplementedError, "Api::V20::#{expected_module(item_type, item_model)}")
           end
         end
       end
