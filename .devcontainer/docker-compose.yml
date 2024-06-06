@@ -1,0 +1,36 @@
+version: "3"
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_PASSWORD=developmentpassword
+  redis:
+    image: redis
+  sidekiq:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: bundle exec sidekiq -c 5 -C config/sidekiq.yml
+    depends_on:
+      - web
+      - db
+      - redis
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=developmentpassword
+      - SETTINGS__APPLICATION=register-trainee-teachers-bg-jobs
+      - REDIS_QUEUE_URL=redis://redis:6379
