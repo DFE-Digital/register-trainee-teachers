@@ -24,6 +24,46 @@ RSpec.describe Api::V01::TraineeAttributes do
     it { is_expected.to validate_inclusion_of(:ethnicity).in_array(Hesa::CodeSets::Ethnicities::MAPPING.keys).allow_nil }
   end
 
+  describe "nested attribute validations" do
+     let(:placement_attributes) { [Api::V01::PlacementAttributes.new({})] }
+     let(:degrees_attributes) { [Api::V01::DegreeAttributes.new({})] }
+     let(:nationalisations_attributes) { [Api::V01::NationalityAttributes.new({})] }
+     let(:hesa_trainee_detail_attributes) { Api::V01::HesaTraineeDetailAttributes.new({}) }
+
+     before do
+       subject.placements_attributes = placement_attributes
+       subject.degrees_attributes = degrees_attributes
+       subject.nationalisations_attributes = nationalisations_attributes
+       subject.hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
+     end
+
+     it "calls valid? on each placement attribute" do
+       placement_attributes.each do |placement_attribute|
+         expect(placement_attribute).to receive(:valid?)
+       end
+       subject.valid?
+     end
+
+     it "calls valid? on each degree attribute" do
+       degrees_attributes.each do |degree_attribute|
+         expect(degree_attribute).to receive(:valid?)
+       end
+       subject.valid?
+     end
+
+     it "calls valid? on each nationalisation attribute" do
+       nationalisations_attributes.each do |nationalisation_attribute|
+         expect(nationalisation_attribute).to receive(:valid?)
+       end
+       subject.valid?
+     end
+
+     it "calls valid? on the hesa_trainee_detail attribute" do
+       expect(hesa_trainee_detail_attributes).to receive(:valid?)
+       subject.valid?
+     end
+   end
+
   describe ".from_trainee" do
     let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :completed, sex: :prefer_not_to_say) }
 
