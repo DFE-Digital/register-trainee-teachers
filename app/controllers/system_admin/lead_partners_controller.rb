@@ -5,7 +5,10 @@ module SystemAdmin
     before_action { require_feature_flag(:lead_partners) }
 
     def index
-      @lead_partners = LeadPartner.order(:name).page(params[:page] || 1)
+      @lead_partners = policy_scope(
+        LeadPartner,
+        policy_scope_class: LeadPartnerPolicy::Scope,
+      ).order(:name).page(params[:page] || 1)
     end
 
     def show
