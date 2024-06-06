@@ -9,10 +9,7 @@ module SystemAdmin
     end
 
     def show
-      @lead_partner = authorize(
-        LeadPartner.find(params[:id]),
-        policy_class: LeadPartnerPolicy,
-      )
+      @lead_partner = authorize(LeadPartner.find(params[:id]))
     end
   end
 end
