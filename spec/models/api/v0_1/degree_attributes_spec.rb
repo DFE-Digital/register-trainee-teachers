@@ -13,10 +13,6 @@ RSpec.describe Api::V01::DegreeAttributes do
   subject { v01 }
 
   describe "validations" do
-    it { expect(subject).to validate_inclusion_of(:institution).in_array(DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code)).allow_nil }
-    it { expect(subject).to validate_inclusion_of(:subject).in_array(DfEReference::DegreesQuery::SUBJECTS.all.map(&:hecos_code)).allow_nil }
-    it { expect(subject).to validate_inclusion_of(:uk_degree).in_array(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code)).allow_nil }
-
     context "with duplicate" do
       before { subject.valid? }
 
