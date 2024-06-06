@@ -29,7 +29,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       )
     end
     let!(:original_subject) { degree.subject }
-    let(:new_subject) { "101005" }
+    let(:new_subject) { "100105" }
 
     context "with a valid trainee and degree" do
       context "when using partial HESA attributes" do
@@ -71,9 +71,9 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           {
             grade: "02",
             subject: "100425",
-            institution: "1017",
+            institution: "0117",
             uk_degree: "083",
-            graduation_year: "2105-10-10",
+            graduation_year: "2015-01-01",
             country: "XF",
           }
         end
@@ -93,9 +93,9 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(degree_attributes["grade"]).to eq("02")
           expect(degree_attributes["subject"]).to eq("100425")
-          expect(degree_attributes["institution"]).to eq("1017")
+          expect(degree_attributes["institution"]).to eq("0117")
           expect(degree_attributes["uk_degree"]).to eq("083")
-          expect(degree_attributes["graduation_year"]).to eq(2105)
+          expect(degree_attributes["graduation_year"]).to eq(2015)
           expect(degree_attributes["country"]).to be_nil
           expect(degree_attributes["locale_code"]).to be_nil
 
@@ -105,7 +105,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(degree.subject).to eq("Physics")
           expect(degree.institution).to eq("University of East Anglia")
           expect(degree.uk_degree).to eq("Bachelor of Science")
-          expect(degree.graduation_year).to eq(2105)
+          expect(degree.graduation_year).to eq(2015)
           expect(degree.country).to be_nil
           expect(degree.locale_code).to eq("uk")
         end

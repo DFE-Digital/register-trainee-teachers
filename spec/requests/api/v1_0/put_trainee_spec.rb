@@ -19,7 +19,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
   context "with an invalid authentication token" do
     let(:token) { "not-a-valid-token" }
 
-    it "returns status 410 unauthorized" do
+    it "returns status 401 unauthorized" do
       put(
         "/api/v1.0/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -138,7 +138,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
     end
 
     context "when updating with valid params" do
-      let(:data) { { first_names: "Alice", provider_trainee_id: "99157234/2/10" } }
+      let(:data) { { first_names: "Alice", provider_trainee_id: "99157234/2/01" } }
 
       before do
         put(
@@ -152,7 +152,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
         expect(response).to have_http_status(:ok)
 
         expect(trainee.reload.first_names).to eq("Alice")
-        expect(trainee.provider_trainee_id).to eq("99157234/2/10")
+        expect(trainee.provider_trainee_id).to eq("99157234/2/01")
         expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
       end
     end
@@ -344,7 +344,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
       put(
         "/api/v1.0/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}" },
-        params: { data: { trainee_start_date: "#{Time.zone.today.year + 1}-08-10" } },
+        params: { data: { trainee_start_date: "#{Time.zone.today.year + 1}-08-01" } },
       )
 
       expect(response).to have_http_status(:unprocessable_entity)
@@ -695,7 +695,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
             {
               data: {
                 course_subject_one: "100346",
-                course_subject_two: "110410",
+                course_subject_two: "101410",
                 course_subject_three: "100366",
                 course_max_age: 11,
               },
@@ -711,7 +711,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
 
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
             expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("110410")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
           end
         end
 
@@ -720,7 +720,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
             {
               data: {
                 course_subject_one: "100511",
-                course_subject_two: "110410",
+                course_subject_two: "101410",
                 course_subject_three: "100366",
                 course_max_age: 11,
               },
@@ -735,7 +735,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
             expect(trainee.course_subject_three).to eq("computer science")
 
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("110410")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
             expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
           end
         end
@@ -746,7 +746,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
           {
             data: {
               course_subject_one: "100346",
-              course_subject_two: "110410",
+              course_subject_two: "101410",
               course_subject_three: "100366",
             },
           }
@@ -768,7 +768,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
           expect(trainee.course_subject_three).to eq("computer science")
 
           expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
-          expect(response.parsed_body[:data][:course_subject_two]).to eq("110410")
+          expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
           expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
         end
       end
@@ -790,7 +790,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
         data: {
           first_names: "John",
           last_name: "Doe",
-          date_of_birth: "1990-10-10",
+          date_of_birth: "1990-01-01",
           sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
           email: "john.doe@example.com",
           nationality: "GB",
@@ -803,7 +803,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
             {
               subject: "100485",
               institution: nil,
-              graduation_date: "2003-06-10",
+              graduation_date: "2003-06-01",
               subject_one: "100485",
               grade: "02",
               country: "XF",
@@ -815,12 +815,12 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
             },
           ],
           itt_aim: 202,
-          itt_qualification_aim: "010",
-          course_year: "2102",
+          itt_qualification_aim: "001",
+          course_year: "2012",
           course_age_range: "13915",
           fund_code: "7",
           funding_method: "4",
-          hesa_id: "0310261553110",
+          hesa_id: "0310261553101",
         },
       }
     end

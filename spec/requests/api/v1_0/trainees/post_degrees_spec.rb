@@ -17,16 +17,16 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       {
         grade: "02",
         subject: "100425",
-        institution: "1017",
+        institution: "0117",
         uk_degree: "083",
-        graduation_year: "2105-10-10",
+        graduation_year: "2015-01-01",
         country: "XF",
         locale_code: "uk",
       }
     end
 
     context "with a valid trainee and degree" do
-      it "creates a new degree and returns a 210 (created) status" do
+      it "creates a new degree and returns a 201 (created) status" do
         post(
           "/api/v1.0/trainees/#{trainee.slug}/degrees",
           headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -41,9 +41,9 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
 
         expect(degree_attributes["grade"]).to eq("02")
         expect(degree_attributes["subject"]).to eq("100425")
-        expect(degree_attributes["institution"]).to eq("1017")
+        expect(degree_attributes["institution"]).to eq("0117")
         expect(degree_attributes["uk_degree"]).to eq("083")
-        expect(degree_attributes["graduation_year"]).to eq(2105)
+        expect(degree_attributes["graduation_year"]).to eq(2015)
         expect(degree_attributes["country"]).to be_nil
         expect(degree_attributes["locale_code"]).to be_nil
 
@@ -61,7 +61,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         expect(degree.uk_degree).to eq("Bachelor of Science")
         expect(degree.uk_degree_uuid).to eq("1b6a5652-c197-e711-80d8-005056ac45bb")
 
-        expect(degree.graduation_year).to eq(2105)
+        expect(degree.graduation_year).to eq(2015)
         expect(degree.country).to be_nil
         expect(degree.locale_code).to eq("uk")
       end
@@ -118,7 +118,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
           subject: "Practical Magic",
           institution: "University of Oxford",
           uk_degree: "Bachelor of Witchcraft & Wizardry",
-          graduation_year: "10-10-2102",
+          graduation_year: "01-01-2012",
           locale_code: "uk",
         }
       end

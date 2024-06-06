@@ -95,7 +95,7 @@ describe "`GET /trainees` endpoint" do
       get(
         "/api/v1.0/trainees",
         headers: { Authorization: "Bearer #{token}" },
-        params: { since: "2023-13-10" },
+        params: { since: "2023-13-01" },
       )
 
       expect(response).to have_http_status(:unprocessable_entity)

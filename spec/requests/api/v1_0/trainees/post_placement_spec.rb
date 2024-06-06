@@ -16,7 +16,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           { data: create(:placement).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
         end
 
-        it "creates a new placement and returns a 210 (created) status" do
+        it "creates a new placement and returns a 201 (created) status" do
           post "/api/v1.0//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
 
           expect(response).to have_http_status(:created)
@@ -43,7 +43,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           { data: placement.attributes.slice(*placement_attribute_keys) }.with_indifferent_access
         end
 
-        it "creates a new placement and returns a 210 (created) status" do
+        it "creates a new placement and returns a 201 (created) status" do
           post "/api/v1.0//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
 
           expect(response).to have_http_status(:created)

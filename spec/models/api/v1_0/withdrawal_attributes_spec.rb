@@ -11,10 +11,7 @@ describe Api::V10::WithdrawalAttributes do
   describe "validations" do
     it { is_expected.to validate_length_of(:withdraw_reasons_details).is_at_most(1000).with_message("Details about why the trainee withdrew must be 1000 characters or less") }
     it { is_expected.to validate_length_of(:withdraw_reasons_dfe_details).is_at_most(1000).with_message("What the Department for Education could have done must be 1000 characters or less") }
-
-    it {
-      expect(subject).to validate_presence_of(:reasons).with_message('Select why the trainee withdrew from the course or select "Unknown"')
-    }
+    it { is_expected.to validate_inclusion_of(:reasons).in_array(WithdrawalReasons::REASONS).with_message("Choose one or more reasons why the trainee withdrew from the course, or select \"Unknown\"") }
 
     context "withdraw_date" do
       context "blank date" do

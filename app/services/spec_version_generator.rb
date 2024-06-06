@@ -49,8 +49,8 @@ class SpecVersionGenerator
       old_version.tr('v', 'V') => new_version.tr('v', 'V'),                           # Vx.x -> Vy.y
       old_version.tr('.', '_') => new_version.tr('.', '_'),                           # vx_x -> vy_y
       old_version.tr('.', '_').tr('v', 'V') => new_version.tr('.', '_').tr('v', 'V'), # Vx_x -> Vy_y
-      old_version.tr('v.', '') => new_version.tr('v.', ''),                           # vxx -> vyy
-      old_version.tr('v.', 'V') => new_version.tr('v.', 'V')                          # Vxx -> Vyy
+      old_version.tr('.', '') => new_version.tr('.', ''),                             # vxx -> vyy
+      old_version.tr('.', '').upcase => new_version.tr('.', '').upcase                # Vxx -> Vyy
     }
 
     replacements.each do |old, new|

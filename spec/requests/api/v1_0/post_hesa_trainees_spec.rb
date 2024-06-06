@@ -16,15 +16,15 @@ describe "`POST /api/v1.0/trainees` endpoint" do
   let(:graduation_year) { "2003" }
   let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
-  let(:itt_start_date) { "2023-10-10" }
-  let(:itt_end_date) { "2023-10-10" }
+  let(:itt_start_date) { "2023-01-01" }
+  let(:itt_end_date) { "2023-10-01" }
 
   let(:data) do
     {
       first_names: "John",
       last_name: "Doe",
       previous_last_name: "Smith",
-      date_of_birth: "1990-10-10",
+      date_of_birth: "1990-01-01",
       sex: sex,
       email: "john.doe@example.com",
       nationality: "GB",
@@ -38,7 +38,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
       degrees_attributes: [
         {
           subject: "100485",
-          institution: "1017",
+          institution: "0117",
           graduation_year: graduation_year,
           grade: "02",
           uk_degree: "083",
@@ -52,13 +52,13 @@ describe "`POST /api/v1.0/trainees` endpoint" do
         },
       ],
       itt_aim: 202,
-      itt_qualification_aim: "010",
-      course_year: "2102",
+      itt_qualification_aim: "001",
+      course_year: "2012",
       course_age_range: course_age_range,
       fund_code: "7",
       funding_method: "4",
-      hesa_id: "0310261553110",
-      provider_trainee_id: "99157234/2/10",
+      hesa_id: "0310261553101",
+      provider_trainee_id: "99157234/2/01",
       pg_apprenticeship_start_date: "2024-03-11",
     }
   end
@@ -143,7 +143,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
       degree_attributes = response.parsed_body[:data][:degrees]&.first
 
       expect(degree_attributes[:subject]).to eq("100485")
-      expect(degree_attributes[:institution]).to eq("1017")
+      expect(degree_attributes[:institution]).to eq("0117")
       expect(degree_attributes[:graduation_year]).to eq(2003)
       expect(degree_attributes[:subject]).to eq("100485")
       expect(degree_attributes[:grade]).to eq("02")
@@ -301,7 +301,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
     end
 
     context "when graduation_year is in 'yyyy-mm-dd' format" do
-      let(:graduation_year) { "2003-10-10" }
+      let(:graduation_year) { "2003-01-01" }
 
       before do
         post "/api/v1.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -364,7 +364,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
       expect(placement_attributes[:urn]).to eq("900020")
     end
 
-    it "returns status code 210" do
+    it "returns status code 201" do
       post "/api/v1.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response).to have_http_status(:created)
@@ -397,7 +397,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
     it "sets the provider_trainee_id" do
       post "/api/v1.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      expect(Trainee.last.provider_trainee_id).to eq("99157234/2/10")
+      expect(Trainee.last.provider_trainee_id).to eq("99157234/2/01")
     end
 
     context "when read only attributes are submitted" do
@@ -482,7 +482,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
             {
               data: data.merge(
                 course_subject_one: "100346",
-                course_subject_two: "110410",
+                course_subject_two: "101410",
                 course_subject_three: "100366",
                 course_max_age: 11,
               ),
@@ -498,7 +498,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
 
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
             expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("110410")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
           end
         end
 
@@ -507,7 +507,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
             {
               data: data.merge(
                 course_subject_one: "100511",
-                course_subject_two: "110410",
+                course_subject_two: "101410",
                 course_subject_three: "100366",
                 course_max_age: 11,
               ),
@@ -522,7 +522,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
             expect(trainee.course_subject_three).to eq("computer science")
 
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("110410")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
             expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
           end
         end
@@ -533,7 +533,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
           {
             data: data.merge(
               course_subject_one: "100346",
-              course_subject_two: "110410",
+              course_subject_two: "101410",
               course_subject_three: "100366",
             ),
           }
@@ -551,7 +551,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
           expect(trainee.course_subject_three).to eq("computer science")
 
           expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
-          expect(response.parsed_body[:data][:course_subject_two]).to eq("110410")
+          expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
           expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
         end
       end
@@ -616,7 +616,7 @@ describe "`POST /api/v1.0/trainees` endpoint" do
     end
 
     context "date of birth is in the future" do
-      let(:params) { { data: data.merge({ date_of_birth: "2990-10-10" }) } }
+      let(:params) { { data: data.merge({ date_of_birth: "2990-01-01" }) } }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
@@ -685,14 +685,14 @@ describe "`POST /api/v1.0/trainees` endpoint" do
 
   context "when a degree is invalid", feature_register_api: true do
     before do
-      params[:data][:degrees_attributes].first[:graduation_year] = "3000-10-10"
+      params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
       post "/api/v1.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body["message"]).to include("Validation failed: 2 errors prohibited this trainee from being saved")
-      expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a graduation year that is in the past, for example 2104")
+      expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a graduation year that is in the past, for example 2014")
       expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a valid graduation year")
     end
   end
