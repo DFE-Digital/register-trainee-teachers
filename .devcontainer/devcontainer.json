@@ -8,7 +8,6 @@
     "vscode": {
       "settings": {},
       "extensions": [
-        "Shopify.ruby-lsp",
         "ms-azuretools.vscode-docker",
         "yzhang.markdown-all-in-one",
         "esbenp.prettier-vscode"
