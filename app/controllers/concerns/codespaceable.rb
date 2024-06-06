@@ -12,6 +12,6 @@ module Codespaceable
   private
 
     def running_in_codespace?
-      Rails.env.development? && request.host.contains?(GITHUB_APP_DOMAIN)
+      Rails.env.development? && request.host.ends_with?(GITHUB_APP_DOMAIN)
     end
 end
