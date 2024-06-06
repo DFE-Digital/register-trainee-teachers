@@ -6,7 +6,7 @@ module Codespaceable
   GITHUB_APP_DOMAIN = "app.github.dev".freeze
 
   included do
-    skip_before_action :verify_authenticity_token if: :running_in_codespace?
+    skip_before_action :verify_authenticity_token, if: :running_in_codespace?
   end
 
   private
