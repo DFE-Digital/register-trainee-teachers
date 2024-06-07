@@ -27,7 +27,7 @@ export const renderTemplate = {
   suggestion: suggestionTemplate
 }
 
-export const setHiddenField = (value) => {
+export const setHiddenField = (idElement, value) => {
   if (value === undefined) {
     return
   }

@@ -7,30 +7,24 @@ const idElement = document.getElementById('lead-partners-id')
 
 let statusMessage = ' '
 
-const mapToLeadPartners = (data) => data.lead_partners
+const fetchLeadPartners = ({ query, populateResults }) => {
+  const encodedQuery = encodeURIComponent(query)
 
-const tryUpdateStatusMessage = (leadPartners) => {
-  if (leadPartners.length === 0) {
-    statusMessage = 'No results found'
-  }
-
-  return leadPartners
+  window.fetch(`/autocomplete/lead_partners?query=${encodedQuery}`)
+    .then(response => response.json())
+    .then(guard)
+    .then((data) => data.lead_partners)
+    .then((data) => { if (data.length === 0) { statusMessage = 'No results found' } else { return data } })
+    .then(populateResults)
+    .catch(console.log)
 }
 
 const findLeadPartners = ({ query, populateResults }) => {
   idElement.value = ''
 
-  const encodedQuery = encodeURIComponent(query)
-
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/autocomplete/lead_partners?query=${encodedQuery}`)
-    .then(response => response.json())
-    .then(guard)
-    .then(mapToLeadPartners)
-    .then(tryUpdateStatusMessage)
-    .then(populateResults)
-    .catch(console.log)
+  fetchLeadPartners({ query, populateResults })
 }
 
 const setupAutoComplete = (form) => {
@@ -51,7 +45,7 @@ const setupAutoComplete = (form) => {
           tracker.trackSearch(query)
           return findLeadPartners({
             query,
-            populateResults,
+            populateResults
           })
         },
         templates: renderTemplate,
@@ -60,7 +54,7 @@ const setupAutoComplete = (form) => {
             window.location.assign(`/system-admin/lead-partners/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
-            setHiddenField(value)
+            setHiddenField(idElement, value)
           }
         },
         tNoResults: () => statusMessage

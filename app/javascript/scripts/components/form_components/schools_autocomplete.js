@@ -9,12 +9,12 @@ let statusMessage = ' '
 
 const mapToSchools = (data) => data.schools
 
-const tryUpdateStatusMessage = (schools) => {
-  if (schools.length === 0) {
+export const tryUpdateStatusMessage = (collection) => {
+  if (collection.length === 0) {
     statusMessage = 'No results found'
   }
 
-  return schools
+  return collection
 }
 
 const findSchools = ({ query, populateResults, onlyLeadSchools }) => {
@@ -61,7 +61,7 @@ const setupAutoComplete = (form) => {
             window.location.assign(`/system-admin/lead-schools/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
-            setHiddenField(value)
+            setHiddenField(idElement, value)
           }
         },
         tNoResults: () => statusMessage
