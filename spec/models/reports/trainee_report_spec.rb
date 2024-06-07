@@ -149,7 +149,7 @@ describe Reports::TraineeReport do
     end
 
     it "includes the disabilities" do
-      expect(subject.disabilities).to start_with("disability ")
+      expect(subject.disabilities).to start_with("Mental health condition")
     end
 
     it "includes the number_of_degrees" do

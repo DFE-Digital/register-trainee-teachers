@@ -12,5 +12,17 @@ FactoryBot.define do
     trait :deaf do
       name { "Deaf" }
     end
+
+    trait :other do
+      name { "Other" }
+    end
+
+    trait :mental_health_condition do
+      name { "Mental health condition" }
+    end
+
+    trait :no_known_disability do
+      name { "No disabilities" }
+    end
   end
 end

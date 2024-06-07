@@ -124,13 +124,13 @@ describe Diversity::View do
 
       it "renders the disability names" do
         trainee.disabilities.each do |disability|
-          expect(rendered_content).to have_text(disability.name)
+          expect(rendered_content).to have_text(disability.name.downcase)
         end
       end
     end
 
     context "when additional disability has been provided" do
-      let(:disability) { build(:disability, name: Diversities::OTHER) }
+      let(:disability) { build(:disability, :other) }
       let(:trainee_disability) { build(:trainee_disability, additional_disability: "some additional disability", disability: disability) }
       let(:trainee) { create(:trainee, :diversity_disclosed, :disabled, trainee_disabilities: [trainee_disability]) }
 

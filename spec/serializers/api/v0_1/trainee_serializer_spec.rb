@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Api::V01::TraineeSerializer do
-  let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :in_progress, :with_placements, :with_french_nationality) }
+  let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
   let(:json) { described_class.new(trainee).as_hash.with_indifferent_access }
 
   describe "serialization" do
