@@ -1,18 +1,11 @@
 import accessibleAutocomplete from 'accessible-autocomplete'
 import tracker from './tracker.js'
+import { guard, renderTemplate, setHiddenField } from './autocomplete/helpers.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
 const idElement = document.getElementById('school-id')
 
 let statusMessage = ' '
-
-const guard = (data) => {
-  if (data === undefined) {
-    return new Error('An error occured')
-  }
-
-  return data
-}
 
 const mapToSchools = (data) => data.schools
 
@@ -38,35 +31,6 @@ const findSchools = ({ query, populateResults, onlyLeadSchools }) => {
     .then(tryUpdateStatusMessage)
     .then(populateResults)
     .catch(console.log)
-}
-
-const inputTemplate = (value) => {
-  return value && value.name
-}
-
-const suggestionTemplate = (result) => {
-  if (result) {
-    if (typeof result === 'string') {
-      return result
-    } else if (typeof result === 'object') {
-      const hints = [`URN ${result.urn}`, result.town, result.postcode].filter(Boolean)
-
-      return `${result.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
-    }
-  } else return ''
-}
-
-const renderTemplate = {
-  inputValue: inputTemplate,
-  suggestion: suggestionTemplate
-}
-
-const setSchoolHiddenField = (value) => {
-  if (value === undefined) {
-    return
-  }
-
-  idElement.value = value.id
 }
 
 const setupAutoComplete = (form) => {
@@ -97,7 +61,7 @@ const setupAutoComplete = (form) => {
             window.location.assign(`/system-admin/lead-schools/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
-            setSchoolHiddenField(value)
+            setHiddenField(value)
           }
         },
         tNoResults: () => statusMessage

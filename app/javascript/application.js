@@ -5,6 +5,7 @@ import './scripts/global/disable-browser-autofill'
 
 // Import individual components
 import './scripts/components/form_components/autocomplete/script'
+import './scripts/components/form_components/autocomplete/helpers'
 import './scripts/components/form_components/country_autocomplete'
 import './scripts/components/form_components/schools_autocomplete'
 import './scripts/components/form_components/lead_partners_autocomplete'
