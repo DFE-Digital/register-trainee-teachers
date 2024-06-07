@@ -11,19 +11,43 @@ describe UserPolicy do
   let(:provider_user) { create(:user, providers: [provider]) }
   let(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
-  let(:lead_school_user) { create(:user, lead_schools: [lead_school]) }
+  let(:provider_admin_user) { create(:user, system_admin: true) }
+  let(:provider_admin_user_context) { UserWithOrganisationContext.new(user: provider_admin_user, session: {}) }
+
+  let(:lead_school_user) { create(:user, :with_lead_school_organisation, lead_schools: [lead_school]) }
   let(:lead_school_user_context) { UserWithOrganisationContext.new(user: lead_school_user, session: {}) }
 
-  let(:lead_school_admin_user) { create(:user, system_admin: true, lead_schools: [lead_school]) }
+  let(:lead_school_admin_user) { create(:user, :with_lead_school_organisation, system_admin: true, lead_schools: [lead_school]) }
   let(:lead_school_admin_user_context) { UserWithOrganisationContext.new(user: lead_school_admin_user, session: {}) }
 
-  before do
-    allow(lead_school_user_context).to receive(:lead_school?).and_return(true)
+  let(:lead_partner) { create(:lead_partner, :lead_school, school: lead_school) }
+
+  let(:lead_partner_user) { create(:user, :with_lead_partner_organisation, lead_partners: [lead_partner]) }
+  let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
+
+  let(:lead_partner_admin_user) { create(:user, :with_lead_partner_organisation, system_admin: true, lead_partners: [lead_partner]) }
+  let(:lead_partner_admin_user_context) { UserWithOrganisationContext.new(user: lead_partner_admin_user, session: {}) }
+
+  context "when drafts?, reports?" do
+    permissions :drafts?, :reports? do
+      it { is_expected.to permit(provider_user_context) }
+      it { is_expected.to permit(lead_school_admin_user_context) }
+      it { is_expected.to permit(lead_partner_admin_user_context) }
+
+      it { is_expected.not_to permit(lead_school_user_context) }
+      it { is_expected.not_to permit(lead_partner_user_context) }
+    end
   end
 
-  permissions :drafts? do
-    it { is_expected.to permit(provider_user_context) }
-    it { is_expected.not_to permit(lead_school_user_context) }
-    it { is_expected.to permit(lead_school_admin_user_context) }
+  context "when bulk_recommend?, bulk_placement?" do
+    permissions :bulk_recommend?, :bulk_placement? do
+      it { is_expected.to permit(provider_user_context) }
+
+      it { is_expected.not_to permit(provider_admin_user_context) }
+      it { is_expected.not_to permit(lead_school_admin_user_context) }
+      it { is_expected.not_to permit(lead_partner_admin_user_context) }
+      it { is_expected.not_to permit(lead_school_user_context) }
+      it { is_expected.not_to permit(lead_partner_user_context) }
+    end
   end
 end
