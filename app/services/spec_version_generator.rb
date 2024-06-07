@@ -31,7 +31,7 @@ private
   end
 
   def spec_files
-    Dir.glob("spec/{models,requests,serializers}/api/#{convert_version_to_dir(old_version)}/**/*.rb")
+    Dir.glob("spec/requests/api/#{convert_version_to_dir(old_version)}/**/*.rb")
   end
 
   def new_file_path(file)
