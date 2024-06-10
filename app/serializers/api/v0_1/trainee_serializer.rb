@@ -47,6 +47,7 @@ module Api
           training_route: training_route,
           nationality: nationality,
           training_initiative: training_initiative,
+          withdraw_reasons: withdraw_reasons,
           placements: placements,
           degrees: degrees,
           state: @trainee.state,
@@ -61,7 +62,7 @@ module Api
       end
 
       def placements
-        @placements ||= @trainee.placements.map do |placement|
+        @placements ||= @trainee.placements.includes(:school).map do |placement|
           PlacementSerializer.new(placement).as_hash
         end
       end
@@ -222,6 +223,10 @@ module Api
 
       def sex
         ::Hesa::CodeSets::Sexes::MAPPING.key(::Trainee.sexes[@trainee.sex])
+      end
+
+      def withdraw_reasons
+        @trainee.withdrawal_reasons&.map(&:name)
       end
     end
   end

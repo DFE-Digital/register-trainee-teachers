@@ -6,9 +6,9 @@ module Diversities
 
     validate :disabilities_cannot_be_empty, if: -> { disability_disclosure_form.disabled? && disabilities.empty? }
 
-    def initialize(trainee, **kwargs)
+    def initialize(trainee, **)
       @disability_disclosure_form = DisabilityDisclosureForm.new(trainee)
-      super(trainee, **kwargs)
+      super
     end
 
     def save!

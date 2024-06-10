@@ -1,0 +1,17 @@
+{
+  "name": "Dev Container",
+  "dockerComposeFile": "./docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/app",
+  "postCreateCommand": ".devcontainer/boot.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "yzhang.markdown-all-in-one",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}

@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   after_action :save_origin_path
   include Pundit::Authorization
   include DfE::Analytics::Requests
+  include Codespaceable
 
   rescue_from Pundit::NotAuthorizedError do
     render "errors/forbidden", status: :forbidden, formats: [:html]

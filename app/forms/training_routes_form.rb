@@ -15,7 +15,7 @@ class TrainingRoutesForm < TraineeForm
   delegate :update_training_route!, to: :route_data_manager
 
   def initialize(...)
-    super(...)
+    super
     @route_data_manager = RouteDataManager.new(trainee:)
   end
 

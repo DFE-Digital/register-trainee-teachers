@@ -318,6 +318,14 @@ FactoryBot.define do
 
       after(:create) do |trainee, evaluator|
         create_list(:trainee_disability, evaluator.disabilities_count, trainee:)
+
+        if trainee.hesa_trainee_detail.present?
+          trainee.hesa_trainee_detail.hesa_disabilities = evaluator.disabilities.map.with_index(1) { |item, index|
+            ["disability#{index}", Hesa::CodeSets::Disabilities::MAPPING.key(item.name)]
+          }.to_h
+
+          trainee.hesa_trainee_detail.save
+        end
         trainee.reload
       end
     end

@@ -20,7 +20,7 @@ class LanguageSpecialismsForm < TraineeForm
   def initialize(trainee, params: {}, user: nil, store: FormStore)
     params.merge!(course_subjects(params[:language_specialisms]))
 
-    super(trainee, params:, user:, store:)
+    super
   end
 
   def languages

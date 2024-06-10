@@ -12,8 +12,8 @@ module Api
       validate :withdraw_date_valid
       validates :withdraw_reasons_details, length: { maximum: 1000 }, allow_blank: true
       validates :withdraw_reasons_dfe_details, length: { maximum: 1000 }, allow_blank: true
+      validates :reasons, inclusion: { in: WithdrawalReasons::REASONS }
 
-      validates :reasons, presence: true
       validate :unknown_exclusively
 
       attr_accessor :trainee
