@@ -16,6 +16,7 @@
 #
 # Indexes
 #
+#  index_lead_partners_on_name         (name)
 #  index_lead_partners_on_provider_id  (provider_id)
 #  index_lead_partners_on_school_id    (school_id)
 #  index_lead_partners_on_ukprn        (ukprn) UNIQUE
