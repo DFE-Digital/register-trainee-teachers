@@ -8,7 +8,7 @@ module SystemAdmin
     helper_method :query
 
     def index
-      # @lead_partner_form = UserLeadPartnersForm.new
+      @lead_partner_form = UserLeadPartnersForm.new
       @lead_partner_search = PartnerSearch.call(query: query, lead_partners_only: true)
     end
 

@@ -22,8 +22,8 @@ feature "Add user to lead partners" do
 
   context "as a system admin", :feature_lead_partners do
     let(:user) { create(:user, system_admin: true) }
-    let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "School Partner") }
-    let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "HEI Partner") }
+    let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "Garibaldi School") }
+    let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "Bourbon University") }
 
     before do
       given_i_am_authenticated(user:)
@@ -37,6 +37,10 @@ feature "Add user to lead partners" do
       when_i_select_a_lead_partner
       and_i_click_the_submit_button
       then_i_see_the_user_added_to_the_lead_partner
+
+      when_i_click_the_lead_partner_link
+      then_i_see_the_lead_partner_detail_page
+      and_i_see_the_user_has_been_added_to_the_lead_partner
     end
   end
 
@@ -76,6 +80,19 @@ feature "Add user to lead partners" do
 
   def then_i_see_the_user_added_to_the_lead_partner
     expect(page).to have_content("Lead partner added")
-    expect(page).to have_link("School Partner", href: lead_partner_path(school_lead_partner))
+    expect(page).to have_link("Garibaldi School", href: lead_partner_path(school_lead_partner))
+  end
+
+  def when_i_click_the_lead_partner_link
+    click_on("Garibaldi School")
+  end
+
+  def then_i_see_the_lead_partner_detail_page
+    expect(page).to have_current_path(lead_partner_path(school_lead_partner))
+    expect(page).to have_content("Garibaldi School")
+  end
+
+  def and_i_see_the_user_has_been_added_to_the_lead_partner
+    expect(page).to have_content(user.name)
   end
 end
