@@ -81,17 +81,63 @@ module TeacherTrainingApi
       course_attributes[:course_length] == "TwoYears" ? 2 : 1
     end
 
-    def route
-      routes = {
-        higher_education_programme: :provider_led_postgrad,
+    def route_not_changing
+      {
         pg_teaching_apprenticeship: :pg_teaching_apprenticeship,
+      }
+    end
+
+    def before2024_routes
+      {
+        higher_education_programme: :provider_led_postgrad,
         school_direct_salaried_training_programme: :school_direct_salaried,
         school_direct_training_programme: :school_direct_tuition_fee,
         scitt_programme: :provider_led_postgrad,
         scitt_salaried_programme: :provider_led_postgrad,
         higher_education_salaried_programme: :provider_led_postgrad,
-      }
+      }.merge(route_not_changing)
+    end
 
+    def route_should_not_be_in_used
+      {
+        higher_education_programme: :provider_led_postgrad,
+        school_direct_salaried_training_programme: :provider_led_postgrad,
+        school_direct_training_programme: :provider_led_postgrad,
+        scitt_programme: :provider_led_postgrad,
+        scitt_salaried_programme: :provider_led_postgrad,
+        higher_education_salaried_programme: :provider_led_postgrad,
+      }
+    end
+
+    def for2024_routes
+      route_should_not_be_in_used.merge(routes_not_made_yet, route_not_changing)
+    end
+
+    def routes_not_made_yet
+      {
+        # undergraduate_salaried_programme: :provider_led_undergrad,
+        # undergraduate_fee_paying_programme: :provider_led_undergrad,
+      }
+    end
+
+    def after2024_routes
+      {
+        postgraduate_salaried_programme: :provider_led_postgrad,
+        postgraduate_fee_paying_programme: :provider_led_postgrad,
+      }.merge(routes_not_made_yet, route_not_changing)
+    end
+
+    def routes
+      if Settings.current_recruitment_cycle_year.to_i < 2024
+        before2024_routes
+      elsif Settings.current_recruitment_cycle_year.to_i == 2024
+        for2024_routes
+      else
+        after2024_routes
+      end
+    end
+
+    def route
       routes[course_attributes[:program_type].to_sym]
     end
 
