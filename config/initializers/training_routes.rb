@@ -628,10 +628,10 @@ GRANTS_2023_TO_2024 = [
   ),
 ].freeze
 
-POSTGRAD_FUNDED = "Postgrad (fee funded)".freeze
-POSTGRAD_SALARIED = "Postgrad (salaried)".freeze
-UNDERGRAD_FUNDED = "Undergrad (fee funded)".freeze
-OTHER = "Other".freeze
+POSTGRAD_FUNDED = "Postgrad (fee funded)"
+POSTGRAD_SALARIED = "Postgrad (salaried)"
+UNDERGRAD_FUNDED = "Undergrad (fee funded)"
+OTHER = "Other"
 
 TRAINING_ROUTE_TYPES = {
   POSTGRAD_FUNDED => [
