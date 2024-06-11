@@ -627,3 +627,32 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
 ].freeze
+
+POSTGRAD_FUNDED = "Postgrad (fee funded)".freeze
+POSTGRAD_SALARIED = "Postgrad (salaried)".freeze
+UNDERGRAD_FUNDED = "Undergrad (fee funded)".freeze
+OTHER = "Other".freeze
+
+TRAINING_ROUTE_TYPES = {
+  POSTGRAD_FUNDED => [
+    TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+  ],
+  POSTGRAD_SALARIED => [
+    TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    TRAINING_ROUTE_ENUMS[:early_years_salaried],
+    TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+  ],
+  UNDERGRAD_FUNDED => [
+    TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+  ],
+  OTHER => [
+    TRAINING_ROUTE_ENUMS[:assessment_only],
+    TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+    TRAINING_ROUTE_ENUMS[:iqts],
+  ],
+}.freeze
