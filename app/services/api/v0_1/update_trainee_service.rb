@@ -42,20 +42,13 @@ module Api
         def invalid? = !errors_count.zero?
 
         def validation_errors
-          [*trainee_errors, *hesa_trainee_detail_attributes_errors].compact.flatten
+          trainee_errors.compact.flatten
         end
 
         def trainee_errors
           @trainee_errors ||= begin
             trainee_attributes.validate
             trainee_attributes.errors&.full_messages
-          end
-        end
-
-        def hesa_trainee_detail_attributes_errors
-          @hesa_trainee_detail_attributes_errors ||= begin
-            trainee_attributes.hesa_trainee_detail_attributes.validate
-            trainee_attributes.hesa_trainee_detail_attributes.errors&.full_messages
           end
         end
       end

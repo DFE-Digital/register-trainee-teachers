@@ -612,7 +612,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body["errors"]).to contain_exactly("First names can't be blank", "Last name can't be blank", "Date of birth can't be blank", "Sex can't be blank", "Training route can't be blank", "Itt start date can't be blank", "Itt end date can't be blank", "Course subject one can't be blank", "Study mode can't be blank", "Email Enter an email address in the correct format, like name@example.com", "Itt aim can't be blank", "Itt qualification aim can't be blank", "Course year can't be blank", "Course age range can't be blank", "Fund code can't be blank", "Funding method can't be blank", "Hesa can't be blank")
+      expect(response.parsed_body["errors"]).to contain_exactly("First names can't be blank", "Last name can't be blank", "Date of birth can't be blank", "Sex can't be blank", "Training route can't be blank", "Itt start date can't be blank", "Itt end date can't be blank", "Course subject one can't be blank", "Study mode can't be blank", "Hesa can't be blank", "Email Enter an email address in the correct format, like name@example.com", "Hesa trainee detail attributes Itt aim can't be blank", "Hesa trainee detail attributes Itt qualification aim can't be blank", "Hesa trainee detail attributes Course year can't be blank", "Hesa trainee detail attributes Course age range can't be blank", "Hesa trainee detail attributes Fund code can't be blank", "Hesa trainee detail attributes Funding method can't be blank")
     end
 
     context "date of birth is in the future" do
@@ -631,7 +631,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course age range can't be blank")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range can't be blank")
       end
     end
 
@@ -642,7 +642,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range is not included in the list")
       end
     end
 
@@ -678,8 +678,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
-      expect(response.parsed_body["errors"]).to include("Placements name can't be blank")
+      expect(response.parsed_body["errors"]).to include("Placements attributes Name can't be blank")
     end
   end
 

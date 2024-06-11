@@ -188,7 +188,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course age range can't be blank")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range can't be blank")
       end
     end
 
@@ -205,7 +205,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range is not included in the list")
       end
     end
 

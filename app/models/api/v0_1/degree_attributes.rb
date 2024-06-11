@@ -41,10 +41,6 @@ module Api
                             end
       end
 
-      validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code) }, allow_nil: true
-      validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:hecos_code) }, allow_nil: true
-      validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code) }, allow_nil: true
-
       validate :check_for_duplicates
 
       def self.from_degree(degree, trainee:)

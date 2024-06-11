@@ -12,6 +12,7 @@ module Api
 
       def initialize(attributes = {})
         super({})
+        return if attributes.blank?
 
         nationality = lookup_nationality_by_name(attributes[:name])
 
