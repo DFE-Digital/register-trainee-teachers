@@ -7,3 +7,7 @@ shared:
     - lead_school_id
     - progress
   courses:
+    - full_time_start_date
+    - level
+    - summary
+    
