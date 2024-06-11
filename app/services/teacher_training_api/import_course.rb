@@ -110,7 +110,7 @@ module TeacherTrainingApi
     end
 
     def for2024_routes
-      route_should_not_be_in_used.merge(routes_not_made_yet, route_not_changing)
+      route_should_not_be_in_used.merge(route_not_changing)
     end
 
     def routes_not_made_yet
