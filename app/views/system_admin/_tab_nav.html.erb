@@ -11,4 +11,4 @@
   { name: "Pending awards", url: pending_awards_path },
   { name: "Duplicate Apply applications", url: duplicate_apply_applications_path },
   ({ name: "Funding", url: funding_uploads_path } if FeatureService.enabled?("funding_uploads")),
-].compact, size: :compact) %>
+], size: :compact) %>
