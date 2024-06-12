@@ -101,11 +101,11 @@ module TeacherTrainingApi
     def mapping_of_old_course_type
       {
         higher_education_programme: :provider_led_postgrad,
-        school_direct_salaried_training_programme: :school_direct_salaried
+        school_direct_salaried_training_programme: :provider_led_postgrad_salaried
         school_direct_training_programme: :provider_led_postgrad,
         scitt_programme: :provider_led_postgrad,
-        scitt_salaried_programme: :school_direct_salaried
-        higher_education_salaried_programme: :school_direct_salaried
+        scitt_salaried_programme: :provider_led_postgrad_salaried
+        higher_education_salaried_programme: :provider_led_postgrad_salaried
       }
     end
 
@@ -113,17 +113,18 @@ module TeacherTrainingApi
       mapping_of_old_course_type.merge(route_not_changing)
     end
 
-    def routes_not_made_yet
+    def not_made_yet
       {
-        # undergraduate_fee_paying_programme: :provider_led_undergrad,
+        postgraduate_salaried_programme: :provider_led_postgrad_salaried,
+        postgraduate_fee_paying_programme: :provider_led_postgrad,
+        undergraduate_fee_paying_programme: :provider_led_undergrad,
+        # NOTE: Teacher Degree Apprenticeship
+        undergraduate_salaried_programme: :provider_led_undergrad_salaried,
       }
     end
 
     def after2024_routes
-      {
-        postgraduate_salaried_programme: :school_direct_salaried
-        postgraduate_fee_paying_programme: :provider_led_postgrad,
-      }.merge(routes_not_made_yet, route_not_changing)
+      not_made_yet
     end
 
     def routes
