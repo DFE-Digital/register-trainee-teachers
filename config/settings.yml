@@ -182,4 +182,5 @@ api:
   blacklist:
     ua: []
     ip: []
-  allowed_versions: [v0.1]
+  allowed_versions: [v0.1, v1.0]
+  current_version: v0.1

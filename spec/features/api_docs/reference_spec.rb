@@ -26,7 +26,7 @@ feature "References documentation page for Register API" do
   end
 
   def and_i_should_see_links_to_other_versions
-    ApiDocs::ReferenceController::VERSIONS.each do |version|
+    Settings.api.allowed_versions.each do |version|
       expect(page).to have_link(version, href: api_docs_versioned_reference_path(api_version: version))
     end
   end

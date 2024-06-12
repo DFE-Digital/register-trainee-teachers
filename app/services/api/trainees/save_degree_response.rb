@@ -40,7 +40,7 @@ module Api
       def save
         if valid?
           assign_attributes(
-            ::Api::V01::HesaMapper::DegreeAttributes.new(
+            hesa_degree_mapper.new(
               attributes.with_indifferent_access,
             ).call,
           )
@@ -49,6 +49,10 @@ module Api
         else
           false
         end
+      end
+
+      def hesa_degree_mapper
+        Api::GetVersionedItem.for_service(model:, version:)
       end
 
       def update_progress

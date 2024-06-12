@@ -16,7 +16,6 @@ module Api
 
     def self.for(model:, version:, item_type:)
       class_name = "Api::#{module_version(version)}::#{class_name_for(model, item_type)}"
-
       if Object.const_defined?(class_name) && Settings.api.allowed_versions.include?(version)
         Object.const_get(class_name)
       else
