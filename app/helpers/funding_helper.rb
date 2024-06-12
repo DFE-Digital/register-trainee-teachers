@@ -21,7 +21,14 @@ module FundingHelper
   def funding_csv_export_path(funding_type, organisation)
     return polymorphic_path([:funding, funding_type], format: :csv) unless current_user.system_admin?
 
-    path_prefix = organisation.is_a?(School) ? :lead_school : :provider
+    path_prefix =
+      if organisation.is_a?(School)
+        :lead_school
+      elsif organisation.is_a?(Provider)
+        :provider
+      else
+        :lead_partner
+      end
 
     polymorphic_path([path_prefix, :funding, funding_type], format: :csv)
   end

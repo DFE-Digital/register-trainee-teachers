@@ -40,11 +40,15 @@ module SystemAdmin
         send("provider_funding_#{funding_type}_path", provider_id: organisation.id, academic_year: year)
       when School
         send("lead_school_funding_#{funding_type}_path", lead_school_id: organisation.id, academic_year: year)
+      when LeadPartner
+        send("lead_partner_funding_#{funding_type}_path", lead_partner_id: organisation.id, academic_year: year)
       end
     end
 
     def organisation
       return Provider.find(params[:provider_id]) if params[:provider_id].present?
+
+      return LeadPartner.find(params[:lead_partner_id]) if params[:lead_partner_id].present?
 
       School.find(params[:lead_school_id])
     end

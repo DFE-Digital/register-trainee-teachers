@@ -18,6 +18,8 @@ module Funding
 
       if organisation.is_a?(Provider)
         provider_funding_payment_schedule_path(provider_id: organisation.id, academic_year: year)
+      elsif organisation.is_a?(LeadPartner)
+        lead_partner_funding_payment_schedule_path(lead_partner_id: organisation.id, academic_year: year)
       else
         lead_school_funding_payment_schedule_path(lead_school_id: organisation.id, academic_year: year)
       end
@@ -28,6 +30,8 @@ module Funding
 
       if organisation.is_a?(Provider)
         provider_funding_trainee_summary_path(provider_id: organisation.id, academic_year: year)
+      elsif organisation.is_a?(LeadPartner)
+        lead_partner_funding_trainee_summary_path(lead_partner_id: organisation.id, academic_year: year)
       else
         lead_school_funding_trainee_summary_path(lead_school_id: organisation.id, academic_year: year)
       end

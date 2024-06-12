@@ -10,6 +10,10 @@ FactoryBot.define do
       payable { |p| p.association(:school) }
     end
 
+    trait :for_lead_partner do
+      payable { |p| p.association(:lead_partner) }
+    end
+
     rows { [build(:payment_schedule_row)] }
 
     trait :for_full_year do

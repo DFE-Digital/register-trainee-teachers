@@ -32,11 +32,20 @@ module SystemAdmin
           redirect_to(provider_funding_trainee_summary_path(provider_id: organisation.id, academic_year: selected_academic_cycle.start_year))
         when School
           redirect_to(lead_school_funding_trainee_summary_path(lead_school_id: organisation.id, academic_year: selected_academic_cycle.start_year))
+        when LeadPartner
+          redirect_to(lead_partner_funding_trainee_summary_path(lead_partner_id: organisation.id, academic_year: selected_academic_cycle.start_year))
         end
       end
 
       def organisation
-        @organisation ||= params[:provider_id].present? ? Provider.find(params[:provider_id]) : School.find(params[:lead_school_id])
+        @organisation ||=
+          if params[:provider_id].present?
+            Provider.find(params[:provider_id])
+          elsif params[:lead_school_id].present?
+            School.find(params[:lead_school_id])
+          else
+            LeadPartner.find(params[:lead_partner_id])
+          end
       end
 
       def data_export
@@ -49,6 +58,8 @@ module SystemAdmin
           provider_funding_path
         when School
           lead_school_funding_path
+        when LeadPartner
+          lead_partner_funding_path
         end
       end
     end
