@@ -3,7 +3,7 @@
 <%= tag.h1("Register API reference", class: "govuk-heading-l") %>
 
 <%= render TabNavigation::View.new(
-  items: ApiDocs::ReferenceController::VERSIONS.map do |version|
+  items: Settings.api.allowed_versions.map do |version|
     {
       url: api_docs_versioned_reference_path(version),
       name: version,

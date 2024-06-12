@@ -11,7 +11,7 @@ module ApiDocs
   private
 
     def check_version
-      unless Settings.api.allowed_versions.include?(version)
+      unless Settings.api.allowed_versions.include?(api_version)
         redirect_to(not_found_path)
       end
     end
