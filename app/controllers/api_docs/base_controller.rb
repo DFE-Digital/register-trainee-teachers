@@ -2,9 +2,6 @@
 
 module ApiDocs
   class BaseController < ::ApplicationController
-    VERSIONS = %w[v0.1 v1.0].freeze
-    CURRENT_VERSION = "v1.0"
-
     layout "api_docs/pages"
     skip_before_action :authenticate
     before_action { require_feature_flag(:register_api) }
@@ -14,13 +11,13 @@ module ApiDocs
   private
 
     def check_version
-      unless VERSIONS.include?(api_version)
+      unless Settings.api.allowed_versions.include?(version)
         redirect_to(not_found_path)
       end
     end
 
     def api_version
-      params[:api_version] || CURRENT_VERSION
+      params[:api_version] || Settings.api.current_version
     end
   end
 end
