@@ -9,7 +9,7 @@ let statusMessage = ' '
 
 const mapToSchools = (data) => data.schools
 
-export const tryUpdateStatusMessage = (collection) => {
+const tryUpdateStatusMessage = (collection) => {
   if (collection.length === 0) {
     statusMessage = 'No results found'
   }
