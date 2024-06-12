@@ -10,6 +10,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
       :with_hesa_trainee_detail,
       :with_lead_school,
       :with_employing_school,
+      :with_diversity_information,
       first_names: "Bob",
     )
   end
@@ -187,7 +188,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course age range can't be blank")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range can't be blank")
       end
     end
 
@@ -204,7 +205,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course age range is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range is not included in the list")
       end
     end
 
@@ -530,7 +531,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
     context "when read only attributes are submitted" do
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
-      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, ethnic_group:, ethnic_background:) }
+      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
 
       before do
         put(
@@ -553,7 +554,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
           }
         end
 
-        it "sets the enthnic attributes based on ethnicity" do
+        it "sets the ethnic attributes based on ethnicity" do
           expect(response).to have_http_status(:ok)
 
           trainee.reload
@@ -603,7 +604,7 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
     end
 
     describe "with ethnicity" do
-      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, ethnic_group:, ethnic_background:) }
+      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
 
@@ -674,6 +675,102 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+        end
+      end
+    end
+
+    describe "with disabilities" do
+      before do
+        create(:disability, :deaf)
+        create(:disability, :blind)
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
+      context "when not present" do
+        let(:params) do
+          {
+            data: {
+              first_names: "Alice",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("55")
+          expect(response.parsed_body[:data][:disability2]).to be_nil
+
+          expect(trainee.reload.disabilities.count).to eq(1)
+          expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Mental health condition")
+        end
+      end
+
+      context "when disability1 is set" do
+        let(:params) do
+          {
+            data: {
+              disability1: "57",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("57")
+          expect(response.parsed_body[:data][:disability2]).to be_nil
+
+          expect(trainee.disabilities.count).to eq(1)
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Deaf")
+        end
+      end
+
+      context "when disability2 is set" do
+        let(:params) do
+          {
+            data: {
+              disability2: "57",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("55")
+          expect(response.parsed_body[:data][:disability2]).to eq("57")
+
+          expect(trainee.disabilities.count).to eq(2)
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Mental health condition", "Deaf")
+        end
+      end
+
+      context "when disability1 & disability2 is set" do
+        let(:params) do
+          {
+            data: {
+              disability1: "58",
+              disability2: "57",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+          expect(response.parsed_body[:data][:disability1]).to eq("58")
+          expect(response.parsed_body[:data][:disability2]).to eq("57")
+
+          expect(trainee.disabilities.count).to eq(2)
+          expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
         end
       end
     end
