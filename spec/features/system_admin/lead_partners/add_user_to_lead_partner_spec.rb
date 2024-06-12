@@ -12,7 +12,7 @@ feature "Add user to lead partners" do
     end
 
     scenario "list lead partners page" do
-      when_i_visit_a_user_page
+      when_i_visit_the_user_page
       then_i_there_is_no_add_to_lead_partner_link
 
       when_i_visit_the_add_to_lead_partner_page
@@ -30,7 +30,7 @@ feature "Add user to lead partners" do
     end
 
     scenario "list lead partners page" do
-      when_i_visit_a_user_page
+      when_i_visit_the_user_page
       and_i_click_the_lead_partner_link
       then_i_see_the_add_to_lead_partner_page
 
@@ -41,10 +41,18 @@ feature "Add user to lead partners" do
       when_i_click_the_lead_partner_link
       then_i_see_the_lead_partner_detail_page
       and_i_see_the_user_has_been_added_to_the_lead_partner
+
+      when_i_visit_the_user_page
+      and_i_click_the_remove_link
+      then_i_see_the_remove_lead_partner_page
+
+      when_i_confirm_the_removal
+      then_i_see_a_flash_message_to_confirm_the_removal
+      and_i_no_longer_see_the_lead_partner_on_the_user_page
     end
   end
 
-  def when_i_visit_a_user_page
+  def when_i_visit_the_user_page
     visit user_path(user)
   end
 
@@ -94,5 +102,28 @@ feature "Add user to lead partners" do
 
   def and_i_see_the_user_has_been_added_to_the_lead_partner
     expect(page).to have_content(user.name)
+  end
+
+  def and_i_click_the_remove_link
+    within("table#lead-partners") do
+      click_on("Remove")
+    end
+  end
+
+  def then_i_see_the_remove_lead_partner_page
+    expect(page).to have_current_path(edit_user_lead_partner_accessions_path(user, school_lead_partner))
+    expect(page).to have_content("Yes I’m sure – remove #{user.name}’s access to Garibaldi School")
+  end
+
+  def when_i_confirm_the_removal
+    click_on("Yes I’m sure – remove #{user.name}’s access to Garibaldi School")
+  end
+
+  def then_i_see_a_flash_message_to_confirm_the_removal
+    expect(page).to have_content("User access removed successfully")
+  end
+
+  def and_i_no_longer_see_the_lead_partner_on_the_user_page
+    expect(page).not_to have_content("Garibaldi School")
   end
 end
