@@ -21,7 +21,7 @@ feature "Viewing lead partner's funding", :feature_lead_partners do
     then_i_see_the_payment_schedule
 
     when_i_click_back
-    then_i_see_the_system_admin_home_page
+    then_i_see_the_home_page
   end
 
   def and_funding_data_exists
@@ -61,7 +61,7 @@ feature "Viewing lead partner's funding", :feature_lead_partners do
     click_on("Back")
   end
 
-  def then_i_see_the_system_admin_home_page
-    expect(page).to have_content(lead_partner.name)
+  def then_i_see_the_home_page
+    expect(page).to have_current_path(root_path)
   end
 end
