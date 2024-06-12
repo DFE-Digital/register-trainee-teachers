@@ -115,7 +115,6 @@ module TeacherTrainingApi
 
     def routes_not_made_yet
       {
-        # undergraduate_salaried_programme: :school_direct_salaried
         # undergraduate_fee_paying_programme: :provider_led_undergrad,
       }
     end
