@@ -639,7 +639,7 @@ TRAINING_ROUTE_TYPES = {
     TRAINING_ROUTE_ENUMS[:early_years_postgrad],
   ],
   POSTGRAD_SALARIED => [
-    TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
     TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     TRAINING_ROUTE_ENUMS[:early_years_salaried],
     TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
