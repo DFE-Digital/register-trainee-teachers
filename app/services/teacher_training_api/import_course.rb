@@ -98,7 +98,7 @@ module TeacherTrainingApi
       }.merge(route_not_changing)
     end
 
-    def route_should_not_be_in_used
+    def mapping_of_old_course_type
       {
         higher_education_programme: :provider_led_postgrad,
         school_direct_salaried_training_programme: :school_direct_salaried
@@ -110,7 +110,7 @@ module TeacherTrainingApi
     end
 
     def for2024_routes
-      route_should_not_be_in_used.merge(route_not_changing)
+      mapping_of_old_course_type.merge(route_not_changing)
     end
 
     def routes_not_made_yet
