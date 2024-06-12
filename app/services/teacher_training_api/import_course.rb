@@ -101,11 +101,11 @@ module TeacherTrainingApi
     def route_should_not_be_in_used
       {
         higher_education_programme: :provider_led_postgrad,
-        school_direct_salaried_training_programme: :provider_led_postgrad,
+        school_direct_salaried_training_programme: :school_direct_salaried
         school_direct_training_programme: :provider_led_postgrad,
         scitt_programme: :provider_led_postgrad,
-        scitt_salaried_programme: :provider_led_postgrad,
-        higher_education_salaried_programme: :provider_led_postgrad,
+        scitt_salaried_programme: :school_direct_salaried
+        higher_education_salaried_programme: :school_direct_salaried
       }
     end
 
@@ -115,14 +115,14 @@ module TeacherTrainingApi
 
     def routes_not_made_yet
       {
-        # undergraduate_salaried_programme: :provider_led_undergrad,
+        # undergraduate_salaried_programme: :school_direct_salaried
         # undergraduate_fee_paying_programme: :provider_led_undergrad,
       }
     end
 
     def after2024_routes
       {
-        postgraduate_salaried_programme: :provider_led_postgrad,
+        postgraduate_salaried_programme: :school_direct_salaried
         postgraduate_fee_paying_programme: :provider_led_postgrad,
       }.merge(routes_not_made_yet, route_not_changing)
     end
