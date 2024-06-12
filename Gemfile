@@ -149,8 +149,13 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 
   gem "erb_lint", require: false
+
+  gem "rubocop-capybara"
+  gem "rubocop-factory_bot"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "rubocop-rspec_rails"
+
   gem "scss_lint-govuk"
 
   # Debugging

@@ -38,8 +38,8 @@ RSpec/PredicateMatcher:
 RSpec/DescribeClass:
   Enabled: false
 
-RSpec/Capybara/FeatureMethods:
-  EnabledMethods:
+RSpec/Dialect:
+  PreferredMethods:
     - "scenario"
     - "feature"
     - "background"
