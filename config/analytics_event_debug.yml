@@ -3,3 +3,4 @@ event_filters:
   entity_table_name: trainees | courses
   event_type: import_entity
   entity_table_name: trainees | courses
+  
