@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 157af8cd609effdcf123282bf8726cc8b9f5c3c0
+  revision: 0d51ed972f19327c35bf6878070a2205c3692e5e
   branch: update-masking-hidden-data-for-logs
   specs:
     dfe-analytics (1.12.6)
