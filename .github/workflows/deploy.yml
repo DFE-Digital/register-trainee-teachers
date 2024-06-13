@@ -15,6 +15,7 @@ on:
         - sandbox
         - productiondata
         - production
+        - pen
       sha:
         description: Commit sha to be deployed
         required: true
