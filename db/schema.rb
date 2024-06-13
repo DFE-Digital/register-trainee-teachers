@@ -23,8 +23,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_13_142252) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-
-    t.exclusion_constraint "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone) WITH &&", using: :gist, name: "academic_cycles_date_range"
+    t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|

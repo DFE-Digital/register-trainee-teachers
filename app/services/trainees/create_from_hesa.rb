@@ -33,7 +33,6 @@ module Trainees
         if trainee.save!
           create_degrees!
           create_placements!
-          store_application_choice_id!
           store_hesa_metadata!
           enqueue_background_jobs!
           check_for_missing_hesa_mappings!
@@ -249,10 +248,6 @@ module Trainees
 
     def create_placements!
       ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements])
-    end
-
-    def store_application_choice_id!
-      trainee.apply_application&.update(application_choice_id: hesa_trainee[:application_choice_id])
     end
 
     def store_hesa_metadata!
