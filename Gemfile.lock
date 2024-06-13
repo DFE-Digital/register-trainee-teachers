@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 0d51ed972f19327c35bf6878070a2205c3692e5e
-  branch: update-masking-hidden-data-for-logs
+  revision: 1eefb72cc21ac155694a90fac18f88dbbb616739
+  branch: hidden-pii-updates
   specs:
     dfe-analytics (1.12.6)
       google-cloud-bigquery (~> 1.38)
