@@ -463,6 +463,9 @@ en:
         lead_schools:
           edit: Lead school
           index: Select the lead school
+        lead_partners:
+          edit: Lead partner
+          index: Select the lead partner
         employing_schools:
           index: Select the employing school
           edit: Employing school
@@ -508,6 +511,8 @@ en:
         index: Schools
       lead_schools:
         index: Lead schools
+      lead_partners:
+        index: Lead partners
       search_schools:
         page_title_no_results: No results
         sub_text_results: Results for

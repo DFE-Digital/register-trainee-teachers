@@ -70,6 +70,19 @@ module SystemAdminRoutes
           end
         end
 
+        resources :lead_partners, path: "lead-partners", only: %i[index show] do
+          resources :users, controller: "lead_partners/users", only: %i[edit update]
+
+          # get "/funding", to: "funding#show", as: :funding
+
+          # namespace :funding do
+          #   scope "(:academic_year)" do
+          #     resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
+          #     resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
+          #   end
+          # end
+        end
+
         resources :dttp_trainees, only: [:show], path: "dttp-trainees" do
           member do
             get :placement_assignments, path: "placement-assignments"

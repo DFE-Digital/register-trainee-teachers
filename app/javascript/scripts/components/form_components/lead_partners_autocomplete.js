@@ -2,40 +2,34 @@ import accessibleAutocomplete from 'accessible-autocomplete'
 import tracker from './tracker.js'
 import { guard, renderTemplate, setHiddenField } from './autocomplete/helpers.js'
 
-const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
-const idElement = document.getElementById('school-id')
+const $allAutocompleteElements = document.querySelectorAll('[data-module="app-lead-partners-autocomplete"]')
+const idElement = document.getElementById('lead-partners-id')
 
 let statusMessage = ' '
 
-const mapToSchools = (data) => data.schools
-
-const tryUpdateStatusMessage = (collection) => {
-  if (collection.length === 0) {
-    statusMessage = 'No results found'
-  }
-
-  return collection
-}
-
-const findSchools = ({ query, populateResults, onlyLeadSchools }) => {
-  idElement.value = ''
-
+const fetchLeadPartners = ({ query, populateResults }) => {
   const encodedQuery = encodeURIComponent(query)
 
-  statusMessage = 'Loading...' // Shared state
-
-  window.fetch(`/autocomplete/schools?query=${encodedQuery}&lead_school=${onlyLeadSchools ? 'true' : 'false'}`)
+  window.fetch(`/autocomplete/lead_partners?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
-    .then(mapToSchools)
-    .then(tryUpdateStatusMessage)
+    .then((data) => data.lead_partners)
+    .then((data) => { if (data.length === 0) { statusMessage = 'No results found' } else { return data } })
     .then(populateResults)
     .catch(console.log)
 }
 
+const findLeadPartners = ({ query, populateResults }) => {
+  idElement.value = ''
+
+  statusMessage = 'Loading...' // Shared state
+
+  fetchLeadPartners({ query, populateResults })
+}
+
 const setupAutoComplete = (form) => {
-  const element = form.querySelector('#schools-autocomplete-element')
-  const inputs = form.querySelectorAll('[data-field="schools-autocomplete"]')
+  const element = form.querySelector('#lead-partners-autocomplete-element')
+  const inputs = form.querySelectorAll('[data-field="lead-partners-autocomplete"]')
   const defaultValueOption = element.getAttribute('data-default-value') || ''
   const fieldName = element.getAttribute('data-field-name') || ''
 
@@ -49,16 +43,15 @@ const setupAutoComplete = (form) => {
         name: fieldName,
         source: (query, populateResults) => {
           tracker.trackSearch(query)
-          return findSchools({
+          return findLeadPartners({
             query,
-            populateResults,
-            onlyLeadSchools: element.dataset.onlyLeadSchools
+            populateResults
           })
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          if (value?.id && element.dataset.systemAdminRedirectLeadSchool) {
-            window.location.assign(`/system-admin/lead-schools/${value.id}`)
+          if (value?.id && element.dataset.systemAdminRedirectLeadPartner) {
+            window.location.assign(`/system-admin/lead-partners/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
             setHiddenField(idElement, value)
