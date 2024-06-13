@@ -79,7 +79,8 @@ module Api
     def hesa_mapped_params_for_update
       hesa_mapper_class.call(
         params: params.require(:data).permit(
-          hesa_mapper_class::ATTRIBUTES + trainee_attributes_service::ATTRIBUTES.keys,
+          hesa_mapper_class::ATTRIBUTES +
+          trainee_attributes_service::ATTRIBUTES.keys,
           hesa_mapper_class.disability_attributes(params),
           hesa_trainee_details_attributes_service::ATTRIBUTES,
         ), update: true
@@ -115,7 +116,11 @@ module Api
     end
 
     def degree_attributes
-      @degree_attributes ||= Api::GetVersionedItem.for_attributes(model: :degree, version: version)::ATTRIBUTES
+      @degree_attributes ||= begin
+        hesa_attributes = Api::GetVersionedItem.for_service(model: :degree, version: version)::ATTRIBUTES
+        standard_attributes = Api::GetVersionedItem.for_attributes(model: :degree, version: version)::ATTRIBUTES
+        standard_attributes + hesa_attributes
+      end
     end
 
     def model = :trainee
