@@ -4,7 +4,6 @@ module Api
   module Trainees
     class SaveDegreeResponse
       include ServicePattern
-
       include Api::Attributable
       include Api::Serializable
       include Api::ErrorResponse
@@ -23,7 +22,7 @@ module Api
           update_progress
           { json: { data: serializer_klass.new(degree).as_hash }, status: status }
         elsif duplicates?
-          conflict_errors_response(errors:)
+          conflict_errors_response(errors: degree_attributes.errors.where(:base, :duplicate))
         else
           validation_errors_response(errors:)
         end
@@ -38,27 +37,12 @@ module Api
       attr_reader :degree, :params, :version, :status
 
       def save
-        if valid?
-          assign_attributes(
-            hesa_degree_mapper.new(
-              attributes.with_indifferent_access,
-            ).call,
-          )
+        assign_attributes(attributes)
 
-          degree.save
+        if valid? && degree.save
+          true
         else
           false
-        end
-      end
-
-      def hesa_degree_mapper
-        Api::GetVersionedItem.for_service(model:, version:)
-      end
-
-      def update_progress
-        if degrees.present?
-          trainee.progress[:degrees] = true
-          trainee.save!
         end
       end
 
@@ -87,6 +71,13 @@ module Api
         end
 
         super
+      end
+
+      def update_progress
+        if degrees.present?
+          trainee.progress[:degrees] = true
+          trainee.save!
+        end
       end
     end
   end
