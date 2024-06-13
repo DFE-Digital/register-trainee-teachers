@@ -41,6 +41,7 @@ module Api
         applying_for_grant: {},
         applying_for_scholarship: {},
         bursary_tier: {},
+        application_choice_id: {},
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end

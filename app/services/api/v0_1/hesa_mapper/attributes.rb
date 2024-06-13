@@ -46,6 +46,7 @@ module Api
             placements_attributes:,
             hesa_disabilities:,
             course_study_mode:,
+            application_choice_id:
           })
           .merge(course_attributes)
           .merge(ethnicity_and_disability_attributes)
@@ -236,6 +237,10 @@ module Api
 
         def veteran_teaching_undergraduate_bursary?
           params[:bursary_level] == VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL
+        end
+
+        def application_choice_id
+          params[:application_id]
         end
       end
     end
