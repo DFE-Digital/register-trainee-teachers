@@ -639,6 +639,9 @@ en:
     school_result_notice:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
+    lead_partner_result_notice:
+      result_text: "1 more lead partner matches your search for ‘%{search_query}’. Try narrowing down your search if the lead partner you’re looking for is not listed."
+      multiple_result_text: "%{remaining_search_count} more lead partners match your search for ‘%{search_query}’. Try narrowing down your search if the lead partner you’re looking for is not listed."
     review_draft:
       draft:
         schools:

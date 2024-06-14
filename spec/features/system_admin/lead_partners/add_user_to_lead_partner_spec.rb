@@ -52,6 +52,29 @@ feature "Add user to lead partners" do
     end
   end
 
+  context "as a system admin using the non-JS flow", :feature_lead_partners do
+    let(:user) { create(:user, system_admin: true) }
+    let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "Garibaldi School") }
+    let!(:hei_lead_partner1) { create(:lead_partner, :hei, name: "Bourbon University") }
+    let!(:hei_lead_partner2) { create(:lead_partner, :hei, name: "Digestive University") }
+
+    before do
+      given_i_am_authenticated(user:)
+    end
+
+    scenario "list lead partners page" do
+      when_i_visit_the_user_page
+      and_i_click_the_lead_partner_link
+      then_i_see_the_add_to_lead_partner_page
+
+      when_i_enter_a_lead_partner_search_and_submit
+      then_i_see_matching_results
+
+      when_i_select_a_lead_partner_from_search_results
+      then_i_see_the_user_added_to_the_hei_lead_partner
+    end
+  end
+
   def when_i_visit_the_user_page
     visit user_path(user)
   end
@@ -125,5 +148,25 @@ feature "Add user to lead partners" do
 
   def and_i_no_longer_see_the_lead_partner_on_the_user_page
     expect(page).not_to have_content("Garibaldi School")
+  end
+
+  def when_i_enter_a_lead_partner_search_and_submit
+    fill_in "system-admin-user-lead-partners-form-query-field", with: "Univ"
+    click_on("Continue")
+  end
+
+  def then_i_see_matching_results
+    expect(page).to have_content("Bourbon University")
+    expect(page).to have_content("Digestive University")
+  end
+
+  def when_i_select_a_lead_partner_from_search_results
+    choose(option: hei_lead_partner2.id)
+    click_on("Continue")
+  end
+
+  def then_i_see_the_user_added_to_the_hei_lead_partner
+    expect(page).to have_content("Lead partner added")
+    expect(page).to have_link("Digestive University", href: lead_partner_path(hei_lead_partner2))
   end
 end

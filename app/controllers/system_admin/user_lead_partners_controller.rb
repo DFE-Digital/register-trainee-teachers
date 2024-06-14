@@ -9,7 +9,7 @@ module SystemAdmin
 
     def index
       @lead_partner_form = UserLeadPartnersForm.new
-      @lead_partner_search = PartnerSearch.call(query: query, lead_partners_only: true)
+      @lead_partner_search = LeadPartnerSearch.call(query: query)
     end
 
     def new
