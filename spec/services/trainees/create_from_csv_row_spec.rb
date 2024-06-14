@@ -294,7 +294,7 @@ module Trainees
 
     context "with a SCITT CSV" do
       let!(:provider) { create(:provider) }
-      let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] }
+      let(:training_route) { TRAINING_ROUTE_ENUMS[:school_direct_salaried] }
       let(:course) { create(:course, accredited_body_code: provider.code, route: training_route) }
       let(:lead_school_urn) { "1234567" }
 

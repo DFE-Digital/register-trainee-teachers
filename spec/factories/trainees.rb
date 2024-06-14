@@ -382,8 +382,8 @@ FactoryBot.define do
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
 
-    trait :provider_led_postgrad_salaried do
-      training_route { TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] }
+    trait :school_direct_salaried do
+      training_route { TRAINING_ROUTE_ENUMS[:school_direct_salaried] }
       study_mode { COURSE_STUDY_MODES[:full_time] }
     end
 

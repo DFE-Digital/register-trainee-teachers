@@ -14,7 +14,7 @@ module Dttp
         TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => { entity_id: QTS },
         TRAINING_ROUTE_ENUMS[:early_years_undergrad] => { entity_id: EYTS },
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => { entity_id: QTS },
-        TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] => { entity_id: QTS },
+        TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: QTS },
         TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => { entity_id: "e0113eff-141e-e711-80c8-0050568902d3" },
         TRAINING_ROUTE_ENUMS[:early_years_postgrad] => { entity_id: EYTS },
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => { entity_id: "d4113eff-141e-e711-80c8-0050568902d3" },
