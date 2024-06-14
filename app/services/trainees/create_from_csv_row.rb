@@ -18,7 +18,7 @@ module Trainees
       "Provider-led (postgrad)" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
       "Provider-led (undergrad)" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
       "School direct (fee funded)" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-      "School direct (salaried)" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      "School direct (salaried)" => TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
       "Teaching apprenticeship (postgrad)" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     }.freeze
 

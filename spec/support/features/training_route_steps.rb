@@ -19,7 +19,7 @@ module Features
     end
 
     def given_i_have_created_a_school_direct_salaried_trainee
-      choose_training_route_for(TRAINING_ROUTE_ENUMS[:school_direct_salaried])
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried])
     end
 
     def given_i_have_created_a_school_direct_tuition_fee_trainee

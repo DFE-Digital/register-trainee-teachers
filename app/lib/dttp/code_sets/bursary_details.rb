@@ -48,7 +48,7 @@ module Dttp
         # Grants
         TRAINING_ROUTE_ENUMS[:early_years_salaried] => { entity_id: EARLY_YEARS_SALARIED },
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => { entity_id: SCHOOL_DIRECT_SALARIED },
-        TRAINING_ROUTE_ENUMS[:school_direct_salaried] => { entity_id: SCHOOL_DIRECT_SALARIED },
+        TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] => { entity_id: SCHOOL_DIRECT_SALARIED },
         # Tier one
         BURSARY_TIER_ENUMS[:tier_one] => { entity_id: NEW_TIER_ONE_BURSARY },
         # Tier two

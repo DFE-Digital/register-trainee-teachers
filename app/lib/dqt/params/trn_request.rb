@@ -28,7 +28,7 @@ module Dqt
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => "Apprenticeship",
         TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "ProviderLedPostgrad",
         TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "ProviderLedUndergrad",
-        TRAINING_ROUTE_ENUMS[:school_direct_salaried] => "SchoolDirectTrainingProgrammeSalaried",
+        TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] => "ProviderLedPostgradSalaried",
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => "SchoolDirectTrainingProgramme",
         TRAINING_ROUTE_ENUMS[:iqts] => DQT_IQTS_PROGRAMME_TYPE,
       }.freeze

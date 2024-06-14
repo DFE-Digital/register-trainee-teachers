@@ -30,7 +30,7 @@ describe Course do
         .with_values({
           TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
           TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
-          TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
+          TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] => 4,
           TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
         })
     end

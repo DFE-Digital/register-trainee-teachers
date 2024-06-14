@@ -1,5 +1,29 @@
 # frozen_string_literal: true
 
+TRAINING_ROUTE_TYPES = {
+  POSTGRAD_FUNDED => [
+    TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+  ],
+  POSTGRAD_SALARIED => [
+    TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
+    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    TRAINING_ROUTE_ENUMS[:early_years_salaried],
+    TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+  ],
+  UNDERGRAD_FUNDED => [
+    TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+  ],
+  OTHER => [
+    TRAINING_ROUTE_ENUMS[:assessment_only],
+    TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+    TRAINING_ROUTE_ENUMS[:iqts],
+  ],
+}.freeze
+
 TRAINING_ROUTE_ENUMS = {
   assessment_only: "assessment_only",
   early_years_assessment_only: "early_years_assessment_only",
@@ -11,7 +35,7 @@ TRAINING_ROUTE_ENUMS = {
   provider_led_postgrad: "provider_led_postgrad",
   provider_led_undergrad: "provider_led_undergrad",
   school_direct_tuition_fee: "school_direct_tuition_fee",
-  school_direct_salaried: "school_direct_salaried",
+  provider_let_postgrad_salaried: "provider_let_postgrad_salaried",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   hpitt_postgrad: "hpitt_postgrad",
 }.freeze
@@ -32,7 +56,7 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => 1,
   TRAINING_ROUTE_ENUMS[:early_years_undergrad] => 2,
   TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
-  TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
+  TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried] => 4,
   TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
   TRAINING_ROUTE_ENUMS[:early_years_assessment_only] => 6,
   TRAINING_ROUTE_ENUMS[:early_years_salaried] => 7,
@@ -205,7 +229,7 @@ GRANTS_2020_TO_2021 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 24_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -215,7 +239,7 @@ GRANTS_2020_TO_2021 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::MODERN_LANGUAGES,
@@ -223,7 +247,7 @@ GRANTS_2020_TO_2021 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 7_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
@@ -361,7 +385,7 @@ GRANTS_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 24_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -371,7 +395,7 @@ GRANTS_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 15_000,
     allocation_subjects: [
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
@@ -381,7 +405,7 @@ GRANTS_2022_TO_2023 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
@@ -559,7 +583,7 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 27_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
@@ -569,7 +593,7 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 25_000,
     allocation_subjects: [
       AllocationSubjects::GEOGRAPHY,
@@ -578,7 +602,7 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 20_000,
     allocation_subjects: [
       AllocationSubjects::BIOLOGY,
@@ -586,7 +610,7 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
   OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    training_route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
     amount: 15_000,
     allocation_subjects: [
       AllocationSubjects::ENGLISH,
@@ -632,27 +656,3 @@ POSTGRAD_FUNDED = "Postgrad (fee funded)"
 POSTGRAD_SALARIED = "Postgrad (salaried)"
 UNDERGRAD_FUNDED = "Undergrad (fee funded)"
 OTHER = "Other"
-
-TRAINING_ROUTE_TYPES = {
-  POSTGRAD_FUNDED => [
-    TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-    TRAINING_ROUTE_ENUMS[:early_years_postgrad],
-  ],
-  POSTGRAD_SALARIED => [
-    TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
-    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
-    TRAINING_ROUTE_ENUMS[:early_years_salaried],
-    TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
-    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
-  ],
-  UNDERGRAD_FUNDED => [
-    TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
-    TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
-    TRAINING_ROUTE_ENUMS[:early_years_undergrad],
-  ],
-  OTHER => [
-    TRAINING_ROUTE_ENUMS[:assessment_only],
-    TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
-    TRAINING_ROUTE_ENUMS[:iqts],
-  ],
-}.freeze

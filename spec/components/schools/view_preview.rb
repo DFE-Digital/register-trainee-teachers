@@ -9,7 +9,7 @@ module Schools
     end
 
     def with_employing_school
-      render(View.new(data_model: mock_trainee(with_employing_school: true, route: TRAINING_ROUTE_ENUMS[:school_direct_salaried])))
+      render(View.new(data_model: mock_trainee(with_employing_school: true, route: TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried])))
     end
 
     def with_no_data
