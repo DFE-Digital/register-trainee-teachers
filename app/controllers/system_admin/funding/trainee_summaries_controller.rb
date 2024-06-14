@@ -37,17 +37,6 @@ module SystemAdmin
         end
       end
 
-      def organisation
-        @organisation ||=
-          if params[:provider_id].present?
-            Provider.find(params[:provider_id])
-          elsif params[:lead_school_id].present?
-            School.find(params[:lead_school_id])
-          else
-            LeadPartner.find(params[:lead_partner_id])
-          end
-      end
-
       def data_export
         @data_export ||= Exports::FundingTraineeSummaryData.new(trainee_summary, organisation.name)
       end
