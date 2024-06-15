@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 081aa877f2c6cfcf9e2a2c0ba3841bff2eb8ea57
+  revision: c49d696aaa9c2ac2b1b539fa1bdbf49550fb9650
   branch: fixing-exception-in-logs
   specs:
     dfe-analytics (1.12.6)
