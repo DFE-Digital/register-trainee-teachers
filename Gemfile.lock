@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 1b8d6880eb11a1aa655169e05cfb091c397e8ba0
-  branch: fixing-exception-in-logs
+  revision: 2f0194bb7e28eaf11ec9beb0918488d90dcdf448
+  branch: debug-logging-hidden-pii
   specs:
     dfe-analytics (1.12.6)
       google-cloud-bigquery (~> 1.38)
