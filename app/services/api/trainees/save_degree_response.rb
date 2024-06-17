@@ -39,11 +39,7 @@ module Api
       def save
         assign_attributes(attributes)
 
-        if valid? && degree.save
-          true
-        else
-          false
-        end
+        valid? && degree.save
       end
 
       def model = :degree
