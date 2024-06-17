@@ -5,17 +5,16 @@ module Api
     class AwardRecommendationService
       include ActiveModel::Model
       include ActiveModel::Attributes
-
       include ServicePattern
+
+      ATTRIBUTE_MAPPER = {
+        date: :qts_standards_met_date,
+      }.freeze
 
       attribute :qts_standards_met_date
 
       validates :qts_standards_met_date, presence: true, date: true
       validate :trainee_state
-
-      ATTRIBUTE_MAPPER = {
-        date: :qts_standards_met_date
-      }.freeze
 
       def initialize(params, trainee)
         super(params)
@@ -40,6 +39,8 @@ module Api
           [false, errors]
         end
       end
+
+      private_constant :ATTRIBUTE_MAPPER
 
     private
 
