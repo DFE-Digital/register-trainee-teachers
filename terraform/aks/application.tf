@@ -45,12 +45,13 @@ module "worker_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image = var.app_docker_image
-  command     = each.value.startup_command
-  max_memory  = each.value.memory_max
-  replicas    = each.value.replicas
-  probe_command = each.value.probe_command
-  enable_logit  = var.enable_logit
+  docker_image   = var.app_docker_image
+  command        = each.value.startup_command
+  max_memory     = each.value.memory_max
+  replicas       = each.value.replicas
+  probe_command  = each.value.probe_command
+  enable_logit   = var.enable_logit
+  enable_gcp_wif = var.enable_gcp_wif
 }
 
 module "application_configuration" {
