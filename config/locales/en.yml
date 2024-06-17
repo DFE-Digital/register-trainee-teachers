@@ -1277,6 +1277,7 @@ en:
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergrad)
+          provider_led_postgrad_salaried: Provider-led (postgrad salaried)
         states:
           draft: Draft
           apply_draft: Apply Draft
