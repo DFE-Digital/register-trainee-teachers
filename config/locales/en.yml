@@ -519,6 +519,12 @@ en:
         sub_text_no_results: No results for
         search_hint: Search for a school by it’s unique reference number (URN), name or postcode
         search_button: Search again
+      search_lead_partners:
+        page_title_no_results: No results
+        sub_text_results: Results for
+        sub_text_no_results: No results for
+        search_hint: Search for a lead partner by it’s unique reference number (URN), name or postcode
+        search_button: Search again
       service_updates: News and updates
       organisations: Choose organisation
     filter:
@@ -633,6 +639,9 @@ en:
     school_result_notice:
       result_text: "1 more school matches your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
       multiple_result_text: "%{remaining_search_count} more schools match your search for ‘%{search_query}’. Try narrowing down your search if the school you’re looking for is not listed."
+    lead_partner_result_notice:
+      result_text: "1 more lead partner matches your search for ‘%{search_query}’. Try narrowing down your search if the lead partner you’re looking for is not listed."
+      multiple_result_text: "%{remaining_search_count} more lead partners match your search for ‘%{search_query}’. Try narrowing down your search if the lead partner you’re looking for is not listed."
     review_draft:
       draft:
         schools:
@@ -1447,6 +1456,17 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
+        system_admin/user_lead_partners_form:
+          attributes:
+            query:
+              blank: Enter a partner unique reference number (URN), name or postcode
+              length: Enter at least two characters
+            lead_school_id:
+              blank: Select a lead partner or search again
+            results_search_again_query:
+              blank: Enter a partner unique reference number (URN), name or postcode
+            no_results_search_again_query:
+              blank: Enter a partner unique reference number (URN), name or postcode
         system_admin/delete_trainee_form:
           attributes:
             delete_reason:

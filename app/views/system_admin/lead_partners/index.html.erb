@@ -4,10 +4,12 @@
 
 <%= render "system_admin/tab_nav" %>
 
-<%= register_form_with url: lead_partners_path,
-                       local: true,
-                       method: :get,
-                       html: { data: { module: "app-lead-partners-autocomplete" } } do |f| %>
+<%= register_form_with(
+  url: lead_partners_path,
+  local: true,
+  method: :get,
+  html: { data: { module: "app-lead-partners-autocomplete" } },
+) do |f| %>
   <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
   <%= f.govuk_text_field(
     :query,
@@ -18,7 +20,7 @@
     "data-field" => "lead-partners-autocomplete",
     width: "three-quarters",
   )%>
-  <div id="lead-partners-autocomplete-element" class="govuk-!-width-three-quarters" data-only-lead-partners=true
+  <div id="lead-partners-autocomplete-element" class="govuk-!-width-three-quarters"
       data-system-admin-redirect-lead-partner="true"
       data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_partners_form[query]"></div>
 <% end %>

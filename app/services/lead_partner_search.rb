@@ -29,6 +29,7 @@ class LeadPartnerSearch
     lead_partners = LeadPartner.all
     if query
       lead_partners = lead_partners
+        .includes(:provider, :school)
         .where("name ilike ?", "%#{query}%")
         .or(LeadPartner.where("urn ilike ?", "%#{query}%"))
     end
