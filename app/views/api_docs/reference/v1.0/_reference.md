@@ -1423,13 +1423,13 @@ Recommend a trainee for a QTS Award.
 Recommendation details
 
 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-  <dt class="govuk-summary-list__key"><code>outcome_date</code></dt>
+  <dt class="govuk-summary-list__key"><code>qts_standards_met_date</code></dt>
   <dd class="govuk-summary-list__value">
     <p class="govuk-body">
       string, required
     </p>
     <p class="govuk-body">
-      The decision date for a trainee to be awarded.
+      The date when the Trainee met the QTS standards.
     </p>
     <p class="govuk-body">
       Example: <code>2000-01-01</code>
@@ -1443,7 +1443,7 @@ Recommendation details
     <pre class="json-code-sample">
     {
       "data": {
-        "outcome_date": "2024-06-17"
+        "qts_standards_met_date": "2024-06-17"
       }
     }
     </pre>
@@ -1609,7 +1609,7 @@ Recommendation details
       "errors": [
         {
           "error": "UnprocessableEntity",
-          "message": "Outcome date can't be blank"
+          "message": "Qts standards met date can't be blank"
         }
       ]
     }

@@ -8,10 +8,14 @@ module Api
 
       include ServicePattern
 
-      attribute :outcome_date
+      attribute :qts_standards_met_date
 
-      validates :outcome_date, presence: true, date: true
+      validates :qts_standards_met_date, presence: true, date: true
       validate :trainee_state
+
+      ATTRIBUTE_MAPPER = {
+        date: :qts_standards_met_date
+      }.freeze
 
       def initialize(params, trainee)
         super(params)
@@ -43,7 +47,7 @@ module Api
 
       def trainee_attributes
         {
-          outcome_date:,
+          outcome_date: qts_standards_met_date,
         }
       end
 
@@ -59,7 +63,7 @@ module Api
 
       def promote_errors(child)
         child.errors.each do |error|
-          errors.add(:base, error.message)
+          errors.add(ATTRIBUTE_MAPPER.fetch(error.attribute, error.attribute), error.type)
         end
       end
     end

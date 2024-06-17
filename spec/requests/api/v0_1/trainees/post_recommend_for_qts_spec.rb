@@ -26,7 +26,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
     it "recommends the trainee for a qts award" do
       post "/api/v0.1/trainees/#{trainee.slug}/recommend-for-qts",
            headers: { authorization: "Bearer #{token}" },
-           params: { data: { outcome_date: Time.zone.today } }, as: :json
+           params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
 
       expect(response).to have_http_status(:accepted)
       expect(response.parsed_body[:recommended_for_award_at]).to eq(current_time.iso8601)
@@ -41,7 +41,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
       it "returns 404" do
         post "/api/v0.1/trainees/#{other_trainee.slug}/recommend-for-qts",
              headers: { authorization: "Bearer #{token}" },
-             params: { data: { outcome_date: Time.zone.today } }, as: :json
+             params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
 
         expect(response).to have_http_status(:not_found)
         expect(response.parsed_body[:errors]).to contain_exactly(
@@ -54,7 +54,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
     it "does not recommend the trainee for a qts award" do
       post "/api/v0.1/trainees/#{trainee.slug}/recommend-for-qts",
            headers: { authorization: "Bearer #{token}" },
-           params: { data: { outcome_date: nil } }, as: :json
+           params: { data: { qts_standards_met_date: nil } }, as: :json
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(trainee.recommended_for_award_at).to be_nil
@@ -62,7 +62,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
 
       expect(response.parsed_body[:errors]).to contain_exactly(
         "error" => "UnprocessableEntity",
-        "message" => "Outcome date can't be blank",
+        "message" => "Qts standards met date can't be blank",
       )
     end
   end

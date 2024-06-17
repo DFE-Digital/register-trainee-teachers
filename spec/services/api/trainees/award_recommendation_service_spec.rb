@@ -10,7 +10,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       let(:trainee) { create(:trainee, :trn_received) }
       let(:params) do
         {
-          outcome_date: Time.zone.today.iso8601,
+          qts_standards_met_date: Time.zone.today.iso8601,
         }
       end
 
@@ -31,11 +31,11 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
     end
 
     describe "failure" do
-      context "when outcome_date is nil" do
+      context "when qts_standards_met_date is nil" do
         let(:trainee) { create(:trainee, :trn_received) }
         let(:params) do
           {
-            outcome_date: nil,
+            qts_standards_met_date: nil,
           }
         end
 
@@ -43,15 +43,15 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Outcome date can't be blank")
+          expect(errors.full_messages).to contain_exactly("Qts standards met date can't be blank")
         end
       end
 
-      context "when outcome_date is empty" do
+      context "when qts_standards_met_date is empty" do
         let(:trainee) { create(:trainee, :trn_received) }
         let(:params) do
           {
-            outcome_date: "",
+            qts_standards_met_date: "",
           }
         end
 
@@ -59,7 +59,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Outcome date can't be blank")
+          expect(errors.full_messages).to contain_exactly("Qts standards met date can't be blank")
         end
       end
 
@@ -67,7 +67,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         let(:trainee) { create(:trainee, :trn_received) }
         let(:params) do
           {
-            outcome_date: "123",
+            qts_standards_met_date: "123",
           }
         end
 
@@ -75,7 +75,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Outcome date is invalid")
+          expect(errors.full_messages).to contain_exactly("Qts standards met date is invalid")
         end
       end
 
@@ -83,7 +83,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         let(:trainee) { create(:trainee, :submitted_for_trn) }
         let(:params) do
           {
-            outcome_date: Time.zone.today.iso8601,
+            qts_standards_met_date: Time.zone.today.iso8601,
           }
         end
 
@@ -99,7 +99,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         let(:trainee) { create(:trainee, :trn_received) }
         let(:params) do
           {
-            outcome_date: Time.zone.tomorrow.iso8601,
+            qts_standards_met_date: Time.zone.tomorrow.iso8601,
           }
         end
 
@@ -107,7 +107,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Outcome date must be in the past")
+          expect(errors.full_messages).to contain_exactly("Qts standards met date must be in the past")
         end
       end
     end
