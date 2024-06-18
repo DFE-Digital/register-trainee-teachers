@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 2f0194bb7e28eaf11ec9beb0918488d90dcdf448
+  revision: dc68fe29e58e2c521f0df94912e0293dab38eac1
   branch: debug-logging-hidden-pii
   specs:
     dfe-analytics (1.12.6)
