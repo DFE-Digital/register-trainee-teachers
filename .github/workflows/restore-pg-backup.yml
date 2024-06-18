@@ -1,0 +1,48 @@
+name: Restore from backup
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to restore
+        required: true
+        type: choice
+        default: qa
+        options:
+        - qa
+      backup-file:
+        description: File to be restored
+        required: true
+  push:
+   branches:
+    - 1855-dr-restore-postgres-from-backup-github-action
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set variables
+        run: |
+          source global_config/qa.sh
+          # source global_config/${{ github.event.inputs.environment }}.sh
+          echo "STORAGE_ACCOUNT=${RESOURCE_NAME_PREFIX}rttdbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP=${RESOURCE_NAME_PREFIX}-rtt-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
+          echo "APP_NAME=register-${CONFIG}" >> $GITHUB_ENV
+
+      - name: Restore postgres backup
+        uses: DFE-Digital/github-actions/restore-postgres-backup@1855-dr-restore-postgres-from-backup-github-action
+        with:
+          storage-account: ${{ env.STORAGE_ACCOUNT }}
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          app-name: ${{ env.APP_NAME }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_QA }}
+          environment: qa
+          backup-file: drbackup200624.sql.tar.gz
+          # azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', github.event.inputs.environment)] }}
+          # environment: ${{ github.event.inputs.environment }}
+          # backup-file: ${{ github.event.inputs.backup-file }}
+          # compression: ${{ github.event.inputs.compression }}
