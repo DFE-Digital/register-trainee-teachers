@@ -206,7 +206,7 @@ module ApiStubs
 
     def self.course(course_attributes = {})
       {
-        recruitment_cycle_year: Settings.current_recruitment_cycle_year,
+        recruitment_cycle_year: Settings.apply_applications.create.recruitment_cycle_year,
         course_code: "V6X1",
         course_uuid: "c6b9f8f0-f8f8-4f0f-b8e2-f8f8f8f8f8f8",
         training_provider_code: "E84",
