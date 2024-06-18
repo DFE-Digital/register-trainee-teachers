@@ -1446,7 +1446,7 @@ Recommendation details
       string, required
     </p>
     <p class="govuk-body">
-      The date when the Trainee met the QTS standards.
+      The date when the Trainee met the QTS standards. Dates should be in ISO 8601 format.
     </p>
     <p class="govuk-body">
       Example: <code>2000-01-01</code>
