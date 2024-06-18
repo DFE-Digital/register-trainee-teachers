@@ -66,14 +66,32 @@ module TeacherTrainingApi
         end
 
         describe "store training route" do
-          context "program type is mapped" do
-            let(:course_attributes) { { program_type: "scitt_salaried_programme" } }
+          training_route_and_course_program_type_mapping = "training_route and course program type mapping"
 
-            it "stores training route" do
-              subject
-              expect(course.route).to eq("provider_led_postgrad")
+          shared_examples training_route_and_course_program_type_mapping do |recruitment_cycle_year, training_route, program_types|
+            before do
+              allow(Settings).to receive(:current_recruitment_cycle_year).and_return(recruitment_cycle_year)
+            end
+
+            program_types.each do |program_type|
+              context "program type #{program_type} is mapped to route #{training_route} for current recruitment cycle year #{recruitment_cycle_year}" do
+                let(:course_attributes) { { program_type: } }
+
+                it "stores training route" do
+                  subject
+                  expect(course.route).to eq(training_route)
+                end
+              end
             end
           end
+
+          it_behaves_like training_route_and_course_program_type_mapping, 2024, "provider_led_postgrad_salaried", %w[scitt_salaried_programme scitt_salaried_programme higher_education_salaried_programme]
+          it_behaves_like training_route_and_course_program_type_mapping, 2024, "provider_led_postgrad", %w[scitt_programme scitt_programme higher_education_programme]
+          it_behaves_like training_route_and_course_program_type_mapping, 2024, "pg_teaching_apprenticeship", ["pg_teaching_apprenticeship"]
+          it_behaves_like training_route_and_course_program_type_mapping, 2023, "provider_led_postgrad", %w[higher_education_programme scitt_programme scitt_salaried_programme higher_education_salaried_programme]
+          it_behaves_like training_route_and_course_program_type_mapping, 2023, "school_direct_salaried", ["school_direct_salaried_training_programme"]
+          it_behaves_like training_route_and_course_program_type_mapping, 2023, "school_direct_tuition_fee", ["school_direct_training_programme"]
+          it_behaves_like training_route_and_course_program_type_mapping, 2023, "pg_teaching_apprenticeship", ["pg_teaching_apprenticeship"]
 
           context "program type is unmapped" do
             let(:course_attributes) { { program_type: "you_wat_now" } }
