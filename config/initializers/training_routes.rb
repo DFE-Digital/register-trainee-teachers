@@ -14,6 +14,31 @@ TRAINING_ROUTE_ENUMS = {
   school_direct_salaried: "school_direct_salaried",
   pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
   hpitt_postgrad: "hpitt_postgrad",
+  provider_led_postgrad_salaried: "provider_led_postgrad_salaried",
+}.freeze
+
+TRAINING_ROUTE_TYPES = {
+  postgrad_funded: [
+    TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+  ],
+  postgrad_salaried: [
+    TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
+    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    TRAINING_ROUTE_ENUMS[:early_years_salaried],
+    TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
+    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+  ],
+  undergrad_funded: [
+    TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    TRAINING_ROUTE_ENUMS[:early_years_undergrad],
+  ],
+  other: [
+    TRAINING_ROUTE_ENUMS[:assessment_only],
+    TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
+    TRAINING_ROUTE_ENUMS[:iqts],
+  ],
 }.freeze
 
 ROUTE_INITIATIVES_ENUMS = {
@@ -41,6 +66,7 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
   TRAINING_ROUTE_ENUMS[:iqts] => 12,
+  TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried] => 13,
 }.freeze
 
 ROUTE_INITIATIVES = {
@@ -56,9 +82,11 @@ ROUTE_INITIATIVES = {
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:provider_led_postgrad,
+                                 :provider_led_postgrad_salaried,
                                  :school_direct_tuition_fee,
                                  :school_direct_salaried,
-                                 :pg_teaching_apprenticeship).include?(training_route)
+                                 :pg_teaching_apprenticeship,
+                                 :provider_led_postgrad_salaried).include?(training_route)
 }.freeze
 
 UNDERGRAD_ROUTES = TRAINING_ROUTES.select { |training_route|
@@ -69,8 +97,8 @@ PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :early_years_assessment_only).exclude?(training_route)
 }.freeze
 
-LEAD_SCHOOL_ROUTES = %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship].freeze
-EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship].freeze
+LEAD_SCHOOL_ROUTES = %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship provider_led_postgrad_salaried].freeze
+EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship provider_led_postgrad_salaried].freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)
@@ -89,6 +117,7 @@ TRAINING_ROUTE_AWARD_TYPE = {
   provider_led_postgrad: QTS_AWARD_TYPE,
   provider_led_undergrad: QTS_AWARD_TYPE,
   school_direct_salaried: QTS_AWARD_TYPE,
+  provider_let_postgrad_salaried: QTS_AWARD_TYPE,
   school_direct_tuition_fee: QTS_AWARD_TYPE,
   opt_in_undergrad: QTS_AWARD_TYPE,
   hpitt_postgrad: QTS_AWARD_TYPE,
@@ -627,3 +656,8 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
 ].freeze
+
+POSTGRAD_FUNDED = "Postgrad (fee funded)"
+POSTGRAD_SALARIED = "Postgrad (salaried)"
+UNDERGRAD_FUNDED = "Undergrad (fee funded)"
+OTHER = "Other"
