@@ -3,20 +3,37 @@
 require "rails_helper"
 
 RSpec.describe Api::V01::DegreeAttributes do
-  let(:v01) { described_class.new(attributes, trainee:) }
-  let(:attributes_with_id) { Api::V01::DegreeSerializer.new(degree).as_hash.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
   let(:degree) { build(:degree) }
-
-  let(:attributes) { attributes_with_id }
   let(:trainee) { create(:trainee, :with_degree) }
+  let(:degree_attributes) { described_class.new(attributes, trainee:) }
+  let(:attributes_with_id) { degree.attributes.with_indifferent_access.slice(*described_class::ATTRIBUTES) }
+  let(:attributes) { attributes_with_id.except(:id) }
 
-  subject { v01 }
+  subject { degree_attributes }
 
   describe "validations" do
+    it { is_expected.to validate_presence_of(:locale_code) }
+    it { is_expected.to validate_presence_of(:graduation_year) }
+    it { is_expected.to validate_presence_of(:subject) }
+
+    context 'when locale_code is "uk"' do
+      before { degree_attributes.locale_code = "uk" }
+
+      it { is_expected.to validate_presence_of(:institution) }
+      it { is_expected.to validate_presence_of(:uk_degree) }
+      it { is_expected.to validate_presence_of(:grade) }
+    end
+
+    context 'when locale_code is "non_uk"' do
+      before { degree_attributes.locale_code = "non_uk" }
+
+      it { is_expected.to validate_presence_of(:country) }
+      it { is_expected.to validate_presence_of(:non_uk_degree) }
+    end
+
     context "with duplicate" do
       before { subject.valid? }
 
-      let(:attributes) { attributes_with_id.except(:id) }
       let(:degree) { trainee.degrees.first }
 
       describe "validations" do
@@ -38,10 +55,9 @@ RSpec.describe Api::V01::DegreeAttributes do
   end
 
   describe "#duplicates?" do
-    subject { v01.duplicates? }
+    subject { degree_attributes.duplicates? }
 
     context "with duplicate" do
-      let(:attributes) { attributes_with_id.except(:id) }
       let(:degree) { trainee.degrees.first }
 
       it "returns true" do

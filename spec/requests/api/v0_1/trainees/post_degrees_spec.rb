@@ -133,7 +133,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         )
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]&.count).to eq(2)
+        expect(response.parsed_body["errors"]&.count).to eq(3)
         expect(trainee.reload.degrees.count).to eq(0)
       end
     end

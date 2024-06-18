@@ -37,12 +37,11 @@ describe "`POST /api/v1.0/trainees` endpoint" do
       disability2: "57",
       degrees_attributes: [
         {
+          grade: "02",
           subject: "100485",
           institution: "0117",
-          graduation_year: graduation_year,
-          grade: "02",
           uk_degree: "083",
-          country: "XF",
+          graduation_year: graduation_year,
         },
       ],
       placements_attributes: [

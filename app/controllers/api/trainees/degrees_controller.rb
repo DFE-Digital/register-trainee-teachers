@@ -33,7 +33,7 @@ module Api
         render(
           **SaveDegreeResponse.call(
             degree: degree,
-            params: degree_params,
+            params: degree_params_for_update,
             version: current_version,
           ),
         )
@@ -50,8 +50,23 @@ module Api
     private
 
       def degree_params
-        params.require(:data)
-          .permit(attributes_klass::ATTRIBUTES)
+        hesa_mapper_class.call(
+          params.require(:data).permit(
+            hesa_mapper_class::ATTRIBUTES,
+          ),
+        )
+      end
+
+      def degree_params_for_update
+        hesa_mapper_class.call(
+          params.require(:data).permit(
+            hesa_mapper_class::ATTRIBUTES,
+          ),
+        ).slice(*params[:data].keys.map(&:to_sym))
+      end
+
+      def hesa_mapper_class
+        Api::GetVersionedItem.for_service(model: :degree, version: version)
       end
 
       def trainee
@@ -71,8 +86,6 @@ module Api
       end
 
       def model = :degree
-
-      alias_method :degree_update_params, :degree_params
     end
   end
 end

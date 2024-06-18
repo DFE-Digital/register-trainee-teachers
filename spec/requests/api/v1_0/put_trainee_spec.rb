@@ -898,12 +898,11 @@ describe "`PUT /api/v1.0/trainees/:id` endpoint" do
           study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
           degrees_attributes: [
             {
-              subject: "100485",
-              institution: nil,
-              graduation_date: "2003-06-01",
-              subject_one: "100485",
               grade: "02",
-              country: "XF",
+              subject: "100425",
+              institution: "0116",
+              uk_degree: "083",
+              graduation_year: "2003-06-01",
             },
           ],
           placements_attributes: [
