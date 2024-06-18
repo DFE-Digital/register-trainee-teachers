@@ -26,10 +26,13 @@ feature "edit bursary" do
   end
 
   context "early years postgrad training route" do
-    background { given_there_is_grant_funding_available_for_early_years_postgrad }
+    background {
+      given_there_is_grant_funding_available_for_early_years_postgrad(academic_cycle: AcademicCycle.for_year(Settings.current_recruitment_cycle_year))
+    }
 
     scenario "edit with valid parameters for tiered bursary" do
       given_an_early_years_postgrad_trainee_exists
+
       when_i_visit_the_bursary_page
       and_i_choose_the_applicable_funding_options
 
