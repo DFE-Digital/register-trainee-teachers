@@ -36,11 +36,7 @@ module Api
       def save
         assign_attributes(attributes)
 
-        if valid? && placement.save
-          true
-        else
-          false
-        end
+        valid? && placement.save
       end
 
       def model = :placement

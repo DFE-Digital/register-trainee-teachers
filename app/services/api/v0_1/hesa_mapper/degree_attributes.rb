@@ -4,29 +4,49 @@ module Api
   module V01
     module HesaMapper
       class DegreeAttributes
+        include ServicePattern
+
         INSTITUTE_OF_EDUCATION_HESA_CODE = "0133"
         UNIVERSITY_COLLEGE_LONDON_HESA_CODE = "0149"
         PASS_WITHOUT_HONOURS_HESA_CODE = "09"
         NEAREST_EQUIVALENT_GRADE_HESA_CODE = "14"
+
+        ATTRIBUTES = %i[
+          country
+          grade
+          uk_degree
+          non_uk_degree
+          subject
+          institution
+          graduation_year
+          other_grade
+        ].freeze
 
         def initialize(params)
           @params = params
         end
 
         def call
+          mapped_params
+        end
+
+      private
+
+        def mapped_params
           {
-            subject:,
-            subject_uuid:,
-            graduation_year:,
-            institution:,
-            institution_uuid:,
-            locale_code:,
             country:,
+            grade:,
+            grade_uuid:,
             uk_degree:,
             uk_degree_uuid:,
             non_uk_degree:,
-            grade:,
-            grade_uuid:,
+            subject:,
+            subject_uuid:,
+            institution:,
+            institution_uuid:,
+            graduation_year:,
+            locale_code:,
+            other_grade:,
           }
         end
 
@@ -83,7 +103,7 @@ module Api
         def non_uk_degree
           return if uk_country_or_uk_institution_present?
 
-          @params[:non_uk_degree]
+          @params[:non_uk_degree].in?(ENIC_NON_UK) ? @params[:non_uk_degree] : NON_ENIC
         end
 
         def grade
@@ -94,7 +114,9 @@ module Api
           grade_from_hesa_code&.id
         end
 
-      private
+        def other_grade
+          @params[:other_grade] if grade == "Other"
+        end
 
         def dfe_reference_subject
           DfEReference::DegreesQuery.find_subject(hecos_code: @params[:subject])

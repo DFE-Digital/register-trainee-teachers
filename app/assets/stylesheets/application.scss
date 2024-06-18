@@ -7,6 +7,8 @@
 @import "govuk-frontend/dist/govuk/utilities";
 @import "govuk-frontend/dist/govuk/overrides";
 
+$govuk-suppressed-warnings: (govuk-typography-scale-14);
+
 @import "@ministryofjustice/frontend/moj/all";
 
 $moj-images-path: "@ministryofjustice/frontend/moj/assets/images/";

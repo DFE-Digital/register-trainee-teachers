@@ -87,6 +87,7 @@ features:
   change_accredited_provider: true
   funding_uploads: true
   register_api: true
+  lead_partners: false
 
 dfe_sign_in:
   # Our service name
@@ -184,4 +185,5 @@ api:
   blacklist:
     ua: []
     ip: []
-  allowed_versions: [v0.1]
+  allowed_versions: [v0.1, v1.0]
+  current_version: v0.1

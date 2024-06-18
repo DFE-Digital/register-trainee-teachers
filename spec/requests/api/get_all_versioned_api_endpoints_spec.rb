@@ -19,7 +19,7 @@ describe "GET all versioned api endpoints" do
 
   context "Version v1.0" do
     paths.each do |path|
-      include_examples "register versioned api GET request", "v1.0", path, false
+      include_examples "register versioned api GET request", "v1.0", path, true
     end
   end
 end

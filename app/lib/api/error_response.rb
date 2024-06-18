@@ -3,7 +3,7 @@
 module Api
   module ErrorResponse
     def validation_errors_response(errors:, status: :unprocessable_entity)
-      error_responses = errors.full_messages.map { |message| { error: status.to_s.camelize, message: message } }
+      error_responses = errors.map { |error| { error: status.to_s.camelize, message: error.full_message } }
 
       {
         status: status, json: {

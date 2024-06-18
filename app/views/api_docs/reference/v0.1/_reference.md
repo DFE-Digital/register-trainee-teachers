@@ -6,6 +6,7 @@ This API allows you to access information about trainees and provides endpoints 
 - [Draft version 0.1](#draft-version-0-1)
 - [Developing on the API](#developing-on-the-api)
     - [Reference spreadsheet](#reference-spreadsheet)
+    - [OpenAPI](#openapi)
     - [Authentication](#authentication)
 - [Endpoints](#endpoints)
     - [GET /info](#code-get-info-code)

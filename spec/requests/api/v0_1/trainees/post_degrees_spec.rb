@@ -118,7 +118,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
           subject: "Practical Magic",
           institution: "University of Oxford",
           uk_degree: "Bachelor of Witchcraft & Wizardry",
-          graduation_year: "01-01-2012",
+          graduation_year: (Time.zone.now.year + 2).to_s,
           locale_code: "uk",
         }
       end

@@ -36,6 +36,9 @@ class User < ApplicationRecord
   has_many :lead_school_users
   has_many :lead_schools, through: :lead_school_users
 
+  has_many :lead_partner_users
+  has_many :lead_partners, through: :lead_partner_users
+
   scope :order_by_last_name, -> { order(:last_name) }
   scope :system_admins, -> { where(system_admin: true) }
 

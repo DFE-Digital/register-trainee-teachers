@@ -11,7 +11,6 @@ module Api
         country
         grade
         grade_uuid
-        locale_code
         uk_degree
         uk_degree_uuid
         non_uk_degree
@@ -20,6 +19,7 @@ module Api
         institution
         institution_uuid
         graduation_year
+        locale_code
         other_grade
       ].freeze
 
@@ -28,6 +28,25 @@ module Api
       end
 
       attr_reader :existing_degrees
+
+      validates :locale_code, presence: true
+      validates :graduation_year, presence: true
+      validates :subject, presence: true
+      with_options if: -> { locale_code == "uk" } do
+        validates :institution, presence: true
+        validates :uk_degree, presence: true
+        validates :grade, presence: true
+      end
+      with_options if: -> { locale_code == "non_uk" } do
+        validates :country, presence: true
+        validates :non_uk_degree, presence: true
+      end
+
+      validate :check_for_duplicates
+
+      def self.from_degree(degree, trainee:)
+        new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) }, trainee:)
+      end
 
       def initialize(attributes, trainee: nil)
         super(attributes)
@@ -41,25 +60,9 @@ module Api
                             end
       end
 
-      validates :institution, inclusion: { in: DfEReference::DegreesQuery::INSTITUTIONS.all.map(&:hesa_itt_code) }, allow_nil: true
-      validates :subject, inclusion: { in: DfEReference::DegreesQuery::SUBJECTS.all.map(&:hecos_code) }, allow_nil: true
-      validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code) }, allow_nil: true
-
-      validate :check_for_duplicates
-
-      def self.from_degree(degree, trainee:)
-        new(
-          DegreeSerializer.new(degree)
-            .as_hash
-            .merge(id: degree.id).select { |k, _v| ATTRIBUTES.include?(k.to_sym) }
-            .as_json,
-          trainee:,
-        )
-      end
-
       def duplicates?
         existing_degrees&.exists?(
-          hesa_mapped_degree_attributes.slice(
+          attributes.with_indifferent_access.slice(
             :subject,
             :graduation_year,
             :country,
@@ -72,12 +75,8 @@ module Api
 
     private
 
-      def hesa_mapped_degree_attributes
-        HesaMapper::DegreeAttributes.new(attributes.symbolize_keys).call
-      end
-
       def check_for_duplicates
-        errors.add(:base, :duplicates) if duplicates?
+        errors.add(:base, :duplicate) if duplicates?
       end
     end
   end

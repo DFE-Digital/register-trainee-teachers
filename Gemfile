@@ -65,7 +65,7 @@ gem "config", "~> 5.5"
 gem "httparty", "~> 0.22"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 2.4"
+gem "store_model", "~> 3.0"
 
 gem "pundit"
 
@@ -149,8 +149,13 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 
   gem "erb_lint", require: false
+
+  gem "rubocop-capybara"
+  gem "rubocop-factory_bot"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "rubocop-rspec_rails"
+
   gem "scss_lint-govuk"
 
   # Debugging
@@ -178,7 +183,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "timecop", "~> 0.9.9"
+  gem "timecop", "~> 0.9.10"
 end
 
 group :development do

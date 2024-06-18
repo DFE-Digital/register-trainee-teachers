@@ -79,7 +79,7 @@ module Api
         end
 
         def degrees_attributes
-          params[:degrees_attributes]&.map { |degree| HesaMapper::DegreeAttributes.new(degree).call }
+          params[:degrees_attributes]&.map { |degree| HesaMapper::DegreeAttributes.call(degree) }
         end
 
         def placements_attributes

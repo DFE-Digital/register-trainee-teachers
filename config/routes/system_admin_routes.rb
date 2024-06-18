@@ -51,6 +51,10 @@ module SystemAdminRoutes
             resource :accessions, controller: "lead_schools/accessions", only: %i[edit destroy]
           end
 
+          resources :lead_partners, controller: "user_lead_partners", only: %i[index new create], path: "lead-partners" do
+            resource :accessions, controller: "lead_partners/accessions", only: %i[edit destroy]
+          end
+
           member { get :delete }
         end
 
@@ -68,6 +72,19 @@ module SystemAdminRoutes
               resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
             end
           end
+        end
+
+        resources :lead_partners, path: "lead-partners", only: %i[index show] do
+          resources :users, controller: "lead_partners/users", only: %i[edit update]
+
+          # get "/funding", to: "funding#show", as: :funding
+
+          # namespace :funding do
+          #   scope "(:academic_year)" do
+          #     resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
+          #     resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
+          #   end
+          # end
         end
 
         resources :dttp_trainees, only: [:show], path: "dttp-trainees" do

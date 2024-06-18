@@ -80,15 +80,11 @@ module Api
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
       validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.keys, allow_nil: true
-
-      validate do |record|
-        EmailFormatValidator.new(record).validate
-      end
-
+      validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
-
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
+      validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
@@ -117,11 +113,9 @@ module Api
         end
 
         hesa_trainee_detail_attributes_raw = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
-
-        self.hesa_trainee_detail_attributes =
-          HesaTraineeDetailAttributes.new(
-            hesa_trainee_detail_attributes_raw,
-          )
+        if hesa_trainee_detail_attributes_raw.present?
+          self.hesa_trainee_detail_attributes = V01::HesaTraineeDetailAttributes.new(hesa_trainee_detail_attributes_raw)
+        end
 
         self.trainee_disabilities_attributes = []
         new_attributes[:disabilities]&.each do |disability|

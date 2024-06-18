@@ -99,6 +99,7 @@ variable "postgres_enable_high_availability" { default = false }
 variable "azure_enable_backup_storage" { default = true }
 variable "enable_container_monitoring" { default = false }
 variable "enable_logit" { default = false }
+variable "enable_gcp_wif" { default = true }
 
 locals {
   app_name_suffix  = var.app_name == null ? var.app_environment : var.app_name
