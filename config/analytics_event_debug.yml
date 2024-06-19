@@ -1,8 +1,11 @@
 shared:
   event_filters:
     -
-      event_type: (create|update|delete)_entity
+      event_type: update_entity
       entity_table_name: trainees
       data:
         key: id
         value: 1811
+    -
+      event_type: import_entity
+      entity_table_name: trainees 
