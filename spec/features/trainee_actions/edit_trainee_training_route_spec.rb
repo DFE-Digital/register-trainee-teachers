@@ -54,7 +54,7 @@ feature "editing a trainee training route" do
         let(:traits) { %i[completed with_valid_itt_start_date] }
 
         scenario "redirects to the publish course path", feature_show_draft_trainee_course_year_choice: false do
-          and_i_select_school_direct_salaried
+          and_i_select_provider_led_postgrad
           and_i_submit_the_new_route
           then_i_am_redirected_to_the_publish_course_details_path
         end
@@ -110,7 +110,7 @@ private
   def given_a_route_has_published_courses
     @course = create(:course_with_subjects,
                      accredited_body_code: trainee.provider.code,
-                     route: "school_direct_salaried",
+                     route: "provider_led_postgrad",
                      subject_names: ["Philosophy"])
   end
 
@@ -126,8 +126,8 @@ private
     expect(trainee_edit_training_route_page).to be_displayed
   end
 
-  def and_i_select_school_direct_salaried
-    trainee_edit_training_route_page.school_direct_salaried.click
+  def and_i_select_provider_led_postgrad
+    trainee_edit_training_route_page.provider_led_postgrad.click
   end
 
   def and_i_select_early_years_route
