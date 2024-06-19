@@ -40,14 +40,16 @@ describe FindNewStarterTrainees do
   end
 
   context "when trainee came from HESA TRN data" do
-    before do
-      create(:trainee,
-             state: 1,
-             itt_start_date: 2.months.ago,
-             start_academic_cycle: AcademicCycle.current,
-             record_source: Trainee::HESA_TRN_DATA_SOURCE)
+    let!(:trainee) do
+      create(
+        :trainee,
+        state: 1,
+        itt_start_date: 2.months.ago,
+        start_academic_cycle: AcademicCycle.current,
+        record_source: Trainee::HESA_TRN_DATA_SOURCE,
+      )
     end
 
-    it { is_expected.to be_empty }
+    it { is_expected.to include(trainee) }
   end
 end
