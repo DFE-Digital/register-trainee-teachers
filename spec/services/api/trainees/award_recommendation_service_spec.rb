@@ -15,7 +15,6 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       it "returns true" do
-        allow(OutcomeDateForm).to receive(:new).and_call_original
         allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
 
         success, errors = subject.call(params, trainee)
@@ -23,10 +22,8 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         expect(success).to be(true)
         expect(errors).to be_blank
 
-        expect(OutcomeDateForm).to have_received(:new).with(trainee, update_dqt: false)
         expect(Dqt::RecommendForAwardJob).to have_received(:perform_later).with(trainee)
-
-        expect(trainee.reload.recommended_for_award?).to be(true)
+        expect(trainee.recommended_for_award?).to be(true)
       end
     end
 
@@ -63,7 +60,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         end
       end
 
-      context "when outcome_date is invalid" do
+      context "when qts_standards_met_date is invalid" do
         let(:trainee) { create(:trainee, :trn_received) }
         let(:params) do
           {
@@ -76,6 +73,38 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("Qts standards met date is invalid")
+        end
+      end
+
+      context "when qts_standards_met_date is in the future" do
+        let(:trainee) { create(:trainee, :trn_received) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.tomorrow.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("Qts standards met date must be in the past")
+        end
+      end
+
+      context "when qts_standards_met_date is before trainee's itt_start_date" do
+        let(:trainee) { create(:trainee, :trn_received, :itt_start_date_in_the_future) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        it "returns false" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("Qts standards met date must not be before the ITT start date")
         end
       end
 
@@ -92,22 +121,6 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("Trainee state is invalid must be [trn_received]")
-        end
-      end
-
-      context "when outcome_date_form is invalid" do
-        let(:trainee) { create(:trainee, :trn_received) }
-        let(:params) do
-          {
-            qts_standards_met_date: Time.zone.tomorrow.iso8601,
-          }
-        end
-
-        it "returns false" do
-          success, errors = subject.call(params, trainee)
-
-          expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("QTS standards met date must be in the past")
         end
       end
     end
