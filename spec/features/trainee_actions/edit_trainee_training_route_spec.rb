@@ -111,7 +111,8 @@ private
     @course = create(:course_with_subjects,
                      accredited_body_code: trainee.provider.code,
                      route: "provider_led_postgrad",
-                     subject_names: ["Philosophy"])
+                     subject_names: ["Philosophy"],
+                     recruitment_cycle_year: trainee.start_academic_cycle.start_year)
   end
 
   def and_i_click_change_course
