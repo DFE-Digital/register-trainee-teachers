@@ -98,7 +98,8 @@ private
     create(:course_with_subjects,
            :secondary,
            accredited_body_code: trainee.provider.code,
-           route: "provider_led_postgrad")
+           route: "provider_led_postgrad",
+           recruitment_cycle_year: trainee.start_academic_cycle.start_year)
   end
 
   def and_a_draft_trainee_exists
