@@ -653,6 +653,7 @@ en:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
         lead_school_user: "Associated with <strong>%{lead_school_name}</strong> and can view trainees assigned to that lead school."
+        lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that lead partner."
     state_tag:
       trainee:
         state:

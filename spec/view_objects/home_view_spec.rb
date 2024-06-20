@@ -5,15 +5,74 @@ require "rails_helper"
 describe HomeView do
   include Rails.application.routes.url_helpers
 
-  let(:admin_user) { create(:user, :system_admin) }
+  let(:current_user) { create(:user, :system_admin) }
   let(:draft_trainee) { create(:trainee, :draft) }
   let!(:current_academic_cycle) { create(:academic_cycle, :current) }
   let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
 
-  subject { described_class.new(trainees, admin_user) }
+  subject { described_class.new(trainees, current_user) }
 
   before do
     allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
+  end
+
+  describe "#action_badges" do
+    let(:trainees) do
+      trainee_ids = create_list(:abstract_trainee, 2).pluck(:id)
+
+      Trainee.where(id: trainee_ids)
+    end
+
+    context "when current_user is a system_admin user" do
+      let(:current_user) do
+        UserWithOrganisationContext.new(user: create(:user, :system_admin), session: {})
+      end
+
+      it "returns nil" do
+        expect(subject.action_badges).to be_nil
+      end
+    end
+
+    context "when current_user is a lead_school user" do
+      let(:current_user) do
+        UserWithOrganisationContext.new(user: create(:user, :with_lead_school_organisation), session: {})
+      end
+
+      it "returns nil" do
+        expect(subject.action_badges).to be_nil
+      end
+    end
+
+    context "when current_user is a lead_partner user" do
+      let(:current_user) do
+        UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {})
+      end
+
+      it "returns nil" do
+        expect(subject.action_badges).to be_nil
+      end
+    end
+
+    context "when current_user is non system_admin user or non lead_school user or non lead_partner user" do
+      let(:current_user) do
+        UserWithOrganisationContext.new(user: create(:user), session: {})
+      end
+
+      it "returns nil" do
+        expect(subject.action_badges.map(&:to_h)).to eq([
+          {
+            status: :can_bulk_recommend_for_award,
+            trainee_count: 0,
+            link: "/bulk-update/recommend/choose-who-to-recommend",
+          },
+          {
+            status: :can_complete,
+            trainee_count: 0,
+            link: "/trainees?record_completion%5B%5D=incomplete",
+          },
+        ])
+      end
+    end
   end
 
   describe "#badges" do

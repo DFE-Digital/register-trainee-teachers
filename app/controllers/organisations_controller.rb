@@ -4,8 +4,9 @@ class OrganisationsController < ApplicationController
   skip_before_action :check_organisation_context_is_set
 
   def index
-    @providers = current_user.providers
-    @lead_schools = current_user.lead_schools
+    @providers     = current_user.providers
+    @lead_schools  = current_user.lead_schools
+    @lead_partners = current_user.lead_partners.includes(:school)
   end
 
   def show

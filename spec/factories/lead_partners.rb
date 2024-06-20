@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :lead_partner do
+    name { school&.name || provider&.name }
     urn { Faker::Number.unique.number(digits: 6) }
 
     trait :lead_school do

@@ -26,6 +26,19 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       when_i_click_on_a_lead_school_link
       then_i_am_redirected_to_the_start_page
     end
+
+    context "when the lead_partner feature is enabled", feature_lead_partners: true do
+      scenario "settings lead partner context" do
+        when_i_click_on_a_lead_partner_link
+        then_i_am_redirected_to_the_start_page
+      end
+    end
+
+    context "when the lead_partner feature is disabled" do
+      scenario "settings lead partner context" do
+        expect(page).not_to have_content("Lead partners")
+      end
+    end
   end
 
   context "a user with no organisations in the DB" do
@@ -74,6 +87,10 @@ private
     organisations_index_page.lead_school_links.find { |link| link.text == lead_school.name }.click
   end
 
+  def when_i_click_on_a_lead_partner_link
+    organisations_index_page.lead_partner_links.find { |link| link.text == lead_partner.name }.click
+  end
+
   def then_i_am_redirected_to_the_start_page
     expect(start_page).to be_displayed
   end
@@ -104,6 +121,10 @@ private
 
   def lead_school
     @_lead_school ||= multi_organisation_user.lead_schools.first
+  end
+
+  def lead_partner
+    @_lead_partner ||= multi_organisation_user.lead_partners.first
   end
 
   def provider_trainee
