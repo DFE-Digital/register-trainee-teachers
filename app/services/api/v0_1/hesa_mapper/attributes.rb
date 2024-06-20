@@ -14,6 +14,7 @@ module Api
           ethnic_background
           employing_school_urn
           lead_school_urn
+          application_id
         ].freeze
 
         NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
