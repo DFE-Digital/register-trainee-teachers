@@ -1,0 +1,49 @@
+name: Backup Postgres for DR test
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to backup
+        required: true
+        type: choice
+        default: qa
+        options:
+        - qa
+      backup-file:
+        description: Filename of backup
+        required: true
+
+  push:
+    branches:
+      - 1857-dr-create-offline-postgres-backup-github-action
+
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set variables
+        run: |
+          source global_config/qa.sh
+          # source global_config/${{ github.event.inputs.environment }}.sh
+          echo "STORAGE_ACCOUNT=${RESOURCE_NAME_PREFIX}rttdbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
+          echo "RESOURCE_GROUP=${RESOURCE_NAME_PREFIX}-rtt-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
+          echo "APP_NAME=register-${CONFIG}" >> $GITHUB_ENV
+
+      - name: Backup postgres
+        uses: DFE-Digital/github-actions/backup-postgres@update-konduit-to-use-separate-deployment
+        with:
+          storage-account: ${{ env.STORAGE_ACCOUNT }}
+          resource-group: ${{ env.RESOURCE_GROUP }}
+          app-name: ${{ env.APP_NAME }}
+          cluster: test
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_QA }}
+          backup-file: drbackup230724.sql
+          # azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', github.event.inputs.environment)] }}
+          # environment: ${{ github.event.inputs.environment }}
+          # backup-file: ${{ github.event.inputs.backup-file }}
