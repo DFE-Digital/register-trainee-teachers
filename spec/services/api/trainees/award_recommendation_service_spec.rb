@@ -107,7 +107,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Qts standards met date must be in the past")
+          expect(errors.full_messages).to contain_exactly("QTS standards met date must be in the past")
         end
       end
     end
