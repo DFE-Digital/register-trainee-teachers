@@ -22,6 +22,9 @@ features:
   user_can_have_multiple_organisations: true
   funding: true
   lead_partners: true
+  google:
+    send_data_to_big_query: true
+    azure_federated_auth: true
 
 pagination:
   records_per_page: 30
