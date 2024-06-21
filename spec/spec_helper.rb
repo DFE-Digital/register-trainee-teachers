@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rspec-benchmark"
+require "rspec/openapi"
 
 if ENV.fetch("COVERAGE", false)
   require "simplecov"
@@ -69,8 +70,13 @@ RSpec.configure do |config|
   end
 
   config.before do |example|
+    RSpec::OpenAPI.title = "Register API"
+
     if (match = example.metadata[:file_path].match(%r{spec/requests/api/(v\d+\_\d+)/}))
-      RSpec::OpenAPI.application_version = match[1].gsub("_", ".")
+      version = match[1].gsub("_", ".")
+
+      RSpec::OpenAPI.application_version = version
+      RSpec::OpenAPI.path = "public/openapi/#{version}.yaml"
     end
   end
 end
