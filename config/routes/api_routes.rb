@@ -10,6 +10,7 @@ module ApiRoutes
             resources :degrees, param: :slug, only: %i[index show create update destroy]
             resources :placements, param: :slug, only: %I[index show create update destroy]
             resources :award_recommendations, only: :create, path: "recommend-for-qts"
+            resources :deferrals, only: :create, path: :defer
           end
         end
 
