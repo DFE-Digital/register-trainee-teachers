@@ -66,7 +66,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         let(:trainee) { create(:trainee, :trn_received) }
         let(:params) do
           {
-            qts_standards_met_date: "123",
+            qts_standards_met_date: "abc",
           }
         end
 

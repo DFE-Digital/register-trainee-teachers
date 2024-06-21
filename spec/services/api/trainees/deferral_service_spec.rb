@@ -86,7 +86,7 @@ RSpec.describe Api::Trainees::DeferralService do
         context "when defer_date is invalid" do
           let(:params) do
             {
-              defer_date: "123",
+              defer_date: "abc",
             }
           end
 

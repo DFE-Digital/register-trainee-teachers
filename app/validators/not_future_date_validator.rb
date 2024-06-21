@@ -11,5 +11,7 @@ private
 
   def future_date?(date)
     Date.parse(date).future?
+  rescue Date::Error
+    false
   end
 end

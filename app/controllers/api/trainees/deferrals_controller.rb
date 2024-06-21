@@ -10,7 +10,6 @@ module Api
 
         if success
           render(json: { data: serializer_klass.new(trainee).as_hash }, status: :ok)
-
         else
           render(validation_errors_response(errors:))
         end
