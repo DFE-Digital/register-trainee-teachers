@@ -62,7 +62,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
 
       expect(response.parsed_body[:errors]).to contain_exactly(
         "error" => "UnprocessableEntity",
-        "message" => "Qts standards met date can't be blank",
+        "message" => "QTS standards met date can't be blank",
       )
     end
   end
