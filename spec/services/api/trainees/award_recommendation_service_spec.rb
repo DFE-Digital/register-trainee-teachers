@@ -40,7 +40,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Qts standards met date can't be blank")
+          expect(errors.full_messages).to contain_exactly("QTS standards met date can't be blank")
         end
       end
 
@@ -56,7 +56,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Qts standards met date can't be blank")
+          expect(errors.full_messages).to contain_exactly("QTS standards met date can't be blank")
         end
       end
 
@@ -72,7 +72,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Qts standards met date is invalid")
+          expect(errors.full_messages).to contain_exactly("QTS standards met date is invalid")
         end
       end
 
@@ -88,7 +88,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Qts standards met date must be in the past")
+          expect(errors.full_messages).to contain_exactly("QTS standards met date must be in the past")
         end
       end
 
@@ -104,7 +104,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Qts standards met date must not be before the ITT start date")
+          expect(errors.full_messages).to contain_exactly("QTS standards met date must not be before the ITT start date")
         end
       end
 
