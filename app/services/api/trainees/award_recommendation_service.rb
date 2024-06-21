@@ -7,10 +7,6 @@ module Api
       include ActiveModel::Attributes
       include ServicePattern
 
-      ATTRIBUTE_MAPPER = {
-        date: :qts_standards_met_date,
-      }.freeze
-
       attribute :qts_standards_met_date
 
       attr_reader :trainee
@@ -39,8 +35,6 @@ module Api
           [false, errors]
         end
       end
-
-      private_constant :ATTRIBUTE_MAPPER
 
     private
 
