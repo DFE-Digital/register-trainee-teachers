@@ -5,7 +5,7 @@ shared:
       entity_table_name: trainees
       data:
         key: id
-        value: 1811
+        value: 1817
     -
       event_type: import_entity
       entity_table_name: trainees 
