@@ -29,7 +29,7 @@ RSpec.describe "POST /api/v1.0/trainees/:trainee_id/recommend-for-qts", feature_
            params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
 
       expect(response).to have_http_status(:accepted)
-      expect(response.parsed_body[:recommended_for_award_at]).to eq(current_time.iso8601)
+      expect(response.parsed_body[:data][:recommended_for_award_at]).to eq(current_time.iso8601)
       expect(response.parsed_body).not_to have_key(:errors)
     end
   end

@@ -9,7 +9,7 @@ module Api
         success, errors = AwardRecommendationService.call(award_recommendation_params, trainee)
 
         if success
-          render(json: serializer_klass.new(trainee).as_hash, status: :accepted)
+          render(json: { data: serializer_klass.new(trainee).as_hash }, status: :accepted)
         else
           render(validation_errors_response(errors:))
         end
