@@ -5304,7 +5304,7 @@ paths:
                     message: Name can't be blank
                   - error: UnprocessableEntity
                     message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_id}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
