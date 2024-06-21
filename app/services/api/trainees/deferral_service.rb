@@ -11,7 +11,10 @@ module Api
 
       attr_reader :trainee
 
-      validates :defer_date, presence: true, date: true, before_itt_start_date: true, if: :requires_start_date?
+      validates :defer_date,
+                presence: true,
+                date: true,
+                after_itt_start_date: true, if: :requires_start_date?
 
       validates_with DeferralValidator
 

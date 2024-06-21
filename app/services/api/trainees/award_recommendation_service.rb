@@ -11,9 +11,13 @@ module Api
 
       attr_reader :trainee
 
-      delegate :itt_start_date, :can_recommend_for_award?, to: :trainee
+      delegate :itt_start_date, :can_recommend_for_award?, to: :trainee, prefix: true
 
-      validates :qts_standards_met_date, presence: true, date: true
+      validates :qts_standards_met_date,
+                presence: true,
+                date: true,
+                not_future_date: true,
+                after_itt_start_date: true
 
       validates_with AwardRecommendationValidator
 
