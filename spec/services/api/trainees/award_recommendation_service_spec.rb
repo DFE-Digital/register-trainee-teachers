@@ -41,6 +41,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("QTS standards met date can't be blank")
+          expect(trainee.recommended_for_award?).to be(false)
         end
       end
 
@@ -57,6 +58,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("QTS standards met date can't be blank")
+          expect(trainee.recommended_for_award?).to be(false)
         end
       end
 
@@ -73,6 +75,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("QTS standards met date is invalid")
+          expect(trainee.recommended_for_award?).to be(false)
         end
       end
 
@@ -89,6 +92,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("QTS standards met date must be in the past")
+          expect(trainee.recommended_for_award?).to be(false)
         end
       end
 
@@ -105,6 +109,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("QTS standards met date must not be before the ITT start date")
+          expect(trainee.recommended_for_award?).to be(false)
         end
       end
 
@@ -121,6 +126,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
 
           expect(success).to be(false)
           expect(errors.full_messages).to contain_exactly("Trainee state is invalid must be [trn_received]")
+          expect(trainee.recommended_for_award?).to be(false)
         end
       end
     end

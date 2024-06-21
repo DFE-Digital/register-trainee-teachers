@@ -5,30 +5,22 @@ require "rails_helper"
 RSpec.describe "POST /trainees/{trainee_id}/defer" do
   let!(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider) }
 
-  let(:current_date) { Time.zone.today.iso8601 }
-
-  before do
-    Timecop.freeze(current_date)
-  end
-
-  after do
-    Timecop.return
-  end
-
   describe "success" do
     context "when a defer date is required" do
       let(:trainee) do
         create(:trainee, :trn_received)
       end
 
+      let(:defer_date) { Time.zone.today.iso8601 }
+
       it "defers a trainee" do
         post "/api/v0.1/trainees/#{trainee.slug}/defer",
              headers: { authorization: "Bearer #{token}" },
-             params: { defer_date: Time.zone.today.iso8601 }, as: :json
+             params: { defer_date: }, as: :json
 
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).not_to have_key(:errors)
-        expect(response.parsed_body[:data][:defer_date]).to eq(current_date)
+        expect(response.parsed_body[:data][:defer_date]).to eq(defer_date)
       end
     end
 
