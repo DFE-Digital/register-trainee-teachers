@@ -31,8 +31,7 @@ module Api
 
       def call
         if valid?
-          trainee.trainee_start_date = itt_start_date if trainee_itt_start_date.is_a?(Date)
-          trainee.defer_date = defer_date
+          trainee.attributes = trainee_attributes
           trainee.defer!
 
           [true]
@@ -42,6 +41,13 @@ module Api
       end
 
     private
+
+      def trainee_attributes
+        {}.tap do |hash|
+          hash[:defer_date]         = defer_date
+          hash[:trainee_start_date] = itt_start_date if trainee_itt_start_date.is_a?(Date)
+        end
+      end
 
       def requires_start_date?
         return false if trainee_starts_course_in_the_future?
