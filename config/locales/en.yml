@@ -1407,6 +1407,8 @@ en:
       itt_dates_form:
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
+      api/trainees/award_recommendation_service:
+        qts_standards_met_date: QTS standards met date
     errors:
       validators:
         postcode:
@@ -1924,6 +1926,14 @@ en:
               too_long: What the Department for Education could have done must be 1000 characters or less
         api/v01/degree_attributes:
           duplicate: This is a duplicate degree
+        api/trainees/award_recommendation_service:
+          attributes:
+            trainee:
+              state: state is invalid must be [trn_received]
+              submission_ready: submission ready is invalid must be true
+            qts_standards_met_date:
+              future: must be in the past
+              itt_start_date: must not be before the ITT start date
   page_headings:
     start_page: Register trainee teachers
   service_updates:
