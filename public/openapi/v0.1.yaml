@@ -18,7 +18,7 @@ paths:
         example: v0.1
       responses:
         '200':
-          description: does not limit the amount of requests
+          description: shows the requested version
           content:
             application/json:
               schema:
@@ -54,8 +54,8 @@ paths:
         in: query
         required: false
         schema:
-          type: string
-        example: not-a-number
+          type: integer
+        example: 2023
       - name: api_version
         in: path
         required: true
@@ -85,7 +85,7 @@ paths:
         required: false
         schema:
           type: string
-        example: '2024-03-15T13:15:37.880Z'
+        example: 2023-13-01
       - name: sort_order
         in: query
         required: false
@@ -97,10 +97,10 @@ paths:
         required: false
         schema:
           type: string
-        example: deferred
+        example: invalid_state
       responses:
         '200':
-          description: has http status ok
+          description: returns all trainees when no state is provided
           content:
             application/json:
               schema:
@@ -284,28 +284,7 @@ paths:
                           nullable: true
                         placements:
                           type: array
-                          items:
-                            type: object
-                            properties:
-                              urn:
-                                type: string
-                              name:
-                                type: string
-                              postcode:
-                                type: string
-                              created_at:
-                                type: string
-                              updated_at:
-                                type: string
-                              placement_id:
-                                type: string
-                            required:
-                            - urn
-                            - name
-                            - postcode
-                            - created_at
-                            - updated_at
-                            - placement_id
+                          items: {}
                         degrees:
                           type: array
                           items:
@@ -559,9 +538,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid:
                     grade_uuid:
-                    degree_id: ":slug"
+                    degree_id: ":degree_id"
                   state: trn_received
-                  trainee_id: ":trainee_slug"
+                  trainee_id: ":trainee_id"
                 - first_names: Jerry
                   last_name: Pouros
                   date_of_birth: '2002-10-06'
@@ -649,7 +628,7 @@ paths:
                     grade_uuid: 1bb9f02f-da6a-4184-8db0-d43b14ccaf1d
                     degree_id: wSJkMZ3ntpAPL5AwbjrcnQCJ
                   state: trn_received
-                  trainee_id: ":slug"
+                  trainee_id: ":trainee_id"
                 meta:
                   current_page: 1
                   total_pages: 1
@@ -705,7 +684,7 @@ paths:
         example: v0.1
       responses:
         '201':
-          description: is expected to eq "142"
+          description: sets the correct subjects
           content:
             application/json:
               schema:
@@ -1792,7 +1771,7 @@ paths:
                 course_subject_two: '101410'
                 course_subject_three: '100366'
                 course_max_age: 11
-  "/api/{api_version}/trainees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -1804,7 +1783,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -1980,55 +1959,7 @@ paths:
                     items: {}
                   degrees:
                     type: array
-                    items:
-                      type: object
-                      properties:
-                        uk_degree:
-                          type: string
-                        non_uk_degree:
-                          nullable: true
-                        created_at:
-                          type: string
-                        updated_at:
-                          type: string
-                        subject:
-                          type: string
-                        institution:
-                          type: string
-                        graduation_year:
-                          type: integer
-                        grade:
-                          type: string
-                        country:
-                          nullable: true
-                        other_grade:
-                          nullable: true
-                        institution_uuid:
-                          type: string
-                        uk_degree_uuid:
-                          type: string
-                        subject_uuid:
-                          type: string
-                        grade_uuid:
-                          type: string
-                        degree_id:
-                          type: string
-                      required:
-                      - uk_degree
-                      - non_uk_degree
-                      - created_at
-                      - updated_at
-                      - subject
-                      - institution
-                      - graduation_year
-                      - grade
-                      - country
-                      - other_grade
-                      - institution_uuid
-                      - uk_degree_uuid
-                      - subject_uuid
-                      - grade_uuid
-                      - degree_id
+                    items: {}
                   state:
                     type: string
                   trainee_id:
@@ -2213,7 +2144,7 @@ paths:
                 itt_qualification_aim: '028'
                 hesa_disabilities: {}
         '404':
-          description: returns status code 404
+          description: returns a not found message
           content:
             application/json:
               schema:
@@ -2248,7 +2179,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -2875,7 +2806,7 @@ paths:
                 course_subject_three: '100366'
                 course_max_age: 11
                 study_mode: '63'
-  "/api/{api_version}/trainees/{trainee_slug}/defer":
+  "/api/{api_version}/trainees/{trainee_id}/defer":
     post:
       summary: create
       tags:
@@ -2887,7 +2818,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3048,55 +2979,7 @@ paths:
                         items: {}
                       degrees:
                         type: array
-                        items:
-                          type: object
-                          properties:
-                            uk_degree:
-                              type: string
-                            non_uk_degree:
-                              nullable: true
-                            created_at:
-                              type: string
-                            updated_at:
-                              type: string
-                            subject:
-                              type: string
-                            institution:
-                              type: string
-                            graduation_year:
-                              type: integer
-                            grade:
-                              type: string
-                            country:
-                              nullable: true
-                            other_grade:
-                              nullable: true
-                            institution_uuid:
-                              type: string
-                            uk_degree_uuid:
-                              type: string
-                            subject_uuid:
-                              type: string
-                            grade_uuid:
-                              type: string
-                            degree_id:
-                              type: string
-                          required:
-                          - uk_degree
-                          - non_uk_degree
-                          - created_at
-                          - updated_at
-                          - subject
-                          - institution
-                          - graduation_year
-                          - grade
-                          - country
-                          - other_grade
-                          - institution_uuid
-                          - uk_degree_uuid
-                          - subject_uuid
-                          - grade_uuid
-                          - degree_id
+                        items: {}
                       state:
                         type: string
                       trainee_id:
@@ -3329,7 +3212,7 @@ paths:
               - defer_date
             example:
               defer_date: '2024-06-24'
-  "/api/{api_version}/trainees/{trainee_slug}/degrees":
+  "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
       tags:
@@ -3341,12 +3224,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: ":trainee_slug"
+        example: ":trainee_id"
       responses:
         '200':
           description: has http status ok
@@ -3443,7 +3326,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3648,7 +3531,7 @@ paths:
                   message: Uk degree can't be blank
                 - error: UnprocessableEntity
                   message: Grade can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/degrees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -3660,13 +3543,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
         example: ywsJQgkVR2xqDPEjMbCRwtYm
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4026,18 +3909,18 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: ":slug"
-      - name: trainee_slug
+        example: ":degree_id"
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: ":trainee_slug"
+        example: ":trainee_id"
       responses:
         '200':
           description: has http status ok
@@ -4120,7 +4003,7 @@ paths:
                   uk_degree_uuid: eb695652-c197-e711-80d8-005056ac45bb
                   subject_uuid:
                   grade_uuid:
-                  degree_id: ":slug"
+                  degree_id: ":degree_id"
         '404':
           description: returns status 404 with a valid JSON response
           content:
@@ -4157,13 +4040,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
         example: dWHNeU4uq4nbnKk7iGwPWTZ5
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4327,7 +4210,7 @@ paths:
                 uk_degree: '083'
                 graduation_year: '2015-01-01'
                 country: XF
-  "/api/{api_version}/trainees/{trainee_slug}/placements":
+  "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index
       tags:
@@ -4339,12 +4222,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: ":trainee_slug"
+        example: ":trainee_id"
       responses:
         '200':
           description: has http status ok
@@ -4386,7 +4269,7 @@ paths:
                   postcode: I7D 3AB
                   created_at: '2024-06-24T11:51:44.622Z'
                   updated_at: '2024-06-24T11:51:44.622Z'
-                  placement_id: ":slug"
+                  placement_id: ":placement_id"
     post:
       summary: create
       tags:
@@ -4398,7 +4281,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4537,7 +4420,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -4549,13 +4432,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: non-existant
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4983,13 +4866,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: QtZqXotj8z9BsxtdtvyBoLSf
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5071,13 +4954,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: xNtp2SjiBqftwfFDABQ5Xv9y
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5212,7 +5095,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/recommend-for-qts":
+  "/api/{api_version}/trainees/{trainee_id}/recommend-for-qts":
     post:
       summary: create
       tags:
@@ -5224,7 +5107,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5672,7 +5555,7 @@ paths:
             example:
               data:
                 qts_standards_met_date: '2024-06-24'
-  "/api/{api_version}/trainees/{trainee_slug}/withdraw":
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
     post:
       summary: create
       tags:
@@ -5684,7 +5567,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -6296,17 +6179,4 @@ paths:
                 - error: StateTransitionError
                   message: It's not possible to perform this action while the trainee
                     is in its current state
-  "/trainees":
-    get:
-      summary: index
-      tags:
-      - Trainee
-      responses:
-        '302':
-          description: redirects back to the sign in page
-          content:
-            text/html:
-              schema:
-                type: string
-              example: ''
 servers: []
