@@ -54,8 +54,8 @@ paths:
         in: query
         required: false
         schema:
-          type: string
-        example: not-a-number
+          type: integer
+        example: 2023
       - name: api_version
         in: path
         required: true
@@ -2602,7 +2602,7 @@ paths:
                 trn: '567899'
                 ethnic_group: mixed_ethnic_group
                 ethnic_background: Another Mixed background
-  "/api/{api_version}/trainees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -2614,7 +2614,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3010,7 +3010,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3231,11 +3231,6 @@ paths:
                               type: string
                           required:
                           - urn
-                          - name
-                          - postcode
-                          - created_at
-                          - updated_at
-                          - placement_id
                       degrees:
                         type: array
                         items:
@@ -3653,7 +3648,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4124,7 +4119,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4206,7 +4201,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4411,7 +4406,7 @@ paths:
                 graduation_year: '2015-01-01'
                 country: XF
                 locale_code: uk
-  "/api/{api_version}/trainees/{trainee_slug}/degrees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -4423,13 +4418,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: 5kSWTqN4KAsBvU5vZeT2ZovA
-      - name: trainee_slug
+        example: quMKsGKcERtM13Cp3RL8N9Hd
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4797,13 +4792,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: dtqhZkqT4VX3LHjbuBtkrVCH
-      - name: trainee_slug
+        example: NusoMY2ygpwEBtFzgnFCFdZX
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4923,13 +4918,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: vuf7fJVP4WPpQi747dbDRw6K
-      - name: trainee_slug
+        example: 2aBF1ZhdvcNbxxBcDwwHj7z8
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5109,7 +5104,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5162,7 +5157,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5301,7 +5296,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -5313,13 +5308,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: non-existant
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5755,13 +5750,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: non-existant
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5843,13 +5838,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
-        example: oh3HnsRFtzC33f7HzhFALFTL
-      - name: trainee_slug
+        example: m9gxhMFwfzaB6ydDiJzbb1pT
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5984,7 +5979,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/recommend-for-qts":
+  "/api/{api_version}/trainees/{trainee_id}/recommend-for-qts":
     post:
       summary: create
       tags:
@@ -5996,7 +5991,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -6454,8 +6449,8 @@ paths:
               - data
             example:
               data:
-                qts_standards_met_date: '2024-07-08'
-  "/api/{api_version}/trainees/{trainee_slug}/withdraw":
+                qts_standards_met_date: '2024-06-24'
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
     post:
       summary: create
       tags:
@@ -6467,7 +6462,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
