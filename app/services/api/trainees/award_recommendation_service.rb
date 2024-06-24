@@ -28,16 +28,14 @@ module Api
       end
 
       def call
-        if valid?
-          trainee.recommend_for_award!
-          trainee.attributes = trainee_attributes
+        return false, errors unless valid?
 
-          Dqt::RecommendForAwardJob.perform_later(trainee)
+        trainee.recommend_for_award!
+        trainee.attributes = trainee_attributes
 
-          [true]
-        else
-          [false, errors]
-        end
+        Dqt::RecommendForAwardJob.perform_later(trainee)
+
+        true
       end
 
     private
