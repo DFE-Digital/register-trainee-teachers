@@ -22,7 +22,7 @@ module Api
       end
 
       def deferral_params
-        params.permit(:defer_date)
+        params.require(:data).permit(:defer_date)
       end
 
       def model = :trainee

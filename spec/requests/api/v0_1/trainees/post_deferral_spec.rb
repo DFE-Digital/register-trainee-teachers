@@ -5,18 +5,18 @@ require "rails_helper"
 RSpec.describe "POST /trainees/{trainee_id}/defer" do
   let!(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider) }
 
+  let(:defer_date) { Time.zone.today.iso8601 }
+
   describe "success" do
     context "when a defer date is required" do
       let(:trainee) do
         create(:trainee, :trn_received)
       end
 
-      let(:defer_date) { Time.zone.today.iso8601 }
-
       it "defers a trainee" do
         post "/api/v0.1/trainees/#{trainee.slug}/defer",
              headers: { authorization: "Bearer #{token}" },
-             params: { defer_date: }, as: :json
+             params: { data: { defer_date: } }, as: :json
 
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body).not_to have_key(:errors)
@@ -33,15 +33,21 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
 
       it "returns 404" do
         post "/api/v0.1/trainees/#{another_trainee.slug}/defer",
-             headers: { authorization: "Bearer #{token}" }, as: :json
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { defer_date: } }, as: :json
 
         expect(response).to have_http_status(:not_found)
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "NotFound",
+          "message" => "Trainee(s) not found",
+        )
       end
     end
 
     it "does not defer the trainee" do
       post "/api/v0.1/trainees/#{trainee.slug}/defer",
-           headers: { authorization: "Bearer #{token}" }, as: :json
+           headers: { authorization: "Bearer #{token}" },
+           params: { data: { defer_date: nil } }, as: :json
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).not_to be_empty
