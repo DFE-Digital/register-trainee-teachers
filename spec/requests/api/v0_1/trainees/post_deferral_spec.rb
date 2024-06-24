@@ -23,21 +23,6 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
         expect(response.parsed_body[:data][:defer_date]).to eq(defer_date)
       end
     end
-
-    context "when a defer date is not required" do
-      let(:trainee) do
-        create(:trainee, :trn_received, :itt_start_date_in_the_future)
-      end
-
-      it "defers a trainee" do
-        post "/api/v0.1/trainees/#{trainee.slug}/defer",
-             headers: { authorization: "Bearer #{token}" }, as: :json
-
-        expect(response).to have_http_status(:ok)
-        expect(response.parsed_body).not_to have_key(:errors)
-        expect(response.parsed_body[:data][:defer_date]).to be_nil
-      end
-    end
   end
 
   describe "failure" do

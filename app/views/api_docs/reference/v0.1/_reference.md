@@ -1659,7 +1659,7 @@ Deferral details
   <dt class="govuk-summary-list__key"><code>defer_date</code></dt>
   <dd class="govuk-summary-list__value">
     <p class="govuk-body">
-      string, optional
+      string, required
     </p>
     <p class="govuk-body">
       The date when the Trainee deferred. Dates should be in ISO 8601 format.
