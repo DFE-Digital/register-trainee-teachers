@@ -1919,7 +1919,7 @@ paths:
                   recommended_for_award_at:
                   trainee_start_date: '2023-01-01'
                   reinstate_date:
-                  course_min_age: 11
+                  course_min_age: 7
                   course_max_age:
                   course_subject_two: '101410'
                   course_subject_three: '100366'
@@ -1932,7 +1932,7 @@ paths:
                   course_uuid:
                   lead_school_not_applicable: false
                   employing_school_not_applicable: false
-                  submission_ready: true
+                  submission_ready: false
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
@@ -2375,24 +2375,23 @@ paths:
                   withdraw_reasons: []
                   placements: []
                   degrees:
-                  - uk_degree: '202'
+                  - uk_degree: '009'
                     non_uk_degree:
-                    created_at: '2024-07-08T10:38:56.313Z'
-                    updated_at: '2024-07-08T10:38:56.313Z'
-                    subject: '100379'
-                    institution: '0433'
-                    graduation_year: 1991
-                    grade:
+                    created_at: '2024-06-24T11:52:36.897Z'
+                    updated_at: '2024-06-24T11:52:36.897Z'
+                    subject: '101091'
+                    institution: '0285'
+                    graduation_year: 2008
+                    grade: '13'
                     country:
                     other_grade:
-                    institution_uuid: e33e182c-1425-ec11-b6e6-000d3adf095a
-                    uk_degree_uuid: 3f6a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 458170f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: yK3UFkfLtjgMKhNDDciAZHPD
+                    institution_uuid: fc3d182c-1425-ec11-b6e6-000d3adf095a
+                    uk_degree_uuid: da47d378-f4bb-45ec-bda0-14af40ad974e
+                    subject_uuid: 4d8570f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
+                    degree_id: L2vpcmPsggU9weHt3Vmyrpzp
                   state: draft
-                  trainee_id: kZNCFxztEFgnaKZ27CTGw4tg
-                  application_id:
+                  trainee_id: qPYbKYXs3r7HBofWdWNN7GWZ
         '422':
           description: return status code 422 with a meaningful error message
           content:
@@ -3599,9 +3598,7 @@ paths:
                       type: string
                     disability1:
                       type: string
-                    lead_school_urn:
-                      type: string
-                    employing_school_urn:
+                    first_names:
                       type: string
                     nationality:
                       type: string
@@ -5181,20 +5178,20 @@ paths:
                   type: object
                   properties:
                     address:
-                      type: string
                       nullable: true
+                      type: string
                     name:
-                      type: string
                       nullable: true
+                      type: string
                     postcode:
-                      type: string
                       nullable: true
+                      type: string
                     urn:
+                      nullable: true
                       type: string
-                      nullable: true
                     school_id:
-                      nullable: true
                       type: integer
+                      nullable: true
                   required:
                   - address
                   - name
@@ -7091,4 +7088,115 @@ paths:
                 - error: StateTransitionError
                   message: It's not possible to perform this action while the trainee
                     is in its current state
+  "/healthcheck":
+    get:
+      summary: healthcheck
+      tags:
+      - Heartbeat
+      responses:
+        '200':
+          description: returns JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  checks:
+                    type: object
+                    properties:
+                      database:
+                        type: boolean
+                      redis:
+                        type: boolean
+                      sidekiq_processes:
+                        type: boolean
+                    required:
+                    - database
+                    - redis
+                    - sidekiq_processes
+                required:
+                - checks
+              example:
+                checks:
+                  database: true
+                  redis: true
+                  sidekiq_processes: true
+        '503':
+          description: sets the sidekiq queue to false
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  checks:
+                    type: object
+                    properties:
+                      database:
+                        type: boolean
+                      redis:
+                        type: boolean
+                      sidekiq_processes:
+                        type: boolean
+                    required:
+                    - database
+                    - redis
+                    - sidekiq_processes
+                required:
+                - checks
+              example:
+                checks:
+                  database: false
+                  redis: true
+                  sidekiq_processes: true
+  "/ping":
+    get:
+      summary: ping
+      tags:
+      - Heartbeat
+      responses:
+        '200':
+          description: returns PONG
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: PONG
+  "/sha":
+    get:
+      summary: sha
+      tags:
+      - Heartbeat
+      responses:
+        '200':
+          description: returns the sha from the env var COMMIT_SHA
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sha:
+                    type: string
+                required:
+                - sha
+              example:
+                sha: deadbeef
+  "/{path}":
+    get:
+      summary: GET /:path
+      tags: []
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+        example: accessibility
+      responses:
+        '301':
+          description: redirects paths to register-trainee-teachers.service.gov.uk
+          content:
+            text/html:
+              schema:
+                type: string
+              example: ''
 servers: []
