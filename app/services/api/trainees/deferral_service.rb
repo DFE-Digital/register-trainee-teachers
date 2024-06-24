@@ -30,14 +30,10 @@ module Api
       end
 
       def call
-        if valid?
-          trainee.attributes = trainee_attributes
-          trainee.defer!
+        return false, errors unless valid?
 
-          [true]
-        else
-          [false, errors]
-        end
+        trainee.attributes = trainee_attributes
+        trainee.defer!
       end
 
     private
@@ -45,7 +41,7 @@ module Api
       def trainee_attributes
         {}.tap do |hash|
           hash[:defer_date]         = defer_date
-          hash[:trainee_start_date] = itt_start_date if trainee_itt_start_date.is_a?(Date)
+          hash[:trainee_start_date] = itt_start_date if itt_start_date.is_a?(Date)
         end
       end
 

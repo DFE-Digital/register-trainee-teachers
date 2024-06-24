@@ -7,25 +7,44 @@ RSpec.describe Api::Trainees::DeferralService do
 
   describe "::call" do
     describe "success" do
-      let(:trainee) { create(:trainee, :trn_received) }
-
       let(:params) do
         {
           defer_date: Time.zone.today.iso8601,
         }
       end
 
-      it "returns true" do
-        success, errors = subject.call(params, trainee)
+      context "when trainee itt_start_date is a Date" do
+        let(:trainee) { create(:trainee, :trn_received, commencement_status: :itt_started_on_time, trainee_start_date: nil) }
 
-        expect(success).to be(true)
-        expect(errors).to be_nil
+        it "returns true" do
+          success, errors = subject.call(params, trainee)
 
-        trainee.reload
+          expect(success).to be(true)
+          expect(errors).to be_nil
 
-        expect(trainee.deferred?).to be(true)
-        expect(trainee.defer_date).to eq(Date.parse(params[:defer_date]))
-        expect(trainee.trainee_start_date).to eq(TraineeStartStatusForm.new(trainee).trainee_start_date)
+          trainee.reload
+
+          expect(trainee.deferred?).to be(true)
+          expect(trainee.defer_date).to eq(Date.parse(params[:defer_date]))
+          expect(trainee.trainee_start_date).to eq(TraineeStartStatusForm.new(trainee).trainee_start_date)
+        end
+      end
+
+      context "when trainee itt_start_date is not a Date" do
+        let(:trainee) { create(:trainee, :trn_received, trainee_start_date: nil, itt_start_date: nil) }
+
+        it "returns true" do
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(errors).to be_nil
+
+          trainee.reload
+
+          expect(trainee.deferred?).to be(true)
+          expect(trainee.defer_date).to eq(Date.parse(params[:defer_date]))
+          expect(trainee.trainee_start_date).to be_nil
+        end
       end
 
       context "when trainee starts course in the future and the defer date is missing" do
