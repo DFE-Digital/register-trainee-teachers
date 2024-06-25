@@ -21,8 +21,8 @@
       <% end %>
     <% end %>
 
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_fee_funded"), tag: "h2" }) do %>
-      <% [:pg_teaching_apprenticeship,:early_years_salaried].each do |option| %>
+    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_salaried"), tag: "h2" }) do %>
+      <% [:pg_teaching_apprenticeship, :early_years_salaried].each do |option| %>
         <%= f.govuk_radio_button(
           :training_route,
           TRAINING_ROUTE_ENUMS[option],
@@ -31,7 +31,7 @@
       <% end %>
     <% end %>
 
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_fee_funded"), tag: "h2" }) do %>
+    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.undergrad_fee_funded"), tag: "h2" }) do %>
       <% [:provider_led_undergrad, :opt_in_undergrad, :early_years_undergrad].each do |option| %>
         <%= f.govuk_radio_button(
           :training_route,
@@ -41,7 +41,7 @@
       <% end %>
     <% end %>
 
-    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_fee_funded"), tag: "h2" }) do %>
+    <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.other"), tag: "h2" }) do %>
       <% [:assessment_only, :early_years_assessment_only, :iqts].each do |option| %>
         <%= f.govuk_radio_button(
           :training_route,
