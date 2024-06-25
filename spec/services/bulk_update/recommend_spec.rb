@@ -38,7 +38,7 @@ module BulkUpdate
 
         it "does not update DQT" do
           expect { subject }
-            .to_not have_enqueued_job(Dqt::RecommendForAwardJob).once
+            .not_to have_enqueued_job(Dqt::RecommendForAwardJob).once
         end
       end
     end

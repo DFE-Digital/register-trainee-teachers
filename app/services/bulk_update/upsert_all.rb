@@ -23,7 +23,7 @@ module BulkUpdate
     attr_reader :original, :modified, :model, :unique_by
 
     def upsert_records
-      model.upsert_all(modified.values, unique_by:, returning: :id)
+      model.upsert_all(modified.values, unique_by: unique_by, returning: :id)
     end
 
     def enqueue_audit_jobs
