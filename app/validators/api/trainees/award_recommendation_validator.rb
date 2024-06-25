@@ -4,7 +4,7 @@ module Api
   module Trainees
     class AwardRecommendationValidator < ActiveModel::Validator
       def validate(record)
-        return unless record.errors[:qts_standards_met_date].empty?
+        return unless record.errors.empty?
 
         record.errors.add(:trainee, :state) unless record.trainee_can_recommend_for_award?
       end
