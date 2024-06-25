@@ -305,7 +305,7 @@ module Trainees
           "Training route" => "School direct (salaried)",
           "Publish Course Code" => course.code,
           "Lead school URN" => lead_school_urn,
-          "Funding: Training Initiatives" => "Transition to Teach",
+          "Funding: Training Initiatives" => "Now Teach",
         })
       end
 
@@ -314,7 +314,7 @@ module Trainees
         expect(trainee.training_route).to eq(training_route)
         expect(trainee.course_uuid).to eq(course.uuid)
         expect(trainee.lead_school.urn).to eq(lead_school_urn)
-        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:transition_to_teach])
+        expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:now_teach])
       end
 
       context "when the course route does not match the training route" do

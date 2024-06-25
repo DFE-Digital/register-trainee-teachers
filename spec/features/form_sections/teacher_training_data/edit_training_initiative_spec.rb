@@ -54,7 +54,7 @@ private
   end
 
   def and_i_update_the_training_initiative
-    training_initiative_page.transition_to_teach.click
+    training_initiative_page.now_teach.click
   end
 
   def and_i_submit_the_form
