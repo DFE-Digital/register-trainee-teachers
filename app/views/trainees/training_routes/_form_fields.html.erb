@@ -22,13 +22,6 @@
     <% end %>
 
     <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.postgrad_salaried"), tag: "h2" }) do %>
-      <% if FeatureService.enabled?("routes.provider_led_postgrad_salaried") %>
-        <%= f.govuk_radio_button(
-          :training_route,
-          TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
-          label: { text: t("activerecord.attributes.trainee.training_routes.itt.provider_led_postgrad_salaried") }
-        ) %>
-      <% end %>
       <% [:pg_teaching_apprenticeship, :early_years_salaried].each do |option| %>
         <%= f.govuk_radio_button(
           :training_route,

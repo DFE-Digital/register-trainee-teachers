@@ -62,10 +62,6 @@ feature "Create trainee journey" do
     and_i_should_not_see_school_direct_tuition_fee_route
   end
 
-  scenario "provider led postgrad salaried should be shown when itt reform is set to true and provider_led_postgrad_salaried is set to false", "feature_routes.provider_led_postgrad_salaried": false, feature_itt_reform: true do
-    and_i_should_not_see_provider_led_postgrad_salaried_route
-  end
-
   scenario "submitting without choosing a route" do
     and_i_save_the_form
     then_i_should_see_a_validation_error
@@ -126,11 +122,6 @@ private
   def and_i_should_not_see_school_direct_tuition_fee_route
     expect(new_trainee_page).to be_displayed
     expect(new_trainee_page).not_to have_school_direct_tuition_fee
-  end
-
-  def and_i_should_not_see_provider_led_postgrad_salaried_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_provider_led_postgrad_salaried
   end
 
   def and_i_save_the_form

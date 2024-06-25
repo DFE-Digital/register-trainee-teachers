@@ -19,7 +19,6 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
-    provider_led_postgrad_salaried: true
   user_can_have_multiple_organisations: true
   funding: true
   lead_partners: true
