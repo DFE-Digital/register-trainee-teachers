@@ -11,16 +11,11 @@ module Api
 
       attr_reader :trainee
 
-      validates :defer_date, presence: true
-      validates :defer_date,
-                date: true,
-                after_itt_start_date: true, if: :requires_start_date?
+      validates :defer_date, presence: true, date: true
 
       validates_with DeferralValidator
 
-      delegate :itt_start_date,
-               :itt_not_yet_started?,
-               :starts_course_in_the_future?,
+      delegate :itt_not_yet_started?,
                :can_defer?, to: :trainee, prefix: true
 
       def initialize(params, trainee)
@@ -43,12 +38,6 @@ module Api
           hash[:defer_date]         = defer_date
           hash[:trainee_start_date] = itt_start_date if itt_start_date.is_a?(Date)
         end
-      end
-
-      def requires_start_date?
-        return false if trainee_starts_course_in_the_future?
-
-        !trainee_itt_not_yet_started?
       end
 
       def itt_start_date

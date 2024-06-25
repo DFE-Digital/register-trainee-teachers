@@ -13,38 +13,19 @@ RSpec.describe Api::Trainees::DeferralService do
         }
       end
 
-      context "when trainee itt_start_date is a Date" do
-        let(:trainee) { create(:trainee, :trn_received, commencement_status: :itt_started_on_time, trainee_start_date: nil) }
+      let(:trainee) { create(:trainee, :trn_received, commencement_status: :itt_started_on_time, trainee_start_date: nil) }
 
-        it "returns true" do
-          success, errors = subject.call(params, trainee)
+      it "returns true" do
+        success, errors = subject.call(params, trainee)
 
-          expect(success).to be(true)
-          expect(errors).to be_nil
+        expect(success).to be(true)
+        expect(errors).to be_nil
 
-          trainee.reload
+        trainee.reload
 
-          expect(trainee.deferred?).to be(true)
-          expect(trainee.defer_date).to eq(Date.parse(params[:defer_date]))
-          expect(trainee.trainee_start_date).to eq(TraineeStartStatusForm.new(trainee).trainee_start_date)
-        end
-      end
-
-      context "when trainee itt_start_date is not a Date" do
-        let(:trainee) { create(:trainee, :trn_received, trainee_start_date: nil, itt_start_date: nil) }
-
-        it "returns true" do
-          success, errors = subject.call(params, trainee)
-
-          expect(success).to be(true)
-          expect(errors).to be_nil
-
-          trainee.reload
-
-          expect(trainee.deferred?).to be(true)
-          expect(trainee.defer_date).to eq(Date.parse(params[:defer_date]))
-          expect(trainee.trainee_start_date).to be_nil
-        end
+        expect(trainee.deferred?).to be(true)
+        expect(trainee.defer_date).to eq(Date.parse(params[:defer_date]))
+        expect(trainee.trainee_start_date).to eq(TraineeStartStatusForm.new(trainee).trainee_start_date)
       end
     end
 
@@ -83,83 +64,10 @@ RSpec.describe Api::Trainees::DeferralService do
         end
       end
 
-      context "when trainee commencement_status is not itt_not_yet_started" do
-        context "when defer_date is invalid" do
-          let(:params) do
-            {
-              defer_date: "abc",
-            }
-          end
-
-          it "returns false" do
-            success, errors = subject.call(params, trainee)
-
-            expect(success).to be(false)
-            expect(errors.full_messages).to contain_exactly("Defer date is invalid")
-            expect(trainee.deferred?).to be(false)
-          end
-        end
-
-        context "when defer_date is before itt_start_date" do
-          let(:trainee) { create(:trainee, :trn_received, :with_valid_itt_start_date) }
-          let(:params) do
-            {
-              defer_date: (trainee.itt_start_date - 1.day).iso8601,
-            }
-          end
-
-          it "returns false" do
-            success, errors = subject.call(params, trainee)
-
-            expect(success).to be(false)
-            expect(errors.full_messages).to contain_exactly("Defer date must not be before the ITT start date")
-            expect(trainee.deferred?).to be(false)
-          end
-        end
-      end
-
-      context "when trainee commencement_status is itt_not_yet_started" do
-        let(:trainee) { create(:trainee, :trn_received, :itt_not_yet_started) }
-
-        context "when defer_date is invalid" do
-          let(:params) do
-            {
-              defer_date: "abc",
-            }
-          end
-
-          it "returns true" do
-            success, errors = subject.call(params, trainee)
-
-            expect(success).to be(true)
-            expect(errors).to be_nil
-            expect(trainee.deferred?).to be(true)
-          end
-        end
-
-        context "when defer_date is before itt_start_date" do
-          let(:trainee) { create(:trainee, :trn_received, :itt_not_yet_started, :with_valid_itt_start_date) }
-          let(:params) do
-            {
-              defer_date: (trainee.itt_start_date - 1.day).iso8601,
-            }
-          end
-
-          it "returns true" do
-            success, errors = subject.call(params, trainee)
-
-            expect(success).to be(true)
-            expect(errors).to be_nil
-            expect(trainee.deferred?).to be(true)
-          end
-        end
-      end
-
-      context "when the trainee cannot be deferred" do
-        let(:trainee) { create(:trainee) }
+      context "when defer_date is invalid" do
         let(:params) do
           {
-            defer_date: Time.zone.today.iso8601,
+            defer_date: "abc",
           }
         end
 
@@ -167,9 +75,26 @@ RSpec.describe Api::Trainees::DeferralService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Trainee state is invalid must be one of [submitted_for_trn, trn_received]")
+          expect(errors.full_messages).to contain_exactly("Defer date is invalid")
           expect(trainee.deferred?).to be(false)
         end
+      end
+    end
+
+    context "when the trainee cannot be deferred" do
+      let(:trainee) { create(:trainee) }
+      let(:params) do
+        {
+          defer_date: Time.zone.today.iso8601,
+        }
+      end
+
+      it "returns false" do
+        success, errors = subject.call(params, trainee)
+
+        expect(success).to be(false)
+        expect(errors.full_messages).to contain_exactly("Trainee state is invalid must be one of [submitted_for_trn, trn_received]")
+        expect(trainee.deferred?).to be(false)
       end
     end
   end
