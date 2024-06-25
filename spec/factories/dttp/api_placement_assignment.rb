@@ -63,9 +63,9 @@ FactoryBot.define do
       enabled_training_routes { ["provider_led_undergrad"] }
     end
 
-    trait :with_future_teaching_scholars_initiative do
+    trait :with_now_teach_initiative do
       enabled_training_routes { nil }
-      _dfe_routeid_value { Dttp::CodeSets::Routes::MAPPING[ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars]][:entity_id] }
+      _dfe_routeid_value { Dttp::CodeSets::Routes::MAPPING[ROUTE_INITIATIVES_ENUMS[:now_teach]][:entity_id] }
     end
 
     trait :with_scholarship do
