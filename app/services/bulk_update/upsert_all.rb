@@ -12,9 +12,10 @@ module BulkUpdate
     end
 
     def call
-      upsert_records
+      result = upsert_records
       enqueue_audit_jobs
       enqueue_analytics_job
+      result
     end
 
   private
@@ -22,7 +23,7 @@ module BulkUpdate
     attr_reader :original, :modified, :model, :unique_by
 
     def upsert_records
-      model.upsert_all(modified.values, unique_by:)
+      model.upsert_all(modified.values, unique_by:, returning: :id)
     end
 
     def enqueue_audit_jobs
