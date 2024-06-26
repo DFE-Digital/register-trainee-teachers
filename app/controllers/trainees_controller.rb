@@ -36,6 +36,7 @@ class TraineesController < BaseTraineeController
     authorize(trainee)
     trainee.draft? ? trainee.destroy! : trainee.discard!
     flash[:success] = t("views.trainees.delete.#{trainee.draft? ? :draft : :record}")
+    send_custom_event
     redirect_to(trainee.draft? ? drafts_path : trainees_path)
   end
 
@@ -71,6 +72,17 @@ private
 
   def redirect_to_not_found
     redirect_to(not_found_path)
+  end
+
+  def send_custom_event
+    event = DfE::Analytics::Event.new
+      .with_type(:custom_event)
+      .with_data(
+        data: { id: trainee.id, trainee_start_date: trainee.trainee_start_date },
+        hidden_data: { trn: trainee.trn, sex: trainee.sex }
+      )
+
+    DfE::Analytics::SendEvents.do([event])
   end
 
   def permitted_params
