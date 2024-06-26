@@ -11,12 +11,13 @@ module BulkUpdate
     def call
       return if original&.keys&.empty?
 
-      UpsertAll.call(
+      result = UpsertAll.call(
         original: original,
         modified: modified,
         model: Trainee,
         unique_by: :slug,
       )
+      send_updates_to_dqt if result.present?
     end
 
   private
@@ -52,6 +53,14 @@ module BulkUpdate
           recommended_for_award_at: Time.zone.now,
         )
       end.with_indifferent_access
+    end
+
+    def send_updates_to_dqt
+      trainees.each { |t| Dqt::RecommendForAwardJob.perform_later(t) }
+    end
+
+    def trainees
+      @trainees ||= recommendations_upload.awardable_rows.map(&:trainee)
     end
   end
 end

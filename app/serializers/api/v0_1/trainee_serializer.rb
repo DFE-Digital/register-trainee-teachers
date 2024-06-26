@@ -52,6 +52,8 @@ module Api
           degrees: degrees,
           state: @trainee.state,
           trainee_id: @trainee.slug,
+          recommended_for_award_at: recommended_for_award_at,
+          application_id: @trainee.application_choice_id,
         )
       end
 
@@ -162,6 +164,10 @@ module Api
 
       def trainee_start_date
         @trainee.trainee_start_date
+      end
+
+      def recommended_for_award_at
+        @trainee.recommended_for_award_at&.iso8601
       end
 
       def school_attributes

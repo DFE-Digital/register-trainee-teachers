@@ -15,6 +15,10 @@ module Features
       given_i_am_authenticated(user:)
     end
 
+    def given_i_am_authenticated_as_a_lead_partner_user(user: create(:user, :with_lead_partner_organisation))
+      given_i_am_authenticated(user:)
+    end
+
     def given_i_am_authenticated_as_system_admin
       given_i_am_authenticated(user: create(:user, :system_admin))
     end

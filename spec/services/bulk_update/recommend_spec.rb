@@ -20,6 +20,11 @@ module BulkUpdate
             .and change { trainee.outcome_date }
             .from(nil).to(recommendations_upload_row.standards_met_at)
         end
+
+        it "updates DQT with the changes" do
+          expect { subject }
+            .to have_enqueued_job(Dqt::RecommendForAwardJob).once
+        end
       end
 
       context "when the trainee is not trn_received" do
@@ -29,6 +34,11 @@ module BulkUpdate
           subject
           expect(trainee.reload.state).to eql "draft"
           expect(trainee.outcome_date).to be_nil
+        end
+
+        it "does not update DQT" do
+          expect { subject }
+            .not_to have_enqueued_job(Dqt::RecommendForAwardJob).once
         end
       end
     end

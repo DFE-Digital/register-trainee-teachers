@@ -6,6 +6,7 @@ features:
   sign_in_method: persona
   enable_feedback_link: true
   publish_course_details: true
+  lead_partners: true
   routes:
     provider_led_postgrad: true
     early_years_assessment_only: true
@@ -18,10 +19,14 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
+    provider_led_postgrad_salaried: true
   user_can_have_multiple_organisations: true
   funding: true
   lead_partners: true
-
+  google:
+    send_data_to_big_query: true
+    azure_federated_auth: true
+  itt_reform: true
 pagination:
   records_per_page: 30
 

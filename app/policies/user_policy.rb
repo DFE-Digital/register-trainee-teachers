@@ -10,18 +10,13 @@ class UserPolicy < ProviderPolicy
   end
 
   def drafts?
-    user.system_admin? || !user.lead_school?
-  end
-
-  def reports?
-    user.system_admin? || !user.lead_school?
+    user.system_admin? || !(user.lead_school? || user.lead_partner?)
   end
 
   def bulk_recommend?
-    !user.system_admin? && !user.lead_school?
+    !user.system_admin? && !user.lead_school? && !user.lead_partner?
   end
 
-  def bulk_placement?
-    !user.system_admin? && !user.lead_school?
-  end
+  alias_method :reports?, :drafts?
+  alias_method :bulk_placement?, :bulk_recommend?
 end

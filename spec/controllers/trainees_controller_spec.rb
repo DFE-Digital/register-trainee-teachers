@@ -73,6 +73,16 @@ describe TraineesController do
         end
       end
 
+      context "with a lead partner user" do
+        let(:user) { build_current_user(user: create(:user, :with_lead_partner_organisation)) }
+
+        it "returns a forbidden response" do
+          enable_features(:user_can_have_multiple_organisations)
+          get(:index, format: "csv")
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
+
       context "with an export request of over the system admin limit" do
         context "by a system admin" do
           let(:user) { build_current_user(user: create(:user, :system_admin)) }

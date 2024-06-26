@@ -5,7 +5,7 @@ An OpenAPI schema has been generated using the `rspec-openapi` gem.
 The Schema can be kept up-to-date by running the api specs with the OPENAPI env thus:
 
 ```
-OPENAPI=1 bundle exec rspec spec/requests/api/v0.1/
+OPENAPI=1 bundle exec rspec spec/requests/api/v0_1/
 ```
 
 This will overwrite the existing schema but _should_ preserve manually made changes.
