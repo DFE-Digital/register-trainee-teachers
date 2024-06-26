@@ -57,6 +57,11 @@ feature "Create trainee journey" do
     and_i_should_not_see_school_direct_tuition_fee_route
   end
 
+  scenario "school direct radio buttons should not be shown when itt reform feature set to true", feature_itt_reform: true do
+    and_i_should_not_see_school_direct_salaried_route
+    and_i_should_not_see_school_direct_tuition_fee_route
+  end
+
   scenario "submitting without choosing a route" do
     and_i_save_the_form
     then_i_should_see_a_validation_error
