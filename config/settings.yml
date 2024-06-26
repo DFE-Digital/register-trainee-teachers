@@ -68,7 +68,6 @@ features:
     provider_led_postgrad_salaried: false
   google:
     send_data_to_big_query: false
-    azure_federated_auth: false
   filters:
     show_start_year_filter: false
   user_can_have_multiple_organisations: true
@@ -164,7 +163,6 @@ google:
   big_query:
     project_id: replaceme
     dataset: replaceme
-    api_json_key: "{}"
     table_name: events
     entity_table_checks_enabled: true
 
