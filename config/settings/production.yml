@@ -44,7 +44,6 @@ features:
   dqt_import:
     sync_teachers: true
   register_api: false
-  itt_reform: false
 environment:
   name: beta
 

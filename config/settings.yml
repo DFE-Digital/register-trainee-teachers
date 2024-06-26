@@ -91,7 +91,7 @@ features:
   funding_uploads: true
   register_api: true
   lead_partners: false
-  itt_reform: true
+  itt_reform: false
 dfe_sign_in:
   # Our service name
   identifier: rtt
