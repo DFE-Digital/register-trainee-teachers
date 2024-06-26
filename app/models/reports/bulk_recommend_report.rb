@@ -94,7 +94,7 @@ module Reports
       row = [
         trainee_report.trn,
         trainee_report.provider_trainee_id,
-        trainee_report.hesa_id
+        trainee_report.hesa_id,
         trainee_report.first_names,
         trainee_report.last_names,
         trainee_report.lead_school_name,
