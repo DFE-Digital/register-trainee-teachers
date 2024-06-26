@@ -79,7 +79,7 @@ private
       .with_type(:custom_event)
       .with_data(
         data: { id: trainee.id, trainee_start_date: trainee.trainee_start_date },
-        hidden_data: { trn: trainee.trn, sex: trainee.sex }
+        hidden_data: { trn: trainee.trn, sex: trainee.sex },
       )
 
     DfE::Analytics::SendEvents.do([event])
