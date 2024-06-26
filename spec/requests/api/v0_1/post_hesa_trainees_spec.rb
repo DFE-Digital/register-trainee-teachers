@@ -59,6 +59,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",
       pg_apprenticeship_start_date: "2024-03-11",
+      application_id: 123456,
     }
   end
 
@@ -92,6 +93,13 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response.parsed_body[:data][:study_mode]).to eq("63")
+    end
+
+    it "sets the correct application_id" do
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(Trainee.last.application_choice_id).to be(123456)
+      expect(response.parsed_body[:data][:application_id]).to eq(123456)
     end
 
     it "sets the correct disabilities" do

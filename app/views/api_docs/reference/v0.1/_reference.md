@@ -2752,13 +2752,13 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>application_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 10 characters)
+        integer
       </p>
       <p class="govuk-body">
-        The unique ID of the application in the Apply system.
+        The unique ID of the application choice in the Apply system.
       </p>
       <p class="govuk-body">
-        Example: <code>11fc0d3b2f</code>
+        Example: <code>123456</code>
       </p>
     </dd>
   </div>
@@ -3366,10 +3366,6 @@ Deletes an existing degree for this trainee.
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.provider_trainee_id.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">20</td>
-    </tr>
-    <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Trainee.properties.application_id.maxLength</th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">10</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.trn.maxLength</th>

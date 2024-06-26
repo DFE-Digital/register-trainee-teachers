@@ -53,6 +53,7 @@ module Api
           state: @trainee.state,
           trainee_id: @trainee.slug,
           recommended_for_award_at: recommended_for_award_at,
+          application_id: @trainee.application_choice_id,
         )
       end
 
