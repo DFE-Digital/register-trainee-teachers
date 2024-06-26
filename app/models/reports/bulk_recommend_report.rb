@@ -94,7 +94,7 @@ module Reports
       row = [
         trainee_report.trn,
         trainee_report.provider_trainee_id,
-        trainee_report.hesa_id&.gsub(/(.*)/, "'\\1"), # prevent Excel from converting it to scientific notation
+        trainee_report.hesa_id
         trainee_report.first_names,
         trainee_report.last_names,
         trainee_report.lead_school_name,
@@ -103,7 +103,7 @@ module Reports
         trainee_report.course_education_phase,
         trainee_report.course_age_range,
         trainee_report.subjects,
-      ].map { |value| CsvValueSanitiser.new(value).sanitise }
+      ]
 
       row.delete_at(2) unless hesa_id?
       row
