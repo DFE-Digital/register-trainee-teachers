@@ -177,6 +177,7 @@ private
       school_direct_tuition_fee: tuition_title,
       school_direct_salaried: salaried_title,
       pg_teaching_apprenticeship: pg_teaching_apprenticeship_title,
+      provider_led_postgrad_salaried: salaried_title,
     }[route.to_sym]
   end
 end
