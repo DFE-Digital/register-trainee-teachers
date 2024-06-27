@@ -43,4 +43,13 @@ describe LeadPartner do
       it { is_expected.to validate_presence_of(:provider) }
     end
   end
+
+  describe "associations" do
+    it { is_expected.to have_many(:lead_partner_users) }
+    it { is_expected.to have_many(:users).through(:lead_partner_users) }
+    it { is_expected.to have_many(:trainees) }
+
+    it { is_expected.to belong_to(:school).optional }
+    it { is_expected.to belong_to(:provider).optional }
+  end
 end
