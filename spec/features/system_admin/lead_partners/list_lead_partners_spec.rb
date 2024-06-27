@@ -80,6 +80,7 @@ feature "List lead partners" do
     expect(page).to have_text(school_lead_partner.urn)
     expect(page).to have_text(school_lead_partner.school.town)
     expect(page).to have_text(school_lead_partner.school.postcode)
+    expect(page).not_to have_link("View funding")
   end
 
   def when_i_click_the_back_button
@@ -95,6 +96,7 @@ feature "List lead partners" do
     expect(page).to have_text("HEI Partner")
     expect(page).to have_text(hei_lead_partner.provider.ukprn)
     expect(page).to have_text(hei_lead_partner.provider.code)
+    expect(page).not_to have_link("View funding")
   end
 
   def then_i_there_is_no_lead_partner_link
