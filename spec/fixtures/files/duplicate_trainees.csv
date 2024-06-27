@@ -1,0 +1,5 @@
+trainee_id,email
+123,duplicate@example.com
+456,duplicate@example.com
+789,duplicate@example.com
+890,unique@example.com
