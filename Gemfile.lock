@@ -101,8 +101,8 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     aes_key_wrap (1.1.0)
     amazing_print (1.6.0)
     annotate (3.2.0)
@@ -276,7 +276,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.70.0)
+    google-apis-bigquery_v2 (0.72.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-apis-core (0.15.0)
       addressable (~> 2.5, >= 2.5.1)
@@ -286,10 +286,10 @@ GEM
       representable (~> 3.0)
       retriable (>= 2.0, < 4.a)
       rexml
-    google-cloud-bigquery (1.49.1)
+    google-cloud-bigquery (1.50.0)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
-      google-apis-bigquery_v2 (~> 0.62)
+      google-apis-bigquery_v2 (~> 0.71)
       google-apis-core (~> 0.13)
       google-cloud-core (~> 1.6)
       googleauth (~> 1.9)
@@ -348,7 +348,7 @@ GEM
       aes_key_wrap
       bindata
       httpclient
-    jwt (2.8.1)
+    jwt (2.8.2)
       base64
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
@@ -470,7 +470,7 @@ GEM
       pry (>= 0.13, < 0.15)
     psych (5.1.2)
       stringio
-    public_suffix (5.1.1)
+    public_suffix (6.0.0)
     puma (6.4.2)
       nio4r (~> 2.0)
     pundit (2.3.2)
@@ -561,7 +561,7 @@ GEM
     request_store_rails (2.0.0)
       concurrent-ruby (~> 1.0)
     retriable (3.1.2)
-    rexml (3.3.0)
+    rexml (3.3.1)
       strscan
     rotp (6.3.0)
     rspec (3.13.0)
