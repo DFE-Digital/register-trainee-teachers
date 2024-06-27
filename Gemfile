@@ -44,7 +44,7 @@ gem "stackprof"
 
 # Logging
 gem "amazing_print", "~> 1.6"
-gem "rails_semantic_logger", "4.14.0"
+gem "rails_semantic_logger", "4.15.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
