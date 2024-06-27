@@ -103,7 +103,7 @@ module Reports
         trainee_report.course_education_phase,
         trainee_report.course_age_range,
         trainee_report.subjects,
-      ]
+      ].map { |value| CsvValueSanitiser.new(value).sanitise }
 
       row.delete_at(2) unless hesa_id?
       row

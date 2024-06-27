@@ -402,7 +402,7 @@ module Reports
     end
 
     def hesa_id
-      trainee.hesa_id&.gsub(/(.*)/, "'\\1") # prevent Excel from converting it to scientific notation
+      trainee.hesa_id&.starts_with?("'") ? trainee.hesa_id : trainee.hesa_id&.prepend("'")
     end
 
   private
