@@ -226,7 +226,7 @@ group :test do
 end
 
 # Required for example_data and vendor:swap so needed in stated environments
-group :development, :test, :review, :qa, :audit, :pen, :sandbox do
+group :development, :test, :review, :qa, :audit, :sandbox do
   gem "bundle-audit", require: false
   gem "factory_bot_rails"
   gem "faker"
