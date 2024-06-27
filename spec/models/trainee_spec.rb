@@ -148,6 +148,7 @@ describe Trainee do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:apply_application).optional }
     it { is_expected.to belong_to(:lead_school).class_name("School").optional }
+    it { is_expected.to belong_to(:lead_partner).optional }
     it { is_expected.to belong_to(:employing_school).class_name("School").optional }
     it { is_expected.to have_one(:dqt_teacher) }
     it { is_expected.to have_one(:dqt_trn_request).dependent(:destroy) }
