@@ -402,7 +402,7 @@ module Reports
     end
 
     def hesa_id
-      trainee.hesa_id&.starts_with?("'") ? trainee.hesa_id : trainee.hesa_id&.prepend("'")
+      trainee.hesa_id&.starts_with?("'") ? trainee.hesa_id : trainee.hesa_id&.prepend("'") # prevent Excel from converting it to scientific notation
     end
 
   private
