@@ -442,7 +442,7 @@ describe Reports::TraineeReport do
   end
 
   describe "#hesa_id" do
-    let(:trainee) { create(:trainee, :for_export, hesa_id: hesa_id) }
+    let(:trainee) { create(:trainee, :for_export, hesa_id:) }
 
     subject { described_class.new(trainee).hesa_id }
 
