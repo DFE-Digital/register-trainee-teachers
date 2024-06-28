@@ -100,7 +100,7 @@ module Features
       itt_dates_edit_page.continue.click
     end
 
-    def given_there_is_grant_funding_available_for_early_years_postgrad
+    def given_there_is_grant_funding_available_for_early_years_postgrad(academic_cycle: AcademicCycle.current)
       funding = OpenStruct.new(
         training_route: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
         amount: 5_000,
@@ -108,10 +108,11 @@ module Features
           AllocationSubjects::EARLY_YEARS_ITT,
         ],
       )
+
       funding_method = FundingMethod.find_or_create_by!(training_route: funding.training_route,
                                                         amount: funding.amount,
                                                         funding_type: FUNDING_TYPE_ENUMS[:grant],
-                                                        academic_cycle: AcademicCycle.current)
+                                                        academic_cycle: academic_cycle)
 
       funding.allocation_subjects.map do |subject|
         allocation_subject = AllocationSubject.find_or_create_by!(name: subject)

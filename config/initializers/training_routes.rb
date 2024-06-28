@@ -27,7 +27,6 @@ TRAINING_ROUTE_TYPES = {
     TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     TRAINING_ROUTE_ENUMS[:early_years_salaried],
     TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
-    TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
   ],
   undergrad_funded: [
     TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
