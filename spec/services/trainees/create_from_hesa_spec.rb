@@ -21,6 +21,7 @@ module Trainees
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
+    let(:training_route) { TRAINING_ROUTES[TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried]] }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -38,7 +39,10 @@ module Trainees
       create(:school, urn: student_attributes[:lead_school_urn])
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
-      described_class.call(hesa_trainee: student_attributes, record_source: record_source)
+      described_class.call(
+        hesa_trainee: student_attributes,
+        record_source: record_source,
+      )
     end
 
     describe "HESA information imported from XML" do
@@ -121,6 +125,18 @@ module Trainees
         expect(trainee.hesa_metadatum.course_programme_title).to eq("FE Course 1")
         expect(trainee.hesa_metadatum.placement_school_urn).to eq(900000)
         expect(trainee.hesa_metadatum.year_of_course).to eq("0")
+      end
+
+      context "when training route is `provider_led_postgrad_salaried`" do
+        let(:hesa_training_route_codes) { ::Hesa::CodeSets::TrainingRoutes::MAPPING.invert }
+
+        let(:hesa_stub_attributes) do
+          { training_route: hesa_training_route_codes[TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried]] }
+        end
+
+        it "maps the the HESA code to the training route enum" do
+          expect(trainee.training_route).to eq("provider_led_postgrad_salaried")
+        end
       end
 
       context "leading and employing schools not applicable" do

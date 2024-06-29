@@ -11,7 +11,7 @@ module Hesa
         "10" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
         "11" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
         "12" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-        "13" => TRAINING_ROUTE_ENUMS[:provider_let_postgrad_salaried],
+        "13" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
       }.freeze
     end
   end
