@@ -10,5 +10,4 @@ namespace :cleanup do
     users.discard_all!
     puts "Discarded #{users.count} user(s)"
   end
-
 end
