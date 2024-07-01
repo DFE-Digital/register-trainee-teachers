@@ -12,7 +12,6 @@
 #  state                  :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
-#  application_choice_id  :string
 #  apply_id               :integer          not null
 #
 # Indexes

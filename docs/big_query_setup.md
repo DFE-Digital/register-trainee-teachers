@@ -9,19 +9,12 @@ To prepare a BigQuery data set to allow this:
     * IAM > Service Accounts in the Google console
     * Create service account, we have one service account per app per env. Naming -> app-bigquery-env e.g register-bigquery-qa
     * Don’t worry about granting anything, just create
-* Get a key, this will be needed in the ENV
-    * Open your shiny new service account by clicking on the ‘email’ in the list
-    * Keys -> Add Key - JSON
-    * We add this JSON as a single line string to the env so get that with
-        * `cat <filepath> | jq -c | jq -R` if you have `jq`
-        * `JSON.parse(File.read(<filepath>)).to_json` in a ruby console. Parsing and to_json-ing is needed to strip the newlines
-    * Put that where it needs to go. Register has a `SETTINGS__GOOGLE__BIG_QUERY__API_JSON_KEY` env var set in the secrets.
 * Create a dataset - In the BigQuery console (https://console.cloud.google.com/bigquery)
     * Create data set on the root
     * Data set Id e.g. register_events_<environment>
     * Data location europe-west2 (London)
     * Don’t enable expiry
-    * Google managed key
+    * Customer managed key
 * Create a table ‘events’
     * Export the schema from an existing table.
         * Install the gcloud CLI if you don't have it (https://cloud.google.com/sdk/docs/install)
@@ -45,5 +38,16 @@ To prepare a BigQuery data set to allow this:
         * New principals - service account email address
         * Select a role - Custom -> Custom BigQuery Data Appender
         * Save
+* Setup the service account for workload identity federation.
+	* See the DfE Analytics [README](https://github.com/DFE-Digital/dfe-analytics) on how to setup a service account for workload identity federation
+	* Open your shiny new service account in ‘Workload Identity Federation‘ by clicking on: 
+	   IAM -> Workload Identity Federation
+	* Navigate to the ‘CONNECTED SERVICE ACCOUNTS‘ for your pool and provider ie 
+	   ‘azure-cip-identity-pool‘ and ‘azure-cip-oidc-provider‘
+	* Download the ‘Client library config‘ JSON for your service account
+	* We add this JSON as a single line string to the env so get that with
+        * `cat <filepath> | jq -c | jq -R` if you have `jq`
+        * `JSON.parse(File.read(<filepath>)).to_json` in a ruby console. Parsing and to_json-ing is needed to strip the newlines
+		* Put that where it needs to go. Register has a `GOOGLE_CLOUD_CREDENTIALS` env var set in the secrets.
 
-The data set should be ready to receive events from a client authenticated with the credentials assocated with the service account. 
+The data set should be ready to receive events from a client authenticated with the credentials associated with the service account. 

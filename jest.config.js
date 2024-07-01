@@ -24,6 +24,6 @@ module.exports = {
   },
   testPathIgnorePatterns: [],
   transform: {
-    '\\.[jt]sx?$': 'esbuild-jest'
+    '^.+\\.jsx?$': 'esbuild-jest-transform'
   }
 }

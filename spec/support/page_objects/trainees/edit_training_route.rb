@@ -23,6 +23,8 @@ module PageObjects
 
       element :pg_teaching_apprenticeship, "#training-routes-form-training-route-pg-teaching-apprenticeship-field"
 
+      element :provider_led_postgrad_salaried, "#trainee-routes-form-training-route-provider-led-postgrad-salaried-field"
+
       sections :training_route_options, TrainingRouteOptions, ".govuk-radios__item"
 
       element :continue_button, 'button.govuk-button[type="submit"]'

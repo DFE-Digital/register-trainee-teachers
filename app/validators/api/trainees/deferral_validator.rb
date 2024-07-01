@@ -2,11 +2,11 @@
 
 module Api
   module Trainees
-    class AwardRecommendationValidator < ActiveModel::Validator
+    class DeferralValidator < ActiveModel::Validator
       def validate(record)
         return unless record.errors.empty?
 
-        record.errors.add(:trainee, :state) unless record.trainee_can_recommend_for_award?
+        record.errors.add(:trainee, :state) unless record.trainee_can_defer?
       end
     end
   end

@@ -348,6 +348,9 @@ paths:
                         withdraw_reasons:
                           type: array
                           items: {}
+                        application_id:
+                          type: integer
+                          nullable: true
                       required:
                         - first_names
                         - last_name
@@ -421,6 +424,7 @@ paths:
                         - degrees
                         - state
                         - trainee_id
+                        - application_id
                   meta:
                     type: object
                     properties:
@@ -540,6 +544,7 @@ paths:
                         degree_id: fv4kc3mwvf2BUMXjJDRRGmKS
                     state: deferred
                     trainee_id: 5dayPYvTJr5FXk8XzUxmqLDD
+                    application_id:
                   - first_names: Ebonie
                     last_name: Murray
                     date_of_birth: "1985-02-18"
@@ -638,6 +643,7 @@ paths:
                         degree_id: 7wVhuhkJC8Z9Du99sWgffCs8
                     state: deferred
                     trainee_id: Niw7mVU5RXpp5Dw53K2qE4AQ
+                    application_id:
                   - first_names: Cameron
                     last_name: Lakin
                     date_of_birth: "1979-04-20"
@@ -736,6 +742,7 @@ paths:
                         degree_id: PU2MqGjGAcqC4mYURy6T9LdH
                     state: deferred
                     trainee_id: pBRFoPmPxSzmTjD1NFEqUUpw
+                    application_id:
                   - first_names: Enrique
                     last_name: Miller
                     date_of_birth: "1995-01-14"
@@ -834,6 +841,7 @@ paths:
                         degree_id: Xui1q2Pvdyh1ivtGtU4LXJmq
                     state: deferred
                     trainee_id: 1MALXpx7P2Pm2hHw85nK7WdT
+                    application_id:
                   - first_names: Aja
                     last_name: Goyette
                     date_of_birth: "1961-02-05"
@@ -932,6 +940,7 @@ paths:
                         degree_id: 2Dnis3iWDQjH5tFixp8aFerg
                     state: deferred
                     trainee_id: 21gNvKQPXikof89GSa9nRSJo
+                    application_id:
                   - first_names: Winford
                     last_name: Streich
                     date_of_birth: "1992-10-06"
@@ -1226,6 +1235,7 @@ paths:
                         degree_id: bLZdAaSYmVyAZvxgRBTyavq3
                     state: trn_received
                     trainee_id: hsjKh2e5tBszAUZAjR9c2hGp
+                    application_id:
                   - first_names: Ollie
                     last_name: Baumbach
                     date_of_birth: "1984-06-10"
@@ -1520,6 +1530,7 @@ paths:
                         degree_id: g6nSrPTnddRwJuTYALszn4Jf
                     state: trn_received
                     trainee_id: A3dPQAMg3mMcr82EX6HsBDd4
+                    application_id: 123456
                   - first_names: Linh
                     last_name: Bashirian
                     date_of_birth: "1962-09-04"
@@ -2237,6 +2248,9 @@ paths:
                         type: string
                       disability2:
                         type: string
+                      application_id:
+                        type: integer
+                        nullable: true
                     required:
                       - first_names
                       - last_name
@@ -2464,6 +2478,7 @@ paths:
                   trainee_id: Kgc8B6drhaovqV3sByzLRGtE
                   disability1: "58"
                   disability2: "57"
+                  application_id:
         "409":
           description:
             returns status 409 (conflict) with the potential duplicates
@@ -2677,6 +2692,9 @@ paths:
                           type: string
                         trainee_id:
                           type: string
+                        application_id:
+                          type: integer
+                          nullable: true
                         withdraw_reasons:
                           type: array
                           items: {}
@@ -2847,6 +2865,7 @@ paths:
                         degree_id: hmmxfrE5DfzU1ipjbpDr36i4
                     state: draft
                     trainee_id: aC23R9GwSQiACmGBpzesmuZ5
+                    application_id:
         "422":
           description: return status code 422 with a meaningful error message
           content:
@@ -2991,6 +3010,8 @@ paths:
                       type: string
                     course_max_age:
                       type: integer
+                    application_id:
+                      type: integer
                   required:
                     - first_names
                     - last_name
@@ -3057,6 +3078,7 @@ paths:
                 course_subject_two: "101410"
                 course_subject_three: "100366"
                 course_max_age: 11
+                application_id: 123456
   "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
@@ -3253,6 +3275,9 @@ paths:
                     type: string
                   trainee_id:
                     type: string
+                  application_id:
+                    type: integer
+                      ff
                 required:
                   - first_names
                   - last_name
@@ -3261,6 +3286,7 @@ paths:
                   - updated_at
                   - email
                   - middle_names
+
                   - training_route
                   - sex
                   - diversity_disclosure
@@ -3337,6 +3363,7 @@ paths:
                   - degrees
                   - state
                   - trainee_id
+                  - application_id
               example:
                 first_names: Everette
                 last_name: Bernhard
@@ -3421,6 +3448,7 @@ paths:
                 degrees: []
                 state: draft
                 trainee_id: "12345"
+                application_id:
         "404":
           description: returns a not found message
           content:
@@ -3830,6 +3858,7 @@ paths:
                       - degrees
                       - state
                       - trainee_id
+                      - application_id
                 required:
                   - data
               example:
@@ -3941,6 +3970,7 @@ paths:
                       degree_id: Bt7USBJKMcWr7k2xF7WY7Sdp
                   state: submitted_for_trn
                   trainee_id: C4Dwv71BbW9JyJoT4E1E7eto
+                  application_id: 123456
                   disability2: "57"
         "401":
           description: returns status 401 unauthorized
@@ -4596,6 +4626,8 @@ paths:
                         type: string
                       trainee_id:
                         type: string
+                      application_id:
+                        type: integer
                     required:
                       - first_names
                       - last_name
@@ -4670,6 +4702,7 @@ paths:
                       - degrees
                       - state
                       - trainee_id
+                      - application_id
                 required:
                   - data
               example:
@@ -4747,6 +4780,7 @@ paths:
                   degrees: []
                   state: draft
                   trainee_id: v4GjADnaH5ZMp1kPVcCsMKw7
+                  application_id: 123456
         "404":
           description: does not delete the degree and returns a 404 status (not_found)
           content:
@@ -5537,6 +5571,8 @@ paths:
                         type: string
                       trainee_id:
                         type: string
+                      application_id:
+                        type: integer
                     required:
                       - first_names
                       - last_name
@@ -5621,6 +5657,7 @@ paths:
                       - degrees
                       - state
                       - trainee_id
+                      - application_id
                 required:
                   - data
               example:
@@ -5714,6 +5751,7 @@ paths:
                   degrees: []
                   state: draft
                   trainee_id: TZhvm9mpe7rV4U9fp3trkQS1
+                  application_id: 123456
         "404":
           description: returns status 404 with a valid JSON response
           content:
@@ -6270,6 +6308,8 @@ paths:
                         type: string
                       trainee_id:
                         type: string
+                      application_id:
+                        type: integer
                       id:
                         type: integer
                       dttp_id:
@@ -6512,6 +6552,7 @@ paths:
                       degree_id: 4q9vMxzg5TLuJJgroL1tjtPp
                   state: withdrawn
                   trainee_id: Z1BAz38AkKbxDRHQbe5MuAjm
+                  application_id: 123456
                   id: 220
                   dttp_id: 251fed09-25ca-473e-a4e2-5a491926459b
                   progress:

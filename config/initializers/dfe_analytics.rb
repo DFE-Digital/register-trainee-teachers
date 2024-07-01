@@ -29,11 +29,6 @@ DfE::Analytics.configure do |config|
   #
   config.bigquery_dataset = Settings.google.big_query.dataset
 
-  # Service account JSON key for the BigQuery API. See
-  # https://cloud.google.com/bigquery/docs/authentication/service-account-file
-  #
-  config.bigquery_api_json_key = Settings.google.big_query.api_json_key
-
   # Passed directly to the retries: option on the BigQuery client
   #
   # config.bigquery_retries = 3
@@ -57,5 +52,5 @@ DfE::Analytics.configure do |config|
   # Whether to use azure workload identity federation for authentication
   # instead of the BigQuery API JSON Key. Note that this also will also
   # use a new version of the BigQuery streaming APIs.
-  config.azure_federated_auth = Settings.features.google.azure_federated_auth
+  config.azure_federated_auth = true
 end

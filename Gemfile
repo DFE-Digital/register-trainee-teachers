@@ -44,7 +44,7 @@ gem "stackprof"
 
 # Logging
 gem "amazing_print", "~> 1.6"
-gem "rails_semantic_logger", "4.14.0"
+gem "rails_semantic_logger", "4.15.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -226,7 +226,7 @@ group :test do
 end
 
 # Required for example_data and vendor:swap so needed in stated environments
-group :development, :test, :review, :qa, :audit, :pen, :sandbox do
+group :development, :test, :review, :qa, :audit, :sandbox do
   gem "bundle-audit", require: false
   gem "factory_bot_rails"
   gem "faker"

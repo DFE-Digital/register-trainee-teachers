@@ -53,7 +53,7 @@ describe Reports::TraineeReport do
     end
 
     it "includes the string-enforced hesa_id" do
-      expect(subject.hesa_id).to eq("'#{trainee.hesa_id}'")
+      expect(subject.hesa_id).to eq(trainee.hesa_id)
     end
 
     it "includes the provider_trainee_id" do
@@ -438,6 +438,30 @@ describe Reports::TraineeReport do
           "#{current_cycle.start_year} to #{current_cycle.start_year + 1}, #{next_cycle.start_year} to #{next_cycle.start_year + 1}",
         )
       end
+    end
+  end
+
+  describe "#hesa_id" do
+    let(:trainee) { create(:trainee, :for_export, hesa_id:) }
+
+    subject { described_class.new(trainee).hesa_id }
+
+    context "when the hesa_id is nil" do
+      let(:hesa_id) { nil }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when hesa_id does not start with a single quote" do
+      let(:hesa_id) { "1234567890123" }
+
+      it { is_expected.to eq("'1234567890123") }
+    end
+
+    context "when hesa_id already starts with a single quote" do
+      let(:hesa_id) { "'1234567890123" }
+
+      it { is_expected.to eq("'1234567890123") }
     end
   end
 end

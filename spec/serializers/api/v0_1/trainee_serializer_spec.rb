@@ -84,6 +84,7 @@ RSpec.describe Api::V01::TraineeSerializer do
         placements
         degrees
         disability1
+        application_id
       ].each do |field|
         expect(json.keys).to include(field)
       end

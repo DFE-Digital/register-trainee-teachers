@@ -19,8 +19,10 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
+    provider_led_postgrad_salaried: true
   funding: true
   lead_partners: true
+  itt_reform: true
 
 pagination:
   records_per_page: 30
