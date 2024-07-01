@@ -4,9 +4,10 @@ require "rails_helper"
 
 RSpec.describe CopyLeadSchoolToLeadPartnerService do
   describe "#call" do
-    let!(:lead_school_one) { create(:school, :lead) }
+    let!(:lead_school_one) { create(:school, :lead, :with_lead_trainees, :with_employing_trainees) }
     let!(:lead_school_two) { create(:school, :lead) }
     let!(:non_lead_school) { create(:school) }
+
     let!(:user_one) { create(:user) }
     let!(:user_two) { create(:user) }
 
@@ -21,6 +22,7 @@ RSpec.describe CopyLeadSchoolToLeadPartnerService do
       }.to change { LeadPartner.count }.by(1)
 
       expect(LeadPartner.exists?(school_id: lead_school_two.id)).to be true
+
       expect(LeadPartner.exists?(school_id: non_lead_school.id)).to be false
     end
 
@@ -76,6 +78,20 @@ RSpec.describe CopyLeadSchoolToLeadPartnerService do
       lead_partner = LeadPartner.find_by(school_id: lead_school_two.id)
       expect(lead_partner.users).to include(user_two)
       expect(lead_partner.users).not_to include(user_one)
+    end
+
+    it "associates all the trainees of a lead school to the lead partner" do
+      described_class.call
+
+      lead_partner = LeadPartner.find_by(school_id: lead_school_one.id)
+
+      lead_school_one.lead_school_trainees.each do |lead_school_trainee|
+        expect(lead_school_trainee.lead_partner).to eq(lead_partner)
+      end
+
+      lead_school_one.employing_school_trainees.each do |employing_trainee|
+        expect(employing_trainee.lead_partner_id).to be_nil
+      end
     end
   end
 end
