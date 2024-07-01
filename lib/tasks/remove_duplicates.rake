@@ -1,8 +1,10 @@
-require 'csv'
+# frozen_string_literal: true
+
+require "csv"
 
 namespace :trainee do
   desc "Remove duplicate trainees based on email address, given a CSV file with trainee ids"
-  task remove_duplicates: :environment do |t, args|
+  task remove_duplicates: :environment do |_t, args|
     file_path = args[:file_path]
 
     if file_path.nil? || !File.exist?(file_path)
@@ -11,19 +13,17 @@ namespace :trainee do
     end
 
     CSV.foreach(file_path, headers: true) do |row|
-      trainee_id = row['id']
+      trainee_id = row["id"]
       trainee = Trainee.find(trainee_id)
 
       if trainee.present?
         duplicates = Trainee.where(email: trainee.email).where.not(id: trainee.id)
 
         duplicates.each do |duplicate|
-          begin
-            duplicate.discard
-            puts "Deleted duplicate trainee with id #{duplicate.id} and email #{duplicate.email}"
-          rescue => e
-            puts "Failed to delete duplicate trainee with id #{duplicate.id}: #{e.message}"
-          end
+          duplicate.discard
+          puts("Deleted duplicate trainee with id #{duplicate.id} and email #{duplicate.email}")
+        rescue StandardError => e
+          puts("Failed to delete duplicate trainee with id #{duplicate.id}: #{e.message}")
         end
       else
         puts "Trainee with trainee_id #{trainee_id} not found."
