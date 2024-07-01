@@ -446,8 +446,8 @@ module Features
       @admin_remove_provider_access_page ||= PageObjects::SystemAdmin::Providers::RemoveAccessConfirmation.new
     end
 
-    def admin_remove_lead_school_access_page
-      @admin_remove_lead_school_access_page ||= PageObjects::SystemAdmin::LeadSchools::RemoveAccessConfirmation.new
+    def admin_remove_lead_partner_access_page
+      @admin_remove_lead_partner_access_page ||= PageObjects::SystemAdmin::Partners::RemoveAccessConfirmation.new
     end
 
     def admin_delete_trainee_reasons_page
