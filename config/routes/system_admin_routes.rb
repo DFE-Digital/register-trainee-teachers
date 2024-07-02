@@ -47,10 +47,6 @@ module SystemAdminRoutes
             resource :accessions, controller: "providers/accessions", only: %i[edit destroy]
           end
 
-          resources :lead_schools, controller: "user_lead_schools", only: %i[index new create], path: "lead-schools" do
-            resource :accessions, controller: "lead_schools/accessions", only: %i[edit destroy]
-          end
-
           resources :lead_partners, controller: "user_lead_partners", only: %i[index new create], path: "lead-partners" do
             resource :accessions, controller: "lead_partners/accessions", only: %i[edit destroy]
           end
@@ -60,19 +56,6 @@ module SystemAdminRoutes
 
         resources :validation_errors, only: %i[index]
         resources :schools, only: %i[index]
-
-        resources :lead_schools, path: "lead-schools", only: %i[index show] do
-          resources :users, controller: "lead_schools/users", only: %i[edit update]
-
-          get "/funding", to: "funding#show", as: :funding
-
-          namespace :funding do
-            scope "(:academic_year)" do
-              resource :payment_schedules, only: %i[show], path: "/payment-schedule", as: :payment_schedule
-              resource :trainee_summaries, only: %i[show], path: "/trainee-summary", as: :trainee_summary
-            end
-          end
-        end
 
         resources :lead_partners, path: "lead-partners", only: %i[index show] do
           resources :users, controller: "lead_partners/users", only: %i[edit update]

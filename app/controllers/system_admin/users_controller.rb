@@ -8,7 +8,7 @@ module SystemAdmin
     def index
       @users = filtered_users(
         policy_scope(
-          User.kept.includes(:providers, :lead_schools),
+          User.kept.includes(:providers, :lead_partners),
           policy_scope_class: UserPolicy,
         ).order_by_last_name.page(params[:page] || 1).per(UserSearch::DEFAULT_LIMIT),
       )

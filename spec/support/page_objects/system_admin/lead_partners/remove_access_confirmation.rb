@@ -2,9 +2,9 @@
 
 module PageObjects
   module SystemAdmin
-    module LeadSchools
+    module Partners
       class RemoveAccessConfirmation < PageObjects::Base
-        set_url "/system-admin/users/{user_id}/lead-schools/{provider_id}/accessions/edit"
+        set_url "/system-admin/users/{user_id}/partners/{partner_id}/accessions/edit"
 
         element :submit, '.govuk-button[type="submit"]'
       end
