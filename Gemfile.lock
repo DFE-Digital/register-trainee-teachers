@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: d2299142d986e46d1c86d415dc9b8b215f7245ab
-  tag: v1.12.7
+  revision: 4435202ce860756f6cfe6b3686799d9b4443d27a
+  branch: debug-logging-hidden-pii
   specs:
-    dfe-analytics (1.12.7)
+    dfe-analytics (1.12.6)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       request_store_rails (~> 2)
@@ -190,9 +190,8 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
-    csv (3.2.8)
-    csv-safe (3.3.1)
-      csv (~> 3.0)
+    csv (3.3.0)
+    csv-safe (3.2.1)
     cuprite (0.15.1)
       capybara (~> 3.0)
       ferrum (~> 0.15.0)
@@ -401,7 +400,8 @@ GEM
     minitest (5.24.1)
     msgpack (1.7.2)
     multi_json (1.15.0)
-    multi_xml (0.6.0)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
     multipart-post (2.4.1)
     mutex_m (0.2.0)
     net-http-digest_auth (1.4.1)
@@ -419,6 +419,8 @@ GEM
     nio4r (2.7.3)
     nkf (0.2.0)
     nokogiri (1.16.6-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.6-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
@@ -770,6 +772,7 @@ PLATFORMS
   arm64-darwin-21
   arm64-darwin-22
   arm64-darwin-23
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES

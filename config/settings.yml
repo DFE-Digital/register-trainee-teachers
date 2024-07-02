@@ -165,6 +165,8 @@ google:
     dataset: replaceme
     table_name: events
     entity_table_checks_enabled: true
+    send_data_to_big_query: false
+    azure_federated_auth: false
 
 sign_off_trainee_data_url: https://forms.office.com/e/kzBmEWKDGz
 sign_off_performance_profiles_url: https://forms.office.com/e/ATXmqJusud)
