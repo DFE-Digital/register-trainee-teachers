@@ -48,7 +48,7 @@ module BulkUpdate
 
         it "returns a RecommendationsUpload record and sanitised CSV::Table" do
           # cell containing potential spreadsheet formula is safely quoted to avoid execution
-          expect(form.csv["lead school"][-1][0]).to eql "'"
+          expect(form.csv["lead partner"][-1][0]).to eql "'"
           expect(form.valid?).to be true
           form.save
           expect(form.recommendations_upload).to be_a BulkUpdate::RecommendationsUpload
