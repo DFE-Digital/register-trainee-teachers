@@ -59,7 +59,11 @@ module Features
     end
 
     def and_the_course_date_fields_are_completed
+<<<<<<< Updated upstream
       course_details_page.set_date_fields(start_date, 1.day.from_now.strftime("%d/%m/%Y"))
+=======
+      course_details_page.set_date_fields(start_date, 1.months.from_now.strftime("%d/%m/%Y"))
+>>>>>>> Stashed changes
       course_details_page.set_date_fields(end_date, 1.year.from_now.strftime("%d/%m/%Y"))
     end
 
@@ -108,15 +112,17 @@ module Features
           AllocationSubjects::EARLY_YEARS_ITT,
         ],
       )
-      funding_method = FundingMethod.find_or_create_by!(training_route: funding.training_route,
+      [AcademicCycle.current, AcademicCycle.next].each do |academic_cycle|
+        funding_method = FundingMethod.find_or_create_by!(training_route: funding.training_route,
                                                         amount: funding.amount,
                                                         funding_type: FUNDING_TYPE_ENUMS[:grant],
-                                                        academic_cycle: AcademicCycle.current)
+                                                        academic_cycle: academic_cycle)
 
-      funding.allocation_subjects.map do |subject|
-        allocation_subject = AllocationSubject.find_or_create_by!(name: subject)
-        allocation_subject.subject_specialisms.create_or_find_by(name: CourseSubjects::EARLY_YEARS_TEACHING)
-        funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
+        funding.allocation_subjects.map do |subject|
+          allocation_subject = AllocationSubject.find_or_create_by!(name: subject)
+          allocation_subject.subject_specialisms.create_or_find_by(name: CourseSubjects::EARLY_YEARS_TEACHING)
+          funding_method.funding_method_subjects.find_or_create_by!(allocation_subject:)
+        end
       end
     end
 
