@@ -15,7 +15,7 @@ module Funding
     end
 
     def lead_school_name_column
-      "Lead School"
+      "Lead Partner"
     end
 
     def lead_school_urn_column

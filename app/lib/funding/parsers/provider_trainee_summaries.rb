@@ -15,7 +15,7 @@ module Funding
             "Academic Year",
             "Subject",
             "Route",
-            "Lead School",
+            "Lead Partner",
             "Lead School ID",
             "Cohort Level",
             "Bursary Amount",
