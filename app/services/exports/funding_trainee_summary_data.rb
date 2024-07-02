@@ -37,7 +37,7 @@ module Exports
             "Funding type" => funding_type_prefix(row) + trainee_summary_row_amount.payment_type,
             "Route" => row.route,
             "Course" => row.subject,
-            "Lead school" => row.lead_school_name,
+            "Lead partner" => row.lead_school_name,
             "Tier" => trainee_summary_row_amount.tier.present? ? "Tier #{trainee_summary_row_amount.tier}" : "Not applicable",
             "Number of trainees" => trainee_summary_row_amount.number_of_trainees,
             "Amount per trainee" => to_pounds(trainee_summary_row_amount.amount_in_pence),
