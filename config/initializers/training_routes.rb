@@ -41,6 +41,11 @@ TRAINING_ROUTE_TYPES = {
   ],
 }.freeze
 
+POSTGRAD_FUNDED = "Postgrad (fee funded)"
+POSTGRAD_SALARIED = "Postgrad (salaried)"
+UNDERGRAD_FUNDED = "Undergrad (fee funded)"
+OTHER = "Other"
+
 ROUTE_INITIATIVES_ENUMS = {
   transition_to_teach: "transition_to_teach",
   troops_to_teachers: "troops_to_teachers",
@@ -656,8 +661,3 @@ GRANTS_2023_TO_2024 = [
     ],
   ),
 ].freeze
-
-POSTGRAD_FUNDED = "Postgrad (fee funded)"
-POSTGRAD_SALARIED = "Postgrad (salaried)"
-UNDERGRAD_FUNDED = "Undergrad (fee funded)"
-OTHER = "Other"

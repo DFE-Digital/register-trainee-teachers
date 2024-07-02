@@ -23,11 +23,7 @@ module Trainees
     }.freeze
 
     INITIATIVES = {
-      "Future Teaching Scholars" => ROUTE_INITIATIVES_ENUMS[:future_teaching_scholars],
-      "Maths and Physics Chairs programme / Researchers in Schools" => ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools],
       "Now Teach" => ROUTE_INITIATIVES_ENUMS[:now_teach],
-      "Transition to Teach" => ROUTE_INITIATIVES_ENUMS[:transition_to_teach],
-      "Troops to Teachers" => ROUTE_INITIATIVES_ENUMS[:troops_to_teachers],
       "Not on a training initiative" => ROUTE_INITIATIVES_ENUMS[:no_initiative],
     }.freeze
 
