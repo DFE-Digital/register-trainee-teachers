@@ -8,7 +8,7 @@
 #  name        :string
 #  record_type :string           not null
 #  ukprn       :citext
-#  urn         :citext           not null
+#  urn         :citext
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  provider_id :bigint
