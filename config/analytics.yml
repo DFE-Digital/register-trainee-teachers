@@ -251,6 +251,7 @@ shared:
     - itt_end_date
     - itt_start_date
     - lead_school_id
+    - lead_partner_id
     - placement_detail
     - lead_school_not_applicable
     - outcome_date
