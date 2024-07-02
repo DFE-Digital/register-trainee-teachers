@@ -4,7 +4,7 @@ require "rails_helper"
 require "rake"
 
 RSpec.describe "trainee:remove_duplicates" do
-  before(:all) do
+  before do
     Rake.application.rake_require("tasks/remove_duplicates")
     Rake::Task.define_task(:environment)
   end
