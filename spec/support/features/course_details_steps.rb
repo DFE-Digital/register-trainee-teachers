@@ -59,7 +59,7 @@ module Features
     end
 
     def and_the_course_date_fields_are_completed
-      course_details_page.set_date_fields(start_date, 1.month.from_now.strftime("%d/%m/%Y"))
+      course_details_page.set_date_fields(start_date, 1.day.from_now.strftime("%d/%m/%Y"))
       course_details_page.set_date_fields(end_date, 1.year.from_now.strftime("%d/%m/%Y"))
     end
 
