@@ -110,9 +110,9 @@ module Features
       )
       [AcademicCycle.current, AcademicCycle.next].each do |academic_cycle|
         funding_method = FundingMethod.find_or_create_by!(training_route: funding.training_route,
-                                                        amount: funding.amount,
-                                                        funding_type: FUNDING_TYPE_ENUMS[:grant],
-                                                        academic_cycle: academic_cycle)
+                                                          amount: funding.amount,
+                                                          funding_type: FUNDING_TYPE_ENUMS[:grant],
+                                                          academic_cycle: academic_cycle)
 
         funding.allocation_subjects.map do |subject|
           allocation_subject = AllocationSubject.find_or_create_by!(name: subject)
