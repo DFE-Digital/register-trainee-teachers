@@ -39,6 +39,10 @@ class AcademicCycle < ApplicationRecord
     for_date(1.year.ago)
   end
 
+  def self.next
+    for_date(1.year.from_now)
+  end
+
   def total_trainees
     trainees_starting.or(trainees_ending).or(Trainee.where(start_cycle: { start_date: ...start_date })
     .where("end_cycle.start_date > ?", start_date))
