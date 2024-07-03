@@ -1,9 +1,8 @@
 <%= render TabNavigation::View.new(items: [
   { name: "Users", url: users_path },
-  { name: "Providers", url: providers_path },
+  { name: "Accredited providers", url: providers_path },
   { name: "Validation errors", url: validation_errors_path },
-  { name: "Schools", url: schools_path },
-  { name: "Lead schools", url: lead_schools_path },
+  { name: "All schools", url: schools_path },
   ({ name: "Lead partners", url: lead_partners_path } if FeatureService.enabled?("lead_partners")),
   { name: "Uploads", url: uploads_path },
   { name: "Dead jobs", url: dead_jobs_path },
