@@ -11,9 +11,14 @@ class CopyLeadSchoolToLeadPartnerService
       end
 
       # Ensure lead_partner_users are up-to-date
-      school.users.each do |user|
+      school.users.find_each do |user|
         LeadPartnerUser.find_or_create_by!(lead_partner:, user:)
       end
+
+      # Associate lead_school trainees with the lead_partner
+      school.lead_school_trainees.update_all(
+        lead_partner_id: lead_partner.id,
+      )
 
       # Remove any LeadPartnerUser records that no longer correspond to the school's users
       LeadPartnerUser.where(lead_partner:).where.not(user_id: school.user_ids).destroy_all

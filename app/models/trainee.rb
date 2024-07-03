@@ -136,8 +136,11 @@ class Trainee < ApplicationRecord
              inverse_of: :trainee,
              class_name: "Dttp::Trainee"
 
+  belongs_to :lead_partner, optional: true
+
   belongs_to :lead_school, optional: true, class_name: "School"
   belongs_to :employing_school, optional: true, class_name: "School"
+
   belongs_to :course_allocation_subject, optional: true, class_name: "AllocationSubject"
 
   belongs_to :published_course,
