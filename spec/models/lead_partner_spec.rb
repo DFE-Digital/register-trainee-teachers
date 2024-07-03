@@ -19,6 +19,14 @@ describe LeadPartner do
     end
   end
 
+  context "SCITT" do
+    subject(:lead_partner) { create(:lead_partner, :scitt) }
+
+    it "creates a SCITT - lead partner" do
+      expect(lead_partner).to be_scitt
+    end
+  end
+
   describe "validations" do
     context "for a lead school" do
       subject(:lead_partner) { build(:lead_partner, :lead_school) }
