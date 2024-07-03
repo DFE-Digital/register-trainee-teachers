@@ -1,12 +1,12 @@
 <%= render PageTitle::View.new(i18n_key: "providers.index") %>
 
-<h1 class="govuk-heading-l">Providers</h1>
+<h1 class="govuk-heading-l">Accredited providers</h1>
 
 <%= render "system_admin/tab_nav" %>
 
 <p class="govuk-body">
   <%= render GovukComponent::StartButtonComponent.new(
-  text: "Add a provider",
+  text: "Add an accredited provider",
   href: new_provider_path,
 ) %>
 </p>
@@ -23,8 +23,8 @@
     <%= f.govuk_text_field(
       :query,
       form_group: { class: "govuk-form-group app-js-only" },
-      label: { text: "Search for a provider", size: "s" },
-      hint: { text: "Search for a provider by its code, name or UKPRN" },
+      label: { text: "Search for an accredited provider", size: "s" },
+      hint: { text: "Search for an accredited provider by its code, name or UKPRN" },
       value: params[:query],
       "data-field" => "providers-autocomplete",
       width: "three-quarters",

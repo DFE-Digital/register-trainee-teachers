@@ -123,7 +123,7 @@ title: Register trainee teachers data sharing agreement
   collected about a provider (depending on route), these extend to:
 </p>
 <ul class='govuk-list govuk-list--bullet'>
-  <li>lead school ID</li>
+  <li>lead partner ID</li>
   <li>employing school ID</li>
   <li>unique reference number (URN)</li>
   <li>organisation name</li>
