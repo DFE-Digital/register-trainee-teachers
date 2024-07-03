@@ -1,6 +1,6 @@
 <%= render PageTitle::View.new(i18n_key: "lead_schools.index") %>
 
-<h1 class="govuk-heading-l">Lead schools</h1>
+<h1 class="govuk-heading-l">Lead partners</h1>
 
 <%= render "system_admin/tab_nav" %>
 
@@ -12,8 +12,8 @@
   <%= f.govuk_text_field(
     :query,
     form_group: { class: "govuk-form-group app-js-only" },
-    label: { text: "Search for a lead school", size: "s" },
-    hint: { text: "Search for a school by its unique reference number (URN), name or postcode" },
+    label: { text: "Search for a lead partner", size: "s" },
+    hint: { text: "Search for a lead partner by its unique reference number (URN), name or postcode" },
     value: params[:query],
     "data-field" => "schools-autocomplete",
     width: "three-quarters",
@@ -23,10 +23,10 @@
       data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_lead_schools_form[query]"></div>
 <% end %>
 
-<table class="govuk-table" summary="Lead schools list">
+<table class="govuk-table" summary="Lead partner list">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
-      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead school name</th>
+      <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Lead partner name</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">URN</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Town</th>
       <th scope="col" class="govuk-table__header govuk-!-width-one-half no-wrap">Postcode</th>

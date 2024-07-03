@@ -8,8 +8,8 @@
 
         <%= f.govuk_text_field(
           :query,
-          label: { text: "Add a lead school for #{@user.name}", size: "l", tag: "h1" },
-          hint: { text: "Search for a school by its unique reference number (URN), name or postcode" },
+          label: { text: "Add a lead partner for #{@user.name}", size: "l", tag: "h1" },
+          hint: { text: "Search for a partner by its unique reference number (URN), name or postcode" },
           value: params[:query],
           "data-field" => "schools-autocomplete",
           width: "three-quarters",
