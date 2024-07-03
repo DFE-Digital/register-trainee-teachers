@@ -42,12 +42,16 @@ DfE::Analytics.configure do |config|
   # environment variable.
   #
   # config.enable_analytics = proc { true }
-  config.enable_analytics = proc { FeatureService.enabled?("google.send_data_to_big_query") }
+  config.enable_analytics = proc { Settings.google.big_query.send_data_to_big_query }
 
   # The environment we’re running in. This value will be attached
   # to all events we send to BigQuery.
   #
   # config.environment = ENV.fetch('RAILS_ENV', 'development')
+
+  # Schedule a maintenance window during which no events are streamed to BigQuery
+  # in the format of '22-01-2024 19:30..22-01-2024 20:30' (UTC).
+  config.bigquery_maintenance_window = "16-05-2024 08:15..16-05-2024 09:15"
 
   # Whether to use azure workload identity federation for authentication
   # instead of the BigQuery API JSON Key. Note that this also will also
