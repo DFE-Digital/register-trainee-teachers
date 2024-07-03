@@ -21,7 +21,7 @@
 #  index_placements_on_slug_and_trainee_id                  (slug,trainee_id) UNIQUE
 #  index_placements_on_trainee_id                           (trainee_id)
 #  index_placements_on_trainee_id_and_address_and_postcode  (trainee_id,address,postcode) UNIQUE WHERE (school_id IS NULL)
-#  index_placements_on_trainee_id_and_urn                   (trainee_id,urn) UNIQUE WHERE (((urn IS NOT NULL) OR ((urn)::text <> ''::text)) AND (school_id IS NULL))
+#  index_placements_on_trainee_id_and_urn                   (trainee_id,urn) UNIQUE WHERE ((urn IS NOT NULL) AND ((urn)::text <> ''::text) AND (school_id IS NULL))
 #
 class Placement < ApplicationRecord
   include Sluggable
