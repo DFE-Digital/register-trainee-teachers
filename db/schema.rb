@@ -750,7 +750,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_234917) do
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["slug", "trainee_id"], name: "index_placements_on_slug_and_trainee_id", unique: true
     t.index ["trainee_id", "address", "postcode"], name: "index_placements_on_trainee_id_and_address_and_postcode", unique: true, where: "(school_id IS NULL)"
-    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "(school_id IS NULL)"
+    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "(((urn IS NOT NULL) OR ((urn)::text <> ''::text)) AND (school_id IS NULL))"
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
   end
 
