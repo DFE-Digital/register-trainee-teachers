@@ -4,6 +4,8 @@ module Trainees
   class BaseController < ApplicationController
     before_action :authorize_trainee
 
+    helper_method :missing_fields
+
   private
 
     def trainee
@@ -16,6 +18,10 @@ module Trainees
 
     def training_route
       TrainingRoutesForm.new(trainee).training_route
+    end
+
+    def missing_fields
+      @missing_fields ||= Submissions::MissingDataValidator.new(trainee:).missing_fields
     end
   end
 end
