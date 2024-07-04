@@ -3,7 +3,7 @@ volumes:
   dbdata:
 services:
   db:
-    image: postgres:11-alpine
+    image: postgres:13-alpine
     # To preserve data between runs of docker compose, we mount a folder from the host machine.
     volumes:
       - dbdata:/var/lib/postgresql/data
