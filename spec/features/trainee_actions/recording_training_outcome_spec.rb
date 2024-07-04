@@ -9,6 +9,13 @@ feature "Recording a training outcome" do
     given_i_am_authenticated
   end
 
+  scenario "trainee cannnot be recommended for award" do
+    given_a_trainee_exists(:trn_received, :without_degrees)
+    and_i_am_on_the_trainee_record_page
+    then_i_dont_see_the_recommend_for_qts_button
+    and_i_see_additional_details_have_to_be_provided("Degrees")
+  end
+
   scenario "submit empty form" do
     given_a_trainee_exists(:trn_received)
     and_i_am_on_the_trainee_record_page
@@ -141,6 +148,19 @@ feature "Recording a training outcome" do
 
   def then_the_outcome_date_is_updated
     expect(trainee.reload.outcome_date).not_to be_nil
+  end
+
+  def then_i_dont_see_the_recommend_for_qts_button
+    expect(record_page).not_to have_content("Recommend trainee for QTS")
+  end
+
+  def and_i_see_additional_details_have_to_be_provided(*details)
+    expect(record_page).to have_content("You need to give additional details before you can recommend the trainee for QTS")
+    expect(record_page).to have_content("You need to enter:")
+
+    details.each do |detail|
+      expect(record_page).to have_content(detail)
+    end
   end
 
   def when_i_cancel_my_changes

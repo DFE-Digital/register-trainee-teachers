@@ -11,6 +11,15 @@ describe TraineeAbout::View do
     )
   end
 
+  describe "#has_missing_fields" do
+    let(:trainee) { create(:trainee, :submitted_for_trn) }
+    let(:current_user) { create(:user, :system_admin) }
+
+    it "defaults to false" do
+      expect(described_class.new(trainee:, current_user:).has_missing_fields).to be(false)
+    end
+  end
+
   context "placements enabled", feature_placements: true do
     context "with an Assessment only trainee" do
       let(:trainee) { create(:trainee, :submitted_for_trn) }

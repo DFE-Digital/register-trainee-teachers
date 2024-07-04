@@ -75,12 +75,13 @@ class DegreesForm
 
     degrees.map do |degree_form|
       degree_form.valid?
+
       if include_degree_id
         { degree_form.slug => degree_form.errors.attribute_names }
       else
         degree_form.errors.attribute_names
       end
-    end
+    end + errors.attribute_names
   end
 
   def trainee_reset_degrees?

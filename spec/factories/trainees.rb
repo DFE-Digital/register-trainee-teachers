@@ -94,6 +94,12 @@ FactoryBot.define do
       nationalities { [build(:nationality, :french)] }
     end
 
+    trait :without_degrees do
+      before(:create) do |trainee|
+        trainee.degrees = []
+      end
+    end
+
     trait :incomplete do
       provider_trainee_id { nil }
       first_names { nil }

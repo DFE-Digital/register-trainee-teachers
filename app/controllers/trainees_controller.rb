@@ -8,6 +8,8 @@ class TraineesController < BaseTraineeController
   before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
   before_action :clear_page_tracker, only: :show
 
+  helper_method :missing_fields
+
   def show
     authorize(trainee)
     clear_form_stash(trainee)

@@ -26,7 +26,7 @@ module Submissions
   private
 
     def forms
-      validator_keys.map { |key| validator(key) }
+      @forms ||= validator_keys.map { |key| validator(key) }
     end
 
     def submission_ready

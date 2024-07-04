@@ -91,8 +91,16 @@ module Submissions
         end
       end
 
+      context "Trainee with missing degrees" do
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :trn_received) }
+
+        it "doesn't cause validation errors" do
+          expect(subject.valid?).to be(true)
+        end
+      end
+
       context "non draft trainee" do
-        let(:trainee) { Trainee.new(training_route: :provider_led_postgrad, state: :submitted_for_trn) }
+        let(:trainee) { Trainee.new(training_route: :provider_led_postgrad, state: :trn_received) }
 
         it "cause validation errors" do
           expect(subject.valid?).to be(false)
@@ -114,6 +122,7 @@ module Submissions
                                                             :provider_trainee_id,
                                                             :training_initiative,
                                                             :placements,
+                                                            :degree_ids,
                                                             :trainee_start_date)
         end
       end

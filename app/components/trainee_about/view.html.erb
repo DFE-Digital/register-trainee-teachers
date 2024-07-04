@@ -2,7 +2,7 @@
   <div class="record-outcome-action-bar">
     <%= render RecordActions::View.new(
       trainee,
-      has_missing_fields: @missing_fields&.excluding(Submissions::MissingDataValidator::OPTIONAL_FIELDS).present?,
+      has_missing_fields: has_missing_fields,
     ) %>
   </div>
 <% end %>

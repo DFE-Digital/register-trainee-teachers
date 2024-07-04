@@ -757,6 +757,7 @@ en:
         iqts_country: edit_trainee_iqts_country_path
         placement_detail: trainee_placements_confirm_path
         placements: trainee_placements_confirm_path
+        degree_ids: trainee_degrees_confirm_path
     missing_data_view:
       degrees_form: degree
       missing_fields_summary:
@@ -811,6 +812,7 @@ en:
         iqts_country: Country or territory of training
         placement_detail: Placement details
         placements: Placements
+        degree_ids: Degrees
     drafts:
       index:
         results:
