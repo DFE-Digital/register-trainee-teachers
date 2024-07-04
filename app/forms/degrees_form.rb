@@ -81,7 +81,7 @@ class DegreesForm
       else
         degree_form.errors.attribute_names
       end
-    end + errors.attribute_names
+    end
   end
 
   def trainee_reset_degrees?
