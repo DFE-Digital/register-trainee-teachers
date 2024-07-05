@@ -24,24 +24,26 @@ Disability.upsert_all(
   unique_by: :name,
 )
 
-# load Withdrawal reasons
+# Load Withdrawal reasons
 WithdrawalReason.upsert_all(WithdrawalReasons::SEED, unique_by: :name)
 
 allocation_subjects = AllocationSubject.upsert_all(
-  ALLOCATION_SUBJECT_SPECIALISM_MAPPING.keys.map do |allocation_subject|
+  AllocationSubjects.constants.map do |allocation_subject|
     {
-      name: allocation_subject,
+      name: AllocationSubjects.const_get(allocation_subject),
       created_at: Time.zone.now,
       updated_at: Time.zone.now,
     }
   end,
   unique_by: :name,
-  returning: %w[name id],
+  returning: %i[name id],
 )
 
 SubjectSpecialism.upsert_all(
   allocation_subjects.rows.flat_map do |allocation_subject_name, allocation_subject_id|
     ALLOCATION_SUBJECT_SPECIALISM_MAPPING[allocation_subject_name].map do |subject_specialism_name|
+      next if allocation_subject_name == AllocationSubjects::MODERN_LANGUAGES && subject_specialism_name.in?([CourseSubjects::FRENCH_LANGUAGE, CourseSubjects::GERMAN_LANGUAGE, CourseSubjects::SPANISH_LANGUAGE])
+
       {
         name: subject_specialism_name,
         hecos_code: DegreeSubjects::MAPPING.dig(CourseSubjects::MAPPING[subject_specialism_name], :hecos_code),
@@ -50,7 +52,7 @@ SubjectSpecialism.upsert_all(
         updated_at: Time.zone.now,
       }
     end
-  end,
+  end.compact,
   unique_by: :name,
 )
 
