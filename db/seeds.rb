@@ -83,6 +83,12 @@ SEED_FUNDING_RULES = [
     scholarships: SCHOLARSHIPS_2023_TO_2024,
     grants: GRANTS_2023_TO_2024,
   },
+  {
+    academic_cycle: AcademicCycle.for_year(2024),
+    bursaries: BURSARIES_2024_TO_2025,
+    scholarships: SCHOLARSHIPS_2024_TO_2025,
+    grants: GRANTS_2024_TO_2025,
+  },
 ].freeze
 
 SEED_FUNDING_RULES.each do |rule|
