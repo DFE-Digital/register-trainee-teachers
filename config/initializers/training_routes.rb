@@ -111,7 +111,7 @@ TRAINING_ROUTE_AWARD_TYPE = {
   provider_led_postgrad: QTS_AWARD_TYPE,
   provider_led_undergrad: QTS_AWARD_TYPE,
   school_direct_salaried: QTS_AWARD_TYPE,
-  provider_let_postgrad_salaried: QTS_AWARD_TYPE,
+  provider_led_postgrad_salaried: QTS_AWARD_TYPE,
   school_direct_tuition_fee: QTS_AWARD_TYPE,
   opt_in_undergrad: QTS_AWARD_TYPE,
   hpitt_postgrad: QTS_AWARD_TYPE,
@@ -121,6 +121,12 @@ TRAINING_ROUTE_AWARD_TYPE = {
 EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"
 
 EARLY_YEARS_TRAINING_ROUTES = TRAINING_ROUTES.select { |t| t.starts_with?(EARLY_YEARS_ROUTE_NAME_PREFIX) }
+
+# Training route groupings
+POSTGRAD_FUNDED = "Postgrad (fee funded)"
+POSTGRAD_SALARIED = "Postgrad (salaried)"
+UNDERGRAD_FUNDED = "Undergrad (fee funded)"
+OTHER = "Other"
 
 # 2021 funding rules (which also applied to 2022)
 
@@ -651,7 +657,218 @@ GRANTS_2023_TO_2024 = [
   ),
 ].freeze
 
-POSTGRAD_FUNDED = "Postgrad (fee funded)"
-POSTGRAD_SALARIED = "Postgrad (salaried)"
-UNDERGRAD_FUNDED = "Undergrad (fee funded)"
-OTHER = "Other"
+BURSARIES_2024_TO_2025 = [
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+    amount: 9_000,
+    allocation_subjects: [
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 28_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 25_000,
+    allocation_subjects: [
+      AllocationSubjects::BIOLOGY,
+      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
+      AllocationSubjects::GEOGRAPHY,
+      AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
+      AllocationSubjects::ANCIENT_LANGUAGES,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 10_000,
+    allocation_subjects: [
+      AllocationSubjects::ART_AND_DESIGN,
+      AllocationSubjects::ENGLISH,
+      AllocationSubjects::MUSIC,
+      AllocationSubjects::RELIGIOUS_EDUCATION,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+    amount: 9_000,
+    allocation_subjects: [
+      AllocationSubjects::ANCIENT_LANGUAGES,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+      AllocationSubjects::MODERN_LANGUAGES,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 28_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 25_000,
+    allocation_subjects: [
+      AllocationSubjects::ANCIENT_LANGUAGES,
+      AllocationSubjects::BIOLOGY,
+      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
+      AllocationSubjects::GEOGRAPHY,
+      AllocationSubjects::MODERN_LANGUAGES,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 10_000,
+    allocation_subjects: [
+      AllocationSubjects::ART_AND_DESIGN,
+      AllocationSubjects::ENGLISH,
+      AllocationSubjects::MUSIC,
+      AllocationSubjects::RELIGIOUS_EDUCATION,
+    ],
+  ),
+].freeze
+
+SCHOLARSHIPS_2024_TO_2025 = [
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 30_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 27_000,
+    allocation_subjects: [
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 30_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+    amount: 27_000,
+    allocation_subjects: [
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
+    ],
+  ),
+].freeze
+
+GRANTS_2024_TO_2025 = [
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+    amount: 7_000,
+    allocation_subjects: [
+      AllocationSubjects::EARLY_YEARS_ITT,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:early_years_salaried],
+    amount: 14_000,
+    allocation_subjects: [
+      AllocationSubjects::EARLY_YEARS_ITT,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 28_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 25_000,
+    allocation_subjects: [
+      AllocationSubjects::ANCIENT_LANGUAGES,
+      AllocationSubjects::BIOLOGY,
+      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
+      AllocationSubjects::GEOGRAPHY,
+      AllocationSubjects::MODERN_LANGUAGES,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 10_000,
+    allocation_subjects: [
+      AllocationSubjects::ART_AND_DESIGN,
+      AllocationSubjects::ENGLISH,
+      AllocationSubjects::MUSIC,
+      AllocationSubjects::RELIGIOUS_EDUCATION,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    amount: 28_000,
+    allocation_subjects: [
+      AllocationSubjects::CHEMISTRY,
+      AllocationSubjects::COMPUTING,
+      AllocationSubjects::MATHEMATICS,
+      AllocationSubjects::PHYSICS,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    amount: 25_000,
+    allocation_subjects: [
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    amount: 16_000,
+    allocation_subjects: [
+      AllocationSubjects::ANCIENT_LANGUAGES,
+      AllocationSubjects::BIOLOGY,
+      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
+      AllocationSubjects::GEOGRAPHY,
+      AllocationSubjects::MODERN_LANGUAGES,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+    amount: 1_000,
+    allocation_subjects: [
+      AllocationSubjects::ART_AND_DESIGN,
+      AllocationSubjects::ENGLISH,
+      AllocationSubjects::MUSIC,
+      AllocationSubjects::RELIGIOUS_EDUCATION,
+    ],
+  ),
+].freeze
