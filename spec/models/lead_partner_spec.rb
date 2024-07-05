@@ -41,8 +41,7 @@ describe LeadPartner do
     context "for an HEI" do
       subject(:lead_partner) { build(:lead_partner, :hei) }
 
-      it { is_expected.to validate_presence_of(:urn) }
-      it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }
+      it { is_expected.not_to validate_presence_of(:urn) }
       it { is_expected.to validate_presence_of(:record_type) }
 
       it { is_expected.to validate_presence_of(:ukprn) }
