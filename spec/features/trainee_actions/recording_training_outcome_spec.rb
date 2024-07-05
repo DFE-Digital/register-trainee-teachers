@@ -10,14 +10,14 @@ feature "Recording a training outcome" do
   end
 
   scenario "trainee cannnot be recommended for award" do
-    given_a_trainee_exists(:trn_received, :without_degrees)
+    given_a_trainee_exists(:trn_received, :with_valid_itt_start_date, :without_degrees)
     and_i_am_on_the_trainee_record_page
     then_i_dont_see_the_recommend_for_qts_button
     and_i_see_additional_details_have_to_be_provided("Degrees")
   end
 
   scenario "submit empty form" do
-    given_a_trainee_exists(:trn_received)
+    given_a_trainee_exists(:trn_received, :with_valid_itt_start_date)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     and_i_see_the_correct_title_for_non_early_years
@@ -26,7 +26,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "view correct title for early years" do
-    given_a_trainee_exists(:trn_received, :early_years_salaried)
+    given_a_trainee_exists(:trn_received, :early_years_salaried, :with_valid_itt_start_date)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     i_see_the_correct_title_for_early_years
@@ -45,7 +45,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "choosing yesterday records the outcome", skip: skip_test_due_to_first_day_of_current_academic_year? do
-    given_a_trainee_exists(:trn_received)
+    given_a_trainee_exists(:trn_received, :with_valid_itt_start_date)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     when_i_choose_yesterday
@@ -58,7 +58,7 @@ feature "Recording a training outcome" do
 
   context "choosing 'On another day'" do
     before do
-      given_a_trainee_exists(:trn_received)
+      given_a_trainee_exists(:trn_received, :with_valid_itt_start_date)
       and_i_am_on_the_trainee_record_page
       and_i_click_on_record_training_outcome
       when_i_choose("On another day")
@@ -86,7 +86,7 @@ feature "Recording a training outcome" do
   end
 
   scenario "cancelling changes" do
-    given_a_trainee_exists(:trn_received)
+    given_a_trainee_exists(:trn_received, :with_valid_itt_start_date)
     and_i_am_on_the_trainee_record_page
     and_i_click_on_record_training_outcome
     when_i_choose_today
