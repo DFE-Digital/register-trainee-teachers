@@ -3,12 +3,11 @@
 class TraineesController < BaseTraineeController
   include TraineeHelper
   include ActivityTracker
+  include MissingFieldsCheckable
 
   before_action :redirect_to_not_found, if: -> { trainee.discarded? }, only: :show
   before_action :ensure_trainee_is_not_draft!, :load_missing_data_view, only: :show
   before_action :clear_page_tracker, only: :show
-
-  helper_method :missing_fields
 
   def show
     authorize(trainee)
@@ -98,10 +97,6 @@ private
     return unless trainee_editable?
 
     @missing_data_view = MissingDataBannerView.new(missing_fields, trainee)
-  end
-
-  def missing_fields
-    @missing_fields ||= Submissions::MissingDataValidator.new(trainee:).missing_fields
   end
 
   def trainee
