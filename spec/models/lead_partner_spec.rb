@@ -19,6 +19,14 @@ describe LeadPartner do
     end
   end
 
+  context "SCITT" do
+    subject(:lead_partner) { create(:lead_partner, :scitt) }
+
+    it "creates a SCITT - lead partner" do
+      expect(lead_partner).to be_scitt
+    end
+  end
+
   describe "validations" do
     context "for a lead school" do
       subject(:lead_partner) { build(:lead_partner, :lead_school) }
@@ -33,8 +41,7 @@ describe LeadPartner do
     context "for an HEI" do
       subject(:lead_partner) { build(:lead_partner, :hei) }
 
-      it { is_expected.to validate_presence_of(:urn) }
-      it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }
+      it { is_expected.not_to validate_presence_of(:urn) }
       it { is_expected.to validate_presence_of(:record_type) }
 
       it { is_expected.to validate_presence_of(:ukprn) }
@@ -42,5 +49,14 @@ describe LeadPartner do
 
       it { is_expected.to validate_presence_of(:provider) }
     end
+  end
+
+  describe "associations" do
+    it { is_expected.to have_many(:lead_partner_users) }
+    it { is_expected.to have_many(:users).through(:lead_partner_users) }
+    it { is_expected.to have_many(:trainees) }
+
+    it { is_expected.to belong_to(:school).optional }
+    it { is_expected.to belong_to(:provider).optional }
   end
 end

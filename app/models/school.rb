@@ -34,6 +34,9 @@ class School < ApplicationRecord
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
 
+  has_many :lead_school_trainees, class_name: "Trainee", foreign_key: :lead_school_id, inverse_of: :lead_school
+  has_many :employing_school_trainees, class_name: "Trainee", foreign_key: :employing_school_id, inverse_of: :employing_school
+
   pg_search_scope :search,
                   against: %i[urn name town postcode],
                   using: {

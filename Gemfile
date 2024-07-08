@@ -31,7 +31,7 @@ gem "foreman"
 gem "canonical-rails"
 
 # For determining file encoding
-gem "charlock_holmes"
+gem "charlock_holmes", "0.7.8"
 
 # Soft delete records
 gem "discard", "~> 1.3"
@@ -44,7 +44,7 @@ gem "stackprof"
 
 # Logging
 gem "amazing_print", "~> 1.6"
-gem "rails_semantic_logger", "4.15.0"
+gem "rails_semantic_logger", "4.17.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -121,7 +121,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.4.0"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.7"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.12.8"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 

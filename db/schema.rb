@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_01_234917) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_03_110939) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -750,7 +750,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_234917) do
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["slug", "trainee_id"], name: "index_placements_on_slug_and_trainee_id", unique: true
     t.index ["trainee_id", "address", "postcode"], name: "index_placements_on_trainee_id_and_address_and_postcode", unique: true, where: "(school_id IS NULL)"
-    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "(school_id IS NULL)"
+    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "((urn IS NOT NULL) AND ((urn)::text <> ''::text) AND (school_id IS NULL))"
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
   end
 
@@ -921,6 +921,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_234917) do
     t.integer "placement_detail"
     t.integer "application_choice_id"
     t.text "provider_trainee_id"
+    t.bigint "lead_partner_id"
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"
@@ -934,6 +935,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_234917) do
     t.index ["ethnic_group"], name: "index_trainees_on_ethnic_group"
     t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
     t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
+    t.index ["lead_partner_id"], name: "index_trainees_on_lead_partner_id"
     t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
     t.index ["placement_detail"], name: "index_trainees_on_placement_detail"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
@@ -1028,6 +1030,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_01_234917) do
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
   add_foreign_key "trainees", "apply_applications"
   add_foreign_key "trainees", "hesa_trn_submissions"
+  add_foreign_key "trainees", "lead_partners"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
   add_foreign_key "trainees", "schools", column: "lead_school_id"
