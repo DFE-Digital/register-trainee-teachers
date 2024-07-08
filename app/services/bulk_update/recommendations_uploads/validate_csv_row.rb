@@ -102,7 +102,7 @@ module BulkUpdate
       def hesa_id
         return unless column_exists?(Reports::BulkRecommendReport::HESA_ID)
 
-        @messages << error_message(:hesa_id) if trainee.hesa_id != row.sanitised_hesa_id
+        @messages << error_message(:hesa_id) if trainee.sanitised_hesa_id != row.sanitised_hesa_id
       end
 
       def provider_trainee_id
