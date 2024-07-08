@@ -290,3 +290,41 @@ features:
 # set the ENV, the pods will automatically restart once the process has gone through
 kubectl -n bat-production set env deployment/production SETTINGS__FEATURES__GOOGLE__SEND_DATA_TO_BIG_QUERY=false
 ```
+
+### Removing Duplicate Trainees
+The `trainee:remove_duplicates` task is used to remove duplicate trainees from the database based on email address. The task requires a CSV file with trainee IDs as input.
+
+Here's how to use it:
+
+**Syntax:**
+
+```
+rake trainee:remove_duplicates <path_to_csv_file>
+```
+
+**Parameters:**
+
+- `path_to_csv_file`: This should be replaced with the path to the CSV file that contains the trainee IDs. The CSV file should contain a header row with an "trainee_id" and an "email" field. See below:
+
+```csv
+trainee_id,email
+123,duplicate@example.com
+456,duplicate@example.com
+789,duplicate@example.com
+890,unique@example.com
+```
+
+**Example:**
+
+Suppose you have a CSV file named `trainees.csv` in the root directory of your project. To run the Rake task, you would use:
+
+```
+rake trainee:remove_duplicates trainees.csv
+```
+
+This command will:
+1. Open the `trainees.csv` file.
+2. Run through each row, using the "id" field to find the corresponding trainee in the database.
+3. If found, it will find and discard any other trainee that has the same email address.
+4. If not found, it will print a message stating that the trainee was not found.
+5. Once the task finishes running through all rows in the CSV, it will print "Task completed."
