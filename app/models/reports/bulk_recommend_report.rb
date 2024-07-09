@@ -16,7 +16,7 @@ module Reports
     # additional headers
     FIRST_NAME  = "First names"
     LAST_NAME   = "Last names"
-    LEAD_SCHOOL = "Lead partner"
+    LEAD_SCHOOL = "Lead school"
     QTS_OR_EYTS = "QTS or EYTS"
     ROUTE       = "Route"
     PHASE       = "Phase"
