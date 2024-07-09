@@ -405,6 +405,10 @@ module Reports
       trainee.hesa_id&.starts_with?("'") ? trainee.hesa_id : trainee.hesa_id&.prepend("'") # prevent Excel from converting it to scientific notation
     end
 
+    def sanitised_hesa_id
+      trainee.hesa_id&.gsub(/[^\d]/, "")
+    end
+
   private
 
     def placements
