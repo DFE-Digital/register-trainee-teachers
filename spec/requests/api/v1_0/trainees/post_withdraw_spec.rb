@@ -9,11 +9,11 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
     let!(:provider) { auth_token.provider }
 
     context "non existant trainee" do
-      let(:slug) { "non-existant" }
+      let(:trainee_id) { "non-existant" }
 
       it "returns status 404 with a valid JSON response" do
         post(
-          "/api/v1.0/trainees/#{slug}/withdraw",
+          "/api/v1.0/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
         )
 
@@ -33,23 +33,23 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
         }
       end
-      let(:slug) { trainee.slug }
+      let(:trainee_id) { trainee.slug }
 
       it "returns status 200 with a valid JSON response" do
         post(
-          "/api/v1.0/trainees/#{slug}/withdraw",
+          "/api/v1.0/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: params.to_json,
         )
         expect(response).to have_http_status(:ok)
 
-        expect(response.parsed_body.dig(:data, :trainee_id)).to eql(slug)
+        expect(response.parsed_body.dig(:data, :trainee_id)).to eql(trainee_id)
       end
 
       it "change the trainee" do
         expect {
           post(
-            "/api/v1.0/trainees/#{slug}/withdraw",
+            "/api/v1.0/trainees/#{trainee_id}/withdraw",
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: params.to_json,
           )
@@ -62,7 +62,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         expect(Trainees::Withdraw).to receive(:call).with(trainee:).at_least(:once)
 
         post(
-          "/api/v1.0/trainees/#{slug}/withdraw",
+          "/api/v1.0/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: params.to_json,
         )
@@ -72,7 +72,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         expect(Api::V10::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
         post(
-          "/api/v1.0/trainees/#{slug}/withdraw",
+          "/api/v1.0/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: params.to_json,
         )
@@ -83,7 +83,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
         it "returns status 422 with a valid JSON response" do
           post(
-            "/api/v1.0/trainees/#{slug}/withdraw",
+            "/api/v1.0/trainees/#{trainee_id}/withdraw",
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: params.to_json,
           )
@@ -98,7 +98,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
         it "did not change the trainee" do
           expect {
-            post "/api/v1.0/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
+            post "/api/v1.0/trainees/#{trainee_id}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
           }.not_to change(trainee, :withdraw_date)
         end
       end
@@ -106,11 +106,11 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
     context "with a non-withdrawable trainee" do
       let(:trainee) { create(:trainee, :itt_start_date_in_the_future, provider:) }
-      let(:slug) { trainee.slug }
+      let(:trainee_id) { trainee.slug }
 
       it "returns status 422 with a valid JSON response" do
         post(
-          "/api/v1.0/trainees/#{slug}/withdraw",
+          "/api/v1.0/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
         )
         expect(response).to have_http_status(:unprocessable_entity)
@@ -119,7 +119,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
       it "did not change the trainee" do
         expect {
-          post "/api/v1.0/trainees/#{slug}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
+          post "/api/v1.0/trainees/#{trainee_id}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
         }.not_to change(trainee, :withdraw_date)
       end
     end

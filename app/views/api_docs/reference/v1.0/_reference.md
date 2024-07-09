@@ -1220,21 +1220,65 @@ Withdraw a trainee.
 
 #### Request
 
-`POST /api/v1.0/trainees/{trainee_id}/withdraw?reasons[]={reasons}&withdraw_date={withdraw_date}&withdraw_reasons_details={withdraw_reasons_details}&withdraw_reasons_dfe_details={withdraw_reasons_dfe_details}`
-
-There is no request body for this endpoint.
-
-Note that multiple values for the reasons parameter can be provided by repeating the parameter in the query string, e.g. `reasons[]=personal_reasons&reasons[]=got_a_job`
+`POST /api/v1.0/trainees/{trainee_id}/withdraw`
 
 #### Parameters
 
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
-| **reasons** | query | array of strings | true | The reason(s) for the withdrawal |
-| **withdraw_date** | query | string | true | The date and time of the withdrawal in ISO 8601 format |
-| **withdraw_reasons_details** | query | string | false | Details about why the trainee withdrew |
-| **withdraw_reasons_dfe_details** | query | string | false | What the Department of Education could have done to prevent the trainee withdrawing |
+
+#### Request body
+
+Recommendation details
+
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>reasons</code></dt>
+    <dd class="govuk-summary-list__value">
+        <p class="govuk-body">
+          array of strings, required
+        </p>
+        <p class="govuk-body">
+          The reason(s) for the withdrawal
+        </p>
+    </dd>
+</div>
+
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdraw_date</code></dt>
+    <dd class="govuk-summary-list__value">
+        <p class="govuk-body">
+          string, required
+        </p>
+        <p class="govuk-body">
+          The date and time of the withdrawal in ISO 8601 format
+        </p>
+    </dd>
+</div>
+
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdraw_reasons_details</code></dt>
+    <dd class="govuk-summary-list__value">
+        <p class="govuk-body">
+          string, optional
+        </p>
+        <p class="govuk-body">
+          Details about why the trainee withdrew
+        </p>
+    </dd>
+</div>
+
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>withdraw_reasons_dfe_details</code></dt>
+    <dd class="govuk-summary-list__value">
+        <p class="govuk-body">
+          string, optional
+        </p>
+        <p class="govuk-body">
+          What the Department of Education could have done to prevent the trainee withdrawing
+        </p>
+    </dd>
+</div>
 
 #### Possible responses
 
