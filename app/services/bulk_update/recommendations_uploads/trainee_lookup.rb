@@ -7,7 +7,18 @@ module BulkUpdate
 
       def initialize(rows, provider)
         @rows = rows
-        @scope = provider.trainees.where.not(state: :draft).strict_loading.includes(:lead_school, :provider)
+        @scope = provider
+          .trainees
+          .where.not(state: :draft)
+          .includes(
+            :lead_school,
+            :provider,
+            :degrees,
+            :apply_application,
+            :course_allocation_subject,
+            :start_academic_cycle,
+            :disabilities,
+          )
       end
 
       def [](key)

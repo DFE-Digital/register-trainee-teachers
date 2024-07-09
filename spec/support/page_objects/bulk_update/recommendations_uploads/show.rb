@@ -7,6 +7,7 @@ module PageObjects
 
       element :cancel_link, ".govuk-link", text: "Cancel bulk recommending trainees"
       element :check_button, ".govuk-button", text: "Check who you’ll recommend"
+      element :recommend_button, ".govuk-button", text: "Recommend"
       element :review_errors_button, ".govuk-button", text: "Review errors"
     end
   end
