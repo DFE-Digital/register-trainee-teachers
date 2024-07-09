@@ -16,7 +16,9 @@ module Submissions
     missing_data_validator :placements, form: "PlacementsForm", if: :requires_placements?
 
     def missing_fields
-      forms.map(&:missing_fields).flatten.uniq
+      forms.map(&:missing_fields).tap do |fields|
+        fields << degrees_form.errors.attribute_names if degrees_form.present?
+      end.flatten.uniq
     end
 
     def course_already_started?
@@ -26,7 +28,11 @@ module Submissions
   private
 
     def forms
-      validator_keys.map { |key| validator(key) }
+      @forms ||= validator_keys.map { |key| validator(key) }
+    end
+
+    def degrees_form
+      @degrees_form ||= forms.detect { |form| form.is_a?(DegreesForm) }
     end
 
     def submission_ready

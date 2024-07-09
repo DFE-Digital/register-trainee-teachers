@@ -47,7 +47,7 @@
     <% end %>
   </ul>
   <div class="govuk-tabs__panel" id="about">
-    <%= render TraineeAbout::View.new(trainee: @trainee, current_user: current_user) %>
+    <%= render TraineeAbout::View.new(trainee: @trainee, current_user: current_user, has_missing_fields: missing_fields&.excluding(Submissions::MissingDataValidator::OPTIONAL_FIELDS).present?) %>
   </div>
   <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="personal-details">
     <%= render TraineePersonalDetails::View.new(trainee: @trainee, current_user: current_user) %>

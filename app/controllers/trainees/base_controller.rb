@@ -2,6 +2,8 @@
 
 module Trainees
   class BaseController < ApplicationController
+    include MissingFieldsCheckable
+
     before_action :authorize_trainee
 
   private

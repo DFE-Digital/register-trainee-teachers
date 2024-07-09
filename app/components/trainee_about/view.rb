@@ -4,11 +4,12 @@ module TraineeAbout
   class View < ViewComponent::Base
     include Pundit::Authorization
 
-    attr_reader :trainee, :current_user
+    attr_reader :trainee, :current_user, :has_missing_fields
 
-    def initialize(trainee:, current_user:)
-      @trainee = trainee
-      @current_user = current_user
+    def initialize(trainee:, current_user:, has_missing_fields: false)
+      @trainee            = trainee
+      @current_user       = current_user
+      @has_missing_fields = has_missing_fields
     end
 
     def display_record_actions?

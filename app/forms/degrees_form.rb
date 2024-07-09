@@ -75,6 +75,7 @@ class DegreesForm
 
     degrees.map do |degree_form|
       degree_form.valid?
+
       if include_degree_id
         { degree_form.slug => degree_form.errors.attribute_names }
       else
