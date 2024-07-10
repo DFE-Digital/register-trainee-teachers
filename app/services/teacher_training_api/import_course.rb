@@ -98,9 +98,9 @@ module TeacherTrainingApi
         higher_education_programme: :provider_led_postgrad,
         school_direct_training_programme: :provider_led_postgrad,
         scitt_programme: :provider_led_postgrad,
-        higher_education_salaried_programme: :provider_led_postgrad_salaried,
-        school_direct_salaried_training_programme: :provider_led_postgrad_salaried,
-        scitt_salaried_programme: :provider_led_postgrad_salaried,
+        higher_education_salaried_programme: :school_direct_salaried,
+        school_direct_salaried_training_programme: :school_direct_salaried,
+        scitt_salaried_programme: :school_direct_salaried,
         pg_teaching_apprenticeship: :pg_teaching_apprenticeship,
       }
     end
