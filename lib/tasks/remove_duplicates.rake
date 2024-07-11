@@ -4,7 +4,7 @@ require "csv"
 
 namespace :trainee do
   desc "Remove duplicate trainees based on email address, given a CSV file with trainee ids"
-  task remove_duplicates: :environment do |_t, args|
+  task :remove_duplicates, [:file_path] => [:environment] do |_t, args|
     file_path = args[:file_path]
 
     if file_path.nil? || !File.exist?(file_path)
