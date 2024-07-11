@@ -3,6 +3,7 @@
 module Api
   class BaseController < ActionController::API
     include Api::ErrorResponse
+    include ApiMonitorable
 
     before_action :check_feature_flag!, :authenticate!
     around_action :track_request_metrics
@@ -79,46 +80,4 @@ module Api
         @auth_token = AuthenticationToken.authenticate(bearer_token)
       end
     end
-
-    def track_request_metrics
-      start = Time.zone.now
-      track_total_requests
-      begin
-        yield
-      rescue => ex
-        track_unsuccessful_requests(ex)
-        raise ex
-      ensure
-        track_request_duration(start:)
-        track_response_size
-      end
-    end
-
-    def track_total_requests
-      Yabeda.register_api.requests_total.increment(tracking_labels)
-    end
-
-    def track_unsuccessful_requests(ex)
-      labels = tracking_labels.merge(error_code: ex.class.name, error_message: ex.message[0, 100])
-      Yabeda.register_api.unsuccessful_requests_total.increment(labels)
-    end
-
-    def track_request_duration(start:)
-      duration = Time.zone.now - start
-      Yabeda.register_api.request_duration.measure(tracking_labels, duration)
-    end
-
-    def track_response_size
-      response_size = response.body.bytesize
-      Yabeda.register_api.response_size.measure(tracking_labels, response_size)
-    end
-
-    def tracking_labels
-      @tracking_labels ||= {
-        method: request.method,
-        controller: controller_name,
-        action: action_name
-      }
-    end
-  end
 end
