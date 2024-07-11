@@ -106,7 +106,7 @@ module TeacherTrainingApi
     end
 
     def routes
-      if Settings.current_recruitment_cycle_year.to_i < 2024
+      if Settings.current_recruitment_cycle_year < 2024
         before_2024_routes
       else
         for_2024_routes
