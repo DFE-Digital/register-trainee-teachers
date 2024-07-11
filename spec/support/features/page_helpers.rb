@@ -502,6 +502,10 @@ module Features
       @recommendations_upload_cancel_page ||= PageObjects::RecommendationsUploads::Cancel.new
     end
 
+    def recommendations_upload_confirmation_page
+      @recommendations_upload_confirmation_page ||= PageObjects::RecommendationsUploads::Confirmation.new
+    end
+
     def hesa_editing_enabled_page
       @hesa_editing_enabled_page ||= PageObjects::Trainees::Hesa::EnableEdits::Show.new
     end
