@@ -17,12 +17,11 @@ feature "provider-led (postgrad) salaried end-to-end journey" do
 
     scenario(
       "submit for TRN",
-      "feature_routes.provider_led_postgrad_salaried": true,
       feature_itt_reform: true,
       feature_publish_course_details: true,
     ) do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
-      given_i_have_created_a_provider_led_salaried_trainee
+      given_i_have_created_a_school_direct_salaried_trainee
       and_the_personal_details_is_complete
       and_the_contact_details_is_complete
       and_the_diversity_information_is_complete

@@ -1212,10 +1212,10 @@ en:
         hints:
           provider_led_postgrad: &provider_led_hint Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
           provider_led_undergrad: *provider_led_hint
-        lede: Provider led training is run by higher education institues (HEIs) or school centred initial teacher training (SCITTs) providers.
+        lede: Primary and secondary training is run by higher education institutions (HEIs) or school centred initial teacher training (SCITTs) providers.
         training_course_routes:
-          postgrad_fee_funded: Post-grad (fee funded)
-          postgrad_salaried: Post-grad (salaried)
+          postgrad_fee_funded: Postgrad (fee funded)
+          postgrad_salaried: Postgrad (salaried)
           undergrad_fee_funded: Undergrad (fee funded)
           other: Other
     start_statuses:
@@ -1309,10 +1309,11 @@ en:
             early_years_salaried: Early years
             early_years_undergrad: Early years
             iqts: International qualified teacher status (iQTS)
-            provider_led_postgrad: Provider-led
+            provider_led_postgrad: &provider_led_postgrad Primary and secondary
             provider_led_postgrad_salaried: Provider-led
-            provider_led_undergrad: Provider-led
+            provider_led_undergrad: *provider_led_postgrad
             pg_teaching_apprenticeship: Teaching apprenticeship
+            school_direct_salaried: School direct
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
             provider_led_postgrad_salaried: Provider-led
