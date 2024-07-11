@@ -90,6 +90,7 @@ module Api
         raise ex
       ensure
         track_request_duration(start:)
+        track_response_size
       end
     end
 
@@ -104,6 +105,11 @@ module Api
     def track_request_duration(start:)
       duration = Time.zone.now - start
       Yabeda.register_api.request_duration.measure(tracking_labels, duration)
+    end
+
+    def track_response_size
+      response_size = response.body.bytesize
+      Yabeda.register_api.response_size.measure(tracking_labels, response_size)
     end
 
     def tracking_labels
