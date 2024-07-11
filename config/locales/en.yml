@@ -1214,8 +1214,8 @@ en:
           provider_led_undergrad: *provider_led_hint
         lede: Primary and secondary training is run by higher education institutions (HEIs) or school centred initial teacher training (SCITTs) providers.
         training_course_routes:
-          postgrad_fee_funded: Post-grad (fee funded)
-          postgrad_salaried: Post-grad (salaried)
+          postgrad_fee_funded: Postgrad (fee funded)
+          postgrad_salaried: Postgrad (salaried)
           undergrad_fee_funded: Undergrad (fee funded)
           other: Other
     start_statuses:
