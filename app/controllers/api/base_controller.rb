@@ -86,7 +86,7 @@ module Api
       begin
         yield
       rescue => ex
-        track_unsuccessful_requests
+        track_unsuccessful_requests(ex)
         raise ex
       ensure
         track_request_duration(start:)
@@ -98,8 +98,9 @@ module Api
       Yabeda.register_api.requests_total.increment(tracking_labels)
     end
 
-    def track_unsuccessful_requests
-      Yabeda.register_api.unsuccessful_requests_total.increment(tracking_labels)
+    def track_unsuccessful_requests(ex)
+      labels = tracking_labels.merge(error_code: ex.class.name, error_message: ex.message[0, 100])
+      Yabeda.register_api.unsuccessful_requests_total.increment(labels)
     end
 
     def track_request_duration(start:)
