@@ -6,7 +6,6 @@ module Api
     include ApiMonitorable
 
     before_action :check_feature_flag!, :authenticate!
-    around_action :track_request_metrics
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       render_not_found(message: "#{e.model}(s) not found")
@@ -80,4 +79,5 @@ module Api
         @auth_token = AuthenticationToken.authenticate(bearer_token)
       end
     end
+  end
 end
