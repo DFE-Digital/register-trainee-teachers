@@ -1212,7 +1212,7 @@ en:
         hints:
           provider_led_postgrad: &provider_led_hint Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
           provider_led_undergrad: *provider_led_hint
-        lede: Primary and secondary training is run by higher education institutions (HEIS) or school centred initial teacher training (SCITTs) providers.
+        lede: Primary and secondary training is run by higher education institutions (HEIs) or school centred initial teacher training (SCITTs) providers.
         training_course_routes:
           postgrad_fee_funded: Post-grad (fee funded)
           postgrad_salaried: Post-grad (salaried)
