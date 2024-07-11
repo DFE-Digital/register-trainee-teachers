@@ -41,5 +41,8 @@ features:
     sync_trn_data: false
   register_api: false
 
+current_recruitment_cycle_year: 2024
+current_default_course_year: 2024
+
 environment:
   name: productiondata
