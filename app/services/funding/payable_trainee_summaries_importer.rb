@@ -26,7 +26,7 @@ module Funding
             row = summary.rows.create(
               subject: row_hash["Subject"],
               route: row_hash[route_column],
-              lead_school_name: row_hash[lead_partner_name_column],
+              lead_school_name: row_hash[lead_school_name_column],
               lead_school_urn: row_hash[lead_school_urn_column],
               cohort_level: row_hash["Cohort Level"],
             )
@@ -63,8 +63,8 @@ module Funding
       raise(NotImplementedException("implement a route_column method"))
     end
 
-    def lead_partner_name_column
-      raise(NotImplementedException("implement a lead_partner_name_column method"))
+    def lead_school_name_column
+      raise(NotImplementedException("implement a lead_school_name_column method"))
     end
 
     def lead_school_urn_column

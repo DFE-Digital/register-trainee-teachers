@@ -14,7 +14,7 @@ module Funding
       "Description"
     end
 
-    def lead_partner_name_column
+    def lead_school_name_column
       "Lead school name"
     end
 
