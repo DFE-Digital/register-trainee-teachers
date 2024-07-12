@@ -202,7 +202,7 @@ module Funding
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
               "Route" => "Provider-led",
-              "Lead Partner" => "Lead School 3",
+              "Lead School" => "Lead School 3",
               "Lead School ID" => "0003",
               "Cohort Level" => "PG",
               "Bursary Amount" => "0",
