@@ -966,7 +966,6 @@ en:
           school_direct_salaried: school direct salaried
           school_direct_tuition_fee: school direct tuition fee
           pg_teaching_apprenticeship: teaching apprenticeship postgrad
-          provider_led_postgrad_salaried: provider-led postgrad salaried
       funding:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
@@ -1301,7 +1300,6 @@ en:
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergrad)
-          provider_led_postgrad_salaried: Provider-led (postgrad salaried)
           itt:
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
@@ -1310,13 +1308,11 @@ en:
             early_years_undergrad: Early years
             iqts: International qualified teacher status (iQTS)
             provider_led_postgrad: &provider_led_postgrad Primary and secondary
-            provider_led_postgrad_salaried: Provider-led
             provider_led_undergrad: *provider_led_postgrad
             pg_teaching_apprenticeship: Teaching apprenticeship
             school_direct_salaried: School direct
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
-            provider_led_postgrad_salaried: Provider-led
           type:
 
         states:

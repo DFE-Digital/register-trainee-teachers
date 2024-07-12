@@ -9,7 +9,6 @@ TRAINING_ROUTE_ENUMS = {
   iqts: "iqts",
   opt_in_undergrad: "opt_in_undergrad",
   provider_led_postgrad: "provider_led_postgrad",
-  provider_led_postgrad_salaried: "provider_led_postgrad_salaried",
   provider_led_undergrad: "provider_led_undergrad",
   school_direct_tuition_fee: "school_direct_tuition_fee",
   school_direct_salaried: "school_direct_salaried",
@@ -23,7 +22,6 @@ TRAINING_ROUTE_TYPES = {
     TRAINING_ROUTE_ENUMS[:early_years_postgrad],
   ],
   postgrad_salaried: [
-    TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried],
     TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
     TRAINING_ROUTE_ENUMS[:early_years_salaried],
     TRAINING_ROUTE_ENUMS[:hpitt_postgrad],
@@ -65,7 +63,6 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
   TRAINING_ROUTE_ENUMS[:iqts] => 12,
-  TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried] => 13,
 }.freeze
 
 ROUTE_INITIATIVES = {
@@ -81,11 +78,9 @@ ROUTE_INITIATIVES = {
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:provider_led_postgrad,
-                                 :provider_led_postgrad_salaried,
                                  :school_direct_tuition_fee,
                                  :school_direct_salaried,
-                                 :pg_teaching_apprenticeship,
-                                 :provider_led_postgrad_salaried).include?(training_route)
+                                 :pg_teaching_apprenticeship).include?(training_route)
 }.freeze
 
 UNDERGRAD_ROUTES = TRAINING_ROUTES.select { |training_route|
@@ -96,8 +91,8 @@ PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :early_years_assessment_only).exclude?(training_route)
 }.freeze
 
-LEAD_SCHOOL_ROUTES = %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship provider_led_postgrad_salaried].freeze
-EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship provider_led_postgrad_salaried].freeze
+LEAD_SCHOOL_ROUTES = %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship].freeze
+EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship].freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)

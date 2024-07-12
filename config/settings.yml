@@ -65,7 +65,6 @@ features:
     hpitt_postgrad: false
     pg_teaching_apprenticeship: false
     iqts: false
-    provider_led_postgrad_salaried: false
   google:
     send_data_to_big_query: false
   filters:
