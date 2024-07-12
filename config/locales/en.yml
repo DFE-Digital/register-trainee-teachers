@@ -523,7 +523,7 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
-        search_hint: Search for a lead partner by it’s unique reference number (URN), name or postcode
+        search_hint: Search for a lead partner by its unique reference number (URN), name or postcode
         search_button: Search again
       service_updates: News and updates
       organisations: Choose organisation
@@ -1172,16 +1172,16 @@ en:
         edit_details: Edit details for this trainee only
     lead_schools:
       edit:
-        heading: Lead partner
-        hint: Search for a lead partner by its unique reference number (URN), name or postcode
-        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        heading: Lead school
+        hint: Search for a lead school by its unique reference number (URN), name or postcode
+        description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
         not_applicable_details:
-          summary_text: Lead partner is not listed, or the trainee is funded or employed privately
-          label_text: Lead partner is not applicable
+          summary_text: Lead school is not listed, or the trainee is funded or employed privately
+          label_text: Lead school is not applicable
           body:
-            <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If the lead school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p>You do not need to provide a lead school if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:
         heading: Employing school
