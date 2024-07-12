@@ -16,7 +16,7 @@ module Schools
     context "when trainee is on a school direct salaried route" do
       let(:trainee) { create(:trainee, lead_school: school1, employing_school: school2, training_route: 4) }
 
-      describe "lead partner" do
+      describe "lead school" do
         it "renders" do
           expect(rendered_content).to have_text(trainee.lead_school.name)
           expect(rendered_content).to have_text(trainee.lead_school.urn)
@@ -46,7 +46,7 @@ module Schools
     context "when trainee is on a school direct tuition fee route" do
       let(:trainee) { create(:trainee, lead_school: school1, employing_school: school2, training_route: 3) }
 
-      describe "lead partner" do
+      describe "lead school" do
         it "renders" do
           expect(rendered_content).to have_text(trainee.lead_school.name)
           expect(rendered_content).to have_text(trainee.lead_school.urn)

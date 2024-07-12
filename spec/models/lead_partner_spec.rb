@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe LeadPartner do
-  context "lead partner" do
+  context "lead school" do
     subject(:lead_partner) { create(:lead_partner, :lead_school) }
 
     it "creates a lead school - lead partner" do

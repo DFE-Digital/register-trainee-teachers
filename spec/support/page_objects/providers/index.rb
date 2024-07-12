@@ -7,7 +7,7 @@ module PageObjects
     class Index < PageObjects::Base
       set_url "/system-admin/providers"
 
-      element :add_provider_link, "a", text: "Add a provider"
+      element :add_provider_link, "a", text: "Add an accredited provider"
 
       sections :provider_cards, PageObjects::Sections::ProviderCard, ".provider-card"
     end
