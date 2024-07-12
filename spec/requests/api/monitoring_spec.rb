@@ -26,7 +26,10 @@ describe "API Monitoring" do
   end
 
   it "increments unsuccessful_requests_total for failed request" do
-    allow_any_instance_of(Api::TraineesController).to receive(:show).and_raise(StandardError)
+    controller = Api::TraineesController.new
+    allow(Api::TraineesController).to receive(:new).and_return(controller)
+    allow(controller).to receive(:show).and_raise(StandardError)
+
     expect(Yabeda.register_api.unsuccessful_requests_total).to receive(:increment)
     expect { response }.to raise_error(StandardError)
   end
