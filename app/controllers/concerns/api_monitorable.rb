@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApiMonitorable
   extend ActiveSupport::Concern
 
@@ -5,16 +7,16 @@ module ApiMonitorable
     around_action :monitor_api_request
   end
 
-  private
+private
 
   def monitor_api_request
     start = Time.zone.now
     track_total_requests
     begin
       yield
-    rescue => ex
-      track_unsuccessful_requests(ex)
-      raise ex
+    rescue StandardError => e
+      track_unsuccessful_requests(e)
+      raise(e)
     ensure
       track_request_duration(start)
       track_response_size
@@ -25,8 +27,8 @@ module ApiMonitorable
     Yabeda.register_api.requests_total.increment(tracking_labels)
   end
 
-  def track_unsuccessful_requests(ex)
-    labels = tracking_labels.merge(error_code: ex.class.name, error_message: ex.message[0, 100])
+  def track_unsuccessful_requests(error)
+    labels = tracking_labels.merge(error_code: error.class.name, error_message: error.message[0, 100])
     Yabeda.register_api.unsuccessful_requests_total.increment(labels)
   end
 
@@ -44,7 +46,7 @@ module ApiMonitorable
     @tracking_labels ||= {
       method: request.method,
       controller: controller_name,
-      action: action_name
+      action: action_name,
     }
   end
 end
