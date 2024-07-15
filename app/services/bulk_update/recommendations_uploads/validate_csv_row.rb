@@ -170,6 +170,8 @@ module BulkUpdate
         return unless string
 
         I18n.transliterate(string.dup.force_encoding(ENCODING), replacement: "")&.downcase
+      rescue ArgumentError
+        @messages << error_message(:transliteration, string:)
       end
 
       def error_message(key, variables = {})

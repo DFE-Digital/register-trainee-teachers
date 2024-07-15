@@ -1582,7 +1582,8 @@ en:
               phase: Phase must match trainee record
               age_range: Age range must match trainee record
               subject: Subject must match trainee record
-              unexpected_error: An unexpected error occurred, please check the uploaded file
+              transliteration: Error parsing text %{string}, please check the uploaded file and try again
+              unexpected_error: An unexpected error occurred, please check the uploaded file and try again
           placements:
             validate_csv_row:
               trn_format: TRN must be 7 numbers

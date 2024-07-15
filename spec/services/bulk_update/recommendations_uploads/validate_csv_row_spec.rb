@@ -211,8 +211,18 @@ module BulkUpdate
           allow(row).to receive(:trn).and_raise(StandardError)
         end
 
-        it "returns an error message" do
-          expect(service.messages).to eql(["An unexpected error occurred, please check the uploaded file"])
+        it "returns the correct error message" do
+          expect(service.messages).to eql(["An unexpected error occurred, please check the uploaded file and try again"])
+        end
+      end
+
+      context "when removing accented characters raises an exception" do
+        before do
+          allow(I18n).to receive(:transliterate).and_raise(ArgumentError)
+        end
+
+        it "returns the correct error message" do
+          expect(service.messages.first).to include("Error parsing text")
         end
       end
     end
