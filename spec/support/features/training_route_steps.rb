@@ -6,16 +6,8 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
     end
 
-    def given_i_have_created_a_provider_led_salaried_trainee
-      choose_training_route_for(TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried])
-    end
-
     def given_i_have_created_a_provider_led_undergrad_trainee
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
-    end
-
-    def given_i_have_created_a_provider_led_postgrad_salaried_trainee
-      choose_training_route_for(TRAINING_ROUTE_ENUMS[:provider_led_postgrad_salaried])
     end
 
     def given_i_have_created_an_assessment_only_trainee

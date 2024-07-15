@@ -966,7 +966,6 @@ en:
           school_direct_salaried: school direct salaried
           school_direct_tuition_fee: school direct tuition fee
           pg_teaching_apprenticeship: teaching apprenticeship postgrad
-          provider_led_postgrad_salaried: provider-led postgrad salaried
       funding:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
@@ -1212,10 +1211,10 @@ en:
         hints:
           provider_led_postgrad: &provider_led_hint Training run by higher education institutions (HEIs) or school centred initial teacher training (SCITT) providers
           provider_led_undergrad: *provider_led_hint
-        lede: Provider led training is run by higher education institues (HEIs) or school centred initial teacher training (SCITTs) providers.
+        lede: Primary and secondary training is run by higher education institutions (HEIs) or school centred initial teacher training (SCITTs) providers.
         training_course_routes:
-          postgrad_fee_funded: Post-grad (fee funded)
-          postgrad_salaried: Post-grad (salaried)
+          postgrad_fee_funded: Postgrad (fee funded)
+          postgrad_salaried: Postgrad (salaried)
           undergrad_fee_funded: Undergrad (fee funded)
           other: Other
     start_statuses:
@@ -1301,7 +1300,6 @@ en:
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergrad)
-          provider_led_postgrad_salaried: Provider-led (postgrad salaried)
           itt:
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
@@ -1309,13 +1307,12 @@ en:
             early_years_salaried: Early years
             early_years_undergrad: Early years
             iqts: International qualified teacher status (iQTS)
-            provider_led_postgrad: Provider-led
-            provider_led_postgrad_salaried: Provider-led
-            provider_led_undergrad: Provider-led
+            provider_led_postgrad: &provider_led_postgrad Primary and secondary
+            provider_led_undergrad: *provider_led_postgrad
             pg_teaching_apprenticeship: Teaching apprenticeship
+            school_direct_salaried: School direct
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
-            provider_led_postgrad_salaried: Provider-led
           type:
 
         states:
@@ -1585,6 +1582,8 @@ en:
               phase: Phase must match trainee record
               age_range: Age range must match trainee record
               subject: Subject must match trainee record
+              transliteration: Error parsing text %{string}, please check the uploaded file and try again
+              unexpected_error: An unexpected error occurred, please check the uploaded file and try again
           placements:
             validate_csv_row:
               trn_format: TRN must be 7 numbers

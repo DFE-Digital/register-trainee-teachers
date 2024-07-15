@@ -139,6 +139,50 @@ module BulkUpdate
             it { expect(service.trainee).to eql trainee }
           end
         end
+
+        context "and a row without Degrees" do
+          let(:trainee) { create(:trainee, :bulk_recommend, :without_degrees) }
+
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be false }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to eql(["Add at least one degree"]) }
+          end
+
+          describe "#trainee" do
+            it { expect(service.trainee).to eql trainee }
+          end
+        end
+
+        context "and a row without Placements" do
+          let(:trainee) { create(:trainee, :bulk_recommend, :provider_led_postgrad, :without_placements) }
+
+          let(:row) do
+            Row.new({
+              "provider trainee id" => trainee.provider_trainee_id,
+            })
+          end
+
+          describe "#valid?" do
+            it { expect(service.valid?).to be true }
+          end
+
+          describe "#messages" do
+            it { expect(service.messages).to be_empty }
+          end
+
+          describe "#trainee" do
+            it { expect(service.trainee).to eql trainee }
+          end
+        end
       end
 
       context "with multiple trainee matches with not trn received" do

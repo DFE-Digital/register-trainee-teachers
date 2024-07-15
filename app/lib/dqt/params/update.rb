@@ -31,7 +31,7 @@ module Dqt
       end
 
       def pii_update_params
-        {} unless trainee&.dqt_teacher&.allowed_pii_updates?
+        return {} unless trainee&.dqt_teacher&.allowed_pii_updates?
 
         {
           "firstName" => trainee.first_names,

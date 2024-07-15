@@ -12,6 +12,8 @@ module BulkUpdate
         provider_trainee_id: "provider trainee ID",
       }.freeze
 
+      OPTIONAL_FORMS = [::PlacementsForm].freeze
+
       def initialize(row:, provider:, trainee_lookup:)
         @row = row
         @provider = provider
@@ -38,7 +40,22 @@ module BulkUpdate
 
       def validate!
         return if row.empty?
-        return if trainee
+
+        if trainee
+          unless trainee.submission_ready?
+            missing_data_validator.validate
+
+            missing_data_validator.forms.each do |form|
+              next if form.class.in?(OPTIONAL_FORMS)
+
+              form.errors.each do |error|
+                @messages << error.message
+              end
+            end
+          end
+
+          return
+        end
 
         # if no singular trainee in state trn_recevied was found then check if there are multiple in trn_received
         if trainees_trn_received.size > 1
@@ -59,6 +76,10 @@ module BulkUpdate
         end
 
         @messages << error_message(:no_trainee_matched, id_available: id_columns)
+      end
+
+      def missing_data_validator
+        @missing_data_validator ||= Submissions::MissingDataValidator.new(trainee:)
       end
 
       def found_with

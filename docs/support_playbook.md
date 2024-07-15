@@ -319,7 +319,7 @@ trainee_id,email
 Suppose you have a CSV file named `trainees.csv` in the root directory of your project. To run the Rake task, you would use:
 
 ```
-rake trainee:remove_duplicates trainees.csv
+bundle exec rake trainee:remove_duplicates\[trainees.csv\]
 ```
 
 This command will:

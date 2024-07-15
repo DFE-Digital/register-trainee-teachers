@@ -100,6 +100,12 @@ FactoryBot.define do
       end
     end
 
+    trait :without_placements do
+      before(:create) do |trainee|
+        trainee.placements = []
+      end
+    end
+
     trait :incomplete do
       provider_trainee_id { nil }
       first_names { nil }

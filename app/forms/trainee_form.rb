@@ -53,8 +53,8 @@ class TraineeForm
     return [] if valid?
 
     [
-      errors.attribute_names.filter_map do |attribute_name|
-        attribute_name if public_send(attribute_name).blank?
+      errors.attribute_names.select do |attribute_name|
+        public_send(attribute_name).blank?
       end,
     ]
   end

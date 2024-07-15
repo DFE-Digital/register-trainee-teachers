@@ -98,23 +98,24 @@ private
     create(:course_with_subjects,
            :secondary,
            accredited_body_code: trainee.provider.code,
-           route: "school_direct_tuition_fee")
+           route: "provider_led_postgrad",
+           recruitment_cycle_year: trainee.start_academic_cycle.start_year)
   end
 
   def and_a_draft_trainee_exists
-    given_a_trainee_exists(:draft, :with_publish_course_details, :school_direct_salaried, :with_secondary_education)
+    given_a_trainee_exists(:draft, :with_publish_course_details, :pg_teaching_apprenticeship, :with_secondary_education)
   end
 
   def and_a_trainee_exists_with_trn_received
-    given_a_trainee_exists(:trn_received, :with_publish_course_details, :school_direct_salaried, :with_secondary_education)
+    given_a_trainee_exists(:trn_received, :with_publish_course_details, :pg_teaching_apprenticeship, :with_secondary_education)
   end
 
   def and_a_trainee_exists
-    given_a_trainee_exists(:trn_received, :school_direct_salaried, :with_secondary_education)
+    given_a_trainee_exists(:trn_received, :pg_teaching_apprenticeship, :with_secondary_education)
   end
 
   def and_a_trainee_exists_for_valid_itt_start_date
-    given_a_trainee_exists(:trn_received, :school_direct_salaried, :with_secondary_education, :with_valid_itt_start_date)
+    given_a_trainee_exists(:trn_received, :pg_teaching_apprenticeship, :with_secondary_education, :with_valid_itt_start_date)
   end
 
   def when_i_click_to_change_course_details
@@ -127,7 +128,7 @@ private
 
   def and_i_choose_a_different_training_route
     trainee_edit_training_route_page.training_route_options.find { |o|
-      o.input.value.include?("school_direct_tuition_fee")
+      o.input.value.include?("provider_led_postgrad")
     }.choose
     trainee_edit_training_route_page.continue_button.click
   end
@@ -179,7 +180,7 @@ private
 
   def then_i_can_pick_a_course_from_the_next_cycle
     expect(publish_course_details_page.title).to include(
-      "Your school direct salaried courses starting in #{Settings.current_recruitment_cycle_year} to #{Settings.current_recruitment_cycle_year + 1}",
+      "Your teaching apprenticeship postgrad courses starting in #{Settings.current_recruitment_cycle_year} to #{Settings.current_recruitment_cycle_year + 1}",
     )
   end
 end

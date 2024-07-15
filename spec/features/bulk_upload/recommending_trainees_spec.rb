@@ -41,6 +41,8 @@ feature "recommending trainees" do
           then_i_see_count_complete
           and_i_check_who_ill_recommend
           and_i_see_a_list_of_trainees_to_check
+          and_i_click_recommend
+          then_i_see_the_confirmation
         end
       end
     end
@@ -57,6 +59,8 @@ feature "recommending trainees" do
           then_i_see_count_complete
           and_i_check_who_ill_recommend
           and_i_see_a_list_of_trainees_to_check
+          and_i_click_recommend
+          then_i_see_the_confirmation
         end
 
         scenario "I can cancel my upload" do
@@ -159,6 +163,10 @@ private
     recommendations_upload_show_page.check_button.click
   end
 
+  def and_i_click_recommend
+    recommendations_upload_show_page.recommend_button.click
+  end
+
   def and_i_click_change_link
     recommendations_checks_show_page.change_link.click
   end
@@ -225,5 +233,9 @@ private
   def then_i_see_an_error_message_about_file_encoding
     expect(page).to have_content("There is a problem")
     expect(page).to have_content("The selected file must be UTF-8 or ISO-8859-1 encoded")
+  end
+
+  def then_i_see_the_confirmation
+    expect(recommendations_upload_confirmation_page).to have_content("2 trainees recommended for QTS")
   end
 end

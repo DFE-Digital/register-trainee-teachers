@@ -25,11 +25,11 @@ module Submissions
       !trainee.starts_course_in_the_future?
     end
 
-  private
-
     def forms
       @forms ||= validator_keys.map { |key| validator(key) }
     end
+
+  private
 
     def degrees_form
       @degrees_form ||= forms.detect { |form| form.is_a?(DegreesForm) }
