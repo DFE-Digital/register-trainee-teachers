@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_03_110939) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_12_150631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -263,9 +263,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_110939) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
-    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
+    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -645,10 +645,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_110939) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
@@ -769,12 +769,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_110939) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
     t.tsvector "searchable"
+    t.boolean "accredited", default: true, null: false
     t.index ["accreditation_id"], name: "index_providers_on_accreditation_id", unique: true
     t.index ["discarded_at"], name: "index_providers_on_discarded_at"
     t.index ["dttp_id"], name: "index_providers_on_dttp_id", unique: true
@@ -889,14 +890,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_03_110939) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.integer "training_initiative"
     t.boolean "applying_for_bursary"
+    t.integer "training_initiative"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.boolean "applying_for_scholarship"
     t.integer "course_education_phase"
+    t.boolean "applying_for_scholarship"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_school_not_applicable", default: false
