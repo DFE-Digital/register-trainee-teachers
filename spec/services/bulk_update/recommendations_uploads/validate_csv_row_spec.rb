@@ -205,6 +205,16 @@ module BulkUpdate
           end
         end
       end
+
+      context "when the row raises an exception" do
+        before do
+          allow(row).to receive(:trn).and_raise(StandardError)
+        end
+
+        it "returns an error message" do
+          expect(service.messages).to eql(["An unexpected error occurred, please check the uploaded file"])
+        end
+      end
     end
   end
 end

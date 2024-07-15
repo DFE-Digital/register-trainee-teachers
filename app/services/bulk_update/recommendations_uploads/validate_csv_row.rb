@@ -45,6 +45,8 @@ module BulkUpdate
         phase
         age_range
         subject
+      rescue StandardError
+        @messages << error_message(:unexpected_error)
       end
 
       def trn_format
