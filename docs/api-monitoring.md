@@ -11,7 +11,7 @@ mount Yabeda::Prometheus::Exporter => "/metrics"
 
 ### Configuration
 
-The configuration of Yabeda within our application is defined in the intializer `app/initializers/yabeda.rb`. Here we define all of the metrics that we want to track throughout our app. Things like the total number of requests, the request duration etc. 
+The configuration of Yabeda within our application is defined in the initializer `app/initializers/yabeda.rb`. Here we define all of the metrics that we want to track throughout our app. Things like the total number of requests, the request duration etc. 
 
 ```ruby
 Yabeda.configure do
