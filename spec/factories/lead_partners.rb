@@ -12,13 +12,13 @@ FactoryBot.define do
 
     trait :hei do
       record_type { LeadPartner::HEI }
-      provider
+      provider factory: %i[provider unacreddited]
       ukprn { Faker::Number.number(digits: 8) }
     end
 
     trait :scitt do
       record_type { LeadPartner::SCITT }
-      provider
+      provider factory: %i[provider unacreddited]
       ukprn { Faker::Number.number(digits: 8) }
     end
   end
