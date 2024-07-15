@@ -56,7 +56,7 @@ Grafana is configured to visualize the metrics collected by Prometheus. It suppo
 ### Accessing Grafana Instances
 
 * Test Environment: [https://grafana.test.teacherservices.cloud/](https://grafana.test.teacherservices.cloud/)
-* Production Environment: [https://grafana.teacherservices.cloud/](https://grafana.test.teacherservices.cloud/)
+* Production Environment: [https://grafana.teacherservices.cloud/](https://grafana.teacherservices.cloud/)
 
 ### Adding New Dashboards
 
