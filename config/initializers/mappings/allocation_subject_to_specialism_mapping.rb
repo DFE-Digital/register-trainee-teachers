@@ -62,11 +62,17 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
     CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE,
     CourseSubjects::TEACHING_ENGLISH_AS_A_FOREIGN_LANGUAGE,
   ],
+  AllocationSubjects::FRENCH_LANGUAGE => [
+    CourseSubjects::FRENCH_LANGUAGE,
+  ],
   AllocationSubjects::GEOGRAPHY => [
     CourseSubjects::GEOGRAPHY,
   ],
   AllocationSubjects::GENERAL_SCIENCES => [
     CourseSubjects::GENERAL_SCIENCES,
+  ],
+  AllocationSubjects::GERMAN_LANGUAGE => [
+    CourseSubjects::GERMAN_LANGUAGE,
   ],
   AllocationSubjects::HISTORY => [
     CourseSubjects::HISTORY,
@@ -118,6 +124,9 @@ ALLOCATION_SUBJECT_SPECIALISM_MAPPING = {
   AllocationSubjects::RELIGIOUS_EDUCATION => [
     CourseSubjects::PHILOSOPHY,
     CourseSubjects::RELIGIOUS_STUDIES,
+  ],
+  AllocationSubjects::SPANISH_LANGUAGE => [
+    CourseSubjects::SPANISH_LANGUAGE,
   ],
   AllocationSubjects::PRIMARY => [
     CourseSubjects::PRIMARY_TEACHING,
