@@ -88,7 +88,7 @@ class PublishProviderReporter
     puts("")
     puts("Publish providers not found in Register")
     checker.missing.each do |provider|
-      puts("#{provider['name']} (#{provider['code']})")
+      puts("#{provider['name']} (code: #{provider['code']}, urn: #{provider['urn']}, ukprn: #{provider['ukprn']}, type: #{provider['provider_type']})")
     end
 
     puts("")
