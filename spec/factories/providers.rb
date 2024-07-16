@@ -9,7 +9,7 @@ FactoryBot.define do
     ukprn { Faker::Number.number(digits: 8) }
     sequence(:accreditation_id, "1111")
 
-    trait :unacreddited do
+    trait :unaccredited do
       accredited { false }
     end
 
