@@ -5,8 +5,10 @@ require "rails_helper"
 describe TraineePolicy do
   let(:system_admin_user) { user_with_organisation(create(:user, :system_admin), nil) }
   let(:provider) { create(:provider) }
+  let(:unaccredited_provider) { create(:provider, :unaccredited) }
   let(:other_provider) { create(:provider) }
   let(:provider_user) { user_with_organisation(create(:user, providers: [provider]), provider) }
+  let(:unaccredited_provider_user) { user_with_organisation(create(:user, providers: [unaccredited_provider]), unaccredited_provider)}
   let(:read_only_provider_user) { user_with_organisation(create(:user, providers: [provider], read_only: true), provider) }
   let(:other_provider_user) { user_with_organisation(create(:user, providers: [other_provider]), other_provider) }
   let(:lead_school) { create(:school, :lead) }
@@ -17,6 +19,7 @@ describe TraineePolicy do
   let(:other_lead_partner_user) { user_with_organisation(create(:user, providers: []), create(:lead_partner, :lead_school)) }
 
   let(:provider_trainee) { create(:trainee, provider:) }
+  let(:unaccredited_provider_trainee) { create(:trainee, provider: unaccredited_provider) }
   let(:lead_school_trainee) { create(:trainee, lead_school:) }
   let(:hesa_trainee) { create(:trainee, provider: provider, hesa_id: "XXX123") }
 
@@ -37,6 +40,7 @@ describe TraineePolicy do
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
+    it { is_expected.to permit(unaccredited_provider_user, unaccredited_provider_trainee) }
 
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
   end
@@ -49,10 +53,11 @@ describe TraineePolicy do
 
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.not_to permit(system_admin_user, provider_trainee) }
+    it { is_expected.not_to permit(unaccredited_provider_user, unaccredited_provider_trainee) }
   end
 
   permissions :create? do
-    it { is_expected.not_to permit(other_provider_user, provider_trainee) }
+    it { is_expected.not_to permit(other_provider_user, provider_trainee, unaccredited_provider_user) }
   end
 
   permissions :update?, :edit?, :destroy?, :confirm? do
@@ -64,6 +69,7 @@ describe TraineePolicy do
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
+    it { is_expected.to permit(unaccredited_provider_user, unaccredited_provider_trainee) }
 
     it { is_expected.not_to permit(other_provider_user, provider_trainee) }
 
