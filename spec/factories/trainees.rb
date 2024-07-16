@@ -237,6 +237,10 @@ FactoryBot.define do
       itt_start_date { compute_valid_itt_start_date }
     end
 
+    trait :with_valid_past_itt_start_date do
+      itt_start_date { compute_valid_past_itt_start_date }
+    end
+
     trait :with_course_allocation_subject do
       course_allocation_subject { SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject }
     end
