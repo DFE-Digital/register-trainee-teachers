@@ -42,7 +42,7 @@ class PublishProviderChecker
 private
 
   def provider_matches?(provider)
-    Provider.find_by(code: provider["code"]).present?
+    Provider.find_by(code: provider["code"]).present? || Provider.find_by(ukprn: provider["ukprn"]).present?
   end
 
   def lead_school_matches?(provider)
@@ -50,13 +50,11 @@ private
   end
 
   def lead_partner_matches?(provider)
-    LeadPartner.find_by(urn: provider["urn"]).present?
+    LeadPartner.find_by(urn: provider["urn"]).present? || LeadPartner.find_by(ukprn: provider["ukprn"]).present?
   end
 end
 
 class PublishProviderReporter
-  PUBLISH_PROVIDER_ENDPOINT = "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1/recruitment_cycles/2023/providers"
-
   attr_accessor :checker
 
   def initialize(checker)
