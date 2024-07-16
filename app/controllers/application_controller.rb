@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     render "errors/forbidden", status: :forbidden, formats: [:html]
   end
 
-  before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required? }
+  before_action :enforce_basic_auth, if: -> { BasicAuthenticable.required?(request.path) }
 
   helper_method :current_user, :authenticated?, :audit_user, :trainee_editable?
 
