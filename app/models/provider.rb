@@ -5,6 +5,7 @@
 # Table name: providers
 #
 #  id                 :bigint           not null, primary key
+#  accredited         :boolean          default(TRUE), not null
 #  apply_sync_enabled :boolean          default(FALSE)
 #  code               :string
 #  discarded_at       :datetime
