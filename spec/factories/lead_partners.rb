@@ -18,7 +18,7 @@ FactoryBot.define do
 
     trait :scitt do
       record_type { LeadPartner::SCITT }
-      provider factory: %i[provider unacreddited]
+      provider factory: %i[provider unaccredited]
       ukprn { Faker::Number.number(digits: 8) }
     end
   end
