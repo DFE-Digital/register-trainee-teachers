@@ -649,6 +649,8 @@ en:
             tuition: Lead school
             salaried: Lead and employing schools
             pg_teaching_apprenticeship: Lead and employing schools
+            provider_led_postgrad: Lead and employing schools
+            provider_led_undergrad: Lead and employing schools
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
