@@ -7,8 +7,6 @@ module SystemAdminRoutes
         require "sidekiq/web"
         require "sidekiq/cron/web"
 
-        mount Yabeda::Prometheus::Exporter => "/metrics"
-
         mount Blazer::Engine, at: "/blazer", constraints: RouteConstraints::SystemAdminConstraint.new
         get "/blazer", to: redirect("/sign-in"), status: 302
 

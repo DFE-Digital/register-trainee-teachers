@@ -3,8 +3,14 @@
 # Enforces HTTP Basic Auth
 module BasicAuthenticable
   class << self
-    def required?
-      Settings.features.basic_auth
+    WHITELISTED_PATHS = %w[/metrics].freeze
+
+    def required?(path)
+      Settings.features.basic_auth && !whitelisted?(path)
+    end
+
+    def whitelisted?(path)
+      WHITELISTED_PATHS.include?(path)
     end
 
     def authenticate(username, password)

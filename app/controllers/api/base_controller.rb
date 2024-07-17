@@ -3,9 +3,9 @@
 module Api
   class BaseController < ActionController::API
     include Api::ErrorResponse
+    include ApiMonitorable
 
     before_action :check_feature_flag!, :authenticate!
-    around_action :track_request_metrics
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       render_not_found(message: "#{e.model}(s) not found")
@@ -78,14 +78,6 @@ module Api
       else
         @auth_token = AuthenticationToken.authenticate(bearer_token)
       end
-    end
-
-    def track_request_metrics
-      start = Time.zone.now
-      Yabeda.register_api.requests_total.increment({})
-      yield
-      duration = Time.zone.now - start
-      Yabeda.register_api.request_duration.measure({}, duration)
     end
   end
 end
