@@ -26,6 +26,8 @@ module "web_application" {
   azure_enable_monitoring = var.enable_container_monitoring
   kubernetes_cluster_id   = module.cluster_data.kubernetes_id
   enable_logit            = var.enable_logit
+
+  enable_prometheus_monitoring = var.enable_prometheus_monitoring
 }
 
 module "worker_application" {
