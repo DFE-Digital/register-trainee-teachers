@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   extend ApiRoutes
   extend AutocompleteRoutes
 
+  mount Yabeda::Prometheus::Exporter => "/metrics"
+
   if Settings.dttp.portal_host.present?
     constraints(->(req) { req.host == Settings.dttp.portal_host }) do
       dttp_replaced_url = "#{Settings.base_url}/dttp-replaced"

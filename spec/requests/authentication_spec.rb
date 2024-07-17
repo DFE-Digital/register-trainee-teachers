@@ -11,4 +11,15 @@ describe "authentication" do
       end
     end
   end
+
+  context "attempting to visit a whitelisted path" do
+    before do
+      allow(Settings.features).to receive(:basic_auth).and_return(true)
+    end
+
+    it "does not require basic auth" do
+      get "/metrics"
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end
