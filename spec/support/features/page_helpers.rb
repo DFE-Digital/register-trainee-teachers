@@ -290,10 +290,6 @@ module Features
       @start_page ||= PageObjects::Start.new
     end
 
-    def lead_schools_search_page
-      @lead_schools_search_page ||= PageObjects::Trainees::LeadSchoolsSearch.new
-    end
-
     def lead_partners_search_page
       @lead_partners_search_page ||= PageObjects::Trainees::LeadPartnersSearch.new
     end
