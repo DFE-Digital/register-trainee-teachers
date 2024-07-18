@@ -16,7 +16,7 @@ It is also off by default to prevent any unintentional mishaps.
 
 ## Decision
 
-We scaled the Sidekiq worker to 1 replica for `productiondata` so as for the jobs to be functional
+We scaled the Sidekiq worker to 1 replica for `productiondata` so that the jobs will function.
 
 ## Consequences
 
