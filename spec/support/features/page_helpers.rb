@@ -294,12 +294,16 @@ module Features
       @lead_schools_search_page ||= PageObjects::Trainees::LeadSchoolsSearch.new
     end
 
+    def lead_partners_search_page
+      @lead_partners_search_page ||= PageObjects::Trainees::LeadPartnersSearch.new
+    end
+
     def employing_schools_search_page
       @employing_schools_search_page ||= PageObjects::Trainees::EmployingSchoolsSearch.new
     end
 
-    def edit_lead_school_page
-      @edit_lead_school_page ||= PageObjects::Trainees::EditLeadSchool.new
+    def edit_lead_partner_page
+      @edit_lead_partner_page ||= PageObjects::Trainees::EditLeadPartner.new
     end
 
     def edit_employing_school_page

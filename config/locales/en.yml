@@ -292,6 +292,7 @@ en:
     school_details:
       summary_title: Schools
       lead_school_key: Lead school
+      lead_partner_key: Lead partner
       employing_school_key: Employing school
     placement_detail: &placement_detail
       title: Placement details
@@ -647,10 +648,10 @@ en:
         schools:
           titles:
             tuition: Lead school
-            salaried: Lead and employing schools
-            pg_teaching_apprenticeship: Lead and employing schools
-            provider_led_postgrad: Lead and employing schools
-            provider_led_undergrad: Lead and employing schools
+            salaried: Lead partner and employing school
+            pg_teaching_apprenticeship: Lead partner and employing school
+            provider_led_postgrad: Lead partner and employing school
+            provider_led_undergrad: Lead partner and employing school
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
@@ -749,6 +750,7 @@ en:
         graduation_year: *degree_path
         country: *degree_path
         lead_school_id: &lead_school_path edit_trainee_lead_schools_path
+        lead_partner_id: &lead_school_path edit_trainee_lead_schools_path
         employing_school_id: edit_trainee_employing_schools_path
         school_id: *lead_school_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
@@ -806,6 +808,8 @@ en:
         lead_school_id: *lead_school
         employing_school_id: *employing_school
         school_id: *lead_school
+        lead_partner_id: *lead_school
+        partner_id: *lead_school
         trainee_start_date: *trainee_start_date
         trainee_start_date_radio_option: Trainee’s start date
         provider_trainee_id: *provider_trainee_id
@@ -1173,16 +1177,16 @@ en:
         edit_details: Edit details for this trainee only
     lead_schools:
       edit:
-        heading: Lead school
-        hint: Search for a school by its unique reference number (URN), name or postcode
-        description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        heading: Lead partner
+        hint: Search for a lead partner by its unique reference number (URN), name or postcode
+        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
         not_applicable_details:
-          summary_text: Lead school is not listed, or the trainee is funded or employed privately
-          label_text: Lead school is not applicable
+          summary_text: Lead partner is not listed, or the trainee is funded or employed privately
+          label_text: Lead partner is not applicable
           body:
-            <p class="govuk-body">If the lead school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead school if the trainee is funded or employed privately.</p>
+            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:
         heading: Employing school

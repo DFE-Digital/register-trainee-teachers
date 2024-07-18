@@ -28,6 +28,7 @@ class FormStore
     degrees
     lead_school
     employing_school
+    lead_partner
     schools
     training_initiative
     bursary

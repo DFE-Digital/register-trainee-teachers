@@ -3,12 +3,13 @@
 module SchoolDetails
   class View < ViewComponent::Base
     include SchoolHelper
+    include LeadPartnerHelper
 
-    attr_reader :trainee, :lead_school, :employing_school, :has_errors, :editable
+    attr_reader :trainee, :lead_partner, :employing_school, :has_errors, :editable
 
     def initialize(trainee:, has_errors: false, editable: false)
       @trainee = trainee
-      @lead_school = trainee.lead_school
+      @lead_partner = trainee.lead_partner
       @employing_school = trainee.employing_school
       @has_errors = has_errors
       @editable = editable
@@ -16,7 +17,7 @@ module SchoolDetails
 
     def school_rows
       [
-        lead_school_row(not_applicable: trainee.lead_school_not_applicable?),
+        lead_partner_row(not_applicable: trainee.lead_partner_not_applicable?),
         employing_school_row(not_applicable: trainee.employing_school_not_applicable?),
       ].compact
     end

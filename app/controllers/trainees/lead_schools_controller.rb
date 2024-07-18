@@ -7,25 +7,25 @@ module Trainees
     helper_method :query
 
     def index
-      @lead_school_form = Schools::LeadSchoolForm.new(trainee)
-      @school_search = SchoolSearch.call(query: query, lead_schools_only: true)
+      @lead_partner_form = Partners::LeadPartnerForm.new(trainee)
+      @lead_partner_search = LeadPartnerSearch.call(query: query)
     end
 
     def edit
-      @lead_school_form = Schools::LeadSchoolForm.new(trainee)
+      @lead_partner_form = Partners::LeadPartnerForm.new(trainee)
     end
 
     def update
-      @lead_school_form = Schools::LeadSchoolForm.new(trainee, params: trainee_params, user: current_user)
+      @lead_partner_form = Partners::LeadPartnerForm.new(trainee, params: trainee_params, user: current_user)
 
-      if @lead_school_form.school_not_selected? && @lead_school_form.valid?
+      if @lead_partner_form.lead_partner_not_selected? && @lead_partner_form.valid?
         return redirect_to(trainee_lead_schools_path(@trainee, query:))
       end
 
-      if @lead_school_form.stash_or_save!
+      if @lead_partner_form.stash_or_save!
         redirect_to(step_wizard.next_step)
       else
-        @school_search = SchoolSearch.call(query: params[:query], lead_schools_only: true)
+        @lead_partner_search = LeadPartnerSearch.call(query: params[:query])
         render(index_or_edit_page)
       end
     end
@@ -33,9 +33,9 @@ module Trainees
   private
 
     def trainee_params
-      params.fetch(:schools_lead_school_form, {})
-            .permit(*Schools::LeadSchoolForm::FIELDS,
-                    *Schools::LeadSchoolForm::NON_TRAINEE_FIELDS)
+      params.fetch(:partners_lead_partner_form, {})
+            .permit(*Partners::LeadPartnerForm::FIELDS,
+                    *Partners::LeadPartnerForm::NON_TRAINEE_FIELDS)
     end
 
     def query
@@ -47,7 +47,7 @@ module Trainees
     end
 
     def index_or_edit_page
-      @lead_school_form.search_results_found? || @lead_school_form.no_results_searching_again? ? :index : :edit
+      @lead_partner_form.search_results_found? || @lead_partner_form.no_results_searching_again? ? :index : :edit
     end
 
     def authorize_trainee
@@ -59,7 +59,7 @@ module Trainees
     end
 
     def validate_form_completeness
-      return if trainee.lead_school_id.blank?
+      return if trainee.lead_partner_id.blank?
       return if user_came_from_backlink?
 
       redirect_to(step_wizard.start_point) if step_wizard.start_point.present?

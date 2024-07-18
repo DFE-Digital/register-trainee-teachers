@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Schools
+module Partners
   class Form < TraineeForm
     NON_TRAINEE_FIELDS = %i[
       query
@@ -17,15 +17,15 @@ module Schools
     validates :query,
               presence: true,
               length: {
-                minimum: SchoolSearch::MIN_QUERY_LENGTH,
+                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
-              if: -> { school_applicable? && initial_search? }
+              if: -> { lead_partner_applicable? && initial_search? }
 
     validates :results_search_again_query,
               presence: true,
               length: {
-                minimum: SchoolSearch::MIN_QUERY_LENGTH,
+                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { results_searching_again? }
@@ -33,7 +33,7 @@ module Schools
     validates :no_results_search_again_query,
               presence: true,
               length: {
-                minimum: SchoolSearch::MIN_QUERY_LENGTH,
+                minimum: LeadPartnerSearch::MIN_QUERY_LENGTH,
                 message: I18n.t("activemodel.errors.models.schools_form.attributes.query.length"),
               },
               if: -> { no_results_searching_again? }
@@ -47,27 +47,19 @@ module Schools
     end
 
     def lead_partner_not_selected?
-      partner_applicable? && lead_partner_id.to_i.zero?
+      lead_partner_applicable? && lead_partner_id.to_i.zero?
     end
 
     def no_results_searching_again?
-      school_id == "no_results_search_again"
+      lead_partner_id == "no_results_search_again"
     end
 
-    def school_applicable?
-      !school_not_applicable?
+    def lead_partner_applicable?
+      !lead_partner_not_applicable?
     end
 
-    def school_not_applicable?
-      ActiveModel::Type::Boolean.new.cast(school_not_applicable)
-    end
-
-    def partner_applicable?
-      !partner_not_applicable?
-    end
-
-    def partner_not_applicable?
-      ActiveModel::Type::Boolean.new.cast(partner_not_applicable)
+    def lead_partner_not_applicable?
+      ActiveModel::Type::Boolean.new.cast(lead_partner_not_applicable)
     end
 
   private
@@ -77,18 +69,14 @@ module Schools
     end
 
     def results_searching_again?
-      school_id == "results_search_again"
+      lead_partner_id == "results_search_again"
     end
 
-    def school_id
+    def partner_id
       raise(NotImplementedError)
     end
 
-    def school_not_applicable
-      raise(NotImplementedError)
-    end
-
-    def partner_not_applicable
+    def lead_partner_not_applicable
       raise(NotImplementedError)
     end
 
@@ -104,12 +92,12 @@ module Schools
       non_search_validation == true
     end
 
-    def school_validation_required?
-      school_applicable? && (non_search_validation? || (search_results_found? && results_search_again_query.blank?))
+    def lead_partner_validation_required?
+      lead_partner_applicable? && (non_search_validation? || (search_results_found? && results_search_again_query.blank?))
     end
 
     def both_fields_are_not_selected
-      if params[:query].present? && school_not_applicable?
+      if params[:query].present? && lead_partner_not_applicable?
         errors.add(:query, :both_fields_are_present)
       end
     end
