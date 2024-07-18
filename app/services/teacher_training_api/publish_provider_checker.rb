@@ -40,6 +40,7 @@ module TeacherTrainingApi
     end
 
   private
+
     def publish_provider_endpoint
       "/recruitment_cycles/#{recruitment_cycle_year}/providers"
     end
