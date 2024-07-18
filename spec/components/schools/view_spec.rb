@@ -6,26 +6,26 @@ module Schools
   describe View do
     include Rails.application.routes.url_helpers
 
-    let(:school1) { create(:school, open_date: Time.zone.today) }
-    let(:school2) { create(:school, open_date: Time.zone.today) }
+    let(:lead_partner) { create(:lead_partner, :lead_school) }
+    let(:employing_school) { create(:school, open_date: Time.zone.today) }
 
     before do
       render_inline(View.new(data_model: trainee, editable: true))
     end
 
     context "when trainee is on a school direct salaried route" do
-      let(:trainee) { create(:trainee, lead_school: school1, employing_school: school2, training_route: 4) }
+      let(:trainee) { create(:trainee, lead_partner: lead_partner, employing_school: employing_school, training_route: 4) }
 
       describe "lead school" do
         it "renders" do
-          expect(rendered_content).to have_text(trainee.lead_school.name)
-          expect(rendered_content).to have_text(trainee.lead_school.urn)
-          expect(rendered_content).to have_text(trainee.lead_school.town)
-          expect(rendered_content).to have_text(trainee.lead_school.postcode)
+          expect(rendered_content).to have_text(trainee.lead_partner.name)
+          expect(rendered_content).to have_text(trainee.lead_partner.urn)
+          expect(rendered_content).to have_text(trainee.lead_partner.school.town)
+          expect(rendered_content).to have_text(trainee.lead_partner.school.postcode)
         end
 
         it "has correct change links" do
-          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/lead-schools/edit")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/lead-partners/edit")
         end
       end
 
@@ -44,18 +44,18 @@ module Schools
     end
 
     context "when trainee is on a school direct tuition fee route" do
-      let(:trainee) { create(:trainee, lead_school: school1, employing_school: school2, training_route: 3) }
+      let(:trainee) { create(:trainee, lead_partner: lead_partner, employing_school: employing_school, training_route: 3) }
 
       describe "lead school" do
         it "renders" do
-          expect(rendered_content).to have_text(trainee.lead_school.name)
-          expect(rendered_content).to have_text(trainee.lead_school.urn)
-          expect(rendered_content).to have_text(trainee.lead_school.town)
-          expect(rendered_content).to have_text(trainee.lead_school.postcode)
+          expect(rendered_content).to have_text(trainee.lead_partner.name)
+          expect(rendered_content).to have_text(trainee.lead_partner.urn)
+          expect(rendered_content).to have_text(trainee.lead_partner.school.town)
+          expect(rendered_content).to have_text(trainee.lead_partner.school.postcode)
         end
 
         it "has correct change links" do
-          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/lead-schools/edit")
+          expect(rendered_content).to have_link(href: "/trainees/#{trainee.slug}/lead-partners/edit")
         end
       end
 

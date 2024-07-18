@@ -113,7 +113,7 @@ module Sections
       include_examples renders_incomplete_section, :trainee_data, :in_progress_valid
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :with_lead_school, :in_progress) }
+        let(:trainee) { create(:trainee, :with_lead_partner, :in_progress) }
 
         include_examples renders_incomplete_section, :schools, :in_progress_valid
       end
@@ -141,7 +141,7 @@ module Sections
       include_examples renders_confirmation, :funding
 
       context "requires school" do
-        let(:trainee) { create(:trainee, :with_lead_school, :completed) }
+        let(:trainee) { create(:trainee, :with_lead_partner, :completed) }
 
         include_examples renders_confirmation, :schools
       end
