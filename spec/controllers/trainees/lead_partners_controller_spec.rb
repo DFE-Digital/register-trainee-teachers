@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-describe Trainees::LeadSchoolsController do
+describe Trainees::LeadPartnersController do
   describe "#update" do
-    let(:lead_school) { create(:school, :lead) }
+    let(:lead_partner) { create(:lead_partner, :lead_school) }
 
     let(:params) do
       {
-        lead_school_id: lead_school.id,
+        lead_partner_id: lead_partner.id,
       }
     end
 
@@ -21,7 +21,7 @@ describe Trainees::LeadSchoolsController do
       let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
 
       before do
-        post(:update, params: { trainee_id: trainee, schools_lead_school_form: params })
+        post(:update, params: { trainee_id: trainee, partners_lead_partner_form: params })
       end
 
       it "redirects to trainee employing school page" do
@@ -34,7 +34,7 @@ describe Trainees::LeadSchoolsController do
       let(:user) { build_current_user(user: create(:user, providers: [trainee.provider])) }
 
       before do
-        post(:update, params: { trainee_id: trainee, schools_lead_school_form: params })
+        post(:update, params: { trainee_id: trainee, partners_lead_partner_form: params })
       end
 
       it "redirects to schools confirmation page" do
