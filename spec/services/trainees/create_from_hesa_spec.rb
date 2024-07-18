@@ -26,9 +26,7 @@ module Trainees
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
     end
 
-    subject(:trainee) { Trainee.first }
-
-    before do
+    let(:create_from_hesa) do
       allow(Dqt::RegisterForTrnJob).to receive(:perform_later)
       allow(Dqt::WithdrawTraineeJob).to receive(:perform_later)
       allow(Trainees::Update).to receive(:call).with(trainee: instance_of(Trainee))
@@ -42,6 +40,11 @@ module Trainees
         hesa_trainee: student_attributes,
         record_source: record_source,
       )
+    end
+
+    subject(:trainee) do
+      create_from_hesa
+      Trainee.first
     end
 
     describe "HESA information imported from XML" do
@@ -83,6 +86,23 @@ module Trainees
         expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
         expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
+        expect(trainee.training_route).to eq(TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee])
+      end
+
+      context "in the 2025 academic cycle with the school_direct_tuition_fee training route" do
+        let(:hesa_stub_attributes) do
+          {
+            trainee_start_date: "2024-09-10",
+            training_route: "02",
+          }
+        end
+        let(:create_custom_state) do
+          create(:academic_cycle, start_date: "01/9/2024", end_date: "31/8/2025")
+        end
+
+        it "raises an error because school_direct_tuition_fee is no longer available" do
+          expect { create_from_hesa }.to raise_error(Trainees::CreateFromHesa::HesaImportError)
+        end
       end
 
       context "when lead_school_not_applicable was previously set to true" do

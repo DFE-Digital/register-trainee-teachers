@@ -162,7 +162,9 @@ module Trainees
     end
 
     def training_route
-      ::Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_trainee[:training_route]]
+      ::Hesa::CodeSets::TrainingRoutes.mapping_for(
+        recruitment_cycle_year: AcademicCycle.for_date(trainee_start_date)&.start_year,
+      )[hesa_trainee[:training_route]]
     end
 
     def ethnic_background

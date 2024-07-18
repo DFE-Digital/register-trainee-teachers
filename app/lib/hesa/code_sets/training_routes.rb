@@ -12,6 +12,10 @@ module Hesa
         "11" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
         "12" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
       }.freeze
+
+      def self.mapping_for(recruitment_cycle_year:)
+        recruitment_cycle_year.to_i <= 2023 ? MAPPING : MAPPING.except("02")
+      end
     end
   end
 end
