@@ -5,7 +5,7 @@ module LeadPartnerHelper
     [
       "URN #{lead_partner.urn}",
       [lead_partner.school&.town, lead_partner.school&.postcode].select(&:present?),
-  ].flatten.join(", ")
+    ].flatten.join(", ")
   end
 
   def lead_partner_row(not_applicable: false)

@@ -8,7 +8,7 @@ module Trainees
 
     def index
       @lead_partner_form = Partners::LeadPartnerForm.new(trainee)
-      @lead_partner_search = LeadPartnerSearch.call(query: query)
+      @lead_partner_search = LeadPartnerSearch.call(query:)
     end
 
     def edit
