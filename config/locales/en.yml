@@ -1865,6 +1865,12 @@ en:
               length:
                 one: Enter at least one character
                 other: Enter at least %{count} characters
+        lead_partners_form:
+          attributes:
+            query:
+              length:
+                one: Enter at least one character
+                other: Enter at least %{count} characters
         subject_specialism_form:
           attributes:
             specialism:

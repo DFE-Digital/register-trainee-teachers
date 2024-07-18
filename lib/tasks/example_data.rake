@@ -166,7 +166,7 @@ namespace :example_data do
             attrs.merge!(provider:) if provider
 
             # Some route-specific logic, but could move into factories too
-            attrs.merge!(lead_school: lead_schools.sample) if LEAD_SCHOOL_ROUTES.include?(route)
+            attrs.merge!(lead_school: lead_schools.sample) if LEAD_PARTNER_ROUTES.include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if EMPLOYING_SCHOOL_ROUTES.include?(route)
 
             if enabled_course_routes.include?(route)

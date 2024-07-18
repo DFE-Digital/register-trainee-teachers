@@ -12,7 +12,7 @@ class TrainingRouteManager
   end
 
   def requires_schools?
-    LEAD_SCHOOL_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
+    LEAD_PARTNER_ROUTES.any? { |training_route_enums_key| enabled?(training_route_enums_key) }
   end
 
   def requires_employing_school?
