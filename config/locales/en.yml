@@ -1896,8 +1896,21 @@ en:
           attributes:
             lead_school_id:
               not_valid: The lead school section is not valid for this trainee
+            lead_partner_id:
+              not_valid: The lead school section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
+        partners/lead_partner_form:
+          attributes:
+            query:
+              blank: Enter a school unique reference number (URN), name or postcode
+              both_fields_are_present: Select a lead school or select lead school not applicable
+            lead_partner_id:
+              blank: Select a lead partner or search again
+            results_search_again_query:
+              blank: Enter a school unique reference number (URN), name or postcode
+            no_results_search_again_query:
+              blank: Enter a school unique reference number (URN), name or postcode
         funding/form_validator:
           attributes:
             training_initiative:
