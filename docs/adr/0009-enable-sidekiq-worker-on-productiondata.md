@@ -12,7 +12,7 @@ In preparation for the next academic year we need to test the changes that we've
 
 Generally the worker is off as there is no need for it to be running all the time.
 
-It is also off be default to prevent any unintentional mishaps.
+It is also off by default to prevent any unintentional mishaps.
 
 ## Decision
 
