@@ -32,7 +32,7 @@ feature "LeadPartnerSearch" do
 private
 
   def given_a_provider_led_postgrad_trainee_exists
-    given_a_trainee_exists(:provider_led_postgrad)
+    given_a_trainee_exists(:school_direct_tuition_fee)
   end
 
   def and_i_fill_in_my_lead_partner

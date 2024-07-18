@@ -58,7 +58,7 @@ module TaskListHelper
     when :school_details
       {
         task_name: school_details_title(trainee.training_route),
-        path: edit_trainee_lead_schools_path(trainee),
+        path: edit_trainee_lead_partners_path(trainee),
         confirm_path: trainee_schools_confirm_path(trainee),
         classes: "school-details",
         status: ProgressService.call(

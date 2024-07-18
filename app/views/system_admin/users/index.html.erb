@@ -63,7 +63,7 @@
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
               <% user.lead_schools.each do |lead_school| %>
                 <%= govuk_link_to(lead_school.name,
-                                  lead_school_path(lead_school, context: :users),
+                                  lead_partner_path(lead_school, context: :users),
                                   class: "govuk-!-display-block") %>
               <% end %>
             </span>
@@ -86,4 +86,3 @@
   <%= render Paginator::View.new(scope: @users) %>
   </div>
 </div>
-

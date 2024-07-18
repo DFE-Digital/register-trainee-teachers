@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class LeadSchoolsController < BaseController
+  class LeadPartnersController < BaseController
     before_action :validate_form_completeness
 
     helper_method :query
@@ -19,7 +19,7 @@ module Trainees
       @lead_partner_form = Partners::LeadPartnerForm.new(trainee, params: trainee_params, user: current_user)
 
       if @lead_partner_form.lead_partner_not_selected? && @lead_partner_form.valid?
-        return redirect_to(trainee_lead_schools_path(@trainee, query:))
+        return redirect_to(trainee_lead_partners_path(@trainee, query:))
       end
 
       if @lead_partner_form.stash_or_save!
