@@ -48,3 +48,10 @@ current_default_course_year: 2024
 
 environment:
   name: productiondata
+
+apply_applications:
+  import:
+    recruitment_cycle_years:
+      - 2024
+  create:
+    recruitment_cycle_year: 2024
