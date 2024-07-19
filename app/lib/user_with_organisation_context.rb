@@ -49,7 +49,7 @@ class UserWithOrganisationContext < SimpleDelegator
   end
 
   def accredited_provider?
-    provider? && organisation.send(:accredited?)
+    provider? && organisation.accredited?
   end
 
   def lead_school?
