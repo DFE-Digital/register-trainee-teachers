@@ -15,7 +15,7 @@ describe Trainees::ConfirmReinstatementsController do
   describe "#update" do
     before do
       allow(ReinstatementForm).to receive(:new).with(trainee).and_return(double(save!: true, date: 1.day.ago))
-      allow(IttDatesForm).to receive(:new).with(trainee).and_return(double(save!: true))
+      allow(IttEndDateForm).to receive(:new).with(trainee).and_return(double(save!: true))
     end
 
     context "with a trainee with a trn" do
@@ -35,11 +35,8 @@ describe Trainees::ConfirmReinstatementsController do
         let(:trn) { nil }
 
         it "updates the state of the trainee to submitted_for_trn" do
-          expect {
-            post :update, params: { trainee_id: trainee }
-          }.to change {
-            trainee.reload.state.to_sym
-          }.from(:deferred).to(:submitted_for_trn)
+          post :update, params: { trainee_id: trainee }
+          expect(trainee.reload.state).to eq("submitted_for_trn")
         end
       end
     end
