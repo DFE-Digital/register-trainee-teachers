@@ -680,6 +680,7 @@ BURSARIES_2024_TO_2025 = [
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 25_000,
     allocation_subjects: [
+      AllocationSubjects::ANCIENT_LANGUAGES,
       AllocationSubjects::BIOLOGY,
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
       AllocationSubjects::GEOGRAPHY,
@@ -687,7 +688,6 @@ BURSARIES_2024_TO_2025 = [
       AllocationSubjects::FRENCH_LANGUAGE,
       AllocationSubjects::GERMAN_LANGUAGE,
       AllocationSubjects::SPANISH_LANGUAGE,
-      AllocationSubjects::ANCIENT_LANGUAGES,
     ],
   ),
   OpenStruct.new(
@@ -707,8 +707,11 @@ BURSARIES_2024_TO_2025 = [
       AllocationSubjects::ANCIENT_LANGUAGES,
       AllocationSubjects::COMPUTING,
       AllocationSubjects::MATHEMATICS,
-      AllocationSubjects::PHYSICS,
       AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
+      AllocationSubjects::PHYSICS,
     ],
   ),
   OpenStruct.new(
@@ -730,6 +733,9 @@ BURSARIES_2024_TO_2025 = [
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
       AllocationSubjects::GEOGRAPHY,
       AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
     ],
   ),
   OpenStruct.new(
@@ -737,6 +743,7 @@ BURSARIES_2024_TO_2025 = [
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
+      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
       AllocationSubjects::ENGLISH,
       AllocationSubjects::MUSIC,
       AllocationSubjects::RELIGIOUS_EDUCATION,
@@ -819,6 +826,9 @@ GRANTS_2024_TO_2025 = [
       AllocationSubjects::DESIGN_AND_TECHNOLOGY,
       AllocationSubjects::GEOGRAPHY,
       AllocationSubjects::MODERN_LANGUAGES,
+      AllocationSubjects::FRENCH_LANGUAGE,
+      AllocationSubjects::GERMAN_LANGUAGE,
+      AllocationSubjects::SPANISH_LANGUAGE,
     ],
   ),
   OpenStruct.new(
