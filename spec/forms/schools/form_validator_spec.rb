@@ -15,7 +15,7 @@ module Schools
           allow(Partners::LeadPartnerForm).to receive(:new).and_return(lead_partner_form)
         end
 
-        context "when LeadSchoolForm is valid" do
+        context "when LeadPartnerForm is valid" do
           before do
             allow(lead_partner_form).to receive(:valid?).and_return(true)
           end
@@ -23,7 +23,7 @@ module Schools
           it { is_expected.to be_valid }
         end
 
-        context "when LeadSchoolForm is invalid" do
+        context "when LeadPartnerForm is invalid" do
           before do
             allow(lead_partner_form).to receive(:valid?).and_return(false)
           end
@@ -50,7 +50,7 @@ module Schools
           allow(Schools::EmployingSchoolForm).to receive(:new).and_return(employing_school_form)
         end
 
-        context "when LeadSchoolForm is valid" do
+        context "when LeadPartnerForm is valid" do
           before do
             allow(lead_partner_form).to receive(:valid?).and_return(true)
           end
@@ -80,7 +80,7 @@ module Schools
           end
         end
 
-        context "when LeadSchoolForm is invalid" do
+        context "when LeadPartnerForm is invalid" do
           before do
             allow(lead_partner_form).to receive(:valid?).and_return(false)
           end
@@ -133,7 +133,7 @@ module Schools
           it { is_expected.to eq([[]]) }
         end
 
-        context "with invalid LeadSchoolForm form", "feature_routes.school_direct_tuition_fee": true do
+        context "with invalid LeadPartnerForm form", "feature_routes.school_direct_tuition_fee": true do
           let(:lead_partner_form) do
             instance_double(
               Partners::LeadPartnerForm,
@@ -151,7 +151,7 @@ module Schools
 
           it { is_expected.to include([:lead_partner_id]) }
 
-          context "with invalid LeadSchoolForm and EmployingSchoolForm form", "feature_routes.school_direct_salaried": true, "feature_routes.school_direct_tuition_fee": true do
+          context "with invalid LeadPartnerForm and EmployingSchoolForm form", "feature_routes.school_direct_salaried": true, "feature_routes.school_direct_tuition_fee": true do
             let(:employing_school_form) do
               instance_double(
                 Schools::EmployingSchoolForm,
