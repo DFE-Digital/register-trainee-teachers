@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApiVersionUpdater : ApiVersionService
+class ApiVersionUpdater < ApiVersionService
   def call
     puts "Copying #{old_version} to #{new_version}..."
     files.each do |file|

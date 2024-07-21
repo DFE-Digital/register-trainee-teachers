@@ -61,7 +61,7 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V10
+          module V10Pre
             class TraineeFilterParamsAttributes < Api::V01::TraineeFilterParamsAttributes
             end
           end
@@ -77,7 +77,7 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V10
+          module V10Pre
             module HesaMapper
               class DegreeAttributes < Api::V01::HesaMapper::DegreeAttributes
               end

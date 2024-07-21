@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ApiVersionGenerator : ApiVersionService
+class ApiVersionGenerator < ApiVersionService
   def call
     files.each do |file|
       new_file = new_file_path(file)

@@ -26,7 +26,27 @@ describe Api::GetVersionedItem do
       context "v0.1" do
         item_models.each do |item_model|
           it "#{item_model} has been implemented" do
-            expect(described_class.for(item_type: item_type.to_sym, model: item_model, version: "v0.1")).to be(Object.const_get("Api::V01::#{expected_module(item_type, item_model)}"))
+            expect(
+              described_class.for(
+                item_type: item_type.to_sym,
+                model: item_model,
+                version: "v0.1",
+              ),
+            ).to be(Object.const_get("Api::V01::#{expected_module(item_type, item_model)}"))
+          end
+        end
+      end
+
+      context "v1.0-pre" do
+        item_models.each do |item_model|
+          it "#{item_model} has been implemented" do
+            expect(
+              described_class.for(
+                item_type: item_type.to_sym,
+                model: item_model,
+                version: "v1.0-pre",
+              ),
+            ).to be(Object.const_get("Api::V10Pre::#{expected_module(item_type, item_model)}"))
           end
         end
       end

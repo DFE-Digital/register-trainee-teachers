@@ -60,7 +60,7 @@ RSpec.describe SpecVersionGenerator do
               expect(response.parsed_body).to eq(parsed_trainee)
             end
 
-            describe Api::V10::TraneeService do
+            describe Api::V10Pre::TraneeService do
               # ... code
             end
           end

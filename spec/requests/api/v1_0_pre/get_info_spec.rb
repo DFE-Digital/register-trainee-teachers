@@ -10,13 +10,13 @@ describe "`GET /info` endpoint" do
     get "/api/#{version}/info", headers: { Authorization: token }
   end
 
-  context "using version v0.1" do
-    let(:version) { "v0.1" }
+  context "using version v1.0-pre" do
+    let(:version) { "v1.0-pre" }
 
-    it_behaves_like "a register API endpoint", "/api/v0.1/info", "info_token"
+    it_behaves_like "a register API endpoint", "/api/v1.0-pre/info", "info_token"
 
     it "shows the requested version" do
-      expect(response.parsed_body).to eq({ "status" => "ok", "version" => { "latest" => "v1.0-pre", "requested" => "v0.1" } })
+      expect(response.parsed_body).to eq({ "status" => "ok", "version" => { "latest" => "v1.0-pre", "requested" => "v1.0-pre" } })
     end
   end
 end
