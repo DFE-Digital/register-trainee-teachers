@@ -138,8 +138,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       parsed_body = response.parsed_body[:data]
 
-      expect(parsed_body[:lead_school_not_applicable]).to be(false)
-      expect(parsed_body[:lead_school]).to be_nil
+      expect(parsed_body[:lead_partner_not_applicable]).to be(false)
+      expect(parsed_body[:lead_partner]).to be_nil
       expect(parsed_body[:employing_school_not_applicable]).to be(false)
       expect(parsed_body[:employing_school]).to be_nil
     end
@@ -168,100 +168,105 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(degree.country).to be_nil
     end
 
-    context "with school_attributes" do
+    context "with lead_partner and employing_school attributes" do
       before do
         post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
-      context "when lead_school_urn is blank" do
+      context "when lead_partner_urn is blank" do
         before do
           data.merge(
-            lead_school_urn: "",
+            lead_partner_urn: "",
             employing_school_urn: "900021",
           )
         end
 
-        it "sets lead_school_urn and employing_school_urn to nil" do
-          expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+        it "sets lead_partner_urn and employing_school_urn to nil" do
+          expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
           expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
         end
 
-        it "sets lead_school_not_applicable and employing_school_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+        it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
+          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
           expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
         end
       end
 
-      context "when lead_school_urn is present" do
-        context "when lead_school_urn is not an applicable shool urn" do
+      context "when lead_partner_urn is present" do
+        context "when lead_partner_urn is not an applicable shool urn" do
           let(:params) do
             {
               data: data.merge(
-                lead_school_urn: "900020",
+                lead_partner_urn: "900020",
                 employing_school_urn: "",
               ),
             }
           end
 
-          it "sets lead_school_urn and employing_school_urn to nil" do
-            expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+          it "sets lead_partner_urn and employing_school_urn to nil" do
+            expect(response.parsed_body[:data]).not_to have_key(:lead_school_urn)
+            expect(response.parsed_body[:data]).to have_key(:lead_partner_urn)
+            expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
           end
 
-          it "sets lead_school_not_applicable to true" do
-            expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+          it "sets lead_partner_not_applicable to true" do
+            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
           end
         end
 
-        context "when lead_school_urn is an applicable school urn" do
+        context "when lead_partner_urn is an applicable partner urn" do
           let(:params) do
             {
               data: data.merge(
-                lead_school_urn: lead_school.urn,
+                lead_partner_urn: lead_partner.urn,
                 employing_school_urn: "",
               ),
             }
           end
 
-          context "when lead_school exists" do
-            let(:lead_school) { create(:school, :lead) }
+          context "when lead_partner exists" do
+            let(:lead_partner) { create(:lead_partner, :lead_school) }
 
-            it "sets lead_school_urn to lead_school#urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_school_urn]).to eq(lead_school.urn)
+            it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
+              expect(response.parsed_body[:data]).not_to have_key(:lead_school_urn)
+              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(lead_partner.urn)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
-            it "sets lead_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(false)
+            it "sets lead_partner_not_applicable to false" do
+              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
             end
           end
 
-          context "when lead_school does not exist" do
-            let(:lead_school) { build(:school, :lead) }
+          context "when lead_partner does not exist" do
+            let(:lead_partner) { build(:lead_partner, :lead_school) }
 
-            it "sets lead_school_urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data][:lead_school_urn]).to be_nil
+            it "sets lead_partner_urn and employing_school_urn to nil" do
+              expect(response.parsed_body[:data]).to have_key(:lead_partner_urn)
+              expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
-            it "sets lead_school_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_school_not_applicable]).to be(true)
+            it "sets lead_partner_not_applicable to true" do
+              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
             end
           end
         end
 
         context "when employing_school_urn is present" do
-          context "when lead_school_urn is not an applicable school urn" do
+          context "when lead_partner_urn is not an applicable school urn" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_school_urn: "900020",
+                  lead_partner_urn: "900020",
                   employing_school_urn: "900030",
                 ),
               }
             end
 
             it "sets employing_school_urn to nil" do
+              expect(response.parsed_body[:data]).to have_key(:employing_school_urn)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end
 
@@ -270,11 +275,11 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
           end
 
-          context "when lead_school_urn is an applicable school urn" do
+          context "when lead_partner_urn is an applicable lead partner urn" do
             let(:params) do
               {
                 data: data.merge(
-                  lead_school_urn: "900020",
+                  lead_partner_urn: "900020",
                   employing_school_urn: employing_school.urn,
                 ),
               }

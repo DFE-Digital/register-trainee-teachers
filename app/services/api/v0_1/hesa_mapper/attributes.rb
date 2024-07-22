@@ -13,7 +13,7 @@ module Api
           ethnic_group
           ethnic_background
           employing_school_urn
-          lead_school_urn
+          lead_partner_urn
           application_id
         ].freeze
 
@@ -53,7 +53,7 @@ module Api
           .merge(ethnicity_and_disability_attributes)
           .merge(funding_attributes)
           .merge(training_initiative_attributes)
-          .merge(school_attributes)
+          .merge(lead_partner_and_employing_school_attributes)
           .compact
 
           if update && !disabilities?
@@ -194,19 +194,19 @@ module Api
           ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:funding_method]]
         end
 
-        def school_attributes
+        def lead_partner_and_employing_school_attributes
           attrs = {}
 
-          return attrs if params[:lead_school_urn].blank?
+          return attrs if params[:lead_partner_urn].blank?
 
-          if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_school_urn])
-            attrs.merge!(lead_school_not_applicable: true)
+          if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
+            attrs.merge!(lead_partner_not_applicable: true)
           else
-            lead_school_id = School.find_by(urn: params[:lead_school_urn], lead_school: true)&.id
+            lead_partner_id = LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
 
             attrs.merge!(
-              lead_school_id: lead_school_id,
-              lead_school_not_applicable: lead_school_id.nil?,
+              lead_partner_id: lead_partner_id,
+              lead_partner_not_applicable: lead_partner_id.nil?,
             )
           end
 
