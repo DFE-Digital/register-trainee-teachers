@@ -14,6 +14,7 @@ module Api
         dttp_update_sha
         dormancy_dttp_id
         lead_school_id
+        lead_partner_id
         employing_school_id
         course_allocation_subject_id
         start_academic_cycle_id
@@ -174,7 +175,7 @@ module Api
         {
           employing_school_urn:,
           lead_partner_urn_ukprn:,
-          lead_school_urn:,
+          lead_partner_urn:,
         }
       end
 
@@ -186,8 +187,8 @@ module Api
         @trainee.lead_school&.urn
       end
 
-      def lead_school_urn
-        @trainee.lead_school&.urn
+      def lead_partner_urn
+        @trainee.lead_partner&.urn
       end
 
       def funding_attributes
