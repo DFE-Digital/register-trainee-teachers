@@ -50,7 +50,7 @@ RSpec.describe Api::V01::TraineeSerializer do
         region
         course_education_phase
         course_uuid
-        lead_school_not_applicable
+        lead_partner_not_applicable
         employing_school_not_applicable
         submission_ready
         commencement_status
@@ -71,6 +71,7 @@ RSpec.describe Api::V01::TraineeSerializer do
         course_age_range
         expected_end_date
         employing_school_urn
+        lead_partner_urn
         lead_partner_urn_ukprn
         fund_code
         course_year
@@ -106,6 +107,7 @@ RSpec.describe Api::V01::TraineeSerializer do
         dttp_update_sha
         dormancy_dttp_id
         lead_school_id
+        lead_partner_id
         employing_school_id
         course_allocation_subject_id
         start_academic_cycle_id
