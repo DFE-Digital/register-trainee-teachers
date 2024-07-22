@@ -40,7 +40,7 @@
 #  itt_end_date                    :date
 #  itt_start_date                  :date
 #  last_name                       :text
-#  lead_school_not_applicable      :boolean          default(FALSE)
+#  lead_partner_not_applicable     :boolean          default(FALSE)
 #  middle_names                    :text
 #  outcome_date                    :date
 #  placement_detail                :integer
