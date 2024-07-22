@@ -289,6 +289,50 @@ describe Trainee do
         end
       end
     end
+
+    describe "clear_lead_school_id" do
+      subject { create(:trainee, :with_lead_school) }
+
+      context "when lead_partner_not_applicable is true" do
+        it "changes lead_school_id to nil" do
+          expect {
+            subject.lead_partner_not_applicable = true
+            subject.save!
+          }.to change(subject, :lead_school_id).from(Integer).to nil
+        end
+      end
+
+      context "when lead_partner_not_applicable is false" do
+        it "does not change lead_school_id" do
+          expect {
+            subject.lead_partner_not_applicable = false
+            subject.save!
+          }.to not_change(subject, :lead_school_id)
+        end
+      end
+    end
+
+    describe "clear_lead_partner_id" do
+      subject { create(:trainee, :with_lead_partner) }
+
+      context "when lead_partner_not_applicable is true" do
+        it "changes lead_partner_id to nil" do
+          expect {
+            subject.lead_partner_not_applicable = true
+            subject.save!
+          }.to change(subject, :lead_partner_id).from(Integer).to nil
+        end
+      end
+
+      context "when lead_partner_not_applicable is false" do
+        it "does not change lead_partner_id" do
+          expect {
+            subject.lead_partner_not_applicable = false
+            subject.save!
+          }.to not_change(subject, :lead_partner_id)
+        end
+      end
+    end
   end
 
   context "class methods" do

@@ -370,7 +370,7 @@ class Trainee < ApplicationRecord
   )
 
   before_save :clear_employing_school_id, if: :employing_school_not_applicable?
-  before_save :clear_lead_school_id, if: :lead_school_not_applicable?
+  before_save :clear_lead_school_id, :clear_lead_partner_id, if: :lead_partner_not_applicable?
   before_save :set_submission_ready, if: :awaiting_action?
   before_save :set_academic_cycles
 
@@ -592,6 +592,10 @@ private
 
   def clear_lead_school_id
     self.lead_school_id = nil
+  end
+
+  def clear_lead_partner_id
+    self.lead_partner_id = nil
   end
 
   def set_submission_ready
