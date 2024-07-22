@@ -3,6 +3,14 @@
 shared_examples "school form validations" do |school_id_key|
   before { subject.valid? }
 
+  let(:not_applicable) do
+    if school_id_key == "lead_school_id"
+      "lead_partner_not_applicable"
+    else
+      school_id_key.sub("id", "not_applicable")
+    end
+  end
+
   context "empty form data" do
     let(:params) { { "query" => "w" } }
 
@@ -32,7 +40,7 @@ shared_examples "school form validations" do |school_id_key|
 
   context "school chosen but also marked as not applicable" do
     let(:form_name) { school_id_key.sub("id", "form") }
-    let(:params) { { school_id_key => "1", school_id_key.sub("id", "not_applicable") => "1", query: "school" } }
+    let(:params) { { school_id_key => "1", not_applicable => "1", query: "school" } }
 
     it "returns an error" do
       expect(subject.errors[:query]).to include(
@@ -43,7 +51,7 @@ shared_examples "school form validations" do |school_id_key|
 
   context "school not chosen, but query present and also marked as not applicable" do
     let(:form_name) { school_id_key.sub("id", "form") }
-    let(:params) { { school_id_key.sub("id", "not_applicable") => "1", query: "school" } }
+    let(:params) { { not_applicable => "1", query: "school" } }
 
     it "returns an error" do
       expect(subject.errors[:query]).to include(
