@@ -234,7 +234,7 @@ FactoryBot.define do
     end
 
     trait :with_valid_itt_start_date do
-      itt_start_date { compute_valid_past_itt_start_date }
+      itt_start_date { compute_valid_itt_start_date }
     end
 
     trait :with_course_allocation_subject do
