@@ -154,7 +154,12 @@ $ kubectl -n bat-qa describe pods register-somenumber-of-the-pod
 
 The app:
 ```
-$ kubectl -n bat-qa scale deployment/register-loadtest --replicas 2
+$ kubectl -n bat-qa scale deployment/register-qa --replicas 2
+```
+
+The worker:
+```
+$ kubectl -n bat-qa scale deployment/register-qa-worker --replicas 1
 ```
 
 ### Enter on console
@@ -162,7 +167,6 @@ $ kubectl -n bat-qa scale deployment/register-loadtest --replicas 2
 ```
 kubectl -n bat-qa exec -ti register-loadtest-some-pod-number -- bundle exec rails c
 ```
-
 
 ### Running tasks
 
