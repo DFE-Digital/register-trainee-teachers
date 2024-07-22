@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameLeadSchoolNotApplicableToLeadPartnerNotApplicable < ActiveRecord::Migration[7.1]
   def change
     safety_assured do
