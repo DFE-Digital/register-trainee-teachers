@@ -16,7 +16,7 @@ module SchoolDetails
 
     def school_rows
       [
-        lead_school_row(not_applicable: trainee.lead_school_not_applicable?),
+        lead_school_row(not_applicable: trainee.lead_partner_not_applicable?),
         employing_school_row(not_applicable: trainee.employing_school_not_applicable?),
       ].compact
     end
