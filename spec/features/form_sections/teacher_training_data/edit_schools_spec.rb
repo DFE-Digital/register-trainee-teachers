@@ -24,7 +24,7 @@ feature "edit schools spec" do
     scenario "choosing not applicable for lead school" do
       i_click_on_change_school(:lead_school)
       and_i_am_on_the_edit_lead_school_page
-      and_i_check_lead_school_is_not_applicable
+      and_i_check_lead_partner_is_not_applicable
       and_i_continue
       then_i_am_redirected_to_the_confirm_schools_page
       and_the_lead_school_displays_not_applicable
@@ -154,7 +154,7 @@ private
     edit_employing_school_page.not_applicable_checkbox.check
   end
 
-  def and_i_check_lead_school_is_not_applicable
+  def and_i_check_lead_partner_is_not_applicable
     edit_lead_school_page.not_applicable_checkbox.check
   end
 
