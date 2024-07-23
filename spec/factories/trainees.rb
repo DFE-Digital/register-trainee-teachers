@@ -81,8 +81,13 @@ FactoryBot.define do
       imported_from_hesa
     end
 
-    trait :without_required_placements do
+    trait :with_training_route do
       training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+    end
+
+    trait :without_required_placements do
+      with_training_route
+
       awarded
     end
 
