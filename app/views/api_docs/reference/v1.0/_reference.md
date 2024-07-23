@@ -3531,6 +3531,10 @@ Deletes an existing degree for this trainee.
       <td class="govuk-table__cell govuk-table__cell--numeric">9</td>
     </tr>
     <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Placement.properties.name.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">255</td>
+    </tr>
+    <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Placement.properties.placement_id.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">24</td>
     </tr>
@@ -3557,6 +3561,10 @@ Deletes an existing degree for this trainee.
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Degree.properties.uk_degree.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Degree.properties.non_uk_degree.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">255</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Degree.properties.subject.maxLength</th>
