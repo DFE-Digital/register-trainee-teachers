@@ -14,8 +14,10 @@ unless defined?(AllocationSubjects)
     EARLY_YEARS_ITT = "Early years ITT"
     ECONOMICS = "Economics"
     ENGLISH = "English"
+    FRENCH_LANGUAGE = "French language"
     GENERAL_SCIENCES = "General sciences"
     GEOGRAPHY = "Geography"
+    GERMAN_LANGUAGE = "German language"
     HISTORY = "History"
     MATHEMATICS = "Mathematics"
     MODERN_LANGUAGES = "Modern languages"
@@ -25,5 +27,6 @@ unless defined?(AllocationSubjects)
     PHYSICS = "Physics"
     PRIMARY = "Primary"
     RELIGIOUS_EDUCATION = "Religious education"
+    SPANISH_LANGUAGE = "Spanish language"
   end
 end
