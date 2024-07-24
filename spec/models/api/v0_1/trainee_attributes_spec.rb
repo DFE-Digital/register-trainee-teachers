@@ -30,6 +30,8 @@ RSpec.describe Api::V01::TraineeAttributes do
           let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
 
           before do
+            Timecop.travel academic_cycle.start_date
+
             subject.trainee_start_date = academic_cycle.start_date
           end
 
@@ -54,10 +56,6 @@ RSpec.describe Api::V01::TraineeAttributes do
           context "when AcademicCycle::start_date > 2023" do
             let(:cycle_year) { 2024 }
 
-            before do
-              Timecop.travel academic_cycle.start_date
-            end
-
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
@@ -79,6 +77,10 @@ RSpec.describe Api::V01::TraineeAttributes do
 
           context "when trainee_start_date is not valid" do
             let(:cycle_year) { 2025 }
+
+            before do
+              Timecop.return
+            end
 
             it do
               expect(subject).not_to validate_inclusion_of(:training_route)

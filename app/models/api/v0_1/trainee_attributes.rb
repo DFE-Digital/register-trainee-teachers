@@ -70,6 +70,10 @@ module Api
         hesa_id
       ].freeze
 
+      ITT_REFORM_YEAR = 2024
+
+      private_constant :ITT_REFORM_YEAR
+
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
       attribute :nationalisations_attributes, array: true, default: -> { [] }
@@ -85,17 +89,7 @@ module Api
       validate :validate_trainee_start_date
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
-      validates :training_route, inclusion: {
-        in: lambda do |trainee_attributes|
-          start_year = AcademicCycle.for_date(trainee_attributes.trainee_start_date)&.start_year
-
-          if start_year.to_i > 2023
-            Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-          else
-            Hesa::CodeSets::TrainingRoutes::MAPPING.values
-          end
-        end,
-      }, allow_blank: true, if: -> { errors[:trainee_start_date].blank? }
+      validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
@@ -227,6 +221,22 @@ module Api
       end
 
     private
+
+      def valid_training_routes
+        if start_year.to_i >= ITT_REFORM_YEAR
+          Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+        else
+          Hesa::CodeSets::TrainingRoutes::MAPPING.values
+        end
+      end
+
+      def start_year
+        AcademicCycle.for_date(trainee_start_date)&.start_year
+      end
+
+      def valid_trainee_start_date?
+        errors[:trainee_start_date].blank?
+      end
 
       def validate_trainee_start_date
         return if trainee_start_date.blank?
