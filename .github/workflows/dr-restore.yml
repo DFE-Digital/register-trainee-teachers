@@ -1,0 +1,38 @@
+name: PTR restore for DR test
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - 1856-dr-postgres-point-in-time-restore-github-action
+
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # - name: Set variables
+      #   run: |
+      #     source global_config/qa.sh
+      #     # source global_config/${{ github.event.inputs.environment }}.sh
+      #     echo "STORAGE_ACCOUNT=${RESOURCE_NAME_PREFIX}rttdbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
+      #     echo "RESOURCE_GROUP=${RESOURCE_NAME_PREFIX}-rtt-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
+      #     echo "APP_NAME=register-${CONFIG}" >> $GITHUB_ENV
+
+      - name: PTR postgres
+        uses: DFE-Digital/github-actions/ptr-postgres@1856-dr-postgres-point-in-time-restore-github-action
+        with:
+          resource-group: s189d01-rtt-rv-rg
+          source-server: s189d01-rtt-rv-pg
+          new-server: s189d01-rtt-rv-ptr-pg
+          restore-time: "2024-07-24T06:00:00"
+          cluster: dev6
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_DV_REVIEW_AKS }}
+          # azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', github.event.inputs.environment)] }}
+          # environment: ${{ github.event.inputs.environment }}
+          # backup-file: ${{ github.event.inputs.backup-file }}
