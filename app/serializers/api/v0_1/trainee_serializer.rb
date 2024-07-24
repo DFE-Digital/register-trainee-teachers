@@ -184,7 +184,7 @@ module Api
       end
 
       def lead_partner_urn_ukprn
-        @trainee.lead_partner&.urn
+        @trainee.lead_partner&.ukprn
       end
 
       def lead_partner_urn
