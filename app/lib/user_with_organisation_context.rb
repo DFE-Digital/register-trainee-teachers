@@ -48,6 +48,10 @@ class UserWithOrganisationContext < SimpleDelegator
     organisation.is_a?(Provider)
   end
 
+  def accredited_provider?
+    provider? && organisation.accredited?
+  end
+
   def lead_school?
     organisation.is_a?(School)
   end
