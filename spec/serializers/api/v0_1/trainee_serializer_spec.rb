@@ -72,7 +72,7 @@ RSpec.describe Api::V01::TraineeSerializer do
         expected_end_date
         employing_school_urn
         lead_partner_urn
-        lead_partner_urn_ukprn
+        lead_partner_ukprn
         fund_code
         course_year
         itt_aim
