@@ -31,7 +31,7 @@ describe ReviewDraft::Draft::View do
     let(:trainee) { create(:trainee, :provider_led_postgrad, :with_placement_assignment) }
 
     it "does not render non provider-led sections" do
-      expect(rendered_content).not_to have_text(I18n.t("components.review_draft.draft.schools.titles.tuition"))
+      expect(rendered_content).not_to have_text("#{I18n.t('components.review_draft.draft.schools.titles.tuition')}\n")
     end
   end
 
@@ -40,7 +40,7 @@ describe ReviewDraft::Draft::View do
       let(:trainee) { create(:trainee, route) }
 
       it "renders additional school-direct specific sections" do
-        expect(rendered_content).to have_text(school_details_title(route))
+        expect(rendered_content).to have_text(lead_partner_and_employing_school_details_title(route))
       end
 
       it "does not render non school direct sections" do

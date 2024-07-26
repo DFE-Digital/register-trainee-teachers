@@ -107,6 +107,7 @@ en:
     view:
       summary_title: Schools
       lead_school: &lead_school Lead school
+      lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
     view:
@@ -289,9 +290,10 @@ en:
         reason: Why the trainee withdrew
         details: Details about why the trainee withdrew
         avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
-    school_details:
+    lead_partner_and_employing_school_details:
       summary_title: Schools
       lead_school_key: Lead school
+      lead_partner_key: Lead partner
       employing_school_key: Employing school
     placement_detail: &placement_detail
       title: Placement details
@@ -618,6 +620,7 @@ en:
         training_details: Trainee ID
         placements: Placement details
         lead_school: School details
+        lead_partner: School details
         trainee_data: Trainee data
         schools: Schools
         funding: Funding details
@@ -646,9 +649,11 @@ en:
       draft:
         schools:
           titles:
-            tuition: Lead school
-            salaried: Lead and employing schools
-            pg_teaching_apprenticeship: Lead and employing schools
+            tuition: Lead partner
+            salaried: Lead partner and employing school
+            pg_teaching_apprenticeship: Lead partner and employing school
+            provider_led_postgrad: Lead partner and employing school
+            provider_led_undergrad: Lead partner and employing school
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
@@ -746,9 +751,9 @@ en:
         grade: *degree_path
         graduation_year: *degree_path
         country: *degree_path
-        lead_school_id: &lead_school_path edit_trainee_lead_schools_path
+        lead_partner_id: &lead_partner_path edit_trainee_lead_partners_path
         employing_school_id: edit_trainee_employing_schools_path
-        school_id: *lead_school_path
+        school_id: *lead_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
         trainee_start_date_radio_option: *trainee_start_date_path
         provider_trainee_id: edit_trainee_training_details_path
@@ -804,6 +809,8 @@ en:
         lead_school_id: *lead_school
         employing_school_id: *employing_school
         school_id: *lead_school
+        lead_partner_id: *lead_partner
+        partner_id: *lead_school
         trainee_start_date: *trainee_start_date
         trainee_start_date_radio_option: Trainee’s start date
         provider_trainee_id: *provider_trainee_id
@@ -1169,18 +1176,18 @@ en:
       edit:
         confirm_course: Confirm course
         edit_details: Edit details for this trainee only
-    lead_schools:
+    lead_partners:
       edit:
-        heading: Lead school
-        hint: Search for a lead school by its unique reference number (URN), name or postcode
-        description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        heading: Lead partner
+        hint: Search for a lead partner by its unique reference number (URN), name or postcode
+        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
         not_applicable_details:
-          summary_text: Lead school is not listed, or the trainee is funded or employed privately
-          label_text: Lead school is not applicable
+          summary_text: Lead partner is not listed, or the trainee is funded or employed privately
+          label_text: Lead partner is not applicable
           body:
-            <p class="govuk-body">If the lead school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead school if the trainee is funded or employed privately.</p>
+            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:
         heading: Employing school
@@ -1860,6 +1867,12 @@ en:
               length:
                 one: Enter at least one character
                 other: Enter at least %{count} characters
+        lead_partners_form:
+          attributes:
+            query:
+              length:
+                one: Enter at least one character
+                other: Enter at least %{count} characters
         subject_specialism_form:
           attributes:
             specialism:
@@ -1890,8 +1903,21 @@ en:
           attributes:
             lead_school_id:
               not_valid: The lead school section is not valid for this trainee
+            lead_partner_id:
+              not_valid: The lead school section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
+        partners/lead_partner_form:
+          attributes:
+            query:
+              blank: Enter a partner unique reference number (URN), name or postcode
+              both_fields_are_present: Select a lead school or select lead school not applicable
+            lead_partner_id:
+              blank: Select a lead partner or search again
+            results_search_again_query:
+              blank: Enter a partner unique reference number (URN), name or postcode
+            no_results_search_again_query:
+              blank: Enter a partner unique reference number (URN), name or postcode
         funding/form_validator:
           attributes:
             training_initiative:

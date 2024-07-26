@@ -173,8 +173,8 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :lead_schools, only: %i[index], path: "/lead-schools"
-      resource :lead_schools, only: %i[update edit], path: "/lead-schools"
+      resources :lead_partners, only: %i[index], path: "/lead-partners"
+      resource :lead_partners, only: %i[update edit], path: "/lead-partners"
       resources :employing_schools, only: %i[index], path: "/employing-schools"
       resource :employing_schools, only: %i[update edit], path: "/employing-schools"
 

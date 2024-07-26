@@ -31,6 +31,7 @@ module Submissions
             personal_details: true,
             course_details: true,
             training_details: true,
+            lead_partner_and_employing_school_details: true,
             funding: true,
             placements: true,
           }
@@ -48,7 +49,7 @@ module Submissions
                 create(
                   :trainee,
                   :school_direct_tuition_fee,
-                  :with_lead_school,
+                  :with_lead_partner,
                   :with_employing_school,
                   :with_placements,
                   :completed,
@@ -99,7 +100,7 @@ module Submissions
                 create(
                   :trainee,
                   :school_direct_tuition_fee,
-                  :with_lead_school,
+                  :with_lead_partner,
                   :with_placements,
                   :completed,
                   progress: progress.merge(schools: true),
@@ -119,7 +120,7 @@ module Submissions
                   create(
                     :trainee,
                     route,
-                    :with_lead_school,
+                    :with_lead_partner,
                     :with_employing_school,
                     :completed,
                     :with_placements,
@@ -170,7 +171,7 @@ module Submissions
                   create(
                     :trainee,
                     route,
-                    :with_lead_school,
+                    :with_lead_partner,
                     :completed,
                     progress: progress.merge(schools: true),
                   )
@@ -235,7 +236,7 @@ module Submissions
         include_examples "error"
 
         context "requires school but incomplete" do
-          let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_school, progress: progress.merge(schools: false)) }
+          let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_partner, progress: progress.merge(schools: false)) }
 
           include_examples "error"
         end

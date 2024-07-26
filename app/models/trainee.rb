@@ -194,7 +194,7 @@ class Trainee < ApplicationRecord
   attribute :progress, Progress.to_type
 
   delegate :award_type,
-           :requires_schools?,
+           :requires_lead_partner?,
            :requires_placements?,
            :requires_employing_school?,
            :early_years_route?,
@@ -207,6 +207,8 @@ class Trainee < ApplicationRecord
            to: :training_route_manager
 
   delegate :update_training_route!, to: :route_data_manager
+
+  alias_attribute :lead_partner_not_applicable, :lead_school_not_applicable
 
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),

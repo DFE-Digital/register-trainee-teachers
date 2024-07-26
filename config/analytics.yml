@@ -312,13 +312,13 @@ shared:
     - updated_at
     - slug
   :withdrawal_reasons:
-  - id
-  - created_at
-  - updated_at
-  - name
+    - id
+    - created_at
+    - updated_at
+    - name
   :trainee_withdrawal_reasons:
-  - id
-  - trainee_id
-  - withdrawal_reason_id
-  - created_at
-  - updated_at
+    - id
+    - trainee_id
+    - withdrawal_reason_id
+    - created_at
+    - updated_at

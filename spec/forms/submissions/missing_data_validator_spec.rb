@@ -84,7 +84,7 @@ module Submissions
       end
 
       context "Trainee with missing placements" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad, :with_lead_partner, :with_employing_school) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)
@@ -115,7 +115,9 @@ module Submissions
                                                             :training_initiative,
                                                             :placements,
                                                             :degree_ids,
-                                                            :trainee_start_date)
+                                                            :trainee_start_date,
+                                                            :employing_school_id,
+                                                            :lead_partner_id)
         end
       end
     end
