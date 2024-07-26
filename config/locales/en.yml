@@ -462,6 +462,9 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
+        lead_schools:
+          edit: Lead school
+          index: Select the lead school
         lead_partners:
           edit: Lead partner
           index: Select the lead partner
