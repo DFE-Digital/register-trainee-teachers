@@ -107,6 +107,7 @@ en:
     view:
       summary_title: Schools
       lead_school: &lead_school Lead school
+      lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
     view:
@@ -619,6 +620,7 @@ en:
         training_details: Trainee ID
         placements: Placement details
         lead_school: School details
+        lead_partner: School details
         trainee_data: Trainee data
         schools: Schools
         funding: Funding details
@@ -807,7 +809,7 @@ en:
         lead_school_id: *lead_school
         employing_school_id: *employing_school
         school_id: *lead_school
-        lead_partner_id: *lead_school
+        lead_partner_id: *lead_partner
         partner_id: *lead_school
         trainee_start_date: *trainee_start_date
         trainee_start_date_radio_option: Trainee’s start date
@@ -1908,14 +1910,14 @@ en:
         partners/lead_partner_form:
           attributes:
             query:
-              blank: Enter a school unique reference number (URN), name or postcode
+              blank: Enter a partner unique reference number (URN), name or postcode
               both_fields_are_present: Select a lead school or select lead school not applicable
             lead_partner_id:
               blank: Select a lead partner or search again
             results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
+              blank: Enter a partner unique reference number (URN), name or postcode
             no_results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
+              blank: Enter a partner unique reference number (URN), name or postcode
         funding/form_validator:
           attributes:
             training_initiative:

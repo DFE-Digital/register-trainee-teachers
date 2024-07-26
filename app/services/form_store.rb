@@ -3,6 +3,7 @@
 class FormStore
   class InvalidKeyError < StandardError; end
 
+  # Will need to remove lead_school when lead_partner transfer is complete
   FORM_SECTION_KEYS = %i[
     contact_details
     publish_course_details
