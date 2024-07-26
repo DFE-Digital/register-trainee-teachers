@@ -40,7 +40,7 @@ class TraineePolicy
 
   attr_reader :user, :trainee, :training_route_manager
 
-  delegate :requires_schools?,
+  delegate :requires_lead_partner?,
            :requires_employing_school?,
            :requires_itt_start_date?,
            to: :training_route_manager

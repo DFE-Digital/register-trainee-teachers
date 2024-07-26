@@ -8,7 +8,7 @@ module Schools
 
     delegate :id, :persisted?, to: :trainee
 
-    validate :validate_lead_partner, if: -> { trainee.requires_schools? }
+    validate :validate_lead_partner, if: -> { trainee.requires_lead_partner? }
     validate :validate_employing_school, if: -> { trainee.requires_employing_school? }
 
     delegate :lead_partner_id, to: :lead_partner_form
@@ -39,7 +39,7 @@ module Schools
 
     def school_forms
       [
-        (lead_partner_form if trainee.requires_schools?),
+        (lead_partner_form if trainee.requires_lead_partner?),
         (employing_school_form if trainee.requires_employing_school?),
       ].compact
     end

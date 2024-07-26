@@ -51,7 +51,7 @@ module Trainees
     end
 
     def authorize_trainee
-      authorize(trainee, :requires_schools?)
+      authorize(trainee, :requires_lead_partner?)
     end
 
     def step_wizard

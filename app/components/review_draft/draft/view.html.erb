@@ -33,7 +33,7 @@
 
       component.with_row(**row_helper(@trainee, :training_details).except(:hint_text))
 
-      if @trainee.requires_schools?
+      if @trainee.requires_lead_partner?
         component.with_row(**row_helper(@trainee, :school_details))
       end
 
