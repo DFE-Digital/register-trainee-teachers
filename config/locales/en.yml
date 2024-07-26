@@ -462,9 +462,6 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
-        lead_schools:
-          edit: Lead school
-          index: Select the lead school
         lead_partners:
           edit: Lead partner
           index: Select the lead partner
@@ -649,7 +646,7 @@ en:
       draft:
         schools:
           titles:
-            tuition: Lead school
+            tuition: Lead partner
             salaried: Lead partner and employing school
             pg_teaching_apprenticeship: Lead partner and employing school
             provider_led_postgrad: Lead partner and employing school
