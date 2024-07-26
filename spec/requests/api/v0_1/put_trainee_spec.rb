@@ -534,7 +534,16 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
       let(:trainee) do
-        create(:trainee, :in_progress, :with_training_route, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:)
+        create(
+          :trainee,
+          :in_progress,
+          :with_lead_partner,
+          :with_training_route,
+          :with_hesa_trainee_detail,
+          :with_diversity_information,
+          ethnic_group:,
+          ethnic_background:,
+        )
       end
 
       before do
