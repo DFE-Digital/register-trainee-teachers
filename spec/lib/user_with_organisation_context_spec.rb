@@ -156,50 +156,6 @@ describe UserWithOrganisationContext do
     end
   end
 
-  describe "#lead_school?" do
-    subject { super().lead_school? }
-
-    context "feature is not enabled" do
-      before do
-        disable_features(:user_can_have_multiple_organisations)
-      end
-
-      it { is_expected.to be(false) }
-    end
-
-    context "multi organisation feature is enabled" do
-      before do
-        enable_features(:user_can_have_multiple_organisations)
-      end
-
-      context "user has multiple organisations" do
-        let(:user) { create(:user, id: 1, lead_schools: [lead_school], lead_partners: [lead_partner], providers: [provider]) }
-
-        context "provider is set in the session" do
-          let(:session) { { current_organisation: { id: lead_school.id, type: "Provider" } } }
-
-          it { is_expected.to be(false) }
-        end
-
-        context "lead partner is set in the session" do
-          let(:session) { { current_organisation: { id: lead_partner.id, type: "LeadPartner" } } }
-
-          it { is_expected.to be(false) }
-        end
-
-        context "lead school is set in the session" do
-          let(:session) { { current_organisation: { id: lead_school.id, type: "School" } } }
-
-          it { is_expected.to be(true) }
-        end
-
-        context "no organisation is set in the session" do
-          it { is_expected.to be(false) }
-        end
-      end
-    end
-  end
-
   describe "#lead_partner?" do
     subject { super().lead_partner? }
 

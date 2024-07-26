@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module UsersHelper
-  def lead_school_user?
-    defined?(current_user) && current_user.respond_to?(:lead_school?) && current_user&.lead_school?
+  def lead_partner_user?
+    defined?(current_user) && current_user.respond_to?(:lead_partner?) && current_user&.lead_partner?
   end
 
   def lead_partner_user?

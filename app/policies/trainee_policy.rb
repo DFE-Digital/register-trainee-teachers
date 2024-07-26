@@ -16,9 +16,7 @@ class TraineePolicy
     attr_reader :user, :scope
 
     def user_scope
-      if user.lead_school?
-        lead_school_scope
-      elsif user.lead_partner?
+      if user.lead_partner?
         lead_partner_scope
       else
         provider_scope
@@ -27,10 +25,6 @@ class TraineePolicy
 
     def provider_scope
       scope.where(provider_id: user.organisation.id).kept
-    end
-
-    def lead_school_scope
-      scope.where(lead_school_id: user.organisation.id).kept
     end
 
     def lead_partner_scope
@@ -96,7 +90,7 @@ class TraineePolicy
   end
 
   def hide_progress_tag?
-    user.lead_school? || user.lead_partner?
+    user.lead_partner?
   end
 
   def allow_actions?

@@ -7,7 +7,7 @@ describe UsersHelper do
 
   describe "#lead_school_user?" do
     describe "lead school user" do
-      let(:current_user) { double(UserWithOrganisationContext, lead_school?: true) }
+      let(:current_user) { double(UserWithOrganisationContext, lead_partner? : true) }
 
       it "returns true" do
         expect(lead_school_user?).to be(true)
@@ -15,7 +15,7 @@ describe UsersHelper do
     end
 
     describe "non-lead school user" do
-      let(:current_user) { double(UserWithOrganisationContext, lead_school?: false) }
+      let(:current_user) { double(UserWithOrganisationContext, lead_partner? : false) }
 
       it "returns false" do
         expect(lead_school_user?).to be(false)
@@ -33,7 +33,7 @@ describe UsersHelper do
     end
 
     describe "non-lead school user" do
-      let(:current_user) { double(UserWithOrganisationContext, lead_school?: false) }
+      let(:current_user) { double(UserWithOrganisationContext, lead_partner? : false) }
 
       it "returns false" do
         expect(lead_school_user?).to be(false)

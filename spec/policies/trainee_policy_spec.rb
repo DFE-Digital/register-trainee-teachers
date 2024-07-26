@@ -302,12 +302,10 @@ describe TraineePolicy do
         UserWithOrganisationContext,
         system_admin?: is_system_admin?,
         organisation: organisation,
-        lead_school?: is_lead_school?,
         lead_partner?: is_lead_partner?,
         provider?: is_provider?,
       )
     end
-    let(:is_lead_school?) { false }
     let(:is_lead_partner?) { false }
     let(:is_provider?) { false }
     let(:is_system_admin?) { false }
@@ -326,30 +324,6 @@ describe TraineePolicy do
 
         context "and the trainee is deleted" do
           let(:trainee) { create(:trainee, :discarded, provider:) }
-
-          it { is_expected.not_to contain_exactly(trainee) }
-        end
-      end
-
-      context "where the trainee is associated with another provider" do
-        let(:trainee) { create(:trainee) }
-
-        it { is_expected.not_to contain_exactly(trainee) }
-      end
-    end
-
-    context "user in lead_school context" do
-      let(:is_lead_school?) { true }
-      let(:lead_school) { create(:school, :lead) }
-      let(:organisation) { lead_school }
-
-      context "where the trainee is associated with the provider" do
-        let(:trainee) { create(:trainee, lead_school:) }
-
-        it { is_expected.to contain_exactly(trainee) }
-
-        context "and the trainee is deleted" do
-          let(:trainee) { create(:trainee, :discarded, lead_school:) }
 
           it { is_expected.not_to contain_exactly(trainee) }
         end

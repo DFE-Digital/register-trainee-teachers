@@ -31,7 +31,7 @@ describe LandingPageController do
       render_views
 
       before do
-        allow(current_user).to receive(:lead_school?).and_return(true)
+        allow(current_user).to receive(:lead_partner?).and_return(true)
       end
 
       it "renders home page" do
