@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_16_123104) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_12_150631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -923,7 +923,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_16_123104) do
     t.integer "application_choice_id"
     t.text "provider_trainee_id"
     t.bigint "lead_partner_id"
-    t.boolean "lead_partner_not_applicable", default: false, null: false
     t.index ["apply_application_id"], name: "index_trainees_on_apply_application_id"
     t.index ["course_allocation_subject_id"], name: "index_trainees_on_course_allocation_subject_id"
     t.index ["course_uuid"], name: "index_trainees_on_course_uuid"

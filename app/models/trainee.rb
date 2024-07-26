@@ -40,7 +40,6 @@
 #  itt_end_date                    :date
 #  itt_start_date                  :date
 #  last_name                       :text
-#  lead_partner_not_applicable     :boolean          default(FALSE), not null
 #  lead_school_not_applicable      :boolean          default(FALSE)
 #  middle_names                    :text
 #  outcome_date                    :date
@@ -208,6 +207,8 @@ class Trainee < ApplicationRecord
            to: :training_route_manager
 
   delegate :update_training_route!, to: :route_data_manager
+
+  alias_attribute :lead_partner_not_applicable, :lead_school_not_applicable
 
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
