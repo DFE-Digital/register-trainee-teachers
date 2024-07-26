@@ -31,7 +31,7 @@ module Submissions
             personal_details: true,
             course_details: true,
             training_details: true,
-            school_details: true,
+            lead_partner_and_employing_school_details: true,
             funding: true,
             placements: true,
           }

@@ -11,7 +11,7 @@ module LeadPartnerHelper
   def lead_partner_row(not_applicable: false)
     mappable_field(
       not_applicable ? t(:not_applicable) : lead_partner_detail(lead_partner),
-      t("components.school_details.lead_partner_key"),
+      t("components.lead_partner_and_employing_school_details.lead_partner_key"),
       change_paths(:lead),
     )
   end

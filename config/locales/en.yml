@@ -290,7 +290,7 @@ en:
         reason: Why the trainee withdrew
         details: Details about why the trainee withdrew
         avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
-    school_details:
+    lead_partner_and_employing_school_details:
       summary_title: Schools
       lead_school_key: Lead school
       lead_partner_key: Lead partner

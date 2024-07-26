@@ -55,9 +55,9 @@ module TaskListHelper
         ).status,
       }
 
-    when :school_details
+    when :lead_partner_and_employing_school_details
       {
-        task_name: school_details_title(trainee.training_route),
+        task_name: lead_partner_and_employing_school_details_title(trainee.training_route),
         path: edit_trainee_lead_partners_path(trainee),
         confirm_path: trainee_schools_confirm_path(trainee),
         classes: "school-details",
@@ -168,7 +168,7 @@ module TaskListHelper
 
 private
 
-  def school_details_title(route)
+  def lead_partner_and_employing_school_details_title(route)
     tuition_title = I18n.t("components.review_draft.draft.schools.titles.tuition")
     salaried_title = I18n.t("components.review_draft.draft.schools.titles.salaried")
     pg_teaching_apprenticeship_title = I18n.t("components.review_draft.draft.schools.titles.pg_teaching_apprenticeship")
