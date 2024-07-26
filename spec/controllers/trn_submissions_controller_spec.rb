@@ -23,9 +23,26 @@ describe TrnSubmissionsController do
           )
         end
 
-        it "calls the SubmitForTrn service" do
-          expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: })
-          post :create, params: { trainee_id: trainee }
+        context "and the provider is accredited" do
+          before do
+            allow(current_user.organisation).to receive(:accredited?).and_return(true)
+          end
+
+          it "calls the SubmitForTrn service" do
+            expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: })
+            post :create, params: { trainee_id: trainee }
+          end
+        end
+
+        context "and the provider is unaccredited" do
+          before do
+            allow(current_user.organisation).to receive(:accredited?).and_return(false)
+          end
+
+          it "calls the SubmitForTrn service" do
+            expect(Trainees::SubmitForTrn).to receive(:call).with({ trainee: })
+            post :create, params: { trainee_id: trainee }
+          end
         end
       end
 

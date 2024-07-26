@@ -17,7 +17,6 @@ class TraineesController < BaseTraineeController
   end
 
   def new
-    skip_authorization
     @trainee = Trainee.new
   end
 

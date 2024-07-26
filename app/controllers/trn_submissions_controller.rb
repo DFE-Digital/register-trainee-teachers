@@ -25,6 +25,6 @@ private
   end
 
   def authorize_trainee
-    authorize(trainee)
+    authorize(trainee, :update?)
   end
 end

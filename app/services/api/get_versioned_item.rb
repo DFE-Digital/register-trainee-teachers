@@ -25,7 +25,7 @@ module Api
     end
 
     def self.module_name(version)
-      version.gsub(".", "").camelize
+      version.gsub(".", "").gsub("-", "_").camelize
     end
 
     def self.class_name(model, item_type)
