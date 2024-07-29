@@ -119,14 +119,8 @@ GEM
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
-    azure-storage-blob (2.0.3)
-      azure-storage-common (~> 2.0)
-      nokogiri (~> 1, >= 1.10.8)
-    azure-storage-common (2.0.4)
-      faraday (~> 1.0)
-      faraday_middleware (~> 1.0, >= 1.0.0.rc1)
-      net-http-persistent (~> 4.0)
-      nokogiri (~> 1, >= 1.10.8)
+    azure-blob (0.4.2)
+      rexml
     base32 (0.3.4)
     base64 (0.2.0)
     benchmark-malloc (0.2.0)
@@ -261,8 +255,6 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
-    faraday_middleware (1.2.0)
-      faraday (~> 1.0)
     ferrum (0.15)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
@@ -780,8 +772,7 @@ DEPENDENCIES
   audited (~> 5.6)
   auto_strip_attributes
   awesome_print
-  azure-storage-blob (~> 2)
-  azure-storage-common (~> 2.0, >= 2.0.4)
+  azure-blob
   base32
   benchmark-memory
   blazer
@@ -808,7 +799,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   faker
-  faraday (~> 1.10.3)
+  faraday
   flamegraph
   foreman
   front_matter_parser
