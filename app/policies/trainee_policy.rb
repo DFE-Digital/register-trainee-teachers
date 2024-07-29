@@ -34,7 +34,7 @@ class TraineePolicy
     end
 
     def lead_partner_scope
-      scope.where(lead_school_id: user.organisation.school&.id).kept
+      scope.where(lead_partner_id: user.organisation.id).kept
     end
   end
 
