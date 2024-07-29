@@ -19,6 +19,8 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   let(:itt_start_date) { "2023-01-01" }
   let(:itt_end_date) { "2023-10-01" }
 
+  let(:endpoint) { "/api/v1.0-pre/trainees" }
+
   let(:data) do
     {
       first_names: "John",
@@ -74,7 +76,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "creates a trainee" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
@@ -83,19 +85,19 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "sets the correct state" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(Trainee.last.state).to eq("submitted_for_trn")
     end
 
     it "sets the correct study_mode" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response.parsed_body[:data][:study_mode]).to eq("63")
     end
 
     it "sets the correct disabilities" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       parsed_body = response.parsed_body[:data]
 
@@ -110,7 +112,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "sets the correct funding attributes" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       parsed_body = response.parsed_body[:data]
 
@@ -126,7 +128,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "sets the correct school attributes" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       parsed_body = response.parsed_body[:data]
 
@@ -137,7 +139,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "creates the degrees if provided in the request body" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       degree_attributes = response.parsed_body[:data][:degrees]&.first
 
@@ -162,7 +164,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
     context "with school_attributes" do
       before do
-        post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       context "when lead_partner_urn is blank" do
@@ -290,7 +292,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       let(:itt_start_date) { "2023-02-30" }
 
       before do
-        post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       it "does not create a trainee record and returns a 422 status with meaningful error message" do
@@ -303,7 +305,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       let(:graduation_year) { "2003-01-01" }
 
       before do
-        post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       it "creates the degrees with the correct graduation_year" do
@@ -317,7 +319,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       let(:graduation_year) { 2003 }
 
       before do
-        post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       it "creates the degrees with the correct graduation_year" do
@@ -354,7 +356,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "creates the placements if provided in the request body" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       placement_attributes = response.parsed_body[:data][:placements]&.first
 
@@ -364,37 +366,37 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     it "returns status code 201" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response).to have_http_status(:created)
     end
 
     it "creates the nationalities" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(Trainee.last.nationalities.first.name).to eq("british")
     end
 
     it "sets the correct course allocation subject" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(Trainee.last.course_allocation_subject).to eq(course_allocation_subject)
     end
 
     it "sets the progress data structure" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(Trainee.last.progress.personal_details).to be(true)
     end
 
     it "sets the record source to `api`" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(Trainee.last.api_record?).to be(true)
     end
 
     it "sets the provider_trainee_id" do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(Trainee.last.provider_trainee_id).to eq("99157234/2/01")
     end
@@ -405,7 +407,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       let(:ethnic_background) { "Another Mixed background" }
 
       before do
-        post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       context "when the ethnicity is provided" do
@@ -473,7 +475,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     context "with course subjects" do
       context "when HasCourseAttributes#primary_education_phase? is true" do
         before do
-          post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+          post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
         end
 
         context "when '100511' is not present" do
@@ -539,7 +541,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
 
         before do
-          post "/api/v1.0-pre/trainees", params: params, headers: { Authorization: token }, as: :json
+          post endpoint, params: params, headers: { Authorization: token }, as: :json
         end
 
         it "sets the correct subjects" do
@@ -558,7 +560,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
     context "with ethnicity" do
       before do
-        post "/api/v1.0-pre/trainees", params: params, headers: { Authorization: token }, as: :json
+        post endpoint, params: params, headers: { Authorization: token }, as: :json
       end
 
       context "when present" do
@@ -600,11 +602,85 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
       end
     end
+
+    context "with training_route" do
+      context "when present" do
+        let(:params) do
+          {
+            data: data.merge(
+              itt_start_date:,
+              training_route:,
+            ),
+          }
+        end
+
+        let(:itt_start_date) { "2023-01-01" }
+        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+        before do
+          post endpoint, params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it do
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body[:data][:training_route]).to eq(training_route)
+        end
+      end
+
+      context "when not present" do
+        let(:params) do
+          {
+            data: data.merge(
+              training_route:,
+            ),
+          }
+        end
+
+        let(:training_route) { nil }
+
+        before do
+          post endpoint, params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route can't be blank")
+        end
+      end
+
+      context "when invalid" do
+        let(:params) do
+          {
+            data: data.merge(
+              itt_start_date: itt_start_date,
+              itt_end_date: itt_end_date,
+              training_route: "12",
+            ),
+          }
+        end
+
+        let(:itt_start_date) { "2024-08-01" }
+        let(:itt_end_date)   { "2025-01-01" }
+
+        let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
+
+        before do
+          Timecop.travel(itt_start_date)
+
+          post endpoint, params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route is not included in the list")
+        end
+      end
+    end
   end
 
   context "when the trainee record is invalid", feature_register_api: true do
     before do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     let(:params) { { data: { email: "Doe" } } }
@@ -670,7 +746,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
   context "when a placement is invalid", feature_register_api: true do
     before do
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     let(:params) { { data: data.merge({ placements_attributes: [{ not_an_attribute: "invalid" }] }) } }
@@ -684,7 +760,8 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   context "when a degree is invalid", feature_register_api: true do
     before do
       params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
-      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
     it "return status code 422 with a meaningful error message" do

@@ -10,7 +10,6 @@ RSpec.describe Api::V01::TraineeAttributes do
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:date_of_birth) }
     it { is_expected.to validate_presence_of(:sex) }
-    it { is_expected.to validate_presence_of(:training_route) }
     it { is_expected.to validate_presence_of(:itt_start_date) }
     it { is_expected.to validate_presence_of(:itt_end_date) }
     it { is_expected.to validate_presence_of(:diversity_disclosure) }
@@ -22,6 +21,75 @@ RSpec.describe Api::V01::TraineeAttributes do
 
     it { is_expected.to validate_inclusion_of(:sex).in_array(Hesa::CodeSets::Sexes::MAPPING.values) }
     it { is_expected.to validate_inclusion_of(:ethnicity).in_array(Hesa::CodeSets::Ethnicities::MAPPING.keys).allow_nil }
+
+    describe "training_route" do
+      it { is_expected.to validate_presence_of(:training_route) }
+
+      describe "inclusion" do
+        context "when trainee_start_date is present" do
+          let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+
+          before do
+            Timecop.travel academic_cycle.start_date
+
+            subject.trainee_start_date = academic_cycle.start_date
+          end
+
+          context "when AcademicCycle#start_date < 2023" do
+            let(:cycle_year) { 2022 }
+
+            it do
+              expect(subject).to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+            end
+          end
+
+          context "when AcademicCycle::start_date == 2023" do
+            let(:cycle_year) { 2023 }
+
+            it do
+              expect(subject).to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+            end
+          end
+
+          context "when AcademicCycle::start_date > 2023" do
+            let(:cycle_year) { 2024 }
+
+            it do
+              expect(subject).to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+            end
+          end
+
+          context "when AcademicCycle::for_date is nil" do
+            let(:cycle_year) { 2024 }
+
+            before do
+              allow(AcademicCycle).to receive(:for_date)
+            end
+
+            it do
+              expect(subject).to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+            end
+          end
+
+          context "when trainee_start_date is not valid" do
+            let(:cycle_year) { 2025 }
+
+            before do
+              Timecop.return
+            end
+
+            it do
+              expect(subject).not_to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+            end
+          end
+        end
+      end
+    end
   end
 
   describe "nested attribute validations" do

@@ -7,6 +7,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     create(
       :trainee,
       :in_progress,
+      :with_training_route,
       :with_hesa_trainee_detail,
       :with_lead_partner,
       :with_employing_school,
@@ -387,6 +388,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             create(
               :trainee,
               :in_progress,
+              :with_training_route,
               :with_hesa_trainee_detail,
               lead_partner_not_applicable: true,
               employing_school_not_applicable: true,
@@ -531,7 +533,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     context "when read only attributes are submitted" do
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
-      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
+      let(:trainee) { create(:trainee, :in_progress, :with_training_route, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
 
       before do
         put(
@@ -604,7 +606,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
 
     describe "with ethnicity" do
-      let(:trainee) { create(:trainee, :in_progress, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
+      let(:trainee) { create(:trainee, :in_progress, :with_training_route, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
 
@@ -675,6 +677,96 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+        end
+      end
+    end
+
+    describe "with training_route" do
+      context "when present" do
+        let(:params) do
+          {
+            data: {
+              itt_start_date:,
+              training_route:,
+            },
+          }
+        end
+
+        let(:itt_start_date) { "2023-01-01" }
+        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body[:data][:training_route]).to eq(training_route)
+        end
+      end
+
+      context "when not present" do
+        let(:params) do
+          {
+            data: {
+              training_route:,
+            },
+          }
+        end
+
+        let(:training_route) { nil }
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it do
+          expect(response).to have_http_status(:ok)
+          expect(response.parsed_body[:data][:training_route]).to eq(
+            Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]],
+          )
+          expect(trainee.reload.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+        end
+      end
+
+      context "when invalid" do
+        let(:params) do
+          {
+            data: {
+              itt_start_date:,
+              itt_end_date:,
+              training_route:,
+            },
+          }
+        end
+
+        let(:itt_start_date) { "2024-08-01" }
+        let(:itt_end_date)   { "2025-01-01" }
+        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
+
+        let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024, next_cycle: true) }
+
+        before do
+          Timecop.travel(itt_start_date)
+
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route is not included in the list")
         end
       end
     end

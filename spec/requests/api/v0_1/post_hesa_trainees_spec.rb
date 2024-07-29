@@ -613,6 +613,80 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         end
       end
     end
+
+    context "with training_route" do
+      context "when present" do
+        let(:params) do
+          {
+            data: data.merge(
+              itt_start_date:,
+              training_route:,
+            ),
+          }
+        end
+
+        let(:itt_start_date) { "2023-01-01" }
+        let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+        before do
+          post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it do
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body[:data][:training_route]).to eq(training_route)
+        end
+      end
+
+      context "when not present" do
+        let(:params) do
+          {
+            data: data.merge(
+              training_route:,
+            ),
+          }
+        end
+
+        let(:training_route) { nil }
+
+        before do
+          post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route can't be blank")
+        end
+      end
+
+      context "when invalid" do
+        let(:params) do
+          {
+            data: data.merge(
+              itt_start_date: itt_start_date,
+              itt_end_date: itt_end_date,
+              training_route: "12",
+            ),
+          }
+        end
+
+        let(:itt_start_date) { "2024-08-01" }
+        let(:itt_end_date)   { "2025-01-01" }
+
+        let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
+
+        before do
+          Timecop.travel(itt_start_date)
+
+          post "/api/v0.1/trainees", params: params, headers: { Authorization: token }, as: :json
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route is not included in the list")
+        end
+      end
+    end
   end
 
   context "when the trainee record is invalid", feature_register_api: true do
