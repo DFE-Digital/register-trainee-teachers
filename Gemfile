@@ -125,13 +125,12 @@ gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.13.0"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
-# version is constrained due to azure-storage-common
-gem "faraday", "~> 1.10.3"
+gem "faraday"
 
 gem "csv-safe"
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
-gem "azure-storage-blob", "~> 2"
+gem "azure-blob"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "rack-attack"
@@ -139,7 +138,6 @@ gem "strong_migrations"
 
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.
-  gem "azure-storage-common", "~> 2.0", ">= 2.0.4"
   gem "cloudfront-rails"
 end
 
