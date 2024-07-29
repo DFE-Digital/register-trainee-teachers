@@ -93,6 +93,7 @@ private
       .group(:training_route)
       .count
       .keys
+      .compact
       .sort_by(&TRAINING_ROUTE_ENUMS.values.method(:index))
   end
 
