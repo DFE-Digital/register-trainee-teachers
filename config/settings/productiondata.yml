@@ -40,7 +40,6 @@ features:
     test_mode: true
     sync_trn_data: false
   register_api: false
-  lead_partners: true
   itt_reform: true
 
 current_recruitment_cycle_year: 2024
