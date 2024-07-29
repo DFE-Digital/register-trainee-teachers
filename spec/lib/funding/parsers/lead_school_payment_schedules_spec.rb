@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Funding
   module Parsers
-    describe LeadSchoolPaymentSchedules do
+    describe LeadPartnerPaymentSchedules do
       context "valid csv" do
         let(:funding_upload) { create(:funding_upload, :lead_school_payment_schedules) }
         let(:expected_urns) { %w[103527 105491 131238 135438] }
