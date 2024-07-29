@@ -257,7 +257,7 @@ describe Reports::TraineeReport do
     end
 
     it "includes the lead_school_name" do
-      expect(subject.lead_school_name).to eq(trainee.lead_school_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_school&.name)
+      expect(subject.lead_school_name).to eq(trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_school&.name)
     end
 
     it "includes the lead_school_urn" do

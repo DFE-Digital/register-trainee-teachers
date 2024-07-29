@@ -193,7 +193,7 @@ current academic cycle.
           "course_education_phase": "primary",
           "applying_for_grant": false,
           "course_uuid": null,
-          "lead_school_not_applicable": false,
+          "lead_partner_not_applicable": false,
           "employing_school_not_applicable": false,
           "submission_ready": true,
           "commencement_status": null,
@@ -217,8 +217,8 @@ current academic cycle.
           "course_age_range": null,
           "expected_end_date": "2023-07-01",
           "employing_school_urn": null,
-          "lead_partner_urn_ukprn": null,
-          "lead_school_urn": null,
+          "lead_partner_ukprn": null,
+          "lead_partner_urn": null,
           "fund_code": "7",
           "bursary_level": "4",
           "course_year": "2",
@@ -346,7 +346,7 @@ Get a single trainee.
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -370,8 +370,8 @@ Get a single trainee.
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -848,7 +848,7 @@ Trainee details
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -872,8 +872,8 @@ Trainee details
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -1332,7 +1332,7 @@ Recommendation details
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -1356,8 +1356,8 @@ Recommendation details
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -1547,7 +1547,7 @@ Recommendation details
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -1571,8 +1571,8 @@ Recommendation details
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -1762,7 +1762,7 @@ Deferral details
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -1786,8 +1786,8 @@ Deferral details
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -1946,7 +1946,7 @@ Deletes an existing degree for this trainee.
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -1970,8 +1970,8 @@ Deletes an existing degree for this trainee.
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -2127,7 +2127,7 @@ Trainee details
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -2151,8 +2151,8 @@ Trainee details
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -2565,7 +2565,7 @@ Deletes an existing placement for this trainee.
         "course_education_phase": "primary",
         "applying_for_grant": false,
         "course_uuid": null,
-        "lead_school_not_applicable": false,
+        "lead_partner_not_applicable": false,
         "employing_school_not_applicable": false,
         "submission_ready": true,
         "commencement_status": null,
@@ -2589,8 +2589,8 @@ Deletes an existing placement for this trainee.
         "course_age_range": null,
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
-        "lead_partner_urn_ukprn": null,
-        "lead_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
         "course_year": "2",
@@ -3098,13 +3098,13 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>lead_school_urn</code></dt>
+    <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string (limited to 6 characters)
       </p>
       <p class="govuk-body">
-        The Unique Reference Number (URN) of the lead school for School Direct trainees.
+        The Unique Reference Number (URN) of the lead partner for trainees.
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
@@ -3503,7 +3503,7 @@ Deletes an existing degree for this trainee.
       <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Trainee.properties.lead_school_urn.maxLength</th>
+      <th scope="row" class="govuk-table__header">Trainee.properties.lead_partner_urn.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
     </tr>
     <tr class="govuk-table__row">

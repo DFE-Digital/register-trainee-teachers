@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_12_150631) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_19_095753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -900,7 +900,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_12_150631) do
     t.boolean "applying_for_scholarship"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
-    t.boolean "lead_school_not_applicable", default: false
+    t.boolean "lead_partner_not_applicable", default: false
     t.boolean "employing_school_not_applicable", default: false
     t.boolean "submission_ready", default: false
     t.integer "commencement_status"

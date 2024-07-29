@@ -299,7 +299,7 @@ module Reports
     end
 
     def lead_school_name
-      trainee.lead_school_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_school&.name
+      trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_school&.name
     end
 
     def lead_school_urn

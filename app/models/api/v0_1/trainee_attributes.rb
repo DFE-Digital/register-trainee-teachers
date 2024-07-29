@@ -46,8 +46,8 @@ module Api
       end
 
       INTERNAL_ATTRIBUTES = {
-        lead_school_id: { type: :integer },
-        lead_school_not_applicable: { type: :boolean, options: { default: false } },
+        lead_partner_id: { type: :integer },
+        lead_partner_not_applicable: { type: :boolean, options: { default: false } },
         employing_school_id: { type: :integer },
         employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
