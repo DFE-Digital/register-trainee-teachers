@@ -35,6 +35,7 @@ azure:
   storage:
     temp_data_access_key: set-me-in-env
     temp_data_acount: set-me-in-env
+    temp_data_container: tempdata
 
 # Used to add feature flags in the app to control access to certain features.
 features:

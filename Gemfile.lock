@@ -119,14 +119,8 @@ GEM
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
-    azure-storage-blob (2.0.3)
-      azure-storage-common (~> 2.0)
-      nokogiri (~> 1, >= 1.10.8)
-    azure-storage-common (2.0.4)
-      faraday (~> 1.0)
-      faraday_middleware (~> 1.0, >= 1.0.0.rc1)
-      net-http-persistent (~> 4.0)
-      nokogiri (~> 1, >= 1.10.8)
+    azure-blob (0.4.2)
+      rexml
     base32 (0.3.4)
     base64 (0.2.0)
     benchmark-malloc (0.2.0)
@@ -261,8 +255,6 @@ GEM
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
-    faraday_middleware (1.2.0)
-      faraday (~> 1.0)
     ferrum (0.15)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
@@ -380,7 +372,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    mechanize (2.10.1)
+    mechanize (2.11.0)
       addressable (~> 2.8)
       base64
       domain_name (~> 0.5, >= 0.5.20190701)
@@ -397,7 +389,7 @@ GEM
     method_source (1.1.0)
     mime-types (3.5.2)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0604)
+    mime-types-data (3.2024.0702)
     mini_mime (1.1.5)
     minitest (5.24.1)
     msgpack (1.7.2)
@@ -472,7 +464,7 @@ GEM
       pry (>= 0.13, < 0.15)
     psych (5.1.2)
       stringio
-    public_suffix (6.0.0)
+    public_suffix (6.0.1)
     puma (6.4.2)
       nio4r (~> 2.0)
     pundit (2.3.2)
@@ -780,8 +772,7 @@ DEPENDENCIES
   audited (~> 5.6)
   auto_strip_attributes
   awesome_print
-  azure-storage-blob (~> 2)
-  azure-storage-common (~> 2.0, >= 2.0.4)
+  azure-blob
   base32
   benchmark-memory
   blazer
@@ -808,7 +799,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   faker
-  faraday (~> 1.10.3)
+  faraday
   flamegraph
   foreman
   front_matter_parser
