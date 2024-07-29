@@ -45,7 +45,7 @@ describe RouteIndicator::View do
 
       it "renders the apply application's course code" do
         expect(component).to have_content("Citizenship (V6X1)")
-        expect(component).to have_content("assessment only route.")
+        expect(component).to have_content("Assessment only route.")
         expect(component).to have_content("recruited to")
       end
     end

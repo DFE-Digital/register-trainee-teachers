@@ -969,7 +969,7 @@ en:
         route_message: Courses imported from the Publish service
         all_courses_message: Your courses in the Publish service
         route_titles:
-          provider_led_postgrad: provider-led postgrad
+          provider_led_postgrad: primary and secondary postgrad
           school_direct_salaried: school direct salaried
           school_direct_tuition_fee: school direct tuition fee
           pg_teaching_apprenticeship: teaching apprenticeship postgrad
@@ -1300,8 +1300,8 @@ en:
           early_years_salaried: Early years graduate employment based
           early_years_undergrad: Early years undergraduate
           iqts: International qualified teacher status (iQTS)
-          provider_led_postgrad: Provider-led (postgrad)
-          provider_led_undergrad: Provider-led (undergrad)
+          provider_led_postgrad: Primary and secondary (postgrad)
+          provider_led_undergrad: Primary and secondary (undergrad)
           school_direct_salaried: School direct (salaried)
           school_direct_tuition_fee: School direct (fee funded)
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
@@ -1320,8 +1320,6 @@ en:
             school_direct_salaried: School direct
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
-          type:
-
         states:
           draft: Draft
           apply_draft: Apply Draft

@@ -64,7 +64,6 @@ module RouteIndicator
     def uncapitalize(training_route)
       return training_route if training_route == "HPITT"
 
-      training_route[0] = training_route[0].downcase
       training_route
     end
 
