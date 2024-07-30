@@ -155,9 +155,9 @@ private
   end
 
   def user_in_lead_partner_context?
-    return false if trainee.lead_school.nil?
+    return false if trainee.lead_partner.nil?
 
-    user&.organisation&.school == trainee.lead_school
+    user&.organisation == trainee.lead_partner
   end
 
   def user_is_system_admin?

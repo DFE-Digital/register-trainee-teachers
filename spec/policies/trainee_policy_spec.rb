@@ -21,6 +21,7 @@ describe TraineePolicy do
   let(:provider_trainee) { create(:trainee, provider:) }
   let(:unaccredited_provider_trainee) { create(:trainee, provider: unaccredited_provider) }
   let(:lead_school_trainee) { create(:trainee, lead_school:) }
+  let(:lead_partner_trainee) { create(:trainee, lead_partner:) }
   let(:hesa_trainee) { create(:trainee, provider: provider, hesa_id: "XXX123") }
 
   subject { described_class }
@@ -36,7 +37,7 @@ describe TraineePolicy do
     it { is_expected.to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.to permit(lead_school_user, lead_school_trainee) }
 
-    it { is_expected.to permit(lead_partner_user, lead_school_trainee) }
+    it { is_expected.to permit(lead_partner_user, lead_partner_trainee) }
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
     it { is_expected.to permit(system_admin_user, lead_school_trainee) }
@@ -49,7 +50,7 @@ describe TraineePolicy do
     it { is_expected.to permit(provider_user, provider_trainee) }
 
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
-    it { is_expected.not_to permit(lead_partner_user, lead_school_trainee) }
+    it { is_expected.not_to permit(lead_partner_user, lead_partner_trainee) }
 
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
     it { is_expected.not_to permit(system_admin_user, provider_trainee) }
@@ -64,7 +65,7 @@ describe TraineePolicy do
     it { is_expected.to permit(provider_user, provider_trainee) }
 
     it { is_expected.not_to permit(lead_school_user, lead_school_trainee) }
-    it { is_expected.not_to permit(lead_partner_user, lead_school_trainee) }
+    it { is_expected.not_to permit(lead_partner_user, lead_partner_trainee) }
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
 
     it { is_expected.to permit(system_admin_user, provider_trainee) }
@@ -293,7 +294,7 @@ describe TraineePolicy do
     it { is_expected.not_to permit(provider_user, provider_trainee) }
     it { is_expected.not_to permit(provider_user, hesa_trainee) }
     it { is_expected.to permit(lead_school_user, lead_school_trainee) }
-    it { is_expected.to permit(lead_partner_user, lead_school_trainee) }
+    it { is_expected.to permit(lead_partner_user, lead_partner_trainee) }
   end
 
   describe TraineePolicy::Scope do

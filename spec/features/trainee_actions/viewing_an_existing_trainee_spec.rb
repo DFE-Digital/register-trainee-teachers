@@ -58,7 +58,7 @@ feature "View trainees" do
   end
 
   context "when i am a lead partner user", feature_user_can_have_multiple_organisations: true do
-    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_school: @current_user.lead_partners.lead_school.first.school) }
+    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_partner: @current_user.lead_partners.first) }
 
     background { given_i_am_authenticated_as_a_lead_partner_user }
 
