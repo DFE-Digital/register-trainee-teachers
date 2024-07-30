@@ -85,16 +85,16 @@ module Trainees
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
 
-      context "when lead_school_not_applicable was previously set to true" do
+      context "when lead_partner_not_applicable was previously set to true" do
         before do
-          trainee.update(lead_school_not_applicable: true, lead_school_id: nil)
+          trainee.update(lead_partner_not_applicable: true, lead_school_id: nil)
           described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           trainee.reload
         end
 
-        it "updates the trainee's lead_school and lead_school_not_applicable state" do
+        it "updates the trainee's lead_school and lead_partner_not_applicable state" do
           expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
-          expect(trainee.lead_school_not_applicable).to be false
+          expect(trainee.lead_partner_not_applicable).to be false
         end
       end
 
@@ -137,8 +137,8 @@ module Trainees
           }
         end
 
-        it "marks the trainee's lead school as not applicable" do
-          expect(trainee.lead_school_not_applicable).to be(true)
+        it "marks the trainee's lead partner as not applicable" do
+          expect(trainee.lead_partner_not_applicable).to be(true)
         end
 
         it "marks the trainee's employing school as not applicable" do

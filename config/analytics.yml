@@ -254,7 +254,7 @@ shared:
     - lead_school_id
     - lead_partner_id
     - placement_detail
-    - lead_school_not_applicable
+    - lead_partner_not_applicable
     - outcome_date
     - placement_assignment_dttp_id
     - progress

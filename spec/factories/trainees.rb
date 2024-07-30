@@ -81,8 +81,13 @@ FactoryBot.define do
       imported_from_hesa
     end
 
-    trait :without_required_placements do
+    trait :with_training_route do
       training_route { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+    end
+
+    trait :without_required_placements do
+      with_training_route
+
       awarded
     end
 
@@ -540,6 +545,16 @@ FactoryBot.define do
                     recruitment_cycle_year: evaluator.recruitment_cycle_year)
 
         trainee.reload
+      end
+    end
+
+    trait :with_lead_partner do
+      transient do
+        record_type { :lead_school }
+      end
+
+      after(:create) do |trainee, evaluator|
+        FactoryBot.create(:lead_partner, evaluator.record_type, trainees: [trainee])
       end
     end
 

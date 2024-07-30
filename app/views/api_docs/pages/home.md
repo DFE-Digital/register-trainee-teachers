@@ -47,20 +47,20 @@ For example, the following request updates the trainee record identified by `id`
 `gQGecNYwLCqPMTgzW7N2bURi`.
 
 ```
-PUT https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainees/gQGecNYwLCqPMTgzW7N2bURi
+PUT https://www.register-trainee-teachers.service.gov.uk/api/v1.0-pre/trainees/gQGecNYwLCqPMTgzW7N2bURi
 ```
 
 You can obtain `id` values from the following request which returns the list of
 trainees for the current provider:
 
 ```
-GET https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainees
+GET https://www.register-trainee-teachers.service.gov.uk/api/v1.0-pre/trainees
 ```
 
 Alternatively an `id` value is given as part of the response to a request to create a new trainee record:
 
 ```
-POST https://www.register-trainee-teachers.service.gov.uk/api/v1.0/trainees
+POST https://www.register-trainee-teachers.service.gov.uk/api/v1.0-pre/trainees
 ```
 
 ## Reference data and data encoding
