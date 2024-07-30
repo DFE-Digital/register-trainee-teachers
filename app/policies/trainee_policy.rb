@@ -16,10 +16,10 @@ class TraineePolicy
     attr_reader :user, :scope
 
     def user_scope
-      if user.lead_school?
-        lead_school_scope
-      elsif user.lead_partner?
+      if user.lead_partner?
         lead_partner_scope
+      elsif user.lead_school?
+        lead_school_scope
       else
         provider_scope
       end
