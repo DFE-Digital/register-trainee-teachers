@@ -183,7 +183,7 @@ private
   end
 
   def and_the_training_route_matches_the_course_route
-    expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@other_course.route}").downcase)
+    expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@other_course.route}"))
   end
 
   def when_i_click_change_course_on_the_confirm_course_page
@@ -203,6 +203,6 @@ private
   end
 
   def then_the_school_direct_training_route_is_the_route
-    expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@school_direct_course.route}").downcase)
+    expect(review_draft_page).to have_content(I18n.t("activerecord.attributes.trainee.training_routes.#{@school_direct_course.route}"))
   end
 end
