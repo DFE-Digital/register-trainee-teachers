@@ -38,16 +38,6 @@ module Personas
       end
     end
 
-    context "multiple lead schools" do
-      let(:persona) { create(:user, id: persona_id, lead_schools: create_list(:school, 2, :lead)) }
-
-      it "renders the all provider names" do
-        persona.lead_schools.each do |lead_school|
-          expect(component).to have_text(lead_school.name)
-        end
-      end
-    end
-
     context "multiple lead partners" do
       let(:persona) { create(:user, id: persona_id, lead_partners: create_list(:lead_partner, 2, :lead_school)) }
 
