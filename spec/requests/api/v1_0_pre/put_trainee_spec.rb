@@ -533,7 +533,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     context "when read only attributes are submitted" do
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
-      let(:trainee) { create(:trainee, :in_progress, :with_training_route, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
+      let(:trainee) { create(:trainee, :in_progress, :with_training_route, :with_lead_partner, :with_employing_school, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
 
       before do
         put(
@@ -606,7 +606,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
 
     describe "with ethnicity" do
-      let(:trainee) { create(:trainee, :in_progress, :with_training_route, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
+      let(:trainee) { create(:trainee, :in_progress, :with_training_route, :with_lead_partner, :with_employing_school, :with_hesa_trainee_detail, :with_diversity_information, ethnic_group:, ethnic_background:) }
       let(:ethnic_background) { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
 
