@@ -1864,11 +1864,13 @@ en:
           attributes:
             specialism:
               blank: Select a specialism
-        schools/lead_partner_form:
+        schools/lead_school_form:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
               both_fields_are_present: Select a lead partner or select lead partner not applicable
+            lead_school_id:
+              blank: Select a lead school or search again
             lead_partner_id:
               blank: Select a lead partner or search again
             results_search_again_query:
@@ -1888,8 +1890,10 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
         schools/form_validator:
           attributes:
-            lead_partner_id:
+            lead_school_id:
               not_valid: The lead partner section is not valid for this trainee
+            lead_partner_id:
+              not_valid: The lead school section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
         funding/form_validator:

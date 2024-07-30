@@ -28,7 +28,7 @@ module Schools
             allow(lead_school_form).to receive(:valid?).and_return(false)
           end
 
-          it "returns an error for the lead_school_id key" do
+          it "returns an error for the lead_partner_id key" do
             subject.valid?
 
             expect(subject.errors[:lead_school_id]).to include(
