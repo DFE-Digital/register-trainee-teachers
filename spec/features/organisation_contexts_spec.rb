@@ -22,11 +22,6 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       then_i_can_see_trainees_belonging_to_that_provider
     end
 
-    scenario "setting a lead school context" do
-      when_i_click_on_a_lead_school_link
-      then_i_am_redirected_to_the_start_page
-    end
-
     context "when the lead_partner feature is enabled", feature_lead_partners: true do
       scenario "settings lead partner context" do
         when_i_click_on_a_lead_partner_link
@@ -81,10 +76,6 @@ private
   def when_i_click_on_a_provider_link
     @provider = multi_organisation_user.providers.first
     organisations_index_page.provider_links.find { |link| link.text == provider.name }.click
-  end
-
-  def when_i_click_on_a_lead_school_link
-    organisations_index_page.lead_school_links.find { |link| link.text == lead_school.name }.click
   end
 
   def when_i_click_on_a_lead_partner_link

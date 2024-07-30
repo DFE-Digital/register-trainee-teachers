@@ -17,15 +17,6 @@ describe "trainees/_record_completion_filter", "feature_routes.provider_led_post
   end
 
   context "placements enabled", feature_placements: true do
-    context "with a lead school user" do
-      let(:lead_school_user?) { true }
-      let(:lead_partner_user?) { false }
-
-      it "does not render the record completion filter" do
-        expect(rendered).to be_empty
-      end
-    end
-
     context "with a lead partner user" do
       let(:lead_school_user?) { false }
       let(:lead_partner_user?) { true }
