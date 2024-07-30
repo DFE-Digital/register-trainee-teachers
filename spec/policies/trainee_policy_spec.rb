@@ -368,22 +368,28 @@ describe TraineePolicy do
       let(:lead_partner) { create(:lead_partner, :lead_school, school: lead_school) }
       let(:organisation) { lead_partner }
 
-      context "where the trainee is associated with the provider" do
-        let(:trainee) { create(:trainee, lead_school:) }
+      context "where the trainee is associated with the lead partner" do
+        let(:trainee) { create(:trainee, lead_partner:) }
 
         it { is_expected.to contain_exactly(trainee) }
 
         context "and the trainee is deleted" do
-          let(:trainee) { create(:trainee, :discarded, lead_school:) }
+          let(:trainee) { create(:trainee, :discarded, lead_partner:) }
 
-          it { is_expected.not_to contain_exactly(trainee) }
+          it { is_expected.not_to include(trainee) }
         end
+      end
+
+      context "where the trainee is associated with the lead school" do
+        let(:trainee) { create(:trainee, lead_school:) }
+
+        it { is_expected.not_to include(trainee) }
       end
 
       context "where the trainee is associated with another provider" do
         let(:trainee) { create(:trainee) }
 
-        it { is_expected.not_to contain_exactly(trainee) }
+        it { is_expected.not_to include(trainee) }
       end
     end
 
