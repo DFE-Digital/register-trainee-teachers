@@ -4,4 +4,18 @@
   <li> new trainees for the <%= @current_academic_cycle_label %> academic year - for census sign off </li>
   <li> trainees who studied in the <%= @previous_academic_cycle_label %> academic year - for performance profiles sign off</li>
 </ul>
-<p class="govuk-body">You can read <%= govuk_link_to "guidance about signing off performance profiles", performance_profiles_guidance_path, id: "performance-profiles-guidance" %>.</p>
+<p class="govuk-body">You can read guidance about signing off:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>
+    <%= govuk_link_to(
+          "#{@census_sign_off} census data",
+          census_sign_off_guidance_path,
+          ) %>
+  </li>
+  <li>
+    <%= govuk_link_to(
+          "#{@performance_sign_off} performance profiles data",
+          performance_profiles_guidance_path,
+          ) %>
+  </li>
+</ul>
