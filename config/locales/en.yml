@@ -91,7 +91,7 @@ en:
           title: Grants breakdown
       column_headings:
         amount_per_trainee: Amount per trainee
-        lead_school: Lead school
+        lead_school: Lead partner
         payment_type: Payment type
         route_and_course: Route and course
         route: Route
@@ -106,7 +106,7 @@ en:
   schools:
     view:
       summary_title: Schools
-      lead_school: &lead_school Lead school
+      lead_school: &lead_school Lead partner
       employing_school: &employing_school Employing school
   record_details:
     view:
@@ -291,7 +291,7 @@ en:
         avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
     school_details:
       summary_title: Schools
-      lead_school_key: Lead school
+      lead_school_key: Lead partner
       employing_school_key: Employing school
     placement_detail: &placement_detail
       title: Placement details
@@ -346,8 +346,8 @@ en:
         index: Upload funding information
         confirmation: File processed successfully
         new:
-          lead_school_trainee_summary: Upload lead school trainee funding payments
-          lead_school_payment_schedule: Upload lead school funding payments
+          lead_school_trainee_summary: Upload lead partner trainee funding payments
+          lead_school_payment_schedule: Upload lead partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
       pending_trns:
@@ -461,8 +461,8 @@ en:
           date_updated: Date updated
           last_name: Last name
         lead_schools:
-          edit: Lead school
-          index: Select the lead school
+          edit: Lead partner
+          index: Select the lead partner
         lead_partners:
           edit: Lead partner
           index: Select the lead partner
@@ -510,7 +510,7 @@ en:
       schools:
         index: Schools
       lead_schools:
-        index: Lead schools
+        index: Lead partners
       lead_partners:
         index: Lead partners
       search_schools:
@@ -646,13 +646,13 @@ en:
       draft:
         schools:
           titles:
-            tuition: Lead school
+            tuition: Lead partner
             salaried: Lead and employing schools
             pg_teaching_apprenticeship: Lead and employing schools
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
-        lead_school_user: "Associated with <strong>%{lead_school_name}</strong> and can view trainees assigned to that lead school."
+        lead_school_user: "Associated with <strong>%{lead_school_name}</strong> and can view trainees assigned to that lead partner."
         lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that lead partner."
     state_tag:
       trainee:
@@ -1171,16 +1171,16 @@ en:
         edit_details: Edit details for this trainee only
     lead_schools:
       edit:
-        heading: Lead school
+        heading: Lead partner
         hint: Search for a school by its unique reference number (URN), name or postcode
-        description: The lead school is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
         not_applicable_details:
-          summary_text: Lead school is not listed, or the trainee is funded or employed privately
-          label_text: Lead school is not applicable
+          summary_text: Lead partner is not listed, or the trainee is funded or employed privately
+          label_text: Lead partner is not applicable
           body:
-            <p class="govuk-body">If the lead school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead school if the trainee is funded or employed privately.</p>
+            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:
         heading: Employing school
@@ -1191,7 +1191,7 @@ en:
           body:
             <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p class="govuk-body">You do not need to provide a lead school if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
@@ -1477,7 +1477,7 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
               length: Enter at least two characters
             lead_school_id:
-              blank: Select a lead school or search again
+              blank: Select a lead partner or search again
             results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
@@ -1576,7 +1576,7 @@ en:
               provider_trainee_id: Provider trainee ID must match trainee record
               first_names: First name must match trainee record
               last_names: Last name must match trainee record
-              lead_school: Lead school must match trainee record
+              lead_school: Lead partner must match trainee record
               qts_or_eyts: QTS or EYTS must match trainee record
               route: Route must match trainee record
               phase: Phase must match trainee record
@@ -1868,9 +1868,9 @@ en:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
-              both_fields_are_present: Select a lead school or select lead school not applicable
+              both_fields_are_present: Select a lead partner or select lead partner not applicable
             lead_school_id:
-              blank: Select a lead school or search again
+              blank: Select a lead partner or search again
             results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
@@ -1889,7 +1889,7 @@ en:
         schools/form_validator:
           attributes:
             lead_school_id:
-              not_valid: The lead school section is not valid for this trainee
+              not_valid: The lead partner section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
         funding/form_validator:
@@ -2005,8 +2005,8 @@ en:
           heading: Confirm deletion of trainee record
     funding_uploads:
       new:
-        lead_school_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead schools.
-        lead_school_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead schools.
+        lead_school_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead partners.
+        lead_school_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
         provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
         provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
   api:
