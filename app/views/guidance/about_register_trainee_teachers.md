@@ -24,6 +24,7 @@ Accredited providers can use Register to perform tasks for their trainees, such 
 
 Accredited providers can view funding information for the current academic year for eligible trainees. From the main navigation bar under ‘Funding’, you will see monthly payments paid and predicted to be paid for scholarships and bursaries.
 
+//TODO: What should this documentation be now?
 ### Access for lead schools
 
 Lead schools that deliver School Direct ITT courses in partnership with accredited providers can use Register to:
@@ -63,4 +64,3 @@ The ITT census happens in September and October every year. We‘ll notify you a
 Every academic year the DfE publishes data on GOV.UK of how many people have successfully completed their teacher training.
 
 Training providers must update their trainee data every January from the previous academic year.
-
