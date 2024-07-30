@@ -10,7 +10,6 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       given_i_visit_the_organisations_page
       then_i_am_redirected_to_the_organisations_page
       then_i_can_see_a_list_of_my_providers
-      then_i_can_see_a_list_of_my_lead_schools
     end
 
     scenario "setting a provider context" do
@@ -63,10 +62,6 @@ private
 
   def then_i_can_see_a_list_of_my_providers
     expect(organisations_index_page.provider_links.map(&:text)).to match_array(multi_organisation_user.providers.map(&:name))
-  end
-
-  def then_i_can_see_a_list_of_my_lead_schools
-    expect(organisations_index_page.lead_school_links.map(&:text)).to match_array(multi_organisation_user.lead_schools.map(&:name))
   end
 
   def given_a_trainee_exists_that_belongs_the_provider

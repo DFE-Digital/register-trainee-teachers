@@ -13,7 +13,7 @@ feature "edit schools spec" do
     end
 
     scenario "changing the lead school", js: true do
-      i_click_on_change_school(:lead_school)
+      i_click_on_change_school(:lead_partner)
       and_i_am_on_the_edit_lead_school_page
       and_i_fill_in_my_lead_school
       and_i_click_the_first_item_in_the_list_lead_school
@@ -22,7 +22,7 @@ feature "edit schools spec" do
     end
 
     scenario "choosing not applicable for lead school" do
-      i_click_on_change_school(:lead_school)
+      i_click_on_change_school(:lead_partner)
       and_i_am_on_the_edit_lead_school_page
       and_i_check_lead_partner_is_not_applicable
       and_i_continue
@@ -59,7 +59,7 @@ feature "edit schools spec" do
     end
 
     scenario "changing the lead school", js: true do
-      i_click_on_change_school(:lead_school)
+      i_click_on_change_school(:lead_partner)
       and_i_am_on_the_edit_lead_school_page
       and_i_fill_in_my_lead_school
       and_i_click_the_first_item_in_the_list_lead_school
