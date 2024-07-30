@@ -1471,13 +1471,13 @@ en:
           attributes:
             trainee:
               incomplete: Review all of the trainee’s details before submitting
-        system_admin/user_lead_partners_form:
+        system_admin/user_lead_schools_form:
           attributes:
             query:
               blank: Enter a school unique reference number (URN), name or postcode
               length: Enter at least two characters
-            lead_partner_id:
-              blank: Select a lead partner or search again
+            lead_school_id:
+              blank: Select a lead school or search again
             results_search_again_query:
               blank: Enter a school unique reference number (URN), name or postcode
             no_results_search_again_query:
