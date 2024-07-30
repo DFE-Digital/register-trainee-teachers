@@ -76,6 +76,9 @@ namespace :example_data do
     employing_schools = FactoryBot.create_list(:school, 50)
     lead_schools = FactoryBot.create_list(:school, 50, lead_school: true)
 
+    # Create some lead partners
+    lead_partners = FactoryBot.create_list(:lead_partner, 50, :lead_school)
+
     # Create some subjects
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
 
@@ -108,11 +111,11 @@ namespace :example_data do
       FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
       FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)
 
-      if persona_attributes[:lead_school]
-        lead_school = School.lead_only.sample
-        LeadSchoolUser.create!(user: persona, lead_school: lead_school)
-        FactoryBot.create(:payment_schedule, :for_full_year, payable: lead_school)
-        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: lead_school)
+      if persona_attributes[:lead_partner]
+        lead_partner = lead_partners.sample
+        LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)
+        FactoryBot.create(:payment_schedule, :for_full_year, payable: lead_partner.school)
+        FactoryBot.create(:trainee_summary, :with_grant_rows, payable: lead_partner.school)
       end
 
       # For each of the course routes enabled...
