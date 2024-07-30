@@ -1901,10 +1901,8 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
         schools/form_validator:
           attributes:
-            lead_school_id:
-              not_valid: The lead school section is not valid for this trainee
             lead_partner_id:
-              not_valid: The lead school section is not valid for this trainee
+              not_valid: The lead partner section is not valid for this trainee
             employing_school_id:
               not_valid: The employing school is not valid for this trainee
         partners/lead_partner_form:
