@@ -24,21 +24,6 @@ Accredited providers can use Register to perform tasks for their trainees, such 
 
 Accredited providers can view funding information for the current academic year for eligible trainees. From the main navigation bar under ‘Funding’, you will see monthly payments paid and predicted to be paid for scholarships and bursaries.
 
-//TODO: What should this documentation be now?
-### Access for lead schools
-
-Lead schools that deliver School Direct ITT courses in partnership with accredited providers can use Register to:
-
-* view trainee records where you’re their lead school
-* view funding information for the current academic year onwards for eligible trainees
-
-Lead schools access to Register is **view only**. As a lead school you cannot:
-
-* add a trainee record
-* change trainee records
-* view draft trainee records
-* view a trainee’s diversity information
-
 ## How trainees are grouped on the Register homepage
 
 When you sign into Register you will see ‘Draft trainees’ and ‘Registered trainees’ sections on the homepage.
