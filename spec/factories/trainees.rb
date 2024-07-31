@@ -570,10 +570,6 @@ FactoryBot.define do
       lead_school factory: %i[school lead]
     end
 
-    trait :with_lead_partner do
-      lead_partner factory: %i[lead_partner lead_school]
-    end
-
     trait :with_employing_school do
       employing_school factory: %i[school]
     end
