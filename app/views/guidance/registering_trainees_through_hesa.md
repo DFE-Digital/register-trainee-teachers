@@ -13,8 +13,8 @@ You’ll be able to view or export trainee data, including your trainees’ teac
 
 If you're in a partnership:
 
-* as an accredited provider you should only use HESA to submit trainees you’re training direct. You should not submit trainee records through HESA on behalf of a lead partner. However, as lead partners do not have edit access to Register, you may need to make subsequent edits on behalf of the lead partner 
-* as a lead partner you should continue to use HESA to submit trainees you are training direct. However, you will not be able to edit those records in Register. You can make amendments through subsequent HESA uploads or your accredited provider will need to make these on your behalf
+* As an accredited provider you should only use HESA to submit trainees you’re training direct. You should not submit trainee records through HESA on behalf of a lead partner. However, as lead partners do not have edit access to Register, you may need to make subsequent edits on behalf of the lead partner.
+* As a lead partner you should continue to use HESA to submit trainees you're training direct. However, you will not be able to edit those records in Register. You can make amendments through subsequent HESA uploads or your accredited provider will need to make these on your behalf.
 
 
 ## How trainees are grouped on the Register homepage
