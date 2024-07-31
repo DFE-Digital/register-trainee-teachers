@@ -22,7 +22,6 @@ features:
   funding: true
   google:
     send_data_to_big_query: true
-  itt_reform: true
 pagination:
   records_per_page: 30
 
