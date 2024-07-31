@@ -169,7 +169,7 @@ title: Register trainee teachers data sharing agreement
   records.
 </p>
 <p class='govuk-body'>
-  When lead schools import Register’s data they have an obligation to
+  When lead partners import Register’s data they have an obligation to
   ensure the data is used in accordance with the rules stated in the
   Third party section of this document.
 </p>
@@ -305,7 +305,7 @@ title: Register trainee teachers data sharing agreement
       trainees and for registering their QTS or EYTS.
     </li>
     <li>
-      lead schools connect to Register to view their funding
+      lead partners connect to Register to view their funding
       information and trainees’ information
     </li>
   </ul>
@@ -591,7 +591,7 @@ title: Register trainee teachers data sharing agreement
   confirmation.
 </p>
 <h3 class='govuk-heading-s'>
-  If you’re a lead school
+  If you’re a lead partner
 </h3>
 <p class='govuk-body'>
   You will have received an email from us asking you to fill out a form where a relevant person from your organisation needs to consent to this data sharing agreement.

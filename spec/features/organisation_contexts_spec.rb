@@ -54,10 +54,6 @@ private
     expect(organisations_index_page.provider_links.map(&:text)).to match_array(multi_organisation_user.providers.map(&:name))
   end
 
-  def then_i_can_see_a_list_of_my_lead_schools
-    expect(organisations_index_page.lead_school_links.map(&:text)).to match_array(multi_organisation_user.lead_schools.map(&:name))
-  end
-
   def given_a_trainee_exists_that_belongs_the_provider
     provider_trainee
   end
@@ -65,10 +61,6 @@ private
   def when_i_click_on_a_provider_link
     @provider = multi_organisation_user.providers.first
     organisations_index_page.provider_links.find { |link| link.text == provider.name }.click
-  end
-
-  def when_i_click_on_a_lead_school_link
-    organisations_index_page.lead_school_links.find { |link| link.text == lead_school.name }.click
   end
 
   def when_i_click_on_a_lead_partner_link

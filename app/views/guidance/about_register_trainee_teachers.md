@@ -73,4 +73,3 @@ The ITT census happens in September and October every year. We‘ll notify you a
 Every academic year the DfE publishes data on GOV.UK of how many people have successfully completed their teacher training.
 
 Training providers must update their trainee data every January from the previous academic year.
-

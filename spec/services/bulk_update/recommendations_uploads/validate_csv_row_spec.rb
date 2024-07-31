@@ -165,7 +165,7 @@ module BulkUpdate
                   "Provider trainee ID must match trainee record",
                   "First name must match trainee record",
                   "Last name must match trainee record",
-                  "Lead school must match trainee record",
+                  "Lead partner must match trainee record",
                   "QTS or EYTS must match trainee record",
                   "Route must match trainee record",
                   "Phase must match trainee record",
