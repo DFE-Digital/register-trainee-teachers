@@ -16,7 +16,7 @@ dfe_sign_in:
 
 features:
   basic_auth: true
-  sign_in_method: otp
+  sign_in_method: dfe-sign-in
   enable_feedback_link: false
   import_courses_from_ttapi: true
   import_applications_from_apply: true
@@ -40,17 +40,6 @@ features:
     test_mode: true
     sync_trn_data: false
   register_api: false
-  itt_reform: true
-
-current_recruitment_cycle_year: 2024
-current_default_course_year: 2024
-
-apply_applications:
-  import:
-    recruitment_cycle_years:
-      - 2024
-  create:
-    recruitment_cycle_year: 2024
 
 environment:
   name: productiondata

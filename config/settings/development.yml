@@ -20,7 +20,6 @@ features:
     opt_in_undergrad: true
     iqts: true
   funding: true
-  itt_reform: true
 
 pagination:
   records_per_page: 30
