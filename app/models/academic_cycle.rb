@@ -75,7 +75,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def current?
-    Time.zone.now >= start_date && Time.zone.now <= end_date
+    (start_date.beginning_of_day..end_date.end_of_day).cover?(Time.zone.now)
   end
 
 private
