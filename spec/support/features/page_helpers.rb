@@ -290,16 +290,16 @@ module Features
       @start_page ||= PageObjects::Start.new
     end
 
-    def lead_schools_search_page
-      @lead_schools_search_page ||= PageObjects::Trainees::LeadSchoolsSearch.new
+    def lead_partners_search_page
+      @lead_partners_search_page ||= PageObjects::Trainees::LeadPartnersSearch.new
     end
 
     def employing_schools_search_page
       @employing_schools_search_page ||= PageObjects::Trainees::EmployingSchoolsSearch.new
     end
 
-    def edit_lead_school_page
-      @edit_lead_school_page ||= PageObjects::Trainees::EditLeadSchool.new
+    def edit_lead_partner_page
+      @edit_lead_partner_page ||= PageObjects::Trainees::EditLeadPartner.new
     end
 
     def edit_employing_school_page
@@ -446,8 +446,8 @@ module Features
       @admin_remove_provider_access_page ||= PageObjects::SystemAdmin::Providers::RemoveAccessConfirmation.new
     end
 
-    def admin_remove_lead_school_access_page
-      @admin_remove_lead_school_access_page ||= PageObjects::SystemAdmin::LeadSchools::RemoveAccessConfirmation.new
+    def admin_remove_lead_partner_access_page
+      @admin_remove_lead_partner_access_page ||= PageObjects::SystemAdmin::Partners::RemoveAccessConfirmation.new
     end
 
     def admin_delete_trainee_reasons_page

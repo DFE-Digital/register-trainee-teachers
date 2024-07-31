@@ -15,7 +15,7 @@ module SchoolHelper
   def lead_school_row(not_applicable: false)
     mappable_field(
       not_applicable ? t(:not_applicable) : school_detail(lead_school),
-      t("components.school_details.lead_school_key"),
+      t("components.lead_partner_and_employing_school_details.lead_school_key"),
       change_paths(:lead),
     )
   end
@@ -25,7 +25,7 @@ module SchoolHelper
 
     mappable_field(
       not_applicable ? t(:not_applicable) : school_detail(employing_school),
-      t("components.school_details.employing_school_key"),
+      t("components.lead_partner_and_employing_school_details.employing_school_key"),
       change_paths(:employing),
     )
   end

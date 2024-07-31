@@ -20,7 +20,6 @@ features:
     opt_in_undergrad: true
     iqts: true
   funding: true
-  lead_partners: true
   itt_reform: true
 
 pagination:

@@ -52,7 +52,6 @@ features:
   sync_trainees_from_dttp: false
   import_trainees_from_dttp: false
   send_emails: false
-  lead_partners: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false
@@ -105,15 +104,15 @@ recruits_api:
   base_url: "https://www.apply-for-teacher-training.service.gov.uk/register-api"
   auth_token: "auth-token-from-env"
 
-current_recruitment_cycle_year: 2023
-current_default_course_year: 2023
+current_recruitment_cycle_year: 2024
+current_default_course_year: 2024
 
 apply_applications:
   import:
     recruitment_cycle_years:
-      - 2023
+      - 2024
   create:
-    recruitment_cycle_year: 2023
+    recruitment_cycle_year: 2024
 
 jobs:
   poll_delay_hours: 1

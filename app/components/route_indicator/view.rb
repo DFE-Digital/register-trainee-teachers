@@ -58,14 +58,7 @@ module RouteIndicator
     end
 
     def training_route_link
-      govuk_link_to(uncapitalize(training_route), edit_trainee_training_route_path(trainee))
-    end
-
-    def uncapitalize(training_route)
-      return training_route if training_route == "HPITT"
-
-      training_route[0] = training_route[0].downcase
-      training_route
+      govuk_link_to(training_route, edit_trainee_training_route_path(trainee))
     end
 
     def course_name

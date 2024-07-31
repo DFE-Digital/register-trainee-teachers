@@ -14,7 +14,7 @@ describe LandingPageController do
   end
 
   context "when signed in and navigate to start page" do
-    let(:current_user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
+    let(:current_user) { UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {}) }
 
     before do
       allow(controller).to receive(:current_user).and_return(current_user)
@@ -27,11 +27,11 @@ describe LandingPageController do
       expect(response).to render_template("home")
     end
 
-    context "lead school user" do
+    context "lead partner user" do
       render_views
 
       before do
-        allow(current_user).to receive(:lead_school?).and_return(true)
+        allow(current_user).to receive(:lead_partner?).and_return(true)
       end
 
       it "renders home page" do

@@ -10,7 +10,6 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       given_i_visit_the_organisations_page
       then_i_am_redirected_to_the_organisations_page
       then_i_can_see_a_list_of_my_providers
-      then_i_can_see_a_list_of_my_lead_schools
     end
 
     scenario "setting a provider context" do
@@ -22,22 +21,9 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       then_i_can_see_trainees_belonging_to_that_provider
     end
 
-    scenario "setting a lead school context" do
-      when_i_click_on_a_lead_school_link
+    scenario "settings lead partner context" do
+      when_i_click_on_a_lead_partner_link
       then_i_am_redirected_to_the_start_page
-    end
-
-    context "when the lead_partner feature is enabled", feature_lead_partners: true do
-      scenario "settings lead partner context" do
-        when_i_click_on_a_lead_partner_link
-        then_i_am_redirected_to_the_start_page
-      end
-    end
-
-    context "when the lead_partner feature is disabled" do
-      scenario "settings lead partner context" do
-        expect(page).not_to have_content("Lead partners")
-      end
     end
   end
 
@@ -56,8 +42,6 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
 
 private
 
-  attr_reader :provider, :lead_school
-
   def given_i_visit_the_organisations_page
     organisations_index_page.load
   end
@@ -70,10 +54,6 @@ private
     expect(organisations_index_page.provider_links.map(&:text)).to match_array(multi_organisation_user.providers.map(&:name))
   end
 
-  def then_i_can_see_a_list_of_my_lead_schools
-    expect(organisations_index_page.lead_school_links.map(&:text)).to match_array(multi_organisation_user.lead_schools.map(&:name))
-  end
-
   def given_a_trainee_exists_that_belongs_the_provider
     provider_trainee
   end
@@ -81,10 +61,6 @@ private
   def when_i_click_on_a_provider_link
     @provider = multi_organisation_user.providers.first
     organisations_index_page.provider_links.find { |link| link.text == provider.name }.click
-  end
-
-  def when_i_click_on_a_lead_school_link
-    organisations_index_page.lead_school_links.find { |link| link.text == lead_school.name }.click
   end
 
   def when_i_click_on_a_lead_partner_link

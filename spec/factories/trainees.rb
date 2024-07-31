@@ -63,7 +63,7 @@ FactoryBot.define do
       ethnic_group { "asian_ethnic_group" }
       disability_disclosure { "disabled" }
       disabled_with_disabilites_disclosed
-      training_initiative { "transition_to_teach" }
+      training_initiative { "now_teach" }
       itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date { itt_start_date + 2.years }
       with_primary_course_details
@@ -238,8 +238,16 @@ FactoryBot.define do
       with_course_allocation_subject
     end
 
+    trait :with_valid_future_itt_start_date do
+      itt_start_date { compute_valid_future_itt_start_date }
+    end
+
     trait :with_valid_itt_start_date do
-      itt_start_date { compute_valid_itt_start_date }
+      itt_start_date { compute_valid_past_itt_start_date }
+    end
+
+    trait :with_valid_past_itt_start_date do
+      itt_start_date { compute_valid_past_itt_start_date }
     end
 
     trait :with_course_allocation_subject do

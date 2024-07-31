@@ -46,6 +46,10 @@ module Schools
       school_applicable? && school_id.to_i.zero?
     end
 
+    def lead_partner_not_selected?
+      partner_applicable? && lead_partner_id.to_i.zero?
+    end
+
     def no_results_searching_again?
       school_id == "no_results_search_again"
     end
@@ -56,6 +60,14 @@ module Schools
 
     def school_not_applicable?
       ActiveModel::Type::Boolean.new.cast(school_not_applicable)
+    end
+
+    def partner_applicable?
+      !partner_not_applicable?
+    end
+
+    def partner_not_applicable?
+      ActiveModel::Type::Boolean.new.cast(partner_not_applicable)
     end
 
   private
@@ -73,6 +85,10 @@ module Schools
     end
 
     def school_not_applicable
+      raise(NotImplementedError)
+    end
+
+    def partner_not_applicable
       raise(NotImplementedError)
     end
 
