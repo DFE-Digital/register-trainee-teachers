@@ -1186,7 +1186,7 @@ en:
           label_text: Lead partner is not applicable
           body:
             <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
-            <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
+            <p class="govuk-body">If you still cannot find the lead partner, contact %{contact_link}</a></p>
             <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
       edit:

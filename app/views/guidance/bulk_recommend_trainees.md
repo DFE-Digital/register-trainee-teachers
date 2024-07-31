@@ -15,7 +15,7 @@ You can change other trainee or course details in an individual trainee’s reco
 
 ## How to bulk recommend trainees for QTS or EYTS
 
-1. Make sure you are signed into Register. Click into ‘Bulk recommend’ in the main navigation.
+1. Make sure you are signed into Register. Click into ‘Bulk updates’ in the main navigation.
 2. Download a CSV file listing the trainees you can recommend for QTS or EYTS.
 3. Fill in the date when each trainee met QTS or EYTS standards.
 4. Upload the CSV file. If there are any errors, fix them and upload the file again.
