@@ -52,7 +52,6 @@ features:
   sync_trainees_from_dttp: false
   import_trainees_from_dttp: false
   send_emails: false
-  lead_partners: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false

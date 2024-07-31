@@ -16,10 +16,10 @@ class TraineePolicy
     attr_reader :user, :scope
 
     def user_scope
-      if user.lead_school?
-        lead_school_scope
-      elsif user.lead_partner?
+      if user.lead_partner?
         lead_partner_scope
+      elsif user.lead_school?
+        lead_school_scope
       else
         provider_scope
       end
@@ -34,13 +34,13 @@ class TraineePolicy
     end
 
     def lead_partner_scope
-      scope.where(lead_school_id: user.organisation.school&.id).kept
+      scope.where(lead_partner_id: user.organisation.id).kept
     end
   end
 
   attr_reader :user, :trainee, :training_route_manager
 
-  delegate :requires_schools?,
+  delegate :requires_lead_partner?,
            :requires_employing_school?,
            :requires_itt_start_date?,
            to: :training_route_manager
@@ -155,9 +155,9 @@ private
   end
 
   def user_in_lead_partner_context?
-    return false if trainee.lead_school.nil?
+    return false if trainee.lead_partner.nil?
 
-    user&.organisation&.school == trainee.lead_school
+    user&.organisation == trainee.lead_partner
   end
 
   def user_is_system_admin?

@@ -2,7 +2,13 @@
 
 module FundingHelper
   def training_initiative_options
-    (ROUTE_INITIATIVES_ENUMS.values - %w[no_initiative troops_to_teachers maths_physics_chairs_programme_researchers_in_schools]).sort
+    (ROUTE_INITIATIVES_ENUMS.values - %w[
+      no_initiative
+      troops_to_teachers
+      maths_physics_chairs_programme_researchers_in_schools
+      transition_to_teach
+      future_teaching_scholars
+    ]).sort
   end
 
   def funding_options(trainee)

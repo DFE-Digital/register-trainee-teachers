@@ -2,8 +2,6 @@
 
 module SystemAdmin
   class LeadPartnersController < ApplicationController
-    before_action { require_feature_flag(:lead_partners) }
-
     def index
       @lead_partners = policy_scope(
         LeadPartner,

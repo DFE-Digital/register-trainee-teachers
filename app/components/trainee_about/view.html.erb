@@ -39,7 +39,7 @@
   <%= render CourseDetails::View.new(data_model: trainee, editable: trainee_editable?) %>
 </div>
 
-<% if trainee.requires_schools? %>
+<% if trainee.requires_lead_partner? %>
   <div class="school-details">
     <%= render SchoolDetails::View.new(trainee: trainee, editable: trainee_editable?)  %>
   </div>

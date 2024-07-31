@@ -2,8 +2,6 @@
 
 module SystemAdmin
   class UserLeadPartnersController < ApplicationController
-    before_action { require_feature_flag(:lead_partners) }
-
     before_action :set_user
     helper_method :query
 

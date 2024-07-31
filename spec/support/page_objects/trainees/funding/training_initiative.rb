@@ -6,7 +6,7 @@ module PageObjects
       class TrainingInitiative < PageObjects::Base
         set_url "/trainees/{id}/funding/training-initiative/edit"
 
-        element :transition_to_teach, "#funding-training-initiatives-form-training-initiative-transition-to-teach-field"
+        element :now_teach, "#funding-training-initiatives-form-training-initiative-now-teach-field"
 
         element :submit_button, "button[type='submit']"
       end

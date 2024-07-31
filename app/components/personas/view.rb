@@ -11,7 +11,7 @@ module Personas
     end
 
     def association_strings
-      provider_strings + lead_school_strings + lead_partner_strings
+      provider_strings + lead_partner_strings
     end
 
   private
@@ -19,12 +19,6 @@ module Personas
     def provider_strings
       @_provider_strings ||= persona.providers.map do |provider|
         t("components.personas.view.provider_user", provider_name: provider.name)
-      end
-    end
-
-    def lead_school_strings
-      @_lead_school_strings ||= persona.lead_schools.map do |lead_school|
-        t("components.personas.view.lead_school_user", lead_school_name: lead_school.name)
       end
     end
 

@@ -194,7 +194,7 @@ class Trainee < ApplicationRecord
   attribute :progress, Progress.to_type
 
   delegate :award_type,
-           :requires_schools?,
+           :requires_lead_partner?,
            :requires_placements?,
            :requires_employing_school?,
            :early_years_route?,

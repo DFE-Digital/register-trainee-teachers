@@ -26,7 +26,7 @@
                            html: { data: { module: "app-users-autocomplete" } } do |f| %>
       <%= f.govuk_text_field :search,
                              label: { text: "Search for a user", size: "s" },
-                             hint: { text: "Search using the person’s name, email, provider or lead school", size: "s" },
+                             hint: { text: "Search using the person’s name, email, accredited provider or lead school", size: "s" },
                              width: "one-half",
                              "data-field" => "users-autocomplete" %>
       <div id="users-autocomplete-element" class="govuk-!-width-one-half" data-field-name="search"></div>
@@ -38,7 +38,7 @@
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Name</th>
         <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Email</th>
-        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Schools</th>
+        <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Lead Partners</th>
         <th scope="col" class="govuk-table__header govuk-!-width-one-fifth no-wrap">Providers</th>
       </tr>
     </thead>
@@ -61,9 +61,9 @@
 
           <td class="govuk-table__cell">
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
-              <% user.lead_schools.each do |lead_school| %>
-                <%= govuk_link_to(lead_school.name,
-                                  lead_school_path(lead_school, context: :users),
+              <% user.lead_partners.each do |lead_partner| %>
+                <%= govuk_link_to(lead_partner.name,
+                                  lead_partner_path(lead_partner, context: :users),
                                   class: "govuk-!-display-block") %>
               <% end %>
             </span>
@@ -86,4 +86,3 @@
   <%= render Paginator::View.new(scope: @users) %>
   </div>
 </div>
-
