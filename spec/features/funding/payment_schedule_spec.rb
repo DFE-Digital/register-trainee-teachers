@@ -5,41 +5,72 @@ require "rails_helper"
 feature "viewing the payment schedule" do
   let(:next_academic_cycle) { build(:academic_cycle, start_date: Time.zone.yesterday + 1.year, end_date: Time.zone.tomorrow + 1.year) }
 
-  background do
-    given_i_am_authenticated
-    and_funding_data_exists
+  context "when User is a Provider" do
+    background do
+      given_i_am_authenticated
+
+      and_funding_data_exists(current_user.providers.first)
+    end
+
+    scenario "viewing payments, predicted payments and payment breakdowns" do
+      given_i_am_on_the_funding_page
+      then_i_should_see_the_actual_payments
+      and_i_should_see_the_predicted_payments
+      and_i_should_see_the_payment_breakdowns
+    end
+
+    scenario "exporting payment schedule" do
+      given_i_am_on_the_funding_page
+      and_i_export_the_results
+      then_i_see_my_exported_data_in_csv_format
+    end
+
+    scenario "no payments this academic year" do
+      allow(AcademicCycle).to receive(:current).and_return(next_academic_cycle)
+
+      given_i_am_on_the_funding_page
+      then_i_should_see_a_message_to_say_there_are_no_payments
+    end
   end
 
-  scenario "viewing payments, predicted payments and payment breakdowns" do
-    given_i_am_on_the_funding_page
-    then_i_should_see_the_actual_payments
-    and_i_should_see_the_predicted_payments
-    and_i_should_see_the_payment_breakdowns
-  end
+  context "when User is a LeadPartner" do
+    background do
+      given_i_am_authenticated_as_a_lead_partner_user
 
-  scenario "exporting payment schedule" do
-    given_i_am_on_the_funding_page
-    and_i_export_the_results
-    then_i_see_my_exported_data_in_csv_format
-  end
+      and_funding_data_exists(current_user.lead_partners.first.school)
+    end
 
-  scenario "no payments this academic year" do
-    allow(AcademicCycle).to receive(:current).and_return(next_academic_cycle)
+    scenario "viewing payments, predicted payments and payment breakdowns" do
+      given_i_am_on_the_funding_page
+      then_i_should_see_the_actual_payments
+      and_i_should_see_the_predicted_payments
+      and_i_should_see_the_payment_breakdowns
+    end
 
-    given_i_am_on_the_funding_page
-    then_i_should_see_a_message_to_say_there_are_no_payments
+    scenario "exporting payment schedule" do
+      given_i_am_on_the_funding_page
+      and_i_export_the_results
+      then_i_see_my_exported_data_in_csv_format
+    end
+
+    scenario "no payments this academic year" do
+      allow(AcademicCycle).to receive(:current).and_return(next_academic_cycle)
+
+      given_i_am_on_the_funding_page
+      then_i_should_see_a_message_to_say_there_are_no_payments
+    end
   end
 
 private
 
-  def and_funding_data_exists
+  def and_funding_data_exists(payable)
     create(:payment_schedule, rows: [
       build(:payment_schedule_row, amounts: [
         build(:payment_schedule_row_amount, month: 1, amount_in_pence: 100),
         build(:payment_schedule_row_amount, month: 2, amount_in_pence: 200),
         build(:payment_schedule_row_amount, month: 3, amount_in_pence: 600, predicted: true),
       ]),
-    ], payable: current_user.providers.first)
+    ], payable: payable)
   end
 
   def given_i_am_on_the_funding_page
