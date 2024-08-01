@@ -525,7 +525,7 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
-        search_hint: Search for a lead partner by its unique reference number (URN), name or postcode
+        search_hint: Search for a lead partner by its unique reference number (URN), name or UKPRN
         search_button: Search again
       service_updates: News and updates
       organisations: Choose organisation

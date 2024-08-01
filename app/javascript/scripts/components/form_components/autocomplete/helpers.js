@@ -6,12 +6,25 @@ export const guard = (data) => {
   return data
 }
 
+const prefixed_result = (prefix, value) => {
+  if (value) {
+    return `${prefix} ${value}`
+  } else {
+    return null;
+  }
+}
+
 const suggestionTemplate = (result) => {
   if (result) {
     if (typeof result === 'string') {
       return result
     } else if (typeof result === 'object') {
-      const hints = [`URN ${result.urn}`, result.town, result.postcode].filter(Boolean)
+      const hints = [
+        prefixed_result('URN', result.urn),
+        prefixed_result('UKPRN', result.ukprn),
+        result.town,
+        result.postcode
+      ].filter(Boolean)
 
       return `${result.name} <span class="autocomplete__option--hint">${hints.join(', ')}</span>`
     }

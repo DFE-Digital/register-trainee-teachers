@@ -25,6 +25,7 @@ module Autocomplete
       context "querying" do
         let!(:lead_partner) { create(:lead_partner, :lead_school, name: "Sheffield School") }
         let!(:lead_partner2) { create(:lead_partner, :lead_school, name: "Cardiff College") }
+        let!(:lead_partner_hei) { create(:lead_partner, :hei, name: "Newbury University") }
 
         context "invalid query" do
           before do
@@ -42,7 +43,7 @@ module Autocomplete
           end
 
           it "returns the lead_partners matching the query only" do
-            expect(json_response["lead_partners"]).to match([lead_partner.as_json(only: %i[id name postcode town urn])])
+            expect(json_response["lead_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
           end
         end
 
@@ -52,7 +53,17 @@ module Autocomplete
           end
 
           it "returns the lead_partners matching the query only" do
-            expect(json_response["lead_partners"]).to match([lead_partner.as_json(only: %i[id name postcode town urn])])
+            expect(json_response["lead_partners"]).to match([lead_partner.as_json(only: %i[id name urn ukprn])])
+          end
+        end
+
+        context "valid query by ukprn" do
+          before do
+            get :index, params: { query: lead_partner_hei.ukprn }
+          end
+
+          it "returns the lead_partners matching the query only" do
+            expect(json_response["lead_partners"]).to match([lead_partner_hei.as_json(only: %i[id name urn ukprn])])
           end
         end
       end
