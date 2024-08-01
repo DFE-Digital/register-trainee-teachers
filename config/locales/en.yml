@@ -91,7 +91,7 @@ en:
           title: Grants breakdown
       column_headings:
         amount_per_trainee: Amount per trainee
-        lead_school: Lead partner
+        lead_partner: Lead partner
         payment_type: Payment type
         route_and_course: Route and course
         route: Route
