@@ -59,4 +59,26 @@ describe LeadPartner do
     it { is_expected.to belong_to(:school).optional }
     it { is_expected.to belong_to(:provider).optional }
   end
+
+  describe "#funding_payment_schedules" do
+    context "when schools exists" do
+      subject(:lead_partner) { create(:lead_partner, :lead_school) }
+
+      it "returns the school#funding_payment_schedules" do
+        expect(lead_partner.funding_payment_schedules).to eq(
+          lead_partner.school.funding_payment_schedules,
+        )
+      end
+    end
+
+    context "when provider exists" do
+      subject(:lead_partner) { create(:lead_partner, :hei) }
+
+      it "returns the provider#funding_payment_schedules" do
+        expect(lead_partner.funding_payment_schedules).to eq(
+          lead_partner.provider.funding_payment_schedules,
+        )
+      end
+    end
+  end
 end
