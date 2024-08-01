@@ -28,7 +28,7 @@
           <% next if scholarship_row[:total] == "—" %>
           <tr class="govuk-table__row">
             <td class="govuk-table__cell"><%= scholarship_row[:route] %><br><%= scholarship_row[:subject] %></td>
-            <td class="govuk-table__cell"><%= scholarship_row[:lead_school] %></td>
+            <td class="govuk-table__cell"><%= scholarship_row[:lead_partner] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= scholarship_row[:trainees] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric"><%= scholarship_row[:amount_per_trainee] %></td>
             <td class="govuk-table__cell govuk-table__cell--numeric no-wrap"><%= scholarship_row[:total] %></td>

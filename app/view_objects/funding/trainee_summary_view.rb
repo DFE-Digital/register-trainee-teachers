@@ -56,7 +56,7 @@ module Funding
         total_amount = amount.number_of_trainees * amount.amount_in_pence
         { route: amount.row.route,
           subject: amount.row.subject,
-          lead_school: format_lead_partner_string(amount),
+          lead_partner: format_lead_partner_string(amount),
           trainees: amount.number_of_trainees,
           amount_per_trainee: format_pounds(amount.amount_in_pence),
           total: format_pounds(total_amount) }
