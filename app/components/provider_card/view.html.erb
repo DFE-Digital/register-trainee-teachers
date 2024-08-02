@@ -7,5 +7,5 @@
   </p>
 
   <%= govuk_tag(text: "Deleted", colour: "red") if provider.discarded? %>
-
+  <%= govuk_tag(text: "Previously accredited", colour: "grey") unless provider.accredited? %>
 </div>
