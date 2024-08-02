@@ -9,7 +9,7 @@ module Autocomplete
 
       render(
         json: {
-          lead_partners: @lead_partner_search.as_json(only: %i[id name urn town postcode]),
+          lead_partners: @lead_partner_search.as_json(only: %i[id name urn ukprn]),
         },
       )
     end
