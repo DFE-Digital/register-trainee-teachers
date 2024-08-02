@@ -57,7 +57,7 @@ feature "Create trainee journey" do
     and_i_should_not_see_school_direct_tuition_fee_route
   end
 
-  scenario "school direct tuition fee radio button should not be shown when itt reform feature set to true", feature_itt_reform: true do
+  scenario "school direct tuition fee radio button should not be shown when itt reform feature set to true" do
     and_i_should_not_see_school_direct_tuition_fee_route
   end
 
