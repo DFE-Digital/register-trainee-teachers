@@ -32,6 +32,7 @@ class LeadPartnerSearch
         .includes(:provider, :school)
         .where("name ilike ?", "%#{query}%")
         .or(LeadPartner.where("urn ilike ?", "%#{query}%"))
+        .or(LeadPartner.where("ukprn ilike ?", "%#{query}%"))
     end
     lead_partners.reorder(:name)
   end

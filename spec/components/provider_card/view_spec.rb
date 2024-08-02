@@ -21,6 +21,17 @@ module ProviderCard
       it "render the correct provider details" do
         expect(rendered_content).to have_text("University of Wantage")
         expect(rendered_content).to have_text("2 users")
+        expect(rendered_content).not_to have_text("Previously accredited")
+      end
+
+      context "when the provider has lost accreditation" do
+        let(:provider) { create(:provider, name: "University of Wantage", accredited: false) }
+
+        it "render the correct provider details and tag to indicate that the provider was previously accredited" do
+          expect(rendered_content).to have_text("University of Wantage")
+          expect(rendered_content).to have_text("2 users")
+          expect(rendered_content).to have_text("Previously accredited")
+        end
       end
     end
   end

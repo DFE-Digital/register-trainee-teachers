@@ -47,4 +47,8 @@ class LeadPartner < ApplicationRecord
   validates :ukprn, presence: true, if: -> { hei? }, uniqueness: { case_sensitive: false, allow_nil: true }
   validates :school, presence: true, if: -> { lead_school? }
   validates :provider, presence: true, if: -> { hei? }
+
+  def funding_payment_schedules
+    school&.funding_payment_schedules || provider&.funding_payment_schedules
+  end
 end
