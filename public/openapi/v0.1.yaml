@@ -54,8 +54,8 @@ paths:
         in: query
         required: false
         schema:
-          type: string
-        example: not-a-number
+          type: integer
+        example: 2023
       - name: api_version
         in: path
         required: true
@@ -85,7 +85,7 @@ paths:
         required: false
         schema:
           type: string
-        example: '2024-03-15T13:15:37.880Z'
+        example: '2023-13-01'
       - name: sort_order
         in: query
         required: false
@@ -100,7 +100,7 @@ paths:
         example: deferred
       responses:
         '200':
-          description: has http status ok
+          description: returns all trainees when no state is provided
           content:
             application/json:
               schema:
@@ -567,7 +567,7 @@ paths:
                     grade_uuid:
                     degree_id: ":slug"
                   state: trn_received
-                  trainee_id: ":trainee_slug"
+                  trainee_id: ":trainee_id"
                   application_id:
                 - first_names: Hedwig
                   last_name: Blick
@@ -656,7 +656,7 @@ paths:
                     grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
                     degree_id: SF8AUw4X5cbeDT7y39zeRv7g
                   state: trn_received
-                  trainee_id: ":slug"
+                  trainee_id: "7RT9MtfwdMYShd3LMGzCfwma"
                   application_id:
                 meta:
                   current_page: 1
@@ -1222,7 +1222,6 @@ paths:
                   application_id:
         '409':
           description: returns status 409 (conflict) with the potential duplicates
-            and does not create a trainee record
           content:
             application/json:
               schema:
@@ -1823,7 +1822,7 @@ paths:
                 course_max_age: 11
                 application_id: 123456
                 lead_partner_urn: '900020'
-  "/api/{api_version}/trainees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -1835,12 +1834,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
-          type: integer
-        example: 12345
+          type: string
+        example: aLRoXzugGHoizMBuRmnvxEaV
       responses:
         '200':
           description: returns the trainee
@@ -2283,7 +2282,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -2917,7 +2916,7 @@ paths:
                 course_max_age: 11
                 provider_trainee_id: 99157234/2/01
                 study_mode: '63'
-  "/api/{api_version}/trainees/{trainee_slug}/defer":
+  "/api/{api_version}/trainees/{trainee_id}/defer":
     post:
       summary: create
       tags:
@@ -2929,7 +2928,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3382,7 +3381,7 @@ paths:
                 errors:
                 - error: UnprocessableEntity
                   message: Defer date can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/degrees":
+  "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
       tags:
@@ -3394,7 +3393,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3481,7 +3480,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3686,7 +3685,7 @@ paths:
                 graduation_year: '2015-01-01'
                 country: XF
                 locale_code: uk
-  "/api/{api_version}/trainees/{trainee_slug}/degrees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -3704,7 +3703,7 @@ paths:
         schema:
           type: string
         example: CXxDRX6up2YKR3nW5Vxny3zS
-      - name: trainee_slug
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -4068,13 +4067,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: rQGjKnyHUhawiLxAVjfh5eYL
-      - name: trainee_slug
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -4205,7 +4204,7 @@ paths:
         schema:
           type: string
         example: H1ZCs1FGBZ3LqUvUzjozxqZA
-      - name: trainee_slug
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -4373,7 +4372,7 @@ paths:
                     past, for example 2014
                 - error: UnprocessableEntity
                   message: Graduation year Enter a valid graduation year
-  "/api/{api_version}/trainees/{trainee_slug}/placements":
+  "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index
       tags:
@@ -4385,12 +4384,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: ":trainee_slug"
+        example: ":trainee_id"
       responses:
         '200':
           description: has http status ok
@@ -4583,7 +4582,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -4595,13 +4594,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: non-existant
-      - name: trainee_slug
+        example: hDJL6aTDegbaz5kr8b2UuKT5
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -5033,18 +5032,18 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
-        example: ":slug"
-      - name: trainee_slug
+        example: "s4Pr1u3vidZhmrQyyntts7AH"
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: ":trainee_slug"
+        example: "SdFyRoX4bcsKVxsuTYGq5JDX"
       responses:
         '200':
           description: has http status ok
@@ -5121,13 +5120,13 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: cEmpVnE3HvqNdfUmMqqDv3bL
-      - name: trainee_slug
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -5170,7 +5169,7 @@ paths:
                 school_id:
       responses:
         '200':
-          description: partial update of an existing placement returns 200 (ok) status
+          description: updates an existing placement and returns a 200 (ok) status
           content:
             application/json:
               schema:
@@ -5262,7 +5261,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/recommend-for-qts":
+  "/api/{api_version}/trainees/{trainee_id}/recommend-for-qts":
     post:
       summary: create
       tags:
@@ -5274,7 +5273,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5727,7 +5726,7 @@ paths:
             example:
               data:
                 qts_standards_met_date: '2024-08-01'
-  "/api/{api_version}/trainees/{trainee_slug}/withdraw":
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
     post:
       summary: create
       tags:
@@ -5739,7 +5738,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -6415,98 +6414,6 @@ paths:
                   database: true
                   redis: false
                   sidekiq_processes: true
-  "/metrics/":
-    get:
-      summary: GET /metrics/
-      responses:
-        '200':
-          description: does not require basic auth
-          content:
-            text/plain:
-              schema:
-                type: string
-              example: |
-                # TYPE register_api_requests_total counter
-                # HELP register_api_requests_total Total number of Register API requests
-                register_api_requests_total{method="DELETE",controller="placements",action="destroy"} 4.0
-                register_api_requests_total{method="POST",controller="withdraw",action="create"} 1.0
-                register_api_requests_total{method="PUT",controller="degrees",action="update"} 6.0
-                register_api_requests_total{method="GET",controller="placements",action="show"} 2.0
-                # TYPE register_api_request_duration_seconds histogram
-                # HELP register_api_request_duration_seconds Request API request duration
-                register_api_request_duration_seconds_bucket{method="DELETE",controller="placements",action="destroy",le="0.1"} 4.0
-                register_api_request_duration_seconds_bucket{method="DELETE",controller="placements",action="destroy",le="0.5"} 4.0
-                register_api_request_duration_seconds_bucket{method="DELETE",controller="placements",action="destroy",le="1"} 4.0
-                register_api_request_duration_seconds_bucket{method="DELETE",controller="placements",action="destroy",le="5"} 4.0
-                register_api_request_duration_seconds_bucket{method="DELETE",controller="placements",action="destroy",le="10"} 4.0
-                register_api_request_duration_seconds_bucket{method="DELETE",controller="placements",action="destroy",le="+Inf"} 4.0
-                register_api_request_duration_seconds_sum{method="DELETE",controller="placements",action="destroy"} 0.071843
-                register_api_request_duration_seconds_count{method="DELETE",controller="placements",action="destroy"} 4.0
-                register_api_request_duration_seconds_bucket{method="POST",controller="withdraw",action="create",le="0.1"} 1.0
-                register_api_request_duration_seconds_bucket{method="POST",controller="withdraw",action="create",le="0.5"} 1.0
-                register_api_request_duration_seconds_bucket{method="POST",controller="withdraw",action="create",le="1"} 1.0
-                register_api_request_duration_seconds_bucket{method="POST",controller="withdraw",action="create",le="5"} 1.0
-                register_api_request_duration_seconds_bucket{method="POST",controller="withdraw",action="create",le="10"} 1.0
-                register_api_request_duration_seconds_bucket{method="POST",controller="withdraw",action="create",le="+Inf"} 1.0
-                register_api_request_duration_seconds_sum{method="POST",controller="withdraw",action="create"} 0.073786
-                register_api_request_duration_seconds_count{method="POST",controller="withdraw",action="create"} 1.0
-                register_api_request_duration_seconds_bucket{method="PUT",controller="degrees",action="update",le="0.1"} 6.0
-                register_api_request_duration_seconds_bucket{method="PUT",controller="degrees",action="update",le="0.5"} 6.0
-                register_api_request_duration_seconds_bucket{method="PUT",controller="degrees",action="update",le="1"} 6.0
-                register_api_request_duration_seconds_bucket{method="PUT",controller="degrees",action="update",le="5"} 6.0
-                register_api_request_duration_seconds_bucket{method="PUT",controller="degrees",action="update",le="10"} 6.0
-                register_api_request_duration_seconds_bucket{method="PUT",controller="degrees",action="update",le="+Inf"} 6.0
-                register_api_request_duration_seconds_sum{method="PUT",controller="degrees",action="update"} 0.193727
-                register_api_request_duration_seconds_count{method="PUT",controller="degrees",action="update"} 6.0
-                register_api_request_duration_seconds_bucket{method="GET",controller="placements",action="show",le="0.1"} 2.0
-                register_api_request_duration_seconds_bucket{method="GET",controller="placements",action="show",le="0.5"} 2.0
-                register_api_request_duration_seconds_bucket{method="GET",controller="placements",action="show",le="1"} 2.0
-                register_api_request_duration_seconds_bucket{method="GET",controller="placements",action="show",le="5"} 2.0
-                register_api_request_duration_seconds_bucket{method="GET",controller="placements",action="show",le="10"} 2.0
-                register_api_request_duration_seconds_bucket{method="GET",controller="placements",action="show",le="+Inf"} 2.0
-                register_api_request_duration_seconds_sum{method="GET",controller="placements",action="show"} 0.0067139999999999995
-                register_api_request_duration_seconds_count{method="GET",controller="placements",action="show"} 2.0
-                # TYPE register_api_unsuccessful_requests_total counter
-                # HELP register_api_unsuccessful_requests_total Total number of unsuccessful Register API requests
-                register_api_unsuccessful_requests_total{method="DELETE",controller="placements",action="destroy",error_code="ActiveRecord::RecordNotFound",error_message="Couldn't find Placement with [WHERE \"placements\".\"trainee_id\" = $1 AND \"placements\".\"slug\" = $2]"} 1.0
-                register_api_unsuccessful_requests_total{method="DELETE",controller="placements",action="destroy",error_code="ActiveRecord::RecordNotFound",error_message="Couldn't find Trainee with [WHERE \"trainees\".\"provider_id\" = $1 AND \"trainees\".\"slug\" = $2]"} 1.0
-                register_api_unsuccessful_requests_total{method="PUT",controller="degrees",action="update",error_code="ActionController::ParameterMissing",error_message="param is missing or the value is empty: data"} 1.0
-                register_api_unsuccessful_requests_total{method="PUT",controller="degrees",action="update",error_code="ActiveRecord::RecordNotFound",error_message="Couldn't find Trainee with [WHERE \"trainees\".\"provider_id\" = $1 AND \"trainees\".\"slug\" = $2]"} 1.0
-                register_api_unsuccessful_requests_total{method="GET",controller="placements",action="show",error_code="ActiveRecord::RecordNotFound",error_message="Couldn't find Placement with [WHERE \"placements\".\"trainee_id\" = $1 AND \"placements\".\"slug\" = $2]"} 1.0
-                # TYPE register_api_response_size_byte histogram
-                # HELP register_api_response_size_byte Response sizes
-                register_api_response_size_byte_bucket{method="DELETE",controller="placements",action="destroy",le="100"} 2.0
-                register_api_response_size_byte_bucket{method="DELETE",controller="placements",action="destroy",le="1000"} 2.0
-                register_api_response_size_byte_bucket{method="DELETE",controller="placements",action="destroy",le="10000"} 4.0
-                register_api_response_size_byte_bucket{method="DELETE",controller="placements",action="destroy",le="100000"} 4.0
-                register_api_response_size_byte_bucket{method="DELETE",controller="placements",action="destroy",le="1000000"} 4.0
-                register_api_response_size_byte_bucket{method="DELETE",controller="placements",action="destroy",le="+Inf"} 4.0
-                register_api_response_size_byte_sum{method="DELETE",controller="placements",action="destroy"} 4660.0
-                register_api_response_size_byte_count{method="DELETE",controller="placements",action="destroy"} 4.0
-                register_api_response_size_byte_bucket{method="POST",controller="withdraw",action="create",le="100"} 0.0
-                register_api_response_size_byte_bucket{method="POST",controller="withdraw",action="create",le="1000"} 0.0
-                register_api_response_size_byte_bucket{method="POST",controller="withdraw",action="create",le="10000"} 1.0
-                register_api_response_size_byte_bucket{method="POST",controller="withdraw",action="create",le="100000"} 1.0
-                register_api_response_size_byte_bucket{method="POST",controller="withdraw",action="create",le="1000000"} 1.0
-                register_api_response_size_byte_bucket{method="POST",controller="withdraw",action="create",le="+Inf"} 1.0
-                register_api_response_size_byte_sum{method="POST",controller="withdraw",action="create"} 2967.0
-                register_api_response_size_byte_count{method="POST",controller="withdraw",action="create"} 1.0
-                register_api_response_size_byte_bucket{method="PUT",controller="degrees",action="update",le="100"} 3.0
-                register_api_response_size_byte_bucket{method="PUT",controller="degrees",action="update",le="1000"} 6.0
-                register_api_response_size_byte_bucket{method="PUT",controller="degrees",action="update",le="10000"} 6.0
-                register_api_response_size_byte_bucket{method="PUT",controller="degrees",action="update",le="100000"} 6.0
-                register_api_response_size_byte_bucket{method="PUT",controller="degrees",action="update",le="1000000"} 6.0
-                register_api_response_size_byte_bucket{method="PUT",controller="degrees",action="update",le="+Inf"} 6.0
-                register_api_response_size_byte_sum{method="PUT",controller="degrees",action="update"} 1292.0
-                register_api_response_size_byte_count{method="PUT",controller="degrees",action="update"} 6.0
-                register_api_response_size_byte_bucket{method="GET",controller="placements",action="show",le="100"} 1.0
-                register_api_response_size_byte_bucket{method="GET",controller="placements",action="show",le="1000"} 2.0
-                register_api_response_size_byte_bucket{method="GET",controller="placements",action="show",le="10000"} 2.0
-                register_api_response_size_byte_bucket{method="GET",controller="placements",action="show",le="100000"} 2.0
-                register_api_response_size_byte_bucket{method="GET",controller="placements",action="show",le="1000000"} 2.0
-                register_api_response_size_byte_bucket{method="GET",controller="placements",action="show",le="+Inf"} 2.0
-                register_api_response_size_byte_sum{method="GET",controller="placements",action="show"} 205.0
-                register_api_response_size_byte_count{method="GET",controller="placements",action="show"} 2.0
   "/ping":
     get:
       summary: ping
@@ -6539,36 +6446,4 @@ paths:
                 - sha
               example:
                 sha: deadbeef
-  "/trainees":
-    get:
-      summary: index
-      tags:
-      - Trainee
-      responses:
-        '302':
-          description: redirects back to the sign in page
-          content:
-            text/html:
-              schema:
-                type: string
-              example: ''
-  "/{path}":
-    get:
-      summary: GET /:path
-      tags: []
-      parameters:
-      - name: path
-        in: path
-        required: true
-        schema:
-          type: string
-        example: accessibility
-      responses:
-        '301':
-          description: redirects paths to register-trainee-teachers.service.gov.uk
-          content:
-            text/html:
-              schema:
-                type: string
-              example: ''
 servers: []
