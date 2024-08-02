@@ -126,7 +126,7 @@ private
                            subject_names: ["Philosophy"])
     @school_direct_course = create(:course_with_subjects,
                                    accredited_body_code: trainee.provider.code,
-                                   route: "school_direct_tuition_fee",
+                                   route: "school_direct_salaried",
                                    subject_names: ["Dance"])
   end
 
@@ -192,7 +192,7 @@ private
 
   def and_i_select_a_different_route
     trainee_edit_training_route_page.training_route_options.find { |o|
-      o.input.value.include?("school_direct_tuition_fee")
+      o.input.value.include?("school_direct_salaried")
     }.choose
     trainee_edit_training_route_page.continue_button.click
   end
