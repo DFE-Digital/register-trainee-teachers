@@ -549,7 +549,7 @@ paths:
                     postcode: Z3E 5JA
                     created_at: '2024-08-02T12:54:55.399Z'
                     updated_at: '2024-08-02T12:54:55.399Z'
-                    placement_id: ":slug"
+                    placement_id: "p7ETRRrj9EVn8LB62xqpqZhh"
                   degrees:
                   - uk_degree: '084'
                     non_uk_degree:
@@ -565,7 +565,7 @@ paths:
                     uk_degree_uuid: 1d6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid:
                     grade_uuid:
-                    degree_id: ":slug"
+                    degree_id: "t8mW6mu6nvCawjB7Gr916dx9"
                   state: trn_received
                   trainee_id: ":trainee_id"
                   application_id:
@@ -4431,7 +4431,7 @@ paths:
                   postcode: WT5 6LA
                   created_at: '2024-08-02T12:54:55.049Z'
                   updated_at: '2024-08-02T12:54:55.049Z'
-                  placement_id: ":slug"
+                  placement_id: "QU8p8ojUcGWA59JH8qdR5kGN"
     post:
       summary: create
       tags:
@@ -5083,7 +5083,7 @@ paths:
                   postcode: W6H 5JF
                   created_at: '2024-08-02T12:54:55.544Z'
                   updated_at: '2024-08-02T12:54:55.544Z'
-                  placement_id: ":slug"
+                  placement_id: "s4Pr1u3vidZhmrQyyntts7AH"
         '404':
           description: returns status 404 with a valid JSON response
           content:
