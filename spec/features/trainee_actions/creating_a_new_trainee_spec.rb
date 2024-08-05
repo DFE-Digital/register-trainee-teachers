@@ -16,48 +16,20 @@ feature "Create trainee journey" do
     and_trainee_record_source_is_set_to_manual
   end
 
-  scenario "setting up an initial provider led record", "feature_routes.provider_led_postgrad": true do
+  scenario "setting up an initial provider led record" do
     and_i_select_provider_led_postgrad_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
   end
 
-  scenario "setting up an initial early years undergrad record", "feature_routes.early_years_undergrad": true do
+  scenario "setting up an initial early years undergrad record" do
     and_i_select_early_years_undergrad_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview
     and_trainee_course_subject_one_set_to_early_years_teaching
   end
 
-  scenario "provider led postgrad radio button not shown when feature set to false", "feature_routes.provider_led_postgrad": false do
-    and_i_should_not_see_provider_led_postgrad_route
-  end
-
-  scenario "early years undergrad radio button not shown when feature set to false", "feature_routes.early_years_undergrad": false do
-    and_i_should_not_see_early_years_undergrad_route
-  end
-
-  scenario "early years assessment only radio button not shown when feature set to false", "feature_routes.early_years_assessment_only": false do
-    and_i_should_not_see_early_years_assessment_only_route
-  end
-
-  scenario "early years graduate employment based radio button not shown when feature set to false", "feature_routes.early_years_salaried": false do
-    and_i_should_not_see_early_years_salaried_route
-  end
-
-  scenario "early years graduate entry radio button not shown when feature set to false", "feature_routes.early_years_postgrad": false do
-    and_i_should_not_see_early_years_postgrad_route
-  end
-
-  scenario "school direct salaried radio button not shown when feature set to false", "feature_routes.school_direct_salaried": false do
-    and_i_should_not_see_school_direct_salaried_route
-  end
-
-  scenario "school direct tuition fee radio button not shown when feature set to false", "feature_routes.school_direct_tuition_fee": false do
-    and_i_should_not_see_school_direct_tuition_fee_route
-  end
-
-  scenario "school direct tuition fee radio button should not be shown when itt reform feature set to true", feature_itt_reform: true do
+  scenario "school direct tuition fee radio button should not be shown" do
     and_i_should_not_see_school_direct_tuition_fee_route
   end
 
@@ -86,36 +58,6 @@ private
 
   def and_i_select_early_years_undergrad_route
     new_trainee_page.early_years_undergrad.click
-  end
-
-  def and_i_should_not_see_provider_led_postgrad_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_provider_led_postgrad
-  end
-
-  def and_i_should_not_see_early_years_undergrad_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_early_years_undergrad
-  end
-
-  def and_i_should_not_see_early_years_assessment_only_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_early_years_assessment_only
-  end
-
-  def and_i_should_not_see_early_years_postgrad_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_early_years_postgrad
-  end
-
-  def and_i_should_not_see_early_years_salaried_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_early_years_salaried
-  end
-
-  def and_i_should_not_see_school_direct_salaried_route
-    expect(new_trainee_page).to be_displayed
-    expect(new_trainee_page).not_to have_school_direct_salaried
   end
 
   def and_i_should_not_see_school_direct_tuition_fee_route
