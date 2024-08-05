@@ -348,7 +348,7 @@ en:
         index: Upload funding information
         confirmation: File processed successfully
         new:
-          lead_school_trainee_summary: Upload lead partner trainee funding payments
+          lead_partner_trainee_summary: Upload lead partner trainee funding payments
           lead_school_payment_schedule: Upload lead partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
@@ -2029,7 +2029,7 @@ en:
           heading: Confirm deletion of trainee record
     funding_uploads:
       new:
-        lead_school_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead partners.
+        lead_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead partners.
         lead_school_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
         provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
         provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
