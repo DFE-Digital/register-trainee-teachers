@@ -3636,7 +3636,7 @@ paths:
                 trn: '567899'
                 ethnic_group: mixed_ethnic_group
                 ethnic_background: Another Mixed background
-  "/api/{api_version}/trainees/{trainee_slug}/defer":
+  "/api/{api_version}/trainees/{trainee_id}/defer":
     post:
       summary: create
       tags:
@@ -4107,7 +4107,7 @@ paths:
             example:
               data:
                 defer_date: '2024-07-08'
-  "/api/{api_version}/trainees/{trainee_slug}/degrees":
+  "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
       tags:
@@ -5092,7 +5092,7 @@ paths:
                     past, for example 2014
                 - error: UnprocessableEntity
                   message: Graduation year Enter a valid graduation year
-  "/api/{api_version}/trainees/{trainee_slug}/placements":
+  "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index
       tags:
