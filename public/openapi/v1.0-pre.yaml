@@ -4,17 +4,6 @@ info:
   title: Register API
   version: v1.0-pre
 paths:
-  "/":
-    get:
-      summary: GET /
-      responses:
-        '301':
-          description: redirects root to register-trainee-teachers.service.gov.uk
-          content:
-            text/html:
-              schema:
-                type: string
-              example: ''
   "/api/{api_version}/info":
     get:
       summary: show
@@ -65,8 +54,8 @@ paths:
         in: query
         required: false
         schema:
-          type: string
-        example: not-a-number
+          type: integer
+        example: 2023
       - name: api_version
         in: path
         required: true
@@ -2407,8 +2396,7 @@ paths:
                   trainee_id: rQFwsiKKwoAdQdnxzP3AmTjA
                   application_id:
         '422':
-          description: is expected to contain exactly "Training route is not included
-            in the list"
+          description: return status code 422 with a meaningful error message
           content:
             application/json:
               schema:
@@ -2618,7 +2606,7 @@ paths:
                 ethnic_group: mixed_ethnic_group
                 ethnic_background: Another Mixed background
                 lead_partner_urn: '900020'
-  "/api/{api_version}/trainees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -2630,12 +2618,12 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: nonexistent
+        example: E5eWwWzP7ar5SNgiradoydPa
       responses:
         '200':
           description: returns the trainee
@@ -2984,7 +2972,7 @@ paths:
                 placements: []
                 degrees: []
                 state: draft
-                trainee_id: '12345'
+                trainee_id: 'E5eWwWzP7ar5SNgiradoydPa'
                 application_id:
         '404':
           description: returns a not found message
@@ -3022,7 +3010,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3495,7 +3483,7 @@ paths:
                     grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
                     degree_id: aQ78shWQ2gf9Xswjhqx91dJf
                   state: draft
-                  trainee_id: aHqDdAr6cLRfgEBcEw5PArNM
+                  trainee_id: SoAYVREVr1fRadHdjwcTWKv9
                   application_id:
                   disability1: '55'
                   disability2: '57'
@@ -3650,7 +3638,7 @@ paths:
                 course_subject_two: '101410'
                 course_subject_three: '100366'
                 course_max_age: 11
-  "/api/{api_version}/trainees/{trainee_slug}/defer":
+  "/api/{api_version}/trainees/{trainee_id}/defer":
     post:
       summary: create
       tags:
@@ -3662,7 +3650,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4114,7 +4102,7 @@ paths:
             example:
               data:
                 defer_date: '2024-08-01'
-  "/api/{api_version}/trainees/{trainee_slug}/degrees":
+  "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
       tags:
@@ -4126,7 +4114,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4206,7 +4194,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4411,7 +4399,7 @@ paths:
                 graduation_year: '2015-01-01'
                 country: XF
                 locale_code: uk
-  "/api/{api_version}/trainees/{trainee_slug}/degrees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -4423,18 +4411,18 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
         example: 9v341nKV9FaJ5qwrjseFFSu7
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: Kz23Zh5AZX4nU3deP63nXhKH
+      - name: degree_id
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: deletes the degree and returns a 200 status (ok)
@@ -4793,18 +4781,18 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-        example: non-existant
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: SCi4YtJQ8D4kq4Ljq4JsetU2
+      - name: degree_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: cVm5zFch3NXfe2Yccnx8uNzB
       responses:
         '200':
           description: returns status 200 with a valid JSON response
@@ -4917,18 +4905,18 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-        example: KuHCPCqxYzzqBFiTovHiQXoQ
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: rpK71mqbTatw9zEfqomPK5M8
+      - name: degree_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: KuHCPCqxYzzqBFiTovHiQXoQ
       responses:
         '200':
           description: updates the degree and returns a 200 status (ok)
@@ -5091,7 +5079,7 @@ paths:
                 uk_degree: '083'
                 graduation_year: '2015-01-01'
                 country: XF
-  "/api/{api_version}/trainees/{trainee_slug}/placements":
+  "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index
       tags:
@@ -5103,7 +5091,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5156,7 +5144,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5295,7 +5283,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -5307,18 +5295,18 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-        example: BHH8QS3dxLdjpT6DnKdkjDrf
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: ZcSzTvVubUF8ss35mDkszSuv
+      - name: placement_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: BHH8QS3dxLdjpT6DnKdkjDrf
       responses:
         '200':
           description: removes the specified placement
@@ -5745,18 +5733,18 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-        example: 6pQvJXJKGEazxWaoFGR1pYP2
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: 6PepSAYcw5xXMWFK4y4tCcuP
+      - name: placement_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: 6pQvJXJKGEazxWaoFGR1pYP2
       responses:
         '200':
           description: returns status 200 with a valid JSON response
@@ -5833,18 +5821,18 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: slug
-        in: path
-        required: true
-        schema:
-          type: string
-        example: p2UVWDvRKqMfBMrfrmDTicaC
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
         example: oBeDsgaqhKQgPTBS2ekBiwEa
+      - name: placement_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: p2UVWDvRKqMfBMrfrmDTicaC
       requestBody:
         content:
           application/json:
@@ -5974,7 +5962,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/recommend-for-qts":
+  "/api/{api_version}/trainees/{trainee_id}/recommend-for-qts":
     post:
       summary: create
       tags:
@@ -5986,7 +5974,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -6438,7 +6426,7 @@ paths:
                 errors:
                 - error: UnprocessableEntity
                   message: QTS standards met date can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/withdraw":
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
     post:
       summary: create
       tags:
@@ -6450,7 +6438,7 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -6835,11 +6823,8 @@ paths:
                 data:
                   commencement_status:
                   withdraw_date: '2024-08-01T00:00:03.000Z'
-                  withdraw_reasons_details: There are three things I hate the most.
-                    Kids, pets, and women with attitude. So tell me, why do we have
-                    all of them packed into our ship!?
-                  withdraw_reasons_dfe_details: I'm a pig. I don't fight for honor.
-                    I fight for a paycheck.
+                  withdraw_reasons_details: Personal reasons
+                  withdraw_reasons_dfe_details: Personal reasons
                   updated_at: '2024-08-01T00:00:03.086Z'
                   first_names: Ellsworth
                   middle_names: Vandervort
@@ -7060,28 +7045,6 @@ paths:
               reasons:
               - unknown
               withdraw_date: 2024-08-01 00:00:03 UTC
-              withdraw_reasons_details: There are three things I hate the most. Kids,
-                pets, and women with attitude. So tell me, why do we have all of them
-                packed into our ship!?
-              withdraw_reasons_dfe_details: I'm a pig. I don't fight for honor. I
-                fight for a paycheck.
-  "/{path}":
-    get:
-      summary: GET /:path
-      tags: []
-      parameters:
-      - name: path
-        in: path
-        required: true
-        schema:
-          type: string
-        example: accessibility
-      responses:
-        '301':
-          description: redirects paths to register-trainee-teachers.service.gov.uk
-          content:
-            text/html:
-              schema:
-                type: string
-              example: ''
+              withdraw_reasons_details: Personal reasons
+              withdraw_reasons_dfe_details: Personal reasons
 servers: []
