@@ -14,7 +14,7 @@ class FundingDataImporter
       import_lead_school_payment_schedules
     when "provider_trainee_summary"
       import_provider_trainee_summaries
-    when "lead_school_trainee_summary"
+    when "lead_partner_trainee_summary"
       import_lead_school_trainee_summaries
     else
       return false
