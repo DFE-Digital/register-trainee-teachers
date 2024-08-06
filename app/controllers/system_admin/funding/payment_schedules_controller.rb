@@ -45,12 +45,7 @@ module SystemAdmin
       end
 
       def back_path
-        case organisation
-        when Provider
-          provider_funding_path
-        when School
-          lead_school_funding_path
-        end
+        provider_funding_path
       end
     end
   end
