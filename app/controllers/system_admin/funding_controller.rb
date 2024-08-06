@@ -35,18 +35,11 @@ module SystemAdmin
     end
 
     def funding_path(year, funding_type)
-      case organisation
-      when Provider
-        send("provider_funding_#{funding_type}_path", provider_id: organisation.id, academic_year: year)
-      when School
-        send("lead_school_funding_#{funding_type}_path", lead_school_id: organisation.id, academic_year: year)
-      end
+      send("provider_funding_#{funding_type}_path", provider_id: organisation.id, academic_year: year)
     end
 
     def organisation
-      return Provider.find(params[:provider_id]) if params[:provider_id].present?
-
-      School.find(params[:lead_school_id])
+      Provider.find(params[:provider_id]) if params[:provider_id].present?
     end
   end
 end
