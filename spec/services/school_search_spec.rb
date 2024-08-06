@@ -83,9 +83,6 @@ describe SchoolSearch do
         create(:school)
       end
 
-      it "has a option to only search for lead schools" do
-        expect(described_class.call(lead_schools_only: true).schools).to match([lead_school])
-      end
     end
 
     context "limit" do

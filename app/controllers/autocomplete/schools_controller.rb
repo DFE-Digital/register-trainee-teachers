@@ -16,7 +16,6 @@ module Autocomplete
       {
         query: params[:query],
         limit: params[:limit],
-        lead_schools_only: lead_schools_only,
       }.compact
     end
 
@@ -27,10 +26,6 @@ module Autocomplete
     def error_response
       render_json_error(message: I18n.t("api.errors.bad_request", length: SchoolSearch::MIN_QUERY_LENGTH),
                         status: :bad_request)
-    end
-
-    def lead_schools_only
-      ActiveModel::Type::Boolean.new.cast(params[:lead_school])
     end
   end
 end
