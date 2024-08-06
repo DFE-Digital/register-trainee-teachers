@@ -2,7 +2,7 @@
 
 module Funding
   module Parsers
-    class LeadSchoolPaymentSchedules < Base
+    class LeadPartnerPaymentSchedules < Base
       class << self
         def id_column
           "Lead school URN"

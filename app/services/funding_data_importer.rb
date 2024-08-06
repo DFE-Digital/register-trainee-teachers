@@ -33,8 +33,8 @@ private
   end
 
   def import_lead_school_payment_schedules
-    attributes = Funding::Parsers::LeadSchoolPaymentSchedules.to_attributes(funding_upload: @funding_upload)
-    missing_urns = Funding::LeadSchoolPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: @funding_upload.month)
+    attributes = Funding::Parsers::LeadPartnerPaymentSchedules.to_attributes(funding_upload: @funding_upload)
+    missing_urns = Funding::LeadPartnerPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: @funding_upload.month)
     raise("Lead school URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
   end
 

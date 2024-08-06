@@ -28,14 +28,14 @@ describe FundingDataImporter do
 
       it "calls the LeadPartnerPaymentSchedulesImporter" do
         importer = FundingDataImporter.new(funding_upload)
-        expect(Funding::Parsers::LeadSchoolPaymentSchedules).to receive(:to_attributes)
-        expect(Funding::LeadSchoolPaymentSchedulesImporter).to receive(:call).with(attributes: anything, first_predicted_month_index: funding_upload.month)
+        expect(Funding::Parsers::LeadPartnerPaymentSchedules).to receive(:to_attributes)
+        expect(Funding::LeadPartnerPaymentSchedulesImporter).to receive(:call).with(attributes: anything, first_predicted_month_index: funding_upload.month)
         importer.import_data
       end
 
       it "sets the funding_upload status to failed if LeadPartnerPaymentSchedulesImporter returns missing URNs" do
-        allow(Funding::Parsers::LeadSchoolPaymentSchedules).to receive(:to_attributes)
-        allow(Funding::LeadSchoolPaymentSchedulesImporter).to receive(:call).and_return(%w[urn1 urn2])
+        allow(Funding::Parsers::LeadPartnerPaymentSchedules).to receive(:to_attributes)
+        allow(Funding::LeadPartnerPaymentSchedulesImporter).to receive(:call).and_return(%w[urn1 urn2])
         importer = FundingDataImporter.new(funding_upload)
         importer.import_data
         expect(funding_upload.reload.failed?).to be true
