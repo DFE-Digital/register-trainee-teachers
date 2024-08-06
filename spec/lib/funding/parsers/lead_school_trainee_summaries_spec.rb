@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Funding
   module Parsers
-    describe LeadSchoolTraineeSummaries do
+    describe LeadPartnerTraineeSummaries do
       context "valid csv" do
         let(:funding_upload) { create(:funding_upload, :lead_partner_trainee_summaries) }
         let(:expected_lead_school_1111_result) do

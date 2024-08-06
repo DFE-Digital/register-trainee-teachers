@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Funding
-  class LeadSchoolTraineeSummariesImporter < PayableTraineeSummariesImporter
+  class LeadPartnerTraineeSummariesImporter < PayableTraineeSummariesImporter
     def payable(id)
       School.find_by(urn: id)
     end

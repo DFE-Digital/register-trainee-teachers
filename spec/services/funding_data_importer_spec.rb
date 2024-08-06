@@ -9,14 +9,14 @@ describe FundingDataImporter do
 
       it "calls the LeadPartnerTraineeSummariesImporter" do
         importer = FundingDataImporter.new(funding_upload)
-        expect(Funding::Parsers::LeadSchoolTraineeSummaries).to receive(:to_attributes)
-        expect(Funding::LeadSchoolTraineeSummariesImporter).to receive(:call).with(attributes: anything)
+        expect(Funding::Parsers::LeadPartnerTraineeSummaries).to receive(:to_attributes)
+        expect(Funding::LeadPartnerTraineeSummariesImporter).to receive(:call).with(attributes: anything)
         importer.import_data
       end
 
       it "sets the funding_upload status to failed if LeadPartnerTraineeSummariesImporter returns missing URNs" do
-        allow(Funding::Parsers::LeadSchoolTraineeSummaries).to receive(:to_attributes)
-        allow(Funding::LeadSchoolTraineeSummariesImporter).to receive(:call).and_return(%w[urn1 urn2])
+        allow(Funding::Parsers::LeadPartnerTraineeSummaries).to receive(:to_attributes)
+        allow(Funding::LeadPartnerTraineeSummariesImporter).to receive(:call).and_return(%w[urn1 urn2])
         importer = FundingDataImporter.new(funding_upload)
         importer.import_data
         expect(funding_upload.reload.failed?).to be true
