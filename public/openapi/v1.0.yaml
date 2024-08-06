@@ -54,8 +54,8 @@ paths:
         in: query
         required: false
         schema:
-          type: string
-        example: not-a-number
+          type: integer
+        example: 2023
       - name: api_version
         in: path
         required: true
@@ -1919,7 +1919,7 @@ paths:
                   recommended_for_award_at:
                   trainee_start_date: '2023-01-01'
                   reinstate_date:
-                  course_min_age: 11
+                  course_min_age: 7
                   course_max_age:
                   course_subject_two: '101410'
                   course_subject_three: '100366'
@@ -1932,7 +1932,7 @@ paths:
                   course_uuid:
                   lead_school_not_applicable: false
                   employing_school_not_applicable: false
-                  submission_ready: true
+                  submission_ready: false
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
@@ -2375,24 +2375,23 @@ paths:
                   withdraw_reasons: []
                   placements: []
                   degrees:
-                  - uk_degree: '202'
+                  - uk_degree: '009'
                     non_uk_degree:
-                    created_at: '2024-07-08T10:38:56.313Z'
-                    updated_at: '2024-07-08T10:38:56.313Z'
-                    subject: '100379'
-                    institution: '0433'
-                    graduation_year: 1991
-                    grade:
+                    created_at: '2024-06-24T11:52:36.897Z'
+                    updated_at: '2024-06-24T11:52:36.897Z'
+                    subject: '101091'
+                    institution: '0285'
+                    graduation_year: 2008
+                    grade: '13'
                     country:
                     other_grade:
-                    institution_uuid: e33e182c-1425-ec11-b6e6-000d3adf095a
-                    uk_degree_uuid: 3f6a5652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 458170f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: yK3UFkfLtjgMKhNDDciAZHPD
+                    institution_uuid: fc3d182c-1425-ec11-b6e6-000d3adf095a
+                    uk_degree_uuid: da47d378-f4bb-45ec-bda0-14af40ad974e
+                    subject_uuid: 4d8570f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: df874702-2bcc-4aab-adaa-2efdd3a8dec4
+                    degree_id: L2vpcmPsggU9weHt3Vmyrpzp
                   state: draft
-                  trainee_id: kZNCFxztEFgnaKZ27CTGw4tg
-                  application_id:
+                  trainee_id: qPYbKYXs3r7HBofWdWNN7GWZ
         '422':
           description: return status code 422 with a meaningful error message
           content:
@@ -2603,7 +2602,7 @@ paths:
                 trn: '567899'
                 ethnic_group: mixed_ethnic_group
                 ethnic_background: Another Mixed background
-  "/api/{api_version}/trainees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -2615,7 +2614,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3011,7 +3010,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3232,11 +3231,6 @@ paths:
                               type: string
                           required:
                           - urn
-                          - name
-                          - postcode
-                          - created_at
-                          - updated_at
-                          - placement_id
                       degrees:
                         type: array
                         items:
@@ -3599,9 +3593,7 @@ paths:
                       type: string
                     disability1:
                       type: string
-                    lead_school_urn:
-                      type: string
-                    employing_school_urn:
+                    first_names:
                       type: string
                     nationality:
                       type: string
@@ -3644,7 +3636,7 @@ paths:
                 trn: '567899'
                 ethnic_group: mixed_ethnic_group
                 ethnic_background: Another Mixed background
-  "/api/{api_version}/trainees/{trainee_slug}/defer":
+  "/api/{api_version}/trainees/{trainee_id}/defer":
     post:
       summary: create
       tags:
@@ -3656,7 +3648,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4115,7 +4107,7 @@ paths:
             example:
               data:
                 defer_date: '2024-07-08'
-  "/api/{api_version}/trainees/{trainee_slug}/degrees":
+  "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
       tags:
@@ -4127,7 +4119,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4209,7 +4201,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4414,7 +4406,7 @@ paths:
                 graduation_year: '2015-01-01'
                 country: XF
                 locale_code: uk
-  "/api/{api_version}/trainees/{trainee_slug}/degrees/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -4426,13 +4418,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: 5kSWTqN4KAsBvU5vZeT2ZovA
-      - name: trainee_slug
+        example: quMKsGKcERtM13Cp3RL8N9Hd
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4800,13 +4792,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: dtqhZkqT4VX3LHjbuBtkrVCH
-      - name: trainee_slug
+        example: NusoMY2ygpwEBtFzgnFCFdZX
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -4926,13 +4918,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: degree_id
         in: path
         required: true
         schema:
           type: string
-        example: vuf7fJVP4WPpQi747dbDRw6K
-      - name: trainee_slug
+        example: 2aBF1ZhdvcNbxxBcDwwHj7z8
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5100,7 +5092,7 @@ paths:
                     past, for example 2014
                 - error: UnprocessableEntity
                   message: Graduation year Enter a valid graduation year
-  "/api/{api_version}/trainees/{trainee_slug}/placements":
+  "/api/{api_version}/trainees/{trainee_id}/placements":
     get:
       summary: index
       tags:
@@ -5112,7 +5104,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5165,7 +5157,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5181,20 +5173,20 @@ paths:
                   type: object
                   properties:
                     address:
-                      type: string
                       nullable: true
+                      type: string
                     name:
-                      type: string
                       nullable: true
+                      type: string
                     postcode:
-                      type: string
                       nullable: true
+                      type: string
                     urn:
+                      nullable: true
                       type: string
-                      nullable: true
                     school_id:
-                      nullable: true
                       type: integer
+                      nullable: true
                   required:
                   - address
                   - name
@@ -5304,7 +5296,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/placements/{slug}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -5316,13 +5308,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: non-existant
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5758,13 +5750,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
         example: non-existant
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5846,13 +5838,13 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: slug
+      - name: placement_id
         in: path
         required: true
         schema:
           type: string
-        example: oh3HnsRFtzC33f7HzhFALFTL
-      - name: trainee_slug
+        example: m9gxhMFwfzaB6ydDiJzbb1pT
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -5987,7 +5979,7 @@ paths:
                   message: Name can't be blank
                 - error: UnprocessableEntity
                   message: School can't be blank
-  "/api/{api_version}/trainees/{trainee_slug}/recommend-for-qts":
+  "/api/{api_version}/trainees/{trainee_id}/recommend-for-qts":
     post:
       summary: create
       tags:
@@ -5999,7 +5991,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -6457,8 +6449,8 @@ paths:
               - data
             example:
               data:
-                qts_standards_met_date: '2024-07-08'
-  "/api/{api_version}/trainees/{trainee_slug}/withdraw":
+                qts_standards_met_date: '2024-06-24'
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
     post:
       summary: create
       tags:
@@ -6470,7 +6462,7 @@ paths:
         schema:
           type: string
         example: v1.0
-      - name: trainee_slug
+      - name: trainee_id
         in: path
         required: true
         schema:
