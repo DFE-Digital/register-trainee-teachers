@@ -4411,7 +4411,6 @@ paths:
         schema:
           type: string
         example: v1.0-pre
-        example: 9v341nKV9FaJ5qwrjseFFSu7
       - name: trainee_id
         in: path
         required: true
@@ -4423,6 +4422,7 @@ paths:
         required: true
         schema:
           type: string
+        example: 9v341nKV9FaJ5qwrjseFFSu7
       responses:
         '200':
           description: deletes the degree and returns a 200 status (ok)
@@ -4736,7 +4736,7 @@ paths:
                   placements: []
                   degrees: []
                   state: draft
-                  trainee_id: ZdWC4WKysnSYfqoEGpRRmDXL
+                  trainee_id: Kz23Zh5AZX4nU3deP63nXhKH
                   application_id:
         '404':
           description: does not delete the degree and returns a 404 status (not_found)
