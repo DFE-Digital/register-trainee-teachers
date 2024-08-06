@@ -76,15 +76,6 @@ describe SchoolSearch do
       end
     end
 
-    context "searching lead schools" do
-      let(:lead_school) { create(:school, lead_school: true) }
-
-      before do
-        create(:school)
-      end
-
-    end
-
     context "limit" do
       it "can set a limit for the returned results" do
         expect(described_class.call(query: school.urn, limit: 10).limit).to eq(10)
