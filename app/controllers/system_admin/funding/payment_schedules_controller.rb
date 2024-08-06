@@ -29,16 +29,11 @@ module SystemAdmin
     private
 
       def redirect_to_schedule_path
-        case organisation
-        when Provider
-          redirect_to(provider_funding_payment_schedule_path(provider_id: organisation.id, academic_year: selected_academic_cycle.start_year))
-        when School
-          redirect_to(lead_school_funding_payment_schedule_path(lead_school_id: organisation.id, academic_year: selected_academic_cycle.start_year))
-        end
+        redirect_to(provider_funding_payment_schedule_path(provider_id: organisation.id, academic_year: selected_academic_cycle.start_year))
       end
 
       def organisation
-        @organisation ||= params[:provider_id].present? ? Provider.find(params[:provider_id]) : School.find(params[:lead_school_id])
+        @organisation ||=  Provider.find(params[:provider_id]) if params[:provider_id].present?
       end
 
       def data_export
