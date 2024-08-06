@@ -10,7 +10,7 @@ class FundingDataImporter
     case @funding_upload.funding_type
     when "provider_payment_schedule"
       import_provider_payment_schedules
-    when "lead_school_payment_schedule"
+    when "lead_partner_payment_schedule"
       import_lead_school_payment_schedules
     when "provider_trainee_summary"
       import_provider_trainee_summaries

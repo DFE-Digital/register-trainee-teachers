@@ -22,7 +22,7 @@ module SystemAdmin
   class FundingUpload < ApplicationRecord
     enum funding_type: {
       lead_partner_trainee_summary: 0,
-      lead_school_payment_schedule: 1,
+      lead_partner_payment_schedule: 1,
       provider_trainee_summary: 2,
       provider_payment_schedule: 3,
     }

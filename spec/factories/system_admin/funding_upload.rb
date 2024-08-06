@@ -11,9 +11,9 @@ FactoryBot.define do
       funding_type { :provider_payment_schedule }
     end
 
-    trait :lead_school_payment_schedules do
-      csv_data { Rails.root.join("spec/support/fixtures/lead_school_payment_schedules.csv").read }
-      funding_type { :lead_school_payment_schedule }
+    trait :lead_partner_payment_schedules do
+      csv_data { Rails.root.join("spec/support/fixtures/lead_partner_payment_schedules.csv").read }
+      funding_type { :lead_partner_payment_schedule }
     end
 
     trait :provider_trainee_summaries do
@@ -22,7 +22,7 @@ FactoryBot.define do
     end
 
     trait :lead_partner_trainee_summaries do
-      csv_data { Rails.root.join("spec/support/fixtures/lead_school_trainee_summaries.csv").read }
+      csv_data { Rails.root.join("spec/support/fixtures/lead_partner_trainee_summaries.csv").read }
       funding_type { :lead_partner_trainee_summary }
     end
 
@@ -37,13 +37,13 @@ FactoryBot.define do
     end
 
     trait :invalid_lead_partner_trainee_summaries do
-      csv_data { Rails.root.join("spec/support/fixtures/invalid_lead_school_trainee_summaries.csv").read }
+      csv_data { Rails.root.join("spec/support/fixtures/invalid_lead_partner_trainee_summaries.csv").read }
       funding_type { :lead_partner_trainee_summary }
     end
 
-    trait :invalid_lead_school_payment_schedules do
-      csv_data { Rails.root.join("spec/support/fixtures/invalid_lead_school_payment_schedules.csv").read }
-      funding_type { :lead_school_payment_schedule }
+    trait :invalid_lead_partner_payment_schedules do
+      csv_data { Rails.root.join("spec/support/fixtures/invalid_lead_partner_payment_schedules.csv").read }
+      funding_type { :lead_partner_payment_schedule }
     end
   end
 end

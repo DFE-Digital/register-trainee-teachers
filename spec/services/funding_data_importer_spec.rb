@@ -23,8 +23,8 @@ describe FundingDataImporter do
       end
     end
 
-    context 'when the funding_type is "lead_school_payment_schedule"' do
-      let(:funding_upload) { create(:funding_upload, :lead_school_payment_schedule) }
+    context 'when the funding_type is "lead_partner_payment_schedule"' do
+      let(:funding_upload) { create(:funding_upload, :lead_partner_payment_schedules) }
 
       it "calls the LeadSchoolPaymentSchedulesImporter" do
         importer = FundingDataImporter.new(funding_upload)
