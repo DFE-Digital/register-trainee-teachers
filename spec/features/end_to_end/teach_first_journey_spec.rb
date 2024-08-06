@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "teach-first end-to-end journey" do
+feature "teach-first end-to-end journey", skip: "training route is no longer available for manual input" do
   let(:user) { create(:user, providers: create_list(:provider, 1, code: Provider::TEACH_FIRST_PROVIDER_CODE)) }
 
   background { given_i_am_authenticated(user:) }
