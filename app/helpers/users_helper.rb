@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module UsersHelper
-
   def lead_partner_user?
     defined?(current_user) && current_user.respond_to?(:lead_partner?) && current_user&.lead_partner?
   end
