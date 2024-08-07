@@ -18,8 +18,6 @@ class TraineePolicy
     def user_scope
       if user.lead_partner?
         lead_partner_scope
-      elsif user.lead_school?
-        lead_school_scope
       else
         provider_scope
       end
@@ -27,10 +25,6 @@ class TraineePolicy
 
     def provider_scope
       scope.where(provider_id: user.organisation.id).kept
-    end
-
-    def lead_school_scope
-      scope.where(lead_school_id: user.organisation.id).kept
     end
 
     def lead_partner_scope
