@@ -90,7 +90,7 @@ class TraineePolicy
   end
 
   def hide_progress_tag?
-    user.lead_school? || user.lead_partner?
+    user.lead_partner?
   end
 
   def allow_actions?
