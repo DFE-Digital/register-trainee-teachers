@@ -44,14 +44,6 @@ describe UserWithOrganisationContext do
         it { is_expected.to eq(user.providers.first) }
       end
 
-      context "user has only a lead school" do
-        let(:user) { create(:user, id: 1, first_name: "Dave", providers: [], lead_schools: [lead_school]) }
-
-        it "raises not authorised" do
-          expect { subject }.to raise_error(Pundit::NotAuthorizedError)
-        end
-      end
-
       context "user has only a lead partner" do
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [], lead_partners: [lead_partner]) }
 
@@ -96,12 +88,6 @@ describe UserWithOrganisationContext do
         let(:user) { create(:user, id: 1, providers: [provider]) }
 
         it { is_expected.to eq(provider) }
-      end
-
-      context "user has only one lead school" do
-        let(:user) { create(:user, id: 1, providers: [], lead_schools: [lead_school]) }
-
-        it { is_expected.to eq(lead_school) }
       end
 
       context "user has only one lead partner" do

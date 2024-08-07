@@ -87,17 +87,13 @@ private
   end
 
   def single_organisation
-    if (user_only_has_lead_school? || user_only_has_lead_partner?) &&
+    if user_only_has_lead_partner? &&
         !FeatureService.enabled?(:user_can_have_multiple_organisations)
 
       raise(Pundit::NotAuthorizedError)
     end
 
-    user.providers.first || user.lead_partners.first || user.lead_schools.first
-  end
-
-  def user_only_has_lead_school?
-    !user.system_admin && user.providers.empty? && user.lead_schools.present?
+    user.providers.first || user.lead_partners.first
   end
 
   def user_only_has_lead_partner?
