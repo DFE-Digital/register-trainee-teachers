@@ -12,14 +12,6 @@ module SchoolHelper
     tag.p(school.name, class: "govuk-body") + tag.span(school_urn_and_location(school), class: "govuk-hint")
   end
 
-  def lead_school_row(not_applicable: false)
-    mappable_field(
-      not_applicable ? t(:not_applicable) : school_detail(lead_school),
-      t("components.lead_partner_and_employing_school_details.lead_school_key"),
-      change_paths(:lead),
-    )
-  end
-
   def employing_school_row(not_applicable: false)
     return unless trainee.requires_employing_school?
 
