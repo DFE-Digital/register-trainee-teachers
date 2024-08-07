@@ -14,7 +14,7 @@ describe UserPolicy do
   let(:provider_admin_user) { create(:user, system_admin: true) }
   let(:provider_admin_user_context) { UserWithOrganisationContext.new(user: provider_admin_user, session: {}) }
 
-  let(:lead_partner) { create(:lead_partner, :hei, school: school) }
+  let(:lead_partner) { create(:lead_partner, :hei, school:) }
 
   let(:lead_partner_user) { create(:user, :with_lead_partner_organisation, lead_partners: [lead_partner]) }
   let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
