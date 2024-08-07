@@ -36,16 +36,6 @@ module ApplicationRecordCard
       end
     end
 
-    context "when lead school user" do
-      let(:current_user) do
-        double(UserWithOrganisationContext, system_admin?: false, lead_school?: true)
-      end
-
-      it "renders provider name" do
-        expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
-      end
-    end
-
     context "when lead partner user" do
       let(:current_user) do
         double(UserWithOrganisationContext, system_admin?: false, lead_school?: false, lead_partner?: true)
@@ -153,16 +143,6 @@ module ApplicationRecordCard
       context "when system admin user" do
         let(:current_user) do
           double(UserWithOrganisationContext, system_admin?: true, lead_school?: false, lead_partner?: false)
-        end
-
-        it "renders provider name" do
-          expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
-        end
-      end
-
-      context "when lead school user" do
-        let(:current_user) do
-          double(UserWithOrganisationContext, system_admin?: false, lead_school?: true)
         end
 
         it "renders provider name" do
