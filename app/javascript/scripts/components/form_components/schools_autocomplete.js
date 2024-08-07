@@ -3,7 +3,7 @@ import tracker from './tracker.js'
 import { guard, renderTemplate, setHiddenField } from './autocomplete/helpers.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
-const idElement = document.getElementById('school-id')
+const idElement = document.getElementById('schools-id')
 
 let statusMessage = ' '
 
@@ -57,8 +57,8 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          if (value?.id && element.dataset.systemAdminRedirectLeadSchool) {
-            window.location.assign(`/system-admin/lead-schools/${value.id}`)
+          if (value?.id && element.dataset.systemAdminRedirectSchool) {
+            window.location.assign(`/system-admin/schools/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
             setHiddenField(idElement, value)

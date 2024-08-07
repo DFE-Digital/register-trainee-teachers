@@ -4,6 +4,28 @@
 
 <%= render "system_admin/tab_nav" %>
 
+<%= register_form_with(
+  url: schools_path,
+  local: true,
+  method: :get,
+  html: { data: { module: "app-schools-autocomplete" } },
+) do |f| %>
+  <%= f.hidden_field :school_id, id: "schools-id" %>
+  <%= f.govuk_text_field(
+    :query,
+    form_group: { class: "govuk-form-group app-js-only" },
+    label: { text: "Search for a school", size: "s" },
+    hint: { text: "Search for a school by its unique reference number (URN), name, postcode or town" },
+    value: params[:query],
+    "data-field" => "schools-autocomplete",
+    width: "three-quarters",
+  )%>
+  <div id="schools-autocomplete-element" class="govuk-!-width-three-quarters"
+      data-system-admin-redirect-school="true"
+      data-default-value="<%= params[:query] %>" data-field-name="system_admin_user_schools_form[query]">
+  </div>
+<% end %>
+
 <table class="govuk-table" summary="Schools list">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
