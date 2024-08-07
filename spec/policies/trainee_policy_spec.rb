@@ -12,7 +12,7 @@ describe TraineePolicy do
   let(:read_only_provider_user) { user_with_organisation(create(:user, providers: [provider], read_only: true), provider) }
   let(:other_provider_user) { user_with_organisation(create(:user, providers: [other_provider]), other_provider) }
   let(:school) { create(:school) }
-  let(:lead_partner) { create(:lead_partner, :lead_school, school: school) }
+  let(:lead_partner) { create(:lead_partner, :lead_school, school:) }
   let(:lead_partner_user) { user_with_organisation(create(:user, providers: []), lead_partner) }
   let(:other_lead_partner_user) { user_with_organisation(create(:user, providers: []), create(:lead_partner, :lead_school)) }
 
@@ -313,7 +313,7 @@ describe TraineePolicy do
     context "user in lead_partner context" do
       let(:is_lead_partner?) { true }
       let(:school) { create(:school) }
-      let(:lead_partner) { create(:lead_partner, :hei, school: school) }
+      let(:lead_partner) { create(:lead_partner, :hei, school:) }
       let(:organisation) { lead_partner }
 
       context "where the trainee is associated with the lead partner" do
