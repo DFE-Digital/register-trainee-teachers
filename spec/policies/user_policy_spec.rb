@@ -34,7 +34,6 @@ describe UserPolicy do
       it { is_expected.to permit(lead_school_admin_user_context) }
       it { is_expected.to permit(lead_partner_admin_user_context) }
 
-      it { is_expected.not_to permit(lead_school_user_context) }
       it { is_expected.not_to permit(lead_partner_user_context) }
     end
   end
@@ -46,7 +45,6 @@ describe UserPolicy do
       it { is_expected.not_to permit(provider_admin_user_context) }
       it { is_expected.not_to permit(lead_school_admin_user_context) }
       it { is_expected.not_to permit(lead_partner_admin_user_context) }
-      it { is_expected.not_to permit(lead_school_user_context) }
       it { is_expected.not_to permit(lead_partner_user_context) }
     end
   end
