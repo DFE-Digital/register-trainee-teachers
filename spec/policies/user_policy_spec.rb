@@ -5,7 +5,7 @@ require "rails_helper"
 describe UserPolicy do
   subject { described_class }
 
-  let(:lead_school) { create(:school, :lead) }
+  let(:school) { create(:school, :lead) }
   let(:provider) { create(:provider) }
 
   let(:provider_user) { create(:user, providers: [provider]) }
@@ -14,13 +14,7 @@ describe UserPolicy do
   let(:provider_admin_user) { create(:user, system_admin: true) }
   let(:provider_admin_user_context) { UserWithOrganisationContext.new(user: provider_admin_user, session: {}) }
 
-  let(:lead_school_user) { create(:user, :with_lead_school_organisation, lead_schools: [lead_school]) }
-  let(:lead_school_user_context) { UserWithOrganisationContext.new(user: lead_school_user, session: {}) }
-
-  let(:lead_school_admin_user) { create(:user, :with_lead_school_organisation, system_admin: true, lead_schools: [lead_school]) }
-  let(:lead_school_admin_user_context) { UserWithOrganisationContext.new(user: lead_school_admin_user, session: {}) }
-
-  let(:lead_partner) { create(:lead_partner, :lead_school, school: lead_school) }
+  let(:lead_partner) { create(:lead_partner, :hei, school: school) }
 
   let(:lead_partner_user) { create(:user, :with_lead_partner_organisation, lead_partners: [lead_partner]) }
   let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
@@ -31,7 +25,6 @@ describe UserPolicy do
   context "when drafts?, reports?" do
     permissions :drafts?, :reports? do
       it { is_expected.to permit(provider_user_context) }
-      it { is_expected.to permit(lead_school_admin_user_context) }
       it { is_expected.to permit(lead_partner_admin_user_context) }
 
       it { is_expected.not_to permit(lead_partner_user_context) }
@@ -43,7 +36,6 @@ describe UserPolicy do
       it { is_expected.to permit(provider_user_context) }
 
       it { is_expected.not_to permit(provider_admin_user_context) }
-      it { is_expected.not_to permit(lead_school_admin_user_context) }
       it { is_expected.not_to permit(lead_partner_admin_user_context) }
       it { is_expected.not_to permit(lead_partner_user_context) }
     end
