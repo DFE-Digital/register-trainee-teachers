@@ -58,7 +58,7 @@ feature "View trainees" do
   end
 
   context "when trainee is imported from HESA" do
-    background { given_i_am_authenticated_as_a_lead_school_user }
+    background { given_i_am_authenticated_as_a_lead_partner_user }
 
     let(:degrees) do
       [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
