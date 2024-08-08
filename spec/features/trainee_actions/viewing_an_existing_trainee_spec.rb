@@ -68,7 +68,7 @@ feature "View trainees" do
       [{ "school_urn" => "138734" }, { "school_urn" => "139408" }]
     end
 
-    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_school: @current_user.lead_schools.first) }
+    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_partner: @current_user.lead_partners.first) }
 
     let!(:hesa_student) do
       create(
