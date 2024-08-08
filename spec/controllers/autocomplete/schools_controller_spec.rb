@@ -57,20 +57,6 @@ module Autocomplete
           expect(json_response["schools"].size).to eq(1)
         end
       end
-
-      context "lead schools only" do
-        let(:lead_school) { create(:school, lead_school: true) }
-
-        before do
-          lead_school
-          create(:school)
-          get :index, params: { lead_school: true }
-        end
-
-        it "returns only lead schools" do
-          expect(json_response["schools"]).to match([lead_school.as_json(only: %i[id name postcode town urn])])
-        end
-      end
     end
   end
 end

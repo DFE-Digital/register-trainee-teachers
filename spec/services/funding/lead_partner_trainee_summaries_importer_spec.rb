@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Funding
-  describe LeadSchoolTraineeSummariesImporter do
+  describe LeadPartnerTraineeSummariesImporter do
     context "valid attributes" do
       let(:summaries_attributes) do
         {

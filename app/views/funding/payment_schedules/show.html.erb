@@ -11,7 +11,7 @@
         <span class="no-wrap">
           <%= govuk_link_to(
             I18n.t('funding.payment_schedule.export_label', start_year: @start_year, end_year: @end_year),
-            funding_csv_export_path(:payment_schedule, @organisation),
+            funding_csv_export_path(:payment_schedule),
             class: "app-trainee-export govuk-link--no-visited-state",
           ) %>
         </span>

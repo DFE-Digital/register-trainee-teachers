@@ -4,9 +4,9 @@ require "rails_helper"
 
 module Funding
   module Parsers
-    describe LeadSchoolTraineeSummaries do
+    describe LeadPartnerTraineeSummaries do
       context "valid csv" do
-        let(:funding_upload) { create(:funding_upload, :lead_school_trainee_summaries) }
+        let(:funding_upload) { create(:funding_upload, :lead_partner_trainee_summaries) }
         let(:expected_lead_school_1111_result) do
           [
             {
@@ -59,7 +59,7 @@ module Funding
       end
 
       context "invalid csv" do
-        let(:funding_upload) { create(:funding_upload, :invalid_lead_school_trainee_summaries) }
+        let(:funding_upload) { create(:funding_upload, :invalid_lead_partner_trainee_summaries) }
 
         subject { described_class.to_attributes(funding_upload:) }
 

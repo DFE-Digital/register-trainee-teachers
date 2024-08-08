@@ -10,11 +10,11 @@ class FundingDataImporter
     case @funding_upload.funding_type
     when "provider_payment_schedule"
       import_provider_payment_schedules
-    when "lead_school_payment_schedule"
+    when "lead_partner_payment_schedule"
       import_lead_school_payment_schedules
     when "provider_trainee_summary"
       import_provider_trainee_summaries
-    when "lead_school_trainee_summary"
+    when "lead_partner_trainee_summary"
       import_lead_school_trainee_summaries
     else
       return false
@@ -33,8 +33,8 @@ private
   end
 
   def import_lead_school_payment_schedules
-    attributes = Funding::Parsers::LeadSchoolPaymentSchedules.to_attributes(funding_upload: @funding_upload)
-    missing_urns = Funding::LeadSchoolPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: @funding_upload.month)
+    attributes = Funding::Parsers::LeadPartnerPaymentSchedules.to_attributes(funding_upload: @funding_upload)
+    missing_urns = Funding::LeadPartnerPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: @funding_upload.month)
     raise("Lead school URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
   end
 
@@ -45,8 +45,8 @@ private
   end
 
   def import_lead_school_trainee_summaries
-    attributes = Funding::Parsers::LeadSchoolTraineeSummaries.to_attributes(funding_upload: @funding_upload)
-    missing_urns = Funding::LeadSchoolTraineeSummariesImporter.call(attributes:)
+    attributes = Funding::Parsers::LeadPartnerTraineeSummaries.to_attributes(funding_upload: @funding_upload)
+    missing_urns = Funding::LeadPartnerTraineeSummariesImporter.call(attributes:)
     raise("Lead school URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
   end
 end

@@ -29,7 +29,7 @@
         <span class="app-nowrap">
           <%= govuk_link_to(
                 I18n.t('funding.trainee_summary.export_label', start_year: @start_year, end_year: @end_year),
-                funding_csv_export_path(:trainee_summary, @organisation),
+                funding_csv_export_path(:trainee_summary),
                 class: "app-trainee-export govuk-link--no-visited-state",
                 ) %>
         </span>

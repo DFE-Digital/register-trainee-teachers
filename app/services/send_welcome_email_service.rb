@@ -10,7 +10,7 @@ class SendWelcomeEmailService
   def call
     return unless FeatureService.enabled?(:send_emails)
     return if user.welcome_email_sent_at
-    return unless lead_school_user? || lead_partner_user?
+    return unless lead_partner_user?
 
     WelcomeEmailMailer.generate(
       first_name: user.first_name,
@@ -28,9 +28,5 @@ private
 
   def lead_partner_user?
     user.lead_partners.any?
-  end
-
-  def lead_school_user?
-    user.lead_schools.any?
   end
 end
