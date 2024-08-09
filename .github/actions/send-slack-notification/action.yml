@@ -1,5 +1,5 @@
-name: send-failure-notification
-description: Send a slack notification for failure
+name: send-slack-notification
+description: Send a Slack notification
 
 inputs:
   slack-title:

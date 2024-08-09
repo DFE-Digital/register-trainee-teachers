@@ -1,0 +1,24 @@
+name: send-slack-notification-for-failure
+description: Send a Slack notification for failure
+
+inputs:
+  slack-title:
+    required: true
+  slack-message:
+    required: true
+  slack-webhook:
+    required: true
+  branch:
+    default: 'refs/heads/main'
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Send failure notification
+      uses: ./.github/actions/send-slack-notification/
+      if: ${{ failure() && github.ref == inputs.branch }}
+      with:
+        slack-title: ${{ inputs.slack-title }}
+        slack-message: ${{ inputs.slack-message }}
+        slack-webhook: ${{ inputs.slack-webhook }}
