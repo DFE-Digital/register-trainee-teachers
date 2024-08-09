@@ -67,12 +67,6 @@ describe UserWithOrganisationContext do
           it { is_expected.to eq(provider) }
         end
 
-        context "lead school is set in the session" do
-          let(:session) { { current_organisation: { id: lead_school.id, type: "School" } } }
-
-          it { is_expected.to eq(lead_school) }
-        end
-
         context "lead partner is set in the session" do
           let(:session) { { current_organisation: { id: lead_partner.id, type: "LeadPartner" } } }
 

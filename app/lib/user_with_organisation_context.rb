@@ -34,7 +34,7 @@ class UserWithOrganisationContext < SimpleDelegator
 
     return if session[:current_organisation].blank?
 
-    lead_partner_or_school_or_provider
+    lead_partner_or_provider
   end
 
   def multiple_organisations?
@@ -73,10 +73,9 @@ private
     session[:current_organisation][:id]
   end
 
-  def lead_partner_or_school_or_provider
-    @_lead_partner_or_school_or_provider ||= {
+  def lead_partner_or_provider
+    @_lead_partner_or_provider ||= {
       "LeadPartner" => user.lead_partners.find_by(id: organisation_id),
-      "School" => user.lead_schools.find_by(id: organisation_id),
       "Provider" => user.providers.find_by(id: organisation_id),
     }[organisation_type]
   end
