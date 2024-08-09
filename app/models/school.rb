@@ -28,6 +28,8 @@ class School < ApplicationRecord
 
   before_save :update_searchable
 
+  has_one :lead_partner
+
   has_many :lead_school_users, foreign_key: :lead_school_id, inverse_of: :lead_school
   has_many :users, through: :lead_school_users
 
