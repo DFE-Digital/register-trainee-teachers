@@ -6,8 +6,7 @@ describe UserWithOrganisationContext do
   let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider]) }
   let(:session) { {} }
   let(:provider) { create(:provider) }
-  let(:lead_school) { create(:school, :lead) }
-  let(:lead_partner) { create(:lead_partner, :lead_school) }
+  let(:lead_partner) { create(:lead_partner, :hei) }
 
   subject do
     described_class.new(user:, session:)
@@ -33,7 +32,7 @@ describe UserWithOrganisationContext do
       it { is_expected.to eq(user.providers.first) }
 
       context "user has a lead school and a provider" do
-        let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider], lead_schools: [lead_school]) }
+        let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider]) }
 
         it { is_expected.to eq(user.providers.first) }
       end
@@ -59,7 +58,7 @@ describe UserWithOrganisationContext do
       end
 
       context "user has multiple organisations" do
-        let(:user) { create(:user, id: 1, providers: [provider], lead_schools: [lead_school], lead_partners: [lead_partner]) }
+        let(:user) { create(:user, id: 1, providers: [provider], lead_partners: [lead_partner]) }
 
         context "provider is set in the session" do
           let(:session) { { current_organisation: { id: provider.id, type: "Provider" } } }
@@ -147,16 +146,10 @@ describe UserWithOrganisationContext do
       end
 
       context "user has multiple organisations" do
-        let(:user) { create(:user, id: 1, lead_partners: [lead_partner], lead_schools: [lead_school], providers: [provider]) }
+        let(:user) { create(:user, id: 1, lead_partners: [lead_partner], providers: [provider]) }
 
         context "provider is set in the session" do
-          let(:session) { { current_organisation: { id: lead_school.id, type: "Provider" } } }
-
-          it { is_expected.to be(false) }
-        end
-
-        context "lead school is set in the session" do
-          let(:session) { { current_organisation: { id: lead_school.id, type: "School" } } }
+          let(:session) { { current_organisation: { id: lead_partner.id, type: "Provider" } } }
 
           it { is_expected.to be(false) }
         end
@@ -201,7 +194,7 @@ describe UserWithOrganisationContext do
       end
 
       context "user has multiple organisations" do
-        let(:user) { create(:user, id: 1, lead_schools: [lead_school], providers: [provider]) }
+        let(:user) { create(:user, id: 1, lead_partners: [lead_partner], providers: [provider]) }
 
         it { is_expected.to be(false) }
       end
@@ -247,7 +240,7 @@ describe UserWithOrganisationContext do
       end
 
       context "user has no organisations" do
-        let(:user) { create(:user, id: 1, lead_schools: [], providers: []) }
+        let(:user) { create(:user, id: 1, lead_partners: [], providers: []) }
 
         it { is_expected.to be(false) }
       end
