@@ -8,7 +8,9 @@ feature "Recommending for QTS" do
   scenario "redirects to the 'Recommended for QTS' page" do
     given_i_am_authenticated
     and_a_trainee_exists_ready_for_qts
-    when_i_record_the_outcome_date
+    when_i_visit_the_trainee_record_page
+    and_i_click_on_recommend_for_qts
+    and_i_record_the_outcome_date
     and_i_confirm_the_outcome_details
     then_the_trainee_is_recommended_for_qts
     and_the_page_has_the_correct_links
@@ -19,12 +21,24 @@ feature "Recommending for QTS" do
   end
 
   def and_a_trainee_exists_ready_for_qts
-    given_a_trainee_exists(:with_placement_assignment, :trn_received, :itt_start_date_in_the_past)
+    given_a_trainee_exists(
+      :with_placement_assignment,
+      :trn_received,
+      :itt_start_date_in_the_past,
+      :provider_led_postgrad,
+    )
     stub_dttp_placement_assignment_request(outcome_date: Time.zone.today, status: 204)
   end
 
-  def when_i_record_the_outcome_date
-    outcome_date_edit_page.load(trainee_id: trainee.slug)
+  def when_i_visit_the_trainee_record_page
+    visit trainee_path(trainee)
+  end
+
+  def and_i_click_on_recommend_for_qts
+    click_on "Recommend trainee for QTS"
+  end
+
+  def and_i_record_the_outcome_date
     outcome_date_edit_page.choose("Today")
     outcome_date_edit_page.continue.click
   end
