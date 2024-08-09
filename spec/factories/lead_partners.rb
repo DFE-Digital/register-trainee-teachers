@@ -8,6 +8,10 @@ FactoryBot.define do
     trait :lead_school do
       record_type { LeadPartner::LEAD_SCHOOL }
       school
+
+      before(:create) do |record|
+        record.urn = record.school.urn
+      end
     end
 
     trait :hei do
