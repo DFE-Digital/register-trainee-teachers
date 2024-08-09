@@ -102,7 +102,7 @@ jobs:
       run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
 
     - name: Check for Failure
-      uses: ./.github/actions/send-failure-notification/
+      uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
       with:
         slack-title: 'Build failure'
@@ -154,8 +154,7 @@ jobs:
           COMMAND: ${{ matrix.command }}
 
       - name: Check for Failure
-        uses: ./.github/actions/send-failure-notification/
-        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        uses: ./.github/actions/send-slack-notification-for-failure/
         with:
           slack-title: 'Lint failure'
           slack-message: ':alert: Lint failure for ${{ matrix.linter_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'

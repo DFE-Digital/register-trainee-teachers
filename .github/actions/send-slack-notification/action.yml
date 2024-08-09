@@ -1,5 +1,5 @@
-name: send-failure-notification
-description: Send a slack notification for failure
+name: send-slack-notification
+description: Send a Slack notification
 
 inputs:
   slack-title:
@@ -8,6 +8,12 @@ inputs:
     required: true
   slack-webhook:
     required: true
+  slack-icon-emoji:
+    required: false
+    default: ':github-logo:'
+  slack-color:
+    required: false
+    default: '#ef5343'
 
 runs:
   using: composite
@@ -16,8 +22,8 @@ runs:
       uses: rtCamp/action-slack-notify@master
       env:
         SLACK_CHANNEL: twd_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
+        SLACK_COLOR: ${{ inputs.slack-color }}
+        SLACK_ICON_EMOJI: ${{ inputs.slack-icon-emoji }}
         SLACK_USERNAME: Register Trainee Teachers
         SLACK_TITLE: ${{ inputs.slack-title }}
         SLACK_MESSAGE: ${{ inputs.slack-message }}
