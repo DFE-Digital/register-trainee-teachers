@@ -58,7 +58,7 @@ class UserWithOrganisationContext < SimpleDelegator
   def no_organisation?
     return false unless FeatureService.enabled?(:user_can_have_multiple_organisations)
 
-    user.providers.none? && user.lead_schools.none? && user.lead_partners.none? && !user.system_admin?
+    user.providers.none? && user.lead_partners.none? && !user.system_admin?
   end
 
 private

@@ -229,7 +229,7 @@ describe UserWithOrganisationContext do
       end
 
       context "user has no organisations" do
-        let(:user) { create(:user, id: 1, lead_schools: [], providers: []) }
+        let(:user) { create(:user, id: 1, providers: []) }
 
         it { is_expected.to be(true) }
       end
