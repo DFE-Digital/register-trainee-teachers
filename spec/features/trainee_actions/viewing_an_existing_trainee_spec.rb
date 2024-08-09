@@ -40,23 +40,6 @@ feature "View trainees" do
     end
   end
 
-  context "when i am a lead school user", feature_user_can_have_multiple_organisations: true do
-    let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_school: @current_user.lead_schools.first) }
-
-    background { given_i_am_authenticated_as_a_lead_school_user }
-
-    scenario "viewing the personal details of a registered trainee" do
-      and_i_visit_the_trainee
-      and_i_can_see_the_trainee_show_page
-      then_i_should_not_see_any_change_links_on_the(record_page)
-      and_i_should_not_see_any_action_links
-      and_i_should_not_see_any_incomplete_data_prompts_on_the(record_page)
-      and_i_visit_the_personal_details
-      then_i_should_not_see_any_change_links_on_the(personal_details_page)
-      and_i_should_not_see_any_incomplete_data_prompts_on_the(personal_details_page)
-    end
-  end
-
   context "when i am a lead partner user", feature_user_can_have_multiple_organisations: true do
     let(:trainee) { create(:trainee, :submitted_for_trn, trainee_start_date: nil, lead_partner: @current_user.lead_partners.first) }
 
@@ -75,7 +58,7 @@ feature "View trainees" do
   end
 
   context "when trainee is imported from HESA" do
-    background { given_i_am_authenticated_as_a_lead_school_user }
+    background { given_i_am_authenticated_as_a_lead_partner_user }
 
     let(:degrees) do
       [{ "graduation_date" => "2019-06-13", "degree_type" => "051", "subject" => "100318", "institution" => "0012", "grade" => "02", "country" => nil }]
@@ -85,7 +68,7 @@ feature "View trainees" do
       [{ "school_urn" => "138734" }, { "school_urn" => "139408" }]
     end
 
-    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_school: @current_user.lead_schools.first) }
+    let(:trainee) { create(:trainee, :completed, :trn_received, hesa_id: "1234", lead_partner: @current_user.lead_partners.first) }
 
     let!(:hesa_student) do
       create(

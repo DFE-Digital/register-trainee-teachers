@@ -7,7 +7,7 @@ module ApplicationRecordCard
     let(:provider) { create(:provider, :with_courses) }
     let(:course) { provider.courses.first }
     let(:current_user) do
-      double(UserWithOrganisationContext, system_admin?: false, lead_school?: false, lead_partner?: false)
+      double(UserWithOrganisationContext, system_admin?: false, lead_partner?: false)
     end
     let(:trainee) { create(:trainee, first_names: nil, provider: provider, course_uuid: course.uuid, provider_trainee_id: nil) }
     let(:cycle) { create(:academic_cycle, cycle_year: 2019) }
@@ -24,7 +24,7 @@ module ApplicationRecordCard
 
     context "when system admin user" do
       let(:current_user) do
-        double(UserWithOrganisationContext, system_admin?: true, lead_school?: false, lead_partner?: false)
+        double(UserWithOrganisationContext, system_admin?: true, lead_partner?: false)
       end
 
       it "renders provider name" do
@@ -36,19 +36,9 @@ module ApplicationRecordCard
       end
     end
 
-    context "when lead school user" do
-      let(:current_user) do
-        double(UserWithOrganisationContext, system_admin?: false, lead_school?: true)
-      end
-
-      it "renders provider name" do
-        expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
-      end
-    end
-
     context "when lead partner user" do
       let(:current_user) do
-        double(UserWithOrganisationContext, system_admin?: false, lead_school?: false, lead_partner?: true)
+        double(UserWithOrganisationContext, system_admin?: false, lead_partner?: true)
       end
 
       it "renders provider name" do
@@ -152,17 +142,7 @@ module ApplicationRecordCard
 
       context "when system admin user" do
         let(:current_user) do
-          double(UserWithOrganisationContext, system_admin?: true, lead_school?: false, lead_partner?: false)
-        end
-
-        it "renders provider name" do
-          expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
-        end
-      end
-
-      context "when lead school user" do
-        let(:current_user) do
-          double(UserWithOrganisationContext, system_admin?: false, lead_school?: true)
+          double(UserWithOrganisationContext, system_admin?: true, lead_partner?: false)
         end
 
         it "renders provider name" do
