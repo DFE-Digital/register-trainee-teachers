@@ -225,6 +225,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_19_095753) do
     t.string "age_range"
     t.string "subject"
     t.bigint "matched_trainee_id"
+    t.string "lead_partner"
     t.index ["bulk_update_recommendations_upload_id"], name: "idx_bu_ru_rows_on_bu_recommendations_upload_id"
     t.index ["matched_trainee_id"], name: "idx_bu_recommendations_upload_rows_on_matched_trainee_id"
   end
