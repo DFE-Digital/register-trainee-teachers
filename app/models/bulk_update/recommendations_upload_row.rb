@@ -35,14 +35,7 @@
 #  fk_rails_...  (matched_trainee_id => trainees.id)
 #
 class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
-  class << self
-    attr_accessor :lead_partner_column, :lead_school_column
-
-    def set_lead_columns(school, partner)
-      @lead_school_column = school
-      @lead_partner_column = partner
-    end
-  end
+  include LeadSchoolMigratable
 
   belongs_to :recommendations_upload,
              class_name: "BulkUpdate::RecommendationsUpload",
@@ -56,7 +49,7 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
 
-  before_save :sync_lead_partner_and_school
+  set_lead_columns(:lead_school, :lead_partner)
 
   def row_error_messages
     row_errors.map(&:message).join("\n")
@@ -72,20 +65,5 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
 
   def eyts?
     trainee&.award_type == "EYTS"
-  end
-
-private
-
-  def sync_lead_partner_and_school
-    partner_col = self.class.lead_partner_column
-    school_col = self.class.lead_school_column
-    partner_changed = changed.include?(partner_col.to_s)
-    school_changed = changed.include?(school_col.to_s)
-
-    if (partner_changed && school_changed) || school_changed
-      send("#{partner_col}=", send(school_col))
-    elsif partner_changed
-      send("#{school_col}=", send(partner_col))
-    end
   end
 end
