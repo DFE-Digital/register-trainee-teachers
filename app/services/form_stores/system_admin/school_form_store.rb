@@ -6,7 +6,7 @@ module FormStores
       include Cacheable
 
       FORM_SECTION_KEYS = %i[
-        school
+        system_admin_school
       ].freeze
     end
   end
