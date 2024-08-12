@@ -10,6 +10,10 @@ RSpec.describe BulkUpdate::RecommendationsUploadRow do
   end
 
   describe "syncing lead_partner and lead_school" do
+    before do
+      BulkUpdate::RecommendationsUploadRow.set_lead_columns(:lead_school, :lead_partner)
+    end
+
     let(:row) { create(:bulk_update_recommendations_upload_row) }
 
     context "when lead_partner is changed" do

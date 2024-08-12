@@ -35,6 +35,15 @@
 #  fk_rails_...  (matched_trainee_id => trainees.id)
 #
 class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
+  class << self
+    attr_accessor :lead_partner_column, :lead_school_column
+
+    def set_lead_columns(school, partner)
+      @lead_school_column = school
+      @lead_partner_column = partner
+    end
+  end
+
   belongs_to :recommendations_upload,
              class_name: "BulkUpdate::RecommendationsUpload",
              foreign_key: :bulk_update_recommendations_upload_id,
@@ -68,10 +77,15 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
 private
 
   def sync_lead_partner_and_school
-    if (lead_partner_changed? && lead_school_changed?) || lead_school_changed?
-      self.lead_partner = lead_school
-    elsif lead_partner_changed?
-      self.lead_school = lead_partner
+    partner_col = self.class.lead_partner_column
+    school_col = self.class.lead_school_column
+    partner_changed = changed.include?(partner_col.to_s)
+    school_changed = changed.include?(school_col.to_s)
+
+    if (partner_changed && school_changed) || school_changed
+      send("#{partner_col}=", send(school_col))
+    elsif partner_changed
+      send("#{school_col}=", send(partner_col))
     end
   end
 end
