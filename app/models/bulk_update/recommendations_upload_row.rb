@@ -9,6 +9,7 @@
 #  csv_row_number                        :integer
 #  first_names                           :string
 #  last_names                            :string
+#  lead_partner                          :string
 #  lead_school                           :string
 #  phase                                 :string
 #  qts_or_eyts                           :string
@@ -46,6 +47,8 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
 
+  before_save :sync_lead_partner_and_school
+
   def row_error_messages
     row_errors.map(&:message).join("\n")
   end
@@ -60,5 +63,15 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
 
   def eyts?
     trainee&.award_type == "EYTS"
+  end
+
+private
+
+  def sync_lead_partner_and_school
+    if (lead_partner_changed? && lead_school_changed?) || lead_school_changed?
+      self.lead_partner = lead_school
+    elsif lead_partner_changed?
+      self.lead_school = lead_partner
+    end
   end
 end
