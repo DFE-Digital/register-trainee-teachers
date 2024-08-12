@@ -141,24 +141,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Bring docker image up
-        uses: ./.github/actions/bring-docker-image-up/
-        with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
-          docker-image: ${{needs.build.outputs.docker-image}}
-          image-tag: ${{ needs.build.outputs.image-tag }}
-
       - name: ${{ matrix.linter-type }}
-        run: ${{ env.COMMAND }}
-        env:
-          COMMAND: ${{ matrix.command }}
-
-      - name: Check for Failure
-        uses: ./.github/actions/send-slack-notification-for-failure/
+        uses: ./.github/actions/lint/
         with:
-          slack-title: 'Lint failure'
-          slack-message: ':alert: Lint failure for ${{ matrix.linter_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'
+          linter-type: ${{ matrix.linter-type }}
+          command: ${{ matrix.command }}
+          docker-image: ${{ needs.build.outputs.docker-image }}
+          image-tag: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
   test:
     name: Test
