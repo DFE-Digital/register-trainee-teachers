@@ -1,0 +1,17 @@
+<%= render PageTitle::View.new(text: "Edit - #{@school.name}") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: school_path(@school),
+  ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= "Edit - #{@school.name}" %></h1>
+
+<%= register_form_with(model: @school_form, url: school_path(@school), method: :put, local: true) do |f| %>
+  <%= f.govuk_collection_radio_buttons :lead_partner,
+    @school_form.lead_partner_options, :value, :name, legend: { text: "Is a lead partner?" } %>
+
+  <%= f.govuk_submit "Continue" %>
+<% end %>

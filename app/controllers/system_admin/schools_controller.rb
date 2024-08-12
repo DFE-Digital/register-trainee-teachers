@@ -5,5 +5,31 @@ module SystemAdmin
     def index
       @schools = policy_scope(School).order_by_name.page(params[:page] || 1)
     end
+
+    def show
+      school
+    end
+
+    def edit
+      @school_form = SchoolForm.new(school)
+    end
+
+    def update
+      @school_form = SchoolForm.new(school, params: school_params)
+
+      if @school_form.stash
+        redirect_to school_confirm_details_path(school)
+      end
+    end
+
+    private
+
+    def school
+      @school ||= policy_scope(School).find(params[:id])
+    end
+
+    def school_params
+      params.require(:system_admin_school_form).permit(:lead_partner)
+    end
   end
 end

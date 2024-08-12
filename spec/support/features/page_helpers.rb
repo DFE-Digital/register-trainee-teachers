@@ -154,6 +154,18 @@ module Features
       @deferral_page ||= PageObjects::Trainees::Deferral.new
     end
 
+    def edit_school_page
+      @edit_school_page ||= PageObjects::SystemAdmin::Schools::Edit.new
+    end
+
+    def show_school_page
+      @show_school_page ||= PageObjects::SystemAdmin::Schools::Show.new
+    end
+
+    def confirm_school_details_page
+      @confirm_school_details_page ||= PageObjects::SystemAdmin::Schools::ConfirmDetails.new
+    end
+
     def deferral_confirmation_page
       @deferral_confirmation_page ||= PageObjects::Trainees::ConfirmDeferral.new
     end

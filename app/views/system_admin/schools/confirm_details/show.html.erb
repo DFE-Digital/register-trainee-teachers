@@ -1,0 +1,84 @@
+<%= render PageTitle::View.new(text: "Confirm changes to #{@school.name}") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: edit_school_path(@school),
+  ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= "Confirm changes to #{@school.name}" %></h1>
+
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      URN
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.urn %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Town
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.town %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Postcode
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.postcode %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      URN
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.urn %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Is a lead partner
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.lead_partner ? "Yes" : "No" %>
+    </dd>
+    <dd class="govuk-summary-list__value">
+      <%= link_to "Change", edit_school_path(@school) %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Open date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.open_date&.strftime("%d %B %Y") %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Close date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= @school_form.close_date&.strftime("%d %B %Y") %>
+    </dd>
+  </div>
+</dl>
+
+<%= register_form_with(model: @school_form, url: school_confirm_details_path(@school), method: :put, local: true) do |f| %>
+  <%= f.govuk_submit "Confirm" %>
+<% end %>

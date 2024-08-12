@@ -53,7 +53,11 @@ module SystemAdminRoutes
         end
 
         resources :validation_errors, only: %i[index]
-        resources :schools, only: %i[index]
+        resources :schools, only: %i[index show edit update] do
+          scope module: :schools do
+            resource :confirm_details, only: %i[show update], path: :confirm
+          end
+        end
 
         resources :lead_partners, path: "lead-partners", only: %i[index show] do
           resources :users, controller: "lead_partners/users", only: %i[edit update]
