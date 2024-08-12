@@ -28,6 +28,8 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class LeadPartner < ApplicationRecord
+  include Discard::Model
+
   RECORD_TYPES = [
     LEAD_SCHOOL = "lead_school",
     HEI = "hei",
