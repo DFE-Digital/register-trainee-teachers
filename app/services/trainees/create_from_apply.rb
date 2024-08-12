@@ -26,7 +26,7 @@ module Trainees
       end
 
       # Courses can be missing in non-prod environments
-      raise(MissingCourseError, "Cannot find course with uuid: #{raw_course['course_uuid']}") if !::Rails.env.sandbox? && course.nil?
+      raise(MissingCourseError, "Cannot find course with uuid: #{raw_course['course_uuid']}") if course.nil?
 
       trainee.save!
       save_other_disability_text!
