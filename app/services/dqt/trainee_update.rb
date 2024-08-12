@@ -18,14 +18,14 @@ module Dqt
       if trainee.trn.blank?
         raise(
           TraineeUpdateMissingTrn,
-          <<~TEXT
+          <<~TEXT,
             Cannot update trainee on DQT without a trn
             slug: #{trainee.slug}
             id: #{trainee.id}
             #{Settings.base_url}/trainees/#{trainee.slug}
           TEXT
         )
-      end 
+      end
 
       dqt_update(
         "/v2/teachers/update/#{trainee.trn}?slugId=#{trainee.slug}&birthDate=#{trainee.date_of_birth.iso8601}",
