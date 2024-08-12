@@ -15,7 +15,17 @@ module Dqt
       return unless FeatureService.enabled?(:integrate_with_dqt)
       return if trainee.submitted_for_trn?
 
-      raise(TraineeUpdateMissingTrn, "Cannot update trainee on DQT without a trn (id: #{trainee.id})") if trainee.trn.blank?
+      if trainee.trn.blank?
+        raise(
+          TraineeUpdateMissingTrn,
+          <<~TEXT
+            Cannot update trainee on DQT without a trn
+            slug: #{trainee.slug}
+            id: #{trainee.id}
+            #{Settings.base_url}/trainees/#{trainee.slug}
+          TEXT
+        )
+      end 
 
       dqt_update(
         "/v2/teachers/update/#{trainee.trn}?slugId=#{trainee.slug}&birthDate=#{trainee.date_of_birth.iso8601}",
