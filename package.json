@@ -43,5 +43,5 @@
     "extends": "stylelint-config-gds/scss"
   },
   "license": "MIT",
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@1.22.22"
 }
