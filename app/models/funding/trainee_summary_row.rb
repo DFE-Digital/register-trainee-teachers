@@ -23,7 +23,7 @@ module Funding
   class TraineeSummaryRow < ApplicationRecord
     include LeadSchoolMigratable
 
-    set_lead_columns(:lead_school_urn, :lead_partner_urn)
+    set_lead_columns :lead_school_urn, :lead_partner_urn
 
     self.table_name = "funding_trainee_summary_rows"
 

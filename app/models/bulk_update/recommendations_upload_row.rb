@@ -37,6 +37,8 @@
 class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
   include LeadSchoolMigratable
 
+  set_lead_columns :lead_school, :lead_partner
+
   belongs_to :recommendations_upload,
              class_name: "BulkUpdate::RecommendationsUpload",
              foreign_key: :bulk_update_recommendations_upload_id,
@@ -48,8 +50,6 @@ class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
              optional: true
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
-
-  set_lead_columns(:lead_school, :lead_partner)
 
   def row_error_messages
     row_errors.map(&:message).join("\n")
