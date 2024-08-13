@@ -160,16 +160,12 @@ jobs:
         retention-days: 3
 
     - name: Check for Failure
+      uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Backup Failure
-        SLACK_MESSAGE: ':alert: Backup failure :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        slack-title: Backup Failure
+        slack-message: ':alert: Backup failure :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
 
   restore_staging:
@@ -212,13 +208,9 @@ jobs:
         bin/konduit.sh -i backup_sanitised.sql.gz -c -t 7200 register-staging -- psql
 
     - name: Check for Failure
+      uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: Staging Restore Failure
-        SLACK_MESSAGE: ':alert: Daily restore failure for staging :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        slack-title: Staging Restore Failure
+        slack-message: ':alert: Daily restore failure for staging :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}

@@ -55,16 +55,12 @@ jobs:
         (kubectl -n bat-production exec -ti deployment/register-sandbox -- bundle exec rake vendor:create) >> vendor_create.txt
 
     - name: Check for Failure
+      uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@master
       env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#ef5343'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: 'Reset :sadpit: database Failure'
-        SLACK_MESSAGE: ':alert: Reset sandbox database failure for sadpit :sadparrot:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        slack-title: 'Reset :sadpit: database Failure'
+        slack-message: ':alert: Reset sandbox database failure for sadpit :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
     - name: Print out vendor_create.txt
       if: ${{ success() }}
@@ -73,13 +69,10 @@ jobs:
         cat vendor_create.txt
 
     - name: Check for Success
+      uses: ./.github/actions/send-slack-notification/
       if: ${{ success() }}
-      uses: rtCamp/action-slack-notify@master
-      env:
-        SLACK_CHANNEL: twd_publish_register_tech
-        SLACK_COLOR: '#37d67a'
-        SLACK_ICON_EMOJI: ':github-logo:'
-        SLACK_USERNAME: Register Trainee Teachers
-        SLACK_TITLE: 'Reset :sadpit: database Success'
-        SLACK_MESSAGE: ':alert-green: Reset sandbox database success for sadpit :char-dance:'
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      with:
+        slack-color: '#37d67a'
+        slack-title: 'Reset :sadpit: database Success'
+        slack-message: ':alert-green: Reset sandbox database success for sadpit :char-dance:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
