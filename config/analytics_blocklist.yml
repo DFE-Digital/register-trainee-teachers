@@ -229,6 +229,7 @@
     - itt_end_date
     - employing_school_urn
     - lead_school_urn
+    - lead_partner_urn
     - mode
     - course_age_range
     - trainee_start_date

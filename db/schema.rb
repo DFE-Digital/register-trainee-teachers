@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_13_122304) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_13_130940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -652,6 +652,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_122304) do
     t.string "itt_start_date"
     t.string "trainee_start_date"
     t.string "provider_trainee_id"
+    t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
 

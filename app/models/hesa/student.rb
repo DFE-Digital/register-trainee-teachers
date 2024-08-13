@@ -41,6 +41,7 @@
 #  itt_qualification_aim        :string
 #  itt_start_date               :string
 #  last_name                    :string
+#  lead_partner_urn             :string
 #  lead_school_urn              :string
 #  mode                         :string
 #  nationality                  :string
@@ -78,6 +79,10 @@
 #
 module Hesa
   class Student < ApplicationRecord
+    include LeadSchoolMigratable
+
+    set_lead_colums :lead_school_urn, :lead_partner_urn
+
     self.table_name = "hesa_students"
     self.ignored_columns += %w[student_instance_id]
 
