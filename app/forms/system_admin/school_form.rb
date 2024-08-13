@@ -12,9 +12,9 @@ module SystemAdmin
     validates :lead_partner, inclusion: [true, false]
 
     def initialize(school, params: {}, store: FormStores::SystemAdmin::SchoolFormStore)
-      @school       = school
-      @params       = params
-      @store        = store
+      @school = school
+      @params = params
+      @store  = store
 
       super(
         compute_attributes.reverse_merge(
@@ -39,6 +39,10 @@ module SystemAdmin
       end
 
       true
+    end
+
+    def clear_stash
+      store.clear_all(school.id)
     end
 
     def lead_partner_options

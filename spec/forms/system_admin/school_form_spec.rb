@@ -7,6 +7,20 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
   let!(:school) { create(:school) }
 
+  describe "#clear_stash" do
+    let(:form_store) { FormStores::SystemAdmin::SchoolFormStore }
+    let(:params) { {} }
+
+    before do
+      allow(form_store).to receive(:clear_all).and_call_original
+    end
+
+    it "deletes the cached key from the FormStore" do
+      expect(subject.clear_stash).to contain_exactly(:system_admin_school)
+      expect(form_store).to have_received(:clear_all).with(school.id)
+    end
+  end
+
   describe "#stash" do
     let(:form_store) { FormStores::SystemAdmin::SchoolFormStore }
 
@@ -113,7 +127,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
           end
         end
 
-        context "when the School is not a Lead Partner" do
+        context "when School is not a Lead Partner" do
           it "creates a Lead Partner record associated with the School" do
             expect(school_form.save).to eq(true)
 

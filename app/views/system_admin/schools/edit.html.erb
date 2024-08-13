@@ -15,3 +15,7 @@
 
   <%= f.govuk_submit "Continue" %>
 <% end %>
+
+<p class="govuk-body">
+  <%= govuk_link_to(t("components.confirmation.cancel_and_return"), school_path(@school)) %>
+</p>

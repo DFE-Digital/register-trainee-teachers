@@ -7,7 +7,8 @@ module SystemAdmin
     end
 
     def show
-      school
+      @school_form = SchoolForm.new(school)
+      @school_form.clear_stash
     end
 
     def edit

@@ -29,7 +29,22 @@ feature "Editing a School", type: :feature do
   end
 
   scenario "A System Admin cancels editing a School" do
-
+    when_i_visit_the_school_index_page
+    and_i_see_the_list_of_schools
+    and_i_click_on_a_school_name
+    then_i_see_the_school_show_page
+    when_i_click_on_change
+    then_i_see_the_school_edit_page
+    when_i_click_on_cancel
+    then_i_see_the_school_show_page
+    when_i_click_on_change
+    and_i_see_the_school_edit_page
+    and_i_edit_the_school
+    and_i_click_on_continue
+    when_i_click_on_cancel
+    then_i_see_the_school_show_page
+    when_i_click_on_change
+    then_i_see_the_school_edit_page
   end
 
   def when_i_visit_the_school_index_page
@@ -56,6 +71,10 @@ feature "Editing a School", type: :feature do
     expect(show_school_page).to have_text("Open date #{school.open_date&.strftime("%d %B %Y")}")
     expect(show_school_page).to have_text("Close date #{school.close_date&.strftime("%d %B %Y")}")
     expect(show_school_page).to have_text("Is a lead partner No Change")
+  end
+
+  def when_i_click_on_cancel
+    edit_school_page.cancel_link.click
   end
 
   def when_i_click_on_back

@@ -8,6 +8,7 @@ module PageObjects
 
         # element :error_summary, ".govuk-error-summary"
         element :continue_button, 'button.govuk-button[type="submit"]'
+        element :cancel_link, '.govuk-link', text: 'Cancel and return to record'
 
         elements :lead_partner_radio_buttons, 'input[type="radio"][name="system_admin_school_form[lead_partner]"]'
 
