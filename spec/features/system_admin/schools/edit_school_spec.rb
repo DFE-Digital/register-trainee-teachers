@@ -2,7 +2,9 @@ require "rails_helper"
 
 feature "Editing a School", type: :feature do
   let(:user) { create(:user, system_admin: true) }
+
   let!(:school) { create(:school, :closed, name: "Test 1") }
+  let(:school_form) { SystemAdmin::SchoolForm.new(school, params: { lead_partner: nil }) }
 
   before do
     given_i_am_authenticated(user:)
@@ -81,6 +83,38 @@ feature "Editing a School", type: :feature do
 
     when_i_visit_the_school_index_page
     then_i_see_the_list_of_schools(lead_partner: false)
+  end
+
+  scenario "A System Admin edits a School and gets errors" do
+    when_i_visit_the_school_index_page
+    and_i_see_the_list_of_schools(lead_partner: false)
+    and_i_click_on_a_school_name
+    and_i_see_the_school_show_page(lead_partner: "No")
+    and_i_click_on_change
+    and_i_see_the_school_edit_page(lead_partner: false)
+    and_i_edit_the_school(lead_partner: true)
+
+    allow(SystemAdmin::SchoolForm).to receive(:new).and_return(school_form)
+
+    and_i_click_on_continue
+    then_i_see_an_error_message
+
+    allow(SystemAdmin::SchoolForm).to receive(:new).and_call_original
+
+    edit_school_page.load(id: school.id)
+
+    and_i_edit_the_school(lead_partner: true)
+    and_i_click_on_continue
+    and_i_see_the_confirm_school_details_page(lead_partner: "Yes")
+
+    allow(SystemAdmin::SchoolForm).to receive(:new).and_return(school_form)
+
+    when_i_click_on_confirm
+    then_i_see_an_error_message
+  end
+
+  def then_i_see_an_error_message
+    expect(edit_school_page.error_summary).to have_text("is not included in the list")
   end
 
   def when_i_visit_the_school_index_page

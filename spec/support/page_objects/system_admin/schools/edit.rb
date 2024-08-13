@@ -6,7 +6,7 @@ module PageObjects
       class Edit < PageObjects::Base
         set_url "/system-admin/schools/{id}/edit"
 
-        # element :error_summary, ".govuk-error-summary"
+        element :error_summary, '.govuk-error-summary'
         element :continue_button, 'button.govuk-button[type="submit"]'
         element :cancel_link, '.govuk-link', text: 'Cancel and return to record'
 

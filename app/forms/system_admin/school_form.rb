@@ -32,7 +32,7 @@ module SystemAdmin
     def save
       return false unless valid?
 
-      ApplicationRecord.transaction do
+      ActiveRecord::Base.transaction do
         if lead_partner
           find_or_create_lead_partner.tap do |school_lead_partner|
             school_lead_partner.undiscard! if school_lead_partner.discarded?

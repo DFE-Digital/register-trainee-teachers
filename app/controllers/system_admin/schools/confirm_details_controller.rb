@@ -10,13 +10,15 @@ module SystemAdmin
       def update
         if school_form.save
           redirect_to school_path(school)
+        else
+          render :show
         end
       end
 
       private
 
       def school_form
-        @school_form = SchoolForm.new(school)
+        @school_form ||= SchoolForm.new(school)
       end
 
       def school

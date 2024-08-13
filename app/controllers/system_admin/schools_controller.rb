@@ -20,6 +20,8 @@ module SystemAdmin
 
       if @school_form.stash
         redirect_to school_confirm_details_path(school)
+      else
+        render :edit
       end
     end
 
