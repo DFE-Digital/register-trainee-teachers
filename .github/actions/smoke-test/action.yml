@@ -25,10 +25,10 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set up Ruby 3.2.2
+    - name: Set up Ruby 3.2.5
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2.2
+        ruby-version: 3.2.5
 
 # base_url is set in config_settings for non-review apps and will need to be overriden for aks non-review
     - name: Set Environment variables
