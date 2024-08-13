@@ -32,13 +32,18 @@ module SystemAdmin
     def save
       return false unless valid?
 
-      if lead_partner
-        find_or_create_lead_partner.undiscard
-      else
-        school.lead_partner&.discard
-      end
+      ApplicationRecord.transaction do
+        if lead_partner
+          find_or_create_lead_partner.tap do |school_lead_partner|
+            school_lead_partner.undiscard! if school_lead_partner.discarded?
+          end
+        else
+          school.lead_partner&.discard!
+        end
 
-      true
+        school.attributes = school_attributes
+        school.save!
+      end
     end
 
     def clear_stash
@@ -47,13 +52,19 @@ module SystemAdmin
 
     def lead_partner_options
       [true, false].map do |value|
-        OpenStruct.new(value:, name: value == true ? "Yes" : "No")
+        OpenStruct.new(id: value, name: value == true ? "Yes" : "No")
       end
     end
 
     private
 
     attr_reader :school, :params, :store
+
+    def school_attributes
+      {
+        lead_school: lead_partner
+      }
+    end
 
     def find_or_create_lead_partner
       LeadPartner.find_or_create_by!(school_id: school.id, urn: school.urn) do |lp|

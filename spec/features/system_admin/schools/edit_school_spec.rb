@@ -25,7 +25,9 @@ feature "Editing a School", type: :feature do
     then_i_see_the_school_edit_page(lead_partner: true)
     when_i_click_on_continue
     and_i_click_on_confirm
-    then_i_see_the_updated_school
+    then_i_see_the_school_show_page(lead_partner: "Yes")
+    when_i_click_on_back
+    then_i_see_the_list_of_schools(lead_partner: true)
   end
 
   scenario "A System Admin cancels editing a School" do
@@ -45,32 +47,34 @@ feature "Editing a School", type: :feature do
     then_i_see_the_school_show_page
     when_i_click_on_change
     then_i_see_the_school_edit_page
+    when_i_visit_the_school_index_page
+    then_i_see_the_list_of_schools
   end
 
   def when_i_visit_the_school_index_page
     schools_index_page.load
   end
 
-  def and_i_see_the_list_of_schools
+  def and_i_see_the_list_of_schools(lead_partner: false)
     expect(schools_index_page).to have_text("Test 1")
     expect(schools_index_page).to have_text(school.urn)
     expect(schools_index_page).to have_text(school.town)
     expect(schools_index_page).to have_text(school.postcode)
-    expect(schools_index_page).to have_text(false)
+    expect(schools_index_page).to have_text(lead_partner)
   end
 
   def and_i_click_on_a_school_name
     click_on "Test 1"
   end
 
-  def then_i_see_the_school_show_page
+  def then_i_see_the_school_show_page(lead_partner: "No")
     expect(show_school_page).to have_text("Name Test 1")
     expect(show_school_page).to have_text("URN #{school.urn}")
     expect(show_school_page).to have_text("Town #{school.town}")
     expect(show_school_page).to have_text("Postcode #{school.postcode}")
     expect(show_school_page).to have_text("Open date #{school.open_date&.strftime("%d %B %Y")}")
     expect(show_school_page).to have_text("Close date #{school.close_date&.strftime("%d %B %Y")}")
-    expect(show_school_page).to have_text("Is a lead partner No Change")
+    expect(show_school_page).to have_text("Is a lead partner #{lead_partner} Change")
   end
 
   def when_i_click_on_cancel
