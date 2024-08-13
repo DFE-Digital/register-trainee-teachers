@@ -6,6 +6,7 @@
 #
 #  id                         :bigint           not null, primary key
 #  cohort_level               :string
+#  lead_partner_urn           :string
 #  lead_school_name           :string
 #  lead_school_urn            :string
 #  route                      :string
@@ -20,6 +21,10 @@
 #
 module Funding
   class TraineeSummaryRow < ApplicationRecord
+    include LeadSchoolMigratable
+
+    set_lead_columns(:lead_school_urn, :lead_partner_urn)
+
     self.table_name = "funding_trainee_summary_rows"
 
     belongs_to :trainee_summary,
