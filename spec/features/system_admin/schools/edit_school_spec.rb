@@ -9,53 +9,97 @@ feature "Editing a School", type: :feature do
   end
 
   scenario "A System Admin edits a School" do
+    when_i_visit_the_lead_partners_index_page
+    then_i_dont_see_the_school_as_a_lead_partner
+
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools
+    and_i_see_the_list_of_schools(lead_partner: false)
     and_i_click_on_a_school_name
-    then_i_see_the_school_show_page
+    then_i_see_the_school_show_page(lead_partner: "No")
+
     when_i_click_on_back
-    then_i_see_the_list_of_schools
+    then_i_see_the_list_of_schools(lead_partner: false)
+
     when_i_click_on_a_school_name
     and_i_click_on_change
-    and_i_see_the_school_edit_page
-    and_i_edit_the_school
+    and_i_see_the_school_edit_page(lead_partner: false)
+    and_i_edit_the_school(lead_partner: true)
     and_i_click_on_continue
-    then_i_see_the_confirm_school_details_page
+    then_i_see_the_confirm_school_details_page(lead_partner: "Yes")
+
     when_i_click_on_back
     then_i_see_the_school_edit_page(lead_partner: true)
+
     when_i_click_on_continue
     and_i_click_on_confirm
     then_i_see_the_school_show_page(lead_partner: "Yes")
+
     when_i_click_on_back
     then_i_see_the_list_of_schools(lead_partner: true)
+
+    when_i_visit_the_lead_partners_index_page
+    then_i_see_the_school_as_a_lead_partner
+
+    when_i_visit_the_school_index_page
+    and_i_see_the_list_of_schools(lead_partner: true)
+    and_i_click_on_a_school_name
+    and_i_see_the_school_show_page(lead_partner: "Yes")
+    and_i_click_on_change
+    and_i_see_the_school_edit_page(lead_partner: true)
+    and_i_edit_the_school(lead_partner: false)
+    and_i_click_on_continue
+    and_i_see_the_confirm_school_details_page(lead_partner: "No")
+    and_i_click_on_confirm
+    then_i_see_the_school_show_page(lead_partner: "No")
+
+    when_i_visit_the_lead_partners_index_page
+    then_i_dont_see_the_school_as_a_lead_partner
   end
 
   scenario "A System Admin cancels editing a School" do
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools
+    and_i_see_the_list_of_schools(lead_partner: false)
     and_i_click_on_a_school_name
-    then_i_see_the_school_show_page
+    then_i_see_the_school_show_page(lead_partner: "No")
+
     when_i_click_on_change
-    then_i_see_the_school_edit_page
+    then_i_see_the_school_edit_page(lead_partner: false)
+
     when_i_click_on_cancel
-    then_i_see_the_school_show_page
+    then_i_see_the_school_show_page(lead_partner: "No")
+
     when_i_click_on_change
-    and_i_see_the_school_edit_page
-    and_i_edit_the_school
+    and_i_see_the_school_edit_page(lead_partner: false)
+    and_i_edit_the_school(lead_partner: true)
     and_i_click_on_continue
-    when_i_click_on_cancel
-    then_i_see_the_school_show_page
+    and_i_see_the_confirm_school_details_page(lead_partner: "Yes")
+    and_i_click_on_cancel
+    then_i_see_the_school_show_page(lead_partner: "No")
+
     when_i_click_on_change
-    then_i_see_the_school_edit_page
+    then_i_see_the_school_edit_page(lead_partner: false)
+
     when_i_visit_the_school_index_page
-    then_i_see_the_list_of_schools
+    then_i_see_the_list_of_schools(lead_partner: false)
   end
 
   def when_i_visit_the_school_index_page
     schools_index_page.load
   end
 
-  def and_i_see_the_list_of_schools(lead_partner: false)
+  def when_i_visit_the_lead_partners_index_page
+    lead_partners_index_page.load
+  end
+
+  def then_i_dont_see_the_school_as_a_lead_partner
+    expect(lead_partners_index_page).not_to have_text("Test 1")
+  end
+
+  def then_i_see_the_school_as_a_lead_partner
+    expect(lead_partners_index_page).to have_text("Test 1")
+  end
+
+  def and_i_see_the_list_of_schools(lead_partner:)
     expect(schools_index_page).to have_text("Test 1")
     expect(schools_index_page).to have_text(school.urn)
     expect(schools_index_page).to have_text(school.town)
@@ -67,7 +111,7 @@ feature "Editing a School", type: :feature do
     click_on "Test 1"
   end
 
-  def then_i_see_the_school_show_page(lead_partner: "No")
+  def then_i_see_the_school_show_page(lead_partner:)
     expect(show_school_page).to have_text("Name Test 1")
     expect(show_school_page).to have_text("URN #{school.urn}")
     expect(show_school_page).to have_text("Town #{school.town}")
@@ -89,31 +133,20 @@ feature "Editing a School", type: :feature do
     first(:link, "Change").click
   end
 
-  def and_i_see_the_school_edit_page(lead_partner: false)
+  def and_i_see_the_school_edit_page(lead_partner:)
     expect(edit_school_page).to have_text("Edit - Test 1")
     expect(edit_school_page).to have_lead_partner_radio_button_checked(lead_partner)
   end
 
-  def and_i_edit_the_school
-    edit_school_page.select_radio_button(true)
+  def and_i_edit_the_school(lead_partner:)
+    edit_school_page.select_radio_button(lead_partner)
   end
 
   def and_i_click_on_continue
     edit_school_page.continue_button.click
   end
 
-  def then_i_see_the_updated_school
-    expect(show_school_page).to be_displayed
-    expect(show_school_page).to have_text("Name Test 1")
-    expect(show_school_page).to have_text("URN #{school.urn}")
-    expect(show_school_page).to have_text("Town #{school.town}")
-    expect(show_school_page).to have_text("Postcode #{school.postcode}")
-    expect(show_school_page).to have_text("Open date #{school.open_date&.strftime("%d %B %Y")}")
-    expect(show_school_page).to have_text("Close date #{school.close_date&.strftime("%d %B %Y")}")
-    expect(show_school_page).to have_text("Is a lead partner Yes Change")
-  end
-
-  def then_i_see_the_confirm_school_details_page
+  def then_i_see_the_confirm_school_details_page(lead_partner:)
     expect(confirm_school_details_page).to be_displayed
     expect(confirm_school_details_page).to have_text("Name Test 1")
     expect(confirm_school_details_page).to have_text("URN #{school.urn}")
@@ -121,7 +154,7 @@ feature "Editing a School", type: :feature do
     expect(confirm_school_details_page).to have_text("Postcode #{school.postcode}")
     expect(confirm_school_details_page).to have_text("Open date #{school.open_date&.strftime("%d %B %Y")}")
     expect(confirm_school_details_page).to have_text("Close date #{school.close_date&.strftime("%d %B %Y")}")
-    expect(confirm_school_details_page).to have_text("Is a lead partner Yes Change")
+    expect(confirm_school_details_page).to have_text("Is a lead partner #{lead_partner} Change")
   end
 
   def when_i_click_on_confirm
@@ -134,4 +167,7 @@ feature "Editing a School", type: :feature do
   alias_method :then_i_see_the_school_edit_page, :and_i_see_the_school_edit_page
   alias_method :when_i_click_on_continue, :and_i_click_on_continue
   alias_method :and_i_click_on_confirm, :when_i_click_on_confirm
+  alias_method :and_i_click_on_cancel, :when_i_click_on_cancel
+  alias_method :and_i_see_the_school_show_page, :then_i_see_the_school_show_page
+  alias_method :and_i_see_the_confirm_school_details_page, :then_i_see_the_confirm_school_details_page
 end

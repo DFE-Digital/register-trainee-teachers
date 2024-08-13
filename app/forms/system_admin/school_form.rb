@@ -18,7 +18,7 @@ module SystemAdmin
 
       super(
         compute_attributes.reverse_merge(
-          lead_partner: school.lead_partner.present?
+          lead_partner: school.lead_school
         )
       )
     end

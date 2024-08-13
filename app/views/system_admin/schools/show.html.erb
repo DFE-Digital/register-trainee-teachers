@@ -55,7 +55,7 @@
       Is a lead partner
     </dt>
     <dd class="govuk-summary-list__value">
-      <%= @school.lead_partner.present? ? "Yes" : "No" %>
+      <%= @school.lead_school ? "Yes" : "No" %>
     </dd>
     <dd class="govuk-summary-list__value">
       <%= link_to "Change", edit_school_path(@school) %>

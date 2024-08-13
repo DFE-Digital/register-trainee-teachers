@@ -13,7 +13,7 @@
   <%= f.govuk_collection_radio_buttons :lead_partner,
     @school_form.lead_partner_options, :id, :name, legend: { text: "Is a lead partner?" } %>
 
-  <%= f.govuk_submit "Continue" %>
+  <%= f.govuk_submit t("continue") %>
 <% end %>
 
 <p class="govuk-body">

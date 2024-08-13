@@ -82,6 +82,10 @@ module Features
       @provider_index_page ||= PageObjects::Providers::Index.new
     end
 
+    def lead_partners_index_page
+      @lead_partners_index_page ||= PageObjects::LeadPartners::Index.new
+    end
+
     def schools_index_page
       @schools_index_page ||= PageObjects::Schools::Index.new
     end
