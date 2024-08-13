@@ -199,7 +199,38 @@ feature "viewing the trainee summary", feature_funding: true do
     end
   end
 
+  context "with a valid trainee summary in the current and previous academic years" do
+    let(:academic_year) { AcademicCycle.current }
+    let(:previous_academic_year_string) { "#{academic_year.start_date.year - 1}/#{(academic_year.end_date.year - 1) % 100}" }
+    let(:previous_summary) { create(:trainee_summary, payable: user.providers.first, academic_year: previous_academic_year_string) }
+    let(:previous_row) { create(:trainee_summary_row, trainee_summary: previous_summary, subject: test_subject) }
+    let!(:amount) { create(:trainee_summary_row_amount, :with_bursary, row: previous_row) }
+
+    let(:summary) { create(:trainee_summary, payable: user.providers.first) }
+    let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
+
+    background {
+      create(:trainee_summary_row_amount, :with_bursary, row:)
+      funding_data_exists_for_previous_year
+    }
+
+    scenario "displays the empty state" do
+      when_i_visit_the_funding_page
+      then_i_see_two_academic_years
+
+      when_i_visit_the_previous_payment_schedule_page
+      then_i_see_the_previous_payment_schedule_page
+
+      when_i_click_on_the_previous_trainee_summary_link
+      then_i_see_the_previous_trainee_summary_page
+    end
+  end
+
 private
+
+  def when_i_visit_the_funding_page
+    funding_page.load
+  end
 
   def when_i_visit_the_trainee_summary_page
     trainee_summary_page.load
@@ -259,5 +290,37 @@ private
 
   def to_pounds(value_in_pence)
     ActionController::Base.helpers.number_to_currency(value_in_pence.to_d / 100, unit: "£")
+  end
+
+  def then_i_see_two_academic_years
+    expect(page).to have_link("#{academic_year.start_date.year} to #{(academic_year.end_date.year)}")
+    expect(page).to have_link("#{academic_year.start_date.year - 1} to #{(academic_year.end_date.year - 1)}")
+  end
+
+  def when_i_visit_the_previous_payment_schedule_page
+    click_link("#{academic_year.start_date.year - 1} to #{(academic_year.end_date.year - 1)}")
+  end
+
+  def funding_data_exists_for_previous_year
+    create(:payment_schedule, rows: [
+      build(:payment_schedule_row, amounts: [
+        build(:payment_schedule_row_amount, month: 1, year: AcademicCycle.previous.start_year, amount_in_pence: 100),
+        build(:payment_schedule_row_amount, month: 2, year: AcademicCycle.previous.start_year, amount_in_pence: 200),
+        build(:payment_schedule_row_amount, month: 3, year: AcademicCycle.previous.start_year, amount_in_pence: 600, predicted: true),
+      ]),
+    ], payable: current_user.providers.first)
+  end
+
+  def then_i_see_the_previous_payment_schedule_page
+    expect(page).to have_text("Payment schedule #{AcademicCycle.previous.start_year} to #{AcademicCycle.previous.end_year}")
+  end
+
+  def when_i_click_on_the_previous_trainee_summary_link
+    click_link("Trainee summary #{AcademicCycle.previous.start_year} to #{AcademicCycle.previous.end_year}")
+  end
+
+  def then_i_see_the_previous_trainee_summary_page
+    expect(page).to have_current_path(funding_trainee_summary_path(AcademicCycle.previous.start_year))
+    expect(page).to have_text("Trainee summary #{AcademicCycle.previous.start_year} to #{AcademicCycle.previous.end_year}")
   end
 end
