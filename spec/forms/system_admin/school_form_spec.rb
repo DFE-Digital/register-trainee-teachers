@@ -99,7 +99,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
         context "when School is an undiscarded Lead Partner" do
           before do
-            create(:lead_partner, :lead_school, school:).discard!
+            create(:lead_partner, :lead_school, school:)
           end
 
           it "discards the Lead Partner" do
