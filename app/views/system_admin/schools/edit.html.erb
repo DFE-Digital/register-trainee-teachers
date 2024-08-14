@@ -1,15 +1,15 @@
-<%= render PageTitle::View.new(text: "Edit - #{@school.name}") %>
+<%= render PageTitle::View.new(text: "Edit - #{@school_form.name}") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t(:back),
-    href: school_path(@school),
+    href: school_path(@school_form),
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l"><%= "Edit - #{@school.name}" %></h1>
+<h1 class="govuk-heading-l"><%= "Edit - #{@school_form.name}" %></h1>
 
-<%= register_form_with(model: @school_form, url: school_path(@school), method: :put, local: true) do |f| %>
+<%= register_form_with(model: @school_form, url: school_path(@school_form), method: :put, local: true) do |f| %>
   <%= f.govuk_collection_radio_buttons :lead_partner,
     @school_form.lead_partner_options, :id, :name, legend: { text: "Is a lead partner?" } %>
 
@@ -18,5 +18,5 @@
 <% end %>
 
 <p class="govuk-body">
-  <%= govuk_link_to(t("components.confirmation.cancel_and_return"), school_path(@school)) %>
+  <%= govuk_link_to(t("components.confirmation.cancel_and_return"), school_path(@school_form)) %>
 </p>

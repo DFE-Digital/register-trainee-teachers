@@ -11,7 +11,15 @@ module SystemAdmin
 
     attribute :lead_partner, :boolean
 
-    delegate :name, :urn, :town, :postcode, :open_date, :close_date, to: :school
+    delegate :name,
+             :urn,
+             :town,
+             :postcode,
+             :open_date,
+             :close_date,
+             :to_param, to: :school
+
+    attr_reader :school
 
     validates :lead_partner, inclusion: [true, false]
 
@@ -66,7 +74,7 @@ module SystemAdmin
 
   private
 
-    attr_reader :school, :params, :store
+    attr_reader :params, :store
 
     def school_attributes
       {

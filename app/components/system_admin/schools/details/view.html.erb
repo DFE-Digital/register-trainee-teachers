@@ -1,0 +1,70 @@
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Name
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.name %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      URN
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.urn %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Town
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.town %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Postcode
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.postcode %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      URN
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.urn %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Is a lead partner
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= lead_partner? ? "Yes" : "No" %>
+    </dd>
+    <dd class="govuk-summary-list__value">
+      <%= link_to "Change", edit_school_path(school_entity) %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Open date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.open_date&.strftime("%d %B %Y") %>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      Close date
+    </dt>
+    <dd class="govuk-summary-list__value">
+      <%= school_entity.close_date&.strftime("%d %B %Y") %>
+    </dd>
+  </div>
+</dl>
+

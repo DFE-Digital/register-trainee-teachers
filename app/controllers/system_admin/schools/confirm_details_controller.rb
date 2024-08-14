@@ -22,7 +22,7 @@ module SystemAdmin
       end
 
       def school
-        @school ||= policy_scope(School).find(params[:school_id])
+        policy_scope(School).find(params[:school_id])
       end
     end
   end
