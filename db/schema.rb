@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_09_135932) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -708,8 +708,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_09_135932) do
     t.datetime "discarded_at"
     t.index ["discarded_at"], name: "index_lead_partners_on_discarded_at"
     t.index ["name"], name: "index_lead_partners_on_name"
-    t.index ["provider_id"], name: "index_lead_partners_on_provider_id"
-    t.index ["school_id"], name: "index_lead_partners_on_school_id"
+    t.index ["provider_id"], name: "index_lead_partners_on_provider_id", unique: true
+    t.index ["school_id"], name: "index_lead_partners_on_school_id", unique: true
     t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
     t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
   end
