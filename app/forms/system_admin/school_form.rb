@@ -11,6 +11,10 @@ module SystemAdmin
 
     validates :lead_partner, inclusion: [true, false]
 
+    def self.model_name
+      ActiveModel::Name.new(School)
+    end
+
     def initialize(school, params: {}, store: FormStores::SystemAdmin::SchoolFormStore)
       @school = school
       @params = params

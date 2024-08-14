@@ -10,7 +10,7 @@ module PageObjects
         element :continue_button, 'button.govuk-button[type="submit"]'
         element :cancel_link, '.govuk-link', text: 'Cancel and return to record'
 
-        elements :lead_partner_radio_buttons, 'input[type="radio"][name="system_admin_school_form[lead_partner]"]'
+        elements :lead_partner_radio_buttons, 'input[type="radio"][name="school[lead_partner]"]'
 
         def has_lead_partner_radio_button_checked?(value)
           radio_button(value).checked?

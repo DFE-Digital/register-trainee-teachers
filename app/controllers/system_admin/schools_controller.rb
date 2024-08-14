@@ -32,7 +32,7 @@ module SystemAdmin
     end
 
     def school_params
-      params.require(:system_admin_school_form).permit(:lead_partner)
+      params.require(:school).permit(:lead_partner)
     end
   end
 end
