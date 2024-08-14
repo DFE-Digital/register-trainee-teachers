@@ -81,7 +81,7 @@ module Hesa
   class Student < ApplicationRecord
     include LeadSchoolMigratable
 
-    set_lead_colums :lead_school_urn, :lead_partner_urn
+    set_lead_columns :lead_school_urn, :lead_partner_urn
 
     self.table_name = "hesa_students"
     self.ignored_columns += %w[student_instance_id]
