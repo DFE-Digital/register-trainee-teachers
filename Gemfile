@@ -84,7 +84,7 @@ gem "pg_search", "~> 2.3"
 gem "slack-notifier"
 
 # Tracking changes to models
-gem "audited", "~> 5.6"
+gem "audited", "~> 5.7"
 
 # Trainee state and transitions
 gem "stateful_enum"
