@@ -42,11 +42,11 @@ module SystemAdmin
 
       ActiveRecord::Base.transaction do
         if lead_partner
-          find_or_create_lead_partner.tap do |school_lead_partner|
+          find_or_create_lead_partner!.tap do |school_lead_partner|
             school_lead_partner.undiscard! if school_lead_partner.discarded?
           end
-        else
-          school.lead_partner&.discard!
+        elsif school.lead_partner&.undiscarded?
+          school.lead_partner.discard!
         end
 
         school.attributes = school_attributes
@@ -74,7 +74,7 @@ module SystemAdmin
       }
     end
 
-    def find_or_create_lead_partner
+    def find_or_create_lead_partner!
       LeadPartner.find_or_create_by!(school_id: school.id, urn: school.urn) do |lp|
         lp.name        = school.name
         lp.record_type = LeadPartner::LEAD_SCHOOL
