@@ -5,6 +5,10 @@ module SystemAdmin
     include ActiveModel::Model
     include ActiveModel::Attributes
 
+    LEAD_PARTNER_OPTION = Struct.new(:id, :name)
+
+    private_constant :LEAD_PARTNER_OPTION
+
     attribute :lead_partner, :boolean
 
     delegate :name, :urn, :town, :postcode, :open_date, :close_date, to: :school
@@ -22,7 +26,7 @@ module SystemAdmin
 
       super(
         compute_attributes.reverse_merge(
-          lead_partner: school.lead_school
+          lead_partner: school.lead_school,
         )
       )
     end
@@ -56,17 +60,17 @@ module SystemAdmin
 
     def lead_partner_options
       [true, false].map do |value|
-        OpenStruct.new(id: value, name: value == true ? "Yes" : "No")
+        LEAD_PARTNER_OPTION.new(id: value, name: value == true ? "Yes" : "No")
       end
     end
 
-    private
+  private
 
     attr_reader :school, :params, :store
 
     def school_attributes
       {
-        lead_school: lead_partner
+        lead_school: lead_partner,
       }
     end
 

@@ -9,13 +9,13 @@ module SystemAdmin
 
       def update
         if school_form.save
-          redirect_to school_path(school)
+          redirect_to(school_path(school))
         else
-          render :show
+          render(:show)
         end
       end
 
-      private
+    private
 
       def school_form
         @school_form ||= SchoolForm.new(school)

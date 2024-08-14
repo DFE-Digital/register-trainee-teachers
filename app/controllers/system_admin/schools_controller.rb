@@ -19,13 +19,13 @@ module SystemAdmin
       @school_form = SchoolForm.new(school, params: school_params)
 
       if @school_form.stash
-        redirect_to school_confirm_details_path(school)
+        redirect_to(school_confirm_details_path(school))
       else
-        render :edit
+        render(:edit)
       end
     end
 
-    private
+  private
 
     def school
       @school ||= policy_scope(School).find(params[:id])

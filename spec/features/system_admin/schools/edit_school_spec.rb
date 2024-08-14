@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-feature "Editing a School", type: :feature do
+feature "Editing a School" do
   let(:user) { create(:user, system_admin: true) }
 
   let!(:school) { create(:school, :closed, name: "Test 1") }
@@ -150,8 +152,8 @@ feature "Editing a School", type: :feature do
     expect(show_school_page).to have_text("URN #{school.urn}")
     expect(show_school_page).to have_text("Town #{school.town}")
     expect(show_school_page).to have_text("Postcode #{school.postcode}")
-    expect(show_school_page).to have_text("Open date #{school.open_date&.strftime("%d %B %Y")}")
-    expect(show_school_page).to have_text("Close date #{school.close_date&.strftime("%d %B %Y")}")
+    expect(show_school_page).to have_text("Open date #{school.open_date&.strftime('%d %B %Y')}")
+    expect(show_school_page).to have_text("Close date #{school.close_date&.strftime('%d %B %Y')}")
     expect(show_school_page).to have_text("Is a lead partner #{lead_partner} Change")
   end
 
@@ -160,7 +162,7 @@ feature "Editing a School", type: :feature do
   end
 
   def when_i_click_on_back
-    click_link "Back"
+    edit_school_page.back_link.click
   end
 
   def when_i_click_on_change
@@ -186,8 +188,8 @@ feature "Editing a School", type: :feature do
     expect(confirm_school_details_page).to have_text("URN #{school.urn}")
     expect(confirm_school_details_page).to have_text("Town #{school.town}")
     expect(confirm_school_details_page).to have_text("Postcode #{school.postcode}")
-    expect(confirm_school_details_page).to have_text("Open date #{school.open_date&.strftime("%d %B %Y")}")
-    expect(confirm_school_details_page).to have_text("Close date #{school.close_date&.strftime("%d %B %Y")}")
+    expect(confirm_school_details_page).to have_text("Open date #{school.open_date&.strftime('%d %B %Y')}")
+    expect(confirm_school_details_page).to have_text("Close date #{school.close_date&.strftime('%d %B %Y')}")
     expect(confirm_school_details_page).to have_text("Is a lead partner #{lead_partner} Change")
   end
 
