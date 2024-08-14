@@ -113,9 +113,9 @@ GEM
       ruby-next-core (~> 1.0)
     ast (2.4.2)
     attr_required (1.0.2)
-    audited (5.6.0)
-      activerecord (>= 5.2, < 7.2)
-      activesupport (>= 5.2, < 7.2)
+    audited (5.7.0)
+      activerecord (>= 5.2, < 8.0)
+      activesupport (>= 5.2, < 8.0)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
@@ -761,7 +761,7 @@ DEPENDENCIES
   activerecord-session_store
   amazing_print (~> 1.6)
   annotate
-  audited (~> 5.6)
+  audited (~> 5.7)
   auto_strip_attributes
   awesome_print
   azure-blob
