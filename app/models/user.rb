@@ -33,9 +33,6 @@ class User < ApplicationRecord
   has_many :provider_users, inverse_of: :user
   has_many :providers, through: :provider_users
 
-  has_many :lead_school_users
-  has_many :lead_schools, through: :lead_school_users
-
   has_many :lead_partner_users
   has_many :lead_partners, through: :lead_partner_users
 
@@ -57,7 +54,7 @@ class User < ApplicationRecord
 
   pg_search_scope :search,
                   against: %i[first_name last_name email],
-                  associated_against: { providers: [:name], lead_schools: [:name] },
+                  associated_against: { providers: [:name], lead_partners: [:name] },
                   using: { trigram: { word_similarity: true } }
 
   def name
