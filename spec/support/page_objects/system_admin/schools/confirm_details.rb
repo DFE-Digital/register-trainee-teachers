@@ -6,7 +6,7 @@ module PageObjects
       class ConfirmDetails < PageObjects::Base
         set_url "/system-admin/schools/{id}/confirm"
 
-        element :confirm_button, 'button.govuk-button[type="submit"]'
+        element :confirm_button, 'button.govuk-button[type="submit"]', text: "Confirm"
       end
     end
   end

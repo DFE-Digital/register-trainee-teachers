@@ -81,7 +81,7 @@
 
 <%= register_form_with(model: @school_form, url: school_confirm_details_path(@school), method: :put, local: true) do |f| %>
   <%= f.govuk_error_summary %>
-  <%= f.govuk_submit "Confirm" %>
+  <%= f.govuk_submit t("confirm") %>
 <% end %>
 
 <p class="govuk-body">
