@@ -25,5 +25,9 @@ FactoryBot.define do
       provider factory: %i[provider unaccredited]
       ukprn { Faker::Number.number(digits: 8) }
     end
+
+    trait :discarded do
+      discarded_at { Time.zone.now }
+    end
   end
 end
