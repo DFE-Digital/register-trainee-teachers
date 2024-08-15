@@ -79,7 +79,7 @@ jobs:
         USE_NEXT_ACADEMIC_YEAR: ${{ inputs.use-next-academic-year }}
 
     - name: Check for Failure
-      uses: ./.github/actions/send-failure-notification/
+      uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
       with:
         slack-title: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} tests"

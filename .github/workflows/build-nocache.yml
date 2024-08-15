@@ -80,16 +80,12 @@ jobs:
           docker push ${{ env.DOCKER_IMAGE }}:${{env.BRANCH_TAG}}
 
       - name: Check for Failure
+        uses: ./.github/actions/send-slack-notification/
         if: failure()
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_CHANNEL: twd_publish_register_tech
-          SLACK_COLOR: '#ef5343'
-          SLACK_ICON_EMOJI: ':github-logo:'
-          SLACK_USERNAME: Register Trainee Teachers
-          SLACK_TITLE: Build failure on weekly rebuild cache workflow
-          SLACK_MESSAGE: ':alert: Build failure :sadparrot:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          slack-title: 'Build failure on weekly rebuild cache workflow'
+          slack-message: ':alert: Build failure :sadparrot:'
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
   audit:
     name: Audit
@@ -117,12 +113,10 @@ jobs:
         run: docker compose exec -T web /bin/sh -c 'bundle-audit check --update'
 
       - name: Check for Failure
+        uses: ./.github/actions/send-slack-notification/
         if: ${{ failure() }}
-        uses: rtCamp/action-slack-notify@master
-        env:
-          SLACK_COLOR: '#ef5343'
-          SLACK_ICON_EMOJI: ':lock:'
-          SLACK_USERNAME: Register Trainee Teachers
-          SLACK_TITLE: Audit Failure
-          SLACK_MESSAGE: ':alert: Audit failure on ${{ github.event.inputs.environment }} :sadparrot:'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          slack-icon-emoji: ':lock:'
+          slack-title: Audit Failure
+          slack-message: ':alert: Audit failure on ${{ github.event.inputs.environment }} :sadparrot:'
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
