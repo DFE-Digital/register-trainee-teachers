@@ -17,12 +17,12 @@ feature "Editing a School" do
     then_i_dont_see_the_school_as_a_lead_partner
 
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: false)
+    and_i_see_the_list_of_schools(lead_partner: "No")
     and_i_click_on_a_school_name
     then_i_see_the_school_show_page(lead_partner: "No")
 
     when_i_click_on_back
-    then_i_see_the_list_of_schools(lead_partner: false)
+    then_i_see_the_list_of_schools(lead_partner: "No")
 
     when_i_click_on_a_school_name
     and_i_click_on_change
@@ -39,13 +39,13 @@ feature "Editing a School" do
     then_i_see_the_school_show_page(lead_partner: "Yes")
 
     when_i_click_on_back
-    then_i_see_the_list_of_schools(lead_partner: true)
+    then_i_see_the_list_of_schools(lead_partner: "Yes")
 
     when_i_visit_the_lead_partners_index_page
     then_i_see_the_school_as_a_lead_partner
 
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: true)
+    and_i_see_the_list_of_schools(lead_partner: "Yes")
     and_i_click_on_a_school_name
     and_i_see_the_school_show_page(lead_partner: "Yes")
     and_i_click_on_change
@@ -62,7 +62,7 @@ feature "Editing a School" do
 
   scenario "A System Admin cancels editing a School" do
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: false)
+    and_i_see_the_list_of_schools(lead_partner: "No")
     and_i_click_on_a_school_name
     then_i_see_the_school_show_page(lead_partner: "No")
 
@@ -84,12 +84,12 @@ feature "Editing a School" do
     then_i_see_the_school_edit_page(lead_partner: false)
 
     when_i_visit_the_school_index_page
-    then_i_see_the_list_of_schools(lead_partner: false)
+    then_i_see_the_list_of_schools(lead_partner: "No")
   end
 
   scenario "A System Admin edits a School and gets errors" do
     when_i_visit_the_school_index_page
-    and_i_see_the_list_of_schools(lead_partner: false)
+    and_i_see_the_list_of_schools(lead_partner: "No")
     and_i_click_on_a_school_name
     and_i_see_the_school_show_page(lead_partner: "No")
     and_i_click_on_change
