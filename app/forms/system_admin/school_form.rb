@@ -68,7 +68,7 @@ module SystemAdmin
 
     def lead_partner_options
       [true, false].map do |value|
-        LEAD_PARTNER_OPTION.new(id: value, name: value == true ? "Yes" : "No")
+        LEAD_PARTNER_OPTION.new(id: value, name: value ? "Yes" : "No")
       end
     end
 
