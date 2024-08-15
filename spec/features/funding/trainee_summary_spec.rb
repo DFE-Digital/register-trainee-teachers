@@ -293,12 +293,12 @@ private
   end
 
   def then_i_see_two_academic_years
-    expect(page).to have_link("#{academic_year.start_date.year} to #{(academic_year.end_date.year)}")
-    expect(page).to have_link("#{academic_year.start_date.year - 1} to #{(academic_year.end_date.year - 1)}")
+    expect(page).to have_link("#{academic_year.start_date.year} to #{academic_year.end_date.year}")
+    expect(page).to have_link("#{academic_year.start_date.year - 1} to #{academic_year.end_date.year - 1}")
   end
 
   def when_i_visit_the_previous_payment_schedule_page
-    click_link("#{academic_year.start_date.year - 1} to #{(academic_year.end_date.year - 1)}")
+    click_on("#{academic_year.start_date.year - 1} to #{academic_year.end_date.year - 1}")
   end
 
   def funding_data_exists_for_previous_year
@@ -316,7 +316,7 @@ private
   end
 
   def when_i_click_on_the_previous_trainee_summary_link
-    click_link("Trainee summary #{AcademicCycle.previous.start_year} to #{AcademicCycle.previous.end_year}")
+    click_on("Trainee summary #{AcademicCycle.previous.start_year} to #{AcademicCycle.previous.end_year}")
   end
 
   def then_i_see_the_previous_trainee_summary_page
