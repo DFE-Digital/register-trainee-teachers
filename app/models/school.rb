@@ -28,9 +28,6 @@ class School < ApplicationRecord
 
   before_save :update_searchable
 
-  has_many :lead_school_users, foreign_key: :lead_school_id, inverse_of: :lead_school
-  has_many :users, through: :lead_school_users
-
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
 
