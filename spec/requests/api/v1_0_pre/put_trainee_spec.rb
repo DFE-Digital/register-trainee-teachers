@@ -159,6 +159,38 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
+    context "when updating a trainee without `hesa_trainee_details` with valid params" do
+      let(:data) { { first_names: "Alice", provider_trainee_id: "99157234/2/01", itt_start_date: 1.month.ago.iso8601 } }
+      let(:trainee) do
+        create(
+          :trainee,
+          :in_progress,
+          :with_training_route,
+          :with_lead_partner,
+          :with_employing_school,
+          :with_diversity_information,
+          first_names: "Bob",
+          hesa_id: "1234567890",
+        )
+      end
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
+      it "returns status 200 with a valid JSON response" do
+        expect(response).to have_http_status(:ok)
+
+        expect(trainee.reload.first_names).to eq("Alice")
+        expect(trainee.provider_trainee_id).to eq("99157234/2/01")
+        expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
+      end
+    end
+
     context "when updating with valid nationality" do
       let(:data) { { nationality: "IE" } }
 

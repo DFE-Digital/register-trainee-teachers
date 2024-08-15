@@ -166,7 +166,10 @@ module Api
       end
 
       def self.params_with_updated_disabilities(new_trainee_attributes, params_for_update)
-        updated_hesa_disabilities = update_hesa_disabilities(new_trainee_attributes.hesa_trainee_detail_attributes.hesa_disabilities, params_for_update)
+        updated_hesa_disabilities = update_hesa_disabilities(
+          new_trainee_attributes.hesa_trainee_detail_attributes&.hesa_disabilities || {},
+          params_for_update,
+        )
 
         updated_disabilities = updated_hesa_disabilities.map do |_key, value|
           Disability.find_by(name: ::Hesa::CodeSets::Disabilities::MAPPING[value])
@@ -203,7 +206,7 @@ module Api
       end
 
       def deep_attributes
-        attributes.except("ethnicity").transform_values do |value|
+        deep_attributes = attributes.except("ethnicity").transform_values do |value|
           if value.is_a?(Array)
             value.map { |item| item.respond_to?(:attributes) ? item.attributes : item }
           elsif value.respond_to?(:attributes)
@@ -212,6 +215,12 @@ module Api
             value
           end
         end
+
+        if deep_attributes.key?("hesa_trainee_detail_attributes") && deep_attributes["hesa_trainee_detail_attributes"].blank?
+          deep_attributes.delete("hesa_trainee_detail_attributes")
+        end
+
+        deep_attributes
       end
 
       delegate :count, to: :errors, prefix: true
