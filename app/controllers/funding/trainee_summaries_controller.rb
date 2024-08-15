@@ -7,10 +7,8 @@ module Funding
         format.html do
           @trainee_summary_view = TraineeSummaryView.new(trainee_summary:)
           @navigation_view = ::Funding::NavigationView.new(organisation:)
-
-          current_academic_cycle = AcademicCycle.current
-          @start_year = current_academic_cycle.start_year
-          @end_year = current_academic_cycle.end_year
+          @start_year = selected_academic_cycle.start_year
+          @end_year = selected_academic_cycle.end_year
         end
         format.csv do
           data_export = Exports::FundingTraineeSummaryData.new(trainee_summary, organisation.name)
