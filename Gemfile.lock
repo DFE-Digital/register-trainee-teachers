@@ -572,7 +572,7 @@ GEM
       actionpack (>= 5.2.0)
       rails-dom-testing
       rspec-core
-    rspec-rails (6.1.3)
+    rspec-rails (6.1.4)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       railties (>= 6.1)
@@ -828,7 +828,7 @@ DEPENDENCIES
   rotp
   rspec-benchmark
   rspec-openapi
-  rspec-rails (~> 6.1.3)
+  rspec-rails (~> 6.1.4)
   rspec-retry
   rubocop-capybara
   rubocop-factory_bot
