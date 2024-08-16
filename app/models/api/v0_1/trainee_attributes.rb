@@ -216,9 +216,7 @@ module Api
           end
         end
 
-        if deep_attributes.key?("hesa_trainee_detail_attributes") && deep_attributes["hesa_trainee_detail_attributes"].blank?
-          deep_attributes.delete("hesa_trainee_detail_attributes")
-        end
+        deep_attributes.delete("hesa_trainee_detail_attributes") if deep_attributes["hesa_trainee_detail_attributes"].blank?
 
         deep_attributes
       end
