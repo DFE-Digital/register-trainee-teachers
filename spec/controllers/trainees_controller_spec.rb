@@ -63,16 +63,6 @@ describe TraineesController do
         end
       end
 
-      context "with a lead school user" do
-        let(:user) { build_current_user(user: create(:user, :with_lead_school_organisation)) }
-
-        it "returns a forbidden response" do
-          enable_features(:user_can_have_multiple_organisations)
-          get(:index, format: "csv")
-          expect(response).to have_http_status(:forbidden)
-        end
-      end
-
       context "with a lead partner user" do
         let(:user) { build_current_user(user: create(:user, :with_lead_partner_organisation)) }
 

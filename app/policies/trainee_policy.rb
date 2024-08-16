@@ -18,8 +18,6 @@ class TraineePolicy
     def user_scope
       if user.lead_partner?
         lead_partner_scope
-      elsif user.lead_school?
-        lead_school_scope
       else
         provider_scope
       end
@@ -27,10 +25,6 @@ class TraineePolicy
 
     def provider_scope
       scope.where(provider_id: user.organisation.id).kept
-    end
-
-    def lead_school_scope
-      scope.where(lead_school_id: user.organisation.id).kept
     end
 
     def lead_partner_scope
@@ -96,7 +90,7 @@ class TraineePolicy
   end
 
   def hide_progress_tag?
-    user.lead_school? || user.lead_partner?
+    user.lead_partner?
   end
 
   def allow_actions?
@@ -126,7 +120,6 @@ private
   def read?
     user_is_system_admin? ||
       user_in_provider_context? ||
-      user_in_lead_school_context? ||
       user_in_lead_partner_context?
   end
 
@@ -146,12 +139,6 @@ private
 
   def user_is_read_only?
     user&.read_only
-  end
-
-  def user_in_lead_school_context?
-    return false if trainee.lead_school.nil?
-
-    user&.organisation == trainee.lead_school
   end
 
   def user_in_lead_partner_context?
