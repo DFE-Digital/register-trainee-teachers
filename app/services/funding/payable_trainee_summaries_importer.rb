@@ -25,7 +25,7 @@ module Funding
           attributes[id].each do |row_hash|
             row = summary.rows.create(
               subject: row_hash["Subject"],
-              route: row_hash[route_column],
+              route_key: row_hash[route_key_column],
               lead_school_name: row_hash[lead_school_name_column],
               lead_school_urn: row_hash[lead_school_urn_column],
               cohort_level: row_hash["Cohort Level"],
@@ -61,6 +61,10 @@ module Funding
 
     def route_column
       raise(NotImplementedException("implement a route_column method"))
+    end
+
+    def route_key_column
+      raise(NotImplementedException("implement a route_key_column method"))
     end
 
     def lead_school_name_column

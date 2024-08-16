@@ -10,8 +10,8 @@ module Funding
       "Academic year"
     end
 
-    def route_column
-      "Description"
+    def route_key_column
+      "Route"
     end
 
     def lead_school_name_column

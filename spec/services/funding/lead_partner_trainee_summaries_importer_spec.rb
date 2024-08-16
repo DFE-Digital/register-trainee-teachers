@@ -13,7 +13,7 @@ module Funding
               "Lead school URN" => "1111",
               "Lead school name" => "Lead School 1",
               "Subject" => "Physics",
-              "Description" => "School Direct salaried",
+              "Route" => "school_direct_salaried",
               "Funding/trainee" => "24,000",
               "Trainees" => "2",
               "Total Funding" => "42,000",
@@ -23,7 +23,7 @@ module Funding
               "Lead school URN" => "1111",
               "Lead school name" => "Lead School 1",
               "Subject" => "Modern Languages",
-              "Description" => "School Direct salaried",
+              "Route" => "school_direct_salaried",
               "Funding/trainee" => "10000",
               "Trainees" => "0",
               "Total Funding" => "0",
@@ -33,7 +33,7 @@ module Funding
               "Lead school URN" => "1111",
               "Lead school name" => "Lead School 1",
               "Subject" => "History",
-              "Description" => "School Direct salaried",
+              "Route" => "school_direct_salaried",
               "Funding/trainee" => "0",
               "Trainees" => "1",
               "Total Funding" => "0",
@@ -45,7 +45,7 @@ module Funding
               "Lead school URN" => "2222",
               "Lead school name" => "Lead School 2",
               "Subject" => "Physics",
-              "Description" => "School Direct salaried",
+              "Route" => "school_direct_salaried",
               "Funding/trainee" => "24000",
               "Trainees" => "0",
               "Total Funding" => "24000",
@@ -84,7 +84,7 @@ module Funding
       describe "TraineeSummaryRow" do
         let(:lead_school_one_expected_attibutes) {
           {
-            "route" => "School Direct salaried",
+            "route_key" => "school_direct_salaried",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "1111",
           }
@@ -93,7 +93,7 @@ module Funding
         let(:lead_school_two_expected_attibutes) {
           {
             "subject" => "Physics",
-            "route" => "School Direct salaried",
+            "route_key" => "school_direct_salaried",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "2222",
           }
