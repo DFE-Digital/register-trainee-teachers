@@ -59,10 +59,6 @@ module Funding
       raise(NotImplementedException("implement a academic_year_column method"))
     end
 
-    def route_column
-      raise(NotImplementedException("implement a route_column method"))
-    end
-
     def route_key_column
       raise(NotImplementedException("implement a route_key_column method"))
     end
