@@ -10,6 +10,7 @@
 #  lead_school_name           :string
 #  lead_school_urn            :string
 #  route                      :string
+#  route_key                  :string
 #  subject                    :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
