@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.2.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 7.1"
@@ -84,7 +84,7 @@ gem "pg_search", "~> 2.3"
 gem "slack-notifier"
 
 # Tracking changes to models
-gem "audited", "~> 5.6"
+gem "audited", "~> 5.7"
 
 # Trainee state and transitions
 gem "stateful_enum"
@@ -121,7 +121,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.5.0"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.13.0"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.0"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
@@ -166,7 +166,7 @@ group :development, :test do
   gem "bullet"
 
   # Testing framework
-  gem "rspec-rails", "~> 6.1.3"
+  gem "rspec-rails", "~> 6.1.4"
 
   gem "rails-controller-testing"
 

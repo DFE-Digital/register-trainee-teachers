@@ -31,12 +31,6 @@ describe UserWithOrganisationContext do
 
       it { is_expected.to eq(user.providers.first) }
 
-      context "user has a lead school and a provider" do
-        let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider]) }
-
-        it { is_expected.to eq(user.providers.first) }
-      end
-
       context "user has a lead partner and a provider" do
         let(:user) { create(:user, id: 1, first_name: "Dave", providers: [provider], lead_partners: [lead_partner]) }
 

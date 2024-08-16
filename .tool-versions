@@ -1,6 +1,6 @@
-nodejs 18.18.2
-ruby 3.2.2
-yarn 1.22.19
+nodejs 20.15.1
+ruby 3.2.5
+yarn 1.22.22
 bundler 2.4.16
 terraform 1.4.5
 azure-cli 2.59.0

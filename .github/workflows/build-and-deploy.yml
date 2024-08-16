@@ -28,86 +28,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      name: Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Set environment variables (push)
-      if: github.event_name == 'push'
-      run: |
-        GIT_BRANCH=${GITHUB_REF##*/}
-        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV # GIT_BRANCH will be main for refs/heads/main
-        echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-
-    - name: Set environment variables (pull_request)
-      if: github.event_name == 'pull_request'
-      run: |
-        GIT_BRANCH=${GITHUB_HEAD_REF##*/}
-        echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
-        echo "IMAGE_TAG=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
-
-    - name: Set KV environment variables
-      run: |
-        # tag build to the review env for vars and secrets
-        tf_vars_file=terraform/aks/workspace-variables/review.tfvars.json
-        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.repository_owner }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
-
-    - uses: DFE-Digital/keyvault-yaml-secret@v1
-      id: get-secret
-      with:
-        keyvault: ${{ env.KEY_VAULT_NAME }}
-        secret: ${{ env.KEY_VAULT_INFRA_SECRET_NAME }}
-        key: SNYK_TOKEN
-
-    - name: Build Docker Image
-      uses: docker/build-push-action@v6
-      with:
-        tags: |
-          ${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
-          ${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
-        push: false
-        load: true
-        cache-to: type=inline
-        cache-from: |
-          type=registry,ref=${{env.DOCKER_IMAGE}}:main
-          type=registry,ref=${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
-          type=registry,ref=${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
-        build-args: COMMIT_SHA=${{ github.sha }}
-
-    - name: Push ${{ env.DOCKER_IMAGE }} images for review
-      if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
-      run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
-
-    - name: Run Snyk to check Docker image for vulnerabilities
-      uses: snyk/actions/docker@master
-      env:
-        SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
-      with:
-        image: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
-        args: --file=Dockerfile --severity-threshold=high --exclude-app-vulns
-
-    - name: Push ${{ env.DOCKER_IMAGE }} images
-      if: ${{ success() && !contains(github.event.pull_request.labels.*.name, 'deploy') }}
-      run: docker image push --all-tags ${{ env.DOCKER_IMAGE }}
-
-    - name: Check for Failure
-      uses: ./.github/actions/send-failure-notification/
-      if: ${{ failure() && github.ref == 'refs/heads/main' }}
-      with:
-        slack-title: 'Build failure'
-        slack-message: ':alert: Build failure on commit ${{env.IMAGE_TAG}} :sadparrot:'
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+      - name: Build
+        uses: ./.github/actions/build/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
   lint:
     name: Lint
@@ -141,25 +70,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Bring docker image up
-        uses: ./.github/actions/bring-docker-image-up/
-        with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
-          docker-image: ${{needs.build.outputs.docker-image}}
-          image-tag: ${{ needs.build.outputs.image-tag }}
-
       - name: ${{ matrix.linter-type }}
-        run: ${{ env.COMMAND }}
-        env:
-          COMMAND: ${{ matrix.command }}
-
-      - name: Check for Failure
-        uses: ./.github/actions/send-failure-notification/
-        if: ${{ failure() && github.ref == 'refs/heads/main' }}
+        uses: ./.github/actions/lint/
         with:
-          slack-title: 'Lint failure'
-          slack-message: ':alert: Lint failure for ${{ matrix.linter_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:'
+          linter-type: ${{ matrix.linter-type }}
+          command: ${{ matrix.command }}
+          docker-image: ${{ needs.build.outputs.docker-image }}
+          image-tag: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
   test:
     name: Test
