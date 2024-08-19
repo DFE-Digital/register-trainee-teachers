@@ -17,6 +17,10 @@ class UserPolicy < ProviderPolicy
     !user.system_admin? && !user.lead_partner?
   end
 
+  def lead_partner_user?
+    user.lead_partner?
+  end
+
   alias_method :reports?, :drafts?
   alias_method :bulk_placement?, :bulk_recommend?
 end
