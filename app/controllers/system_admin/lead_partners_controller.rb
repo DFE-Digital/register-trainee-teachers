@@ -6,7 +6,7 @@ module SystemAdmin
       @lead_partners = policy_scope(
         LeadPartner,
         policy_scope_class: LeadPartnerPolicy::Scope,
-      ).order(:name).page(params[:page] || 1)
+      ).kept.order(:name).page(params[:page] || 1)
     end
 
     def show

@@ -82,6 +82,10 @@ module Features
       @provider_index_page ||= PageObjects::Providers::Index.new
     end
 
+    def lead_partners_index_page
+      @lead_partners_index_page ||= PageObjects::LeadPartners::Index.new
+    end
+
     def schools_index_page
       @schools_index_page ||= PageObjects::Schools::Index.new
     end
@@ -152,6 +156,18 @@ module Features
 
     def deferral_page
       @deferral_page ||= PageObjects::Trainees::Deferral.new
+    end
+
+    def edit_school_page
+      @edit_school_page ||= PageObjects::SystemAdmin::Schools::Edit.new
+    end
+
+    def show_school_page
+      @show_school_page ||= PageObjects::SystemAdmin::Schools::Show.new
+    end
+
+    def confirm_school_details_page
+      @confirm_school_details_page ||= PageObjects::SystemAdmin::Schools::ConfirmDetails.new
     end
 
     def deferral_confirmation_page

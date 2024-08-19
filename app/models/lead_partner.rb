@@ -4,23 +4,25 @@
 #
 # Table name: lead_partners
 #
-#  id          :bigint           not null, primary key
-#  name        :string
-#  record_type :string           not null
-#  ukprn       :citext
-#  urn         :citext
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  provider_id :bigint
-#  school_id   :bigint
+#  id           :bigint           not null, primary key
+#  discarded_at :datetime
+#  name         :string
+#  record_type  :string           not null
+#  ukprn        :citext
+#  urn          :citext
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  provider_id  :bigint
+#  school_id    :bigint
 #
 # Indexes
 #
-#  index_lead_partners_on_name         (name)
-#  index_lead_partners_on_provider_id  (provider_id)
-#  index_lead_partners_on_school_id    (school_id)
-#  index_lead_partners_on_ukprn        (ukprn) UNIQUE
-#  index_lead_partners_on_urn          (urn) UNIQUE
+#  index_lead_partners_on_discarded_at  (discarded_at)
+#  index_lead_partners_on_name          (name)
+#  index_lead_partners_on_provider_id   (provider_id) UNIQUE
+#  index_lead_partners_on_school_id     (school_id) UNIQUE
+#  index_lead_partners_on_ukprn         (ukprn) UNIQUE
+#  index_lead_partners_on_urn           (urn) UNIQUE
 #
 # Foreign Keys
 #
@@ -28,6 +30,8 @@
 #  fk_rails_...  (school_id => schools.id)
 #
 class LeadPartner < ApplicationRecord
+  include Discard::Model
+
   RECORD_TYPES = [
     LEAD_SCHOOL = "lead_school",
     HEI = "hei",

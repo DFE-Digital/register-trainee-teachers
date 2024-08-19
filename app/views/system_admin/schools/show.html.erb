@@ -1,0 +1,12 @@
+<%= render PageTitle::View.new(text: @school_form.name) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: schools_path,
+  ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= @school_form.name %></h1>
+
+<%= render SystemAdmin::Schools::Details::View.new(@school_form.school) %>
