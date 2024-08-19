@@ -37,7 +37,7 @@ class LeadPartner < ApplicationRecord
     HEI = "hei",
     SCITT = "scitt",
   ].freeze
-  enum record_type: RECORD_TYPES.to_h { |record_type| [record_type, record_type] }
+  enum(:record_type, RECORD_TYPES.to_h { |record_type| [record_type, record_type] })
 
   belongs_to :school, optional: true
   belongs_to :provider, optional: true

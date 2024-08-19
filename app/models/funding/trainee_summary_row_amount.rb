@@ -26,7 +26,7 @@ module Funding
                foreign_key: :funding_trainee_summary_row_id,
                inverse_of: :amounts
 
-    enum payment_type: { bursary: 0, scholarship: 1, grant: 2 }
+    enum :payment_type, { bursary: 0, scholarship: 1, grant: 2 }
 
     def tiered_bursary?
       bursary? && tier.present?

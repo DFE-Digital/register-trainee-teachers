@@ -25,7 +25,7 @@ class ApplyApplication < ApplicationRecord
 
   validates :application, presence: true
 
-  enum state: {
+  enum :state, {
     importable: 0,
     non_importable_hei: 1,
     non_importable_duplicate: 2,

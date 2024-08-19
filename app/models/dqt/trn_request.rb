@@ -27,7 +27,7 @@ module Dqt
 
     belongs_to :trainee
 
-    enum state: {
+    enum :state, {
       requested: 0,
       received: 1,
       failed: 2,

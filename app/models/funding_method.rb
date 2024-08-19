@@ -29,5 +29,5 @@ class FundingMethod < ApplicationRecord
   validates :training_route, presence: true, inclusion: { in: TRAINING_ROUTE_ENUMS.values }
   validates :amount, presence: true
 
-  enum funding_type: FUNDING_TYPES
+  enum :funding_type, FUNDING_TYPES
 end
