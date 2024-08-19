@@ -8,6 +8,10 @@ FactoryBot.define do
     trait :lead_school do
       record_type { LeadPartner::LEAD_SCHOOL }
       school
+
+      before(:create) do |record|
+        record.urn = record.school.urn
+      end
     end
 
     trait :hei do
@@ -20,6 +24,10 @@ FactoryBot.define do
       record_type { LeadPartner::SCITT }
       provider factory: %i[provider unaccredited]
       ukprn { Faker::Number.number(digits: 8) }
+    end
+
+    trait :discarded do
+      discarded_at { Time.zone.now }
     end
   end
 end

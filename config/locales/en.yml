@@ -6,6 +6,7 @@ en:
   cancel: Cancel
   change: Change
   continue: Continue
+  confirm: Confirm
   flash:
     trainee_deferred: Trainee deferred
     trainee_degree_deleted: Trainee degree deleted

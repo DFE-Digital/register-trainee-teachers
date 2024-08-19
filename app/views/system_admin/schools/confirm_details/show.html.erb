@@ -1,0 +1,21 @@
+<%= render PageTitle::View.new(text: "Confirm changes to #{@school_form.name}") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: edit_school_path(@school_form),
+  ) %>
+<% end %>
+
+<h1 class="govuk-heading-l"><%= "Confirm changes to #{@school_form.name}" %></h1>
+
+<%= render SystemAdmin::Schools::Details::View.new(@school_form) %>
+
+<%= register_form_with(model: @school_form, url: school_confirm_details_path(@school_form), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
+  <%= f.govuk_submit t("confirm") %>
+<% end %>
+
+<p class="govuk-body">
+  <%= govuk_link_to(t("components.confirmation.cancel_and_return"), school_path(@school_form)) %>
+</p>

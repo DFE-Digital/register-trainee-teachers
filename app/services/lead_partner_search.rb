@@ -26,13 +26,13 @@ class LeadPartnerSearch
   end
 
   def all_lead_partners
-    lead_partners = LeadPartner.all
+    lead_partners = LeadPartner.kept
     if query
       lead_partners = lead_partners
         .includes(:provider, :school)
         .where("name ilike ?", "%#{query}%")
-        .or(LeadPartner.where("urn ilike ?", "%#{query}%"))
-        .or(LeadPartner.where("ukprn ilike ?", "%#{query}%"))
+        .or(LeadPartner.kept.where("urn ilike ?", "%#{query}%"))
+        .or(LeadPartner.kept.where("ukprn ilike ?", "%#{query}%"))
     end
     lead_partners.reorder(:name)
   end

@@ -3,6 +3,8 @@
 require "rails_helper"
 
 feature "Non-JS lead partner search" do
+  let!(:discarded_lead_partner) { create(:lead_partner, :lead_school, :discarded) }
+
   before do
     given_i_am_authenticated
     given_a_school_direct_tuition_fee_trainee_exists
@@ -39,11 +41,11 @@ private
   end
 
   def and_i_enter_a_search_term_that_should_yield_no_results
-    lead_partners_search_page.results_search_again_input.set("foo")
+    lead_partners_search_page.results_search_again_input.set(discarded_lead_partner.name)
   end
 
   def then_i_should_see_no_results
-    expect(lead_partners_search_page).to have_text("#{t('components.page_titles.search_schools.sub_text_no_results')} foo")
+    expect(lead_partners_search_page).to have_text("#{t('components.page_titles.search_schools.sub_text_no_results')} #{discarded_lead_partner.name}")
   end
 
   def and_i_should_see_a_search_again_field

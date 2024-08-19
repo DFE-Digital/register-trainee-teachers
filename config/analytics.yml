@@ -148,6 +148,7 @@ shared:
     - provider_id
     - created_at
     - updated_at
+    - discarded_at
   lead_partner_users:
     - id
     - lead_partner_id

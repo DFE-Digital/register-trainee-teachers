@@ -8,6 +8,7 @@ feature "Add user to lead partners" do
 
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
+
     let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "Garibaldi School") }
     let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "Bourbon University") }
 
@@ -43,6 +44,7 @@ feature "Add user to lead partners" do
     let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "Garibaldi School") }
     let!(:hei_lead_partner1) { create(:lead_partner, :hei, name: "Bourbon University") }
     let!(:hei_lead_partner2) { create(:lead_partner, :hei, name: "Digestive University") }
+    let!(:discarded_lead_partner) { create(:lead_partner, :lead_school, :discarded, name: "Discarded Uni") }
 
     before do
       given_i_am_authenticated(user:)
@@ -53,7 +55,10 @@ feature "Add user to lead partners" do
       and_i_click_the_lead_partner_link
       then_i_see_the_add_to_lead_partner_page
 
-      when_i_enter_a_lead_partner_search_and_submit
+      when_i_enter_a_lead_partner_search_and_submit(name: discarded_lead_partner.name)
+      then_i_dont_see_matching_results
+
+      when_i_enter_a_lead_partner_search_and_submit(name: "Univ")
       then_i_see_matching_results
 
       when_i_select_a_lead_partner_from_search_results
@@ -72,6 +77,14 @@ feature "Add user to lead partners" do
   def then_i_see_the_add_to_lead_partner_page
     expect(page).to have_current_path(new_user_lead_partner_path(user))
     expect(page).to have_content("Add a lead partner for #{user.name}")
+  end
+
+  def when_i_search_for_a_discarded_lead_partner
+    fill_in "system-admin-user-lead-partners-form-query-field", with: school_lead_partner.name
+  end
+
+  def then_i_dont_see_matching_results
+    expect(page).to have_content("No results")
   end
 
   def when_i_select_a_lead_partner
@@ -124,9 +137,14 @@ feature "Add user to lead partners" do
     expect(page).not_to have_content("Garibaldi School")
   end
 
-  def when_i_enter_a_lead_partner_search_and_submit
-    fill_in "system-admin-user-lead-partners-form-query-field", with: "Univ"
-    click_on("Continue")
+  def when_i_enter_a_lead_partner_search_and_submit(name:)
+    if page.has_field?("system-admin-user-lead-partners-form-no-results-search-again-query-field")
+      fill_in("system-admin-user-lead-partners-form-no-results-search-again-query-field", with: name)
+      click_on("Search again")
+    else
+      fill_in "system-admin-user-lead-partners-form-query-field", with: name
+      click_on("Continue")
+    end
   end
 
   def then_i_see_matching_results
@@ -143,4 +161,6 @@ feature "Add user to lead partners" do
     expect(page).to have_content("Lead partner added")
     expect(page).to have_link("Digestive University", href: lead_partner_path(hei_lead_partner2))
   end
+
+  alias_method :when_i_enter_a_discarded_lead_partner_search_and_submit, :when_i_enter_a_lead_partner_search_and_submit
 end

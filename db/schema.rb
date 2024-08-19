@@ -647,10 +647,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_15_130820) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
@@ -708,9 +708,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_15_130820) do
     t.bigint "provider_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_lead_partners_on_discarded_at"
     t.index ["name"], name: "index_lead_partners_on_name"
-    t.index ["provider_id"], name: "index_lead_partners_on_provider_id"
-    t.index ["school_id"], name: "index_lead_partners_on_school_id"
+    t.index ["provider_id"], name: "index_lead_partners_on_provider_id", unique: true
+    t.index ["school_id"], name: "index_lead_partners_on_school_id", unique: true
     t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
     t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
   end
