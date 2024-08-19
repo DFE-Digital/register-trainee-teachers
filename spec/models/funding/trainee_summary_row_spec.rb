@@ -8,5 +8,16 @@ module Funding
       it { is_expected.to belong_to(:trainee_summary) }
       it { is_expected.to have_many(:amounts) }
     end
+
+    describe "Lead School Migration" do
+      it "includes the LeadSchoolMigratable concern" do
+        expect(Funding::TraineeSummaryRow.included_modules).to include(LeadSchoolMigratable)
+      end
+
+      it "calls set_lead_columns with the correct arguments" do
+        expect(Funding::TraineeSummaryRow).to receive(:set_lead_columns).with(:lead_school_urn, :lead_partner_urn)
+        load Rails.root.join("app/models/funding/trainee_summary_row.rb")
+      end
+    end
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_15_130820) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -225,6 +225,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
     t.string "age_range"
     t.string "subject"
     t.bigint "matched_trainee_id"
+    t.string "lead_partner"
     t.index ["bulk_update_recommendations_upload_id"], name: "idx_bu_ru_rows_on_bu_recommendations_upload_id"
     t.index ["matched_trainee_id"], name: "idx_bu_recommendations_upload_rows_on_matched_trainee_id"
   end
@@ -541,6 +542,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
     t.string "cohort_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "lead_partner_urn"
     t.index ["funding_trainee_summary_id"], name: "index_trainee_summary_rows_on_trainee_summary_id"
   end
 
@@ -650,6 +652,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
     t.string "trainee_start_date"
     t.string "previous_hesa_id"
     t.string "provider_trainee_id"
+    t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
   end
 
@@ -712,15 +715,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
     t.index ["school_id"], name: "index_lead_partners_on_school_id", unique: true
     t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
     t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
-  end
-
-  create_table "lead_school_users", force: :cascade do |t|
-    t.bigint "lead_school_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lead_school_id"], name: "index_lead_school_users_on_lead_school_id"
-    t.index ["user_id"], name: "index_lead_school_users_on_user_id"
   end
 
   create_table "nationalisations", force: :cascade do |t|
@@ -1017,8 +1011,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_14_110540) do
   add_foreign_key "lead_partner_users", "users"
   add_foreign_key "lead_partners", "providers"
   add_foreign_key "lead_partners", "schools"
-  add_foreign_key "lead_school_users", "schools", column: "lead_school_id"
-  add_foreign_key "lead_school_users", "users"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
   add_foreign_key "provider_users", "providers"

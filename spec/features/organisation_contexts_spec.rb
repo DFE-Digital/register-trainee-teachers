@@ -95,10 +95,6 @@ private
     @_provider ||= multi_organisation_user.providers.first
   end
 
-  def lead_school
-    @_lead_school ||= multi_organisation_user.lead_schools.first
-  end
-
   def lead_partner
     @_lead_partner ||= multi_organisation_user.lead_partners.first
   end

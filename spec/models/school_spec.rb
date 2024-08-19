@@ -4,9 +4,6 @@ require "rails_helper"
 
 describe School do
   describe "associations" do
-    it { is_expected.to have_one(:lead_partner) }
-    it { is_expected.to have_many(:lead_school_users) }
-    it { is_expected.to have_many(:users).through(:lead_school_users) }
     it { is_expected.to have_many(:funding_payment_schedules) }
     it { is_expected.to have_many(:funding_trainee_summaries) }
     it { is_expected.to have_many(:lead_school_trainees) }
