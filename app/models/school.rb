@@ -28,6 +28,8 @@ class School < ApplicationRecord
 
   before_save :update_searchable
 
+  has_one :lead_partner
+
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
 
