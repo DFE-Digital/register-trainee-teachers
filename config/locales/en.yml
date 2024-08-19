@@ -1285,6 +1285,8 @@ en:
           error: Unable to withdraw trainee, please message support
   activerecord:
     attributes:
+      funding/trainee_summary_row:
+        provider_led: "Provider-led"
       trainee:
         record_sources:
           title: Record source

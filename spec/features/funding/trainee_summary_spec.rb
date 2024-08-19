@@ -323,7 +323,7 @@ private
   def then_i_see_my_exported_data_in_csv_format
     expect(csv_data).to include("Funding type,Route,Course,Lead school,Tier,Number of trainees,Amount per trainee,Total")
     expect(csv_data).to include("bursary")
-    expect(csv_data).to include(row.route)
+    expect(csv_data).to include("Provider-led")
     expect(csv_data).to include(row.subject)
     expect(csv_data).to include(row.lead_school_name)
     expect(csv_data).to include("Not applicable")

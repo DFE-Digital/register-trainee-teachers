@@ -38,5 +38,16 @@ module Funding
              foreign_key: :funding_trainee_summary_row_id,
              dependent: :destroy,
              inverse_of: :row
+
+    enum :route_key, {
+      provider_led: "provider_led"
+    }
+
+    def route
+      I18n.t(
+        "activerecord.attributes.funding/trainee_summary_row.#{route_key}",
+        default: super
+      )
+    end
   end
 end
