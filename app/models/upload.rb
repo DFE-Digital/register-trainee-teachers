@@ -37,5 +37,5 @@ class Upload < ApplicationRecord
     clean: 1,
     error: 2,
     suspect: 3,
-  }, _prefix: :scan_result
+  }, prefix: :scan_result, instance_methods: true
 end
