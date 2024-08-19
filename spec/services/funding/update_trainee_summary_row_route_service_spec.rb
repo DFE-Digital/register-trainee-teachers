@@ -45,6 +45,14 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       }
     end
 
+    before do
+      previous_academic_year_funding_trainee_summary.rows.each do |row|
+        row.route     = row.route
+        row.route_key = nil
+        row.save!
+      end
+    end
+
     it "has the correct mapping" do
       expect(subject::ROUTE_MAPPING).to eq(mapping)
     end

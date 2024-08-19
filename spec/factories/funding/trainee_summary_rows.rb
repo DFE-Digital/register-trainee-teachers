@@ -31,7 +31,7 @@ FactoryBot.define do
     end
 
     trait :with_tiered_bursary_amount do
-      route_key { "early_years_graduate_employment_based" }
+      route_key { "early_years_salaried" }
 
       amounts do
         [build(:trainee_summary_row_amount, :with_tiered_bursary)]
@@ -39,7 +39,7 @@ FactoryBot.define do
     end
 
     trait :with_multiple_amounts do
-      route_key { "early_years_graduate_employment_based" }
+      route_key { "early_years_salaried" }
 
       amounts do
         [

@@ -40,13 +40,15 @@ module Funding
              inverse_of: :row
 
     enum :route_key, {
-      provider_led: "provider_led"
+      provider_led: "provider_led",
+      school_direct_salaried: "school_direct_salaried",
+      early_years_salaried: "early_years_salaried",
     }
 
     def route
       I18n.t(
         "activerecord.attributes.funding/trainee_summary_row.#{route_key}",
-        default: super
+        default: super,
       )
     end
   end

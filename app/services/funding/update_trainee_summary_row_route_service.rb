@@ -35,7 +35,7 @@ module Funding
     attr_reader :academic_year
 
     def rows
-      TraineeSummaryRow
+      @rows ||= TraineeSummaryRow
         .joins(:trainee_summary)
         .where(
           trainee_summary: { academic_year: },

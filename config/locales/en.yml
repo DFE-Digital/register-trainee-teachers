@@ -1286,7 +1286,8 @@ en:
   activerecord:
     attributes:
       funding/trainee_summary_row:
-        provider_led: "Provider-led"
+        provider_led: Provider-led
+        early_years_salaried: Early years graduate employment based
       trainee:
         record_sources:
           title: Record source
