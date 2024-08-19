@@ -11,7 +11,7 @@ module Funding
     end
 
     def route_key_column
-      "Route"
+      "Description"
     end
 
     def lead_school_name_column
