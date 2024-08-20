@@ -1285,9 +1285,6 @@ en:
           error: Unable to withdraw trainee, please message support
   activerecord:
     attributes:
-      funding/trainee_summary_row:
-        provider_led: Provider-led
-        early_years_salaried: Early years graduate employment based
       trainee:
         record_sources:
           title: Record source
@@ -1311,7 +1308,7 @@ en:
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergrad)
-          itt:
+          itt: &itt_routes
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
             early_years_postgrad: Early years
@@ -1323,6 +1320,7 @@ en:
             provider_led: *provider_led_postgrad
             pg_teaching_apprenticeship: Teaching apprenticeship
             school_direct_salaried: School direct
+            school_direct_tuition_fee: School direct (fee funded)
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
         states:
@@ -1375,6 +1373,8 @@ en:
           sex_not_provided: Not provided
           prefer_not_to_say: Prefer not to say
           other: Other
+      funding/trainee_summary_row:
+        *itt_routes
     errors:
       models:
         trainee:

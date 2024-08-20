@@ -39,17 +39,20 @@ module Funding
              dependent: :destroy,
              inverse_of: :row
 
-    enum :route_type, {
-      provider_led: "provider_led",
+    enum route_type: {
       school_direct_salaried: "school_direct_salaried",
+      pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
+      early_years_postgrad: "early_years_postgrad",
       early_years_salaried: "early_years_salaried",
+      provider_led: "provider_led",
+      opt_in_undergrad: "opt_in_undergrad",
+      school_direct_tuition_fee: "school_direct_tuition_fee"
     }
 
     def route
-      I18n.t(
-        "activerecord.attributes.funding/trainee_summary_row.#{route_type}",
-        default: super,
-      )
+      return super if route_type.nil?
+
+      human_attribute_name(route_type)
     end
   end
 end
