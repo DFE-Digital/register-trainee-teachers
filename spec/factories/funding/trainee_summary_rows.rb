@@ -5,12 +5,14 @@ FactoryBot.define do
     trainee_summary
 
     subject { "Biology" }
+    route { "Provider-led" }
     route_type { "provider_led" }
     lead_school_name { "The School of Life" }
     lead_school_urn { Faker::Number.number(digits: 7) }
     cohort_level { "PG" }
 
     trait :with_grant_amount do
+      route { "School direct (salaried)" }
       route_type { "school_direct_salaried" }
 
       amounts do
@@ -31,6 +33,7 @@ FactoryBot.define do
     end
 
     trait :with_tiered_bursary_amount do
+      route { "Early years graduate employment based" }
       route_type { "early_years_salaried" }
 
       amounts do
@@ -39,6 +42,7 @@ FactoryBot.define do
     end
 
     trait :with_multiple_amounts do
+      route { "Early years graduate employment based" }
       route_type { "early_years_salaried" }
 
       amounts do

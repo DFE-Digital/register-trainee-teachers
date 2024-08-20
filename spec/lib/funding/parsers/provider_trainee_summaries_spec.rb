@@ -34,7 +34,6 @@ module Funding
               "Provider name" => "Provider 1",
               "Academic Year" => "2021/22",
               "Subject" => "Business studies",
-
               "Route" => "Provider-led",
               "Lead School" => nil,
               "Lead School ID" => nil,
