@@ -40,4 +40,14 @@ describe UserPolicy do
       it { is_expected.not_to permit(lead_partner_user_context) }
     end
   end
+
+  context "when lead_partner_user?" do
+    permissions :lead_partner_user? do
+      it { is_expected.to permit(lead_partner_user_context) }
+      it { is_expected.to permit(lead_partner_admin_user_context) }
+
+      it { is_expected.not_to permit(provider_user_context) }
+      it { is_expected.not_to permit(provider_admin_user_context) }
+    end
+  end
 end

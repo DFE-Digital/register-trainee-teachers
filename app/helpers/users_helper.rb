@@ -2,7 +2,7 @@
 
 module UsersHelper
   def lead_partner_user?
-    defined?(current_user) && current_user.respond_to?(:lead_partner?) && current_user&.lead_partner?
+    defined?(current_user) && UserPolicy.new(current_user, nil).lead_partner_user?
   end
 
   def can_view_drafts?
