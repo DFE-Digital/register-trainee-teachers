@@ -4,6 +4,17 @@ require "rails_helper"
 
 module Funding
   describe LeadPartnerTraineeSummariesImporter do
+    describe "::ROUTE_TYPES" do
+      subject { described_class::ROUTE_TYPES }
+
+      it do
+        is_expected. to eq(
+          "School Direct salaried" => :school_direct_salaried,
+          "post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
+        )
+      end
+    end
+
     context "valid attributes" do
       let(:summaries_attributes) do
         {
@@ -85,6 +96,7 @@ module Funding
         let(:lead_school_one_expected_attibutes) {
           {
             "route" => "School Direct salaried",
+            "route_type" => "school_direct_salaried",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "1111",
           }
@@ -94,6 +106,7 @@ module Funding
           {
             "subject" => "Physics",
             "route" => "School Direct salaried",
+            "route_type" => "school_direct_salaried",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "2222",
           }
