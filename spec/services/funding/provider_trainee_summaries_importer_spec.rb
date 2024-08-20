@@ -103,7 +103,7 @@ module Funding
       describe "TraineeSummaryRow" do
         let(:provider_one_expected_attibutes) {
           {
-            "route_key" => "provider_led",
+            "route_type" => "provider_led",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "0001",
             "cohort_level" => "PG",
@@ -113,7 +113,7 @@ module Funding
         let(:provider_two_expected_attibutes) {
           {
             "subject" => "Modern Languages",
-            "route_key" => "provider_led",
+            "route_type" => "provider_led",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "0002",
             "cohort_level" => "PG",

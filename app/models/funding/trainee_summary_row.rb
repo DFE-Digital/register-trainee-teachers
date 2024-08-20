@@ -10,7 +10,7 @@
 #  lead_school_name           :string
 #  lead_school_urn            :string
 #  route                      :string
-#  route_key                  :string
+#  route_type                 :string
 #  subject                    :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
@@ -39,7 +39,7 @@ module Funding
              dependent: :destroy,
              inverse_of: :row
 
-    enum :route_key, {
+    enum :route_type, {
       provider_led: "provider_led",
       school_direct_salaried: "school_direct_salaried",
       early_years_salaried: "early_years_salaried",
@@ -47,7 +47,7 @@ module Funding
 
     def route
       I18n.t(
-        "activerecord.attributes.funding/trainee_summary_row.#{route_key}",
+        "activerecord.attributes.funding/trainee_summary_row.#{route_type}",
         default: super,
       )
     end

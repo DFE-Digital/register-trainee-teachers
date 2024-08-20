@@ -48,7 +48,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
     before do
       previous_academic_year_funding_trainee_summary.rows.each do |row|
         row.route     = row.route
-        row.route_key = nil
+        row.route_type = nil
         row.save!
       end
     end
@@ -57,15 +57,15 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       expect(subject::ROUTE_MAPPING).to eq(mapping)
     end
 
-    it "sets the route_key only for the current_academic_year" do
+    it "sets the route_type only for the current_academic_year" do
       subject.call
 
       previous_academic_year_funding_trainee_summary.rows.reload.each do |row|
-        expect(row.route_key).to be_nil
+        expect(row.route_type).to be_nil
       end
 
       current_academic_year_funding_trainee_summary.rows.reload.each do |row|
-        expect(row.route_key).to eq(mapping[row.route].to_s)
+        expect(row.route_type).to eq(mapping[row.route].to_s)
       end
     end
   end

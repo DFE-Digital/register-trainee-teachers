@@ -26,7 +26,7 @@ module Funding
 
     def call
       rows.find_each(batch_size: 100) do |row|
-        row.update!(route_key: ROUTE_MAPPING[row.route])
+        row.update!(route_type: ROUTE_MAPPING[row.route])
       end
     end
 
@@ -39,7 +39,7 @@ module Funding
         .joins(:trainee_summary)
         .where(
           trainee_summary: { academic_year: },
-          route_key: nil,
+          route_type: nil,
         )
     end
   end

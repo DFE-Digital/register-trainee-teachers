@@ -84,7 +84,7 @@ module Funding
       describe "TraineeSummaryRow" do
         let(:lead_school_one_expected_attibutes) {
           {
-            "route_key" => "school_direct_salaried",
+            "route_type" => "school_direct_salaried",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "1111",
           }
@@ -93,7 +93,7 @@ module Funding
         let(:lead_school_two_expected_attibutes) {
           {
             "subject" => "Physics",
-            "route_key" => "school_direct_salaried",
+            "route_type" => "school_direct_salaried",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "2222",
           }
