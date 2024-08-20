@@ -1320,6 +1320,7 @@ en:
             iqts: International qualified teacher status (iQTS)
             provider_led_postgrad: &provider_led_postgrad Primary and secondary
             provider_led_undergrad: *provider_led_postgrad
+            provider_led: *provider_led_postgrad
             pg_teaching_apprenticeship: Teaching apprenticeship
             school_direct_salaried: School direct
             hpitt_postgrad: HPITT

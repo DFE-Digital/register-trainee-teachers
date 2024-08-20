@@ -2,6 +2,14 @@
 
 module Funding
   class ProviderTraineeSummariesImporter < PayableTraineeSummariesImporter
+    ROUTE_TYPES = {
+      "EYITT Graduate entry" => :early_years_postgrad,
+      "EYITT Graduate employment-based" => :early_years_salaried,
+      "Provider-led" => :provider_led,
+      "Undergraduate opt-in" => :opt_in_undergrad,
+      "School Direct tuition fee" => :school_direct_tuition_fee,
+    }.freeze
+
     def payable(id)
       Provider.find_by(accreditation_id: id)
     end
