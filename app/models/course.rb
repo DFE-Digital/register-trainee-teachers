@@ -42,12 +42,12 @@ class Course < ApplicationRecord
   validates :qualification, presence: true
   validates :route, presence: true
 
-  enum level: {
+  enum :level, {
     COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
     COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
   }
 
-  enum qualification: {
+  enum :qualification, {
     qts: 0,
     pgce_with_qts: 1,
     pgde_with_qts: 2,
@@ -55,8 +55,8 @@ class Course < ApplicationRecord
     pgde: 4,
   }
 
-  enum route: TRAINING_ROUTES_FOR_COURSE
-  enum study_mode: COURSE_STUDY_MODE_ENUMS
+  enum :route, TRAINING_ROUTES_FOR_COURSE
+  enum :study_mode, COURSE_STUDY_MODE_ENUMS
 
   belongs_to :provider, foreign_key: :accredited_body_code, primary_key: :code, inverse_of: :courses, optional: true
 

@@ -57,7 +57,7 @@ class Degree < ApplicationRecord
 
   belongs_to :trainee, touch: true
 
-  enum locale_code: { uk: 0, non_uk: 1 }
+  enum :locale_code, { uk: 0, non_uk: 1 }
 
   audited associated_with: :trainee
 

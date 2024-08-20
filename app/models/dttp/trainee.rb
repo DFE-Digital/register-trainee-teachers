@@ -59,7 +59,7 @@ module Dttp
 
     validates :response, presence: true
 
-    enum state: {
+    enum :state, {
       importable: 0,
       imported: 1,
       non_importable_duplicate: 2,

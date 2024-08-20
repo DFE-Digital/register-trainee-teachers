@@ -21,7 +21,7 @@ module Sourceable
   HESA_SOURCES = [HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE].freeze
 
   included do
-    enum record_source: ALL.to_h { |r| [r, r] }, _suffix: :record
+    enum :record_source, ALL.to_h { |r| [r, r] }, suffix: :record, instance_methods: true
 
     after_initialize :set_manual_record_source, if: -> { record_source.nil? }
 

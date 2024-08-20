@@ -32,11 +32,10 @@ class Upload < ApplicationRecord
   validates :file, presence: true, file: { content_type: VALID_CONTENT_TYPES, size_limit: MAX_FILE_SIZE }
   validates :name, presence: true
 
-  enum malware_scan_result: {
-         pending: 0,
-         clean: 1,
-         error: 2,
-         suspect: 3,
-       },
-       _prefix: :scan_result
+  enum :malware_scan_result, {
+    pending: 0,
+    clean: 1,
+    error: 2,
+    suspect: 3,
+  }, prefix: :scan_result, instance_methods: true
 end

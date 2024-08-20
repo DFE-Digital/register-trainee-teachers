@@ -20,7 +20,7 @@ module Hesa
   class CollectionRequest < ApplicationRecord
     self.table_name = "hesa_collection_requests"
 
-    enum state: { import_failed: 0, import_successful: 1 }
+    enum :state, { import_failed: 0, import_successful: 1 }
 
     class << self
       def next_from_date

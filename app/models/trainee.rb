@@ -212,13 +212,13 @@ class Trainee < ApplicationRecord
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
   }
 
-  enum training_route: TRAINING_ROUTES
+  enum :training_route, TRAINING_ROUTES
 
-  enum training_initiative: ROUTE_INITIATIVES
+  enum :training_initiative, ROUTE_INITIATIVES
 
-  enum bursary_tier: BURSARY_TIERS
+  enum :bursary_tier, BURSARY_TIERS
 
-  enum sex: {
+  enum :sex, {
     male: 0,
     female: 1,
     other: 2,
@@ -226,25 +226,25 @@ class Trainee < ApplicationRecord
     prefer_not_to_say: 4,
   }
 
-  enum commencement_status: COMMENCEMENT_STATUSES
+  enum :commencement_status, COMMENCEMENT_STATUSES
 
-  enum placement_detail: {
+  enum :placement_detail, {
     PLACEMENT_DETAIL_ENUMS[:has_placement_detail] => 0,
     PLACEMENT_DETAIL_ENUMS[:no_placement_detail] => 1,
   }
 
-  enum diversity_disclosure: {
+  enum :diversity_disclosure, {
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed] => 0,
     Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] => 1,
   }
 
-  enum disability_disclosure: {
+  enum :disability_disclosure, {
     Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] => 0,
     Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability] => 1,
     Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided] => 2,
   }
 
-  enum ethnic_group: {
+  enum :ethnic_group, {
     Diversities::ETHNIC_GROUP_ENUMS[:asian] => 0,
     Diversities::ETHNIC_GROUP_ENUMS[:black] => 1,
     Diversities::ETHNIC_GROUP_ENUMS[:mixed] => 2,
@@ -253,15 +253,15 @@ class Trainee < ApplicationRecord
     Diversities::ETHNIC_GROUP_ENUMS[:not_provided] => 5,
   }
 
-  enum study_mode: TRAINEE_STUDY_MODE_ENUMS
+  enum :study_mode, TRAINEE_STUDY_MODE_ENUMS
 
-  enum course_education_phase: {
+  enum :course_education_phase, {
     COURSE_EDUCATION_PHASE_ENUMS[:primary] => 0,
     COURSE_EDUCATION_PHASE_ENUMS[:secondary] => 1,
     COURSE_EDUCATION_PHASE_ENUMS[:early_years] => 2,
   }
 
-  enum state: {
+  enum :state, {
     draft: 0,
     submitted_for_trn: 1,
     trn_received: 2,
