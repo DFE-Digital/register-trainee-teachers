@@ -30,7 +30,7 @@ module Funding
             early_years_salaried: "early_years_salaried",
             provider_led: "provider_led",
             opt_in_undergrad: "opt_in_undergrad",
-            school_direct_tuition_fee: "school_direct_tuition_fee"
+            school_direct_tuition_fee: "school_direct_tuition_fee",
           )
           .backed_by_column_of_type(:string)
       end
@@ -41,7 +41,7 @@ module Funding
 
       context "when route_type is nil" do
         let(:route) { "Provider-led" }
-        let(:trainee_summary_row) { create(:trainee_summary_row, route_type: nil, trainee_summary:) }
+        let(:trainee_summary_row) { create(:trainee_summary_row, route_type: nil, trainee_summary: trainee_summary) }
 
         it "returns super" do
           expect(trainee_summary_row.route). to eq("Provider-led")
@@ -49,23 +49,23 @@ module Funding
       end
 
       context "when route_type is not nil" do
-          %i[
-            school_direct_salaried
-            school_direct_tuition_fee
-            pg_teaching_apprenticeship
-            early_years_postgrad
-            early_years_salaried
-            provider_led
-            opt_in_undergrad
-          ].each do |route_type|
-            it "returns the ITT translation" do
-              trainee_summary_row = create(:trainee_summary_row, route_type:, trainee_summary:)
+        %i[
+          school_direct_salaried
+          school_direct_tuition_fee
+          pg_teaching_apprenticeship
+          early_years_postgrad
+          early_years_salaried
+          provider_led
+          opt_in_undergrad
+        ].each do |route_type|
+          it "returns the ITT translation" do
+            trainee_summary_row = create(:trainee_summary_row, route_type:, trainee_summary:)
 
-              expect(trainee_summary_row.route).to eq(
-                I18n.t("activerecord.attributes.trainee.training_routes.itt.#{route_type}")
-              )
-            end
+            expect(trainee_summary_row.route).to eq(
+              I18n.t("activerecord.attributes.trainee.training_routes.itt.#{route_type}"),
+            )
           end
+        end
       end
     end
   end

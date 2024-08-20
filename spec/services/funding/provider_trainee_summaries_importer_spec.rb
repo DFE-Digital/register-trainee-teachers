@@ -8,7 +8,7 @@ module Funding
       subject { described_class::ROUTE_TYPES }
 
       it do
-        is_expected.to eq(
+        expect(subject).to eq(
           "EYITT Graduate entry" => :early_years_postgrad,
           "EYITT Graduate employment-based" => :early_years_salaried,
           "Provider-led" => :provider_led,

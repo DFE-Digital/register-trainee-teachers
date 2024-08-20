@@ -46,7 +46,7 @@ module Funding
       early_years_salaried: "early_years_salaried",
       provider_led: "provider_led",
       opt_in_undergrad: "opt_in_undergrad",
-      school_direct_tuition_fee: "school_direct_tuition_fee"
+      school_direct_tuition_fee: "school_direct_tuition_fee",
     }
 
     def route

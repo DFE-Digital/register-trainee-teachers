@@ -47,7 +47,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
 
     before do
       previous_academic_year_funding_trainee_summary.rows.each do |row|
-        row.route     = row.route
+        row.route = row.read_attribute(:route)
         row.route_type = nil
         row.save!
       end
