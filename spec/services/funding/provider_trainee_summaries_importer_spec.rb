@@ -13,7 +13,7 @@ module Funding
               "Provider name" => "Provider 1",
               "Academic Year" => "2021/22",
               "Subject" => "Physics",
-              "Route" => "provider_led",
+              "Route" => "Provider-led",
               "Lead School" => "Lead School 1",
               "Lead School ID" => "0001",
               "Cohort Level" => "PG",
@@ -33,7 +33,7 @@ module Funding
               "Provider name" => "Provider 1",
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
-              "Route" => "provider_led",
+              "Route" => "Provider-led",
               "Lead School" => "Lead School 1",
               "Lead School ID" => "0001",
               "Cohort Level" => "PG",
@@ -55,7 +55,7 @@ module Funding
               "Provider name" => "Provider 2",
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
-              "Route" => "provider_led",
+              "Route" => "Provider-led",
               "Lead School" => "Lead School 2",
               "Lead School ID" => "0002",
               "Cohort Level" => "PG",
@@ -103,7 +103,7 @@ module Funding
       describe "TraineeSummaryRow" do
         let(:provider_one_expected_attibutes) {
           {
-            "route_type" => "provider_led",
+            "route" => "Provider-led",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "0001",
             "cohort_level" => "PG",
@@ -113,7 +113,7 @@ module Funding
         let(:provider_two_expected_attibutes) {
           {
             "subject" => "Modern Languages",
-            "route_type" => "provider_led",
+            "route" => "Provider-led",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "0002",
             "cohort_level" => "PG",
@@ -201,7 +201,7 @@ module Funding
               "Provider name" => "Provider 3",
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
-              "Route" => "provider_led",
+              "Route" => "Provider-led",
               "Lead School" => "Lead School 3",
               "Lead School ID" => "0003",
               "Cohort Level" => "PG",
