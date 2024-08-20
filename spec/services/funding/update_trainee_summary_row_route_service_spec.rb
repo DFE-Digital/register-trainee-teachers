@@ -27,34 +27,32 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       )
     end
 
-    let(:mapping) do
+    let(:route_types) do
       {
-        "Early years graduate employment based" => :early_years_salaried,
-        "Provider-led" => :provider_led,
-        "School Direct tuition fee" => :school_direct_tuition_fee,
         "School Direct salaried" => :school_direct_salaried,
-        "Assessment only" => :assessment_only,
-        "Early years assessment only" => :early_years_assessment_only,
-        "Early years" => :early_years,
-        "International qualified teacher status (iQTS)" => :iqts,
-        "Primary and secondary" => :provider_led_undergrad,
-        "Teaching apprenticeship" => :pg_teaching_apprenticeship,
-        "School direct" => :school_direct_salaried,
-        "HPITT" => :hpitt_postgrad,
-        "Opt-in" => :opt_in_undergrad,
+        "post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
+        "EYITT Graduate entry" => :early_years_postgrad,
+        "EYITT Graduate employment-based" => :early_years_salaried,
+        "Provider-led" => :provider_led,
+        "Undergraduate opt-in" => :opt_in_undergrad,
+        "School Direct tuition fee" => :school_direct_tuition_fee,
       }
     end
 
     before do
       previous_academic_year_funding_trainee_summary.rows.each do |row|
-        row.route = row.read_attribute(:route)
+        row.route_type = nil
+        row.save!
+      end
+
+      current_academic_year_funding_trainee_summary.rows.each do |row|
         row.route_type = nil
         row.save!
       end
     end
 
-    it "has the correct mapping" do
-      expect(subject::ROUTE_MAPPING).to eq(mapping)
+    it "has the correct route types" do
+      expect(subject::ROUTE_TYPES).to eq(route_types)
     end
 
     it "sets the route_type only for the current_academic_year" do
@@ -65,7 +63,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       end
 
       current_academic_year_funding_trainee_summary.rows.reload.each do |row|
-        expect(row.route_type).to eq(mapping[row.route].to_s)
+        expect(row.route_type).to eq(route_types[row.read_attribute(:route)].to_s)
       end
     end
   end

@@ -33,7 +33,7 @@ FactoryBot.define do
     end
 
     trait :with_tiered_bursary_amount do
-      route { "Early years graduate employment based" }
+      route { "EYITT Graduate employment-based" }
       route_type { "early_years_salaried" }
 
       amounts do
@@ -42,7 +42,7 @@ FactoryBot.define do
     end
 
     trait :with_multiple_amounts do
-      route { "Early years graduate employment based" }
+      route { "EYITT Graduate employment-based" }
       route_type { "early_years_salaried" }
 
       amounts do
