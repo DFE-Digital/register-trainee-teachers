@@ -3,7 +3,7 @@ import tracker from './tracker.js'
 import { guard, renderTemplate, setHiddenField } from './autocomplete/helpers.js'
 
 const $allAutocompleteElements = document.querySelectorAll('[data-module="app-schools-autocomplete"]')
-const idElement = document.getElementById('schools-id')
+const idElement = document.getElementById('school-id')
 
 let statusMessage = ' '
 

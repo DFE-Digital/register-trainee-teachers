@@ -10,7 +10,7 @@
   method: :get,
   html: { data: { module: "app-schools-autocomplete" } },
 ) do |f| %>
-  <%= f.hidden_field :school_id, id: "schools-id" %>
+  <%= f.hidden_field :school_id, id: "school-id" %>
   <%= f.govuk_text_field(
     :query,
     form_group: { class: "govuk-form-group app-js-only" },

@@ -7,8 +7,15 @@ module Autocomplete
 
       @user_search = filtered_users
 
-      render(json: { users: @user_search.as_json(only: %i[id first_name last_name email],
-                                                 include: { providers: { only: [:name] } }) })
+      render(json: {
+        users: @user_search.as_json(
+          only: %i[id first_name last_name email],
+          include: {
+            providers: { only: [:name] },
+            lead_partners: { only: [:name] },
+          },
+        ),
+      })
     end
 
   private
