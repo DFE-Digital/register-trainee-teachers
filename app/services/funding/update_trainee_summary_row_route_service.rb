@@ -8,8 +8,10 @@ module Funding
       ProviderTraineeSummariesImporter::ROUTE_TYPES,
     ).freeze
 
-    def initialize(academic_year: "2024/2025")
-      @academic_year = academic_year
+    ACADEMIC_YEAR = "2024/25"
+
+    def initialize(academic_year = nil)
+      @academic_year = academic_year || ACADEMIC_YEAR
     end
 
     def call

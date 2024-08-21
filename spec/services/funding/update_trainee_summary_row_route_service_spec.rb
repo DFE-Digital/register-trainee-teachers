@@ -6,8 +6,8 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
   subject { described_class }
 
   describe "#call" do
-    let(:previous_academic_year) { "2023/2024" }
-    let(:current_academic_year) { "2024/2025" }
+    let(:previous_academic_year) { "2023/24" }
+    let(:current_academic_year) { "2024/25" }
 
     let!(:previous_academic_year_funding_trainee_summary) do
       create(
