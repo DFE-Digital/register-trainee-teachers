@@ -187,7 +187,7 @@ GEM
     cuprite (0.15.1)
       capybara (~> 3.0)
       ferrum (~> 0.15.0)
-    data_migrate (9.4.2)
+    data_migrate (11.0.0.rc)
       activerecord (>= 6.1)
       railties (>= 6.1)
     database_cleaner-active_record (2.2.0)
@@ -779,7 +779,7 @@ DEPENDENCIES
   cssbundling-rails
   csv-safe
   cuprite (~> 0.15)
-  data_migrate
+  data_migrate (= 11.0.0.rc)
   database_cleaner-active_record
   debug
   dfe-analytics!

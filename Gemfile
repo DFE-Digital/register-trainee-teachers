@@ -103,7 +103,7 @@ gem "yabeda-prometheus"
 gem "yabeda-rails"
 
 # Run data migrations alongside schema migrations
-gem "data_migrate"
+gem "data_migrate", "11.0.0.rc"
 
 # Gov Notify
 gem "govuk_notify_rails"
