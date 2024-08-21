@@ -30,7 +30,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
     let(:route_types) do
       {
         "School Direct salaried" => :school_direct_salaried,
-        "post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
+        "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
         "EYITT Graduate entry" => :early_years_postgrad,
         "EYITT Graduate employment-based" => :early_years_salaried,
         "Provider-led" => :provider_led,

@@ -10,7 +10,7 @@ module Funding
       it do
         expect(subject). to eq(
           "School Direct salaried" => :school_direct_salaried,
-          "post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
+          "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
         )
       end
     end
