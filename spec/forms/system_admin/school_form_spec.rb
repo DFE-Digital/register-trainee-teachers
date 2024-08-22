@@ -131,6 +131,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
             expect(school.lead_partner).to be_present
             expect(school.lead_partner).to be_undiscarded
+            expect(school.lead_school).to be(true)
           end
         end
 
@@ -144,6 +145,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
             expect(school.lead_partner).to be_present
             expect(school.lead_partner).to be_undiscarded
+            expect(school.lead_school).to be(true)
           end
         end
 
@@ -155,6 +157,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
             expect(school.lead_partner).to be_present
             expect(school.lead_partner).to be_undiscarded
+            expect(school.lead_school).to be(true)
           end
         end
       end
