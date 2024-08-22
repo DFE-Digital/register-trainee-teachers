@@ -57,7 +57,6 @@ module SystemAdmin
           school.lead_partner.discard!
         end
 
-        school.attributes = school_attributes
         school.save!
       end
     end
@@ -75,12 +74,6 @@ module SystemAdmin
   private
 
     attr_reader :params, :store
-
-    def school_attributes
-      {
-        lead_school: lead_partner,
-      }
-    end
 
     def find_or_create_lead_partner!
       LeadPartner.find_or_create_by!(school_id: school.id, urn: school.urn) do |lp|
