@@ -22,8 +22,7 @@ module Trainees
     let!(:second_disability) { create(:disability, name: second_disability_name) }
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
     let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
-    let(:lead_partner_urn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn][:urn] }
-    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn][:ukprn] }
+    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn] }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -39,7 +38,7 @@ module Trainees
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:provider, ukprn: accredited_provider_ukprn)
-      create(:lead_partner, :hei, urn: lead_partner_urn)
+      create(:lead_partner, :hei, ukprn: former_accredited_provider_ukprn)
       create(:school, urn: student_attributes[:lead_school_urn])
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
@@ -103,11 +102,11 @@ module Trainees
         end
       end
 
-      context "when ukprn is from an ex-accreddited HEI" do
+      context "when ukprn is from an ex-accredited HEI" do
         let(:hesa_stub_attributes) { { ukprn: former_accredited_provider_ukprn } }
 
         it "sets the correct accredited provider for the lead partner" do
-          expect(trainee.lead_partner.urn).to eq(lead_partner_urn)
+          expect(trainee.lead_partner.ukprn).to eq(former_accredited_provider_ukprn)
           expect(trainee.provider.ukprn).to eq(accredited_provider_ukprn)
         end
       end
