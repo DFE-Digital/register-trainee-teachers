@@ -54,8 +54,8 @@ module Funding
         }
       end
 
-      let!(:lead_school_one) { create(:school, :lead, urn: "1111") }
-      let!(:lead_school_two) { create(:school, :lead, urn: "2222") }
+      let!(:lead_school_one) { create(:school, urn: "1111") }
+      let!(:lead_school_two) { create(:school, urn: "2222") }
 
       let(:lead_school_one_summary) { lead_school_one.funding_trainee_summaries.last }
       let(:lead_school_two_summary) { lead_school_two.funding_trainee_summaries.last }

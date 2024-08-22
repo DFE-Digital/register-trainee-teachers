@@ -170,10 +170,10 @@ module Funding
         }
       end
 
-      let(:lead_school_one) { create(:school, :lead, urn: "131238") }
-      let(:lead_school_two) { create(:school, :lead, urn: "135438") }
-      let(:lead_school_three) { create(:school, :lead, urn: "103527") }
-      let(:lead_school_four) { create(:school, :lead, urn: "105491") }
+      let(:lead_school_one) { create(:school, urn: "131238") }
+      let(:lead_school_two) { create(:school, urn: "135438") }
+      let(:lead_school_three) { create(:school, urn: "103527") }
+      let(:lead_school_four) { create(:school, urn: "105491") }
       let(:lead_school_ids) { [lead_school_one.id, lead_school_two.id, lead_school_three.id, lead_school_four.id] }
       let(:lead_school_one_second_row) { lead_school_one.funding_payment_schedules.last.rows.second }
       let(:lead_school_one_first_row) { lead_school_one.funding_payment_schedules.last.rows.first }

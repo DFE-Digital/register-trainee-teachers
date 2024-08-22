@@ -188,7 +188,6 @@ shared:
     - close_date
     - created_at
     - id
-    - lead_school
     - name
     - open_date
     - postcode

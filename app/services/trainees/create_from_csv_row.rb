@@ -290,7 +290,7 @@ module Trainees
     end
 
     def lead_school_id
-      School.lead_only.find_by(urn: csv_row["Lead school URN"])&.id
+      School.find_by(urn: csv_row["Lead school URN"])&.id
     end
 
     def course_uuid

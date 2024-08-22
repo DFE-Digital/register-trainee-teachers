@@ -6,7 +6,6 @@ FactoryBot.define do
     name { Faker::Educator.secondary_school }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }
-    lead_school { false }
 
     trait :open do
       open_date { Faker::Date.in_date_period }
@@ -15,10 +14,6 @@ FactoryBot.define do
     trait :closed do
       open_date { Faker::Date.in_date_period }
       close_date { Faker::Date.in_date_period }
-    end
-
-    trait :lead do
-      lead_school { true }
     end
 
     trait :with_employing_trainees do
@@ -32,8 +27,6 @@ FactoryBot.define do
     end
 
     trait :with_lead_trainees do
-      lead
-
       transient do
         lead_trainees_count { 2 }
       end

@@ -5,7 +5,7 @@ require "rails_helper"
 describe UserPolicy do
   subject { described_class }
 
-  let(:school) { create(:school, :lead) }
+  let(:school) { create(:school) }
   let(:provider) { create(:provider) }
 
   let(:provider_user) { create(:user, providers: [provider]) }
