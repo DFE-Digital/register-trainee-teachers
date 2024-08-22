@@ -5,6 +5,24 @@ require "rails_helper"
 RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
   subject { described_class }
 
+  let(:route_types) do
+    {
+      "School Direct salaried" => :school_direct_salaried,
+      "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
+      "EYITT Graduate entry" => :early_years_postgrad,
+      "EYITT Graduate employment-based" => :early_years_salaried,
+      "Provider-led" => :provider_led,
+      "Undergraduate opt-in" => :opt_in_undergrad,
+      "School Direct tuition fee" => :school_direct_tuition_fee,
+    }
+  end
+
+  describe "::ROUTE_TYPES" do
+    it "has the correct route types" do
+      expect(subject::ROUTE_TYPES).to eq(route_types)
+    end
+  end
+
   describe "#call" do
     let(:previous_academic_year) { "2023/24" }
     let(:academic_year) { "2024/25" }
@@ -27,18 +45,6 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       )
     end
 
-    let(:route_types) do
-      {
-        "School Direct salaried" => :school_direct_salaried,
-        "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
-        "EYITT Graduate entry" => :early_years_postgrad,
-        "EYITT Graduate employment-based" => :early_years_salaried,
-        "Provider-led" => :provider_led,
-        "Undergraduate opt-in" => :opt_in_undergrad,
-        "School Direct tuition fee" => :school_direct_tuition_fee,
-      }
-    end
-
     before do
       previous_academic_year_funding_trainee_summary.rows.each do |row|
         row.route_type = nil
@@ -49,10 +55,6 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
         row.route_type = nil
         row.save!
       end
-    end
-
-    it "has the correct route types" do
-      expect(subject::ROUTE_TYPES).to eq(route_types)
     end
 
     it "sets the route_type only for the current_academic_year" do
