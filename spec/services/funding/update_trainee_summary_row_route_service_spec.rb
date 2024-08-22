@@ -41,7 +41,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
         :trainee_summary,
         :for_school,
         :with_bursary_and_scholarship_and_multiple_amounts,
-        academic_year:,
+        academic_year: subject.send(:new).send(:current_academic_year),
       )
     end
 
