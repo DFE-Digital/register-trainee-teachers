@@ -52,7 +52,7 @@ module Funding
     def route
       return super if route_type.nil?
 
-      human_attribute_name(route_type)
+      self.class.human_attribute_name(route_type)
     end
   end
 end
