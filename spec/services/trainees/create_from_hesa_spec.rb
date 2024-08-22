@@ -21,6 +21,9 @@ module Trainees
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
+    let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING.keys.sample }
+    let(:lead_partner_urn) { described_class::LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING[former_accredited_provider_ukprn][:urn] }
+    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING[former_accredited_provider_ukprn][:ukprn] }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -35,6 +38,8 @@ module Trainees
       allow(Sentry).to receive(:capture_message)
       create(:nationality, name: nationality_name)
       create(:provider, ukprn: student_attributes[:ukprn])
+      create(:provider, ukprn: accredited_provider_ukprn)
+      create(:lead_partner, :hei, urn: lead_partner_urn)
       create(:school, urn: student_attributes[:lead_school_urn])
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
@@ -95,6 +100,15 @@ module Trainees
         it "updates the trainee's lead_school and lead_partner_not_applicable state" do
           expect(trainee.lead_school.urn).to eq(student_attributes[:lead_school_urn])
           expect(trainee.lead_partner_not_applicable).to be false
+        end
+      end
+
+      context "when lead_partner_urn is from an ex-accreddited HEI" do
+        let(:hesa_stub_attributes) { { ukprn: former_accredited_provider_ukprn } }
+
+        it "sets the correct accredited provider for the lead partner" do
+          expect(trainee.lead_partner.urn).to eq(lead_partner_urn)
+          expect(trainee.provider.ukprn).to eq(accredited_provider_ukprn)
         end
       end
 

@@ -14,6 +14,16 @@ module Trainees
 
     MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE = 30
 
+    LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING = {
+      "10006841" => { urn: "133794", ukprn: "10000571" }, # University of Bolton => Bath Spa University
+      "10000961" => { urn: "133897", ukprn: "10000571" }, # Brunel University => Bath Spa University
+      "10007146" => { urn: "133876", ukprn: "10007851" }, # University of Greenwich => University of Derby
+      "10007806" => { urn: "133795", ukprn: "10007137" }, # University of Sussex => University of Chichester
+      "10007842" => { urn: "135398", ukprn: "10007163" }, # University of Cumbria => University of Warwick
+      "10007164" => { urn: "133798", ukprn: "10005790" }, # University of the West of England => Sheffield Hallam University
+      "10007789" => { urn: "133853", ukprn: "10007139" }, # University of East Anglia => University of Worcester
+    }.freeze
+
     class HesaImportError < StandardError; end
 
     def initialize(hesa_trainee:, record_source:)
@@ -57,6 +67,7 @@ module Trainees
       }.compact # trainee_state can be nil, therefore we don't want to override the current state
        .merge(personal_details_attributes)
        .merge(provider_attributes)
+       .merge(lead_partner_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(submitted_for_trn_attributes)
@@ -106,8 +117,21 @@ module Trainees
       }
     end
 
+    def lead_partner_attributes
+      return {} unless LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING.keys.include?(hesa_trainee[:ukprn])
+
+      lead_partner = LeadPartner.find_by(urn: LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING[hesa_trainee[:ukprn]][:urn])
+
+      lead_partner ? { lead_partner: } : {}
+    end
+
     def provider_attributes
-      provider = Provider.find_by(ukprn: hesa_trainee[:ukprn])
+      provider = if LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING.keys.include?(hesa_trainee[:ukprn])
+                   Provider.find_by(ukprn: LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING[hesa_trainee[:ukprn]][:ukprn])
+                 else
+                   Provider.find_by(ukprn: hesa_trainee[:ukprn])
+                 end
+
       provider ? { provider: } : {}
     end
 
