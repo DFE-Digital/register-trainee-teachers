@@ -16,11 +16,13 @@ module Trainees
 
     class HesaImportError < StandardError; end
 
-    def initialize(hesa_trainee:, record_source:)
+    def initialize(hesa_trainee:, record_source:, skip_background_jobs: false, slug: nil)
       @hesa_trainee = hesa_trainee
+      @slug = slug
       @trainee = find_or_initialize_trainee_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
       @current_trainee_state = @trainee&.state&.to_sym
+      @skip_background_jobs = skip_background_jobs
     end
 
     def call
@@ -45,7 +47,7 @@ module Trainees
 
   private
 
-    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state
+    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state, :skip_background_jobs, :slug
 
     def mapped_attributes
       {
@@ -70,13 +72,13 @@ module Trainees
       # If we have multiple trainees with the same HESA ID, we want to pick the one most recently created
       trainee = Trainee.where(hesa_id:).order(:created_at).last
 
-      return new_trainee_record(hesa_id) if trainee.blank?
+      return new_trainee_record(hesa_id, slug) if trainee.blank?
       # if the trainee is neither awarded nor withdrawn we always update the existing record
       return trainee unless awarded_or_withdrawn?(trainee)
 
       # if the trainee is either awarded or withdrawn and the ITT start date is different to the existing record,
       # we need to create a new record because the provider is submitting the trainee for a new course
-      new_trainee_record(hesa_id) if itt_start_date_significantly_changed_for?(trainee)
+      new_trainee_record(hesa_id, slug) if itt_start_date_significantly_changed_for?(trainee)
 
       # if the trainee's ITT start date has not changed, and the trainee is either awarded or withdrawn,
       # then we do nothing (we don't create a new record, nor update the existing one), therefore we
@@ -176,6 +178,7 @@ module Trainees
     end
 
     def enqueue_background_jobs!
+      return if skip_background_jobs
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
       if trainee.trn.present?
@@ -243,11 +246,11 @@ module Trainees
     end
 
     def create_degrees!
-      ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+      ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees]) if hesa_trainee[:degrees]
     end
 
     def create_placements!
-      ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements])
+      ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements]) if hesa_trainee[:placements]
     end
 
     def store_hesa_metadata!
@@ -282,8 +285,8 @@ module Trainees
       ::Hesa::ValidateMapping.call(hesa_trainee:, record_source:)
     end
 
-    def new_trainee_record(hesa_id)
-      Trainee.new(hesa_id:)
+    def new_trainee_record(hesa_id, slug)
+      Trainee.new(hesa_id:, slug:)
     end
 
     def itt_start_date_significantly_changed_for?(trainee)
