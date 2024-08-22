@@ -103,7 +103,7 @@ module Trainees
         end
       end
 
-      context "when lead_partner_urn is from an ex-accreddited HEI" do
+      context "when ukprn is from an ex-accreddited HEI" do
         let(:hesa_stub_attributes) { { ukprn: former_accredited_provider_ukprn } }
 
         it "sets the correct accredited provider for the lead partner" do
