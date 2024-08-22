@@ -21,9 +21,9 @@ module Trainees
     let(:second_disability_name) { Diversities::DEVELOPMENT_CONDITION }
     let!(:second_disability) { create(:disability, name: second_disability_name) }
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
-    let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING.keys.sample }
-    let(:lead_partner_urn) { described_class::LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING[former_accredited_provider_ukprn][:urn] }
-    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_URN_TO_ACCREDITED_PROVIDER_UKPRN_MAPPING[former_accredited_provider_ukprn][:ukprn] }
+    let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
+    let(:lead_partner_urn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn][:urn] }
+    let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn][:ukprn] }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
