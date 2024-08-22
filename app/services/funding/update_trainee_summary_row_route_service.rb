@@ -13,14 +13,18 @@ module Funding
     end
 
     def call
-      rows.find_each(batch_size: 100) do |row|
-        row.update!(route_type: ROUTE_TYPES[row.route])
+      routes.each do |route|
+        rows.where(route:).update_all(route_type: ROUTE_TYPES[route])
       end
     end
 
   private
 
     attr_reader :academic_year
+
+    def routes
+      rows.distinct.pluck(:route)
+    end
 
     def rows
       TraineeSummaryRow
