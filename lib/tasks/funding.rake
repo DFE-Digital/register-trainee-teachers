@@ -29,7 +29,7 @@ namespace :funding do
     abort("Lead school URNs: #{missing_urns.join(', ')} not found") unless missing_urns.empty?
   end
 
-  desc "Set the route_type to the corresponding translation key defaults to academic_year 2024/2025 unless specified: rails funding:generate_trainee_summary_row_route_type or 'funding:generate_trainee_summary_row_route_type[2024/25]'"
+  desc "Set the route_type to the corresponding translation key defaults to current academic year unless specified: rails funding:generate_trainee_summary_row_route_type or 'funding:generate_trainee_summary_row_route_type[2024/25]'"
   task :generate_trainee_summary_row_route_type, %i[academic_year] => :environment do |_, args|
     Funding::UpdateTraineeSummaryRowRouteService.call(args[:academic_year])
   end
