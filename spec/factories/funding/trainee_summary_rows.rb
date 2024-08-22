@@ -12,7 +12,7 @@ FactoryBot.define do
     cohort_level { "PG" }
 
     trait :with_grant_amount do
-      route { "School direct (salaried)" }
+      route { "School Direct salaried" }
       route_type { "school_direct_salaried" }
 
       amounts do
