@@ -39,7 +39,7 @@ module Funding
              dependent: :destroy,
              inverse_of: :row
 
-    enum route_type: {
+    enum :route_type, {
       school_direct_salaried: "school_direct_salaried",
       pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
       early_years_postgrad: "early_years_postgrad",
