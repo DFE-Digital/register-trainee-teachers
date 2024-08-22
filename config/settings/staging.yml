@@ -51,3 +51,7 @@ environment:
 google_tag_manager:
   auth_id: h9MLvalp6AuXoRufPTHO_A
   env_id: 12
+
+hesa:
+  current_collection_reference: "C24053"
+  current_collection_start_date: "2024-08-01"
