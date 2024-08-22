@@ -53,6 +53,10 @@ class School < ApplicationRecord
   validates :name, presence: true
   validates :lead_school, inclusion: { in: [true, false] }
 
+  def lead_partner?
+    lead_partner.present? && lead_partner.undiscarded?
+  end
+
 private
 
   # The below generates a query like:

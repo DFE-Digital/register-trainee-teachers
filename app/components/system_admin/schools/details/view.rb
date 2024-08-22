@@ -11,7 +11,11 @@ module SystemAdmin
         end
 
         def lead_partner?
-          school_entity.lead_partner
+          if school_entity.is_a?(School)
+            school_entity.lead_partner?
+          else
+            school_entity.lead_partner
+          end
         end
       end
     end
