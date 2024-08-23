@@ -71,7 +71,8 @@ module Trainees
        .merge(course_attributes)
        .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
-       .merge(school_attributes)
+       .merge(lead_partner_attributes)
+       .merge(employing_school_attributes)
        .merge(training_initiative_attributes)
        .merge(apply_attributes)
     end
@@ -130,7 +131,7 @@ module Trainees
       { submitted_for_trn_at: Time.zone.now }
     end
 
-    def school_attributes
+    def lead_partner_attributes
       attrs = {}
 
       if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
@@ -140,6 +141,12 @@ module Trainees
       else
         attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
       end
+
+      attrs
+    end
+
+    def employing_school_attributes
+      attrs = {}
 
       if hesa_trainee[:employing_school_urn].present?
         if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:employing_school_urn])
