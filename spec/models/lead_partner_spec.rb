@@ -80,6 +80,14 @@ describe LeadPartner do
         )
       end
     end
+
+    context "when school and provider are nil" do
+      subject(:lead_partner) { build(:lead_partner) }
+
+      it "returns nil" do
+        expect(lead_partner.funding_payment_schedules).to be_nil
+      end
+    end
   end
 
   describe "#funding_trainee_summaries" do
@@ -100,6 +108,14 @@ describe LeadPartner do
         expect(lead_partner.funding_trainee_summaries).to eq(
           lead_partner.provider.funding_trainee_summaries,
         )
+      end
+    end
+
+    context "when school and provider are nil" do
+      subject(:lead_partner) { build(:lead_partner) }
+
+      it "returns nil" do
+        expect(lead_partner.funding_trainee_summaries).to be_nil
       end
     end
   end
