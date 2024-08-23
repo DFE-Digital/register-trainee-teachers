@@ -11,6 +11,54 @@ feature "viewing the trainee summary", feature_funding: true do
     given_i_am_authenticated(user:)
   }
 
+  context "when User is a LeadPartner school" do
+    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :lead_school) }
+    let(:summary) { create(:trainee_summary, payable: user.lead_partners.first.school) }
+    let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
+
+    background do
+      create(:trainee_summary_row_amount, :with_bursary, row:)
+      when_i_visit_the_trainee_summary_page
+    end
+
+    scenario "displays the bursary breakdown table" do
+      then_i_see_the_bursary_table
+    end
+
+    scenario "displays the summary table" do
+      then_i_see_the_summary_table
+    end
+
+    scenario "downloads trainee summary export csv" do
+      and_i_export_the_results
+      then_i_see_my_exported_data_in_csv_format
+    end
+  end
+
+  context "when User is a LeadPartner provider" do
+    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :hei) }
+    let(:summary) { create(:trainee_summary, payable: user.lead_partners.first.provider) }
+    let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }
+
+    background do
+      create(:trainee_summary_row_amount, :with_bursary, row:)
+      when_i_visit_the_trainee_summary_page
+    end
+
+    scenario "displays the bursary breakdown table" do
+      then_i_see_the_bursary_table
+    end
+
+    scenario "displays the summary table" do
+      then_i_see_the_summary_table
+    end
+
+    scenario "downloads trainee summary export csv" do
+      and_i_export_the_results
+      then_i_see_my_exported_data_in_csv_format
+    end
+  end
+
   context "with a trainee summary in the current academic year" do
     let(:summary) { create(:trainee_summary, payable: user.providers.first) }
     let(:row) { create(:trainee_summary_row, trainee_summary: summary, subject: test_subject) }

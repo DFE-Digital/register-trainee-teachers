@@ -21,8 +21,12 @@ FactoryBot.define do
     end
 
     trait :with_lead_partner_organisation do
+      transient do
+        lead_partner_type { :lead_school }
+      end
+
       providers { [] }
-      lead_partners { [build(:lead_partner, :lead_school)] }
+      lead_partners { [build(:lead_partner, lead_partner_type)] }
     end
 
     trait :with_no_organisation_in_db do

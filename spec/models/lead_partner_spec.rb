@@ -81,4 +81,26 @@ describe LeadPartner do
       end
     end
   end
+
+  describe "#funding_trainee_summaries" do
+    context "when schools exists" do
+      subject(:lead_partner) { create(:lead_partner, :lead_school) }
+
+      it "returns the school#funding_trainee_summaries" do
+        expect(lead_partner.funding_trainee_summaries).to eq(
+          lead_partner.school.funding_trainee_summaries,
+        )
+      end
+    end
+
+    context "when provider exists" do
+      subject(:lead_partner) { create(:lead_partner, :hei) }
+
+      it "returns the provider#funding_payment_schedules" do
+        expect(lead_partner.funding_trainee_summaries).to eq(
+          lead_partner.provider.funding_trainee_summaries,
+        )
+      end
+    end
+  end
 end
