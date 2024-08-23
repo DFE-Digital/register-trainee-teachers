@@ -18,12 +18,12 @@ module SchoolDetails
       @mock_trainee ||= Trainee.new(
         id: 1,
         training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-        lead_school: mock_school(lead: true),
+        lead_school: mock_school,
         employing_school: with_employing ? mock_school : nil,
       )
     end
 
-    def mock_school(lead: false)
+    def mock_school
       @mock_school ||= School.new(
         id: 1,
         urn: "12345",
@@ -31,7 +31,6 @@ module SchoolDetails
         postcode: "E1 5DJ",
         town: "London",
         open_date: Time.zone.today,
-        lead_school: lead,
       )
     end
   end
