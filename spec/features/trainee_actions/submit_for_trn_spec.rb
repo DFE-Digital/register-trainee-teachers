@@ -6,10 +6,6 @@ feature "submit for TRN" do
   include TraineeHelper
   background { given_i_am_authenticated }
 
-  before do
-    stub_dttp_batch_request
-  end
-
   describe "submission" do
     context "when itt start date is in the past" do
       let(:trainee) do
