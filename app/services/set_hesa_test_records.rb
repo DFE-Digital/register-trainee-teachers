@@ -73,7 +73,7 @@ private
 
   def ringo
     {
-      trn: "3001588",
+      trn: "3001587",
       slug: "Bcyx6hB4kd9AxRtK3jYdkTEo",
       hesa: {
         first_names: "Ringo",
@@ -96,7 +96,7 @@ private
 
   def john
     {
-      trn: "3001587",
+      trn: "3001588",
       slug: "6wk4nGs8BnLtvgniu593uHau",
       hesa: {
         first_names: "John",
