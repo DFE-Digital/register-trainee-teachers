@@ -56,7 +56,7 @@ module Funding
               "Lead school URN" => "2222",
               "Lead school name" => "Lead School 2",
               "Subject" => "Physics",
-              "Description" => "School Direct salaried",
+              "Description" => " School Direct salaried ",
               "Funding/trainee" => "24000",
               "Trainees" => "0",
               "Total Funding" => "24000",
@@ -105,7 +105,7 @@ module Funding
         let(:lead_school_two_expected_attibutes) {
           {
             "subject" => "Physics",
-            "route" => "School Direct salaried",
+            "route" => " School Direct salaried ",
             "route_type" => "school_direct_salaried",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "2222",

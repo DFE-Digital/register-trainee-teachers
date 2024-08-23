@@ -69,7 +69,7 @@ module Funding
               "Provider name" => "Provider 2",
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
-              "Route" => "Provider-led",
+              "Route" => "Provider-led ",
               "Lead School" => "Lead School 2",
               "Lead School ID" => "0002",
               "Cohort Level" => "PG",
@@ -128,7 +128,7 @@ module Funding
         let(:provider_two_expected_attibutes) {
           {
             "subject" => "Modern Languages",
-            "route" => "Provider-led",
+            "route" => "Provider-led ",
             "route_type" => "provider_led",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "0002",

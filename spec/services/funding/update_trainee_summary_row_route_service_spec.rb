@@ -51,6 +51,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
 
       current_academic_year_funding_trainee_summary.rows.each do |row|
         row.route_type = nil
+        row.route = " #{row.route} "
         row.save!
       end
     end
@@ -63,7 +64,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       end
 
       current_academic_year_funding_trainee_summary.rows.reload.each do |row|
-        expect(row.route_type).to eq(route_types[row.read_attribute(:route)].to_s)
+        expect(row.route_type).to eq(route_types[row.read_attribute(:route).strip].to_s)
       end
     end
   end
