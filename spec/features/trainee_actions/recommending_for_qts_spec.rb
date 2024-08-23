@@ -27,7 +27,6 @@ feature "Recommending for QTS" do
       :itt_start_date_in_the_past,
       :provider_led_postgrad,
     )
-    stub_dttp_placement_assignment_request(outcome_date: Time.zone.today, status: 204)
   end
 
   def when_i_visit_the_trainee_record_page
