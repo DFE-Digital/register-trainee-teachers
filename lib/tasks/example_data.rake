@@ -74,7 +74,6 @@ namespace :example_data do
 
     # Create some schools
     employing_schools = FactoryBot.create_list(:school, 50)
-    lead_schools = FactoryBot.create_list(:school, 50, lead_school: true)
 
     # Create some lead partners
     lead_partners = FactoryBot.create_list(:lead_partner, 50, :lead_school)
@@ -169,7 +168,6 @@ namespace :example_data do
             attrs.merge!(provider:) if provider
 
             # Some route-specific logic, but could move into factories too
-            attrs.merge!(lead_school: lead_schools.sample) if LEAD_PARTNER_ROUTES.include?(route)
             attrs.merge!(employing_school: employing_schools.sample) if EMPLOYING_SCHOOL_ROUTES.include?(route)
 
             if enabled_course_routes.include?(route)
@@ -225,7 +223,6 @@ namespace :example_data do
                 itt_start_date: nil,
                 itt_end_date: nil,
                 provider_trainee_id: nil,
-                lead_school: nil,
                 employing_school: nil,
               )
             end
