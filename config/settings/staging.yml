@@ -13,14 +13,14 @@ dfe_sign_in:
   profile: https://pp-profile.signin.education.gov.uk
 
 dqt:
-  base_url: https://qualified-teachers-api-preprod.london.cloudapps.digital/
+  base_url: https://preprod.teacher-qualifications-api.education.gov.uk
 
 features:
   sign_in_method: dfe-sign-in
   basic_auth: false
   enable_feedback_link: true
   import_courses_from_ttapi: true
-  import_applications_from_apply: true
+  import_applications_from_apply: false
   publish_course_details: true
   routes:
     early_years_assessment_only: true
@@ -51,3 +51,7 @@ environment:
 google_tag_manager:
   auth_id: h9MLvalp6AuXoRufPTHO_A
   env_id: 12
+
+hesa:
+  current_collection_reference: "C24053"
+  current_collection_start_date: "2024-08-01"
