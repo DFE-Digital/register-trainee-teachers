@@ -36,11 +36,7 @@ module Funding
     end
 
     def current_academic_year
-      format_year(AcademicCycle.current.start_year)
-    end
-
-    def format_year(year)
-      "#{year}/#{(year + 1).to_s[-2..]}"
+      "#{AcademicCycle.current.start_year}/#{AcademicCycle.current.end_year % 100}"
     end
   end
 end
