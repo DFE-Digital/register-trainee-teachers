@@ -104,7 +104,7 @@ describe PlacementForm, type: :model do
   describe "#save!" do
     context "creating a new placement" do
       context "when a `school_id` for an existing school is given" do
-        let!(:school) { create(:school, lead_school: false) }
+        let!(:school) { create(:school) }
         let(:placement) { Placement.new(school_id: school.id) }
 
         it "creates a new placement record" do
