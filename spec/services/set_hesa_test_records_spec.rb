@@ -7,8 +7,8 @@ RSpec.describe SetHesaTestRecords do
     subject { described_class.call }
 
     let(:george_data) { { trn: "3001586", slug: "4RwkB5YADdBbAVMcLJ8cgSaL", first_names: "George", last_name: "Harrison" } }
-    let(:ringo_data) { { trn: "3001588", slug: "Bcyx6hB4kd9AxRtK3jYdkTEo", first_names: "Ringo", last_name: "Starr" } }
-    let(:john_data) { { trn: "3001587", slug: "6wk4nGs8BnLtvgniu593uHau", first_names: "John", last_name: "Lennon" } }
+    let(:ringo_data) { { trn: "3001587", slug: "Bcyx6hB4kd9AxRtK3jYdkTEo", first_names: "Ringo", last_name: "Starr" } }
+    let(:john_data) { { trn: "3001588", slug: "6wk4nGs8BnLtvgniu593uHau", first_names: "John", last_name: "Lennon" } }
     let!(:provider) { create(:provider, ukprn: "10007140") }
 
     it "creates George, Ringo, and John with the correct attributes" do
