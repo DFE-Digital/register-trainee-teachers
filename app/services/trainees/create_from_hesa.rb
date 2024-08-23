@@ -14,6 +14,16 @@ module Trainees
 
     MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE = 30
 
+    LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING = {
+      "10006841" => "10000571", # University of Bolton => Bath Spa University
+      "10000961" => "10000571", # Brunel University => Bath Spa University
+      "10007146" => "10007851", # University of Greenwich => University of Derby
+      "10007806" => "10007137", # University of Sussex => University of Chichester
+      "10007842" => "10007163", # University of Cumbria => University of Warwick
+      "10007164" => "10005790", # University of the West of England => Sheffield Hallam University
+      "10007789" => "10007139", # University of East Anglia => University of Worcester
+    }.freeze
+
     class HesaImportError < StandardError; end
 
     def initialize(hesa_trainee:, record_source:, skip_background_jobs: false, slug: nil)
@@ -63,7 +73,8 @@ module Trainees
        .merge(course_attributes)
        .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
-       .merge(school_attributes)
+       .merge(lead_partner_attributes)
+       .merge(employing_school_attributes)
        .merge(training_initiative_attributes)
        .merge(apply_attributes)
     end
@@ -109,7 +120,12 @@ module Trainees
     end
 
     def provider_attributes
-      provider = Provider.find_by(ukprn: hesa_trainee[:ukprn])
+      provider = if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+                   Provider.find_by(ukprn: LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[hesa_trainee[:ukprn]])
+                 else
+                   Provider.find_by(ukprn: hesa_trainee[:ukprn])
+                 end
+
       provider ? { provider: } : {}
     end
 
@@ -117,16 +133,22 @@ module Trainees
       { submitted_for_trn_at: Time.zone.now }
     end
 
-    def school_attributes
+    def lead_partner_attributes
       attrs = {}
 
-      return attrs if hesa_trainee[:lead_school_urn].blank?
-
-      if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_school_urn])
+      if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+        attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
+      elsif hesa_trainee[:lead_school_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(lead_partner_not_applicable: true)
       else
-        attrs.merge!(lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
+        attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
       end
+
+      attrs
+    end
+
+    def employing_school_attributes
+      attrs = {}
 
       if hesa_trainee[:employing_school_urn].present?
         if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:employing_school_urn])
