@@ -99,12 +99,10 @@ feature "Recording a training outcome" do
   end
 
   def when_i_choose_today
-    stub_dttp_placement_assignment_request(outcome_date: Time.zone.today, status: 204)
     when_i_choose("Today")
   end
 
   def when_i_choose_yesterday
-    stub_dttp_placement_assignment_request(outcome_date: Time.zone.yesterday, status: 204)
     when_i_choose("Yesterday")
   end
 
@@ -114,7 +112,6 @@ feature "Recording a training outcome" do
 
   def and_i_enter_a_valid_date
     @outcome_date = valid_date_after_itt_start_date
-    stub_dttp_placement_assignment_request(outcome_date: @outcome_date, status: 204)
     outcome_date_edit_page.set_date_fields("outcome_date", @outcome_date.strftime("%d/%m/%Y"))
   end
 
