@@ -67,7 +67,6 @@ module Trainees
       }.compact # trainee_state can be nil, therefore we don't want to override the current state
        .merge(personal_details_attributes)
        .merge(provider_attributes)
-       .merge(lead_partner_attributes)
        .merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(submitted_for_trn_attributes)
@@ -117,14 +116,6 @@ module Trainees
       }
     end
 
-    def lead_partner_attributes
-      return {} unless hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
-
-      lead_partner = LeadPartner.find_by(ukprn: hesa_trainee[:ukprn])
-
-      lead_partner ? { lead_partner: } : {}
-    end
-
     def provider_attributes
       provider = if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
                    Provider.find_by(ukprn: LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[hesa_trainee[:ukprn]])
@@ -142,12 +133,12 @@ module Trainees
     def school_attributes
       attrs = {}
 
-      return attrs if hesa_trainee[:lead_school_urn].blank?
-
-      if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_school_urn])
+      if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+        attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
+      elsif hesa_trainee[:lead_school_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(lead_partner_not_applicable: true)
       else
-        attrs.merge!(lead_school: School.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
+        attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
       end
 
       if hesa_trainee[:employing_school_urn].present?
