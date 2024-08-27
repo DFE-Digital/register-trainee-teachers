@@ -88,7 +88,7 @@ Rails/UnknownEnv:
 
 Metrics/CollectionLiteralLength:
   Exclude:
-    - "app/lib/dttp/**/*"
+    - "app/lib/register/code_sets/**/*"
     - "app/lib/hesa/**/*"
     - "config/initializers/subjects/**/*"
     - "db/data/**/*"
