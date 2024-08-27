@@ -40,7 +40,7 @@ module Trainees
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:provider, ukprn: accredited_provider_ukprn)
       create(:lead_partner, :hei, ukprn: former_accredited_provider_ukprn)
-      create(:lead_partner, :lead_school, school: school)
+      create(:lead_partner, :lead_school, school:)
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
       described_class.call(
