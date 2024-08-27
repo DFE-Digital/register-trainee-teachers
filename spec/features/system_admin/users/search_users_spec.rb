@@ -23,6 +23,61 @@ feature "Search users" do
     end
   end
 
+  context "as a system admin with JavaScript", js: true do
+    let(:user) { create(:user, first_name: "Bob", system_admin: true) }
+    let!(:second_user) { create(:user, first_name: "Alice") }
+    let(:provider) { create(:provider, name: "West Pudding University") }
+    let(:lead_partner) { create(:lead_partner, :lead_school, name: "East Porridge School") }
+
+    before do
+      second_user.providers << provider
+      second_user.lead_partners << lead_partner
+      given_i_am_authenticated(user:)
+    end
+
+    scenario "search users by name" do
+      when_i_visit_the_user_index_page
+      then_i_see_the_users
+      when_i_enter_the_first_users_last_name_into_the_autocomplete
+      and_click_on_the_first_user_in_the_autocomplete
+      then_i_see_the_detail_page_for_the_second_user
+    end
+
+    scenario "search users by lead partner name" do
+      when_i_visit_the_user_index_page
+      when_i_enter_the_first_users_lead_partner_name_into_the_autocomplete
+      and_click_on_the_first_user_in_the_autocomplete
+      then_i_see_the_detail_page_for_the_second_user
+    end
+
+    scenario "search users by provider name" do
+      when_i_visit_the_user_index_page
+      when_i_enter_the_first_users_provider_name_into_the_autocomplete
+      and_click_on_the_first_user_in_the_autocomplete
+      then_i_see_the_detail_page_for_the_second_user
+    end
+  end
+
+  def when_i_enter_the_first_users_last_name_into_the_autocomplete
+    fill_in("search-field", with: second_user.last_name)
+  end
+
+  def when_i_enter_the_first_users_lead_partner_name_into_the_autocomplete
+    fill_in("search-field", with: "East Porridge")
+  end
+
+  def when_i_enter_the_first_users_provider_name_into_the_autocomplete
+    fill_in("search-field", with: "West Pudding")
+  end
+
+  def and_click_on_the_first_user_in_the_autocomplete
+    find("#search-field__listbox li:first-child").click
+  end
+
+  def then_i_see_the_detail_page_for_the_second_user
+    expect(page).to have_current_path(user_path(second_user))
+  end
+
   def when_i_visit_the_user_index_page
     admin_users_index_page.load
   end

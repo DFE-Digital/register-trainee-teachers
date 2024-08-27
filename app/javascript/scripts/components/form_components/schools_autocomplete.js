@@ -57,8 +57,8 @@ const setupAutoComplete = (form) => {
         },
         templates: renderTemplate,
         onConfirm: (value) => {
-          if (value?.id && element.dataset.systemAdminRedirectLeadSchool) {
-            window.location.assign(`/system-admin/lead-schools/${value.id}`)
+          if (value?.id && element.dataset.systemAdminRedirectSchool) {
+            window.location.assign(`/system-admin/schools/${value.id}`)
           } else {
             tracker.sendTrackingEvent(value, fieldName)
             setHiddenField(idElement, value)

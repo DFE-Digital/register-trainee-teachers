@@ -6,9 +6,15 @@ module Autocomplete
       return error_response if invalid_query?
 
       @user_search = filtered_users
-
-      render(json: { users: @user_search.as_json(only: %i[id first_name last_name email],
-                                                 include: { providers: { only: [:name] } }) })
+      render(json: {
+        users: @user_search.as_json(
+          only: %i[id first_name last_name email],
+          include: {
+            providers: { only: [:name] },
+            lead_partners: { only: [:name] },
+          },
+        ),
+      })
     end
 
   private
@@ -27,7 +33,7 @@ module Autocomplete
     end
 
     def filtered_users
-      UserSearch.call(**args, scope: User.kept).users
+      UserSearch.call(**args, scope: User.kept.includes(%i[providers lead_partners])).users
     end
   end
 end

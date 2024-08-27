@@ -14,13 +14,25 @@ module Trainees
 
     MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE = 30
 
+    LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING = {
+      "10006841" => "10000571", # University of Bolton => Bath Spa University
+      "10000961" => "10000571", # Brunel University => Bath Spa University
+      "10007146" => "10007851", # University of Greenwich => University of Derby
+      "10007806" => "10007137", # University of Sussex => University of Chichester
+      "10007842" => "10007163", # University of Cumbria => University of Warwick
+      "10007164" => "10005790", # University of the West of England => Sheffield Hallam University
+      "10007789" => "10007139", # University of East Anglia => University of Worcester
+    }.freeze
+
     class HesaImportError < StandardError; end
 
-    def initialize(hesa_trainee:, record_source:)
+    def initialize(hesa_trainee:, record_source:, skip_background_jobs: false, slug: nil)
       @hesa_trainee = hesa_trainee
+      @slug = slug
       @trainee = find_or_initialize_trainee_by(hesa_id: hesa_trainee[:hesa_id])
       @record_source = record_source
       @current_trainee_state = @trainee&.state&.to_sym
+      @skip_background_jobs = skip_background_jobs
     end
 
     def call
@@ -45,7 +57,7 @@ module Trainees
 
   private
 
-    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state
+    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state, :skip_background_jobs, :slug
 
     def mapped_attributes
       {
@@ -61,7 +73,8 @@ module Trainees
        .merge(course_attributes)
        .merge(submitted_for_trn_attributes)
        .merge(funding_attributes)
-       .merge(school_attributes)
+       .merge(lead_partner_attributes)
+       .merge(employing_school_attributes)
        .merge(training_initiative_attributes)
        .merge(apply_attributes)
     end
@@ -70,13 +83,13 @@ module Trainees
       # If we have multiple trainees with the same HESA ID, we want to pick the one most recently created
       trainee = Trainee.where(hesa_id:).order(:created_at).last
 
-      return new_trainee_record(hesa_id) if trainee.blank?
+      return new_trainee_record(hesa_id, slug) if trainee.blank?
       # if the trainee is neither awarded nor withdrawn we always update the existing record
       return trainee unless awarded_or_withdrawn?(trainee)
 
       # if the trainee is either awarded or withdrawn and the ITT start date is different to the existing record,
       # we need to create a new record because the provider is submitting the trainee for a new course
-      new_trainee_record(hesa_id) if itt_start_date_significantly_changed_for?(trainee)
+      new_trainee_record(hesa_id, slug) if itt_start_date_significantly_changed_for?(trainee)
 
       # if the trainee's ITT start date has not changed, and the trainee is either awarded or withdrawn,
       # then we do nothing (we don't create a new record, nor update the existing one), therefore we
@@ -107,7 +120,12 @@ module Trainees
     end
 
     def provider_attributes
-      provider = Provider.find_by(ukprn: hesa_trainee[:ukprn])
+      provider = if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+                   Provider.find_by(ukprn: LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[hesa_trainee[:ukprn]])
+                 else
+                   Provider.find_by(ukprn: hesa_trainee[:ukprn])
+                 end
+
       provider ? { provider: } : {}
     end
 
@@ -115,16 +133,22 @@ module Trainees
       { submitted_for_trn_at: Time.zone.now }
     end
 
-    def school_attributes
+    def lead_partner_attributes
       attrs = {}
 
-      return attrs if hesa_trainee[:lead_partner_urn].blank?
-
-      if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:lead_partner_urn])
+      if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+        attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
+      elsif hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(lead_partner_not_applicable: true)
       else
-        attrs.merge!(lead_school: School.find_by(urn: hesa_trainee[:lead_partner_urn]), lead_partner_not_applicable: false)
+        attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
       end
+
+      attrs
+    end
+
+    def employing_school_attributes
+      attrs = {}
 
       if hesa_trainee[:employing_school_urn].present?
         if NOT_APPLICABLE_SCHOOL_URNS.include?(hesa_trainee[:employing_school_urn])
@@ -176,6 +200,7 @@ module Trainees
     end
 
     def enqueue_background_jobs!
+      return if skip_background_jobs
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
       if trainee.trn.present?
@@ -243,11 +268,11 @@ module Trainees
     end
 
     def create_degrees!
-      ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees])
+      ::Degrees::CreateFromHesa.call(trainee: trainee, hesa_degrees: hesa_trainee[:degrees]) if hesa_trainee[:degrees]
     end
 
     def create_placements!
-      ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements])
+      ::Placements::CreateFromHesa.call(trainee: trainee, hesa_placements: hesa_trainee[:placements]) if hesa_trainee[:placements]
     end
 
     def store_hesa_metadata!
@@ -282,8 +307,8 @@ module Trainees
       ::Hesa::ValidateMapping.call(hesa_trainee:, record_source:)
     end
 
-    def new_trainee_record(hesa_id)
-      Trainee.new(hesa_id:)
+    def new_trainee_record(hesa_id, slug)
+      Trainee.new(hesa_id:, slug:)
     end
 
     def itt_start_date_significantly_changed_for?(trainee)
