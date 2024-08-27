@@ -37,7 +37,7 @@ module RegisterTraineeTeachers
     config.view_component.show_previews = !Rails.env.production?
 
     config.middleware.use(Rack::Deflater)
-    config.active_job.queue_adapter = :sidekiq
+    config.active_job.queue_adapter = :good_job
 
     # Configure session store to use ActiveRecord.
     # - key: Sets the name of the session cookie.
