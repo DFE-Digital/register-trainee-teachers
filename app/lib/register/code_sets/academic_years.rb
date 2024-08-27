@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dttp
+module Register
   module CodeSets
     module AcademicYears
       ACADEMIC_YEAR_2008_2009_FIRST = "1757b5c4-2bd1-e711-80df-005056ac45bb"

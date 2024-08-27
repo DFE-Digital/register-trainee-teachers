@@ -21,7 +21,7 @@ module Dttp
   class Trainee < ApplicationRecord
     self.table_name = "dttp_trainees"
 
-    ACADEMIC_YEAR_ENTITY_IDS = Dttp::CodeSets::AcademicYears::MAPPING.values.map { |x| x[:entity_id] }.reverse
+    ACADEMIC_YEAR_ENTITY_IDS = Register::CodeSets::AcademicYears::MAPPING.values.map { |x| x[:entity_id] }.reverse
 
     PLACEMENT_ASSIGNMENTS_ORDER_SQL = sanitize_sql_array(["array_position(ARRAY[?]::uuid[], academic_year::uuid)", ACADEMIC_YEAR_ENTITY_IDS])
 

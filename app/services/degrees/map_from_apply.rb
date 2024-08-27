@@ -118,7 +118,7 @@ module Degrees
     end
 
     def country
-      Dttp::CodeSets::Countries::MAPPING.find { |_, v| v[:country_code] == attributes["hesa_degctry"] }&.first
+      Register::CodeSets::Countries::MAPPING.find { |_, v| v[:country_code] == attributes["hesa_degctry"] }&.first
     end
   end
 end

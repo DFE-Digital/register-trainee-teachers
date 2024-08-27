@@ -20,7 +20,7 @@ module Trainees
     def funding_attributes
       return {} if funding_entity_id.blank?
 
-      if funding_entity_id == Dttp::CodeSets::BursaryDetails::NO_BURSARY_AWARDED
+      if funding_entity_id == Register::CodeSets::BursaryDetails::NO_BURSARY_AWARDED
         return {
           applying_for_grant: false,
           applying_for_bursary: false,
@@ -45,23 +45,23 @@ module Trainees
     end
 
     def applying_for_bursary?
-      Dttp::CodeSets::BursaryDetails::BURSARIES.include?(funding_entity_id)
+      Register::CodeSets::BursaryDetails::BURSARIES.include?(funding_entity_id)
     end
 
     def applying_for_grant?
-      funding_entity_id == Dttp::CodeSets::BursaryDetails::GRANT
+      funding_entity_id == Register::CodeSets::BursaryDetails::GRANT
     end
 
     def applying_for_new_tier?
-      Dttp::CodeSets::BursaryDetails::NEW_TIERS.include?(funding_entity_id)
+      Register::CodeSets::BursaryDetails::NEW_TIERS.include?(funding_entity_id)
     end
 
     def applying_for_scholarship?
-      funding_entity_id == Dttp::CodeSets::BursaryDetails::SCHOLARSHIP
+      funding_entity_id == Register::CodeSets::BursaryDetails::SCHOLARSHIP
     end
 
     def tier_for_funding
-      find_by_entity_id(funding_entity_id, Dttp::CodeSets::BursaryDetails::MAPPING)
+      find_by_entity_id(funding_entity_id, Register::CodeSets::BursaryDetails::MAPPING)
     end
   end
 end

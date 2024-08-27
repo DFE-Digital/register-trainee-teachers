@@ -2,7 +2,7 @@
 
 class UpdateFirstClassHonoursCapitalisation < ActiveRecord::Migration[6.1]
   def up
-    Degree.where(grade: "First-class Honours").update_all(grade: Dttp::CodeSets::Grades::FIRST_CLASS_HONOURS)
+    Degree.where(grade: "First-class Honours").update_all(grade: Register::CodeSets::Grades::FIRST_CLASS_HONOURS)
   end
 
   def down

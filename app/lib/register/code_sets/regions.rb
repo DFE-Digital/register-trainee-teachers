@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dttp
+module Register
   module CodeSets
     YORKSHIRE_AND_HUMBER_DTTP_ID = "6a4b1c3c-f272-e711-80d3-005056ac45bb"
 

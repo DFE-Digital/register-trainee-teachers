@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dttp
+module Register
   module CodeSets
     module CourseSubjects
       EARLY_YEARS_DTTP_ID = "3aa12838-b3cf-e911-a860-000d3ab1da01"

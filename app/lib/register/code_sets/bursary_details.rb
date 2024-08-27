@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dttp
+module Register
   module CodeSets
     module BursaryDetails
       NO_BURSARY_AWARDED = "1c8375c2-7722-e711-80c8-0050568902d3"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dttp
+module Register
   module CodeSets
     module Institutions
       BIRKBECK_COLLEGE = "Birkbeck College"

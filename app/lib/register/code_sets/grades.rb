@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dttp
+module Register
   module CodeSets
     module Grades
       # Do not make any changes to the keys. If necessary, change Degree#grade to enum type first
