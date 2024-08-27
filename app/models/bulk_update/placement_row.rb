@@ -33,7 +33,7 @@ class BulkUpdate::PlacementRow < ApplicationRecord
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError"
 
-  enum state: {
+  enum :state, {
     pending: 0,
     importing: 1,
     imported: 2,

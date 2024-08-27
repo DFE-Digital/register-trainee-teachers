@@ -50,7 +50,7 @@ class ApplyApplication < ApplicationRecord
     [
       first_name,
       last_name,
-    ].select(&:present?).join(" ").presence
+    ].compact_blank.join(" ").presence
   end
 
 private
