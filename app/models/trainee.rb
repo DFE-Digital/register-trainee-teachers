@@ -137,7 +137,7 @@ class Trainee < ApplicationRecord
              class_name: "Dttp::Trainee"
 
   belongs_to :lead_partner, optional: true
-  has_one :school, through: :lead_partner
+  has_one :lead_school, through: :lead_partner, class_name: "School", source: :school
 
   belongs_to :employing_school, optional: true, class_name: "School"
 
