@@ -33,11 +33,43 @@ feature "viewing the payment schedule" do
     end
   end
 
-  context "when User is a LeadPartner" do
+  context "when User is a LeadPartner School" do
+    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :lead_school) }
+
     background do
-      given_i_am_authenticated_as_a_lead_partner_user
+      given_i_am_authenticated_as_a_lead_partner_user(user:)
 
       and_funding_data_exists(current_user.lead_partners.first.school)
+    end
+
+    scenario "viewing payments, predicted payments and payment breakdowns" do
+      given_i_am_on_the_funding_page
+      then_i_should_see_the_actual_payments
+      and_i_should_see_the_predicted_payments
+      and_i_should_see_the_payment_breakdowns
+    end
+
+    scenario "exporting payment schedule" do
+      given_i_am_on_the_funding_page
+      and_i_export_the_results
+      then_i_see_my_exported_data_in_csv_format
+    end
+
+    scenario "no payments this academic year" do
+      allow(AcademicCycle).to receive(:current).and_return(next_academic_cycle)
+
+      given_i_am_on_the_funding_page
+      then_i_should_see_a_message_to_say_there_are_no_payments
+    end
+  end
+
+  context "when User is a LeadPartner provider" do
+    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :hei) }
+
+    background do
+      given_i_am_authenticated_as_a_lead_partner_user(user:)
+
+      and_funding_data_exists(current_user.lead_partners.first.provider)
     end
 
     scenario "viewing payments, predicted payments and payment breakdowns" do

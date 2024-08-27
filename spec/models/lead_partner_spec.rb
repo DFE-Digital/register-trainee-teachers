@@ -80,5 +80,43 @@ describe LeadPartner do
         )
       end
     end
+
+    context "when school and provider are nil" do
+      subject(:lead_partner) { build(:lead_partner) }
+
+      it "returns nil" do
+        expect(lead_partner.funding_payment_schedules).to be_nil
+      end
+    end
+  end
+
+  describe "#funding_trainee_summaries" do
+    context "when schools exists" do
+      subject(:lead_partner) { create(:lead_partner, :lead_school) }
+
+      it "returns the school#funding_trainee_summaries" do
+        expect(lead_partner.funding_trainee_summaries).to eq(
+          lead_partner.school.funding_trainee_summaries,
+        )
+      end
+    end
+
+    context "when provider exists" do
+      subject(:lead_partner) { create(:lead_partner, :hei) }
+
+      it "returns the provider#funding_payment_schedules" do
+        expect(lead_partner.funding_trainee_summaries).to eq(
+          lead_partner.provider.funding_trainee_summaries,
+        )
+      end
+    end
+
+    context "when school and provider are nil" do
+      subject(:lead_partner) { build(:lead_partner) }
+
+      it "returns nil" do
+        expect(lead_partner.funding_trainee_summaries).to be_nil
+      end
+    end
   end
 end
