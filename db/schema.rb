@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_22_150430) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_27_141021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -876,7 +876,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_150430) do
     t.date "trainee_start_date"
     t.date "reinstate_date"
     t.uuid "dormancy_dttp_id"
-    t.bigint "lead_school_id"
     t.bigint "employing_school_id"
     t.bigint "apply_application_id"
     t.integer "course_min_age"
@@ -931,7 +930,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_150430) do
     t.index ["hesa_id"], name: "index_trainees_on_hesa_id"
     t.index ["hesa_trn_submission_id"], name: "index_trainees_on_hesa_trn_submission_id"
     t.index ["lead_partner_id"], name: "index_trainees_on_lead_partner_id"
-    t.index ["lead_school_id"], name: "index_trainees_on_lead_school_id"
     t.index ["placement_detail"], name: "index_trainees_on_placement_detail"
     t.index ["progress"], name: "index_trainees_on_progress", using: :gin
     t.index ["provider_id"], name: "index_trainees_on_provider_id"
@@ -1026,6 +1024,5 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_150430) do
   add_foreign_key "trainees", "lead_partners"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
-  add_foreign_key "trainees", "schools", column: "lead_school_id"
   add_foreign_key "uploads", "users"
 end
