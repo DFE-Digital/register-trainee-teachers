@@ -2,7 +2,7 @@
 
 module SchoolHelper
   def school_urn_and_location(school)
-    ["URN #{school.urn}", school.town, school.postcode].select(&:present?).join(", ")
+    ["URN #{school.urn}", school.town, school.postcode].compact_blank.join(", ")
   end
 
   def school_detail(school)

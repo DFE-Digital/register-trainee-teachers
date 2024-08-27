@@ -48,7 +48,7 @@ module RegisterTraineeTeachers
                          httponly: true,
                          secure: !Rails.env.development? && !Rails.env.test?)
 
-    config.i18n.load_path += Dir[Rails.root.join("config/locales/**/*.yml")]
+    config.i18n.load_path += Rails.root.glob("config/locales/**/*.yml")
 
     config.autoload_paths << Rails.root.join("config/routes")
     config.autoload_once_paths << Rails.root.join("config/initializers/subjects")
