@@ -67,9 +67,9 @@ const inputTemplate = (user) => {
 const suggestionTemplate = (user) => {
   if (typeof user === 'object' && 'first_name' in user) {
     const providerNames = user.providers.map(provider => provider.name).sort(sortAlphabetical)
-    const leadSchools = user.lead_schools.map(school => school.name).sort(sortAlphabetical)
+    const leadPartners = user.lead_partners.map(partner => partner.name).sort(sortAlphabetical)
     const name = `${user.first_name} ${user.last_name}`
-    const allOrgs = providerNames.concat(leadSchools)
+    const allOrgs = providerNames.concat(leadPartners)
 
     return `${name} <span class="autocomplete__option--hint">${user.email}<br>${allOrgs.join(', ')}</span>`
   } else {
