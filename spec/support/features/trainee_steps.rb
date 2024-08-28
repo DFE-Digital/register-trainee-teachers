@@ -5,7 +5,11 @@ module Features
     attr_reader :trainee
 
     def given_a_trainee_exists(*, **)
-      @trainee ||= create(:trainee, *, **, provider: current_user.organisation)
+      @trainee ||= if current_user.organisation
+                     create(:trainee, *, **, provider: current_user.organisation)
+                   else
+                     create(:trainee, *, **)
+                   end
     end
 
     def trainee_from_url

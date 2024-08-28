@@ -72,7 +72,11 @@ private
   end
 
   def given_a_trainee_exists_with_a_degree
-    given_a_trainee_exists(:submitted_for_trn, degrees: create_list(:degree, 1, :uk_degree_with_details))
+    given_a_trainee_exists(
+      :submitted_for_trn,
+      :without_provider,
+      degrees: create_list(:degree, 1, :uk_degree_with_details)
+    )
   end
 
   def and_i_click_on_personal_details

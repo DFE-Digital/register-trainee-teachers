@@ -12,6 +12,8 @@ FactoryBot.define do
       "#{year}/#{year + 1}-#{n}"
     end
 
+    provider
+
     training_route { TRAINING_ROUTE_ENUMS[:assessment_only] }
 
     first_names { Faker::Name.first_name }
@@ -31,12 +33,6 @@ FactoryBot.define do
 
     email { "#{first_names}.#{last_name}@example.com" }
     applying_for_bursary { nil }
-
-    after(:build) do |trainee, _evaluator|
-      if trainee.provider.nil?
-        trainee.provider = build(:provider, trainees: [trainee])
-      end
-    end
 
     after(:create) do |trainee, _evaluator|
       # NOTE: some of the tests circumvent the proper expectations with associations.
@@ -112,6 +108,12 @@ FactoryBot.define do
     trait :without_placements do
       before(:create) do |trainee|
         trainee.placements = []
+      end
+    end
+
+    trait :without_provider do
+      before(:build) do |trainee|
+        trainee.provider = nil
       end
     end
 
