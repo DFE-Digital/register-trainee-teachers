@@ -20,6 +20,8 @@ RSpec.describe Degrees::TraineePolicy, type: :policy do
 
   subject { described_class }
 
+  it { is_expected.to be < TraineePolicy }
+
   def user_with_organisation(user, organisation)
     UserWithOrganisationContext.new(user: user, session: {}).tap do |user_with_org|
       allow(user_with_org).to receive(:organisation).and_return(organisation)
