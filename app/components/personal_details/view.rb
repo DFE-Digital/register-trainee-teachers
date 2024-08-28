@@ -74,8 +74,8 @@ module PersonalDetails
 
     def nationality_names
       names = nationalities.map { |nationality| nationality.name.titleize }
-      promote_nationality(names, Register::CodeSets::Nationalities::IRISH.titleize)
-      promote_nationality(names, Register::CodeSets::Nationalities::BRITISH.titleize)
+      promote_nationality(names, CodeSets::Nationalities::IRISH.titleize)
+      promote_nationality(names, CodeSets::Nationalities::BRITISH.titleize)
     end
 
     def promote_nationality(array, nationality)

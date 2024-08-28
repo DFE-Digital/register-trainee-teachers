@@ -237,7 +237,7 @@ module RecruitsApi
       }.freeze
 
       # The following HESA nationality codes need to be mapped to British
-      BRITISH_MAPPING = %w[GB IM JE GG IO FK].index_with { |_code| Register::CodeSets::Nationalities::BRITISH }.freeze
+      BRITISH_MAPPING = %w[GB IM JE GG IO FK].index_with { |_code| CodeSets::Nationalities::BRITISH }.freeze
 
       MAPPING = APPLY_MAPPING.invert.merge(BRITISH_MAPPING)
     end

@@ -5,7 +5,7 @@ FactoryBot.define do
     transient do
       dttp_id { SecureRandom.uuid }
       provider_dttp_id { SecureRandom.uuid }
-      nationality_name { Register::CodeSets::Nationalities::BRITISH }
+      nationality_name { CodeSets::Nationalities::BRITISH }
     end
     contactid { dttp_id }
     _parentcustomerid_value { provider_dttp_id }
@@ -19,7 +19,7 @@ FactoryBot.define do
     address1_line3 { Faker::Address.city }
     address1_postalcode { Faker::Address.postcode }
     dfe_traineeid { "#{firstname}.#{lastname}.#{birthdate}" }
-    _dfe_nationality_value { Register::CodeSets::Nationalities::MAPPING[nationality_name][:entity_id] }
+    _dfe_nationality_value { CodeSets::Nationalities::MAPPING[nationality_name][:entity_id] }
     dfe_trn { Faker::Number.number(digits: 7).to_s }
     merged { false }
     createdon { Faker::Date.between(from: 2.years.ago, to: 2.days.ago).iso8601 }
@@ -31,12 +31,12 @@ FactoryBot.define do
 
     trait :with_uk_nationality do
       transient do
-        nationality_name { Register::CodeSets::Nationalities::UK_NATIONALITIES.sample }
+        nationality_name { CodeSets::Nationalities::UK_NATIONALITIES.sample }
       end
 
       _dfe_nationality_value do
-        Register::CodeSets::Nationalities::MAPPING.dig(nationality_name, :entity_id).presence ||
-        Register::CodeSets::Nationalities::INACTIVE_MAPPING.dig(nationality_name, :entity_id)
+        CodeSets::Nationalities::MAPPING.dig(nationality_name, :entity_id).presence ||
+        CodeSets::Nationalities::INACTIVE_MAPPING.dig(nationality_name, :entity_id)
       end
     end
 

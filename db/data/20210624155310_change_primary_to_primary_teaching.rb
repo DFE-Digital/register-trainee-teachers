@@ -2,7 +2,7 @@
 
 class ChangePrimaryToPrimaryTeaching < ActiveRecord::Migration[6.1]
   def up
-    Trainee.where(course_subject_one: "Primary").update_all(course_subject_one: Register::CodeSets::CourseSubjects::PRIMARY_TEACHING)
+    Trainee.where(course_subject_one: "Primary").update_all(course_subject_one: CodeSets::CourseSubjects::PRIMARY_TEACHING)
   end
 
   def down

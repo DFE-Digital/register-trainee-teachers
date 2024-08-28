@@ -2,22 +2,22 @@
 
 FactoryBot.define do
   factory :nationality do
-    name { Register::CodeSets::Nationalities::MAPPING.keys.sample }
+    name { CodeSets::Nationalities::MAPPING.keys.sample }
 
     trait :british do
-      name { Register::CodeSets::Nationalities::BRITISH }
+      name { CodeSets::Nationalities::BRITISH }
     end
 
     trait :irish do
-      name { Register::CodeSets::Nationalities::IRISH }
+      name { CodeSets::Nationalities::IRISH }
     end
 
     trait :french do
-      name { Register::CodeSets::Nationalities::FRENCH }
+      name { CodeSets::Nationalities::FRENCH }
     end
 
     trait :other do
-      name { Register::CodeSets::Nationalities::OTHER }
+      name { CodeSets::Nationalities::OTHER }
     end
   end
 end

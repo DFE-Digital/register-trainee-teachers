@@ -44,7 +44,7 @@ describe SubjectSpecialismForm, type: :model do
   describe "#save!" do
     context "course allocation subject changed" do
       let(:trainee) { build(:trainee, :with_funding, :with_course_allocation_subject, id: 123456) }
-      let(:course_subject_one) { Register::CodeSets::CourseSubjects::MAPPING.keys.sample }
+      let(:course_subject_one) { CodeSets::CourseSubjects::MAPPING.keys.sample }
       let(:params) { { course_subject_one: } }
 
       before do
