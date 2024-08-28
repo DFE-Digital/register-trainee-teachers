@@ -146,7 +146,7 @@ describe Trainee do
   context "associations" do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:apply_application).optional }
-    it { is_expected.to have_one(:school).through(:lead_partner) }
+    it { is_expected.to have_one(:lead_school).through(:lead_partner) }
     it { is_expected.to belong_to(:lead_partner).optional }
     it { is_expected.to belong_to(:employing_school).class_name("School").optional }
     it { is_expected.to have_one(:dqt_teacher) }
