@@ -137,7 +137,7 @@ module Dqt
 
       def qualification_params
         return if degree.nil?
-        return if CodeSets::DegreeTypes::FOUNDATIONS.include?(degree.uk_degree_uuid)
+        return if ::CodeSets::DegreeTypes::FOUNDATIONS.include?(degree.uk_degree_uuid)
 
         {
           "providerUkprn" => institution_ukprn,
@@ -145,7 +145,7 @@ module Dqt
           "subject" => subject_code,
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => graduation_date,
-          "heQualificationType" => CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
+          "heQualificationType" => ::CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
         }
       end
 

@@ -17,7 +17,7 @@ module TrainingDetails
     def hpitt_trainee
       Trainee.new(
         shared_attributes.merge(
-          region: CodeSets::Regions::MAPPING.keys.sample,
+          region: ::CodeSets::Regions::MAPPING.keys.sample,
           provider: Provider.new(code: Provider::TEACH_FIRST_PROVIDER_CODE),
         ),
       )

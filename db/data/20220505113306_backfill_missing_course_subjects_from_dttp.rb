@@ -15,7 +15,7 @@ class BackfillMissingCourseSubjectsFromDttp < ActiveRecord::Migration[6.1]
   def fix_course_subject(trainee)
     course_subject_dttp_id = trainee.dttp_trainee.latest_placement_assignment.response["_dfe_ittsubject1id_value"]
 
-    mapping = CodeSets::CourseSubjects::INACTIVE_MAPPING.select do |_, value|
+    mapping = ::CodeSets::CourseSubjects::INACTIVE_MAPPING.select do |_, value|
       value[:entity_id] == course_subject_dttp_id
     end
 

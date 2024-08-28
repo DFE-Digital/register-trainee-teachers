@@ -40,7 +40,7 @@ FactoryBot.define do
       non_uk_degree_type
       subject { DfEReference::DegreesQuery::SUBJECTS.all.sample.name }
       grade { DfEReference::DegreesQuery::SUPPORTED_GRADES_WITH_OTHER.all.sample.name }
-      country { CodeSets::Countries::MAPPING.keys.sample }
+      country { ::CodeSets::Countries::MAPPING.keys.sample }
       graduation_year { rand(Time.zone.now.year.next - Degree::MAX_GRAD_YEARS..Time.zone.now.year.next) }
     end
 

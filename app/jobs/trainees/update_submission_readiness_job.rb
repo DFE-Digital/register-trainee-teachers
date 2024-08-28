@@ -2,7 +2,7 @@
 
 module Trainees
   class UpdateSubmissionReadinessJob < ApplicationJob
-    sidekiq_options retry: 0
+    retry_on StandardError, attempts: 0
     queue_as :default
 
     def perform(trainee)

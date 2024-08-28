@@ -18,15 +18,15 @@ module Hesa
       GRANT = "E"
 
       MAPPING = {
-        SCHOLARSHIP => CodeSets::BursaryDetails::SCHOLARSHIP,
-        NONE => CodeSets::BursaryDetails::NO_BURSARY_AWARDED,
-        TIER_ONE => CodeSets::BursaryDetails::NEW_TIER_ONE_BURSARY,
-        TIER_TWO => CodeSets::BursaryDetails::NEW_TIER_TWO_BURSARY,
-        TIER_THREE => CodeSets::BursaryDetails::NEW_TIER_THREE_BURSARY,
-        UNDERGRADUATE_BURSARY => CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY,
-        VETERAN_TEACHING_UNDERGRADUATE_BURSARY => CodeSets::BursaryDetails::VETERAN_TEACHING_UNDERGRADUATE_BURSARY,
-        POSTGRADUATE_BURSARY => CodeSets::BursaryDetails::POSTGRADUATE_BURSARY,
-        GRANT => CodeSets::BursaryDetails::GRANT,
+        SCHOLARSHIP => ::CodeSets::BursaryDetails::SCHOLARSHIP,
+        NONE => ::CodeSets::BursaryDetails::NO_BURSARY_AWARDED,
+        TIER_ONE => ::CodeSets::BursaryDetails::NEW_TIER_ONE_BURSARY,
+        TIER_TWO => ::CodeSets::BursaryDetails::NEW_TIER_TWO_BURSARY,
+        TIER_THREE => ::CodeSets::BursaryDetails::NEW_TIER_THREE_BURSARY,
+        UNDERGRADUATE_BURSARY => ::CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY,
+        VETERAN_TEACHING_UNDERGRADUATE_BURSARY => ::CodeSets::BursaryDetails::VETERAN_TEACHING_UNDERGRADUATE_BURSARY,
+        POSTGRADUATE_BURSARY => ::CodeSets::BursaryDetails::POSTGRADUATE_BURSARY,
+        GRANT => ::CodeSets::BursaryDetails::GRANT,
       }.freeze
 
       VALUES = {

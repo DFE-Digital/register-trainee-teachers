@@ -18,12 +18,12 @@ class Nationality < ApplicationRecord
   has_many :trainees, through: :nationalisations
 
   NATIONALITIES = [
-    CodeSets::Nationalities::BRITISH,
-    CodeSets::Nationalities::IRISH,
+    ::CodeSets::Nationalities::BRITISH,
+    ::CodeSets::Nationalities::IRISH,
   ].freeze
 
   EXCLUDED_NATIONALITIES = [
-    CodeSets::Nationalities::CYPRIOT,
+    ::CodeSets::Nationalities::CYPRIOT,
   ].freeze
 
   scope :default, -> { where(name: NATIONALITIES) }
