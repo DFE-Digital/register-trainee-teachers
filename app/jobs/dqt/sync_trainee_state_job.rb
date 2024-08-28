@@ -3,7 +3,7 @@
 module Dqt
   class SyncTraineeStateJob < Dqt::BaseJob
     queue_as :dqt_sync
-    sidekiq_options retry: 5
+    retry_on StandardError, attempts: 5
 
     sidekiq_retry_in do |count, exception|
       case exception

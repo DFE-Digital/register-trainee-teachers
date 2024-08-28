@@ -2,7 +2,7 @@
 
 module Dqt
   class RegisterForTrnJob < Dqt::BaseJob
-    sidekiq_options retry: 0
+    retry_on StandardError, attempts: 0
     queue_as :dqt
 
     def perform(trainee)
