@@ -460,3 +460,67 @@
     - urn
     - trn
     - school_id
+  :good_job_settings:
+    - id
+    - created_at
+    - updated_at
+    - key
+    - value
+  :good_job_processes:
+    - id
+    - created_at
+    - updated_at
+    - state
+    - lock_type
+  :good_job_executions:
+    - id
+    - created_at
+    - updated_at
+    - active_job_id
+    - job_class
+    - queue_name
+    - serialized_params
+    - scheduled_at
+    - finished_at
+    - error
+    - error_event
+    - error_backtrace
+    - process_id
+    - duration
+  :good_job_batches:
+    - id
+    - created_at
+    - updated_at
+    - description
+    - serialized_properties
+    - on_finish
+    - on_success
+    - on_discard
+    - callback_queue_name
+    - callback_priority
+    - enqueued_at
+    - discarded_at
+    - finished_at
+  :good_jobs:
+    - id
+    - queue_name
+    - priority
+    - serialized_params
+    - scheduled_at
+    - performed_at
+    - finished_at
+    - error
+    - created_at
+    - updated_at
+    - active_job_id
+    - concurrency_key
+    - cron_key
+    - cron_at
+    - batch_id
+    - batch_callback_id
+    - executions_count
+    - job_class
+    - error_event
+    - labels
+    - locked_by_id
+    - locked_at
