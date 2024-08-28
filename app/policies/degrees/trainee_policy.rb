@@ -1,4 +1,4 @@
-# frozen_string_literal
+# frozen_string_literal: true
 
 class Degrees::TraineePolicy
   attr_reader :user, :trainee, :training_route_manager
@@ -17,7 +17,7 @@ class Degrees::TraineePolicy
     (user.system_admin? || (user_in_provider_context? && user.accredited_provider?)) && !user_is_read_only?
   end
 
-  private
+private
 
   def user_is_read_only?
     user&.read_only
