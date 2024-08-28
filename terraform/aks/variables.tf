@@ -95,6 +95,7 @@ variable "main_app" {
 
 variable "azure_maintenance_window" { default = null }
 variable "postgres_flexible_server_sku" { default = "B_Standard_B1ms" }
+variable "snapshot_flexible_server_sku" { default = "GP_Standard_D2ds_v4" }
 variable "postgres_enable_high_availability" { default = false }
 variable "azure_enable_backup_storage" { default = true }
 variable "enable_container_monitoring" { default = false }
