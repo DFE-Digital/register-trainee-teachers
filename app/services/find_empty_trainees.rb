@@ -26,7 +26,6 @@ class FindEmptyTrainees
     trainees.recommended_for_award_at
     trainees.trainee_start_date
     trainees.reinstate_date
-    trainees.lead_school_id
     trainees.employing_school_id
     trainees.apply_application_id
     trainees.course_min_age
