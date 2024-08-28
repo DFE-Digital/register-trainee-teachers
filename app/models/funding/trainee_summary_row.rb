@@ -10,8 +10,8 @@
 #  lead_school_name           :string
 #  lead_school_urn            :string
 #  route                      :string
-#  route_type                 :string
 #  subject                    :string
+#  training_route             :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
 #  funding_trainee_summary_id :integer
@@ -39,7 +39,7 @@ module Funding
              dependent: :destroy,
              inverse_of: :row
 
-    enum :route_type, {
+    enum :training_route, {
       school_direct_salaried: "school_direct_salaried",
       pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
       early_years_postgrad: "early_years_postgrad",
@@ -50,9 +50,9 @@ module Funding
     }
 
     def route
-      return super if route_type.nil?
+      return super if training_route.nil?
 
-      self.class.human_attribute_name(route_type)
+      self.class.human_attribute_name(training_route)
     end
   end
 end

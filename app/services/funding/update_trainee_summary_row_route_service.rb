@@ -4,8 +4,8 @@ module Funding
   class UpdateTraineeSummaryRowRouteService
     include ServicePattern
 
-    ROUTE_TYPES = LeadPartnerTraineeSummariesImporter::ROUTE_TYPES.merge(
-      ProviderTraineeSummariesImporter::ROUTE_TYPES,
+    TRAINING_ROUTES = LeadPartnerTraineeSummariesImporter::TRAINING_ROUTES.merge(
+      ProviderTraineeSummariesImporter::TRAINING_ROUTES,
     ).freeze
 
     def initialize(academic_year = nil)
@@ -14,7 +14,7 @@ module Funding
 
     def call
       routes.each do |route|
-        rows.where(route:).update_all(route_type: ROUTE_TYPES[route.strip])
+        rows.where(route:).update_all(route_type: TRAINING_ROUTES[route.strip])
       end
     end
 
@@ -31,7 +31,7 @@ module Funding
         .joins(:trainee_summary)
         .where(
           trainee_summary: { academic_year: },
-          route_type: nil,
+          training_route: nil,
         )
     end
 

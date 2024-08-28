@@ -2,7 +2,7 @@
 
 module Funding
   class LeadPartnerTraineeSummariesImporter < PayableTraineeSummariesImporter
-    ROUTE_TYPES = {
+    TRAINING_ROUTES = {
       "School Direct salaried" => :school_direct_salaried,
       "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
     }.freeze

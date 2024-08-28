@@ -4,8 +4,8 @@ require "rails_helper"
 
 module Funding
   describe LeadPartnerTraineeSummariesImporter do
-    describe "::ROUTE_TYPES" do
-      subject { described_class::ROUTE_TYPES }
+    describe "::TRAINING_ROUTES" do
+      subject { described_class::TRAINING_ROUTES }
 
       it do
         expect(subject).to eq(
@@ -96,7 +96,7 @@ module Funding
         let(:lead_school_one_expected_attibutes) {
           {
             "route" => "School Direct salaried",
-            "route_type" => "school_direct_salaried",
+            "training_route" => "school_direct_salaried",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "1111",
           }
@@ -106,7 +106,7 @@ module Funding
           {
             "subject" => "Physics",
             "route" => " School Direct salaried ",
-            "route_type" => "school_direct_salaried",
+            "training_route" => "school_direct_salaried",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "2222",
           }

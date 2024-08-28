@@ -2,7 +2,7 @@
 
 module Funding
   class ProviderTraineeSummariesImporter < PayableTraineeSummariesImporter
-    ROUTE_TYPES = {
+    TRAINING_ROUTES = {
       "EYITT Graduate entry" => :early_years_postgrad,
       "EYITT Graduate employment-based" => :early_years_salaried,
       "Provider-led" => :provider_led,

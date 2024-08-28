@@ -20,9 +20,9 @@ module Funding
       end
     end
 
-    describe "#route_type" do
+    describe "#training_route" do
       it do
-        expect(subject).to define_enum_for(:route_type)
+        expect(subject).to define_enum_for(:training_route)
           .with_values(
             school_direct_salaried: "school_direct_salaried",
             pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
