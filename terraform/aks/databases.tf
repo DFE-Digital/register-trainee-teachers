@@ -78,7 +78,7 @@ module "postgres_snapshot" {
   alert_window_size       = var.alert_window_size
   azure_extensions        = ["PGCRYPTO","BTREE_GIST","CITEXT","PG_TRGM"]
   server_version          = var.postgres_version
-  azure_sku_name          = var.postgres_flexible_server_sku
+  azure_sku_name          = var.snapshot_flexible_server_sku
 
   azure_enable_high_availability      = false
   azure_maintenance_window            = var.azure_maintenance_window
