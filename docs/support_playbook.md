@@ -328,3 +328,32 @@ This command will:
 3. If found, it will find and discard any other trainee that has the same email address.
 4. If not found, it will print a message stating that the trainee was not found.
 5. Once the task finishes running through all rows in the CSV, it will print "Task completed."
+
+### Resolving Incorrect `provider_type` on Publish: Ensuring Trainees are Created on Register
+
+**Steps to Take:**
+1. **Correct the `provider_type` on Publish**
+    - Once the provider type is corrected, the Apply applications will be imported, and new trainees will be created.
+2. **Identify the `apply_id` on Register**
+    - Retrieve the `apply_id` from the `ApplyApplication` table using the following query:
+
+    `application_choice_ids = ApplyApplication.where(accredited_body_code: "2N2", recruitment_cycle_year: 2024, state: :non_importable_hei).pluck(:apply_id)`
+
+3. **Touch All Relevant `ApplicationChoice` Entries on Apply**
+
+    - Touch the relevant `ApplicationChoice` records so that when Register calls the API endpoint with the `changed_since` parameter it will return the applications again:
+    
+    `ApplicationChoice.where(id: application_choice_ids).touch_all`
+
+4. **Delete Related `ApplyApplication` Entries on Register**
+    
+    - Remove the associated `ApplyApplication` records from the Register:
+
+    `ApplyApplication.where(apply_id: application_choice_ids).delete_all`
+
+5. **Initiate Sidekiq Jobs on Register**
+    - Trigger the following Sidekiq jobs to complete the process:
+      - `import_applications_from_apply`
+      - `create_trainees_from_apply`
+
+Note: This process will import a fresh copy of the applicants' details and use them to create new records. This ensures that the system realigns with its normal mode of operation, correcting any issues caused by previously imported, potentially stale data.
