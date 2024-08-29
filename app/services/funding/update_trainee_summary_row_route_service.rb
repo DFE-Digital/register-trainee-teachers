@@ -14,7 +14,7 @@ module Funding
 
     def call
       routes.each do |route|
-        rows.where(route:).update_all(route_type: TRAINING_ROUTES[route.strip])
+        rows.where(route:).update_all(training_route: TRAINING_ROUTES[route.strip])
       end
     end
 

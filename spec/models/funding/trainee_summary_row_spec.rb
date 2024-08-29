@@ -39,16 +39,16 @@ module Funding
     describe "#route" do
       let(:trainee_summary) { create(:trainee_summary, :for_provider) }
 
-      context "when route_type is nil" do
+      context "when training_route is nil" do
         let(:route) { "Provider-led" }
-        let(:trainee_summary_row) { create(:trainee_summary_row, route_type: nil, trainee_summary: trainee_summary) }
+        let(:trainee_summary_row) { create(:trainee_summary_row, training_route: nil, trainee_summary: trainee_summary) }
 
         it "returns super" do
           expect(trainee_summary_row.route). to eq("Provider-led")
         end
       end
 
-      context "when route_type is not nil" do
+      context "when training_route is not nil" do
         %i[
           school_direct_salaried
           school_direct_tuition_fee
@@ -57,12 +57,12 @@ module Funding
           early_years_salaried
           provider_led
           opt_in_undergrad
-        ].each do |route_type|
+        ].each do |training_route|
           it "returns the ITT translation" do
-            trainee_summary_row = create(:trainee_summary_row, route_type:, trainee_summary:)
+            trainee_summary_row = create(:trainee_summary_row, training_route:, trainee_summary:)
 
             expect(trainee_summary_row.route).to eq(
-              I18n.t("activerecord.attributes.trainee.training_routes.itt.#{route_type}"),
+              I18n.t("activerecord.attributes.trainee.training_routes.itt.#{training_route}"),
             )
           end
         end

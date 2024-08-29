@@ -30,7 +30,7 @@ FactoryBot.define do
                 :with_scholarship_amount,
                 subject: AllocationSubjects::CHEMISTRY,
                 route: "School Direct tuition fee",
-                route_type: "school_direct_tuition_fee"),
+                training_route: "school_direct_tuition_fee"),
         ]
         tiered_bursaries = [build(:trainee_summary_row, :with_tiered_bursary_amount, subject: AllocationSubjects::CLASSICS)]
 
@@ -49,7 +49,7 @@ FactoryBot.define do
             :with_scholarship_amount,
             subject: AllocationSubjects::CHEMISTRY,
             route: "School Direct tuition fee",
-            route_type: "school_direct_tuition_fee",
+            training_route: "school_direct_tuition_fee",
           ),
         ]
         tiered_bursaries = [
