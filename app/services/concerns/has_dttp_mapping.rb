@@ -11,12 +11,12 @@ module HasDttpMapping
 
   def united_kingdom_countries
     [
-      Dttp::CodeSets::Countries::UNITED_KINGDOM,
-      Dttp::CodeSets::Countries::ENGLAND,
-      Dttp::CodeSets::Countries::NORTHERN_IRELAND,
-      Dttp::CodeSets::Countries::SCOTLAND,
-      Dttp::CodeSets::Countries::UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED,
-      Dttp::CodeSets::Countries::WALES,
+      ::CodeSets::Countries::UNITED_KINGDOM,
+      ::CodeSets::Countries::ENGLAND,
+      ::CodeSets::Countries::NORTHERN_IRELAND,
+      ::CodeSets::Countries::SCOTLAND,
+      ::CodeSets::Countries::UNITED_KINGDOM_NOT_OTHERWISE_SPECIFIED,
+      ::CodeSets::Countries::WALES,
     ]
   end
 end

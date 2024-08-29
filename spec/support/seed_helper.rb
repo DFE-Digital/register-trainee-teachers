@@ -18,7 +18,7 @@ private
   end
 
   def nationality_attributes
-    Dttp::CodeSets::Nationalities::MAPPING.keys.map do |nationality|
+    CodeSets::Nationalities::MAPPING.keys.map do |nationality|
       { name: nationality }.merge(created_at: Time.zone.now, updated_at: Time.zone.now)
     end
   end
