@@ -22,7 +22,7 @@ describe Exports::BulkRecommendExport, type: :model do
         "HESA ID",
         "Last names",
         "First names",
-        "Lead school",
+        "Lead partner",
         "QTS or EYTS",
         "Route",
         "Phase",
@@ -45,7 +45,7 @@ describe Exports::BulkRecommendExport, type: :model do
             "Provider trainee ID",
             "Last names",
             "First names",
-            "Lead school",
+            "Lead partner",
             "QTS or EYTS",
             "Route",
             "Phase",
@@ -90,8 +90,8 @@ describe Exports::BulkRecommendExport, type: :model do
         expect(trainee_csv_row["First names"]).to eq(trainee_report.first_names)
       end
 
-      it "includes the lead school" do
-        expect(trainee_csv_row["Lead school"]).to eq(trainee_report.lead_school_name)
+      it "includes the lead partner" do
+        expect(trainee_csv_row["Lead partner"]).to eq(trainee_report.lead_partner_name)
       end
 
       it "includes the QTS or EYTS" do
