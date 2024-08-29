@@ -44,7 +44,8 @@ module Funding
       pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
       early_years_postgrad: "early_years_postgrad",
       early_years_salaried: "early_years_salaried",
-      provider_led: "provider_led",
+      provider_led_postgrad: "provider_led_postgrad",
+      provider_led_undergrad: "provider_led_undergrad",
       opt_in_undergrad: "opt_in_undergrad",
       school_direct_tuition_fee: "school_direct_tuition_fee",
     }

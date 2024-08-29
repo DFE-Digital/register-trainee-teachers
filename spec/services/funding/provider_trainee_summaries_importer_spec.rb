@@ -4,17 +4,22 @@ require "rails_helper"
 
 module Funding
   describe ProviderTraineeSummariesImporter do
-    describe "::TRAINING_ROUTES" do
-      subject { described_class::TRAINING_ROUTES }
+    describe described_class::SummaryRowMapper do
+      describe "::TRAINING_ROUTES" do
+        subject { described_class::TRAINING_ROUTES }
 
-      it do
-        expect(subject).to eq(
-          "EYITT Graduate entry" => :early_years_postgrad,
-          "EYITT Graduate employment-based" => :early_years_salaried,
-          "Provider-led" => :provider_led,
-          "Undergraduate opt-in" => :opt_in_undergrad,
-          "School Direct tuition fee" => :school_direct_tuition_fee,
-        )
+        it do
+          expect(subject).to eq(
+            "EYITT Graduate entry" => :early_years_postgrad,
+            "EYITT Graduate employment-based" => :early_years_salaried,
+            "Provider-led" => {
+              "PG" => :provider_led_postgrad,
+              "UG" => :provider_led_undergrad,
+            },
+            "Undergraduate opt-in" => :opt_in_undergrad,
+            "School Direct tuition fee" => :school_direct_tuition_fee,
+          )
+        end
       end
     end
 
@@ -72,7 +77,7 @@ module Funding
               "Route" => "Provider-led ",
               "Lead School" => "Lead School 2",
               "Lead School ID" => "0002",
-              "Cohort Level" => "PG",
+              "Cohort Level" => "UG",
               "Bursary Amount" => "0",
               "Bursary Trainees" => "0",
               "Scholarship Amount" => "0",
@@ -118,7 +123,7 @@ module Funding
         let(:provider_one_expected_attibutes) {
           {
             "route" => "Provider-led",
-            "training_route" => "provider_led",
+            "training_route" => "provider_led_postgrad",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "0001",
             "cohort_level" => "PG",
@@ -128,11 +133,11 @@ module Funding
         let(:provider_two_expected_attibutes) {
           {
             "subject" => "Modern Languages",
-            "route" => "Provider-led ",
-            "training_route" => "provider_led",
+            "route" => "Provider-led",
+            "training_route" => "provider_led_undergrad",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "0002",
-            "cohort_level" => "PG",
+            "cohort_level" => "UG",
           }
         }
 

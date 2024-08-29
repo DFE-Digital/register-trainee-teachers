@@ -4,9 +4,9 @@ module Funding
   class UpdateTraineeSummaryRowRouteService
     include ServicePattern
 
-    TRAINING_ROUTES = LeadPartnerTraineeSummariesImporter::TRAINING_ROUTES.merge(
-      ProviderTraineeSummariesImporter::TRAINING_ROUTES,
-    ).freeze
+    # TRAINING_ROUTES = LeadPartnerTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES.merge(
+    # ProviderTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES,
+    # ).freeze
 
     def initialize(academic_year = nil)
       @academic_year = academic_year || current_academic_year
