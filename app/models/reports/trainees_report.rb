@@ -60,8 +60,8 @@ module Reports
          expected_end_date
          course_duration_in_years
          trainee_start_date
-         lead_school_name
-         lead_school_urn
+         lead_partner_name
+         lead_partner_urn
          employing_school_name
          employing_school_urn
          training_initiative
@@ -97,7 +97,7 @@ module Reports
                                        :degrees, :disabilities,
                                        :employing_school,
                                        :end_academic_cycle,
-                                       :lead_school,
+                                       :lead_partner,
                                        { nationalisations: :nationality },
                                        :nationalities,
                                        :provider,

@@ -256,12 +256,12 @@ describe Reports::TraineeReport do
       expect(subject.trainee_start_date).to eq(trainee.trainee_start_date&.iso8601)
     end
 
-    it "includes the lead_school_name" do
-      expect(subject.lead_school_name).to eq(trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_school&.name)
+    it "includes the lead_partner_name" do
+      expect(subject.lead_partner_name).to eq(trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_partner&.name)
     end
 
-    it "includes the lead_school_urn" do
-      expect(subject.lead_school_urn).to eq(trainee.lead_school&.urn)
+    it "includes the lead_partner_urn" do
+      expect(subject.lead_partner_urn).to eq(trainee.lead_partner&.urn)
     end
 
     it "includes the employing_school_name" do
