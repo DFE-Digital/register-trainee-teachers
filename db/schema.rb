@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[7.2].define(version: 2024_08_22_150430) do
+=======
+ActiveRecord::Schema[7.2].define(version: 2024_08_15_130820) do
+>>>>>>> 463531690 (adjust specs)
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -647,10 +651,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_150430) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
+    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
-    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
