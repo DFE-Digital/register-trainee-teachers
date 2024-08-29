@@ -25,11 +25,11 @@ FactoryBot.define do
     }
 
     trait :with_academic_year_twenty_twenty_one do
-      academic_year { ::CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021 }
+      academic_year { CodeSets::AcademicYears::ACADEMIC_YEAR_2020_2021 }
     end
 
     trait :with_academic_year_twenty_one_twenty_two do
-      academic_year { ::CodeSets::AcademicYears::ACADEMIC_YEAR_2021_2022 }
+      academic_year { CodeSets::AcademicYears::ACADEMIC_YEAR_2021_2022 }
     end
   end
 end

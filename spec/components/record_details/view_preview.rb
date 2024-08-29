@@ -10,7 +10,7 @@ module RecordDetails
 
     def with_region
       trainee = mock_trainee("default").tap do |t|
-        t.region = ::CodeSets::Regions::MAPPING.keys.sample
+        t.region = CodeSets::Regions::MAPPING.keys.sample
         t.provider = Provider.new(code: Provider::TEACH_FIRST_PROVIDER_CODE)
       end
 

@@ -10,7 +10,7 @@
 
 # Load Nationalities
 Nationality.upsert_all(
-  ::CodeSets::Nationalities::MAPPING.keys.map do |nationality|
+  CodeSets::Nationalities::MAPPING.keys.map do |nationality|
     { name: nationality }.merge(created_at: Time.zone.now, updated_at: Time.zone.now)
   end,
   unique_by: :name,
