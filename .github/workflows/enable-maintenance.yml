@@ -37,7 +37,7 @@ jobs:
       with:
         azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', github.event.inputs.environment)] }}
 
-    - name: Deploy maintenance app
-      run: make ${{ inputs.environment }} maintenance-fail-over
-      env:
-        MAINTENANCE_IMAGE_TAG: ${{steps.build-image.outputs.tag}}
+    # - name: Deploy maintenance app
+    #   run: make ${{ inputs.environment }} maintenance-fail-over
+    #   env:
+    #     MAINTENANCE_IMAGE_TAG: ${{steps.build-image.outputs.tag}}
