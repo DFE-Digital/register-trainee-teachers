@@ -214,7 +214,7 @@ module Api
             if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
               attrs.merge!(employing_school_not_applicable: true)
             else
-              employing_school_id = School.find_by(urn: params[:employing_school_urn], lead_school: false)&.id
+              employing_school_id = School.find_by(urn: params[:employing_school_urn])&.id
 
               attrs.merge!(
                 employing_school_id: employing_school_id,

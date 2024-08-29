@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Exports
   describe FundingTraineeSummaryData do
-    let!(:payable) { create(:school, lead_school: true, name: "Fussington Academy") }
+    let!(:payable) { create(:school, name: "Fussington Academy") }
     let!(:trainee_summary) { create(:trainee_summary, :for_school) }
     let!(:trainee_summary_row) { create(:trainee_summary_row, trainee_summary: trainee_summary, lead_school_urn: payable.urn) }
     let!(:tiered_bursary_amount) { create(:trainee_summary_row_amount, :with_tiered_bursary, row: trainee_summary_row) }

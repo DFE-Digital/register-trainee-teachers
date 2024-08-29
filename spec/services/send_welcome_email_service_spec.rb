@@ -22,7 +22,7 @@ describe SendWelcomeEmailService do
           first_name: "Meowington",
           email: "meowington@cat.net",
           welcome_email_sent_at: nil,
-          lead_schools: [build(:school, :lead)],
+          lead_schools: [build(:school)],
         )
       end
 
@@ -107,7 +107,7 @@ describe SendWelcomeEmailService do
       spy(
         first_name: "Meowington",
         welcome_email_sent_at: Time.zone.local(2021, 1, 1),
-        lead_schools: [build(:school, :lead)],
+        lead_schools: [build(:school)],
       )
     end
 

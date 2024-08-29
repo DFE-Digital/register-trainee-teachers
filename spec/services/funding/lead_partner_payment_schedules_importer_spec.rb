@@ -11,7 +11,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "105491",
-              "Lead school name" => "Lead School 3",
+              "Lead school name" => "School 3",
               "Description" => "Course extension trainee funding",
               "Total funding" => "6500",
               "August" => "1625.00",
@@ -30,7 +30,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "105491",
-              "Lead school name" => "Lead School 3",
+              "Lead school name" => "School 3",
               "Description" => "Course extension provider funding",
               "Total funding" => "2000",
               "August" => "0.00",
@@ -51,7 +51,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "103527",
-              "Lead school name" => "Lead School 4",
+              "Lead school name" => "School 4",
               "Description" => "School Direct (salaried)",
               "Total funding" => "0",
               "August" => "0.00",
@@ -72,7 +72,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "131238",
-              "Lead school name" => "Lead School 1",
+              "Lead school name" => "School 1",
               "Description" => "FE ITT Bursary for AY 2021/22",
               "Total funding" => "90000",
               "August" => nil,
@@ -91,7 +91,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "131238",
-              "Lead school name" => "Lead School 1",
+              "Lead school name" => "School 1",
               "Description" => "FE ITT in-year adjs for AY 2021/22",
               "Total funding" => "-26000",
               "August" => nil,
@@ -112,7 +112,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "135438",
-              "Lead school name" => "Lead School 2",
+              "Lead school name" => "School 2",
               "Description" => "FE ITT Grant for AY 2021/22",
               "Total funding" => "91000",
               "August" => nil,
@@ -131,7 +131,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "135438",
-              "Lead school name" => "Lead School 2",
+              "Lead school name" => "School 2",
               "Description" => "FE ITT in-year adjs for AY 2021/22",
               "Total funding" => "-18200",
               "August" => nil,
@@ -150,7 +150,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "135438",
-              "Lead school name" => "Lead School 2",
+              "Lead school name" => "School 2",
               "Description" => "FE AGR Adjustments AY20/21",
               "Total funding" => "-11696.31",
               "August" => nil,
@@ -170,23 +170,23 @@ module Funding
         }
       end
 
-      let(:lead_school_one) { create(:school, :lead, urn: "131238") }
-      let(:lead_school_two) { create(:school, :lead, urn: "135438") }
-      let(:lead_school_three) { create(:school, :lead, urn: "103527") }
-      let(:lead_school_four) { create(:school, :lead, urn: "105491") }
-      let(:lead_school_ids) { [lead_school_one.id, lead_school_two.id, lead_school_three.id, lead_school_four.id] }
-      let(:lead_school_one_second_row) { lead_school_one.funding_payment_schedules.last.rows.second }
-      let(:lead_school_one_first_row) { lead_school_one.funding_payment_schedules.last.rows.first }
-      let(:lead_school_two_first_row) { lead_school_two.funding_payment_schedules.last.rows.first }
+      let(:school_one) { create(:school, urn: "131238") }
+      let(:school_two) { create(:school, urn: "135438") }
+      let(:school_three) { create(:school, urn: "103527") }
+      let(:school_four) { create(:school, urn: "105491") }
+      let(:school_ids) { [school_one.id, school_two.id, school_three.id, school_four.id] }
+      let(:school_one_second_row) { school_one.funding_payment_schedules.last.rows.second }
+      let(:school_one_first_row) { school_one.funding_payment_schedules.last.rows.first }
+      let(:school_two_first_row) { school_two.funding_payment_schedules.last.rows.first }
 
-      let(:expected_lead_school_one_row_descriptions) do
+      let(:expected_school_one_row_descriptions) do
         [
           "FE ITT Bursary for AY 2021/22",
           "FE ITT in-year adjs for AY 2021/22",
         ]
       end
 
-      let(:expected_lead_school_two_first_row_descriptions) do
+      let(:expected_school_two_first_row_descriptions) do
         [
           "FE ITT Grant for AY 2021/22",
           "FE ITT in-year adjs for AY 2021/22",
@@ -197,41 +197,41 @@ module Funding
       subject { described_class.call(attributes: schedules_attributes, first_predicted_month_index: 12) }
 
       before do
-        lead_school_ids
+        school_ids
       end
 
-      it "creates a Funding::PaymentSchedule for each lead school" do
-        expect { subject }.to change { Funding::PaymentSchedule.where(payable_id: lead_school_ids, payable_type: "School").count }.by(4)
+      it "creates a Funding::PaymentSchedule for each school" do
+        expect { subject }.to change { Funding::PaymentSchedule.where(payable_id: school_ids, payable_type: "School").count }.by(4)
       end
 
       it "creates a PaymentScheduleRow for each entry" do
         subject
-        expect(lead_school_one.funding_payment_schedules.last.rows.map(&:description)).to match_array(expected_lead_school_one_row_descriptions)
-        expect(lead_school_two.funding_payment_schedules.last.rows.map(&:description)).to match_array(expected_lead_school_two_first_row_descriptions)
+        expect(school_one.funding_payment_schedules.last.rows.map(&:description)).to match_array(expected_school_one_row_descriptions)
+        expect(school_two.funding_payment_schedules.last.rows.map(&:description)).to match_array(expected_school_two_first_row_descriptions)
       end
 
       it "creates the monthly amounts for each row" do
         subject
-        expect(lead_school_one_first_row.amounts.count).to eq(12)
-        expect(lead_school_one_second_row.amounts.count).to eq(12)
-        expect(lead_school_two_first_row.amounts.count).to eq(12)
+        expect(school_one_first_row.amounts.count).to eq(12)
+        expect(school_one_second_row.amounts.count).to eq(12)
+        expect(school_two_first_row.amounts.count).to eq(12)
       end
 
       it "sets the amount correctly" do
         subject
-        october_amount = lead_school_two_first_row.amounts.find_by(month: 10)
+        october_amount = school_two_first_row.amounts.find_by(month: 10)
         expect(october_amount.amount_in_pence).to eq(1648010)
       end
 
       it "sets the amount correctly for amounts containing commas" do
         subject
-        november_amount = lead_school_two_first_row.amounts.find_by(month: 11)
+        november_amount = school_two_first_row.amounts.find_by(month: 11)
         expect(november_amount.amount_in_pence).to eq(828555)
       end
 
       it "sets the amount to 0 when the value is blank" do
         subject
-        december_amount = lead_school_two_first_row.amounts.find_by(month: 12)
+        december_amount = school_two_first_row.amounts.find_by(month: 12)
         expect(december_amount.amount_in_pence).to eq(0)
       end
 
@@ -241,12 +241,12 @@ module Funding
         months2021 = [8, 9, 10, 11, 12]
 
         months2022.each do |month_index|
-          year = lead_school_two_first_row.amounts.find_by(month: month_index).year
+          year = school_two_first_row.amounts.find_by(month: month_index).year
           expect(year).to eq(2022)
         end
 
         months2021.each do |month_index|
-          year = lead_school_two_first_row.amounts.find_by(month: month_index).year
+          year = school_two_first_row.amounts.find_by(month: month_index).year
           expect(year).to eq(2021)
         end
       end
@@ -254,8 +254,8 @@ module Funding
       context "first predicted month is passed" do
         it "sets predicted correctly" do
           subject
-          expect(lead_school_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
-          expect(lead_school_one_first_row.amounts.find_by(month: 12)).to be_predicted
+          expect(school_one_first_row.amounts.find_by(month: 11)).not_to be_predicted
+          expect(school_one_first_row.amounts.find_by(month: 12)).to be_predicted
         end
       end
 
@@ -264,7 +264,7 @@ module Funding
 
         it "sets all months predicted to false" do
           subject
-          expect(lead_school_one_first_row.amounts.where(predicted: false).count).to eq(12)
+          expect(school_one_first_row.amounts.where(predicted: false).count).to eq(12)
         end
       end
     end
@@ -276,7 +276,7 @@ module Funding
             {
               "Academic year" => "2021/22",
               "Lead school URN" => "105491",
-              "Lead school name" => "Lead School 3",
+              "Lead school name" => "School 3",
               "Description" => "Course extension trainee funding",
               "Total funding" => "6500",
               "August" => "1625.00",
@@ -298,7 +298,7 @@ module Funding
 
       subject { described_class.call(attributes: invalid_schedules_attributes, first_predicted_month_index: 12) }
 
-      it "returns a list of lead school urns not found in database" do
+      it "returns a list of school urns not found in database" do
         expect(subject).to eq(["105491"])
       end
     end

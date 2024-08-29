@@ -46,7 +46,7 @@ private
     ]
 
     schools_data.each do |school_data|
-      create(:school, :lead, :open, school_data)
+      create(:school, :open, school_data)
     end
   end
 

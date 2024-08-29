@@ -4,24 +4,22 @@
 #
 # Table name: schools
 #
-#  id          :bigint           not null, primary key
-#  close_date  :date
-#  lead_school :boolean          not null
-#  name        :string           not null
-#  open_date   :date
-#  postcode    :string
-#  searchable  :tsvector
-#  town        :string
-#  urn         :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :bigint           not null, primary key
+#  close_date :date
+#  name       :string           not null
+#  open_date  :date
+#  postcode   :string
+#  searchable :tsvector
+#  town       :string
+#  urn        :string           not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 # Indexes
 #
-#  index_schools_on_close_date   (close_date) WHERE (close_date IS NULL)
-#  index_schools_on_lead_school  (lead_school) WHERE (lead_school IS TRUE)
-#  index_schools_on_searchable   (searchable) USING gin
-#  index_schools_on_urn          (urn) UNIQUE
+#  index_schools_on_close_date  (close_date) WHERE (close_date IS NULL)
+#  index_schools_on_searchable  (searchable) USING gin
+#  index_schools_on_urn         (urn) UNIQUE
 #
 class School < ApplicationRecord
   include PgSearch::Model
@@ -46,12 +44,14 @@ class School < ApplicationRecord
                   }
 
   scope :open, -> { where(close_date: nil) }
-  scope :lead_only, -> { where(lead_school: true) }
   scope :order_by_name, -> { order(:name) }
 
   validates :urn, presence: true, uniqueness: true
   validates :name, presence: true
-  validates :lead_school, inclusion: { in: [true, false] }
+
+  def lead_partner?
+    lead_partner.present? && lead_partner.undiscarded?
+  end
 
 private
 

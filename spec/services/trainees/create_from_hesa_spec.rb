@@ -23,7 +23,7 @@ module Trainees
     let(:record_source) { Trainee::HESA_COLLECTION_SOURCE }
     let(:former_accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys.sample }
     let(:accredited_provider_ukprn) { described_class::LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[former_accredited_provider_ukprn] }
-    let(:lead_school) { create(:school, urn: student_attributes[:lead_school_urn]) }
+    let(:school) { create(:school, urn: student_attributes[:lead_partner_urn]) }
 
     let!(:course_allocation_subject) do
       create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
@@ -40,7 +40,7 @@ module Trainees
       create(:provider, ukprn: student_attributes[:ukprn])
       create(:provider, ukprn: accredited_provider_ukprn)
       create(:lead_partner, :hei, ukprn: former_accredited_provider_ukprn)
-      create(:lead_partner, :lead_school, school: lead_school)
+      create(:lead_partner, :lead_school, school:)
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
       described_class.call(
@@ -85,7 +85,7 @@ module Trainees
       end
 
       it "updates the trainee's school and training details" do
-        expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_school_urn])
+        expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_partner_urn])
         expect(trainee.employing_school.urn).to eq(student_attributes[:employing_school_urn])
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:maths_physics_chairs_programme_researchers_in_schools])
       end
@@ -98,7 +98,7 @@ module Trainees
         end
 
         it "updates the trainee's lead_partner and lead_partner_not_applicable state" do
-          expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_school_urn])
+          expect(trainee.lead_partner.urn).to eq(student_attributes[:lead_partner_urn])
           expect(trainee.lead_partner_not_applicable).to be false
         end
       end
@@ -146,7 +146,7 @@ module Trainees
 
         let(:hesa_stub_attributes) do
           {
-            lead_school_urn: not_applicable_or_not_available_hesa_code,
+            lead_partner_urn: not_applicable_or_not_available_hesa_code,
             employing_school_urn: establishment_outside_england_and_wales_hesa_code,
           }
         end

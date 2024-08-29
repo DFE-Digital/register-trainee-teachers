@@ -138,10 +138,10 @@ module Trainees
 
       if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
         attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
-      elsif hesa_trainee[:lead_school_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
+      elsif hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(lead_partner_not_applicable: true)
       else
-        attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_school_urn]), lead_partner_not_applicable: false)
+        attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_partner_urn]), lead_partner_not_applicable: false)
       end
 
       attrs
