@@ -97,7 +97,7 @@ module Reports
         trainee_report.hesa_id,
         trainee_report.first_names,
         trainee_report.last_names,
-        trainee_report.lead_school_name,
+        trainee_report.lead_partner_name,
         trainee_report.qts_or_eyts,
         trainee_report.course_training_route,
         trainee_report.course_education_phase,
