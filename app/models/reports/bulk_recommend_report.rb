@@ -14,20 +14,20 @@ module Reports
     DATE        = "Date QTS or EYTS standards met"
 
     # additional headers
-    FIRST_NAME  = "First names"
-    LAST_NAME   = "Last names"
-    LEAD_SCHOOL = "Lead partner"
-    QTS_OR_EYTS = "QTS or EYTS"
-    ROUTE       = "Route"
-    PHASE       = "Phase"
-    AGE_RANGE   = "Age range"
-    SUBJECT     = "Subject"
+    FIRST_NAME   = "First names"
+    LAST_NAME    = "Last names"
+    LEAD_PARTNER = "Lead partner"
+    QTS_OR_EYTS  = "QTS or EYTS"
+    ROUTE        = "Route"
+    PHASE        = "Phase"
+    AGE_RANGE    = "Age range"
+    SUBJECT      = "Subject"
 
     DEFAULT_HEADERS = [
       *IDENTIFIERS,
       FIRST_NAME,
       LAST_NAME,
-      LEAD_SCHOOL,
+      LEAD_PARTNER,
       QTS_OR_EYTS,
       ROUTE,
       PHASE,
