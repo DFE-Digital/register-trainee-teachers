@@ -74,7 +74,6 @@ private
   def given_a_trainee_exists_with_a_degree
     given_a_trainee_exists(
       :submitted_for_trn,
-      :without_provider,
       degrees: create_list(:degree, 1, :uk_degree_with_details),
     )
   end

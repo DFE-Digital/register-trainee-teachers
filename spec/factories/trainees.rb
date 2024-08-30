@@ -111,12 +111,6 @@ FactoryBot.define do
       end
     end
 
-    trait :without_provider do
-      before(:build) do |trainee|
-        trainee.provider = nil
-      end
-    end
-
     trait :incomplete do
       provider_trainee_id { nil }
       first_names { nil }
