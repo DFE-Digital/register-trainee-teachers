@@ -7,19 +7,26 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
 
   let(:training_routes) do
     {
-      "School Direct salaried" => :school_direct_salaried,
-      "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
-      "EYITT Graduate entry" => :early_years_postgrad,
-      "EYITT Graduate employment-based" => :early_years_salaried,
-      "Provider-led" => :provider_led,
-      "Undergraduate opt-in" => :opt_in_undergrad,
-      "School Direct tuition fee" => :school_direct_tuition_fee,
+      "School Direct salaried" => "school_direct_salaried",
+      "Post graduate teaching apprenticeship" => "pg_teaching_apprenticeship",
+      "EYITT Graduate entry" => "early_years_postgrad",
+      "EYITT Graduate employment-based" => "early_years_salaried",
+      "Provider-led" => {
+        "PG" => "provider_led_postgrad",
+        "UG" => "provider_led_undergrad",
+      },
+      "Undergraduate opt-in" => "opt_in_undergrad",
+      "School Direct tuition fee" => "school_direct_tuition_fee",
     }
   end
 
-  describe "::TRAINING_ROUTES" do
-    it "has the correct route types" do
-      expect(subject::TRAINING_ROUTES).to eq(training_routes)
+  describe described_class::TrainingRouteMapper do
+    subject { described_class }
+
+    describe "::TRAINING_ROUTES" do
+      it "has the correct route types" do
+        expect(subject::TRAINING_ROUTES).to eq(training_routes)
+      end
     end
   end
 
@@ -49,8 +56,15 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
         row.save!
       end
 
-      current_academic_year_funding_trainee_summary.rows.each do |row|
+      current_academic_year_funding_trainee_summary.rows.first(3).each do |row|
         row.training_route = nil
+        row.route = " #{row.route} "
+        row.cohort_level = " #{row.cohort_level}"
+        row.save!
+      end
+
+      current_academic_year_funding_trainee_summary.rows.last(2).each do |row|
+        row.training_route = row.cohort_level = nil
         row.route = " #{row.route} "
         row.save!
       end
@@ -64,7 +78,11 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       end
 
       current_academic_year_funding_trainee_summary.rows.reload.each do |row|
-        expect(row.training_route).to eq(training_routes[row.read_attribute(:route).strip].to_s)
+        route                   = row.read_attribute(:route).strip
+        cohort_level            = row.read_attribute(:cohort_level).to_s.strip
+        expected_training_route = training_routes[route][cohort_level].presence || training_routes[route].presence
+
+        expect(row.training_route).to eq(expected_training_route)
       end
     end
   end
