@@ -11,7 +11,7 @@ module BulkUpdate
           .trainees
           .where.not(state: :draft)
           .includes(
-            :lead_school,
+            :lead_partner,
             :provider,
             :degrees,
             :apply_application,
