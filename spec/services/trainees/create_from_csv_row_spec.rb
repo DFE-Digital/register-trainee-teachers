@@ -296,15 +296,16 @@ module Trainees
       let!(:provider) { create(:provider) }
       let(:training_route) { TRAINING_ROUTE_ENUMS[:school_direct_salaried] }
       let(:course) { create(:course, accredited_body_code: provider.code, route: training_route) }
-      let(:lead_school_urn) { "1234567" }
+      let(:school_urn) { "1234567" }
+      let(:school) { create(:school, urn: school_urn) }
 
       before do
-        create(:school, urn: lead_school_urn)
+        create(:lead_partner, :lead_school, school: school)
 
         csv_row.merge!({
           "Training route" => "School direct (salaried)",
           "Publish Course Code" => course.code,
-          "Lead school URN" => lead_school_urn,
+          "Lead partner URN" => school_urn,
           "Funding: Training Initiatives" => "Now Teach",
         })
       end
@@ -313,7 +314,7 @@ module Trainees
         described_class.call(provider:, csv_row:)
         expect(trainee.training_route).to eq(training_route)
         expect(trainee.course_uuid).to eq(course.uuid)
-        expect(trainee.lead_school.urn).to eq(lead_school_urn)
+        expect(trainee.lead_partner.urn).to eq(school_urn)
         expect(trainee.training_initiative).to eq(ROUTE_INITIATIVES_ENUMS[:now_teach])
       end
 

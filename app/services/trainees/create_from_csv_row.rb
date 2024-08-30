@@ -71,7 +71,7 @@ module Trainees
         email: csv_row["Email"],
         training_initiative: training_initiative,
         employing_school_id: employing_school_id,
-        lead_school_id: lead_school_id,
+        lead_partner_id: lead_partner_id,
       }.merge(ethnicity_and_disability_attributes)
        .merge(course_attributes)
        .merge(funding_attributes)
@@ -289,8 +289,8 @@ module Trainees
       School.find_by(urn: csv_row["Employing school URN"])&.id
     end
 
-    def lead_school_id
-      School.find_by(urn: csv_row["Lead school URN"])&.id
+    def lead_partner_id
+      LeadPartner.find_by(urn: csv_row["Lead partner URN"])&.id
     end
 
     def course_uuid
