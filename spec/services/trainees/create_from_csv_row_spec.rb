@@ -300,7 +300,7 @@ module Trainees
       let(:school) { create(:school, urn: school_urn) }
 
       before do
-        create(:lead_partner, :lead_school, school: school)
+        create(:lead_partner, :lead_school, school:)
 
         csv_row.merge!({
           "Training route" => "School direct (salaried)",
