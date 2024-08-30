@@ -40,14 +40,14 @@ module Funding
              inverse_of: :row
 
     enum :training_route, {
-      school_direct_salaried: "school_direct_salaried",
-      pg_teaching_apprenticeship: "pg_teaching_apprenticeship",
-      early_years_postgrad: "early_years_postgrad",
-      early_years_salaried: "early_years_salaried",
-      provider_led_postgrad: "provider_led_postgrad",
-      provider_led_undergrad: "provider_led_undergrad",
-      opt_in_undergrad: "opt_in_undergrad",
-      school_direct_tuition_fee: "school_direct_tuition_fee",
+      school_direct_salaried: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+      pg_teaching_apprenticeship: TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+      early_years_postgrad: TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+      early_years_salaried: TRAINING_ROUTE_ENUMS[:early_years_salaried],
+      provider_led_postgrad: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+      provider_led_undergrad: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
+      opt_in_undergrad: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+      school_direct_tuition_fee: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
     }
 
     def route

@@ -42,10 +42,6 @@ module Funding
         row_hash[lead_school_urn_column]
       end
 
-      def payable(_id)
-        raise(NotImplementedException("implement a payable method"))
-      end
-
       def training_route
         raise(NotImplementedException("implement a training_route method"))
       end
@@ -114,6 +110,10 @@ module Funding
   private
 
     attr_reader :attributes
+
+    def payable(_id)
+      raise(NotImplementedException("implement a payable method"))
+    end
 
     def academic_year_column
       raise(NotImplementedException("implement a academic_year_column method"))

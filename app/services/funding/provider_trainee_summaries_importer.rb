@@ -4,14 +4,14 @@ module Funding
   class ProviderTraineeSummariesImporter < PayableTraineeSummariesImporter
     class SummaryRowMapper < PayableTraineeSummariesImporter::SummaryRowMapper
       TRAINING_ROUTES = {
-        "EYITT Graduate entry" => :early_years_postgrad,
-        "EYITT Graduate employment-based" => :early_years_salaried,
+        "EYITT Graduate entry" => TRAINING_ROUTE_ENUMS[:early_years_postgrad],
+        "EYITT Graduate employment-based" => TRAINING_ROUTE_ENUMS[:early_years_salaried],
         "Provider-led" => {
-          "PG" => :provider_led_postgrad,
-          "UG" => :provider_led_undergrad,
+          "PG" => TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+          "UG" => TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
         },
-        "Undergraduate opt-in" => :opt_in_undergrad,
-        "School Direct tuition fee" => :school_direct_tuition_fee,
+        "Undergraduate opt-in" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
+        "School Direct tuition fee" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
       }.freeze
 
       def to_h

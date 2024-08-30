@@ -10,14 +10,14 @@ module Funding
 
         it do
           expect(subject).to eq(
-            "EYITT Graduate entry" => :early_years_postgrad,
-            "EYITT Graduate employment-based" => :early_years_salaried,
+            "EYITT Graduate entry" => "early_years_postgrad",
+            "EYITT Graduate employment-based" => "early_years_salaried",
             "Provider-led" => {
-              "PG" => :provider_led_postgrad,
-              "UG" => :provider_led_undergrad,
+              "PG" => "provider_led_postgrad",
+              "UG" => "provider_led_undergrad",
             },
-            "Undergraduate opt-in" => :opt_in_undergrad,
-            "School Direct tuition fee" => :school_direct_tuition_fee,
+            "Undergraduate opt-in" => "opt_in_undergrad",
+            "School Direct tuition fee" => "school_direct_tuition_fee",
           )
         end
       end
