@@ -11,7 +11,7 @@ module Funding
     private
 
       def training_route
-        self.class::TRAINING_ROUTES[route]
+        TRAINING_ROUTES[route]
       end
 
       def route_column

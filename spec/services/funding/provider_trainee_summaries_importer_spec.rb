@@ -90,18 +90,43 @@ module Funding
               "Tier 3 Trainees" => "1",
             },
           ],
+          "3333" => [
+            {
+              "Provider" => "3333",
+              "Provider name" => "Provider 3",
+              "Academic Year" => "2021/22",
+              "Subject" => "Modern Languages",
+              "Route" => "School Direct tuition fee",
+              "Lead School" => "Lead School 2",
+              "Lead School ID" => "0002",
+              "Cohort Level" => "UG",
+              "Bursary Amount" => "0",
+              "Bursary Trainees" => "0",
+              "Scholarship Amount" => "0",
+              "Scholarship Trainees" => "0",
+              "Tier 1 Amount" => "15000",
+              "Tier 1 Trainees" => "3",
+              "Tier 2 Amount" => "10000",
+              "Tier 2 Trainees" => "2",
+              "Tier 3 Amount" => "5000",
+              "Tier 3 Trainees" => "1",
+            },
+          ],
         }
       end
 
       let!(:provider_one) { create(:provider, accreditation_id: "1111") }
       let!(:provider_two) { create(:provider, accreditation_id: "2222") }
+      let!(:provider_three) { create(:provider, accreditation_id: "3333") }
 
       let(:provider_one_summary) { provider_one.funding_trainee_summaries.last }
       let(:provider_two_summary) { provider_two.funding_trainee_summaries.last }
+      let(:provider_three_summary) { provider_three.funding_trainee_summaries.last }
 
       let(:provider_one_first_row) { provider_one_summary.rows.first }
       let(:provider_one_second_row) { provider_one_summary.rows.second }
       let(:provider_two_first_row) { provider_two_summary.rows.first }
+      let(:provider_three_first_row) { provider_three_summary.rows.first }
 
       subject { described_class.call(attributes: summaries_attributes) }
 
@@ -141,9 +166,21 @@ module Funding
           }
         }
 
+        let(:provider_three_expected_attibutes) {
+          {
+            "subject" => "Modern Languages",
+            "route" => "School Direct tuition fee",
+            "training_route" => "school_direct_tuition_fee",
+            "lead_school_name" => "Lead School 2",
+            "lead_school_urn" => "0002",
+            "cohort_level" => "UG",
+          }
+        }
+
         it "creates the correct number of TraineeSummaryRows" do
           expect(provider_one_summary.rows.count).to eq(2)
           expect(provider_two_summary.rows.count).to eq(1)
+          expect(provider_three_summary.rows.count).to eq(1)
         end
 
         it "creates TraineeSummaryRows with the correct attributes" do
@@ -154,6 +191,7 @@ module Funding
             provider_one_expected_attibutes.merge({ "subject" => "Modern Languages" }),
           )
           expect(provider_two_first_row.attributes).to include(provider_two_expected_attibutes)
+          expect(provider_three_first_row.attributes).to include(provider_three_expected_attibutes)
         end
       end
 
@@ -216,9 +254,9 @@ module Funding
     context "unknown provider" do
       let(:invalid_summaries_attributes) do
         {
-          "3333" => [
+          "4444" => [
             {
-              "Provider" => "3333",
+              "Provider" => "4444",
               "Provider name" => "Provider 3",
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
@@ -244,7 +282,7 @@ module Funding
       subject { described_class.call(attributes: invalid_summaries_attributes) }
 
       it "returns a list of missing provider accreditation ids" do
-        expect(subject).to eq(["3333"])
+        expect(subject).to eq(["4444"])
       end
     end
   end

@@ -23,7 +23,7 @@ module Funding
     private
 
       def training_route
-        self.class::TRAINING_ROUTES[route][cohort_level]
+        TRAINING_ROUTES[route][cohort_level] || TRAINING_ROUTES[route]
       end
 
       def cohort_level
