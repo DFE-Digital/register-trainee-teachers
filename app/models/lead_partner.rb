@@ -55,4 +55,8 @@ class LeadPartner < ApplicationRecord
   def funding_payment_schedules
     school&.funding_payment_schedules || provider&.funding_payment_schedules
   end
+
+  def funding_trainee_summaries
+    school&.funding_trainee_summaries || provider&.funding_trainee_summaries
+  end
 end

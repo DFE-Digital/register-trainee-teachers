@@ -10,6 +10,7 @@ module SystemAdmin
     private_constant :LEAD_PARTNER_OPTION
 
     attribute :lead_partner, :boolean
+    alias lead_partner? lead_partner
 
     delegate :name,
              :urn,

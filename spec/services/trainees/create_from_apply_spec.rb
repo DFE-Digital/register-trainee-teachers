@@ -246,7 +246,7 @@ module Trainees
 
     context "when nationalities exist" do
       before do
-        Nationality.create!(Dttp::CodeSets::Nationalities::MAPPING.keys.map { |key| { name: key } })
+        Nationality.create!(CodeSets::Nationalities::MAPPING.keys.map { |key| { name: key } })
       end
 
       it "adds the trainee's nationalities" do

@@ -8,7 +8,7 @@ class PageTitle::View < ViewComponent::Base
   end
 
   def build_page_title
-    [build_error + build_title, I18n.t("service_name"), "GOV.UK"].select(&:present?).join(" - ")
+    [build_error + build_title, I18n.t("service_name"), "GOV.UK"].compact_blank.join(" - ")
   end
 
 private

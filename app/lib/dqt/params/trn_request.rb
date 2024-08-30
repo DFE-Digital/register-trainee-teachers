@@ -26,8 +26,8 @@ module Dqt
         TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => "HighPotentialITT",
         TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => "UndergraduateOptIn",
         TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => "Apprenticeship",
-        TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "ProviderLedPostgrad",
-        TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "ProviderLedUndergrad",
+        TRAINING_ROUTE_ENUMS[:provider_led_postgrad] => "PrimaryAndSecondaryPostgraduateFeeFunded",
+        TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => "PrimaryAndSecondaryUndergraduateFeeFunded",
         TRAINING_ROUTE_ENUMS[:school_direct_salaried] => "SchoolDirectTrainingProgrammeSalaried",
         TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => "SchoolDirectTrainingProgramme",
         TRAINING_ROUTE_ENUMS[:iqts] => DQT_IQTS_PROGRAMME_TYPE,
@@ -137,7 +137,7 @@ module Dqt
 
       def qualification_params
         return if degree.nil?
-        return if CodeSets::DegreeTypes::FOUNDATIONS.include?(degree.uk_degree_uuid)
+        return if Dqt::CodeSets::DegreeTypes::FOUNDATIONS.include?(degree.uk_degree_uuid)
 
         {
           "providerUkprn" => institution_ukprn,
@@ -145,7 +145,7 @@ module Dqt
           "subject" => subject_code,
           "class" => DEGREE_CLASSES[degree.grade],
           "date" => graduation_date,
-          "heQualificationType" => CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
+          "heQualificationType" => Dqt::CodeSets::DegreeTypes::MAPPING[degree.uk_degree_uuid],
         }
       end
 

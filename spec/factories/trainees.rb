@@ -221,7 +221,7 @@ FactoryBot.define do
       with_secondary_education
       course_subject_one do
         if randomise_subjects
-          Dttp::CodeSets::CourseSubjects::MAPPING.keys.reject { |subject| SubjectSpecialism::PRIMARY_SUBJECT_NAMES.include?(subject) }.sample
+          CodeSets::CourseSubjects::MAPPING.keys.reject { |subject| SubjectSpecialism::PRIMARY_SUBJECT_NAMES.include?(subject) }.sample
         else
           CourseSubjects::MATHEMATICS
         end
@@ -328,7 +328,7 @@ FactoryBot.define do
     end
 
     trait :with_ethnic_background do
-      ethnic_background { Dttp::CodeSets::Ethnicities::MAPPING.keys.sample }
+      ethnic_background { CodeSets::Ethnicities::MAPPING.keys.sample }
     end
 
     trait :disabled do
@@ -418,7 +418,7 @@ FactoryBot.define do
 
     trait :iqts do
       training_route { TRAINING_ROUTE_ENUMS[:iqts] }
-      iqts_country { Dttp::CodeSets::Countries::MAPPING.keys.sample }
+      iqts_country { CodeSets::Countries::MAPPING.keys.sample }
     end
 
     trait :draft do
@@ -683,7 +683,7 @@ FactoryBot.define do
 
     trait :with_hpitt_provider do
       training_route { TRAINING_ROUTE_ENUMS[:hpitt_postgrad] }
-      region { Dttp::CodeSets::Regions::MAPPING.keys.sample }
+      region { CodeSets::Regions::MAPPING.keys.sample }
       provider factory: %i[provider teach_first]
     end
 

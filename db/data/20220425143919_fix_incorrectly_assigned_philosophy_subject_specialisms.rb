@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FixIncorrectlyAssignedPhilosophySubjectSpecialisms < ActiveRecord::Migration[6.1]
-  RELIGIOUS_STUDIES_ENTITY_ID = Dttp::CodeSets::CourseSubjects::MAPPING["religious studies"][:entity_id]
+  RELIGIOUS_STUDIES_ENTITY_ID = CodeSets::CourseSubjects::MAPPING["religious studies"][:entity_id]
 
   def up
     trainees = Trainee.where(course_subject_one: CourseSubjects::PHILOSOPHY)

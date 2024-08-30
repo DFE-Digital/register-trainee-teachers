@@ -505,7 +505,7 @@ class Trainee < ApplicationRecord
     [
       first_names,
       last_name,
-    ].select(&:present?).join(" ").presence
+    ].compact_blank.join(" ").presence
   end
 
   def inactive?
@@ -521,7 +521,7 @@ class Trainee < ApplicationRecord
       first_names,
       middle_names,
       last_name,
-    ].select(&:present?).join(" ").presence
+    ].compact_blank.join(" ").presence
   end
 
   def duplicate?
