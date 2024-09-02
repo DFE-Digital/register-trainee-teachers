@@ -14,6 +14,7 @@ module Trainees
 
     MIN_NUMBER_OF_DAYS_SUGGESTING_COURSE_CHANGE = 30
 
+    LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING_START_YEAR = 2024
     LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING = {
       "10006841" => "10000571", # University of Bolton => Bath Spa University
       "10000961" => "10000571", # Brunel University => Bath Spa University
@@ -120,7 +121,7 @@ module Trainees
     end
 
     def provider_attributes
-      provider = if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+      provider = if lead_partner_mapping_needed?
                    Provider.find_by(ukprn: LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING[hesa_trainee[:ukprn]])
                  else
                    Provider.find_by(ukprn: hesa_trainee[:ukprn])
@@ -136,7 +137,7 @@ module Trainees
     def lead_partner_attributes
       attrs = {}
 
-      if hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys)
+      if lead_partner_mapping_needed?
         attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
       elsif hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(lead_partner_not_applicable: true)
@@ -232,6 +233,10 @@ module Trainees
       hesa_trainee[:trainee_start_date].presence || itt_start_date
     end
 
+    def start_academic_year
+      AcademicCycle.for_date(trainee_start_date).start_year
+    end
+
     def course_subject_name(subject_code)
       ::Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
     end
@@ -317,6 +322,11 @@ module Trainees
 
     def awarded_or_withdrawn?(trainee)
       %i[awarded withdrawn].include?(trainee.state.to_sym)
+    end
+
+    def lead_partner_mapping_needed?
+      hesa_trainee[:ukprn].in?(LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING.keys) &&
+        start_academic_year >= LEAD_PARTNER_TO_ACCREDITED_PROVIDER_MAPPING_START_YEAR
     end
   end
 end

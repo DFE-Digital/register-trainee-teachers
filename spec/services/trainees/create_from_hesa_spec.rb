@@ -15,6 +15,7 @@ module Trainees
     let(:hesa_age_range_codes) { DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.invert }
     let!(:start_academic_cycle) { create(:academic_cycle, cycle_year: 2022) }
     let!(:end_academic_cycle) { create(:academic_cycle, cycle_year: 2023) }
+    let!(:itt_reform_academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
     let(:first_disability_name) { Diversities::LEARNING_DIFFICULTY }
     let!(:first_disability) { create(:disability, name: first_disability_name) }
@@ -103,12 +104,26 @@ module Trainees
         end
       end
 
-      context "when ukprn is from an ex-accredited HEI" do
+      context "when ukprn is from a formerly accredited HEI in academic year 2022" do
         let(:hesa_stub_attributes) { { ukprn: former_accredited_provider_ukprn } }
 
-        it "sets the correct accredited provider for the lead partner" do
-          expect(trainee.lead_partner.ukprn).to eq(former_accredited_provider_ukprn)
+        it "sets the correct accredited provider and lead partner" do
+          expect(trainee.provider.ukprn).to eq(former_accredited_provider_ukprn)
+          expect(trainee.lead_partner.urn).to eq(school.urn)
+        end
+      end
+
+      context "when ukprn is from a formerly accredited HEI in academic year 2024" do
+        let(:hesa_stub_attributes) do
+          {
+            ukprn: former_accredited_provider_ukprn,
+            trainee_start_date: "2024-09-01",
+          }
+        end
+
+        it "sets the correct accredited provider and lead partner" do
           expect(trainee.provider.ukprn).to eq(accredited_provider_ukprn)
+          expect(trainee.lead_partner.ukprn).to eq(former_accredited_provider_ukprn)
         end
       end
 
