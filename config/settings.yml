@@ -164,7 +164,7 @@ google:
     table_name: events
     entity_table_checks_enabled: true
 
-sign_off_trainee_data_url: https://forms.office.com/e/kzBmEWKDGz
+sign_off_trainee_data_url: https://forms.office.com/pages/responsepage.aspx?id=yXfS-grGoU2187O4s0qC-QBBClDaMHtAsZDhksQEJa5URFg1TjBHMlhNWDRZOE9SUDRUOFVYOUFETSQlQCN0PWcu&route=shorturl
 sign_off_performance_profiles_url: https://forms.office.com/e/ATXmqJusud)
 sign_off_period: # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb
 
