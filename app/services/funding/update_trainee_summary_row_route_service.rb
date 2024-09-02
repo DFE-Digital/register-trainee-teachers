@@ -25,7 +25,7 @@ module Funding
       attr_reader :route, :cohort_level
 
       def training_route
-        TRAINING_ROUTES[route][cohort_level].presence || TRAINING_ROUTES[route]
+        TRAINING_ROUTES.fetch(route, {})[cohort_level].presence || TRAINING_ROUTES[route]
       end
     end
 
