@@ -80,7 +80,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       current_academic_year_funding_trainee_summary.rows.reload.each do |row|
         route                   = row.read_attribute(:route).strip
         cohort_level            = row.read_attribute(:cohort_level).to_s.strip
-        expected_training_route = training_routes[route][cohort_level].presence || training_routes[route].presence
+        expected_training_route = training_routes[route][cohort_level].presence || training_routes[route]
 
         expect(row.training_route).to eq(expected_training_route)
       end
