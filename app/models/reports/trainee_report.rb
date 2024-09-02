@@ -298,11 +298,11 @@ module Reports
       trainee.last_name
     end
 
-    def lead_school_name
+    def lead_partner_school_name
       trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_partner_school&.name
     end
 
-    def lead_school_urn
+    def lead_partner_school_urn
       trainee.lead_partner_school&.urn
     end
 

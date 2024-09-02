@@ -60,8 +60,8 @@ module Reports
          expected_end_date
          course_duration_in_years
          trainee_start_date
-         lead_partner_name
-         lead_partner_urn
+         lead_partner_school_name
+         lead_partner_school_urn
          employing_school_name
          employing_school_urn
          training_initiative
@@ -174,8 +174,8 @@ module Reports
         trainee_report.expected_end_date,
         trainee_report.course_duration_in_years,
         trainee_report.trainee_start_date,
-        trainee_report.lead_partner_name,
-        trainee_report.lead_partner_urn,
+        trainee_report.lead_partner_school_name,
+        trainee_report.lead_partner_school_urn,
         trainee_report.employing_school_name,
         trainee_report.employing_school_urn,
         trainee_report.training_initiative,
