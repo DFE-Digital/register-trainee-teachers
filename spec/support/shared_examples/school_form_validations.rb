@@ -4,11 +4,7 @@ shared_examples "school form validations" do |school_id_key|
   before { subject.valid? }
 
   let(:not_applicable) do
-    if school_id_key == "lead_school_id"
-      "lead_partner_not_applicable"
-    else
-      school_id_key.sub("id", "not_applicable")
-    end
+    school_id_key.sub("id", "not_applicable")
   end
 
   context "empty form data" do
