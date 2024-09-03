@@ -2006,7 +2006,7 @@ en:
     funding_uploads:
       new:
         lead_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead partners.
-        lead_school_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
+        lead_partner_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
         provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
         provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
   api:
