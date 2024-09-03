@@ -285,6 +285,8 @@ class Trainee < ApplicationRecord
 
     event :recommend_for_award do
       before do
+        raise StateTransitionError, "Cannot transition to :recommend_for_award without degree information" if degrees.blank?
+
         self.recommended_for_award_at = Time.zone.now
       end
 
