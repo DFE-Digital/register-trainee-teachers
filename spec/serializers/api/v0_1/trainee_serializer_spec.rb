@@ -106,7 +106,6 @@ RSpec.describe Api::V01::TraineeSerializer do
         placement_assignment_dttp_id
         dttp_update_sha
         dormancy_dttp_id
-        lead_school_id
         lead_partner_id
         employing_school_id
         course_allocation_subject_id
