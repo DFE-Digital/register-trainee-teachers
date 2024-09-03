@@ -1864,17 +1864,6 @@ en:
           attributes:
             specialism:
               blank: Select a specialism
-        schools/lead_school_form:
-          attributes:
-            query:
-              blank: Enter a school unique reference number (URN), name or postcode
-              both_fields_are_present: Select a lead partner or select lead partner not applicable
-            lead_school_id:
-              blank: Select a lead partner or search again
-            results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
-            no_results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
         schools/employing_school_form:
           attributes:
             query:
