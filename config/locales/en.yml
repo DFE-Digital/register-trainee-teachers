@@ -1481,7 +1481,7 @@ en:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
               length: Enter at least two characters
-            lead_school_id:
+            lead_partner_id:
               blank: Select a lead partner or search again
             results_search_again_query:
               blank: Enter a partner unique reference number (URN), name or postcode
