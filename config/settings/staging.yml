@@ -34,14 +34,14 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
-  integrate_with_dqt: true
-  hesa_trn_requests: true
+  integrate_with_dqt: false
+  hesa_trn_requests: false
   hesa_import:
-    sync_collection: true
-    sync_trn_data: true
+    sync_collection: false
+    sync_trn_data: false
     test_mode: true
   dqt_import:
-    sync_teachers: true
+    sync_teachers: false
   google:
     send_data_to_big_query: true
 
@@ -51,7 +51,3 @@ environment:
 google_tag_manager:
   auth_id: h9MLvalp6AuXoRufPTHO_A
   env_id: 12
-
-hesa:
-  current_collection_reference: "C24053"
-  current_collection_start_date: "2024-08-01"

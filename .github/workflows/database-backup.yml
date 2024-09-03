@@ -167,50 +167,49 @@ jobs:
         slack-message: ':alert: Backup failure :sadparrot:'
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
+  restore_staging:
+    needs: [backup]
+    name: restore Database (staging)
+    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToStagingEnv == 'true') }}
+    runs-on: ubuntu-latest
 
-  # restore_staging:
-  #   needs: [backup]
-  #   name: restore Database (staging)
-  #   if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToStagingEnv == 'true') }}
-  #   runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      name: Checkout
 
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #     name: Checkout
+    - uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
 
-  #   - uses: azure/login@v2
-  #     with:
-  #       creds: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
+    - name: Download Sanitised Backup
+      uses: actions/download-artifact@v4
+      with:
+        name: backup_sanitised
 
-  #   - name: Download Sanitised Backup
-  #     uses: actions/download-artifact@v4
-  #     with:
-  #       name: backup_sanitised
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v4
+      with:
+        version: "v1.26.1" # default is latest stable
 
-  #   - name: Install kubectl
-  #     uses: azure/setup-kubectl@v4
-  #     with:
-  #       version: "v1.26.1" # default is latest stable
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
 
-  #   - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-  #     with:
-  #       azure-credentials: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
+    - name: K8 setup
+      shell: bash
+      run: |
+        make ci staging get-cluster-credentials
+        make install-konduit
 
-  #   - name: K8 setup
-  #     shell: bash
-  #     run: |
-  #       make ci staging get-cluster-credentials
-  #       make install-konduit
+    - name: Restore backup to aks env database
+      shell: bash
+      run: |
+        bin/konduit.sh -i backup_sanitised.sql.gz -c -t 7200 register-staging -- psql
 
-  #   - name: Restore backup to aks env database
-  #     shell: bash
-  #     run: |
-  #       bin/konduit.sh -i backup_sanitised.sql.gz -c -t 7200 register-staging -- psql
-
-  #   - name: Check for Failure
-  #     uses: ./.github/actions/send-slack-notification/
-  #     if: ${{ failure() }}
-  #     with:
-  #       slack-title: Staging Restore Failure
-  #       slack-message: ':alert: Daily restore failure for staging :sadparrot:'
-  #       slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+    - name: Check for Failure
+      uses: ./.github/actions/send-slack-notification/
+      if: ${{ failure() }}
+      with:
+        slack-title: Staging Restore Failure
+        slack-message: ':alert: Daily restore failure for staging :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
