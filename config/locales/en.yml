@@ -350,7 +350,7 @@ en:
         confirmation: File processed successfully
         new:
           lead_partner_trainee_summary: Upload lead partner trainee funding payments
-          lead_school_payment_schedule: Upload lead partner funding payments
+          lead_partner_payment_schedule: Upload lead partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
       pending_trns:
