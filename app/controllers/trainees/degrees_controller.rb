@@ -45,6 +45,10 @@ module Trainees
 
   private
 
+    def authorize_trainee
+      authorize([:degrees, trainee])
+    end
+
     def redirect_path
       if draft_apply_application?
         edit_trainee_apply_applications_trainee_data_path(trainee)
