@@ -350,7 +350,7 @@ en:
         confirmation: File processed successfully
         new:
           lead_partner_trainee_summary: Upload lead partner trainee funding payments
-          lead_school_payment_schedule: Upload lead partner funding payments
+          lead_partner_payment_schedule: Upload lead partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
       pending_trns:
@@ -1301,24 +1301,25 @@ en:
           early_years_salaried: Early years graduate employment based
           early_years_undergrad: Early years undergraduate
           iqts: International qualified teacher status (iQTS)
-          provider_led_postgrad: Primary and secondary (postgrad)
-          provider_led_undergrad: Primary and secondary (undergrad)
+          provider_led_postgrad: &provider_led_postgrad Primary and secondary (postgrad)
+          provider_led_undergrad: &provider_led_undergrad Primary and secondary (undergrad)
           school_direct_salaried: School direct (salaried)
           school_direct_tuition_fee: School direct (fee funded)
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergrad)
-          itt:
+          itt: &itt_routes
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
             early_years_postgrad: Early years
             early_years_salaried: Early years
             early_years_undergrad: Early years
             iqts: International qualified teacher status (iQTS)
-            provider_led_postgrad: &provider_led_postgrad Primary and secondary
-            provider_led_undergrad: *provider_led_postgrad
+            provider_led_postgrad: *provider_led_postgrad
+            provider_led_undergrad: *provider_led_undergrad
             pg_teaching_apprenticeship: Teaching apprenticeship
             school_direct_salaried: School direct
+            school_direct_tuition_fee: School direct (fee funded)
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
         states:
@@ -1371,6 +1372,8 @@ en:
           sex_not_provided: Not provided
           prefer_not_to_say: Prefer not to say
           other: Other
+      funding/trainee_summary_row:
+        <<: *itt_routes
     errors:
       models:
         trainee:

@@ -7,6 +7,66 @@ module Funding
     include ServicePattern
     include HasAmountsInPence
 
+    class SummaryRowMapper
+      attr_reader :row_hash
+
+      def initialize(row_hash)
+        @row_hash = row_hash
+      end
+
+      def to_h
+        {
+          subject:,
+          route:,
+          training_route:,
+          lead_school_name:,
+          lead_school_urn:,
+        }
+      end
+
+    private
+
+      def subject
+        row_hash[subject_column]
+      end
+
+      def route
+        row_hash[route_column].strip
+      end
+
+      def lead_school_name
+        row_hash[lead_school_name_column]
+      end
+
+      def lead_school_urn
+        row_hash[lead_school_urn_column]
+      end
+
+      def training_route
+        raise(NotImplementedException("implement a training_route method"))
+      end
+
+      def route_column
+        raise(NotImplementedException("implement a route_column method"))
+      end
+
+      def lead_school_name_column
+        raise(NotImplementedException("implement a lead_school_name_column method"))
+      end
+
+      def lead_school_urn_column
+        raise(NotImplementedException("implement a lead_school_urn_column method"))
+      end
+
+      def cohort_level_column
+        raise(NotImplementedException("implement a cohort_level_column method"))
+      end
+
+      def subject_column
+        "Subject"
+      end
+    end
+
     def initialize(attributes:)
       @attributes = attributes
     end
@@ -24,11 +84,7 @@ module Funding
 
           attributes[id].each do |row_hash|
             row = summary.rows.create(
-              subject: row_hash["Subject"],
-              route: row_hash[route_column],
-              lead_school_name: row_hash[lead_school_name_column],
-              lead_school_urn: row_hash[lead_school_urn_column],
-              cohort_level: row_hash["Cohort Level"],
+              self.class::SummaryRowMapper.new(row_hash).to_h,
             )
 
             amount_maps.each do |amount_map|
@@ -51,6 +107,10 @@ module Funding
       missing_payable_ids
     end
 
+  private
+
+    attr_reader :attributes
+
     def payable(_id)
       raise(NotImplementedException("implement a payable method"))
     end
@@ -58,21 +118,5 @@ module Funding
     def academic_year_column
       raise(NotImplementedException("implement a academic_year_column method"))
     end
-
-    def route_column
-      raise(NotImplementedException("implement a route_column method"))
-    end
-
-    def lead_school_name_column
-      raise(NotImplementedException("implement a lead_school_name_column method"))
-    end
-
-    def lead_school_urn_column
-      raise(NotImplementedException("implement a lead_school_urn_column method"))
-    end
-
-  private
-
-    attr_reader :attributes
   end
 end

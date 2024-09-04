@@ -25,12 +25,12 @@ module Funding
 
     let(:summary) do
       create(:trainee_summary, :for_provider).tap do |s|
-        create(:trainee_summary_row, trainee_summary: s, subject: "Maths", route: "Provider-led", lead_school_name: "BAT Academy").tap do |r|
+        create(:trainee_summary_row, trainee_summary: s, subject: "Maths", route: "Provider-led", training_route: "provider_led_postgrad", lead_school_name: "BAT Academy").tap do |r|
           create(:trainee_summary_row_amount, row: r, payment_type: "scholarship", amount_in_pence: maths_scholarship_amount, number_of_trainees: maths_scholarship_trainees)
           create(:trainee_summary_row_amount, row: r, payment_type: "bursary", amount_in_pence: maths_bursary_amount, number_of_trainees: maths_bursary_trainees)
           create(:trainee_summary_row_amount, row: r, payment_type: "grant", amount_in_pence: maths_grant_amount, number_of_trainees: maths_grant_trainees)
         end
-        create(:trainee_summary_row, trainee_summary: s, subject: "Biology", route: "Provider-led", lead_school_name: "Regminster College").tap do |r|
+        create(:trainee_summary_row, trainee_summary: s, subject: "Biology", route: "Provider-led", training_route: "provider_led_postgrad", lead_school_name: "Regminster College").tap do |r|
           create(:trainee_summary_row_amount, row: r, payment_type: "bursary", tier: 1, amount_in_pence: biology_tiered_bursary_amount, number_of_trainees: biology_tiered_bursary_trainees)
           create(:trainee_summary_row_amount, row: r, payment_type: "scholarship", amount_in_pence: biology_scholarship_amount, number_of_trainees: biology_scholarship_trainees)
         end
@@ -81,7 +81,7 @@ module Funding
       let(:bursary_array) {
         [
           {
-            route: "Provider-led",
+            route: "Primary and secondary (postgrad)",
             subject: "Maths",
             lead_partner: "BAT Academy",
             trainees: maths_bursary_trainees,
@@ -102,7 +102,7 @@ module Funding
       let(:scholarship_array) do
         [
           {
-            route: "Provider-led",
+            route: "Primary and secondary (postgrad)",
             subject: "Biology",
             lead_partner: "Regminster College",
             trainees: biology_scholarship_trainees,
@@ -110,7 +110,7 @@ module Funding
             total: "£8,000",
           },
           {
-            route: "Provider-led",
+            route: "Primary and secondary (postgrad)",
             subject: "Maths",
             lead_partner: "BAT Academy",
             trainees: maths_scholarship_trainees,
@@ -131,7 +131,7 @@ module Funding
       let(:tiered_bursary_array) do
         [
           {
-            route: "Provider-led",
+            route: "Primary and secondary (postgrad)",
             tier: "Tier 1",
             trainees: biology_tiered_bursary_trainees,
             amount_per_trainee: "£1,000",
@@ -151,7 +151,7 @@ module Funding
       let(:grant_array) do
         [
           {
-            route: "Provider-led",
+            route: "Primary and secondary (postgrad)",
             subject: "Maths",
             trainees: maths_grant_trainees,
             amount_per_trainee: "£3,000",

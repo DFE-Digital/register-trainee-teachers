@@ -543,6 +543,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_141021) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "lead_partner_urn"
+    t.string "training_route"
     t.index ["funding_trainee_summary_id"], name: "index_trainee_summary_rows_on_trainee_summary_id"
   end
 
