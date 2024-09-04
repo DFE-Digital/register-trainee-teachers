@@ -218,7 +218,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
           end
 
           context "when lead_partner exists" do
-            let(:lead_partner) { create(:lead_partner, :lead_school) }
+            let(:lead_partner) { create(:lead_partner, :school) }
 
             it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
               expect(response.parsed_body[:data][:lead_partner_urn]).to eq(lead_partner.urn)

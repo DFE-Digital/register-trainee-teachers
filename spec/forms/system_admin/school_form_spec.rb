@@ -82,7 +82,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
         context "when School is a discarded Lead Partner" do
           before do
-            create(:lead_partner, :lead_school, school:).discard!
+            create(:lead_partner, :school, school:).discard!
           end
 
           it "returns true" do
@@ -97,7 +97,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
         context "when School is an undiscarded Lead Partner" do
           before do
-            create(:lead_partner, :lead_school, school:)
+            create(:lead_partner, :school, school:)
           end
 
           it "discards the Lead Partner" do
@@ -119,7 +119,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
         end
 
         context "when School has an undiscarded Lead Partner" do
-          let!(:lead_partner) { create(:lead_partner, :lead_school, school:) }
+          let!(:lead_partner) { create(:lead_partner, :school, school:) }
 
           it "returns true" do
             expect(school_form.save).to be(true)
@@ -132,7 +132,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
         end
 
         context "when School has a discarded Lead Partner" do
-          let!(:lead_partner) { create(:lead_partner, :lead_school, school: school, discarded_at: Time.zone.now) }
+          let!(:lead_partner) { create(:lead_partner, :school, school: school, discarded_at: Time.zone.now) }
 
           it "undiscards the Lead Partner" do
             expect(school_form.save).to be(true)

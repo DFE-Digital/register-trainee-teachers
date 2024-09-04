@@ -23,8 +23,8 @@ module Autocomplete
       end
 
       context "querying" do
-        let!(:lead_partner) { create(:lead_partner, :lead_school, name: "Sheffield School") }
-        let!(:lead_partner2) { create(:lead_partner, :lead_school, name: "Cardiff College") }
+        let!(:lead_partner) { create(:lead_partner, :school, name: "Sheffield School") }
+        let!(:lead_partner2) { create(:lead_partner, :school, name: "Cardiff College") }
         let!(:lead_partner_hei) { create(:lead_partner, :hei, name: "Newbury University") }
 
         context "invalid query" do

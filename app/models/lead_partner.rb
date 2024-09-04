@@ -33,7 +33,7 @@ class LeadPartner < ApplicationRecord
   include Discard::Model
 
   RECORD_TYPES = [
-    LEAD_SCHOOL = "lead_school",
+    SCHOOL = "school",
     HEI = "hei",
     SCITT = "scitt",
   ].freeze
@@ -46,10 +46,10 @@ class LeadPartner < ApplicationRecord
   has_many :users, through: :lead_partner_users
   has_many :trainees
 
-  validates :urn, presence: true, if: -> { lead_school? }, uniqueness: { case_sensitive: false, allow_nil: true }
+  validates :urn, presence: true, if: -> { school? }, uniqueness: { case_sensitive: false, allow_nil: true }
   validates :record_type, presence: true, inclusion: { in: RECORD_TYPES }
   validates :ukprn, presence: true, if: -> { hei? }, uniqueness: { case_sensitive: false, allow_nil: true }
-  validates :school, presence: true, if: -> { lead_school? }
+  validates :school, presence: true, if: -> { school? }
   validates :provider, presence: true, if: -> { hei? }
 
   def funding_payment_schedules

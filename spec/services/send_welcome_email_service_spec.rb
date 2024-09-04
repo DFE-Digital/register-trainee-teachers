@@ -55,7 +55,7 @@ describe SendWelcomeEmailService do
           email: "meowington@cat.net",
           welcome_email_sent_at: nil,
           lead_schools: [],
-          lead_partners: [build(:lead_partner, :lead_school)],
+          lead_partners: [build(:lead_partner, :school)],
         )
       end
 
@@ -133,7 +133,7 @@ describe SendWelcomeEmailService do
         first_name: "Meowington",
         welcome_email_sent_at: Time.zone.local(2021, 1, 1),
         lead_schools: [],
-        lead_partners: [build(:lead_partner, :lead_school)],
+        lead_partners: [build(:lead_partner, :school)],
       )
     end
 

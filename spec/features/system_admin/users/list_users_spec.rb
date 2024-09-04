@@ -5,7 +5,7 @@ require "rails_helper"
 feature "List users" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let(:lead_partner) { create(:lead_partner, :lead_school) }
+    let(:lead_partner) { create(:lead_partner, :school) }
     let(:provider) { create(:provider) }
 
     before do

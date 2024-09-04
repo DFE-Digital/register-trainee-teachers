@@ -5,7 +5,7 @@ require "rails_helper"
 feature "List lead partners" do
   context "as a system admin" do
     let(:user) { create(:user, system_admin: true) }
-    let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "School Partner") }
+    let!(:school_lead_partner) { create(:lead_partner, :school,, name: "School Partner") }
     let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "HEI Partner") }
 
     before do

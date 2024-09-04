@@ -79,7 +79,7 @@ module SystemAdmin
     def find_or_create_lead_partner!
       LeadPartner.find_or_create_by!(school_id: school.id, urn: school.urn) do |lp|
         lp.name        = school.name
-        lp.record_type = LeadPartner::LEAD_SCHOOL
+        lp.record_type = LeadPartner::SCHOOL
       end
     end
 

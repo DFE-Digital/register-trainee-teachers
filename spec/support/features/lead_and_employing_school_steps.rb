@@ -36,7 +36,7 @@ module Features
     end
 
     def given_a_lead_partner_exists_in_the_system
-      @lead_partner = create(:lead_partner, :lead_school)
+      @lead_partner = create(:lead_partner, :school)
     end
 
     def and_i_fill_in_my_lead_partner

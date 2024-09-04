@@ -226,7 +226,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           end
 
           context "when lead_partner exists" do
-            let(:lead_partner) { create(:lead_partner, :lead_school) }
+            let(:lead_partner) { create(:lead_partner, :school) }
 
             it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
               expect(response.parsed_body[:data]).not_to have_key(:lead_school_urn)
@@ -240,7 +240,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           end
 
           context "when lead_partner does not exist" do
-            let(:lead_partner) { build(:lead_partner, :lead_school) }
+            let(:lead_partner) { build(:lead_partner, :school) }
 
             it "sets lead_partner_urn and employing_school_urn to nil" do
               expect(response.parsed_body[:data]).to have_key(:lead_partner_urn)

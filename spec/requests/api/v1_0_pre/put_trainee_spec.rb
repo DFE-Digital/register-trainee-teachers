@@ -472,7 +472,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           end
 
           context "when lead_partner exists" do
-            let(:new_lead_partner) { create(:lead_partner, :lead_school) }
+            let(:new_lead_partner) { create(:lead_partner, :school) }
 
             it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to employing_school#urn" do
               expect(response.parsed_body[:data][:lead_partner_urn]).to eq(new_lead_partner.urn)
@@ -486,7 +486,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           end
 
           context "when lead_partner does not exist" do
-            let(:new_lead_partner) { build(:lead_partner, :lead_school) }
+            let(:new_lead_partner) { build(:lead_partner, :school) }
 
             it "sets lead_partner_urn to nil and lead_partner_not_applicable to true" do
               expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil

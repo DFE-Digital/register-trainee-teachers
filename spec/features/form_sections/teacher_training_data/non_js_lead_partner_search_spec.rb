@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "Non-JS lead partner search" do
-  let!(:discarded_lead_partner) { create(:lead_partner, :lead_school, :discarded) }
+  let!(:discarded_lead_partner) { create(:lead_partner, :school,, :discarded) }
 
   before do
     given_i_am_authenticated

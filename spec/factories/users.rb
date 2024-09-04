@@ -17,12 +17,12 @@ FactoryBot.define do
 
     trait :with_multiple_organisations do
       providers { [build(:provider), build(:provider)] }
-      lead_partners { [build(:lead_partner, :lead_school), build(:lead_partner, :lead_school)] }
+      lead_partners { [build(:lead_partner, :school), build(:lead_partner, :school)] }
     end
 
     trait :with_lead_partner_organisation do
       transient do
-        lead_partner_type { :lead_school }
+        lead_partner_type { :school }
       end
 
       providers { [] }
