@@ -34,7 +34,7 @@ feature "viewing the payment schedule" do
   end
 
   context "when User is a LeadPartner School" do
-    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :lead_school) }
+    let(:user) { create(:user, :with_lead_partner_organisation, lead_partner_type: :school) }
 
     background do
       given_i_am_authenticated_as_a_lead_partner_user(user:)

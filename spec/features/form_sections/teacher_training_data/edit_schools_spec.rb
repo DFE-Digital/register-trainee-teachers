@@ -107,7 +107,7 @@ private
   end
 
   def and_a_number_of_lead_partners_exist
-    @lead_partners = create_list(:lead_partner, 1, :lead_school)
+    @lead_partners = create_list(:lead_partner, 1, :school)
   end
 
   def and_a_number_of_employing_schools_exist
