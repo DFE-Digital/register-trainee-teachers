@@ -76,7 +76,7 @@ namespace :example_data do
     employing_schools = FactoryBot.create_list(:school, 50)
 
     # Create some lead partners
-    lead_partners = FactoryBot.create_list(:lead_partner, 50, :lead_school)
+    lead_partners = FactoryBot.create_list(:lead_partner, 50, :school)
 
     # Create some subjects
     REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
