@@ -9,6 +9,7 @@ module Trainees
 
       def create
         @degree = trainee.degrees.build(locale_code_params)
+
         if @degree.valid?
           redirect_to(new_trainee_degree_path(trainee_id: params[:trainee_id], **locale_code_params))
         else
@@ -17,6 +18,10 @@ module Trainees
       end
 
     private
+
+      def authorize_trainee
+        authorize([:degrees, trainee])
+      end
 
       def locale_code_params
         params.require(:degree).permit(:locale_code) if params.dig(:degree, :locale_code).present?

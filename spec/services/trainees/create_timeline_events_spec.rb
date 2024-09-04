@@ -7,7 +7,7 @@ module Trainees
     let(:system_admin) { create(:user, :system_admin) }
     let(:provider_user) { create(:user) }
     let(:current_user) { nil }
-    let(:trainee) { create(:trainee, awarded_at: Time.zone.now) }
+    let(:trainee) { create(:trainee, :with_degree, awarded_at: Time.zone.now) }
 
     subject { described_class.call(audit: trainee.own_and_associated_audits.first, current_user: current_user) }
 
@@ -156,7 +156,7 @@ module Trainees
         end
 
         context "with an EYTS trainee" do
-          let(:trainee) { create(:trainee, :early_years_undergrad) }
+          let(:trainee) { create(:trainee, :with_degree, :early_years_undergrad) }
 
           it "returns a 'Recommended for EYTS' timeline event" do
             expect(subject.title).to eq(t("components.timeline.titles.trainee.recommended_for_eyts"))
@@ -176,7 +176,7 @@ module Trainees
         end
 
         context "with an EYTS trainee" do
-          let(:trainee) { create(:trainee, :early_years_undergrad, awarded_at: Time.zone.now) }
+          let(:trainee) { create(:trainee, :with_degree, :early_years_undergrad, awarded_at: Time.zone.now) }
 
           it "returns a 'EYTS awarded' timeline event" do
             expect(subject.title).to eq(t("components.timeline.titles.trainee.eyts_awarded"))
