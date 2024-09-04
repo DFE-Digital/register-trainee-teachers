@@ -350,7 +350,7 @@ en:
         confirmation: File processed successfully
         new:
           lead_partner_trainee_summary: Upload lead partner trainee funding payments
-          lead_school_payment_schedule: Upload lead partner funding payments
+          lead_partner_payment_schedule: Upload lead partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
       pending_trns:
@@ -1301,8 +1301,8 @@ en:
           early_years_salaried: Early years graduate employment based
           early_years_undergrad: Early years undergraduate
           iqts: International qualified teacher status (iQTS)
-          provider_led_postgrad: Primary and secondary (postgrad)
-          provider_led_undergrad: Primary and secondary (undergrad)
+          provider_led_postgrad: &provider_led_postgrad Primary and secondary (postgrad)
+          provider_led_undergrad: &provider_led_undergrad Primary and secondary (undergrad)
           school_direct_salaried: School direct (salaried)
           school_direct_tuition_fee: School direct (fee funded)
           pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
@@ -1315,9 +1315,8 @@ en:
             early_years_salaried: Early years
             early_years_undergrad: Early years
             iqts: International qualified teacher status (iQTS)
-            provider_led_postgrad: &provider_led_postgrad Primary and secondary
-            provider_led_undergrad: *provider_led_postgrad
-            provider_led: *provider_led_postgrad
+            provider_led_postgrad: *provider_led_postgrad
+            provider_led_undergrad: *provider_led_undergrad
             pg_teaching_apprenticeship: Teaching apprenticeship
             school_direct_salaried: School direct
             school_direct_tuition_fee: School direct (fee funded)

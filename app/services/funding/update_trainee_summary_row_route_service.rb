@@ -4,17 +4,40 @@ module Funding
   class UpdateTraineeSummaryRowRouteService
     include ServicePattern
 
-    TRAINING_ROUTES = LeadPartnerTraineeSummariesImporter::TRAINING_ROUTES.merge(
-      ProviderTraineeSummariesImporter::TRAINING_ROUTES,
-    ).freeze
+    class TrainingRouteMapper
+      TRAINING_ROUTES = LeadPartnerTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES.merge(
+        ProviderTraineeSummariesImporter::SummaryRowMapper::TRAINING_ROUTES,
+      ).freeze
+
+      def initialize(route, cohort_level)
+        @route        = route.strip
+        @cohort_level = cohort_level.to_s.strip
+      end
+
+      def to_h
+        {
+          training_route:,
+        }
+      end
+
+    private
+
+      attr_reader :route, :cohort_level
+
+      def training_route
+        TRAINING_ROUTES.fetch(route, {})[cohort_level].presence || TRAINING_ROUTES[route]
+      end
+    end
 
     def initialize(academic_year = nil)
       @academic_year = academic_year || current_academic_year
     end
 
     def call
-      routes.each do |route|
-        rows.where(route:).update_all(training_route: TRAINING_ROUTES[route.strip])
+      routes_and_cohort_levels.each do |route, cohort_level|
+        rows.where(route:, cohort_level:).update_all(
+          TrainingRouteMapper.new(route, cohort_level).to_h,
+        )
       end
     end
 
@@ -22,8 +45,8 @@ module Funding
 
     attr_reader :academic_year
 
-    def routes
-      rows.distinct.pluck(:route)
+    def routes_and_cohort_levels
+      rows.distinct.pluck(:route, :cohort_level)
     end
 
     def rows

@@ -6,7 +6,7 @@ FactoryBot.define do
 
     subject { "Biology" }
     route { "Provider-led" }
-    training_route { "provider_led" }
+    training_route { "provider_led_postgrad" }
     lead_school_name { "The School of Life" }
     lead_school_urn { Faker::Number.number(digits: 7) }
     cohort_level { "PG" }

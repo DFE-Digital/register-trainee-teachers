@@ -2,29 +2,39 @@
 
 module Funding
   class LeadPartnerTraineeSummariesImporter < PayableTraineeSummariesImporter
-    TRAINING_ROUTES = {
-      "School Direct salaried" => :school_direct_salaried,
-      "Post graduate teaching apprenticeship" => :pg_teaching_apprenticeship,
-    }.freeze
+    class SummaryRowMapper < PayableTraineeSummariesImporter::SummaryRowMapper
+      TRAINING_ROUTES = {
+        "School Direct salaried" => TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+        "Post graduate teaching apprenticeship" => TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship],
+      }.freeze
 
-    def payable(id)
-      School.find_by(urn: id)
+    private
+
+      def training_route
+        TRAINING_ROUTES[route]
+      end
+
+      def route_column
+        "Description"
+      end
+
+      def lead_school_name_column
+        "Lead school name"
+      end
+
+      def lead_school_urn_column
+        "Lead school URN"
+      end
     end
+
+  private
 
     def academic_year_column
       "Academic year"
     end
 
-    def route_column
-      "Description"
-    end
-
-    def lead_school_name_column
-      "Lead school name"
-    end
-
-    def lead_school_urn_column
-      "Lead school URN"
+    def payable(id)
+      School.find_by(urn: id)
     end
 
     def amount_maps
