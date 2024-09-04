@@ -245,7 +245,6 @@ shared:
     - iqts_country
     - itt_end_date
     - itt_start_date
-    - lead_school_id
     - lead_partner_id
     - placement_detail
     - lead_partner_not_applicable

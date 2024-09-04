@@ -12,10 +12,6 @@ class FixApplyDraftTrainingRoutes < ActiveRecord::Migration[6.1]
                                     applying_for_grant: nil,
                                     bursary_tier: nil)
 
-          if trainee.published_course.route == "provider_led_postgrad"
-            trainee.lead_school_id = nil
-          end
-
           trainee.save!
         end
       end
