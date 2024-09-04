@@ -5,8 +5,9 @@ FactoryBot.define do
     sequence(:apply_id)
     application { JSON.parse(ApiStubs::RecruitsApi.application(degree_attributes:)) }
     invalid_data { {} }
-    accredited_body_code { create(:provider).code }
+    accredited_body_code { create(:provider, apply_sync_enabled: true).code }
     recruitment_cycle_year { Settings.apply_applications.create.recruitment_cycle_year }
+    state { :importable }
 
     transient do
       degree_slug { SecureRandom.base58(Sluggable::SLUG_LENGTH).to_s }
