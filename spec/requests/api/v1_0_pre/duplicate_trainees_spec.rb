@@ -7,17 +7,6 @@ describe "Trainees API" do
   let(:provider) { trainee.provider }
   let(:token) { AuthenticationToken.create_with_random_token(provider:) }
 
-  let!(:trainee) do
-    create(
-      :trainee,
-      :male,
-      :provider_led_undergrad,
-      :in_progress,
-      itt_start_date: academic_cycle.start_date,
-      course_subject_one: CourseSubjects::BIOLOGY,
-    )
-  end
-
   describe "`POST /api/v1.0-pre/trainees` endpoint" do
     let(:valid_attributes) do
       {
@@ -47,13 +36,47 @@ describe "Trainees API" do
       }
     end
 
-    context "when the request attempts to create a duplicate record" do
+    context "when the itt_start_date is in the AcademicCycle#start_date year" do
+      let!(:trainee) do
+        create(
+          :trainee,
+          :male,
+          :provider_led_undergrad,
+          :in_progress,
+          itt_start_date: academic_cycle.start_date,
+          course_subject_one: CourseSubjects::BIOLOGY,
+        )
+      end
+
       it "returns status 409 (conflict) with the potential duplicates and does not create a trainee record" do
         expect {
           post "/api/v1.0-pre/trainees", params: valid_attributes.to_json, headers: { Authorization: token, **json_headers }
         }.not_to change { Trainee.count }
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body[:data].count).to be(1)
+      end
+    end
+
+    context "when the itt_start_date is in the AcademicCycle#end_date year" do
+      let!(:trainee) do
+        create(
+          :trainee,
+          :male,
+          :provider_led_undergrad,
+          :in_progress,
+          itt_start_date: academic_cycle.end_date.beginning_of_year,
+          course_subject_one: CourseSubjects::BIOLOGY,
+        )
+      end
+
+      it "returns status 409 (conflict) with the potential duplicates and does not create a trainee record" do
+        Timecop.travel trainee.itt_start_date do
+          expect {
+            post "/api/v1.0-pre/trainees", params: valid_attributes.to_json, headers: { Authorization: token, **json_headers }
+          }.not_to change { Trainee.count }
+          expect(response).to have_http_status(:conflict)
+          expect(response.parsed_body[:data].count).to be(1)
+        end
       end
     end
   end
