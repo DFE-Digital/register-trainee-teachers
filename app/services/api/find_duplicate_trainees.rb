@@ -42,7 +42,7 @@ module Api
     end
 
     def recruitment_cycle_year
-      AcademicCycle.for_date(trainee_attributes.itt_start_date)&.start_date&.year
+      AcademicCycle.for_date(trainee_attributes.itt_start_date)&.start_year
     end
   end
 end
