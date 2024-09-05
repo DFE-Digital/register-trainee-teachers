@@ -42,11 +42,7 @@ module Api
     end
 
     def recruitment_cycle_year
-      if trainee_attributes.itt_start_date.is_a?(String)
-        trainee_attributes.itt_start_date = Date.parse(trainee_attributes.itt_start_date)
-      end
-
-      trainee_attributes.itt_start_date&.year
+      AcademicCycle.for_date(trainee_attributes.itt_start_date)&.start_date&.year
     end
   end
 end
