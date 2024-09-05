@@ -11,7 +11,7 @@ module BulkUpdate
 
     describe "#call" do
       context "when the trainee is trn_received" do
-        let(:trainee) { create(:trainee, :with_degree, :trn_received) }
+        let(:trainee) { create(:trainee, :trn_received) }
 
         it "updates the trainees state and outcome date" do
           expect { subject }
@@ -28,7 +28,7 @@ module BulkUpdate
       end
 
       context "when the trainee is not trn_received" do
-        let(:trainee) { create(:trainee, :with_degree, :draft) }
+        let(:trainee) { create(:trainee, :draft) }
 
         it "does not update the trainee state and outcome date" do
           subject
