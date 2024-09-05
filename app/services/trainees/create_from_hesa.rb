@@ -47,6 +47,7 @@ module Trainees
           create_degrees!
           create_placements!
           store_hesa_metadata!
+          check_for_potential_duplicate_trainees!
           enqueue_background_jobs!
           check_for_missing_hesa_mappings!
         end
@@ -58,7 +59,8 @@ module Trainees
 
   private
 
-    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state, :skip_background_jobs, :slug
+    attr_reader :hesa_trainee, :trainee, :record_source, :current_trainee_state, :skip_background_jobs, :slug, :potential_duplicate
+    alias_method :potential_duplicate?, :potential_duplicate
 
     def mapped_attributes
       {
@@ -211,8 +213,15 @@ module Trainees
       end
     end
 
-    def potential_duplicate?
-      false
+    def check_for_potential_duplicate_trainees!
+      duplicate_trainees = Trainees::FindDuplicatesOfHesaTrainee.call(trainee:)
+      if duplicate_trainees.present?
+        self.potential_duplicate = true
+
+        MarkPotentialDuplicateTrainees.call(
+          trainees: duplicate_trainees.to_a.push(trainee),
+        )
+      end
     end
 
     def training_initiative
