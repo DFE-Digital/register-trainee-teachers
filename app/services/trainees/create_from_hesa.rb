@@ -201,7 +201,7 @@ module Trainees
     end
 
     def enqueue_background_jobs!
-      return if skip_background_jobs
+      return if skip_background_jobs || potential_duplicate?
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
       if trainee.trn.present?
@@ -209,6 +209,10 @@ module Trainees
       else
         Dqt::RegisterForTrnJob.perform_later(trainee)
       end
+    end
+
+    def potential_duplicate?
+      false
     end
 
     def training_initiative
