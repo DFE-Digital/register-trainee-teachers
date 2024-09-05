@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_27_141021) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_05_114659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -648,10 +648,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_141021) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
+    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
-    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
@@ -749,6 +749,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_141021) do
     t.index ["trainee_id", "address", "postcode"], name: "index_placements_on_trainee_id_and_address_and_postcode", unique: true, where: "(school_id IS NULL)"
     t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "((urn IS NOT NULL) AND ((urn)::text <> ''::text) AND (school_id IS NULL))"
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
+  end
+
+  create_table "potential_duplicate_trainees", force: :cascade do |t|
+    t.uuid "group_id", null: false
+    t.bigint "trainee_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_potential_duplicate_trainees_on_group_id"
+    t.index ["trainee_id"], name: "index_potential_duplicate_trainees_on_trainee_id"
   end
 
   create_table "provider_users", force: :cascade do |t|
@@ -1010,6 +1019,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_27_141021) do
   add_foreign_key "lead_partners", "schools"
   add_foreign_key "nationalisations", "nationalities"
   add_foreign_key "nationalisations", "trainees"
+  add_foreign_key "potential_duplicate_trainees", "trainees"
   add_foreign_key "provider_users", "providers"
   add_foreign_key "provider_users", "users"
   add_foreign_key "subject_specialisms", "allocation_subjects"
