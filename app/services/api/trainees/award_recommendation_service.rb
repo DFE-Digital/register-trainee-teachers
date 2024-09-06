@@ -21,6 +21,8 @@ module Api
 
       validates_with AwardRecommendationValidator
 
+      validate :trainee_has_degrees?
+
       def initialize(params, trainee)
         super(params)
 
@@ -44,6 +46,10 @@ module Api
         {
           outcome_date: qts_standards_met_date,
         }
+      end
+
+      def trainee_has_degrees?
+        errors.add(:trainee, :degrees) if trainee.degrees.empty?
       end
     end
   end

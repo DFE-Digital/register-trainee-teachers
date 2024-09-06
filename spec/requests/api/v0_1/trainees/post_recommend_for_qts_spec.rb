@@ -51,6 +51,31 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
       end
     end
 
+    context "when the trainee has no degree information" do
+      let(:trainee) do
+        create(
+          :trainee,
+          :without_degrees,
+          :trn_received,
+        )
+      end
+
+      it "does not recommend the trainee for a qts award" do
+        post "/api/v0.1/trainees/#{trainee.slug}/recommend-for-qts",
+             headers: { authorization: "Bearer #{token}" },
+             params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(trainee.recommended_for_award_at).to be_nil
+        expect(trainee.recommended_for_award?).to be(false)
+
+        expect(response.parsed_body[:errors]).to contain_exactly(
+          "error" => "UnprocessableEntity",
+          "message" => "Trainee degree information must be sumitted before QTS recommendation",
+        )
+      end
+    end
+
     it "does not recommend the trainee for a qts award" do
       post "/api/v0.1/trainees/#{trainee.slug}/recommend-for-qts",
            headers: { authorization: "Bearer #{token}" },
