@@ -25,10 +25,6 @@ module Trainees
           trainee.submit_for_trn!
         end
 
-        around do |example|
-          Timecop.freeze { example.run }
-        end
-
         it "returns the creation audit and the trn audit" do
           expect(subject.map(&:title)).to contain_exactly(
             "Record created",
@@ -51,9 +47,9 @@ module Trainees
         end
 
         it "returns the events in reverse order" do
-          expected_order = trainee.own_and_associated_audits.pluck(:created_at).sort.reverse
+          expected_order = trainee.own_and_associated_audits.pluck(:created_at).sort.reverse.map(&:to_i)
 
-          expect(subject.map(&:date)).to eq(expected_order)
+          expect(subject.map(&:date).map(&:to_i)).to eq(expected_order)
         end
 
         context "when a degree has been created and deleted" do
@@ -109,32 +105,44 @@ module Trainees
       end
 
       context "when a placement has been created, updated and deleted" do
+        let(:school) { create(:school) }
+        let(:new_school) { create(:school) }
+        let(:placement) { create(:placement, school:, trainee:) }
+
         before do
           trainee.update_column(:submitted_for_trn_at, 10.days.ago)
-          placement = create(:placement, trainee:)
-          placement.update!(school: create(:school))
+          placement.update!(school: new_school)
           placement.destroy!
         end
 
         it "returns each of the CRUD events" do
           expect(trainee.own_and_associated_audits.count).to eq(4)
-          expect(subject.count).to eq(4)
+          expect(subject.map(&:title)).to contain_exactly(
+            "Record created",
+            "Placement at #{school.name} added",
+            "Placement changed from #{school.name} to #{new_school.name}",
+            "Placement at #{placement.name} removed",
+          )
         end
       end
 
       context "when multiple placements have been created in the same request" do
-        let(:trainee) { create(:trainee) }
+        let!(:trainee) { create(:trainee) }
+        let!(:placement_one) { create(:placement, trainee:) }
+        let!(:placement_two) { create(:placement, trainee:) }
 
         before do
-          create(:placement, trainee:)
-          create(:placement, trainee:)
           trainee.update_column(:submitted_for_trn_at, 1.day.ago)
           ::Audited::Audit.where(auditable_type: Placement.name).update_all(request_uuid: SecureRandom.uuid)
         end
 
         it "returns all the placement events" do
           expect(trainee.own_and_associated_audits.where(auditable_type: Placement.name).count).to eq(2)
-          expect(subject.count).to eq(3)
+          expect(subject.map(&:title)).to contain_exactly(
+            "Record created",
+            "Placement at #{placement_one.name} added",
+            "Placement at #{placement_two.name} added",
+          )
         end
       end
     end
