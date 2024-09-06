@@ -40,7 +40,6 @@ module Funding
              dependent: :destroy,
              inverse_of: :row
 
-
     def sync_lead_school_and_partner_name
       school_name_changed = changed.include?("lead_school_name")
       partner_name_changed = changed.include?("lead_partner_name")
