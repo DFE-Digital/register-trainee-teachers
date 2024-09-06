@@ -63,8 +63,16 @@ module Trainees
 
     def audits
       own_and_associated_audits
-        .where.not(username: "HESA", auditable_type: "Degree")
-        .or(own_and_associated_audits.where(username: nil))
+        .where(
+          audit_table[:username]
+            .not_eq("HESA")
+            .and(audit_table[:auditable_type].not_eq("Degree"))
+            .or(audit_table[:username].eq(nil)),
+        )
+    end
+
+    def audit_table
+      Audited::Audit.arel_table
     end
   end
 end
