@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePotentialDuplicateTrainees < ActiveRecord::Migration[7.2]
   def change
     create_table :potential_duplicate_trainees do |t|

@@ -8,7 +8,7 @@ module Trainees
 
     context "when no duplicate trainee records exist" do
       it "creates a record for each trainee" do
-        expect{ described_class.call(trainees:) }.to change{ PotentialDuplicateTrainee.count }.by(2)
+        expect { described_class.call(trainees:) }.to change { PotentialDuplicateTrainee.count }.by(2)
       end
     end
   end
