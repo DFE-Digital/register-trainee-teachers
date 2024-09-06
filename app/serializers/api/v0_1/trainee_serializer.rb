@@ -26,6 +26,7 @@ module Api
         applying_for_scholarship
         bursary_tier
         course_max_age
+        ethnic_group
       ].freeze
 
       def initialize(trainee)
