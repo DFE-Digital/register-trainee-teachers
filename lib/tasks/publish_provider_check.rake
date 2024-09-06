@@ -8,7 +8,7 @@ namespace :publish_providers do
     )
 
     puts("Publish providers that match a Register lead school")
-    checker.lead_school_matches.each do |provider|
+    checker.school_matches.each do |provider|
       puts("#{provider['name']} (#{provider['code']})")
     end
 
@@ -31,7 +31,7 @@ namespace :publish_providers do
     end
 
     puts("")
-    puts("Matching lead schools:  #{checker.lead_school_matches.count}")
+    puts("Matching lead schools:  #{checker.school_matches.count}")
     puts("Matching lead partners: #{checker.lead_partner_matches.count}")
     puts("Matching providers:     #{checker.provider_matches.count}")
     puts("Missing providers:      #{checker.missing.count}")
