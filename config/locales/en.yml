@@ -1379,7 +1379,6 @@ en:
         trainee:
           attributes:
             training_route: Select a type of training
-            degrees: "Degree information must be sumitted for trainee before QTS recommendation"
         degree:
           attributes:
             uk_degree:
