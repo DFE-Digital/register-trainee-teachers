@@ -184,6 +184,7 @@
     - lead_school_name
     - lead_school_urn
     - lead_partner_urn
+    - lead_partner_name
     - cohort_level
     - created_at
     - updated_at

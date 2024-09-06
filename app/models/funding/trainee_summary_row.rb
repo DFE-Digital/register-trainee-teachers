@@ -27,6 +27,8 @@ module Funding
 
     self.table_name = "funding_trainee_summary_rows"
 
+    before_save :sync_lead_school_and_partner_name
+
     belongs_to :trainee_summary,
                class_name: "Funding::TraineeSummary",
                foreign_key: :funding_trainee_summary_id,
@@ -37,5 +39,17 @@ module Funding
              foreign_key: :funding_trainee_summary_row_id,
              dependent: :destroy,
              inverse_of: :row
+
+
+    def sync_lead_school_and_partner_name
+      school_name_changed = changed.include?("lead_school_name")
+      partner_name_changed = changed.include?("lead_partner_name")
+
+      if school_name_changed
+        self.lead_partner_name = lead_school_name
+      elsif partner_name_changed
+        self.lead_school_name = lead_partner_name
+      end
+    end
   end
 end
