@@ -25,6 +25,7 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        course_max_age
       ].freeze
 
       def initialize(trainee)
