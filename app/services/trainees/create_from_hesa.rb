@@ -216,7 +216,7 @@ module Trainees
     def check_for_potential_duplicate_trainees!
       duplicate_trainees = Trainees::FindDuplicatesOfHesaTrainee.call(trainee:)
       if duplicate_trainees.present?
-        self.potential_duplicate = true
+        @potential_duplicate = true
 
         MarkPotentialDuplicateTrainees.call(
           trainees: duplicate_trainees.to_a.push(trainee),
