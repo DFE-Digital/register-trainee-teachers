@@ -51,7 +51,7 @@ const setupAutoComplete = (form) => {
           tracker.trackSearch(query)
           return findSchools({
             query,
-            populateResults,
+            populateResults
           })
         },
         templates: renderTemplate,
