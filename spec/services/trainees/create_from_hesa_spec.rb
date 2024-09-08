@@ -50,6 +50,10 @@ module Trainees
       )
     end
 
+    after do
+      FormStore.clear_all(trainee.id)
+    end
+
     describe "HESA information imported from XML" do
       it "updates the Trainee ID, HESA ID and record_source" do
         expect(trainee.provider_trainee_id).to eq(student_attributes[:provider_trainee_id])
