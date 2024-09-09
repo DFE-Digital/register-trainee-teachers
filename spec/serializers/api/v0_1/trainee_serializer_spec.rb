@@ -22,7 +22,6 @@ RSpec.describe Api::V01::TraineeSerializer do
         training_route
         sex
         diversity_disclosure
-        ethnic_group
         ethnicity
         disability_disclosure
         itt_start_date
@@ -39,7 +38,6 @@ RSpec.describe Api::V01::TraineeSerializer do
         trainee_start_date
         reinstate_date
         course_min_age
-        course_max_age
         course_subject_one
         course_subject_two
         course_subject_three
@@ -118,6 +116,10 @@ RSpec.describe Api::V01::TraineeSerializer do
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        course_max_age
+        ethnic_group
+        ethnic_background
+        lead_school_urn
       ].each do |field|
         expect(json.keys).not_to include(field)
       end

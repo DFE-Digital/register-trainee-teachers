@@ -80,7 +80,6 @@ module Api
 
       def diversity_attributes
         attributes = {
-          ethnic_group:,
           ethnicity:,
           disability_disclosure:,
         }
@@ -94,10 +93,6 @@ module Api
           attributes[key] = disability
         end
         attributes
-      end
-
-      def ethnic_group
-        @trainee.ethnic_group
       end
 
       def ethnicity
