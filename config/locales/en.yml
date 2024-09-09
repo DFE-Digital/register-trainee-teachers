@@ -507,8 +507,6 @@ en:
         page_title: Validation errors
       schools:
         index: Schools
-      lead_schools:
-        index: Lead partners
       lead_partners:
         index: Lead partners
       search_schools:
@@ -615,7 +613,6 @@ en:
         course_details: Course details
         training_details: Trainee ID
         placements: Placement details
-        lead_school: School details
         lead_partner: School details
         trainee_data: Trainee data
         schools: Schools
@@ -653,7 +650,6 @@ en:
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
-        lead_school_user: "Associated with <strong>%{lead_school_name}</strong> and can view trainees assigned to that lead partner."
         lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that lead partner."
     state_tag:
       trainee:
@@ -1974,12 +1970,6 @@ en:
     providers:
       edit:
         delete_provider_button: "Delete this provider"
-      users:
-        create:
-          success: User has been successfully added.
-        update:
-          success: User details have been successfully updated.
-    lead_schools:
       users:
         create:
           success: User has been successfully added.
