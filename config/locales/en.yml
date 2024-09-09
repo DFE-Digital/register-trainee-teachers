@@ -107,7 +107,6 @@ en:
   schools:
     view:
       summary_title: Schools
-      lead_school: &lead_partner Lead partner
       lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
@@ -462,9 +461,6 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
-        lead_schools:
-          edit: Lead partner
-          index: Select the lead partner
         lead_partners:
           edit: Lead partner
           index: Select the lead partner
