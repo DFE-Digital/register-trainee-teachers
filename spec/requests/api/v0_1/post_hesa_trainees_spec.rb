@@ -414,7 +414,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     context "when read only attributes are submitted" do
       let(:trn) { "567899" }
-      let(:ethnic_group) { "mixed_ethnic_group" }
       let(:ethnic_background) { "Another Mixed background" }
 
       before do
@@ -427,7 +426,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             data: data.merge(
               trn:,
               ethnicity:,
-              ethnic_group:,
               ethnic_background:,
             ),
           }
@@ -448,7 +446,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
           expect(parsed_body[:trn]).to be_nil
           expect(parsed_body[:ethnicity]).to eq(ethnicity)
-          expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
         end
       end
 
@@ -457,7 +454,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           {
             data: data.merge(
               trn:,
-              ethnic_group:,
               ethnic_background:,
             ),
           }
@@ -476,7 +472,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
           expect(parsed_body[:trn]).to be_nil
           expect(parsed_body[:ethnicity]).to eq("997")
-          expect(parsed_body[:ethnic_group]).to eq("not_provided_ethnic_group")
         end
       end
     end

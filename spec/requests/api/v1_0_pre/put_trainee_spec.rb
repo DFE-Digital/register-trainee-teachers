@@ -594,7 +594,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             data: {
               trn: "567899",
               ethnicity: "899",
-              ethnic_group: "mixed_ethnic_group",
               ethnic_background: "Another Mixed background",
             },
           }
@@ -613,7 +612,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
           expect(parsed_body[:ethnicity]).to eq("899")
           expect(parsed_body[:trn]).to be_nil
-          expect(parsed_body[:ethnic_group]).to eq(trainee.ethnic_group)
         end
       end
 
@@ -622,7 +620,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           {
             data: {
               trn: "567899",
-              ethnic_group: "mixed_ethnic_group",
               ethnic_background: "Another Mixed background",
             },
           }
@@ -642,7 +639,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
           expect(parsed_body[:trn]).to be_nil
           expect(parsed_body[:ethnicity]).to eq(Hesa::CodeSets::Ethnicities::MAPPING.key(ethnic_background))
-          expect(parsed_body[:ethnic_group]).to eq(ethnic_group)
         end
       end
     end
