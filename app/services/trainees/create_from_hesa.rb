@@ -214,6 +214,8 @@ module Trainees
     end
 
     def check_for_potential_duplicate_trainees!
+      return [] unless FeatureService.enabled?(:duplicate_checking)
+
       duplicate_trainees = Trainees::FindDuplicatesOfHesaTrainee.call(trainee:)
       if duplicate_trainees.present?
         @potential_duplicate = true
