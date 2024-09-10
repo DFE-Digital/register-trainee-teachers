@@ -6,7 +6,7 @@ module Partners
   describe LeadPartnerForm, type: :model do
     let(:trainee) { create(:trainee) }
     let(:form_store) { class_double(FormStore) }
-    let(:lead_partner_id) { create(:lead_partner, :lead_school).id }
+    let(:lead_partner_id) { create(:lead_partner, :school).id }
     let(:params) { { "lead_partner_id" => lead_partner_id } }
 
     subject { described_class.new(trainee, params: params, store: form_store) }

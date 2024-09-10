@@ -6735,8 +6735,6 @@ paths:
                         nullable: true
                       dormancy_dttp_id:
                         nullable: true
-                      lead_school_id:
-                        nullable: true
                       employing_school_id:
                         nullable: true
                       apply_application_id:
@@ -6941,7 +6939,6 @@ paths:
                   slug: 2HrdgRnfpzNLxaMF1hkqpxbB
                   dttp_update_sha:
                   dormancy_dttp_id:
-                  lead_school_id:
                   employing_school_id:
                   apply_application_id:
                   applying_for_bursary: false

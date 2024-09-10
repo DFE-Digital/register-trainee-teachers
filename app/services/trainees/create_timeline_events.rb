@@ -45,7 +45,6 @@ module Trainees
       grade
       country
       other_grade
-      lead_school_id
       employing_school_id
       iqts_country
       withdraw_date

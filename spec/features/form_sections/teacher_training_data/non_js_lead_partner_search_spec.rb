@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "Non-JS lead partner search" do
-  let!(:discarded_lead_partner) { create(:lead_partner, :lead_school, :discarded) }
+  let!(:discarded_lead_partner) { create(:lead_partner, :school, :discarded) }
 
   before do
     given_i_am_authenticated
@@ -57,7 +57,7 @@ private
   end
 
   def and_a_number_of_lead_partners_exists
-    @lead_partners = create_list(:lead_partner, 5, :lead_school)
+    @lead_partners = create_list(:lead_partner, 5, :school)
   end
 
   def and_i_am_on_the_lead_partners_page_filtered_by_my_query

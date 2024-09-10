@@ -52,7 +52,7 @@ private
   end
 
   def and_a_number_of_lead_partners_exist
-    @lead_partners = create_list(:lead_partner, 5, :lead_school)
+    @lead_partners = create_list(:lead_partner, 5, :school)
   end
 
   def and_i_visit_the_trainee_edit_lead_partner_page

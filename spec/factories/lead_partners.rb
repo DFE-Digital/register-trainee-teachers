@@ -5,8 +5,8 @@ FactoryBot.define do
     name { school&.name || provider&.name }
     urn { Faker::Number.unique.number(digits: 6) }
 
-    trait :lead_school do
-      record_type { LeadPartner::LEAD_SCHOOL }
+    trait :school do
+      record_type { LeadPartner::SCHOOL }
       school
 
       before(:create) do |record|

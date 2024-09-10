@@ -807,7 +807,6 @@ en:
         grade: *grade
         graduation_year: *graduation_year
         country: *country
-        lead_school_id: *lead_school
         employing_school_id: *employing_school
         school_id: *lead_school
         lead_partner_id: *lead_partner
@@ -1480,23 +1479,12 @@ en:
           attributes:
             trainee:
               incomplete: Review all of the trainee’s details before submitting
-        system_admin/user_lead_schools_form:
-          attributes:
-            query:
-              blank: Enter a school unique reference number (URN), name or postcode
-              length: Enter at least two characters
-            lead_school_id:
-              blank: Select a lead partner or search again
-            results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
-            no_results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
         system_admin/user_lead_partners_form:
           attributes:
             query:
               blank: Enter a partner unique reference number (URN), name or postcode
               length: Enter at least two characters
-            lead_school_id:
+            lead_partner_id:
               blank: Select a lead partner or search again
             results_search_again_query:
               blank: Enter a partner unique reference number (URN), name or postcode
@@ -1879,17 +1867,6 @@ en:
           attributes:
             specialism:
               blank: Select a specialism
-        schools/lead_school_form:
-          attributes:
-            query:
-              blank: Enter a school unique reference number (URN), name or postcode
-              both_fields_are_present: Select a lead partner or select lead partner not applicable
-            lead_school_id:
-              blank: Select a lead partner or search again
-            results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
-            no_results_search_again_query:
-              blank: Enter a school unique reference number (URN), name or postcode
         schools/employing_school_form:
           attributes:
             query:
@@ -1903,8 +1880,6 @@ en:
               blank: Enter a school unique reference number (URN), name or postcode
         schools/form_validator:
           attributes:
-            lead_school_id:
-              not_valid: The lead partner section is not valid for this trainee
             lead_partner_id:
               not_valid: The lead partner section is not valid for this trainee
             employing_school_id:
@@ -2034,7 +2009,7 @@ en:
     funding_uploads:
       new:
         lead_partner_trainee_summary: You can upload a CSV file to make monthly funding payments available to trainees at lead partners.
-        lead_school_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
+        lead_partner_payment_schedule: You can upload a CSV file to make monthly funding payments available to lead partners.
         provider_trainee_summary: You can upload a CSV file to make monthly funding payments available to provider trainees.
         provider_payment_schedule: You can upload a CSV file to make monthly funding payments available to providers.
   api:

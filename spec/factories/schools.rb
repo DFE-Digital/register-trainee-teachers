@@ -25,15 +25,5 @@ FactoryBot.define do
         create_list(:trainee, evaluator.employing_trainees_count, employing_school_id: school.id)
       end
     end
-
-    trait :with_lead_trainees do
-      transient do
-        lead_trainees_count { 2 }
-      end
-
-      after(:create) do |school, evaluator|
-        create_list(:trainee, evaluator.lead_trainees_count, lead_school_id: school.id)
-      end
-    end
   end
 end

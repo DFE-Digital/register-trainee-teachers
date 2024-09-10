@@ -68,7 +68,6 @@ data_sources:
       }
       employing_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
       end_academic_cycle_id: "SELECT id, extract(year FROM start_date) || ' to ' || extract(year FROM end_date) FROM academic_cycles WHERE id in {value}"
-      lead_school_id: "SELECT id, name || ' (' || postcode || ')' FROM schools WHERE id in {value}"
       provider_id: "SELECT id, name FROM providers WHERE id in {value}"
       # From https://github.com/DFE-Digital/register-trainee-teachers/blob/df3c3171bce938eca6f89e4ddf29beca6da0be56/app/models/trainee.rb#L134
       # Using 'trainee_state' rather than 'state' to avoid changing other columns that use the name 'state'

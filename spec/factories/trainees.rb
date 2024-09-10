@@ -558,7 +558,7 @@ FactoryBot.define do
 
     trait :with_lead_partner do
       transient do
-        record_type { :lead_school }
+        record_type { :school }
       end
 
       after(:create) do |trainee, evaluator|

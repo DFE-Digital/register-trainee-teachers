@@ -12,9 +12,9 @@ describe TraineePolicy do
   let(:read_only_provider_user) { user_with_organisation(create(:user, providers: [provider], read_only: true), provider) }
   let(:other_provider_user) { user_with_organisation(create(:user, providers: [other_provider]), other_provider) }
   let(:school) { create(:school) }
-  let(:lead_partner) { create(:lead_partner, :lead_school, school:) }
+  let(:lead_partner) { create(:lead_partner, :school, school:) }
   let(:lead_partner_user) { user_with_organisation(create(:user, providers: []), lead_partner) }
-  let(:other_lead_partner_user) { user_with_organisation(create(:user, providers: []), create(:lead_partner, :lead_school)) }
+  let(:other_lead_partner_user) { user_with_organisation(create(:user, providers: []), create(:lead_partner, :school)) }
 
   let(:provider_trainee) { create(:trainee, provider:) }
   let(:unaccredited_provider_trainee) { create(:trainee, provider: unaccredited_provider) }

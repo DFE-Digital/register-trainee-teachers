@@ -15,7 +15,7 @@ describe LeadPartnerPolicy do
 
   describe LeadPartnerPolicy::Scope do
     let!(:hei_lead_partner) { create(:lead_partner, :hei, name: "AAA") }
-    let!(:school_lead_partner) { create(:lead_partner, :lead_school, name: "BBB") }
+    let!(:school_lead_partner) { create(:lead_partner, :school, name: "BBB") }
 
     subject { described_class.new(user, LeadPartner).resolve }
 

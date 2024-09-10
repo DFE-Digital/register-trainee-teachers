@@ -4,10 +4,10 @@ require "rails_helper"
 
 describe LeadPartner do
   context "lead school" do
-    subject(:lead_partner) { create(:lead_partner, :lead_school) }
+    subject(:lead_partner) { create(:lead_partner, :school) }
 
     it "creates a lead school - lead partner" do
-      expect(lead_partner).to be_lead_school
+      expect(lead_partner).to be_school
     end
   end
 
@@ -29,7 +29,7 @@ describe LeadPartner do
 
   describe "validations" do
     context "for a lead school" do
-      subject(:lead_partner) { build(:lead_partner, :lead_school) }
+      subject(:lead_partner) { build(:lead_partner, :school) }
 
       it { is_expected.to validate_presence_of(:urn) }
       it { is_expected.to validate_uniqueness_of(:urn).case_insensitive }
@@ -62,7 +62,7 @@ describe LeadPartner do
 
   describe "#funding_payment_schedules" do
     context "when schools exists" do
-      subject(:lead_partner) { create(:lead_partner, :lead_school) }
+      subject(:lead_partner) { create(:lead_partner, :school) }
 
       it "returns the school#funding_payment_schedules" do
         expect(lead_partner.funding_payment_schedules).to eq(
@@ -92,7 +92,7 @@ describe LeadPartner do
 
   describe "#funding_trainee_summaries" do
     context "when schools exists" do
-      subject(:lead_partner) { create(:lead_partner, :lead_school) }
+      subject(:lead_partner) { create(:lead_partner, :school) }
 
       it "returns the school#funding_trainee_summaries" do
         expect(lead_partner.funding_trainee_summaries).to eq(
