@@ -17,10 +17,7 @@ module Trainees
     attr_reader :trainee
 
     def potential_duplicates
-      trainee.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
-        .where(date_of_birth: trainee.date_of_birth)
-        .where("last_name ILIKE ?", trainee.last_name)
-        .where("id != ?", trainee.id)
+      Trainee.potential_duplicates_of(trainee)
     end
 
     def confirmed_duplicate?(duplicate_trainee)
