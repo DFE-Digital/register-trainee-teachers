@@ -181,6 +181,7 @@
     - funding_trainee_summary_id
     - subject
     - route
+    - training_route
     - lead_school_name
     - lead_school_urn
     - lead_partner_urn

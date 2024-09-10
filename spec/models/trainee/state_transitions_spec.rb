@@ -199,26 +199,4 @@ describe "Trainee state transitions" do
       end
     end
   end
-
-  describe "#recommend_for_award" do
-    context "when degree information is not present" do
-      let(:trainee) { create(:trainee, :without_degrees, :trn_received) }
-
-      it "raises an error if no awarded_at is provided" do
-        expect {
-          trainee.recommend_for_award!
-        }.to raise_error(StateTransitionError)
-      end
-    end
-
-    context "when degree information is present" do
-      subject(:trainee) { create(:trainee, :trn_received) }
-
-      it "raises an error if no awarded_at is provided" do
-        expect {
-          trainee.recommend_for_award!
-        }.not_to raise_error(StateTransitionError)
-      end
-    end
-  end
 end

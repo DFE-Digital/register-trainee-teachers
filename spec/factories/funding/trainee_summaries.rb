@@ -25,7 +25,13 @@ FactoryBot.define do
         bursaries = [AllocationSubjects::MATHEMATICS, AllocationSubjects::PHYSICS].map do |subject|
           build(:trainee_summary_row, :with_bursary_amount, subject: subject, lead_school_name: nil, lead_school_urn: nil)
         end
-        scholarships = [build(:trainee_summary_row, :with_scholarship_amount, subject: AllocationSubjects::CHEMISTRY, route: "School Direct tuition fee")]
+        scholarships = [
+          build(:trainee_summary_row,
+                :with_scholarship_amount,
+                subject: AllocationSubjects::CHEMISTRY,
+                route: "School Direct tuition fee",
+                training_route: "school_direct_tuition_fee"),
+        ]
         tiered_bursaries = [build(:trainee_summary_row, :with_tiered_bursary_amount, subject: AllocationSubjects::CLASSICS)]
 
         bursaries + scholarships + tiered_bursaries
@@ -43,6 +49,7 @@ FactoryBot.define do
             :with_scholarship_amount,
             subject: AllocationSubjects::CHEMISTRY,
             route: "School Direct tuition fee",
+            training_route: "school_direct_tuition_fee",
           ),
         ]
         tiered_bursaries = [

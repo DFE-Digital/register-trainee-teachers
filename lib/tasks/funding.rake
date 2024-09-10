@@ -28,4 +28,9 @@ namespace :funding do
     missing_urns = Funding::LeadPartnerTraineeSummariesImporter.call(attributes:)
     abort("Lead school URNs: #{missing_urns.join(', ')} not found") unless missing_urns.empty?
   end
+
+  desc "Set the training_route to the corresponding translation key. The update will only be applied to records of the current academic year unless specified and where the training_route is nil: rails funding:generate_trainee_summary_row_training_route or 'funding:generate_trainee_summary_row_training_route[2024/25]'"
+  task :generate_trainee_summary_row_training_route, %i[academic_year] => :environment do |_, args|
+    Funding::UpdateTraineeSummaryRowRouteService.call(args[:academic_year])
+  end
 end

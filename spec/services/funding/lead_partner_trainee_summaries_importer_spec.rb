@@ -4,6 +4,19 @@ require "rails_helper"
 
 module Funding
   describe LeadPartnerTraineeSummariesImporter do
+    describe described_class::SummaryRowMapper do
+      describe "::TRAINING_ROUTES" do
+        subject { described_class::TRAINING_ROUTES }
+
+        it do
+          expect(subject).to eq(
+            "School Direct salaried" => "school_direct_salaried",
+            "Post graduate teaching apprenticeship" => "pg_teaching_apprenticeship",
+          )
+        end
+      end
+    end
+
     context "valid attributes" do
       let(:summaries_attributes) do
         {
@@ -45,7 +58,7 @@ module Funding
               "Lead school URN" => "2222",
               "Lead school name" => "Lead School 2",
               "Subject" => "Physics",
-              "Description" => "School Direct salaried",
+              "Description" => " School Direct salaried ",
               "Funding/trainee" => "24000",
               "Trainees" => "0",
               "Total Funding" => "24000",
@@ -85,6 +98,7 @@ module Funding
         let(:lead_school_one_expected_attibutes) {
           {
             "route" => "School Direct salaried",
+            "training_route" => "school_direct_salaried",
             "lead_school_name" => "Lead School 1",
             "lead_school_urn" => "1111",
           }
@@ -94,6 +108,7 @@ module Funding
           {
             "subject" => "Physics",
             "route" => "School Direct salaried",
+            "training_route" => "school_direct_salaried",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "2222",
           }

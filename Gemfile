@@ -103,7 +103,7 @@ gem "yabeda-prometheus"
 gem "yabeda-rails"
 
 # Run data migrations alongside schema migrations
-gem "data_migrate", "11.0.0.rc3"
+gem "data_migrate", "11.0.0"
 
 # Gov Notify
 gem "govuk_notify_rails"
@@ -118,7 +118,7 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.5.0"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.5.1"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.1"
@@ -166,7 +166,7 @@ group :development, :test do
   gem "bullet"
 
   # Testing framework
-  gem "rspec-rails", "~> 6.1.4"
+  gem "rspec-rails", "~> 7.0.1"
 
   gem "rails-controller-testing"
 
