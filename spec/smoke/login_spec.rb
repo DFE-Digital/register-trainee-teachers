@@ -25,8 +25,8 @@ describe "User login spec" do
 
   scenario "signing in successfully", js: true do
     visit_sign_in_page
-    fill_in_login_credentials
-    submit_login_form
+    login_with_username
+    login_with_password
     verify_successful_login
     sign_out
   end
@@ -38,12 +38,13 @@ private
     find_button("Sign in using DfE Sign-in").click
   end
 
-  def fill_in_login_credentials
+  def login_with_username
     fill_in "username", with: ENV.fetch("SMOKE_TEST_USERNAME", nil)
-    fill_in "password", with: ENV.fetch("SMOKE_TEST_PASSWORD", nil)
+    find_button("Continue").click
   end
 
-  def submit_login_form
+  def login_with_password
+    fill_in "password", with: ENV.fetch("SMOKE_TEST_PASSWORD", nil)
     find_button("Sign in").click
   end
 
