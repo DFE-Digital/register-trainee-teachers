@@ -29,7 +29,7 @@ describe "User login spec" do
       login_with_username
       login_with_password
     else
-      # NOTE: This can bew removed once DSI has swiched over their login flow
+      # NOTE: This can be removed once DSI has swiched over their login flow
       fill_in "username", with: ENV.fetch("SMOKE_TEST_USERNAME", nil)
       fill_in "password", with: ENV.fetch("SMOKE_TEST_PASSWORD", nil)
       find_button("Sign in").click
