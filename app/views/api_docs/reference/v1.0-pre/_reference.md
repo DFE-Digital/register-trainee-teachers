@@ -1240,11 +1240,11 @@ Withdrawal details
         </p>
         <p class="govuk-body">
           The reason(s) for the withdrawal. Valid values are arrays containing one or more of these string values: 
-          `financial_problems`, `another_reason`, `got_a_job`, `problems_with_their_health`, `unknown`,
-          `could_not_give_enough_time`, `course_was_not_suitable`, `did_not_make_progress`,
-          `did_not_meet_entry_requirements`, `does_not_want_to_become_a_teacher`, `family_problems`,
-          `stopped_responding_to_messages`, `teaching_placement_problems`, `unacceptable_behaviour`,
-          `unhappy_with_course_provider_or_employing_school`.
+          <code>financial_problems</code>, <code>another_reason</code>, <code>got_a_job</code>, <code>problems_with_their_health</code>, <code>unknown</code>,
+          <code>could_not_give_enough_time</code>, <code>course_was_not_suitable</code>, <code>did_not_make_progress</code>,
+          <code>did_not_meet_entry_requirements</code>, <code>does_not_want_to_become_a_teacher</code>, <code>family_problems</code>,
+          <code>stopped_responding_to_messages</code>, <code>teaching_placement_problems</code>, <code>unacceptable_behaviour</code>,
+          <code>unhappy_with_course_provider_or_employing_school</code>.
         </p>
     </dd>
 </div>
@@ -1284,6 +1284,26 @@ Withdrawal details
         </p>
     </dd>
 </div>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">Example request body</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "reasons": [
+          "got_a_job",
+          "could_not_give_enough_time",
+          "course_was_not_suitable"
+        ],
+        "withdraw_date": "2024-02-15 15:17:09 UTC",
+        "withdraw_reasons_details": "I decided to pursue other career options because I was not able to dedicate enough time to teacher training",
+        "withdraw_reasons_dfe_details": "The course did not match my expectations"
+      }
+    }
+    </pre>
+  </div>
+</details>
 
 #### Possible responses
 
