@@ -20,7 +20,7 @@ require "spec_helper_smoke"
 
 describe "User login spec" do
   before do
-    skip "DfE sign-in not enabled" if Settings.features.sign_in_method != "dfe-sign-in" || Settings.environment.name == "staging"
+    skip "DfE sign-in not enabled" if Settings.features.sign_in_method != "dfe-sign-in"
   end
 
   scenario "signing in successfully", js: true do
