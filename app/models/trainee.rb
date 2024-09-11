@@ -351,7 +351,10 @@ class Trainee < ApplicationRecord
       .where(date_of_birth: trainee.date_of_birth)
       .where("last_name ILIKE ?", trainee.last_name)
       .where("id != ?", trainee.id)
-      .where(training_route: trainee.training_route, )
+      .where(
+        training_route: trainee.training_route,
+        start_academic_cycle_id: trainee.start_academic_cycle_id,
+      )
   end
 
   audited associated_with: :provider

@@ -21,12 +21,7 @@ module Trainees
     end
 
     def confirmed_duplicate?(duplicate_trainee)
-      matching_recruitment_cycle_year?(duplicate_trainee) &&
       at_least_one_match_identifying_attribute?(duplicate_trainee)
-    end
-
-    def matching_recruitment_cycle_year?(duplicate_trainee)
-      duplicate_trainee.start_academic_cycle&.start_date&.year == trainee.start_academic_cycle&.start_date&.year
     end
 
     def at_least_one_match_identifying_attribute?(duplicate_trainee)
