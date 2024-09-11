@@ -16,13 +16,13 @@ describe SendWelcomeEmailService do
   after { Timecop.return }
 
   context "when the user has not logged in before" do
-    context "lead school user" do
+    context "lead partner user" do
       let(:user) do
         spy(
           first_name: "Meowington",
           email: "meowington@cat.net",
           welcome_email_sent_at: nil,
-          lead_schools: [build(:school)],
+          lead_partners: [build(:lead_partner)],
         )
       end
 
@@ -54,7 +54,6 @@ describe SendWelcomeEmailService do
           first_name: "Meowington",
           email: "meowington@cat.net",
           welcome_email_sent_at: nil,
-          lead_schools: [],
           lead_partners: [build(:lead_partner, :school)],
         )
       end
@@ -81,13 +80,12 @@ describe SendWelcomeEmailService do
       end
     end
 
-    context "not a lead school or lead partner user" do
+    context "not a lead partner user" do
       let(:user) do
         spy(
           first_name: "Meowington",
           email: "meowington@cat.net",
           welcome_email_sent_at: nil,
-          lead_schools: [],
           lead_partners: [],
         )
       end
@@ -102,12 +100,12 @@ describe SendWelcomeEmailService do
     end
   end
 
-  context "when a lead school user has logged in before" do
+  context "when a lead partner user has logged in before" do
     let(:user) do
       spy(
         first_name: "Meowington",
         welcome_email_sent_at: Time.zone.local(2021, 1, 1),
-        lead_schools: [build(:school)],
+        lead_partners: [build(:lead_partner)],
       )
     end
 
@@ -132,7 +130,6 @@ describe SendWelcomeEmailService do
       spy(
         first_name: "Meowington",
         welcome_email_sent_at: Time.zone.local(2021, 1, 1),
-        lead_schools: [],
         lead_partners: [build(:lead_partner, :school)],
       )
     end
