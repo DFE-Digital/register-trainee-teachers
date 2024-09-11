@@ -203,7 +203,7 @@ module Trainees
     end
 
     def enqueue_background_jobs!
-      return if skip_background_jobs || potential_duplicate?
+      return if skip_background_jobs || (potential_duplicate? && trainee.trn.blank?)
       return unless FeatureService.enabled?(:integrate_with_dqt)
 
       if trainee.trn.present?
