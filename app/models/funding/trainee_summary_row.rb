@@ -58,7 +58,7 @@ module Funding
       self.class.human_attribute_name(training_route)
     end
 
-	def sync_lead_school_and_partner_name
+    def sync_lead_school_and_partner_name
       school_name_changed = changed.include?("lead_school_name")
       partner_name_changed = changed.include?("lead_partner_name")
 

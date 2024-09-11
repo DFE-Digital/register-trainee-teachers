@@ -75,6 +75,7 @@ module Funding
       end
 
       it "syncs the lead school name and lead partner name" do
+        row = create(:trainee_summary_row, trainee_summary:)
         row.update(lead_school_name: "School")
         expect(row.lead_partner_name).to eq("School")
         row.update(lead_partner_name: "Partner")
