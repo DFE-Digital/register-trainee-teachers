@@ -346,7 +346,7 @@ class Trainee < ApplicationRecord
   scope :with_trn, -> { where.not(trn: nil) }
   scope :without_trn, -> { where(trn: nil) }
 
-  scope :potential_duplicates_of, ->(trainee) do
+  scope :potential_duplicates_of, lambda { |trainee|
     trainee.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
       .where(date_of_birth: trainee.date_of_birth)
       .where("last_name ILIKE ?", trainee.last_name)
@@ -355,7 +355,7 @@ class Trainee < ApplicationRecord
         training_route: trainee.training_route,
         start_academic_cycle_id: trainee.start_academic_cycle_id,
       )
-  end
+  }
 
   audited associated_with: :provider
   has_associated_audits
