@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_12_135058) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_12_140127) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -218,7 +218,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_12_135058) do
     t.string "provider_trainee_id"
     t.string "last_names"
     t.string "first_names"
-    t.string "lead_school"
     t.string "qts_or_eyts"
     t.string "route"
     t.string "phase"

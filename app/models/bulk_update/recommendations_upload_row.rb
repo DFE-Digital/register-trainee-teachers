@@ -10,7 +10,6 @@
 #  first_names                           :string
 #  last_names                            :string
 #  lead_partner                          :string
-#  lead_school                           :string
 #  phase                                 :string
 #  qts_or_eyts                           :string
 #  route                                 :string
@@ -35,10 +34,6 @@
 #  fk_rails_...  (matched_trainee_id => trainees.id)
 #
 class BulkUpdate::RecommendationsUploadRow < ApplicationRecord
-  include LeadSchoolMigratable
-
-  set_lead_columns :lead_school, :lead_partner
-
   belongs_to :recommendations_upload,
              class_name: "BulkUpdate::RecommendationsUpload",
              foreign_key: :bulk_update_recommendations_upload_id,
