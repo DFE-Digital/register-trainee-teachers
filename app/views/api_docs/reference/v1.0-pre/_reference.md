@@ -1127,12 +1127,14 @@ Degree details
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": {
-        "grade": "02",
-        "subject": "100425",
-        "institution": "0116",
-        "uk_degree": "083",
-        "graduation_year": "2012-07-31"
+    "data": {
+      "grade": "02",
+      "subject": "100425",
+      "institution": "0117",
+      "uk_degree": "083",
+      "graduation_year": "2015-01-01",
+      "country": "GB",
+      "locale_code": "uk"
       }
     }
     </pre>
@@ -3464,6 +3466,20 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>2012-07-31</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string, required
+      </p>
+      <p class="govuk-body">
+        The locale code `uk` or `non_uk`.
+      </p>
+      <p class="govuk-body">
+        Example: <code>uk</code>
       </p>
     </dd>
   </div>
