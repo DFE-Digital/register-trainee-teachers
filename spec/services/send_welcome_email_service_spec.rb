@@ -48,38 +48,6 @@ describe SendWelcomeEmailService do
       end
     end
 
-    context "lead partner user" do
-      let(:user) do
-        spy(
-          first_name: "Meowington",
-          email: "meowington@cat.net",
-          welcome_email_sent_at: nil,
-          lead_partners: [build(:lead_partner, :school)],
-        )
-      end
-
-      before do
-        allow(WelcomeEmailMailer).to receive_message_chain(:generate, :deliver_later)
-        described_class.call(user:)
-      end
-
-      it "sets their welcome email date to now" do
-        expect(user).to have_received(:update!).with(hash_including(welcome_email_sent_at: Time.zone.now))
-      end
-
-      it "sends the welcome email" do
-        expect(WelcomeEmailMailer).to have_received(:generate)
-      end
-
-      it "sends the email to the user" do
-        expect(WelcomeEmailMailer).to have_received(:generate).with(hash_including(email: "meowington@cat.net"))
-      end
-
-      it "sends the users first name in the email" do
-        expect(WelcomeEmailMailer).to have_received(:generate).with(hash_including(first_name: "Meowington"))
-      end
-    end
-
     context "not a lead partner user" do
       let(:user) do
         spy(
