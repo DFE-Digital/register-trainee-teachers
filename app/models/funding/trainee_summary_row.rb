@@ -6,6 +6,7 @@
 #
 #  id                         :bigint           not null, primary key
 #  cohort_level               :string
+#  lead_partner_name          :string
 #  lead_partner_urn           :string
 #  lead_school_name           :string
 #  lead_school_urn            :string
