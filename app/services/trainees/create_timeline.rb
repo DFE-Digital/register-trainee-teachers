@@ -17,6 +17,8 @@ module Trainees
 
     attr_reader :trainee, :current_user
 
+    delegate :own_and_associated_audits, to: :trainee
+
     def events
       filtered_audits.map { |audit| CreateTimelineEvents.call(audit:, current_user:) }
     end
@@ -60,9 +62,17 @@ module Trainees
     end
 
     def audits
-      trainee
-        .own_and_associated_audits
-        .where.not("username = ? AND auditable_type = ?", "HESA", "Degree")
+      own_and_associated_audits
+        .where(
+          audit_table[:username]
+            .not_eq("HESA")
+            .and(audit_table[:auditable_type].not_eq("Degree"))
+            .or(audit_table[:username].eq(nil)),
+        )
+    end
+
+    def audit_table
+      Audited::Audit.arel_table
     end
   end
 end

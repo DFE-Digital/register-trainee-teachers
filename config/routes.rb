@@ -186,7 +186,6 @@ Rails.application.routes.draw do
         resource :confirm_courses, only: %i[show update], path: "/confirm-course"
       end
 
-      resource :timeline, only: :show
       resource :admin, only: :show
 
       resource :subject_specialism, only: %i[edit update], path: "/subject-specialism/:position"

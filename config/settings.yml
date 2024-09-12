@@ -89,6 +89,7 @@ features:
   funding_uploads: true
   register_api: true
   itt_reform: true
+  duplicate_checking: false
 dfe_sign_in:
   # Our service name
   identifier: rtt

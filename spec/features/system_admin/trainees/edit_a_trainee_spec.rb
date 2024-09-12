@@ -26,9 +26,19 @@ feature "Edit a trainee" do
     and_i_see_the_trainee_record_page
     and_i_click_on_personal_details
     then_i_see_the_updated_degree_details
+    when_i_click_on_timeline_tab
+    then_i_see_the_timeline_details
   end
 
 private
+
+  def then_i_see_the_timeline_details
+    expect(timeline_page).to have_content("Degree added")
+  end
+
+  def when_i_click_on_timeline_tab
+    record_page.timeline_tab.click
+  end
 
   def then_i_see_the_updated_degree_details
     expect(record_page.degree_detail).to have_content(degree_template.uk_degree)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class FindDuplicates
+  class FindDuplicatesOfApplyApplication
     include ServicePattern
 
     def initialize(application_record:)

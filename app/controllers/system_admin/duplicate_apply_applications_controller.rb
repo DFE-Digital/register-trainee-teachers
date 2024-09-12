@@ -14,7 +14,7 @@ module SystemAdmin
       @apply_application = ApplyApplication.find(params[:id])
       @candidate_name = @apply_application.candidate_full_name
 
-      @duplicate_trainees = Trainees::FindDuplicates.call(application_record: @apply_application)
+      @duplicate_trainees = Trainees::FindDuplicatesOfApplyApplication.call(application_record: @apply_application)
       @exact_duplicates = @duplicate_trainees.present?
       @duplicate_trainees = Trainees::FindPotentialDuplicates.call(application_record: @apply_application) if @duplicate_trainees.blank?
 

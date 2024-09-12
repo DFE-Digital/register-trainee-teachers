@@ -50,7 +50,7 @@ module Trainees
                 :disability_uuids
 
     def trainee_already_exists?
-      Trainees::FindDuplicates.call(application_record:).present?
+      Trainees::FindDuplicatesOfApplyApplication.call(application_record:).present?
     end
 
     def mapped_attributes

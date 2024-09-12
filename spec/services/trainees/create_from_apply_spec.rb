@@ -60,7 +60,7 @@ module Trainees
     subject(:create_trainee_from_apply) { described_class.call(application: apply_application) }
 
     before do
-      allow(Trainees::FindDuplicates).to receive(:call).and_return(duplicates)
+      allow(Trainees::FindDuplicatesOfApplyApplication).to receive(:call).and_return(duplicates)
     end
 
     it "creates a draft trainee" do
