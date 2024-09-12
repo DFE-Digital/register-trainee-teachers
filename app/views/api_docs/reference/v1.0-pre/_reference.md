@@ -1002,8 +1002,9 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "urn": "123456",
-        "name": "Placement"
+        "urn": "343452",
+        "name": "Oxford School",
+        "postcode": "OX1 1AA"
       }
     }
     </pre>
