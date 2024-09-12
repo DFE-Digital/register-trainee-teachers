@@ -594,7 +594,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             data: {
               trn: "567899",
               ethnicity: "899",
-              ethnic_background: "Another Mixed background",
             },
           }
         end
@@ -620,7 +619,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           {
             data: {
               trn: "567899",
-              ethnic_background: "Another Mixed background",
             },
           }
         end

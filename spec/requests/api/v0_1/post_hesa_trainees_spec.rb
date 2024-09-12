@@ -414,7 +414,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     context "when read only attributes are submitted" do
       let(:trn) { "567899" }
-      let(:ethnic_background) { "Another Mixed background" }
 
       before do
         post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -426,7 +425,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             data: data.merge(
               trn:,
               ethnicity:,
-              ethnic_background:,
             ),
           }
         end
@@ -454,7 +452,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           {
             data: data.merge(
               trn:,
-              ethnic_background:,
             ),
           }
         end
