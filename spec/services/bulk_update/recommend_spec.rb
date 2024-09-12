@@ -9,6 +9,10 @@ module BulkUpdate
 
     subject { described_class.call(recommendations_upload:) }
 
+    before do
+      allow(Trainees::FindDuplicatesOfHesaTrainee).to receive(:call).and_return([])
+    end
+
     describe "#call" do
       context "when the trainee is trn_received" do
         let(:trainee) { create(:trainee, :trn_received) }

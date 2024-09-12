@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class FindPotentialDuplicates < FindDuplicates
+  class FindPotentialDuplicates < FindDuplicatesOfApplyApplication
     def call
       potential_duplicates
     end
