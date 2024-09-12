@@ -70,15 +70,4 @@ RSpec.configure do |config|
   config.after do
     Timecop.return if use_next_academic_year
   end
-
-  config.before do |example|
-    RSpec::OpenAPI.title = "Register API"
-
-    if (match = example.metadata[:file_path].match(%r{spec/requests/api/(v\d+_\d+(_pre)?)}))
-      version = match[1].sub("_", ".").sub("_pre", "-pre")
-
-      RSpec::OpenAPI.application_version = version
-      RSpec::OpenAPI.path = "public/openapi/#{version}.yaml"
-    end
-  end
 end
