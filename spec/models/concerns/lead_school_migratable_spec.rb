@@ -47,11 +47,11 @@ describe LeadSchoolMigratable do
 
   context "when neither lead_partner nor lead_school are changed" do
     it "does not change lead_partner" do
-      expect { row.update(route: "12345") }.to_not change { row.lead_partner_urn }
+      expect { row.update(route: "12345") }.not_to change { row.lead_partner_urn }
     end
 
     it "does not change lead_school" do
-      expect { row.update(route: "12345") }.to_not change { row.lead_school_urn }
+      expect { row.update(route: "12345") }.not_to change { row.lead_school_urn }
     end
   end
 end
