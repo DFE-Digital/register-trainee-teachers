@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Trainees
-  describe FindDuplicates do
+  describe FindDuplicatesOfApplyApplication do
     let(:candidate_attributes) { {} }
     let(:course_attributes) { {} }
     let(:application_record) { create(:apply_application, application: application_data) }
