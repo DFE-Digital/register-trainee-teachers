@@ -10,6 +10,10 @@ module Funding
     end
 
     describe "Lead School Migration" do
+      let(:user) { create(:user) }
+      let(:summary) { create(:trainee_summary, payable: user.providers.first) }
+      let(:row) { create(:trainee_summary_row, trainee_summary: summary) }
+
       it "includes the LeadSchoolMigratable concern" do
         expect(described_class.included_modules).to include(LeadSchoolMigratable)
       end
@@ -68,6 +72,14 @@ module Funding
             )
           end
         end
+      end
+
+      it "syncs the lead school name and lead partner name" do
+        row = create(:trainee_summary_row, trainee_summary:)
+        row.update(lead_school_name: "School")
+        expect(row.lead_partner_name).to eq("School")
+        row.update(lead_partner_name: "Partner")
+        expect(row.lead_school_name).to eq("Partner")
       end
     end
   end

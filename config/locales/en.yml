@@ -107,7 +107,6 @@ en:
   schools:
     view:
       summary_title: Schools
-      lead_school: &lead_school Lead partner
       lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
@@ -293,7 +292,6 @@ en:
         avoidable: Could the Department of Education have done anything to avoid the candidate withdawning?
     lead_partner_and_employing_school_details:
       summary_title: Schools
-      lead_school_key: Lead partner
       lead_partner_key: Lead partner
       employing_school_key: Employing school
     placement_detail: &placement_detail
@@ -463,9 +461,6 @@ en:
           sort_by: Sort by
           date_updated: Date updated
           last_name: Last name
-        lead_schools:
-          edit: Lead partner
-          index: Select the lead partner
         lead_partners:
           edit: Lead partner
           index: Select the lead partner
@@ -512,8 +507,6 @@ en:
         page_title: Validation errors
       schools:
         index: Schools
-      lead_schools:
-        index: Lead partners
       lead_partners:
         index: Lead partners
       search_schools:
@@ -620,7 +613,6 @@ en:
         course_details: Course details
         training_details: Trainee ID
         placements: Placement details
-        lead_school: School details
         lead_partner: School details
         trainee_data: Trainee data
         schools: Schools
@@ -658,7 +650,6 @@ en:
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
-        lead_school_user: "Associated with <strong>%{lead_school_name}</strong> and can view trainees assigned to that lead partner."
         lead_partner_user: "Associated with <strong>%{lead_partner_name}</strong> and can view trainees assigned to that lead partner."
     state_tag:
       trainee:
@@ -808,9 +799,9 @@ en:
         graduation_year: *graduation_year
         country: *country
         employing_school_id: *employing_school
-        school_id: *lead_school
+        school_id: *lead_partner
         lead_partner_id: *lead_partner
-        partner_id: *lead_school
+        partner_id: *lead_partner
         trainee_start_date: *trainee_start_date
         trainee_start_date_radio_option: Trainee’s start date
         provider_trainee_id: *provider_trainee_id
@@ -1982,12 +1973,6 @@ en:
     providers:
       edit:
         delete_provider_button: "Delete this provider"
-      users:
-        create:
-          success: User has been successfully added.
-        update:
-          success: User details have been successfully updated.
-    lead_schools:
       users:
         create:
           success: User has been successfully added.

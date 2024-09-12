@@ -17,14 +17,14 @@ const tryUpdateStatusMessage = (collection) => {
   return collection
 }
 
-const findSchools = ({ query, populateResults, onlyLeadSchools }) => {
+const findSchools = ({ query, populateResults }) => {
   idElement.value = ''
 
   const encodedQuery = encodeURIComponent(query)
 
   statusMessage = 'Loading...' // Shared state
 
-  window.fetch(`/autocomplete/schools?query=${encodedQuery}&lead_school=${onlyLeadSchools ? 'true' : 'false'}`)
+  window.fetch(`/autocomplete/schools?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
     .then(mapToSchools)
@@ -51,8 +51,7 @@ const setupAutoComplete = (form) => {
           tracker.trackSearch(query)
           return findSchools({
             query,
-            populateResults,
-            onlyLeadSchools: element.dataset.onlyLeadSchools
+            populateResults
           })
         },
         templates: renderTemplate,

@@ -6,6 +6,7 @@
 #
 #  id                         :bigint           not null, primary key
 #  cohort_level               :string
+#  lead_partner_name          :string
 #  lead_partner_urn           :string
 #  lead_school_name           :string
 #  lead_school_urn            :string
@@ -27,6 +28,8 @@ module Funding
     set_lead_columns :lead_school_urn, :lead_partner_urn
 
     self.table_name = "funding_trainee_summary_rows"
+
+    before_save :sync_lead_school_and_partner_name
 
     belongs_to :trainee_summary,
                class_name: "Funding::TraineeSummary",
@@ -54,6 +57,17 @@ module Funding
       return super if training_route.nil?
 
       self.class.human_attribute_name(training_route)
+    end
+
+    def sync_lead_school_and_partner_name
+      school_name_changed = changed.include?("lead_school_name")
+      partner_name_changed = changed.include?("lead_partner_name")
+
+      if school_name_changed
+        self.lead_partner_name = lead_school_name
+      elsif partner_name_changed
+        self.lead_school_name = lead_partner_name
+      end
     end
   end
 end
