@@ -5,4 +5,5 @@ module "statuscake" {
 
   uptime_urls    = each.value.website_url
   contact_groups = each.value.contact_group
+  trigger_rate   = each.value.trigger_rate
 }
