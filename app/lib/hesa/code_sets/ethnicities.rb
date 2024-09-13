@@ -54,6 +54,7 @@ module Hesa
         "Any other ethnic background" => Diversities::ANOTHER_ETHNIC_BACKGROUND,
         "Prefer not to say" => Diversities::NOT_PROVIDED,
         "Not available" => Diversities::NOT_PROVIDED,
+        "Not provided" => Diversities::NOT_PROVIDED,
       }.freeze
     end
   end
