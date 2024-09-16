@@ -57,6 +57,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
           :trainee,
           :without_degrees,
           :trn_received,
+          :provider_led_postgrad,
         )
       end
 
@@ -71,7 +72,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
 
         expect(response.parsed_body[:errors]).to contain_exactly(
           "error" => "UnprocessableEntity",
-          "message" => "Trainee degree information must be sumitted before QTS recommendation",
+          "message" => "Trainee degree information must be completed before QTS recommendation",
         )
       end
     end
