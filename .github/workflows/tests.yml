@@ -101,6 +101,6 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage/backend/*.json
+        files: ./coverage/backend/coverage.json
         flags: ${{ matrix.test-type }}
         name: codecov-umbrella

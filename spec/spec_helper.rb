@@ -5,6 +5,12 @@ require "rspec/openapi"
 
 if ENV.fetch("COVERAGE", false)
   require "simplecov"
+  require "simplecov-json"
+
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::JSONFormatter
+  ])
 
   SimpleCov.coverage_dir("coverage/backend")
   SimpleCov.minimum_coverage(90)
