@@ -21,7 +21,7 @@ module Api
 
       validates_with AwardRecommendationValidator
 
-      validate :trainee_has_degrees?
+      validate :trainee_has_degrees?, if: -> { !trainee.undergrad_route? }
 
       def initialize(params, trainee)
         super(params)
