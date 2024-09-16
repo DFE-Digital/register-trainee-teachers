@@ -78,6 +78,15 @@ jobs:
         TEST_MATRIX_NODE_NAME: ${{ matrix.test-type }}
         USE_NEXT_ACADEMIC_YEAR: ${{ inputs.use-next-academic-year }}
 
+    - name: Upload coverage to Codecov
+      if: always()
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/*.json
+        flags: ${{ matrix.test-type }}
+        name: codecov-umbrella
+
     - name: Check for Failure
       uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() && github.ref == 'refs/heads/main' }}
