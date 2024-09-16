@@ -20,13 +20,9 @@ if ENV.fetch("COVERAGE", false)
     enable_coverage :branch
   end
 
-  # If running specs in parallel this ensures SimpleCov results appears
-  # upon completion of all specs
-  if ENV["TEST_ENV_NUMBER"]
-    SimpleCov.at_exit do
-      result = SimpleCov.result
-      result.format! if ParallelTests.number_of_running_processes <= 1
-    end
+  SimpleCov.at_exit do
+    result = SimpleCov.result
+    result.format! if ParallelTests.number_of_running_processes <= 1
   end
 end
 
