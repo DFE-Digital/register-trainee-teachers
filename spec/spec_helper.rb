@@ -9,7 +9,7 @@ if ENV.fetch("COVERAGE", false)
 
   SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
     SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::JSONFormatter
+    SimpleCov::Formatter::JSONFormatter,
   ])
 
   SimpleCov.coverage_dir("coverage/backend")
