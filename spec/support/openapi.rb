@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
-RSpec.configure do |config|
-  generate_openapi = ENV.fetch("OPENAPI", nil) == "1"
+generate_openapi = ENV.fetch("OPENAPI", nil) == "1"
 
-  if generate_openapi
+if generate_openapi
+  seed = ENV.fetch("OPENAPI_SEED", 0xFFFF)
+  srand(seed)
+  Faker::Config.random = Random.new(seed) if defined? Faker
+
+  RSpec.configure do |config|
+    config.order = :defined
+
     version_regex = %r{spec/requests/api/v(?<major>\d+)_(?<minor>\d+)(?<label>_pre)?}
     match = ARGV.first.match(version_regex)
     version = "v#{match[:major]}.#{match[:minor]}#{match[:label] ? '-pre' : ''}"
