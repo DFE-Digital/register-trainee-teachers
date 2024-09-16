@@ -9,7 +9,9 @@ if ENV.fetch("COVERAGE", false)
   SimpleCov.coverage_dir("coverage/backend")
   SimpleCov.minimum_coverage(90)
   SimpleCov.start("rails") do
+    add_filter '/spec/'
     add_filter %r{/code_sets/}
+    enable_coverage :branch
   end
 
   # If running specs in parallel this ensures SimpleCov results appears
