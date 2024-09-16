@@ -1,0 +1,46 @@
+name: Code Coverage
+
+on:
+  push:
+    branches:
+      - run-full-test-suite
+
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: Build
+    env:
+      DOCKER_IMAGE: ghcr.io/dfe-digital/register-trainee-teachers
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_HOSTNAME: localhost
+    outputs:
+      docker-image: ${{ env.DOCKER_IMAGE }}
+      image-tag: ${{ env.IMAGE_TAG }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/build/
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+
+  test:
+    name: Test
+    needs: [build]
+    uses: ./.github/workflows/tests2.yml
+    secrets: inherit
+    with:
+      docker-image: ${{needs.build.outputs.docker-image}}
+      image-tag: ${{ needs.build.outputs.image-tag }}
+      use-next-academic-year: false

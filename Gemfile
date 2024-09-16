@@ -210,6 +210,7 @@ group :test do
   gem "shoulda-matchers", "~> 6.4"
   # Code coverage reporter
   gem "simplecov", "~> 0.22.0", require: false
+  gem "simplecov-json"
 
   # Page objects
   gem "site_prism", "~> 5.0"

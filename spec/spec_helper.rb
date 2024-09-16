@@ -2,24 +2,19 @@
 
 require "rspec-benchmark"
 require "rspec/openapi"
+require "simplecov"
+require "simplecov-json"
 
-if ENV.fetch("COVERAGE", false)
-  require "simplecov"
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter,
+])
 
-  SimpleCov.coverage_dir("coverage/backend")
-  SimpleCov.minimum_coverage(90)
-  SimpleCov.start("rails") do
-    add_filter %r{/code_sets/}
-  end
-
-  # If running specs in parallel this ensures SimpleCov results appears
-  # upon completion of all specs
-  if ENV["TEST_ENV_NUMBER"]
-    SimpleCov.at_exit do
-      result = SimpleCov.result
-      result.format! if ParallelTests.number_of_running_processes <= 1
-    end
-  end
+SimpleCov.coverage_dir("coverage/backend")
+SimpleCov.start("rails") do
+  add_filter "/spec/"
+  add_filter %r{/code_sets/}
+  enable_coverage :branch
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change

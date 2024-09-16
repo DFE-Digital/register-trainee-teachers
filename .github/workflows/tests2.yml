@@ -20,30 +20,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test-type: [ unit_models, unit_services, unit_forms, unit_components, unit_other, integration_end_to_end, integration_form_sections, integration_system_admin, integration_trainee_actions, integration_other ]
+        test-type: [ full-suite ]
         include:
-          - test-type: unit_models
-            include-pattern: spec/models/.*_spec.rb
-          - test-type: unit_services
-            include-pattern: spec/services/.*_spec.rb
-          - test-type: unit_forms
-            include-pattern: spec/forms/.*_spec.rb
-          - test-type: unit_components
-            include-pattern: spec/components/.*_spec.rb
-          - test-type: unit_other
-            include-pattern: spec/.*_spec.rb
-            exclude-pattern: spec/(features|smoke|models|services|forms|components)/.*_spec.rb
-          - test-type: integration_end_to_end
-            include-pattern: spec/features/end_to_end/.*_spec.rb
-          - test-type: integration_form_sections
-            include-pattern: spec/features/form_sections/.*_spec.rb
-          - test-type: integration_system_admin
-            include-pattern: spec/features/system_admin/.*_spec.rb
-          - test-type: integration_trainee_actions
-            include-pattern: spec/features/trainee_actions/.*_spec.rb
-          - test-type: integration_other
-            include-pattern: spec/features/.*_spec.rb
-            exclude-pattern: spec/features/(end_to_end|form_sections|system_admin|trainee_actions)/.*_spec.rb
+          - test-type: full-suite
+            include-pattern: spec/**/.*_spec.rb
+            exclude-pattern: spec/smoke/.*_spec.rb
 
     steps:
     - name: Checkout
