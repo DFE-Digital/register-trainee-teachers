@@ -36,5 +36,17 @@ if generate_openapi
       puts "Generated api docs for version #{version}"
       puts "Generated file located: '#{RSpec::OpenAPI.path}'"
     end
+
+    config.around do |example|
+      time_sensitive = example.metadata[:time_sensitive]
+      if time_sensitive
+        example.run
+      else
+        time = Time.zone.local(current_academic_year, 9, 15, 12, 34, 56)
+        Timecop.freeze(time)
+        example.run
+        Timecop.return
+      end
+    end
   end
 end
