@@ -785,7 +785,7 @@ Trainee details
         ],
         "itt_aim": 202,
         "itt_qualification_aim": "001",
-        "course_year": "2012",
+        "course_year": "1",
         "course_age_range": "13913",
         "fund_code": "7",
         "funding_method": "4",
@@ -797,7 +797,6 @@ Trainee details
         "course_subject_three": "100366",
         "lead_school_urn": "900020",
         "employing_school_urn": "790928",
-        "trn": "567899",
         "ethnic_group": "mixed_ethnic_group",
         "ethnic_background": "Another Mixed background",
         "lead_partner_urn": "900020"
@@ -887,7 +886,7 @@ Trainee details
         "previous_last_name": "Smith",
         "itt_aim": "202",
         "course_study_mode": "63",
-        "course_year": 2012,
+        "course_year": "1",
         "pg_apprenticeship_start_date": "2024-03-11",
         "funding_method": "4",
         "ni_number": null,
@@ -1134,7 +1133,6 @@ Degree details
       "uk_degree": "083",
       "graduation_year": "2015-01-01",
       "country": "GB",
-      "locale_code": "uk"
       }
     }
     </pre>
@@ -3137,13 +3135,13 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>lead_school_urn</code></dt>
+    <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string
       </p>
       <p class="govuk-body">
-        The Unique Reference Number (URN) of the lead school for the trainee.
+        The Unique Reference Number (URN) of the lead partner for the trainee.
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
@@ -3476,7 +3474,7 @@ Deletes an existing degree for this trainee.
         string, required
       </p>
       <p class="govuk-body">
-        The locale code `uk` or `non_uk`.
+        The locale code `uk` or `non_uk` (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>uk</code>
