@@ -55,7 +55,7 @@ module ApplicationRecordCard
     def provider_name
       return unless show_provider
 
-      tag.p(record.provider.name.to_s, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-bottom-0 govuk-!-margin-top-2")
+      tag.p(record.provider.name_and_code.to_s, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-bottom-0 govuk-!-margin-top-2")
     end
 
     def record_source
