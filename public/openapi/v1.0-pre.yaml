@@ -86,6 +86,12 @@ paths:
         schema:
           type: string
         example: 2023-13-01
+      - name: sort_order
+        in: query
+        required: false
+        schema:
+          type: string
+        example: asc
       - name: status
         in: query
         required: false
@@ -364,8 +370,6 @@ paths:
                       - training_route
                       - sex
                       - diversity_disclosure
-                      - ethnic_group
-                      - ethnic_background
                       - additional_ethnic_background
                       - disability_disclosure
                       - course_subject_one
@@ -381,7 +385,6 @@ paths:
                       - trainee_start_date
                       - reinstate_date
                       - course_min_age
-                      - course_max_age
                       - course_subject_two
                       - course_subject_three
                       - awarded_at
@@ -455,8 +458,6 @@ paths:
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -472,7 +473,6 @@ paths:
                   trainee_start_date: '2024-08-17'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -544,8 +544,6 @@ paths:
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -561,7 +559,6 @@ paths:
                   trainee_start_date: '2024-08-29'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -633,8 +630,6 @@ paths:
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -650,7 +645,6 @@ paths:
                   trainee_start_date: '2024-09-08'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -732,8 +726,6 @@ paths:
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -749,7 +741,6 @@ paths:
                   trainee_start_date: '2024-08-17'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -831,8 +822,6 @@ paths:
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -848,7 +837,6 @@ paths:
                   trainee_start_date: '2024-08-23'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -930,8 +918,6 @@ paths:
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -947,7 +933,6 @@ paths:
                   trainee_start_date: '2024-08-16'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1029,8 +1014,6 @@ paths:
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -1046,7 +1029,6 @@ paths:
                   trainee_start_date: '2024-08-30'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1128,8 +1110,6 @@ paths:
                   training_route:
                   sex: '99'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -1145,7 +1125,6 @@ paths:
                   trainee_start_date: '2024-08-18'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1227,8 +1206,6 @@ paths:
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -1244,7 +1221,6 @@ paths:
                   trainee_start_date: '2024-09-04'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1326,8 +1302,6 @@ paths:
                   training_route:
                   sex: '96'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -1343,7 +1317,6 @@ paths:
                   trainee_start_date: '2024-08-14'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1425,8 +1398,6 @@ paths:
                   training_route:
                   sex: '96'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -1442,7 +1413,6 @@ paths:
                   trainee_start_date: '2024-08-09'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1524,8 +1494,6 @@ paths:
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
@@ -1541,7 +1509,6 @@ paths:
                   trainee_start_date: '2024-08-08'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -1956,8 +1923,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
@@ -1973,7 +1938,6 @@ paths:
                     - trainee_start_date
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -2149,7 +2113,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: 7yiEoxLmGAysFVDQU1wMWEoa
+                    placement_id: KKN4q4XrZWU4q8VBfs5y1v3w
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2165,9 +2129,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: rGR4D3JiPNnNira12D3h61U3
+                    degree_id: ZYq1sc6GAmQb29YcapZdLhV9
                   state: submitted_for_trn
-                  trainee_id: rGJKWZzcL6fAjc82sfTBvZ7e
+                  trainee_id: 51yHLes1cq3GaxV39hvMSnxy
                   application_id:
                   disability1: '58'
                   disability2: '57'
@@ -2412,8 +2376,6 @@ paths:
                       - training_route
                       - sex
                       - diversity_disclosure
-                      - ethnic_group
-                      - ethnic_background
                       - additional_ethnic_background
                       - disability_disclosure
                       - course_subject_one
@@ -2429,7 +2391,6 @@ paths:
                       - trainee_start_date
                       - reinstate_date
                       - course_min_age
-                      - course_max_age
                       - course_subject_two
                       - course_subject_three
                       - awarded_at
@@ -2488,8 +2449,6 @@ paths:
                   training_route: '11'
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100346'
@@ -2505,7 +2464,6 @@ paths:
                   trainee_start_date: '2024-10-23'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -2825,10 +2783,6 @@ paths:
                     type: string
                   diversity_disclosure:
                     type: string
-                  ethnic_group:
-                    nullable: true
-                  ethnic_background:
-                    nullable: true
                   additional_ethnic_background:
                     nullable: true
                   disability_disclosure:
@@ -2858,8 +2812,6 @@ paths:
                   reinstate_date:
                     nullable: true
                   course_min_age:
-                    nullable: true
-                  course_max_age:
                     nullable: true
                   course_subject_two:
                     nullable: true
@@ -2988,8 +2940,6 @@ paths:
                 - training_route
                 - sex
                 - diversity_disclosure
-                - ethnic_group
-                - ethnic_background
                 - additional_ethnic_background
                 - disability_disclosure
                 - course_subject_one
@@ -3005,7 +2955,6 @@ paths:
                 - trainee_start_date
                 - reinstate_date
                 - course_min_age
-                - course_max_age
                 - course_subject_two
                 - course_subject_three
                 - awarded_at
@@ -3073,8 +3022,6 @@ paths:
                 training_route:
                 sex: '10'
                 diversity_disclosure: diversity_not_disclosed
-                ethnic_group:
-                ethnic_background:
                 additional_ethnic_background:
                 disability_disclosure:
                 course_subject_one:
@@ -3090,7 +3037,6 @@ paths:
                 trainee_start_date:
                 reinstate_date:
                 course_min_age:
-                course_max_age:
                 course_subject_two:
                 course_subject_three:
                 awarded_at:
@@ -3188,7 +3134,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 4PqKh7LeVtB3BEXEF7cDQpbL
+        example: zSwwSNwq2b6VkGQcYC6n8EFT
       responses:
         '200':
           description: updates the trainee
@@ -3221,12 +3167,6 @@ paths:
                         type: string
                       diversity_disclosure:
                         type: string
-                      ethnic_group:
-                        type: string
-                        nullable: true
-                      ethnic_background:
-                        type: string
-                        nullable: true
                       additional_ethnic_background:
                         nullable: true
                       disability_disclosure:
@@ -3259,9 +3199,6 @@ paths:
                         nullable: true
                       course_min_age:
                         type: integer
-                      course_max_age:
-                        type: integer
-                        nullable: true
                       course_subject_two:
                         nullable: true
                         type: string
@@ -3484,8 +3421,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
@@ -3501,7 +3436,6 @@ paths:
                     - trainee_start_date
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -3562,8 +3496,6 @@ paths:
                   training_route: '11'
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group: not_provided_ethnic_group
-                  ethnic_background: Not provided
                   additional_ethnic_background:
                   disability_disclosure: disability_not_provided
                   course_subject_one: '100346'
@@ -3579,7 +3511,6 @@ paths:
                   trainee_start_date: '2024-08-01'
                   reinstate_date:
                   course_min_age: 7
-                  course_max_age:
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -3640,7 +3571,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: SSrVT9hGVAVajnrKtMxgx6tt
+                    placement_id: fmreTcG7KX41sfWNNeiVY7CZ
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3656,9 +3587,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: 4yKMKFSGiPhRhon8u2e5rNhE
+                    degree_id: LHWHvBKBXkzdNc2W8wjhYWSH
                   state: submitted_for_trn
-                  trainee_id: 4PqKh7LeVtB3BEXEF7cDQpbL
+                  trainee_id: zSwwSNwq2b6VkGQcYC6n8EFT
                   application_id:
                   disability2: '57'
         '401':
@@ -3769,10 +3700,6 @@ paths:
                     ethnicity:
                       type: string
                       nullable: true
-                    ethnic_group:
-                      type: string
-                    ethnic_background:
-                      type: string
                     training_route:
                       type: string
                       nullable: true
@@ -3802,8 +3729,6 @@ paths:
                 employing_school_urn: '865860'
                 trn: '567899'
                 ethnicity:
-                ethnic_group: mixed_ethnic_group
-                ethnic_background: Another Mixed background
                 training_route:
                 disability1: '58'
                 disability2: '57'
@@ -3873,8 +3798,6 @@ paths:
                         type: string
                       email:
                         type: string
-                      ethnic_background:
-                        nullable: true
                       additional_ethnic_background:
                         nullable: true
                       trn:
@@ -3907,8 +3830,6 @@ paths:
                         type: string
                       diversity_disclosure:
                         type: string
-                      ethnic_group:
-                        nullable: true
                       disability_disclosure:
                         nullable: true
                       itt_start_date:
@@ -3926,8 +3847,6 @@ paths:
                       reinstate_date:
                         nullable: true
                       course_min_age:
-                        type: integer
-                      course_max_age:
                         type: integer
                       awarded_at:
                         nullable: true
@@ -4066,7 +3985,6 @@ paths:
                     - middle_names
                     - last_name
                     - email
-                    - ethnic_background
                     - additional_ethnic_background
                     - trn
                     - withdraw_reasons_details
@@ -4083,7 +4001,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
                     - disability_disclosure
                     - itt_start_date
                     - outcome_date
@@ -4093,7 +4010,6 @@ paths:
                     - recommended_for_award_at
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -4144,7 +4060,6 @@ paths:
                   middle_names: Feeney
                   last_name: Emmerich
                   email: Brent.Emmerich@example.com
-                  ethnic_background:
                   additional_ethnic_background:
                   trn: '5687681'
                   withdraw_reasons_details:
@@ -4161,7 +4076,6 @@ paths:
                   training_route:
                   sex: '96'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
                   disability_disclosure:
                   itt_start_date: '2024-08-04'
                   outcome_date:
@@ -4171,7 +4085,6 @@ paths:
                   recommended_for_award_at:
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   awarded_at:
                   training_initiative:
                   study_mode:
@@ -4491,7 +4404,7 @@ paths:
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: XtCASvQEc4nxvk955NX3YmE7
+                  degree_id: Tkb7JEZbXrWK3WSkTYnBY2yJ
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4635,10 +4548,6 @@ paths:
                         type: string
                       diversity_disclosure:
                         type: string
-                      ethnic_group:
-                        nullable: true
-                      ethnic_background:
-                        nullable: true
                       additional_ethnic_background:
                         nullable: true
                       disability_disclosure:
@@ -4668,8 +4577,6 @@ paths:
                       reinstate_date:
                         nullable: true
                       course_min_age:
-                        nullable: true
-                      course_max_age:
                         nullable: true
                       course_subject_two:
                         nullable: true
@@ -4777,8 +4684,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
@@ -4794,7 +4699,6 @@ paths:
                     - trainee_start_date
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -4855,8 +4759,6 @@ paths:
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one:
@@ -4872,7 +4774,6 @@ paths:
                   trainee_start_date:
                   reinstate_date:
                   course_min_age:
-                  course_max_age:
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -5398,7 +5299,7 @@ paths:
                   postcode: Z6D 8JB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: QDufLau2iKWF4iSDznuWAoLd
+                  placement_id: YyBNmx3xCLHJfwRrySFFMW3m
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5508,10 +5409,6 @@ paths:
                         type: string
                       diversity_disclosure:
                         type: string
-                      ethnic_group:
-                        nullable: true
-                      ethnic_background:
-                        nullable: true
                       additional_ethnic_background:
                         nullable: true
                       disability_disclosure:
@@ -5541,8 +5438,6 @@ paths:
                       reinstate_date:
                         nullable: true
                       course_min_age:
-                        nullable: true
-                      course_max_age:
                         nullable: true
                       course_subject_two:
                         nullable: true
@@ -5692,8 +5587,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
                     - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
@@ -5709,7 +5602,6 @@ paths:
                     - trainee_start_date
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -5780,8 +5672,6 @@ paths:
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
-                  ethnic_background:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one:
@@ -5797,7 +5687,6 @@ paths:
                   trainee_start_date:
                   reinstate_date:
                   course_min_age:
-                  course_max_age:
                   course_subject_two:
                   course_subject_three:
                   awarded_at:
@@ -6189,8 +6078,6 @@ paths:
                         type: string
                       email:
                         type: string
-                      ethnic_background:
-                        nullable: true
                       additional_ethnic_background:
                         nullable: true
                       trn:
@@ -6221,8 +6108,6 @@ paths:
                         type: string
                       diversity_disclosure:
                         type: string
-                      ethnic_group:
-                        nullable: true
                       disability_disclosure:
                         nullable: true
                       itt_start_date:
@@ -6242,8 +6127,6 @@ paths:
                       reinstate_date:
                         nullable: true
                       course_min_age:
-                        type: integer
-                      course_max_age:
                         type: integer
                       awarded_at:
                         nullable: true
@@ -6384,7 +6267,6 @@ paths:
                     - middle_names
                     - last_name
                     - email
-                    - ethnic_background
                     - additional_ethnic_background
                     - trn
                     - withdraw_reasons_details
@@ -6400,7 +6282,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
                     - disability_disclosure
                     - itt_start_date
                     - outcome_date
@@ -6411,7 +6292,6 @@ paths:
                     - trainee_start_date
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -6462,7 +6342,6 @@ paths:
                   middle_names: Bradtke
                   last_name: DuBuque
                   email: Corey.DuBuque@example.com
-                  ethnic_background:
                   additional_ethnic_background:
                   trn: '9398507'
                   withdraw_reasons_details:
@@ -6478,7 +6357,6 @@ paths:
                   training_route:
                   sex: '96'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
                   disability_disclosure:
                   itt_start_date: '2024-08-03'
                   outcome_date: '2024-09-15'
@@ -6489,7 +6367,6 @@ paths:
                   trainee_start_date: '2024-08-14'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 18
                   awarded_at:
                   training_initiative: '036'
                   study_mode:
@@ -6672,8 +6549,6 @@ paths:
                         type: string
                       email:
                         type: string
-                      ethnic_background:
-                        nullable: true
                       additional_ethnic_background:
                         nullable: true
                       trn:
@@ -6700,8 +6575,6 @@ paths:
                         type: string
                       diversity_disclosure:
                         type: string
-                      ethnic_group:
-                        nullable: true
                       disability_disclosure:
                         nullable: true
                       itt_start_date:
@@ -6721,8 +6594,6 @@ paths:
                       reinstate_date:
                         nullable: true
                       course_min_age:
-                        type: integer
-                      course_max_age:
                         type: integer
                       awarded_at:
                         nullable: true
@@ -6885,7 +6756,6 @@ paths:
                     - middle_names
                     - last_name
                     - email
-                    - ethnic_background
                     - additional_ethnic_background
                     - trn
                     - region
@@ -6899,7 +6769,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
                     - disability_disclosure
                     - itt_start_date
                     - outcome_date
@@ -6910,7 +6779,6 @@ paths:
                     - trainee_start_date
                     - reinstate_date
                     - course_min_age
-                    - course_max_age
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -6975,7 +6843,6 @@ paths:
                   middle_names: Hamill
                   last_name: Auer
                   email: Valentine.Auer@example.com
-                  ethnic_background:
                   additional_ethnic_background:
                   trn: '6151850'
                   region:
@@ -6989,7 +6856,6 @@ paths:
                   training_route:
                   sex: '10'
                   diversity_disclosure: diversity_not_disclosed
-                  ethnic_group:
                   disability_disclosure:
                   itt_start_date: '2024-08-08'
                   outcome_date:
@@ -7000,7 +6866,6 @@ paths:
                   trainee_start_date: '2024-08-08'
                   reinstate_date:
                   course_min_age: 11
-                  course_max_age: 16
                   awarded_at:
                   training_initiative: '025'
                   study_mode: '01'
