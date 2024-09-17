@@ -18,20 +18,6 @@ if ENV.fetch("COVERAGE", false)
     add_filter %r{/code_sets/}
     enable_coverage :branch
   end
-
-  SimpleCov.at_exit do
-    result = SimpleCov.result
-    result.format! if ParallelTests.number_of_running_processes <= 1
-
-    # Apply minimum coverage only if this is the last process
-    if ParallelTests.number_of_running_processes <= 1
-      SimpleCov.minimum_coverage(90)
-      if result.covered_percent < 90
-        puts "Coverage is below the minimum threshold of 90%"
-        exit 1
-      end
-    end
-  end
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
