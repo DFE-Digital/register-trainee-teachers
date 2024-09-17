@@ -214,7 +214,7 @@ current academic cycle.
           "course_title": null,
           "course_level": "undergrad",
           "course_itt_start_date": "2022-09-01",
-          "course_age_range": null,
+          "course_age_range": "13914",
           "expected_end_date": "2023-07-01",
           "employing_school_urn": null,
           "lead_partner_ukprn": null,
@@ -367,7 +367,7 @@ Get a single trainee.
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -795,7 +795,6 @@ Trainee details
         "ethnicity": "142",
         "course_subject_two": "101410",
         "course_subject_three": "100366",
-        "course_max_age": 11,
         "lead_school_urn": "900020",
         "employing_school_urn": "790928",
         "trn": "567899",
@@ -878,7 +877,7 @@ Trainee details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2023-01-01",
-        "course_age_range": "13913",
+        "course_age_range": "13914",
         "expected_end_date": "2023-10-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -1399,7 +1398,7 @@ Withdrawal details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -1614,7 +1613,7 @@ Recommendation details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -2013,7 +2012,7 @@ Deletes an existing degree for this trainee.
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -2194,7 +2193,7 @@ Trainee details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -3102,7 +3101,7 @@ Deletes an existing degree for this trainee.
         integer
       </p>
       <p class="govuk-body">
-        The lower bound of the age range of children taught on the course.
+        The lower bound of the age range of children taught on the course (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>7</code>
@@ -3116,7 +3115,7 @@ Deletes an existing degree for this trainee.
         integer
       </p>
       <p class="govuk-body">
-        The upper bound of the age range of children taught on the course.
+        The upper bound of the age range of children taught on the course (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>11</code>
