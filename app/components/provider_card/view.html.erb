@@ -1,6 +1,6 @@
 <div class="provider-card">
   <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
-    <%= govuk_link_to provider.name, provider_path(provider) %>
+    <%= govuk_link_to provider.name_and_code, provider_path(provider) %>
   </h2>
   <p class="govuk-body govuk-hint">
     <%= pluralize(user_count, "user") %>
