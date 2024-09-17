@@ -2948,10 +2948,10 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>ethnic_group</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The ethnic group of the trainee
+        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
       </p>
     </dd>
   </div>
@@ -2959,7 +2959,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>ethnic_background</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        Example: <code>120</code>
       </p>
       <p class="govuk-body">
         The ethnic background of the trainee
