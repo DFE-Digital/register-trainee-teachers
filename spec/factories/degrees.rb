@@ -6,7 +6,7 @@ FactoryBot.define do
 
     uk_degree_type
 
-    slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
+    slug { Faker::Alphanumeric.alphanumeric(number: Sluggable::SLUG_LENGTH) }
 
     trait :uk_degree_type do
       locale_code { :uk }
