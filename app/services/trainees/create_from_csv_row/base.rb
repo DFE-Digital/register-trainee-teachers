@@ -31,7 +31,7 @@ module Trainees
       def initialize(provider:, csv_row:)
         @csv_row = csv_row
         @provider = provider
-        @trainee = @provider.trainees.find_or_initialize_by(provider_trainee_id: csv_row["Provider trainee ID"])
+        @trainee = @provider.trainees.find_or_initialize_by(provider_trainee_id: lookup("Provider trainee ID"))
       end
 
       def call
@@ -61,15 +61,15 @@ module Trainees
       def mapped_attributes
         {
           record_source: Trainee::MANUAL_SOURCE,
-          region: csv_row["Region"],
+          region: lookup("Region"),
           training_route: training_route,
           first_names: first_names,
           middle_names: middle_names,
           last_name: last_name,
           sex: sex,
-          date_of_birth: Date.parse(csv_row["Date of birth"]),
+          date_of_birth: Date.parse(lookup("Date of birth")),
           nationality_ids: nationality_ids,
-          email: csv_row["Email"],
+          email: lookup("Email"),
           training_initiative: training_initiative,
           employing_school_id: employing_school_id,
           lead_partner_id: lead_partner_id,
@@ -87,7 +87,7 @@ module Trainees
       end
 
       def ethnicity_split
-        csv_row["Ethnicity"]&.split(":")&.map(&:strip)
+        lookup("Ethnicity")&.split(":")&.map(&:strip)
       end
 
       def ethnicity_attributes
@@ -109,9 +109,9 @@ module Trainees
 
       def disabilities
         @disabilities ||=
-          if csv_row["Disabilities"].nil?
+          if lookup("Disabilities").nil?
             []
-          elsif csv_row["Disabilities"].start_with?("#{Diversities::OTHER}:")
+          elsif lookup("Disabilities").start_with?("#{Diversities::OTHER}:")
             handle_other_disability
           else
             parse_standard_disabilities
@@ -119,12 +119,12 @@ module Trainees
       end
 
       def handle_other_disability
-        other_disability = csv_row["Disabilities"].split(":", 2).last.strip
+        other_disability = lookup("Disabilities").split(":", 2).last.strip
         [[Diversities::OTHER, other_disability]]
       end
 
       def parse_standard_disabilities
-        csv_row["Disabilities"].split(",").map(&:strip)
+        lookup("Disabilities").split(",").map(&:strip)
           .map { |disability| ::Hesa::CodeSets::Disabilities::NAME_MAPPING[disability] }
           .compact
       end
@@ -173,41 +173,41 @@ module Trainees
       end
 
       def first_names
-        csv_row["First names"].presence || csv_row["First name"]
+        lookup("First names")
       end
 
       def middle_names
-        csv_row["Middle names"].presence || csv_row["Middle name"]
+        lookup("Middle names")
       end
 
       def last_name
-        csv_row["Last names"].presence || csv_row["Last name"]
+        lookup("Last names")
       end
 
       def itt_start_date
-        csv_row["Course ITT start date"]
+        lookup("Course ITT start date")
       end
 
       def itt_end_date
-        csv_row["Course Expected End Date"]
+        lookup("Course Expected End Date")
       end
 
       def trainee_start_date
-        csv_row["Trainee start date"]
+        lookup("Trainee start date")
       end
 
       def training_route
-        hpitt_trainee? ? TRAINING_ROUTE_ENUMS[:hpitt_postgrad] : TRAINING_ROUTES[csv_row["Training route"]]
+        hpitt_trainee? ? TRAINING_ROUTE_ENUMS[:hpitt_postgrad] : TRAINING_ROUTES[lookup("Training route")]
       end
 
       def training_initiative
-        hpitt_trainee? ? ROUTE_INITIATIVES_ENUMS[:no_initiative] : INITIATIVES[csv_row["Funding: Training Initiatives"]]
+        hpitt_trainee? ? ROUTE_INITIATIVES_ENUMS[:no_initiative] : INITIATIVES[lookup("Funding: Training Initiatives")]
       end
 
       def funding_attributes
         return {} if hpitt_trainee?
 
-        funding_type = csv_row["Funding: Type"]
+        funding_type = lookup("Funding: Type")
 
         {
           applying_for_bursary: funding_type == "Bursary",
@@ -217,10 +217,10 @@ module Trainees
       end
 
       def sex
-        if csv_row["Sex"] == Diversities::NOT_PROVIDED
+        if lookup("Sex") == Diversities::NOT_PROVIDED
           "sex_not_provided"
         else
-          csv_row["Sex"].downcase
+          lookup("Sex").downcase
         end
       end
 
@@ -229,14 +229,14 @@ module Trainees
       end
 
       def nationalities
-        return [] if csv_row["Nationality"].downcase == "other"
+        return [] if lookup("Nationality").downcase == "other"
 
         british_nationalities = /english|scottish|welsh|irish/i
-        csv_row["Nationality"].gsub(british_nationalities, "british").split(",").compact
+        lookup("Nationality").gsub(british_nationalities, "british").split(",").compact
       end
 
       def course_education_phase
-        csv_row["Course education phase"].downcase.parameterize(separator: "_")
+        lookup("Course education phase").downcase.parameterize(separator: "_")
       end
 
       def course_subject_one_name
@@ -265,7 +265,7 @@ module Trainees
       end
 
       def course_age_range
-        age_range = csv_row["Course age range"].split(" to ").map(&:to_i)
+        age_range = lookup("Course age range").split(" to ").map(&:to_i)
 
         if valid_age_ranges.include?(age_range)
           age_range
@@ -283,19 +283,19 @@ module Trainees
       end
 
       def study_mode
-        csv_row["Course study mode"].downcase.gsub("-", "_")
+        lookup("Course study mode").downcase.gsub("-", "_")
       end
 
       def employing_school_id
-        School.find_by(urn: csv_row["Employing school URN"])&.id
+        School.find_by(urn: lookup("Employing school URN"))&.id
       end
 
       def lead_partner_id
-        LeadPartner.find_by(urn: csv_row["Lead partner URN"])&.id
+        LeadPartner.find_by(urn: lookup("Lead partner URN"))&.id
       end
 
       def course_uuid
-        course_code = csv_row["Publish Course Code"]
+        course_code = lookup("Publish Course Code")
         return if course_code.blank?
 
         recruitement_cycle_year = trainee.start_academic_cycle.start_year
