@@ -23,7 +23,7 @@ RSpec.shared_examples "a register API endpoint", openapi: false do |url, api_tok
         .by(1)
     end
 
-    it "measures the request_duration histogram", openapi: do
+    it "measures the request_duration histogram", openapi: openapi, time_sensitive: true do
       expect(Yabeda.register_api.request_duration.values.values.sum).to be > 0
     end
 
