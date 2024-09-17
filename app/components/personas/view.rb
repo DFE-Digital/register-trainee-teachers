@@ -18,7 +18,7 @@ module Personas
 
     def provider_strings
       @_provider_strings ||= persona.providers.map do |provider|
-        t("components.personas.view.provider_user", provider_name: provider.name)
+        t("components.personas.view.provider_user", provider_name: provider.name_and_code)
       end
     end
 
