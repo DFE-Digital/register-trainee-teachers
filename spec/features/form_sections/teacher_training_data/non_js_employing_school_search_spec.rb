@@ -13,7 +13,7 @@ feature "Non-JS employing schools search" do
   scenario "choosing a lead school" do
     and_i_choose_my_employing_school
     and_i_continue
-    then_i_am_redirected_to_the_confirm_lead_school_page
+    then_i_am_redirected_to_the_confirm_schools_page
   end
 
   scenario "choosing search again option" do
@@ -58,7 +58,7 @@ private
     employing_schools_search_page.load(trainee_id: trainee.slug, query: query)
   end
 
-  def then_i_am_redirected_to_the_confirm_lead_school_page
+  def then_i_am_redirected_to_the_confirm_schools_page
     expect(confirm_schools_page).to be_displayed(id: trainee.slug)
   end
 

@@ -204,7 +204,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           end
 
           it "sets lead_partner_urn and employing_school_urn to nil" do
-            expect(response.parsed_body[:data]).not_to have_key(:lead_school_urn)
             expect(response.parsed_body[:data]).to have_key(:lead_partner_urn)
             expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
             expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
@@ -229,7 +228,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             let(:lead_partner) { create(:lead_partner, :school) }
 
             it "sets lead_partner_urn to lead_partner#urn and employing_school_urn to nil" do
-              expect(response.parsed_body[:data]).not_to have_key(:lead_school_urn)
               expect(response.parsed_body[:data][:lead_partner_urn]).to eq(lead_partner.urn)
               expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
             end

@@ -22,7 +22,7 @@ feature "EmployingSchoolSearch" do
       and_i_fill_in_my_employing_school
       and_i_click_the_first_item_in_the_list
       and_i_continue
-      then_i_am_redirected_to_the_confirm_lead_school_page
+      then_i_am_redirected_to_the_confirm_schools_page
     end
 
     scenario "when a employing school is not selected" do
@@ -70,7 +70,7 @@ private
     @my_employing_school ||= @employing_schools.sample
   end
 
-  def then_i_am_redirected_to_the_confirm_lead_school_page
+  def then_i_am_redirected_to_the_confirm_schools_page
     expect(confirm_schools_page).to be_displayed(id: trainee.slug)
   end
 

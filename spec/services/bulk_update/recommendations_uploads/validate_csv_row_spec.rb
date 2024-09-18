@@ -189,8 +189,6 @@ module BulkUpdate
           let!(:trainee) { create(:trainee, :early_years_assessment_only) }
 
           context "doesn't match" do
-            let(:report_lead_school) { "QTS" }
-
             it "errors" do
               expect(service.messages).to include(award_type_error)
             end
