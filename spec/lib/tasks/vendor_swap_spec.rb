@@ -11,7 +11,7 @@ describe "vendor:swap" do
   let(:existing_provider) { create(:provider) }
   let(:provider_id_to_replace) { existing_provider.id }
   let(:vendor_name) { "vendor name" }
-  let(:swapped_message) { "Swapped: #{existing_provider.name} with #{vendor_name}" }
+  let(:swapped_message) { "Swapped: #{existing_provider.name_and_code} with #{vendor_name}" }
   let(:token) { AuthenticationToken.last.hashed_token }
   let(:token_message) { "Token: `not_for_production_#{token}`" }
 

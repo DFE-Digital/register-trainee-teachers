@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Add a user for #{@provider.name}", has_errors: @user.errors.present?) %>
+<%= render PageTitle::View.new(text: "Add a user for #{@provider.name_and_code}", has_errors: @user.errors.present?) %>
 
 <%= render GovukComponent::BackLinkComponent.new(
       text: "Back",
@@ -12,7 +12,7 @@
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">
-        Add a user for <%= @provider.name %>
+        Add a user for <%= @provider.name_and_code %>
       </h1>
 
       <%= f.govuk_text_field :first_name, label: { text: "First Name", size: "s" }, width: 20, autocomplete: :off, maxlength: 255 %>

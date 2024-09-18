@@ -59,6 +59,6 @@ private
   end
 
   def and_i_see_the_new_provider
-    expect(admin_user_show_page.providers).to have_content(new_provider.name)
+    expect(admin_user_show_page.providers).to have_content(new_provider.name_and_code)
   end
 end

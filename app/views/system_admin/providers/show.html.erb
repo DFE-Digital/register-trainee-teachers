@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: @provider.name, has_errors: @provider.errors.present?) %>
+<%= render PageTitle::View.new(text: @provider.name_and_code, has_errors: @provider.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -7,7 +7,7 @@
   ) %>
 <% end %>
 
-<h1 class="govuk-heading-l"><%= @provider.name %>
+<h1 class="govuk-heading-l"><%= @provider.name_and_code %>
   <%= govuk_tag(text: "Deleted", colour: "red") if @provider.discarded? %>
 </h1>
 

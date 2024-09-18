@@ -51,7 +51,7 @@ private
   end
 
   def then_i_can_see_a_list_of_my_providers
-    expect(organisations_index_page.provider_links.map(&:text)).to match_array(multi_organisation_user.providers.map(&:name))
+    expect(organisations_index_page.provider_links.map(&:text)).to match_array(multi_organisation_user.providers.map(&:name_and_code))
   end
 
   def given_a_trainee_exists_that_belongs_the_provider
@@ -60,7 +60,7 @@ private
 
   def when_i_click_on_a_provider_link
     @provider = multi_organisation_user.providers.first
-    organisations_index_page.provider_links.find { |link| link.text == provider.name }.click
+    organisations_index_page.provider_links.find { |link| link.text == provider.name_and_code }.click
   end
 
   def when_i_click_on_a_lead_partner_link

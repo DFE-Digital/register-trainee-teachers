@@ -83,7 +83,7 @@ feature "Change a trainee's accredited provider" do
   end
 
   def when_i_select_a_provider
-    select new_provider.name, from: "system-admin-change-accredited-provider-form-accredited-provider-id-field"
+    select new_provider.name_and_code, from: "system-admin-change-accredited-provider-form-accredited-provider-id-field"
   end
 
   def and_click_continue
