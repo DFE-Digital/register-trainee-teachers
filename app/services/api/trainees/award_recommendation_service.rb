@@ -11,7 +11,7 @@ module Api
 
       attr_reader :trainee
 
-      delegate :itt_start_date, :can_recommend_for_award?, to: :trainee, prefix: true
+      delegate :itt_start_date, :can_recommend_for_award?, :requires_degree?, to: :trainee, prefix: true
 
       validates :qts_standards_met_date,
                 presence: true,
@@ -20,8 +20,6 @@ module Api
                 after_itt_start_date: true
 
       validates_with AwardRecommendationValidator
-
-      validate :trainee_has_degrees?, if: -> { !trainee.undergrad_route? }
 
       def initialize(params, trainee)
         super(params)
@@ -40,16 +38,16 @@ module Api
         true
       end
 
+      def trainee_degree_missing?
+        trainee.degrees.blank?
+      end
+
     private
 
       def trainee_attributes
         {
           outcome_date: qts_standards_met_date,
         }
-      end
-
-      def trainee_has_degrees?
-        errors.add(:trainee, :degrees) if trainee.degrees.empty?
       end
     end
   end
