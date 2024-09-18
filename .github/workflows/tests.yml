@@ -17,9 +17,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      COVERAGE: true
-
     strategy:
       fail-fast: false
       matrix:
@@ -88,12 +85,3 @@ jobs:
         slack-title: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} tests"
         slack-message: "':alert: ${{ inputs.use-next-academic-year &&  'Next academic year' || 'Current academic year'}}  ${{ matrix.test-type }} test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:"
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-
-    - name: Upload coverage to Codecov
-      if: ${{ matrix.test-type == 'integration_other' }}
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage/backend/*.json
-        flags: ${{ matrix.test-type }}
-        name: codecov-umbrella
