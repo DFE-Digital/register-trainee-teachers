@@ -73,7 +73,7 @@ jobs:
       with:
         attempt_limit: 5
         command: |
-          docker compose exec -T web /bin/sh -c 'USE_NEXT_ACADEMIC_YEAR=${{env.USE_NEXT_ACADEMIC_YEAR}} COVERAGE=true bundle exec --verbose rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
+          docker compose exec -T web /bin/sh -c 'USE_NEXT_ACADEMIC_YEAR=${{env.USE_NEXT_ACADEMIC_YEAR}} COVERAGE=true bundle exec --verbose parallel_rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
       env:
         IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
         INCLUDE_PATTERN: ${{ matrix.include-pattern }}
@@ -89,11 +89,18 @@ jobs:
         slack-message: "':alert: ${{ inputs.use-next-academic-year &&  'Next academic year' || 'Current academic year'}}  ${{ matrix.test-type }} test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:"
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
+  upload-coverage:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
     - name: Upload coverage to Codecov
-      if: ${{ matrix.test-type == 'integration_other' }}
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage/backend/*.json
+        files: ./coverage/backend/coverage.json
         flags: ${{ matrix.test-type }}
         name: codecov-umbrella
