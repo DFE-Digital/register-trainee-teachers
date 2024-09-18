@@ -90,6 +90,16 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(Trainee.last.state).to eq("submitted_for_trn")
     end
 
+    it "sets the correct course_min_age and course_max_age" do
+      course_min_age, course_max_age = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range]
+
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response.parsed_body[:data][:course_min_age]).to eq(course_min_age)
+      expect(response.parsed_body[:data][:course_max_age]).to eq(course_max_age)
+    end
+
+
     it "sets the correct study_mode" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 

@@ -7,7 +7,7 @@ module HasCourseAttributes
       course_subject_one: course_subject_one_name,
       course_subject_two: course_subject_two_name,
       course_subject_three: course_subject_three_name,
-      course_min_age: course_age_range && course_age_range[0],
+      course_min_age: course_min_age,
       course_max_age: course_max_age,
       study_mode: study_mode,
       itt_start_date: itt_start_date,
@@ -19,12 +19,16 @@ module HasCourseAttributes
     primary_education_phase? ? fix_invalid_primary_course_subjects(attributes) : attributes
   end
 
-  def primary_education_phase?
-    course_max_age && course_max_age <= DfE::ReferenceData::AgeRanges::UPPER_BOUND_PRIMARY_AGE
+  def course_min_age
+    course_age_range && course_age_range[0]
   end
 
   def course_max_age
     course_age_range && course_age_range[1]
+  end
+
+  def primary_education_phase?
+    course_max_age && course_max_age <= DfE::ReferenceData::AgeRanges::UPPER_BOUND_PRIMARY_AGE
   end
 
   def fix_invalid_primary_course_subjects(course_attributes)

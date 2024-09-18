@@ -176,6 +176,28 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       end
     end
 
+    context "when updating with valid course_age_range" do
+      let(:data) { { course_age_range: } }
+
+      let(:course_age_range) { "13909" }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
+      it "returns status 200" do
+        course_min_age, course_max_age = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range]
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:course_min_age]).to eq(course_min_age)
+        expect(response.parsed_body[:data][:course_max_age]).to eq(course_max_age)
+      end
+    end
+
     context "when course_age_range is empty" do
       let(:data) { { course_age_range: "" } }
 

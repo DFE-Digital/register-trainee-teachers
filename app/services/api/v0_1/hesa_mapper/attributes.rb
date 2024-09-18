@@ -56,6 +56,7 @@ module Api
           .merge(lead_partner_and_employing_school_attributes)
           .compact
 
+
           if update && !disabilities?
             mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure, :disabilities)
           end
@@ -168,10 +169,6 @@ module Api
 
         def course_age_range
           DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
-        end
-
-        def course_max_age
-          params[:course_max_age]
         end
 
         def course_study_mode

@@ -17,8 +17,7 @@ module Api
         date_of_birth: { type: :date },
         email: {},
         course_education_phase: {},
-        course_min_age: {},
-        course_max_age: {},
+        course_age_range: {},
         trainee_start_date: {},
         sex: {},
         training_route: {},
@@ -52,6 +51,8 @@ module Api
         employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
         ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
+        course_min_age: {},
+        course_max_age: {},
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
