@@ -2945,7 +2945,7 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>ethnic_group</code></dt>
+    <dt class="govuk-summary-list__key"><code>ethnicity</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string (limited to 3 characters)
@@ -2953,16 +2953,8 @@ Deletes an existing degree for this trainee.
       <p class="govuk-body">
         The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
       </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>ethnic_background</code></dt>
-    <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         Example: <code>120</code>
-      </p>
-      <p class="govuk-body">
-        The ethnic background of the trainee
       </p>
     </dd>
   </div>
@@ -3471,7 +3463,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string
       </p>
       <p class="govuk-body">
         The locale code `uk` or `non_uk` (read-only).
