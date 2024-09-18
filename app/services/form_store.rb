@@ -3,7 +3,6 @@
 class FormStore
   include Cacheable
 
-  # Will need to remove lead_school when lead_partner transfer is complete
   FORM_SECTION_KEYS = %i[
     contact_details
     publish_course_details
@@ -27,7 +26,6 @@ class FormStore
     disability_detail
     diversity
     degrees
-    lead_school
     employing_school
     lead_partner
     schools
