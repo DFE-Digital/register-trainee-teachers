@@ -2,22 +2,19 @@
 
 require "rspec-benchmark"
 require "rspec/openapi"
+require "simplecov"
+require "simplecov-json"
 
-if ENV.fetch("COVERAGE", false)
-  require "simplecov"
-  require "simplecov-json"
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter,
+])
 
-  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::JSONFormatter,
-  ])
-
-  SimpleCov.coverage_dir("coverage/backend")
-  SimpleCov.start("rails") do
-    add_filter "/spec/"
-    add_filter %r{/code_sets/}
-    enable_coverage :branch
-  end
+SimpleCov.coverage_dir("coverage/backend")
+SimpleCov.start("rails") do
+  add_filter "/spec/"
+  add_filter %r{/code_sets/}
+  enable_coverage :branch
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
