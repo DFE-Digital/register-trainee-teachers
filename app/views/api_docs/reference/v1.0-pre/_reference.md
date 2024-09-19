@@ -1132,7 +1132,7 @@ Degree details
       "institution": "0117",
       "uk_degree": "083",
       "graduation_year": "2015-01-01",
-      "country": "GB",
+      "country": "GB"
       }
     }
     </pre>
