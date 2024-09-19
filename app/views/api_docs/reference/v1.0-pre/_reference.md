@@ -3130,7 +3130,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (limited to 6 characters)
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the lead partner for the trainee.
@@ -3176,20 +3176,6 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the employing school for School Direct salaried trainees.
-      </p>
-      <p class="govuk-body">
-        Example: <code>123456</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string (limited to 6 characters)
-      </p>
-      <p class="govuk-body">
-        The Unique Reference Number (URN) of the lead partner for trainees.
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
