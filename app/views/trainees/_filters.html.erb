@@ -13,7 +13,7 @@
         <%= label_tag "provider", t("views.trainees.index.filters.provider"), class: "govuk-label govuk-label--s" %>
         <%= select_tag(
           :provider,
-          options_from_collection_for_select(providers, :id, :name),
+          options_from_collection_for_select(providers, :id, :name_and_code),
           include_blank: "All providers",
           class: "govuk-select"
         ) %>

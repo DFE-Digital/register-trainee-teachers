@@ -3,7 +3,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <% if current_user.organisation %>
-      <span class="govuk-caption-l"><%= current_user.organisation.name %></span>
+      <span class="govuk-caption-l"><%= current_user.organisation.name_and_code %></span>
     <% end %>
     <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
   </div>
