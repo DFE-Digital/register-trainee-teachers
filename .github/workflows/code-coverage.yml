@@ -55,6 +55,7 @@ jobs:
       - name: Setup tests dependencies on images
         shell: bash
         run: |
+          docker compose exec -T web /bin/sh -c 'bundle config --local disable_exec_load true'
           docker compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
           docker compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
           docker compose exec -T web /bin/sh -c 'apk add --no-cache graphviz'
@@ -62,9 +63,11 @@ jobs:
           docker compose exec -T web /bin/sh -c 'bundle exec rails db:create db:migrate'
 
       - name: Run tests
-        shell: bash
-        run: |
-          docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec rspec'
+        uses: Wandalen/wretry.action@v3.5.0
+        with:
+          attempt_limit: 5
+          command: |
+            docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec rspec'
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
