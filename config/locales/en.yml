@@ -1949,6 +1949,7 @@ en:
             trainee:
               state: state is invalid must be [trn_received]
               submission_ready: submission ready is invalid must be true
+              degrees: degree information must be completed before QTS recommendation
             qts_standards_met_date:
               future: must be in the past
               itt_start_date: &qts_itt_start_date must not be before the ITT start date

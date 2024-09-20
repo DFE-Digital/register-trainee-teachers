@@ -11,7 +11,7 @@ module Api
 
       attr_reader :trainee
 
-      delegate :itt_start_date, :can_recommend_for_award?, to: :trainee, prefix: true
+      delegate :itt_start_date, :can_recommend_for_award?, :requires_degree?, to: :trainee, prefix: true
 
       validates :qts_standards_met_date,
                 presence: true,
@@ -36,6 +36,10 @@ module Api
         Dqt::RecommendForAwardJob.perform_later(trainee)
 
         true
+      end
+
+      def trainee_degree_missing?
+        trainee.degrees.blank?
       end
 
     private

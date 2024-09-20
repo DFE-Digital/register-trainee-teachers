@@ -129,6 +129,69 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
+
+      context "when trainee has no degrees but is on an undergraduate training route" do
+        let(:trainee) { create(:trainee, :trn_received, training_route: :early_years_undergrad) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        before do
+          allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
+        end
+
+        it "returns true" do
+          trainee.degrees.destroy_all
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
+
+      context "when trainee has no degrees and is on a postgraduate training route" do
+        let(:trainee) { create(:trainee, :trn_received, training_route: :provider_led_postgrad) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        before do
+          allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
+        end
+
+        it "returns false" do
+          trainee.degrees.destroy_all
+          success, errors = subject.call(params, trainee)
+
+          expect(success).to be(false)
+          expect(errors.full_messages).to contain_exactly("Trainee degree information must be completed before QTS recommendation")
+          expect(trainee.recommended_for_award?).to be(false)
+        end
+      end
+
+      context "when trainee has a degree and is on a postgraduate training route" do
+        let(:trainee) { create(:trainee, :trn_received, training_route: :provider_led_postgrad) }
+        let(:params) do
+          {
+            qts_standards_met_date: Time.zone.today.iso8601,
+          }
+        end
+
+        before do
+          allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
+        end
+
+        it "returns true" do
+          success, _errors = subject.call(params, trainee)
+
+          expect(success).to be(true)
+          expect(trainee.recommended_for_award?).to be(true)
+        end
+      end
     end
   end
 end

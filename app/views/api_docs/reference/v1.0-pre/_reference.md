@@ -214,7 +214,7 @@ current academic cycle.
           "course_title": null,
           "course_level": "undergrad",
           "course_itt_start_date": "2022-09-01",
-          "course_age_range": null,
+          "course_age_range": "13914",
           "expected_end_date": "2023-07-01",
           "employing_school_urn": null,
           "lead_partner_ukprn": null,
@@ -367,7 +367,7 @@ Get a single trainee.
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -754,42 +754,52 @@ Trainee details
     <pre class="json-code-sample">
     {
       "data": {
-        "provider_trainee_id": "12345678",
         "first_names": "John",
         "last_name": "Doe",
+        "previous_last_name": "Smith",
         "date_of_birth": "1990-01-01",
-        "sex": "11",
+        "sex": "99",
         "email": "john.doe@example.com",
-        "training_route": "11",
-        "itt_start_date": "2023-09-01",
-        "itt_end_date": "2024-07-01",
-        "course_subject_one": "100425",
-        "study_mode": "01",
         "nationality": "GB",
-        "ethnicity": "120",
+        "training_route": "11",
+        "itt_start_date": "2023-01-01",
+        "itt_end_date": "2023-10-01",
+        "course_subject_one": "100346",
+        "study_mode": "63",
         "disability1": "58",
-        "itt_aim": "201",
-        "itt_qualification_aim": "004",
-        "course_year": "2",
-        "course_age_range": "13918",
-        "fund_code": "7",
-        "funding_method": "4",
-        "hesa_id": "1210007145123456",
-        "placements_attributes": [
-          {
-            "urn": "123456",
-            "name": "Placement"
-          }
-        ],
+        "disability2": "57",
         "degrees_attributes": [
           {
             "grade": "02",
-            "subject": "100425",
-            "institution": "0116",
+            "subject": "100485",
+            "institution": "0117",
             "uk_degree": "083",
-            "graduation_year": "2012-07-31"
+            "graduation_year": "2003"
           }
-        ]
+        ],
+        "placements_attributes": [
+          {
+            "name": "Placement",
+            "urn": "900020"
+          }
+        ],
+        "itt_aim": 202,
+        "itt_qualification_aim": "001",
+        "course_year": "1",
+        "course_age_range": "13913",
+        "fund_code": "7",
+        "funding_method": "4",
+        "hesa_id": "0310261553101",
+        "provider_trainee_id": "99157234/2/01",
+        "pg_apprenticeship_start_date": "2024-03-11",
+        "ethnicity": "142",
+        "course_subject_two": "101410",
+        "course_subject_three": "100366",
+        "lead_school_urn": "900020",
+        "employing_school_urn": "790928",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Another Mixed background",
+        "lead_partner_urn": "900020"
       }
     }
     </pre>
@@ -804,116 +814,122 @@ Trainee details
     <pre class="json-code-sample">
     {
       "data": {
-        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-        "provider_trainee_id": "abc1234",
-        "first_names": "Trainee",
-        "last_name": "TraineeUser644065",
-        "date_of_birth": "2000-01-01",
-        "created_at": "2023-10-20T14:54:47.374Z",
-        "updated_at": "2024-01-24T16:03:28.721Z",
-        "email": "trainee_644065@example.com",
+        "first_names": "John",
+        "last_name": "Doe",
+        "date_of_birth": "1990-01-01",
+        "created_at": "2024-09-11T15:12:45.067Z",
+        "updated_at": "2024-09-11T15:12:45.067Z",
+        "email": "john.doe@example.com",
         "middle_names": null,
         "training_route": "11",
-        "sex": "10",
+        "sex": "99",
         "diversity_disclosure": "diversity_disclosed",
-        "ethnic_group": "black_ethnic_group",
-        "ethnic_background": "African",
+        "ethnic_group": "mixed_ethnic_group",
+        "ethnic_background": "Black Caribbean and White",
         "additional_ethnic_background": null,
-        "disability_disclosure": "no_disability",
-        "course_subject_one": "100425",
-        "itt_start_date": "2023-09-04",
+        "disability_disclosure": "disabled",
+        "course_subject_one": "100511",
+        "itt_start_date": "2023-01-01",
         "outcome_date": null,
-        "itt_end_date": "2023-10-17",
-        "trn": "6440650",
-        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-        "state": "deferred",
+        "itt_end_date": "2023-10-01",
+        "trn": null,
+        "submitted_for_trn_at": "2024-09-11T15:12:45.345Z",
         "withdraw_date": null,
         "withdraw_reasons_details": null,
-        "defer_date": "2023-10-17",
+        "defer_date": null,
         "recommended_for_award_at": null,
-        "trainee_start_date": "2023-09-04",
+        "trainee_start_date": "2023-01-01",
         "reinstate_date": null,
         "course_min_age": 5,
         "course_max_age": 11,
-        "course_subject_two": null,
-        "course_subject_three": null,
+        "course_subject_two": "100346",
+        "course_subject_three": "101410",
         "awarded_at": null,
-        "training_initiative": "009",
-        "applying_for_bursary": false,
-        "bursary_tier": null,
-        "study_mode": "01",
+        "training_initiative": null,
+        "study_mode": "63",
         "ebacc": false,
         "region": null,
-        "applying_for_scholarship": false,
         "course_education_phase": "primary",
-        "applying_for_grant": false,
         "course_uuid": null,
-        "lead_partner_not_applicable": false,
-        "employing_school_not_applicable": false,
+        "lead_partner_not_applicable": true,
+        "employing_school_not_applicable": true,
         "submission_ready": true,
         "commencement_status": null,
         "discarded_at": null,
         "created_from_dttp": false,
-        "hesa_id": "87960005710008762",
+        "hesa_id": "0310261553101",
         "additional_dttp_data": null,
         "created_from_hesa": false,
-        "hesa_updated_at": null
+        "hesa_updated_at": null,
         "record_source": "api",
         "iqts_country": null,
-        "hesa_editable": true,
+        "hesa_editable": false,
         "withdraw_reasons_dfe_details": null,
+        "slug_sent_to_dqt_at": null,
         "placement_detail": null,
-        "ukprn": "10000571",
-        "ethnicity": "120",
+        "provider_trainee_id": "99157234/2/01",
+        "ukprn": "81239124",
+        "ethnicity": "142",
+        "disability1": "58",
+        "disability2": "57",
         "course_qualification": "QTS",
         "course_title": null,
         "course_level": "undergrad",
-        "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
-        "expected_end_date": "2023-07-01",
+        "course_itt_start_date": "2023-01-01",
+        "course_age_range": "13914",
+        "expected_end_date": "2023-10-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
         "lead_partner_urn": null,
         "fund_code": "7",
         "bursary_level": "4",
-        "course_year": "2",
+        "previous_last_name": "Smith",
+        "itt_aim": "202",
+        "course_study_mode": "63",
+        "course_year": "1",
+        "pg_apprenticeship_start_date": "2024-03-11",
         "funding_method": "4",
-        "itt_aim": "201",
-        "itt_qualification_aim": "004",
         "ni_number": null,
-        "previous_last_name": null,
-        "hesa_disabilities": null,
         "additional_training_initiative": null,
+        "itt_qualification_aim": "001",
+        "hesa_disabilities": {
+          "disability1": "58",
+          "disability2": "57"
+        },
+        "nationality": "GB",
+        "withdraw_reasons": [],
         "placements": [
           {
-            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
-            "urn": "123456",
-            "name": "Meadow Creek School",
-            "postcode": "AB1 2CD",
-            "created_at": "2024-01-18T08:02:42.672Z",
-            "updated_at": "2024-01-18T08:02:42.672Z"
+            "urn": "900020",
+            "name": "London School",
+            "postcode": null,
+            "created_at": "2024-09-11T15:12:45.090Z",
+            "updated_at": "2024-09-11T15:12:45.090Z",
+            "placement_id": "D8VsiEck1ueqigL1Pu9ESAaR"
           }
         ],
         "degrees": [
           {
-            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
             "uk_degree": "083",
             "non_uk_degree": null,
-            "created_at": "2024-01-18T08:02:41.955Z",
-            "updated_at": "2024-01-18T08:02:41.955Z",
-            "subject": "100425",
-            "institution": "0116",
-            "graduation_year": 2022,
+            "created_at": "2024-09-11T15:12:45.069Z",
+            "updated_at": "2024-09-11T15:12:45.069Z",
+            "subject": "100485",
+            "institution": "0117",
+            "graduation_year": 2003,
             "grade": "02",
             "country": null,
             "other_grade": null,
-            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+            "institution_uuid": "1271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "1b6a5652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "e78170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f",
+            "degree_id": "cPTm9iXPbLzER8UqReEFGvNn"
           }
-        ]
+        ],
+        "state": "submitted_for_trn",
+        "trainee_id": "EMHhWRF33g53PReREX6rdPwd",
+        "application_id": null
       }
     }
     </pre>
@@ -984,8 +1000,9 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "urn": "123456",
-        "name": "Placement"
+        "urn": "343452",
+        "name": "Oxford School",
+        "postcode": "OX1 1AA"
       }
     }
     </pre>
@@ -1109,12 +1126,13 @@ Degree details
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "data": {
-        "grade": "02",
-        "subject": "100425",
-        "institution": "0116",
-        "uk_degree": "083",
-        "graduation_year": "2012-07-31"
+    "data": {
+      "grade": "02",
+      "subject": "100425",
+      "institution": "0117",
+      "uk_degree": "083",
+      "graduation_year": "2015-01-01",
+      "country": "GB"
       }
     }
     </pre>
@@ -1378,7 +1396,7 @@ Withdrawal details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -1593,7 +1611,7 @@ Recommendation details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -1992,7 +2010,7 @@ Deletes an existing degree for this trainee.
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -2173,7 +2191,7 @@ Trainee details
         "course_title": null,
         "course_level": "undergrad",
         "course_itt_start_date": "2022-09-01",
-        "course_age_range": null,
+        "course_age_range": "13914",
         "expected_end_date": "2023-07-01",
         "employing_school_urn": null,
         "lead_partner_ukprn": null,
@@ -3067,16 +3085,58 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_min_age</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        integer
+      </p>
+      <p class="govuk-body">
+        The lower bound of the age range of children taught on the course (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>7</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_max_age</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        integer
+      </p>
+      <p class="govuk-body">
+        The upper bound of the age range of children taught on the course (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>course_age_range</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string (limited to 5 characters), required
       </p>
       <p class="govuk-body">
-        The age range of the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittphsc">HESA ITT phase/scope field</a>
+        The age range of children taught on the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittphsc">HESA ITT phase/scope field</a>
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 6 characters)
+      </p>
+      <p class="govuk-body">
+        The Unique Reference Number (URN) of the lead partner for the trainee.
+      </p>
+      <p class="govuk-body">
+        Example: <code>123456</code>
       </p>
     </dd>
   </div>
@@ -3116,20 +3176,6 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the employing school for School Direct salaried trainees.
-      </p>
-      <p class="govuk-body">
-        Example: <code>123456</code>
-      </p>
-    </dd>
-  </div>
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>lead_partner_urn</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        string (limited to 6 characters)
-      </p>
-      <p class="govuk-body">
-        The Unique Reference Number (URN) of the lead partner for trainees.
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
@@ -3396,6 +3442,20 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>2012-07-31</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The locale code `uk` or `non_uk` (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>uk</code>
       </p>
     </dd>
   </div>

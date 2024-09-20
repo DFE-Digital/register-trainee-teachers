@@ -19,7 +19,7 @@
       "govuk-frontend": "^5.6.0",
       "jquery": "^3.7.1",
       "rails-ujs": "^5.2.8",
-      "sass": "^1.79.0",
+      "sass": "^1.79.2",
       "turbolinks": "^5.2.0"
     },
     "devDependencies": {
