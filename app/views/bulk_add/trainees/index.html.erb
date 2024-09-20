@@ -1,0 +1,80 @@
+<%= render PageTitle::View.new(text: "Bulk add new trainees") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-xl"><%= @navigation_view.organisation_name %></span>
+      Bulk add new trainees
+    </h1>
+
+    <p class="govuk-body">
+      Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+    </p>
+
+    <%= render GovukComponent::InsetTextComponent.new(classes: "") do %>
+      <p class="govuk-body">
+        You must only use this CSV file template to register new trainees.
+        If you use this to update already existing trainees, it will come back
+        as an error.
+      </p>
+    <% end %>
+
+    <h2 class="govuk-heading-m">
+      1. Download this CSV file template
+    </h2>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Download empty CSV file to add new trainees", "#") %>
+    </p>
+
+    <h3 class="govuk-heading-s">If you're adapting the CSV file template for a direct extract from your student record system</h3>
+
+    <p class="govuk-body">You can adapt this CSV file template to add trainee data directly from your student record system.</p>
+
+    <p class="govuk-body">You must follow the exact order of the data fields in this CSV template, otherwise it will come back as an error.</p>
+
+    <p class="govuk-body">If you're adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.</p>
+
+    <h2 class="govuk-heading-m">
+      2. Add new trainee details
+    </h2>
+
+    <p class="govuk-body">Open as a CSV file to add trainee details in bulk. There are 36 data fields. You will need to include trainee information such as:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>personal information</li>
+      <li>course details</li>
+      <li>funding (if eligible)</li>
+    </ul>
+
+    <p class="govuk-body">You can leave non mandatory rows or cells empty if you do not want to upload those fields.</p>
+
+    <%= govuk_details(summary_text: "Help with copying data from Excel to CSV") do %>
+      If you're copying trainee data from Excel to CSV, be aware Excel removes the 'leading zeros' from any data that begins with a zero, for example, trainee IDs.
+      <br><br>
+      To prevent this, you can first apply the Text format to the cells before you type or paste the numbers in Excel.
+    <% end %>
+
+    <p class="govuk-body">Check <a class="govuk-link" href="#">guidance on how add trainee information to the CSV template</a>.</p>
+
+    <h2 class="govuk-heading-m">
+      3. Upload your trainee records
+    </h2>
+
+    <%= register_form_with(model: @bulk_add_trainee_form, url: "#") do |f| %>
+      <label class="govuk-label" for="file-upload-1">
+        Upload a file
+      </label>
+      <div id="file-upload-1-hint" class="govuk-hint">
+        File type must be ‘CSV’.
+      </div>
+
+      <%= f.govuk_file_field(:file, label: { hidden: true }, accept: ".csv") %>
+      <%= f.govuk_submit("Upload records") %>
+    <% end %>
+  </div>
+</div>

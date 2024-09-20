@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+module BulkAdd
+  class TraineesController < ApplicationController
+    before_action { check_for_provider }
+
+    def index
+      @navigation_view = ::Funding::NavigationView.new(organisation:)
+    end
+
+  private
+
+    def organisation
+      @organisation ||= current_user.organisation
+    end
+
+    def check_for_provider
+      redirect_to(root_path) unless organisation.is_a?(Provider)
+    end
+  end
+end

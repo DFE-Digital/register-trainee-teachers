@@ -8,25 +8,25 @@ feature "bulk add trainees" do
   end
 
   before do
-    and_i_visit_the_bulk_upload_trainees_page
+    and_i_visit_the_bulk_add_trainees_page
   end
 
-  scenario "the bulk upload trainees page is visible" do
-    then_i_see_how_instructions_on_how_to_bulk_upload_trainees
-    and_i_see_the_upload_trainees_link
+  scenario "the bulk add trainees page is visible" do
+    then_i_see_how_instructions_on_how_to_bulk_add_trainees
+    and_i_see_the_empty_csv_link
   end
 
 private
 
-  def and_i_visit_the_bulk_upload_trainees_page
-    visit bulk_upload_trainees_path
+  def and_i_visit_the_bulk_add_trainees_page
+    visit bulk_add_trainees_path
   end
 
-  def then_i_see_how_instructions_on_how_to_bulk_upload_trainees
+  def then_i_see_how_instructions_on_how_to_bulk_add_trainees
     expect(page).to have_content("Bulk add new trainees")
   end
 
-  def and_i_see_the_upload_trainees_link
+  def and_i_see_the_empty_csv_link
     expect(page).to have_link("Download empty CSV file to add new trainees")
   end
 end

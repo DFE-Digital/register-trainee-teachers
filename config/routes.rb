@@ -88,6 +88,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :bulk_add, path: "bulk-add" do
+    get "/trainees", to: "trainees#index"
+  end
+
   resources :trainees, except: :edit do
     scope module: :trainees do
       resource :training_details, concerns: :confirmable, only: %i[edit update], path: "/training-details"
