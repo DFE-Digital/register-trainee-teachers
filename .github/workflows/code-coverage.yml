@@ -8,6 +8,12 @@ on:
     branches:
       - codecoverage
 
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+  pull-requests: write
+
 jobs:
   build:
     name: Build
@@ -68,7 +74,7 @@ jobs:
         with:
           attempt_limit: 5
           command: |
-            docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec rspec'
+            docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose parallel_rspec'
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
