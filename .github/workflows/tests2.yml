@@ -20,10 +20,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        test-type: [ unit_models ]
+        test-type: [ full-suite ]
         include:
-          - test-type: unit_models
-            include-pattern: spec/models/.*_spec.rb
+          - test-type: full-suite
+            include-pattern: spec/**/.*_spec.rb
 
     steps:
     - name: Checkout
