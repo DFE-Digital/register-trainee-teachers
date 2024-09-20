@@ -20,7 +20,7 @@ FactoryBot.define do
     middle_names { Faker::Name.middle_name }
     last_name { Faker::Name.last_name }
     sex { Trainee.sexes.keys.sample }
-    slug { SecureRandom.base58(Sluggable::SLUG_LENGTH) }
+    slug { Faker::Alphanumeric.alphanumeric(number: Sluggable::SLUG_LENGTH) }
 
     diversity_disclosure { Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed] }
     ethnic_group { nil }

@@ -118,7 +118,7 @@ describe "`GET /trainees` endpoint" do
     end
   end
 
-  context "with sort order" do
+  context "with sort order", time_sensitive: true do
     it "sorts the results in descending order by default" do
       get(
         "/api/v1.0-pre/trainees",
