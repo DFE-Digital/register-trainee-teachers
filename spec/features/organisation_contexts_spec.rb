@@ -72,7 +72,7 @@ private
   end
 
   def and_i_am_in_the_provider_context
-    expect(start_page.organisation_name.text).to eq(provider.name)
+    expect(start_page.organisation_name.text).to eq(provider.name_and_code)
   end
 
   def when_i_visit_the_draft_trainee_page

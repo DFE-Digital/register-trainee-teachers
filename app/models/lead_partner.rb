@@ -59,4 +59,8 @@ class LeadPartner < ApplicationRecord
   def funding_trainee_summaries
     school&.funding_trainee_summaries || provider&.funding_trainee_summaries
   end
+
+  def name_and_code
+    name
+  end
 end
