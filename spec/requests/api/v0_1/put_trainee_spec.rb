@@ -918,6 +918,8 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
       context "when HasCourseAttributes#primary_education_phase? is true" do
         before do
+          trainee.update!(course_age_range: [7, 11])
+
           put(
             endpoint,
             headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -932,7 +934,6 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
                 course_subject_one: "100346",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
               },
             }
           end
@@ -957,7 +958,6 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
                 course_subject_one: "100511",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
               },
             }
           end

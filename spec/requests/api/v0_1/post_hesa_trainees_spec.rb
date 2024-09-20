@@ -494,6 +494,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     context "with course subjects" do
       context "when HasCourseAttributes#primary_education_phase? is true" do
+        let(:course_age_range) { "13914" }
+
         before do
           post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
         end
@@ -548,6 +550,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       end
 
       context "when HasCourseAttributes#primary_education_phase? is false" do
+        let(:course_age_range) { "13917" }
         let(:params) do
           {
             data: data.merge(

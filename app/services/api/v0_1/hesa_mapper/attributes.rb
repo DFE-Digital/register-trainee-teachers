@@ -56,7 +56,6 @@ module Api
           .merge(lead_partner_and_employing_school_attributes)
           .compact
 
-
           if update && !disabilities?
             mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure, :disabilities)
           end
@@ -145,15 +144,15 @@ module Api
           ::Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
         end
 
-        def course_subject_one_name
+        def course_subject_one
           course_subject_name(params[:course_subject_one])
         end
 
-        def course_subject_two_name
+        def course_subject_two
           course_subject_name(params[:course_subject_two])
         end
 
-        def course_subject_three_name
+        def course_subject_three
           course_subject_name(params[:course_subject_three])
         end
 

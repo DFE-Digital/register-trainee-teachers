@@ -958,13 +958,14 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         end
 
         context "when '100511' is not present" do
+          let(:course_age_range) { "13914" }
           let(:params) do
             {
               data: {
                 course_subject_one: "100346",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
+                course_age_range: course_age_range,
               },
             }
           end
@@ -972,6 +973,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           it "sets the correct subjects" do
             trainee.reload
 
+            expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range])
             expect(trainee.course_subject_one).to eq("primary teaching")
             expect(trainee.course_subject_two).to eq("biology")
             expect(trainee.course_subject_three).to eq("historical linguistics")
@@ -989,7 +991,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
                 course_subject_one: "100511",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
               },
             }
           end
