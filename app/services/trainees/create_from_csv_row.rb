@@ -238,15 +238,15 @@ module Trainees
       csv_row["Course education phase"].downcase.parameterize(separator: "_")
     end
 
-    def course_subject_one_name
+    def course_subject_one
       course_subject_name("Course ITT subject 1")
     end
 
-    def course_subject_two_name
+    def course_subject_two
       course_subject_name("Course ITT subject 2")
     end
 
-    def course_subject_three_name
+    def course_subject_three
       course_subject_name("Course ITT Subject 3")
     end
 
