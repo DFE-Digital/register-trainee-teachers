@@ -23,6 +23,12 @@ module HasCourseAttributes
     attributes
   end
 
+private
+
+  def course_education_phase
+    COURSE_EDUCATION_PHASE_ENUMS[:secondary]
+  end
+
   def course_min_age
     course_age_range && course_age_range[0]
   end
