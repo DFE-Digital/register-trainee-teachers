@@ -33,7 +33,7 @@ module Personas
 
       it "renders the all provider names" do
         persona.providers.each do |provider|
-          expect(component).to have_text(provider.name)
+          expect(component).to have_text("#{provider.name} (#{provider.code})")
         end
       end
     end

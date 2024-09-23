@@ -60,7 +60,7 @@ module Trainees
 
           context "and there's no current_user set" do
             it "returns a timeline event with the provider's name" do
-              expect(subject.first.username).to eq(trainee.provider.name)
+              expect(subject.first.username).to eq(trainee.provider.name_and_code)
             end
           end
 
@@ -68,7 +68,7 @@ module Trainees
             let(:current_user) { create(:user) }
 
             it "returns a timeline event with the provider's name" do
-              expect(subject.first.username).to eq(trainee.provider.name)
+              expect(subject.first.username).to eq(trainee.provider.name_and_code)
             end
           end
 
@@ -84,7 +84,7 @@ module Trainees
             let(:current_user) { create(:user, :system_admin) }
 
             it "returns a timeline event with the user's name and the provider's name" do
-              expect(subject.first.username).to eq("#{provider_user.name} (#{trainee.provider.name})")
+              expect(subject.first.username).to eq("#{provider_user.name} (#{trainee.provider.name_and_code})")
             end
           end
         end

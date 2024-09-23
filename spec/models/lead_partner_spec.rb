@@ -119,4 +119,14 @@ describe LeadPartner do
       end
     end
   end
+
+  describe "#name_and_code" do
+    context "when schools exists" do
+      subject(:lead_partner) { create(:lead_partner, :hei) }
+
+      it "returns the name of the lead partner" do
+        expect(lead_partner.name_and_code).to eq(lead_partner.name)
+      end
+    end
+  end
 end

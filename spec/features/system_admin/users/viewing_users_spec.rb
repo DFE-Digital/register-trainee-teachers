@@ -28,7 +28,7 @@ feature "View users" do
   end
 
   def and_i_click_on_a_provider
-    providers_index_page.provider_cards.find { |card| card.name.text == provider.name }.name.click
+    providers_index_page.provider_cards.find { |card| card.name.text == provider.name_and_code }.name.click
   end
 
   def then_i_am_taken_to_the_provider_show_page

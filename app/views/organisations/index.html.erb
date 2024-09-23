@@ -9,7 +9,7 @@
       <ul class="govuk-list">
         <%- @providers.each do |provider| -%>
           <li class="govuk-!-margin-bottom-2">
-            <%= govuk_link_to provider.name,
+            <%= govuk_link_to provider.name_and_code,
               organisation_path(id: provider.id, type: "Provider"),
               class: "provider-link govuk-!-font-size-24 govuk-!-font-weight-bold govuk-link govuk-link--no-visited-state" %>
           </li>

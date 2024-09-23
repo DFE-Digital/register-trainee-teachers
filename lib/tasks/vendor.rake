@@ -12,7 +12,6 @@ namespace :vendor do
                       PWC
                       Unit-e
                       TechnologyOne] + [*1..10].map { |a| "Test vendor #{a}" }
-
     provider_ids = Trainee.group(:provider_id).order("count_all DESC").count.take(vendor_names.count).shuffle
       .map { |provider_id, _count_all| provider_id }
 
@@ -33,7 +32,7 @@ namespace :vendor do
     vendor_name, provider_id_to_replace = *args
 
     existing_provider = Provider.find(provider_id_to_replace)
-    puts "Swapped: #{existing_provider.name} with #{vendor_name}"
+    puts "Swapped: #{existing_provider.name_and_code} with #{vendor_name}"
 
     existing_provider.update(
       dttp_id: SecureRandom.uuid,

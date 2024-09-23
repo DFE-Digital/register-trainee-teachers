@@ -28,7 +28,7 @@ module ApplicationRecordCard
       end
 
       it "renders provider name" do
-        expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
+        expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name_and_code)
       end
 
       it "renders the record source" do
@@ -42,7 +42,7 @@ module ApplicationRecordCard
       end
 
       it "renders provider name" do
-        expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
+        expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name_and_code)
       end
     end
 
@@ -146,7 +146,7 @@ module ApplicationRecordCard
         end
 
         it "renders provider name" do
-          expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name.to_s)
+          expect(rendered_content).to have_css(".application-record-card__provider_name", text: provider.name_and_code)
         end
       end
 

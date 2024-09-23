@@ -37,10 +37,10 @@
           <% @user.providers.each do |provider| %>
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <%= govuk_link_to provider.name, provider_path(provider), class: 'provider' %>
+                <%= govuk_link_to provider.name_and_code, provider_path(provider), class: 'provider' %>
               </td>
               <td class="govuk-table__cell">
-                <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{provider.name}</span>".html_safe,
+                <%= govuk_link_to "Remove<span class=\"govuk-visually-hidden\"> access to #{provider.name_and_code}</span>".html_safe,
                                   edit_user_provider_accessions_path(@user, provider),
                                   class: 'remove-access' %>
               </td>

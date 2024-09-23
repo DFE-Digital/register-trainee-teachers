@@ -72,7 +72,7 @@
           <td class="govuk-table__cell">
             <span class="govuk-!-display-block govuk-!-margin-bottom-1">
               <% user.providers.each do |provider| %>
-                <%= govuk_link_to provider.name,
+                <%= govuk_link_to provider.name_and_code,
                                   provider_path(provider, context: :users),
                                   class: "govuk-!-display-block" %>
               <% end %>
