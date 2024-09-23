@@ -86,10 +86,10 @@ Rails.application.routes.draw do
       resource :recommendations_errors, only: %i[show create], path: "review-errors"
       member { get :cancel, path: "cancel" }
     end
-  end
 
-  namespace :bulk_add, path: "bulk-add" do
-    get "/trainees", to: "trainees#index"
+    namespace :trainees do
+      get :add_new_trainees, path: "add-new-trainees", to: "add_new_trainees#show"
+    end
   end
 
   resources :trainees, except: :edit do

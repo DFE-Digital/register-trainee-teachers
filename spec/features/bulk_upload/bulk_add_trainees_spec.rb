@@ -19,7 +19,7 @@ feature "bulk add trainees" do
 private
 
   def and_i_visit_the_bulk_add_trainees_page
-    visit bulk_add_trainees_path
+    visit bulk_update_trainees_add_new_trainees_path
   end
 
   def then_i_see_how_instructions_on_how_to_bulk_add_trainees
