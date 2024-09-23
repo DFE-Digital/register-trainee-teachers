@@ -7,22 +7,25 @@ feature "bulk add trainees" do
     given_i_am_authenticated
   end
 
-  before do
-    and_i_visit_the_bulk_add_trainees_page
-  end
-
   scenario "the bulk add trainees page is visible" do
+    when_i_visit_the_bulk_update_index_page
+    and_i_click_the_bulk_add_trainees_page
     then_i_see_how_instructions_on_how_to_bulk_add_trainees
     and_i_see_the_empty_csv_link
   end
 
 private
 
-  def and_i_visit_the_bulk_add_trainees_page
-    visit bulk_update_trainees_add_new_trainees_path
+  def when_i_visit_the_bulk_update_index_page
+    visit bulk_update_path
+  end
+
+  def and_i_click_the_bulk_add_trainees_page
+    click_on "Bulk add new trainees"
   end
 
   def then_i_see_how_instructions_on_how_to_bulk_add_trainees
+    expect(page).to have_current_path(bulk_update_trainees_add_new_trainees_path)
     expect(page).to have_content("Bulk add new trainees")
   end
 

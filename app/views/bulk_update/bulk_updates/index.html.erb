@@ -12,7 +12,23 @@
     </h1>
 
     <p class="govuk-body">
-      Make changes to multiple trainee records at the same time.
+      Make changes to multiple trainee records at the same time. You can:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>add new trainees</li>
+      <li>add missing placement data</li>
+      <li>recommend trainees for QTS</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Add new trainees
+    </h2>
+
+    <p class="govuk-body">You can bulk add new trainees.</p>
+
+    <p class="govuk-body">
+      <%= govuk_link_to("Bulk add new trainees", bulk_update_trainees_add_new_trainees_path) %>
     </p>
 
     <% if bulk_placements_count.positive?  %>
