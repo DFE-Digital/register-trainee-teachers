@@ -23,7 +23,7 @@ jobs:
         test-type: [ full-suite ]
         include:
           - test-type: full-suite
-            include-pattern: spec/**/.*_spec.rb
+            include-pattern: spec/**/*_spec.rb
             exclude-pattern: spec/smoke/.*_spec.rb
 
     steps:
