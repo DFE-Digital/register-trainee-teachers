@@ -10,11 +10,13 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::JSONFormatter,
 ])
 
-SimpleCov.coverage_dir("coverage/backend")
-SimpleCov.start("rails") do
-  add_filter "/spec/"
-  add_filter %r{/code_sets/}
-  enable_coverage :branch
+if ENV.fetch("COVERAGE", false)
+  SimpleCov.coverage_dir("coverage/backend")
+  SimpleCov.start("rails") do
+    add_filter "/spec/"
+    add_filter %r{/code_sets/}
+    enable_coverage :branch
+  end
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
