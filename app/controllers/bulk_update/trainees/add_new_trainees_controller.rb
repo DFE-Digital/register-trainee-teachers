@@ -10,6 +10,16 @@ module BulkUpdate
         @navigation_view = ::Funding::NavigationView.new(organisation:)
       end
 
+      def create
+        # Validate the uploaded CSV
+
+        redirect_to(bulk_update_trainees_status_path)
+      end
+
+      def status
+        @navigation_view = ::Funding::NavigationView.new(organisation:)
+      end
+
     private
 
       def organisation

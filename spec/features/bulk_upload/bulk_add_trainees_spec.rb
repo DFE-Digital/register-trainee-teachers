@@ -18,6 +18,9 @@ feature "bulk add trainees" do
     and_i_click_the_bulk_add_trainees_page
     then_i_see_how_instructions_on_how_to_bulk_add_trainees
     and_i_see_the_empty_csv_link
+
+    when_i_click_the_upload_button
+    then_i_see_the_summary_page
   end
 
 private
@@ -46,5 +49,13 @@ private
 
   def and_i_see_the_empty_csv_link
     expect(page).to have_link("Download empty CSV file to add new trainees")
+  end
+
+  def when_i_click_the_upload_button
+    click_on "Upload records"
+  end
+
+  def then_i_see_the_summary_page
+    expect(page).to have_current_path(bulk_update_trainees_status_path)
   end
 end
