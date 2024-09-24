@@ -5,8 +5,9 @@ require "rails_helper"
 feature "iQTS end-to-end journey" do
   background { given_i_am_authenticated }
 
+  include_context "perform enqueued jobs"
+
   scenario "submit for TRN", "feature_routes.iqts": true do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_i_have_created_an_iqts_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete

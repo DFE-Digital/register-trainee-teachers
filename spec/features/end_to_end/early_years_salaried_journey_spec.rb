@@ -3,10 +3,11 @@
 require "rails_helper"
 
 feature "early_years_salaried end-to-end journey" do
+  include_context "perform enqueued jobs"
+
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.early_years_salaried": true do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_i_have_created_an_early_years_salaried_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete

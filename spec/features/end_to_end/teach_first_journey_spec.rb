@@ -3,12 +3,13 @@
 require "rails_helper"
 
 feature "teach-first end-to-end journey", skip: "training route is no longer available for manual input" do
+  include_context "perform enqueued jobs"
+
   let(:user) { create(:user, providers: create_list(:provider, 1, code: Provider::TEACH_FIRST_PROVIDER_CODE)) }
 
   background { given_i_am_authenticated(user:) }
 
   scenario "submit for TRN" do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_i_have_created_a_teach_first_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete
