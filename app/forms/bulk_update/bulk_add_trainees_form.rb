@@ -18,6 +18,7 @@ module BulkUpdate
       return false unless valid?
 
       # TODO: Implement the save method
+      true
     end
 
     def csv
