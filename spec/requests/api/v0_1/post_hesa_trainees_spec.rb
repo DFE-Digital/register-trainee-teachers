@@ -89,6 +89,15 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(Trainee.last.state).to eq("submitted_for_trn")
     end
 
+    it "sets the correct course_min_age and course_max_age" do
+      course_min_age, course_max_age = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range]
+
+      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response.parsed_body[:data][:course_min_age]).to eq(course_min_age)
+      expect(response.parsed_body[:data][:course_max_age]).to eq(course_max_age)
+    end
+
     it "sets the correct study_mode" do
       post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
@@ -483,6 +492,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     context "with course subjects" do
       context "when HasCourseAttributes#primary_education_phase? is true" do
+        let(:course_age_range) { "13914" }
+
         before do
           post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
         end
@@ -494,7 +505,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
                 course_subject_one: "100346",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
               ),
             }
           end
@@ -519,7 +529,6 @@ describe "`POST /api/v0.1/trainees` endpoint" do
                 course_subject_one: "100511",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
               ),
             }
           end
@@ -539,6 +548,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       end
 
       context "when HasCourseAttributes#primary_education_phase? is false" do
+        let(:course_age_range) { "13917" }
         let(:params) do
           {
             data: data.merge(
