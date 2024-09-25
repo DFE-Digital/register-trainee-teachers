@@ -539,6 +539,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       end
 
       context "when HasCourseAttributes#primary_education_phase? is false" do
+        let(:course_age_range) { "13917" }
         let(:params) do
           {
             data: data.merge(

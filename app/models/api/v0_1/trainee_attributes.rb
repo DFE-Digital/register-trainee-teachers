@@ -156,7 +156,7 @@ module Api
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
 
-        self.attributes = primary_course_subjects(attributes) if primary_education_phase?
+        self.attributes = primary_course_subjects if primary_education_phase?
       end
 
       def update_hesa_trainee_detail_attributes(new_attributes)

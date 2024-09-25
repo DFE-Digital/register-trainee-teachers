@@ -3,7 +3,7 @@
 module PrimaryCourseSubjects
   extend ActiveSupport::Concern
 
-  def primary_course_subjects(_attributes)
+  def primary_course_subjects
     # This always ensures "primary teaching" is the first subject or inserts it if it's missing
     other_subjects = course_subjects - [CourseSubjects::PRIMARY_TEACHING]
 
