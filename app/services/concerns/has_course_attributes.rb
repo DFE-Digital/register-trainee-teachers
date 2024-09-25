@@ -18,7 +18,7 @@ module HasCourseAttributes
       course_allocation_subject:,
     }
 
-    return attributes.merge(primary_course_subjects(attributes)) if primary_education_phase?
+    return attributes.merge(primary_course_subjects) if primary_education_phase?
 
     attributes
   end
