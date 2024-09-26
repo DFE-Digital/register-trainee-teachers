@@ -380,8 +380,6 @@ paths:
                       - recommended_for_award_at
                       - trainee_start_date
                       - reinstate_date
-                      - course_min_age
-                      - course_max_age
                       - course_subject_two
                       - course_subject_three
                       - awarded_at
@@ -2030,37 +2028,6 @@ paths:
                 required:
                 - data
               example:
-                middle_names:
-                additional_ethnic_background:
-                outcome_date:
-                trn:
-                withdraw_date:
-                withdraw_reasons_details:
-                defer_date:
-                recommended_for_award_at:
-                reinstate_date:
-                course_subject_three:
-                awarded_at:
-                training_initiative:
-                region:
-                course_uuid:
-                commencement_status:
-                discarded_at:
-                additional_dttp_data:
-                hesa_updated_at:
-                iqts_country:
-                withdraw_reasons_dfe_details:
-                slug_sent_to_dqt_at:
-                placement_detail:
-                provider_trainee_id:
-                course_title:
-                employing_school_urn:
-                lead_partner_urn_ukprn:
-                lead_school_urn:
-                previous_last_name:
-                postgrad_apprenticeship_start_date:
-                ni_number:
-                additional_training_initiative:
                 data:
                   first_names: John
                   last_name: Doe
@@ -2699,17 +2666,9 @@ paths:
                       type: string
                     course_subject_three:
                       type: string
-                    course_max_age:
-                      type: integer
-                    lead_school_urn:
-                      type: string
                     employing_school_urn:
                       type: string
                     trn:
-                      type: string
-                    ethnic_group:
-                      type: string
-                    ethnic_background:
                       type: string
                     lead_partner_urn:
                       type: string
@@ -2772,12 +2731,8 @@ paths:
                 ethnicity: '142'
                 course_subject_two: '101410'
                 course_subject_three: '100366'
-                course_max_age: 11
-                lead_school_urn: '900020'
                 employing_school_urn: '190936'
                 trn: '567899'
-                ethnic_group: mixed_ethnic_group
-                ethnic_background: Another Mixed background
                 lead_partner_urn: '900020'
   "/api/{api_version}/trainees/{id}":
     get:
@@ -3769,10 +3724,6 @@ paths:
                     ethnicity:
                       type: string
                       nullable: true
-                    ethnic_group:
-                      type: string
-                    ethnic_background:
-                      type: string
                     training_route:
                       type: string
                       nullable: true
@@ -3786,8 +3737,6 @@ paths:
                       type: string
                     course_subject_three:
                       type: string
-                    course_max_age:
-                      type: integer
                     study_mode:
                       type: string
               required:
@@ -3802,15 +3751,12 @@ paths:
                 employing_school_urn: '865860'
                 trn: '567899'
                 ethnicity:
-                ethnic_group: mixed_ethnic_group
-                ethnic_background: Another Mixed background
                 training_route:
                 disability1: '58'
                 disability2: '57'
                 course_subject_one: '100346'
                 course_subject_two: '101410'
                 course_subject_three: '100366'
-                course_max_age: 11
                 study_mode: '63'
   "/api/{api_version}/trainees/{trainee_id}/defer":
     post:
