@@ -6,9 +6,7 @@ module BulkUpdate
 
     helper_method :bulk_placements_count, :bulk_recommend_count
 
-    def index
-      @navigation_view = ::Funding::NavigationView.new(organisation:)
-    end
+    def index; end
 
   private
 

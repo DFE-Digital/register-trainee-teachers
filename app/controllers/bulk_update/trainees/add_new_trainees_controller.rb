@@ -6,9 +6,7 @@ module BulkUpdate
       before_action { check_for_provider }
       before_action { require_feature_flag(:bulk_add_trainees) }
 
-      def show
-        @navigation_view = ::Funding::NavigationView.new(organisation:)
-      end
+      def show; end
 
       def create
         # Validate the uploaded CSV
@@ -16,9 +14,7 @@ module BulkUpdate
         redirect_to(bulk_update_trainees_status_path)
       end
 
-      def status
-        @navigation_view = ::Funding::NavigationView.new(organisation:)
-      end
+      def status; end
 
     private
 
