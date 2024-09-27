@@ -8,7 +8,7 @@ RSpec.configure do |config|
   end
 
   config.around do |example|
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
 
     # Start transaction
     DatabaseCleaner.cleaning do
