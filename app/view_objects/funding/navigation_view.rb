@@ -10,7 +10,7 @@ module Funding
     end
 
     def organisation_name
-      @organisation&.name
+      @organisation&.name_and_code
     end
 
     def path_for_funding_payment_schedule(year)
