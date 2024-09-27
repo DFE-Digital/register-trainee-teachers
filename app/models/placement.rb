@@ -44,7 +44,7 @@ class Placement < ApplicationRecord
   scope :with_urn, -> { where.not(urn: nil) }
 
   def name
-    school&.name || super
+    super || school&.name
   end
 
   def full_address
