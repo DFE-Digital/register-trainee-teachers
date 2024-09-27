@@ -22,8 +22,8 @@ end
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.configure do |config|
-  config.before(:each) do
-    Redis.new.flushdb
+  config.before do
+    RedisClient.current.flushdb
   end
 
   config.include RSpec::Benchmark::Matchers
