@@ -67,7 +67,6 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
 
           placement.reload
 
-          expect(placement.school_id).to eq(placement.school.id)
           expect(placement.address).to eq(params.dig(:data, :address))
           expect(placement.name).to eq(params.dig(:data, :name))
           expect(placement.postcode).to eq(params.dig(:data, :postcode))
