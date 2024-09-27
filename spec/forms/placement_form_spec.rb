@@ -163,7 +163,7 @@ describe PlacementForm, type: :model do
     end
 
     context "when there are placements" do
-      let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 1, :with_school)) }
       let(:placement) { trainee.placements.first }
 
       it "returns school name" do
@@ -174,7 +174,7 @@ describe PlacementForm, type: :model do
 
   describe "#update_placement" do
     context "using custom school data" do
-      let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 1, :with_school)) }
       let(:placement) { trainee.placements.first }
 
       let(:attributes) do
@@ -188,11 +188,11 @@ describe PlacementForm, type: :model do
         expect { subject.update_placement(attributes) }
           .to change { subject.school_id }.to(nil)
           .and change { subject.name }
-          .from(nil).to(attributes[:name])
+          .to(attributes[:name])
           .and change { subject.urn }
-          .from(nil).to(attributes[:urn])
+          .to(attributes[:urn])
           .and change { subject.postcode }
-          .from(nil).to(attributes[:postcode])
+          .to(attributes[:postcode])
       end
     end
 
@@ -212,7 +212,7 @@ describe PlacementForm, type: :model do
     end
 
     context "when there are placements" do
-      let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+      let(:trainee) { create(:trainee, placements: build_list(:placement, 1, :with_school)) }
       let(:placement) { trainee.placements.first }
 
       it "returns school name" do
@@ -236,7 +236,7 @@ describe PlacementForm, type: :model do
       end
 
       context "with duplicated urn" do
-        let(:trainee) { create(:trainee, placements: build_list(:placement, 1)) }
+        let(:trainee) { create(:trainee, placements: build_list(:placement, 1, :with_school)) }
 
         let(:placement) { Placement.new(name: "duplicated urn", urn: trainee.placements.first.school.urn) }
 
@@ -270,7 +270,7 @@ describe PlacementForm, type: :model do
     end
 
     describe "#urn_valid" do
-      let(:trainee_placement) { build(:placement) }
+      let(:trainee_placement) { build(:placement, :with_school) }
       let(:trainee) { create(:trainee, placements: [trainee_placement]) }
       let(:placement) { Placement.new(**placement_attributes) }
 
@@ -314,7 +314,7 @@ describe PlacementForm, type: :model do
     end
 
     describe "#school_urn_valid" do
-      let(:trainee_placement) { build(:placement) }
+      let(:trainee_placement) { build(:placement, :with_school) }
       let(:trainee) { create(:trainee, placements: [trainee_placement]) }
       let(:placement) { Placement.new(**placement_attributes) }
 

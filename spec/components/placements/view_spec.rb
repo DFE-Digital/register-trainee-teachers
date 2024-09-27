@@ -28,7 +28,7 @@ module Placements
     end
 
     context "with 2 placements" do
-      let(:placements) { create_list(:placement, 2, :manual) }
+      let(:placements) { create_list(:placement, 2) }
 
       it "shows the placement" do
         placements.each do |placement|

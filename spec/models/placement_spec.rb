@@ -70,7 +70,7 @@ RSpec.describe Placement do
 
   describe "#name" do
     context "when a school record exists" do
-      subject { create(:placement) }
+      subject { create(:placement, :with_school) }
 
       it "returns the school name" do
         expect(subject.name).to eq(subject.school.name)
@@ -79,7 +79,7 @@ RSpec.describe Placement do
 
     context "when a school record does not exist" do
       subject {
-        create(:placement, :manual, name: "Some name")
+        create(:placement, name: "Some name")
       }
 
       it "returns the school name" do
@@ -90,7 +90,7 @@ RSpec.describe Placement do
 
   describe "#address" do
     context "when a school record exists" do
-      subject { create(:placement) }
+      subject { create(:placement, :with_school) }
 
       it "returns the school address" do
         expect(subject.full_address).to eq("URN #{subject.school.urn}, #{subject.school.town}, #{subject.school.postcode}")
@@ -99,7 +99,7 @@ RSpec.describe Placement do
 
     context "when a school record does not exist and no urn is provided by user" do
       subject {
-        create(:placement, :manual, urn: nil)
+        create(:placement, urn: nil)
       }
 
       it "returns the user input address" do
@@ -109,7 +109,7 @@ RSpec.describe Placement do
 
     context "when a school record does not exist but urn is provided by user" do
       subject {
-        create(:placement, :manual)
+        create(:placement, urn: Faker::Number.number(digits: 6))
       }
 
       it "returns the user input address" do
@@ -119,7 +119,7 @@ RSpec.describe Placement do
 
     context "when the school urn is among the Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS" do
       subject {
-        create(:placement, :manual, urn: Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.sample)
+        create(:placement, urn: Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.sample)
       }
 
       it "returns no address" do

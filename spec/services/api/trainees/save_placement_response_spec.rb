@@ -116,7 +116,7 @@ describe Api::Trainees::SavePlacementResponse do
     end
 
     context "with same name" do
-      let(:existing_placement) { create(:placement, :manual, name: "existing placement") }
+      let(:existing_placement) { create(:placement, name: "existing placement") }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:conflict)
@@ -128,7 +128,7 @@ describe Api::Trainees::SavePlacementResponse do
     end
 
     context "with same address and postcode" do
-      let(:existing_placement) { create(:placement, :manual, address: "1 Hogwarts drive", postcode: "BN1 1AA") }
+      let(:existing_placement) { create(:placement, address: "1 Hogwarts drive", postcode: "BN1 1AA") }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:conflict)
