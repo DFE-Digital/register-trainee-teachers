@@ -24,7 +24,7 @@ module Api
       validates :postcode, postcode: true
 
       def self.from_placement(placement)
-        new(placement.attributes)
+        new(placement.attributes.with_indifferent_access)
       end
 
       def assign_attributes(new_attributes)
@@ -34,10 +34,18 @@ module Api
           new_attributes[:name]      ||= school.name
           new_attributes[:postcode]  ||= school.postcode
 
-          super
+          super(
+            new_attributes.select do |k, _v|
+              INTERNAL_ATTRIBUTES.include?(k.to_sym)
+            end
+          )
         end
 
-        super(new_attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) })
+        super(
+          new_attributes.select do |k, _v|
+            ATTRIBUTES.include?(k.to_sym)
+          end
+        )
       end
     end
   end
