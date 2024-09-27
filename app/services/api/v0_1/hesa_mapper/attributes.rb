@@ -144,15 +144,15 @@ module Api
           ::Hesa::CodeSets::CourseSubjects::MAPPING[subject_code]
         end
 
-        def course_subject_one_name
+        def course_subject_one
           course_subject_name(params[:course_subject_one])
         end
 
-        def course_subject_two_name
+        def course_subject_two
           course_subject_name(params[:course_subject_two])
         end
 
-        def course_subject_three_name
+        def course_subject_three
           course_subject_name(params[:course_subject_three])
         end
 
@@ -168,10 +168,6 @@ module Api
 
         def course_age_range
           DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
-        end
-
-        def course_max_age
-          params[:course_max_age]
         end
 
         def course_study_mode

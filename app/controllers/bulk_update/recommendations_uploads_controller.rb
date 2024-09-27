@@ -5,7 +5,6 @@ module BulkUpdate
     helper_method :organisation_filename_prepopulated, :organisation_filename_empty
 
     def new
-      navigation_view
       @recommendations_upload_form = RecommendationsUploadForm.new
     end
 
@@ -20,7 +19,6 @@ module BulkUpdate
         create_rows!
         redirect_to(bulk_update_recommendations_upload_summary_path(@recommendations_upload_form.recommendations_upload))
       else
-        navigation_view
         render(:new)
       end
     end

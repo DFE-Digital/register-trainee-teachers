@@ -86,6 +86,12 @@ Rails.application.routes.draw do
       resource :recommendations_errors, only: %i[show create], path: "review-errors"
       member { get :cancel, path: "cancel" }
     end
+
+    namespace :trainees do
+      get :add_new_trainees, path: "add-new-trainees", to: "add_new_trainees#show"
+      post :add_new_trainees, path: "add-new-trainees", to: "add_new_trainees#create"
+      get :status, path: "add-new-trainees/status", to: "add_new_trainees#status"
+    end
   end
 
   resources :trainees, except: :edit do

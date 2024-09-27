@@ -6,7 +6,7 @@ module NavigationHelper
 
     {
       drafts: -> { trainee&.draft? && segment == "drafts" },
-      trainees: -> { url.include?("/#{segment}") && !trainee&.draft? },
+      trainees: -> { url.include?("/#{segment}") && !trainee&.draft? && !url.include?(segment) },
       bulk: -> { url.include?(segment) },
       reports: -> { url.include?("reports") },
       funding: -> { url.include?("funding") },
