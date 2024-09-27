@@ -22,6 +22,10 @@ end
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.configure do |config|
+  config.before(:each) do
+    Redis.new.flushdb
+  end
+
   config.include RSpec::Benchmark::Matchers
 
   config.filter_run_excluding smoke: true
