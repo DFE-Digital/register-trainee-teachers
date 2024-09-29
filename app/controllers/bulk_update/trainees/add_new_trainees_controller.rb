@@ -6,10 +6,19 @@ module BulkUpdate
       before_action { check_for_provider }
       before_action { require_feature_flag(:bulk_add_trainees) }
 
-      def show; end
+      def show
+        @bulk_add_trainee_form = BulkUpdate::BulkAddTraineesForm.new(
+          provider: organisation,
+        )
+      end
 
       def create
-        # Validate the uploaded CSV
+        @bulk_add_trainee_form = BulkUpdate::BulkAddTraineesForm.new(
+          provider: organisation,
+          file: file,
+        )
+
+        @bulk_add_trainee_form.save
 
         redirect_to(bulk_update_trainees_status_path)
       end
@@ -17,6 +26,10 @@ module BulkUpdate
       def status; end
 
     private
+
+      def file
+        @file ||= params.dig(:bulk_update_bulk_add_trainees_form, :file)
+      end
 
       def organisation
         @organisation ||= current_user.organisation

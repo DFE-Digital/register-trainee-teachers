@@ -19,7 +19,8 @@ feature "bulk add trainees" do
     then_i_see_how_instructions_on_how_to_bulk_add_trainees
     and_i_see_the_empty_csv_link
 
-    when_i_click_the_upload_button
+    when_i_attach_an_empty_file
+    and_i_click_the_upload_button
     then_i_see_the_summary_page
   end
 
@@ -51,7 +52,16 @@ private
     expect(page).to have_link("Download empty CSV file to add new trainees")
   end
 
-  def when_i_click_the_upload_button
+  def when_i_attach_an_empty_file
+    tempfile = Tempfile.new("csv")
+    tempfile.write("")
+    tempfile.rewind
+    tempfile.path
+
+    attach_file("bulk_update_bulk_add_trainees_form[file]", tempfile.path)
+  end
+
+  def and_i_click_the_upload_button
     click_on "Upload records"
   end
 
