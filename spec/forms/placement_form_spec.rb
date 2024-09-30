@@ -114,8 +114,8 @@ describe PlacementForm, type: :model do
 
           expect(new_placement.school_id).to eq(school.id)
           expect(new_placement.name).to eq(school.name)
-          expect(new_placement.urn).to be_nil
-          expect(new_placement.postcode).to be_nil
+          expect(new_placement.urn).to eq(school.urn)
+          expect(new_placement.postcode).to eq(school.postcode)
         end
       end
 

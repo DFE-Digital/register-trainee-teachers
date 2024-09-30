@@ -25,7 +25,7 @@ describe Api::Trainees::SavePlacementResponse do
       it "returns status created with data" do
         expect(subject[:status]).to be(:created)
 
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id))
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
@@ -53,7 +53,6 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Name can't be blank" },
-          { error: "UnprocessableEntity", message: "School can't be blank" },
         )
       end
     end
@@ -71,7 +70,7 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status ok with data" do
         expect(subject[:status]).to be(:ok)
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id))
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
@@ -99,7 +98,6 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Name can't be blank" },
-          { error: "UnprocessableEntity", message: "School can't be blank" },
         )
       end
     end

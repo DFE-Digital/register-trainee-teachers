@@ -5,27 +5,32 @@ require "rails_helper"
 RSpec.describe Api::V01::PlacementAttributes do
   subject { described_class.new(params) }
 
-  let!(:school) { create(:school) }
+  let(:school) { create(:school) }
 
   describe "validations" do
     context "when urn is present" do
       context "with a valid urn" do
         let(:params) do
           {
-            urn: school.urn,
+            urn:,
           }
         end
 
-        it "sets the attributes from the school" do
-          expect(subject).to be_valid
-          expect(subject.errors).to be_empty
-          expect(subject.school_id).to eq(school.id)
-          expect(subject.urn).to eq(school.urn)
-          expect(subject.name).to eq(school.name)
-          expect(subject.postcode).to eq(school.postcode)
+        context "with a School matching the urn" do
+          let(:urn) { school.urn }
+
+          it "sets the attributes from the school" do
+            expect(subject).to be_valid
+            expect(subject.errors).to be_empty
+            expect(subject.school_id).to eq(school.id)
+            expect(subject.urn).to be_nil
+            expect(subject.name).to be_nil
+            expect(subject.postcode).to be_nil
+          end
         end
 
         context "with name, postcode, address specified" do
+          let(:urn) { Faker::Number.unique.number(digits: 6).to_s }
           let(:name) { Faker::Educator.primary_school }
           let(:postcode) { Faker::Address.postcode }
           let(:address) { Faker::Address.street_address }
@@ -40,6 +45,7 @@ RSpec.describe Api::V01::PlacementAttributes do
 
           it "sets the attributes" do
             expect(subject).to be_valid
+            expect(subject.urn).to eq(urn)
             expect(subject.name).to eq(name)
             expect(subject.postcode).to eq(postcode)
             expect(subject.address).to eq(address)

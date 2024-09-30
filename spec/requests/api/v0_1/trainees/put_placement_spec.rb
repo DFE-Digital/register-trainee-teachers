@@ -56,22 +56,19 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           }
 
           expect(response).to have_http_status(:ok)
-
           expect(response.parsed_body["data"]).to include(
             "placement_id" => slug,
             "address" => params.dig(:data, :address),
             "name" => params.dig(:data, :name),
             "postcode" => params.dig(:data, :postcode),
             "urn" => params.dig(:data, :urn),
-            "urn" => nil,
           )
-
           placement.reload
 
           expect(placement.address).to eq(params.dig(:data, :address))
           expect(placement.name).to eq(params.dig(:data, :name))
           expect(placement.postcode).to eq(params.dig(:data, :postcode))
-          expect(placement.urn).to be_nil
+          expect(placement.urn).to eq(params.dig(:data, :urn))
           expect(placement.school_id).to be_nil
         end
 
