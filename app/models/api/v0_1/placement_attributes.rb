@@ -20,7 +20,7 @@ module Api
       ].freeze.each { |attr| attribute(attr) }
 
       validates :urn, format: { with: URN_REGEX }, if: -> { urn.present? }
-      validates :name, presence: true, if: -> { school_id.blank? }
+      validates :name, presence: true, if: -> { school_id.nil? && !School.exists?(urn:) }
       validates :postcode, postcode: true
 
       def self.from_placement(placement)

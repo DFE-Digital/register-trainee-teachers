@@ -5,15 +5,15 @@ require "rails_helper"
 RSpec.describe Api::V01::PlacementAttributes do
   subject { described_class.new(params) }
 
-  let(:school) { create(:school) }
-
   describe "validations" do
+    let(:school) { create(:school) }
+
     context "when urn is present" do
       context "with a valid urn" do
         let(:params) do
           {
             urn:,
-          }
+          }.stringify_keys
         end
 
         context "with a School matching the urn" do
@@ -71,7 +71,7 @@ RSpec.describe Api::V01::PlacementAttributes do
       let(:params) do
         {
           urn: "",
-        }
+        }.stringify_keys
       end
 
       context "with a name" do
@@ -130,32 +130,20 @@ RSpec.describe Api::V01::PlacementAttributes do
   end
 
   describe "attributes" do
-    describe "#address" do
-      let(:address) { Faker::Address.street_address }
-      let(:params) do
-        {
-          name: Faker::Educator.university,
-          address: address,
-        }
-      end
+    let(:school) { create(:school) }
 
-      it "sets the address" do
-        expect(subject.address).to eq(address)
-      end
+    let(:params) do
+      {
+        urn: school.urn,
+        school_id: school.id,
+        name: school.name,
+        address: Faker::Address.street_address,
+        postcode: school.postcode,
+      }.stringify_keys
     end
 
-    describe "#school_id" do
-      let(:params) do
-        {
-          name: Faker::Educator.university,
-          school_id: school.id,
-        }
-      end
-
-      it "does not set it" do
-        expect(subject).to be_valid
-        expect(subject.school_id).to be_nil
-      end
+    it "sets the ATTRIBUTES and INTERNAL_ATTRIBUTES" do
+      expect(subject.attributes).to eq(params)
     end
   end
 end
