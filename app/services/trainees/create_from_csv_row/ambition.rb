@@ -3,14 +3,6 @@
 module Trainees
   module CreateFromCsvRow
     class Ambition < Base
-      def initialize(csv_row:)
-        @csv_row = csv_row
-        @provider = Provider.find_by!(code: "1TF")
-        @trainee = @provider.trainees.find_or_initialize_by(provider_trainee_id: lookup("Provider trainee ID"))
-      end
-
-    private
-
       TRAINING_ROUTES = {
         "Assessment only" => TRAINING_ROUTE_ENUMS[:assessment_only],
         "Early years assessment only" => TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
@@ -34,25 +26,20 @@ module Trainees
         "Not on a Training Initiative" => ROUTE_INITIATIVES_ENUMS[:no_initiative],
       }.freeze
 
+      def initialize(csv_row:)
+        @provider = Provider.find_by!(code: Provider::AMBITION_PROVIDER_CODE)
+        super(csv_row:, provider:)
+      end
+
+    private
+
+      def after_actions
+        create_placements!
+        super
+      end
+
       def mapped_attributes
-        {
-          record_source: Trainee::MANUAL_SOURCE,
-          region: lookup("Region"),
-          training_route: training_route,
-          first_names: lookup("First names"),
-          middle_names: lookup("Middle names"),
-          last_name: lookup("Last names"),
-          sex: sex,
-          date_of_birth: Date.parse(lookup("Date of birth")),
-          nationality_ids: nationality_ids,
-          email: lookup("Email"),
-          training_initiative: training_initiative,
-          employing_school_id: employing_school_id,
-          lead_partner_id: lead_partner_id,
-          deferal_date: deferal_date,
-        }.merge(ethnicity_and_disability_attributes)
-         .merge(course_attributes)
-         .merge(funding_attributes)
+        default_attributes.merge({ defer_date: })
       end
 
       def training_route
@@ -63,15 +50,6 @@ module Trainees
         case_insensitive_lookup(INITIATIVES, lookup("Training Initiative one"))
       end
 
-      # NOTE: the CSV template seems to offer both URN or UKPRN but School only has URN
-      def employing_school_id
-        School.find_by(urn: lookup("Employing school URN or UKPRN"))&.id
-      end
-
-      def lead_partner_id
-        LeadPartner.find_by_ukprn_or_urn(lookup("Lead Partner URN or UKPRN")&.strip)&.id
-      end
-
       def create_placements!
         [lookup("First Placement URN"), lookup("Second Placement URN")].compact.each do |urn|
           next unless (school = School.find_by(urn:))
@@ -80,7 +58,7 @@ module Trainees
         end
       end
 
-      def deferal_date
+      def defer_date
         lookup("Defer Date")
       end
     end

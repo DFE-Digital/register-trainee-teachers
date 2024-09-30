@@ -17,6 +17,10 @@ FactoryBot.define do
       code { Provider::TEACH_FIRST_PROVIDER_CODE }
     end
 
+    trait :ambition do
+      code { Provider::AMBITION_PROVIDER_CODE }
+    end
+
     trait :with_courses do
       transient do
         courses_count { 1 }

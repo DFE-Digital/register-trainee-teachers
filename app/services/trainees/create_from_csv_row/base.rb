@@ -35,30 +35,33 @@ module Trainees
       end
 
       def call
-        trainee.assign_attributes(mapped_attributes)
-        Trainees::SetAcademicCycles.call(trainee:)
-
-        # This must happen after we've determined the academic cycles since we
-        # need to choose the course from the correct year.
-        trainee.course_uuid = course_uuid
-        sanitise_funding
-
+        before_actions
         if trainee.save!
-          ::Degrees::CreateFromCsvRow.call(
-            trainee: trainee,
-            csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree:") },
-          )
+          after_actions
+          trainee.save!
         end
-
-        validate_and_set_progress
-        trainee.save!
       end
 
     private
 
       attr_reader :csv_row, :trainee, :provider
 
+      def before_actions
+        trainee.assign_attributes(mapped_attributes)
+        Trainees::SetAcademicCycles.call(trainee:)
+      end
+
+      def after_actions
+        sanitise_funding!
+        create_degrees!
+        validate_and_set_progress!
+      end
+
       def mapped_attributes
+        default_attributes
+      end
+
+      def default_attributes
         {
           record_source: Trainee::MANUAL_SOURCE,
           region: lookup("Region"),
@@ -76,6 +79,13 @@ module Trainees
         }.merge(ethnicity_and_disability_attributes)
          .merge(course_attributes)
          .merge(funding_attributes)
+      end
+
+      def create_degrees!
+        ::Degrees::CreateFromCsvRow.call(
+          trainee: trainee,
+          csv_row: csv_row.to_hash.compact.select { |column_name, _| column_name.start_with?("Degree") },
+        )
       end
 
       def ethnic_background
@@ -185,11 +195,11 @@ module Trainees
       end
 
       def itt_start_date
-        lookup("Course ITT start date")
+        lookup("Course ITT start date", "ITT Start Date")
       end
 
       def itt_end_date
-        lookup("Course Expected End Date")
+        lookup("Course Expected End Date", "ITT End Date")
       end
 
       def trainee_start_date
@@ -210,9 +220,9 @@ module Trainees
         funding_type = lookup("Funding: Type")
 
         {
-          applying_for_bursary: funding_type == "Bursary",
-          applying_for_scholarship: funding_type == "Scholarship",
-          applying_for_grant: funding_type == "Grant",
+          applying_for_bursary: funding_type == "bursary",
+          applying_for_scholarship: funding_type == "scholarship",
+          applying_for_grant: funding_type == "grant",
         }
       end
 
@@ -236,23 +246,23 @@ module Trainees
       end
 
       def course_education_phase
-        lookup("Course education phase").downcase.parameterize(separator: "_")
+        normalize(lookup("Course education phase"))
       end
 
-      def course_subject_one_name
-        course_subject_name("Course ITT subject 1")
+      def course_subject_one
+        course_subject_name("Course ITT subject 1", "Course ITT subject one")
       end
 
-      def course_subject_two_name
-        course_subject_name("Course ITT subject 2")
+      def course_subject_two
+        course_subject_name("Course ITT subject 2", "Course ITT subject two")
       end
 
-      def course_subject_three_name
-        course_subject_name("Course ITT Subject 3")
+      def course_subject_three
+        course_subject_name("Course ITT Subject 3", "Course ITT subject three")
       end
 
-      def course_subject_name(field)
-        course_subject = csv_row[field]
+      def course_subject_name(*fields)
+        course_subject = lookup(*fields)
         return if course_subject.blank?
 
         subject_specialism = SubjectSpecialism.where("lower(name) = ?", course_subject.downcase).first
@@ -283,15 +293,17 @@ module Trainees
       end
 
       def study_mode
-        lookup("Course study mode").downcase.gsub("-", "_")
+        normalize(lookup("Course study mode", "study mode"))
       end
 
       def employing_school_id
-        School.find_by(urn: lookup("Employing school URN"))&.id
+        School.find_by(urn: lookup("Employing school URN", "Employing school URN or UKPRN"))&.id
       end
 
       def lead_partner_id
-        LeadPartner.find_by(urn: lookup("Lead partner URN"))&.id
+        LeadPartner.find_by_ukprn_or_urn(
+          lookup("Lead Partner URN", "Lead Partner URN or UKPRN")&.strip,
+        )&.id
       end
 
       def course_uuid
@@ -316,14 +328,14 @@ module Trainees
         @provider.code == "1TF"
       end
 
-      def sanitise_funding
+      def sanitise_funding!
         funding_manager = FundingManager.new(trainee)
         trainee.applying_for_bursary = nil unless funding_manager.can_apply_for_bursary?
         trainee.applying_for_grant = nil unless funding_manager.can_apply_for_grant?
         trainee.applying_for_scholarship = nil unless funding_manager.can_apply_for_scholarship?
       end
 
-      def validate_and_set_progress
+      def validate_and_set_progress!
         Submissions::TrnValidator.new(trainee:).validators.each do |section, validator|
           section_valid = validator[:form].constantize.new(trainee).valid?
           trainee.progress.public_send("#{section}=", section_valid)
@@ -337,16 +349,20 @@ module Trainees
         hash.transform_keys(&:downcase)[key.strip.downcase]
       end
 
-      def lookup(column_name)
-        normalized_column = normalize(column_name)
-        csv_row.each_key do |key|
-          return csv_row[key] if normalize(key) == normalized_column
+      def lookup(*column_names)
+        column_names.each do |column_name|
+          normalized_column = normalize(column_name)
+          csv_row.each_key do |key|
+            return csv_row[key] if normalize(key) == normalized_column
+          end
         end
         nil
       end
 
-      def normalize(column_name)
-        column_name.to_s.downcase.strip.gsub(/\s+/, "_").singularize
+      def normalize(str)
+        return if str.blank?
+
+        str.to_s.downcase.strip.gsub(/\s+/, "_").gsub("-", "_").singularize
       end
     end
   end
