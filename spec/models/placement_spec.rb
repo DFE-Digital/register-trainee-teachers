@@ -85,8 +85,8 @@ RSpec.describe Placement do
           subject.update!(name:)
         end
 
-        it "returns the column value" do
-          expect(subject.name).to eq(name)
+        it "returns the school name" do
+          expect(subject.name).to eq(subject.school.name)
         end
       end
     end
@@ -102,7 +102,79 @@ RSpec.describe Placement do
     end
   end
 
-  describe "#address" do
+  describe "#urn" do
+    context "when a school record exists" do
+      subject { create(:placement, :with_school) }
+
+      context "with urn column value nil" do
+        it "returns the school urn" do
+          expect(subject.urn).to eq(subject.school.urn)
+        end
+      end
+
+      context "with urn column value present" do
+        let(:urn) { Faker::Number.unique.number(digits: 6).to_s }
+
+        before do
+          subject.update!(urn:)
+        end
+
+        it "returns the school urn" do
+          expect(subject.urn).to eq(subject.school.urn)
+        end
+      end
+    end
+
+    context "when a school record does not exist" do
+      subject {
+        create(:placement, urn:)
+      }
+
+      let(:urn) { Faker::Number.unique.number(digits: 6).to_s }
+
+      it "returns the urn column value" do
+        expect(subject.urn).to eq(urn)
+      end
+    end
+  end
+
+  describe "#postcode" do
+    context "when a school record exists" do
+      subject { create(:placement, :with_school) }
+
+      context "with postcode column value nil" do
+        it "returns the school name" do
+          expect(subject.postcode).to eq(subject.school.postcode)
+        end
+      end
+
+      context "with postcode column value present" do
+        let(:postcode) { Faker::Address.postcode }
+
+        before do
+          subject.update!(postcode:)
+        end
+
+        it "returns the school postcode" do
+          expect(subject.postcode).to eq(subject.school.postcode)
+        end
+      end
+    end
+
+    context "when a school record does not exist" do
+      subject {
+        create(:placement, postcode:)
+      }
+
+      let(:postcode) { Faker::Address.postcode }
+
+      it "returns the postcode column value" do
+        expect(subject.postcode).to eq(postcode)
+      end
+    end
+  end
+
+  describe "#full_address" do
     context "when a school record exists" do
       subject { create(:placement, :with_school) }
 
@@ -127,7 +199,7 @@ RSpec.describe Placement do
       }
 
       it "returns the user input address" do
-        expect(subject.full_address).to eq("URN #{subject.urn}, #{subject.address}, #{subject.postcode}")
+        expect(subject.full_address).to eq("#{subject.address}, #{subject.postcode}")
       end
     end
 
