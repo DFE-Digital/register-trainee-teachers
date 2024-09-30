@@ -1858,10 +1858,10 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-esbuild-jest-transform@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/esbuild-jest-transform/-/esbuild-jest-transform-2.0.0.tgz#90476a3686047fc64019e2bb14f19e602d0e24ce"
-  integrity sha512-M0NHuPJyfLbeA1hVnTxvPVzhfAqFDTt/e3s9DzYW+vp2oR98jesMWPq+QF8n+xR3T//Tem5Yu6ismdfuFtVQAA==
+esbuild-jest-transform@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/esbuild-jest-transform/-/esbuild-jest-transform-2.0.1.tgz#5e8abaf47168a56aef6b6310d27eb7cc386e0a7b"
+  integrity sha512-7tx7VQjs3ZgndK63+NJxiD/A/g8eQj8Uaz/qd8MRLy5xGICuuZXA+aZYKGd+q8bfFu7GlDkf4riw9e8di/SVvw==
 
 esbuild@^0.17.19:
   version "0.17.19"
