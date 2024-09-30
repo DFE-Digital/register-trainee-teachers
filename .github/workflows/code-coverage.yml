@@ -1,7 +1,9 @@
 name: Code Coverage
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - run-full-test-suite
 
 permissions:
   contents: write
