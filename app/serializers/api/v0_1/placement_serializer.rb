@@ -18,8 +18,7 @@ module Api
 
       def as_hash
         placement
-          .attributes
-          .except(*EXCLUDED_ATTRIBUTES)
+          .as_json(except: EXCLUDED_ATTRIBUTES)
           .merge(school_attributes)
       end
 
