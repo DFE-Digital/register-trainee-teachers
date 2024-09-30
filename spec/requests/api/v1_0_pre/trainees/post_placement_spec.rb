@@ -8,7 +8,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
-    let(:placement_attribute_keys) { Api::V10Pre::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+    let(:placement_attribute_keys) { Api::V10Pre::PlacementAttributes::ATTRIBUTES }
 
     context "with a valid trainee and placement" do
       context "create placement with a urn" do
@@ -81,9 +81,9 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
       end
 
       context "create placement without a urn" do
-        let(:placement_attributes) { build(:placement).attributes.except("urn").slice(*placement_attribute_keys) }
+        let(:data) { attributes_for(:placement).except(:urn).slice(*placement_attribute_keys) }
         let(:params) do
-          { data: placement_attributes }.with_indifferent_access
+          { data: }.with_indifferent_access
         end
 
         it "creates a new placement and returns a 201 (created) status" do
@@ -94,15 +94,15 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           }.from(0).to(1)
 
           expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to include(placement_attributes)
+          expect(response.parsed_body[:data]).to include(data)
 
           placement = trainee.placements.take
 
           expect(placement.school_id).to be_nil
           expect(placement.urn).to be_nil
-          expect(placement.address).to eq(placement_attributes["address"])
-          expect(placement.name).to eq(placement_attributes["name"])
-          expect(placement.postcode).to eq(placement_attributes["postcode"])
+          expect(placement.address).to eq(data[:address])
+          expect(placement.name).to eq(data[:name])
+          expect(placement.postcode).to eq(data[:postcode])
         end
 
         it "updates the progress attribute on the trainee" do

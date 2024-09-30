@@ -27,7 +27,7 @@ module Api
       end
 
       delegate :assign_attributes, :new_record?, :trainee, to: :placement
-      delegate :valid?, :attributes, to: :placement_attributes
+      delegate :valid?, :attributes, :attributes=, to: :placement_attributes
 
     private
 

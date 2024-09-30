@@ -24,17 +24,22 @@ module Api
       validates :postcode, postcode: true
 
       def self.from_placement(placement)
-        new(placement.attributes.with_indifferent_access)
+        new(
+          placement.attributes.select do |k, _v|
+            ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
+          end,
+        )
       end
 
       def assign_attributes(new_attributes)
-        if (school = School.find_by(urn: new_attributes[:urn]))
-          new_attributes[:urn]         = nil
-          new_attributes[:name]        = nil
-          new_attributes[:postcode]    = nil
+        if new_attributes.key?("urn") && (school = School.find_by(urn: new_attributes["urn"]))
+          new_attributes["urn"]      = nil
+          new_attributes["name"]     = nil
+          new_attributes["address"]  = nil
+          new_attributes["postcode"] = nil
         end
 
-        new_attributes[:school_id] = school&.id
+        new_attributes["school_id"] = school&.id if new_attributes.key?("urn")
 
         super(
           new_attributes.select do |k, _v|

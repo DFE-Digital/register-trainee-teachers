@@ -8,13 +8,14 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
-    let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+    let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES }
 
     context "with a valid trainee and placement" do
       context "create placement with a school" do
         let(:school) { create(:school) }
+        let(:data) { { urn: school.urn } }
         let(:params) do
-          { data: { urn: school.urn } }.with_indifferent_access
+          { data: }.with_indifferent_access
         end
 
         it "creates a new placement and returns a 201 (created) status" do
@@ -25,11 +26,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           }.from(0).to(1)
 
           expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to include(
-            urn: school.urn,
-            name: school.name,
-            postcode: school.postcode,
-          )
+          expect(response.parsed_body[:data]).to include(data)
 
           placement = trainee.placements.take
 
@@ -47,10 +44,10 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
         end
       end
 
-      context "create placement without a urn" do
-        let(:placement) { create(:placement) }
+      context "create placement without a school" do
+        let(:data) { attributes_for(:placement).slice(*placement_attribute_keys) }
         let(:params) do
-          { data: placement.attributes.slice(*placement_attribute_keys) }.with_indifferent_access
+          { data: }.with_indifferent_access
         end
 
         it "creates a new placement and returns a 201 (created) status" do
@@ -61,27 +58,23 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           }.from(0).to(1)
 
           expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to include(
-            "urn" => nil,
-            "name" => placement.name,
-            "address" => placement.address,
-            "postcode" => placement.postcode,
-          )
+          expect(response.parsed_body["data"]).to include(data)
 
           placement = trainee.reload.placements.take
 
-          expect(placement.urn).to be_nil
           expect(placement.school_id).to be_nil
-          expect(placement.address).to eq(params.dig(:data, :address))
-          expect(placement.name).to eq(params.dig(:data, :name))
-          expect(placement.postcode).to eq(params.dig(:data, :postcode))
+          expect(placement.urn).to eq(data[:urn])
+          expect(placement.address).to eq(data[:address])
+          expect(placement.name).to eq(data[:name])
+          expect(placement.postcode).to eq(data[:postcode])
         end
 
         context "with different trainee" do
           let(:trainee_for_another_provider) { create(:trainee) }
           let(:trainee_slug) { trainee_for_another_provider.slug }
+          let(:data) { attributes_for(:placement).slice(*placement_attribute_keys) }
           let(:params) do
-            { data: create(:placement).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
+            { data: }.with_indifferent_access
           end
 
           it "does not create a new placement and returns a 422 status (unprocessable_entity) status" do
@@ -109,8 +102,8 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
 
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "error" => "UnprocessableEntity",
-              "message" => "Name can't be blank",
+              error: "UnprocessableEntity",
+              message: "Name can't be blank",
             )
           end
         end
