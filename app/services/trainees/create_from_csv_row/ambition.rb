@@ -54,7 +54,7 @@ module Trainees
         [lookup("First Placement URN"), lookup("Second Placement URN")].compact.each do |urn|
           next unless (school = School.find_by(urn:))
 
-          Placement.find_or_create_by(trainee:, school:)
+          Placement.find_or_create_by!(trainee:, school:)
         end
       end
 

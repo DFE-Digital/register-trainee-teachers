@@ -120,6 +120,11 @@ module Trainees
             expect(degree.other_grade).to be_nil
             expect(degree.country).to be_nil
           end
+
+          it "creates the trainee's placements" do
+            expect(trainee.reload.placements.first.school.urn).to eq(first_placement_school_urn)
+            expect(trainee.placements.second.school.urn).to eq(second_placement_school_urn)
+          end
         end
 
         context "when the degree institution UKPRN is provided" do
