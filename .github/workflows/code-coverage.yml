@@ -1,9 +1,7 @@
 name: Code Coverage
 
 on:
-  push:
-    branches:
-      - run-full-test-suite
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -38,7 +36,7 @@ jobs:
   test:
     name: Test
     needs: [build]
-    uses: ./.github/workflows/tests2.yml
+    uses: ./.github/workflows/coverage-tests.yml
     secrets: inherit
     with:
       docker-image: ${{needs.build.outputs.docker-image}}
