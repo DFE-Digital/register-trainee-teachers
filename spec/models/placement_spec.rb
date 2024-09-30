@@ -72,8 +72,22 @@ RSpec.describe Placement do
     context "when a school record exists" do
       subject { create(:placement, :with_school) }
 
-      it "returns the school name" do
-        expect(subject.name).to eq(subject.school.name)
+      context "with name column value nil" do
+        it "returns the school name" do
+          expect(subject.name).to eq(subject.school.name)
+        end
+      end
+
+      context "with name column value present" do
+        let(:name) { Faker::Educator.primary_school }
+
+        before do
+          subject.update!(name:)
+        end
+
+        it "returns the column value" do
+          expect(subject.name).to eq(name)
+        end
       end
     end
 

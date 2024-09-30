@@ -11,7 +11,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
     context "with a valid trainee and placement" do
-      context "create placement with urn" do
+      context "create placement with a school" do
         let(:school) { create(:school) }
         let(:params) do
           { data: { urn: school.urn } }.with_indifferent_access
@@ -25,7 +25,6 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           }.from(0).to(1)
 
           expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to be_present
           expect(response.parsed_body["data"]).to include(
             urn: school.urn,
             name: school.name,

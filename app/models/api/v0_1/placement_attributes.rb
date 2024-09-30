@@ -20,7 +20,7 @@ module Api
       ].freeze.each { |attr| attribute(attr) }
 
       validates :urn, format: { with: URN_REGEX }, if: -> { urn.present? }
-      validates :name, presence: true
+      validates :name, presence: true, if: -> { school_id.blank? }
       validates :postcode, postcode: true
 
       def self.from_placement(placement)
@@ -29,21 +29,16 @@ module Api
 
       def assign_attributes(new_attributes)
         if (school = School.find_by(urn: new_attributes[:urn]))
-          new_attributes[:school_id]   = school.id
-          new_attributes[:urn]         = school.urn
-          new_attributes[:name]      ||= school.name
-          new_attributes[:postcode]  ||= school.postcode
-
-          super(
-            new_attributes.select do |k, _v|
-              INTERNAL_ATTRIBUTES.include?(k.to_sym)
-            end
-          )
+          new_attributes[:urn]         = nil
+          new_attributes[:name]        = nil
+          new_attributes[:postcode]    = nil
         end
+
+        new_attributes[:school_id] = school&.id
 
         super(
           new_attributes.select do |k, _v|
-            ATTRIBUTES.include?(k.to_sym)
+            ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
           end
         )
       end

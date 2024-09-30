@@ -14,12 +14,6 @@ FactoryBot.define do
 
     trait :with_school do
       school
-
-      after(:build) do |placement, evaluator|
-        placement.urn      = evaluator.school&.urn
-        placement.name     = evaluator.school&.name
-        placement.postcode = evaluator.school&.postcode
-      end
     end
 
     trait :not_applicable_school do

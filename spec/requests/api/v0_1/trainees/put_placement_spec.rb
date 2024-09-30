@@ -13,7 +13,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
     let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
     context "with a valid trainee and placement" do
-      context "update placement with urn" do
+      context "update placement with a school" do
         let(:school) { create(:school) }
         let(:params) do
           { data: { urn: school.urn } }.with_indifferent_access
@@ -39,9 +39,9 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
         end
       end
 
-      context "updates an existing placement without urn" do
+      context "updates an existing placement without a school" do
         let(:params) do
-          { data: build(:placement).attributes.except("urn").slice(*placement_attribute_keys) }.with_indifferent_access
+          { data: build(:placement).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
         end
 
         let(:params_to_update_postcode) do
@@ -62,7 +62,8 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
             "address" => params.dig(:data, :address),
             "name" => params.dig(:data, :name),
             "postcode" => params.dig(:data, :postcode),
-            "urn" => placement.urn,
+            "urn" => params.dig(:data, :urn),
+            "urn" => nil,
           )
 
           placement.reload
@@ -70,7 +71,8 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           expect(placement.address).to eq(params.dig(:data, :address))
           expect(placement.name).to eq(params.dig(:data, :name))
           expect(placement.postcode).to eq(params.dig(:data, :postcode))
-          expect(placement.urn).to eq(placement.school.urn)
+          expect(placement.urn).to be_nil
+          expect(placement.school_id).to be_nil
         end
 
         it "partial update of an existing placement returns 200 (ok) status" do
