@@ -35,7 +35,7 @@ RSpec.describe Api::V01::PlacementSerializer do
     let(:json) { described_class.new(placement).as_hash.with_indifferent_access }
 
     context "for a placement that is not associated with a school" do
-      let(:placement) { create(:placement, :manual) }
+      let(:placement) { create(:placement) }
 
       it_behaves_like "a placement serialiser"
     end
