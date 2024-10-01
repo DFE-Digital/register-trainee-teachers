@@ -69,6 +69,6 @@ RSpec.configure do |config|
   end
 
   config.after do
-    Timecop.return if use_next_academic_year
+    Timecop.return
   end
 end
