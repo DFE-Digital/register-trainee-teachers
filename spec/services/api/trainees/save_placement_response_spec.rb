@@ -24,12 +24,16 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status created with data" do
         expect(subject[:status]).to be(:created)
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
+          "urn" => params[:urn],
+          "name" => params[:name],
+          "address" => "URN #{params[:urn]}, #{params[:address]}, #{params[:postcode]}",
+          "postcode" => params[:postcode]
+        )
 
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id))
-
-        expect(placement.reload.id).to be_present
+        expect(placement.id).to be_present
         expect(placement.slug).to be_present
-        expect(placement.school_id).to eq(params[:school_id])
+        expect(placement.school_id).to be_nil
       end
 
       it "uses the serializer" do
@@ -70,7 +74,12 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status ok with data" do
         expect(subject[:status]).to be(:ok)
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id))
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
+          "urn" => params[:urn],
+          "name" => params[:name],
+          "address" => "URN #{params[:urn]}, #{params[:address]}, #{params[:postcode]}",
+          "postcode" => params[:postcode]
+        )
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
