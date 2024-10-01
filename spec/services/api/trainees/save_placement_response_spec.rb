@@ -28,7 +28,7 @@ describe Api::Trainees::SavePlacementResponse do
           "urn" => params[:urn],
           "name" => params[:name],
           "address" => "URN #{params[:urn]}, #{params[:address]}, #{params[:postcode]}",
-          "postcode" => params[:postcode]
+          "postcode" => params[:postcode],
         )
 
         expect(placement.id).to be_present
@@ -78,7 +78,7 @@ describe Api::Trainees::SavePlacementResponse do
           "urn" => params[:urn],
           "name" => params[:name],
           "address" => "URN #{params[:urn]}, #{params[:address]}, #{params[:postcode]}",
-          "postcode" => params[:postcode]
+          "postcode" => params[:postcode],
         )
 
         expect(placement.reload.id).to be_present

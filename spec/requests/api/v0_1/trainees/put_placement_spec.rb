@@ -35,7 +35,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
               urn: school.urn,
               name: school.name,
               postcode: school.postcode,
-              address: nil,
+              address: "URN #{school.urn}, #{school.town}, #{school.postcode}",
             )
 
             placement.reload
@@ -66,7 +66,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
               urn: params.dig(:data, :urn),
               name: params.dig(:data, :name),
               postcode: nil,
-              address: nil,
+              address: "URN #{params.dig(:data, :urn)}",
             )
 
             placement.reload
@@ -102,7 +102,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
 
           expect(response.parsed_body["data"]).to include(
             "placement_id" => slug,
-            "address" => params.dig(:data, :address),
+            "address" => "URN #{placement.urn}, #{placement.address}, #{placement.postcode}",
             "name" => params.dig(:data, :name),
             "postcode" => params.dig(:data, :postcode),
             "urn" => placement.urn,

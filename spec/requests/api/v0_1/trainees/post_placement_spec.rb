@@ -57,10 +57,16 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
             trainee.placements.count
           }.from(0).to(1)
 
-          expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to include(data)
-
           placement = trainee.reload.placements.take
+
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body["data"]).to include(
+            urn: data[:urn],
+            name: data[:name],
+            address: "URN #{data[:urn]}, #{data[:address]}, #{data[:postcode]}",
+            postcode: data[:postcode],
+            placement_id: placement.slug,
+          )
 
           expect(placement.school_id).to be_nil
           expect(placement.urn).to eq(data[:urn])
