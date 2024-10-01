@@ -195,11 +195,13 @@ RSpec.describe Placement do
 
     context "when a school record does not exist but urn is provided by user" do
       subject {
-        create(:placement, urn: Faker::Number.number(digits: 6))
+        create(:placement, urn:)
       }
 
+      let(:urn) { Faker::Number.number(digits: 6) }
+
       it "returns the user input address" do
-        expect(subject.full_address).to eq("#{subject.address}, #{subject.postcode}")
+        expect(subject.full_address).to eq("URN #{urn}, #{subject.address}, #{subject.postcode}")
       end
     end
 
