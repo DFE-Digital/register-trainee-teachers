@@ -370,9 +370,6 @@ paths:
                       - training_route
                       - sex
                       - diversity_disclosure
-                      - ethnic_group
-                      - ethnic_background
-                      - additional_ethnic_background
                       - disability_disclosure
                       - course_subject_one
                       - itt_start_date
@@ -1960,9 +1957,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
-                    - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
                     - itt_start_date
@@ -1976,8 +1970,6 @@ paths:
                     - recommended_for_award_at
                     - trainee_start_date
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -2385,9 +2377,6 @@ paths:
                       - training_route
                       - sex
                       - diversity_disclosure
-                      - ethnic_group
-                      - ethnic_background
-                      - additional_ethnic_background
                       - disability_disclosure
                       - course_subject_one
                       - itt_start_date
@@ -2401,8 +2390,6 @@ paths:
                       - recommended_for_award_at
                       - trainee_start_date
                       - reinstate_date
-                      - course_min_age
-                      - course_max_age
                       - course_subject_two
                       - course_subject_three
                       - awarded_at
@@ -2678,10 +2665,6 @@ paths:
                       type: string
                     lead_partner_urn:
                       type: string
-                    ethnic_group:
-                      type: string
-                    ethnic_background:
-                      type: string
                   required:
                   - first_names
                   - last_name
@@ -2744,8 +2727,6 @@ paths:
                 employing_school_urn: '142457'
                 trn: '567899'
                 lead_partner_urn: '900020'
-                ethnic_group: mixed_ethnic_group
-                ethnic_background: Another Mixed background
   "/api/{api_version}/trainees/{id}":
     get:
       summary: show
@@ -2955,9 +2936,6 @@ paths:
                 - training_route
                 - sex
                 - diversity_disclosure
-                - ethnic_group
-                - ethnic_background
-                - additional_ethnic_background
                 - disability_disclosure
                 - course_subject_one
                 - itt_start_date
@@ -2971,8 +2949,6 @@ paths:
                 - recommended_for_award_at
                 - trainee_start_date
                 - reinstate_date
-                - course_min_age
-                - course_max_age
                 - course_subject_two
                 - course_subject_three
                 - awarded_at
@@ -3450,9 +3426,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
-                    - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
                     - itt_start_date
@@ -3466,8 +3439,6 @@ paths:
                     - recommended_for_award_at
                     - trainee_start_date
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -3737,10 +3708,6 @@ paths:
                     ethnicity:
                       type: string
                       nullable: true
-                    ethnic_group:
-                      type: string
-                    ethnic_background:
-                      type: string
                     training_route:
                       type: string
                       nullable: true
@@ -3769,8 +3736,6 @@ paths:
                 employing_school_urn: '670086'
                 trn: '567899'
                 ethnicity:
-                ethnic_group: mixed_ethnic_group
-                ethnic_background: Another Mixed background
                 training_route:
                 disability1: '58'
                 disability2: '57'
@@ -4049,7 +4014,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
                     - disability_disclosure
                     - itt_start_date
                     - outcome_date
@@ -4058,8 +4022,6 @@ paths:
                     - withdraw_date
                     - recommended_for_award_at
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -4743,9 +4705,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
-                    - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
                     - itt_start_date
@@ -4759,8 +4718,6 @@ paths:
                     - recommended_for_award_at
                     - trainee_start_date
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -5658,9 +5615,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
-                    - ethnic_background
-                    - additional_ethnic_background
                     - disability_disclosure
                     - course_subject_one
                     - itt_start_date
@@ -5674,8 +5628,6 @@ paths:
                     - recommended_for_award_at
                     - trainee_start_date
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - course_subject_two
                     - course_subject_three
                     - awarded_at
@@ -6366,7 +6318,6 @@ paths:
                     - training_route
                     - sex
                     - diversity_disclosure
-                    - ethnic_group
                     - disability_disclosure
                     - itt_start_date
                     - outcome_date
@@ -6376,8 +6327,6 @@ paths:
                     - defer_date
                     - trainee_start_date
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - awarded_at
                     - training_initiative
                     - study_mode
@@ -6880,8 +6829,6 @@ paths:
                     - recommended_for_award_at
                     - trainee_start_date
                     - reinstate_date
-                    - course_min_age
-                    - course_max_age
                     - awarded_at
                     - training_initiative
                     - study_mode
