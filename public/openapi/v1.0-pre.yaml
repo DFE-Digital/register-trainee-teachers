@@ -5267,27 +5267,24 @@ paths:
                 data:
                   type: object
                   properties:
-                    address:
+                    urn:
                       nullable: true
                       type: string
+                      description: |
+                        The URN of the object.
+                        If School 'urn' does not exist in the system, 'name' is required.
                     name:
+                      nullable: true
+                      type: string
+                      description: |
+                        The name of the object.
+                        Required if School 'urn' does not exist in the system.
+                    address:
                       nullable: true
                       type: string
                     postcode:
                       nullable: true
                       type: string
-                    urn:
-                      nullable: true
-                      type: string
-                    school_id:
-                      type: integer
-                      nullable: true
-                  required:
-                  - address
-                  - name
-                  - postcode
-                  - urn
-                  - school_id
               required:
               - data
             example:
@@ -5950,23 +5947,24 @@ paths:
                 data:
                   type: object
                   properties:
-                    address:
+                    urn:
                       nullable: true
                       type: string
+                      description: |
+                        The URN of the object.
+                        If School 'urn' does not exist in the system, 'name' is required.
                     name:
+                      nullable: true
+                      type: string
+                      description: |
+                        The name of the object.
+                        Required if School 'urn' does not exist in the system.
+                    address:
                       nullable: true
                       type: string
                     postcode:
                       nullable: true
                       type: string
-                    urn:
-                      nullable: true
-                      type: string
-                    school_id:
-                      type: integer
-                      nullable: true
-                  required:
-                  - postcode
               required:
               - data
             example:
