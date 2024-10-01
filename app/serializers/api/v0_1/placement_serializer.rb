@@ -27,6 +27,7 @@ module Api
       def school_attributes
         {
           "placement_id" => placement.slug,
+          "address" => placement.full_address,
         }
       end
     end
