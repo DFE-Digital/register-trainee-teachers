@@ -11,7 +11,6 @@ module Api
       ATTRIBUTES = %i[
         urn
         name
-        address
         postcode
       ].freeze.each { |attr| attribute(attr) }
 
@@ -35,7 +34,6 @@ module Api
         if new_attributes.key?("urn") && (school = School.find_by(urn: new_attributes["urn"]))
           new_attributes["urn"]      = nil
           new_attributes["name"]     = nil
-          new_attributes["address"]  = nil
           new_attributes["postcode"] = nil
         end
 

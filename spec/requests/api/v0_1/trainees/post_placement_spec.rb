@@ -63,7 +63,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           expect(response.parsed_body["data"]).to include(
             urn: data[:urn],
             name: data[:name],
-            address: "URN #{data[:urn]}, #{data[:address]}, #{data[:postcode]}",
+            address: "URN #{data[:urn]}, #{data[:postcode]}",
             postcode: data[:postcode],
             placement_id: placement.slug,
           )

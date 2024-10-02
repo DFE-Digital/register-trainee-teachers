@@ -99,14 +99,14 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           expect(response.parsed_body[:data]).to include(
             urn: nil,
             name: data[:name],
-            address: "#{data[:address]}, #{data[:postcode]}",
+            address: placement.full_address,
             postcode: data[:postcode],
             placement_id: placement.slug,
           )
 
           expect(placement.school_id).to be_nil
           expect(placement.urn).to be_nil
-          expect(placement.address).to eq(data[:address])
+          expect(placement.address).to be_nil
           expect(placement.name).to eq(data[:name])
           expect(placement.postcode).to eq(data[:postcode])
         end

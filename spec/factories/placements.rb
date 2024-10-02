@@ -7,7 +7,7 @@ FactoryBot.define do
 
     urn { Faker::Number.unique.number(digits: 6).to_s }
     name { Faker::University.name }
-    address { Faker::Address.street_address }
+    address { nil }
     postcode { Faker::Address.postcode }
 
     school { nil }

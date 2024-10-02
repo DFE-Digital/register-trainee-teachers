@@ -29,17 +29,15 @@ RSpec.describe Api::V01::PlacementAttributes do
           end
         end
 
-        context "with name, postcode, address specified" do
+        context "with name and postcode specified" do
           let(:urn) { Faker::Number.unique.number(digits: 6).to_s }
           let(:name) { Faker::Educator.primary_school }
           let(:postcode) { Faker::Address.postcode }
-          let(:address) { Faker::Address.street_address }
 
           before do
             params.merge!(
               name:,
               postcode:,
-              address:,
             )
           end
 
@@ -48,7 +46,6 @@ RSpec.describe Api::V01::PlacementAttributes do
             expect(subject.urn).to eq(urn)
             expect(subject.name).to eq(name)
             expect(subject.postcode).to eq(postcode)
-            expect(subject.address).to eq(address)
           end
         end
       end
@@ -137,7 +134,6 @@ RSpec.describe Api::V01::PlacementAttributes do
         urn: school.urn,
         school_id: school.id,
         name: school.name,
-        address: Faker::Address.street_address,
         postcode: school.postcode,
       }.stringify_keys
     end

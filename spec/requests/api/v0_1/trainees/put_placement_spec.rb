@@ -29,16 +29,16 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
               trainee.placements.count
             }
 
+            placement.reload
+
             expect(response).to have_http_status(:ok)
             expect(response.parsed_body["data"]).to include(
               placement_id: slug,
               urn: school.urn,
               name: school.name,
               postcode: school.postcode,
-              address: "URN #{school.urn}, #{school.town}, #{school.postcode}",
+              address: placement.full_address,
             )
-
-            placement.reload
 
             expect(placement.school_id).to eq(school.id)
             expect(placement.urn).to eq(school.urn)
@@ -100,18 +100,18 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
 
           expect(response).to have_http_status(:ok)
 
+          placement.reload
+
           expect(response.parsed_body["data"]).to include(
             "placement_id" => slug,
-            "address" => "URN #{placement.urn}, #{placement.address}, #{placement.postcode}",
+            "address" => placement.full_address,
             "name" => params.dig(:data, :name),
             "postcode" => params.dig(:data, :postcode),
             "urn" => placement.urn,
           )
 
-          placement.reload
-
           expect(placement.school_id).to be_nil
-          expect(placement.address).to eq(params.dig(:data, :address))
+          expect(placement.address).to be_nil
           expect(placement.name).to eq(params.dig(:data, :name))
           expect(placement.postcode).to eq(params.dig(:data, :postcode))
           expect(placement.urn).not_to be_blank

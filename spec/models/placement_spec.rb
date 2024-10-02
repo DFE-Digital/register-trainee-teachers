@@ -175,6 +175,8 @@ RSpec.describe Placement do
   end
 
   describe "#full_address" do
+    let(:address) { Faker::Address.street_address }
+
     context "when a school record exists" do
       subject { create(:placement, :with_school) }
 
@@ -185,7 +187,7 @@ RSpec.describe Placement do
 
     context "when a school record does not exist and no urn is provided by user" do
       subject {
-        create(:placement, urn: nil)
+        create(:placement, address: address, urn: nil)
       }
 
       it "returns the user input address" do
@@ -195,7 +197,7 @@ RSpec.describe Placement do
 
     context "when a school record does not exist but urn is provided by user" do
       subject {
-        create(:placement, urn:)
+        create(:placement, address:, urn:)
       }
 
       let(:urn) { Faker::Number.number(digits: 6) }

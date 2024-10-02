@@ -16,7 +16,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.new }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
       let(:params) do
         create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
@@ -27,7 +27,7 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
           "urn" => params[:urn],
           "name" => params[:name],
-          "address" => "URN #{params[:urn]}, #{params[:address]}, #{params[:postcode]}",
+          "address" => "URN #{params[:urn]}, #{params[:postcode]}",
           "postcode" => params[:postcode],
         )
 
@@ -66,7 +66,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.first }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
       let(:params) do
         create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
@@ -77,7 +77,7 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
           "urn" => params[:urn],
           "name" => params[:name],
-          "address" => "URN #{params[:urn]}, #{params[:address]}, #{params[:postcode]}",
+          "address" => "URN #{params[:urn]}, #{params[:postcode]}",
           "postcode" => params[:postcode],
         )
 
@@ -130,18 +130,6 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to include(
           { error: "Conflict", message: "Urn has already been taken" },
-        )
-      end
-    end
-
-    context "with same address and postcode" do
-      let(:existing_placement) { create(:placement, address: "1 Hogwarts drive", postcode: "BN1 1AA") }
-
-      it "returns status unprocessable entity with error response" do
-        expect(subject[:status]).to be(:conflict)
-        expect(subject[:json][:data]).to be_blank
-        expect(subject[:json][:errors]).to include(
-          { error: "Conflict", message: "Address has already been taken" },
         )
       end
     end
