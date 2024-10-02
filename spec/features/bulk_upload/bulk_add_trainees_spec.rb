@@ -30,6 +30,11 @@ feature "bulk add trainees" do
     then_i_see_the_summary_page_with_no_errors
   end
 
+  scenario "when I try to look at the status of a different providers upload", feature_bulk_add_trainees: true do
+    when_there_is_a_bulk_update_trainee_upload
+    when_i_visit_the_bulk_update_status_page_for_another_provider
+  end
+
 private
 
   def when_i_visit_the_bulk_update_index_page
@@ -91,5 +96,17 @@ private
       bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
     )
     # TODO: Add success message expectations
+  end
+
+  def when_there_is_a_bulk_update_trainee_upload
+    @upload_for_different_provider = create(:bulk_update_trainee_upload)
+  end
+
+  def when_i_visit_the_bulk_update_status_page_for_another_provider
+    visit bulk_update_trainees_status_path(id: @upload_for_different_provider.id)
+  end
+
+  def then_i_see_a_not_found_page
+    expect(page).to have_current_path(not_found_path)
   end
 end

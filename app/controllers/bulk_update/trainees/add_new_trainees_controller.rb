@@ -25,6 +25,8 @@ module BulkUpdate
 
       def status
         @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to(not_found_path)
       end
 
     private
