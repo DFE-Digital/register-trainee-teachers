@@ -1851,6 +1851,8 @@ paths:
                               type: string
                             name:
                               type: string
+                            address:
+                              type: string
                             postcode:
                               nullable: true
                             created_at:
@@ -2139,6 +2141,7 @@ paths:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
+                    address: URN 900020
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
@@ -2659,12 +2662,21 @@ paths:
                       items:
                         type: object
                         properties:
-                          name:
-                            type: string
                           urn:
+                            nullable: true
                             type: string
-                        required:
-                        - urn
+                            description: |
+                              The URN of the object.
+                              If School 'urn' does not exist in the system, 'name' is required.
+                          name:
+                            nullable: true
+                            type: string
+                            description: |
+                              The name of the object.
+                              Required if School 'urn' does not exist in the system.
+                          postcode:
+                            nullable: true
+                            type: string
                     itt_aim:
                       type: integer
                     itt_qualification_aim:
@@ -3637,6 +3649,7 @@ paths:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
+                    address:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
@@ -5284,6 +5297,8 @@ paths:
                           type: string
                         name:
                           type: string
+                        address:
+                          type: string
                         postcode:
                           type: string
                         created_at:
@@ -5295,6 +5310,7 @@ paths:
                       required:
                       - urn
                       - name
+                      - address
                       - postcode
                       - created_at
                       - updated_at
@@ -5341,9 +5357,6 @@ paths:
                       description: |
                         The name of the object.
                         Required if School 'urn' does not exist in the system.
-                    address:
-                      nullable: true
-                      type: string
                     postcode:
                       nullable: true
                       type: string
@@ -5351,11 +5364,9 @@ paths:
               - data
             example:
               data:
-                address: 57663 Brock Hills
                 name: East Wiza College
                 postcode: CF6 5BW
                 urn: '445001'
-                school_id:
       responses:
         '201':
           description: creates a new placement and returns a 201 (created) status
@@ -5382,6 +5393,7 @@ paths:
                     required:
                     - urn
                     - name
+                    - address
                     - postcode
                     - created_at
                     - updated_at
@@ -5392,6 +5404,7 @@ paths:
                 data:
                   urn: '445001'
                   name: East Wiza College
+                  address: URN 445001, New Kacey, CF6 5BW
                   postcode: CF6 5BW
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
@@ -6021,9 +6034,6 @@ paths:
                       description: |
                         The name of the object.
                         Required if School 'urn' does not exist in the system.
-                    address:
-                      nullable: true
-                      type: string
                     postcode:
                       nullable: true
                       type: string
@@ -6031,11 +6041,9 @@ paths:
               - data
             example:
               data:
-                address: 2146 Walker Mills
                 name: South Hackett University
                 postcode: GU1 1AA
                 urn: '642209'
-                school_id:
       responses:
         '200':
           description: partial update of an existing placement returns 200 (ok) status
@@ -6050,6 +6058,8 @@ paths:
                       urn:
                         type: string
                       name:
+                        type: string
+                      address:
                         type: string
                       postcode:
                         type: string
@@ -6072,6 +6082,7 @@ paths:
                 data:
                   urn: '808369'
                   name: Falconholt High
+                  address: "URN 808369, Zenobialand, WB1R 8NL"
                   postcode: WB1R 8NL
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
