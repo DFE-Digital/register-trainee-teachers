@@ -18,12 +18,14 @@ module BulkUpdate
           file: file,
         )
 
-        @bulk_add_trainee_form.save
+        upload = @bulk_add_trainee_form.save
 
-        redirect_to(bulk_update_trainees_status_path)
+        redirect_to(bulk_update_trainees_status_path(upload.id))
       end
 
-      def status; end
+      def status
+        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
+      end
 
     private
 

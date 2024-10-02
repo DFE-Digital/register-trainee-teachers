@@ -2,9 +2,14 @@
 
 module BulkUpdate
   class BulkAddTraineesForm
+    attr_reader :provider, :file
+
     include ActiveModel::Model
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks
+
+    # TODO: Rename this to something more generic?
+    include RecommendationsUploads::Config
 
     validate :validate_file!
     # validate :validate_csv!
@@ -15,10 +20,13 @@ module BulkUpdate
     end
 
     def save
-      return false unless valid?
-
-      # TODO: Implement the save method
-      true
+      BulkUpdate::TraineeUpload.create(
+        provider: provider,
+        file: file,
+        file_name: file.original_filename,
+        number_of_trainees: csv.count,
+        status: valid? ? :failed : :pending,
+      )
     end
 
     def csv

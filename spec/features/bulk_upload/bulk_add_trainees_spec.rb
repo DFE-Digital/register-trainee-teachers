@@ -21,7 +21,13 @@ feature "bulk add trainees" do
 
     when_i_attach_an_empty_file
     and_i_click_the_upload_button
-    then_i_see_the_summary_page
+    then_i_see_the_summary_page_with_errors
+
+    when_i_visit_the_bulk_update_index_page
+    and_i_click_the_bulk_add_trainees_page
+    and_i_attach_a_valid_file
+    and_i_click_the_upload_button
+    then_i_see_the_summary_page_with_no_errors
   end
 
 private
@@ -53,8 +59,16 @@ private
   end
 
   def when_i_attach_an_empty_file
+    and_i_attach_a_file("")
+  end
+
+  def and_i_attach_a_valid_file
+    and_i_attach_a_file("trainee_id,first_name,last_name,email")
+  end
+
+  def and_i_attach_a_file(content)
     tempfile = Tempfile.new("csv")
-    tempfile.write("")
+    tempfile.write(content)
     tempfile.rewind
     tempfile.path
 
@@ -65,7 +79,17 @@ private
     click_on "Upload records"
   end
 
-  def then_i_see_the_summary_page
-    expect(page).to have_current_path(bulk_update_trainees_status_path)
+  def then_i_see_the_summary_page_with_errors
+    expect(page).to have_current_path(
+      bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
+    )
+    # TODO: Add error message expectations
+  end
+
+  def then_i_see_the_summary_page_with_no_errors
+    expect(page).to have_current_path(
+      bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
+    )
+    # TODO: Add success message expectations
   end
 end
