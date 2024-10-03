@@ -12,7 +12,7 @@
     </h1>
 
     <p class="govuk-body">
-      You uploaded a CSV file with details of 42 trainees.
+    You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
     </p>
 
     <p class="govuk-body">
@@ -20,7 +20,7 @@
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        42 trainees who can be added
+        <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %> who can be added
       </li>
     </ul>
   </div>

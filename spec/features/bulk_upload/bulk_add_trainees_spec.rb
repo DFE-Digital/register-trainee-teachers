@@ -68,7 +68,7 @@ private
   end
 
   def and_i_attach_a_valid_file
-    and_i_attach_a_file("trainee_id,first_name,last_name,email")
+    and_i_attach_a_file("trainee_id,first_name,last_name,email\n1,Bob,Roberts,bob@example.com\n1,Alice,Roberts,alice@example.com")
   end
 
   def and_i_attach_a_file(content)
@@ -95,7 +95,7 @@ private
     expect(page).to have_current_path(
       bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
     )
-    # TODO: Add success message expectations
+    expect(page).to have_content("You uploaded a CSV file with details of 2 trainees.")
   end
 
   def when_there_is_a_bulk_update_trainee_upload
