@@ -92,11 +92,11 @@ jobs:
         --connection-string '${{ env.STORAGE_CONN_STR }}'
         rm ${BACKUP_FILE_NAME}.tar.gz
 
-    - name: Restore backup to aks productiondata database
-      if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
-      shell: bash
-      run: |
-        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
+    # - name: Restore backup to aks productiondata database
+    #   if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
+    #   shell: bash
+    #   run: |
+    #     bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
 
     - name: Restore backup to aks analysis database
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
