@@ -40,7 +40,7 @@ private
 
   def login_with_username
     fill_in "username", with: ENV.fetch("SMOKE_TEST_USERNAME", nil)
-    find_button("Continue").click
+    first(:css, "button[type='submit']").click
   end
 
   def login_with_password
