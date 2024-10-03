@@ -11,7 +11,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:placement_attribute_keys) { Api::V10Pre::PlacementAttributes::ATTRIBUTES }
 
     context "with a valid trainee and placement" do
-      context "create placement with a urn" do
+      context "create placement with a school" do
         let(:school) { create(:school) }
         let(:params) do
           { data: { urn: school.urn } }.with_indifferent_access
@@ -80,7 +80,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
         end
       end
 
-      context "create placement without a urn" do
+      context "create placement without a school" do
         let(:data) { attributes_for(:placement).except(:urn).slice(*placement_attribute_keys) }
         let(:params) do
           { data: }.with_indifferent_access
