@@ -3,10 +3,11 @@
 require "rails_helper"
 
 feature "edit personal details" do
+  include_context "perform enqueued jobs"
+
   background { given_i_am_authenticated }
 
   scenario "updates personal details with valid data" do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_valid_personal_details_are_provided
     then_the_personal_details_are_updated
   end
@@ -42,7 +43,6 @@ feature "edit personal details" do
   end
 
   scenario "partially entering nationality", js: true do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_a_trainee_exists
     and_nationalities_exist_in_the_system
     when_i_visit_the_personal_details_page

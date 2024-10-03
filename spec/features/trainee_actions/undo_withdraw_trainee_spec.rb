@@ -3,16 +3,13 @@
 require "rails_helper"
 
 feature "Undo trainee withdrawal" do
+  include_context "perform enqueued jobs"
+
   include SummaryHelper
 
   before do
     ActiveJob::Base.queue_adapter.enqueued_jobs.clear
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
     when_i_am_on_the_undo_withdrawal_page
-  end
-
-  after do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
   end
 
   context "validations" do

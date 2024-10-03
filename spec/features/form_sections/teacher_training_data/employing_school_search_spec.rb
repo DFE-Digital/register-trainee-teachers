@@ -3,6 +3,8 @@
 require "rails_helper"
 
 feature "EmployingSchoolSearch" do
+  include_context "perform enqueued jobs"
+
   before do
     given_i_am_authenticated
     given_a_school_direct_salaried_trainee_exists
@@ -18,7 +20,6 @@ feature "EmployingSchoolSearch" do
 
   context "employing school with javascript", js: true do
     scenario "choosing a employing school" do
-      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
       and_i_fill_in_my_employing_school
       and_i_click_the_first_item_in_the_list
       and_i_continue

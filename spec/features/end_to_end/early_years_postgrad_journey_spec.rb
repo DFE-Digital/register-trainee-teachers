@@ -3,13 +3,14 @@
 require "rails_helper"
 
 feature "early_years_postgrad end-to-end journey" do
+  include_context "perform enqueued jobs"
+
   background do
     given_i_am_authenticated
     given_there_is_grant_funding_available_for_early_years_postgrad
   end
 
   scenario "submit for TRN", "feature_routes.early_years_postgrad": true do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_i_have_created_an_early_years_postgrad_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete

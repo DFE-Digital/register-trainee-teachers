@@ -3,10 +3,11 @@
 require "rails_helper"
 
 feature "school-direct-tuition-fee end-to-end journey", skip: "training route is no longer in use" do
+  include_context "perform enqueued jobs"
+
   background { given_i_am_authenticated }
 
   scenario "submit for TRN", "feature_routes.school_direct_tuition_fee": true do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
     given_i_have_created_a_school_direct_tuition_fee_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete

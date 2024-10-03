@@ -661,6 +661,9 @@ GEM
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
+    simplecov-json (0.2.3)
+      json
+      simplecov
     simplecov_json_formatter (0.1.4)
     site_prism (5.0.3)
       addressable (~> 2.8, >= 2.8.4)
@@ -844,6 +847,7 @@ DEPENDENCIES
   sidekiq (~> 6.5)
   sidekiq-cron (~> 1.12)
   simplecov (~> 0.22.0)
+  simplecov-json
   site_prism (~> 5.0)
   skylight
   slack-notifier

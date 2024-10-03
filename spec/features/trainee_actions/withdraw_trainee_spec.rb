@@ -3,15 +3,11 @@
 require "rails_helper"
 
 feature "Withdrawing a trainee" do
+  include_context "perform enqueued jobs"
   include SummaryHelper
 
   before do
     ActiveJob::Base.queue_adapter.enqueued_jobs.clear
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
-  end
-
-  after do
-    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
   end
 
   let!(:withdrawal_reason) { create(:withdrawal_reason) }
@@ -128,6 +124,7 @@ feature "Withdrawing a trainee" do
     end
 
     scenario "when DQT integration feature is active" do
+      ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       when_i_choose_today
       and_i_continue(:date)
       when_i_check_a_reason(withdrawal_reason.name)

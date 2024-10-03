@@ -18,44 +18,13 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
-        test-type:
-          [
-            unit_models,
-            unit_services,
-            unit_forms,
-            unit_components,
-            unit_other,
-            integration_end_to_end,
-            integration_form_sections,
-            integration_system_admin,
-            integration_trainee_actions,
-            integration_other,
-          ]
+        test-type: [full-suite]
         include:
-          - test-type: unit_models
-            include-pattern: spec/models/*_spec.rb
-          - test-type: unit_services
-            include-pattern: spec/services/*_spec.rb
-          - test-type: unit_forms
-            include-pattern: spec/forms/*_spec.rb
-          - test-type: unit_components
-            include-pattern: spec/components/*_spec.rb
-          - test-type: unit_other
-            include-pattern: spec/*_spec.rb
-            exclude-pattern: spec/(features|smoke|models|services|forms|components)/*_spec.rb
-          - test-type: integration_end_to_end
-            include-pattern: spec/features/end_to_end/*_spec.rb
-          - test-type: integration_form_sections
-            include-pattern: spec/features/form_sections/*_spec.rb
-          - test-type: integration_system_admin
-            include-pattern: spec/features/system_admin/*_spec.rb
-          - test-type: integration_trainee_actions
-            include-pattern: spec/features/trainee_actions/*_spec.rb
-          - test-type: integration_other
-            include-pattern: spec/features/*_spec.rb
-            exclude-pattern: spec/features/(end_to_end|form_sections|system_admin|trainee_actions)/*_spec.rb
+          - test-type: full-suite
+            include-pattern: spec/**/*_spec.rb
+            exclude-pattern: spec/features/*_spec.rb
 
     steps:
       - name: Checkout
@@ -78,11 +47,8 @@ jobs:
           docker compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
 
       - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} ${{ matrix.test-type }} tests"
-        uses: Wandalen/wretry.action@v3.5.0
-        with:
-          attempt_limit: 5
-          command: |
-            docker compose exec -T web /bin/sh -c 'USE_NEXT_ACADEMIC_YEAR=${{env.USE_NEXT_ACADEMIC_YEAR}} bundle exec --verbose rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
+        run: |
+          docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "spec/smoke/*_spec.rb,spec/features/*_spec.rb,spec/features/**/*_spec.rb"'
         env:
           IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
           INCLUDE_PATTERN: ${{ matrix.include-pattern }}
@@ -97,3 +63,12 @@ jobs:
           slack-title: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} tests"
           slack-message: "':alert: ${{ inputs.use-next-academic-year &&  'Next academic year' || 'Current academic year'}}  ${{ matrix.test-type }} test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:"
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/backend/coverage.json
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
