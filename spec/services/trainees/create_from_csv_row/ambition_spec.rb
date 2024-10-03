@@ -9,8 +9,8 @@ module Trainees
       let!(:academic_cycle) { create(:academic_cycle, :current) }
       let(:employing_school_urn) { "666666" }
       let(:lead_partner_ukprn) { "88888888" }
-      let(:first_placement_school_urn) { "166666"}
-      let(:second_placement_school_urn) { "266666"}
+      let(:first_placement_school_urn) { "166666" }
+      let(:second_placement_school_urn) { "266666" }
 
       let(:csv_row) {
         {

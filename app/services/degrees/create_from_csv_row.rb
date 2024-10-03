@@ -138,7 +138,7 @@ module Degrees
       str.to_s.downcase.strip
          .gsub(/\s+/, "_")
          .gsub("-", "_")
-         .gsub(":","")
+         .gsub(":", "")
          .singularize
     end
   end
