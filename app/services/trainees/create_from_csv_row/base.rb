@@ -350,10 +350,12 @@ module Trainees
       end
 
       def lookup(*column_names)
+        csv_hash = csv_row.to_hash
+
         column_names.each do |column_name|
           normalized_column = normalize(column_name)
-          csv_row.each_key do |key|
-            return csv_row[key] if normalize(key) == normalized_column
+          csv_hash.each_key do |key|
+            return csv_hash[key] if normalize(key) == normalized_column
           end
         end
         nil

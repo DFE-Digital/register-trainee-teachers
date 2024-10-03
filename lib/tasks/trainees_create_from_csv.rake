@@ -18,9 +18,10 @@ namespace :create_trainees_from_csv do
         headers: true,
         encoding: "ISO-8859-1",
         header_converters: ->(f) { f&.strip },
-      ).with_index(1) do |csv_row, i|
+      ).with_index(2) do |csv_row, i|
         processor.call(csv_row:)
       rescue StandardError => e
+        puts("Error on row #{i}: #{e.message}")
         Rails.logger.error("Error on row #{i}: #{e.message}")
         Sentry.capture_exception(e)
       end
