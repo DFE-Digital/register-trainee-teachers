@@ -21,7 +21,7 @@ feature "bulk add trainees" do
 
     when_i_attach_an_empty_file
     and_i_click_the_upload_button
-    then_i_see_the_summary_page_with_errors
+    then_i_see_the_upload_page_with_errors
 
     when_i_visit_the_bulk_update_index_page
     and_i_click_the_bulk_add_trainees_page
@@ -84,11 +84,10 @@ private
     click_on "Upload records"
   end
 
-  def then_i_see_the_summary_page_with_errors
-    expect(page).to have_current_path(
-      bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
-    )
-    # TODO: Add error message expectations
+  def then_i_see_the_upload_page_with_errors
+    expect(page).to have_current_path(bulk_update_trainees_add_new_trainees_path)
+    expect(page).to have_content("There is a problem")
+    expect(page).to have_content("The selected file is empty")
   end
 
   def then_i_see_the_summary_page_with_no_errors

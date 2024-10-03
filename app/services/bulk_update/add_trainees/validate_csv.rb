@@ -18,28 +18,13 @@ module BulkUpdate
       attr_reader :csv, :record
 
       def header_row!
-        return if headers.intersect?(all_headers)
-
-        record.errors.add(:file, :no_header_detected)
+        true
       end
 
       def trainees!
-        return unless csv.empty? || (rows.one? && not_a_trainee_row?)
+        return unless csv.empty?
 
         record.errors.add(:file, :no_trainees)
-      end
-
-      def not_a_trainee_row?
-        rows[0].any? do |cell|
-          # Either they've deleted all their trainees
-          cell.include?(Reports::BulkRecommendReport::DO_NOT_EDIT) ||
-            # Or they managed to export an empty CSV
-            cell.include?("No trainee data to export")
-        end
-      end
-
-      def all_headers
-        Reports::BulkRecommendReport::DEFAULT_HEADERS.map(&:downcase)
       end
 
       def headers

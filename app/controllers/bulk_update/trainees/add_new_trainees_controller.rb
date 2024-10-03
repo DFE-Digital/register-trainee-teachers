@@ -18,9 +18,12 @@ module BulkUpdate
           file: file,
         )
 
-        upload = @bulk_add_trainee_form.save
-
-        redirect_to(bulk_update_trainees_status_path(upload.id))
+        if @bulk_add_trainee_form.valid?
+          upload = @bulk_add_trainee_form.save
+          redirect_to(bulk_update_trainees_status_path(upload.id))
+        else
+          render(:show)
+        end
       end
 
       def status

@@ -25,7 +25,7 @@
 class BulkUpdate::TraineeUpload < ApplicationRecord
   belongs_to :provider
 
-  enum status: {
+  enum :status, {
     pending: "pending",
     failed: "failed",
     succeeded: "succeeded",

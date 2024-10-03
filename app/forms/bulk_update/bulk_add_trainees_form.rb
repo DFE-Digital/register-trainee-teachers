@@ -12,7 +12,7 @@ module BulkUpdate
     include RecommendationsUploads::Config
 
     validate :validate_file!
-    # validate :validate_csv!
+    validate :validate_csv!
 
     def initialize(provider: nil, file: nil)
       @provider = provider
@@ -20,20 +20,24 @@ module BulkUpdate
     end
 
     def save
+      return false unless valid?
+
       BulkUpdate::TraineeUpload.create(
         provider: provider,
         file: file,
         file_name: file.original_filename,
-        number_of_trainees: csv.count,
-        status: valid? ? :failed : :pending,
+        number_of_trainees: csv&.count,
+        status: valid? ? :pending : :failed,
+        error_messages: errors.messages.values.inject([], &:concat),
       )
     end
 
     def csv
-      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
+      file.tempfile.rewind
+      @csv ||= file ? CSVSafe.new(file.tempfile, **CSV_ARGS).read : nil
+    rescue StandardError
+      @csv = nil
     end
-
-    attr_reader :file
 
   private
 
@@ -41,23 +45,14 @@ module BulkUpdate
       @tempfile ||= file&.tempfile
     end
 
-    def original_csv_sanitised
-      @original_csv_sanitised ||= begin
-        file.tempfile.rewind
-        CSVSafe.new(file.tempfile, headers: true, encoding: ENCODING).read
-      end
-    end
-
     def validate_file!
       BulkUpdate::AddTrainees::ValidateFile.new(file: file, record: self).validate!
     end
 
-    # def validate_csv!
-    #   return unless tempfile
+    def validate_csv!
+      return false unless csv
 
-    #   AddTrainee::ValidateCsv.new(csv: csv, record: self).validate!
-    # rescue CSV::MalformedCSVError, Encoding::UndefinedConversionError
-    #   errors.add(:file, :is_not_csv)
-    # end
+      BulkUpdate::AddTrainees::ValidateCsv.new(csv: csv, record: self).validate!
+    end
   end
 end
