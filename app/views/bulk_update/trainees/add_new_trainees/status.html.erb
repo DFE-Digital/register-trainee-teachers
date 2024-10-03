@@ -11,17 +11,34 @@
       Upload Summary
     </h1>
 
-    <p class="govuk-body">
-    You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
-    </p>
+    <% if @bulk_update_trainee_upload.error_messages.any? %>
+      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
+        <h2 class="govuk-error-summary__title" id="error-summary-title">
+          The upload failed because:
+        </h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <% @bulk_update_trainee_upload.error_messages.each do |error_message| %>
+              <li>
+                <%= error_message %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% else %>
+      <p class="govuk-body">
+      You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
+      </p>
 
-    <p class="govuk-body">
-      It included:
-    </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>
-        <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %> who can be added
-      </li>
-    </ul>
+      <p class="govuk-body">
+        It included:
+      </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>
+          <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %> who can be added
+        </li>
+      </ul>
+    <% end %>
   </div>
 </div>

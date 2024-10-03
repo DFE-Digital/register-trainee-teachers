@@ -12,10 +12,10 @@ module BulkUpdate
 
       def validate!
         if file
-          file_size_within_range?
-          file_encoding_is_accepted?
+          file_size_within_range? && valid_csv? && file_encoding_is_accepted?
         else
           record.errors.add(:file, :missing)
+          false
         end
       end
 
@@ -43,9 +43,21 @@ module BulkUpdate
       def file_size_within_range?
         if file.size > 1.megabyte
           record.errors.add(:file, :too_large)
+          return false
         elsif file.size.zero? # rubocop:disable Style/ZeroLengthPredicate
           record.errors.add(:file, :empty)
+          return false
         end
+        true
+      end
+
+      def valid_csv?
+        file.tempfile.rewind
+        CSVSafe.new(file.tempfile, **BulkUpdate::BulkAddTraineesForm::CSV_ARGS).read
+        true
+      rescue StandardError
+        record.errors.add(:file, :is_not_csv)
+        false
       end
     end
   end

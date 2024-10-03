@@ -9,4 +9,3 @@ FactoryBot.define do
     file { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/complete.csv").read }
   end
 end
-
