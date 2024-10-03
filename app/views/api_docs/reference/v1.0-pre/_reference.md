@@ -795,7 +795,6 @@ Trainee details
         "ethnicity": "142",
         "course_subject_two": "101410",
         "course_subject_three": "100366",
-        "lead_school_urn": "900020",
         "employing_school_urn": "790928",
         "ethnic_group": "mixed_ethnic_group",
         "ethnic_background": "Another Mixed background",

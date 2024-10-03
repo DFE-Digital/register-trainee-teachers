@@ -299,7 +299,7 @@ GEM
     govuk_notify_rails (3.0.0)
       notifications-ruby-client (~> 6.2)
       rails (>= 4.1.0)
-    hashdiff (1.1.0)
+    hashdiff (1.1.1)
     hashie (5.0.0)
     highline (3.0.1)
     html-attributes-utils (1.0.2)
@@ -359,12 +359,12 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    mechanize (2.12.1)
+    mechanize (2.12.2)
       addressable (~> 2.8)
       base64
       domain_name (~> 0.5, >= 0.5.20190701)
       http-cookie (~> 1.0, >= 1.0.3)
-      mime-types (~> 3.0)
+      mime-types (~> 3.3)
       net-http-digest_auth (~> 1.4, >= 1.4.1)
       net-http-persistent (>= 2.5.2, < 5.0.dev)
       nkf
@@ -374,9 +374,10 @@ GEM
       webrobots (~> 0.1.2)
     memory_profiler (1.1.0)
     method_source (1.1.0)
-    mime-types (3.5.2)
+    mime-types (3.6.0)
+      logger
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2024.0820)
+    mime-types-data (3.2024.1001)
     mini_mime (1.1.5)
     minitest (5.25.1)
     msgpack (1.7.2)
@@ -386,7 +387,7 @@ GEM
     net-http (0.4.1)
       uri
     net-http-digest_auth (1.4.1)
-    net-http-persistent (4.0.2)
+    net-http-persistent (4.0.4)
       connection_pool (~> 2.2)
     net-imap (0.4.14)
       date
@@ -547,7 +548,7 @@ GEM
     request_store_rails (2.0.0)
       concurrent-ruby (~> 1.0)
     retriable (3.1.2)
-    rexml (3.3.7)
+    rexml (3.3.8)
     rotp (6.3.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -602,7 +603,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.52.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (3.0.5)
+    rubocop-rspec (3.1.0)
       rubocop (~> 1.61)
     rubocop-rspec_rails (2.30.0)
       rubocop (~> 1.61)
@@ -725,7 +726,7 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.23.1)
+    webmock (3.24.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
