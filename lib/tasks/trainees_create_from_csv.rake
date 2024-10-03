@@ -16,7 +16,6 @@ namespace :create_trainees_from_csv do
       CSV.foreach(
         tempfile.path,
         headers: true,
-        encoding: "ISO-8859-1",
         header_converters: ->(f) { f&.strip },
       ).with_index(2) do |csv_row, i|
         processor.call(csv_row:)
