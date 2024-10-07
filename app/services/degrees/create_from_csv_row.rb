@@ -132,6 +132,9 @@ module Degrees
       nil
     end
 
+    # slight variations in the CSV headers sent out to providers and the
+    # potential for providers to alter case or spacing inadvertently means
+    # normalising before lookup reduces potential errors and missed data
     def normalize(str)
       return if str.blank?
 

@@ -152,7 +152,7 @@ module Trainees
             described_class.call(csv_row:)
           end
 
-          it "create's the trainee's non-uk degree" do
+          it "creates the trainee's non-uk degree" do
             degree = trainee.degrees.last
             expect(degree.locale_code).to eq("non_uk")
             expect(degree.uk_degree).to be_nil

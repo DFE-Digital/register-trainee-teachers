@@ -122,7 +122,7 @@ module Trainees
             described_class.call(csv_row:)
           end
 
-          it "create's the trainee's degree with the correct institution" do
+          it "creates the trainee's degree with the correct institution" do
             expect(trainee.degrees.first.institution).to eq("University of Warwick")
           end
         end
@@ -141,7 +141,7 @@ module Trainees
             described_class.call(csv_row:)
           end
 
-          it "create's the trainee's non-uk degree" do
+          it "creates the trainee's non-uk degree" do
             degree = trainee.degrees.last
             expect(degree.locale_code).to eq("non_uk")
             expect(degree.uk_degree).to be_nil
