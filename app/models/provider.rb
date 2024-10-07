@@ -76,6 +76,7 @@ class Provider < ApplicationRecord
                   }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
+  AMBITION_PROVIDER_CODE = "2A2"
   START_MANDATING_PLACEMENT_DATA_CYCLE = 2022
 
   def code=(cde)

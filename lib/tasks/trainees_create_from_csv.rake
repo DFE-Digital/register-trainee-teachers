@@ -1,25 +1,29 @@
 # frozen_string_literal: true
 
-namespace :trainees do
-  desc "creates trainees from a CSV"
-  task :create_from_csv, %i[provider_code csv_path] => [:environment] do |_, args|
-    csv = CSV.read(
-      args.csv_path,
-      headers: true,
-      encoding: "ISO-8859-1",
-      header_converters: ->(f) { f&.strip },
-    )
+namespace :create_trainees_from_csv do
+  desc "Creates trainees from an Upload CSV"
+  task :process, %i[upload_id type] => [:environment] do |_, args|
+    upload = Upload.find(args.upload_id)
 
-    provider = Provider.find_by!(code: args.provider_code)
-
-    csv.each_with_index do |row, i|
-      Trainees::CreateFromCsvRow.call(provider: provider, csv_row: row)
-    rescue StandardError => e
-      Rails.logger.error("error on row #{i + 1}: #{e.message}")
-      Sentry.capture_exception(e)
+    unless %w[teach_first ambition].include?(args.type)
+      puts "Invalid type. Please specify 'teach_first' or 'ambition'."
+      exit
     end
-  rescue ActiveRecord::RecordNotFound => e
-    Rails.logger.error("Provider not found with code #{args.provider_code}")
-    Sentry.capture_exception(e)
+
+    processor = "Trainees::CreateFromCsvRow::#{args.type.camelize}".constantize
+
+    upload.file.blob.open do |tempfile|
+      CSV.foreach(
+        tempfile.path,
+        headers: true,
+        header_converters: ->(f) { f&.strip },
+      ).with_index(2) do |csv_row, i|
+        processor.call(csv_row:)
+      rescue StandardError => e
+        puts("Error on row #{i}: #{e.message}")
+        Rails.logger.error("Error on row #{i}: #{e.message}")
+        Sentry.capture_exception(e)
+      end
+    end
   end
 end
