@@ -689,7 +689,7 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.26)
     stateful_enum (0.7.0)
-    store_model (4.0.0)
+    store_model (4.1.0)
       activerecord (>= 7.0)
     stringio (3.1.1)
     strong_migrations (2.0.0)
@@ -857,7 +857,7 @@ DEPENDENCIES
   sprockets-rails
   stackprof
   stateful_enum
-  store_model (~> 4.0)
+  store_model (~> 4.1)
   strong_migrations
   timecop (~> 0.9.10)
   tzinfo-data
