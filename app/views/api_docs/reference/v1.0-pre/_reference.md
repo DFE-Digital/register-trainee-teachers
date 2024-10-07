@@ -19,8 +19,8 @@ This API allows you to access information about trainees and provides endpoints 
     - [POST /trainees/{trainee_id}/placements](#code-post-trainees-trainee_id-placements-code)
     - [POST /trainees/{trainee_id}/degrees](#code-post-trainees-trainee_id-degrees-code)
     - [POST /trainees/{trainee_id}/withdraw](#code-post-trainees-trainee_id-withdraw-code)
-    - [POST /trainees/{trainee_id}/recommend-for-qts](#code-post-trainees-trainee_id-recommend-for-qts)
-    - [POST /trainees/{trainee_id}/defer](#code-post-trainees-trainee_id-defer)
+    - [POST /trainees/{trainee_id}/recommend-for-qts](#code-post-trainees-trainee_id-recommend-for-qts-code)
+    - [POST /trainees/{trainee_id}/defer](#code-post-trainees-trainee_id-defer-code)
     - [PUT|PATCH /trainees/{trainee_id}](#code-put-patch-trainees-trainee_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
@@ -1256,7 +1256,7 @@ Withdrawal details
           array of strings, required
         </p>
         <p class="govuk-body">
-          The reason(s) for the withdrawal. Valid values are arrays containing one or more of these string values: 
+          The reason(s) for the withdrawal. Valid values are arrays containing one or more of these string values:
           <code>financial_problems</code>, <code>another_reason</code>, <code>got_a_job</code>, <code>problems_with_their_health</code>, <code>unknown</code>,
           <code>could_not_give_enough_time</code>, <code>course_was_not_suitable</code>, <code>did_not_make_progress</code>,
           <code>did_not_meet_entry_requirements</code>, <code>does_not_want_to_become_a_teacher</code>, <code>family_problems</code>,
