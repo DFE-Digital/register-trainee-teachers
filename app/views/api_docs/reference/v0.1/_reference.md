@@ -816,7 +816,7 @@ Trainee details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 201<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -943,6 +943,137 @@ Trainee details
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": "This trainee is already in Register",
+      "data": [
+        {
+          "first_names": "John",
+          "last_name": "Doe",
+          "date_of_birth": "1990-01-01",
+          "created_at": "2024-09-11T15:12:45.067Z",
+          "updated_at": "2024-09-11T15:12:45.067Z",
+          "email": "john.doe@example.com",
+          "middle_names": null,
+          "training_route": "11",
+          "sex": "99",
+          "diversity_disclosure": "diversity_disclosed",
+          "ethnic_group": "mixed_ethnic_group",
+          "ethnic_background": "Black Caribbean and White",
+          "additional_ethnic_background": null,
+          "disability_disclosure": "disabled",
+          "course_subject_one": "100511",
+          "itt_start_date": "2023-01-01",
+          "outcome_date": null,
+          "itt_end_date": "2023-10-01",
+          "trn": null,
+          "submitted_for_trn_at": "2024-09-11T15:12:45.345Z",
+          "withdraw_date": null,
+          "withdraw_reasons_details": null,
+          "defer_date": null,
+          "recommended_for_award_at": null,
+          "trainee_start_date": "2023-01-01",
+          "reinstate_date": null,
+          "course_min_age": 5,
+          "course_max_age": 11,
+          "course_subject_two": "100346",
+          "course_subject_three": "101410",
+          "awarded_at": null,
+          "training_initiative": null,
+          "study_mode": "63",
+          "ebacc": false,
+          "region": null,
+          "course_education_phase": "primary",
+          "course_uuid": null,
+          "lead_partner_not_applicable": true,
+          "employing_school_not_applicable": true,
+          "submission_ready": true,
+          "commencement_status": null,
+          "discarded_at": null,
+          "created_from_dttp": false,
+          "hesa_id": "0310261553101",
+          "additional_dttp_data": null,
+          "created_from_hesa": false,
+          "hesa_updated_at": null,
+          "record_source": "api",
+          "iqts_country": null,
+          "hesa_editable": false,
+          "withdraw_reasons_dfe_details": null,
+          "slug_sent_to_dqt_at": null,
+          "placement_detail": null,
+          "provider_trainee_id": "99157234/2/01",
+          "ukprn": "81239124",
+          "ethnicity": "142",
+          "disability1": "58",
+          "disability2": "57",
+          "course_qualification": "QTS",
+          "course_title": null,
+          "course_level": "undergrad",
+          "course_itt_start_date": "2023-01-01",
+          "course_age_range": "13914",
+          "expected_end_date": "2023-10-01",
+          "employing_school_urn": null,
+          "lead_partner_ukprn": null,
+          "lead_partner_urn": null,
+          "fund_code": "7",
+          "bursary_level": "4",
+          "previous_last_name": "Smith",
+          "itt_aim": "202",
+          "course_study_mode": "63",
+          "course_year": "1",
+          "pg_apprenticeship_start_date": "2024-03-11",
+          "funding_method": "4",
+          "ni_number": null,
+          "additional_training_initiative": null,
+          "itt_qualification_aim": "001",
+          "hesa_disabilities": {
+            "disability1": "58",
+            "disability2": "57"
+          },
+          "nationality": "GB",
+          "withdraw_reasons": [],
+          "placements": [
+            {
+              "urn": "900020",
+              "name": "London School",
+              "postcode": null,
+              "created_at": "2024-09-11T15:12:45.090Z",
+              "updated_at": "2024-09-11T15:12:45.090Z",
+              "placement_id": "D8VsiEck1ueqigL1Pu9ESAaR"
+            }
+          ],
+          "degrees": [
+            {
+              "uk_degree": "083",
+              "non_uk_degree": null,
+              "created_at": "2024-09-11T15:12:45.069Z",
+              "updated_at": "2024-09-11T15:12:45.069Z",
+              "subject": "100485",
+              "institution": "0117",
+              "graduation_year": 2003,
+              "grade": "02",
+              "country": null,
+              "other_grade": null,
+              "institution_uuid": "1271f34a-2887-e711-80d8-005056ac45bb",
+              "uk_degree_uuid": "1b6a5652-c197-e711-80d8-005056ac45bb",
+              "subject_uuid": "e78170f0-5dce-e911-a985-000d3ab79618",
+              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f",
+              "degree_id": "cPTm9iXPbLzER8UqReEFGvNn"
+            }
+          ],
+          "state": "submitted_for_trn",
+          "trainee_id": "EMHhWRF33g53PReREX6rdPwd",
+          "application_id": null
+        }
+      ]
     }
     </pre>
   </div>
