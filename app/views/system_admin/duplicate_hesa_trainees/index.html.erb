@@ -4,31 +4,21 @@
   <div class ="govuk-grid-column-full">
     <%= render "system_admin/tab_nav" %>
 
-    <%= govuk_table do |table|
-      table.with_caption(size: "m", text: "Duplicate apply applications")
-      table.with_head do |head|
-        head.with_row do |row|
-          row.with_cell(text: "Name")
-          row.with_cell(text: "Created on")
-          row.with_cell(text: "")
+    <%
+      @potential_duplicate_trainees.each do |group|
+        # TODO: Fix nasty 1+N query
+        group[:trainee_ids].map { |id| Trainee.find(id) }.each do |trainee|
+    %>
+    <%= render(
+      ApplicationRecordCard::View.new(
+        record: trainee,
+        current_user: current_user,
+      ),
+    ) %>
+    <%
         end
       end
-      table.with_body do |body|
-        @potential_duplicate_trainees.each do |duplicate|
-          body.with_row do |row|
-            row.with_cell(text: duplicate.trainee.full_name)
-            row.with_cell(text: "")
-            row.with_cell do |cell|
-              govuk_button_link_to(
-                "View",
-                trainee_path(duplicate.trainee.id),
-                class: "govuk-!-margin-0",
-              )
-            end
-          end
-        end
-      end
-    end %>
+    %>
 
     <%= render Paginator::View.new(scope: @potential_duplicate_trainees) %>
   </div>
