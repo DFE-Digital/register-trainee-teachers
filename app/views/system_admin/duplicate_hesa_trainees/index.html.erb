@@ -4,21 +4,18 @@
   <div class ="govuk-grid-column-full">
     <%= render "system_admin/tab_nav" %>
 
-    <%
-      @potential_duplicate_trainees.each do |group|
-        # TODO: Fix nasty 1+N query
-        group[:trainee_ids].map { |id| Trainee.find(id) }.each do |trainee|
-    %>
-    <%= render(
-      ApplicationRecordCard::View.new(
-        record: trainee,
-        current_user: current_user,
-      ),
-    ) %>
-    <%
-        end
-      end
-    %>
+    <% @potential_duplicate_trainees.each do |group| %>
+    <div class="govuk-!-margin-bottom-8">
+      <% group[:trainee_ids].map { |id| Trainee.find(id) }.each do |trainee| %>
+        <%= render(
+          ApplicationRecordCard::View.new(
+            record: trainee,
+            current_user: current_user,
+          ),
+        ) %>
+      <% end %>
+    </div>
+    <% end %>
 
     <%= render Paginator::View.new(scope: @potential_duplicate_trainees) %>
   </div>

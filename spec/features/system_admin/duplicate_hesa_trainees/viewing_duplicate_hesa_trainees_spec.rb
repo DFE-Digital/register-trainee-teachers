@@ -11,12 +11,8 @@ feature "Viewing duplicate HESA trainees" do
     when_i_visit_the_duplicate_hesa_trainees_index_page
     then_i_should_see_the_duplicate_hesa_trainees
 
-    # when_i_click_on_a_duplicate_hesa_trainee
-    # then_i_should_see_the_trainee_name
-    # and_i_should_see_the_trainee_details
-
-    # when_i_click_on_the_trainee_link
-    # then_i_should_see_the_trainee_page
+    when_i_click_on_the_trainee_link
+    then_i_should_see_the_trainee_page
   end
 
   def and_there_are_duplicate_hesa_trainees
@@ -43,5 +39,14 @@ feature "Viewing duplicate HESA trainees" do
   def then_i_should_see_the_duplicate_hesa_trainees
     expect(page).to have_content(@trainee_one.short_name)
     expect(page).to have_content(@trainee_two.short_name)
+  end
+
+  def when_i_click_on_the_trainee_link
+    click_on @trainee_one.short_name
+  end
+
+  def then_i_should_see_the_trainee_page
+    expect(page).to have_content(@trainee_one.full_name)
+    expect(page).to have_current_path(trainee_review_drafts_path(@trainee_one))
   end
 end
