@@ -41,5 +41,7 @@ feature "Viewing duplicate HESA trainees" do
   end
 
   def then_i_should_see_the_duplicate_hesa_trainees
+    expect(page).to have_content(@trainee_one.full_name)
+    expect(page).to have_content(@trainee_two.full_name)
   end
 end
