@@ -4,7 +4,6 @@ This API allows you to access information about trainees and provides endpoints 
 
 - [API versioning strategy](#api-versioning-strategy)
 - [Developing on the API](#developing-on-the-api)
-    - [Reference spreadsheet](#reference-spreadsheet)
     - [OpenAPI](#openapi)
     - [Authentication](#authentication)
 - [Endpoints](#endpoints)
@@ -45,23 +44,6 @@ Find out about [how we make updates to the API](/api-docs#api-versioning-strateg
 ---
 
 ## Developing on the API
-
-### Reference spreadsheet
-
-You can use the Register API reference spreadsheet to map trainee data from your student record system into the Register service via the Register API.
-
-Register API reference spreadsheet contains the following information:
-
-- field requirement
-- entity
-- description
-- whether a field is optional or mandatory
-- whether it allows multiple values
-- minimum and maximum instances
-- character length
-- format rules
-- HESA data type, alignment, code examples, labels, link to their data reference webpage and confirmation if the HESA validation is applicable
-
 
 ### OpenAPI
 
