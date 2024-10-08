@@ -3,9 +3,6 @@ name: Code Coverage
 on:
   schedule:
     - cron: "0 23 * * *"
-  push:
-    branches:
-      - feature-specs
 
 permissions:
   contents: write
