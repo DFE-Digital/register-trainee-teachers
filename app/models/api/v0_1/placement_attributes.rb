@@ -32,12 +32,13 @@ module Api
 
       def assign_attributes(new_attributes)
         if new_attributes.key?("urn") && (school = School.find_by(urn: new_attributes["urn"]))
-          new_attributes["urn"]      = nil
-          new_attributes["name"]     = nil
-          new_attributes["postcode"] = nil
+          new_attributes["urn"]       = nil
+          new_attributes["name"]      = nil
+          new_attributes["postcode"]  = nil
+          new_attributes["school_id"] = school.id
+        else
+          new_attributes["school_id"] = nil
         end
-
-        new_attributes["school_id"] = school&.id if new_attributes.key?("urn")
 
         super(
           new_attributes.select do |k, _v|
