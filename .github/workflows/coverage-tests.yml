@@ -24,7 +24,7 @@ jobs:
         include:
           - test-type: full-suite
             include-pattern: spec/**/*_spec.rb
-            exclude-pattern: spec/features/*_spec.rb
+            exclude-pattern: spec/smoke/*_spec.rb
 
     steps:
       - name: Checkout
@@ -48,7 +48,7 @@ jobs:
 
       - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} ${{ matrix.test-type }} tests"
         run: |
-          docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "spec/smoke/*_spec.rb,spec/features/*_spec.rb,spec/features/**/*_spec.rb"'
+          docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose rspec --pattern "${{ env.INCLUDE_PATTERN }}" --exclude-pattern "${{ env.EXCLUDE_PATTERN }}"'
         env:
           IMAGE_TAG: ${{ env.DOCKER_IMAGE_TAG }}
           INCLUDE_PATTERN: ${{ matrix.include-pattern }}

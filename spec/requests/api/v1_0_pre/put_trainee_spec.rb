@@ -833,8 +833,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024, next_cycle: true) }
 
         before do
-          Timecop.travel(itt_start_date)
-
           put(
             endpoint,
             headers: { Authorization: "Bearer #{token}", **json_headers },
