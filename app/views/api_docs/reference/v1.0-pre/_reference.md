@@ -367,9 +367,9 @@ Get a single trainee.
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -883,6 +883,7 @@ Trainee details
           {
             "urn": "900020",
             "name": "London School",
+            "address": "URN 900020",
             "postcode": null,
             "created_at": "2024-09-11T15:12:45.090Z",
             "updated_at": "2024-09-11T15:12:45.090Z",
@@ -1024,6 +1025,7 @@ Trainee details
             {
               "urn": "900020",
               "name": "London School",
+              "address": "URN 900020",
               "postcode": null,
               "created_at": "2024-09-11T15:12:45.090Z",
               "updated_at": "2024-09-11T15:12:45.090Z",
@@ -1526,9 +1528,9 @@ Withdrawal details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1741,9 +1743,9 @@ Recommendation details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1956,9 +1958,9 @@ Deferral details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -2140,9 +2142,9 @@ Deletes an existing degree for this trainee.
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -2321,9 +2323,9 @@ Trainee details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -2455,10 +2457,11 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "trainee_id": 644065,
-        "address": null,
+        "urn": "137523",
         "name": "Wellsway School",
+        "address": "URN 137523",
         "postcode": null,
+        "placement_id": 4fjxTZgHxFgzYrwB8L3UNRvM,
         "created_at": "2024-03-19T22:23:48.619Z",
         "updated_at": "2024-03-19T22:23:48.619Z"
       }
@@ -2759,9 +2762,9 @@ Deletes an existing placement for this trainee.
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"

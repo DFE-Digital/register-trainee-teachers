@@ -66,7 +66,7 @@ class Placement < ApplicationRecord
                      ["URN #{school.urn}", school.town, school.postcode]
                    end
 
-    full_address.join(", ")
+    full_address.join(", ").presence
   end
 
   def created_by_hesa?
