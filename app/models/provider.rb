@@ -58,6 +58,8 @@ class Provider < ApplicationRecord
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
 
+  has_many :bulk_update_trainee_uploads, class_name: "BulkUpdate::TraineeUpload"
+
   audited
 
   has_associated_audits

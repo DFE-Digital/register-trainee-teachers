@@ -1534,6 +1534,16 @@ en:
               no_date_header: The selected file must contain a column for date QTS or EYTS standards met
               no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
               no_trainees: The selected file must contain at least one trainee
+        bulk_update/bulk_add_trainees_form:
+          attributes:
+            file:
+              missing: Select a CSV file
+              empty: The selected file is empty
+              too_large: The selected file must be smaller than 1MB
+              encoding_not_accepted: "The selected file must be UTF-8 or ISO-8859-1 encoded (detected: %{encoding})"
+              is_not_csv: The selected file must be a CSV
+              no_header_detected: No header was detected
+              no_trainees: The selected file must contain at least one trainee
         bulk_update/placements_form:
           attributes:
             file:
