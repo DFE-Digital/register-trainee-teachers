@@ -40,6 +40,31 @@ feature "add lead partner and employing school" do
     then_the_lead_and_employing_schools_section_is_marked_completed
   end
 
+  scenario "add a lead partner", "feature_routes.school_direct_salaried": true do
+    given_lead_partner_and_employing_school_exist_in_the_system
+    given_a_trainee_exists(:school_direct_salaried)
+    and_i_am_on_the_trainee_record_page
+    then_i_see_the_lead_partner_and_employing_school_details
+    when_i_click_on_the_lead_partner_and_employing_schools
+    and_i_see_the_edit_lead_partner_details_page
+    and_i_see_the_not_applicable_lead_partner_radio_option(false)
+    and_i_choose_the_not_applicable_lead_partner_option(false)
+    and_i_click_on_continue
+    then_i_see_the_lead_partner_edit_page
+    when_i_fill_in_my_lead_partner
+    and_i_click_on_continue
+    then_i_see_the_lead_partner_search_page
+    when_i_choose_a_lead_partner
+    and_i_click_on_continue
+    then_i_see_the_edit_employing_school_details_page
+    and_i_see_the_not_applicable_employing_school_radio_option(false)
+    and_i_choose_not_applicable_employing_school_option(true)
+    and_i_click_on_continue
+    then_i_see_the_confirm_my_details_page
+    when_i_confirm_my_details
+    then_the_lead_and_employing_schools_section_is_marked_completed
+  end
+
   scenario "add an employing school", "feature_routes.school_direct_salaried": true do
     given_lead_partner_and_employing_school_exist_in_the_system
     given_a_trainee_exists(:school_direct_salaried)

@@ -11,7 +11,11 @@ module Trainees
         @employing_school_form = Schools::EmployingSchoolForm.new(trainee, params: trainee_params, user: current_user)
 
         if @employing_school_form.stash_or_save!
-          redirect_to(edit_trainee_employing_schools_path(trainee))
+          if @employing_school_form.school_applicable?
+            redirect_to(edit_trainee_employing_schools_path(trainee))
+          else
+            redirect_to(trainee_schools_confirm_path(trainee))
+          end
         else
           render(:edit)
         end
