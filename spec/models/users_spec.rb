@@ -15,7 +15,7 @@ describe User do
     subject { create(:user) }
 
     it "validates uniqueness of email" do
-      expect(subject).to validate_uniqueness_of(:email).with_message("Enter a unique email address")
+      expect(subject).to validate_uniqueness_of(:email).ignoring_case_sensitivity.with_message("Enter a unique email address")
     end
   end
 

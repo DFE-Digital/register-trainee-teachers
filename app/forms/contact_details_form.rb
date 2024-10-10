@@ -34,6 +34,6 @@ private
   end
 
   def sanitise_email
-    self.email = email.gsub(/\s+/, "") unless email.nil?
+    self.email = email.gsub(/\s+/, "").downcase unless email.nil?
   end
 end
