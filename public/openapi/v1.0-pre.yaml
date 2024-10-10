@@ -1860,6 +1860,8 @@ paths:
                               type: string
                             name:
                               type: string
+                            address:
+                              type: string
                             postcode:
                               nullable: true
                             created_at:
@@ -1871,6 +1873,7 @@ paths:
                           required:
                           - urn
                           - name
+                          - address
                           - postcode
                           - created_at
                           - updated_at
@@ -2111,6 +2114,7 @@ paths:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
+                    address: URN 900020
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
@@ -2629,12 +2633,21 @@ paths:
                       items:
                         type: object
                         properties:
-                          name:
-                            type: string
                           urn:
+                            nullable: true
                             type: string
-                        required:
-                        - urn
+                            description: |
+                              The URN of the object.
+                              If School 'urn' does not exist in the system, 'name' is required.
+                          name:
+                            nullable: true
+                            type: string
+                            description: |
+                              The name of the object.
+                              Required if School 'urn' does not exist in the system.
+                          postcode:
+                            nullable: true
+                            type: string
                     itt_aim:
                       type: integer
                     itt_qualification_aim:
@@ -3584,6 +3597,7 @@ paths:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
+                    address: URN 900020
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
@@ -5267,36 +5281,28 @@ paths:
                 data:
                   type: object
                   properties:
-                    address:
-                      nullable: true
-                      type: string
-                    name:
-                      nullable: true
-                      type: string
-                    postcode:
-                      nullable: true
-                      type: string
                     urn:
                       nullable: true
                       type: string
-                    school_id:
-                      type: integer
+                      description: |
+                        The URN of the object.
+                        If School 'urn' does not exist in the system, 'name' is required.
+                    name:
                       nullable: true
-                  required:
-                  - address
-                  - name
-                  - postcode
-                  - urn
-                  - school_id
+                      type: string
+                      description: |
+                        The name of the object.
+                        Required if School 'urn' does not exist in the system.
+                    postcode:
+                      nullable: true
+                      type: string
               required:
               - data
             example:
               data:
-                address: 893 Louvenia Stream
-                name: Hauck Academy
-                postcode: H5 0NA
-                urn: '605218'
-                school_id:
+                name: Kohler Academy
+                postcode: Z6D 8JB
+                urn: '650551'
       responses:
         '201':
           description: creates a new placement and returns a 201 (created) status
@@ -5312,6 +5318,8 @@ paths:
                         type: string
                       name:
                         type: string
+                      address:
+                        type: string
                       postcode:
                         type: string
                       created_at:
@@ -5323,6 +5331,7 @@ paths:
                     required:
                     - urn
                     - name
+                    - address
                     - postcode
                     - created_at
                     - updated_at
@@ -5331,9 +5340,10 @@ paths:
                 - data
               example:
                 data:
-                  urn: '605218'
-                  name: Hauck Academy
-                  postcode: H5 0NA
+                  urn: '650551'
+                  name: Kohler Academy
+                  address: URN 650551, New Kacey, Z6D 8JB
+                  postcode: Z6D 8JB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   placement_id: CAUbbNT3NgLfpDovQzTimXTa
@@ -5868,6 +5878,8 @@ paths:
                         type: string
                       name:
                         type: string
+                      address:
+                        type: string
                       postcode:
                         type: string
                       created_at:
@@ -5879,6 +5891,7 @@ paths:
                     required:
                     - urn
                     - name
+                    - address
                     - postcode
                     - created_at
                     - updated_at
@@ -5887,9 +5900,10 @@ paths:
                 - data
               example:
                 data:
-                  urn: '252611'
-                  name: Ostbarrow High
-                  postcode: C7 4BE
+                  urn: '699410'
+                  name: Lakeacre High School
+                  address: URN 699410, New Kacey, R3 3JN
+                  postcode: R3 3JN
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   placement_id: 8xr5hbtl1baxj453o07iqmtq
@@ -5950,32 +5964,29 @@ paths:
                 data:
                   type: object
                   properties:
-                    address:
-                      nullable: true
-                      type: string
-                    name:
-                      nullable: true
-                      type: string
-                    postcode:
-                      nullable: true
-                      type: string
                     urn:
                       nullable: true
                       type: string
-                    school_id:
-                      type: integer
+                      description: |
+                        The URN of the object.
+                        If School 'urn' does not exist in the system, 'name' is required.
+                    name:
                       nullable: true
-                  required:
-                  - postcode
+                      type: string
+                      description: |
+                        The name of the object.
+                        Required if School 'urn' does not exist in the system.
+                    postcode:
+                      nullable: true
+                      type: string
               required:
               - data
             example:
               data:
-                address: 8934 Rosenbaum Spring
-                name: Rippin College
+                name: South Hackett University
                 postcode: GU1 1AA
-                urn: '177099'
-                school_id:
+                urn: '642209'
+                placement_id: '72LUDJ9yBxz5qKDfvrVtveRW'
       responses:
         '200':
           description: partial update of an existing placement returns 200 (ok) status
@@ -6002,6 +6013,7 @@ paths:
                     required:
                     - urn
                     - name
+                    - address
                     - postcode
                     - created_at
                     - updated_at
@@ -6010,9 +6022,10 @@ paths:
                 - data
               example:
                 data:
-                  urn: '912343'
-                  name: Iceborough Secondary College
-                  postcode: UB9 9JA
+                  urn: '808369'
+                  name: Falconholt High
+                  postcode: WB1R 8NL
+                  address: URN 808369, Zenobialand, WB1R 8NL
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   placement_id: juudytrc69p1kkbtxu3dhii5

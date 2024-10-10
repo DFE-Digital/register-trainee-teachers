@@ -50,7 +50,7 @@ module Api
             attributes_klass.new(params, trainee:)
           else
             attributes = attributes_klass.from_degree(degree, trainee:)
-            attributes.assign_attributes(params)
+            attributes.assign_attributes(params.to_h)
             attributes
           end
       end

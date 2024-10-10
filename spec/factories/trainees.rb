@@ -142,7 +142,7 @@ FactoryBot.define do
 
     trait :with_placements do
       has_placement_detail
-      placements { build_list(:placement, 2) }
+      placements { create_list(:placement, 2, :with_school) }
     end
 
     trait :submission_ready do

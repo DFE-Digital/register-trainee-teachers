@@ -3,21 +3,22 @@
 FactoryBot.define do
   factory :placement do
     trainee
-
-    with_school
-
     slug { Faker::Alphanumeric.alphanumeric(number: Sluggable::SLUG_LENGTH) }
+
+    urn { Faker::Number.unique.number(digits: 6).to_s }
+    name { Faker::University.name }
+    address { nil }
+    postcode { Faker::Address.postcode }
+
+    school { nil }
 
     trait :with_school do
       school
-    end
 
-    trait :manual do
-      school { nil }
-      urn { Faker::Number.unique.number(digits: 6) }
-      name { Faker::University.name }
-      address { Faker::Address.street_address }
-      postcode { Faker::Address.postcode }
+      urn { nil }
+      name { nil }
+      address { nil }
+      postcode { nil }
     end
 
     trait :not_applicable_school do

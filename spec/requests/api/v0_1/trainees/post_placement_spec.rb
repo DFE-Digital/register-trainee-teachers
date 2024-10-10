@@ -8,70 +8,89 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
-    let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+    let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES }
 
     context "with a valid trainee and placement" do
-      context "create placement with school_id" do
+      context "create placement with a school" do
+        let(:school) { create(:school) }
+        let(:data) { { urn: school.urn } }
         let(:params) do
-          { data: create(:placement).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
+          { data: }.with_indifferent_access
         end
 
         it "creates a new placement and returns a 201 (created) status" do
-          post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+          expect {
+            post "/api/v0.1/trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.to change {
+            trainee.placements.count
+          }.from(0).to(1)
 
           expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to be_present
-          expect(trainee.reload.placements.count).to eq(1)
+          expect(response.parsed_body[:data]).to include(data)
 
-          expect(trainee.reload.placements.first.school_id).to eq(params.dig(:data, :school_id))
-          expect(trainee.reload.placements.first.address).to be_blank
-          expect(trainee.reload.placements.first.name).to eq(School.find(params.dig(:data, :school_id)).name)
-          expect(trainee.reload.placements.first.postcode).to be_blank
-          expect(trainee.reload.placements.first.urn).to be_blank
+          placement = trainee.placements.take
+
+          expect(placement.urn).to eq(school.urn)
+          expect(placement.school_id).to eq(school.id)
+          expect(placement.address).to be_nil
+          expect(placement.name).to eq(school.name)
+          expect(placement.postcode).to eq(school.postcode)
         end
 
         it "updates the progress attribute on the trainee" do
-          post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+          post "/api/v0.1/trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
 
           expect(trainee.reload.progress[:placements]).to be(true)
         end
       end
 
-      context "create placement without school_id" do
-        let(:placement) { create(:placement, :manual) }
+      context "create placement without a school" do
+        let(:data) { attributes_for(:placement).slice(*placement_attribute_keys) }
         let(:params) do
-          { data: placement.attributes.slice(*placement_attribute_keys) }.with_indifferent_access
+          { data: }.with_indifferent_access
         end
 
         it "creates a new placement and returns a 201 (created) status" do
-          post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+          expect {
+            post "/api/v0.1/trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.to change {
+            trainee.placements.count
+          }.from(0).to(1)
+
+          placement = trainee.reload.placements.take
 
           expect(response).to have_http_status(:created)
-          expect(response.parsed_body["data"]).to be_present
+          expect(response.parsed_body["data"]).to include(
+            urn: data[:urn],
+            name: data[:name],
+            address: "URN #{data[:urn]}, #{data[:postcode]}",
+            postcode: data[:postcode],
+            placement_id: placement.slug,
+          )
 
-          expect(trainee.reload.placements.count).to eq(1)
-          expect(trainee.reload.placements.first.school_id).to be_blank
-          expect(trainee.reload.placements.first.address).to eq(params.dig(:data, :address))
-          expect(trainee.reload.placements.first.name).to eq(params.dig(:data, :name))
-          expect(trainee.reload.placements.first.postcode).to eq(params.dig(:data, :postcode))
-          expect(trainee.reload.placements.first.urn).to eq(params.dig(:data, :urn))
-
-          expect(response.parsed_body["data"]["urn"]).to eq(placement.urn)
-          expect(response.parsed_body["data"]["name"]).to eq(placement.name)
+          expect(placement.school_id).to be_nil
+          expect(placement.urn).to eq(data[:urn])
+          expect(placement.address).to eq(data[:address])
+          expect(placement.name).to eq(data[:name])
+          expect(placement.postcode).to eq(data[:postcode])
         end
 
         context "with different trainee" do
           let(:trainee_for_another_provider) { create(:trainee) }
           let(:trainee_slug) { trainee_for_another_provider.slug }
+          let(:data) { attributes_for(:placement).slice(*placement_attribute_keys) }
           let(:params) do
-            { data: create(:placement).attributes.slice(*placement_attribute_keys) }.with_indifferent_access
+            { data: }.with_indifferent_access
           end
 
           it "does not create a new placement and returns a 422 status (unprocessable_entity) status" do
-            post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+            expect {
+              post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+            }.not_to change {
+              trainee.placements.count
+            }
 
             expect(response).to have_http_status(:not_found)
-            expect(trainee.reload.placements.count).to eq(0)
           end
         end
 
@@ -81,11 +100,17 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           end
 
           it "does not create a new placements and returns a 422 status (unprocessable_entity) status" do
-            post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+            expect {
+              post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+            }.not_to change {
+              trainee.placements.count
+            }
 
             expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"].count).to eq(2)
-            expect(trainee.reload.placements.count).to eq(0)
+            expect(response.parsed_body["errors"]).to contain_exactly(
+              error: "UnprocessableEntity",
+              message: "Name can't be blank",
+            )
           end
         end
       end

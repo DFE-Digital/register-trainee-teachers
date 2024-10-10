@@ -16,7 +16,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.new }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
       let(:params) do
         create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
@@ -24,12 +24,16 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status created with data" do
         expect(subject[:status]).to be(:created)
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
+          "urn" => params[:urn],
+          "name" => params[:name],
+          "address" => "URN #{params[:urn]}, #{params[:postcode]}",
+          "postcode" => params[:postcode],
+        )
 
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
-
-        expect(placement.reload.id).to be_present
+        expect(placement.id).to be_present
         expect(placement.slug).to be_present
-        expect(placement.school_id).to eq(params[:school_id])
+        expect(placement.school_id).to be_nil
       end
 
       it "uses the serializer" do
@@ -53,7 +57,6 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Name can't be blank" },
-          { error: "UnprocessableEntity", message: "School can't be blank" },
         )
       end
     end
@@ -63,7 +66,7 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.first }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
       let(:params) do
         create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
@@ -71,7 +74,12 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status ok with data" do
         expect(subject[:status]).to be(:ok)
-        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(params.except(:school_id, :address))
+        expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
+          "urn" => params[:urn],
+          "name" => params[:name],
+          "address" => "URN #{params[:urn]}, #{params[:postcode]}",
+          "postcode" => params[:postcode],
+        )
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
@@ -99,7 +107,6 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Name can't be blank" },
-          { error: "UnprocessableEntity", message: "School can't be blank" },
         )
       end
     end
@@ -116,25 +123,13 @@ describe Api::Trainees::SavePlacementResponse do
     end
 
     context "with same name" do
-      let(:existing_placement) { create(:placement, :manual, name: "existing placement") }
+      let(:existing_placement) { create(:placement, name: "existing placement") }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:conflict)
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to include(
           { error: "Conflict", message: "Urn has already been taken" },
-        )
-      end
-    end
-
-    context "with same address and postcode" do
-      let(:existing_placement) { create(:placement, :manual, address: "1 Hogwarts drive", postcode: "BN1 1AA") }
-
-      it "returns status unprocessable entity with error response" do
-        expect(subject[:status]).to be(:conflict)
-        expect(subject[:json][:data]).to be_blank
-        expect(subject[:json][:errors]).to include(
-          { error: "Conflict", message: "Address has already been taken" },
         )
       end
     end

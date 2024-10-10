@@ -6,47 +6,45 @@ module Api
       include ActiveModel::Model
       include ActiveModel::Attributes
 
-      URN_REGEX = /^[0-9]{6}$/
+      URN_REGEX = /\A[0-9]{6}\z/
 
       ATTRIBUTES = %i[
-        address
+        urn
         name
         postcode
-        urn
+      ].freeze.each { |attr| attribute(attr) }
+
+      INTERNAL_ATTRIBUTES = %i[
         school_id
-      ].freeze
+      ].freeze.each { |attr| attribute(attr) }
 
-      ATTRIBUTES.each do |attr|
-        attribute attr
-      end
-
-      validates :name, presence: true, if: -> { school_id.blank? }
-      validate :school_valid
-      validate :urn_valid
-      validate :postcode_valid
+      validates :urn, format: { with: URN_REGEX }, if: -> { urn.present? }
+      validates :name, presence: true, if: -> { school_id.nil? && !School.exists?(urn:) }
+      validates :postcode, postcode: true
 
       def self.from_placement(placement)
-        new(placement.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) })
+        new(
+          placement.attributes.select do |k, _v|
+            ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
+          end,
+        )
       end
 
-    private
-
-      def school_valid
-        if school_id.blank? && [name, urn, postcode].all?(&:blank?)
-          errors.add(:school_id, :blank)
+      def assign_attributes(new_attributes)
+        if new_attributes.key?("urn") && (school = School.find_by(urn: new_attributes["urn"]))
+          new_attributes["urn"]       = nil
+          new_attributes["name"]      = nil
+          new_attributes["postcode"]  = nil
+          new_attributes["school_id"] = school.id
+        else
+          new_attributes["school_id"] = nil
         end
-      end
 
-      def urn_valid
-        if urn.present? && !urn.match?(URN_REGEX)
-          errors.add(:urn, :invalid)
-        end
-      end
-
-      def postcode_valid
-        if postcode.present? && !UKPostcode.parse(postcode).valid?
-          errors.add(:postcode, I18n.t("activemodel.errors.validators.postcode.invalid"))
-        end
+        super(
+          new_attributes.select do |k, _v|
+            ATTRIBUTES.include?(k.to_sym) || INTERNAL_ATTRIBUTES.include?(k.to_sym)
+          end
+        )
       end
     end
   end

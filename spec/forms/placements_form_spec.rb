@@ -20,7 +20,7 @@ describe PlacementsForm, type: :model do
       end
 
       context "with placements" do
-        let(:placements) { build_list(:placement, 2) }
+        let(:placements) { build_list(:placement, 2, :with_school) }
 
         it { is_expected.to be_valid }
       end
@@ -47,7 +47,7 @@ describe PlacementsForm, type: :model do
   end
 
   describe "#build_placement_form" do
-    let(:template_placement) { build(:placement) }
+    let(:template_placement) { build(:placement, :with_school) }
 
     it "returns new PlacementForm instance" do
       placement_form = subject.build_placement_form(
@@ -62,8 +62,8 @@ describe PlacementsForm, type: :model do
   end
 
   describe "#find_placement_from_param" do
-    let(:placement1) { build(:placement, :manual, trainee:) }
-    let(:placement2) { build(:placement, :manual, trainee:) }
+    let(:placement1) { build(:placement, trainee:) }
+    let(:placement2) { build(:placement, trainee:) }
 
     before do
       allow(form_store).to receive(:get).and_return(nil)
@@ -102,8 +102,8 @@ describe PlacementsForm, type: :model do
   end
 
   describe "#placements" do
-    let(:placement1) { build(:placement, :manual, trainee:) }
-    let(:placement2) { build(:placement, :manual, trainee:) }
+    let(:placement1) { build(:placement, trainee:) }
+    let(:placement2) { build(:placement, trainee:) }
 
     before do
       allow(form_store).to receive(:get).and_return({
