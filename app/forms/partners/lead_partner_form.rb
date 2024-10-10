@@ -2,6 +2,8 @@
 
 module Partners
   class LeadPartnerForm < Form
+    LEAD_PARTNER_NOT_APPLICABLE_OPTION = Struct.new(:id, :name)
+
     FIELDS = %i[
       lead_partner_id
       lead_partner_not_applicable
@@ -13,6 +15,12 @@ module Partners
 
     alias_method :partner_id, :lead_partner_id
     alias_method :partner_not_applicable, :lead_partner_not_applicable
+
+    def lead_partner_not_applicable_options
+      [true, false].map do |value|
+        LEAD_PARTNER_NOT_APPLICABLE_OPTION.new(id: value, name: value ? "No" : "Yes")
+      end
+    end
 
   private
 

@@ -25,7 +25,7 @@ module Trainees
       if @lead_partner_form.stash_or_save!
         redirect_to(step_wizard.next_step)
       else
-        @lead_partner_search = LeadPartnerSearch.call(query: params[:query])
+        @lead_partner_search = LeadPartnerSearch.call(query: trainee_params[:query])
         render(index_or_edit_page)
       end
     end
