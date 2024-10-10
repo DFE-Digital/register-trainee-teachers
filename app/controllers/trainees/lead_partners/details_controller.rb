@@ -11,7 +11,11 @@ module Trainees
         @lead_partner_form = Partners::LeadPartnerForm.new(trainee, params: trainee_params, user: current_user)
 
         if @lead_partner_form.stash_or_save!
-          redirect_to(edit_trainee_lead_partners_path(trainee))
+          if @lead_partner_form.lead_partner_applicable?
+            redirect_to(edit_trainee_lead_partners_path(trainee))
+          else
+            redirect_to(edit_trainee_employing_schools_details_path(trainee))
+          end
         else
           render(:edit)
         end
