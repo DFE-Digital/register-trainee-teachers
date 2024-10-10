@@ -17,6 +17,13 @@ feature "LeadPartnerSearch" do
     then_i_am_redirected_to_the_confirm_lead_partner_page
   end
 
+  scenario "searching for a lead partner by postcode", js: true do
+    and_i_fill_in_my_lead_partner_postcode
+    and_i_click_the_first_item_in_the_list
+    and_i_continue
+    then_i_am_redirected_to_the_confirm_lead_partner_page
+  end
+
   scenario "choosing a lead partner without javascript" do
     and_i_fill_in_my_lead_partner_without_js
     and_i_continue
@@ -37,6 +44,10 @@ private
 
   def and_i_fill_in_my_lead_partner
     edit_lead_partner_page.lead_partner.fill_in with: my_lead_partner_name
+  end
+
+  def and_i_fill_in_my_lead_partner_postcode
+    edit_lead_partner_page.lead_partner.fill_in with: my_lead_partner_postcode
   end
 
   def and_i_fill_in_my_lead_partner_without_js
@@ -61,6 +72,10 @@ private
 
   def my_lead_partner_name
     my_lead_partner.name.split.first
+  end
+
+  def my_lead_partner_postcode
+    my_lead_partner.school&.postcode
   end
 
   def my_lead_partner
