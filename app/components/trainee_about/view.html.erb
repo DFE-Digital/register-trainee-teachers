@@ -39,12 +39,6 @@
   <%= render CourseDetails::View.new(data_model: trainee, editable: trainee_editable?) %>
 </div>
 
-<% if trainee.requires_lead_partner? %>
-  <div class="school-details">
-    <%= render SchoolDetails::View.new(trainee: trainee, editable: trainee_editable?)  %>
-  </div>
-<% end %>
-
 <% if trainee.requires_placements? %>
   <div class="placement-details">
     <%= render PlacementDetails::View.new(data_model: trainee, editable: TraineePolicy.new(current_user, trainee).write_placements?) %>

@@ -6,7 +6,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with model: @employing_school_form, url: trainee_employing_schools_details_path(@trainee), local: true, html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+    <%= register_form_with model: @employing_school_form, url: trainee_employing_schools_details_path(@trainee), local: true,
+                           html: { data: { module: "app-schools-autocomplete" } } do |f| %>
+
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons :employing_school_not_applicable,
         @employing_school_form.employing_school_not_applicable_options,
