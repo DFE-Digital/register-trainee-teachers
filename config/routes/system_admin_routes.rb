@@ -16,8 +16,8 @@ module SystemAdminRoutes
         resources :dead_jobs, only: %i[index show update destroy]
         resources :pending_trns, only: %i[index show]
         resources :pending_awards, only: %i[index show]
-        resources :duplicate_apply_applications, only: %i[index show]
-        resources :duplicate_hesa_trainees, only: %i[index show]
+        resources :duplicate_apply_applications, only: :index
+        resources :duplicate_hesa_trainees, only: :index
 
         get "funding-uploads", to: "funding_uploads#index", as: :funding_uploads
 

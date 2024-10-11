@@ -3,6 +3,6 @@
 FactoryBot.define do
   factory :potential_duplicate_trainee do
     group_id { SecureRandom.uuid }
-    association :trainee
+    trainee
   end
 end

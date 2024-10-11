@@ -6,7 +6,7 @@
 
     <% @potential_duplicate_trainees.each do |group| %>
     <div class="govuk-!-margin-bottom-8">
-      <% group[:trainee_ids].map { |id| Trainee.find(id) }.each do |trainee| %>
+      <% group[:trainee_ids].map { |id| @trainee_lookup[id] }.each do |trainee| %>
         <%= render(
           ApplicationRecordCard::View.new(
             record: trainee,
