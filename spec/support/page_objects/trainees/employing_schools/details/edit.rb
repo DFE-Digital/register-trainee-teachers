@@ -7,7 +7,7 @@ module PageObjects
         class Edit < PageObjects::Base
           set_url "/trainees/{trainee_id}/employing-schools/details/edit"
 
-          elements :employing_schools_radio_buttons, 'input[type="radio"][name="schools_employing_school_form[employing_school_not_applicable]"]'
+          elements :employing_school_radio_buttons, 'input[type="radio"][name="schools_employing_school_form[employing_school_not_applicable]"]'
           element :continue_button, 'button.govuk-button[type="submit"]'
 
           # rubocop:disable Naming/PredicateName
@@ -27,7 +27,7 @@ module PageObjects
         private
 
           def radio_button(value)
-            employing_schools_radio_buttons.detect { |radio| radio.value == value.to_s }
+            employing_school_radio_buttons.detect { |radio| radio.value == value.to_s }
           end
         end
       end

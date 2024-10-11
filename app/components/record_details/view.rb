@@ -4,21 +4,43 @@ module RecordDetails
   class View < ViewComponent::Base
     include SanitizeHelper
     include SummaryHelper
+    include SchoolHelper
+    include LeadPartnerHelper
 
-    attr_reader :trainee, :last_updated_event, :not_provided_copy, :show_provider, :show_record_source, :editable, :show_change_provider
+    attr_reader :trainee,
+                :last_updated_event,
+                :not_provided_copy,
+                :show_provider,
+                :show_record_source,
+                :editable,
+                :show_change_provider,
+                :lead_partner,
+                :employing_school
 
-    def initialize(trainee:, last_updated_event:, show_provider: false, show_record_source: false, editable: false, show_change_provider: false)
+    def initialize(
+      trainee:,
+      last_updated_event:,
+      show_provider: false,
+      show_record_source: false,
+      editable: false,
+      show_change_provider: false
+    )
+
       @trainee = trainee
       @last_updated_event = last_updated_event
       @show_provider = show_provider
       @editable = editable
       @show_record_source = show_record_source
       @show_change_provider = show_change_provider
+      @lead_partner = fetch_lead_partner
+      @employing_school = trainee.employing_school
     end
 
     def record_detail_rows
-      [
-        provider_row,
+      rows = [provider_row]
+      rows += [lead_partner_row]     if trainee.requires_lead_partner?
+      rows += [employing_school_row] if trainee.requires_lead_partner?
+      rows += [
         record_source_row,
         trainee_id_row,
         region,
@@ -29,7 +51,8 @@ module RecordDetails
         start_year_row,
         end_year_row,
         trainee_start_date_row,
-      ].compact
+      ]
+      rows.compact
     end
 
   private
@@ -181,6 +204,31 @@ module RecordDetails
 
     def mappable_field(field_value, field_label, action_url)
       { field_value:, field_label:, action_url: }
+    end
+
+    def lead_partner_not_applicable?
+      trainee.lead_partner_not_applicable?
+    end
+
+    def employing_school_not_applicable?
+      trainee.employing_school_not_applicable?
+    end
+
+    def fetch_lead_partner
+      fetch_lead_partner_record(trainee.lead_partner_id)
+    end
+
+    def fetch_lead_partner_record(id)
+      return if id.blank?
+
+      LeadPartner.find(id)
+    end
+
+    def change_paths(school_type)
+      {
+        lead: edit_trainee_lead_partners_details_path(trainee),
+        employing: edit_trainee_employing_schools_details_path(trainee),
+      }[school_type.to_sym]
     end
   end
 end
