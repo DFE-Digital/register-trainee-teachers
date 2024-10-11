@@ -186,3 +186,13 @@ api:
     ip: []
   allowed_versions: [v0.1, v1.0-pre]
   current_version: v0.1
+
+qualtrics:
+  api_token: please_change_me
+  directory_id: POOL_please_change_me
+  base_url: https://{{data_centre_id}}.qualtrics.com/API/v3/
+  library_id: UR_please_change_me
+  withdraw:
+    survey_id: SV_please_change_me
+    mailing_list_id: CG_please_change_me
+    message_id: MS_please_change_me
