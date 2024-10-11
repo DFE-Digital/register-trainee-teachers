@@ -27,13 +27,18 @@ feature "add lead partner and employing school" do
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
     and_i_see_the_not_applicable_employing_school_radio_option(false)
-    and_i_choose_not_applicable_employing_school_option(false)
+    and_i_choose_the_not_applicable_employing_school_option(false)
     and_i_click_on_continue
     then_i_see_the_employing_school_edit_page
     when_i_fill_in_my_employing_school
     and_i_click_on_continue
     then_i_see_the_employing_school_search_page
     when_i_choose_an_employing_school
+    and_i_click_on_continue
+    then_i_see_the_confirm_my_details_page
+    when_i_click_on_change_lead_partner
+    and_i_see_the_not_applicable_lead_partner_radio_option(false)
+    and_i_choose_the_not_applicable_lead_partner_option(true)
     and_i_click_on_continue
     then_i_see_the_confirm_my_details_page
     when_i_confirm_my_details
@@ -58,7 +63,7 @@ feature "add lead partner and employing school" do
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
     and_i_see_the_not_applicable_employing_school_radio_option(false)
-    and_i_choose_not_applicable_employing_school_option(true)
+    and_i_choose_the_not_applicable_employing_school_option(true)
     and_i_click_on_continue
     then_i_see_the_confirm_my_details_page
     when_i_confirm_my_details
@@ -77,7 +82,7 @@ feature "add lead partner and employing school" do
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
     and_i_see_the_not_applicable_employing_school_radio_option(false)
-    and_i_choose_not_applicable_employing_school_option(false)
+    and_i_choose_the_not_applicable_employing_school_option(false)
     and_i_click_on_continue
     then_i_see_the_employing_school_edit_page
     when_i_fill_in_my_employing_school
@@ -170,7 +175,7 @@ feature "add lead partner and employing school" do
     expect(edit_trainee_employing_school_details_page).to have_employing_school_radio_button_checked(value)
   end
 
-  def and_i_choose_not_applicable_employing_school_option(value)
+  def and_i_choose_the_not_applicable_employing_school_option(value)
     edit_trainee_employing_school_details_page.select_radio_button(value)
   end
 
@@ -185,5 +190,9 @@ feature "add lead partner and employing school" do
 
   def then_the_lead_and_employing_schools_section_is_marked_completed
     expect(review_draft_page).to have_lead_and_employing_school_information_completed
+  end
+
+  def when_i_click_on_change_lead_partner
+    confirm_details_page.change.click
   end
 end

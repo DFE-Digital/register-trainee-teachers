@@ -14,7 +14,7 @@ module Trainees
           if @lead_partner_form.lead_partner_applicable?
             redirect_to(edit_trainee_lead_partners_path(trainee))
           else
-            redirect_to(edit_trainee_employing_schools_details_path(trainee))
+            redirect_to(step_wizard.next_step)
           end
         else
           render(:edit)
@@ -27,6 +27,10 @@ module Trainees
         params.fetch(:partners_lead_partner_form, {})
           .permit(*Partners::LeadPartnerForm::FIELDS,
                   *Partners::LeadPartnerForm::NON_TRAINEE_FIELDS)
+      end
+
+      def step_wizard
+        @step_wizard ||= Wizards::SchoolsStepWizard.new(trainee:, page_tracker:)
       end
     end
   end
