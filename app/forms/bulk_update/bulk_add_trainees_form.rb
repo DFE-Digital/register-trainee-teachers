@@ -30,6 +30,8 @@ module BulkUpdate
         status: valid? ? :pending : :failed,
         error_messages: errors.messages.values.inject([], &:concat),
       )
+
+      # TODO: Queue a job to process the file
     end
 
     def csv
