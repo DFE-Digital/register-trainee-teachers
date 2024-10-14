@@ -23,9 +23,14 @@
            data-default-value="<%= query %>" data-field-name="partners_lead_partner_form[query]"></div>
 
       <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
+
+      <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
+
       <%= f.govuk_submit t("continue") %>
     <% end %>
+
   </div>
+
 </div>
 
 <% unless @trainee.draft? %>

@@ -1175,15 +1175,15 @@ en:
             hint: You do not need to provide a lead partner if the trainee is funded or employed privately.
       edit:
         heading: Lead partner
-        hint: Search for a lead partner by name, school postcode, school URN or training provider UKPRN
-        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        hint: Search for a school by its unique reference number (URN), name or postcode
+        description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee's record.</p>
         not_applicable_details:
           summary_text: Lead partner is not listed, or the trainee is funded or employed privately
           label_text: Lead partner is not applicable
           body:
             <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the lead partner, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
       details:
         edit:
@@ -1199,7 +1199,7 @@ en:
           body:
             <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide an employing school if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?

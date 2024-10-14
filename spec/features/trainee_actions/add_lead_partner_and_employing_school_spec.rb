@@ -123,6 +123,26 @@ feature "add lead partner and employing school" do
 
   def then_i_see_the_lead_partner_edit_page
     expect(edit_lead_partner_page).to be_displayed
+    expect(edit_lead_partner_page).to have_content(
+      "The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
+    )
+    expect(edit_lead_partner_page).to have_content(
+      "The lead partner you select will be able to view trainee's record.",
+    )
+    expect(edit_lead_partner_page).to have_content(
+      "Search for a school by its unique reference number (URN), name or postcode",
+    )
+    expect(edit_lead_partner_page).to have_content(
+      "If the lead partner is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
+    )
+    expect(edit_employing_school_page).to have_link(text: "Get information about schools", href: "https://get-information-schools.service.gov.uk/")
+    expect(edit_lead_partner_page).to have_content(
+      "If you still cannot find the lead partner, contact becomingateacher@digital.education.gov.uk",
+    )
+    expect(edit_employing_school_page).to have_link("becomingateacher@digital.education.gov.uk")
+    expect(edit_lead_partner_page).to have_content(
+      "You do not need to provide a lead partner if the trainee is funded or employed privately.",
+    )
   end
 
   def then_i_see_the_lead_partner_search_page
@@ -151,6 +171,20 @@ feature "add lead partner and employing school" do
 
   def then_i_see_the_employing_school_edit_page
     expect(edit_employing_school_page).to be_displayed
+    expect(edit_employing_school_page).to have_content(
+      "Search for a school by its unique reference number (URN), name or postcode",
+    )
+    expect(edit_employing_school_page).to have_content(
+      "If the employing school is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
+    )
+    expect(edit_employing_school_page).to have_link(text: "Get information about schools", href: "https://get-information-schools.service.gov.uk/")
+    expect(edit_employing_school_page).to have_content(
+      "If you still cannot find the school, contact becomingateacher@digital.education.gov.uk",
+    )
+    expect(edit_employing_school_page).to have_link("becomingateacher@digital.education.gov.uk")
+    expect(edit_employing_school_page).to have_content(
+      "You do not need to provide an employing school if the trainee is funded or employed privately.",
+    )
   end
 
   def when_i_fill_in_my_employing_school

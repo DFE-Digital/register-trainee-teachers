@@ -22,11 +22,14 @@
         width: "three-quarters",
       ) %>
 
-    <div id="schools-autocomplete-element"
-         class="govuk-!-width-three-quarters"
-         data-default-value="<%= query %>" data-field-name="schools_employing_school_form[query]"></div>
+      <div id="schools-autocomplete-element"
+           class="govuk-!-width-three-quarters"
+           data-default-value="<%= query %>" data-field-name="schools_employing_school_form[query]"></div>
 
       <%= f.hidden_field :employing_school_id, id: "school-id", value: nil %>
+
+      <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
+
       <%= f.govuk_submit t("continue") %>
     <% end %>
   </div>

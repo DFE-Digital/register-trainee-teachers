@@ -9,7 +9,6 @@ module PageObjects
 
           elements :lead_partner_radio_buttons, 'input[type="radio"][name="partners_lead_partner_form[lead_partner_not_applicable]"]'
           element :continue_button, 'button.govuk-button[type="submit"]'
-          # element :submit, 'button.govuk-button[type="submit"]'
 
           # rubocop:disable Naming/PredicateName
           def has_lead_partner_radio_button_checked?(value)
