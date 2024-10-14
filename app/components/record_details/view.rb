@@ -38,8 +38,12 @@ module RecordDetails
 
     def record_detail_rows
       rows = [provider_row]
-      rows += [lead_partner_row]     if trainee.requires_lead_partner?
-      rows += [employing_school_row] if trainee.requires_lead_partner?
+      if trainee.requires_lead_partner?
+        rows += [
+          lead_partner_row,
+          employing_school_row,
+        ]
+      end
       rows += [
         record_source_row,
         trainee_id_row,
