@@ -79,6 +79,7 @@ module Trainees
         publish_course_details: "trainee's course details",
         trainee_start_status: "start date",
         iqts_country: "international training details",
+        schools: "training partners",
       }[trainee_section_key.to_sym] || trainee_section_key.gsub("_", " ").gsub("id", "ID")
     end
 

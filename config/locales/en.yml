@@ -106,7 +106,7 @@ en:
       email_line_two: if you think there should be trainees who are eligible.
   schools:
     view:
-      summary_title: Schools
+      summary_title: Training partners
       lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
