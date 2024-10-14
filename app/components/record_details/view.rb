@@ -13,9 +13,12 @@ module RecordDetails
                 :show_provider,
                 :show_record_source,
                 :editable,
-                :show_change_provider,
-                :lead_partner,
-                :employing_school
+                :show_change_provider
+
+    delegate :lead_partner,
+             :employing_school,
+             :lead_partner_not_applicable?,
+             :employing_school_not_applicable?, to: :trainee
 
     def initialize(
       trainee:,
@@ -32,8 +35,6 @@ module RecordDetails
       @editable = editable
       @show_record_source = show_record_source
       @show_change_provider = show_change_provider
-      @lead_partner = fetch_lead_partner
-      @employing_school = trainee.employing_school
     end
 
     def record_detail_rows
@@ -208,24 +209,6 @@ module RecordDetails
 
     def mappable_field(field_value, field_label, action_url)
       { field_value:, field_label:, action_url: }
-    end
-
-    def lead_partner_not_applicable?
-      trainee.lead_partner_not_applicable?
-    end
-
-    def employing_school_not_applicable?
-      trainee.employing_school_not_applicable?
-    end
-
-    def fetch_lead_partner
-      fetch_lead_partner_record(trainee.lead_partner_id)
-    end
-
-    def fetch_lead_partner_record(id)
-      return if id.blank?
-
-      LeadPartner.find(id)
     end
 
     def change_paths(school_type)
