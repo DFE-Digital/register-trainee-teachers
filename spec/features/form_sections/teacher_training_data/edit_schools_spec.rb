@@ -16,13 +16,13 @@ feature "edit schools spec" do
       when_i_see_the_lead_partner
       and_i_click_on_change_lead_partner(:lead_partner)
       and_i_see_the_edit_lead_partner_details_page
-      # and_i_see_the_not_applicable_lead_partner_radio_option(false)
       and_i_continue
       and_i_am_on_the_edit_lead_partner_page
       and_i_fill_in_my_lead_partner
       and_i_click_the_first_item_in_the_list_lead_partner
       and_i_continue
       then_i_am_redirected_to_the_confirm_schools_page
+      and_i_see_the_updated_lead_partner
     end
 
     scenario "choosing not applicable for lead partner" do
@@ -40,13 +40,13 @@ feature "edit schools spec" do
       when_i_see_the_employing_school
       and_i_click_on_change_school(:employing_school)
       and_i_see_the_edit_employing_school_details_page
-      # and_i_see_the_not_applicable_employing_school_radio_option(false)
       and_i_continue
       and_i_am_on_the_edit_employing_school_page
       and_i_fill_in_my_employing_school
       and_i_click_the_first_item_in_the_list_employing_school
       and_i_continue
       then_i_am_redirected_to_the_confirm_schools_page
+      and_i_see_the_updated_employing_school
     end
 
     scenario "choosing not applicable for employing school" do
@@ -74,13 +74,13 @@ feature "edit schools spec" do
       when_i_see_the_lead_partner
       and_i_click_on_change_lead_partner(:lead_partner)
       and_i_see_the_edit_lead_partner_details_page
-      # and_i_see_the_not_applicable_lead_partner_radio_option(false)
       and_i_continue
       and_i_am_on_the_edit_lead_partner_page
       and_i_fill_in_my_lead_partner
       and_i_click_the_first_item_in_the_list_lead_partner
       and_i_continue
       then_i_am_redirected_to_the_confirm_schools_page
+      and_i_see_the_updated_lead_partner
     end
   end
 
@@ -230,5 +230,13 @@ private
 
   def and_i_see_the_not_applicable_employing_school_radio_option(value)
     expect(edit_trainee_employing_school_details_page).to have_employing_school_radio_button_checked(value)
+  end
+
+  def and_i_see_the_updated_lead_partner
+    expect(confirm_schools_page).to have_content(my_lead_partner_name)
+  end
+
+  def and_i_see_the_updated_employing_school
+    expect(confirm_schools_page).to have_content(my_employing_school_name)
   end
 end
