@@ -24,9 +24,9 @@ module Trainees
     private
 
       def trainee_params
-        params.fetch(:partners_lead_partner_form, {})
-          .permit(*Partners::LeadPartnerForm::FIELDS,
-                  *Partners::LeadPartnerForm::NON_TRAINEE_FIELDS)
+        params
+          .require(:partners_lead_partner_form)
+          .permit(:lead_partner_not_applicable)
       end
 
       def step_wizard

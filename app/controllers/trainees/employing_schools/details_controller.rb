@@ -24,9 +24,9 @@ module Trainees
     private
 
       def trainee_params
-        params.fetch(:schools_employing_school_form, {})
-          .permit(*Schools::EmployingSchoolForm::FIELDS,
-                  *Schools::EmployingSchoolForm::NON_TRAINEE_FIELDS)
+        params
+          .require(:schools_employing_school_form)
+          .permit(:employing_school_not_applicable)
       end
     end
   end
