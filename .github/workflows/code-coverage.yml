@@ -40,9 +40,14 @@ jobs:
   coverage_tests:
     name: Coverage tests
     needs: [build]
-    uses: ./.github/actions/coverage-tests/
-    secrets: inherit
-    with:
-      docker-image: ${{needs.build.outputs.docker-image}}
-      image-tag: ${{ needs.build.outputs.image-tag }}
-      use-next-academic-year: false
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        uses: ./.github/actions/coverage-tests/
+        with:
+          docker-image: ${{needs.build.outputs.docker-image}}
+          image-tag: ${{ needs.build.outputs.image-tag }}
+          use-next-academic-year: false
