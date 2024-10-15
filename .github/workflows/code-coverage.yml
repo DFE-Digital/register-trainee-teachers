@@ -1,6 +1,7 @@
 name: Code Coverage
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 23 * * *"
 
@@ -35,7 +36,7 @@ jobs:
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
   test:
-    name: Test
+    name: Coverage tests
     needs: [build]
     uses: ./.github/workflows/coverage-tests.yml
     secrets: inherit
