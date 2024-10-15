@@ -45,6 +45,7 @@ runs:
         docker compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
 
     - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} coverage tests"
+      shell: bash
       run: |
         docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose rspec --pattern "spec/**/*_spec.rb" --exclude-pattern "spec/smoke/*_spec.rb"'
       env:
