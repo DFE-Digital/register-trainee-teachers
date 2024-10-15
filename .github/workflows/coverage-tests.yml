@@ -17,9 +17,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: true
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,9 +37,9 @@ jobs:
           docker compose exec -T web /bin/sh -c "RAILS_ENV=test bundle exec rails assets:precompile"
           docker compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
 
-      - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} ${{ matrix.test-type }} tests"
+      - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} coverage tests"
         run: |
-          docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose rspec --pattern spec/**/*_spec.rb --exclude-pattern spec/smoke/*_spec.rb'
+          docker compose exec -T web /bin/sh -c 'COVERAGE=true bundle exec --verbose rspec --pattern spec/**/*_spec.rb --exclude-pattern "spec/smoke/*_spec.rb"'
         env:
           USE_NEXT_ACADEMIC_YEAR: ${{ inputs.use-next-academic-year }}
 
@@ -51,7 +48,7 @@ jobs:
         if: ${{ failure() && github.ref == 'refs/heads/main' }}
         with:
           slack-title: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} tests"
-          slack-message: "':alert: ${{ inputs.use-next-academic-year &&  'Next academic year' || 'Current academic year'}}  ${{ matrix.test-type }} test failure for ${{ matrix.tests_type  }} on commit ${{env.IMAGE_TAG}} :sadpanda:"
+          slack-message: "':alert: ${{ inputs.use-next-academic-year &&  'Next academic year' || 'Current academic year'}}  coverage test failure on commit ${{env.IMAGE_TAG}} :sadpanda:"
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Upload coverage to Codecov
