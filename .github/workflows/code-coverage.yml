@@ -35,7 +35,7 @@ jobs:
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
   test:
-    name: Test
+    name: Coverage tests
     needs: [build]
     uses: ./.github/workflows/coverage-tests.yml
     secrets: inherit
