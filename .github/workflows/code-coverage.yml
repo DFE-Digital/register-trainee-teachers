@@ -37,7 +37,7 @@ jobs:
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
 
-  test:
+  coverage_tests:
     name: Coverage tests
     needs: [build]
     uses: ./.github/workflows/coverage-tests.yml
