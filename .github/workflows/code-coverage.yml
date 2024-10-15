@@ -40,7 +40,7 @@ jobs:
   coverage_tests:
     name: Coverage tests
     needs: [build]
-    uses: ./.github/workflows/coverage-tests.yml
+    uses: ./.github/actions/coverage-tests/
     secrets: inherit
     with:
       docker-image: ${{needs.build.outputs.docker-image}}
