@@ -692,7 +692,7 @@ GEM
     store_model (4.1.0)
       activerecord (>= 7.0)
     stringio (3.1.1)
-    strong_migrations (2.0.0)
+    strong_migrations (2.0.1)
       activerecord (>= 6.1)
     swd (2.0.3)
       activesupport (>= 3)
