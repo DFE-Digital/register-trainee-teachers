@@ -51,3 +51,6 @@ jobs:
           docker-image: ${{needs.build.outputs.docker-image}}
           image-tag: ${{ needs.build.outputs.image-tag }}
           use-next-academic-year: false
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          codecov-token: ${{ secrets.CODECOV_TOKEN }}

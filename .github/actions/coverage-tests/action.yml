@@ -12,6 +12,15 @@ inputs:
   use-next-academic-year:
     required: true
     type: boolean
+  azure-credentials:
+    required: true
+    type: string
+  slack-webhook:
+    required: true
+    type: string
+  codecov-token:
+    required: true
+    type: string
 
 runs:
   using: composite
@@ -22,7 +31,7 @@ runs:
     - name: Bring docker image up
       uses: ./.github/actions/bring-docker-image-up/
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+        azure-credentials: ${{ inputs.azure-credentials }}
         docker-image: ${{ inputs.docker-image}}
         image-tag: ${{ inputs.image-tag }}
 
@@ -47,13 +56,13 @@ runs:
       with:
         slack-title: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} tests"
         slack-message: "':alert: ${{ inputs.use-next-academic-year &&  'Next academic year' || 'Current academic year'}}  coverage test failure on commit ${{env.IMAGE_TAG}} :sadpanda:"
-        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        slack-webhook: ${{ inputs.slack-webhook }}
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
         files: ./coverage/backend/coverage.json
-        token: ${{ secrets.CODECOV_TOKEN }}
+        token: ${{ inputs.codecov-token }}
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
