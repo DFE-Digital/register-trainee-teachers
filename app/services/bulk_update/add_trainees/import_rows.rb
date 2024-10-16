@@ -5,13 +5,13 @@ module BulkUpdate
     class ImportRows
       include ServicePattern
 
-      attr_reader :id
+      attr_accessor :id
 
       def initialize(id:)
         self.id = id
       end
 
-      HEADERS = {
+      TRAINEE_HEADERS = {
         "Provider Trainee ID" => "provider_trainee_id",
         "Application ID" => "application_id",
         "HESA ID" => "hesa_id",
@@ -21,7 +21,7 @@ module BulkUpdate
         "Date of Birth" => "date_of_birth",
         "NI Number" => "ni_number",
         "Sex" => "sex",
-        "Email", => "email",
+        "Email" => "email",
         "Nationality" => "nationality",
         "Ethnicity" => "ethnicity",
         "Disability 1" => "disability_1",
@@ -49,11 +49,17 @@ module BulkUpdate
         "Trainee Start Date" => "trainee_start_date",
         "PG Apprenticeship" => "pg_apprenticeship",
         "Start Date" => "start_date",
-        "First Placement URN" => "first_placement",
         "Fund Code" => "fund_code",
         "Funding Method" => "funding_method",
         "Training Initiative" => "training_initiative",
         "Additional Training Initiative" => "additional_training_initiative",
+      }.freeze
+
+      PLACEMENT_HEADERS = {
+        "First Placement URN" => "urn",
+      }.freeze
+
+      DEGREE_HEADERS = {
         "UK Degree Type" => "uk_degree_type",
         "Non-UK Degree Type" => "non_uk_degree_type",
         "Degree Subject" => "degree_subject",
@@ -65,17 +71,37 @@ module BulkUpdate
       }.freeze
 
       def call
-        # TODO: Check the feature flag
+        return unless FeatureService.enabled?(:bulk_add_trainees)
 
-        # TODO: Read the uploaded file content from the DB
+        success = true
+        ActiveRecord::Base.transaction do |transaction|
+          results = CSV.parse(trainee_upload.file, headers: :first_line).map do |row|
+            BulkUpdate::AddTrainees::ImportRow.call(row)
+          end
 
-        # TODO: Parse the CSV
+          # Commit or rollback the transaction depending on whether all rows were error free
+          if all_succeeded?(results)
+            trainee_upload.succeeded!
+            true
+          else
+            # TODO: copy any errors into `trainee_upload`
+            success = false
+            raise ActiveRecord::Rollback
+          end
+        end
 
-        # TODO: Begin a transaction
+        trainee_upload.failed! unless success
+        return success
+      end
 
-        # TODO: Process each row
+      def trainee_upload
+        @trainee_upload ||= BulkUpdate::TraineeUpload.find(id)
+      end
 
-        # TODO: Commit or rollback the transaction depending on whether all rows were error free
+    private
+
+      def all_succeeded?(results)
+        results.all?
       end
     end
   end
