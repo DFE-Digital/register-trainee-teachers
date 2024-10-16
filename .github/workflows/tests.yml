@@ -44,7 +44,7 @@ jobs:
             include-pattern: spec/components/**/*_spec.rb
           - test-type: unit_other
             include-pattern: spec/**/*_spec.rb
-            exclude-pattern: spec/(features|smoke|models|services|forms|components)/**/*_spec.rb
+            exclude-pattern: spec/{features,smoke,models,services,forms,components}/**/*_spec.rb
           - test-type: integration_end_to_end
             include-pattern: spec/features/end_to_end/**/*_spec.rb
           - test-type: integration_form_sections
@@ -55,7 +55,7 @@ jobs:
             include-pattern: spec/features/trainee_actions/**/*_spec.rb
           - test-type: integration_other
             include-pattern: spec/features/**/*_spec.rb
-            exclude-pattern: spec/features/(end_to_end|form_sections|system_admin|trainee_actions)/**/*_spec.rb
+            exclude-pattern: spec/features/{end_to_end,form_sections,system_admin,trainee_actions}/**/*_spec.rb
 
     steps:
       - name: Checkout
