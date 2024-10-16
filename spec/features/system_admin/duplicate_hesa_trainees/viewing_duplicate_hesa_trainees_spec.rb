@@ -5,7 +5,12 @@ require "rails_helper"
 feature "Viewing duplicate HESA trainees" do
   let(:user) { create(:user, system_admin: true) }
 
-  scenario "shows the duplicate HESA trainees" do
+  scenario "menu item is hidden when feature flag is off", feature_duplicate_checking: false do
+    given_i_am_authenticated(user:)
+    then_i_should_not_see_the_duplicate_hesa_trainees_link
+  end
+
+  scenario "shows the duplicate HESA trainees", feature_duplicate_checking: true do
     given_i_am_authenticated(user:)
     and_there_are_duplicate_hesa_trainees
     when_i_visit_the_duplicate_hesa_trainees_index_page
@@ -34,6 +39,11 @@ feature "Viewing duplicate HESA trainees" do
   def when_i_visit_the_duplicate_hesa_trainees_index_page
     visit users_path
     click_on "Duplicate HESA trainees"
+  end
+
+  def then_i_should_not_see_the_duplicate_hesa_trainees_link
+    visit users_path
+    expect(page).not_to have_link("Duplicate HESA trainees")
   end
 
   def then_i_should_see_the_duplicate_hesa_trainees
