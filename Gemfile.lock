@@ -18,6 +18,14 @@ GIT
       activesupport
       tzinfo
 
+GIT
+  remote: https://github.com/d-a-v-e/azure-blob
+  revision: 1649f48b72fb98b6079d3ca2ae2a12da9d5904da
+  branch: master
+  specs:
+    azure-blob (0.5.2)
+      rexml
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -115,8 +123,6 @@ GEM
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
-    azure-blob (0.5.2)
-      rexml
     base32 (0.3.4)
     base64 (0.2.0)
     benchmark-malloc (0.2.0)
@@ -766,7 +772,7 @@ DEPENDENCIES
   audited (~> 5.7)
   auto_strip_attributes
   awesome_print
-  azure-blob
+  azure-blob!
   base32
   benchmark-memory
   blazer
