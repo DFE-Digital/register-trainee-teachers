@@ -21,4 +21,11 @@
 #
 class PotentialDuplicateTrainee < ApplicationRecord
   belongs_to :trainee
+
+  scope :grouped, lambda {
+    select(:group_id, "array_agg(trainee_id) as trainee_ids", "max(trainees.created_at) as max_created_at")
+    .joins(:trainee)
+    .group(:group_id)
+    .order(max_created_at: :desc)
+  }
 end

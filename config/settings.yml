@@ -89,7 +89,7 @@ features:
   funding_uploads: true
   register_api: true
   itt_reform: true
-  duplicate_checking: false
+  duplicate_checking: true
   bulk_add_trainees: true
 dfe_sign_in:
   # Our service name
