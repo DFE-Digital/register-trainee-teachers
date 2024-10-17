@@ -44,7 +44,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true
-  validates :email, uniqueness: { case_sensitive: false }, if: :active_user?
+  validates :email, uniqueness: true, if: :active_user?
 
   validate do |record|
     EmailFormatValidator.new(record).validate
@@ -81,6 +81,6 @@ class User < ApplicationRecord
 private
 
   def sanitise_email
-    self.email = email.gsub(/\s+/, "") unless email.nil?
+    self.email = email.gsub(/\s+/, "").downcase unless email.nil?
   end
 end
