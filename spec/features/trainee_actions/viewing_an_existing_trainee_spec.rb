@@ -186,6 +186,6 @@ private
   end
 
   def and_i_can_see_the_trainee_show_page
-    expect(page).to have_content("Trainee progress")
+    expect(page).to have_content("Training overview")
   end
 end

@@ -22,17 +22,15 @@
       <div id="lead-partners-autocomplete-element" class="govuk-!-width-three-quarters"
            data-default-value="<%= query %>" data-field-name="partners_lead_partner_form[query]"></div>
 
-      <%= render GovukComponent::DetailsComponent.new(summary_text: t(".not_applicable_details.summary_text"),
-                                                      open: false ) do %>
-        <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
-        <%= f.govuk_check_box(:lead_partner_not_applicable, "1", "0", multiple: false,
-                              label: { text: t(".not_applicable_details.label_text") }) %>
-      <% end  %>
-
       <%= f.hidden_field :lead_partner_id, id: "lead-partners-id" %>
+
+      <%= t(".not_applicable_details.body", contact_link: support_email).html_safe %>
+
       <%= f.govuk_submit t("continue") %>
     <% end %>
+
   </div>
+
 </div>
 
 <% unless @trainee.draft? %>
