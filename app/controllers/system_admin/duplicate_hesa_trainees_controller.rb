@@ -7,7 +7,7 @@ module SystemAdmin
     helper_method :duplicate_trainees_count
 
     def index
-      @potential_duplicate_trainees = PotentialDuplicateTrainee.grouped .page(params[:page] || 1)
+      @potential_duplicate_trainees = PotentialDuplicateTrainee.grouped.page(params[:page] || 1)
       @trainee_lookup = Trainee.where(
         id: @potential_duplicate_trainees.map(&:trainee_ids).flatten,
       ).includes(:start_academic_cycle, :end_academic_cycle, provider: [:courses]).index_by(&:id)
