@@ -45,6 +45,7 @@ features:
     sync_teachers: true
   register_api: false
   bulk_add_trainees: false
+  duplicate_checking: false
 environment:
   name: beta
 
