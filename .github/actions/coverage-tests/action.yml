@@ -54,7 +54,7 @@ runs:
     - name: Flaky flush
       shell: bash
       run: |
-        docker compose exec -T web /bin/sh -c 'for i in {1..100} do  bundle exec --verbose rspec --pattern "spec/**/*_spec.rb" --exclude-pattern "spec/smoke/*_spec.rb" end'
+        docker compose exec -T web /bin/sh -c 'for i in {1..100} do  bundle exec --verbose rspec  ./spec/features/end_to_end/provider_led_undergrad_journey_spec.rb:10 end'
       env:
         USE_NEXT_ACADEMIC_YEAR: ${{ inputs.use-next-academic-year }}
 
