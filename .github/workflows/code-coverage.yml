@@ -46,7 +46,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
+      - name: Coverage Tests
         uses: ./.github/actions/coverage-tests/
         with:
           docker-image: ${{needs.build.outputs.docker-image}}
