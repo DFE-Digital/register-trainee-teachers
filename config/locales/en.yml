@@ -106,7 +106,7 @@ en:
       email_line_two: if you think there should be trainees who are eligible.
   schools:
     view:
-      summary_title: Schools
+      summary_title: Training partners
       lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
@@ -745,8 +745,8 @@ en:
         grade: *degree_path
         graduation_year: *degree_path
         country: *degree_path
-        lead_partner_id: &lead_partner_path edit_trainee_lead_partners_path
-        employing_school_id: edit_trainee_employing_schools_path
+        lead_partner_id: &lead_partner_path edit_trainee_lead_partners_details_path
+        employing_school_id: edit_trainee_employing_schools_details_path
         school_id: *lead_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
         trainee_start_date_radio_option: *trainee_start_date_path
@@ -1170,18 +1170,28 @@ en:
         confirm_course: Confirm course
         edit_details: Edit details for this trainee only
     lead_partners:
+      details:
+        edit:
+          heading: Is there a lead partner?
+          not_applicable_details:
+            hint: You do not need to provide a lead partner if the trainee is funded or employed privately.
       edit:
         heading: Lead partner
-        hint: Search for a lead partner by name, school postcode, school URN or training provider UKPRN
-        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        hint: Search for a school by its unique reference number (URN), name or postcode
+        description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee's record.</p>
         not_applicable_details:
           summary_text: Lead partner is not listed, or the trainee is funded or employed privately
           label_text: Lead partner is not applicable
           body:
             <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the lead partner, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
+      details:
+        edit:
+          heading: Is there an employing school?
+          not_applicable_details:
+            hint: You do not need to provide an employing school if the trainee is funded or employed privately.
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
@@ -1191,7 +1201,7 @@ en:
           body:
             <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide an employing school if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?

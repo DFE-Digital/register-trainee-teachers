@@ -2,6 +2,8 @@
 
 module Schools
   class EmployingSchoolForm < Form
+    EMPLOYING_SCHOOL_NOT_APPLICABLE_OPTION = Struct.new(:id, :name)
+
     FIELDS = %i[
       employing_school_id
       employing_school_not_applicable
@@ -13,6 +15,12 @@ module Schools
 
     alias_method :school_id, :employing_school_id
     alias_method :school_not_applicable, :employing_school_not_applicable
+
+    def employing_school_not_applicable_options
+      [true, false].map do |value|
+        EMPLOYING_SCHOOL_NOT_APPLICABLE_OPTION.new(id: value, name: value ? "No" : "Yes")
+      end
+    end
 
   private
 
