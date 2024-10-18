@@ -2,3 +2,5 @@
 shared:
   trainees:
     - trn
+  :users:
+    - dfe_sign_in_uid

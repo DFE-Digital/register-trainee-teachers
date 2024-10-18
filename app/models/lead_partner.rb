@@ -63,4 +63,15 @@ class LeadPartner < ApplicationRecord
   def name_and_code
     name
   end
+
+  def self.find_by_ukprn_or_urn(str)
+    return if str.blank?
+
+    case str.length
+    when 8
+      find_by(ukprn: str)
+    when 6
+      find_by(urn: str)
+    end
+  end
 end

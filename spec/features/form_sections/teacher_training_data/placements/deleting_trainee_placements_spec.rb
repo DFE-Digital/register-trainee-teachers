@@ -65,7 +65,7 @@ private
 
   def and_a_trainee_exists_with_a_placement
     and_a_trainee_exists
-    @placement = create(:placement, trainee: @trainee)
+    @placement = create(:placement, :with_school, trainee: @trainee)
     @school ||= @placement.school
     FormStore.clear_all(@trainee.id)
   end

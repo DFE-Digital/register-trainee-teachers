@@ -519,7 +519,7 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
-        search_hint: Search for a lead partner by its unique reference number (URN), name or UKPRN
+        search_hint: Search for a lead partner by name, school postcode, school URN or training provider UKPRN
         search_button: Search again
       service_updates: News and updates
       organisations: Choose organisation
@@ -1170,7 +1170,7 @@ en:
     lead_partners:
       edit:
         heading: Lead partner
-        hint: Search for a lead partner by its unique reference number (URN), name or postcode
+        hint: Search for a lead partner by name, school postcode, school URN or training provider UKPRN
         description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
         not_applicable_details:
           summary_text: Lead partner is not listed, or the trainee is funded or employed privately
@@ -1533,6 +1533,16 @@ en:
               no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID
               no_date_header: The selected file must contain a column for date QTS or EYTS standards met
               no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
+              no_trainees: The selected file must contain at least one trainee
+        bulk_update/bulk_add_trainees_form:
+          attributes:
+            file:
+              missing: Select a CSV file
+              empty: The selected file is empty
+              too_large: The selected file must be smaller than 1MB
+              encoding_not_accepted: "The selected file must be UTF-8 or ISO-8859-1 encoded (detected: %{encoding})"
+              is_not_csv: The selected file must be a CSV
+              no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
         bulk_update/placements_form:
           attributes:

@@ -5,7 +5,7 @@ require "rails_helper"
 module Trainees
   describe GetPlacementNameFromAudit do
     let(:trainee) { create(:trainee) }
-    let(:placement) { create(:placement, trainee:) }
+    let(:placement) { create(:placement, :with_school, trainee:) }
 
     context "when the placement is associated with a school record" do
       it "returns the correct names for a create audit" do
@@ -32,7 +32,7 @@ module Trainees
     end
 
     context "when the placement is NOT associated with a school record" do
-      let(:placement) { create(:placement, :manual, trainee:) }
+      let(:placement) { create(:placement, trainee:) }
 
       it "returns the correct names for a create audit" do
         placement

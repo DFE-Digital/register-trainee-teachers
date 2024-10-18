@@ -58,6 +58,8 @@ class Provider < ApplicationRecord
   has_many :funding_payment_schedules, class_name: "Funding::PaymentSchedule", as: :payable
   has_many :funding_trainee_summaries, class_name: "Funding::TraineeSummary", as: :payable
 
+  has_many :bulk_update_trainee_uploads, class_name: "BulkUpdate::TraineeUpload"
+
   audited
 
   has_associated_audits
@@ -76,6 +78,7 @@ class Provider < ApplicationRecord
                   }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
+  AMBITION_PROVIDER_CODE = "2A2"
   START_MANDATING_PLACEMENT_DATA_CYCLE = 2022
 
   def code=(cde)

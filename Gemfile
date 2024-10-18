@@ -65,7 +65,7 @@ gem "config", "~> 5.5"
 gem "httparty", "~> 0.22"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 4.0"
+gem "store_model", "~> 4.1"
 
 gem "pundit"
 
@@ -103,7 +103,7 @@ gem "yabeda-prometheus"
 gem "yabeda-rails"
 
 # Run data migrations alongside schema migrations
-gem "data_migrate", "11.0.0"
+gem "data_migrate", "11.1.0"
 
 # Gov Notify
 gem "govuk_notify_rails"
@@ -118,7 +118,7 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.5.1"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.6.3"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
@@ -210,6 +210,7 @@ group :test do
   gem "shoulda-matchers", "~> 6.4"
   # Code coverage reporter
   gem "simplecov", "~> 0.22.0", require: false
+  gem "simplecov-json"
 
   # Page objects
   gem "site_prism", "~> 5.0"

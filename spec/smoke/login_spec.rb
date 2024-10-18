@@ -25,15 +25,8 @@ describe "User login spec" do
 
   scenario "signing in successfully", js: true do
     visit_sign_in_page
-    if Settings.environment.name == "staging"
-      login_with_username
-      login_with_password
-    else
-      # NOTE: This can bew removed once DSI has swiched over their login flow
-      fill_in "username", with: ENV.fetch("SMOKE_TEST_USERNAME", nil)
-      fill_in "password", with: ENV.fetch("SMOKE_TEST_PASSWORD", nil)
-      find_button("Sign in").click
-    end
+    login_with_username
+    login_with_password
     verify_successful_login
     sign_out
   end
@@ -47,7 +40,7 @@ private
 
   def login_with_username
     fill_in "username", with: ENV.fetch("SMOKE_TEST_USERNAME", nil)
-    find_button("Continue").click
+    first(:css, "button[type='submit']").click
   end
 
   def login_with_password

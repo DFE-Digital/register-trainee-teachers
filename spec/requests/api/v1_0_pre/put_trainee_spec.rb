@@ -208,6 +208,28 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
+    context "when updating with valid course_age_range" do
+      let(:data) { { course_age_range: } }
+
+      let(:course_age_range) { "13909" }
+
+      before do
+        put(
+          endpoint,
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
+        )
+      end
+
+      it "returns status 200" do
+        course_min_age, course_max_age = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range]
+
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:course_min_age]).to eq(course_min_age)
+        expect(response.parsed_body[:data][:course_max_age]).to eq(course_max_age)
+      end
+    end
+
     context "when course_age_range is empty" do
       let(:data) { { course_age_range: "" } }
 
@@ -562,7 +584,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
-    context "when read only attributes are submitted" do
+    context "when read only attributes are submitted", openapi: false do
       let(:ethnic_background) { CodeSets::Ethnicities::MAPPING.keys.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
       let(:trainee) do
@@ -811,8 +833,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024, next_cycle: true) }
 
         before do
-          Timecop.travel(itt_start_date)
-
           put(
             endpoint,
             headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -936,13 +956,14 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         end
 
         context "when '100511' is not present" do
+          let(:course_age_range) { "13914" }
           let(:params) do
             {
               data: {
                 course_subject_one: "100346",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
+                course_age_range: course_age_range,
               },
             }
           end
@@ -950,6 +971,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           it "sets the correct subjects" do
             trainee.reload
 
+            expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range])
             expect(trainee.course_subject_one).to eq("primary teaching")
             expect(trainee.course_subject_two).to eq("biology")
             expect(trainee.course_subject_three).to eq("historical linguistics")
@@ -967,7 +989,6 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
                 course_subject_one: "100511",
                 course_subject_two: "101410",
                 course_subject_three: "100366",
-                course_max_age: 11,
               },
             }
           end

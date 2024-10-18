@@ -229,7 +229,7 @@ module Trainees
         end
 
         context "for an update action" do
-          let(:placement) { create(:placement, :manual, trainee:) }
+          let(:placement) { create(:placement, trainee:) }
           let(:associated_audit) do
             trainee.own_and_associated_audits.where(auditable_type: "Placement", action: :update).last
           end

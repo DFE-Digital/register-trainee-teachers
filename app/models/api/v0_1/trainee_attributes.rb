@@ -7,6 +7,8 @@ module Api
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
 
+      include PrimaryCourseSubjects
+
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
 
@@ -17,8 +19,6 @@ module Api
         date_of_birth: { type: :date },
         email: {},
         course_education_phase: {},
-        course_min_age: {},
-        course_max_age: {},
         trainee_start_date: {},
         sex: {},
         training_route: {},
@@ -52,6 +52,8 @@ module Api
         employing_school_not_applicable: { type: :boolean, options: { default: false } },
         ethnic_group: { type: :string, options: { default: Diversities::ETHNIC_GROUP_ENUMS[:not_provided] } },
         ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
+        course_min_age: {},
+        course_max_age: {},
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
@@ -138,7 +140,8 @@ module Api
             :nationalisations_attributes,
             :hesa_trainee_detail_attributes,
             :trainee_disabilities_attributes,
-          ))
+          )
+        )
 
         self.nationalisations_attributes = []
         new_attributes[:nationalisations_attributes]&.each do |nationalisation_params|
@@ -152,6 +155,8 @@ module Api
         new_attributes[:disabilities]&.each do |disability|
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
+
+        self.attributes = primary_course_subjects if primary_education_phase?
       end
 
       def update_hesa_trainee_detail_attributes(new_attributes)
@@ -202,6 +207,7 @@ module Api
         params_with_updated_disabilities = params_with_updated_disabilities(new_trainee_attributes, params_for_update)
 
         new_trainee_attributes.assign_attributes(params_with_updated_disabilities)
+
         new_trainee_attributes
       end
 

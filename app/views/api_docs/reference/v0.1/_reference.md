@@ -20,8 +20,8 @@ This API allows you to access information about trainees and provides endpoints 
     - [POST /trainees/{trainee_id}/placements](#code-post-trainees-trainee_id-placements-code)
     - [POST /trainees/{trainee_id}/degrees](#code-post-trainees-trainee_id-degrees-code)
     - [POST /trainees/{trainee_id}/withdraw](#code-post-trainees-trainee_id-withdraw-code)
-    - [POST /trainees/{trainee_id}/recommend-for-qts](#code-post-trainees-trainee_id-recommend-for-qts)
-    - [POST /trainees/{trainee_id}/defer](#code-post-trainees-trainee_id-defer)
+    - [POST /trainees/{trainee_id}/recommend-for-qts](#code-post-trainees-trainee_id-recommend-for-qts-code)
+    - [POST /trainees/{trainee_id}/defer](#code-post-trainees-trainee_id-defer-code)
     - [PUT|PATCH /trainees/{trainee_id}](#code-put-patch-trainees-trainee_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}](#code-put-patch-trainees-trainee_id-placements-placement_id-code)
     - [PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}](#code-put-patch-trainees-trainee_id-degrees-degree_id-code)
@@ -402,9 +402,9 @@ Get a single trainee.
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -488,9 +488,9 @@ Get many placements for a trainee.
       "data": [
         {
           "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-          "school_id": 26214,
           "urn": "123456",
           "name": "Meadow Creek School",
+          "address": "URN 123456, AB1 2CD",
           "postcode": "AB1 2CD",
           "created_at": "2024-01-18T08:02:42.672Z",
           "updated_at": "2024-01-18T08:02:42.672Z"
@@ -554,9 +554,9 @@ Get a single placement for a trainee.
     {
       "data": {
         "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-        "school_id": 26214,
         "urn": "123456",
         "name": "Meadow Creek School",
+        "address": "URN 123456, AB1 2CD",
         "postcode": "AB1 2CD",
         "created_at": "2024-01-18T08:02:42.672Z",
         "updated_at": "2024-01-18T08:02:42.672Z"
@@ -816,7 +816,7 @@ Trainee details
 #### Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 201<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -904,9 +904,9 @@ Trainee details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -943,6 +943,138 @@ Trainee details
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": "This trainee is already in Register",
+      "data": [
+        {
+          "first_names": "John",
+          "last_name": "Doe",
+          "date_of_birth": "1990-01-01",
+          "created_at": "2024-09-11T15:12:45.067Z",
+          "updated_at": "2024-09-11T15:12:45.067Z",
+          "email": "john.doe@example.com",
+          "middle_names": null,
+          "training_route": "11",
+          "sex": "99",
+          "diversity_disclosure": "diversity_disclosed",
+          "ethnic_group": "mixed_ethnic_group",
+          "ethnic_background": "Black Caribbean and White",
+          "additional_ethnic_background": null,
+          "disability_disclosure": "disabled",
+          "course_subject_one": "100511",
+          "itt_start_date": "2023-01-01",
+          "outcome_date": null,
+          "itt_end_date": "2023-10-01",
+          "trn": null,
+          "submitted_for_trn_at": "2024-09-11T15:12:45.345Z",
+          "withdraw_date": null,
+          "withdraw_reasons_details": null,
+          "defer_date": null,
+          "recommended_for_award_at": null,
+          "trainee_start_date": "2023-01-01",
+          "reinstate_date": null,
+          "course_min_age": 5,
+          "course_max_age": 11,
+          "course_subject_two": "100346",
+          "course_subject_three": "101410",
+          "awarded_at": null,
+          "training_initiative": null,
+          "study_mode": "63",
+          "ebacc": false,
+          "region": null,
+          "course_education_phase": "primary",
+          "course_uuid": null,
+          "lead_partner_not_applicable": true,
+          "employing_school_not_applicable": true,
+          "submission_ready": true,
+          "commencement_status": null,
+          "discarded_at": null,
+          "created_from_dttp": false,
+          "hesa_id": "0310261553101",
+          "additional_dttp_data": null,
+          "created_from_hesa": false,
+          "hesa_updated_at": null,
+          "record_source": "api",
+          "iqts_country": null,
+          "hesa_editable": false,
+          "withdraw_reasons_dfe_details": null,
+          "slug_sent_to_dqt_at": null,
+          "placement_detail": null,
+          "provider_trainee_id": "99157234/2/01",
+          "ukprn": "81239124",
+          "ethnicity": "142",
+          "disability1": "58",
+          "disability2": "57",
+          "course_qualification": "QTS",
+          "course_title": null,
+          "course_level": "undergrad",
+          "course_itt_start_date": "2023-01-01",
+          "course_age_range": "13914",
+          "expected_end_date": "2023-10-01",
+          "employing_school_urn": null,
+          "lead_partner_ukprn": null,
+          "lead_partner_urn": null,
+          "fund_code": "7",
+          "bursary_level": "4",
+          "previous_last_name": "Smith",
+          "itt_aim": "202",
+          "course_study_mode": "63",
+          "course_year": "1",
+          "pg_apprenticeship_start_date": "2024-03-11",
+          "funding_method": "4",
+          "ni_number": null,
+          "additional_training_initiative": null,
+          "itt_qualification_aim": "001",
+          "hesa_disabilities": {
+            "disability1": "58",
+            "disability2": "57"
+          },
+          "nationality": "GB",
+          "withdraw_reasons": [],
+          "placements": [
+            {
+              "urn": "900020",
+              "name": "London School",
+              "address": "URN 900020",
+              "postcode": null,
+              "created_at": "2024-09-11T15:12:45.090Z",
+              "updated_at": "2024-09-11T15:12:45.090Z",
+              "placement_id": "D8VsiEck1ueqigL1Pu9ESAaR"
+            }
+          ],
+          "degrees": [
+            {
+              "uk_degree": "083",
+              "non_uk_degree": null,
+              "created_at": "2024-09-11T15:12:45.069Z",
+              "updated_at": "2024-09-11T15:12:45.069Z",
+              "subject": "100485",
+              "institution": "0117",
+              "graduation_year": 2003,
+              "grade": "02",
+              "country": null,
+              "other_grade": null,
+              "institution_uuid": "1271f34a-2887-e711-80d8-005056ac45bb",
+              "uk_degree_uuid": "1b6a5652-c197-e711-80d8-005056ac45bb",
+              "subject_uuid": "e78170f0-5dce-e911-a985-000d3ab79618",
+              "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f",
+              "degree_id": "cPTm9iXPbLzER8UqReEFGvNn"
+            }
+          ],
+          "state": "submitted_for_trn",
+          "trainee_id": "EMHhWRF33g53PReREX6rdPwd",
+          "application_id": null
+        }
+      ]
     }
     </pre>
   </div>
@@ -1018,9 +1150,9 @@ Placement details
     {
       "data": {
         "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-        "school_id": 26214,
         "urn": "123456",
         "name": "Meadow Creek School",
+        "address": "URN 123456, AB1 2CD",
         "postcode": "AB1 2CD",
         "created_at": "2024-01-18T08:02:42.672Z",
         "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1344,9 +1476,9 @@ Note that multiple values for the reasons parameter can be provided by repeating
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1559,9 +1691,9 @@ Recommendation details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1774,9 +1906,9 @@ Deferral details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -1958,9 +2090,9 @@ Deletes an existing degree for this trainee.
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -2139,9 +2271,9 @@ Trainee details
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -2273,9 +2405,9 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "trainee_id": 644065,
-        "address": null,
+        "urn": null,
         "name": "Wellsway School",
+        "address": null,
         "postcode": null,
         "created_at": "2024-03-19T22:23:48.619Z",
         "updated_at": "2024-03-19T22:23:48.619Z"
@@ -2577,9 +2709,9 @@ Deletes an existing placement for this trainee.
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-            "school_id": 26214,
             "urn": "123456",
             "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
             "postcode": "AB1 2CD",
             "created_at": "2024-01-18T08:02:42.672Z",
             "updated_at": "2024-01-18T08:02:42.672Z"
@@ -2741,7 +2873,7 @@ Deletes an existing degree for this trainee.
         string (limited to 20 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Provider's student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ownstu">HESA provider's own identifier for student field</a>
+        The unique ID of the trainee in the Provider's student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider's own identifier for student field</a>
       </p>
       <p class="govuk-body">
         Example: <code>99157234</code>
@@ -2825,7 +2957,7 @@ Deletes an existing degree for this trainee.
         string, required
       </p>
       <p class="govuk-body">
-        The date of birth of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/birthdte">HESA date of birth field</a>
+        The date of birth of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/birthdte">HESA date of birth field</a>
       </p>
       <p class="govuk-body">
         Example: <code>2000-01-01</code>
@@ -2839,7 +2971,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The sex of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/sexid">HESA sex identifier field</a>
+        The sex of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sexid">HESA sex identifier field</a>
       </p>
       <p class="govuk-body">
         Example: <code>10</code>
@@ -2853,7 +2985,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nation">HESA nationality field</a>
+        The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/nation">HESA nationality field</a>
       </p>
       <p class="govuk-body">
         Example: <code>GB</code>
@@ -2867,7 +2999,7 @@ Deletes an existing degree for this trainee.
         string (limited to 80 characters), required
       </p>
       <p class="govuk-body">
-        The email address of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/nqtemail">HESA email addresses field</a>
+        The email address of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/nqtemail">HESA email addresses field</a>
       </p>
       <p class="govuk-body">
         Example: <code>trainee123@example.com</code>
@@ -2881,7 +3013,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
+        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
       </p>
       <p class="govuk-body">
         Example: <code>120</code>
@@ -2895,7 +3027,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters)
       </p>
       <p class="govuk-body">
-        The type of disabilities that the trainee has. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/disable">HESA disability field</a>
+        The type of disabilities that the trainee has. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/disable">HESA disability field</a>
       </p>
       <p class="govuk-body">
         Example: <code>58</code>
@@ -2909,7 +3041,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittaim">HESA ITT qualification aim field</a>
+        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ittaim">HESA ITT qualification aim field</a>
       </p>
       <p class="govuk-body">
         Example: <code>201</code>
@@ -2923,7 +3055,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The training route that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/entryrte">HESA entry route field</a>
+        The training route that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/entryrte">HESA entry route field</a>
       </p>
       <p class="govuk-body">
         Example: <code>11</code>
@@ -2937,7 +3069,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The qualification aim of the trainee's course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/qlaim">HESA qualification aim field</a>
+        The qualification aim of the trainee's course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/qlaim">HESA qualification aim field</a>
       </p>
       <p class="govuk-body">
         Example: <code>004</code>
@@ -2951,7 +3083,7 @@ Deletes an existing degree for this trainee.
         string (limited to 6 characters), <code>course_subject_one</code> is required
       </p>
       <p class="govuk-body">
-        The subjects included in the trainee's course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/sbjca">HESA subject of ITT course field</a>
+        The subjects included in the trainee's course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -2965,7 +3097,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        This indicates whether the trainee's course is full time or part time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/mode">HESA mode of study field</a>
+        This indicates whether the trainee's course is full time or part time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/mode">HESA mode of study field</a>
       </p>
       <p class="govuk-body">
         Example: <code>01</code>
@@ -3007,7 +3139,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The year number of the course that the trainee is currently studying. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/yearprg">HESA year of course field</a>
+        The year number of the course that the trainee is currently studying. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/yearprg">HESA year of course field</a>
       </p>
       <p class="govuk-body">
         Example: <code>2</code>
@@ -3021,7 +3153,7 @@ Deletes an existing degree for this trainee.
         string (limited to 5 characters), required
       </p>
       <p class="govuk-body">
-        The age range of the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/ittphsc">HESA ITT phase/scope field</a>
+        The age range of the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ittphsc">HESA ITT phase/scope field</a>
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
@@ -3091,7 +3223,7 @@ Deletes an existing degree for this trainee.
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/fundcode">HESA fundability code field</a>
+        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/fundcode">HESA fundability code field</a>
       </p>
       <p class="govuk-body">
         Example: <code>7</code>
@@ -3105,7 +3237,7 @@ Deletes an existing degree for this trainee.
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/burslev">HESA bursary level award field</a>
+        The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/burslev">HESA bursary level award field</a>
       </p>
       <p class="govuk-body">
         Example: <code>4</code>
@@ -3119,7 +3251,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
+        The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/initiatives">HESA initiatives field</a>
       </p>
       <p class="govuk-body">
         Example: <code>009</code>
@@ -3133,7 +3265,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/initiatives">HESA initiatives field</a>
+        The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/initiatives">HESA initiatives field</a>
       </p>
       <p class="govuk-body">
         Example: <code>025</code>
@@ -3147,7 +3279,7 @@ Deletes an existing degree for this trainee.
         string (limited to 17 characters), required
       </p>
       <p class="govuk-body">
-        The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/husid">HESA unique student identifier field</a>
+        The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/husid">HESA unique student identifier field</a>
       </p>
       <p class="govuk-body">
         Example: <code>1210007145123456</code>
@@ -3195,7 +3327,7 @@ Deletes an existing degree for this trainee.
         string (limited to 6 characters)
       </p>
       <p class="govuk-body">
-        The URN of the school. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/plmntsch">HESA placement school field</a>
+        The URN of the school. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/plmntsch">HESA placement school field</a>
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
@@ -3256,7 +3388,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
-        The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degctry">HESA degree country field</a>
+        The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/degctry">HESA degree country field</a>
       </p>
       <p class="govuk-body">
         Example: <code>US</code>
@@ -3270,7 +3402,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degclss">HESA degree class field</a>
+        The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degclss">HESA degree class field</a>
       </p>
       <p class="govuk-body">
         Example: <code>02</code>
@@ -3284,7 +3416,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degtype">HESA degree type field</a>
+        The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degtype">HESA degree type field</a>
       </p>
       <p class="govuk-body">
         Example: <code>083</code>
@@ -3312,7 +3444,7 @@ Deletes an existing degree for this trainee.
         string (limited to 6 characters), required
       </p>
       <p class="govuk-body">
-        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c23053/e/degsbj">HESA degree subject field</a>
+        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degsbj">HESA degree subject field</a>
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -3326,7 +3458,7 @@ Deletes an existing degree for this trainee.
         string (limited to 4 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degest">HESA degree establishment field</a>
+        The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/degest">HESA degree establishment field</a>
       </p>
       <p class="govuk-body">
         Example: <code>0116</code>
@@ -3340,7 +3472,7 @@ Deletes an existing degree for this trainee.
         string, required
       </p>
       <p class="govuk-body">
-        The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c23053/e/degenddt">HESA degree end date field</a>
+        The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/degenddt">HESA degree end date field</a>
       </p>
       <p class="govuk-body">
         Example: <code>2012-07-31</code>

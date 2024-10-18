@@ -2,29 +2,30 @@
 
 require "rspec-benchmark"
 require "rspec/openapi"
+require "simplecov"
+require "simplecov-json"
+
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter,
+])
 
 if ENV.fetch("COVERAGE", false)
-  require "simplecov"
-
   SimpleCov.coverage_dir("coverage/backend")
-  SimpleCov.minimum_coverage(90)
   SimpleCov.start("rails") do
+    add_filter "/spec/"
     add_filter %r{/code_sets/}
-  end
-
-  # If running specs in parallel this ensures SimpleCov results appears
-  # upon completion of all specs
-  if ENV["TEST_ENV_NUMBER"]
-    SimpleCov.at_exit do
-      result = SimpleCov.result
-      result.format! if ParallelTests.number_of_running_processes <= 1
-    end
+    enable_coverage :branch
   end
 end
 
 RSpec::Matchers.define_negated_matcher :not_change, :change
 
 RSpec.configure do |config|
+  config.before do
+    RedisClient.current.flushdb
+  end
+
   config.include RSpec::Benchmark::Matchers
 
   config.filter_run_excluding smoke: true
@@ -68,6 +69,6 @@ RSpec.configure do |config|
   end
 
   config.after do
-    Timecop.return if use_next_academic_year
+    Timecop.return
   end
 end

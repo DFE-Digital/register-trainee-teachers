@@ -42,14 +42,13 @@ module Api
       def model = :placement
 
       def placement_attributes
-        @placement_attributes ||=
-          if new_record?
-            attributes_klass.new(params)
-          else
-            attributes = attributes_klass.from_placement(placement)
-            attributes.assign_attributes(params)
-            attributes
-          end
+        @placement_attributes ||= if new_record?
+                                    attributes_klass.new(params.to_h)
+                                  else
+                                    new_attributes = attributes_klass.from_placement(placement)
+                                    new_attributes.assign_attributes(params.to_h)
+                                    new_attributes
+                                  end
       end
 
       def errors = placement_attributes.errors.presence || placement.errors

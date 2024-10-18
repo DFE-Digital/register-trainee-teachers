@@ -8,29 +8,26 @@ module Api
         slug
         trainee_id
         school_id
-        address
       ].freeze
+
+      attr_reader :placement
 
       def initialize(placement)
         @placement = placement
       end
 
       def as_hash
-        @placement.attributes.except(*EXCLUDED_ATTRIBUTES).merge(
-          placement_id: @placement.slug,
-          **school_attributes,
-        )
+        placement
+          .as_json(except: EXCLUDED_ATTRIBUTES)
+          .merge(school_attributes)
       end
 
     private
 
       def school_attributes
-        return {} if @placement.school.blank?
-
         {
-          urn: @placement.school.urn,
-          name: @placement.school.name,
-          postcode: @placement.school.postcode,
+          "placement_id" => placement.slug,
+          "address" => placement.full_address,
         }
       end
     end

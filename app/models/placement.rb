@@ -47,6 +47,14 @@ class Placement < ApplicationRecord
     school&.name || super
   end
 
+  def urn
+    school&.urn || super
+  end
+
+  def postcode
+    school&.postcode || super
+  end
+
   def full_address
     return if Trainees::CreateFromHesa::NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
 
@@ -58,7 +66,7 @@ class Placement < ApplicationRecord
                      ["URN #{school.urn}", school.town, school.postcode]
                    end
 
-    full_address.join(", ")
+    full_address.join(", ").presence
   end
 
   def created_by_hesa?
