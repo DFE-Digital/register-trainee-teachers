@@ -92,7 +92,7 @@ PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
 }.freeze
 
 LEAD_PARTNER_ROUTES = %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship provider_led_postgrad provider_led_undergrad].freeze
-EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship provider_led_postgrad provider_led_undergrad].freeze
+EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship].freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)
