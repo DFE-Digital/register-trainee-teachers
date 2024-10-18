@@ -47,7 +47,7 @@ module Features
     end
 
     def subject_specialism_name
-      @subject_specialism_name ||= CodeSets::CourseSubjects::MAPPING.keys.sample.capitalize
+      @subject_specialism_name ||= ::CourseSubjects::EARLY_YEARS_TEACHING.capitalize
     end
 
     def and_the_course_details_is_marked_completed
