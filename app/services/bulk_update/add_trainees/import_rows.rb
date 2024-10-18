@@ -71,28 +71,37 @@ module BulkUpdate
       }.freeze
 
       def call
-        return unless FeatureService.enabled?(:bulk_update_add_trainees)
+        return unless FeatureService.enabled?(:bulk_add_trainees)
 
-        # TODO: Read the uploaded file content from the DB
+        success = true
+        ActiveRecord::Base.transaction do |transaction|
+          results = CSV.parse(trainee_upload.file, headers: :first_line).map do |row|
+            BulkUpdate::AddTrainees::ImportRow.call(row)
+          end
 
-        # TODO: Begin a transaction
-
-        # TODO: Parse the CSV
-        require 'pry'; binding.pry
-        CSV.parse(trainee_upload.file, headers: :first_line) do |row|
-          require 'pry'; binding.pry
-          BulkUpdate::AddTrainees::ImportRow.call(row)
+          # Commit or rollback the transaction depending on whether all rows were error free
+          if all_succeeded?(results)
+            trainee_upload.succeeded!
+            true
+          else
+            # TODO: copy any errors into `trainee_upload`
+            success = false
+            raise ActiveRecord::Rollback
+          end
         end
 
-        # TODO: Process each row
+        trainee_upload.failed! unless success
+        return success
+      end
 
-        # TODO: Commit or rollback the transaction depending on whether all rows were error free
+      def trainee_upload
+        @trainee_upload ||= BulkUpdate::TraineeUpload.find(id)
       end
 
     private
 
-      def trainee_upload
-        @trainee_upload ||= BulkUpdate::TraineeUpload.find(id)
+      def all_succeeded?(results)
+        results.all?
       end
     end
   end
