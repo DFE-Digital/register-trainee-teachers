@@ -55,12 +55,12 @@ describe ContactDetailsForm, type: :model do
 
     before do
       allow(form_store).to receive(:get).and_return({
-        "email" => "test @example.com",
+        "email" => "Test @example.com",
       })
       allow(form_store).to receive(:set).with(trainee.id, :contact_details, nil)
     end
 
-    it "strips all whitespace from emails" do
+    it "strips all whitespace from emails and downcases them" do
       expect { subject.save! }.to change(trainee, :email).to("test@example.com")
     end
   end
