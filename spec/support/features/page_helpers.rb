@@ -306,6 +306,14 @@ module Features
       @start_page ||= PageObjects::Start.new
     end
 
+    def edit_trainee_employing_school_details_page
+      @edit_trainee_employing_school_details_page ||= PageObjects::Trainees::EmployingSchools::Details::Edit.new
+    end
+
+    def edit_trainee_lead_partner_details_page
+      @edit_trainee_lead_partner_details_page ||= PageObjects::Trainees::LeadPartners::Details::Edit.new
+    end
+
     def lead_partners_search_page
       @lead_partners_search_page ||= PageObjects::Trainees::LeadPartnersSearch.new
     end
