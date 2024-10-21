@@ -76,7 +76,7 @@ module BulkUpdate
         success = true
         ActiveRecord::Base.transaction do |transaction|
           results = CSV.parse(trainee_upload.file, headers: :first_line).map do |row|
-            BulkUpdate::AddTrainees::ImportRow.call(row)
+            BulkUpdate::AddTrainees::ImportRow.call(row:)
           end
 
           # Commit or rollback the transaction depending on whether all rows were error free
