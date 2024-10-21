@@ -515,10 +515,10 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    rails_semantic_logger (4.17.0)
+    rails_semantic_logger (4.16.0)
       rack
       railties (>= 5.1)
-      semantic_logger (~> 4.16)
+      semantic_logger (~> 4.13)
     railties (7.2.0)
       actionpack (= 7.2.0)
       activesupport (= 7.2.0)
@@ -630,7 +630,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    semantic_logger (4.16.0)
+    semantic_logger (4.16.1)
       concurrent-ruby (~> 1.0)
     sentry-rails (5.21.0)
       railties (>= 5.0)
@@ -825,7 +825,7 @@ DEPENDENCIES
   rails (~> 7.2)
   rails-controller-testing
   rails-erd
-  rails_semantic_logger (= 4.17.0)
+  rails_semantic_logger (= 4.16.0)
   request_store (~> 1.7)
   rotp
   rspec-benchmark
