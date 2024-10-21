@@ -75,7 +75,7 @@ class Degree < ApplicationRecord
 
   def graduation_year_valid
     errors.add(:graduation_year, :future) if graduation_year > next_year
-    errors.add(:graduation_year, :invalid) unless graduation_year.between?(next_year - MAX_GRAD_YEARS, next_year)
+    errors.add(:graduation_year, :invalid, value: graduation_year) unless graduation_year.between?(next_year - MAX_GRAD_YEARS, next_year)
   end
 
   def non_uk_degree_non_enic?

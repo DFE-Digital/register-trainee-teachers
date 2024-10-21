@@ -1398,7 +1398,7 @@ en:
             graduation_year:
               blank: Enter a graduation year
               future: Enter a graduation year that is in the past, for example 2014
-              invalid: Enter a valid graduation year
+              invalid: Graduation year %{value} is invalid
             country:
               blank: Select the country where the degree was obtained
         provider:

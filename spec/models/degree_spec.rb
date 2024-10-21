@@ -48,8 +48,9 @@ describe Degree do
         it "validates" do
           expect { degree.save! }.to raise_error(ActiveRecord::RecordInvalid)
           expect(degree.errors.messages[:graduation_year]).to include(I18n.t(
-                                                                        "activerecord.errors.models.degree.attributes.graduation_year.invalid",
-                                                                      ))
+            "activerecord.errors.models.degree.attributes.graduation_year.invalid",
+            value: degree.graduation_year
+          ))
         end
       end
 
