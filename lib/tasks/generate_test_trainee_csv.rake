@@ -59,7 +59,7 @@ def column_names
 end
 
 desc "Disposable task to generate some fake CSV data."
-task :generate_csv => :environment do
+task :generate_trainee_test_csv => :environment do
   CSV.open("tmp/trainees.csv", "wb") do |csv|
     csv << column_names
     5.times do |row|
