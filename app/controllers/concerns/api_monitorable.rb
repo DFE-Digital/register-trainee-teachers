@@ -10,15 +10,12 @@ module ApiMonitorable
 private
 
   def monitor_api_request
-    start = Time.zone.now
-    begin
-      yield
-    rescue StandardError => e
-      track_unsuccessful_requests(e)
-      raise(e)
-    ensure
-      track_response_size
-    end
+    yield
+  rescue StandardError => e
+    track_unsuccessful_requests(e)
+    raise(e)
+  ensure
+    track_response_size
   end
 
   def track_unsuccessful_requests(error)
