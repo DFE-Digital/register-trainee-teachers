@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe Api::V01::DegreeSerializer do
   let(:degree) { create(:degree) }
-  let(:json) { described_class.new(degree).as_hash.with_indifferent_access }
+  let(:json) { described_class.new(degree).as_hash }
 
   describe "serialization" do
-    it "includes all expected fields" do
+    let(:fields) do
       %w[
         degree_id
         uk_degree
@@ -24,21 +24,11 @@ RSpec.describe Api::V01::DegreeSerializer do
         uk_degree_uuid
         subject_uuid
         grade_uuid
-      ].each do |field|
-        expect(json.keys).to include(field)
-      end
+      ]
     end
 
-    it "does not include excluded fields" do
-      %w[
-        id
-        trainee_id
-        slug
-        dttp_id
-        locale_code
-      ].each do |field|
-        expect(json.keys).not_to include(field)
-      end
+    it "matches the fields" do
+      expect(json.keys).to match_array(fields)
     end
   end
 end

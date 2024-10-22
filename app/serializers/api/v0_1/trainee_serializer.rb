@@ -32,29 +32,31 @@ module Api
       end
 
       def as_hash
-        @trainee.attributes.except(*EXCLUDED_ATTRIBUTES).merge(
-          provider_attributes,
-          diversity_attributes,
-          course_attributes,
-          school_attributes,
-          funding_attributes,
-          hesa_trainee_attributes,
-          sex: sex,
-          study_mode: course_study_mode,
-          course_subject_one: course_subject_one,
-          course_subject_two: course_subject_two,
-          course_subject_three: course_subject_three,
-          training_route: training_route,
-          nationality: nationality,
-          training_initiative: training_initiative,
-          withdraw_reasons: withdraw_reasons,
-          placements: placements,
-          degrees: degrees,
-          state: @trainee.state,
-          trainee_id: @trainee.slug,
-          recommended_for_award_at: recommended_for_award_at,
-          application_id: @trainee.application_choice_id,
-        )
+        @trainee.attributes
+          .except(*EXCLUDED_ATTRIBUTES)
+          .with_indifferent_access.merge(
+            provider_attributes,
+            diversity_attributes,
+            course_attributes,
+            school_attributes,
+            funding_attributes,
+            hesa_trainee_attributes,
+            sex: sex,
+            study_mode: course_study_mode,
+            course_subject_one: course_subject_one,
+            course_subject_two: course_subject_two,
+            course_subject_three: course_subject_three,
+            training_route: training_route,
+            nationality: nationality,
+            training_initiative: training_initiative,
+            withdraw_reasons: withdraw_reasons,
+            placements: placements,
+            degrees: degrees,
+            state: @trainee.state,
+            trainee_id: @trainee.slug,
+            recommended_for_award_at: recommended_for_award_at,
+            application_id: @trainee.application_choice_id,
+          )
       end
 
       def degrees
