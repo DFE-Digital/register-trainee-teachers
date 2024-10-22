@@ -32,6 +32,8 @@ module BulkUpdate
       )
 
       BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: trainee_upload.id)
+
+      trainee_upload
     end
 
     def csv
