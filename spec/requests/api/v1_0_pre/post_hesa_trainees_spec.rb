@@ -176,7 +176,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
-      context "when lead_partner_urn is blank" do
+      context "when lead_partner_urn is blank and lead_partner_ukprn is blank" do
         before do
           data.merge(
             lead_partner_urn: "",
@@ -192,6 +192,28 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
           expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
           expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+        end
+      end
+
+      context "when lead_partner_urn is blank and lead_partner_ukprn is present" do
+        let(:lead_partner) { create(:lead_partner, :scitt) }
+        let(:params) do
+          {
+            data: data.merge(
+              lead_partner_ukprn: lead_partner.ukprn,
+              employing_school_urn: "",
+            ),
+          }
+        end
+
+        it "sets lead_partner_ukprn to lead_partner#ukprn and employing_school_urn to nil" do
+          expect(response.parsed_body[:data][:lead_partner_ukprn]).to eq(lead_partner.ukprn)
+          expect(response.parsed_body[:data][:lead_partner_ukprn]).to_not be_nil
+          expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+        end
+
+        it "sets lead_partner_not_applicable to false" do
+          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
         end
       end
 
