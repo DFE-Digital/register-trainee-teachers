@@ -74,7 +74,7 @@ module BulkUpdate
         return unless FeatureService.enabled?(:bulk_add_trainees)
 
         success = true
-        ActiveRecord::Base.transaction do |transaction|
+        ActiveRecord::Base.transaction do |_transaction|
           results = CSV.parse(trainee_upload.file, headers: :first_line).map do |row|
             BulkUpdate::AddTrainees::ImportRow.call(row:)
           end
@@ -86,12 +86,12 @@ module BulkUpdate
           else
             # TODO: copy any errors into `trainee_upload`
             success = false
-            raise ActiveRecord::Rollback
+            raise(ActiveRecord::Rollback)
           end
         end
 
         trainee_upload.failed! unless success
-        return success
+        success
       end
 
       def trainee_upload
