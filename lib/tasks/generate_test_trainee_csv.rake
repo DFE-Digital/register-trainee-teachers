@@ -7,7 +7,7 @@ def generate_row_data
     first_names: first_name,
     last_name: last_name,
     previous_last_name: Faker::Name.last_name,
-    date_of_birth: Faker::Date.between(from: '1960-01-01', to: '2002-12-31').iso8601,
+    date_of_birth: Faker::Date.between(from: "1960-01-01", to: "2002-12-31").iso8601,
     sex: Hesa::CodeSets::Sexes::MAPPING.keys.sample,
     email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
     nationality: "GB",
@@ -59,10 +59,10 @@ def column_names
 end
 
 desc "Disposable task to generate some fake CSV data."
-task :generate_trainee_test_csv => :environment do
+task generate_trainee_test_csv: :environment do
   CSV.open("tmp/trainees.csv", "wb") do |csv|
     csv << column_names
-    5.times do |row|
+    5.times do |_row|
       csv << csv_row
     end
   end

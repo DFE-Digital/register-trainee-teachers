@@ -17,9 +17,9 @@ module BulkUpdate
 
           it "does not create a trainee record" do
             original_count = Trainee.count
-            result = described_class.call(row:,  current_provider:)
+            result = described_class.call(row:, current_provider:)
             expect(result.success).to be(false)
-            expect(Trainee.count).to eql(original_count)
+            expect(Trainee.count).to be(original_count)
           end
         end
 
@@ -28,9 +28,9 @@ module BulkUpdate
 
           it "creates a trainee record" do
             original_count = Trainee.count
-            result = described_class.call(row:,  current_provider:)
+            result = described_class.call(row:, current_provider:)
             expect(result.success).to be(true)
-            expect(Trainee.count - original_count).to eql(1)
+            expect(Trainee.count - original_count).to be(1)
           end
         end
       end

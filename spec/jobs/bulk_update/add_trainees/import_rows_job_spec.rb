@@ -7,7 +7,7 @@ RSpec.describe BulkUpdate::AddTrainees::ImportRowsJob do
 
   let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
-  context "when the feature flag is turned off", "feature_bulk_add_trainees": false do
+  context "when the feature flag is turned off", feature_bulk_add_trainees: false do
     describe "#perform" do
       it "does not call the BulkUpdate::AddTrainees::ImportRows service" do
         allow(BulkUpdate::AddTrainees::ImportRows).to receive(:call)
@@ -19,7 +19,7 @@ RSpec.describe BulkUpdate::AddTrainees::ImportRowsJob do
     end
   end
 
-  context "when the feature flag is turned on", "feature_bulk_add_trainees": true do
+  context "when the feature flag is turned on", feature_bulk_add_trainees: true do
     describe "#perform" do
       it "calls the BulkUpdate::AddTrainees::ImportRows service" do
         allow(BulkUpdate::AddTrainees::ImportRows).to receive(:call)

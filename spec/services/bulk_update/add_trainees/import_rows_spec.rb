@@ -6,7 +6,7 @@ module BulkUpdate
   module AddTrainees
     RSpec.describe ImportRows do
       describe "#call" do
-        context "when the feature flag is off", "feature_bulk_add_trainees": false do
+        context "when the feature flag is off", feature_bulk_add_trainees: false do
           let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
           it "does not call the `ImportRow` service" do
@@ -15,11 +15,12 @@ module BulkUpdate
           end
         end
 
-        context "when the feature flag is on", "feature_bulk_add_trainees": true do
+        context "when the feature flag is on", feature_bulk_add_trainees: true do
           before { @original_trainee_count = Trainee.count }
 
           context "when all rows are valid and can be imported" do
             let(:trainee_upload) { create(:bulk_update_trainee_upload) }
+
             before do
               allow(ImportRow).to receive(:call).and_return(true)
             end
@@ -40,6 +41,7 @@ module BulkUpdate
 
           context "when some rows are valid and can be imported whilst others are not" do
             let(:trainee_upload) { create(:bulk_update_trainee_upload) }
+
             before do
               allow(ImportRow).to receive(:call).and_return(true, true, true, true, false)
             end

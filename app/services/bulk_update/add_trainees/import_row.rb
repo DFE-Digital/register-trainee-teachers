@@ -18,12 +18,12 @@ module BulkUpdate
 
       def call
         # Map the CSV header names to the correct attribute names
-        attributes = BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.map do |header_name, attribute_name|
+        attributes = BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.to_h do |header_name, attribute_name|
           [attribute_name, row[header_name]]
-        end.to_h.with_indifferent_access
+        end.with_indifferent_access
 
         # Apply conversions to the attributes
-        mapper_klass = Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version:)
+        mapper_klass = Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
 
         # Save the record
