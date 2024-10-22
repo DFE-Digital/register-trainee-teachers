@@ -34,6 +34,7 @@ module BulkUpdate
 
       it "returns validation errors and does not create a bulk_updates_trainee_upload record" do
         expect(form.valid?).to be false
+        expect(BulkUpdate::AddTrainees::ImportRowsJob).not_to receive(:perform_later)
         expect { form.save }.not_to change { BulkUpdate::TraineeUpload.count }
         expect(form.errors.messages[:file]).to include("Select a CSV file")
       end
@@ -44,6 +45,7 @@ module BulkUpdate
 
       it "returns validation errors and does not create a bulk_updates_trainee_upload record" do
         expect(form.valid?).to be false
+        expect(BulkUpdate::AddTrainees::ImportRowsJob).not_to receive(:perform_later)
         expect { form.save }.not_to change { BulkUpdate::TraineeUpload.count }
         expect(form.errors.messages[:file]).to include("The selected file must be a CSV")
       end
@@ -54,6 +56,7 @@ module BulkUpdate
 
       it "returns validation errors and does not create a bulk_updates_trainee_upload record" do
         expect(form.valid?).to be false
+        expect(BulkUpdate::AddTrainees::ImportRowsJob).not_to receive(:perform_later)
         expect { form.save }.not_to change { BulkUpdate::TraineeUpload.count }
         expect(form.errors.messages[:file]).to include("The selected file is empty")
       end
@@ -64,6 +67,7 @@ module BulkUpdate
 
       it "returns validation errors and does not create a bulk_updates_trainee_upload record" do
         expect(form.valid?).to be false
+        expect(BulkUpdate::AddTrainees::ImportRowsJob).not_to receive(:perform_later)
         expect { form.save }.not_to change { BulkUpdate::TraineeUpload.count }
         expect(form.errors.messages[:file]).to include("The selected file must contain at least one trainee")
       end
@@ -72,8 +76,9 @@ module BulkUpdate
     context "when passed a valid file" do
       let(:test_file_contents) { "trn,first_name,last_name\n0123456789,Bob,Roberts" }
 
-      it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
+      it "returns no validation errors, creates a BulkUpdate::TraineeUpload record and queues a TraineeRows job" do
         expect(form.valid?).to be true
+        expect(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
         expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1)
         expect(form.errors).to be_empty
       end
