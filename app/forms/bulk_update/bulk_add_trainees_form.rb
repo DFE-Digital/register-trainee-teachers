@@ -22,7 +22,7 @@ module BulkUpdate
     def save
       return false unless valid?
 
-      BulkUpdate::TraineeUpload.create(
+      trainee_upload = BulkUpdate::TraineeUpload.create(
         provider: provider,
         file: file,
         file_name: file.original_filename,
@@ -31,7 +31,7 @@ module BulkUpdate
         error_messages: errors.messages.values.inject([], &:concat),
       )
 
-      # TODO: Queue a job to process the file
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: trainee_upload.id)
     end
 
     def csv
