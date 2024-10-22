@@ -299,7 +299,7 @@ module Reports
     end
 
     def lead_partner_name
-      trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_partner.name
+      trainee.lead_partner_not_applicable? ? I18n.t(:not_applicable) : trainee.lead_partner&.name
     end
 
     def lead_partner_urn
