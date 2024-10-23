@@ -39,6 +39,12 @@
           <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %> who can be added
         </li>
       </ul>
+      <%= register_form_with(
+        model: @bulk_add_trainee_form,
+        url: bulk_update_trainees_submit_new_trainees_path(id: @bulk_update_trainee_upload.id),
+      ) do |f| %>
+        <%= f.govuk_submit("Submit") %>
+      <% end %>
     <% end %>
   </div>
 </div>

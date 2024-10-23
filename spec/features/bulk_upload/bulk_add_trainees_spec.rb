@@ -4,6 +4,10 @@ require "rails_helper"
 
 feature "bulk add trainees" do
   before do
+    allow(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
+  end
+
+  before do
     given_i_am_authenticated
   end
 
@@ -27,7 +31,11 @@ feature "bulk add trainees" do
     and_i_click_the_bulk_add_trainees_page
     and_i_attach_a_valid_file
     and_i_click_the_upload_button
-    then_i_see_the_summary_page_with_no_errors
+    then_i_see_the_review_page_with_no_errors
+
+    when_i_click_the_submit_button
+    then_a_job_is_queued_to_process_the_upload
+    and_i_see_the_summary_page
   end
 
   scenario "when I try to look at the status of a different providers upload", feature_bulk_add_trainees: true do
@@ -77,7 +85,7 @@ private
     tempfile.rewind
     tempfile.path
 
-    attach_file("bulk_update_bulk_add_trainees_form[file]", tempfile.path)
+    attach_file("bulk_update_bulk_add_trainees_upload_form[file]", tempfile.path)
   end
 
   def and_i_click_the_upload_button
@@ -90,11 +98,29 @@ private
     expect(page).to have_content("The selected file is empty")
   end
 
-  def then_i_see_the_summary_page_with_no_errors
+  def then_i_see_the_review_page_with_no_errors
     expect(page).to have_current_path(
       bulk_update_trainees_review_path(id: BulkUpdate::TraineeUpload.last.id),
     )
     expect(page).to have_content("You uploaded a CSV file with details of 2 trainees.")
+  end
+
+  def when_i_click_the_submit_button
+    click_on "Submit"
+  end
+
+  def then_a_job_is_queued_to_process_the_upload
+    expect(BulkUpdate::AddTrainees::ImportRowsJob).to have_received(:perform_later).with(id: BulkUpdate::TraineeUpload.last.id)
+  end
+
+  def and_i_see_the_summary_page
+    expect(page).to have_current_path(
+      bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
+    )
+    within(".govuk-panel") do
+      expect(page).to have_content("Trainees submitted")
+    end
+    expect(page).to have_content("There are 3 ways to check trainee data in Register.")
   end
 
   def when_there_is_a_bulk_update_trainee_upload
