@@ -208,7 +208,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
         it "sets lead_partner_ukprn to lead_partner#ukprn and employing_school_urn to nil" do
           expect(response.parsed_body[:data][:lead_partner_ukprn]).to eq(lead_partner.ukprn)
-          expect(response.parsed_body[:data][:lead_partner_ukprn]).to_not be_nil
+          expect(response.parsed_body[:data][:lead_partner_ukprn]).not_to be_nil
           expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
         end
 
