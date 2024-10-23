@@ -12,21 +12,22 @@ module BulkUpdate
         )
       end
 
-      def create
+      def upload
         @bulk_add_trainee_form = BulkUpdate::BulkAddTraineesForm.new(
           provider: organisation,
           file: file,
         )
 
         if @bulk_add_trainee_form.valid?
+          # TODO: Replace with dry run method
           upload = @bulk_add_trainee_form.save
-          redirect_to(bulk_update_trainees_status_path(upload.id))
+          redirect_to(bulk_update_trainees_review_path(upload.id))
         else
           render(:show)
         end
       end
 
-      def status
+      def review
         @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to(not_found_path)

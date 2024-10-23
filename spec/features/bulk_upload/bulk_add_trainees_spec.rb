@@ -85,14 +85,14 @@ private
   end
 
   def then_i_see_the_upload_page_with_errors
-    expect(page).to have_current_path(bulk_update_trainees_add_new_trainees_path)
+    expect(page).to have_current_path(bulk_update_trainees_upload_new_trainees_path)
     expect(page).to have_content("There is a problem")
     expect(page).to have_content("The selected file is empty")
   end
 
   def then_i_see_the_summary_page_with_no_errors
     expect(page).to have_current_path(
-      bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
+      bulk_update_trainees_review_path(id: BulkUpdate::TraineeUpload.last.id),
     )
     expect(page).to have_content("You uploaded a CSV file with details of 2 trainees.")
   end
@@ -102,7 +102,7 @@ private
   end
 
   def when_i_visit_the_bulk_update_status_page_for_another_provider
-    visit bulk_update_trainees_status_path(id: @upload_for_different_provider.id)
+    visit bulk_update_trainees_review_path(id: @upload_for_different_provider.id)
   end
 
   def then_i_see_a_not_found_page
