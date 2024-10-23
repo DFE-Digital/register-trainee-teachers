@@ -4,30 +4,20 @@ require "rails_helper"
 
 RSpec.describe Api::V01::PlacementSerializer do
   shared_examples_for "a placement serialiser" do
-    %w[
-      placement_id
-      urn
-      name
-      address
-      postcode
-      created_at
-      updated_at
-    ].each do |field|
-      it "`#{field}` is present in the output and has a value" do
-        expect(json.keys).to include(field)
-        expect(json[field]).to be_present
-      end
+    let(:fields) do
+      %w[
+        placement_id
+        urn
+        name
+        address
+        postcode
+        created_at
+        updated_at
+      ]
     end
 
-    %w[
-      id
-      slug
-      trainee_id
-      school_id
-    ].each do |field|
-      it "`#{field}` is not present in the output" do
-        expect(json.keys).not_to include(field)
-      end
+    it "matches the fields" do
+      expect(json.keys).to match_array(fields)
     end
   end
 

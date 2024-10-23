@@ -4,10 +4,10 @@ require "rails_helper"
 
 RSpec.describe Api::V01::TraineeSerializer do
   let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
-  let(:json) { described_class.new(trainee).as_hash.with_indifferent_access }
+  let(:json) { described_class.new(trainee).as_hash }
 
   describe "serialization" do
-    it "includes all the expected fields" do
+    let(:fields) do
       %w[
         trainee_id
         provider_trainee_id
@@ -86,41 +86,24 @@ RSpec.describe Api::V01::TraineeSerializer do
         degrees
         disability1
         application_id
-      ].each do |field|
-        expect(json.keys).to include(field)
-      end
+        ethnic_background
+        additional_ethnic_background
+        created_from_dttp
+        created_from_hesa
+        bursary_level
+        funding_method
+        itt_qualification_aim
+        state
+      ]
+    end
+
+    it "matches the fields" do
+      expect(json.keys).to match_array(fields)
     end
 
     it "includes the correct disability values" do
       expect(json["disability1"]).not_to be_nil
       expect(json["disability1"]).to eq(trainee.hesa_trainee_detail.hesa_disabilities["disability1"])
-    end
-
-    it "does not include excluded fields" do
-      %w[
-        id
-        slug
-        progress
-        provider_id
-        dttp_id
-        placement_assignment_dttp_id
-        dttp_update_sha
-        dormancy_dttp_id
-        lead_partner_id
-        employing_school_id
-        course_allocation_subject_id
-        start_academic_cycle_id
-        end_academic_cycle_id
-        hesa_trn_submission_id
-        application_choice_id
-        apply_application_id
-        applying_for_bursary
-        applying_for_grant
-        applying_for_scholarship
-        bursary_tier
-      ].each do |field|
-        expect(json.keys).not_to include(field)
-      end
     end
 
     describe "placements" do
