@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: https://github.com/d-a-v-e/azure-blob
-  revision: 1649f48b72fb98b6079d3ca2ae2a12da9d5904da
+  revision: b2971e3dda367641536cabce2d40d6e42fbcc562
   branch: master
   specs:
     azure-blob (0.5.2)
