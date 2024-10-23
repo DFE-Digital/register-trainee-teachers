@@ -24,8 +24,8 @@ describe Trainees::LeadPartnersController do
         post(:update, params: { trainee_id: trainee, partners_lead_partner_form: params })
       end
 
-      it "redirects to trainee employing school page" do
-        expect(response).to redirect_to(edit_trainee_employing_schools_path(trainee))
+      it "redirects to trainee employing school details page" do
+        expect(response).to redirect_to(edit_trainee_employing_schools_details_path(trainee))
       end
     end
 
