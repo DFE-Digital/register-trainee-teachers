@@ -130,7 +130,7 @@ feature "add lead partner and employing school" do
       "The lead partner you select will be able to view trainee's record.",
     )
     expect(edit_lead_partner_page).to have_content(
-      "Search for a school by its unique reference number (URN), name or postcode",
+      "Search for a lead partner by name, postcode, school URN or training provider UKPRN",
     )
     expect(edit_lead_partner_page).to have_content(
       "If the lead partner is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
