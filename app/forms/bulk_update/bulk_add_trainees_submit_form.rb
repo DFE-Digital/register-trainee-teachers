@@ -13,11 +13,10 @@ module BulkUpdate
     end
 
     def save
-      return false unless valid?
+      return false unless valid? && upload.validated?
 
       BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: upload.id)
-
-      upload
+      upload.submitted!
     end
   end
 end
