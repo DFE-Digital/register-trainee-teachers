@@ -16,7 +16,7 @@ module Dqt
       @trainee = trn_request.trainee
 
       if @timeout_after.nil?
-        self.class.perform_later(trn_request, trainee.submitted_for_trn_at + Settings.jobs.max_poll_duration_days.days)
+        self.class.perform_later(trn_request, trainee.submitted_for_trn_at + timeout)
         return
       end
 
@@ -46,6 +46,12 @@ module Dqt
 
     def requeue
       self.class.set(wait: Settings.jobs.poll_delay_hours.hours).perform_later(trn_request, timeout_after)
+    end
+
+    def timeout
+      return (Settings.jobs.max_poll_duration_days + 6).days if Time.Zone.now.month == 10 # Increase timeout for jobs during October to deal with increased registrations
+
+      Settings.jobs.max_poll_duration_days.days
     end
   end
 end
