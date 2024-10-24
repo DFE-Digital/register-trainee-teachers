@@ -21,13 +21,29 @@ module Dqt
     end
 
     context "when timeout_after is nil" do
-      let(:timeout_date) { trainee.submitted_for_trn_at + configured_poll_timeout_days.days }
+      context "during October" do
+        let(:timeout_date) { trainee.submitted_for_trn_at + (configured_poll_timeout_days + 6).days }
 
-      it "re-enqueues RetrieveTrnJob with the trainee and default timeout_after" do
-        Timecop.freeze(Time.zone.now) do
-          expect {
-            described_class.perform_now(trn_request, nil)
-          }.to enqueue_job(RetrieveTrnJob).with(trn_request, timeout_date)
+        it "re-enqueues RetrieveTrnJob with the trainee and default timeout_afte plus 6 days" do
+          Timecop.travel(Time.zone.now.year, 10, 1) do
+            expect {
+              described_class.perform_now(trn_request, nil)
+            }.to enqueue_job(RetrieveTrnJob).with(trn_request, timeout_date)
+          end
+        end
+      end
+
+      context "during any time of the year other than October" do
+        let(:timeout_date) { trainee.submitted_for_trn_at + configured_poll_timeout_days.days }
+
+        it "re-enqueues RetrieveTrnJob with the trainee and default timeout_after" do
+          (1..9).to_a + [11, 12].each do |month|
+            Timecop.travel(Time.zone.now.year, month, 1) do
+              expect {
+                described_class.perform_now(trn_request, nil)
+              }.to enqueue_job(RetrieveTrnJob).with(trn_request, timeout_date)
+            end
+          end
         end
       end
     end
