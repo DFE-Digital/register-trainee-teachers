@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module BulkUpdate
-  describe BulkAddTraineesForm, type: :model do
+  describe BulkAddTraineesUploadForm, type: :model do
     subject(:form) { described_class.new(provider:, file:) }
 
     let(:provider) { create(:provider) }

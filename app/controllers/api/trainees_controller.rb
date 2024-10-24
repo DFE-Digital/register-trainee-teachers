@@ -66,10 +66,8 @@ module Api
     def hesa_mapped_params
       hesa_mapper_class.call(
         params: params.require(:data).permit(
-          hesa_mapper_class::ATTRIBUTES +
-          hesa_mapper_class.disability_attributes(params),
-          trainee_attributes_service::ATTRIBUTES.keys +
-          hesa_trainee_details_attributes_service::ATTRIBUTES,
+          hesa_mapper_class::ATTRIBUTES + hesa_mapper_class.disability_attributes(params),
+          trainee_attributes_service::ATTRIBUTES.keys + hesa_trainee_details_attributes_service::ATTRIBUTES,
           placements_attributes: placements_attributes,
           degrees_attributes: degree_attributes,
           nationalisations_attributes: nationality_attributes,
