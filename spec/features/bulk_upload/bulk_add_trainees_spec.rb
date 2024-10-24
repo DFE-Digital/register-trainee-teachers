@@ -5,9 +5,6 @@ require "rails_helper"
 feature "bulk add trainees" do
   before do
     allow(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
-  end
-
-  before do
     given_i_am_authenticated
   end
 
