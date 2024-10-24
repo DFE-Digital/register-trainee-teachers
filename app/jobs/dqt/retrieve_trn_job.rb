@@ -49,7 +49,7 @@ module Dqt
     end
 
     def timeout
-      return (Settings.jobs.max_poll_duration_days + 6).days if Time.Zone.now.month == 10 # Increase timeout for jobs during October to deal with increased registrations
+      return (Settings.jobs.max_poll_duration_days + 6).days if Time.zone.now.month == 10 # Increase timeout for jobs during October to deal with increased registrations
 
       Settings.jobs.max_poll_duration_days.days
     end
