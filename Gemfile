@@ -46,7 +46,7 @@ gem "stackprof"
 gem "amazing_print", "~> 1.6"
 
 # There seems to be an issue with 4.17.0 where the workers log the sql
-gem "rails_semantic_logger", "4.16.0"
+gem "rails_semantic_logger", "4.17.0"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"
@@ -132,7 +132,7 @@ gem "faraday"
 gem "csv-safe"
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
-gem "azure-blob"
+gem "azure-blob", git: "https://github.com/d-a-v-e/azure-blob", branch: "master"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "rack-attack"

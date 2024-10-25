@@ -1177,7 +1177,7 @@ en:
             hint: You do not need to provide a lead partner if the trainee is funded or employed privately.
       edit:
         heading: Lead partner
-        hint: Search for a school by its unique reference number (URN), name or postcode
+        hint: Search for a lead partner by name, postcode, school URN or training provider UKPRN
         description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee's record.</p>
         not_applicable_details:
           summary_text: Lead partner is not listed, or the trainee is funded or employed privately

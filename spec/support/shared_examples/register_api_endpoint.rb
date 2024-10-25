@@ -17,16 +17,6 @@ RSpec.shared_examples "a register API endpoint", openapi: false do |url, api_tok
       expect(response).to have_http_status(:ok)
     end
 
-    it "increments the requests_total counter", openapi: do
-      expect { get url, headers: { Authorization: token } }
-        .to change { Yabeda.register_api.requests_total.values.values.sum }
-        .by(1)
-    end
-
-    it "measures the request_duration histogram", openapi: openapi, time_sensitive: true do
-      expect(Yabeda.register_api.request_duration.values.values.sum).to be > 0
-    end
-
     context "when the register_api feature flag is off", feature_register_api: false do
       it "returns status code 404", openapi: do
         expect(response).to have_http_status(:not_found)

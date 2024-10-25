@@ -23,6 +23,7 @@ module Trainees
       "10007842" => "10007163", # University of Cumbria => University of Warwick
       "10007164" => "10005790", # University of the West of England => Sheffield Hallam University
       "10007789" => "10007139", # University of East Anglia => University of Worcester
+      "10007143" => "10007799", # University of Durham => Newcastle University
     }.freeze
 
     class HesaImportError < StandardError; end

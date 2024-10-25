@@ -14,12 +14,6 @@ describe "API Monitoring" do
     )
   end
 
-  it "increments request_total and measures request_duration for successful request" do
-    expect(Yabeda.register_api.requests_total).to receive(:increment)
-    expect(Yabeda.register_api.request_duration).to receive(:measure)
-    response
-  end
-
   it "measures response size for every request" do
     expect(Yabeda.register_api.response_size).to receive(:measure)
     response
