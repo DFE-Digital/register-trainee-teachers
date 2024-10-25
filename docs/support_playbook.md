@@ -47,7 +47,7 @@ If a provider loses accreditation and needs to be converted into a lead partner,
 bundle exec rails 'copy_providers_to_lead_partners:copy[<provider ids separated by spaces>, <provider type, eg hei or scitt>]'
 ```
 
-This task should create the new lead partner and associate the providers users with the new lead partner record.
+This task should create the new lead partner and associate the providers' users with the new lead partner record.
 
 ## Error codes on DQT trainee jobs
 
