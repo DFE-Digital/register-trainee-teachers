@@ -5,7 +5,7 @@ module BulkUpdate
     class ImportRows
       include ServicePattern
 
-      attr_accessor :id
+      attr_accessor :id, :current_provider
 
       def initialize(id:)
         self.id = id
@@ -72,30 +72,38 @@ module BulkUpdate
 
       def call
         return unless FeatureService.enabled?(:bulk_add_trainees)
+        dry_run = !trainee_upload.submitted?
 
         success = true
         ActiveRecord::Base.transaction do |_transaction|
           results = CSV.parse(trainee_upload.file, headers: :first_line).map do |row|
-            BulkUpdate::AddTrainees::ImportRow.call(row:)
+            BulkUpdate::AddTrainees::ImportRow.call(row:, current_provider:)
           end
 
           # Commit or rollback the transaction depending on whether all rows were error free
           if all_succeeded?(results)
-            trainee_upload.succeeded!
+            trainee_upload.succeeded! unless dry_run
             true
           else
             # TODO: copy any errors into `trainee_upload`
             success = false
             raise(ActiveRecord::Rollback)
           end
+          raise(ActiveRecord::Rollback) if dry_run
         end
 
+        trainee_upload.validated! if dry_run && success
         trainee_upload.failed! unless success
+
         success
       end
 
       def trainee_upload
         @trainee_upload ||= BulkUpdate::TraineeUpload.find(id)
+      end
+
+      def current_provider
+        @current_provider ||= trainee_upload.provider
       end
 
     private

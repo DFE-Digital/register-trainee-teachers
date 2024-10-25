@@ -24,15 +24,14 @@ module BulkUpdate
 
       @upload = BulkUpdate::TraineeUpload.create(
         provider: provider,
-        file: file,
+        file: File.read(file),
         file_name: file.original_filename,
         number_of_trainees: csv&.count,
         status: valid? ? :pending : :failed,
         error_messages: errors.messages.values.inject([], &:concat),
       )
 
-      # TODO: Dry run this inside a transaction and rollback?
-      # BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: @upload.id)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: @upload.id)
 
       @upload
     end

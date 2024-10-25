@@ -19,23 +19,41 @@ module BulkUpdate
           before { @original_trainee_count = Trainee.count }
 
           context "when all rows are valid and can be imported" do
-            let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
-            before do
-              allow(ImportRow).to receive(:call).and_return(true)
+            context "when the upload status is pending" do
+              let(:trainee_upload) { create(:bulk_update_trainee_upload, status: :pending) }
+
+              before do
+                allow(ImportRow).to receive(:call).and_return(true)
+              end
+
+              it "does not create any trainee records" do
+                expect(ImportRow).to receive(:call).exactly(5).times
+                expect(described_class.call(id: trainee_upload.id)).to be(true)
+              end
+
+              it "sets the status to `validated`" do
+                described_class.call(id: trainee_upload.id)
+                expect(trainee_upload.reload).to be_validated
+              end
             end
 
-            it "creates 5 trainee records" do
-              expect(ImportRow).to receive(:call).exactly(5).times
-              expect(described_class.call(id: trainee_upload.id)).to be(true)
+            context "when the upload status is submitted" do
+              let(:trainee_upload) { create(:bulk_update_trainee_upload, status: :submitted) }
 
-              pending "need to assert that trainee records are created"
-              expect(Trainee.count - @original_trainee_count).to eq(5)
-            end
+              before do
+                allow(ImportRow).to receive(:call).and_return(true)
+              end
 
-            it "sets the status to `succeeded`" do
-              described_class.call(id: trainee_upload.id)
-              expect(trainee_upload.reload).to be_succeeded
+              it "creates 5 trainee records" do
+                expect(ImportRow).to receive(:call).exactly(5).times
+                expect(described_class.call(id: trainee_upload.id)).to be(true)
+              end
+
+              it "sets the status to `succeeded`" do
+                described_class.call(id: trainee_upload.id)
+                expect(trainee_upload.reload).to be_succeeded
+              end
             end
           end
 
