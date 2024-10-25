@@ -141,6 +141,28 @@ describe Trainee do
         expect(described_class.complete).not_to include(incomplete_trn_received)
       end
     end
+
+    describe ".potential_duplicates_of and .not_marked_as_duplicate" do
+      let(:trainee1) { create(:trainee, :in_progress, :with_training_route) }
+      let!(:trainee2) { create(:trainee, :in_progress, last_name: trainee1.last_name, date_of_birth: trainee1.date_of_birth, training_route: trainee1.training_route, start_academic_cycle: trainee1.start_academic_cycle) }
+
+      it "returns trainees with the same last_name, date_of_birth, training_route and start_academic_cycle" do
+        expect(described_class.potential_duplicates_of(trainee1).not_marked_as_duplicate).to contain_exactly(trainee2)
+      end
+
+      context "when trainee is marked as duplicate" do
+        let!(:potential_duplicate1) { create(:potential_duplicate_trainee, trainee: trainee1) }
+        let!(:potential_duplicate2) { create(:potential_duplicate_trainee, trainee: trainee2, group_id: potential_duplicate1.group_id) }
+
+        it "`potential_duplicates_of` combined with `not_marked_as_duplicate` does not return trainees with the same last_name, date_of_birth, training_route and start_academic_cycle" do
+          expect(described_class.potential_duplicates_of(trainee1).not_marked_as_duplicate).to be_empty
+        end
+
+        it "`potential_duplicates_of` alone returns trainees with the same last_name, date_of_birth, training_route and start_academic_cycle" do
+          expect(described_class.potential_duplicates_of(trainee1)).to contain_exactly(trainee2)
+        end
+      end
+    end
   end
 
   context "associations" do
@@ -752,7 +774,7 @@ describe Trainee do
 
     before { trainee.dup.tap { |t| t.slug = t.generate_slug }.save }
 
-    it "returns true if another trainee has the same nam, date of birth and email address" do
+    it "returns true if another trainee has the same name, date of birth and email address" do
       expect(trainee.duplicate?).to be(true)
     end
   end
