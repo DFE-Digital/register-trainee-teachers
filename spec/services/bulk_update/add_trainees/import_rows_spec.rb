@@ -19,7 +19,6 @@ module BulkUpdate
           before { @original_trainee_count = Trainee.count }
 
           context "when all rows are valid and can be imported" do
-
             context "when the upload status is pending" do
               let(:trainee_upload) { create(:bulk_update_trainee_upload, status: :pending) }
 

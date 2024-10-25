@@ -5,7 +5,7 @@ module BulkUpdate
     class ImportRows
       include ServicePattern
 
-      attr_accessor :id, :current_provider
+      attr_accessor :id
 
       def initialize(id:)
         self.id = id
@@ -72,6 +72,7 @@ module BulkUpdate
 
       def call
         return unless FeatureService.enabled?(:bulk_add_trainees)
+
         dry_run = !trainee_upload.submitted?
 
         success = true
