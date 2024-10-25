@@ -36,6 +36,19 @@ trainee.withdrawal_reasons.clear
 trainee.update_columns(state: "XXX", withdraw_reasons_details: nil, withdraw_reasons_dfe_details: nil, withdraw_date: nil)
 ```
 
+## Converting a provider into lead partner
+
+If a provider loses accreditation and needs to be converted into a lead partner, do the following
+
+- Find the ids of all providers that need to be converted
+- run the following task including the apostrophes
+
+```
+bundle exec rails 'copy_providers_to_lead_partners:copy[<provider ids separated by spaces>, <provider type, eg hei or scitt>]'
+```
+
+This task should create the new lead partner and associate the providers users with the new lead partner record.
+
 ## Error codes on DQT trainee jobs
 
 Sometimes the different jobs that send trainee info to DQT (such as `Dqt::UpdateTraineeJob`,`Dqt::WithdrawTraineeJob` and `Dqt::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
@@ -345,13 +358,13 @@ This command will:
 3. **Touch All Relevant `ApplicationChoice` Entries on Apply**
 
     - Touch the relevant `ApplicationChoice` records so that when Register calls the API endpoint with the `changed_since` parameter it will return the applications again:
-    
+
       ```ruby
       ApplicationChoice.where(id: application_choice_ids).touch_all
       ```
 
 4. **Delete Related `ApplyApplication` Entries on Register**
-    
+
     - Remove the associated `ApplyApplication` records from the Register:
 
       ```ruby
