@@ -84,7 +84,7 @@ module Submissions
       end
 
       context "Trainee with missing placements" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad, :with_lead_partner, :with_employing_school) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_lead_partner, :with_employing_school) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)
@@ -92,7 +92,7 @@ module Submissions
       end
 
       context "Trainee with a missing lead partner" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad, :with_placements, :with_employing_school) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_employing_school) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)
@@ -100,7 +100,7 @@ module Submissions
       end
 
       context "Trainee with a missing employing school" do
-        let(:trainee) { create(:trainee, :submitted_with_start_date, :provider_led_postgrad, :with_placements, :with_lead_partner) }
+        let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_lead_partner) }
 
         it "doesn't cause validation errors" do
           expect(subject.valid?).to be(true)
@@ -108,7 +108,7 @@ module Submissions
       end
 
       context "non draft trainee" do
-        let(:trainee) { Trainee.new(training_route: :provider_led_postgrad, state: :trn_received) }
+        let(:trainee) { Trainee.new(training_route: :school_direct_salaried, state: :trn_received) }
 
         it "cause validation errors" do
           expect(subject.valid?).to be(false)
