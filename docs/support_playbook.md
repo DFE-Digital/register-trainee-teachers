@@ -237,9 +237,12 @@ default_queue.map { _1["wrapped"] }.tally
 #### Dead jobs
 
 ```ruby
+include Hashable
+
 ds = Sidekiq::DeadSet.new
+
 # unique user ids
-ds.map { _1.args[0]["arguments"][0]["_aj_globalid"].split("/").last }.uniq.count
+ds.map { deep_dig(_1.args[0]["arguments"][0], "_aj_globalid").split("/").last }.uniq.count
 # eg count 405 errors
 ds.select { _1.item["error_message"].starts_with? "status: 405" }.count
 # retry

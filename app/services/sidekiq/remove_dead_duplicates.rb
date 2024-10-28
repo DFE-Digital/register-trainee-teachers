@@ -3,18 +3,21 @@
 module Sidekiq
   class RemoveDeadDuplicates
     include ServicePattern
+    include Hashable
 
     attr_reader :dead_jobs, :set
 
     def initialize
-      @set = Set.new
+      @set       = Set.new
       @dead_jobs = Sidekiq::DeadSet.new
     end
 
     def call
       dead_jobs.each do |job|
-        error = job.item["error_message"]&.split(",")&.first
-        trainee_id = job.args.dig(0, "arguments", 0, "_aj_globalid")&.split("/")&.last
+        error      = job.item["error_message"]&.split(",")&.first
+        arguments  = job.args.dig(0, "arguments", 0)
+        trainee_id = deep_dig(arguments, "_aj_globalid")&.split("/")&.last
+
         next unless error && trainee_id
 
         digest = [error, job.display_class, trainee_id].join

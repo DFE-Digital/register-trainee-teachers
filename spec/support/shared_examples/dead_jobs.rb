@@ -17,7 +17,7 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
           args: [
             {
               arguments: [
-                { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" },
+                { trainee_id: { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" } },
               ],
             },
           ],
