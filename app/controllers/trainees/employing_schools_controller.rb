@@ -2,6 +2,7 @@
 
 module Trainees
   class EmployingSchoolsController < BaseController
+    before_action :employing_school_applicable
     before_action :load_schools
 
     helper_method :query
@@ -50,6 +51,12 @@ module Trainees
 
     def index_or_edit_page
       @employing_school_form.search_results_found? || @employing_school_form.no_results_searching_again? ? :index : :edit
+    end
+
+    def employing_school_applicable
+      if trainee.employing_school_not_applicable?
+        redirect_to(edit_trainee_employing_schools_details_path(trainee))
+      end
     end
 
     def authorize_trainee

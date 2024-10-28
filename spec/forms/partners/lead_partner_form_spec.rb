@@ -43,26 +43,6 @@ module Partners
       end
     end
 
-    context "school chosen but also marked as not applicable" do
-      let(:params) { { "lead_partner_id" => "1", "lead_partner_not_applicable" => "1", query: "school" } }
-
-      it "returns an error" do
-        expect(subject.errors[:query]).to include(
-          I18n.t("activemodel.errors.models.partners/lead_partner_form.attributes.query.both_fields_are_present"),
-        )
-      end
-    end
-
-    context "school not chosen, but query present and also marked as not applicable" do
-      let(:params) { { "lead_partner_not_applicable" => "1", query: "school" } }
-
-      it "returns an error" do
-        expect(subject.errors[:query]).to include(
-          I18n.t("activemodel.errors.models.partners/lead_partner_form.attributes.query.both_fields_are_present"),
-        )
-      end
-    end
-
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee ID and lead_partner" do
         expect(form_store).to receive(:set).with(trainee.id, :lead_partner, subject.fields)

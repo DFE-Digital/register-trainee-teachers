@@ -2,6 +2,7 @@
 
 module Trainees
   class LeadPartnersController < BaseController
+    before_action :lead_partner_applicable
     before_action :validate_form_completeness
 
     helper_method :query
@@ -48,6 +49,12 @@ module Trainees
 
     def index_or_edit_page
       @lead_partner_form.search_results_found? || @lead_partner_form.no_results_searching_again? ? :index : :edit
+    end
+
+    def lead_partner_applicable
+      if trainee.lead_partner_not_applicable?
+        redirect_to(edit_trainee_lead_partners_details_path(trainee))
+      end
     end
 
     def authorize_trainee
