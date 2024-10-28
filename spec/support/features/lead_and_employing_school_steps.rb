@@ -24,6 +24,8 @@ module Features
     def and_the_lead_partner_section_is_complete
       given_a_lead_partner_exists_in_the_system
       review_draft_page.lead_and_employing_schools_section.link.click
+      and_i_choose_the_not_applicable_lead_partner_option(false)
+      and_i_continue
       and_i_fill_in_my_lead_partner
       and_i_continue
       lead_partners_search_page.choose_lead_partner(id: @lead_partner.id)
