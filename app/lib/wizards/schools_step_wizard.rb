@@ -29,7 +29,7 @@ module Wizards
     end
 
     def redirect_url
-      trainee.requires_employing_school? ? edit_trainee_employing_schools_path(trainee) : trainee_schools_confirm_path(trainee)
+      trainee.requires_employing_school? ? edit_trainee_employing_schools_details_path(trainee) : trainee_schools_confirm_path(trainee)
     end
 
     def origin_page_or_next_step

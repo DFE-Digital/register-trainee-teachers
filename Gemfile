@@ -44,6 +44,8 @@ gem "stackprof"
 
 # Logging
 gem "amazing_print", "~> 1.6"
+
+# There seems to be an issue with 4.17.0 where the workers log the sql
 gem "rails_semantic_logger", "4.17.0"
 
 # Thread-safe global state
@@ -118,7 +120,7 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.5.1"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.6.3"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
@@ -130,7 +132,7 @@ gem "faraday"
 gem "csv-safe"
 gem "progress_bar" # useful to track progress of long running data migrations using scripts or rake tasks
 
-gem "azure-blob"
+gem "azure-blob", git: "https://github.com/d-a-v-e/azure-blob", branch: "master"
 gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "rack-attack"

@@ -23,6 +23,22 @@ feature "Viewing sidekiq dead jobs" do
           enqueued_at: 73.hours.ago.to_i,
         }.with_indifferent_access,
       ),
+      OpenStruct.new(
+        item: {
+          wrapped: "Dqt::UpdateTraineeJob",
+          args:
+          [
+            {
+              arguments: [
+                { trainee: { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" } },
+              ],
+            },
+          ],
+          error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
+          jid: "1234",
+          enqueued_at: 73.hours.ago.to_i,
+        }.with_indifferent_access,
+      ),
     ]
   end
 

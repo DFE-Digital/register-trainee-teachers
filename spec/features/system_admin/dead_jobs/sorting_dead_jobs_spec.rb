@@ -29,7 +29,7 @@ feature "Sorting sidekiq dead jobs" do
           [
             {
               arguments: [
-                { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee_two.id}" },
+                { trainee: { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee_two.id}" } },
               ],
             },
           ],

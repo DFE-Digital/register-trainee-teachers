@@ -23,6 +23,7 @@ module Trainees
       "10007842" => "10007163", # University of Cumbria => University of Warwick
       "10007164" => "10005790", # University of the West of England => Sheffield Hallam University
       "10007789" => "10007139", # University of East Anglia => University of Worcester
+      "10007143" => "10007799", # University of Durham => Newcastle University
     }.freeze
 
     class HesaImportError < StandardError; end
@@ -141,7 +142,7 @@ module Trainees
 
       if lead_partner_mapping_needed?
         attrs.merge!(lead_partner: LeadPartner.find_by(ukprn: hesa_trainee[:ukprn]), lead_partner_not_applicable: false)
-      elsif hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
+      elsif hesa_trainee[:lead_partner_urn].blank? || hesa_trainee[:lead_partner_urn].in?(NOT_APPLICABLE_SCHOOL_URNS)
         attrs.merge!(lead_partner_not_applicable: true)
       else
         attrs.merge!(lead_partner: LeadPartner.find_by(urn: hesa_trainee[:lead_partner_urn]), lead_partner_not_applicable: false)

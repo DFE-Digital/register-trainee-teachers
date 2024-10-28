@@ -2,6 +2,8 @@
 
 module DeadJobs
   class Base
+    include Hashable
+
     def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false, sort_by: :register)
       @dead_set = dead_set
       @include_dqt_status = include_dqt_status
@@ -111,8 +113,10 @@ module DeadJobs
         .select { |job| job.item["wrapped"] == klass }
         .sort_by { |job| job.item["enqueued_at"] }
         .to_h do |job|
+          arguments = job.item["args"].first["arguments"]
+
           [
-            job.item["args"].first["arguments"].first["_aj_globalid"].split("/").last.to_i,
+            deep_dig(arguments, "_aj_globalid").split("/").last.to_i,
             {
               error_message: parse_error(job.item["error_message"]),
               job_id: job.item["jid"],

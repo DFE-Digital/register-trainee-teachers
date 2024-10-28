@@ -30,6 +30,7 @@ module Api
 
     def show
       trainee = current_provider.trainees.find_by!(slug: params[:slug])
+
       render(json: serializer_klass.new(trainee).as_hash)
     end
 

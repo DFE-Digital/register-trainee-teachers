@@ -91,7 +91,7 @@ describe Exports::BulkRecommendExport, type: :model do
       end
 
       it "includes the lead partner" do
-        expect(trainee_csv_row["Lead partner"]).to eq(trainee_report.lead_partner_school_name)
+        expect(trainee_csv_row["Lead partner"]).to eq(trainee_report.lead_partner_name)
       end
 
       it "includes the QTS or EYTS" do

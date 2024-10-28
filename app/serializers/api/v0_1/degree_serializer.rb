@@ -16,14 +16,16 @@ module Api
       end
 
       def as_hash
-        @degree.attributes.except(*EXCLUDED_ATTRIBUTES).merge({
-          degree_id:,
-          subject:,
-          institution:,
-          country:,
-          uk_degree:,
-          grade:,
-        })
+        @degree.attributes
+          .except(*EXCLUDED_ATTRIBUTES)
+          .with_indifferent_access.merge({
+            degree_id:,
+            subject:,
+            institution:,
+            country:,
+            uk_degree:,
+            grade:,
+          })
       end
 
       def degree_id

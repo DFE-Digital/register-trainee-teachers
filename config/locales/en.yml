@@ -106,7 +106,7 @@ en:
       email_line_two: if you think there should be trainees who are eligible.
   schools:
     view:
-      summary_title: Schools
+      summary_title: Training partners
       lead_partner: &lead_partner Lead partner
       employing_school: &employing_school Employing school
   record_details:
@@ -343,6 +343,8 @@ en:
         show: Dead Jobs
       duplicate_apply_applications:
         index: Duplicate Apply applications
+      duplicate_hesa_trainees:
+        index: Duplicate HESA trainees
       funding_uploads:
         index: Upload funding information
         confirmation: File processed successfully
@@ -519,7 +521,7 @@ en:
         page_title_no_results: No results
         sub_text_results: Results for
         sub_text_no_results: No results for
-        search_hint: Search for a lead partner by its unique reference number (URN), name or UKPRN
+        search_hint: Search for a lead partner by name, school postcode, school URN or training provider UKPRN
         search_button: Search again
       service_updates: News and updates
       organisations: Choose organisation
@@ -743,8 +745,8 @@ en:
         grade: *degree_path
         graduation_year: *degree_path
         country: *degree_path
-        lead_partner_id: &lead_partner_path edit_trainee_lead_partners_path
-        employing_school_id: edit_trainee_employing_schools_path
+        lead_partner_id: &lead_partner_path edit_trainee_lead_partners_details_path
+        employing_school_id: edit_trainee_employing_schools_details_path
         school_id: *lead_partner_path
         trainee_start_date: &trainee_start_date_path edit_trainee_start_date_path
         trainee_start_date_radio_option: *trainee_start_date_path
@@ -1168,18 +1170,28 @@ en:
         confirm_course: Confirm course
         edit_details: Edit details for this trainee only
     lead_partners:
+      details:
+        edit:
+          heading: Is there a lead partner?
+          not_applicable_details:
+            hint: You do not need to provide a lead partner if the trainee is funded or employed privately.
       edit:
         heading: Lead partner
-        hint: Search for a lead partner by its unique reference number (URN), name or postcode
-        description: The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the school direct partnership.
+        hint: Search for a lead partner by name, postcode, school URN or training provider UKPRN
+        description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee's record.</p>
         not_applicable_details:
           summary_text: Lead partner is not listed, or the trainee is funded or employed privately
           label_text: Lead partner is not applicable
           body:
             <p class="govuk-body">If the lead partner is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the lead partner, contact %{contact_link}</a></p>
-            <p>You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
     employing_schools:
+      details:
+        edit:
+          heading: Is there an employing school?
+          not_applicable_details:
+            hint: You do not need to provide an employing school if the trainee is funded or employed privately.
       edit:
         heading: Employing school
         hint: Search for a school by its unique reference number (URN), name or postcode
@@ -1189,7 +1201,7 @@ en:
           body:
             <p class="govuk-body">If the employing school is missing from the list, try searching for its unique reference number (URN) on <a target="_blank" rel="noreferrer noopener" class="govuk-link" href="https://get-information-schools.service.gov.uk/">Get information about schools (opens in a new tab)</a>.</p>
             <p class="govuk-body">If you still cannot find the school, contact %{contact_link}</a></p>
-            <p class="govuk-body">You do not need to provide a lead partner if the trainee is funded or employed privately.</p>
+            <p class="govuk-body">You do not need to provide an employing school if the trainee is funded or employed privately.</p>
     subject_specialisms:
       edit:
         heading: Which %{subject} specialism has the trainee chosen to study?
@@ -1533,6 +1545,16 @@ en:
               no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID
               no_date_header: The selected file must contain a column for date QTS or EYTS standards met
               no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
+              no_trainees: The selected file must contain at least one trainee
+        bulk_update/bulk_add_trainees_form:
+          attributes:
+            file:
+              missing: Select a CSV file
+              empty: The selected file is empty
+              too_large: The selected file must be smaller than 1MB
+              encoding_not_accepted: "The selected file must be UTF-8 or ISO-8859-1 encoded (detected: %{encoding})"
+              is_not_csv: The selected file must be a CSV
+              no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
         bulk_update/placements_form:
           attributes:

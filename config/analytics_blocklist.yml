@@ -422,6 +422,16 @@
     - provider_ukprn
     - created_at
     - updated_at
+  :bulk_update_trainee_uploads:
+    - id
+    - provider_id
+    - file
+    - file_name
+    - number_of_trainees
+    - status
+    - created_at
+    - updated_at
+    - error_messages
   :bulk_update_recommendations_uploads:
     - id
     - created_at
