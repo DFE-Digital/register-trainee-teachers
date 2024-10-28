@@ -566,6 +566,16 @@ FactoryBot.define do
       end
     end
 
+    trait :with_lead_partner_scitt do
+      transient do
+        record_type { :scitt }
+      end
+
+      after(:create) do |trainee, evaluator|
+        FactoryBot.create(:lead_partner, evaluator.record_type, trainees: [trainee])
+      end
+    end
+
     trait :with_employing_school do
       employing_school factory: %i[school]
     end
