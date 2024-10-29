@@ -21,6 +21,14 @@
 #
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
+  enum :status, {
+    pending: "pending",
+    validated: "validated",
+    in_progress: "in_progress",
+    succeeded: "succeeded",
+    failed: "failed",
+  }
+
   belongs_to :provider
   has_many :bulk_update_trainee_upload_rows,
            class_name: "BulkUpdate::TraineeUploadRow",
@@ -29,12 +37,4 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
            dependent: :destroy
 
   has_one_attached :file
-
-  enum :status, {
-    pending: "pending",
-    validated: "validated",
-    in_progress: "in_progress",
-    succeeded: "succeeded",
-    failed: "failed",
-  }
 end
