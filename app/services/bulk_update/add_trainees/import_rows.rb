@@ -84,7 +84,6 @@ module BulkUpdate
           # Commit or rollback the transaction depending on whether all rows were error free
           if all_succeeded?(results)
             trainee_upload.succeeded! unless dry_run
-            true
           else
             # TODO: copy any errors into `trainee_upload`
             success = false
