@@ -7,9 +7,7 @@ module BulkUpdate
       before_action { require_feature_flag(:bulk_add_trainees) }
 
       def show
-        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find_by(id: params[:id])
-
-        redirect_to(not_found_path) unless @bulk_update_trainee_upload
+        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
       end
 
       def new
@@ -27,6 +25,7 @@ module BulkUpdate
         if @bulk_add_trainee_upload_form.valid?
           # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
+
           redirect_to(bulk_update_trainees_upload_path(upload))
         else
           render(:new)
@@ -36,11 +35,7 @@ module BulkUpdate
     private
 
       def file
-        @file ||= create_params["file"]
-      end
-
-      def create_params
-        params.require(:bulk_update_bulk_add_trainees_upload_form).permit(:file)
+        @file ||= params.dig(:bulk_update_bulk_add_trainees_upload_form, :file)
       end
 
       def organisation
