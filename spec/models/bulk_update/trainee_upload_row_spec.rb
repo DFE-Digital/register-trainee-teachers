@@ -4,4 +4,5 @@ require "rails_helper"
 
 RSpec.describe BulkUpdate::TraineeUploadRow do
   it { is_expected.to belong_to(:bulk_update_trainee_upload) }
+  it { is_expected.to have_many(:row_errors) }
 end
