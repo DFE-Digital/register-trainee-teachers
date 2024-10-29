@@ -64,7 +64,7 @@ private
   end
 
   def and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
-    visit bulk_update_trainees_add_new_trainees_path
+    visit new_bulk_update_trainees_upload_path
     expect(page).to have_current_path(not_found_path)
   end
 
@@ -73,7 +73,7 @@ private
   end
 
   def then_i_see_how_instructions_on_how_to_bulk_add_trainees
-    expect(page).to have_current_path(bulk_update_trainees_add_new_trainees_path)
+    expect(page).to have_current_path(new_bulk_update_trainees_upload_path)
     expect(page).to have_content("Bulk add new trainees")
   end
 
@@ -104,14 +104,14 @@ private
   end
 
   def then_i_see_the_upload_page_with_errors
-    expect(page).to have_current_path(bulk_update_trainees_upload_new_trainees_path)
+    expect(page).to have_current_path(bulk_update_trainees_uploads_path)
     expect(page).to have_content("There is a problem")
     expect(page).to have_content("The selected file is empty")
   end
 
   def then_i_see_the_review_page_with_no_errors
     expect(page).to have_current_path(
-      bulk_update_trainees_review_path(id: BulkUpdate::TraineeUpload.last.id),
+      bulk_update_trainees_upload_path(id: BulkUpdate::TraineeUpload.last.id),
     )
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
   end
@@ -126,7 +126,7 @@ private
 
   def and_i_see_the_summary_page
     expect(page).to have_current_path(
-      bulk_update_trainees_status_path(id: BulkUpdate::TraineeUpload.last.id),
+      bulk_update_trainees_submission_path(id: BulkUpdate::TraineeUpload.last.id),
     )
     within(".govuk-panel") do
       expect(page).to have_content("Trainees submitted")
@@ -139,7 +139,7 @@ private
   end
 
   def when_i_visit_the_bulk_update_status_page_for_another_provider
-    visit bulk_update_trainees_review_path(id: @upload_for_different_provider.id)
+    visit bulk_update_trainees_upload_path(id: @upload_for_different_provider.id)
   end
 
   def then_i_see_a_not_found_page
@@ -153,7 +153,7 @@ private
   end
 
   def and_i_refresh_the_page
-    visit bulk_update_trainees_review_path(id: BulkUpdate::TraineeUpload.last.id)
+    visit bulk_update_trainees_upload_path(id: BulkUpdate::TraineeUpload.last.id)
   end
 
   def when_the_submit_background_job_is_run

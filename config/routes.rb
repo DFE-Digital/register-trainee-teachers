@@ -88,11 +88,8 @@ Rails.application.routes.draw do
     end
 
     namespace :trainees do
-      get :add_new_trainees, path: "add-new-trainees", to: "add_new_trainees#show"
-      post :upload_new_trainees, path: "upload-new-trainees", to: "add_new_trainees#upload"
-      get :review, path: "add-new-trainees/review/:id", to: "add_new_trainees#review"
-      post :submit_new_trainees, path: "add-new-trainees/submit/:id", to: "add_new_trainees#submit"
-      get :status, path: "add-new-trainees/status/:id", to: "add_new_trainees#status"
+      resources :uploads, path: "uploads", only: %i[new create show]
+      resources :submissions, path: "submissions", only: %i[create show]
     end
   end
 
