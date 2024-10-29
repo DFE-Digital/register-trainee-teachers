@@ -17,7 +17,7 @@ module Trainees
     attr_reader :trainee
 
     def potential_duplicates
-      Trainee.potential_duplicates_of(trainee)
+      Trainee.potential_duplicates_of(trainee).not_marked_as_duplicate
     end
 
     def confirmed_duplicate?(duplicate_trainee)
