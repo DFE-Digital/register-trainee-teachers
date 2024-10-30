@@ -23,7 +23,8 @@
 class BulkUpdate::TraineeUploadRow < ApplicationRecord
   belongs_to :trainee_upload,
              class_name: "BulkUpdate::TraineeUpload",
-             foreign_key: :bulk_update_trainee_upload_id
+             foreign_key: :bulk_update_trainee_upload_id,
+             inverse_of: :trainee_upload_rows
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError", dependent: :destroy
 
