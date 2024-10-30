@@ -12,7 +12,6 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  provider_id        :bigint           not null
-#  error_messages     :jsonb
 #
 # Indexes
 #
@@ -21,6 +20,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
+#
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
   belongs_to :provider
