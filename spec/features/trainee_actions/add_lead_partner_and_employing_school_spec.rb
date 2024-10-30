@@ -65,6 +65,10 @@ feature "add lead partner and employing school" do
     and_i_see_the_not_applicable_employing_school_radio_option(false)
     and_i_choose_the_not_applicable_employing_school_option(true)
     and_i_click_on_continue
+    when_i_try_to_visit_the_edit_employing_school_page_by_url
+    then_i_see_the_edit_employing_school_details_page
+    and_i_see_the_not_applicable_employing_school_radio_option(true)
+    and_i_click_on_continue
     then_i_see_the_confirm_my_details_page
     when_i_confirm_my_details
     then_the_lead_and_employing_schools_section_is_marked_completed
@@ -81,6 +85,10 @@ feature "add lead partner and employing school" do
     and_i_choose_the_not_applicable_lead_partner_option(true)
     and_i_click_on_continue
     then_i_see_the_edit_employing_school_details_page
+    when_i_try_to_visit_the_lead_partner_edit_page_by_url
+    then_i_see_the_edit_lead_partner_details_page
+    and_i_choose_the_not_applicable_lead_partner_option(true)
+    and_i_click_on_continue
     and_i_see_the_not_applicable_employing_school_radio_option(false)
     and_i_choose_the_not_applicable_employing_school_option(false)
     and_i_click_on_continue
@@ -229,4 +237,14 @@ feature "add lead partner and employing school" do
   def when_i_click_on_change_lead_partner
     confirm_details_page.change.click
   end
+
+  def when_i_try_to_visit_the_edit_employing_school_page_by_url
+    employing_schools_search_page.load(trainee_id: trainee.slug)
+  end
+
+  def when_i_try_to_visit_the_lead_partner_edit_page_by_url
+    edit_lead_partner_page.load(trainee_id: trainee.slug)
+  end
+
+  alias_method :then_i_see_the_edit_lead_partner_details_page, :and_i_see_the_edit_lead_partner_details_page
 end
