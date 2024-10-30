@@ -21,7 +21,9 @@
 #  fk_rails_...  (bulk_update_trainee_upload_id => bulk_update_trainee_uploads.id)
 #
 class BulkUpdate::TraineeUploadRow < ApplicationRecord
-  belongs_to :bulk_update_trainee_upload, class_name: "BulkUpdate::TraineeUpload"
+  belongs_to :trainee_upload,
+             class_name: "BulkUpdate::TraineeUpload",
+             foreign_key: :bulk_update_trainee_upload_id
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError", dependent: :destroy
 
