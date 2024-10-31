@@ -8,17 +8,10 @@ module Trainees
     helper_method :query
 
     def index
-      @lead_partner_form = Partners::LeadPartnerForm.new(trainee)
       @lead_partner_search = LeadPartnerSearch.call(query:)
     end
 
-    def edit
-      @lead_partner_form = Partners::LeadPartnerForm.new(trainee)
-    end
-
     def update
-      @lead_partner_form = Partners::LeadPartnerForm.new(trainee, params: trainee_params, user: current_user)
-
       if @lead_partner_form.lead_partner_not_selected? && @lead_partner_form.valid?
         return redirect_to(trainee_lead_partners_path(@trainee, query:))
       end
@@ -51,8 +44,16 @@ module Trainees
       @lead_partner_form.search_results_found? || @lead_partner_form.no_results_searching_again? ? :index : :edit
     end
 
+    def lead_partner_form
+      @lead_partner_form ||= Partners::LeadPartnerForm.new(
+        trainee,
+        params: trainee_params,
+        user: current_user,
+      )
+    end
+
     def lead_partner_applicable
-      if trainee.lead_partner_not_applicable?
+      if lead_partner_form.partner_not_applicable
         redirect_to(edit_trainee_lead_partners_details_path(trainee))
       end
     end
