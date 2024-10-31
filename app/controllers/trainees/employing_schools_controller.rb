@@ -7,17 +7,7 @@ module Trainees
 
     helper_method :query
 
-    def index
-      @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
-    end
-
-    def edit
-      @employing_school_form = Schools::EmployingSchoolForm.new(trainee)
-    end
-
     def update
-      @employing_school_form = Schools::EmployingSchoolForm.new(trainee, params: trainee_params, user: current_user)
-
       if @employing_school_form.school_not_selected? && @employing_school_form.valid?
         return redirect_to(trainee_employing_schools_path(@trainee, query:))
       end
@@ -53,8 +43,16 @@ module Trainees
       @employing_school_form.search_results_found? || @employing_school_form.no_results_searching_again? ? :index : :edit
     end
 
+    def employing_school_form
+      @employing_school_form ||= Schools::EmployingSchoolForm.new(
+        trainee,
+        params: trainee_params,
+        user: current_user,
+      )
+    end
+
     def employing_school_applicable
-      if trainee.employing_school_not_applicable?
+      if employing_school_form.school_not_applicable
         redirect_to(edit_trainee_employing_schools_details_path(trainee))
       end
     end

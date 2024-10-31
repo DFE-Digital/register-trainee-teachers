@@ -14,7 +14,10 @@ module Schools
     validates :employing_school_id, presence: true, if: :school_validation_required?
 
     alias_method :school_id, :employing_school_id
-    alias_method :school_not_applicable, :employing_school_not_applicable
+
+    def school_not_applicable
+      employing_school_not_applicable.to_s == "true"
+    end
 
     def employing_school_not_applicable_options
       [true, false].map do |value|
