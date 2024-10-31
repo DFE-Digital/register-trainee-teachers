@@ -46,7 +46,7 @@ module RegisterTraineeTeachers
     config.session_store(:active_record_store,
                          key: "_register_trainee_teachers_session",
                          httponly: true,
-                         secure: !Rails.env.development? && !Rails.env.test?)
+                         secure: !Rails.env.local?)
 
     config.i18n.load_path += Rails.root.glob("config/locales/**/*.yml")
 
