@@ -31,6 +31,7 @@ module Api
         .where(academic_cycles: { id: academic_cycle.id })
         .where(trainees: { updated_at: since.. })
         .order("trainees.updated_at #{sort_order}")
+        .order("trainees.id DESC")
         .page(page)
         .per(pagination_per_page)
     end

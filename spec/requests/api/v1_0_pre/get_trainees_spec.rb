@@ -215,7 +215,7 @@ describe "`GET /trainees` endpoint" do
       context "when has_trn is nil" do
         let(:has_trn) { nil }
 
-        it "returns all the trainees" do
+        it "returns all the trainees", openapi: false do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body["data"].count).to eq(12)
           expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
@@ -226,7 +226,7 @@ describe "`GET /trainees` endpoint" do
       context "when has_trn is empty" do
         let(:has_trn) { "" }
 
-        it "returns all the trainees" do
+        it "returns all the trainees", openapi: false do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body["data"].count).to eq(12)
           expect(response.parsed_body["data"].map { |trainee| trainee[:trainee_id] })
