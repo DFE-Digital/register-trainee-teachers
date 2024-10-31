@@ -24,6 +24,10 @@
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
   belongs_to :provider
+  has_many :bulk_update_trainee_upload_rows,
+           class_name: "BulkUpdate::TraineeUploadRow",
+           foreign_key: :bulk_update_trainee_upload_id,
+           inverse_of: :bulk_update_trainee_upload
 
   enum :status, {
     pending: "pending",

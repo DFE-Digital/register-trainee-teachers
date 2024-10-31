@@ -22,14 +22,7 @@ module BulkUpdate
     def save
       return false unless valid?
 
-      upload = BulkUpdate::TraineeUpload.create(
-        provider: provider,
-        file: File.read(file),
-        file_name: file.original_filename,
-        number_of_trainees: csv&.count,
-        status: valid? ? :pending : :failed,
-        error_messages: errors.messages.values.inject([], &:concat),
-      )
+      upload = create_upload
 
       BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
 
@@ -44,6 +37,24 @@ module BulkUpdate
     end
 
   private
+
+    def create_upload
+      upload = BulkUpdate::TraineeUpload.create(
+        provider: provider,
+        file: File.read(file),
+        file_name: file.original_filename,
+        number_of_trainees: csv&.count,
+        status: valid? ? :pending : :failed,
+      )
+
+      CSV.parse(upload.file, headers: :first_line).map.with_index do |row, index|
+        BulkUpdate::TraineeUploadRow.create(
+          bulk_update_trainee_upload: upload,
+          data: row.to_h,
+          row_number: index + 1,
+        )
+      end
+    end
 
     def tempfile
       @tempfile ||= file&.tempfile
