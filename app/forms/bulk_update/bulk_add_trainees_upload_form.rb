@@ -54,6 +54,8 @@ module BulkUpdate
           row_number: index + 1,
         )
       end
+
+      upload
     end
 
     def tempfile
