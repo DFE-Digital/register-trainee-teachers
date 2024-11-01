@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :nationality do
-    name { CodeSets::Nationalities::MAPPING.keys.sample }
+    name { "citizen of guinea-bissau" }
 
     trait :british do
       name { CodeSets::Nationalities::BRITISH }
