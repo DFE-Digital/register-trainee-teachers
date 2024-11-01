@@ -20,7 +20,6 @@ inherit_from:
   - .rubocop_todo.yml
 
 AllCops:
-  TargetRubyVersion: 3.2
   NewCops: enable
   Exclude:
     - "bin/*"
