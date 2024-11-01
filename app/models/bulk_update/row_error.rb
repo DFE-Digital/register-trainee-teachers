@@ -14,4 +14,9 @@
 #
 class BulkUpdate::RowError < ApplicationRecord
   belongs_to :errored_on, polymorphic: true
+
+  enum :error_type, {
+    duplicate: "duplicate",
+    validation: "validation",
+  }
 end
