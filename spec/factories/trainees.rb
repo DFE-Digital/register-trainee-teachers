@@ -459,7 +459,7 @@ FactoryBot.define do
     end
 
     trait :with_withdrawal_date do
-      withdraw_date { Faker::Date.between(from: potential_itt_start_date, to: potential_itt_start_date + 1.year) }
+      withdraw_date { Faker::Date.between(from: itt_start_date + 1.day, to: itt_start_date + 1.year) }
     end
 
     trait :withdrawn do
