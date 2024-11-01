@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :school do
     urn { Faker::Number.unique.number(digits: 6) }
-    name { Faker::Educator.secondary_school }
+    name { Faker::Educator.unique.secondary_school }
     town { Faker::Address.city }
     postcode { Faker::Address.postcode }
 
