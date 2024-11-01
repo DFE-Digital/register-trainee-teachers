@@ -12,8 +12,6 @@ module Partners
 
     attr_accessor(*NON_TRAINEE_FIELDS)
 
-    validate :both_fields_are_not_selected
-
     validates :query,
               presence: true,
               length: {
@@ -94,12 +92,6 @@ module Partners
 
     def lead_partner_validation_required?
       lead_partner_applicable? && (non_search_validation? || (search_results_found? && results_search_again_query.blank?))
-    end
-
-    def both_fields_are_not_selected
-      if params[:query].present? && lead_partner_not_applicable?
-        errors.add(:query, :both_fields_are_present)
-      end
     end
   end
 end
