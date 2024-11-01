@@ -52,7 +52,7 @@ module Trainees
     end
 
     def employing_school_applicable
-      if employing_school_form.school_not_applicable
+      if employing_school_form.school_not_applicable?
         redirect_to(edit_trainee_employing_schools_details_path(trainee))
       end
     end

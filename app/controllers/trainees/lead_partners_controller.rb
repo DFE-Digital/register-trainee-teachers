@@ -53,7 +53,7 @@ module Trainees
     end
 
     def lead_partner_applicable
-      if lead_partner_form.partner_not_applicable
+      if lead_partner_form.lead_partner_not_applicable?
         redirect_to(edit_trainee_lead_partners_details_path(trainee))
       end
     end
