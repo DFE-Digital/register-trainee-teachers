@@ -14,6 +14,7 @@ module Api
           ethnic_background
           employing_school_urn
           lead_partner_urn
+          lead_partner_ukprn
           application_id
         ].freeze
 
@@ -53,7 +54,8 @@ module Api
           .merge(ethnicity_and_disability_attributes)
           .merge(funding_attributes)
           .merge(training_initiative_attributes)
-          .merge(lead_partner_and_employing_school_attributes)
+          .merge(lead_partner_attributes)
+          .merge(employing_school_attributes)
           .compact
 
           if update && !disabilities?
@@ -190,21 +192,40 @@ module Api
           ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:funding_method]]
         end
 
-        def lead_partner_and_employing_school_attributes
-          attrs = {}
-
-          return attrs if params[:lead_partner_urn].blank?
-
-          if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
-            attrs.merge!(lead_partner_not_applicable: true)
+        def lead_partner_attributes
+          if params[:lead_partner_urn].present?
+            lead_partner_from_urn
+          elsif params[:lead_partner_ukprn].present?
+            lead_partner_from_ukprn
           else
-            lead_partner_id = LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
-
-            attrs.merge!(
-              lead_partner_id: lead_partner_id,
-              lead_partner_not_applicable: lead_partner_id.nil?,
-            )
+            {}
           end
+        end
+
+        def lead_partner_from_urn
+          return { lead_partner_not_applicable: true } if lead_partner_not_applicable?
+
+          lead_partner_id = LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
+          {
+            lead_partner_id: lead_partner_id,
+            lead_partner_not_applicable: lead_partner_id.nil?,
+          }
+        end
+
+        def lead_partner_from_ukprn
+          lead_partner_id = LeadPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id
+          {
+            lead_partner_id: lead_partner_id,
+            lead_partner_not_applicable: lead_partner_id.nil?,
+          }
+        end
+
+        def lead_partner_not_applicable?
+          NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
+        end
+
+        def employing_school_attributes
+          attrs = {}
 
           if params[:employing_school_urn].present?
             if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])

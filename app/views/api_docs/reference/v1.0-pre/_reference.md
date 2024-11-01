@@ -781,6 +781,7 @@ Trainee details
         "ethnic_group": "mixed_ethnic_group",
         "ethnic_background": "Another Mixed background",
         "lead_partner_urn": "900020"
+        "lead_partner_ukprn": "12345"
       }
     }
     </pre>
