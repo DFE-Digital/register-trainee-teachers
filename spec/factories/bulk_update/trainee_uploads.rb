@@ -10,7 +10,7 @@ FactoryBot.define do
 
     trait :with_rows do
       after(:create) do |upload|
-        CSV.parse(upload.file, headers: :first_line).map.with_index do |row, index|
+        CSV.parse(upload.file, headers: true).map.with_index do |row, index|
           create(
             :bulk_update_trainee_upload_row,
             bulk_update_trainee_upload: upload,

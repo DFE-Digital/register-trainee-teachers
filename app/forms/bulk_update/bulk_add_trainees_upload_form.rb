@@ -39,23 +39,25 @@ module BulkUpdate
   private
 
     def create_upload
-      upload = BulkUpdate::TraineeUpload.create(
-        provider: provider,
-        file: File.read(file),
-        file_name: file.original_filename,
-        number_of_trainees: csv&.count,
-        status: valid? ? :pending : :failed,
-      )
-
-      CSV.parse(upload.file, headers: :first_line).map.with_index do |row, index|
-        BulkUpdate::TraineeUploadRow.create(
-          bulk_update_trainee_upload: upload,
-          data: row.to_h,
-          row_number: index + 1,
+      ActiveRecord::Base.transaction do
+        upload = BulkUpdate::TraineeUpload.create!(
+          provider: provider,
+          file: File.read(file),
+          file_name: file.original_filename,
+          number_of_trainees: csv&.count,
+          status: valid? ? :pending : :failed,
         )
-      end
 
-      upload
+        CSV.parse(upload.file, headers: true).map.with_index do |row, index|
+          BulkUpdate::TraineeUploadRow.create!(
+            bulk_update_trainee_upload: upload,
+            data: row.to_h,
+            row_number: index + 1,
+          )
+        end
+
+        return upload
+      end
     end
 
     def tempfile

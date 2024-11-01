@@ -27,7 +27,7 @@ module BulkUpdate
         if @bulk_add_trainee_upload_form.valid?
           # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
-          redirect_to(bulk_update_trainees_upload_path(upload.id))
+          redirect_to(bulk_update_trainees_upload_path(upload))
         else
           render(:new)
         end
@@ -36,7 +36,11 @@ module BulkUpdate
     private
 
       def file
-        @file ||= params.dig(:bulk_update_bulk_add_trainees_upload_form, :file)
+        @file ||= create_params["file"]
+      end
+
+      def create_params
+        params.require(:bulk_update_bulk_add_trainees_upload_form).permit(:file)
       end
 
       def organisation
