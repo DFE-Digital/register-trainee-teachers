@@ -298,6 +298,7 @@ shared:
     - updated_at
     - errored_on_id
     - errored_on_type
+    - error_type
     - message
   :placements:
     - id

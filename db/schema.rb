@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_30_160457) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_01_133718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -242,6 +242,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_160457) do
     t.bigint "errored_on_id"
     t.string "errored_on_type"
     t.string "message"
+    t.string "error_type", default: "validation", null: false
   end
 
   create_table "bulk_update_trainee_upload_rows", force: :cascade do |t|

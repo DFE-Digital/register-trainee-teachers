@@ -5,6 +5,7 @@
 # Table name: bulk_update_row_errors
 #
 #  id              :bigint           not null, primary key
+#  error_type      :string           default("validation"), not null
 #  errored_on_type :string
 #  message         :string
 #  created_at      :datetime         not null
