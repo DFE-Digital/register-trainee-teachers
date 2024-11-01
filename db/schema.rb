@@ -243,6 +243,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_01_133718) do
     t.string "errored_on_type"
     t.string "message"
     t.string "error_type", default: "validation", null: false
+    t.index ["error_type"], name: "index_bulk_update_row_errors_on_error_type"
   end
 
   create_table "bulk_update_trainee_upload_rows", force: :cascade do |t|
