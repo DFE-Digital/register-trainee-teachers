@@ -24,6 +24,8 @@
 class BulkUpdate::TraineeUploadRow < ApplicationRecord
   belongs_to :bulk_update_trainee_upload, class_name: "BulkUpdate::TraineeUpload"
 
+  has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError", dependent: :destroy
+
   validates :row_number, presence: true
   validates :data, presence: true
 end

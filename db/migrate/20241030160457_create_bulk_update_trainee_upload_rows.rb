@@ -6,7 +6,6 @@ class CreateBulkUpdateTraineeUploadRows < ActiveRecord::Migration[7.2]
       t.references :bulk_update_trainee_upload, null: false, foreign_key: true
       t.integer :row_number, null: false
       t.jsonb :data, null: false
-      t.jsonb :error_messages
       t.timestamps
     end
 
