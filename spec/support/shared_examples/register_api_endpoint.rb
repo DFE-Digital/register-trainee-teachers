@@ -13,7 +13,7 @@ RSpec.shared_examples "a register API endpoint", openapi: false do |url, api_tok
       get url, headers: { Authorization: token }
     end
 
-    it "returns status 200", openapi: do
+    it "returns status code 200", openapi: do
       expect(response).to have_http_status(:ok)
     end
 
@@ -24,7 +24,7 @@ RSpec.shared_examples "a register API endpoint", openapi: false do |url, api_tok
     end
 
     context "with an invalid version" do
-      it "returns status 404", openapi: do
+      it "returns status code 404", openapi: do
         invalid_version_url = url.sub(/v[.0-9]+/, "v0.0")
         get invalid_version_url, headers: { Authorization: token }
         expect(response).to have_http_status(:not_found)
@@ -37,7 +37,7 @@ RSpec.shared_examples "a register API endpoint", openapi: false do |url, api_tok
       get url, headers: { Authorization: "Bearer bob" }
     end
 
-    it "returns status 401", openapi: do
+    it "returns status code 401", openapi: do
       expect(response).to have_http_status(:unauthorized)
     end
   end

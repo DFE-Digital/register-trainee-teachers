@@ -29,7 +29,7 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
     context "when the trainee cannot be found" do
       let(:another_trainee) { create(:trainee) }
 
-      it "returns 404" do
+      it "returns status code 404" do
         post "/api/v1.0-pre/trainees/#{another_trainee.slug}/defer",
              headers: { authorization: "Bearer #{token}" },
              params: { data: { defer_date: } }, as: :json

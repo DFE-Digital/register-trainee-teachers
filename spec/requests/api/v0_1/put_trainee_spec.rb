@@ -21,7 +21,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
   context "with an invalid authentication token" do
     let(:token) { "not-a-valid-token" }
 
-    it "returns status 401 unauthorized" do
+    it "returns status code 401 unauthorized" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -35,7 +35,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
   context "with an valid authentication token and the feature flag off", feature_register_api: false do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
 
-    it "returns status 404 not found" do
+    it "returns status code 404 not found" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -70,7 +70,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns status 404" do
+      it "returns status code 404" do
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -86,7 +86,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns status 422" do
+      it "returns status code 422" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly("Param is missing or the value is empty: data")
       end
@@ -104,7 +104,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       context "attribute errors supersede" do
         let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogocwhereisthecookie", email: "invalid" } }
 
-        it "returns status 422" do
+        it "returns status code 422" do
           expect(response).to have_http_status(:unprocessable_entity)
 
           expect(response.parsed_body[:errors]).to include("Email Enter an email address in the correct format, like name@example.com")
@@ -114,7 +114,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       context "validator errors" do
         let(:data) { { first_names: "Llanfairpwllgwyngyllgogerychwyrdrobwllllantysiliogogogocwhereisthecookie" } }
 
-        it "returns status 422" do
+        it "returns status code 422" do
           expect(response).to have_http_status(:unprocessable_entity)
 
           expect(response.parsed_body[:errors]).to contain_exactly(["personal_details", { "first_names" => ["First name must be 60 characters or fewer"] }])
@@ -134,7 +134,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns 404" do
+      it "returns status code 404" do
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -150,7 +150,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         expect(response).to have_http_status(:ok)
 
         expect(trainee.reload.first_names).to eq("Alice")
@@ -170,7 +170,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns status 200" do
+      it "returns status code 200" do
         expect(response).to have_http_status(:ok)
         expect(trainee.reload.nationalities.first.name).to eq("irish")
       end
@@ -189,7 +189,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns status 200" do
+      it "returns status code 200" do
         course_min_age, course_max_age = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range]
 
         expect(response).to have_http_status(:ok)
@@ -277,7 +277,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         )
       end
 
-      it "returns status 200 and updates nationality" do
+      it "returns status code 200 and updates nationality" do
         expect(response).to have_http_status(:ok)
         expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
       end
@@ -307,7 +307,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       end
     end
 
-    it "returns status 422 with an invalid `itt_start_date` and the trainee is not updated" do
+    it "returns status code 422 with an invalid `itt_start_date` and the trainee is not updated" do
       original_itt_start_date = trainee.itt_start_date
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
@@ -320,7 +320,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
     end
 
-    it "returns status 422 with an invalid `itt_end_date` and the trainee is not updated" do
+    it "returns status code 422 with an invalid `itt_end_date` and the trainee is not updated" do
       original_itt_end_date = trainee.itt_end_date
 
       put(
@@ -335,7 +335,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end
 
-    it "returns status 422 with an invalid `itt_start_date/itt_end_date` combination and the trainee is not updated" do
+    it "returns status code 422 with an invalid `itt_start_date/itt_end_date` combination and the trainee is not updated" do
       original_itt_end_date = trainee.itt_end_date
       original_itt_start_date = trainee.itt_start_date
 
@@ -352,7 +352,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end
 
-    it "returns status 422 with an invalid `trainee_start_date` and the trainee is not updated" do
+    it "returns status code 422 with an invalid `trainee_start_date` and the trainee is not updated" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}" },
@@ -364,7 +364,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       expect(response.parsed_body).to have_key("errors")
     end
 
-    it "returns status 422 with a future `trainee_start_date` and the trainee is not updated" do
+    it "returns status code 422 with a future `trainee_start_date` and the trainee is not updated" do
       put(
         "/api/v0.1/trainees/#{trainee.slug}",
         headers: { Authorization: "Bearer #{token}" },

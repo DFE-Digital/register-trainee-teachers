@@ -16,7 +16,7 @@ describe "`GET /trainees/:trainee_id/degrees` endpoint" do
     context "with a valid trainee that has a degree" do
       let(:trainee) { create(:trainee, :with_degree) }
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         get(
           "/api/v0.1/trainees/#{trainee.slug}/degrees",
           headers: { Authorization: "Bearer #{token}" },
@@ -29,7 +29,7 @@ describe "`GET /trainees/:trainee_id/degrees` endpoint" do
     context "with a valid trainee that doesn't have a degree" do
       let(:trainee) { create(:trainee) }
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         get(
           "/api/v0.1/trainees/#{trainee.slug}/degrees",
           headers: { Authorization: "Bearer #{token}" },

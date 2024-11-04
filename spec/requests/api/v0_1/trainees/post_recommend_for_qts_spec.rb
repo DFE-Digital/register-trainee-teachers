@@ -38,7 +38,7 @@ RSpec.describe "POST /api/v0.1/trainees/:trainee_id/recommend-for-qts", feature_
     context "when the trainee cannot be found" do
       let(:other_trainee) { create(:trainee, :trn_received) }
 
-      it "returns 404" do
+      it "returns status code 404" do
         post "/api/v0.1/trainees/#{other_trainee.slug}/recommend-for-qts",
              headers: { authorization: "Bearer #{token}" },
              params: { data: { qts_standards_met_date: Time.zone.today } }, as: :json
