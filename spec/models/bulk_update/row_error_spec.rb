@@ -8,8 +8,8 @@ RSpec.describe BulkUpdate::RowError do
   end
 
   it do
-    is_expected.to define_enum_for(
-      :error_type
+    expect(subject).to define_enum_for(
+      :error_type,
     ).with_values(
       duplicate: "duplicate",
       validation: "validation",
