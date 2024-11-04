@@ -11,31 +11,44 @@
       Upload Summary
     </h1>
 
-    <% if @bulk_update_trainee_upload.failed? %>
-      <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="govuk-error-summary">
-        <h2 class="govuk-error-summary__title" id="error-summary-title">
-          The upload failed because:
-        </h2>
-      </div>
-    <% else %>
-      <p class="govuk-body">
+    <p class="govuk-body">
       You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
-      </p>
+    </p>
 
-      <p class="govuk-body">
-        It included:
-      </p>
-      <ul class="govuk-list govuk-list--bullet">
+    <p class="govuk-body">
+      It included:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <% if @bulk_update_trainee_upload.trainee_upload_rows.without_errors.present? %>
         <li>
-          <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %> who can be added
+          <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.without_errors.size, "trainee") %> who can be added
         </li>
-      </ul>
-      <%= register_form_with(
-        model: @bulk_add_trainee_form,
-        url: bulk_update_trainees_submissions_path(id: @bulk_update_trainee_upload.id),
-      ) do |f| %>
-        <%= f.govuk_submit("Submit") %>
       <% end %>
+
+      <% if @bulk_update_trainee_upload.row_errors.duplicate.present? %>
+        <li>
+          <%= pluralize(@bulk_update_trainee_upload.row_errors.duplicate.size, "trainee") %>
+          who will not be added, as they already exist in Register
+        </li>
+      <% end %>
+
+      <% if @bulk_update_trainee_upload.row_errors.validation.present? %>
+        <li>
+          <%= pluralize(@bulk_update_trainee_upload.row_errors.validation.size, "trainee") %>
+          with errors in their details
+        </li>
+      <% end %>
+
+    </ul>
+
+    <p class="govuk-body">You need to review the errors before you can add new trainees</p>
+
+    <%= register_form_with(
+      model: @bulk_add_trainee_form,
+      url: bulk_update_trainees_submissions_path(id: @bulk_update_trainee_upload.id),
+    ) do |f| %>
+      <%= f.govuk_submit("Submit") %>
     <% end %>
   </div>
 </div>

@@ -30,4 +30,6 @@ class BulkUpdate::TraineeUploadRow < ApplicationRecord
 
   validates :row_number, presence: true
   validates :data, presence: true
+
+  scope :without_errors, -> { left_joins(:row_errors).where(row_errors: { errored_on_id: nil }) }
 end

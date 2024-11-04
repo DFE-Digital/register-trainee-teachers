@@ -34,5 +34,8 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
            class_name: "BulkUpdate::TraineeUploadRow",
            foreign_key: :bulk_update_trainee_upload_id,
            inverse_of: :trainee_upload,
+           dependent: :destroy
+
+  has_many :row_errors, through: :trainee_upload_rows
   has_one_attached :file
 end

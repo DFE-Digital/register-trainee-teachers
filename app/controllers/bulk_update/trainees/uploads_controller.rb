@@ -7,7 +7,10 @@ module BulkUpdate
       before_action { require_feature_flag(:bulk_add_trainees) }
 
       def show
-        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
+        @bulk_update_trainee_upload = organisation
+          .bulk_update_trainee_uploads
+          .includes(:row_errors)
+          .find(params[:id])
       end
 
       def new
