@@ -91,8 +91,13 @@ private
   def available_amount(funding_type)
     return unless allocation_subject && academic_cycle
 
-    allocation_subject.funding_methods.find_by(training_route:,
-                                               funding_type:,
-                                               academic_cycle:)&.amount
+    @available_amounts ||= {}
+    return @available_amounts[funding_type] if @available_amounts.key?(funding_type)
+
+    @available_amounts[funding_type] = allocation_subject.funding_methods.find_by(
+      training_route:,
+      funding_type:,
+      academic_cycle:,
+    )&.amount
   end
 end
