@@ -13,12 +13,6 @@ module Partners
 
     validates :lead_partner_id, presence: true, if: :lead_partner_validation_required?
 
-    alias_method :partner_id, :lead_partner_id
-
-    def partner_not_applicable
-      lead_partner_not_applicable.to_s == "true"
-    end
-
     def lead_partner_not_applicable_options
       [true, false].map do |value|
         LEAD_PARTNER_NOT_APPLICABLE_OPTION.new(id: value, name: value ? "No" : "Yes")
