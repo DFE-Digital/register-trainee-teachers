@@ -70,10 +70,6 @@ module Partners
       lead_partner_id == "results_search_again"
     end
 
-    def partner_id
-      raise(NotImplementedError)
-    end
-
     def lead_partner_not_applicable
       raise(NotImplementedError)
     end
