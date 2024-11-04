@@ -167,6 +167,41 @@ feature "bulk add trainees" do
     end
   end
 
+
+  # scenario "the upload is processing", feature_bulk_add_trainees: true do
+
+  # end
+
+  scenario "view the upload summary page with errors", feature_bulk_add_trainees: true do
+    when_the_upload_has_failed_with_validation_errors
+    and_i_visit_the_summary_page(upload: @failed_upload)
+    then_i_see_the_review_page
+    and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
+    and_i_see_the_validation_errors(number: 2)
+    and_i_dont_see_any_duplicate_errors
+    and_i_see_the_review_errors_message
+  end
+
+  scenario "view the upload summary page with duplicate errors", feature_bulk_add_trainees: true do
+    when_the_upload_has_failed_with_duplicate_errors
+    and_i_visit_the_summary_page(upload: @failed_upload)
+    then_i_see_the_review_page
+    and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
+    and_i_dont_see_any_validation_errors
+    and_i_see_the_duplicate_errors(number: 2)
+    and_i_see_the_review_errors_message
+  end
+
+  scenario "view the uplaod summary page with validation and duplicate errors", feature_bulk_add_trainees: true do
+    when_the_upload_has_failed_with_validation_and_duplicate_errors
+    and_i_visit_the_summary_page(upload: @failed_upload)
+    then_i_see_the_review_page
+    and_i_dont_the_number_of_trainees_that_can_be_added
+    and_i_see_the_validation_errors(number: 2)
+    and_i_see_the_duplicate_errors(number: 3)
+    and_i_see_the_review_errors_message
+  end
+
 private
 
   def when_i_try_resubmit_the_same_upload
@@ -322,6 +357,39 @@ private
 
   def and_i_dont_see_the_review_errors_link
     expect(page).not_to have_link("Review errors")
+  end
+
+  def then_i_see_the_review_page
+    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
+    expect(page).to have_content("It included:")
+  end
+
+  def and_i_see_the_number_of_trainees_that_can_be_added(number:)
+    expect(page).to have_content("#{number} trainees who can be added")
+  end
+
+  def and_i_dont_the_number_of_trainees_that_can_be_added
+    expect(page).not_to have_content("trainees who can be added")
+  end
+
+  def and_i_see_the_validation_errors(number:)
+    expect(page).to have_content("#{number} trainees with errors in their details")
+  end
+
+  def and_i_see_the_duplicate_errors(number:)
+    expect(page).to have_content("#{number} trainees who will not be added, as they already exist in Register")
+  end
+
+  def and_i_see_the_review_errors_message
+    expect(page).to have_content("You need to review the errors before you can add new trainees")
+  end
+
+  def and_i_dont_see_any_validation_errors
+    expect(page).not_to have_content("0 trainees with errors in their details")
+  end
+
+  def and_i_dont_see_any_duplicate_errors
+    expect(page).not_to have_content("0 trainees who will not be added, as they already exist in Register")
   end
 
   def when_i_click_the_submit_button

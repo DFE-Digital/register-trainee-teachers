@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :bulk_update_trainee_upload_row, class: "BulkUpdate::TraineeUploadRow" do
-    trainee_upload factory: %i[bulk_update_trainee_upload]
+    association :trainee_upload, factory: :bulk_update_trainee_upload
 
     sequence(:row_number) { |n| n }
 
