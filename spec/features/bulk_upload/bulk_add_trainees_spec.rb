@@ -73,42 +73,64 @@ feature "bulk add trainees" do
     expect(page).to have_current_path(root_path)
   end
 
-
-  # scenario "the upload is processing", feature_bulk_add_trainees: true do
-
-  # end
-
   scenario "view the upload summary page with errors", feature_bulk_add_trainees: true do
     when_the_upload_has_failed_with_validation_errors
+    and_i_dont_see_that_the_upload_is_processing
     and_i_visit_the_summary_page(upload: @failed_upload)
     then_i_see_the_review_page
     and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
     and_i_see_the_validation_errors(number: 2)
     and_i_dont_see_any_duplicate_errors
     and_i_see_the_review_errors_message
+    and_i_see_the_review_errors_link
+    and_i_dont_see_the_submit_button
   end
 
   scenario "view the upload summary page with duplicate errors", feature_bulk_add_trainees: true do
     when_the_upload_has_failed_with_duplicate_errors
+    and_i_dont_see_that_the_upload_is_processing
     and_i_visit_the_summary_page(upload: @failed_upload)
     then_i_see_the_review_page
     and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
     and_i_dont_see_any_validation_errors
     and_i_see_the_duplicate_errors(number: 2)
     and_i_see_the_review_errors_message
+    and_i_see_the_review_errors_link
+    and_i_dont_see_the_submit_button
   end
 
   scenario "view the uplaod summary page with validation and duplicate errors", feature_bulk_add_trainees: true do
     when_the_upload_has_failed_with_validation_and_duplicate_errors
+    and_i_dont_see_that_the_upload_is_processing
     and_i_visit_the_summary_page(upload: @failed_upload)
     then_i_see_the_review_page
     and_i_dont_the_number_of_trainees_that_can_be_added
     and_i_see_the_validation_errors(number: 2)
     and_i_see_the_duplicate_errors(number: 3)
     and_i_see_the_review_errors_message
+    and_i_see_the_review_errors_link
+    and_i_dont_see_the_submit_button
   end
 
 private
+
+  def then_i_see_that_the_upload_is_processing
+    expect(page).to have_content("Your file is being processed")
+    expect(page).to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.file_name}.")
+    expect(page).to have_content("This is taking longer than usual")
+    expect(page).to have_content("You'll receive and email to tell you when this is complete.")
+    expect(page).to have_content("You can also check the status of new trainee files.")
+    expect(page).to have_link("Back to bulk updates page")
+  end
+
+  def and_i_dont_see_that_the_upload_is_processing
+    expect(page).not_to have_content("Your file is being processed")
+    expect(page).not_to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.file_name}.")
+    expect(page).not_to have_content("This is taking longer than usual")
+    expect(page).not_to have_content("You'll receive and email to tell you when this is complete.")
+    expect(page).not_to have_content("You can also check the status of new trainee files.")
+    expect(page).not_to have_link("Back to bulk updates page")
+  end
 
   def and_there_is_a_nationality
     create(:nationality, :british)
@@ -200,12 +222,28 @@ private
     expect(page).to have_content("You need to review the errors before you can add new trainees")
   end
 
+  def and_i_dont_see_the_review_errors_message
+    expect(page).not_to have_content("You need to review the errors before you can add new trainees")
+  end
+
   def and_i_dont_see_any_validation_errors
     expect(page).not_to have_content("0 trainees with errors in their details")
   end
 
   def and_i_dont_see_any_duplicate_errors
     expect(page).not_to have_content("0 trainees who will not be added, as they already exist in Register")
+  end
+
+  def and_i_dont_see_the_submit_button
+    expect(page).not_to have_button("Submit")
+  end
+
+  def and_i_see_the_review_errors_link
+    expect(page).to have_link("Review errors")
+  end
+
+  def and_i_dont_see_the_review_errors_link
+    expect(page).not_to have_link("Review errors")
   end
 
   def when_i_click_the_submit_button

@@ -6,49 +6,79 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l">
-      <span class="govuk-caption-xl"><%= organisation_name %></span>
-      Upload Summary
-    </h1>
+    <% if @bulk_update_trainee_upload.pending? %>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= organisation_name %></span>
+        Your file is being processed
+      </h1>
 
-    <p class="govuk-body">
-      You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
-    </p>
+      <p class="govuk-body">
+        We're currently processing <%= @bulk_update_trainee_upload.file_name %>.
+      </p>
 
-    <p class="govuk-body">
-      It included:
-    </p>
+      <p class="govuk-body">
+        This is taking longer than usual
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <% if @bulk_update_trainee_upload.trainee_upload_rows.without_errors.present? %>
-        <li>
-          <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.without_errors.size, "trainee") %> who can be added
-        </li>
-      <% end %>
+      <p class="govuk-body">
+        You'll receive and email to tell you when this is complete.
+      </p>
 
-      <% if @bulk_update_trainee_upload.row_errors.duplicate.present? %>
-        <li>
-          <%= pluralize(@bulk_update_trainee_upload.row_errors.duplicate.size, "trainee") %>
-          who will not be added, as they already exist in Register
-        </li>
-      <% end %>
+      <p class="govuk-body">
+        You can also check the <%= link_to "status of new trainee files" %>.
+      </p>
 
-      <% if @bulk_update_trainee_upload.row_errors.validation.present? %>
-        <li>
-          <%= pluralize(@bulk_update_trainee_upload.row_errors.validation.size, "trainee") %>
-          with errors in their details
-        </li>
-      <% end %>
+      <p class="govuk-body">
+        <%= link_to "Back to bulk updates page" %>
+      </p>
+    <% else %>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= organisation_name %></span>
+        Upload Summary
+      </h1>
 
-    </ul>
+      <p class="govuk-body">
+        You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
+      </p>
 
-    <p class="govuk-body">You need to review the errors before you can add new trainees</p>
+      <p class="govuk-body">
+        It included:
+      </p>
 
-    <%= register_form_with(
-      model: @bulk_add_trainee_form,
-      url: bulk_update_trainees_submissions_path(id: @bulk_update_trainee_upload.id),
-    ) do |f| %>
-      <%= f.govuk_submit("Submit") %>
+      <ul class="govuk-list govuk-list--bullet">
+        <% if @bulk_update_trainee_upload.trainee_upload_rows.without_errors.present? %>
+          <li>
+            <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.without_errors.size, "trainee") %> who can be added
+          </li>
+        <% end %>
+
+        <% if @bulk_update_trainee_upload.row_errors.duplicate.present? %>
+          <li>
+            <%= pluralize(@bulk_update_trainee_upload.row_errors.duplicate.size, "trainee") %>
+            who will not be added, as they already exist in Register
+          </li>
+        <% end %>
+
+        <% if @bulk_update_trainee_upload.row_errors.validation.present? %>
+          <li>
+            <%= pluralize(@bulk_update_trainee_upload.row_errors.validation.size, "trainee") %>
+            with errors in their details
+          </li>
+        <% end %>
+      </ul>
+
+      <% if @bulk_update_trainee_upload.row_errors.present? %>
+        <p class="govuk-body">You need to review the errors before you can add new trainees</p>
+
+        <%= govuk_link_to("Review errors", class: "govuk-button") %>
+      <% else %>
+        <%= register_form_with(
+          model: @bulk_add_trainee_form,
+          url: bulk_update_trainees_submissions_path(id: @bulk_update_trainee_upload.id),
+        ) do |f| %>
+          <%= f.govuk_submit("Submit") %>
+        <% end %>
     <% end %>
+  <% end %>
   </div>
 </div>
