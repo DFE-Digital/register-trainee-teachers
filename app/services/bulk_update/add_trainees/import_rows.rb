@@ -88,7 +88,7 @@ module BulkUpdate
           end
 
           ActiveRecord::Base.transaction do |_transaction|
-            results = trainee_upload.bulk_update_trainee_upload_rows.map do |upload_row|
+            results = trainee_upload.trainee_upload_rows.map do |upload_row|
               BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
             end
 
