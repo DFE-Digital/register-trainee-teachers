@@ -20,7 +20,7 @@ module BulkUpdate
 
           context "when all rows are valid and can be imported" do
             context "when the upload status is pending" do
-              let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows, status: :pending) }
+              let(:trainee_upload) { create(:bulk_update_trainee_upload, status: :pending) }
 
               before do
                 allow(ImportRow).to receive(:call).and_return(true)
@@ -29,6 +29,11 @@ module BulkUpdate
               it "does not create any trainee records" do
                 expect(ImportRow).to receive(:call).exactly(5).times
                 expect(described_class.call(id: trainee_upload.id)).to be(true)
+              end
+
+              it "creates bulk_update_trainee_upload_rows records" do
+                trainee_upload
+                expect { described_class.call(id: trainee_upload.id) }.to not_change { BulkUpdate::TraineeUpload.count }.and change { BulkUpdate::TraineeUploadRow.count }.by(5)
               end
 
               it "sets the status to `validated`" do
@@ -57,7 +62,7 @@ module BulkUpdate
           end
 
           context "when some rows are valid and can be imported whilst others are not" do
-            let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows) }
+            let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
             before do
               allow(ImportRow).to receive(:call).and_return(true, true, true, true, false)

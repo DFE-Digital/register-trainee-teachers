@@ -74,9 +74,8 @@ module BulkUpdate
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
         expect(form.valid?).to be true
-        expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1).and change { BulkUpdate::TraineeUploadRow.count }.by(2)
+        expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1).and not_change { BulkUpdate::TraineeUploadRow.count }
         expect(BulkUpdate::TraineeUpload.last).to be_pending
-        expect(BulkUpdate::TraineeUploadRow.last.data).to eq({ "trn" => "9876543210", "first_name" => "Alice", "last_name" => "Roberts" })
         expect(form.errors).to be_empty
       end
     end
