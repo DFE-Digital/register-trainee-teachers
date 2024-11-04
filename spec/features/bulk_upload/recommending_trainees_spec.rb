@@ -232,7 +232,7 @@ private
 
   def then_i_see_an_error_message_about_file_encoding
     expect(page).to have_content("There is a problem")
-    expect(page).to have_content("The selected file must be UTF-8 or ISO-8859-1 encoded")
+    expect(page).to have_content("The uploaded file is in an unsupported file encoding")
   end
 
   def then_i_see_the_confirmation

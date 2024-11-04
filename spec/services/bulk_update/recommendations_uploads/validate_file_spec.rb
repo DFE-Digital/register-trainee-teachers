@@ -43,7 +43,7 @@ module BulkUpdate
 
         it "adds the correct error message" do
           service.validate!
-          expect(error_message).to include "File The selected file must be UTF-8 or ISO-8859-1 encoded (detected: ISO-8859-2)"
+          expect(error_message).to include "File The uploaded file is in an unsupported file encoding (ISO-8859-2). Please upload a file with UTF-8 or ISO-8859-1 encoding."
         end
       end
     end
