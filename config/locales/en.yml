@@ -1988,6 +1988,12 @@ en:
     index:
       heading: News and updates
       contents: Contents
+
+  bulk_update:
+    trainees:
+      uploads:
+        create:
+          success: File uploaded
   system_admin:
     users:
       create:

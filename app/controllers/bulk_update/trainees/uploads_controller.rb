@@ -29,7 +29,7 @@ module BulkUpdate
           # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
 
-          redirect_to(bulk_update_trainees_upload_path(upload))
+          redirect_to(bulk_update_trainees_upload_path(upload), flash: { success: t(".success") })
         else
           render(:new)
         end
