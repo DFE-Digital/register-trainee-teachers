@@ -29,7 +29,7 @@
       </p>
 
       <p class="govuk-body">
-        <%= link_to "Back to bulk updates page" %>
+        <%= link_to "Back to bulk updates page", bulk_update_path %>
       </p>
     <% else %>
       <h1 class="govuk-heading-l">
@@ -79,6 +79,9 @@
           <%= f.govuk_submit("Submit") %>
         <% end %>
     <% end %>
+      <p class="govuk-body">
+        <%= link_to "Cancel bulk updates to records", bulk_update_path %>
+      </p>
   <% end %>
   </div>
 </div>
