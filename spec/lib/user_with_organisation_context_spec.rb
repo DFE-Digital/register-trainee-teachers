@@ -284,7 +284,7 @@ describe UserWithOrganisationContext do
       context "and the provider is a HEI" do
         let(:provider) { create(:provider, :hei) }
 
-       it { is_expected.to be true }
+        it { is_expected.to be true }
       end
 
       context "and the provider is not a HEI" do
