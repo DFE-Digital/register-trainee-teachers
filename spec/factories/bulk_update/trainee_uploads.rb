@@ -17,7 +17,7 @@ FactoryBot.define do
         CSV.parse(upload.file.download, headers: true).map.with_index do |row, index|
           create(
             :bulk_update_trainee_upload_row,
-            bulk_update_trainee_upload: upload,
+            trainee_upload: upload,
             data: row.to_h,
             row_number: index + 1,
           )
