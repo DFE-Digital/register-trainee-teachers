@@ -22,7 +22,6 @@ FactoryBot.define do
             row_number: index + 1,
           )
         end
-
       end
     end
 
@@ -41,7 +40,7 @@ FactoryBot.define do
               error_type: :duplicate,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
-              row_number: index + 1
+              row_number: index + 1,
             )
           else
             create(
@@ -49,7 +48,7 @@ FactoryBot.define do
               :with_errors,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
-              row_number: index + 1
+              row_number: index + 1,
             )
           end
         end
@@ -69,7 +68,7 @@ FactoryBot.define do
               :bulk_update_trainee_upload_row,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
-              row_number: index + 1
+              row_number: index + 1,
             )
           else
             create(
@@ -77,7 +76,7 @@ FactoryBot.define do
               :with_errors,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
-              row_number: index + 1
+              row_number: index + 1,
             )
           end
         end
@@ -97,7 +96,7 @@ FactoryBot.define do
               :bulk_update_trainee_upload_row,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
-              row_number: index + 1
+              row_number: index + 1,
             )
           else
             create(
@@ -106,7 +105,7 @@ FactoryBot.define do
               error_type: :duplicate,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
-              row_number: index + 1
+              row_number: index + 1,
             )
           end
         end

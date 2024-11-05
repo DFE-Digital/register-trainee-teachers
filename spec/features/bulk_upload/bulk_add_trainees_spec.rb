@@ -304,7 +304,7 @@ private
     @failed_upload = create(
       :bulk_update_trainee_upload,
       :failed_with_validation_errors,
-      provider: current_user.organisation
+      provider: current_user.organisation,
     )
   end
 
@@ -312,7 +312,7 @@ private
     @failed_upload = create(
       :bulk_update_trainee_upload,
       :failed_with_duplicate_errors,
-      provider: current_user.organisation
+      provider: current_user.organisation,
     )
   end
 
@@ -320,7 +320,7 @@ private
     @failed_upload = create(
       :bulk_update_trainee_upload,
       :failed,
-      provider: current_user.organisation
+      provider: current_user.organisation,
     )
   end
 
