@@ -43,7 +43,7 @@ module BulkUpdate
       end
 
       def check_for_provider
-        redirect_to(root_path) unless organisation.is_a?(Provider)
+        redirect_to(root_path) unless (organisation.is_a?(Provider) && organisation.hei?)
       end
     end
   end
