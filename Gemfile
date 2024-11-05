@@ -96,7 +96,7 @@ gem "kaminari"
 
 gem "activerecord-session_store"
 # Zip file extracting
-gem "rubyzip"
+gem "rubyzip", "~> 2.3.0"
 
 # Monitoring
 gem "prometheus-client"

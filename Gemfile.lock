@@ -838,7 +838,7 @@ DEPENDENCIES
   rubocop-rspec
   rubocop-rspec_rails
   ruby-progressbar
-  rubyzip
+  rubyzip (~> 2.3.0)
   scss_lint-govuk
   sentry-rails
   sentry-ruby
