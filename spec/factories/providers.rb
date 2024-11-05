@@ -35,5 +35,13 @@ FactoryBot.define do
     trait :with_dttp_id do
       dttp_id { SecureRandom.uuid }
     end
+
+    trait :hei do
+      accreditation_id { "12345" }
+    end
+
+    trait :scitt do
+      accreditation_id { "54321" }
+    end
   end
 end
