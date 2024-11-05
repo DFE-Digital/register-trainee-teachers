@@ -36,6 +36,6 @@ private
 
   def then_i_should_see_the_privacy_notice
     expect(privacy_notice_page).to be_displayed
-    expect(privacy_notice_page.page_heading).to have_text("Register trainee teachers privacy notice")
+    expect(privacy_notice_page.page_heading).to have_text("Register trainee teachers (Register) privacy notice")
   end
 end
