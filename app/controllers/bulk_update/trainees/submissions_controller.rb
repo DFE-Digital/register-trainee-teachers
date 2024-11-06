@@ -7,12 +7,14 @@ module BulkUpdate
       before_action { require_feature_flag(:bulk_add_trainees) }
 
       def show
-        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
+        authorize(bulk_update_trainee_upload)
       end
 
       def create
-        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
-        @bulk_add_trainee_submit_form = BulkUpdate::BulkAddTraineesSubmitForm.new(upload: @bulk_update_trainee_upload)
+        @bulk_add_trainee_submit_form = BulkUpdate::BulkAddTraineesSubmitForm.new(
+          upload: authorize(bulk_update_trainee_upload),
+        )
+
         @bulk_add_trainee_submit_form.save
 
         # TODO: Handle failures/errors when saving
@@ -20,6 +22,10 @@ module BulkUpdate
       end
 
     private
+
+      def bulk_update_trainee_upload
+        @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload).find(params[:id])
+      end
 
       def organisation
         @organisation ||= current_user.organisation

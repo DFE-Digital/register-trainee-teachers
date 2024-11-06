@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
-    status { "pending" }
+    status { nil }
     number_of_trainees { 5 }
     after(:build) do |upload|
       upload.file.attach(
@@ -13,6 +13,8 @@ FactoryBot.define do
     end
 
     trait :with_rows do
+      validated
+
       after(:create) do |upload|
         CSV.parse(upload.file.download, headers: true).map.with_index do |row, index|
           create(
@@ -23,6 +25,22 @@ FactoryBot.define do
           )
         end
       end
+    end
+
+    trait :pending do
+      status { "pending" }
+    end
+
+    trait :validated do
+      status { "validated" }
+    end
+
+    trait :submitted do
+      status { "submitted" }
+    end
+
+    trait :succeeded do
+      status { "succeeded" }
     end
 
     trait :failed do
