@@ -34,7 +34,7 @@ gem "canonical-rails"
 gem "charlock_holmes", "0.7.9"
 
 # Soft delete records
-gem "discard", "~> 1.3"
+gem "discard", "~> 1.4"
 
 # Sentry
 gem "sentry-rails"
