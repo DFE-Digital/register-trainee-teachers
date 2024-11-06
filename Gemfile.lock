@@ -616,15 +616,6 @@ GEM
       base64
     rubyzip (2.3.2)
     safely_block (0.4.1)
-    sass (3.7.4)
-      sass-listen (~> 4.0.0)
-    sass-listen (4.0.0)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-    scss_lint (0.59.0)
-      sass (~> 3.5, >= 3.5.5)
-    scss_lint-govuk (0.2.0)
-      scss_lint
     securerandom (0.3.1)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -837,7 +828,6 @@ DEPENDENCIES
   rubocop-rspec_rails
   ruby-progressbar
   rubyzip
-  scss_lint-govuk
   sentry-rails
   sentry-ruby
   sentry-sidekiq

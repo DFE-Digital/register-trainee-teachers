@@ -156,8 +156,6 @@ group :development, :test do
   gem "rubocop-rspec"
   gem "rubocop-rspec_rails"
 
-  gem "scss_lint-govuk"
-
   # Debugging
   gem "debug"
   gem "pry-byebug"
