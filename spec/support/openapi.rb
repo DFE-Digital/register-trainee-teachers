@@ -20,13 +20,13 @@ if generate_openapi
 
     RSpec::OpenAPI.post_process_hook = lambda { |_path, _records, spec|
       spec[:paths].transform_keys! do |key|
-        key.to_s.sub("{trainee_slug}", "{trainee_id}").sub("{slug}", "{id}").to_sym
+        key.to_s.sub("{slug}", "{trainee_id}").gsub("_slug}", "_id}").to_sym
       end
 
       RSpec::OpenAPI::HashHelper.matched_paths(spec, "paths.*.*.parameters").each do |paths|
         spec.dig(*paths[0..]).replace(spec.dig(*paths[0..]).each do |parameters|
-          parameters[:name] = "trainee_id" if parameters[:name] == "trainee_slug"
-          parameters[:name] = "id" if parameters[:name] == "slug"
+          parameters[:name] = "trainee_id" if parameters[:name] == "slug"
+          parameters[:name] = parameters[:name].sub("_slug", "_id") if parameters[:name].include?("_slug")
         end)
       end
     }

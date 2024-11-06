@@ -42,7 +42,7 @@ module Api
         @placement ||= trainee.placements.includes([:school]).find_by!(slug:)
       end
 
-      def slug = params[:slug]
+      def slug = params[:placement_slug]
 
       def trainee_serializer_klass
         Api::GetVersionedItem.for_serializer(model: :trainee, version: version)

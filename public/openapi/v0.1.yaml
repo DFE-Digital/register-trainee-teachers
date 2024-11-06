@@ -2146,7 +2146,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: JBAmqHyJTJfiJV93YmdQvDfd
+                    placement_id: T1cMVXEkSUK4bbzGnsz7i5q5
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2162,9 +2162,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: EvarFr7mvSrzWi85kpYdxJuT
+                    degree_id: Dbv4Me7umhYKiZZPPF4Atpct
                   state: submitted_for_trn
-                  trainee_id: KgGp6gFnX4qWANsyZFW5jVpk
+                  trainee_id: YEe6Nf9AZ3e2HZQeDWC8FB2L
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: false
@@ -2787,7 +2787,7 @@ paths:
                 course_max_age: 11
                 application_id: 123456
                 lead_partner_urn: '900020'
-  "/api/{api_version}/trainees/{id}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -2799,7 +2799,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3191,12 +3191,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: bJh4LFHfVB7z53FwbBFqugDx
+        example: 6fFaYuU5xcgkfHs5zEsKK3Ha
       responses:
         '200':
           description: updates the trainee
@@ -3657,7 +3657,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: tt5d7zBaZ4L31Z2pL6ezDbVC
+                    placement_id: pXyhyMu1gV2bxJzq3RmS6rMG
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3673,9 +3673,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: EPBA6WyV9HCAC4GBLdoCiTb4
+                    degree_id: jeib3edZA4jLZ3hHVE5DSKKu
                   state: submitted_for_trn
-                  trainee_id: bJh4LFHfVB7z53FwbBFqugDx
+                  trainee_id: 6fFaYuU5xcgkfHs5zEsKK3Ha
                   application_id:
                   disability2: '57'
         '401':
@@ -4499,7 +4499,7 @@ paths:
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: dhev7ZCwee5CTnwPKxajuyhT
+                  degree_id: mcPg7fBa5NuWgnNLPPp2ftcR
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4581,7 +4581,7 @@ paths:
                   message: Uk degree can't be blank
                 - error: UnprocessableEntity
                   message: Grade can't be blank
-  "/api/{api_version}/trainees/{trainee_id}/degrees/{id}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -4593,7 +4593,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -4963,7 +4963,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -5087,7 +5087,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -5398,7 +5398,7 @@ paths:
                   postcode: W5 5BJ
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: yUCzGMy5VAVx9oVyjCxf7pZp
+                  placement_id: sfMMJc5ZPaJiHpZm38UJojVM
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5451,7 +5451,7 @@ paths:
                 errors:
                 - error: UnprocessableEntity
                   message: Name can't be blank
-  "/api/{api_version}/trainees/{trainee_id}/placements/{id}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -5463,7 +5463,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -5852,7 +5852,7 @@ paths:
                   withdraw_reasons: []
                   placements:
                   - urn: '390857'
-                    name: Brookville High School
+                    name: Brookville 122 High School
                     address: URN 390857, Jamaalshire, T5 8BL
                     postcode: T5 8BL
                     created_at: '2024-09-15T12:34:56.000Z'
@@ -5905,7 +5905,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -5955,7 +5955,7 @@ paths:
               example:
                 data:
                   urn: '404263'
-                  name: Mallowpond High
+                  name: Mallowpond 124 High
                   address: URN 404263, Lake Jacquilineville, YH5W 5NX
                   postcode: YH5W 5NX
                   created_at: '2024-09-15T12:34:56.000Z'
@@ -5997,7 +5997,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -7119,7 +7119,7 @@ paths:
                   trainee_id: o4puv5vthltufunt526003m7
                   application_id:
                   id: 691
-                  dttp_id: b04f799e-5d3c-4b33-8540-8d8761fd58ad
+                  dttp_id: 05a4aeff-e62c-4f77-91fd-c9be6ec7a1e2
                   progress:
                     personal_details: true
                     contact_details: true
