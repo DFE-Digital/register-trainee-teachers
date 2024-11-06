@@ -16,17 +16,23 @@ module BulkUpdate
 
     def initialize(provider: nil, file: nil)
       @provider = provider
-      @file = file
+      @file     = file
+      @upload   = build_upload
+
+      if file
+        @upload.file      = File.read(file)
+        @upload.file_name = file.original_filename
+      end
     end
 
     def save
       return false unless valid?
 
-      trainee_upload = create_upload
+      upload.save!
 
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(trainee_upload)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
 
-      trainee_upload
+      upload
     end
 
     def csv
@@ -38,10 +44,9 @@ module BulkUpdate
 
   private
 
-    def create_upload
-      BulkUpdate::TraineeUpload.create!(
+    def build_upload
+      BulkUpdate::TraineeUpload.new(
         provider: provider,
-        file: file,
         number_of_trainees: csv&.count,
         status: :pending,
       )

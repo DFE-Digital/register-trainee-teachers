@@ -3,16 +3,21 @@
 module BulkUpdate
   module Trainees
     class SubmissionsController < ApplicationController
-      before_action { check_for_provider }
       before_action { require_feature_flag(:bulk_add_trainees) }
 
       def show
-        authorize(bulk_update_trainee_upload)
+        authorize(
+          bulk_update_trainee_upload,
+          policy_class: BulkUpdate::Submissions::TraineeUploadPolicy,
+        )
       end
 
       def create
         @bulk_add_trainee_submit_form = BulkUpdate::BulkAddTraineesSubmitForm.new(
-          upload: authorize(bulk_update_trainee_upload),
+          upload: authorize(
+            bulk_update_trainee_upload,
+            policy_class: BulkUpdate::Submissions::TraineeUploadPolicy,
+          ),
         )
 
         @bulk_add_trainee_submit_form.save
@@ -25,14 +30,6 @@ module BulkUpdate
 
       def bulk_update_trainee_upload
         @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload).find(params[:id])
-      end
-
-      def organisation
-        @organisation ||= current_user.organisation
-      end
-
-      def check_for_provider
-        redirect_to(root_path) unless organisation.is_a?(Provider)
       end
     end
   end

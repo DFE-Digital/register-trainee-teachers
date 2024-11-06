@@ -22,12 +22,11 @@ module BulkUpdate
       @trainee_upload = trainee_upload
     end
 
-    def show?
-      trainee_upload.submitted? || trainee_upload.succeeded?
+    def new?
+      user.provider?
     end
 
-    def create?
-      trainee_upload.validated?
-    end
+    alias_method :show?, :new?
+    alias_method :create?, :new?
   end
 end
