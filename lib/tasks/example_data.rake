@@ -88,7 +88,7 @@ namespace :example_data do
     ]
 
     # For each persona...
-    PERSONAS.each do |persona_attributes|
+    PERSONAS.each_with_index do |persona_attributes, index|
       # Create the persona
       persona = Persona.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
         first_name: persona_attributes[:first_name],
@@ -104,7 +104,7 @@ namespace :example_data do
         name: persona_attributes[:provider],
         ukprn: Faker::Number.number(digits: 8),
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
-        accreditation_id: Faker::Number.number(digits: 4),
+        accreditation_id: index.even? ? "1#{Faker::Number.number(digits: 4)}" : "5#{Faker::Number.number(digits: 4)}",
       )
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
       FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
