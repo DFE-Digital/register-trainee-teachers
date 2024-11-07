@@ -55,7 +55,7 @@ module BulkUpdate
         file.tempfile.rewind
         CSVSafe.new(file.tempfile, **BulkUpdate::BulkAddTraineesUploadForm::CSV_ARGS).read
         true
-      rescue StandardError
+      rescue CSV::MalformedCSVError
         record.errors.add(:file, :is_not_csv)
         false
       end

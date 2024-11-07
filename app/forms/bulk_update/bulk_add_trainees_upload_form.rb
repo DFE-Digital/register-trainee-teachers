@@ -18,36 +18,34 @@ module BulkUpdate
       @provider = provider
       @file     = file
       @upload   = build_upload
-
-      if file
-        @upload.file = file
-      end
     end
 
     def save
       return false unless valid?
 
+      upload.file               = file
+      upload.number_of_trainees = csv&.count
       upload.save!
 
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: upload.id)
 
       upload
     end
 
     def csv
+      return if file.nil? || errors[:file].present?
+
       file.tempfile.rewind
-      @csv ||= file ? CSVSafe.new(file.tempfile, **CSV_ARGS).read : nil
-    rescue StandardError
-      @csv = nil
+
+      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
   private
 
     def build_upload
       BulkUpdate::TraineeUpload.new(
-        provider: provider,
-        number_of_trainees: csv&.count,
         status: :pending,
+        provider:,
       )
     end
 

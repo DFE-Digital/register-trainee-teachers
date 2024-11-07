@@ -41,7 +41,11 @@ module BulkUpdate
     private
 
       def file
-        @file ||= params.dig(:bulk_update_bulk_add_trainees_upload_form, :file)
+        @file ||= create_params["file"]
+      end
+
+      def create_params
+        params.fetch(:bulk_update_bulk_add_trainees_upload_form, {}).permit(:file)
       end
     end
   end
