@@ -23,9 +23,7 @@ module BulkUpdate
     def save
       return false unless valid?
 
-      upload.provider           = provider
-      upload.file               = file
-      upload.number_of_trainees = csv&.count
+      upload.attributes = upload_attributes
       upload.save!
 
       BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: upload.id)
@@ -42,6 +40,15 @@ module BulkUpdate
     end
 
   private
+
+    def upload_attributes
+      {
+        provider: provider,
+        file: file,
+        number_of_trainees: csv&.count,
+        status: :pending,
+      }
+    end
 
     def build_upload
       BulkUpdate::TraineeUpload.new(
