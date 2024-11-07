@@ -16,7 +16,7 @@
     <p class="govuk-body">Choose whichever one of the following that suits you:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li><a href="<%= trainees_path %>" class="govuk-link">View your trainee records</a> to check your trainees directly in the service one by one</li>
+      <li><%= govuk_link_to("View your trainee records", trainees_path) %> to check your trainees directly in the service one by one</li>
      <li><%= govuk_link_to("Use the ‘Reports’ section", reports_path) %> and export a CSV of your new trainees for the current academic year</li>
       <li>Export a CSV of your trainees in the <%= govuk_link_to("‘Registered trainees’ section", trainees_path) %>, using the ‘start year’ filter to select the current academic year</li>
     </ul>
