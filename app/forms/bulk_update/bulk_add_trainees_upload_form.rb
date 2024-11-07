@@ -23,6 +23,7 @@ module BulkUpdate
     def save
       return false unless valid?
 
+      upload.provider           = provider
       upload.file               = file
       upload.number_of_trainees = csv&.count
       upload.save!
@@ -45,7 +46,6 @@ module BulkUpdate
     def build_upload
       BulkUpdate::TraineeUpload.new(
         status: :pending,
-        provider:,
       )
     end
 
