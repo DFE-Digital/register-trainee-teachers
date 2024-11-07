@@ -104,7 +104,7 @@ namespace :example_data do
         name: persona_attributes[:provider],
         ukprn: Faker::Number.number(digits: 8),
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
-        accreditation_id: index.even? ? "1#{Faker::Number.number(digits: 4)}" : "5#{Faker::Number.number(digits: 4)}",
+        accreditation_id: provider.contains?("University") ? "1#{Faker::Number.number(digits: 4)}" : "5#{Faker::Number.number(digits: 4)}",
       )
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
       FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
