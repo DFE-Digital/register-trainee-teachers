@@ -88,7 +88,7 @@ namespace :example_data do
     ]
 
     # For each persona...
-    PERSONAS.each_with_index do |persona_attributes, index|
+    PERSONAS.each do |persona_attributes|
       # Create the persona
       persona = Persona.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
         first_name: persona_attributes[:first_name],
