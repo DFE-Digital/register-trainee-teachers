@@ -26,7 +26,7 @@ module BulkUpdate
       upload.attributes = upload_attributes
       upload.save!
 
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: upload.id)
 
       upload
     end
