@@ -3,50 +3,71 @@
 require "rails_helper"
 
 feature "bulk add trainees" do
-  before do
-    allow(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
-    given_i_am_authenticated
-    and_there_is_a_nationality
+  context "when authenticated as a provider user" do
+    before do
+      allow(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
+      given_i_am_authenticated
+      and_there_is_a_nationality
+    end
+
+    scenario "the bulk add trainees page is not-visible when feature flag is off", feature_bulk_add_trainees: false do
+      when_i_visit_the_bulk_update_index_page
+      then_i_cannot_see_the_bulk_add_trainees_link
+      and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
+    end
+
+    scenario "the bulk add trainees page is visible when feature flag is on", feature_bulk_add_trainees: true do
+      when_i_visit_the_bulk_update_index_page
+      and_i_click_the_bulk_add_trainees_page
+      then_i_see_how_instructions_on_how_to_bulk_add_trainees
+      and_i_see_the_empty_csv_link
+
+      when_i_attach_an_empty_file
+      and_i_click_the_upload_button
+      then_i_see_the_upload_page_with_errors
+
+      when_i_visit_the_bulk_update_index_page
+      and_i_click_the_bulk_add_trainees_page
+      and_i_attach_a_valid_file
+      and_i_click_the_upload_button
+      then_i_see_the_review_page_with_no_errors
+
+      when_the_upload_validation_background_job_is_run
+      and_i_refresh_the_page
+      then_i_see_the_review_page_with_no_errors
+
+      when_i_click_the_submit_button
+      then_a_job_is_queued_to_process_the_upload
+      and_i_see_the_summary_page
+
+      when_the_submit_background_job_is_run
+      and_i_visit_the_trainees_page
+      then_i_can_see_the_new_trainees
+    end
+
+    scenario "when I try to look at the status of a different providers upload", feature_bulk_add_trainees: true do
+      when_there_is_a_bulk_update_trainee_upload
+      when_i_visit_the_bulk_update_status_page_for_another_provider
+    end
   end
 
-  scenario "the bulk add trainees page is not-visible when feature flag is off", feature_bulk_add_trainees: false do
-    when_i_visit_the_bulk_update_index_page
-    then_i_cannot_see_the_bulk_add_trainees_link
-    and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
+  context "when authenticated but not as a provider user" do
+    before do
+      given_i_am_authenticated_as_system_admin
+    end
+
+    scenario "the bulk add trainees page is visible when feature flag is on", feature_bulk_add_trainees: true do
+      when_i_visit_the_bulk_update_add_trainees_page
+      then_i_am_redirected_to_the_root_path
+    end
   end
 
-  scenario "the bulk add trainees page is visible when feature flag is on", feature_bulk_add_trainees: true do
-    when_i_visit_the_bulk_update_index_page
-    and_i_click_the_bulk_add_trainees_page
-    then_i_see_how_instructions_on_how_to_bulk_add_trainees
-    and_i_see_the_empty_csv_link
-
-    when_i_attach_an_empty_file
-    and_i_click_the_upload_button
-    then_i_see_the_upload_page_with_errors
-
-    when_i_visit_the_bulk_update_index_page
-    and_i_click_the_bulk_add_trainees_page
-    and_i_attach_a_valid_file
-    and_i_click_the_upload_button
-    then_i_see_the_review_page_with_no_errors
-
-    when_the_upload_validation_background_job_is_run
-    and_i_refresh_the_page
-    then_i_see_the_review_page_with_no_errors
-
-    when_i_click_the_submit_button
-    then_a_job_is_queued_to_process_the_upload
-    and_i_see_the_summary_page
-
-    when_the_submit_background_job_is_run
-    and_i_visit_the_trainees_page
-    then_i_can_see_the_new_trainees
+  def when_i_visit_the_bulk_update_add_trainees_page
+    visit new_bulk_update_trainees_upload_path
   end
 
-  scenario "when I try to look at the status of a different providers upload", feature_bulk_add_trainees: true do
-    when_there_is_a_bulk_update_trainee_upload
-    when_i_visit_the_bulk_update_status_page_for_another_provider
+  def then_i_am_redirected_to_the_root_path
+    expect(page).to have_current_path(root_path)
   end
 
 private
