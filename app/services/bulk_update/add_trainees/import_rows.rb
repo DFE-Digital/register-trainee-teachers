@@ -108,6 +108,10 @@ module BulkUpdate
         end
 
         success
+      rescue ActiveRecord::ActiveRecordError
+        trainee_upload.failed!
+
+        raise
       end
 
       def trainee_upload

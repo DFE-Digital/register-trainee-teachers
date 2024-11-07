@@ -40,6 +40,15 @@ module BulkUpdate
                 described_class.call(id: trainee_upload.id)
                 expect(trainee_upload.reload).to be_validated
               end
+
+              context "when there is a database error" do
+                before { allow(BulkUpdate::TraineeUploadRow).to receive(:create!).and_raise(ActiveRecord::ActiveRecordError) }
+
+                it "raises the exception and sets the status to `failed`" do
+                  expect { described_class.call(id: trainee_upload.id) }.to raise_error(ActiveRecord::ActiveRecordError)
+                  expect(trainee_upload.reload).to be_failed
+                end
+              end
             end
 
             context "when the upload status is submitted" do
@@ -57,6 +66,15 @@ module BulkUpdate
               it "sets the status to `succeeded`" do
                 described_class.call(id: trainee_upload.id)
                 expect(trainee_upload.reload).to be_succeeded
+              end
+
+              context "when there is a database error" do
+                before { allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_raise(ActiveRecord::ActiveRecordError) }
+
+                it "raises the exception and sets the status to `failed`" do
+                  expect { described_class.call(id: trainee_upload.id) }.to raise_error(ActiveRecord::ActiveRecordError)
+                  expect(trainee_upload.reload).to be_failed
+                end
               end
             end
           end
