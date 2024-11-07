@@ -40,11 +40,15 @@ FactoryBot.define do
     trait :failed do
       status { "failed" }
 
-      file_name { "five_trainees_with_two_errors" }
-      file { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read }
-
       after(:build) do |bulk_update_trainee_upload|
-        CSV.parse(bulk_update_trainee_upload.file, headers: true).each_with_index do |row, index|
+        bulk_update_trainee_upload.attach(
+          io: Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").open,
+          filename: "five_trainees_with_two_errors.csv",
+        )
+      end
+
+      after(:create) do |bulk_update_trainee_upload|
+        CSV.parse(bulk_update_trainee_upload.download, headers: true).each_with_index do |row, index|
           if index < 3
             create(
               :bulk_update_trainee_upload_row,
@@ -70,11 +74,15 @@ FactoryBot.define do
     trait :failed_with_validation_errors do
       status { "failed" }
 
-      file_name { "five_trainees_with_two_errors" }
-      file { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read }
-
       after(:build) do |bulk_update_trainee_upload|
-        CSV.parse(bulk_update_trainee_upload.file, headers: true).each_with_index do |row, index|
+        bulk_update_trainee_upload.attach(
+          io: Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").open,
+          filename: "five_trainees_with_two_errors.csv",
+        )
+      end
+
+      after(:create) do |bulk_update_trainee_upload|
+        CSV.parse(bulk_update_trainee_upload.download, headers: true).each_with_index do |row, index|
           if index < 3
             create(
               :bulk_update_trainee_upload_row,
@@ -98,11 +106,15 @@ FactoryBot.define do
     trait :failed_with_duplicate_errors do
       status { "failed" }
 
-      file_name { "five_trainees_with_two_errors" }
-      file { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read }
-
       after(:build) do |bulk_update_trainee_upload|
-        CSV.parse(bulk_update_trainee_upload.file, headers: true).each_with_index do |row, index|
+        bulk_update_trainee_upload.attach(
+          io: Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").open,
+          filename: "five_trainees_with_two_errors.csv",
+        )
+      end
+
+      after(:create) do |bulk_update_trainee_upload|
+        CSV.parse(bulk_update_trainee_upload.download, headers: true).each_with_index do |row, index|
           if index < 3
             create(
               :bulk_update_trainee_upload_row,
