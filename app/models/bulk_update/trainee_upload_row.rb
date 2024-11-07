@@ -6,7 +6,6 @@
 #
 #  id                            :bigint           not null, primary key
 #  data                          :jsonb            not null
-#  error_messages                :jsonb
 #  row_number                    :integer          not null
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null

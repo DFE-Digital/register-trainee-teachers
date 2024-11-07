@@ -248,7 +248,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_160457) do
     t.bigint "bulk_update_trainee_upload_id", null: false
     t.integer "row_number", null: false
     t.jsonb "data", null: false
-    t.jsonb "error_messages"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bulk_update_trainee_upload_id", "row_number"], name: "index_bulk_update_trainee_upload_rows_on_upload_and_row_number", unique: true
@@ -257,8 +256,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_160457) do
 
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
-    t.text "file"
-    t.string "file_name"
     t.integer "number_of_trainees"
     t.string "status"
     t.datetime "created_at", null: false

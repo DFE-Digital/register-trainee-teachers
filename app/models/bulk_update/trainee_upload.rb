@@ -5,8 +5,6 @@
 # Table name: bulk_update_trainee_uploads
 #
 #  id                 :bigint           not null, primary key
-#  file               :text
-#  file_name          :string
 #  number_of_trainees :integer
 #  status             :string
 #  created_at         :datetime         not null
@@ -29,6 +27,8 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
            foreign_key: :bulk_update_trainee_upload_id,
            inverse_of: :bulk_update_trainee_upload,
            dependent: :destroy
+
+  has_one_attached :file
 
   enum :status, {
     pending: "pending",

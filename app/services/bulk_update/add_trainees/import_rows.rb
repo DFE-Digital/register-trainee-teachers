@@ -78,7 +78,7 @@ module BulkUpdate
 
         ActiveRecord::Base.transaction do |_transaction|
           if dry_run
-            CSV.parse(trainee_upload.file, headers: true).map.with_index do |row, index|
+            CSV.parse(trainee_upload.file.download, headers: true).map.with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
                 bulk_update_trainee_upload: trainee_upload,
                 data: row.to_h,

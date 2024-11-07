@@ -27,7 +27,11 @@ module BulkUpdate
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
 
         # Save the record
-        json_result = Api::CreateTrainee.call(current_provider:, trainee_attributes:, version:)
+        json_result = Api::CreateTrainee.call(
+          current_provider:,
+          trainee_attributes:,
+          version:,
+        )
 
         json_result_to_result(json_result)
       end

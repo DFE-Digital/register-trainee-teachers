@@ -41,8 +41,7 @@ module BulkUpdate
     def create_upload
       BulkUpdate::TraineeUpload.create!(
         provider: provider,
-        file: File.read(file),
-        file_name: file.original_filename,
+        file: file,
         number_of_trainees: csv&.count,
         status: valid? ? :pending : :failed,
       )
