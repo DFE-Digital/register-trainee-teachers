@@ -30,11 +30,11 @@ class ProgressService
   end
 
   def in_progress_valid?
-    started? && @validator.valid? && !completed?
+    started? && valid? && !completed?
   end
 
   def in_progress_invalid?
-    started? && @validator.invalid? && !completed?
+    started? && !valid? && !completed?
   end
 
   def review?
@@ -42,11 +42,17 @@ class ProgressService
   end
 
   def completed?
-    @validator.valid? && marked_as_completed
+    valid? && marked_as_completed
   end
 
   def errors
     validator.errors.full_messages
+  end
+
+  def valid?
+    return @valid if defined?(@valid)
+
+    @valid = @validator.valid?
   end
 
 private
