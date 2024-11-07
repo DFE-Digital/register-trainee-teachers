@@ -381,10 +381,10 @@ This command will:
 
 Note: This process will import a fresh copy of the applicants' details and use them to create new records. This ensures that the system realigns with its normal mode of operation, correcting any issues caused by previously imported, potentially stale data.
 
-### Adding a previous trainee for a former accredited provider
+## Adding a previous trainee for a former accredited provider
 
 
-Given a lead provider and the former accredited provider is the same.
+Given a lead partner and the former accredited provider is the same.
 ```ruby
 
 lead_partner = LeadPartner.find(1363)
@@ -394,6 +394,6 @@ lead_partner.name == lead_partner.provider.name && lead_partner.provider.accredi
 trainee = Trainee.new(provider: lead_partner.provider, state: :draft)
 ```
 
-Create a `draft` trainee for `lead_partner.provider` and have support agent to liaise with the provider to ensure the the details are correct, and the dates are correct.
+Create a `draft` trainee for `lead_partner.provider` and ask the support agent to liaise with the provider to ensure that the details are correct, and the dates are correct.
 
 May need overseeing from `draft` to `awarded`.
