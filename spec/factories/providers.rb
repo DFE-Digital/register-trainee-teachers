@@ -37,11 +37,11 @@ FactoryBot.define do
     end
 
     trait :hei do
-      accreditation_id { "12345" }
+      accreditation_id { "1234" }
     end
 
     trait :scitt do
-      accreditation_id { "54321" }
+      accreditation_id { "5432" }
     end
   end
 end
