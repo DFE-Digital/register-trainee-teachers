@@ -50,7 +50,9 @@ private
   end
 
   def existing_trainee_with_id
-    @existing_trainee_with_id ||= Trainee.where.not(id: trainee.id)
+    return @existing_trainee_with_id if defined?(@existing_trainee_with_id)
+
+    @existing_trainee_with_id = Trainee.where.not(id: trainee.id)
       .where(provider_id:)
       .where("UPPER(provider_trainee_id) = ?", provider_trainee_id.upcase).first
   end
