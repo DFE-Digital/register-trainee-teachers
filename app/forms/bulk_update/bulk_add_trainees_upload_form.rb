@@ -20,8 +20,7 @@ module BulkUpdate
       @upload   = build_upload
 
       if file
-        @upload.file      = File.read(file)
-        @upload.file_name = file.original_filename
+        @upload.file = file
       end
     end
 

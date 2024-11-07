@@ -38,4 +38,6 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
 
   has_many :row_errors, through: :trainee_upload_rows
   has_one_attached :file
+
+  delegate :filename, :download, :attach, to: :file
 end
