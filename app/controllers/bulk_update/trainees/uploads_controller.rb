@@ -23,7 +23,7 @@ module BulkUpdate
       def create
         @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
           provider: current_user.organisation,
-          file: file,
+          file: upload_params[:file],
         )
 
         authorize(@bulk_add_trainee_upload_form.upload)
@@ -40,11 +40,7 @@ module BulkUpdate
 
     private
 
-      def file
-        @file ||= create_params["file"]
-      end
-
-      def create_params
+      def upload_params
         params.fetch(:bulk_update_bulk_add_trainees_upload_form, {}).permit(:file)
       end
     end
