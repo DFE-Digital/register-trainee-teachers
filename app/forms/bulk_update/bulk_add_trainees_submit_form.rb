@@ -16,7 +16,7 @@ module BulkUpdate
       return false unless valid? && upload.validated?
 
       BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: upload.id)
-      upload.submitted!
+      upload.in_progress!
     end
   end
 end

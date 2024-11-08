@@ -51,8 +51,8 @@ module BulkUpdate
               end
             end
 
-            context "when the upload status is submitted" do
-              let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows, status: :submitted) }
+            context "when the upload status is in progress" do
+              let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows, status: :in_progress) }
 
               before do
                 allow(ImportRow).to receive(:call).and_return(true)

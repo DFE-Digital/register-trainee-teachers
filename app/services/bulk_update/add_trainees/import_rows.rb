@@ -73,7 +73,7 @@ module BulkUpdate
       def call
         return unless FeatureService.enabled?(:bulk_add_trainees)
 
-        dry_run = !trainee_upload.submitted?
+        dry_run = !trainee_upload.in_progress?
         success = true
 
         ActiveRecord::Base.transaction do |_transaction|

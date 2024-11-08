@@ -33,7 +33,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   enum :status, {
     pending: "pending",
     validated: "validated",
-    submitted: "submitted",
+    in_progress: "in_progress",
     succeeded: "succeeded",
     failed: "failed",
   }
