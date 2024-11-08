@@ -10,8 +10,8 @@ describe NationalitiesHelper do
   describe "#checkbox_nationalities" do
     let(:expected_nationality) do
       NationalityOption.new(
-        id: nationality.name.titleize,
-        name: nationality.name.titleize,
+        id: nationality.name.to_title,
+        name: nationality.name.to_title,
         description: t("views.default_nationalities.#{nationality.name}.description"),
       )
     end
@@ -29,7 +29,7 @@ describe NationalitiesHelper do
       result = nationalities_options([nationality])
       expect(result.size).to be 2
       expect(result.first.name).to be ""
-      expect(result.second.name).to eq nationality.name.titleize
+      expect(result.second.name).to eq nationality.name.to_title
     end
   end
 end

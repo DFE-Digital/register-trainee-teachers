@@ -27,7 +27,7 @@ describe PersonalDetailsForm, type: :model do
       "other_nationality2_raw" => "American",
       "other_nationality3" => "Irish",
       "other_nationality3_raw" => "Irish",
-      "nationality_names" => [french.name.titleize, american.name.titleize, irish.name.titleize],
+      "nationality_names" => [french.name.to_title, american.name.to_title, irish.name.to_title],
     }
   end
 
@@ -194,7 +194,7 @@ describe PersonalDetailsForm, type: :model do
         year: "1963",
         other: true,
         nationality_ids: [french.id, american.id, irish.id],
-        nationality_names: [french.name.titleize, american.name.titleize, irish.name.titleize],
+        nationality_names: [french.name.to_title, american.name.to_title, irish.name.to_title],
       })
     end
   end
@@ -235,7 +235,7 @@ describe PersonalDetailsForm, type: :model do
           "other_nationality2_raw" => jamaican.name,
           "other_nationality3" => "",
           "other_nationality3_raw" => "",
-          "nationality_names" => [british.name.titleize],
+          "nationality_names" => [british.name.to_title],
         }
       }
 
@@ -255,7 +255,7 @@ describe PersonalDetailsForm, type: :model do
           "other_nationality2_raw" => jamaican.name,
           "other_nationality3" => "",
           "other_nationality3_raw" => "",
-          "nationality_names" => [british.name.titleize],
+          "nationality_names" => [british.name.to_title],
         }
       }
 
