@@ -25,7 +25,7 @@ module BulkUpdate
       it "queues a TraineeRows job and changed the status of the the upload to `submitted`" do
         expect(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
         form.save
-        expect(upload.reload).to be_submitted
+        expect(upload.reload).to be_in_progress
       end
     end
   end
