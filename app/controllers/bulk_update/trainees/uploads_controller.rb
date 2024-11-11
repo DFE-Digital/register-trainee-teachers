@@ -38,6 +38,12 @@ module BulkUpdate
         end
       end
 
+      def destroy
+        policy_scope(BulkUpdate::TraineeUpload).find(params[:id]).cancelled!
+
+        redirect_to(bulk_update_path, flash: { success: t(".success") })
+      end
+
     private
 
       def upload_params

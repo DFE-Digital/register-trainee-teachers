@@ -344,7 +344,7 @@ private
 
   def and_i_see_the_summary_page
     expect(page).to have_current_path(
-      bulk_update_trainees_submissions_path(BulkUpdate::TraineeUpload.last),
+      bulk_update_trainees_submission_path(BulkUpdate::TraineeUpload.last),
     )
     within(".govuk-panel") do
       expect(page).to have_content("Trainees submitted")

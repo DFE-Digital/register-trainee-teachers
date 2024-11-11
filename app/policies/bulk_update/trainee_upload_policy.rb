@@ -23,7 +23,7 @@ module BulkUpdate
     end
 
     def new?
-      user.hei_provider?
+      !trainee_upload.cancelled? && user.hei_provider?
     end
 
     alias_method :show?, :new?

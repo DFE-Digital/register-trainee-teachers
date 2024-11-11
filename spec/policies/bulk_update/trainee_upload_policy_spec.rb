@@ -9,19 +9,39 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
 
   context "when the User's organisation is an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :hei), session: {}) }
-    let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
 
-    permissions :show?, :new?, :create? do
-      it { is_expected.to permit(user, trainee_upload) }
+    %i[pending validated in_progress succeeded failed].each do |status|
+      context "when the upload is #{status}" do
+        let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+        permissions :show?, :new?, :create? do
+          it { is_expected.to permit(user, trainee_upload) }
+        end
+      end
+    end
+
+    %i[cancelled].each do |status|
+      context "when the upload is #{status}" do
+        let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+        permissions :show?, :new?, :create? do
+          it { is_expected.not_to permit(user, trainee_upload) }
+        end
+      end
     end
   end
 
   context "when the User's organisation is not an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
-    let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
 
-    permissions :show?, :new?, :create? do
-      it { is_expected.not_to permit(user, trainee_upload) }
+    %i[pending validated in_progress succeeded failed cancelled].each do |status|
+      context "when the upload is #{status}" do
+        let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+        permissions :show?, :new?, :create? do
+          it { is_expected.not_to permit(user, trainee_upload) }
+        end
+      end
     end
   end
 
@@ -29,8 +49,14 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {}) }
     let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
 
-    permissions :show?, :new?, :create? do
-      it { is_expected.not_to permit(user, trainee_upload) }
+    %i[pending validated in_progress succeeded failed cancelled].each do |status|
+      context "when the upload is #{status}" do
+        let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+        permissions :show?, :new?, :create? do
+          it { is_expected.not_to permit(user, trainee_upload) }
+        end
+      end
     end
   end
 

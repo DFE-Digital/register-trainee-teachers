@@ -27,6 +27,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     in_progress: "in_progress",
     succeeded: "succeeded",
     failed: "failed",
+    cancelled: "cancelled",
   }
 
   belongs_to :provider
