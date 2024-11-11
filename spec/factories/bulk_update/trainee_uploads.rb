@@ -36,8 +36,8 @@ FactoryBot.define do
       status { "validated" }
     end
 
-    trait :submitted do
-      status { "submitted" }
+    trait :in_progress do
+      status { "in_progress" }
     end
 
     trait :succeeded do
