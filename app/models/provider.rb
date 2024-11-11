@@ -104,6 +104,10 @@ class Provider < ApplicationRecord
       .where(academic_cycles: { id: AcademicCycle.since_year(START_MANDATING_PLACEMENT_DATA_CYCLE).select(:id) })
   end
 
+  def hei?
+    accreditation_id.starts_with?("1")
+  end
+
 private
 
   def update_courses

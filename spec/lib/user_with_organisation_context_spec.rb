@@ -276,4 +276,28 @@ describe UserWithOrganisationContext do
       expect(described_class.primary_key).to eq("id")
     end
   end
+
+  describe "#hei_provider?" do
+    subject { described_class.new(user:, session:).hei_provider? }
+
+    context "when the organisation is a provider" do
+      context "and the provider is a HEI" do
+        let(:provider) { create(:provider, :hei) }
+
+        it { is_expected.to be true }
+      end
+
+      context "and the provider is not a HEI" do
+        let(:provider) { create(:provider, :scitt) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the organisation is a lead partner" do
+      let(:user) { create(:user, id: 1, first_name: "Dave", lead_partners: [lead_partner]) }
+
+      it { is_expected.to be false }
+    end
+  end
 end

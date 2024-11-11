@@ -198,4 +198,18 @@ describe Provider do
       end
     end
   end
+
+  describe "hei?" do
+    context "when the accreditation_id begins with 1" do
+      subject { build(:provider, accreditation_id: "123456").hei? }
+
+      it { is_expected.to be true }
+    end
+
+    context "when the accreditation_id does not begin with 1" do
+      subject { build(:provider, accreditation_id: "234567").hei? }
+
+      it { is_expected.to be false }
+    end
+  end
 end
