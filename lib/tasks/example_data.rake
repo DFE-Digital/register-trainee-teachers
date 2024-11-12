@@ -100,12 +100,13 @@ namespace :example_data do
       next unless persona_attributes[:provider]
 
       # Create the provider for that persona
-      provider = Provider.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
+      provider = FactoryBot.create(
+        :provider,
+        :with_dttp_id,
         name: persona_attributes[:provider],
-        ukprn: Faker::Number.number(digits: 8),
         code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
-        accreditation_id: provider.contains?("University") ? "1#{Faker::Number.number(digits: 4)}" : "5#{Faker::Number.number(digits: 4)}",
       )
+
       ProviderUser.find_or_create_by!(user: persona, provider: provider)
       FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
       FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)

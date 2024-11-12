@@ -7,7 +7,10 @@ FactoryBot.define do
     end
     code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
     ukprn { Faker::Number.number(digits: 8) }
-    sequence(:accreditation_id, "1111")
+
+    after(:build) do |provider|
+      provider.accreditation_id ||= "#{provider.name.include?('University') ? 1 : 5}#{Faker::Number.number(digits: 4)}"
+    end
 
     trait :unaccredited do
       accredited { false }
