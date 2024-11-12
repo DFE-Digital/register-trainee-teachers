@@ -24,9 +24,9 @@ module Features
 
       if other_nationality
         personal_details_page.nationality.check("Other")
-        personal_details_page.other_nationality.select(@french.name.to_title)
+        personal_details_page.other_nationality.select(@french.name.titleize_with_hyphens)
       else
-        personal_details_page.nationality.check(@british.name.to_title)
+        personal_details_page.nationality.check(@british.name.titleize_with_hyphens)
       end
     end
 

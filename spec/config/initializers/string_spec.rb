@@ -3,9 +3,9 @@
 require "rails_helper"
 
 describe "String" do
-  describe "#to_title" do
-    it "titleize the string retaining the hythen" do
-      expect("citizen of guinea-bissau".to_title).to eq("Citizen Of Guinea-Bissau")
+  describe "#titleize_with_hyphens" do
+    it "titleize the string retaining the hyphen" do
+      expect("citizen of guinea-bissau".titleize_with_hyphens).to eq("Citizen Of Guinea-Bissau")
     end
   end
 end

@@ -62,7 +62,7 @@ module PersonalDetails
       return if nationalities.blank?
 
       if nationalities.size == 1
-        nationalities.first.name.to_title
+        nationalities.first.name.titleize_with_hyphens
       else
         sanitize(tag.ul(class: "govuk-list") do
           nationality_names.each do |nationality_name|
@@ -73,9 +73,9 @@ module PersonalDetails
     end
 
     def nationality_names
-      names = nationalities.map { |nationality| nationality.name.to_title }
-      promote_nationality(names, ::CodeSets::Nationalities::IRISH.to_title)
-      promote_nationality(names, ::CodeSets::Nationalities::BRITISH.to_title)
+      names = nationalities.map { |nationality| nationality.name.titleize_with_hyphens }
+      promote_nationality(names, ::CodeSets::Nationalities::IRISH.titleize_with_hyphens)
+      promote_nationality(names, ::CodeSets::Nationalities::BRITISH.titleize_with_hyphens)
     end
 
     def promote_nationality(array, nationality)
