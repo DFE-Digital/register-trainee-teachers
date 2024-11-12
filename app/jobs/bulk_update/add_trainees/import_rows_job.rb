@@ -5,10 +5,10 @@ module BulkUpdate
     class ImportRowsJob < ApplicationJob
       queue_as :bulk_update
 
-      def perform(id:)
+      def perform(trainee_upload)
         return unless FeatureService.enabled?(:bulk_add_trainees)
 
-        ImportRows.call(id:)
+        ImportRows.call(trainee_upload)
       end
     end
   end

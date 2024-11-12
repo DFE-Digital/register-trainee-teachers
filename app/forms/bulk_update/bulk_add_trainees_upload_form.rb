@@ -22,11 +22,11 @@ module BulkUpdate
     def save
       return false unless valid?
 
-      upload = create_upload
+      trainee_upload = create_upload
 
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(trainee_upload)
 
-      upload
+      trainee_upload
     end
 
     def csv

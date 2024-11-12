@@ -5,10 +5,10 @@ module BulkUpdate
     class ImportRows
       include ServicePattern
 
-      attr_accessor :id
+      attr_accessor :trainee_upload
 
-      def initialize(id:)
-        self.id = id
+      def initialize(trainee_upload)
+        self.trainee_upload = trainee_upload
       end
 
       TRAINEE_HEADERS = {
@@ -112,10 +112,6 @@ module BulkUpdate
         trainee_upload.failed!
 
         raise
-      end
-
-      def trainee_upload
-        @trainee_upload ||= BulkUpdate::TraineeUpload.find(id)
       end
 
       def current_provider

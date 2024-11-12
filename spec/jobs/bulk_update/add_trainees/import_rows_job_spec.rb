@@ -12,7 +12,7 @@ RSpec.describe BulkUpdate::AddTrainees::ImportRowsJob do
       it "does not call the BulkUpdate::AddTrainees::ImportRows service" do
         allow(BulkUpdate::AddTrainees::ImportRows).to receive(:call)
 
-        described_class.perform_now(id: trainee_upload.id)
+        described_class.perform_now(trainee_upload)
 
         expect(BulkUpdate::AddTrainees::ImportRows).not_to have_received(:call)
       end
@@ -24,9 +24,9 @@ RSpec.describe BulkUpdate::AddTrainees::ImportRowsJob do
       it "calls the BulkUpdate::AddTrainees::ImportRows service" do
         allow(BulkUpdate::AddTrainees::ImportRows).to receive(:call)
 
-        described_class.perform_now(id: trainee_upload.id)
+        described_class.perform_now(trainee_upload)
 
-        expect(BulkUpdate::AddTrainees::ImportRows).to have_received(:call).with(id: trainee_upload.id)
+        expect(BulkUpdate::AddTrainees::ImportRows).to have_received(:call).with(trainee_upload)
       end
     end
   end

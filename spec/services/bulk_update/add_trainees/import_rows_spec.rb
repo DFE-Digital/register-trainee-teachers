@@ -11,7 +11,7 @@ module BulkUpdate
 
           it "does not call the `ImportRow` service" do
             expect(ImportRow).not_to receive(:call)
-            described_class.call(id: trainee_upload.id)
+            described_class.call(trainee_upload)
           end
         end
 
@@ -28,16 +28,16 @@ module BulkUpdate
 
               it "does not create any trainee records" do
                 expect(ImportRow).to receive(:call).exactly(5).times
-                expect(described_class.call(id: trainee_upload.id)).to be(true)
+                expect(described_class.call(trainee_upload)).to be(true)
               end
 
               it "creates bulk_update_trainee_upload_rows records" do
                 trainee_upload
-                expect { described_class.call(id: trainee_upload.id) }.to not_change { BulkUpdate::TraineeUpload.count }.and change { BulkUpdate::TraineeUploadRow.count }.by(5)
+                expect { described_class.call(trainee_upload) }.to not_change { BulkUpdate::TraineeUpload.count }.and change { BulkUpdate::TraineeUploadRow.count }.by(5)
               end
 
               it "sets the status to `validated`" do
-                described_class.call(id: trainee_upload.id)
+                described_class.call(trainee_upload)
                 expect(trainee_upload.reload).to be_validated
               end
 
@@ -45,7 +45,7 @@ module BulkUpdate
                 before { allow(BulkUpdate::TraineeUploadRow).to receive(:create!).and_raise(ActiveRecord::ActiveRecordError) }
 
                 it "raises the exception and sets the status to `failed`" do
-                  expect { described_class.call(id: trainee_upload.id) }.to raise_error(ActiveRecord::ActiveRecordError)
+                  expect { described_class.call(trainee_upload) }.to raise_error(ActiveRecord::ActiveRecordError)
                   expect(trainee_upload.reload).to be_failed
                 end
               end
@@ -60,11 +60,11 @@ module BulkUpdate
 
               it "creates 5 trainee records" do
                 expect(ImportRow).to receive(:call).exactly(5).times
-                expect(described_class.call(id: trainee_upload.id)).to be(true)
+                expect(described_class.call(trainee_upload)).to be(true)
               end
 
               it "sets the status to `succeeded`" do
-                described_class.call(id: trainee_upload.id)
+                described_class.call(trainee_upload)
                 expect(trainee_upload.reload).to be_succeeded
               end
 
@@ -72,7 +72,7 @@ module BulkUpdate
                 before { allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_raise(ActiveRecord::ActiveRecordError) }
 
                 it "raises the exception and sets the status to `failed`" do
-                  expect { described_class.call(id: trainee_upload.id) }.to raise_error(ActiveRecord::ActiveRecordError)
+                  expect { described_class.call(trainee_upload) }.to raise_error(ActiveRecord::ActiveRecordError)
                   expect(trainee_upload.reload).to be_failed
                 end
               end
@@ -88,13 +88,13 @@ module BulkUpdate
 
             it "does not create any trainee records" do
               expect(ImportRow).to receive(:call).exactly(5).times
-              expect(described_class.call(id: trainee_upload.id)).to be(false)
+              expect(described_class.call(trainee_upload)).to be(false)
 
               expect(Trainee.count).to eq(@original_trainee_count)
             end
 
             it "sets the status to `failed`" do
-              described_class.call(id: trainee_upload.id)
+              described_class.call(trainee_upload)
               expect(trainee_upload.reload).to be_failed
             end
           end

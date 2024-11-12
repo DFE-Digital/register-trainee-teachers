@@ -142,7 +142,7 @@ private
   end
 
   def then_a_job_is_queued_to_process_the_upload
-    expect(BulkUpdate::AddTrainees::ImportRowsJob).to have_received(:perform_later).with(id: BulkUpdate::TraineeUpload.last.id).at_least(:once)
+    expect(BulkUpdate::AddTrainees::ImportRowsJob).to have_received(:perform_later).with(BulkUpdate::TraineeUpload.last).at_least(:once)
   end
 
   def and_i_see_the_summary_page
@@ -169,7 +169,7 @@ private
 
   def when_the_upload_validation_background_job_is_run
     Sidekiq::Testing.inline! do
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_now(id: BulkUpdate::TraineeUpload.last.id)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_now(BulkUpdate::TraineeUpload.last)
     end
   end
 
@@ -179,7 +179,7 @@ private
 
   def when_the_submit_background_job_is_run
     Sidekiq::Testing.inline! do
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_now(id: BulkUpdate::TraineeUpload.last.id)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_now(BulkUpdate::TraineeUpload.last)
     end
   end
 
