@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module BulkUpdate
-  describe BulkAddTraineesForm, type: :model do
+  describe BulkAddTraineesUploadForm, type: :model do
     subject(:form) { described_class.new(provider:, file:) }
 
     let(:provider) { create(:provider) }
@@ -70,11 +70,12 @@ module BulkUpdate
     end
 
     context "when passed a valid file" do
-      let(:test_file_contents) { "trn,first_name,last_name\n0123456789,Bob,Roberts" }
+      let(:test_file_contents) { "trn,first_name,last_name\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts" }
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
         expect(form.valid?).to be true
-        expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1)
+        expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1).and not_change { BulkUpdate::TraineeUploadRow.count }
+        expect(BulkUpdate::TraineeUpload.last).to be_pending
         expect(form.errors).to be_empty
       end
     end

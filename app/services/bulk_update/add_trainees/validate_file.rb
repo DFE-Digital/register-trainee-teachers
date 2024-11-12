@@ -53,7 +53,7 @@ module BulkUpdate
 
       def valid_csv?
         file.tempfile.rewind
-        CSVSafe.new(file.tempfile, **BulkUpdate::BulkAddTraineesForm::CSV_ARGS).read
+        CSVSafe.new(file.tempfile, **BulkUpdate::BulkAddTraineesUploadForm::CSV_ARGS).read
         true
       rescue StandardError
         record.errors.add(:file, :is_not_csv)
