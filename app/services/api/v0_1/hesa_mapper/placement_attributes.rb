@@ -35,15 +35,12 @@ module Api
         end
 
         def urn
-          urn = @params[:urn]
-          return if school_urn_applicable?(urn)
-
-          urn
+          @params[:urn]
         end
 
         def name
           urn = @params[:urn]
-          return if school_urn_applicable?(urn)
+          return @params[:name] if school_urn_applicable?(urn)
 
           I18n.t("components.placement_detail.magic_urn.#{urn}")
         end
