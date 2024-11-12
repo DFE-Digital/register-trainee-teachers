@@ -7,9 +7,9 @@ module BulkUpdate
       before_action { require_feature_flag(:bulk_add_trainees) }
 
       def show
-        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        redirect_to(not_found_path)
+        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find_by(id: params[:id])
+
+        redirect_to(not_found_path) unless @bulk_update_trainee_upload
       end
 
       def create
