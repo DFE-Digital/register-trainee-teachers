@@ -69,4 +69,9 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   config.active_job.queue_adapter = :test
+
+  config.action_mailer.default_url_options = { host: "localhost:3000" } # for absolute urls in email
+
+  # Allow generating absolute urls with routing url helpers.
+  Rails.application.routes.default_url_options[:host] = "localhost:3000"
 end

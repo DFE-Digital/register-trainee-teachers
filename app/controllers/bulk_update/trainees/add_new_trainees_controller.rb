@@ -20,6 +20,7 @@ module BulkUpdate
 
         if @bulk_add_trainee_form.valid?
           upload = @bulk_add_trainee_form.save
+          SendCsvSubmittedForProcessingEmailService.call(user: current_user, upload: upload)
           redirect_to(bulk_update_trainees_status_path(upload.id))
         else
           render(:show)
