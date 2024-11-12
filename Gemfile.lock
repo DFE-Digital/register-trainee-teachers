@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 0e5dd9169a8395053497dcbca83c64c8eb0e2d63
-  tag: v3.6.3
+  revision: 84f01c1bd7de455f6f0fb67dcf0020382b400e65
+  tag: v3.6.4
   specs:
-    dfe-reference-data (3.6.3)
+    dfe-reference-data (3.6.4)
       activesupport
       tzinfo
 
@@ -109,9 +109,9 @@ GEM
       ruby-next-core (~> 1.0)
     ast (2.4.2)
     attr_required (1.0.2)
-    audited (5.7.0)
-      activerecord (>= 5.2, < 8.0)
-      activesupport (>= 5.2, < 8.0)
+    audited (5.8.0)
+      activerecord (>= 5.2, < 8.2)
+      activesupport (>= 5.2, < 8.2)
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
@@ -750,7 +750,7 @@ DEPENDENCIES
   activerecord-session_store
   amazing_print (~> 1.6)
   annotate
-  audited (~> 5.7)
+  audited (~> 5.8)
   auto_strip_attributes
   awesome_print
   azure-blob

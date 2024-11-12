@@ -61,6 +61,10 @@ class UserWithOrganisationContext < SimpleDelegator
     user.providers.none? && user.lead_partners.none? && !user.system_admin?
   end
 
+  def hei_provider?
+    provider? && organisation.hei?
+  end
+
 private
 
   attr_reader :session
