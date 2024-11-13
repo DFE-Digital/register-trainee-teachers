@@ -4,9 +4,12 @@ require "rails_helper"
 
 feature "bulk add trainees" do
   context "when authenticated as a provider user" do
+    let(:hei_provider) { create(:provider, :hei) }
+    let(:user) { create(:user, providers: [hei_provider]) }
+
     before do
       allow(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
-      given_i_am_authenticated
+      given_i_am_authenticated(user:)
       and_there_is_a_nationality
     end
 
