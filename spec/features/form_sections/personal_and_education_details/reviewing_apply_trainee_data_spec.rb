@@ -32,11 +32,21 @@ feature "edit training details" do
     then_i_am_back_on_the_apply_trainee_data_page
   end
 
-  def given_a_trainee_with_degrees_exist
+  scenario "changing an attribute for a Citizen of Guinea-Bissau" do
+    given_a_trainee_with_degrees_exist(nationality: build(:nationality, :citizen_of_guinea_bissau))
+    when_i_visit_the_apply_trainee_data_page
+    and_i_click_to_change_the_trainee_full_name
+    and_i_change_the_first_name_to("Jeff")
+    then_i_am_back_on_the_apply_trainee_data_page
+  end
+
+private
+
+  def given_a_trainee_with_degrees_exist(nationality: build(:nationality))
     given_a_trainee_exists(
       :with_diversity_information,
       :with_apply_application,
-      nationalities: [build(:nationality)],
+      nationalities: [nationality],
       degrees: [build(:degree, :uk_degree_with_details)],
     )
   end
