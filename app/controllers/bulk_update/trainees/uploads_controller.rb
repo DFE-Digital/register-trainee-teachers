@@ -1,0 +1,56 @@
+# frozen_string_literal: true
+
+module BulkUpdate
+  module Trainees
+    class UploadsController < ApplicationController
+      before_action { check_for_provider }
+      before_action { require_feature_flag(:bulk_add_trainees) }
+
+      def show
+        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find_by(id: params[:id])
+
+        redirect_to(not_found_path) unless @bulk_update_trainee_upload
+      end
+
+      def new
+        @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
+          provider: organisation,
+        )
+      end
+
+      def create
+        @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
+          provider: organisation,
+          file: file,
+        )
+
+        if @bulk_add_trainee_upload_form.valid?
+          # TODO: Dry run method
+          upload = @bulk_add_trainee_upload_form.save
+          SendCsvSubmittedForProcessingEmailService.call(user: current_user, upload: upload)
+          redirect_to(bulk_update_trainees_upload_path(upload))
+        else
+          render(:new)
+        end
+      end
+
+    private
+
+      def file
+        @file ||= create_params["file"]
+      end
+
+      def create_params
+        params.require(:bulk_update_bulk_add_trainees_upload_form).permit(:file)
+      end
+
+      def organisation
+        @organisation ||= current_user.organisation
+      end
+
+      def check_for_provider
+        redirect_to(root_path) unless current_user.hei_provider?
+      end
+    end
+  end
+end
