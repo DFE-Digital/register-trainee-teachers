@@ -24,6 +24,12 @@ module BulkUpdate
             context "when the upload status is pending" do
               let(:trainee_upload) { create(:bulk_update_trainee_upload, :pending) }
 
+              before do
+                allow(ImportRow).to receive(:call).and_return(
+                  BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
+                )
+              end
+
               it "does not create any trainee records" do
                 expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
                 expect(described_class.call(trainee_upload)).to be(true)
@@ -53,6 +59,12 @@ module BulkUpdate
             context "when the upload status is in progress" do
               let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows, status: :in_progress) }
 
+              before do
+                allow(ImportRow).to receive(:call).and_return(
+                  BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
+                )
+              end
+
               it "creates 5 trainee records" do
                 expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
                 expect(described_class.call(trainee_upload)).to be(true)
@@ -77,6 +89,22 @@ module BulkUpdate
           context "when some rows are valid and can be imported whilst others are not" do
             let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_errors) }
 
+            before do
+              allow(ImportRow).to receive(:call).and_return(
+                BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
+                BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
+                BulkUpdate::AddTrainees::ImportRow::Result.new(
+                  false,
+                  ["Funding type is required", "Enter an email address"],
+                ),
+                BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
+                BulkUpdate::AddTrainees::ImportRow::Result.new(
+                  false,
+                  ["Add at least one degree"],
+                ),
+              )
+            end
+
             it "does not create any trainee records" do
               expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
               expect(described_class.call(trainee_upload)).to be(false)
@@ -86,6 +114,12 @@ module BulkUpdate
             it "sets the status to `failed`" do
               described_class.call(trainee_upload)
               expect(trainee_upload.reload).to be_failed
+            end
+
+            it "creates an error record for the failing row" do
+              expect { described_class.call(trainee_upload) }.to(
+                change { BulkUpdate::RowError.count }.by(3),
+              )
             end
           end
         end

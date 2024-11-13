@@ -96,7 +96,7 @@ module BulkUpdate
             if results.all?(&:success)
               trainee_upload.succeeded! unless dry_run
             else
-              # TODO: copy any errors into `trainee_upload`
+              create_error_rows(results)
               success = false
             end
 
@@ -118,6 +118,16 @@ module BulkUpdate
 
       def current_provider
         @current_provider ||= trainee_upload.provider
+      end
+
+      def create_error_rows(results)
+        trainee_upload.bulk_update_trainee_upload_rows.each_with_index do |upload_row, index|
+          unless results[index].success
+            results[index].errors.each do |message|
+              upload_row.row_errors.create!(message:)
+            end
+          end
+        end
       end
     end
   end
