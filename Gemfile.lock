@@ -616,7 +616,7 @@ GEM
       base64
     rubyzip (2.3.2)
     safely_block (0.4.1)
-    securerandom (0.3.1)
+    securerandom (0.3.2)
     selenium-webdriver (4.26.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -685,7 +685,7 @@ GEM
     store_model (4.1.0)
       activerecord (>= 7.0)
     stringio (3.1.1)
-    strong_migrations (2.0.2)
+    strong_migrations (2.1.0)
       activerecord (>= 6.1)
     swd (2.0.3)
       activesupport (>= 3)
