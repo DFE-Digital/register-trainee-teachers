@@ -18,6 +18,16 @@ GIT
       activesupport
       tzinfo
 
+GIT
+  remote: https://github.com/kennyevil/rails_semantic_logger.git
+  revision: c09d7158bdcd8884a13d185848c3a519d9d4bf6d
+  branch: filter-bind-values
+  specs:
+    rails_semantic_logger (4.17.0)
+      rack
+      railties (>= 5.1)
+      semantic_logger (~> 4.16)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -515,10 +525,6 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    rails_semantic_logger (4.17.0)
-      rack
-      railties (>= 5.1)
-      semantic_logger (~> 4.16)
     railties (7.2.0)
       actionpack (= 7.2.0)
       activesupport (= 7.2.0)
@@ -812,7 +818,7 @@ DEPENDENCIES
   rails (~> 7.2)
   rails-controller-testing
   rails-erd
-  rails_semantic_logger (= 4.17.0)
+  rails_semantic_logger!
   request_store (~> 1.7)
   rotp
   rspec-benchmark
