@@ -57,7 +57,7 @@ class PersonalDetailsForm < TraineeForm
   end
 
   def nationality_names
-    @nationality_names ||= nationality_ids.map { |id| Nationality.find(id).name.titleize }
+    @nationality_names ||= nationality_ids.map { |id| Nationality.find(id).name.titleize_with_hyphens }
   end
 
   def nationality_ids
@@ -124,7 +124,7 @@ private
     @other_nationalities_hash ||=
       begin
         # Re-hydrate the 'Other nationality' fields from the trainee model.
-        nationality1, nationality2, nationality3 = trainee.nationalities.where.not(name: %w[british irish]).pluck(:name).map(&:titleize)
+        nationality1, nationality2, nationality3 = trainee.nationalities.where.not(name: %w[british irish]).pluck(:name).map(&:titleize_with_hyphens)
 
         {
           other_nationality1: nationality1,
@@ -205,7 +205,7 @@ private
       found_nationality = find_nationality(raw_value)
       next unless found_nationality
 
-      titleized_name = found_nationality.name.titleize
+      titleized_name = found_nationality.name.titleize_with_hyphens
       public_send("other_nationality#{index + 1}=", titleized_name)
       new_attributes[:"other_nationality#{index + 1}"] = titleized_name
       new_attributes[:"other_nationality#{index + 1}_raw"] = titleized_name
