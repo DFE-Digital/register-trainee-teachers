@@ -12,6 +12,10 @@
 #  updated_at      :datetime         not null
 #  errored_on_id   :bigint
 #
+# Indexes
+#
+#  index_bulk_update_row_errors_on_error_type  (error_type)
+#
 class BulkUpdate::RowError < ApplicationRecord
   belongs_to :errored_on, polymorphic: true
 
