@@ -46,7 +46,6 @@ module BulkUpdate
         provider: provider,
         file: file,
         number_of_trainees: csv&.count,
-        status: :pending,
       }
     end
 
