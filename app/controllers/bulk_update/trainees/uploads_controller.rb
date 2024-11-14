@@ -27,7 +27,6 @@ module BulkUpdate
         if @bulk_add_trainee_upload_form.valid?
           # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
-          SendCsvSubmittedForProcessingEmailService.call(user: current_user, upload: upload)
           redirect_to(bulk_update_trainees_upload_path(upload))
         else
           render(:new)

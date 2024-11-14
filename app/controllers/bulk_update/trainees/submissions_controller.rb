@@ -19,6 +19,7 @@ module BulkUpdate
 
         # TODO: Handle failures/errors when saving
 
+        SendCsvSubmittedForProcessingEmailService.call(user: current_user, upload: @bulk_update_trainee_upload)
         redirect_to(bulk_update_trainees_submission_path(@bulk_update_trainee_upload))
       rescue ActiveRecord::RecordNotFound
         redirect_to(not_found_path)
