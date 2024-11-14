@@ -24,7 +24,7 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
-        permissions :show?, :new?, :create? do
+        permissions :show?, :create? do
           it { is_expected.not_to permit(user, trainee_upload) }
         end
       end

@@ -23,10 +23,13 @@ module BulkUpdate
     end
 
     def new?
-      !trainee_upload.cancelled? && user.hei_provider?
+      user.hei_provider?
     end
 
-    alias_method :show?, :new?
-    alias_method :create?, :new?
+    def create?
+      new? && !trainee_upload.cancelled?
+    end
+
+    alias_method :show?, :create?
   end
 end

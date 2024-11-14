@@ -26,7 +26,7 @@ module BulkUpdate
       upload.attributes = upload_attributes
       upload.save!
 
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(id: upload.id)
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
 
       upload
     end
@@ -44,6 +44,7 @@ module BulkUpdate
     def upload_attributes
       {
         provider: provider,
+        file: file,
         number_of_trainees: csv&.count,
       }
     end

@@ -10,7 +10,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
     expect(subject).to define_enum_for(:status).with_values(
       pending: "pending",
       validated: "validated",
-      submitted: "submitted",
+      in_progress: "in_progress",
       succeeded: "succeeded",
       failed: "failed",
       cancelled: "cancelled",
