@@ -30,14 +30,33 @@ feature "bulk add trainees" do
       end
 
       scenario "attempts to visit the new upload trainees page" do
+        when_i_visit_the_bulk_update_index_page
+        then_i_cannot_see_the_bulk_add_trainees_link
+
         when_i_visit_the_new_bulk_update_trainees_upload_path
         then_i_see_the_unauthorized_message
       end
     end
 
-    context "when the User is a Provider" do
+    context "when the User is not an HEI Provider" do
       before do
         given_i_am_authenticated
+      end
+
+      scenario "attempts to visit the new upload trainees page" do
+        when_i_visit_the_bulk_update_index_page
+        then_i_cannot_see_the_bulk_add_trainees_link
+
+        when_i_visit_the_new_bulk_update_trainees_upload_path
+        then_i_see_the_unauthorized_message
+      end
+    end
+
+    context "when the User is an HEI Provider" do
+      let(:user) { create(:user, :hei) }
+
+      before do
+        given_i_am_authenticated(user:)
       end
 
       scenario "the bulk add trainees page is visible" do
@@ -63,7 +82,6 @@ feature "bulk add trainees" do
         when_i_click_the_back_to_bulk_updates_page_link
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
-
         and_i_click_the_upload_button
         then_i_see_that_the_upload_is_processing
 
@@ -86,9 +104,10 @@ feature "bulk add trainees" do
 
         when_i_click_the_submit_button
         then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
         and_i_see_the_summary_page
         and_i_dont_see_the_review_errors_message
-
         and_i_visit_the_trainees_page
         then_i_can_see_the_new_trainees
 
@@ -309,7 +328,7 @@ private
 
   def then_a_job_is_queued_to_process_the_upload
     expect(BulkUpdate::AddTrainees::ImportRowsJob).to have_been_enqueued.with(
-      id: BulkUpdate::TraineeUpload.last.id,
+      BulkUpdate::TraineeUpload.last,
     )
   end
 
@@ -345,6 +364,10 @@ private
 
   def then_i_can_see_the_new_trainees
     expect(page).to have_content("Jonas Padberg")
+    expect(page).to have_content("Myriam Bruen")
+    expect(page).to have_content("Usha Rolfson")
+    expect(page).to have_content("Fidel Hessel")
+    expect(page).to have_content("Melony Kilback")
   end
 
   def when_the_upload_has_failed_with_validation_errors

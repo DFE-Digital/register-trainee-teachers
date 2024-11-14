@@ -7,11 +7,21 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
 
   let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
 
-  context "when the User's organisation is a Provider" do
+  context "when the User's organisation is an HEI Provider" do
+    let(:user) { UserWithOrganisationContext.new(user: create(:user, :hei), session: {}) }
     let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
 
     permissions :show?, :new?, :create? do
       it { is_expected.to permit(user, trainee_upload) }
+    end
+  end
+
+  context "when the User's organisation is not an HEI Provider" do
+    let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
+    let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
+
+    permissions :show?, :new?, :create? do
+      it { is_expected.not_to permit(user, trainee_upload) }
     end
   end
 

@@ -23,7 +23,7 @@ module BulkUpdate
     end
 
     def new?
-      user.provider?
+      user.hei_provider?
     end
 
     alias_method :show?, :new?
