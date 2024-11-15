@@ -1,47 +1,48 @@
-  {
-    "engines": {
-      "node": "20.x"
-    },
-    "scripts": {
-      "js:lint": "standard",
-      "js:lint:fix": "standard --fix",
-      "scss:lint": "stylelint 'app/assets/stylesheets/**/*.scss'",
-      "scss:lint:fix": "stylelint 'app/assets/stylesheets/**/*.scss' --fix",
-      "test": "jest",
-      "test:ci": "jest --ci --runInBand --coverage",
-      "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
-      "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=. --quiet-deps"
-    },
-    "dependencies": {
-      "@ministryofjustice/frontend": "^3.0.3",
-      "accessible-autocomplete": "^3.0.1",
-      "govuk-country-and-territory-autocomplete": "^2.0.0",
-      "govuk-frontend": "^5.7.1",
-      "jquery": "^3.7.1",
-      "rails-ujs": "^5.2.8",
-      "sass": "^1.81.0",
-      "turbolinks": "^5.2.0"
-    },
-    "devDependencies": {
-      "esbuild": "^0.24.0",
-      "esbuild-jest-transform": "^2.0.1",
-      "jest": "^29.7.0",
-      "jest-environment-jsdom": "^29.7.0",
-      "postcss": "^8.4.49",
-      "standard": "^17.1.2",
-      "stylelint": "^15.11.0",
-      "stylelint-config-gds": "^1.1.1",
-      "stylelint-config-standard-scss": "^11.1.0",
-      "stylelint-scss": "^5.3.2"
-    },
-    "standard": {
-      "env": [
-        "jest"
-      ]
-    },
-    "stylelint": {
-      "extends": "stylelint-config-gds/scss"
-    },
-    "license": "MIT",
-    "packageManager": "yarn@1.22.22"
-  }
+{
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "js:lint": "standard",
+    "js:lint:fix": "standard --fix",
+    "scss:lint": "stylelint 'app/assets/stylesheets/**/*.scss'",
+    "scss:lint:fix": "stylelint 'app/assets/stylesheets/**/*.scss' --fix",
+    "test": "jest",
+    "test:ci": "jest --ci --runInBand --coverage",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --load-path=. --quiet-deps"
+  },
+  "dependencies": {
+    "@hotwired/turbo-rails": "^8.0.12",
+    "@ministryofjustice/frontend": "^3.0.3",
+    "accessible-autocomplete": "^3.0.1",
+    "govuk-country-and-territory-autocomplete": "^2.0.0",
+    "govuk-frontend": "^5.7.1",
+    "jquery": "^3.7.1",
+    "rails-ujs": "^5.2.8",
+    "sass": "^1.81.0",
+    "turbolinks": "^5.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0",
+    "esbuild-jest-transform": "^2.0.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8.4.49",
+    "standard": "^17.1.2",
+    "stylelint": "^15.11.0",
+    "stylelint-config-gds": "^1.1.1",
+    "stylelint-config-standard-scss": "^11.1.0",
+    "stylelint-scss": "^5.3.2"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  },
+  "stylelint": {
+    "extends": "stylelint-config-gds/scss"
+  },
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22"
+}

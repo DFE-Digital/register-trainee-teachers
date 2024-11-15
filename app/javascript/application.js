@@ -1,3 +1,4 @@
+import '@hotwired/turbo-rails'
 import jQuery from 'jquery'
 
 import './scripts/global/nationality_select'
@@ -29,3 +30,4 @@ initAll()
 LiveFilter.init()
 FilterToggle.init()
 CookieBanner.init()
+import "@hotwired/turbo-rails"
