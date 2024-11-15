@@ -1,4 +1,5 @@
 import '@hotwired/turbo-rails'
+
 import jQuery from 'jquery'
 
 import './scripts/global/nationality_select'
@@ -23,11 +24,12 @@ import { initAll } from 'govuk-frontend'
 window.jQuery = jQuery
 window.$ = jQuery
 
-// Initialize GOV.UK Frontend components
-initAll()
+document.addEventListener('turbo:load', function() {
+  // Initialize GOV.UK Frontend components
+  initAll()
 
-// Initialize custom components
-LiveFilter.init()
-FilterToggle.init()
-CookieBanner.init()
-import "@hotwired/turbo-rails"
+  // Initialize custom components
+  LiveFilter.init()
+  FilterToggle.init()
+  CookieBanner.init()
+})
