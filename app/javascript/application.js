@@ -24,7 +24,7 @@ import { initAll } from 'govuk-frontend'
 window.jQuery = jQuery
 window.$ = jQuery
 
-document.addEventListener('turbo:load', function() {
+document.addEventListener('turbo:load', function () {
   // Initialize GOV.UK Frontend components
   initAll()
 
