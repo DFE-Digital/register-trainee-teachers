@@ -1041,7 +1041,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
   end
 
-  context "Updating a newly created trainee", feature_register_api: true do
+  context "Updating a newly created trainee" do
     let(:token) { "trainee_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
     let!(:nationality) { create(:nationality, :british) }

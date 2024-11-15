@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "POST /api/v1.0-pre/trainees/:trainee_id/recommend-for-qts", feature_register_api: true do
+RSpec.describe "POST /api/v1.0-pre/trainees/:trainee_id/recommend-for-qts" do
   let(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider) }
 
   let(:trainee) do

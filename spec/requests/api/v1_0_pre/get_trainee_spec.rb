@@ -9,7 +9,7 @@ describe "`GET /api/v1.0-pre/trainees/:id` endpoint" do
 
   it_behaves_like "a register API endpoint", "/api/v1.0-pre/trainees/12345", "trainee_token"
 
-  context "when the trainee exists", feature_register_api: true do
+  context "when the trainee exists" do
     before do
       get(
         "/api/v1.0-pre/trainees/#{trainee.slug}",
@@ -22,12 +22,12 @@ describe "`GET /api/v1.0-pre/trainees/:id` endpoint" do
       expect(response.parsed_body).to eq(parsed_trainee)
     end
 
-    it "returns status code 200" do
+    it "returns status 200" do
       expect(response).to have_http_status(:ok)
     end
   end
 
-  context "when the trainee does not exist", feature_register_api: true do
+  context "when the trainee does not exist" do
     before do
       get(
         "/api/v1.0-pre/trainees/nonexistent",
@@ -35,7 +35,7 @@ describe "`GET /api/v1.0-pre/trainees/:id` endpoint" do
       )
     end
 
-    it "returns status code 404" do
+    it "returns status 404" do
       expect(response).to have_http_status(:not_found)
     end
 
