@@ -3,6 +3,7 @@ openapi: 3.0.3
 info:
   title: Register API
   version: v1.0-pre
+servers: []
 paths:
   "/api/{api_version}/info":
     get:
@@ -176,8 +177,8 @@ paths:
                         awarded_at:
                           nullable: true
                         training_initiative:
-                          nullable: true
                           type: string
+                          nullable: true
                         study_mode:
                           type: string
                           nullable: true
@@ -189,7 +190,7 @@ paths:
                           type: string
                         course_uuid:
                           nullable: true
-                        lead_school_not_applicable:
+                        lead_partner_not_applicable:
                           type: boolean
                         employing_school_not_applicable:
                           type: boolean
@@ -211,7 +212,6 @@ paths:
                         hesa_updated_at:
                           nullable: true
                         record_source:
-                          nullable: true
                           type: string
                         iqts_country:
                           nullable: true
@@ -229,8 +229,6 @@ paths:
                           type: string
                         ethnicity:
                           nullable: true
-                        disability1:
-                          type: string
                         course_qualification:
                           type: string
                         course_title:
@@ -246,9 +244,9 @@ paths:
                           type: string
                         employing_school_urn:
                           nullable: true
-                        lead_partner_urn_ukprn:
+                        lead_partner_ukprn:
                           nullable: true
-                        lead_school_urn:
+                        lead_partner_urn:
                           nullable: true
                         fund_code:
                           type: string
@@ -264,7 +262,7 @@ paths:
                           type: string
                         course_year:
                           type: integer
-                        postgrad_apprenticeship_start_date:
+                        pg_apprenticeship_start_date:
                           type: string
                         funding_method:
                           type: string
@@ -276,11 +274,12 @@ paths:
                           type: string
                         hesa_disabilities:
                           type: object
-                          properties:
-                            disability1:
-                              type: string
+                          properties: {}
                         nationality:
                           type: string
+                        withdraw_reasons:
+                          type: array
+                          items: {}
                         placements:
                           type: array
                           items: {}
@@ -303,12 +302,11 @@ paths:
                                 nullable: true
                               institution:
                                 type: string
-                                nullable: true
                               graduation_year:
                                 type: integer
                               grade:
-                                type: string
                                 nullable: true
+                                type: string
                               country:
                                 nullable: true
                               other_grade:
@@ -344,20 +342,6 @@ paths:
                         trainee_id:
                           type: string
                         application_id:
-                          type: integer
-                          nullable: true
-                        pg_apprenticeship_start_date:
-                          type: string
-                        withdraw_reasons:
-                          type: array
-                          items: {}
-                        lead_partner_id:
-                          nullable: true
-                        lead_partner_not_applicable:
-                          type: boolean
-                        lead_partner_ukprn:
-                          nullable: true
-                        lead_partner_urn:
                           nullable: true
                       required:
                       - first_names
@@ -370,6 +354,9 @@ paths:
                       - training_route
                       - sex
                       - diversity_disclosure
+                      - ethnic_group
+                      - ethnic_background
+                      - additional_ethnic_background
                       - disability_disclosure
                       - course_subject_one
                       - itt_start_date
@@ -383,6 +370,8 @@ paths:
                       - recommended_for_award_at
                       - trainee_start_date
                       - reinstate_date
+                      - course_min_age
+                      - course_max_age
                       - course_subject_two
                       - course_subject_three
                       - awarded_at
@@ -392,6 +381,7 @@ paths:
                       - region
                       - course_education_phase
                       - course_uuid
+                      - lead_partner_not_applicable
                       - employing_school_not_applicable
                       - submission_ready
                       - commencement_status
@@ -417,9 +407,12 @@ paths:
                       - course_age_range
                       - expected_end_date
                       - employing_school_urn
+                      - lead_partner_ukprn
+                      - lead_partner_urn
                       - fund_code
                       - bursary_level
                       - nationality
+                      - withdraw_reasons
                       - placements
                       - degrees
                       - state
@@ -1619,8 +1612,18 @@ paths:
                   total_pages: 1
                   total_count: 12
                   per_page: 50
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+                required:
+                - error
+              example: {}
         '422':
-          description: returns 422 when an invalid state is provided
+          description: returns status code 422 when an invalid state is provided
           content:
             application/json:
               schema:
@@ -2117,7 +2120,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: T7tWo3SMzQKTjG1gsncQR4ZK
+                    placement_id: hSLtWBgmaiJsh6rEmdpCQrjU
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2133,12 +2136,12 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: AQo33pLsFgotXVoQCMNSQQgi
+                    degree_id: L9bEeJo9uaYZQ6EjEr1TqZxM
                   state: submitted_for_trn
-                  trainee_id: eenemtCTBvUGZvsTHHmxcRC5
+                  trainee_id: b8muM9Rz13VEysUNhHjzpFDU
                   application_id:
         '409':
-          description: returns status 409 (conflict) with the potential duplicates
+          description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
           content:
             application/json:
@@ -2215,8 +2218,8 @@ paths:
                         awarded_at:
                           nullable: true
                         training_initiative:
-                          nullable: true
                           type: string
+                          nullable: true
                         study_mode:
                           nullable: true
                         ebacc:
@@ -2227,7 +2230,7 @@ paths:
                           type: string
                         course_uuid:
                           nullable: true
-                        lead_school_not_applicable:
+                        lead_partner_not_applicable:
                           type: boolean
                         employing_school_not_applicable:
                           type: boolean
@@ -2248,7 +2251,6 @@ paths:
                         hesa_updated_at:
                           nullable: true
                         record_source:
-                          nullable: true
                           type: string
                         iqts_country:
                           nullable: true
@@ -2280,9 +2282,9 @@ paths:
                           type: string
                         employing_school_urn:
                           nullable: true
-                        lead_partner_urn_ukprn:
+                        lead_partner_ukprn:
                           nullable: true
-                        lead_school_urn:
+                        lead_partner_urn:
                           nullable: true
                         fund_code:
                           nullable: true
@@ -2290,6 +2292,9 @@ paths:
                           nullable: true
                         nationality:
                           nullable: true
+                        withdraw_reasons:
+                          type: array
+                          items: {}
                         placements:
                           type: array
                           items: {}
@@ -2314,7 +2319,6 @@ paths:
                                 type: integer
                               grade:
                                 type: string
-                                nullable: true
                               country:
                                 nullable: true
                               other_grade:
@@ -2350,18 +2354,6 @@ paths:
                         trainee_id:
                           type: string
                         application_id:
-                          type: integer
-                          nullable: true
-                        withdraw_reasons:
-                          type: array
-                          items: {}
-                        lead_partner_id:
-                          nullable: true
-                        lead_partner_not_applicable:
-                          type: boolean
-                        lead_partner_ukprn:
-                          nullable: true
-                        lead_partner_urn:
                           nullable: true
                       required:
                       - first_names
@@ -2374,6 +2366,9 @@ paths:
                       - training_route
                       - sex
                       - diversity_disclosure
+                      - ethnic_group
+                      - ethnic_background
+                      - additional_ethnic_background
                       - disability_disclosure
                       - course_subject_one
                       - itt_start_date
@@ -2387,6 +2382,8 @@ paths:
                       - recommended_for_award_at
                       - trainee_start_date
                       - reinstate_date
+                      - course_min_age
+                      - course_max_age
                       - course_subject_two
                       - course_subject_three
                       - awarded_at
@@ -2396,6 +2393,7 @@ paths:
                       - region
                       - course_education_phase
                       - course_uuid
+                      - lead_partner_not_applicable
                       - employing_school_not_applicable
                       - submission_ready
                       - commencement_status
@@ -2421,9 +2419,12 @@ paths:
                       - course_age_range
                       - expected_end_date
                       - employing_school_urn
+                      - lead_partner_ukprn
+                      - lead_partner_urn
                       - fund_code
                       - bursary_level
                       - nationality
+                      - withdraw_reasons
                       - placements
                       - degrees
                       - state
@@ -2739,7 +2740,7 @@ paths:
         example: nonexistent
       responses:
         '200':
-          description: returns status code 200
+          description: returns status 200
           content:
             application/json:
               schema:
@@ -3128,7 +3129,7 @@ paths:
         required: true
         schema:
           type: string
-        example: XetzqRNkQxV9WDNr4Z7Q5qcs
+        example: NK5n5ysMYwxWh3UNatcMX1BK
       responses:
         '200':
           description: updates the trainee
@@ -3583,7 +3584,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: sypB87iWzbpsB3LXqzK6ioA2
+                    placement_id: ZfFKLnZhPe5snJHsuFo9y4NP
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3599,13 +3600,13 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: abQ9tTNiGxowiXVfPeQHp8UQ
+                    degree_id: CuNiij6bmAPMMUHKgY8ZFBa6
                   state: submitted_for_trn
-                  trainee_id: XetzqRNkQxV9WDNr4Z7Q5qcs
+                  trainee_id: NK5n5ysMYwxWh3UNatcMX1BK
                   application_id:
                   disability2: '57'
         '401':
-          description: returns status 401 unauthorized
+          description: returns status code 401 unauthorized
           content:
             application/json:
               schema:
@@ -3618,7 +3619,7 @@ paths:
               example:
                 error: Unauthorized
         '404':
-          description: returns 404
+          description: returns status code 404
           content:
             application/json:
               schema:
@@ -4161,7 +4162,7 @@ paths:
                   trainee_id: sv52xt2ih9dhtrgpa38zaomp
                   application_id:
         '404':
-          description: returns 404
+          description: returns status code 404
           content:
             application/json:
               schema:
@@ -4230,7 +4231,7 @@ paths:
         example: c79kgdy0fdyh43piyeuzzppb
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -4425,7 +4426,7 @@ paths:
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: aarQj9ikiPRdvHoxXBZMesGq
+                  degree_id: h2KkyLevWYEJGsoMRkgsHotg
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4903,7 +4904,7 @@ paths:
         example: 3cge3hbu2k3tzz4nntz5z3aq
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -4978,7 +4979,7 @@ paths:
                   grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
                   degree_id: oevhd8hws9u5x3l9cmjfzyya
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5203,7 +5204,7 @@ paths:
         example: pvbt0zxd051c6mxna56fbdwy
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5323,7 +5324,7 @@ paths:
                   postcode: TD1B 9SB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: vKF7Pjyai3XLsK7RYwS8nTw3
+                  placement_id: nuYFoJc8yraEEFsPyj2Cgbym
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5788,7 +5789,7 @@ paths:
                   trainee_id: cjl76q53mhp6krkurz7s8jfx
                   application_id:
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5844,7 +5845,7 @@ paths:
         example: 0wcxej5grum7ek5qoqz65zsn
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5887,7 +5888,7 @@ paths:
                   updated_at: '2024-09-15T12:34:56.000Z'
                   placement_id: y35c1ygvx4wus8fdlhpgrka8
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5958,7 +5959,8 @@ paths:
                 postcode: GU1 1AA
       responses:
         '200':
-          description: partial update of an existing placement returns 200 (ok) status
+          description: partial update of an existing placement returns status code
+            200 (ok) status
           content:
             application/json:
               schema:
@@ -6468,7 +6470,7 @@ paths:
                   trainee_id: 5jjju6sniy2vsyv6642do0on
                   application_id:
         '404':
-          description: returns 404
+          description: returns status code 404
           content:
             application/json:
               schema:
@@ -6566,7 +6568,7 @@ paths:
               withdraw_reasons_dfe_details: A pig that doesn't fly is just a pig.
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -7001,7 +7003,7 @@ paths:
               example:
                 error: Unauthorized
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -7026,7 +7028,7 @@ paths:
                 - error: NotFound
                   message: Trainee(s) not found
         '422':
-          description: returns status 422 with a valid JSON response
+          description: returns status code 422 with a valid JSON response
           content:
             application/json:
               schema:
@@ -7051,4 +7053,3 @@ paths:
                 - error: StateTransitionError
                   message: It's not possible to perform this action while the trainee
                     is in its current state
-servers: []
