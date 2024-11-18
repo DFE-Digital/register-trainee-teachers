@@ -24,7 +24,7 @@ module Api
 
       def update
         placement_attributes = attributes_klass.from_placement(placement)
-        placement_attributes.assign_attributes(params.to_h)
+        placement_attributes.assign_attributes(placement_params.to_h)
         render(**SavePlacementResponse.call(placement: placement, attributes: placement_attributes, version: version))
       end
 

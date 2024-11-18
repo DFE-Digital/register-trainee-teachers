@@ -8,7 +8,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider:) }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
-    let(:placement_attribute_keys) { Api::V10Pre::PlacementAttributes::ATTRIBUTES }
+    let(:placement_attribute_keys) { Api::V10Pre::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
     context "with a valid trainee and placement" do
       context "create placement with a school" do
@@ -50,7 +50,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
 
           it "does not create a new placement and returns a 422 status (unprocessable_entity) status" do
             expect {
-              post "/api/v1.0-pre//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
+              post "/api/v1.0-pre/trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
             }.not_to change {
               trainee.placements.count
             }
@@ -81,7 +81,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
       end
 
       context "create placement without a school" do
-        let(:data) { attributes_for(:placement).except(:urn).slice(*placement_attribute_keys) }
+        let(:data) { attributes_for(:placement).except(:urn).with_indifferent_access.slice(*placement_attribute_keys) }
         let(:params) do
           { data: }.with_indifferent_access
         end
