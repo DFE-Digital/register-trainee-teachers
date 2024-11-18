@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe Api::Trainees::SavePlacementResponse do
-  let(:placement_response) { described_class.call(placement:, params:, version:) }
-  let(:params) do
+  let(:placement_response) { described_class.call(placement:, attributes:, version:) }
+  let(:attributes) do
     {}
   end
   let(:trainee) { create(:trainee, :with_placements) }
@@ -18,17 +18,18 @@ describe Api::Trainees::SavePlacementResponse do
     context "with valid params" do
       let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
-      let(:params) do
-        create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
+      let(:attributes) do
+        attrs = create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
+        Api::V01::PlacementAttributes.new(attrs)
       end
 
       it "returns status created with data" do
         expect(subject[:status]).to be(:created)
         expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
-          "urn" => params[:urn],
-          "name" => params[:name],
-          "address" => "URN #{params[:urn]}, #{params[:postcode]}",
-          "postcode" => params[:postcode],
+          "urn" => attributes.urn,
+          "name" => attributes.name,
+          "address" => "URN #{attributes.urn}, #{attributes.postcode}",
+          "postcode" => attributes.postcode,
         )
 
         expect(placement.id).to be_present
@@ -41,16 +42,10 @@ describe Api::Trainees::SavePlacementResponse do
 
         subject
       end
-
-      it "uses the attributes" do
-        expect(Api::V01::PlacementAttributes).to receive(:new).with(params).and_return(double(attributes: placement.attributes, valid?: true, errors: nil)).at_least(:once)
-
-        subject
-      end
     end
 
     context "with invalid params" do
-      let(:params) { {} }
+      let(:attributes) { Api::V01::PlacementAttributes.new({}) }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
@@ -68,22 +63,23 @@ describe Api::Trainees::SavePlacementResponse do
     context "with valid params" do
       let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
-      let(:params) do
-        create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
+      let(:attributes) do
+        attrs = create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
+        Api::V01::PlacementAttributes.new(attrs)
       end
 
       it "returns status ok with data" do
         expect(subject[:status]).to be(:ok)
         expect(subject[:json][:data].slice(*placement_attribute_keys)).to match(
-          "urn" => params[:urn],
-          "name" => params[:name],
-          "address" => "URN #{params[:urn]}, #{params[:postcode]}",
-          "postcode" => params[:postcode],
+          "urn" => attributes.urn,
+          "name" => attributes.name,
+          "address" => "URN #{attributes.urn}, #{attributes.postcode}",
+          "postcode" => attributes.postcode,
         )
 
         expect(placement.reload.id).to be_present
         expect(placement.slug).to be_present
-        expect(placement.school_id).to eq(params[:school_id])
+        expect(placement.school_id).to eq(attributes.school_id)
       end
 
       it "uses the serializer" do
@@ -91,16 +87,12 @@ describe Api::Trainees::SavePlacementResponse do
 
         subject
       end
-
-      it "uses the attributes" do
-        expect(Api::V01::PlacementAttributes).to receive(:from_placement).with(placement).and_return(double(attributes: placement.attributes, assign_attributes: true, valid?: true, errors: nil)).at_least(:once)
-
-        subject
-      end
     end
 
     context "with invalid params" do
-      let(:params) { { name: "", school_id: "" } }
+      let(:attributes) do
+        Api::V01::PlacementAttributes.new({})
+      end
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
@@ -118,8 +110,9 @@ describe Api::Trainees::SavePlacementResponse do
 
     let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
-    let(:params) do
-      existing_placement.attributes.slice(*placement_attribute_keys).with_indifferent_access
+    let(:attributes) do
+      attrs = existing_placement.attributes.slice(*placement_attribute_keys).with_indifferent_access
+      Api::V01::PlacementAttributes.new(attrs)
     end
 
     context "with same name" do
