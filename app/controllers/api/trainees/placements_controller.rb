@@ -18,11 +18,14 @@ module Api
       end
 
       def create
-        render(**SavePlacementResponse.call(placement: new_placement, params: placement_params, version: version))
+        placement_attributes = attributes_klass.new(hesa_mapped_params)
+        render(**SavePlacementResponse.call(placement: new_placement, attributes: placement_attributes, version: version))
       end
 
       def update
-        render(**SavePlacementResponse.call(placement: placement, params: placement_params, version: version))
+        placement_attributes = attributes_klass.from_placement(placement)
+        placement_attributes.assign_attributes(params.to_h)
+        render(**SavePlacementResponse.call(placement: placement, attributes: placement_attributes, version: version))
       end
 
       def destroy
@@ -49,6 +52,17 @@ module Api
       end
 
       def model = :placement
+
+      def hesa_mapper_class
+        Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
+      end
+
+      def hesa_mapped_params
+        hesa_mapper_class.call(
+          params: params.require(:data).permit(
+            hesa_mapper_class::ATTRIBUTES, attributes_klass::ATTRIBUTES),
+        )
+      end
 
       def placement_params
         params.require(:data)
