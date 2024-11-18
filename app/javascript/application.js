@@ -1,5 +1,7 @@
 import '@hotwired/turbo-rails'
 
+Turbo.session.drive = false
+
 import jQuery from 'jquery'
 
 import './scripts/global/nationality_select'
