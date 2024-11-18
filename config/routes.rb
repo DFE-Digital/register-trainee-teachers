@@ -93,6 +93,7 @@ Rails.application.routes.draw do
           resources :submissions, only: %i[show create]
         end
       end
+      resources :review_errors, path: "review_errors", only: %i[show], as: :review_errors
     end
   end
 

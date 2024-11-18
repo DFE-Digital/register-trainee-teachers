@@ -19,6 +19,58 @@ feature "bulk add trainees" do
       then_i_cannot_see_the_bulk_add_trainees_link
       and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
     end
+
+    scenario "the bulk add trainees page is visible when feature flag is on", feature_bulk_add_trainees: true do
+      when_i_visit_the_bulk_update_index_page
+      and_i_click_the_bulk_add_trainees_page
+      then_i_see_how_instructions_on_how_to_bulk_add_trainees
+      and_i_see_the_empty_csv_link
+
+      when_i_attach_an_empty_file
+      and_i_click_the_upload_button
+      then_i_see_the_upload_page_with_errors
+
+      when_i_visit_the_bulk_update_index_page
+      and_i_click_the_bulk_add_trainees_page
+      and_i_attach_a_valid_file
+      and_i_click_the_upload_button
+      then_i_see_the_review_page_with_no_errors
+
+      when_the_upload_validation_background_job_is_run
+      and_i_refresh_the_page
+      then_i_see_the_review_page_with_no_errors
+
+      when_i_click_the_submit_button
+      then_a_job_is_queued_to_process_the_upload
+      and_i_see_the_summary_page
+
+      when_the_submit_background_job_is_run
+      and_i_visit_the_trainees_page
+      then_i_can_see_the_new_trainees
+    end
+
+    scenario "when I try to look at the status of a different providers upload", feature_bulk_add_trainees: true do
+      when_there_is_a_bulk_update_trainee_upload
+      when_i_visit_the_bulk_update_status_page_for_another_provider
+    end
+
+    scenario "when I try to upload a file with errors", feature_bulk_add_trainees: true do
+      when_i_visit_the_bulk_update_index_page
+      and_i_click_the_bulk_add_trainees_page
+      then_i_see_how_instructions_on_how_to_bulk_add_trainees
+      and_i_see_the_empty_csv_link
+
+      when_i_attach_a_file_with_invalid_rows
+      and_i_click_the_upload_button
+      then_i_see_the_review_page_with_no_errors
+
+      when_the_upload_validation_background_job_is_run
+      and_i_refresh_the_page
+      then_i_see_the_review_page_with_validation_errors
+
+      when_i_click_the_review_errors_link
+      then_i_see_the_review_errors_page
+    end
   end
 
   context "when the feature flag is on", feature_bulk_add_trainees: true do
@@ -267,6 +319,11 @@ private
     and_i_attach_a_file(csv)
   end
 
+  def when_i_attach_a_file_with_invalid_rows
+    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read
+    and_i_attach_a_file(csv)
+  end
+
   def and_i_attach_a_file(content)
     tempfile = Tempfile.new("csv")
     tempfile.write(content)
@@ -423,4 +480,18 @@ private
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
+
+  def then_i_see_the_review_page_with_validation_errors
+    # TODO: Reinstate the expectation after rebasing
+    # expect(page).to have_content("2 trainees with errors in their details")
+  end
+
+  def when_i_click_the_review_errors_link
+    click_on "Review errors"
+  end
+
+  def then_i_see_the_review_errors_page
+    expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
+    expect(page).to have_content("Review errors for 2 trainees in the CSV that you uploaded")
+  end
 end

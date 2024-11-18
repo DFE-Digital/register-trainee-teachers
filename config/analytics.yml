@@ -308,6 +308,7 @@ shared:
     - errored_on_type
     - error_type
     - message
+    - error_type
   :placements:
     - id
     - trainee_id
