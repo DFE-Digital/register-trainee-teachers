@@ -9,6 +9,7 @@ feature "bulk add trainees" do
 
     before do
       allow(BulkUpdate::AddTrainees::ImportRowsJob).to receive(:perform_later)
+      allow(SendCsvSubmittedForProcessingEmailService).to receive(:call)
       given_i_am_authenticated(user:)
       and_there_is_a_nationality
     end
@@ -41,6 +42,7 @@ feature "bulk add trainees" do
 
       when_i_click_the_submit_button
       then_a_job_is_queued_to_process_the_upload
+      and_the_send_csv_processing_email_has_been_sent
       and_i_see_the_summary_page
 
       when_the_submit_background_job_is_run
@@ -184,6 +186,10 @@ private
     Sidekiq::Testing.inline! do
       BulkUpdate::AddTrainees::ImportRowsJob.perform_now(BulkUpdate::TraineeUpload.last)
     end
+  end
+
+  def and_the_send_csv_processing_email_has_been_sent
+    expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call).with(user: current_user, upload: BulkUpdate::TraineeUpload.last).at_least(:once)
   end
 
   def and_i_visit_the_trainees_page
