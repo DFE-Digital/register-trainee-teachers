@@ -60,7 +60,8 @@ module Api
       def hesa_mapped_params
         hesa_mapper_class.call(
           params: params.require(:data).permit(
-            hesa_mapper_class::ATTRIBUTES, attributes_klass::ATTRIBUTES),
+            hesa_mapper_class::ATTRIBUTES, attributes_klass::ATTRIBUTES
+          ),
         )
       end
 
