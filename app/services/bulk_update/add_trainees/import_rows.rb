@@ -80,27 +80,27 @@ module BulkUpdate
           if dry_run
             CSV.parse(trainee_upload.file.download, headers: true).map.with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
-                bulk_update_trainee_upload: trainee_upload,
+                trainee_upload: trainee_upload,
                 data: row.to_h,
                 row_number: index + 1,
               )
             end
           end
 
-          ActiveRecord::Base.transaction do |_transaction|
-            results = trainee_upload.bulk_update_trainee_upload_rows.map do |upload_row|
+          ActiveRecord::Base.transaction(requires_new: true) do
+            results = trainee_upload.trainee_upload_rows.map do |upload_row|
               BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
             end
 
             # Commit or rollback the transaction depending on whether all rows were error free
-            if all_succeeded?(results)
+            if results.all?(&:success)
               trainee_upload.succeeded! unless dry_run
             else
               # TODO: copy any errors into `trainee_upload`
               success = false
-              raise(ActiveRecord::Rollback)
             end
-            raise(ActiveRecord::Rollback) if dry_run
+
+            raise(ActiveRecord::Rollback) if dry_run || !success
           end
 
           trainee_upload.validated! if dry_run && success
@@ -114,14 +114,10 @@ module BulkUpdate
         raise
       end
 
-      def current_provider
-        @current_provider ||= trainee_upload.provider
-      end
-
     private
 
-      def all_succeeded?(results)
-        results.all?
+      def current_provider
+        @current_provider ||= trainee_upload.provider
       end
     end
   end

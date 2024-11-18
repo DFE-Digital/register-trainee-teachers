@@ -79,7 +79,7 @@ module BulkUpdate
       end
 
       def missing_data_validator
-        @missing_data_validator ||= Submissions::MissingDataValidator.new(trainee:)
+        @missing_data_validator ||= ::Submissions::MissingDataValidator.new(trainee:)
       end
 
       def found_with

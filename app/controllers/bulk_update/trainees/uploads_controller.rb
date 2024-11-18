@@ -3,31 +3,36 @@
 module BulkUpdate
   module Trainees
     class UploadsController < ApplicationController
-      before_action { check_for_provider }
       before_action { require_feature_flag(:bulk_add_trainees) }
 
       def show
-        @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find_by(id: params[:id])
+        @bulk_update_trainee_upload = policy_scope(BulkUpdate::TraineeUpload)
+          .includes(:row_errors).find(params[:id])
 
-        redirect_to(not_found_path) unless @bulk_update_trainee_upload
+        authorize(@bulk_update_trainee_upload)
       end
 
       def new
         @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
-          provider: organisation,
+          provider: current_user.organisation,
         )
+
+        authorize(@bulk_add_trainee_upload_form.upload)
       end
 
       def create
         @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
-          provider: organisation,
-          file: file,
+          provider: current_user.organisation,
+          file: upload_params[:file],
         )
+
+        authorize(@bulk_add_trainee_upload_form.upload)
 
         if @bulk_add_trainee_upload_form.valid?
           # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
-          redirect_to(bulk_update_trainees_upload_path(upload))
+
+          redirect_to(bulk_update_trainees_upload_path(upload), flash: { success: t(".success") })
         else
           render(:new)
         end
@@ -35,20 +40,8 @@ module BulkUpdate
 
     private
 
-      def file
-        @file ||= create_params["file"]
-      end
-
-      def create_params
-        params.require(:bulk_update_bulk_add_trainees_upload_form).permit(:file)
-      end
-
-      def organisation
-        @organisation ||= current_user.organisation
-      end
-
-      def check_for_provider
-        redirect_to(root_path) unless current_user.hei_provider?
+      def upload_params
+        params.fetch(:bulk_update_bulk_add_trainees_upload_form, {}).permit(:file)
       end
     end
   end

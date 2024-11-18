@@ -11,7 +11,7 @@
       Bulk updates
     </h1>
 
-    <% if FeatureService.enabled?(:bulk_add_trainees) && current_user.hei_provider? %>
+    <% if FeatureService.enabled?(:bulk_add_trainees) && policy(BulkUpdate::TraineeUpload).new? %>
       <p class="govuk-body">
         Make changes to multiple trainee records at the same time. You can:
       </p>
