@@ -21,10 +21,15 @@
 #  fk_rails_...  (bulk_update_trainee_upload_id => bulk_update_trainee_uploads.id)
 #
 class BulkUpdate::TraineeUploadRow < ApplicationRecord
-  belongs_to :bulk_update_trainee_upload, class_name: "BulkUpdate::TraineeUpload"
+  belongs_to :trainee_upload,
+             class_name: "BulkUpdate::TraineeUpload",
+             foreign_key: :bulk_update_trainee_upload_id,
+             inverse_of: :trainee_upload_rows
 
   has_many :row_errors, as: :errored_on, class_name: "BulkUpdate::RowError", dependent: :destroy
 
   validates :row_number, presence: true
   validates :data, presence: true
+
+  scope :without_errors, -> { left_joins(:row_errors).where(row_errors: { errored_on_id: nil }) }
 end

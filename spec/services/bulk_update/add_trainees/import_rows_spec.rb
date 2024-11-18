@@ -6,6 +6,8 @@ module BulkUpdate
   module AddTrainees
     RSpec.describe ImportRows do
       describe "#call" do
+        let!(:nationality) { create(:nationality, :british) }
+
         context "when the feature flag is off", feature_bulk_add_trainees: false do
           let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
@@ -20,20 +22,17 @@ module BulkUpdate
 
           context "when all rows are valid and can be imported" do
             context "when the upload status is pending" do
-              let(:trainee_upload) { create(:bulk_update_trainee_upload, status: :pending) }
-
-              before do
-                allow(ImportRow).to receive(:call).and_return(true)
-              end
+              let(:trainee_upload) { create(:bulk_update_trainee_upload, :pending) }
 
               it "does not create any trainee records" do
-                expect(ImportRow).to receive(:call).exactly(5).times
+                expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
                 expect(described_class.call(trainee_upload)).to be(true)
               end
 
               it "creates bulk_update_trainee_upload_rows records" do
-                trainee_upload
-                expect { described_class.call(trainee_upload) }.to not_change { BulkUpdate::TraineeUpload.count }.and change { BulkUpdate::TraineeUploadRow.count }.by(5)
+                expect {
+                  described_class.call(trainee_upload)
+                }.to change { BulkUpdate::TraineeUploadRow.count }.by(5)
               end
 
               it "sets the status to `validated`" do
@@ -54,12 +53,8 @@ module BulkUpdate
             context "when the upload status is in progress" do
               let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows, status: :in_progress) }
 
-              before do
-                allow(ImportRow).to receive(:call).and_return(true)
-              end
-
               it "creates 5 trainee records" do
-                expect(ImportRow).to receive(:call).exactly(5).times
+                expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
                 expect(described_class.call(trainee_upload)).to be(true)
               end
 
@@ -80,16 +75,11 @@ module BulkUpdate
           end
 
           context "when some rows are valid and can be imported whilst others are not" do
-            let(:trainee_upload) { create(:bulk_update_trainee_upload) }
-
-            before do
-              allow(ImportRow).to receive(:call).and_return(true, true, true, true, false)
-            end
+            let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_errors) }
 
             it "does not create any trainee records" do
-              expect(ImportRow).to receive(:call).exactly(5).times
+              expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
               expect(described_class.call(trainee_upload)).to be(false)
-
               expect(Trainee.count).to eq(@original_trainee_count)
             end
 
