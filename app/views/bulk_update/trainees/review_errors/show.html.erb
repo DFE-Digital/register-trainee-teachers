@@ -8,7 +8,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl"><%= organisation_name %></span>
-      Review errors for <%= @bulk_update_trainee_upload.bulk_update_trainee_upload_rows.joins(:row_errors).count("DISTINCT(bulk_update_trainee_upload_rows.id)") %> trainees in the CSV that you uploaded
+      Review errors for <%= @bulk_update_trainee_upload.trainee_upload_rows.joins(:row_errors).count("DISTINCT(bulk_update_trainee_upload_rows.id)") %> trainees in the CSV that you uploaded
     </h1>
 
     <p class="govuk-body">
@@ -20,7 +20,7 @@
       <li>
         <%= govuk_link_to(
           "Download your CSV file with errors indicated",
-          "#",
+          bulk_update_trainees_review_error_path(@bulk_update_trainee_upload, format: :csv),
         ) %>
       </li>
 
@@ -33,7 +33,7 @@
     <p class="govuk-body">
         <%= govuk_link_to(
           "Cancel bulk updates to records",
-          "#",
+          new_bulk_update_trainees_upload_path,
         ) %>
     </p>
   </div>

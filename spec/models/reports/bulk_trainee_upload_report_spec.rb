@@ -1,0 +1,59 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+describe Reports::BulkTraineeUploadReport do
+  context "given an empty trainee upload" do
+    let(:trainee_upload) { create(:bulk_update_trainee_upload) }
+
+    it "generates a CSV with the correct headers and no rows" do
+      csv = CSV.generate do |csv|
+        described_class.new(csv, scope: trainee_upload).generate_report
+      end
+
+      data = CSV.parse(csv)
+      expect(data.size).to eq(1)
+      expect(data[0]).to eq(BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.keys + ["Errors"])
+    end
+  end
+
+  context "given a valid trainee upload without errors" do
+    let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows) }
+
+    it "generates a CSV with an extra _Errors_ column with empty values" do
+      csv = CSV.generate do |csv|
+        described_class.new(csv, scope: trainee_upload).generate_report
+      end
+
+      data = CSV.parse(csv, headers: true)
+      expect(data.size).to eq(5)
+      data.each do |row|
+        expect(row.key?("Errors")).to be(true)
+        expect(row["Errors"]).to be_blank
+      end
+    end
+  end
+
+  context "given a valid trainee upload with some errors" do
+    let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows_and_errors) }
+
+    it "generates a CSV with an extra _Errors_ column" do
+      csv = CSV.generate do |csv|
+        described_class.new(csv, scope: trainee_upload).generate_report
+      end
+
+      data = CSV.parse(csv, headers: true)
+      expect(data.size).to eq(5)
+      expect(data[0]["Errors"]).to be_blank
+      expect(data[1]["Errors"]).to eq(
+        trainee_upload.trainee_upload_rows[1].row_errors.pluck(:message).join(", "),
+      )
+      expect(data[2]["Errors"]).to be_blank
+      expect(data[3]["Errors"]).to be_present
+      expect(data[3]["Errors"]).to eq(
+        trainee_upload.trainee_upload_rows[3].row_errors.pluck(:message).join(", "),
+      )
+      expect(data[4]["Errors"]).to be_blank
+    end
+  end
+end

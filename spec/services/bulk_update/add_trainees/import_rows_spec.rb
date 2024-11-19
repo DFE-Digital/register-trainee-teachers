@@ -95,7 +95,7 @@ module BulkUpdate
                 BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
                 BulkUpdate::AddTrainees::ImportRow::Result.new(
                   false,
-                  ["Funding type is required", "Enter an email address"],
+                  { errors: { funding: ["Funding type is required"], email: "Enter an email address" } },
                 ),
                 BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
                 BulkUpdate::AddTrainees::ImportRow::Result.new(
@@ -120,6 +120,12 @@ module BulkUpdate
               expect { described_class.call(trainee_upload) }.to(
                 change { BulkUpdate::RowError.count }.by(3),
               )
+              expect(
+                trainee_upload.trainee_upload_rows[2].row_errors.pluck(:message),
+              ).to eq(["Funding type is required", "Enter an email address"])
+              expect(
+                trainee_upload.trainee_upload_rows[4].row_errors.pluck(:message),
+              ).to eq(["Add at least one degree"])
             end
           end
         end

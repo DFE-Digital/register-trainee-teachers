@@ -6,9 +6,11 @@ FactoryBot.define do
     status { nil }
     number_of_trainees { 5 }
 
-    after(:build) do |bulk_update_trainee_upload|
-      bulk_update_trainee_upload.attach(
-        io: Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").open,
+    after(:build) do |upload|
+      upload.file.attach(
+        io: Rails.root.join(
+          "spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv",
+        ).open,
         filename: "five_trainees.csv",
       )
     end
@@ -123,6 +125,33 @@ FactoryBot.define do
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
             )
+          end
+        end
+      end
+    end
+
+    # TODO: Check whether the trait below is still needed
+    ERROR_MESSAGES = [
+      "Invalid email address",
+      "Invalid date of birth",
+      "Invalid degree grade",
+      "Missing placement data",
+      "Missing degree data",
+    ].freeze
+
+    trait :with_rows_and_errors do
+      after(:create) do |upload|
+        CSV.parse(upload.file.download, headers: true).map.with_index do |row, index|
+          row = create(
+            :bulk_update_trainee_upload_row,
+            bulk_update_trainee_upload: upload,
+            data: row.to_h,
+            row_number: index + 1,
+          )
+          if index.odd?
+            ERROR_MESSAGES.sample(index).each do |message|
+              create(:bulk_update_row_error, errored_on: row, message:)
+            end
           end
         end
       end

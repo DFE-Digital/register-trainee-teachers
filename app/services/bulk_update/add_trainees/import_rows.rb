@@ -121,13 +121,28 @@ module BulkUpdate
       end
 
       def create_error_rows(results)
-        trainee_upload.bulk_update_trainee_upload_rows.each_with_index do |upload_row, index|
+        trainee_upload.trainee_upload_rows.each_with_index do |upload_row, index|
           unless results[index].success
-            results[index].errors.each do |message|
+            extract_error_messages(errors: results[index].errors).each do |message|
               upload_row.row_errors.create!(message:)
             end
           end
         end
+      end
+
+      def extract_error_messages(messages = [], errors:)
+        values = errors.is_a?(Array) ? errors : errors.values
+        values.each do |value|
+          if value.is_a?(Hash)
+            extract_error_messages(messages, errors: value)
+          elsif value.is_a?(Array)
+            extract_error_messages(messages, errors: value)
+          else
+            messages << value
+          end
+        end
+
+        messages
       end
     end
   end
