@@ -1,6 +1,4 @@
-import '@hotwired/turbo-rails'
-
-Turbo.session.drive = false
+import { Turbo } from '@hotwired/turbo-rails'
 
 import jQuery from 'jquery'
 
@@ -22,6 +20,8 @@ import FilterToggle from './scripts/filter_toggle'
 import CookieBanner from './scripts/cookie_banner'
 
 import { initAll } from 'govuk-frontend'
+
+Turbo.session.drive = false
 
 window.jQuery = jQuery
 window.$ = jQuery
