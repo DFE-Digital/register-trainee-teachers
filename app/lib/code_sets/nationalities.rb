@@ -14,6 +14,7 @@ module CodeSets
     GUERNSEY = "Guernsey"
     BRITISH_INDIAN_OCEAN_TERRITORY = "British Indian Ocean Territory (BIOT)"
     FALKLAND_ISLANDS = "Falkland Islands [Falkland Islands (Malvinas)]"
+    CITIZEN_OF_GUINEA_BISSAU = "citizen of guinea-bissau"
 
     CYPRIOT = "cypriot"
 
@@ -88,7 +89,7 @@ module CodeSets
       "chinese" => { entity_id: "9d7d640e-5c62-e711-80d1-005056ac45bb" },
       "citizen of antigua and barbuda" => { entity_id: "557d640e-5c62-e711-80d1-005056ac45bb" },
       "citizen of bosnia and herzegovina" => { entity_id: "697d640e-5c62-e711-80d1-005056ac45bb" },
-      "citizen of guinea-bissau" => { entity_id: "ed7d640e-5c62-e711-80d1-005056ac45bb" },
+      CITIZEN_OF_GUINEA_BISSAU => { entity_id: "ed7d640e-5c62-e711-80d1-005056ac45bb" },
       "citizen of kiribati" => { entity_id: "1d7e640e-5c62-e711-80d1-005056ac45bb" },
       "citizen of seychelles" => { entity_id: "a97e640e-5c62-e711-80d1-005056ac45bb" },
       "citizen of the dominican republic" => { entity_id: "b17d640e-5c62-e711-80d1-005056ac45bb" },

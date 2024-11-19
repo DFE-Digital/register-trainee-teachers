@@ -8,7 +8,7 @@ feature "Home page for Register API documentation" do
     then_i_should_see_the_default_not_found_page
   end
 
-  scenario "navigate to the documentation when feature flag is active", feature_register_api: true do
+  scenario "navigate to the documentation when feature flag is active" do
     when_i_visit_the_documentation_page
     then_i_should_see_the_api_docs_home_page
 

@@ -219,6 +219,17 @@ current academic cycle.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -229,17 +240,6 @@ current academic cycle.
           "message": "No trainees found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -401,6 +401,17 @@ Get a single trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -411,17 +422,6 @@ Get a single trainee.
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -467,6 +467,17 @@ Get many placements for a trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -477,17 +488,6 @@ Get many placements for a trainee.
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -532,6 +532,17 @@ Get a single placement for a trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -542,17 +553,6 @@ Get a single placement for a trainee.
           "message": "Placement(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -606,6 +606,17 @@ Get many degrees for a trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -616,17 +627,6 @@ Get many degrees for a trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -679,6 +679,17 @@ Get a single degree for a trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -689,17 +700,6 @@ Get a single degree for a trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -2159,6 +2159,17 @@ Deletes an existing degree for this trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -2169,17 +2180,6 @@ Deletes an existing degree for this trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -2358,6 +2358,17 @@ Trainee details
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -2368,17 +2379,6 @@ Trainee details
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -2472,6 +2472,17 @@ Placement details
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -2482,17 +2493,6 @@ Placement details
           "message": "Placement(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -2596,6 +2596,17 @@ Degree details
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -2606,17 +2617,6 @@ Degree details
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -2797,6 +2797,17 @@ Deletes an existing placement for this trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -2807,17 +2818,6 @@ Deletes an existing placement for this trainee.
           "message": "Placement(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>
@@ -2872,6 +2872,17 @@ Deletes an existing degree for this trainee.
 </details>
 
 <details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "error": "Unauthorized"
+    }
+    </pre>
+  </div>
+</details>
+
+<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -2882,17 +2893,6 @@ Deletes an existing degree for this trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "error": "Unauthorized"
     }
     </pre>
   </div>

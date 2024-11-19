@@ -19,5 +19,9 @@ FactoryBot.define do
     trait :other do
       name { CodeSets::Nationalities::OTHER }
     end
+
+    trait :citizen_of_guinea_bissau do
+      name { CodeSets::Nationalities::CITIZEN_OF_GUINEA_BISSAU }
+    end
   end
 end

@@ -12,7 +12,7 @@ describe "`GET /trainees/:trainee_slug/placements` endpoint" do
     context "with a valid trainee that has placements" do
       let(:trainee) { create(:trainee, :with_placements) }
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         get "/api/v1.0-pre/trainees/#{trainee_slug}/placements", headers: { Authorization: token }
 
         expect(response).to have_http_status(:ok)
@@ -23,7 +23,7 @@ describe "`GET /trainees/:trainee_slug/placements` endpoint" do
     context "with a valid trainee that doesn't have placements" do
       let(:trainee) { create(:trainee) }
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         get "/api/v1.0-pre/trainees/#{trainee_slug}/placements", headers: { Authorization: token }
 
         expect(response).to have_http_status(:ok)

@@ -69,7 +69,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     create(:disability, :deaf)
   end
 
-  context "when the request is valid", feature_register_api: true do
+  context "when the request is valid" do
     before do
       allow(Api::V10Pre::HesaMapper::Attributes).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
@@ -396,7 +396,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(placement_attributes[:urn]).to eq("900020")
     end
 
-    it "returns status code 201" do
+    it "returns status 201" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response).to have_http_status(:created)
@@ -710,7 +710,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
   end
 
-  context "when the trainee record is invalid", feature_register_api: true do
+  context "when the trainee record is invalid" do
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
     end
@@ -776,7 +776,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
   end
 
-  context "when a placement is invalid", feature_register_api: true do
+  context "when a placement is invalid" do
     before do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
     end
@@ -805,7 +805,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
   end
 
-  context "when a degree is invalid", feature_register_api: true do
+  context "when a degree is invalid" do
     before do
       params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
 

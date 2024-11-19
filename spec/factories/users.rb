@@ -10,6 +10,10 @@ FactoryBot.define do
     dttp_id { SecureRandom.uuid }
     welcome_email_sent_at { Faker::Time.backward(days: 1).utc }
 
+    trait :hei do
+      providers { [build(:provider, :hei)] }
+    end
+
     trait :system_admin do
       providers { [] }
       system_admin { true }

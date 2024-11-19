@@ -117,7 +117,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
           expect(placement.urn).not_to be_blank
         end
 
-        it "partial update of an existing placement returns 200 (ok) status" do
+        it "partial update of an existing placement returns status code 200 (ok) status" do
           expect {
             put "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", params: params_to_update_postcode.to_json, headers: { Authorization: token, **json_headers }
           }.not_to change {

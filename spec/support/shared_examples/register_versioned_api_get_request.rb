@@ -14,8 +14,8 @@ RSpec.shared_examples "register versioned api GET request" do |version, path, co
              :trn_received,
              provider: auth_token.provider,
              slug: ":trainee_slug",
-             placements: [build(:placement, slug: ":slug")],
-             degrees: [build(:degree, slug: ":slug")])
+             placements: [build(:placement, slug: ":placement_slug")],
+             degrees: [build(:degree, slug: ":degree_slug")])
     end
 
     let(:trainee_with_slug) { create(:trainee, :trn_received, provider: auth_token.provider, slug: ":slug") }

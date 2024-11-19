@@ -32,4 +32,5 @@ Rails.application.config.filter_parameters += [
   :region,
   :town_city,
   :trn,
+  :audited_changes,
 ]

@@ -11,7 +11,7 @@
       Bulk updates
     </h1>
 
-    <% if FeatureService.enabled?(:bulk_add_trainees) && current_user.hei_provider? %>
+    <% if FeatureService.enabled?(:bulk_add_trainees) && policy(BulkUpdate::TraineeUpload).new? %>
       <p class="govuk-body">
         Make changes to multiple trainee records at the same time. You can:
       </p>
@@ -29,7 +29,7 @@
       <p class="govuk-body">You can bulk add new trainees.</p>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Bulk add new trainees", bulk_update_trainees_add_new_trainees_path) %>
+        <%= govuk_link_to("Bulk add new trainees", new_bulk_update_trainees_upload_path) %>
       </p>
     <% else %>
       <p class="govuk-body">

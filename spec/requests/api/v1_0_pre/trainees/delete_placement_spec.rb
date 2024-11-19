@@ -12,7 +12,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
       let(:trainee_slug) { "non-existant" }
       let(:slug) { "non-existant" }
 
-      it "returns status 404 with a valid JSON response" do
+      it "returns status code 404 with a valid JSON response" do
         delete "/api/v1.0-pre/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token, **json_headers }
         expect(response).to have_http_status(:not_found)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "NotFound", message: "Trainee(s) not found" })
@@ -24,7 +24,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
       let(:trainee_slug) { trainee.slug }
       let(:slug) { "non-existant" }
 
-      it "returns status 404 with a valid JSON response" do
+      it "returns status code 404 with a valid JSON response" do
         delete "/api/v1.0-pre/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token, **json_headers }
 
         expect(response).to have_http_status(:not_found)
@@ -37,7 +37,7 @@ describe "`DELETE /trainees/:trainee_slug/placement/:slug` endpoint" do
       let(:trainee_slug) { trainee.slug }
       let(:slug) { trainee.placements.last.slug }
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         delete "/api/v1.0-pre/trainees/#{trainee_slug}/placements/#{slug}", headers: { Authorization: token, **json_headers }
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body.dig(:data, :trainee_id)).to eql(trainee_slug)

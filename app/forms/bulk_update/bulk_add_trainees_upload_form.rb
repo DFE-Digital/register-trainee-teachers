@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  class BulkAddTraineesForm
-    attr_reader :provider, :file
+  class BulkAddTraineesUploadForm
+    attr_reader :provider, :file, :upload
 
     include ActiveModel::Model
     include ActiveModel::AttributeAssignment
@@ -16,30 +16,44 @@ module BulkUpdate
 
     def initialize(provider: nil, file: nil)
       @provider = provider
-      @file = file
+      @file     = file
+      @upload   = build_upload
     end
 
     def save
       return false unless valid?
 
-      BulkUpdate::TraineeUpload.create(
-        provider: provider,
-        file: file,
-        file_name: file.original_filename,
-        number_of_trainees: csv&.count,
-        status: valid? ? :pending : :failed,
-        error_messages: errors.messages.values.inject([], &:concat),
-      )
+      upload.attributes = upload_attributes
+      upload.save!
+
+      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
+
+      upload
     end
 
     def csv
+      return if file.nil? || errors[:file].present?
+
       file.tempfile.rewind
-      @csv ||= file ? CSVSafe.new(file.tempfile, **CSV_ARGS).read : nil
-    rescue StandardError
-      @csv = nil
+
+      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
   private
+
+    def upload_attributes
+      {
+        provider: provider,
+        file: file,
+        number_of_trainees: csv&.count,
+      }
+    end
+
+    def build_upload
+      BulkUpdate::TraineeUpload.new(
+        status: :pending,
+      )
+    end
 
     def tempfile
       @tempfile ||= file&.tempfile

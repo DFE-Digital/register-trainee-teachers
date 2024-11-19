@@ -46,7 +46,7 @@ gem "stackprof"
 gem "amazing_print", "~> 1.6"
 
 # There seems to be an issue with 4.17.0 where the workers log the sql
-gem "rails_semantic_logger", "4.17.0"
+gem "rails_semantic_logger", github: "kennyevil/rails_semantic_logger", branch: "filter-bind-values"
 
 # Thread-safe global state
 gem "request_store", "~> 1.7"

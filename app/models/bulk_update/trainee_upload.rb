@@ -5,14 +5,11 @@
 # Table name: bulk_update_trainee_uploads
 #
 #  id                 :bigint           not null, primary key
-#  file               :text
-#  file_name          :string
 #  number_of_trainees :integer
 #  status             :string
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  provider_id        :bigint           not null
-#  error_messages     :jsonb
 #
 # Indexes
 #
@@ -21,13 +18,26 @@
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
+#
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
-  belongs_to :provider
-
   enum :status, {
     pending: "pending",
-    failed: "failed",
+    validated: "validated",
+    in_progress: "in_progress",
     succeeded: "succeeded",
+    failed: "failed",
   }
+
+  belongs_to :provider
+  has_many :trainee_upload_rows,
+           class_name: "BulkUpdate::TraineeUploadRow",
+           foreign_key: :bulk_update_trainee_upload_id,
+           inverse_of: :trainee_upload,
+           dependent: :destroy
+
+  has_many :row_errors, through: :trainee_upload_rows
+  has_one_attached :file
+
+  delegate :filename, :download, :attach, to: :file
 end

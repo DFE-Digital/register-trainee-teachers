@@ -37,7 +37,7 @@ describe "`GET /trainees` endpoint" do
       expect(response.parsed_body["data"].count).to eq(trainees.count)
     end
 
-    it "returns 422 if academic cycle filter is invalid" do
+    it "returns status code 422 if academic cycle filter is invalid" do
       get(
         "/api/v1.0-pre/trainees",
         headers: { Authorization: "Bearer #{token}" },
@@ -91,7 +91,7 @@ describe "`GET /trainees` endpoint" do
       end
     end
 
-    it "returns 422 if since filter is an invalid date" do
+    it "returns status code 422 if since filter is an invalid date" do
       get(
         "/api/v1.0-pre/trainees",
         headers: { Authorization: "Bearer #{token}" },
@@ -155,7 +155,7 @@ describe "`GET /trainees` endpoint" do
       expect(response.parsed_body["data"].count).to eq(submitted_trainees.count)
     end
 
-    it "returns 422 when an invalid state is provided" do
+    it "returns status code 422 when an invalid state is provided" do
       get(
         "/api/v1.0-pre/trainees",
         headers: { Authorization: "Bearer #{token}" },
