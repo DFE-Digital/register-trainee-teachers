@@ -9,7 +9,7 @@ describe "`GET /api/v0.1/trainees/:id` endpoint" do
 
   it_behaves_like "a register API endpoint", "/api/v0.1/trainees/12345", "trainee_token"
 
-  context "when the trainee exists", feature_register_api: true do
+  context "when the trainee exists" do
     before do
       get(
         "/api/v0.1/trainees/#{trainee.slug}",
@@ -28,7 +28,7 @@ describe "`GET /api/v0.1/trainees/:id` endpoint" do
     end
   end
 
-  context "when the trainee does not exist", feature_register_api: true do
+  context "when the trainee does not exist" do
     before do
       get(
         "/api/v0.1/trainees/nonexistent",

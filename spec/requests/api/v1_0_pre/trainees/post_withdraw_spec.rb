@@ -11,7 +11,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
     context "non existant trainee" do
       let(:trainee_id) { "non-existant" }
 
-      it "returns status 404 with a valid JSON response" do
+      it "returns status code 404 with a valid JSON response" do
         post(
           "/api/v1.0-pre/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -35,7 +35,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       end
       let(:trainee_id) { trainee.slug }
 
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         post(
           "/api/v1.0-pre/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -81,7 +81,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       context "with invalid params" do
         let(:params) { { withdraw_reasons_details: nil, withdraw_date: nil } }
 
-        it "returns status 422 with a valid JSON response" do
+        it "returns status code 422 with a valid JSON response" do
           post(
             "/api/v1.0-pre/trainees/#{trainee_id}/withdraw",
             headers: { Authorization: "Bearer #{token}", **json_headers },
@@ -108,7 +108,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       let(:trainee) { create(:trainee, :itt_start_date_in_the_future, provider:) }
       let(:trainee_id) { trainee.slug }
 
-      it "returns status 422 with a valid JSON response" do
+      it "returns status code 422 with a valid JSON response" do
         post(
           "/api/v1.0-pre/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },

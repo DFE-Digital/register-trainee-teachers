@@ -74,7 +74,7 @@ module Api
       end
 
       def degree
-        @degree ||= trainee.degrees.find_by!(slug: params[:slug])
+        @degree ||= trainee.degrees.find_by!(slug: params[:degree_slug])
       end
 
       def trainee_serializer_klass

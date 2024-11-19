@@ -11,7 +11,7 @@ describe "`GET /trainees/:trainee_slug/degrees/:slug` endpoint" do
     let(:trainee) { create(:trainee, :with_degree) }
 
     context "with a valid trainee that has a degree" do
-      it "returns status 200 with a valid JSON response" do
+      it "returns status code 200 with a valid JSON response" do
         get "/api/v1.0-pre//trainees/#{trainee_slug}/degrees/#{slug}", headers: { Authorization: token }
         expect(response).to have_http_status(:ok)
       end
@@ -20,7 +20,7 @@ describe "`GET /trainees/:trainee_slug/degrees/:slug` endpoint" do
     context "non existant degree" do
       let(:slug) { "non-existant" }
 
-      it "returns status 404 with a valid JSON response" do
+      it "returns status code 404 with a valid JSON response" do
         get "/api/v1.0-pre//trainees/#{trainee_slug}/degrees/#{slug}", headers: { Authorization: token }
 
         expect(response).to have_http_status(:not_found)

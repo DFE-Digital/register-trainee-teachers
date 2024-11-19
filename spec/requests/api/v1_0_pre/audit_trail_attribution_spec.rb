@@ -18,7 +18,7 @@ describe "audit trail attribution" do
       }
     end
 
-    it "returns status 200 with a valid JSON response" do
+    it "returns status code 200 with a valid JSON response" do
       post(
         "/api/v1.0-pre/trainees/#{trainee.slug}/withdraw",
         headers: { Authorization: "Bearer #{token}", **json_headers },

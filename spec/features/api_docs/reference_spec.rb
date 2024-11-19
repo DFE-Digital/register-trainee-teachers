@@ -3,7 +3,7 @@
 require "rails_helper"
 
 feature "References documentation page for Register API" do
-  scenario "navigate to the documentation when feature flag is active", feature_register_api: true do
+  scenario "navigate to the documentation when feature flag is active" do
     when_i_visit_the_documentation_page
     and_i_navigate_to_the_api_reference
     then_i_should_see_the_api_reference_for_the_current_version

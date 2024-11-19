@@ -48,7 +48,7 @@ describe "Trainees API" do
         )
       end
 
-      it "returns status 409 (conflict) with the potential duplicates and does not create a trainee record" do
+      it "returns status code 409 (conflict) with the potential duplicates and does not create a trainee record" do
         expect {
           post "/api/v1.0-pre/trainees", params: valid_attributes.to_json, headers: { Authorization: token, **json_headers }
         }.not_to change { Trainee.count }
@@ -69,7 +69,7 @@ describe "Trainees API" do
         )
       end
 
-      it "returns status 409 (conflict) with the potential duplicates and does not create a trainee record" do
+      it "returns status code 409 (conflict) with the potential duplicates and does not create a trainee record" do
         Timecop.travel trainee.itt_start_date do
           expect {
             post "/api/v1.0-pre/trainees", params: valid_attributes.to_json, headers: { Authorization: token, **json_headers }

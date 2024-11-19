@@ -185,4 +185,4 @@ api:
     ua: []
     ip: []
   allowed_versions: [v0.1, v1.0-pre]
-  current_version: v0.1
+  current_version: v1.0-pre

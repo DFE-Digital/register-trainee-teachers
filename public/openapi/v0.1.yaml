@@ -1611,7 +1611,7 @@ paths:
                   total_count: 12
                   per_page: 50
         '422':
-          description: returns 422 when an invalid state is provided
+          description: returns status code 422 when an invalid state is provided
           content:
             application/json:
               schema:
@@ -2146,7 +2146,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: JBAmqHyJTJfiJV93YmdQvDfd
+                    placement_id: bTKB2BX4TeZN2w3j362ktuwF
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2162,9 +2162,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: EvarFr7mvSrzWi85kpYdxJuT
+                    degree_id: KA5cMajDpqEN85hoL9kw4vht
                   state: submitted_for_trn
-                  trainee_id: KgGp6gFnX4qWANsyZFW5jVpk
+                  trainee_id: EtQwVGKumKfPcyvctZc3d7Bf
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: false
@@ -2172,7 +2172,7 @@ paths:
                   lead_partner_urn:
                   application_id:
         '409':
-          description: returns status 409 (conflict) with the potential duplicates
+          description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
           content:
             application/json:
@@ -2787,7 +2787,7 @@ paths:
                 course_max_age: 11
                 application_id: 123456
                 lead_partner_urn: '900020'
-  "/api/{api_version}/trainees/{id}":
+  "/api/{api_version}/trainees/{trainee_id}":
     get:
       summary: show
       tags:
@@ -2799,7 +2799,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: trainee_id
         in: path
         required: true
         schema:
@@ -3191,12 +3191,12 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: bJh4LFHfVB7z53FwbBFqugDx
+        example: iRpHYpbPgfWGFVft26YksYBN
       responses:
         '200':
           description: updates the trainee
@@ -3657,7 +3657,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: tt5d7zBaZ4L31Z2pL6ezDbVC
+                    placement_id: GdZRhYcvymsmMg3sxUp9ioPJ
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3673,13 +3673,13 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: EPBA6WyV9HCAC4GBLdoCiTb4
+                    degree_id: vs5DLYCBwJfs9x1Dq1f2z28g
                   state: submitted_for_trn
-                  trainee_id: bJh4LFHfVB7z53FwbBFqugDx
+                  trainee_id: iRpHYpbPgfWGFVft26YksYBN
                   application_id:
                   disability2: '57'
         '401':
-          description: returns status 401 unauthorized
+          description: returns status code 401 unauthorized
           content:
             application/json:
               schema:
@@ -3692,7 +3692,7 @@ paths:
               example:
                 error: Unauthorized
         '404':
-          description: returns 404
+          description: returns status code 404
           content:
             application/json:
               schema:
@@ -4235,7 +4235,7 @@ paths:
                   trainee_id: 3r1sgtqw77qx2226bi4ktdjd
                   application_id:
         '404':
-          description: returns 404
+          description: returns status code 404
           content:
             application/json:
               schema:
@@ -4304,7 +4304,7 @@ paths:
         example: g954k9bgw9q547g1zs84izkw
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -4499,7 +4499,7 @@ paths:
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: dhev7ZCwee5CTnwPKxajuyhT
+                  degree_id: kM1DENrYxLi2m3E1bMHfkB8s
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4581,7 +4581,7 @@ paths:
                   message: Uk degree can't be blank
                 - error: UnprocessableEntity
                   message: Grade can't be blank
-  "/api/{api_version}/trainees/{trainee_id}/degrees/{id}":
+  "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
       tags:
@@ -4593,7 +4593,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -4963,7 +4963,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -4977,7 +4977,7 @@ paths:
         example: lfrnp13y637rjl2ggwgma3r3
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5052,7 +5052,7 @@ paths:
                   grade_uuid: aaba4427-287c-4610-a838-1970dd9090c1
                   degree_id: nygwxht300j3ub1496kose2n
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5087,7 +5087,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: degree_id
         in: path
         required: true
         schema:
@@ -5277,7 +5277,7 @@ paths:
         example: x9weh1n37vbbhq8ssf3ifz9e
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5398,7 +5398,7 @@ paths:
                   postcode: W5 5BJ
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: yUCzGMy5VAVx9oVyjCxf7pZp
+                  placement_id: aJshZhjQgkGcKPfBiQdtymsU
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5451,7 +5451,7 @@ paths:
                 errors:
                 - error: UnprocessableEntity
                   message: Name can't be blank
-  "/api/{api_version}/trainees/{trainee_id}/placements/{id}":
+  "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
       tags:
@@ -5463,7 +5463,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -5852,7 +5852,7 @@ paths:
                   withdraw_reasons: []
                   placements:
                   - urn: '390857'
-                    name: Brookville High School
+                    name: Brookville 122 High School
                     address: URN 390857, Jamaalshire, T5 8BL
                     postcode: T5 8BL
                     created_at: '2024-09-15T12:34:56.000Z'
@@ -5863,7 +5863,7 @@ paths:
                   trainee_id: bae754i00pfor7w5zeswgps1
                   application_id:
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5905,7 +5905,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -5919,7 +5919,7 @@ paths:
         example: f9gur806ar788ariskimi53z
       responses:
         '200':
-          description: returns status 200 with a valid JSON response
+          description: returns status code 200 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5955,14 +5955,14 @@ paths:
               example:
                 data:
                   urn: '404263'
-                  name: Mallowpond High
+                  name: Mallowpond 124 High
                   address: URN 404263, Lake Jacquilineville, YH5W 5NX
                   postcode: YH5W 5NX
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   placement_id: qpf2aguq93keeimbclt07dc7
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -5997,7 +5997,7 @@ paths:
         schema:
           type: string
         example: v0.1
-      - name: id
+      - name: placement_id
         in: path
         required: true
         schema:
@@ -6033,7 +6033,8 @@ paths:
                 postcode: GU1 1AA
       responses:
         '200':
-          description: partial update of an existing placement returns 200 (ok) status
+          description: partial update of an existing placement returns status code
+            200 (ok) status
           content:
             application/json:
               schema:
@@ -6543,7 +6544,7 @@ paths:
                   trainee_id: 3g3yvu8b63ypomklvxbbz0g7
                   application_id:
         '404':
-          description: returns 404
+          description: returns status code 404
           content:
             application/json:
               schema:
@@ -7119,7 +7120,7 @@ paths:
                   trainee_id: o4puv5vthltufunt526003m7
                   application_id:
                   id: 691
-                  dttp_id: b04f799e-5d3c-4b33-8540-8d8761fd58ad
+                  dttp_id: 4d03ca96-de3b-4669-8b0d-8f4e29ab9817
                   progress:
                     personal_details: true
                     contact_details: true
@@ -7164,7 +7165,7 @@ paths:
               example:
                 error: Unauthorized
         '404':
-          description: returns status 404 with a valid JSON response
+          description: returns status code 404 with a valid JSON response
           content:
             application/json:
               schema:
@@ -7189,7 +7190,7 @@ paths:
                 - error: NotFound
                   message: Trainee(s) not found
         '422':
-          description: returns status 422 with a valid JSON response
+          description: returns status code 422 with a valid JSON response
           content:
             application/json:
               schema:
