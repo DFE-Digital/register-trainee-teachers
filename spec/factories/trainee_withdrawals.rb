@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :trainee_withdrawal, class: "Trainee::Withdrawal" do
+  factory :trainee_withdrawal, class: "TraineeWithdrawal" do
     trainee
     date { "2024-11-18" }
     trigger { :provider }
