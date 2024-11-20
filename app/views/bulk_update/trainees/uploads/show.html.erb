@@ -69,10 +69,10 @@
       <% if @bulk_update_trainee_upload.row_errors.present? %>
         <p class="govuk-body">You need to review the errors before you can add new trainees</p>
 
-        <%= govuk_button_to(
-          "Review errors",
-          bulk_update_trainees_review_error_path(id: @bulk_update_trainee_upload.id),
-          method: :get,
+        <%= render GovukButtonLinkTo::View.new(
+          body: "Review errors",
+          url: bulk_update_trainees_review_error_path(id: @bulk_update_trainee_upload.id),
+          class_option: "govuk-button"
         ) %>
       <% else %>
         <%= register_form_with(
