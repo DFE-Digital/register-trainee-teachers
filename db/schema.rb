@@ -10,13 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_14_153414) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_20_205445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "future_interest_type", ["yes", "no", "unknown"]
+  create_enum "trigger_type", ["provider", "trainee"]
 
   create_table "academic_cycles", force: :cascade do |t|
     t.date "start_date", null: false
@@ -873,8 +878,21 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_153414) do
     t.bigint "withdrawal_id"
     t.index ["trainee_id", "withdrawal_reason_id"], name: "uniq_idx_trainee_withdawal_reasons", unique: true
     t.index ["trainee_id"], name: "index_trainee_withdrawal_reasons_on_trainee_id"
-    t.index ["withdrawal_id"], name: "index_trainee_withdrawal_reasons_on_withdrawal_id"
+    t.index ["withdrawal_id", "withdrawal_reason_id"], name: "uniq_idx_withdrawal_id_withdrawal_reason_id", unique: true
     t.index ["withdrawal_reason_id"], name: "index_trainee_withdrawal_reasons_on_withdrawal_reason_id"
+  end
+
+  create_table "trainee_withdrawals", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.date "date"
+    t.enum "trigger", enum_type: "trigger_type"
+    t.string "another_reason"
+    t.enum "future_interest", enum_type: "future_interest_type"
+    t.datetime "discarded_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["discarded_at"], name: "index_trainee_withdrawals_on_discarded_at"
+    t.index ["trainee_id"], name: "index_trainee_withdrawals_on_trainee_id"
   end
 
   create_table "trainees", force: :cascade do |t|
@@ -1053,8 +1071,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_153414) do
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
+  add_foreign_key "trainee_withdrawal_reasons", "trainee_withdrawals", column: "withdrawal_id"
   add_foreign_key "trainee_withdrawal_reasons", "trainees"
   add_foreign_key "trainee_withdrawal_reasons", "withdrawal_reasons"
+  add_foreign_key "trainee_withdrawals", "trainees"
   add_foreign_key "trainees", "academic_cycles", column: "end_academic_cycle_id"
   add_foreign_key "trainees", "academic_cycles", column: "start_academic_cycle_id"
   add_foreign_key "trainees", "allocation_subjects", column: "course_allocation_subject_id"
