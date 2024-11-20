@@ -14,7 +14,8 @@
 #
 # Indexes
 #
-#  index_bulk_update_row_errors_on_error_type  (error_type)
+#  idx_on_errored_on_id_errored_on_type_492045ed60  (errored_on_id,errored_on_type)
+#  index_bulk_update_row_errors_on_error_type       (error_type)
 #
 class BulkUpdate::RowError < ApplicationRecord
   belongs_to :errored_on, polymorphic: true
