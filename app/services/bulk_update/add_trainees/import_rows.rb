@@ -87,6 +87,8 @@ module BulkUpdate
             end
           end
 
+          results = []
+
           ActiveRecord::Base.transaction(requires_new: true) do
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
               BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
@@ -96,15 +98,18 @@ module BulkUpdate
             if results.all?(&:success)
               trainee_upload.succeeded! unless dry_run
             else
-              create_error_rows(results)
               success = false
             end
 
             raise(ActiveRecord::Rollback) if dry_run || !success
           end
 
-          trainee_upload.validated! if dry_run && success
-          trainee_upload.failed! unless success
+          if success
+            trainee_upload.validated! if dry_run
+          else
+            create_error_rows(results)
+            trainee_upload.failed! unless success
+          end
         end
 
         success
