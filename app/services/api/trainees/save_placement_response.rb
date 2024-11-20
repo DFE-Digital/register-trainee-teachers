@@ -8,9 +8,9 @@ module Api
       include Api::Serializable
       include Api::ErrorResponse
 
-      def initialize(placement:, params:, version:)
+      def initialize(placement:, attributes:, version:)
         @placement = placement
-        @params = params
+        @placement_attributes = attributes
         @version = version
         @status = new_record? ? :created : :ok
       end
@@ -31,7 +31,7 @@ module Api
 
     private
 
-      attr_reader :placement, :params, :version, :status
+      attr_reader :placement, :placement_attributes, :version, :status
 
       def save
         assign_attributes(attributes)
@@ -40,16 +40,6 @@ module Api
       end
 
       def model = :placement
-
-      def placement_attributes
-        @placement_attributes ||= if new_record?
-                                    attributes_klass.new(params.to_h)
-                                  else
-                                    new_attributes = attributes_klass.from_placement(placement)
-                                    new_attributes.assign_attributes(params.to_h)
-                                    new_attributes
-                                  end
-      end
 
       def errors = placement_attributes.errors.presence || placement.errors
 

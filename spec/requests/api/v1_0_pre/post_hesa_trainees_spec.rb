@@ -789,6 +789,22 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
   end
 
+  context "when only a placement urn is provided", feature_register_api: true do
+    before do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    let(:school) { create(:school) }
+    let(:params) { { data: data.merge({ placements_attributes: [{ urn: school.urn }] }) } }
+
+    it "creates the placement" do
+      placement_attributes = response.parsed_body[:data][:placements]&.first
+
+      expect(placement_attributes[:urn]).to eq(school.urn)
+      expect(placement_attributes[:name]).to eq(school.name)
+    end
+  end
+
   context "when a degree is invalid" do
     before do
       params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
