@@ -6,7 +6,10 @@ Sentry.init do |config|
     filter.filter(event.to_hash)
   end
 
-  config.enabled_patches += [:sidekiq_cron]
+  # NOTE: turn off Sentry Cron monitoring it seems to automatically create new monitor without notice
+  # https://dfe-teacher-services.sentry.io/crons/
+  # config.enabled_patches += [:sidekiq_cron]
+
   config.traces_sample_rate = 0.05
   config.profiles_sample_rate = 0.05
   config.release = ENV.fetch("COMMIT_SHA", nil)
