@@ -7,11 +7,11 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
     it "generates a CSV with the correct headers and no rows" do
-      csv = CSV.generate do |csv|
+      generated_csv = CSV.generate do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
-      data = CSV.parse(csv)
+      data = CSV.parse(generated_csv)
       expect(data.size).to eq(1)
       expect(data[0]).to eq(BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.keys + ["Errors"])
     end
@@ -21,11 +21,11 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows) }
 
     it "generates a CSV with an extra _Errors_ column with empty values" do
-      csv = CSV.generate do |csv|
+      generated_csv = CSV.generate do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
-      data = CSV.parse(csv, headers: true)
+      data = CSV.parse(generated_csv, headers: true)
       expect(data.size).to eq(5)
       data.each do |row|
         expect(row.key?("Errors")).to be(true)
@@ -38,11 +38,11 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows_and_errors) }
 
     it "generates a CSV with an extra _Errors_ column" do
-      csv = CSV.generate do |csv|
+      generated_csv = CSV.generate do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
-      data = CSV.parse(csv, headers: true)
+      data = CSV.parse(generated_csv, headers: true)
       expect(data.size).to eq(5)
       expect(data[0]["Errors"]).to be_blank
       expect(data[1]["Errors"]).to eq(

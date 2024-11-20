@@ -25,7 +25,7 @@ module Reports
 
     def add_row_to_csv(row)
       csv << row.data.merge(
-        'Errors': row.row_errors.pluck(:message).join(", "),
+        Errors: row.row_errors.pluck(:message).join(", "),
       ).values.map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end

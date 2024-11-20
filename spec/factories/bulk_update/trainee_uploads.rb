@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+UPLOAD_ERROR_MESSAGES = [
+  "Invalid email address",
+  "Invalid date of birth",
+  "Invalid degree grade",
+  "Missing placement data",
+  "Missing degree data",
+].freeze
+
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
@@ -131,14 +139,6 @@ FactoryBot.define do
     end
 
     # TODO: Check whether the trait below is still needed
-    ERROR_MESSAGES = [
-      "Invalid email address",
-      "Invalid date of birth",
-      "Invalid degree grade",
-      "Missing placement data",
-      "Missing degree data",
-    ].freeze
-
     trait :with_rows_and_errors do
       after(:create) do |upload|
         CSV.parse(upload.file.download, headers: true).map.with_index do |row, index|
@@ -149,8 +149,8 @@ FactoryBot.define do
             row_number: index + 1,
           )
           if index.odd?
-            ERROR_MESSAGES.sample(index).each do |message|
-              create(:bulk_update_row_error, errored_on: row, message:)
+            UPLOAD_ERROR_MESSAGES.sample(index).each do |message|
+              create(:bulk_update_row_error, errored_on: row, message: message)
             end
           end
         end

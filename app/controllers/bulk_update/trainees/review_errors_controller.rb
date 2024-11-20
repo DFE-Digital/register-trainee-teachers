@@ -5,12 +5,10 @@ module BulkUpdate
     class ReviewErrorsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
-      # TODO: integrate with Pundit policy
-
       def show
         @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find_by(id: params[:id])
 
-        redirect_to(not_found_path) unless @bulk_update_trainee_upload.present?
+        redirect_to(not_found_path) if @bulk_update_trainee_upload.blank?
 
         respond_to do |format|
           format.html { render(:show) }
