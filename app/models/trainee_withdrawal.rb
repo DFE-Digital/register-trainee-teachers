@@ -26,6 +26,6 @@
 class TraineeWithdrawal < ApplicationRecord
   belongs_to :trainee
 
-  enum trigger: { provider: 'provider', trainee: 'trainee' }, _prefix: :triggered_by
-  enum future_interest: { yes: 'yes', no: 'no', unknown: 'unknown' }, _suffix: true
+  enum :trigger, { provider: "provider", trainee: "trainee" }, prefix: :triggered_by
+  enum :future_interest, { yes: "yes", no: "no", unknown: "unknown" }, suffix: true
 end

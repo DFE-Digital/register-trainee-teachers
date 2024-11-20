@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateTraineeWithdrawals < ActiveRecord::Migration[7.2]
   def up
     safety_assured {
