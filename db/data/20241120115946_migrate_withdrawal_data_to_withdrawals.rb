@@ -2,14 +2,19 @@
 
 class MigrateWithdrawalDataToWithdrawals < ActiveRecord::Migration[7.2]
   def up
-    Trainee.withdrawn.find_each do |trainee|
-      withdrawal = Trainee::Withdrawal.create!(
-        trainee_id: trainee.id,
-        date: trainee.withdraw_date,
+    execute <<~SQL
+      WITH new_withdrawals AS (
+        INSERT INTO withdrawals (trainee_id, date, created_at, updated_at)
+        SELECT id, withdraw_date, NOW(), NOW()
+        FROM trainees
+        WHERE state = 4
+        RETURNING trainee_id, id
       )
-
-      TraineeWithdrawalReason.where(trainee_id: trainee.id).update_all(withdrawal_id: withdrawal.id)
-    end
+      UPDATE trainee_withdrawal_reasons twr
+      SET withdrawal_id = nw.id
+      FROM new_withdrawals nw
+      WHERE twr.trainee_id = nw.trainee_id;
+    SQL
   end
 
   def down
