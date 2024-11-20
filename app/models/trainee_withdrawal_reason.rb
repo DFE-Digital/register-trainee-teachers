@@ -27,7 +27,7 @@
 class TraineeWithdrawalReason < ApplicationRecord
   belongs_to :trainee, touch: true
   belongs_to :withdrawal_reason
-  belongs_to :withdrawal
+  belongs_to :trainee_withdrawal
 
   audited associated_with: :trainee
 end

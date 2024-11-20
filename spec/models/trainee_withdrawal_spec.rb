@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Trainee::Withdrawal do
+RSpec.describe TraineeWithdrawal do
   describe "associations" do
     it { is_expected.to belong_to(:trainee) }
   end
