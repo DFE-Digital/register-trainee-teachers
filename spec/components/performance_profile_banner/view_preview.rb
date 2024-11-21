@@ -20,10 +20,10 @@ class PerformanceProfileBanner::ViewPreview < ViewComponent::Preview
 private
 
   def provider_awaiting_sign_off
-    OpenStruct.new(performance_signed_off: false)
+    OpenStruct.new(performance_signed_off?: false)
   end
 
   def provider_performance_signed_off
-    OpenStruct.new(performance_signed_off: true)
+    OpenStruct.new(performance_signed_off?: true)
   end
 end

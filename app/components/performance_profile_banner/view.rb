@@ -25,11 +25,11 @@ module PerformanceProfileBanner
     attr_reader :previous_academic_cycle, :provider, :sign_off_period
 
     def deadline
-      "31 January #{previous_academic_cycle_end_year}"
+      "31 January #{previous_academic_cycle_end_year + 1}"
     end
 
     def provider_awaiting_sign_off?
-      !provider.performance_signed_off
+      !provider.performance_signed_off?
     end
 
     def performance_period?
