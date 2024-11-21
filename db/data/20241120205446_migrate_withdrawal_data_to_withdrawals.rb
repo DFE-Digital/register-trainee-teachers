@@ -12,7 +12,7 @@ class MigrateWithdrawalDataToWithdrawals < ActiveRecord::Migration[7.2]
           RETURNING trainee_id, id
         )
         UPDATE trainee_withdrawal_reasons twr
-        SET withdrawal_id = nw.id
+        SET trainee_withdrawal_id = nw.id
         FROM new_withdrawals nw
         WHERE twr.trainee_id = nw.trainee_id;
       SQL

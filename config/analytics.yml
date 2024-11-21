@@ -330,6 +330,6 @@ shared:
     - id
     - trainee_id
     - withdrawal_reason_id
-    - withdrawal_id
+    - trainee_withdrawal_id
     - created_at
     - updated_at
