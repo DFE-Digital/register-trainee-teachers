@@ -35,7 +35,7 @@ describe Reports::BulkTraineeUploadReport do
   end
 
   context "given a valid trainee upload with some errors" do
-    let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows_and_errors) }
+    let(:trainee_upload) { create(:bulk_update_trainee_upload, :failed_with_validation_errors) }
 
     it "generates a CSV with an extra _Errors_ column" do
       generated_csv = CSV.generate do |csv|
@@ -45,15 +45,16 @@ describe Reports::BulkTraineeUploadReport do
       data = CSV.parse(generated_csv, headers: true)
       expect(data.size).to eq(5)
       expect(data[0]["Errors"]).to be_blank
-      expect(data[1]["Errors"]).to eq(
-        trainee_upload.trainee_upload_rows[1].row_errors.pluck(:message).join(", "),
-      )
+      expect(data[1]["Errors"]).to be_blank
       expect(data[2]["Errors"]).to be_blank
       expect(data[3]["Errors"]).to be_present
       expect(data[3]["Errors"]).to eq(
         trainee_upload.trainee_upload_rows[3].row_errors.pluck(:message).join(", "),
       )
-      expect(data[4]["Errors"]).to be_blank
+      expect(data[4]["Errors"]).to be_present
+      expect(data[4]["Errors"]).to eq(
+        trainee_upload.trainee_upload_rows[4].row_errors.pluck(:message).join(", "),
+      )
     end
   end
 end

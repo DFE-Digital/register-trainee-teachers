@@ -137,24 +137,5 @@ FactoryBot.define do
         end
       end
     end
-
-    # TODO: Check whether the trait below is still needed
-    trait :with_rows_and_errors do
-      after(:create) do |upload|
-        CSV.parse(upload.file.download, headers: true).map.with_index do |row, index|
-          row = create(
-            :bulk_update_trainee_upload_row,
-            trainee_upload: upload,
-            data: row.to_h,
-            row_number: index + 1,
-          )
-          if index.odd?
-            UPLOAD_ERROR_MESSAGES.sample(index).each do |message|
-              create(:bulk_update_row_error, errored_on: row, message: message)
-            end
-          end
-        end
-      end
-    end
   end
 end
