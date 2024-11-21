@@ -252,13 +252,13 @@ describe Provider do
     end
 
     context "when there are only census sign offs" do
-      let (:census_sign_off) { create(:sign_off, :census) }
+      let(:census_sign_off) { create(:sign_off, :census) }
       let(:provider) { create(:provider, sign_offs: [census_sign_off]) }
 
       it "returns false" do
         expect(provider.performance_signed_off?).to be false
       end
-     end
+    end
 
     context "when there are performance sign offs from the previous academic cycle" do
       let(:performance_profile_sign_off) { create(:sign_off, :performance_profile, :previous_academic_cycle) }

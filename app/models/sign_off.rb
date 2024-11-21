@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: sign_offs
@@ -28,10 +30,11 @@ class SignOff < ApplicationRecord
   belongs_to :user
 
   TYPES = %w[performance_profile census].freeze
-  enum sign_off_type: TYPES.map { |type| [type, type] }.to_h
+  enum(:sign_off_type, TYPES.to_h { |type| [type, type] })
 
-  scope :current_academic_cycle, -> do
-    return none unless AcademicCycle.current.present?
+  scope :current_academic_cycle, lambda {
+    return none if AcademicCycle.current.blank?
+
     joins(:academic_cycle).where(academic_cycles: { id: AcademicCycle.current.id })
-  end
+  }
 end

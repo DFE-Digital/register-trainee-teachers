@@ -31,5 +31,9 @@ FactoryBot.define do
     trait :current do
       cycle_year { current_academic_year }
     end
+
+    trait :previous do
+      previous_cycle { true }
+    end
   end
 end

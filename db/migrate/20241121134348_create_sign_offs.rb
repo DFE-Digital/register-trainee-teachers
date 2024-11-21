@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSignOffs < ActiveRecord::Migration[7.2]
   def change
     create_table :sign_offs do |t|
