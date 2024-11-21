@@ -412,7 +412,7 @@ private
   end
 
   def then_the_upload_is_cancelled
-    expect(page).to have_current_path(bulk_update_path, ignore_query: true)
+    expect(page).to have_current_path(bulk_update_path)
     expect(page).to have_content("Bulk updates to records have been cancelled")
   end
 

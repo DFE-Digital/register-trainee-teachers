@@ -82,7 +82,9 @@
     <% end %>
       <p class="govuk-body">
         <%= govuk_link_to "Cancel bulk updates to records",
-          bulk_update_trainees_upload_path(@bulk_update_trainee_upload), data: { turbo_method: :delete }, class: "govuk-link--no-visited-state govuk-link" %>
+          bulk_update_trainees_upload_path(@bulk_update_trainee_upload),
+          data: { turbo: true, turbo_method: :delete },
+          class: "govuk-link--no-visited-state govuk-link" %>
       </p>
   <% end %>
   </div>
