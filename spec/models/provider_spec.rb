@@ -36,6 +36,7 @@ describe Provider do
     it { is_expected.to have_many(:funding_trainee_summaries) }
     it { is_expected.to have_many(:recommendations_uploads) }
     it { is_expected.to have_many(:recommendations_upload_rows) }
+    it { is_expected.to have_many(:sign_offs) }
   end
 
   describe "auditing" do
@@ -210,6 +211,71 @@ describe Provider do
       subject { build(:provider, accreditation_id: "234567").hei? }
 
       it { is_expected.to be false }
+    end
+  end
+
+  describe "#performance_sign_offs" do
+    context "when there are no sign offs" do
+      let(:provider) { create(:provider) }
+
+      it "returns an empty collection" do
+        expect(provider.performance_sign_offs).to be_empty
+      end
+    end
+
+    context "when there are only census sign offs" do
+      let(:census_sign_off) { create(:sign_off, :census) }
+      let(:provider) { create(:provider, sign_offs: [census_sign_off]) }
+
+      it "returns an empty collection" do
+        expect(provider.performance_sign_offs).to be_empty
+      end
+    end
+
+    context "when there are census and performance sign offs" do
+      let(:performance_profile_sign_off) { create(:sign_off, :performance_profile) }
+      let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off]) }
+
+      it "returns only the performance sign offs" do
+        expect(provider.performance_sign_offs).to contain_exactly(performance_profile_sign_off)
+      end
+    end
+  end
+
+  describe "#performance_signed_off?" do
+    context "when there are no sign offs" do
+      let(:provider) { create(:provider) }
+
+      it "returns false" do
+        expect(provider.performance_signed_off?).to be false
+      end
+    end
+
+    context "when there are only census sign offs" do
+      let (:census_sign_off) { create(:sign_off, :census) }
+      let(:provider) { create(:provider, sign_offs: [census_sign_off]) }
+
+      it "returns false" do
+        expect(provider.performance_signed_off?).to be false
+      end
+     end
+
+    context "when there are performance sign offs from the previous academic cycle" do
+      let(:performance_profile_sign_off) { create(:sign_off, :performance_profile, :previous_academic_cycle) }
+      let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off]) }
+
+      it "returns false" do
+        expect(provider.performance_signed_off?).to be false
+      end
+    end
+
+    context "when there are performace sign offs from the current academic cycle" do
+      let(:performance_profile_sign_off) { create(:sign_off, :performance_profile) }
+      let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off]) }
+
+      it "returns true" do
+        expect(provider.performance_signed_off?).to be true
+      end
     end
   end
 end
