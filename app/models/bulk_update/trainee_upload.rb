@@ -7,6 +7,7 @@
 #  id                 :bigint           not null, primary key
 #  number_of_trainees :integer
 #  status             :string
+#  submitted_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  provider_id        :bigint           not null
