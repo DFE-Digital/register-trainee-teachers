@@ -1,3 +1,5 @@
+import { Turbo } from '@hotwired/turbo-rails'
+
 import jQuery from 'jquery'
 
 import './scripts/global/nationality_select'
@@ -19,13 +21,17 @@ import CookieBanner from './scripts/cookie_banner'
 
 import { initAll } from 'govuk-frontend'
 
+Turbo.session.drive = false
+
 window.jQuery = jQuery
 window.$ = jQuery
 
-// Initialize GOV.UK Frontend components
-initAll()
+document.addEventListener('turbo:load', function () {
+  // Initialize GOV.UK Frontend components
+  initAll()
 
-// Initialize custom components
-LiveFilter.init()
-FilterToggle.init()
-CookieBanner.init()
+  // Initialize custom components
+  LiveFilter.init()
+  FilterToggle.init()
+  CookieBanner.init()
+})

@@ -706,6 +706,9 @@ GEM
     timecop (0.9.10)
     timeout (0.4.2)
     trailblazer-option (0.1.2)
+    turbo-rails (2.0.11)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
@@ -858,6 +861,7 @@ DEPENDENCIES
   store_model (~> 4.1)
   strong_migrations
   timecop (~> 0.9.10)
+  turbo-rails
   tzinfo-data
   uk_postcode
   webmock

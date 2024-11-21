@@ -13,8 +13,14 @@ const fetchLeadPartners = ({ query, populateResults }) => {
   window.fetch(`/autocomplete/lead_partners?query=${encodedQuery}`)
     .then(response => response.json())
     .then(guard)
-    .then((data) => data.lead_partners)
-    .then((data) => { if (data.length === 0) { statusMessage = 'No results found' } else { return data } })
+    .then(data => data.lead_partners)
+    .then((leadPartners) => {
+      if (leadPartners.length === 0) {
+        statusMessage = 'No results found'
+      }
+
+      return leadPartners
+    })
     .then(populateResults)
     .catch(console.log)
 }
