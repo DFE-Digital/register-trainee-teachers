@@ -8,6 +8,10 @@ module BulkUpdate
       def show
         @bulk_update_trainee_upload = organisation.bulk_update_trainee_uploads.find_by(id: params[:id])
 
+        @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
+          provider: current_user.organisation,
+        )
+
         redirect_to(not_found_path) if @bulk_update_trainee_upload.blank?
 
         respond_to do |format|

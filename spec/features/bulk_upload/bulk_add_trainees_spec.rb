@@ -192,6 +192,14 @@ feature "bulk add trainees" do
 
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page
+
+        when_i_click_on_the_download_link
+        then_i_receive_the_file
+
+        when_i_return_to_the_review_errors_page
+        and_i_attach_a_valid_file
+        and_i_click_the_upload_button
+        then_i_see_that_the_upload_is_processing
       end
     end
   end
@@ -466,5 +474,18 @@ private
   def then_i_see_the_review_errors_page
     expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
     expect(page).to have_content("Review errors for 2 trainees in the CSV that you uploaded")
+  end
+
+  def when_i_click_on_the_download_link
+    click_on "Download your CSV file with errors indicated"
+  end
+
+  def then_i_receive_the_file
+    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
+  end
+
+  def when_i_return_to_the_review_errors_page
+    visit bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id)
   end
 end
