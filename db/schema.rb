@@ -28,8 +28,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_205445) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-
-    t.exclusion_constraint "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone) WITH &&", using: :gist, name: "academic_cycles_date_range"
+    t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -265,8 +264,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_205445) do
 
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
-    t.text "file"
-    t.string "file_name"
     t.integer "number_of_trainees"
     t.string "status"
     t.datetime "created_at", null: false
@@ -293,9 +290,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_205445) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
-    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
+    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -804,8 +801,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_205445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.string "code"
     t.boolean "apply_sync_enabled", default: false
+    t.string "code"
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
@@ -937,14 +934,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_20_205445) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.integer "training_initiative"
     t.boolean "applying_for_bursary"
+    t.integer "training_initiative"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.boolean "applying_for_scholarship"
     t.integer "course_education_phase"
+    t.boolean "applying_for_scholarship"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_partner_not_applicable", default: false
