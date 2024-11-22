@@ -153,6 +153,8 @@ module Api
         self.trainee_disabilities_attributes = []
 
         new_attributes[:disabilities]&.each do |disability|
+          next if disability.blank?
+
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
 
