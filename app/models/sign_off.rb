@@ -5,7 +5,7 @@
 # Table name: sign_offs
 #
 #  id                :bigint           not null, primary key
-#  sign_off_type     :string
+#  sign_off_type     :string           not null
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  academic_cycle_id :bigint           not null
@@ -14,9 +14,10 @@
 #
 # Indexes
 #
-#  index_sign_offs_on_academic_cycle_id  (academic_cycle_id)
-#  index_sign_offs_on_provider_id        (provider_id)
-#  index_sign_offs_on_user_id            (user_id)
+#  index_sign_offs_on_academic_cycle_id                  (academic_cycle_id)
+#  index_sign_offs_on_provider_id                        (provider_id)
+#  index_sign_offs_on_provider_id_and_academic_cycle_id  (provider_id,academic_cycle_id) UNIQUE
+#  index_sign_offs_on_user_id                            (user_id)
 #
 # Foreign Keys
 #

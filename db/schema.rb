@@ -837,10 +837,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_134348) do
     t.bigint "provider_id", null: false
     t.bigint "academic_cycle_id", null: false
     t.bigint "user_id", null: false
-    t.string "sign_off_type"
+    t.string "sign_off_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["academic_cycle_id"], name: "index_sign_offs_on_academic_cycle_id"
+    t.index ["provider_id", "academic_cycle_id"], name: "index_sign_offs_on_provider_id_and_academic_cycle_id", unique: true
     t.index ["provider_id"], name: "index_sign_offs_on_provider_id"
     t.index ["user_id"], name: "index_sign_offs_on_user_id"
   end
