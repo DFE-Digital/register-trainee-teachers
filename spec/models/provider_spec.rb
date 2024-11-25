@@ -214,12 +214,12 @@ describe Provider do
     end
   end
 
-  describe "#performance_sign_offs" do
+  describe "#performance_profile_sign_offs" do
     context "when there are no sign offs" do
       let(:provider) { create(:provider) }
 
       it "returns an empty collection" do
-        expect(provider.performance_sign_offs).to be_empty
+        expect(provider.performance_profile_sign_offs).to be_empty
       end
     end
 
@@ -227,7 +227,7 @@ describe Provider do
       let(:provider) { create(:provider, :census_sign_off) }
 
       it "returns an empty collection" do
-        expect(provider.performance_sign_offs).to be_empty
+        expect(provider.performance_profile_sign_offs).to be_empty
       end
     end
 
@@ -237,17 +237,17 @@ describe Provider do
       let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
 
       it "returns only the performance sign offs" do
-        expect(provider.performance_sign_offs).to contain_exactly(performance_profile_sign_off)
+        expect(provider.performance_profile_sign_offs).to contain_exactly(performance_profile_sign_off)
       end
     end
   end
 
-  describe "#performance_signed_off?" do
+  describe "#performance_profile_signed_off?" do
     context "when there are no sign offs" do
       let(:provider) { create(:provider) }
 
       it "returns false" do
-        expect(provider.performance_signed_off?).to be false
+        expect(provider.performance_profile_signed_off?).to be false
       end
     end
 
@@ -255,7 +255,7 @@ describe Provider do
       let(:provider) { create(:provider, :census_sign_off) }
 
       it "returns false" do
-        expect(provider.performance_signed_off?).to be false
+        expect(provider.performance_profile_signed_off?).to be false
       end
     end
 
@@ -263,7 +263,7 @@ describe Provider do
       let(:provider) { create(:provider, :previous_performance_profile_sign_off) }
 
       it "returns false" do
-        expect(provider.performance_signed_off?).to be false
+        expect(provider.performance_profile_signed_off?).to be false
       end
     end
 
@@ -271,7 +271,7 @@ describe Provider do
       let(:provider) { create(:provider, :performance_profile_sign_off) }
 
       it "returns true" do
-        expect(provider.performance_signed_off?).to be true
+        expect(provider.performance_profile_signed_off?).to be true
       end
     end
   end

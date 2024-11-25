@@ -110,11 +110,11 @@ class Provider < ApplicationRecord
     accreditation_id.starts_with?("1")
   end
 
-  def performance_sign_offs
+  def performance_profile_sign_offs
     sign_offs.performance_profile
   end
 
-  def performance_signed_off?
+  def performance_profile_signed_off?
     sign_offs.performance_profile.current_academic_cycle.exists?
   end
 
