@@ -89,7 +89,7 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         then_i_see_that_the_upload_is_processing
 
-        when_i_click_the_view_status_of_new_trainees_files_link
+        when_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_pending(BulkUpdate::TraineeUpload.last)
         and_i_click_on_back_link
 
@@ -97,7 +97,7 @@ feature "bulk add trainees" do
         and_i_refresh_the_page
         then_i_see_the_review_page_without_validation_errors
 
-        when_i_click_the_view_status_of_new_trainees_files_link
+        when_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
         and_i_click_on_back_link
         then_i_see_the_review_page
@@ -214,6 +214,7 @@ feature "bulk add trainees" do
         Timecop.freeze do
           when_multiple_uploads_exist
           and_i_visit_the_bulk_update_index_page
+          and_i_click_on_view_status_of_uploaded_trainee_files
           then_i_see_the_uploads
         end
       end
@@ -226,8 +227,8 @@ private
     click_on "Back"
   end
 
-  def when_i_click_the_view_status_of_new_trainees_files_link
-    click_on "status of new trainees files"
+  def when_i_click_the_view_status_of_new_trainee_files_link
+    click_on "status of new trainee files"
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
@@ -246,6 +247,10 @@ private
 
   def and_i_visit_the_bulk_update_index_page
     visit bulk_update_trainees_uploads_path
+  end
+
+  def and_i_click_on_view_status_of_uploaded_trainee_files
+    click_on "View status of previously uploaded new trainee files"
   end
 
   def then_i_see_the_uploads
@@ -307,7 +312,7 @@ private
     expect(page).to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
     expect(page).to have_content("This is taking longer than usual")
     expect(page).to have_content("You'll receive and email to tell you when this is complete.")
-    expect(page).to have_content("You can also check the status of new trainees files.")
+    expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_link("Back to bulk updates page")
   end
 
@@ -317,7 +322,7 @@ private
     expect(page).not_to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
     expect(page).not_to have_content("This is taking longer than usual")
     expect(page).not_to have_content("You'll receive and email to tell you when this is complete.")
-    expect(page).not_to have_content("You can also check the status of new trainees files.")
+    expect(page).not_to have_content("You can also check the status of new trainee files.")
     expect(page).not_to have_link("Back to bulk updates page")
   end
 
@@ -558,4 +563,5 @@ private
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
+  alias_method :and_i_visit_the_bulk_update_index_page, :when_i_visit_the_bulk_update_index_page
 end
