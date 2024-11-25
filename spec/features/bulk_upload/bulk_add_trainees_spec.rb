@@ -57,6 +57,7 @@ feature "bulk add trainees" do
 
       before do
         given_i_am_authenticated(user:)
+        allow(SendCsvSubmittedForProcessingEmailService).to receive(:call)
       end
 
       scenario "the bulk add trainees page is visible" do
@@ -104,6 +105,7 @@ feature "bulk add trainees" do
 
         when_i_click_the_submit_button
         then_a_job_is_queued_to_process_the_upload
+        and_the_send_csv_processing_email_has_been_sent
 
         when_the_background_job_is_run
         and_i_see_the_summary_page
@@ -356,6 +358,10 @@ private
 
   def when_the_background_job_is_run
     perform_enqueued_jobs
+  end
+
+  def and_the_send_csv_processing_email_has_been_sent
+    expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call).at_least(:once)
   end
 
   def and_i_visit_the_trainees_page
