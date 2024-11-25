@@ -200,6 +200,14 @@ shared:
     - town
     - updated_at
     - urn
+  sign_offs:
+    - id
+    - provider_id
+    - academic_cycle_id
+    - user_id
+    - sign_off_type
+    - created_at
+    - updated_at
   subject_specialisms:
     - allocation_subject_id
     - created_at

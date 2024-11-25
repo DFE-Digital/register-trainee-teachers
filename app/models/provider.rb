@@ -60,6 +60,8 @@ class Provider < ApplicationRecord
 
   has_many :bulk_update_trainee_uploads, class_name: "BulkUpdate::TraineeUpload"
 
+  has_many :sign_offs
+
   audited
 
   has_associated_audits
@@ -106,6 +108,14 @@ class Provider < ApplicationRecord
 
   def hei?
     accreditation_id.starts_with?("1")
+  end
+
+  def performance_profile_sign_offs
+    sign_offs.performance_profile
+  end
+
+  def performance_profile_signed_off?
+    sign_offs.performance_profile.current_academic_cycle.exists?
   end
 
 private

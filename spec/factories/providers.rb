@@ -46,5 +46,17 @@ FactoryBot.define do
     trait :scitt do
       accreditation_id { "5432" }
     end
+
+    trait :performance_profile_sign_off do
+      sign_offs { [build(:sign_off, :performance_profile)] }
+    end
+
+    trait :previous_performance_profile_sign_off do
+      sign_offs { [build(:sign_off, :performance_profile, :previous_academic_cycle)] }
+    end
+
+    trait :census_sign_off do
+      sign_offs { [build(:sign_off, :census)] }
+    end
   end
 end

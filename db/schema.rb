@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_14_153414) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_21_134348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -833,6 +833,19 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_153414) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
+  create_table "sign_offs", force: :cascade do |t|
+    t.bigint "provider_id", null: false
+    t.bigint "academic_cycle_id", null: false
+    t.bigint "user_id", null: false
+    t.string "sign_off_type", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["academic_cycle_id"], name: "index_sign_offs_on_academic_cycle_id"
+    t.index ["provider_id", "academic_cycle_id", "sign_off_type"], name: "idx_on_provider_id_academic_cycle_id_sign_off_type_fc3b6ade67", unique: true
+    t.index ["provider_id"], name: "index_sign_offs_on_provider_id"
+    t.index ["user_id"], name: "index_sign_offs_on_user_id"
+  end
+
   create_table "subject_specialisms", force: :cascade do |t|
     t.citext "name", null: false
     t.bigint "allocation_subject_id", null: false
@@ -1045,6 +1058,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_14_153414) do
   add_foreign_key "potential_duplicate_trainees", "trainees"
   add_foreign_key "provider_users", "providers"
   add_foreign_key "provider_users", "users"
+  add_foreign_key "sign_offs", "academic_cycles"
+  add_foreign_key "sign_offs", "providers"
+  add_foreign_key "sign_offs", "users"
   add_foreign_key "subject_specialisms", "allocation_subjects"
   add_foreign_key "trainee_disabilities", "disabilities"
   add_foreign_key "trainee_disabilities", "trainees"
