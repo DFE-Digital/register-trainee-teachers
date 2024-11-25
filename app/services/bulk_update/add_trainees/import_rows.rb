@@ -96,7 +96,7 @@ module BulkUpdate
 
             # Commit or rollback the transaction depending on whether all rows were error free
             if results.all?(&:success)
-              trainee_upload.succeeded! unless dry_run
+              trainee_upload.succeed! unless dry_run
             else
               success = false
             end
@@ -105,16 +105,16 @@ module BulkUpdate
           end
 
           if !success
-            trainee_upload.failed!
+            trainee_upload.fail!
             create_row_errors(results)
           elsif dry_run
-            trainee_upload.validated!
+            trainee_upload.process!
           end
         end
 
         success
       rescue ActiveRecord::ActiveRecordError
-        trainee_upload.failed!
+        trainee_upload.fail!
 
         raise
       end
