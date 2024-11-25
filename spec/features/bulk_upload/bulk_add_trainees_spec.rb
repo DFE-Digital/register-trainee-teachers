@@ -6,6 +6,8 @@ feature "bulk add trainees" do
   include ActiveJob::TestHelper
 
   before do
+    and_there_is_a_current_academic_cycle
+    and_there_is_a_previous_academic_cycle
     and_there_is_a_nationality
   end
 
@@ -220,11 +222,41 @@ feature "bulk add trainees" do
           when_i_click_on_back_link
           then_i_see_the_bulk_update_index_page
         end
+
+        when_an_upload_exists_from_the_previous_academic_cycle
+        and_i_click_on_view_status_of_uploaded_trainee_files
+        then_i_dont_see_the_upload
       end
     end
   end
 
 private
+
+  def when_an_upload_exists_from_the_previous_academic_cycle
+    @previous_academic_cycle_upload ||= Timecop.travel(
+      rand(AcademicCycle.previous.start_date..AcademicCycle.previous.end_date)
+    ) do
+      create(
+        :bulk_update_trainee_upload,
+        :succeeded,
+        provider: current_user.organisation,
+      )
+    end
+  end
+
+  def then_i_dont_see_the_upload
+    expect(page).not_to have_content(
+      @previous_academic_cycle_upload.submitted_at.to_fs(:govuk_date_and_time),
+    )
+  end
+
+  def and_there_is_a_current_academic_cycle
+    create(:academic_cycle, :current)
+  end
+
+  def and_there_is_a_previous_academic_cycle
+    create(:academic_cycle, :previous)
+  end
 
   def and_i_click_on_back_link
     click_on "Back"

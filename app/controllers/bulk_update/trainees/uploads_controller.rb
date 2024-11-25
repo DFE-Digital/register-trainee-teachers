@@ -8,7 +8,7 @@ module BulkUpdate
       def index
         @bulk_update_trainee_uploads = policy_scope(
           BulkUpdate::TraineeUpload,
-        ).includes(:file_attachment)
+        ).current_academic_cycle.includes(:file_attachment)
       end
 
       def show

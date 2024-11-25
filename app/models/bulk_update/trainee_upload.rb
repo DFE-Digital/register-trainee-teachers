@@ -67,6 +67,10 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
 
   delegate :filename, :download, :attach, to: :file
 
+  scope :current_academic_cycle, lambda {
+    where(created_at: AcademicCycle.current.start_date..AcademicCycle.current.end_date)
+  }
+
   def total_rows_with_errors
     trainee_upload_rows.with_errors.size
   end

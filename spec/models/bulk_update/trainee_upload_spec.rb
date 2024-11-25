@@ -111,6 +111,43 @@ RSpec.describe BulkUpdate::TraineeUpload do
     end
   end
 
+  describe "scopes" do
+    describe "#current_academic_cycle" do
+      let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+      let(:current_academic_cycle) { create(:academic_cycle, :current) }
+      let(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
+
+      let!(:previous_academic_cycle_upload) do
+        create(
+          :bulk_update_trainee_upload,
+          created_at: rand(
+            previous_academic_cycle.start_date..previous_academic_cycle.end_date,
+          ),
+        )
+      end
+      let!(:current_academic_cycle_upload) do
+        create(
+          :bulk_update_trainee_upload,
+          created_at: rand(
+            current_academic_cycle.start_date..current_academic_cycle.end_date,
+          ),
+        )
+      end
+      let!(:next_academic_cycle_upload) do
+        create(
+          :bulk_update_trainee_upload,
+          created_at: rand(
+            next_academic_cycle.start_date..next_academic_cycle.end_date,
+          ),
+        )
+      end
+
+      it "returns records from the current academic cycle" do
+        expect(described_class.current_academic_cycle).to contain_exactly(current_academic_cycle_upload)
+      end
+    end
+  end
+
   describe "#total_rows_with_errors" do
     subject(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
