@@ -40,7 +40,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
       end
     end
 
-    %i[pending failed].each do |status|
+    %i[pending failed cancelled].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
@@ -56,7 +56,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
   context "when the User's organisation is not an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
 
-    %i[pending validated failed in_progress succeeded].each do |status|
+    %i[pending validated failed in_progress succeeded cancelled].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
@@ -70,7 +70,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
   context "when the User's organisation is not a Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {}) }
 
-    %i[pending validated failed in_progress succeeded].each do |status|
+    %i[pending validated failed in_progress succeeded cancelled].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 

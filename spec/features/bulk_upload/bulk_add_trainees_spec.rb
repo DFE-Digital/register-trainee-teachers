@@ -57,6 +57,7 @@ feature "bulk add trainees" do
 
       before do
         given_i_am_authenticated(user:)
+
         allow(SendCsvSubmittedForProcessingEmailService).to receive(:call)
       end
 
@@ -93,6 +94,12 @@ feature "bulk add trainees" do
         and_i_dont_see_the_back_to_bulk_updates_link
 
         when_i_click_the_cancel_bulk_updates_link
+        then_the_upload_is_cancelled
+
+        when_i_try_resubmit_the_same_upload
+        then_i_see_the_unauthorized_message
+
+        when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
@@ -187,6 +194,10 @@ private
 
   def when_i_click_the_cancel_bulk_updates_link
     click_on "Cancel bulk updates to records"
+  end
+
+  def and_the_bulk_upload_is_cancelled
+    expect(BulkUpdate::TraineeUpload.last).to be_cancelled
   end
 
   def when_i_click_the_back_to_bulk_updates_page_link
@@ -398,6 +409,11 @@ private
       :failed,
       provider: current_user.organisation,
     )
+  end
+
+  def then_the_upload_is_cancelled
+    expect(page).to have_current_path(bulk_update_path)
+    expect(page).to have_content("Bulk updates to records have been cancelled")
   end
 
   def and_i_visit_the_summary_page(upload:)

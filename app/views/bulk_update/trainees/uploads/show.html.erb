@@ -73,14 +73,21 @@
         <%= govuk_link_to("Review errors", class: "govuk-button") %>
       <% else %>
         <%= register_form_with(
-          model: @bulk_add_trainee_form,
-          url: bulk_update_trainees_submissions_path(id: @bulk_update_trainee_upload.id),
+          model: @bulk_update_trainee_upload,
+          url: bulk_update_trainees_submissions_path(@bulk_update_trainee_upload),
+          method: :post
         ) do |f| %>
           <%= f.govuk_submit("Submit") %>
         <% end %>
     <% end %>
       <p class="govuk-body">
-        <%= link_to "Cancel bulk updates to records", bulk_update_path %>
+        <%= register_form_with(
+          model: @bulk_update_trainee_upload,
+          url: bulk_update_trainees_upload_path(@bulk_update_trainee_upload),
+          method: :delete
+        ) do |f| %>
+          <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
+        <% end %>
       </p>
   <% end %>
   </div>

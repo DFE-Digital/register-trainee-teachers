@@ -86,6 +86,10 @@ $mobile-big-end: 501px;
   &:active {
     top: 0;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .app-autocomplete__remove-link {

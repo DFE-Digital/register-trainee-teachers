@@ -1994,6 +1994,8 @@ en:
       uploads:
         create:
           success: File uploaded
+        destroy:
+          success: Bulk updates to records have been cancelled
   system_admin:
     users:
       create:
