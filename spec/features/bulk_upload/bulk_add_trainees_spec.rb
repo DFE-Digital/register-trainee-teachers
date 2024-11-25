@@ -91,7 +91,7 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_with_no_errors
+        then_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
@@ -152,7 +152,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page_with_no_errors
+        then_i_see_the_review_page_without_validation_errors
         and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_dont_see_any_validation_errors
         and_i_see_the_duplicate_errors(number: 2)
@@ -165,7 +165,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_and_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page_with_no_errors
+        then_i_see_the_review_page_without_validation_errors
         and_i_dont_the_number_of_trainees_that_can_be_added
         and_i_see_the_validation_errors(number: 2)
         and_i_see_the_duplicate_errors(number: 3)
@@ -174,17 +174,16 @@ feature "bulk add trainees" do
         and_i_dont_see_the_submit_button
       end
 
-      scenario "when I try to upload a file with errors" do
+      scenario "when I try to upload a file with errors then upload a corrected file" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         then_i_see_how_instructions_on_how_to_bulk_add_trainees
-        and_i_see_the_empty_csv_link
 
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_with_no_errors
+        then_i_see_the_review_page_without_validation_errors
 
         when_the_background_job_is_run
         and_i_refresh_the_page
@@ -325,7 +324,7 @@ private
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
   end
 
-  def then_i_see_the_review_page_with_no_errors
+  def then_i_see_the_review_page_without_validation_errors
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
   end

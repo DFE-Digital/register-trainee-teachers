@@ -104,11 +104,11 @@ module BulkUpdate
             raise(ActiveRecord::Rollback) if dry_run || !success
           end
 
-          if success
-            trainee_upload.validated! if dry_run
-          else
-            create_error_rows(results)
-            trainee_upload.failed! unless success
+          if !success
+            trainee_upload.failed!
+            create_row_errors(results)
+          elsif dry_run
+            trainee_upload.validated!
           end
         end
 
@@ -125,7 +125,7 @@ module BulkUpdate
         @current_provider ||= trainee_upload.provider
       end
 
-      def create_error_rows(results)
+      def create_row_errors(results)
         trainee_upload.trainee_upload_rows.each_with_index do |upload_row, index|
           next if results[index].success
 
