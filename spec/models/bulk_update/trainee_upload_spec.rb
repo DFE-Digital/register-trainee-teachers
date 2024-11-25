@@ -9,13 +9,13 @@ RSpec.describe BulkUpdate::TraineeUpload do
   it do
     expect(subject).to define_enum_for(:status)
       .without_instance_methods.with_values(
-      pending: "pending",
-      validated: "validated",
-      in_progress: "in_progress",
-      succeeded: "succeeded",
-      failed: "failed",
-      cancelled: "cancelled",
-    ).backed_by_column_of_type(:string)
+        pending: "pending",
+        validated: "validated",
+        in_progress: "in_progress",
+        succeeded: "succeeded",
+        failed: "failed",
+        cancelled: "cancelled",
+      ).backed_by_column_of_type(:string)
   end
 
   describe "events" do
