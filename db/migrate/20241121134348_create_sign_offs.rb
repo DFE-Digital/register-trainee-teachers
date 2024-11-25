@@ -9,7 +9,7 @@ class CreateSignOffs < ActiveRecord::Migration[7.2]
       t.string :sign_off_type, null: false
       t.timestamps
 
-      t.index %i[provider_id academic_cycle_id], unique: true
+      t.index %i[provider_id academic_cycle_id sign_off_type], unique: true
     end
   end
 end

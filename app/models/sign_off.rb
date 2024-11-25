@@ -14,10 +14,10 @@
 #
 # Indexes
 #
-#  index_sign_offs_on_academic_cycle_id                  (academic_cycle_id)
-#  index_sign_offs_on_provider_id                        (provider_id)
-#  index_sign_offs_on_provider_id_and_academic_cycle_id  (provider_id,academic_cycle_id) UNIQUE
-#  index_sign_offs_on_user_id                            (user_id)
+#  idx_on_provider_id_academic_cycle_id_sign_off_type_fc3b6ade67  (provider_id,academic_cycle_id,sign_off_type) UNIQUE
+#  index_sign_offs_on_academic_cycle_id                           (academic_cycle_id)
+#  index_sign_offs_on_provider_id                                 (provider_id)
+#  index_sign_offs_on_user_id                                     (user_id)
 #
 # Foreign Keys
 #
