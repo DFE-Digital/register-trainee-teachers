@@ -127,7 +127,7 @@ RSpec.describe Api::V01::TraineeAttributes do
   end
 
   describe ".from_trainee" do
-    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilites_disclosed, :completed, sex: :prefer_not_to_say) }
+    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilities_disclosed, :completed, sex: :prefer_not_to_say) }
     let(:blind_disability) { create(:disability, :blind) }
     let(:deaf_disability) { create(:disability, :deaf) }
     let(:trainee_disability) { trainee.disabilities.to_h { |disability| [:disability_id, disability.id] } }

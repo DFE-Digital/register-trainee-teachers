@@ -62,7 +62,7 @@ FactoryBot.define do
       diversity_disclosure { "diversity_disclosed" }
       ethnic_group { "asian_ethnic_group" }
       disability_disclosure { "disabled" }
-      disabled_with_disabilites_disclosed
+      disabled_with_disabilities_disclosed
       training_initiative { "now_teach" }
       itt_start_date { compute_valid_past_itt_start_date }
       itt_end_date { itt_start_date + 2.years }
@@ -335,7 +335,7 @@ FactoryBot.define do
       disability_disclosure { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
     end
 
-    trait :disabled_with_disabilites_disclosed do
+    trait :disabled_with_disabilities_disclosed do
       disabled
       transient do
         disabilities_count { 1 }
@@ -359,7 +359,7 @@ FactoryBot.define do
       diversity_disclosed
       with_ethnic_group
       with_ethnic_background
-      disabled_with_disabilites_disclosed
+      disabled_with_disabilities_disclosed
     end
 
     trait :with_placement_assignment do

@@ -86,7 +86,7 @@ describe Diversity::View do
 
     context "disabled" do
       let(:disability_disclosure) { Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled] }
-      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilites_disclosed, disability_disclosure:) }
+      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilities_disclosed, disability_disclosure:) }
 
       it "returns a message stating the user is disabled" do
         expect(rendered_content).to have_text("They shared that they’re disabled")
@@ -120,7 +120,7 @@ describe Diversity::View do
     end
 
     context "when there are disabilities" do
-      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilites_disclosed) }
+      let(:trainee) { create(:trainee, :diversity_disclosed, :disabled_with_disabilities_disclosed) }
 
       it "renders the disability names" do
         trainee.disabilities.each do |disability|
