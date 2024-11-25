@@ -89,9 +89,18 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         then_i_see_that_the_upload_is_processing
 
+        when_i_click_the_view_status_of_new_trainees_files_link
+        then_i_see_the_upload_status_row_as_pending(BulkUpdate::TraineeUpload.last)
+        and_i_click_on_back_link
+
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_page_without_validation_errors
+
+        when_i_click_the_view_status_of_new_trainees_files_link
+        then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
+        and_i_click_on_back_link
+        then_i_see_the_review_page
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
@@ -200,10 +209,69 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         then_i_see_that_the_upload_is_processing
       end
+
+      scenario "view the upload status page" do
+        Timecop.freeze do
+          when_multiple_uploads_exist
+          and_i_visit_the_bulk_update_index_page
+          then_i_see_the_uploads
+        end
+      end
     end
   end
 
 private
+
+  def and_i_click_on_back_link
+    click_on "Back"
+  end
+
+  def when_i_click_the_view_status_of_new_trainees_files_link
+    click_on "status of new trainees files"
+  end
+
+  def then_i_see_the_upload_status_row_as_pending(upload)
+    expect(page).to have_content("#{upload.filename} Pending")
+  end
+
+  def then_i_see_the_upload_status_row_as_validated(upload)
+    expect(page).to have_content("#{upload.filename} Validated")
+  end
+
+  def when_multiple_uploads_exist
+    %i[pending validated in_progress succeeded failed].each do |status|
+      create(:bulk_update_trainee_upload, status, provider: current_user.organisation)
+    end
+  end
+
+  def and_i_visit_the_bulk_update_index_page
+    visit bulk_update_trainees_uploads_path
+  end
+
+  def then_i_see_the_uploads
+    expect(page).to have_content(current_user.organisation.name)
+
+    expect(page).to have_content("Status of new trainee files")
+    expect(page).to have_content("View the status of recently uploaded files containing new trainees.")
+    expect(page).to have_content("This will list all successful new trainee uploads for the current academic year.")
+    expect(page).to have_content("Failed uploads will be removed after 30 days.")
+
+    expect(page).to have_content(
+      "five_trainees.csv Pending",
+    )
+    expect(page).to have_content(
+      "five_trainees.csv Validated",
+    )
+    expect(page).to have_content(
+      "#{Time.current.to_fs(:govuk_date_and_time)} five_trainees.csv In progress",
+    )
+    expect(page).to have_content(
+      "#{Time.current.to_fs(:govuk_date_and_time)} five_trainees.csv Succeeded",
+    )
+    expect(page).to have_content(
+      "#{Time.current.to_fs(:govuk_date_and_time)} five_trainees.csv Failed",
+    )
+  end
 
   def when_i_try_resubmit_the_same_upload
     visit bulk_update_trainees_upload_path(BulkUpdate::TraineeUpload.last)
@@ -239,7 +307,7 @@ private
     expect(page).to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
     expect(page).to have_content("This is taking longer than usual")
     expect(page).to have_content("You'll receive and email to tell you when this is complete.")
-    expect(page).to have_content("You can also check the status of new trainee files.")
+    expect(page).to have_content("You can also check the status of new trainees files.")
     expect(page).to have_link("Back to bulk updates page")
   end
 
@@ -249,7 +317,7 @@ private
     expect(page).not_to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
     expect(page).not_to have_content("This is taking longer than usual")
     expect(page).not_to have_content("You'll receive and email to tell you when this is complete.")
-    expect(page).not_to have_content("You can also check the status of new trainee files.")
+    expect(page).not_to have_content("You can also check the status of new trainees files.")
     expect(page).not_to have_link("Back to bulk updates page")
   end
 
@@ -292,8 +360,11 @@ private
   end
 
   def when_i_attach_a_valid_file
-    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").read
-    and_i_attach_a_file(csv)
+    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv")
+    filename = File.basename(file)
+    content  = file.read
+
+    and_i_attach_a_file(content, filename)
   end
 
   def when_i_attach_a_file_with_invalid_rows
@@ -301,8 +372,8 @@ private
     and_i_attach_a_file(csv)
   end
 
-  def and_i_attach_a_file(content)
-    tempfile = Tempfile.new("csv")
+  def and_i_attach_a_file(content, filename = "csv")
+    tempfile = Tempfile.new([filename])
     tempfile.write(content)
     tempfile.rewind
     tempfile.path
@@ -402,7 +473,7 @@ private
   end
 
   def and_i_refresh_the_page
-    visit bulk_update_trainees_upload_path(id: BulkUpdate::TraineeUpload.last.id)
+    visit bulk_update_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
   def when_the_background_job_is_run
@@ -458,10 +529,6 @@ private
     visit bulk_update_trainees_upload_path(upload)
   end
 
-  alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
-  alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
-  alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
-
   def then_i_see_the_review_page_with_validation_errors
     expect(page).to have_content("2 trainees with errors in their details")
   end
@@ -487,4 +554,8 @@ private
   def when_i_return_to_the_review_errors_page
     visit bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id)
   end
+
+  alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
+  alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
+  alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
 end

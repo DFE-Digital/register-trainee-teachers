@@ -5,6 +5,12 @@ module BulkUpdate
     class UploadsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
+      def index
+        @bulk_update_trainee_uploads = policy_scope(
+          BulkUpdate::TraineeUpload,
+        ).includes(:file_attachment)
+      end
+
       def show
         authorize(bulk_update_trainee_upload)
       end
