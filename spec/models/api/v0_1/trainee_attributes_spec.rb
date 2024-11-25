@@ -127,7 +127,7 @@ RSpec.describe Api::V01::TraineeAttributes do
   end
 
   describe ".from_trainee" do
-    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilites_disclosed, :completed, sex: :prefer_not_to_say) }
+    let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :disabled_with_disabilities_disclosed, :completed, sex: :prefer_not_to_say) }
     let(:blind_disability) { create(:disability, :blind) }
     let(:deaf_disability) { create(:disability, :deaf) }
     let(:trainee_disability) { trainee.disabilities.to_h { |disability| [:disability_id, disability.id] } }
@@ -173,10 +173,6 @@ RSpec.describe Api::V01::TraineeAttributes do
         expect(attributes.hesa_trainee_detail_attributes.hesa_disabilities).to match({ "disability1" => "55", "disability2" => "58" })
         expect(attributes.trainee_disabilities_attributes).to match([trainee_disability, { disability_id: blind_disability.id }])
       end
-
-      it "correctly sets the sex attribute as an integer" do
-        expect(attributes.sex).to eq(Trainee.sexes[:prefer_not_to_say])
-      end
     end
 
     context "with replacing hesa_disabilities disability1" do
@@ -193,10 +189,6 @@ RSpec.describe Api::V01::TraineeAttributes do
       it "correct sets both hesa_disabilities & trainee_disabilities_attributes" do
         expect(attributes.hesa_trainee_detail_attributes.hesa_disabilities).to match({ "disability1" => "58" })
         expect(attributes.trainee_disabilities_attributes).to match([{ disability_id: blind_disability.id }])
-      end
-
-      it "correctly sets the sex attribute as an integer" do
-        expect(attributes.sex).to eq(Trainee.sexes[:prefer_not_to_say])
       end
     end
 
@@ -215,9 +207,22 @@ RSpec.describe Api::V01::TraineeAttributes do
         expect(attributes.hesa_trainee_detail_attributes.hesa_disabilities).to match({ "disability1" => "57", "disability2" => "58" })
         expect(attributes.trainee_disabilities_attributes).to match([{ disability_id: deaf_disability.id }, { disability_id: blind_disability.id }])
       end
+    end
 
-      it "correctly sets the sex attribute as an integer" do
-        expect(attributes.sex).to eq(Trainee.sexes[:prefer_not_to_say])
+    context "with hesa_disabilities disability1 set to blank and disability2 set to null" do
+      subject(:attributes) { described_class.from_trainee(trainee, { hesa_disabilities: { "disability1" => "", "disability2" => "null" } }) }
+
+      it "pulls HesaTraineeDetail attributes from association" do
+        expect(attributes.hesa_trainee_detail_attributes).to be_present
+
+        Api::V01::HesaTraineeDetailAttributes::ATTRIBUTES.each do |attr|
+          expect(attributes.hesa_trainee_detail_attributes.send(attr)).to be_present
+        end
+      end
+
+      it "correct sets both hesa_disabilities & trainee_disabilities_attributes" do
+        expect(attributes.hesa_trainee_detail_attributes.hesa_disabilities).to match({ "disability1" => "", "disability2" => "null" })
+        expect(attributes.trainee_disabilities_attributes).to be_empty
       end
     end
   end

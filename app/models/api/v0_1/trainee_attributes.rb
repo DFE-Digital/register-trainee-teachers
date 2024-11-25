@@ -119,9 +119,9 @@ module Api
           nationalisations_attributes << NationalityAttributes.new(nationalisation_params)
         end
 
-        hesa_trainee_detail_attributes_raw = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
-        if hesa_trainee_detail_attributes_raw.present?
-          self.hesa_trainee_detail_attributes = V01::HesaTraineeDetailAttributes.new(hesa_trainee_detail_attributes_raw)
+        new_hesa_trainee_detail_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
+        if new_hesa_trainee_detail_attributes.present?
+          self.hesa_trainee_detail_attributes = V01::HesaTraineeDetailAttributes.new(new_hesa_trainee_detail_attributes)
         end
 
         self.trainee_disabilities_attributes = []
@@ -153,6 +153,8 @@ module Api
         self.trainee_disabilities_attributes = []
 
         new_attributes[:disabilities]&.each do |disability|
+          next if disability.blank?
+
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
 
@@ -184,10 +186,10 @@ module Api
       end
 
       def self.update_hesa_disabilities(original_hesa_disabilities, params_for_update)
-        updated_hesa_disabilites = original_hesa_disabilities
-        updated_hesa_disabilites = updated_hesa_disabilites.merge(params_for_update[:hesa_disabilities]) if params_for_update[:hesa_disabilities].present?
+        updated_hesa_disabilities = original_hesa_disabilities
+        updated_hesa_disabilities = updated_hesa_disabilities.merge(params_for_update[:hesa_disabilities]) if params_for_update[:hesa_disabilities].present?
 
-        updated_hesa_disabilites
+        updated_hesa_disabilities
       end
 
       def self.from_trainee(trainee, params_for_update)
