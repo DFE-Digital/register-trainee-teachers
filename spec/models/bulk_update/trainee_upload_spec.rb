@@ -60,15 +60,37 @@ RSpec.describe BulkUpdate::TraineeUpload do
     end
 
     describe "#fail!" do
-      before do
-        subject.process!
-        subject.submit!
+      context "when the status is 'pending'" do
+        it "sets the status to failed" do
+          expect {
+            subject.fail!
+          }.to change(subject, :status).from("pending").to("failed")
+        end
       end
 
-      it "sets the status to failed" do
-        expect {
-          subject.fail!
-        }.to change(subject, :status).from("in_progress").to("failed")
+      context "when the status is 'validated'" do
+        before do
+          subject.process!
+        end
+
+        it "sets the status to failed" do
+          expect {
+            subject.fail!
+          }.to change(subject, :status).from("validated").to("failed")
+        end
+      end
+
+      context "when the status is 'in_progress'" do
+        before do
+          subject.process!
+          subject.submit!
+        end
+
+        it "sets the status to failed" do
+          expect {
+            subject.fail!
+          }.to change(subject, :status).from("in_progress").to("failed")
+        end
       end
     end
   end

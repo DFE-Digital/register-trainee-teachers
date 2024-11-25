@@ -47,7 +47,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     end
 
     event :fail do
-      transition %i[in_progress] => :failed
+      transition %i[pending validated in_progress] => :failed
     end
   end
 
