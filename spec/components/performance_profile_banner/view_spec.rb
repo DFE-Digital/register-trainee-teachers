@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe PerformanceProfileBanner::View do
   let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+  let(:previous_academic_cycle_label) { previous_academic_cycle.label }
   let(:sign_off_period) { :census_period }
 
   let(:provider_awaiting_sign_off) { OpenStruct.new(performance_signed_off?: false) }
@@ -47,12 +48,11 @@ describe PerformanceProfileBanner::View do
 
     it "renders correctly" do
       expect(@result).to have_css("#govuk-notification-banner-title", text: "Important")
-      expect(@result).to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle.label} performance profile sign off deadline is 31 January #{previous_academic_cycle.end_year + 1}.")
+      expect(@result).to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off due")
     end
 
-    it "renders the links correctly" do
-      expect(@result).to have_link("sign off to confirm", href: "/guidance/performance-profiles")
-      expect(@result).to have_link("how to check your #{previous_academic_cycle.label} trainee data is accurate for the performance profile publication", href: "#")
+    it "renders the link correctly" do
+      expect(@result).to have_link("Sign off your performance profile", href: "#")
     end
   end
 end

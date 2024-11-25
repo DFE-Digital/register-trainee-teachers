@@ -1,5 +1,5 @@
 <%= govuk_notification_banner(title_text: "Important") do |banner| %>
   <% banner.with_heading(text: banner_heading_text) %>
 
-  Find out <%= govuk_link_to("how to check your #{previous_academic_cycle_label} trainee data is accurate for the performance profile publication", "#")%> and how to <%= govuk_link_to("sign off to confirm", performance_profiles_guidance_path) %>.
+  <%= govuk_link_to("Sign off your performance profile", "#")%> by the <%= deadline_date %> deadline.
 <% end %>

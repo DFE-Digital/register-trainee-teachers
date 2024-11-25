@@ -15,18 +15,18 @@ module PerformanceProfileBanner
     end
 
     def banner_heading_text
-      "The #{previous_academic_cycle_label} performance profile sign off deadline is #{deadline}."
+      "The #{previous_academic_cycle_label} ITT performance profile sign off due"
     end
 
     delegate :label, :end_year, to: :previous_academic_cycle, prefix: true
 
+    def deadline_date
+      "28 February #{previous_academic_cycle_end_year + 1}"
+    end
+
   private
 
     attr_reader :previous_academic_cycle, :provider, :sign_off_period
-
-    def deadline
-      "31 January #{previous_academic_cycle_end_year + 1}"
-    end
 
     def provider_awaiting_sign_off?
       !provider.performance_signed_off?
