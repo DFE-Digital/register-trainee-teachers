@@ -29,7 +29,27 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     succeeded: "succeeded",
     failed: "failed",
     cancelled: "cancelled",
-  }
+  } do
+    event :process do
+      transition %i[pending] => :validated
+    end
+
+    event :submit do
+      before do
+        self.submitted_at = Time.current
+      end
+
+      transition %i[validated] => :in_progress
+    end
+
+    event :succeed do
+      transition %i[in_progress] => :succeeded
+    end
+
+    event :fail do
+      transition %i[in_progress] => :failed
+    end
+  end
 
   belongs_to :provider
   has_many :trainee_upload_rows,
