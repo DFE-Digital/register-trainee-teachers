@@ -6,6 +6,10 @@ describe DetermineSignOffPeriod do
   describe ".call" do
     subject { described_class.call }
 
+    before do
+      allow(Settings).to receive(:sign_off_period).and_return(nil)
+    end
+
     current_year = Time.zone.today.year
     census_period_range = [*Date.new(current_year, 9, 1)..Date.new(current_year, 11, 7)]
     jan_to_feb_range = Date.new(Time.zone.today.year, 1, 1)..Date.new(Time.zone.today.year, 2, 7)
