@@ -216,6 +216,9 @@ feature "bulk add trainees" do
           and_i_visit_the_bulk_update_index_page
           and_i_click_on_view_status_of_uploaded_trainee_files
           then_i_see_the_uploads
+
+          when_i_click_on_back_link
+          then_i_see_the_bulk_update_index_page
         end
       end
     end
@@ -560,8 +563,13 @@ private
     visit bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id)
   end
 
+  def then_i_see_the_bulk_update_index_page
+    expect(page).to have_content("Bulk updates")
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
   alias_method :and_i_visit_the_bulk_update_index_page, :when_i_visit_the_bulk_update_index_page
+  alias_method :when_i_click_on_back_link, :and_i_click_on_back_link
 end

@@ -27,8 +27,8 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     validated: "validated",
     in_progress: "in_progress",
     succeeded: "succeeded",
-    failed: "failed",
     cancelled: "cancelled",
+    failed: "failed",
   } do
     event :process do
       transition %i[pending] => :validated
