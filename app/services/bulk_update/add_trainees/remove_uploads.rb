@@ -6,8 +6,8 @@ module BulkUpdate
       include ServicePattern
 
       def call
-        TraineeUpload.cancelled.or(
-          TraineeUpload.failed
+        BulkUpdate::TraineeUpload.cancelled.or(
+          BulkUpdate::TraineeUpload.failed,
         ).destroy_all
       end
     end
