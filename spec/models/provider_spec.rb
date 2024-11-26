@@ -262,16 +262,16 @@ describe Provider do
     context "when there are performance sign offs from the previous academic cycle" do
       let(:provider) { create(:provider, :previous_performance_profile_sign_off) }
 
-      it "returns false" do
-        expect(provider.performance_profile_signed_off?).to be false
+      it "returns true" do
+        expect(provider.performance_profile_signed_off?).to be true
       end
     end
 
-    context "when there are performace sign offs from the current academic cycle" do
+    context "when there are performance sign offs from the current academic cycle" do
       let(:provider) { create(:provider, :performance_profile_sign_off) }
 
-      it "returns true" do
-        expect(provider.performance_profile_signed_off?).to be true
+      it "returns false" do
+        expect(provider.performance_profile_signed_off?).to be false
       end
     end
   end
