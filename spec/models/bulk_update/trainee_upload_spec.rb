@@ -30,19 +30,23 @@ RSpec.describe BulkUpdate::TraineeUpload do
     end
 
     describe "#submit!" do
-      let(:current_time) { Time.current }
+      let!(:current_time) { Time.current.round }
 
       before do
         subject.process!
+
+        Timecop.freeze(current_time)
+      end
+
+      after do
+        Timecop.return
       end
 
       it do
-        Timecop.freeze(current_time) do
-          expect {
-            subject.submit!
-          }.to change(subject, :status).from("validated").to("in_progress")
-            .and change(subject, :submitted_at).from(nil).to(current_time)
-        end
+        expect {
+          subject.submit!
+        }.to change(subject, :status).from("validated").to("in_progress")
+          .and change(subject, :submitted_at).from(nil).to(current_time)
       end
     end
 
