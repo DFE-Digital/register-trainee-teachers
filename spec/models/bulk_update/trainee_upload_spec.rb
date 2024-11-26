@@ -22,7 +22,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
     subject { create(:bulk_update_trainee_upload) }
 
     describe "#process!" do
-      it "sets the status to validated" do
+      it do
         expect {
           subject.process!
         }.to change(subject, :status).from("pending").to("validated")
@@ -36,7 +36,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
         subject.process!
       end
 
-      it "sets the status to in_progress and the submitted_at to Time.current" do
+      it do
         Timecop.freeze(current_time) do
           expect {
             subject.submit!
@@ -52,16 +52,28 @@ RSpec.describe BulkUpdate::TraineeUpload do
         subject.submit!
       end
 
-      it "sets the status to succeeded" do
+      it do
         expect {
           subject.succeed!
         }.to change(subject, :status).from("in_progress").to("succeeded")
       end
     end
 
+    describe "#cancel!" do
+      before do
+        subject.process!
+      end
+
+      it do
+        expect {
+          subject.cancel!
+        }.to change(subject, :status).from("validated").to("cancelled")
+      end
+    end
+
     describe "#fail!" do
       context "when the status is 'pending'" do
-        it "sets the status to failed" do
+        it do
           expect {
             subject.fail!
           }.to change(subject, :status).from("pending").to("failed")
@@ -73,7 +85,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
           subject.process!
         end
 
-        it "sets the status to failed" do
+        it do
           expect {
             subject.fail!
           }.to change(subject, :status).from("validated").to("failed")
@@ -86,7 +98,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
           subject.submit!
         end
 
-        it "sets the status to failed" do
+        it do
           expect {
             subject.fail!
           }.to change(subject, :status).from("in_progress").to("failed")

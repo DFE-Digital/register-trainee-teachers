@@ -42,7 +42,7 @@ module BulkUpdate
       end
 
       def destroy
-        authorize(bulk_update_trainee_upload).cancelled!
+        authorize(bulk_update_trainee_upload).cancel!
 
         redirect_to(bulk_update_path, flash: { success: t(".success") })
       end
