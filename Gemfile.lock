@@ -570,19 +570,19 @@ GEM
       benchmark-perf (~> 0.6)
       benchmark-trend (~> 0.4)
       rspec (>= 3.0)
-    rspec-core (3.13.1)
+    rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.2)
+    rspec-expectations (3.13.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.1)
+    rspec-mocks (3.13.2)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-openapi (0.18.3)
       actionpack (>= 5.2.0)
       rails-dom-testing
       rspec-core
-    rspec-rails (7.0.1)
+    rspec-rails (7.1.0)
       actionpack (>= 7.0)
       activesupport (>= 7.0)
       railties (>= 7.0)
@@ -833,7 +833,7 @@ DEPENDENCIES
   rotp
   rspec-benchmark
   rspec-openapi
-  rspec-rails (~> 7.0.1)
+  rspec-rails (~> 7.1.0)
   rspec-retry
   rubocop-capybara
   rubocop-factory_bot
