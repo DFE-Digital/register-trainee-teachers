@@ -182,7 +182,7 @@ describe AcademicCycle do
     end
   end
 
-  describe "#second_monday_of_january" do
+  describe "#in_performance_profile_range?" do
     it "returns whether a date is in the performance profile range" do
       expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january)).to be true
       expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february)).to be true
