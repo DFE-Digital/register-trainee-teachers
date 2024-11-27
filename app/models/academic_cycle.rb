@@ -78,6 +78,12 @@ class AcademicCycle < ApplicationRecord
     (start_date.beginning_of_day..end_date.end_of_day).cover?(Time.zone.now)
   end
 
+  def last_day_of_february
+    Date.new(end_year + 1, 2, -1)
+  end
+
+  alias_method :end_date_of_performance_profile, :last_day_of_february
+
 private
 
   def start_date_before_end_date

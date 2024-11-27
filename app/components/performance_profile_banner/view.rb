@@ -18,10 +18,10 @@ module PerformanceProfileBanner
       "The #{previous_academic_cycle_label} ITT performance profile sign off due"
     end
 
-    delegate :label, :end_year, to: :previous_academic_cycle, prefix: true
+    delegate :label, :end_date_of_performance_profile, to: :previous_academic_cycle, prefix: true
 
     def deadline_date
-      "28 February #{previous_academic_cycle_end_year + 1}"
+      previous_academic_cycle.end_date_of_performance_profile.strftime("%-d %B %Y")
     end
 
   private

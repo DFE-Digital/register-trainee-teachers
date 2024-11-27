@@ -3,7 +3,9 @@
 require "rails_helper"
 
 describe AcademicCycle do
-  subject { build(:academic_cycle) }
+  let(:academic_cycle) { build(:academic_cycle) }
+
+  subject { academic_cycle }
 
   before do
     allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
@@ -178,5 +180,13 @@ describe AcademicCycle do
 
       it { expect(subject).to eq(past_academic_year) }
     end
+  end
+
+  describe "#last_day_of_february" do
+    subject { academic_cycle.last_day_of_february }
+
+    it { expect(subject.month).to eq 2 }
+    it { expect(subject.day).to be_between(28, 29) }
+    it { expect(subject).to be_a(Date) }
   end
 end
