@@ -29,7 +29,7 @@ module PerformanceProfileBanner
     attr_reader :previous_academic_cycle, :provider, :sign_off_period
 
     def provider_awaiting_sign_off?
-      !provider.performance_signed_off?
+      !provider.performance_profile_signed_off?
     end
 
     def performance_period?

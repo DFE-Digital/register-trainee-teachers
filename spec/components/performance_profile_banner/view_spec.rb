@@ -3,13 +3,15 @@
 require "rails_helper"
 
 describe PerformanceProfileBanner::View do
-  let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+  let(:previous_academic_cycle) { create(:academic_cycle, :previous) }
+  let(:current_academic_cycle) { create(:academic_cycle, :current) }
   let(:previous_academic_cycle_label) { previous_academic_cycle.label }
+
   let(:sign_off_period) { :census_period }
 
-  let(:provider_awaiting_sign_off) { OpenStruct.new(performance_signed_off?: false) }
+  let(:provider_awaiting_sign_off) { create(:provider, sign_offs: [build(:sign_off, :performance_profile, academic_cycle: current_academic_cycle)]) }
 
-  let(:provider_performance_signed_off) { OpenStruct.new(performance_signed_off?: true) }
+  let(:provider_performance_signed_off) { create(:provider, sign_offs: [build(:sign_off, :performance_profile, academic_cycle: previous_academic_cycle)]) }
 
   before do
     @result = render_inline(PerformanceProfileBanner::View.new(previous_academic_cycle:, sign_off_period:, provider:))
