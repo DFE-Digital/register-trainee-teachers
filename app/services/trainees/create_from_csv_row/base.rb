@@ -199,7 +199,7 @@ module Trainees
       end
 
       def itt_end_date
-        lookup("Course Expected End Date", "ITT End Date")
+        lookup("Course Expected End Date", "Course ITT End Date", "ITT End Date")
       end
 
       def trainee_start_date

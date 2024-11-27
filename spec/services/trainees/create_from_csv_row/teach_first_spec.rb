@@ -31,7 +31,7 @@ module Trainees
           "Course ITT Subject 3" => "",
           "Course study mode" => "full-time",
           "Course ITT start date" => "#{academic_cycle.start_year}-09-09",
-          "Course Expected End Date" => "#{academic_cycle.end_year}-07-31",
+          "Course ITT end date" => "#{academic_cycle.end_year}-07-31",
           "Trainee start date" => "#{academic_cycle.start_year}-09-09",
           "Employing school URN" => employing_school_urn,
           "Degree: country" => "United Kingdom",
@@ -91,7 +91,7 @@ module Trainees
             expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::ELEVEN_TO_SIXTEEN)
             expect(trainee.study_mode).to eq("full_time")
             expect(trainee.itt_start_date).to eq(Date.parse(csv_row["Course ITT start date"]))
-            expect(trainee.itt_end_date).to eq(Date.parse(csv_row["Course Expected End Date"]))
+            expect(trainee.itt_end_date).to eq(Date.parse(csv_row["Course ITT end date"]))
             expect(trainee.start_academic_cycle).to eq(academic_cycle)
             expect(trainee.end_academic_cycle).to eq(academic_cycle)
             expect(trainee.trainee_start_date).to eq(Date.parse(csv_row["Trainee start date"]))
