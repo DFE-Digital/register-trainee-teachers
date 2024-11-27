@@ -115,6 +115,9 @@ jobs:
         sudo rm -rf /usr/share/dotnet || true
         sudo rm -rf /opt/ghc || true
 
+    - name: Set env variable
+      run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
+
     - name: Create local Sanitised Database
       run: |
         createdb ${DATABASE_NAME} && psql -f ${{ env.BACKUP_FILE_NAME }}.sql -d ${DATABASE_NAME}
@@ -142,7 +145,7 @@ jobs:
 
     - name: Dump the Sanitised Database
       run: |
-        pg_dump --encoding utf8 --compress=1 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f backup_sanitised.sql.gz
+        pg_dump --encoding utf8 --compress=1 --clean --no-owner --if-exists -d ${DATABASE_NAME} -f ${SANITISED_FILE_NAME}.sql.gz
       env:
         DATABASE_NAME: register_trainee_teachers
         PGUSER:  postgres
@@ -150,12 +153,12 @@ jobs:
         PGHOST: localhost
         PGPORT: 5432
 
-    - name: Upload Sanitised Backup
-      uses: actions/upload-artifact@v4
-      with:
-        name: backup_sanitised
-        path: backup_sanitised.sql.gz
-        retention-days: 3
+    - name: Upload Backup to Azure Storage
+      run: |
+        az storage blob upload --container-name database-backup \
+        --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz --overwrite \
+        --connection-string '${{ env.STORAGE_CONN_STR }}'
+        rm ${SANITISED_FILE_NAME}.sql.gz
 
     - name: Check for Failure
       uses: ./.github/actions/send-slack-notification/
@@ -175,14 +178,34 @@ jobs:
     - uses: actions/checkout@v4
       name: Checkout
 
+    - name: Set env variable
+      run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
+
+    - name: Set KV environment variables
+      run: |
+        tf_vars_file=terraform/aks/workspace-variables/production.tfvars.json
+        echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+
+    - uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+
+    - name: Set Connection String
+      run: |
+        STORAGE_CONN_STR="$(az keyvault secret show --name REGISTER-BACKUP-STORAGE-CONNECTION-STRING-AKS --vault-name ${{ env.key_vault_name }} | jq -r .value)"
+        echo "::add-mask::$STORAGE_CONN_STR"
+        echo "STORAGE_CONN_STR=$STORAGE_CONN_STR" >> $GITHUB_ENV
+
+    - name: Download Backup
+      run: |
+        az storage blob download --container-name database-backup \
+        --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
+        --connection-string '${{ env.STORAGE_CONN_STR }}'
+        az logout
+
     - uses: azure/login@v2
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
-
-    - name: Download Sanitised Backup
-      uses: actions/download-artifact@v4
-      with:
-        name: backup_sanitised
 
     - name: Install kubectl
       uses: DFE-Digital/github-actions/set-kubectl@master
@@ -200,7 +223,7 @@ jobs:
     - name: Restore backup to aks env database
       shell: bash
       run: |
-        bin/konduit.sh -i backup_sanitised.sql.gz -c -t 7200 register-staging -- psql
+        bin/konduit.sh -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
 
     - name: Check for Failure
       uses: ./.github/actions/send-slack-notification/
