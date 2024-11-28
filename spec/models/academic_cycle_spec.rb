@@ -182,6 +182,24 @@ describe AcademicCycle do
     end
   end
 
+  describe "#second_monday_of_january" do
+    it "returns whether a date is in the performance profile range" do
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january)).to be true
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february)).to be true
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january - 1.day)).to be false
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february + 1.day)).to be false
+    end
+  end
+
+  describe "#second_monday_of_january" do
+    subject { academic_cycle.second_monday_of_january }
+
+    it { expect(subject.month).to eq 1 }
+    it { expect(subject.wday).to eq 1 }
+    it { expect(subject.day).to be_between(8, 14) }
+    it { expect(subject).to be_a(Date) }
+  end
+
   describe "#last_day_of_february" do
     subject { academic_cycle.last_day_of_february }
 
