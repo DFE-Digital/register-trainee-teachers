@@ -39,17 +39,17 @@
 
         <%= f.govuk_submit("Upload records") %>
       </ol>
-
-      <p class="govuk-body">
-        <%= register_form_with(
-          model: @bulk_update_trainee_upload,
-          url: bulk_update_trainees_upload_path(@bulk_update_trainee_upload),
-          method: :delete
-        ) do |f| %>
-          <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
-        <% end %>
-      </p>
     <% end %>
+
+    <p class="govuk-body">
+      <%= register_form_with(
+        model: @bulk_update_trainee_upload,
+        url: bulk_update_trainees_upload_path(@bulk_update_trainee_upload),
+        method: :delete
+      ) do |f| %>
+        <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
+      <% end %>
+    </p>
   </div>
 </div>
 
