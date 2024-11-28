@@ -53,6 +53,10 @@ describe User do
     it { is_expected.to have_many(:provider_users) }
     it { is_expected.to have_many(:lead_partner_users) }
     it { is_expected.to have_many(:lead_partners).through(:lead_partner_users) }
+    it do
+      is_expected.to have_many(:submitted_bulk_update_trainee_uploads)
+      .class_name("BulkUpdate::TraineeUpload").with_foreign_key(:submitted_by_id)
+    end
   end
 
   describe "indexes" do

@@ -59,6 +59,8 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   end
 
   belongs_to :provider
+  belongs_to :submitted_by, class_name: "User", optional: true
+
   has_many :trainee_upload_rows,
            class_name: "BulkUpdate::TraineeUploadRow",
            foreign_key: :bulk_update_trainee_upload_id,

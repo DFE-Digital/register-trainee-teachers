@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe BulkUpdate::TraineeUpload do
   it { is_expected.to belong_to(:provider) }
+  it { is_expected.to belong_to(:submitted_by).class_name("User").optional }
   it { is_expected.to have_many(:trainee_upload_rows).dependent(:destroy) }
 
   it do
