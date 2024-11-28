@@ -191,19 +191,27 @@ en:
       reasons: &withdrawal_reasons
         could_not_give_enough_time: Could not give enough time to course
         course_was_not_suitable: Course was not suitable for them
-        did_not_make_progress: Did not make progress in course
+        did_not_make_progress: Lack of academic progress
         did_not_meet_entry_requirements: Did not meet entry requirements
-        does_not_want_to_become_a_teacher: Does not want to become a teacher
+        does_not_want_to_become_a_teacher: No longer want to pursue a teaching career
         family_problems: Family problems
         financial_problems: Financial problems
         got_a_job: Got a job
         problems_with_their_health: Problems with their health
         stopped_responding_to_messages: Stopped responding to messages
         teaching_placement_problems: Teaching placement problems
-        unacceptable_behaviour: Unacceptable behaviour
+        unacceptable_behaviour: Trainee behaviour or attitude
         unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
         another_reason: Another reason
         unknown: Unknown
+        record_added_in_error: This training record was added in error
+        mandatory_reasons: Trainee removed for mandatory reasons
+        lack_of_progress_during_placements: Lack of progress during placements
+        not_meeting_qts_standards: Not meeting QTS standards
+        trainee_workload_issues: Trainee workload issues
+        change_in_personal_or_health_circumstances: Change in their personal or health situation
+        never_intended_to_obtain_qts: They never intended to obtain QTS
+        moved_to_different_itt_course: They moved to a different ITT course
     award_details:
         waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
     confirmation:
