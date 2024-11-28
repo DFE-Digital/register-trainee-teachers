@@ -19,6 +19,7 @@ describe Reports::BulkTraineeUploadReport do
 
   context "given a valid trainee upload without errors" do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_rows) }
+    let(:original_csv_data) { CSV.parse(trainee_upload.file.download, headers: true) }
 
     it "generates a CSV with an extra _Errors_ column with empty values" do
       generated_csv = CSV.generate do |csv|
@@ -27,12 +28,14 @@ describe Reports::BulkTraineeUploadReport do
 
       data = CSV.parse(generated_csv, headers: true)
       expect(data.size).to eq(5)
-      data.each do |row|
+      data.each_with_index do |row, index|
         expect(row.key?("Errors")).to be(true)
         expect(row["Errors"]).to be_blank
+        expect(row.to_h.except("Errors")).to eq(original_csv_data[index].to_h)
       end
     end
   end
+
 
   context "given a valid trainee upload with some errors" do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :failed_with_validation_errors) }
