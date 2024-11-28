@@ -5,6 +5,7 @@ require "rails_helper"
 feature "viewing reports index" do
   let!(:previous_cycle) { create(:academic_cycle, previous_cycle: true) }
   let!(:current_cycle) { create(:academic_cycle, :current) }
+  let(:sign_off_date) { Date.new(current_cycle.end_year, 1, 31).strftime("%d %B %Y") }
   let!(:trainee) { create(:trainee, :trn_received, start_academic_cycle: previous_cycle, end_academic_cycle: previous_cycle) }
 
   context "in the performance period" do
@@ -62,8 +63,7 @@ private
 
   def then_i_should_see_the_performance_period_content
     expect(reports_page).not_to have_text("No reports are currently available.")
-    expect(reports_page).to have_text("Reports are available for trainees who studied in the #{previous_cycle.label} academic year - for performance profiles sign off")
-    expect(reports_page).to have_text("You can read guidance about signing off performance profiles")
+    expect(reports_page).to have_text("Trainees who studied in the #{previous_cycle.label} academic year report - for performance profiles sign off with a deadline of #{sign_off_date}")
   end
 
   def then_i_should_see_the_census_period_content

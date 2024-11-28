@@ -4,6 +4,7 @@ class ReportsController < BaseTraineeController
   include DateOfTheNthWeekdayHelper
 
   before_action :set_cycle_variables
+  before_action :set_sign_off_date, only: %i[index performance_profiles]
 
   helper_method :itt_new_starter_trainees
 
@@ -41,7 +42,6 @@ class ReportsController < BaseTraineeController
 
     respond_to do |format|
       format.html do
-        @sign_off_date = Date.new(@current_academic_cycle.end_year, 1, 31).strftime("%d %B %Y")
         @sign_off_url = Settings.sign_off_performance_profiles_url
       end
 
@@ -124,6 +124,10 @@ private
     @previous_academic_cycle = AcademicCycle.previous
     @current_academic_cycle_label = @current_academic_cycle.label
     @previous_academic_cycle_label = @previous_academic_cycle.label
+  end
+  
+  def set_sign_off_date
+    @sign_off_date = Date.new(@current_academic_cycle.end_year, 1, 31).strftime("%d %B %Y")
   end
 
   def base_trainee_scope
