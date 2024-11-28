@@ -6,7 +6,8 @@ describe "A user authenticates via Email Sign-in" do
   let!(:user) { create(:user, :with_otp_secret) }
   let!(:salt) { ROTP::Base32.random(16) }
   let!(:otp)  { ROTP::TOTP.new(user.otp_secret + salt, issuer: "Register") }
-  let!(:code) { otp.now }
+  let(:code) { "123456" }
+  let(:incorrect_code) { "654321" }
   let(:mailer) { double(:mailer, deliver_later: true) }
 
   before do
@@ -15,6 +16,9 @@ describe "A user authenticates via Email Sign-in" do
 
     # this means we can generate the OTP code in the test
     allow(ROTP::TOTP).to receive(:new).with(user.otp_secret + salt, issuer: "Register").and_return(otp)
+    allow(otp).to receive(:now).and_return(code)
+    allow(otp).to receive(:verify).with(incorrect_code, drift_behind: 600).and_return(nil)
+    allow(otp).to receive(:verify).with(code, drift_behind: 600).and_return(Time.zone.now)
 
     # and make sure the mailer is called with the correct OTP code
     allow(OtpMailer).to receive(:generate).with(
@@ -32,6 +36,13 @@ describe "A user authenticates via Email Sign-in" do
       then_i_am_redirected_to_the_root_path
       and_i_should_see_the_link_to_sign_out
       and_i_should_not_see_the_link_to_the_support_interface
+    end
+
+    scenario "attempting to signin with an invalid code", feature_sign_in_method: "otp" do
+      given_i_am_registered_as_a_user
+      and_submit_my_email
+      and_enter_an_incorrect_otp
+      then_i_am_redirected_to_the_otp_form
     end
   end
 
@@ -65,6 +76,11 @@ private
     otp_verification_page.submit.click
   end
 
+  def and_enter_an_incorrect_otp
+    otp_verification_page.code.fill_in(with: incorrect_code)
+    otp_verification_page.submit.click
+  end
+
   def then_i_am_redirected_to_the_root_path
     expect(page).to have_current_path("/")
   end
@@ -83,5 +99,10 @@ private
 
   def and_i_can_access_the_support_interface
     click_on("Support for Register")
+  end
+
+  def then_i_am_redirected_to_the_otp_form
+    expect(page).to have_current_path(otp_verifications_path)
+    expect(page).to have_content("The code is incorrect or has expired")
   end
 end
