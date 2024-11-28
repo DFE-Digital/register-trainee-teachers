@@ -92,11 +92,11 @@ class AcademicCycle < ApplicationRecord
 
   alias_method :end_date_of_performance_profile, :last_day_of_february
 
-private
-
   def performance_profile_date_range
-    @performance_profile_date_range ||= second_monday_of_january..last_day_of_february
+    @performance_profile_date_range ||= second_monday_of_january..end_date_of_performance_profile
   end
+
+private
 
   def start_date_before_end_date
     return unless dates_available?
