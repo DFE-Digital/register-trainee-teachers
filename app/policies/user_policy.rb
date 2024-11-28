@@ -10,7 +10,7 @@ class UserPolicy < ProviderPolicy
   end
 
   def drafts?
-    user.system_admin? || !user.lead_partner?
+    user.system_admin? || user.provider?
   end
 
   def bulk_recommend?
