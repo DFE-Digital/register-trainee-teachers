@@ -7,6 +7,8 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
 
   let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
 
+  it { is_expected.to be < BulkUpdate::TraineeUploads::BasePolicy }
+
   context "when the User's organisation is an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :hei), session: {}) }
 
