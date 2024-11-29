@@ -71,6 +71,8 @@ bin/konduit.sh
 
 # Downloaded terraform modules
 terraform/aks/vendor/
+terraform/custom_domains/infrastructure/vendor/
+terraform/custom_domains/environment_domains/vendor/
 
 Procfile.dev
 missing-location-graph-from-dfe-reference.json

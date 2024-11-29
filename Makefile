@@ -89,8 +89,6 @@ sandbox:
 	$(eval DEPLOY_ENV=sandbox)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
-
-
 set-azure-account:
 	echo "Logging on to ${AZ_SUBSCRIPTION}"
 	az account set -s ${AZ_SUBSCRIPTION}
@@ -228,47 +226,43 @@ upload-review-backup: read-deployment-config read-tf-config # make review upload
 backup-review-database: read-deployment-config # make review backup-review-database APP_NAME=1234
 	bin/backup-review-database ${POSTGRES_DATABASE_NAME} ${paas_env}
 
-deploy-domain-resources: check-auto-approve domain-azure-resources # make register deploy-domain-resources AUTO_APPROVE=1
-
-check-auto-approve:
-	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
-
-register:
+domains:
 	$(eval include global_config/register-domain.sh)
 
-domains-infra-init: set-production-subscription set-azure-account
+domains-infra-init: domains set-azure-account
+	rm -rf terraform/custom_domains/infrastructure/vendor/modules/domains
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/custom_domains/infrastructure/vendor/modules/domains
+
 	terraform -chdir=terraform/custom_domains/infrastructure init -reconfigure -upgrade \
 		-backend-config=workspace_variables/${DOMAINS_ID}_backend.tfvars
 
-domains-infra-plan: domains-infra-init # make register domains-infra-plan
+domains-infra-plan: domains-infra-init # make domains-infra-plan
 	terraform -chdir=terraform/custom_domains/infrastructure plan -var-file workspace_variables/${DOMAINS_ID}.tfvars.json
 
-domains-infra-apply: domains-infra-init # make register domains-infra-apply
+domains-infra-apply: domains-infra-init # make domains-infra-apply
 	terraform -chdir=terraform/custom_domains/infrastructure apply -var-file workspace_variables/${DOMAINS_ID}.tfvars.json ${AUTO_APPROVE}
 
-domains-init: set-production-subscription set-azure-account
-	$(if $(PR_NUMBER), $(eval DEPLOY_ENV=${PR_NUMBER}))
+domains-init: domains set-azure-account
+	rm -rf terraform/custom_domains/environment_domains/vendor/modules/domains
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/custom_domains/environment_domains/vendor/modules/domains
+
 	terraform -chdir=terraform/custom_domains/environment_domains init -upgrade -reconfigure -backend-config=workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}_backend.tfvars
 
-domains-plan: domains-init  # make register qa domains-plan
+domains-plan: domains-init  # make qa domains-plan
 	terraform -chdir=terraform/custom_domains/environment_domains plan -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
 
-domains-apply: domains-init # make register qa domains-apply
+domains-apply: domains-init # make qa domains-apply
 	terraform -chdir=terraform/custom_domains/environment_domains apply -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
-domains-destroy: domains-init # make register qa domains-destroy
+domains-destroy: domains-init # make qa domains-destroy
 	terraform -chdir=terraform/custom_domains/environment_domains destroy -var-file workspace_variables/${DOMAINS_ID}_${DEPLOY_ENV}.tfvars.json
 
-set-production-subscription:
-	$(eval AZ_SUBSCRIPTION=s189-teacher-services-cloud-production)
-
-domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags #
-	$(if $(AUTO_APPROVE), , $(error can only run with AUTO_APPROVE))
+domain-azure-resources: domains set-azure-account set-azure-template-tag set-azure-resource-group-tags # make domain-azure-resources
 	az deployment sub create -l "UK South" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--name "${DNS_ZONE}domains-$(shell date +%Y%m%d%H%M%S)" --parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-rg" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}${DNS_ZONE}domainstf" "tfStorageContainerName=${DNS_ZONE}domains-tf"  "keyVaultName=${RESOURCE_NAME_PREFIX}-${DNS_ZONE}domains-kv" ${WHAT_IF}
 
-validate-domain-resources: set-what-if domain-azure-resources # make register validate-domain-resources
+validate-domain-resources: set-what-if domain-azure-resources # make validate-domain-resources
 
 action-group-resources: set-azure-account # make env action-group-resources ACTION_GROUP_EMAIL=notificationemail@domain.com . Must be run before setting enable_monitoring=true for each subscription
 	$(if $(ACTION_GROUP_EMAIL), , $(error Please specify a notification email for the action group))
