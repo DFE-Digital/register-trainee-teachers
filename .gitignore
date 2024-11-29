@@ -67,7 +67,6 @@ config/localhost/https/localhost.crt
 dump.rdb
 
 bin/fetch_config.rb
-bin/terrafile
 bin/konduit.sh
 
 # Downloaded terraform modules

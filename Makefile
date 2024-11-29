@@ -3,7 +3,6 @@ ifndef VERBOSE
 endif
 SERVICE_SHORT=rtt
 SERVICE_NAME=register
-TERRAFILE_VERSION=0.8
 
 help:
 	@echo "Environment setup targets:"
@@ -30,12 +29,6 @@ install-konduit: ## Install the konduit script, for accessing backend services
 	[ ! -f bin/konduit.sh ] \
 		&& curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/master/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh \
-		|| true
-
-install-terrafile: ## Install terrafile to manage terraform modules
-	[ ! -f bin/terrafile ] \
-		&& curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
-		| tar xz -C ./bin terrafile \
 		|| true
 
 local: ## Configure local dev environment
@@ -165,12 +158,13 @@ deploy: terraform-init
 destroy: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) destroy -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS} $(AUTO_APPROVE)
 
-terraform-init: install-terrafile
+terraform-init:
 	$(if $(IMAGE_TAG), , $(eval export IMAGE_TAG=main))
 	$(eval export TF_VAR_app_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
 
 	az account set -s $(AZ_SUBSCRIPTION) && az account show
-	[ "${RUN_TERRAFILE}" = "yes" ] && ./bin/terrafile -p terraform/$(PLATFORM)/vendor/modules -f terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV)_Terrafile || true
+	rm -rf terraform/$(PLATFORM)/vendor/modules/aks
+	git -c advice.detachedHead=false clone --depth=1 --single-branch --branch ${TERRAFORM_MODULES_TAG} https://github.com/DFE-Digital/terraform-modules.git terraform/$(PLATFORM)/vendor/modules/aks
 	terraform -chdir=terraform/$(PLATFORM) init -reconfigure -upgrade -backend-config=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars $(backend_key)
 
 get-cluster-credentials: read-cluster-config set-azure-account ## make <config> get-cluster-credentials [ENVIRONMENT=<clusterX>]
