@@ -125,7 +125,7 @@ private
     @current_academic_cycle_label = @current_academic_cycle.label
     @previous_academic_cycle_label = @previous_academic_cycle.label
   end
-  
+
   def set_sign_off_date
     @sign_off_date = Date.new(@current_academic_cycle.end_year, 1, 31).strftime("%d %B %Y")
   end
