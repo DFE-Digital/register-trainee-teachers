@@ -17,7 +17,5 @@
     - Use the command: make pen apply IMAGE_TAG=1705-register-pen-test-environment.
 
 - To deploy new domain changes :
-    - Validate domain resources with: make register <env> validate-domain-resources.
-    - Deploy Azure domain resources with: make register <env>  domain-azure-resources.
-    - Plan domain deployment with: make register <env>  domains-plan.
-    - Apply domain deployment with: make register <env>  domains-apply.
+    - Plan domain deployment with: make <env> domains-plan.
+    - Apply domain deployment with: make <env> domains-apply.

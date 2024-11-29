@@ -33,7 +33,6 @@ A service for training providers in England to register trainees with the Depart
 - [Alerting & Monitoring](/docs/alerting_and_monitoring.md)
 - [Transactional Emails](/docs/emails.md)
 - [Healthchecks](/docs/healthcheck_and_ping_endpoints.md)
-- [Maintenance Mode](/docs/maintenance-mode.md)
 - [Disaster Recovery Plan](/docs/disaster-recovery.md)
 - [ADRs](/docs/adr/index.md)
 - [Support Playbook](/docs/support_playbook.md)
