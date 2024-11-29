@@ -53,7 +53,7 @@ values. If this is not clear, then reach out to the funding team to clarify.
   create a new file
 
     ```bash
-    cf ssh register-worker-production
+    kubectl -n bat-production exec -ti deployment/register-worker-production -- sh
     cd /app/tmp
     cat > funding.csv
     ```

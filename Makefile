@@ -119,14 +119,10 @@ install-fetch-config:
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
-read-deployment-config:
-	$(eval export POSTGRES_DATABASE_NAME=register-postgres-${paas_env})
-
 read-tf-config:
 	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval key_vault_app_secret_name=$(shell jq -r '.key_vault_app_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval space=$(shell jq -r '.paas_space_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 
 read-cluster-config:
 	$(eval CLUSTER=$(shell jq -r '.cluster' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
@@ -188,43 +184,6 @@ ssh: get-cluster-credentials
 worker-ssh: get-cluster-credentials
 	$(if $(APP_NAME), $(eval export APP_ID=$(APP_NAME)) , $(eval export APP_ID=$(CONFIG_LONG)))
 	kubectl -n ${NAMESPACE} exec -ti --tty deployment/register-${APP_ID}-worker -- /bin/sh
-
-get-image-tag:
-	$(eval export TAG=$(shell cf target -s ${space} 1> /dev/null && cf app register-${paas_env} | awk -F : '$$1 == "docker image" {print $$3}'))
-	@echo ${TAG}
-
-get-postgres-instance-guid: ## Gets the postgres service instance's guid make qa get-postgres-instance-guid
-	$(eval export DB_INSTANCE_GUID=$(shell cf target -s ${space} 1> /dev/null && cf service register-postgres-${paas_env} --guid))
-	@echo ${DB_INSTANCE_GUID}
-
-rename-postgres-service: ## make qa rename-postgres-service
-	cf target -s ${space} 1> /dev/null
-	cf rename-service register-postgres-${paas_env} register-postgres-${paas_env}-old
-
-remove-postgres-tf-state: terraform-init ## make qa remove-postgres-tf-state
-	terraform -chdir=terraform/$(PLATFORM) state rm module.paas.cloudfoundry_service_instance.postgres_instance
-
-set-restore-variables:
-	$(if $(IMAGE_TAG), , $(error can only run with an IMAGE_TAG))
-	$(if $(DB_INSTANCE_GUID), , $(error can only run with DB_INSTANCE_GUID, get it by running `make ${space} get-postgres-instance-guid`))
-	$(if $(SNAPSHOT_TIME), , $(error can only run with BEFORE_TIME, eg SNAPSHOT_TIME="2021-09-14 16:00:00"))
-	$(eval export TF_VAR_paas_docker_image=ghcr.io/dfe-digital/register-trainee-teachers:$(IMAGE_TAG))
-	$(eval export TF_VAR_paas_restore_from_db_guid=$(DB_INSTANCE_GUID))
-	$(eval export TF_VAR_paas_db_backup_before_point_in_time=$(SNAPSHOT_TIME))
-	echo "Restoring register-trainee-teachers from $(TF_VAR_paas_restore_from_db_guid) before $(TF_VAR_paas_db_backup_before_point_in_time)"
-
-restore-postgres: set-restore-variables deploy ##  make qa restore-postgres IMAGE_TAG=12345abcdef67890ghijklmnopqrstuvwxyz1234 DB_INSTANCE_GUID=abcdb262-79d1-xx1x-b1dc-0534fb9b4 SNAPSHOT_TIME="2021-11-16 15:20:00"
-
-restore-data-from-nightly-backup: read-deployment-config read-tf-config # make production restore-data-from-nightly-backup CONFIRM_PRODUCTION=YES CONFIRM_RESTORE=YES BACKUP_DATE="yyyy-mm-dd"
-	bin/download-nightly-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${paas_env}_ ${BACKUP_DATE}
-	$(if $(CONFIRM_RESTORE), , $(error Restore can only run with CONFIRM_RESTORE))
-	bin/restore-nightly-backup ${space} ${POSTGRES_DATABASE_NAME} register_${paas_env}_ ${BACKUP_DATE}
-
-upload-review-backup: read-deployment-config read-tf-config # make review upload-review-backup BACKUP_DATE=2022-06-10 APP_NAME=1234
-	bin/upload-review-backup REGISTER-BACKUP-STORAGE-CONNECTION-STRING ${key_vault_name} ${BACKUP_CONTAINER_NAME} register_${paas_env}_${BACKUP_DATE}.tar.gz
-
-backup-review-database: read-deployment-config # make review backup-review-database APP_NAME=1234
-	bin/backup-review-database ${POSTGRES_DATABASE_NAME} ${paas_env}
 
 domains:
 	$(eval include global_config/register-domain.sh)
