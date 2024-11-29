@@ -32,4 +32,20 @@ class BulkUpdate::TraineeUploadRow < ApplicationRecord
   validates :data, presence: true
 
   scope :without_errors, -> { left_joins(:row_errors).where(row_errors: { errored_on_id: nil }) }
+  scope :with_validation_errors, lambda {
+    where(
+      "EXISTS (:validation_errors)",
+      validation_errors: BulkUpdate::RowError.validation.select("1").where(
+        "bulk_update_row_errors.errored_on_id = bulk_update_trainee_upload_rows.id AND bulk_update_row_errors.errored_on_type = 'BulkUpdate::TraineeUploadRow'",
+      ),
+    )
+  }
+  scope :with_duplicate_errors, lambda {
+    where(
+      "EXISTS (:duplicate_errors)",
+      duplicate_errors: BulkUpdate::RowError.duplicate.select("1").where(
+        "bulk_update_row_errors.errored_on_id = bulk_update_trainee_upload_rows.id AND bulk_update_row_errors.errored_on_type = 'BulkUpdate::TraineeUploadRow'",
+      ),
+    )
+  }
 end

@@ -36,7 +36,6 @@ describe Reports::BulkTraineeUploadReport do
     end
   end
 
-
   context "given a valid trainee upload with some errors" do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :failed_with_validation_errors) }
 
