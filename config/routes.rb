@@ -167,6 +167,7 @@ Rails.application.routes.draw do
       resource :award_recommendations, only: %i[create]
 
       namespace :withdrawal do
+        resource :start, only: :show
         resource :date, only: %i[edit update]
         resource :reason, only: %i[edit update]
         resource :extra_information, only: %i[edit update], path: "extra-information"
