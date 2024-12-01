@@ -139,7 +139,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw
+    and_i_click_on_withdraw_and_continue
     and_i_choose_they_have_not_started
     then_i_am_taken_to_the_forbidden_withdrawal_page
   end
@@ -148,7 +148,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw
+    and_i_click_on_withdraw_and_continue
     and_i_choose_they_have_started
     when_i_choose_they_started_on_time
     then_i_should_be_on_the_withdrawal_page
@@ -169,7 +169,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_deferred_trainee_exists
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw
+    and_i_click_on_withdraw_and_continue
     then_the_deferral_text_should_be_shown
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
@@ -185,7 +185,7 @@ feature "Withdrawing a trainee" do
     given_a_trainee_exists_to_be_withdrawn
     and_the_trainee_has_a_duplicate
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw
+    and_i_click_on_withdraw_and_continue
     then_the_duplicate_record_text_should_be_shown
   end
 
@@ -226,7 +226,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw
+    and_i_click_on_withdraw_and_continue
   end
 
   def when_i_am_on_the_date_page
@@ -283,8 +283,17 @@ feature "Withdrawing a trainee" do
     public_send("withdrawal_#{page}_page").continue.click
   end
 
+  def and_i_click_on_withdraw_and_continue
+    and_i_click_on_withdraw
+    and_i_start_withdrawal
+  end
+
   def and_i_click_on_withdraw
     record_page.withdraw.click
+  end
+
+  def and_i_start_withdrawal
+    and_i_continue(:start)
   end
 
   def when_i_withdraw
