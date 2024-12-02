@@ -136,12 +136,12 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(parsed_body[:applying_for_grant]).to be_nil
     end
 
-    it "sets the correct school attributes" do
+    it "sets the correct lead partner and employing school attributes" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       parsed_body = response.parsed_body[:data]
 
-      expect(parsed_body[:lead_partner_not_applicable]).to be(false)
+      expect(parsed_body[:lead_partner_not_applicable]).to be(true)
       expect(parsed_body[:lead_partner]).to be_nil
       expect(parsed_body[:employing_school_not_applicable]).to be(false)
       expect(parsed_body[:employing_school]).to be_nil
@@ -171,27 +171,29 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(degree.country).to be_nil
     end
 
-    context "with school_attributes" do
+    context "with lead_partner_and_employing_school_attributes" do
       before do
         post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
 
       context "when lead_partner_urn is blank and lead_partner_ukprn is blank" do
-        before do
-          data.merge(
-            lead_partner_urn: "",
-            employing_school_urn: "900021",
-          )
+        let(:params) do
+          {
+            data: data.merge(
+              lead_partner_ukprn: "",
+              employing_school_urn: "900020",
+            ),
+          }
         end
 
         it "sets lead_partner_urn and employing_school_urn to nil" do
-          expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
-          expect(response.parsed_body[:data][:employing_school_urn]).to be_nil
+          expect(response.parsed_body[:lead_partner_urn]).to be_nil
+          expect(response.parsed_body[:employing_school_urn]).to be_nil
         end
 
         it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
-          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
         end
       end
 
