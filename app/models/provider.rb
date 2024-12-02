@@ -115,7 +115,7 @@ class Provider < ApplicationRecord
   end
 
   def performance_profile_signed_off?
-    sign_offs.performance_profile.current_academic_cycle.exists?
+    sign_offs.performance_profile.previous_academic_cycle.exists?
   end
 
 private
