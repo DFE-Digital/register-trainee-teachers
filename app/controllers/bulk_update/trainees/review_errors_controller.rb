@@ -16,7 +16,7 @@ module BulkUpdate
         authorize(@bulk_update_trainee_upload)
 
         respond_to do |format|
-          format.html { render(:show) }
+          format.html
           format.csv do
             send_data(
               Exports::BulkTraineeUploadExport.call(trainee_upload: @bulk_update_trainee_upload),
@@ -25,12 +25,6 @@ module BulkUpdate
             )
           end
         end
-      end
-
-    private
-
-      def organisation
-        @organisation ||= current_user.organisation
       end
     end
   end
