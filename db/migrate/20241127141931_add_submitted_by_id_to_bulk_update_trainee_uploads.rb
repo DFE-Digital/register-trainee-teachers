@@ -6,9 +6,9 @@ class AddSubmittedByIdToBulkUpdateTraineeUploads < ActiveRecord::Migration[7.2]
   def change
     safety_assured do
       add_reference :bulk_update_trainee_uploads,
-        :submitted_by,
-        index: {algorithm: :concurrently},
-        foreign_key: { to_table: :users }
+                    :submitted_by,
+                    index: { algorithm: :concurrently },
+                    foreign_key: { to_table: :users }
     end
   end
 end
