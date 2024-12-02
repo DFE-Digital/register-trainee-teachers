@@ -37,8 +37,8 @@ class User < ApplicationRecord
   has_many :lead_partners, through: :lead_partner_users
 
   has_many :submitted_bulk_update_trainee_uploads,
-    class_name: "BulkUpdate::TraineeUpload",
-    foreign_key: :submitted_by_id, inverse_of: :submitted_by
+           class_name: "BulkUpdate::TraineeUpload",
+           foreign_key: :submitted_by_id, inverse_of: :submitted_by
 
   scope :order_by_last_name, -> { order(:last_name) }
   scope :system_admins, -> { where(system_admin: true) }
