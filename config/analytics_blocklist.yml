@@ -428,7 +428,6 @@
     - submitted_by_id
     - file
     - file_name
-    - number_of_trainees
     - status
     - submitted_at
     - created_at
