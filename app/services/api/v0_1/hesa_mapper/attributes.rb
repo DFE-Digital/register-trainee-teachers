@@ -198,7 +198,7 @@ module Api
           elsif params[:lead_partner_ukprn].present?
             lead_partner_from_ukprn
           else
-            {}
+            { lead_partner_not_applicable: true }
           end
         end
 
