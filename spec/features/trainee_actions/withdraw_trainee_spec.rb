@@ -148,7 +148,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw_and_continue
+    and_i_click_on_withdraw
     and_i_choose_they_have_started
     when_i_choose_they_started_on_time
     then_i_should_be_on_the_withdrawal_page
