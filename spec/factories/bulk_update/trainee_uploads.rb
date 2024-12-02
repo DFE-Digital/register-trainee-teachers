@@ -11,7 +11,6 @@ UPLOAD_ERROR_MESSAGES = [
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
-    number_of_trainees { 5 }
 
     after(:build) do |upload|
       upload.file.attach(
