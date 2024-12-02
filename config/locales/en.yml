@@ -212,6 +212,8 @@ en:
         change_in_personal_or_health_circumstances: Change in their personal or health situation
         never_intended_to_obtain_qts: They never intended to obtain QTS
         moved_to_different_itt_course: They moved to a different ITT course
+        had_to_withdraw_trainee_another_reason: Another reason
+        trainee_chose_to_withdraw_another_reason: Another reason
     award_details:
         waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
     confirmation:
