@@ -53,7 +53,7 @@ private
 
   def current_user
     @current_user ||= if sign_in_user
-                        UserWithOrganisationContext.new(
+                        Current.user = UserWithOrganisationContext.new(
                           user: sign_in_user.user,
                           session: session,
                         )
