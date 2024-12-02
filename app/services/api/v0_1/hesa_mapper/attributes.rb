@@ -203,7 +203,7 @@ module Api
         end
 
         def lead_partner_from_urn
-          return { lead_partner_not_applicable: true } if lead_partner_not_applicable?
+          return { lead_partner_not_applicable: true } if not_applicable_urn?(params[:lead_partner_urn])
 
           lead_partner_id = LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
           {
@@ -220,27 +220,20 @@ module Api
           }
         end
 
-        def lead_partner_not_applicable?
-          NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
+        def not_applicable_urn?(urn)
+          NOT_APPLICABLE_SCHOOL_URNS.include?(urn)
         end
 
         def employing_school_attributes
-          attrs = {}
-
           if params[:employing_school_urn].present?
-            if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
-              attrs.merge!(employing_school_not_applicable: true)
-            else
-              employing_school_id = School.find_by(urn: params[:employing_school_urn])&.id
+            return { employing_school_not_applicable: true } if not_applicable_urn?(params[:employing_school_urn])
 
-              attrs.merge!(
-                employing_school_id: employing_school_id,
-                employing_school_not_applicable: employing_school_id.nil?,
-              )
-            end
+            employing_school_id = School.find_by(urn: params[:employing_school_urn])&.id
+            {
+              employing_school_id: employing_school_id,
+              employing_school_not_applicable: employing_school_id.nil?,
+            }
           end
-
-          attrs
         end
 
         def training_initiative_attributes
