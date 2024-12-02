@@ -14,4 +14,24 @@ RSpec.describe BulkUpdate::TraineeUploadRow do
       expect(described_class.without_errors).to eq(rows_without_errors)
     end
   end
+
+  describe ".with_validation_errors" do
+    let!(:rows_with_validation_errors) { create_list(:bulk_update_trainee_upload_row, 2, :with_multiple_errors, error_type: :validation) }
+    let!(:rows_with_duplicate_errors) { create_list(:bulk_update_trainee_upload_row, 2, :with_errors, error_type: :duplicate) }
+    let!(:rows_without_errors) { create_list(:bulk_update_trainee_upload_row, 2) }
+
+    it "returns only distinct validation error rows" do
+      expect(described_class.with_validation_errors).to eq(rows_with_validation_errors)
+    end
+  end
+
+  describe ".with_duplicate_errors" do
+    let!(:rows_with_validation_errors) { create_list(:bulk_update_trainee_upload_row, 2, :with_multiple_errors, error_type: :validation) }
+    let!(:rows_with_duplicate_errors) { create_list(:bulk_update_trainee_upload_row, 2, :with_errors, error_type: :duplicate) }
+    let!(:rows_without_errors) { create_list(:bulk_update_trainee_upload_row, 2) }
+
+    it "returns only distinct duplicate error rows" do
+      expect(described_class.with_duplicate_errors).to eq(rows_with_duplicate_errors)
+    end
+  end
 end
