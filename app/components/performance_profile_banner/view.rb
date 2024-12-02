@@ -21,7 +21,7 @@ module PerformanceProfileBanner
     delegate :label, :end_date_of_performance_profile, to: :previous_academic_cycle, prefix: true
 
     def deadline_date
-      previous_academic_cycle.end_date_of_performance_profile.strftime("%-d %B %Y")
+      previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk])
     end
 
   private

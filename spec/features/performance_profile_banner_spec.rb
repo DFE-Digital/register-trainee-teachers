@@ -4,9 +4,9 @@ require "rails_helper"
 
 feature "performance profile banner" do
   context "within the performance profile date range" do
-    background {
+    background do
       Timecop.freeze(AcademicCycle.previous.performance_profile_date_range.to_a.sample)
-    }
+    end
 
     context "not logged in" do
       scenario "performance profile banner is not shown" do
