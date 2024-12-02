@@ -9,7 +9,7 @@ module BulkUpdate
 
       attr_accessor :row, :current_provider
 
-      Result = Struct.new(:success, :errors)
+      Result = Struct.new(:success, :errors, :error_type)
 
       def initialize(row:, current_provider:)
         self.row = row
@@ -50,9 +50,11 @@ module BulkUpdate
 
       def json_result_to_result(json_result)
         if json_result[:status] == :created
-          Result.new(true, [])
+          Result.new(true, [], nil)
+        elsif json_result[:status] == :conflict
+          Result.new(false, ["This trainee is already in Register"], :duplicate)
         else
-          Result.new(false, json_result.fetch(:json, :errors))
+          Result.new(false, json_result.fetch(:json, :errors), :validation)
         end
       end
 
