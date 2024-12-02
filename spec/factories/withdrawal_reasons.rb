@@ -9,7 +9,7 @@ FactoryBot.define do
     end
 
     trait :another_reason do
-      name { WithdrawalReasons::ANOTHER_REASON }
+      name { WithdrawalReasons::HAD_TO_WITHDRAW_TRAINEE_ANOTHER_REASON }
     end
 
     trait :with_all_reasons do
