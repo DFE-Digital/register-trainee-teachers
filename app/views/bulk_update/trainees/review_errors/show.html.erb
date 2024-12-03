@@ -11,7 +11,7 @@
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-xl"><%= organisation_name %></span>
-        Review errors for <%= @bulk_update_trainee_upload.row_errors.distinct("bulk_update_trainee_upload_rows.id").size %> trainees in the CSV that you uploaded
+        Review errors for <%= @bulk_update_trainee_upload.total_rows_with_errors %> trainees in the CSV that you uploaded
       </h1>
 
       <p class="govuk-body">
