@@ -12,5 +12,6 @@ module BulkUpdate
 
     alias_method :show?, :create?
     alias_method :destroy?, :create?
+    alias_method :index?, :new?
   end
 end
