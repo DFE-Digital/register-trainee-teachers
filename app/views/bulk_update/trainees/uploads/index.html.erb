@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: "Bulk add new trainees") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: request.referrer) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: t(:back), href: request.referrer) %>
 <% end %>
 
 <div class="govuk-grid-row">

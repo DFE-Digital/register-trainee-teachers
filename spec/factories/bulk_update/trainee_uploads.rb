@@ -10,6 +10,10 @@ UPLOAD_ERROR_MESSAGES = [
 
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
+    transient do
+      user { create(:user) }
+    end
+
     provider
 
     after(:build) do |upload|
@@ -54,12 +58,22 @@ FactoryBot.define do
 
     trait :in_progress do
       status { "in_progress" }
-      submitted_at { Time.current }
+      submitted_at { Time.zone.at(SecureRandom.random_number(1_000_000_000)) }
+
+      after(:build) do |bulk_update_trainee_upload, evaluator|
+        bulk_update_trainee_upload.submitted_by ||= evaluator.user
+      end
     end
 
     trait :succeeded do
       status { "succeeded" }
-      submitted_at { Time.current }
+      submitted_at { Time.zone.at(SecureRandom.random_number(1_000_000_000)) }
+
+      after(:build) do |bulk_update_trainee_upload, evaluator|
+        bulk_update_trainee_upload.submitted_by ||= evaluator.user
+      end
+
+      with_rows
     end
 
     trait :cancelled do
@@ -68,7 +82,11 @@ FactoryBot.define do
 
     trait :failed do
       status { "failed" }
-      submitted_at { Time.current }
+      submitted_at { Time.zone.at(SecureRandom.random_number(1_000_000_000)) }
+
+      after(:build) do |bulk_update_trainee_upload, evaluator|
+        bulk_update_trainee_upload.submitted_by ||= evaluator.user
+      end
 
       after(:create) do |bulk_update_trainee_upload|
         CSV.parse(bulk_update_trainee_upload.download, headers: true).each_with_index do |row, index|
