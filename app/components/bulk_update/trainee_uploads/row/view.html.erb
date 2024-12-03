@@ -1,6 +1,8 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell">
-    <%= submitted_at %>
+    <% if submitted_at %>
+      <%= link_to submitted_at, bulk_update_trainees_details_path(upload) %>
+    <% end %>
   </td>
   <td class="govuk-table__cell">
     <%= filename %>

@@ -40,6 +40,14 @@ feature "bulk add trainees" do
         when_i_visit_the_new_bulk_update_trainees_upload_path
         then_i_see_the_unauthorized_message
       end
+
+      scenario "attempts to visit the upload status page" do
+        when_i_visit_the_bulk_update_index_page
+        then_i_cannot_see_the_bulk_view_status_link
+
+        when_i_visit_the_bulk_trainee_uploads_page
+        then_i_see_the_unauthorized_message
+      end
     end
 
     context "when the User is not an HEI Provider" do
@@ -60,6 +68,13 @@ feature "bulk add trainees" do
         then_i_cannot_see_the_bulk_view_status_link
 
         when_i_visit_the_bulk_trainee_uploads_page
+        then_i_see_the_unauthorized_message
+      end
+
+      scenario "attempts to visit the upload details page" do
+        when_an_upload_exist
+        and_i_visit_the_bulk_update_trainee_upload_details_page
+
         then_i_see_the_unauthorized_message
       end
     end
@@ -138,6 +153,19 @@ feature "bulk add trainees" do
         and_i_dont_see_the_review_errors_message
         and_i_visit_the_trainees_page
         then_i_can_see_the_new_trainees
+
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_on_view_status_of_uploaded_trainee_files
+        then_i_see_the_uploads_index_page
+
+        when_i_click_on_an_upload
+        then_i_see_the_upload_details_page
+
+        when_i_click_on_back_link
+        then_i_see_the_uploads_index_page
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_update_index_page
 
         when_i_try_resubmit_the_same_upload
         and_i_click_the_submit_button
@@ -219,19 +247,23 @@ feature "bulk add trainees" do
       end
 
       scenario "view the upload status page" do
-        Timecop.freeze do
-          when_multiple_uploads_exist
-          and_i_visit_the_bulk_update_index_page
-          and_i_click_on_view_status_of_uploaded_trainee_files
-          then_i_see_the_uploads
+        when_multiple_uploads_exist
+        and_i_visit_the_bulk_update_index_page
+        and_i_click_on_view_status_of_uploaded_trainee_files
+        then_i_see_the_uploads
 
-          when_i_click_on_back_link
-          then_i_see_the_bulk_update_index_page
-        end
+        when_i_click_on_back_link
+        then_i_see_the_bulk_update_index_page
 
         when_an_upload_exists_from_the_previous_academic_cycle
         and_i_click_on_view_status_of_uploaded_trainee_files
         then_i_dont_see_the_upload
+
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.succeeded.last)
+        then_i_see_the_upload_details_page
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_update_index_page
       end
 
       scenario "when I try to upload a file with duplicate trainees" do
@@ -280,12 +312,41 @@ private
     create(:academic_cycle, :previous)
   end
 
+  def then_i_see_the_uploads_index_page
+    expect(page).to have_content("Status of new trainee files")
+  end
+
+  def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
+    first(:link, upload.submitted_at.to_fs(:govuk_date_and_time)).click
+  end
+
+  def then_i_see_the_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
+    expect(page).to have_content("Your new trainees have been registered")
+    expect(page).to have_content("Submitted by: #{current_user.name}")
+    expect(page).to have_content("Number of registered trainees: 5")
+    expect(page).to have_content("You can also check the status of new trainee files.")
+    expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
+    expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
+    expect(page).to have_content(
+      "view 'Choose trainee status export' from the 'Registered trainees' section, using the 'academic year' or 'start year' filter to select the current academic year",
+    )
+    expect(page).to have_content(
+      "check your trainees directly in the service one by one",
+    )
+  end
+
   def and_i_click_on_back_link
     click_on "Back"
   end
 
-  def when_i_click_the_view_status_of_new_trainee_files_link
-    click_on "status of new trainee files"
+  def when_i_click_the_view_status_of_new_trainee_files_link(full_link: false)
+    link = if full_link
+             "View status of previously uploaded new trainee files"
+           else
+             "status of new trainee files"
+           end
+
+    click_on link
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
@@ -297,9 +358,18 @@ private
   end
 
   def when_multiple_uploads_exist
-    %i[pending validated in_progress succeeded failed].each do |status|
-      create(:bulk_update_trainee_upload, status, provider: current_user.organisation)
+    BulkUpdate::TraineeUpload.statuses.each_key do |status|
+      create(
+        :bulk_update_trainee_upload,
+        status,
+        provider: current_user.organisation,
+        user: current_user,
+      )
     end
+  end
+
+  def when_an_upload_exist
+    create(:bulk_update_trainee_upload, provider: current_user.organisation)
   end
 
   def and_i_visit_the_bulk_update_index_page
@@ -325,13 +395,16 @@ private
       "five_trainees.csv Validated",
     )
     expect(page).to have_content(
-      "#{Time.current.to_fs(:govuk_date_and_time)} five_trainees.csv In progress",
+      "five_trainees.csv Cancelled",
     )
     expect(page).to have_content(
-      "#{Time.current.to_fs(:govuk_date_and_time)} five_trainees.csv Succeeded",
+      "#{BulkUpdate::TraineeUpload.in_progress.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv In progress",
     )
     expect(page).to have_content(
-      "#{Time.current.to_fs(:govuk_date_and_time)} five_trainees.csv Failed",
+      "#{BulkUpdate::TraineeUpload.succeeded.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Succeeded",
+    )
+    expect(page).to have_content(
+      "#{BulkUpdate::TraineeUpload.failed.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Failed",
     )
   end
 
@@ -644,6 +717,18 @@ private
     expect(page).to have_content("Bulk updates")
   end
 
+  def then_i_cannot_see_the_bulk_view_status_link
+    expect(page).not_to have_link("View status of previously uploaded new trainee files")
+  end
+
+  def when_i_visit_the_bulk_trainee_uploads_page
+    visit bulk_update_trainees_uploads_path
+  end
+
+  def and_i_visit_the_bulk_update_trainee_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
+    visit bulk_update_trainees_details_path(upload)
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
@@ -651,4 +736,5 @@ private
   alias_method :when_i_click_on_back_link, :and_i_click_on_back_link
   alias_method :and_i_click_the_view_status_of_new_trainee_files_link, :when_i_click_the_view_status_of_new_trainee_files_link
   alias_method :and_i_see_the_review_page_without_validation_errors, :then_i_see_the_review_page_without_validation_errors
+  alias_method :when_i_visit_the_bulk_update_index_page, :and_i_visit_the_bulk_update_index_page
 end
