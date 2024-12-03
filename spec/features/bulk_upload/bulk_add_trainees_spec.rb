@@ -10,6 +10,8 @@ feature "bulk add trainees" do
   end
 
   context "when the feature flag is off", feature_bulk_add_trainees: false do
+    let(:user) { create(:user, :hei) }
+
     before do
       given_i_am_authenticated
     end
@@ -89,7 +91,7 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page
+        then_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
@@ -150,7 +152,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page
+        then_i_see_the_review_page_without_validation_errors
         and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_dont_see_any_validation_errors
         and_i_see_the_duplicate_errors(number: 2)
@@ -163,13 +165,40 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_and_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page
+        then_i_see_the_review_page_without_validation_errors
         and_i_dont_the_number_of_trainees_that_can_be_added
         and_i_see_the_validation_errors(number: 2)
         and_i_see_the_duplicate_errors(number: 3)
         and_i_see_the_review_errors_message
         and_i_see_the_review_errors_link
         and_i_dont_see_the_submit_button
+      end
+
+      scenario "when I try to upload a file with errors then upload a corrected file" do
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+
+        when_i_attach_a_file_with_invalid_rows
+        and_i_click_the_upload_button
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_the_review_page_without_validation_errors
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_the_review_page_with_validation_errors
+
+        when_i_click_the_review_errors_link
+        then_i_see_the_review_errors_page
+
+        when_i_click_on_the_download_link
+        then_i_receive_the_file
+
+        when_i_return_to_the_review_errors_page
+        and_i_attach_a_valid_file
+        and_i_click_the_upload_button
+        then_i_see_that_the_upload_is_processing
       end
     end
   end
@@ -267,6 +296,11 @@ private
     and_i_attach_a_file(csv)
   end
 
+  def when_i_attach_a_file_with_invalid_rows
+    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read
+    and_i_attach_a_file(csv)
+  end
+
   def and_i_attach_a_file(content)
     tempfile = Tempfile.new("csv")
     tempfile.write(content)
@@ -287,6 +321,10 @@ private
   end
 
   def then_i_see_the_review_page
+    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
+  end
+
+  def then_i_see_the_review_page_without_validation_errors
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
   end
@@ -423,4 +461,30 @@ private
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
+
+  def then_i_see_the_review_page_with_validation_errors
+    expect(page).to have_content("2 trainees with errors in their details")
+  end
+
+  def when_i_click_the_review_errors_link
+    click_on "Review errors"
+  end
+
+  def then_i_see_the_review_errors_page
+    expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
+    expect(page).to have_content("Review errors for 2 trainees in the CSV that you uploaded")
+  end
+
+  def when_i_click_on_the_download_link
+    click_on "Download your CSV file with errors indicated"
+  end
+
+  def then_i_receive_the_file
+    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
+  end
+
+  def when_i_return_to_the_review_errors_page
+    visit bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id)
+  end
 end
