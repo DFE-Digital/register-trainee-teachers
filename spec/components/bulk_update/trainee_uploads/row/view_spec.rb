@@ -28,7 +28,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
       }.with_indifferent_access
     end
 
-    %w[pending validated in_progress succeeded failed cancelled].each do |status|
+    BulkUpdate::TraineeUpload.statuses.keys.each do |status|
       context "when #{status}" do
         let(:upload) { build(:bulk_update_trainee_upload, status) }
 
