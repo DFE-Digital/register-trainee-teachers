@@ -15,7 +15,7 @@ module PerformanceProfileBanner
     end
 
     def banner_heading_text
-      "The #{previous_academic_cycle_label} ITT performance profile sign off due"
+      "The #{previous_academic_cycle_label} ITT performance profile sign off is due"
     end
 
     delegate :label, :end_date_of_performance_profile, to: :previous_academic_cycle, prefix: true

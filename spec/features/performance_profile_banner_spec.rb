@@ -53,12 +53,12 @@ private
 
   def then_i_do_not_see_the_performance_profile_banner
     expect(page).not_to have_css("#govuk-notification-banner-title", text: "Important")
-    expect(page).not_to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off due")
+    expect(page).not_to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off is due")
   end
 
   def then_i_can_see_the_performance_profile_banner
     expect(page).to have_css("#govuk-notification-banner-title", text: "Important")
-    expect(page).to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off due")
+    expect(page).to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off is due")
   end
 
   def previous_academic_cycle_label

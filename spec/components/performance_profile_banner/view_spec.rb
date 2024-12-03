@@ -50,7 +50,7 @@ describe PerformanceProfileBanner::View do
 
     it "renders correctly" do
       expect(@result).to have_css("#govuk-notification-banner-title", text: "Important")
-      expect(@result).to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off due")
+      expect(@result).to have_css(".govuk-notification-banner__heading", text: "The #{previous_academic_cycle_label} ITT performance profile sign off is due")
     end
 
     it "renders the link correctly" do
