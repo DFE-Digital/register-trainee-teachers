@@ -54,6 +54,14 @@ feature "bulk add trainees" do
         when_i_visit_the_new_bulk_update_trainees_upload_path
         then_i_see_the_unauthorized_message
       end
+
+      scenario "attempts to visit the upload status page" do
+        when_i_visit_the_bulk_update_index_page
+        then_i_cannot_see_the_bulk_view_status_link
+
+        when_i_visit_the_bulk_trainee_uploads_page
+        then_i_see_the_unauthorized_message
+      end
     end
 
     context "when the User is an HEI Provider" do
