@@ -232,7 +232,7 @@ private
 
   def when_an_upload_exists_from_the_previous_academic_cycle
     @previous_academic_cycle_upload ||= Timecop.travel(
-      rand(AcademicCycle.previous.start_date..AcademicCycle.previous.end_date)
+      rand(AcademicCycle.previous.start_date..AcademicCycle.previous.end_date),
     ) do
       create(
         :bulk_update_trainee_upload,
