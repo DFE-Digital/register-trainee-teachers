@@ -12,7 +12,7 @@ RSpec.describe BulkUpdate::AddTrainees::RemoveUploads do
       expect {
         described_class.call
       }.to change { BulkUpdate::TraineeUpload.count }.to(4)
-        .and change { BulkUpdate::TraineeUploadRow.count }.to(20)
+        .and change { BulkUpdate::TraineeUploadRow.count }.to(25)
         .and change { BulkUpdate::RowError.count }.to(0)
 
       expect(pending_upload.reload).to be_present
