@@ -275,11 +275,22 @@ feature "bulk add trainees" do
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_index_page
+        and_i_click_on_view_status_of_uploaded_trainee_files
+        and_i_click_on_cancel_link
+        then_i_see_the_root_page
       end
     end
   end
 
 private
+
+  def then_i_see_the_root_page
+    expect(page).to have_content("Your trainee teachers")
+  end
+
+  def and_i_click_on_cancel_link
+    click_on "Cancel reviewing uploads"
+  end
 
   def when_an_upload_exists_from_the_previous_academic_cycle
     @previous_academic_cycle_upload ||= Timecop.travel(
