@@ -3,7 +3,9 @@
 require "rails_helper"
 
 describe AcademicCycle do
-  subject { build(:academic_cycle) }
+  let(:academic_cycle) { build(:academic_cycle) }
+
+  subject { academic_cycle }
 
   before do
     allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
@@ -178,5 +180,31 @@ describe AcademicCycle do
 
       it { expect(subject).to eq(past_academic_year) }
     end
+  end
+
+  describe "#in_performance_profile_range?" do
+    it "returns whether a date is in the performance profile range" do
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january)).to be true
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february)).to be true
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.second_monday_of_january - 1.day)).to be false
+      expect(academic_cycle.in_performance_profile_range?(academic_cycle.last_day_of_february + 1.day)).to be false
+    end
+  end
+
+  describe "#second_monday_of_january" do
+    subject { academic_cycle.second_monday_of_january }
+
+    it { expect(subject.month).to eq 1 }
+    it { expect(subject.wday).to eq 1 }
+    it { expect(subject.day).to be_between(8, 14) }
+    it { expect(subject).to be_a(Date) }
+  end
+
+  describe "#last_day_of_february" do
+    subject { academic_cycle.last_day_of_february }
+
+    it { expect(subject.month).to eq 2 }
+    it { expect(subject.day).to be_between(28, 29) }
+    it { expect(subject).to be_a(Date) }
   end
 end
