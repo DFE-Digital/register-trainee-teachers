@@ -164,9 +164,6 @@ feature "bulk add trainees" do
         when_i_click_on_back_link
         then_i_see_the_uploads_index_page
 
-        when_i_click_on_back_link
-        then_i_see_the_bulk_update_index_page
-
         when_i_try_resubmit_the_same_upload
         and_i_click_the_submit_button
         then_i_see_the_unauthorized_message
@@ -259,8 +256,22 @@ feature "bulk add trainees" do
         and_i_click_on_view_status_of_uploaded_trainee_files
         then_i_dont_see_the_upload
 
-        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.succeeded.last)
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.succeeded.first)
         then_i_see_the_upload_details_page
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_trainees_uploads_index_page
+
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.in_progress.first)
+        and_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.in_progress.first)
+
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_on_view_status_of_uploaded_trainee_files
+        and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.failed.first)
+        then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.failed.first)
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_trainees_uploads_index_page
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_index_page
@@ -359,12 +370,14 @@ private
 
   def when_multiple_uploads_exist
     BulkUpdate::TraineeUpload.statuses.each_key do |status|
-      create(
-        :bulk_update_trainee_upload,
-        status,
-        provider: current_user.organisation,
-        user: current_user,
-      )
+      Timecop.travel(rand(AcademicCycle.current.start_date..AcademicCycle.current.end_date)) do
+        create(
+          :bulk_update_trainee_upload,
+          status,
+          provider: current_user.organisation,
+          user: current_user,
+        )
+      end
     end
   end
 
@@ -372,7 +385,7 @@ private
     create(:bulk_update_trainee_upload, provider: current_user.organisation)
   end
 
-  def and_i_visit_the_bulk_update_index_page
+  def and_i_visit_the_bulk_update_trainee_uploads_page
     visit bulk_update_trainees_uploads_path
   end
 
@@ -607,9 +620,9 @@ private
     )
   end
 
-  def and_i_see_the_summary_page
+  def and_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.last)
     expect(page).to have_current_path(
-      bulk_update_trainees_submission_path(BulkUpdate::TraineeUpload.last),
+      bulk_update_trainees_submission_path(upload),
     )
     within(".govuk-panel") do
       expect(page).to have_content("Trainees submitted")
@@ -690,9 +703,9 @@ private
     click_on "Review errors"
   end
 
-  def then_i_see_the_review_errors_page
-    expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
-    expect(page).to have_content("Review errors for 2 trainees in the CSV that you uploaded")
+  def then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
+    expect(page).to have_current_path(bulk_update_trainees_review_error_path(upload))
+    expect(page).to have_content("Review errors for #{upload.total_rows_with_errors} trainees in the CSV that you uploaded")
   end
 
   def then_i_see_the_review_errors_page_with_one_error
@@ -714,7 +727,11 @@ private
   end
 
   def then_i_see_the_bulk_update_index_page
-    expect(page).to have_content("Bulk updates")
+    expect(current_path).to eq(bulk_update_path)
+  end
+
+  def then_i_see_the_bulk_trainees_uploads_index_page
+    expect(current_path).to eq(bulk_update_trainees_uploads_path)
   end
 
   def then_i_cannot_see_the_bulk_view_status_link
@@ -737,4 +754,5 @@ private
   alias_method :and_i_click_the_view_status_of_new_trainee_files_link, :when_i_click_the_view_status_of_new_trainee_files_link
   alias_method :and_i_see_the_review_page_without_validation_errors, :then_i_see_the_review_page_without_validation_errors
   alias_method :when_i_visit_the_bulk_update_index_page, :and_i_visit_the_bulk_update_index_page
+  alias_method :and_i_click_on_an_upload, :when_i_click_on_an_upload
 end

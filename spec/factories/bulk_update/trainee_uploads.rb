@@ -58,7 +58,7 @@ FactoryBot.define do
 
     trait :in_progress do
       status { "in_progress" }
-      submitted_at { Time.zone.at(SecureRandom.random_number(1_000_000_000)) }
+      submitted_at { Time.current }
 
       after(:build) do |bulk_update_trainee_upload, evaluator|
         bulk_update_trainee_upload.submitted_by ||= evaluator.user
@@ -67,7 +67,7 @@ FactoryBot.define do
 
     trait :succeeded do
       status { "succeeded" }
-      submitted_at { Time.zone.at(SecureRandom.random_number(1_000_000_000)) }
+      submitted_at { Time.current }
 
       after(:build) do |bulk_update_trainee_upload, evaluator|
         bulk_update_trainee_upload.submitted_by ||= evaluator.user
@@ -82,7 +82,7 @@ FactoryBot.define do
 
     trait :failed do
       status { "failed" }
-      submitted_at { Time.zone.at(SecureRandom.random_number(1_000_000_000)) }
+      submitted_at { Time.current }
 
       after(:build) do |bulk_update_trainee_upload, evaluator|
         bulk_update_trainee_upload.submitted_by ||= evaluator.user
