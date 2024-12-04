@@ -11,7 +11,7 @@ UPLOAD_ERROR_MESSAGES = [
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     transient do
-      user { create(:user) }
+      user { association(:user) }
     end
 
     provider
