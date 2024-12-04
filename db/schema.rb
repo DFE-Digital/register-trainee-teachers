@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_21_134348) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_26_164709) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -260,10 +260,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_134348) do
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
     t.integer "number_of_trainees"
-    t.string "status"
+    t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "submitted_at"
     t.index ["provider_id"], name: "index_bulk_update_trainee_uploads_on_provider_id"
+    t.index ["status"], name: "index_bulk_update_trainee_uploads_on_status"
   end
 
   create_table "course_subjects", force: :cascade do |t|
@@ -669,10 +671,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_134348) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true

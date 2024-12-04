@@ -11,7 +11,6 @@ UPLOAD_ERROR_MESSAGES = [
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
-    status { nil }
     number_of_trainees { 5 }
 
     after(:build) do |upload|
@@ -56,10 +55,12 @@ FactoryBot.define do
 
     trait :in_progress do
       status { "in_progress" }
+      submitted_at { Time.current }
     end
 
     trait :succeeded do
       status { "succeeded" }
+      submitted_at { Time.current }
     end
 
     trait :cancelled do
@@ -68,6 +69,7 @@ FactoryBot.define do
 
     trait :failed do
       status { "failed" }
+      submitted_at { Time.current }
 
       after(:create) do |bulk_update_trainee_upload|
         CSV.parse(bulk_update_trainee_upload.download, headers: true).each_with_index do |row, index|
