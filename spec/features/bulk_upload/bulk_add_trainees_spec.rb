@@ -331,7 +331,7 @@ private
     first(:link, upload.submitted_at.to_fs(:govuk_date_and_time)).click
   end
 
-  def then_i_see_the_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
+  def then_i_see_the_upload_details_page
     expect(page).to have_content("Your new trainees have been registered")
     expect(page).to have_content("Submitted by: #{current_user.name}")
     expect(page).to have_content("Number of registered trainees: 5")
@@ -727,11 +727,11 @@ private
   end
 
   def then_i_see_the_bulk_update_index_page
-    expect(current_path).to eq(bulk_update_path)
+    expect(page).to have_current_path(bulk_update_path, ignore_query: true)
   end
 
   def then_i_see_the_bulk_trainees_uploads_index_page
-    expect(current_path).to eq(bulk_update_trainees_uploads_path)
+    expect(page).to have_current_path(bulk_update_trainees_uploads_path, ignore_query: true)
   end
 
   def then_i_cannot_see_the_bulk_view_status_link
