@@ -9,7 +9,11 @@ module BulkUpdate
 
       attr_accessor :row, :current_provider
 
-      Result = Struct.new(:success, :errors, :error_type)
+      Result = Struct.new(:success, :errors, :error_type) do
+        def initialize(success, errors, error_type = :validation)
+          super
+        end
+      end
 
       def initialize(row:, current_provider:)
         self.row = row

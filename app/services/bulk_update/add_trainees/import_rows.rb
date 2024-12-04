@@ -129,8 +129,9 @@ module BulkUpdate
         trainee_upload.trainee_upload_rows.each_with_index do |upload_row, index|
           next if results[index].success
 
+          error_type = results[index].error_type
           extract_error_messages(errors: results[index].errors).each do |message|
-            upload_row.row_errors.create!(message:)
+            upload_row.row_errors.create!(message:, error_type:)
           end
         end
       end
