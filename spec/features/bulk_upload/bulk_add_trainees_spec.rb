@@ -96,13 +96,11 @@ feature "bulk add trainees" do
         and_i_click_on_back_link
 
         when_the_background_job_is_run
-        and_i_refresh_the_page
-        then_i_see_the_review_page_without_validation_errors
-
-        when_i_click_the_view_status_of_new_trainee_files_link
+        and_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
+
         and_i_click_on_back_link
-        then_i_see_the_review_page
+        and_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
@@ -121,7 +119,7 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page
+        then_i_see_the_review_page_without_validation_errors
 
         when_i_click_the_submit_button
         then_a_job_is_queued_to_process_the_upload
@@ -150,7 +148,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page
+        then_i_see_the_review_page_without_validation_errors
         and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_see_the_validation_errors(number: 2)
         and_i_dont_see_any_duplicate_errors
@@ -431,10 +429,6 @@ private
     expect(page).to have_content(empty ? "The selected file is empty" : "Select a CSV file")
   end
 
-  def then_i_see_the_review_page
-    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
-  end
-
   def then_i_see_the_review_page_without_validation_errors
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
@@ -604,4 +598,6 @@ private
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
   alias_method :and_i_visit_the_bulk_update_index_page, :when_i_visit_the_bulk_update_index_page
   alias_method :when_i_click_on_back_link, :and_i_click_on_back_link
+  alias_method :and_i_click_the_view_status_of_new_trainee_files_link, :when_i_click_the_view_status_of_new_trainee_files_link
+  alias_method :and_i_see_the_review_page_without_validation_errors, :then_i_see_the_review_page_without_validation_errors
 end
