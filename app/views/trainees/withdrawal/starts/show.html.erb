@@ -1,0 +1,29 @@
+<%= render PageTitle::View.new(text: t("trainees.withdrawals.start.show.heading")) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: trainee_path(trainee),
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <span class="govuk-caption-l"><%= trainee.full_name %></span>
+    <h1 class="govuk-heading-l"><%= t("trainees.withdrawals.start.show.heading") %></h1>
+
+    <h2 class="govuk-heading-m"><%= t("trainees.withdrawals.start.show.before_you_start.header") %></h2>
+    <p class="govuk-body">
+      <%= t("trainees.withdrawals.start.show.before_you_start.body") %>
+    </p>
+
+    <h2 class="govuk-heading-m"><%= t("trainees.withdrawals.start.show.how_your_answers_will_help.header") %></h2>
+    <p class="govuk-body">
+      <%= t("trainees.withdrawals.start.show.how_your_answers_will_help.body") %>
+    </p>
+
+    <%= govuk_link_to t("views.forms.common.continue"), edit_trainee_withdrawal_date_path(trainee), class: "govuk-button" %>
+  </div>
+</div>
+
+<%= govuk_link_to t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee), class: "govuk-link app-button--link govuk-body", role: "link" %>

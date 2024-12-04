@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
+UPLOAD_ERROR_MESSAGES = [
+  "Invalid email address",
+  "Invalid date of birth",
+  "Invalid degree grade",
+  "Missing placement data",
+  "Missing degree data",
+].freeze
+
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
     status { nil }
     number_of_trainees { 5 }
 
-    after(:build) do |bulk_update_trainee_upload|
-      bulk_update_trainee_upload.attach(
-        io: Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").open,
+    after(:build) do |upload|
+      upload.file.attach(
+        io: Rails.root.join(
+          "spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv",
+        ).open,
         filename: "five_trainees.csv",
       )
     end

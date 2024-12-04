@@ -87,6 +87,8 @@ module BulkUpdate
             end
           end
 
+          results = []
+
           ActiveRecord::Base.transaction(requires_new: true) do
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
               BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
@@ -96,15 +98,18 @@ module BulkUpdate
             if results.all?(&:success)
               trainee_upload.succeeded! unless dry_run
             else
-              # TODO: copy any errors into `trainee_upload`
               success = false
             end
 
             raise(ActiveRecord::Rollback) if dry_run || !success
           end
 
-          trainee_upload.validated! if dry_run && success
-          trainee_upload.failed! unless success
+          if !success
+            trainee_upload.failed!
+            create_row_errors(results)
+          elsif dry_run
+            trainee_upload.validated!
+          end
         end
 
         success
@@ -118,6 +123,30 @@ module BulkUpdate
 
       def current_provider
         @current_provider ||= trainee_upload.provider
+      end
+
+      def create_row_errors(results)
+        trainee_upload.trainee_upload_rows.each_with_index do |upload_row, index|
+          next if results[index].success
+
+          extract_error_messages(errors: results[index].errors).each do |message|
+            upload_row.row_errors.create!(message:)
+          end
+        end
+      end
+
+      def extract_error_messages(messages = [], errors:)
+        values = errors.respond_to?(:values) ? errors.values : errors
+
+        values.each do |value|
+          if value.is_a?(Hash) || value.is_a?(Array)
+            extract_error_messages(messages, errors: value)
+          else
+            messages << value
+          end
+        end
+
+        messages
       end
     end
   end

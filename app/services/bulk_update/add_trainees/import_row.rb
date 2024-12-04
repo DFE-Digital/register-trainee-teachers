@@ -22,6 +22,8 @@ module BulkUpdate
           [attribute_name, row[header_name]]
         end.with_indifferent_access
 
+        attributes = prepare_csv_attributes_for_api(attributes)
+
         # Apply conversions to the attributes
         mapper_klass = Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
@@ -52,6 +54,11 @@ module BulkUpdate
         else
           Result.new(false, json_result.fetch(:json, :errors))
         end
+      end
+
+      def prepare_csv_attributes_for_api(attributes)
+        attributes[:lead_partner_not_applicable] = attributes[:lead_partner_urn].blank?
+        attributes
       end
     end
   end

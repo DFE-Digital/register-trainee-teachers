@@ -7,14 +7,14 @@
     <%= canonical_tag %>
 
     <%= tag.meta(name: "viewport", content: "width=device-width, initial-scale=1") %>
-    <%= tag.meta(property: "og:image", content: image_path('govuk-opengraph-image.png')) %>
+    <%= tag.meta(property: "og:image", content: image_path("govuk-opengraph-image.png")) %>
     <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
     <%= tag.meta(name: "format-detection", content: "telephone=no") %>
 
-    <%= favicon_link_tag image_path('favicon.ico'), type: nil, sizes: "48x48" %>
-    <%= favicon_link_tag image_path('favicon.svg'), type: 'image/svg+xml', sizes: "any" %>
-    <%= favicon_link_tag image_path('govuk-icon-mask.svg'), rel: 'mask-icon', color: "#0b0c0c", type: nil %>
-    <%= favicon_link_tag image_path('govuk-icon-180.png'), rel: 'apple-touch-icon', type: nil %>
+    <%= favicon_link_tag image_path("favicon.ico"), type: nil, sizes: "48x48" %>
+    <%= favicon_link_tag image_path("favicon.svg"), type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag image_path("govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
+    <%= favicon_link_tag image_path("govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
 
     <%= stylesheet_link_tag "accessible-autocomplete/dist/accessible-autocomplete.min" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -68,7 +68,7 @@
             { name: "Home", url: root_path },
             ({ name: "Draft trainees", url: drafts_path, current: active_link_for("drafts", @trainee) } if can_view_drafts?),
             { name: "Registered trainees", url: trainees_path, current: active_link_for("trainees", @trainee) },
-            ({ name: "Bulk updates", url: bulk_update_path, current: active_link_for("bulk") } if can_bulk_update? ),
+            ({ name: "Bulk updates", url: bulk_update_path, current: active_link_for("bulk") } if can_bulk_update?),
             ({ name: "Reports", url: reports_path, current: active_link_for("reports") } if can_view_reports?),
             ({ name: "Funding", url: funding_payment_schedule_path, current: active_link_for("funding") } if can_view_funding?),
             ({ name: current_user.organisation.name, url: organisations_path, align_right: true } if show_organisation_link?),
@@ -107,12 +107,13 @@
       <div class="govuk-width-container">
         <% if FeatureService.enabled?(:maintenance_banner) %>
           <%= govuk_notification_banner(title_text: "Important") do |banner|
-            banner.heading(text: "Register will be unavailable on Wednesday 19 July from 5pm")
+                banner.heading(text: "Register will be unavailable on Wednesday 19 July from 5pm")
 
-            content_tag(:p, "You will be able to use the service from 9am on Thursday 20 July 2023.", class: "govuk-body")
-          end %>
+                content_tag(:p, "You will be able to use the service from 9am on Thursday 20 July 2023.", class: "govuk-body")
+              end %>
         <% else %>
           <%= render(YearChangeBanner::View.new) %>
+          <%= render(PerformanceProfileBanner::View.new(previous_academic_cycle: AcademicCycle.previous, sign_off_period: :performance_period, provider: @current_user.organisation)) if @current_user&.accredited_provider? && request.path == root_path %>
         <% end %>
 
         <%= render(FlashBanner::View.new(flash: flash, trainee: @trainee)) %>

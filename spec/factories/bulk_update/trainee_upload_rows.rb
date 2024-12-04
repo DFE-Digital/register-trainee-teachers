@@ -22,5 +22,22 @@ FactoryBot.define do
         )
       end
     end
+
+    trait :with_multiple_errors do
+      after(:build) do |bulk_update_trainee_upload_row, evaluator|
+        create(
+          :bulk_update_row_error,
+          error_type: evaluator.error_type,
+          errored_on: bulk_update_trainee_upload_row,
+          message: "An error has occured",
+        )
+        create(
+          :bulk_update_row_error,
+          error_type: evaluator.error_type,
+          errored_on: bulk_update_trainee_upload_row,
+          message: "Another error has occured",
+        )
+      end
+    end
   end
 end

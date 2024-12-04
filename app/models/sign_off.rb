@@ -33,9 +33,9 @@ class SignOff < ApplicationRecord
   TYPES = %w[performance_profile census].freeze
   enum(:sign_off_type, TYPES.to_h { |type| [type, type] })
 
-  scope :current_academic_cycle, lambda {
-    return none if AcademicCycle.current.blank?
+  scope :previous_academic_cycle, lambda {
+    return none if AcademicCycle.previous.blank?
 
-    joins(:academic_cycle).where(academic_cycles: { id: AcademicCycle.current.id })
+    joins(:academic_cycle).where(academic_cycles: { id: AcademicCycle.previous.id })
   }
 end

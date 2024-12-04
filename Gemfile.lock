@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 15208a10476428d645f69b184f18eba6cd1b6213
-  tag: v1.15.0
+  revision: 7618b23697e91ab1ababee5234faaa260f6c873e
+  tag: v1.15.1
   specs:
-    dfe-analytics (1.15.0)
+    dfe-analytics (1.15.1)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       multi_xml (~> 0.6.0)
@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: a9af3f8eaee02b92dcc206e1442c4d5ef0305bc7
-  tag: v3.6.6
+  revision: f6349961e0b912cc11b7e47b5cb1eed2dbd69ffe
+  tag: v3.6.7
   specs:
-    dfe-reference-data (3.6.3)
+    dfe-reference-data (3.6.7)
       activesupport
       tzinfo
 
@@ -398,7 +398,7 @@ GEM
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
-    mutex_m (0.2.0)
+    mutex_m (0.3.0)
     net-http (0.5.0)
       uri
     net-http-digest_auth (1.4.1)
@@ -415,9 +415,9 @@ GEM
       net-protocol
     nio4r (2.7.4)
     nkf (0.2.0)
-    nokogiri (1.16.7-arm64-darwin)
+    nokogiri (1.16.8-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.16.7-x86_64-linux)
+    nokogiri (1.16.8-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (6.2.0)
       jwt (>= 1.5, < 3)
@@ -527,9 +527,9 @@ GEM
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.6.0)
+    rails-html-sanitizer (1.6.1)
       loofah (~> 2.21)
-      nokogiri (~> 1.14)
+      nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     railties (7.2.2)
       actionpack (= 7.2.2)
       activesupport (= 7.2.2)

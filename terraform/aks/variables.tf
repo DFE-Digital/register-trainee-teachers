@@ -4,8 +4,6 @@ variable "postgres_version" { default = 13 }
 
 variable "app_name" { default = null }
 
-# PaaS variables
-
 variable "app_environment" {}
 
 variable "app_docker_image" {}
@@ -33,13 +31,6 @@ variable "statuscake_alerts" {
 }
 
 variable "api_token" { default = "" }
-
-# Restore DB variables
-variable "paas_restore_db_from_db_instance" { default = "" }
-
-variable "paas_restore_db_from_point_in_time_before" { default = "" }
-
-variable "paas_enable_external_logging" { default = true }
 
 # Kubernetes variables
 variable "namespace" {}

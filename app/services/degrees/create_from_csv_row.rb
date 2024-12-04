@@ -43,7 +43,7 @@ module Degrees
         })
       end
 
-      if uk_country?(country)
+      if uk_country?
         attrs.merge!({
           institution: institution&.name,
           institution_uuid: institution&.id,
@@ -63,19 +63,21 @@ module Degrees
     end
 
     def country
-      country = lookup("Degree: country")
+      @country ||= begin
+        country = lookup("Degree: country")
 
-      # They can provide either the country code or name
-      if ["UK", "United Kingdom"].include?(country)
-        HESA_UK_COUNTRY
-      elsif Hesa::CodeSets::Countries::MAPPING.values.include?(country)
-        country
-      else
-        Hesa::CodeSets::Countries::MAPPING[country]
+        # They can provide either the country code or name
+        if ["UK", "United Kingdom"].include?(country)
+          HESA_UK_COUNTRY
+        elsif Hesa::CodeSets::Countries::MAPPING.values.include?(country)
+          country
+        else
+          Hesa::CodeSets::Countries::MAPPING[country]
+        end
       end
     end
 
-    def uk_country?(country)
+    def uk_country?
       Hesa::CodeSets::Countries::UK_COUNTRIES.include?(country)
     end
 
