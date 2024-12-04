@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Trainees who studied in the #{@previous_academic_cycle_label} academic") %>
+<%= render PageTitle::View.new(text: "Export trainee data for the #{@previous_academic_cycle_label} performance profile sign off") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -10,38 +10,68 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
-      Trainees who studied in the <%= @previous_academic_cycle_label %> academic year
+      Export trainee data for the <%= @previous_academic_cycle_label %> performance profile sign off
     </h1>
     <p class="govuk-body">
-      Use this report to help you sign off your data for the initial teacher
-      training performance profiles publication.
+      Signing off your list of trainees for the performance profiles publication deadline is <%= @previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk]) %>.
+    </p>
+
+    <p class="govuk-body">
+      As an accredited provider, you need to sign off your teacher trainee data from the previous <%= @previous_academic_cycle_label %> academic year.
+    </p>
+
+    <p class="govuk-body">
+      The data you sign off will be included in the annual initial teacher training performance profiles publication. This will be published on GOV.UK.
     </p>
 
     <h2 class="govuk-heading-m">
-      Which trainees are included in this report
+      Finding your trainee data
     </h2>
     <p class="govuk-body">
-      This report includes all trainees who:
+      You need to check all registered trainees who studied in the previous <%= @previous_academic_cycle_label %> academic year.
+    </p>
+    <p class="govuk-body">
+      <%= govuk_link_to "Export #{@previous_academic_cycle_label} trainee data (#{@trainee_count} #{"trainee".pluralize(@trainee_count)})", performance_profiles_reports_path(:csv) %>
+    </p>
+
+    <h2 class="govuk-heading-m">
+      Checking your trainee data
+    </h2>
+    <p class="govuk-body">
+      You’ll need to check that all your trainees from the <%= @previous_academic_cycle_label %> academic year are listed. For each trainee you’ll need to check:
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        have been registered with the Department for Education
+        course details
       </li>
       <li>
-        studied in the <%= @previous_academic_cycle_label %> academic year
+        status
+      </li>
+      <li>
+        the date they were awarded qualified teacher status (QTS) or early years teacher status (EYTS), or deferred or withdrew from the course - unless they’re still studying
+      </li>
+      <li>
+        2 placements for trainees that were QTS awarded
       </li>
     </ul>
 
     <h2 class="govuk-heading-m">
-      How to use this report
+      Fixing mistakes in your trainee data
     </h2>
     <p class="govuk-body">
-      You can read about
-      <a href=<%= performance_profiles_guidance_path %> class="govuk-link">how to check, fix and sign off your data</a>.
+      You’ll need to fix any mistakes before you sign off the data.
     </p>
+
     <p class="govuk-body">
-      You must sign off your data by <%= @sign_off_date %> at 11:59pm.
+      Find out more on <%= govuk_link_to("Signing off your list of trainees for the performance profiles publication", performance_profiles_guidance_path) %> and <%= govuk_link_to("managing your trainee placement data", manage_placements_guidance_path) %>.
     </p>
-    <%= govuk_link_to "Export trainee data", performance_profiles_reports_path(:csv), class: "govuk-button" %>
+
+    <h2 class="govuk-heading-m">
+      Signing off your trainee data
+    </h2>
+    <p class="govuk-body">
+      If you have checked your data.
+    </p>
+    <%= govuk_button_link_to("Continue to performance profile sign off", "#")%>
   </div>
 </div>
