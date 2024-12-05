@@ -5,9 +5,8 @@ class DetermineSignOffPeriod
 
   VALID_PERIODS = %i[census_period performance_period outside_period].freeze
 
-  def initialize(previous_academic_cycle: AcademicCycle.previous, provider: nil)
+  def initialize(previous_academic_cycle: AcademicCycle.previous)
     @previous_academic_cycle = previous_academic_cycle
-    @provider = provider
   end
 
   def call
@@ -23,7 +22,7 @@ class DetermineSignOffPeriod
 
 private
 
-  attr_reader :previous_academic_cycle, :provider
+  attr_reader :previous_academic_cycle
 
   def valid_sign_off_period?
     return false if Settings.sign_off_period.blank?
@@ -40,10 +39,5 @@ private
     start_date..end_date
   end
 
-  def in_performance_profile_range?(current_date)
-    result = previous_academic_cycle.in_performance_profile_range?(current_date)
-    result = false if result && provider.present? && provider.performance_profile_signed_off?
-
-    result
-  end
+  delegate :in_performance_profile_range?, to: :previous_academic_cycle
 end

@@ -4,10 +4,9 @@ require "rails_helper"
 
 describe DetermineSignOffPeriod do
   describe ".call" do
-    subject { described_class.call(previous_academic_cycle:, provider:) }
+    subject { described_class.call(previous_academic_cycle: academic_cycle) }
 
-    let(:previous_academic_cycle) { create(:academic_cycle, :previous) }
-    let(:provider) { nil }
+    let(:academic_cycle) { create(:academic_cycle) }
 
     before do
       allow(Settings).to receive(:sign_off_period).and_return(nil)
@@ -61,27 +60,11 @@ describe DetermineSignOffPeriod do
       context "on #{performance_date} the performance profiles sign off period" do
         before do
           allow(Time.zone).to receive(:today).and_return(performance_date)
-          allow(previous_academic_cycle).to receive(:in_performance_profile_range?).with(performance_date).and_return(true)
+          allow(academic_cycle).to receive(:in_performance_profile_range?).with(performance_date).and_return(true)
         end
 
         it "returns :performance_period" do
           expect(subject).to eq(:performance_period)
-        end
-
-        context "provider has awaiting performance profile sign off" do
-          let(:provider) { create(:provider) }
-
-          it "returns :performance_period" do
-            expect(subject).to eq(:performance_period)
-          end
-        end
-
-        context "provider has performance profile signed off" do
-          let(:provider) { create(:provider, sign_offs: [build(:sign_off, :performance_profile, academic_cycle: previous_academic_cycle)]) }
-
-          it "returns :outside_period" do
-            expect(subject).to eq(:outside_period)
-          end
         end
       end
     end
