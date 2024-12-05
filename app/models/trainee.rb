@@ -187,6 +187,7 @@ class Trainee < ApplicationRecord
 
   has_many :trainee_withdrawal_reasons, inverse_of: :trainee
   has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
+  has_many :trainee_withdrawals, dependent: :destroy
 
   has_many :potential_duplicate_trainees, dependent: :destroy
 
