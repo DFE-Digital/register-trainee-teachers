@@ -5,6 +5,8 @@
 # Table name: bulk_update_trainee_uploads
 #
 #  id                 :bigint           not null, primary key
+#  file               :text
+#  file_name          :string
 #  number_of_trainees :integer
 #  status             :string           default("pending")
 #  submitted_at       :datetime
@@ -15,6 +17,7 @@
 # Indexes
 #
 #  index_bulk_update_trainee_uploads_on_provider_id  (provider_id)
+#  index_bulk_update_trainee_uploads_on_status       (status)
 #
 # Foreign Keys
 #
