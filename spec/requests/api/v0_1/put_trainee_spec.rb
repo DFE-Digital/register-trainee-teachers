@@ -388,7 +388,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         let(:params) do
           {
             data: data.merge(
-            lead_partner_urn: "",
+              lead_partner_urn: "",
               employing_school_urn: "900020",
             ),
           }
