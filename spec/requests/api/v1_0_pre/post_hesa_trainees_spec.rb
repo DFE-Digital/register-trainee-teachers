@@ -143,7 +143,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
       expect(parsed_body[:lead_partner_not_applicable]).to be(true)
       expect(parsed_body[:lead_partner]).to be_nil
-      expect(parsed_body[:employing_school_not_applicable]).to be(false)
+      expect(parsed_body[:employing_school_not_applicable]).to be(true)
       expect(parsed_body[:employing_school]).to be_nil
     end
 
