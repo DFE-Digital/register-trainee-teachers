@@ -47,7 +47,7 @@ class ReportsController < BaseTraineeController
 
     respond_to do |format|
       format.html do
-        @sign_off_url = Settings.sign_off_performance_profiles_url
+        @trainee_count = performance_profiles_trainees.count
       end
 
       format.csv do
