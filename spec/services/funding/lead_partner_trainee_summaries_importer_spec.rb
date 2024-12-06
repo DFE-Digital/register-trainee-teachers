@@ -23,8 +23,8 @@ module Funding
           "1111" => [
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "1111",
-              "Lead school name" => "Lead School 1",
+              "Provider" => "1111",
+              "Provider name" => "Provider 1",
               "Subject" => "Physics",
               "Description" => "School Direct salaried",
               "Funding/trainee" => "24,000",
@@ -33,8 +33,8 @@ module Funding
             },
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "1111",
-              "Lead school name" => "Lead School 1",
+              "Provider" => "1111",
+              "Provider name" => "Provider 1",
               "Subject" => "Modern Languages",
               "Description" => "School Direct salaried",
               "Funding/trainee" => "10000",
@@ -43,8 +43,8 @@ module Funding
             },
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "1111",
-              "Lead school name" => "Lead School 1",
+              "Provider" => "1111",
+              "Provider name" => "Provider 1",
               "Subject" => "History",
               "Description" => "School Direct salaried",
               "Funding/trainee" => "0",
@@ -55,8 +55,8 @@ module Funding
           "2222" => [
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "2222",
-              "Lead school name" => "Lead School 2",
+              "Provider" => "2222",
+              "Provider name" => "Provider 2",
               "Subject" => "Physics",
               "Description" => " School Direct salaried ",
               "Funding/trainee" => "24000",
@@ -67,16 +67,16 @@ module Funding
         }
       end
 
-      let!(:lead_school_one) { create(:school, urn: "1111") }
-      let!(:lead_school_two) { create(:school, urn: "2222") }
+      let!(:provider_one) { create(:provider, accreditation_id: "1111") }
+      let!(:provider_two) { create(:provider, accreditation_id: "2222") }
 
-      let(:lead_school_one_summary) { lead_school_one.funding_trainee_summaries.last }
-      let(:lead_school_two_summary) { lead_school_two.funding_trainee_summaries.last }
+      let(:provider_one_summary) { provider_one.funding_trainee_summaries.last }
+      let(:provider_two_summary) { provider_two.funding_trainee_summaries.last }
 
-      let(:lead_school_one_first_row) { lead_school_one_summary.rows.first }
-      let(:lead_school_one_second_row) { lead_school_one_summary.rows.second }
-      let(:lead_school_one_third_row) { lead_school_one_summary.rows.last }
-      let(:lead_school_two_first_row) { lead_school_two_summary.rows.first }
+      let(:provider_one_first_row) { provider_one_summary.rows.first }
+      let(:provider_one_second_row) { provider_one_summary.rows.second }
+      let(:provider_one_third_row) { provider_one_summary.rows.last }
+      let(:provider_two_first_row) { provider_two_summary.rows.first }
 
       subject { described_class.call(attributes: summaries_attributes) }
 
@@ -84,65 +84,61 @@ module Funding
         subject
       end
 
-      it "creates a TraineeSummary for each lead school" do
-        expect(lead_school_one.funding_trainee_summaries.count).to eq(1)
-        expect(lead_school_two.funding_trainee_summaries.count).to eq(1)
+      it "creates a TraineeSummary for each provider" do
+        expect(provider_one.funding_trainee_summaries.count).to eq(1)
+        expect(provider_two.funding_trainee_summaries.count).to eq(1)
       end
 
       it "creates a TraineeSummary for the academic year" do
-        expect(lead_school_one_summary.academic_year).to eq("2021/22")
-        expect(lead_school_two_summary.academic_year).to eq("2021/22")
+        expect(provider_one_summary.academic_year).to eq("2021/22")
+        expect(provider_two_summary.academic_year).to eq("2021/22")
       end
 
       describe "TraineeSummaryRow" do
-        let(:lead_school_one_expected_attibutes) {
+        let(:provider_one_expected_attributes) {
           {
             "route" => "School Direct salaried",
             "training_route" => "school_direct_salaried",
-            "lead_school_name" => "Lead School 1",
-            "lead_school_urn" => "1111",
           }
         }
 
-        let(:lead_school_two_expected_attibutes) {
+        let(:provider_two_expected_attributes) {
           {
             "subject" => "Physics",
             "route" => "School Direct salaried",
             "training_route" => "school_direct_salaried",
-            "lead_school_name" => "Lead School 2",
-            "lead_school_urn" => "2222",
           }
         }
 
         it "creates the correct number of TraineeSummaryRows" do
-          expect(lead_school_one_summary.rows.count).to eq(3)
-          expect(lead_school_two_summary.rows.count).to eq(1)
+          expect(provider_one_summary.rows.count).to eq(3)
+          expect(provider_two_summary.rows.count).to eq(1)
         end
 
         it "creates TraineeSummaryRows with the correct attributes" do
-          expect(lead_school_one_first_row.attributes).to include(
-            lead_school_one_expected_attibutes.merge({ "subject" => "Physics" }),
+          expect(provider_one_first_row.attributes).to include(
+            provider_one_expected_attributes.merge({ "subject" => "Physics" }),
           )
-          expect(lead_school_one_second_row.attributes).to include(
-            lead_school_one_expected_attibutes.merge({ "subject" => "Modern Languages" }),
+          expect(provider_one_second_row.attributes).to include(
+            provider_one_expected_attributes.merge({ "subject" => "Modern Languages" }),
           )
-          expect(lead_school_one_third_row.attributes).to include(
-            lead_school_one_expected_attibutes.merge({ "subject" => "History" }),
+          expect(provider_one_third_row.attributes).to include(
+            provider_one_expected_attributes.merge({ "subject" => "History" }),
           )
-          expect(lead_school_two_first_row.attributes).to include(lead_school_two_expected_attibutes)
+          expect(provider_two_first_row.attributes).to include(provider_two_expected_attributes)
         end
       end
 
       describe "TraineeSummaryRowAmount" do
         it "creates the correct number of TraineeSummaryRowAmounts" do
-          expect(lead_school_one_first_row.amounts.count).to eq(1)
-          expect(lead_school_one_second_row.amounts.count).to eq(0)
-          expect(lead_school_one_third_row.amounts.count).to eq(0)
-          expect(lead_school_two_first_row.amounts.count).to eq(0)
+          expect(provider_one_first_row.amounts.count).to eq(1)
+          expect(provider_one_second_row.amounts.count).to eq(0)
+          expect(provider_one_third_row.amounts.count).to eq(0)
+          expect(provider_two_first_row.amounts.count).to eq(0)
         end
 
         it "creates TraineeSummaryRowAmounts with the correct attributes" do
-          expect(lead_school_one_first_row.amounts.first.attributes).to include(
+          expect(provider_one_first_row.amounts.first.attributes).to include(
             {
               "amount_in_pence" => 2_400_000,
               "number_of_trainees" => 2,
@@ -154,14 +150,14 @@ module Funding
       end
     end
 
-    context "unknown school" do
+    context "unknown provider" do
       let(:invalid_summaries_attributes) do
         {
           "4444" => [
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "4444",
-              "Lead school name" => "Lead School 4",
+              "Provider" => "4444",
+              "Provider name" => "Provider 4",
               "Subject" => "Physics",
               "Description" => "School Direct salaried",
               "Funding/trainee" => "24000",
@@ -174,7 +170,7 @@ module Funding
 
       subject { described_class.call(attributes: invalid_summaries_attributes) }
 
-      it "returns a list of missing lead school urns" do
+      it "returns a list of missing provider accreditation_ids" do
         expect(subject).to eq(["4444"])
       end
     end

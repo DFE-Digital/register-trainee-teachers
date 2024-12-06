@@ -5,14 +5,14 @@ module Funding
     class LeadPartnerTraineeSummaries < Base
       class << self
         def id_column
-          "Lead school URN"
+          "Provider"
         end
 
         def expected_headers
           [
             "Academic year",
-            "Lead school URN",
-            "Lead school name",
+            "Provider",
+            "Provider name",
             "Subject",
             "Description",
             "Funding/trainee",

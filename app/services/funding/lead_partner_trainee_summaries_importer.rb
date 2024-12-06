@@ -34,7 +34,7 @@ module Funding
     end
 
     def payable(id)
-      School.find_by(urn: id)
+      Provider.find_by(accreditation_id: id)
     end
 
     def amount_maps
