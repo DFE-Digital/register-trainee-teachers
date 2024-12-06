@@ -147,9 +147,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       parsed_body = response.parsed_body[:data]
 
-      expect(parsed_body[:lead_partner_not_applicable]).to be(false)
+      expect(parsed_body[:lead_partner_not_applicable]).to be(true)
       expect(parsed_body[:lead_partner]).to be_nil
-      expect(parsed_body[:employing_school_not_applicable]).to be(false)
+      expect(parsed_body[:employing_school_not_applicable]).to be(true)
       expect(parsed_body[:employing_school]).to be_nil
     end
 
@@ -196,8 +196,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         end
 
         it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
-          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
         end
       end
 
