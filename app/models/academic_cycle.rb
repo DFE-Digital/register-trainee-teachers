@@ -78,6 +78,24 @@ class AcademicCycle < ApplicationRecord
     (start_date.beginning_of_day..end_date.end_of_day).cover?(Time.zone.now)
   end
 
+  def in_performance_profile_range?(date)
+    performance_profile_date_range.cover?(date)
+  end
+
+  def second_monday_of_january
+    Date.new(end_year + 1, 1, 1).next_week(:monday) + 7
+  end
+
+  def last_day_of_february
+    Date.new(end_year + 1, 2, -1)
+  end
+
+  alias_method :end_date_of_performance_profile, :last_day_of_february
+
+  def performance_profile_date_range
+    @performance_profile_date_range ||= second_monday_of_january..end_date_of_performance_profile
+  end
+
 private
 
   def start_date_before_end_date

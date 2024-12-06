@@ -54,23 +54,26 @@
 
         <% if @bulk_update_trainee_upload.row_errors.duplicate.present? %>
           <li>
-            <%= pluralize(@bulk_update_trainee_upload.row_errors.duplicate.size, "trainee") %>
+            <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.with_duplicate_errors.size, "trainee") %>
             who will not be added, as they already exist in Register
           </li>
         <% end %>
 
         <% if @bulk_update_trainee_upload.row_errors.validation.present? %>
           <li>
-            <%= pluralize(@bulk_update_trainee_upload.row_errors.validation.size, "trainee") %>
+            <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.with_validation_errors.size, "trainee") %>
             with errors in their details
           </li>
         <% end %>
       </ul>
-
       <% if @bulk_update_trainee_upload.row_errors.present? %>
         <p class="govuk-body">You need to review the errors before you can add new trainees</p>
 
-        <%= govuk_link_to("Review errors", class: "govuk-button") %>
+        <%= render GovukButtonLinkTo::View.new(
+          body: "Review errors",
+          url: bulk_update_trainees_review_error_path(id: @bulk_update_trainee_upload.id),
+          class_option: "govuk-button"
+        ) %>
       <% else %>
         <%= register_form_with(
           model: @bulk_update_trainee_upload,
@@ -78,7 +81,7 @@
           method: :post
         ) do |f| %>
           <%= f.govuk_submit("Submit") %>
-        <% end %>
+      <% end %>
     <% end %>
       <p class="govuk-body">
         <%= register_form_with(
