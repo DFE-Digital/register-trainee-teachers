@@ -1,0 +1,55 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: request.referrer.include?(
+      bulk_update_trainees_details_path(@bulk_update_trainee_upload)
+    ) ? request.referrer : bulk_update_trainees_uploads_path
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <h1 class="govuk-heading-l">
+      Your new trainees have been registered
+    </h1>
+
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Submitted by:</dt>
+        <dd class="govuk-summary-list__value"><%= @bulk_update_trainee_upload.submitted_by.name %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Date and time:</dt>
+        <dd class="govuk-summary-list__value"><%= @bulk_update_trainee_upload.submitted_at.to_fs(:govuk_date_and_time) %></dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Number of registered trainees:</dt>
+        <dd class="govuk-summary-list__value"><%= @bulk_update_trainee_upload.trainee_upload_rows.size %></dd>
+      </div>
+    </dl>
+
+    <p class="govuk-body">
+      You can also check the <%= govuk_link_to("status of new trainee files", bulk_update_trainees_uploads_path) %>.
+    </p>
+
+    <p class="govuk-heading-s">
+      Check data submitted into Register from CSV bulk add new trainees
+    </p>
+
+    <p class="govuk-body">
+      You can check your trainee data once it has been submitted into Register. At any time you can:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        view 'Choose trainee status export' from the 'Registered trainees' section, using the 'academic year' or
+        'start year' filter to select the  current academic year
+      </li>
+      <li>
+        check your trainees directly in the service one by one.
+      </li>
+    </ul>
+  </div>
+</div>

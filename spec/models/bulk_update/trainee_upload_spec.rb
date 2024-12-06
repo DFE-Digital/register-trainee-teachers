@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe BulkUpdate::TraineeUpload do
   it { is_expected.to belong_to(:provider) }
+  it { is_expected.to belong_to(:submitted_by).class_name("User").optional }
   it { is_expected.to have_many(:trainee_upload_rows).dependent(:destroy) }
 
   it do
@@ -20,6 +21,16 @@ RSpec.describe BulkUpdate::TraineeUpload do
 
   describe "events" do
     subject { create(:bulk_update_trainee_upload) }
+
+    let!(:user) { create(:user) }
+
+    before do
+      Current.user = user
+    end
+
+    after do
+      Current.user = nil
+    end
 
     describe "#process!" do
       it do
@@ -46,6 +57,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
         expect {
           subject.submit!
         }.to change(subject, :status).from("validated").to("in_progress")
+          .and change(subject, :submitted_by).from(nil).to(user)
           .and change(subject, :submitted_at).from(nil).to(current_time)
       end
     end

@@ -43,9 +43,8 @@ module BulkUpdate
 
     def upload_attributes
       {
-        provider: provider,
-        file: file,
-        number_of_trainees: csv&.count,
+        provider:,
+        file:,
       }
     end
 
