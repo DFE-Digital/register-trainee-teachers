@@ -11,8 +11,8 @@ module Funding
           [
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "1111",
-              "Lead school name" => "Lead school 1",
+              "Provider" => "1111",
+              "Provider name" => "Provider 1",
               "Subject" => "Physics",
               "Description" => "School Direct salaried",
               "Funding/trainee" => "24000",
@@ -21,8 +21,8 @@ module Funding
             },
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "1111",
-              "Lead school name" => "Lead school 1",
+              "Provider" => "1111",
+              "Provider name" => "Provider 1",
               "Subject" => "Modern Languages",
               "Description" => "Post Graduate Teaching Apprenticeship",
               "Funding/trainee" => "10000",
@@ -35,8 +35,8 @@ module Funding
           [
             {
               "Academic year" => "2021/22",
-              "Lead school URN" => "2222",
-              "Lead school name" => "Lead school 2",
+              "Provider" => "2222",
+              "Provider name" => "Provider 2",
               "Subject" => "Mathematics",
               "Description" => "School Direct salaried",
               "Funding/trainee" => "24000",

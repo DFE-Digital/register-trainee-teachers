@@ -18,6 +18,8 @@ module ApplicationHelper
 
   def register_form_with(*args, &)
     options = args.extract_options!
+    options[:model] ||= false
+
     defaults = {
       html: {
         novalidate: true,
