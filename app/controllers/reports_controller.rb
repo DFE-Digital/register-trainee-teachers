@@ -9,6 +9,12 @@ class ReportsController < BaseTraineeController
 
   def index
     authorize(current_user, :reports?)
+
+    @partial_page = DetermineSignOffPeriod.call
+
+    if @partial_page == :performance_period && current_user.organisation.performance_profile_signed_off?
+      @partial_page = :outside_period
+    end
   end
 
   def itt_new_starter_data_sign_off
@@ -41,7 +47,6 @@ class ReportsController < BaseTraineeController
 
     respond_to do |format|
       format.html do
-        @sign_off_date = Date.new(@current_academic_cycle.end_year, 1, 31).strftime("%d %B %Y")
         @sign_off_url = Settings.sign_off_performance_profiles_url
       end
 
