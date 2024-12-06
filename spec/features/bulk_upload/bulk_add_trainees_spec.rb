@@ -225,6 +225,22 @@ feature "bulk add trainees" do
         and_i_click_on_view_status_of_uploaded_trainee_files
         then_i_dont_see_the_upload
       end
+
+      scenario "when I try to upload a file with duplicate trainees" do
+        when_there_is_already_one_trainee_in_register
+        and_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+
+        when_i_attach_a_valid_file
+        and_i_click_the_upload_button
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_that_there_is_one_duplicate_error
+
+        when_i_click_the_review_errors_link
+        then_i_see_the_review_errors_page_with_one_error
+      end
     end
   end
 
@@ -311,6 +327,20 @@ private
     )
   end
 
+  def when_there_is_already_one_trainee_in_register
+    create(
+      :trainee,
+      :completed,
+      provider: current_user.organisation,
+      training_route: :provider_led_undergrad,
+      first_names: "Jonas",
+      last_name: "Padberg",
+      email: "jonas.padberg@example.com",
+      date_of_birth: "1964-03-07",
+      itt_start_date: Date.new(2022, 9, 7),
+    )
+  end
+
   def when_i_try_resubmit_the_same_upload
     visit bulk_update_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
@@ -366,6 +396,8 @@ private
   def when_i_visit_the_bulk_update_index_page
     visit bulk_update_path
   end
+
+  alias_method :and_i_visit_the_bulk_update_index_page, :when_i_visit_the_bulk_update_index_page
 
   def then_i_cannot_see_the_bulk_add_trainees_link
     expect(page).not_to have_link("Bulk add new trainees")
@@ -432,6 +464,12 @@ private
   def then_i_see_the_review_page_without_validation_errors
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
+  end
+
+  def then_i_see_that_there_is_one_duplicate_error
+    expect(page).to have_content("You uploaded a CSV file")
+    expect(page).to have_content("It included:")
+    expect(page).to have_content("1 trainee who will not be added, as they already exist in Register")
   end
 
   def and_i_see_the_number_of_trainees_that_can_be_added(number:)
@@ -574,6 +612,11 @@ private
   def then_i_see_the_review_errors_page
     expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
     expect(page).to have_content("Review errors for 2 trainees in the CSV that you uploaded")
+  end
+
+  def then_i_see_the_review_errors_page_with_one_error
+    expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
+    expect(page).to have_content("Review errors for 1 trainee in the CSV that you uploaded")
   end
 
   def when_i_click_on_the_download_link
