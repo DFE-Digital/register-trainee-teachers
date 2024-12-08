@@ -126,6 +126,7 @@ feature "bulk add trainees" do
         and_the_send_csv_processing_email_has_been_sent
 
         when_the_background_job_is_run
+        and_i_refresh_the_summary_page
         and_i_see_the_summary_page
         and_i_dont_see_the_review_errors_message
         and_i_visit_the_trainees_page
@@ -508,6 +509,10 @@ private
 
   def and_i_refresh_the_page
     visit bulk_update_trainees_upload_path(BulkUpdate::TraineeUpload.last)
+  end
+
+  def and_i_refresh_the_summary_page
+    visit bulk_update_trainees_submission_path(id: BulkUpdate::TraineeUpload.last.id)
   end
 
   def when_the_background_job_is_run
