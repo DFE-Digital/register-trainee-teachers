@@ -85,8 +85,13 @@ variable "enable_prometheus_monitoring" {
   default = false
 }
 
+variable "azure_resource_group_name" { default = null }
+variable "azure_tempdata_storage_account_name" { default = null }
+variable "azure_storage_account_replication_type" { default = "LRS" }
+variable "deploy_temp_data_storage_account" { default = true }
+
 locals {
-  app_name_suffix = var.app_name == null ? var.app_environment : var.app_name
+  app_name_suffix   = var.app_name == null ? var.app_environment : var.app_name
 
   kv_app_secrets    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
   infra_secrets     = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
@@ -120,13 +125,3 @@ locals {
   default_azure_tempdata_storage_account_name = replace("${var.azure_resource_prefix}${var.service_short}${local.app_name_suffix}tmp", "-", "")
   azure_tempdata_storage_account_name         = var.azure_tempdata_storage_account_name != null ? var.azure_tempdata_storage_account_name : local.default_azure_tempdata_storage_account_name
 }
-
-variable "azure_resource_group_name" { default = null }
-
-variable "azure_tempdata_storage_account_name" { default = null }
-
-variable "azure_storage_account_replication_type" { default = "LRS" }
-
-variable "azure_region_name" { default = "uk south" }
-
-variable "deploy_temp_data_storage_account" { default = true }
