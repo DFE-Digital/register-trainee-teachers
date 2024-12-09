@@ -265,10 +265,12 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_28_141813) do
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
     t.integer "number_of_trainees"
-    t.string "status"
+    t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "submitted_at"
     t.index ["provider_id"], name: "index_bulk_update_trainee_uploads_on_provider_id"
+    t.index ["status"], name: "index_bulk_update_trainee_uploads_on_status"
   end
 
   create_table "course_subjects", force: :cascade do |t|

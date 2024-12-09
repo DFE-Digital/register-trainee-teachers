@@ -193,18 +193,16 @@ module Api
         end
 
         def lead_partner_attributes
-          if params[:lead_partner_urn].present?
+          if params.key?(:lead_partner_urn)
             lead_partner_from_urn
-          elsif params[:lead_partner_ukprn].present?
+          elsif params.key?(:lead_partner_ukprn)
             lead_partner_from_ukprn
           else
-            {}
+            { lead_partner_not_applicable: true } unless update
           end
         end
 
         def lead_partner_from_urn
-          return { lead_partner_not_applicable: true } if lead_partner_not_applicable?
-
           lead_partner_id = LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
           {
             lead_partner_id: lead_partner_id,
@@ -220,27 +218,16 @@ module Api
           }
         end
 
-        def lead_partner_not_applicable?
-          NOT_APPLICABLE_SCHOOL_URNS.include?(params[:lead_partner_urn])
-        end
-
         def employing_school_attributes
-          attrs = {}
-
-          if params[:employing_school_urn].present?
-            if NOT_APPLICABLE_SCHOOL_URNS.include?(params[:employing_school_urn])
-              attrs.merge!(employing_school_not_applicable: true)
-            else
-              employing_school_id = School.find_by(urn: params[:employing_school_urn])&.id
-
-              attrs.merge!(
-                employing_school_id: employing_school_id,
-                employing_school_not_applicable: employing_school_id.nil?,
-              )
-            end
+          if params.key?(:employing_school_urn)
+            employing_school_id = School.find_by(urn: params[:employing_school_urn])&.id
+            {
+              employing_school_id: employing_school_id,
+              employing_school_not_applicable: employing_school_id.nil?,
+            }
+          else
+            { employing_school_not_applicable: true } unless update
           end
-
-          attrs
         end
 
         def training_initiative_attributes

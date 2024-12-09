@@ -16,5 +16,5 @@ Time::DATE_FORMATS[:govuk_date_and_time] = lambda do |time|
              "%e %B %Y at %l:%M%P"
            end
 
-  time.in_time_zone("London").strftime(format)
+  time.in_time_zone("London").strftime(format).squeeze(" ")
 end

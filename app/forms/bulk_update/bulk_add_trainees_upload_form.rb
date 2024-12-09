@@ -50,9 +50,7 @@ module BulkUpdate
     end
 
     def build_upload
-      BulkUpdate::TraineeUpload.new(
-        status: :pending,
-      )
+      BulkUpdate::TraineeUpload.new
     end
 
     def tempfile

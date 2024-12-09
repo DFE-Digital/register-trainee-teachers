@@ -429,6 +429,7 @@
     - file_name
     - number_of_trainees
     - status
+    - submitted_at
     - created_at
     - updated_at
   :bulk_update_trainee_upload_rows:

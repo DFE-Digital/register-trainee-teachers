@@ -6,7 +6,8 @@
 #
 #  id                 :bigint           not null, primary key
 #  number_of_trainees :integer
-#  status             :string
+#  status             :string           default("pending")
+#  submitted_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  provider_id        :bigint           not null
@@ -14,6 +15,7 @@
 # Indexes
 #
 #  index_bulk_update_trainee_uploads_on_provider_id  (provider_id)
+#  index_bulk_update_trainee_uploads_on_status       (status)
 #
 # Foreign Keys
 #
@@ -26,9 +28,33 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     validated: "validated",
     in_progress: "in_progress",
     succeeded: "succeeded",
-    failed: "failed",
     cancelled: "cancelled",
-  }
+    failed: "failed",
+  } do
+    event :process do
+      transition %i[pending] => :validated
+    end
+
+    event :submit do
+      before do
+        self.submitted_at = Time.current
+      end
+
+      transition %i[validated] => :in_progress
+    end
+
+    event :succeed do
+      transition %i[in_progress] => :succeeded
+    end
+
+    event :cancel do
+      transition %i[validated] => :cancelled
+    end
+
+    event :fail do
+      transition %i[pending validated in_progress] => :failed
+    end
+  end
 
   belongs_to :provider
   has_many :trainee_upload_rows,
@@ -41,6 +67,10 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   has_one_attached :file
 
   delegate :filename, :download, :attach, to: :file
+
+  scope :current_academic_cycle, lambda {
+    where(created_at: AcademicCycle.current.start_date..AcademicCycle.current.end_date)
+  }
 
   def total_rows_with_errors
     trainee_upload_rows.with_errors.size
