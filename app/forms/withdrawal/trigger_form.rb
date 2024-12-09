@@ -2,9 +2,7 @@
 
 module Withdrawal
   class TriggerForm < TraineeForm
-    FIELDS = %i[
-      trigger
-    ].freeze
+    FIELDS = %i[trigger].freeze
 
     attr_accessor(*FIELDS)
 
@@ -16,7 +14,7 @@ module Withdrawal
       clear_stash
     end
 
-    private
+  private
 
     def form_store_key
       :withdrawal_trigger
