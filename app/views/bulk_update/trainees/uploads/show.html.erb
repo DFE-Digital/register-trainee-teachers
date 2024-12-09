@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: "Upload summary") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: new_bulk_update_trainees_upload_path) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -38,7 +38,7 @@
       </h1>
 
       <p class="govuk-body">
-        You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
+        You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.size, "trainee") %>.
       </p>
 
       <p class="govuk-body">

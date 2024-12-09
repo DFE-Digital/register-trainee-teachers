@@ -1,7 +1,9 @@
 <%= render PageTitle::View.new(text: "Bulk add new trainees") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: request.referrer) %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t(:back),
+    href: (request.referrer.present? && request.referrer.match?(/#{bulk_update_trainees_uploads_path}\/\d+$/)) ? request.referrer : bulk_update_path) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -32,5 +34,7 @@
         <% end %>
       </tbody>
     </table>
+
+    <%= govuk_link_to "Cancel reviewing uploads", root_path %>
   </div>
 </div>
