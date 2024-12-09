@@ -4,7 +4,7 @@
 <ul class="govuk-list govuk-list--spaced">
   <li>
     <p>
-      <%= govuk_link_to "Trainees who studied in the #{@previous_academic_cycle_label} academic year report", performance_profiles_reports_path, class: "performance-profiles" %> - for performance profiles sign off with a deadline of <%= @previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk]) %>.
+      <%= govuk_link_to "Trainees who studied in the #{@previous_academic_cycle_label} academic year report", reports_performance_profiles_path, class: "performance-profiles" %> - for performance profiles sign off with a deadline of <%= @previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk]) %>.
     </p>
   </li>
 </ul>
