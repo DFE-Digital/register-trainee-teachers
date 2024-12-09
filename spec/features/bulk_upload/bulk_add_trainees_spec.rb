@@ -234,6 +234,19 @@ feature "bulk add trainees" do
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page
 
+        when_i_click_on_back_link
+        then_i_see_the_review_page_with_validation_errors
+
+        when_i_click_the_review_errors_link
+        then_i_see_the_review_errors_page
+
+        when_i_visit_the_review_errors_page
+        and_i_click_on_back_link
+        then_i_see_the_review_page_with_validation_errors
+
+        when_i_click_the_review_errors_link
+        then_i_see_the_review_errors_page
+
         when_i_click_on_the_download_link
         then_i_receive_the_file
 
@@ -765,6 +778,10 @@ private
 
   def and_i_visit_the_bulk_update_trainee_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
     visit bulk_update_trainees_details_path(upload)
+  end
+
+  def when_i_visit_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
+    visit bulk_update_trainees_review_error_path(upload)
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
