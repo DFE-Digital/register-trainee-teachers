@@ -3,15 +3,6 @@
 module Trainees
   module Withdrawal
     class TriggersController < Base
-      #      def update
-      #         @form = form_class.new(trainee)
-      #         if form.save!
-      #           redirect_to(next_page)
-      #         else
-      #           render(:edit)
-      #         end
-      #       end
-
     private
 
       def form_class
