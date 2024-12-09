@@ -32,6 +32,12 @@ feature "Withdrawing a trainee" do
       then_i_see_the_error_message_for_reason_not_chosen
     end
 
+    scenario "no trigger provided" do
+      when_i_am_on_the_trigger_page
+      and_i_continue(:trigger)
+      then_i_see_the_error_message_for_trigger_not_chosen
+    end
+
     scenario "reason given with 'unknown' also selected" do
       when_i_am_on_the_reason_page
       when_i_check_a_reason(withdrawal_reason_unknown.name)
@@ -71,6 +77,8 @@ feature "Withdrawing a trainee" do
       scenario "successfully" do
         when_i_choose_today
         and_i_continue(:date)
+        when_i_choose_trainee_chose_to_withdraw
+        and_i_continue(:trigger)
         when_i_check_a_reason(withdrawal_reason.name)
         and_i_continue(:reason)
         when_i_add_detail(:withdraw_reasons_details, details)
@@ -90,6 +98,8 @@ feature "Withdrawing a trainee" do
       scenario "successfully" do
         when_i_choose_yesterday
         and_i_continue(:date)
+        when_i_choose_trainee_chose_to_withdraw
+        and_i_continue(:trigger)
         when_i_check_a_reason(withdrawal_reason.name)
         and_i_continue(:reason)
         when_i_add_detail(:withdraw_reasons_details, details)
@@ -110,6 +120,8 @@ feature "Withdrawing a trainee" do
         when_i_choose_another_day
         withdrawal_date = and_i_enter_a_valid_date
         and_i_continue(:date)
+        when_i_choose_trainee_chose_to_withdraw
+        and_i_continue(:trigger)
         when_i_check_a_reason(withdrawal_reason.name)
         and_i_continue(:reason)
         when_i_add_detail(:withdraw_reasons_details, details)
@@ -127,6 +139,8 @@ feature "Withdrawing a trainee" do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       when_i_choose_today
       and_i_continue(:date)
+      when_i_choose_trainee_chose_to_withdraw
+      and_i_continue(:trigger)
       when_i_check_a_reason(withdrawal_reason.name)
       and_i_continue(:reason)
       and_i_continue(:extra_information)
@@ -158,6 +172,8 @@ feature "Withdrawing a trainee" do
     when_i_am_on_the_withdrawal_page
     and_i_choose_today
     and_i_continue(:date)
+    when_i_choose_trainee_chose_to_withdraw
+    and_i_continue(:trigger)
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
     when_i_cancel_my_changes(:extra_information)
@@ -170,6 +186,8 @@ feature "Withdrawing a trainee" do
     given_a_deferred_trainee_exists
     and_i_am_on_the_trainee_record_page
     and_i_click_on_withdraw_and_continue
+    when_i_choose_trainee_chose_to_withdraw
+    and_i_continue(:trigger)
     then_the_deferral_text_should_be_shown
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
@@ -193,6 +211,8 @@ feature "Withdrawing a trainee" do
     when_i_am_on_the_withdrawal_page
     and_i_choose_today
     and_i_continue(:date)
+    when_i_choose_trainee_chose_to_withdraw
+    and_i_continue(:trigger)
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
     and_i_continue(:extra_information)
@@ -233,6 +253,10 @@ feature "Withdrawing a trainee" do
     withdrawal_date_page.load(id: trainee.slug)
   end
 
+  def when_i_am_on_the_trigger_page
+    withdrawal_trigger_page.load(id: trainee.slug)
+  end
+
   def when_i_am_on_the_reason_page
     withdrawal_reason_page.load(id: trainee.slug)
   end
@@ -253,6 +277,10 @@ feature "Withdrawing a trainee" do
 
   def when_i_choose_another_day
     when_i_choose(:date, "Another date")
+  end
+
+  def when_i_choose_trainee_chose_to_withdraw
+    when_i_choose(:trigger, "The trainee chose to withdraw")
   end
 
   def and_i_enter_a_valid_date
@@ -338,6 +366,10 @@ feature "Withdrawing a trainee" do
 
   def then_i_see_the_error_message_for_reason_not_chosen
     expect(withdrawal_reason_page).to have_content('Select why the trainee withdrew from the course or select "Unknown"')
+  end
+
+  def then_i_see_the_error_message_for_trigger_not_chosen
+    expect(withdrawal_trigger_page).to have_content("Select whether the trainee or provider chose to withdraw the trainee")
   end
 
   def then_i_see_the_error_message_for_unknown_exclusivity

@@ -8,4 +8,11 @@ FactoryBot.define do
     another_reason { "Not enough coffee" }
     future_interest { :yes }
   end
+
+  trait :untriggered do
+    date { nil }
+    trigger { nil }
+    another_reason { nil }
+    future_interest { nil }
+  end
 end
