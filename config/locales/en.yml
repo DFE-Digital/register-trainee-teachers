@@ -1691,7 +1691,7 @@ en:
         withdrawal/trigger_form:
           attributes:
             trigger:
-              blank: Select whether the trainee or provider chose to withdraw the trainee
+              blank: Choose a reason for withdrawal
         withdrawal/date_form:
           attributes:
             date_string:

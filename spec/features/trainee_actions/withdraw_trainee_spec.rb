@@ -369,7 +369,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen
-    expect(withdrawal_trigger_page).to have_content("Select whether the trainee or provider chose to withdraw the trainee")
+    expect(withdrawal_trigger_page).to have_content("Choose a reason for withdrawal")
   end
 
   def then_i_see_the_error_message_for_unknown_exclusivity
