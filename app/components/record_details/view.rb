@@ -28,7 +28,6 @@ module RecordDetails
       editable: false,
       show_change_provider: false
     )
-
       @trainee = trainee
       @last_updated_event = last_updated_event
       @show_provider = show_provider

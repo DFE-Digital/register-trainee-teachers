@@ -6,7 +6,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t("back"),
-    href: edit_trainee_withdrawal_date_path(trainee),
+    href: edit_trainee_withdrawal_trigger_path(trainee),
     ) %>
 <% end %>
 
