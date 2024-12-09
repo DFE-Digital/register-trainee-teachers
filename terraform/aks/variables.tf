@@ -9,12 +9,8 @@ variable "app_docker_image" {}
 variable "snapshot_databases_to_deploy" { default = 0 }
 
 # Key Vault variables
-variable "azure_credentials" { default = null }
-
 variable "key_vault_name" {}
-
 variable "key_vault_infra_secret_name" {}
-
 variable "key_vault_app_secret_name" {}
 
 variable "gov_uk_host_names" {
@@ -92,7 +88,6 @@ variable "enable_prometheus_monitoring" {
 locals {
   app_name_suffix = var.app_name == null ? var.app_environment : var.app_name
 
-  azure_credentials = try(jsondecode(var.azure_credentials), null)
   kv_app_secrets    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
   infra_secrets     = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
   app_config        = yamldecode(file(var.app_config_file))[var.env_config]
