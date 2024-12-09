@@ -11,22 +11,22 @@
       Your new trainees have been registered
     </h1>
 
-    <dl class="govuk-summary-list govuk-summary-list--no-border">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Submitted by:</dt>
-        <dd class="govuk-summary-list__value"><%= @bulk_update_trainee_upload.submitted_by.name %></dd>
-      </div>
+    <%= govuk_summary_list(actions: false, classes: "govuk-summary-list--no-border") do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <%= row.with_key(text: "Submitted by:") %>
+        <%= row.with_value(text: @bulk_update_trainee_upload.submitted_by.name) %>
+      <% end %>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Date and time:</dt>
-        <dd class="govuk-summary-list__value"><%= @bulk_update_trainee_upload.submitted_at.to_fs(:govuk_date_and_time) %></dd>
-      </div>
+      <% summary_list.with_row do |row| %>
+        <%= row.with_key(text: "Date and time:") %>
+        <%= row.with_value(text: @bulk_update_trainee_upload.submitted_at.to_fs(:govuk_date_and_time)) %>
+      <% end %>
 
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Number of registered trainees:</dt>
-        <dd class="govuk-summary-list__value"><%= @bulk_update_trainee_upload.trainee_upload_rows.size %></dd>
-      </div>
-    </dl>
+      <% summary_list.with_row do |row| %>
+        <%= row.with_key(text: "Number of registered trainees:") %>
+        <%= row.with_value(text: @bulk_update_trainee_upload.trainee_upload_rows.size) %>
+      <% end %>
+    <% end %>
 
     <p class="govuk-body">
       You can also check the <%= govuk_link_to("status of new trainee files", bulk_update_trainees_uploads_path) %>.
