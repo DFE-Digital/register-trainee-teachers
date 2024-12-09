@@ -65,10 +65,14 @@ Rails.application.routes.draw do
 
   resources :reports, only: :index do
     get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
-    get "performance-profiles", to: "reports#performance_profiles", on: :collection
     get :bulk_recommend_export, on: :collection
     get :bulk_recommend_empty_export, on: :collection
     get :bulk_placement_export, on: :collection
+    collection do
+      scope module: :reports, as: :reports do
+        resources :performance_profiles, only: %i[index]
+      end
+    end
   end
 
   namespace :bulk_update, path: "bulk-update" do

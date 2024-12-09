@@ -1,5 +1,5 @@
 <%= govuk_notification_banner(title_text: "Important") do |banner| %>
   <% banner.with_heading(text: banner_heading_text) %>
 
-  <%= govuk_link_to("Sign off your performance profile", performance_profiles_reports_path)%> by the <%= deadline_date %> deadline.
+  <%= govuk_link_to("Sign off your performance profile", reports_performance_profiles_path) %> by the <%= deadline_date %> deadline.
 <% end %>

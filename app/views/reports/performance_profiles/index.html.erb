@@ -31,7 +31,7 @@
       You need to check all registered trainees who studied in the previous <%= @previous_academic_cycle_label %> academic year.
     </p>
     <p class="govuk-body">
-      <%= govuk_link_to "Export #{@previous_academic_cycle_label} trainee data (#{@trainee_count} #{"trainee".pluralize(@trainee_count)})", performance_profiles_reports_path(:csv) %>
+      <%= govuk_link_to "Export #{@previous_academic_cycle_label} trainee data (#{@trainee_count} #{"trainee".pluralize(@trainee_count)})", reports_performance_profiles_path(:csv) %>
     </p>
 
     <h2 class="govuk-heading-m">
