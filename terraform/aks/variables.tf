@@ -1,5 +1,3 @@
-variable "app_name_suffix" { default = null }
-
 variable "postgres_version" { default = 13 }
 
 variable "app_name" { default = null }
@@ -30,8 +28,6 @@ variable "statuscake_alerts" {
   default = {}
 }
 
-variable "api_token" { default = "" }
-
 # Kubernetes variables
 variable "namespace" {}
 
@@ -45,15 +41,10 @@ variable "db_sslmode" { default = "require" }
 
 variable "azure_resource_prefix" {}
 
-variable "enable_alerting" { default = false }
-variable "pg_actiongroup_name" { default = false }
-variable "pg_actiongroup_rg" { default = false }
-
 variable "alert_window_size" {
   default = "PT5M"
 }
 
-variable "pdb_min_available" { default = null }
 variable "config_short" {}
 variable "service_short" {}
 
@@ -101,7 +92,6 @@ variable "enable_prometheus_monitoring" {
 locals {
   app_name_suffix = var.app_name == null ? var.app_environment : var.app_name
 
-  cf_api_url        = "https://api.london.cloud.service.gov.uk"
   azure_credentials = try(jsondecode(var.azure_credentials), null)
   kv_app_secrets    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
   infra_secrets     = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
@@ -117,7 +107,6 @@ locals {
     }
   )
 
-  cluster_name = "${module.cluster_data.configuration_map.resource_prefix}-aks"
   app_resource_group_name = "${var.azure_resource_prefix}-${var.service_short}-${var.config_short}-rg"
 
   # added for app module
