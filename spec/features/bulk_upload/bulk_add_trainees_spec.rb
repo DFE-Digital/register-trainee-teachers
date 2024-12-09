@@ -409,7 +409,7 @@ private
           :bulk_update_trainee_upload,
           status,
           provider: current_user.organisation,
-          user: current_user,
+          submitted_by: current_user,
         )
       end
     end
