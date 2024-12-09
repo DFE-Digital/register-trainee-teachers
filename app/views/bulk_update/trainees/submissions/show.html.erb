@@ -6,26 +6,53 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= govuk_panel(
-      title_text: "Trainees submitted",
-      classes: "govuk-!-margin-bottom-7"
-    ) %>
+    <% if @bulk_update_trainee_upload.in_progress? %>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= organisation_name %></span>
+        Your file is being processed
+      </h1>
 
-    <p class="govuk-body govuk-body-lead">You can view your trainee records to check if they are correct.</p>
-    <p class="govuk-body">There are 3 ways to check trainee data in Register.</p>
-    <p class="govuk-body">Choose whichever one of the following that suits you:</p>
+      <p class="govuk-body">
+        We're currently processing <%= @bulk_update_trainee_upload.filename %>.
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <li><%= govuk_link_to("View your trainee records", trainees_path) %> to check your trainees directly in the service one by one</li>
-     <li><%= govuk_link_to("Use the ‘Reports’ section", reports_path) %> and export a CSV of your new trainees for the current academic year</li>
-      <li>Export a CSV of your trainees in the <%= govuk_link_to("‘Registered trainees’ section", trainees_path) %>, using the ‘start year’ filter to select the current academic year</li>
-    </ul>
+      <p class="govuk-body">
+        This is taking longer than usual
+      </p>
 
-    <h2 class="govuk-heading-m">View trainees' teacher reference number (TRN)</h2>
+      <p class="govuk-body">
+        You'll receive and email to tell you when this is complete.
+      </p>
 
-    <p class="govuk-body">Once a trainee is registered, a TRN is created for each trainee record.</p>
-    <p class="govuk-body">This is when the trainee becomes registered with the Department for Education (DfE).</p>
-    <p class="govuk-body">You can view trainee TRNs in the Register service. This may take several minutes to appear after the bulk upload.</p>
-    <p class="govuk-body">Trainees will receive their TRN by email.</p>
+      <p class="govuk-body">
+        You can also check the <%= link_to "status of new trainee files" %>.
+      </p>
+
+      <p class="govuk-body">
+        <%= link_to "Back to bulk updates page", bulk_update_path %>
+      </p>
+    <% else %>
+      <%= govuk_panel(
+        title_text: "Trainees submitted",
+        classes: "govuk-!-margin-bottom-7"
+      ) %>
+
+      <p class="govuk-body govuk-body-lead">You can view your trainee records to check if they are correct.</p>
+      <p class="govuk-body">There are 3 ways to check trainee data in Register.</p>
+      <p class="govuk-body">Choose whichever one of the following that suits you:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li><%= govuk_link_to("View your trainee records", trainees_path) %> to check your trainees directly in the service one by one</li>
+       <li><%= govuk_link_to("Use the ‘Reports’ section", reports_path) %> and export a CSV of your new trainees for the current academic year</li>
+        <li>Export a CSV of your trainees in the <%= govuk_link_to("‘Registered trainees’ section", trainees_path) %>, using the ‘start year’ filter to select the current academic year</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">View trainees' teacher reference number (TRN)</h2>
+
+      <p class="govuk-body">Once a trainee is registered, a TRN is created for each trainee record.</p>
+      <p class="govuk-body">This is when the trainee becomes registered with the Department for Education (DfE).</p>
+      <p class="govuk-body">You can view trainee TRNs in the Register service. This may take several minutes to appear after the bulk upload.</p>
+      <p class="govuk-body">Trainees will receive their TRN by email.</p>
+    <% end %>
   </div>
 </div>
