@@ -4,6 +4,8 @@ module BulkUpdate
   module TraineeUploads
     module Row
       class View < ViewComponent::Base
+        include Rails.application.routes.url_helpers
+
         COLOURS = {
           "pending" => "govuk-tag--light-blue",
           "validated" => "govuk-tag--turquoise",
@@ -11,18 +13,6 @@ module BulkUpdate
           "succeeded" => "govuk-tag--green",
           "failed" => "govuk-tag--red",
           "cancelled" => "govuk-tag--yellow",
-        }.freeze
-
-        PATHS = {
-          "succeeded" => lambda do |upload|
-            Rails.application.routes.url_helpers.bulk_update_trainees_details_path(upload)
-          end,
-          "in_progress" => lambda do |upload|
-            Rails.application.routes.url_helpers.bulk_update_trainees_submission_path(upload)
-          end,
-          "failed" => lambda do |upload|
-            Rails.application.routes.url_helpers.bulk_update_trainees_review_error_path(upload)
-          end,
         }.freeze
 
         attr_reader :upload
@@ -40,7 +30,11 @@ module BulkUpdate
         end
 
         def upload_path
-          PATHS[upload.status]&.call(upload)
+          {
+            "succeeded" => bulk_update_trainees_details_path(upload),
+            "in_progress" => bulk_update_trainees_submission_path(upload),
+            "failed" => bulk_update_trainees_review_error_path(upload),
+          }[upload.status]
         end
 
         def submitted_at
