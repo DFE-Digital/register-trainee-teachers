@@ -262,11 +262,20 @@ feature "bulk add trainees" do
         when_i_click_on_back_link
         then_i_see_the_bulk_trainees_uploads_index_page
 
-        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.in_progress.first)
-        and_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.in_progress.first)
+        when_i_click_on_back_link
+        then_i_see_the_bulk_update_index_page
 
-        when_i_visit_the_bulk_update_index_page
-        and_i_click_on_view_status_of_uploaded_trainee_files
+        when_i_click_the_view_status_of_new_trainee_files_link(full_link: true)
+        and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.in_progress.first)
+        then_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.in_progress.first)
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_trainees_uploads_index_page
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_update_index_page
+
+        when_i_click_the_view_status_of_new_trainee_files_link(full_link: true)
         and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.failed.first)
         then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.failed.first)
 
@@ -275,7 +284,8 @@ feature "bulk add trainees" do
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_index_page
-        and_i_click_on_view_status_of_uploaded_trainee_files
+        and_i_click_the_view_status_of_new_trainee_files_link(full_link: true)
+
         and_i_click_on_cancel_link
         then_i_see_the_root_page
       end
@@ -766,4 +776,5 @@ private
   alias_method :and_i_see_the_review_page_without_validation_errors, :then_i_see_the_review_page_without_validation_errors
   alias_method :when_i_visit_the_bulk_update_index_page, :and_i_visit_the_bulk_update_index_page
   alias_method :and_i_click_on_an_upload, :when_i_click_on_an_upload
+  alias_method :then_i_see_the_summary_page, :and_i_see_the_summary_page
 end
