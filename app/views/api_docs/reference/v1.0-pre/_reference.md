@@ -781,7 +781,6 @@ Trainee details
         "ethnic_group": "mixed_ethnic_group",
         "ethnic_background": "Another Mixed background",
         "lead_partner_urn": "900020"
-        "lead_partner_ukprn": "12345"
       }
     }
     </pre>
@@ -3257,6 +3256,22 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>lead_partner_ukprn</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string (limited to 8 characters)
+      </p>
+      <p class="govuk-body">
+        The UK Provider Reference Number (UKPRN) of the lead partner for the trainee. If
+        <code>lead_partner_urn</code> and <code>lead_partner_ukprn</code> are both provided,
+        the <code>lead_partner_urn</code> will be used.
+      </p>
+      <p class="govuk-body">
+        Example: <code>12345678</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>trainee_start_date</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
@@ -3706,6 +3721,10 @@ Deletes an existing degree for this trainee.
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.lead_partner_urn.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">6</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.lead_partner_ukprn.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">8</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.fund_code.maxLength</th>

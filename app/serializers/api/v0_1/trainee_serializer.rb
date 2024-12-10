@@ -38,7 +38,7 @@ module Api
             provider_attributes,
             diversity_attributes,
             course_attributes,
-            school_attributes,
+            lead_partner_and_employing_school_attributes,
             funding_attributes,
             hesa_trainee_attributes,
             sex: sex,
@@ -172,7 +172,7 @@ module Api
         @trainee.recommended_for_award_at&.iso8601
       end
 
-      def school_attributes
+      def lead_partner_and_employing_school_attributes
         {
           employing_school_urn:,
           lead_partner_ukprn:,

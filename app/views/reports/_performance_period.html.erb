@@ -1,10 +1,10 @@
+<h2 class="govuk-heading-m">
+  Performance Profile
+</h2>
 <ul class="govuk-list govuk-list--spaced">
   <li>
     <p>
-      Reports are available for <%= govuk_link_to "trainees who studied in the #{@previous_academic_cycle_label} academic year", performance_profiles_reports_path, class: "performance-profiles" %> - for performance profiles sign off
+      <%= govuk_link_to "Trainees who studied in the #{@previous_academic_cycle_label} academic year report", performance_profiles_reports_path, class: "performance-profiles" %> - for performance profiles sign off with a deadline of <%= @previous_academic_cycle.end_date_of_performance_profile.strftime(Date::DATE_FORMATS[:govuk]) %>.
     </p>
-  </li>
-  <li>
-    <p>You can read <%= govuk_link_to("guidance about signing off performance profiles", performance_profiles_guidance_path) %></p>
   </li>
 </ul>

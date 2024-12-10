@@ -66,7 +66,7 @@ private
   end
 
   def and_i_am_on_the_sign_off_your_performance_profile_page
-    expect(page).to have_current_path("/")
+    expect(page).to have_current_path("/reports/performance-profiles")
   end
 
   alias_method :and_i_click_on, :click_on

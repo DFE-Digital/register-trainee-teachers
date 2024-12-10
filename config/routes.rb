@@ -88,7 +88,7 @@ Rails.application.routes.draw do
     end
 
     namespace :trainees do
-      resources :uploads, only: %i[show new create destroy] do
+      resources :uploads, only: %i[index show new create destroy] do
         member do
           resources :submissions, only: %i[show create]
         end

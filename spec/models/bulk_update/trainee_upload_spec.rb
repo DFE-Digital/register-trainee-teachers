@@ -7,14 +7,145 @@ RSpec.describe BulkUpdate::TraineeUpload do
   it { is_expected.to have_many(:trainee_upload_rows).dependent(:destroy) }
 
   it do
-    expect(subject).to define_enum_for(:status).with_values(
-      pending: "pending",
-      validated: "validated",
-      in_progress: "in_progress",
-      succeeded: "succeeded",
-      failed: "failed",
-      cancelled: "cancelled",
-    ).backed_by_column_of_type(:string)
+    expect(subject).to define_enum_for(:status)
+      .without_instance_methods.with_values(
+        pending: "pending",
+        validated: "validated",
+        in_progress: "in_progress",
+        succeeded: "succeeded",
+        failed: "failed",
+        cancelled: "cancelled",
+      ).backed_by_column_of_type(:string)
+  end
+
+  describe "events" do
+    subject { create(:bulk_update_trainee_upload) }
+
+    describe "#process!" do
+      it do
+        expect {
+          subject.process!
+        }.to change(subject, :status).from("pending").to("validated")
+      end
+    end
+
+    describe "#submit!" do
+      let!(:current_time) { Time.current.round }
+
+      before do
+        subject.process!
+
+        Timecop.freeze(current_time)
+      end
+
+      after do
+        Timecop.return
+      end
+
+      it do
+        expect {
+          subject.submit!
+        }.to change(subject, :status).from("validated").to("in_progress")
+          .and change(subject, :submitted_at).from(nil).to(current_time)
+      end
+    end
+
+    describe "#succeed!" do
+      before do
+        subject.process!
+        subject.submit!
+      end
+
+      it do
+        expect {
+          subject.succeed!
+        }.to change(subject, :status).from("in_progress").to("succeeded")
+      end
+    end
+
+    describe "#cancel!" do
+      before do
+        subject.process!
+      end
+
+      it do
+        expect {
+          subject.cancel!
+        }.to change(subject, :status).from("validated").to("cancelled")
+      end
+    end
+
+    describe "#fail!" do
+      context "when the status is 'pending'" do
+        it do
+          expect {
+            subject.fail!
+          }.to change(subject, :status).from("pending").to("failed")
+        end
+      end
+
+      context "when the status is 'validated'" do
+        before do
+          subject.process!
+        end
+
+        it do
+          expect {
+            subject.fail!
+          }.to change(subject, :status).from("validated").to("failed")
+        end
+      end
+
+      context "when the status is 'in_progress'" do
+        before do
+          subject.process!
+          subject.submit!
+        end
+
+        it do
+          expect {
+            subject.fail!
+          }.to change(subject, :status).from("in_progress").to("failed")
+        end
+      end
+    end
+  end
+
+  describe "scopes" do
+    describe "#current_academic_cycle" do
+      let(:previous_academic_cycle) { create(:academic_cycle, previous_cycle: true) }
+      let(:current_academic_cycle) { create(:academic_cycle, :current) }
+      let(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
+
+      let!(:previous_academic_cycle_upload) do
+        create(
+          :bulk_update_trainee_upload,
+          created_at: rand(
+            previous_academic_cycle.start_date..previous_academic_cycle.end_date,
+          ),
+        )
+      end
+      let!(:current_academic_cycle_upload) do
+        create(
+          :bulk_update_trainee_upload,
+          created_at: rand(
+            current_academic_cycle.start_date..current_academic_cycle.end_date,
+          ),
+        )
+      end
+      let!(:next_academic_cycle_upload) do
+        create(
+          :bulk_update_trainee_upload,
+          created_at: rand(
+            next_academic_cycle.start_date..next_academic_cycle.end_date,
+          ),
+        )
+      end
+
+      it "returns records from the current academic cycle" do
+        expect(described_class.current_academic_cycle).to contain_exactly(current_academic_cycle_upload)
+      end
+    end
   end
 
   describe "#total_rows_with_errors" do

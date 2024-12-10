@@ -1,3 +1,10 @@
+# Jobs that run once a month at a specific time, sorted by their running time
+
+delete_cancelled_and_failed_bulk_update_trainee_uploads:
+  cron: "0 0 1 * *" # Every month at 00:00 (midnight).
+  class: "BulkUpdate::AddTrainees::RemoveCancelledAndFailedJob"
+  queue: default
+
 # Jobs that run multiple times a day, sorted by frequency
 import_collection_from_hesa:
   cron: "0 8-23/2 * * *" # every 2 hours, starting at 08:00 and ending at 23:59

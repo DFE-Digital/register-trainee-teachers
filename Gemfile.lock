@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 7618b23697e91ab1ababee5234faaa260f6c873e
-  tag: v1.15.1
+  revision: 82c94b22afd8e799d445394ffc387e41f8fd9366
+  tag: v1.15.2
   specs:
-    dfe-analytics (1.15.1)
+    dfe-analytics (1.15.2)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       multi_xml (~> 0.6.0)
@@ -268,7 +268,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.80.0)
+    google-apis-bigquery_v2 (0.81.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-apis-core (0.15.1)
       addressable (~> 2.5, >= 2.5.1)
@@ -278,7 +278,7 @@ GEM
       mutex_m
       representable (~> 3.0)
       retriable (>= 2.0, < 4.a)
-    google-cloud-bigquery (1.50.0)
+    google-cloud-bigquery (1.51.0)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
       google-apis-bigquery_v2 (~> 0.71)
@@ -363,7 +363,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.1)
+    logger (1.6.2)
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -399,7 +399,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     mutex_m (0.3.0)
-    net-http (0.5.0)
+    net-http (0.6.0)
       uri
     net-http-digest_auth (1.4.1)
     net-http-persistent (4.0.4)
@@ -636,14 +636,14 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.16.1)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.21.0)
+    sentry-rails (5.22.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.21.0)
-    sentry-ruby (5.21.0)
+      sentry-ruby (~> 5.22.0)
+    sentry-ruby (5.22.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sentry-sidekiq (5.21.0)
-      sentry-ruby (~> 5.21.0)
+    sentry-sidekiq (5.22.0)
+      sentry-ruby (~> 5.22.0)
       sidekiq (>= 3.0)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)

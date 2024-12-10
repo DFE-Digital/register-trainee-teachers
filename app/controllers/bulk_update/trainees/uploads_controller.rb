@@ -5,6 +5,12 @@ module BulkUpdate
     class UploadsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
+      def index
+        @bulk_update_trainee_uploads = policy_scope(
+          BulkUpdate::TraineeUpload,
+        ).current_academic_cycle.includes(:file_attachment)
+      end
+
       def show
         authorize(bulk_update_trainee_upload)
       end
@@ -36,7 +42,7 @@ module BulkUpdate
       end
 
       def destroy
-        authorize(bulk_update_trainee_upload).cancelled!
+        authorize(bulk_update_trainee_upload).cancel!
 
         redirect_to(bulk_update_path, flash: { success: t(".success") })
       end

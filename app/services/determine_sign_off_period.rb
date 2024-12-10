@@ -15,7 +15,6 @@ class DetermineSignOffPeriod
     current_date = Time.zone.today
 
     return :census_period if census_range.cover?(current_date)
-
     return :performance_period if in_performance_profile_range?(current_date)
 
     :outside_period
