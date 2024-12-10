@@ -6,5 +6,5 @@ Rails.application.configure do
   config.semantic_logger.environment = Rails.env
   config.semantic_logger.application = "Register Teacher Training"
   config.log_tags = [:request_id]
-  config.semantic_logger.add_appender(io: $stdout, formatter: :json, colorize: false)
+  config.semantic_logger.add_appender(io: $stdout, formatter: :json)
 end
