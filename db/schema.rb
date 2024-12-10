@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_26_164709) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -259,15 +259,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_164709) do
 
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
-    t.text "file"
-    t.string "file_name"
-    t.integer "number_of_trainees"
     t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "submitted_at"
+    t.bigint "submitted_by_id"
     t.index ["provider_id"], name: "index_bulk_update_trainee_uploads_on_provider_id"
     t.index ["status"], name: "index_bulk_update_trainee_uploads_on_status"
+    t.index ["submitted_by_id"], name: "index_bulk_update_trainee_uploads_on_submitted_by_id"
   end
 
   create_table "course_subjects", force: :cascade do |t|
@@ -1047,6 +1046,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_26_164709) do
   add_foreign_key "bulk_update_recommendations_uploads", "providers"
   add_foreign_key "bulk_update_trainee_upload_rows", "bulk_update_trainee_uploads"
   add_foreign_key "bulk_update_trainee_uploads", "providers"
+  add_foreign_key "bulk_update_trainee_uploads", "users", column: "submitted_by_id"
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"

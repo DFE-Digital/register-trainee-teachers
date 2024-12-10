@@ -1,6 +1,8 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell">
-    <%= submitted_at %>
+    <% if submitted_at %>
+      <%= govuk_link_to submitted_at, upload_path %>
+    <% end %>
   </td>
   <td class="govuk-table__cell">
     <%= filename %>

@@ -9,6 +9,8 @@ module BulkUpdate
         @bulk_update_trainee_uploads = policy_scope(
           BulkUpdate::TraineeUpload,
         ).current_academic_cycle.includes(:file_attachment)
+
+        authorize(@bulk_update_trainee_uploads)
       end
 
       def show

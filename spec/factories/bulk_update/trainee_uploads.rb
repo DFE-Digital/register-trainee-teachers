@@ -11,7 +11,6 @@ UPLOAD_ERROR_MESSAGES = [
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
-    number_of_trainees { 5 }
 
     after(:build) do |upload|
       upload.file.attach(
@@ -55,12 +54,16 @@ FactoryBot.define do
 
     trait :in_progress do
       status { "in_progress" }
+      submitted_by { association(:user) }
       submitted_at { Time.current }
     end
 
     trait :succeeded do
       status { "succeeded" }
+      submitted_by { association(:user) }
       submitted_at { Time.current }
+
+      with_rows
     end
 
     trait :cancelled do
@@ -69,6 +72,7 @@ FactoryBot.define do
 
     trait :failed do
       status { "failed" }
+      submitted_by { association(:user) }
       submitted_at { Time.current }
 
       after(:create) do |bulk_update_trainee_upload|
