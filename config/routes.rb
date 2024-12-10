@@ -94,7 +94,7 @@ Rails.application.routes.draw do
           resource :details, only: :show
         end
       end
-      resources :review_errors, path: "review-errors", only: %i[show], as: :review_errors
+      resources :review_errors, path: "review-errors", only: %i[show]
     end
   end
 
