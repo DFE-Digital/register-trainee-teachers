@@ -277,5 +277,9 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :system_admin do
+    get "logging-test", to: "logging_test#test"
+  end
+
   root to: "landing_page#start"
 end
