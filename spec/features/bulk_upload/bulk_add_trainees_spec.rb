@@ -37,7 +37,7 @@ feature "bulk add trainees" do
         when_i_visit_the_bulk_update_index_page
         then_i_cannot_see_the_bulk_add_trainees_link
 
-        when_i_visit_the_new_bulk_update_trainees_upload_path
+        when_i_visit_the_new_bulk_update_add_trainees_upload_path
         then_i_see_the_unauthorized_message
       end
 
@@ -45,7 +45,7 @@ feature "bulk add trainees" do
         when_i_visit_the_bulk_update_index_page
         then_i_cannot_see_the_bulk_view_status_link
 
-        when_i_visit_the_bulk_trainee_uploads_page
+        when_i_visit_the_bulk_update_add_trainees_uploads_page
         then_i_see_the_unauthorized_message
       end
     end
@@ -59,7 +59,7 @@ feature "bulk add trainees" do
         when_i_visit_the_bulk_update_index_page
         then_i_cannot_see_the_bulk_add_trainees_link
 
-        when_i_visit_the_new_bulk_update_trainees_upload_path
+        when_i_visit_the_new_bulk_update_add_trainees_upload_path
         then_i_see_the_unauthorized_message
       end
 
@@ -67,13 +67,13 @@ feature "bulk add trainees" do
         when_i_visit_the_bulk_update_index_page
         then_i_cannot_see_the_bulk_view_status_link
 
-        when_i_visit_the_bulk_trainee_uploads_page
+        when_i_visit_the_bulk_update_add_trainees_uploads_page
         then_i_see_the_unauthorized_message
       end
 
       scenario "attempts to visit the upload details page" do
         when_an_upload_exist
-        and_i_visit_the_bulk_update_trainee_upload_details_page
+        and_i_visit_the_bulk_update_add_trainees_upload_details_page
 
         then_i_see_the_unauthorized_message
       end
@@ -157,13 +157,13 @@ feature "bulk add trainees" do
 
         when_i_visit_the_bulk_update_index_page
         and_i_click_on_view_status_of_uploaded_trainee_files
-        then_i_see_the_uploads_index_page
+        then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_click_on_an_upload
-        then_i_see_the_upload_details_page
+        then_i_see_the_bulk_update_add_trainees_upload_details_page
 
         when_i_click_on_back_link
-        then_i_see_the_uploads_index_page
+        then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_try_resubmit_the_same_upload
         and_i_click_the_submit_button
@@ -174,7 +174,7 @@ feature "bulk add trainees" do
         when_there_is_a_bulk_update_trainee_upload
 
         expect {
-          when_i_visit_the_bulk_update_status_page_for_another_provider
+          when_i_visit_the_bulk_update_add_trainees_status_page_for_another_provider
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
@@ -271,10 +271,10 @@ feature "bulk add trainees" do
         then_i_dont_see_the_upload
 
         when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.succeeded.first)
-        then_i_see_the_upload_details_page
+        then_i_see_the_bulk_update_add_trainees_upload_details_page
 
         when_i_click_on_back_link
-        then_i_see_the_bulk_trainees_uploads_index_page
+        then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_index_page
@@ -284,7 +284,7 @@ feature "bulk add trainees" do
         then_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.in_progress.first)
 
         when_i_click_on_back_link
-        then_i_see_the_bulk_trainees_uploads_index_page
+        then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_index_page
@@ -294,7 +294,7 @@ feature "bulk add trainees" do
         then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.failed.first)
 
         when_i_click_on_back_link
-        then_i_see_the_bulk_trainees_uploads_index_page
+        then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_index_page
@@ -358,7 +358,7 @@ private
     create(:academic_cycle, :previous)
   end
 
-  def then_i_see_the_uploads_index_page
+  def then_i_see_the_bulk_update_add_trainees_uploads_index_page
     expect(page).to have_content("Status of new trainee files")
   end
 
@@ -366,7 +366,7 @@ private
     first(:link, upload.submitted_at.to_fs(:govuk_date_and_time)).click
   end
 
-  def then_i_see_the_upload_details_page
+  def then_i_see_the_bulk_update_add_trainees_upload_details_page
     expect(page).to have_content("Your new trainees have been registered")
     expect(page).to have_content("Submitted by:#{current_user.name}")
     expect(page).to have_content("Number of registered trainees:5")
@@ -421,7 +421,7 @@ private
   end
 
   def and_i_visit_the_bulk_update_trainee_uploads_page
-    visit bulk_update_trainees_uploads_path
+    visit bulk_update_add_trainees_uploads_path
   end
 
   def and_i_click_on_view_status_of_uploaded_trainee_files
@@ -471,7 +471,7 @@ private
   end
 
   def when_i_try_resubmit_the_same_upload
-    visit bulk_update_trainees_upload_path(BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
   def then_i_see_the_unauthorized_message
@@ -533,12 +533,12 @@ private
   end
 
   def and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
-    when_i_visit_the_new_bulk_update_trainees_upload_path
+    when_i_visit_the_new_bulk_update_add_trainees_upload_path
     expect(page).to have_current_path(not_found_path)
   end
 
-  def when_i_visit_the_new_bulk_update_trainees_upload_path
-    visit new_bulk_update_trainees_upload_path
+  def when_i_visit_the_new_bulk_update_add_trainees_upload_path
+    visit new_bulk_update_add_trainees_upload_path
   end
 
   def and_i_click_the_bulk_add_trainees_page
@@ -546,7 +546,7 @@ private
   end
 
   def then_i_see_how_instructions_on_how_to_bulk_add_trainees
-    expect(page).to have_current_path(new_bulk_update_trainees_upload_path)
+    expect(page).to have_current_path(new_bulk_update_add_trainees_upload_path)
     expect(page).to have_content("Bulk add new trainees")
   end
 
@@ -585,7 +585,7 @@ private
   end
 
   def then_i_see_the_upload_page_with_errors(empty:)
-    expect(page).to have_current_path(bulk_update_trainees_uploads_path)
+    expect(page).to have_current_path(bulk_update_add_trainees_uploads_path)
     expect(page).to have_content("There is a problem")
     expect(page).to have_content(empty ? "The selected file is empty" : "Select a CSV file")
   end
@@ -657,7 +657,7 @@ private
 
   def and_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.last)
     expect(page).to have_current_path(
-      bulk_update_trainees_submission_path(upload),
+      bulk_update_add_trainees_submission_path(upload),
     )
     within(".govuk-panel") do
       expect(page).to have_content("Trainees submitted")
@@ -669,12 +669,12 @@ private
     @upload_for_different_provider = create(:bulk_update_trainee_upload)
   end
 
-  def when_i_visit_the_bulk_update_status_page_for_another_provider
-    visit bulk_update_trainees_upload_path(@upload_for_different_provider)
+  def when_i_visit_the_bulk_update_add_trainees_status_page_for_another_provider
+    visit bulk_update_add_trainees_upload_path(@upload_for_different_provider)
   end
 
   def and_i_refresh_the_page
-    visit bulk_update_trainees_upload_path(BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
   def and_i_refresh_the_summary_page
@@ -731,7 +731,7 @@ private
   end
 
   def and_i_visit_the_summary_page(upload:)
-    visit bulk_update_trainees_upload_path(upload)
+    visit bulk_update_add_trainees_upload_path(upload)
   end
 
   def then_i_see_the_review_page_with_validation_errors
@@ -743,12 +743,12 @@ private
   end
 
   def then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
-    expect(page).to have_current_path(bulk_update_trainees_review_error_path(upload))
+    expect(page).to have_current_path(bulk_update_add_trainees_review_error_path(upload))
     expect(page).to have_content("Review errors for #{upload.total_rows_with_errors} trainees in the CSV that you uploaded")
   end
 
   def then_i_see_the_review_errors_page_with_one_error
-    expect(page).to have_current_path(bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
+    expect(page).to have_current_path(bulk_update_add_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
     expect(page).to have_content("Review errors for 1 trainee in the CSV that you uploaded")
   end
 
@@ -762,31 +762,31 @@ private
   end
 
   def when_i_return_to_the_review_errors_page
-    visit bulk_update_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id)
+    visit bulk_update_add_trainees_review_error_path(BulkUpdate::TraineeUpload.last)
   end
 
   def then_i_see_the_bulk_update_index_page
     expect(page).to have_current_path(bulk_update_path, ignore_query: true)
   end
 
-  def then_i_see_the_bulk_trainees_uploads_index_page
-    expect(page).to have_current_path(bulk_update_trainees_uploads_path, ignore_query: true)
+  def then_i_see_the_bulk_add_trainees_uploads_index_page
+    expect(page).to have_current_path(bulk_update_add_trainees_uploads_path, ignore_query: true)
   end
 
   def then_i_cannot_see_the_bulk_view_status_link
     expect(page).not_to have_link("View status of previously uploaded new trainee files")
   end
 
-  def when_i_visit_the_bulk_trainee_uploads_page
-    visit bulk_update_trainees_uploads_path
+  def when_i_visit_the_bulk_update_add_trainees_uploads_page
+    visit bulk_update_add_trainees_uploads_path
   end
 
-  def and_i_visit_the_bulk_update_trainee_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_trainees_details_path(upload)
+  def and_i_visit_the_bulk_update_add_trainees_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_details_path(upload)
   end
 
   def when_i_visit_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_trainees_review_error_path(upload)
+    visit bulk_update_add_trainees_review_error_path(upload)
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file

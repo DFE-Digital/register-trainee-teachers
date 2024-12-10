@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  module Trainees
+  module AddTrainees
     class ReviewErrorsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
