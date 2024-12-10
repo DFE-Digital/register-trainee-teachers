@@ -78,9 +78,9 @@ Rails.application.configure do
   # logging config #
   ##################
   config.log_level = :info # less chatter in prod
-  config.log_format = :json # For parsing in Logit
   config.rails_semantic_logger.add_file_appender = false # Don't log to file
   config.active_record.logger = nil # Don't log SQL
   config.active_support.report_deprecations = false # Don't log any deprecations.
   config.semantic_logger.backtrace_level = nil # no backtrace in prod
+  config.colorize_logging = false
 end
