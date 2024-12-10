@@ -512,7 +512,7 @@ private
   end
 
   def and_i_refresh_the_summary_page
-    visit bulk_update_trainees_submission_path(id: BulkUpdate::TraineeUpload.last.id)
+    visit bulk_update_trainees_submission_path(BulkUpdate::TraineeUpload.last)
   end
 
   def when_the_background_job_is_run
