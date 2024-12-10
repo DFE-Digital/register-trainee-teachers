@@ -29,6 +29,14 @@ class UserWithOrganisationContext < SimpleDelegator
     "User"
   end
 
+  def bullet_primary_key_value
+    user.id
+  end
+
+  def bullet_key
+    self.class.primary_key
+  end
+
   def organisation
     return single_organisation unless multiple_organisations?
 
