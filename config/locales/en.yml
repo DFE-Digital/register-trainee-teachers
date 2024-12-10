@@ -1528,6 +1528,11 @@ en:
             email:
               blank: Enter an email address
               invalid: Enter an email address in the correct format, like name@example.com
+        performance_profile_sign_off_form:
+          attributes:
+            sign_off:
+              inclusion: Please confirm sign off
+              blank: Please confirm sign off
         language_specialisms_form:
           attributes:
             course_subject_one:
