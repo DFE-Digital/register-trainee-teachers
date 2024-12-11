@@ -1,7 +1,7 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t(:back),
-    href: bulk_update_trainees_uploads_path
+    href: bulk_update_add_trainees_uploads_path
   ) %>
 <% end %>
 
@@ -29,7 +29,7 @@
     <% end %>
 
     <p class="govuk-body">
-      You can also check the <%= govuk_link_to("status of new trainee files", bulk_update_trainees_uploads_path) %>.
+      You can also check the <%= govuk_link_to("status of new trainee files", bulk_update_add_trainees_uploads_path) %>.
     </p>
 
     <p class="govuk-heading-s">

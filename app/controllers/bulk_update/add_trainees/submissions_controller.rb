@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  module Trainees
+  module AddTrainees
     class SubmissionsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
@@ -25,7 +25,7 @@ module BulkUpdate
         # TODO: Handle failures/errors when saving
         SendCsvSubmittedForProcessingEmailService.call(user: current_user, upload: bulk_update_trainee_upload)
 
-        redirect_to(bulk_update_trainees_submission_path(bulk_update_trainee_upload))
+        redirect_to(bulk_update_add_trainees_submission_path(bulk_update_trainee_upload))
       end
 
     private

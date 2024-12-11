@@ -87,14 +87,14 @@ Rails.application.routes.draw do
       member { get :cancel, path: "cancel" }
     end
 
-    namespace :trainees do
+    namespace :add_trainees, path: "add-trainees" do
       resources :uploads, only: %i[index show new create destroy] do
         member do
           resources :submissions, only: %i[show create]
           resource :details, only: :show
         end
       end
-      resources :review_errors, path: "review_errors", only: %i[show], as: :review_errors
+      resources :review_errors, path: "review-errors", only: %i[show]
     end
   end
 

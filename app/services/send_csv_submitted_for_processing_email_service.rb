@@ -16,7 +16,7 @@ class SendCsvSubmittedForProcessingEmailService
       first_name: user.first_name,
       email: user.email,
       file_name: upload.file.name,
-      file_link: bulk_update_trainees_upload_url(upload),
+      file_link: bulk_update_add_trainees_upload_url(upload),
       submitted_at: upload.created_at.strftime("%d.%M.%Y, %l%p"),
     ).deliver_later
   end

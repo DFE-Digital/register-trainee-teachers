@@ -1990,7 +1990,7 @@ en:
       contents: Contents
 
   bulk_update:
-    trainees:
+    add_trainees:
       uploads:
         create:
           success: File uploaded
