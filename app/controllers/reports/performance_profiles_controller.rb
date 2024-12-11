@@ -5,6 +5,8 @@ module Reports
     def index
       authorize(current_user, :reports?)
 
+      redirect_to(reports_path) unless applicable_to_user?
+
       @previous_academic_cycle = AcademicCycle.previous
       @previous_academic_cycle_label = @previous_academic_cycle.label
 
@@ -29,7 +31,33 @@ module Reports
       end
     end
 
-    private
+    def new
+      authorize(current_user, :reports?)
+
+      redirect_to(reports_path) unless applicable_to_user?
+
+      @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new
+    end
+
+    def create
+      authorize(current_user, :reports?)
+
+      redirect_to(reports_path) unless applicable_to_user?
+
+      @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new(sign_off: sign_off, provider: current_user.organisation, user: current_user)
+
+      if @performance_profile_sign_off_form.save!
+        redirect_to(reports_path)
+      else
+        render(:new)
+      end
+    end
+
+  private
+
+    def applicable_to_user?
+      current_user.accredited_provider? && current_user.organisation.performance_profile_awaiting_sign_off? && DetermineSignOffPeriod.call == :performance_period
+    end
 
     def time_now
       Time.now.in_time_zone("London").strftime("%F_%H-%M-%S")
@@ -45,6 +73,10 @@ module Reports
 
     def base_trainee_scope
       policy_scope(Trainee.includes({ provider: [:courses] }, :start_academic_cycle, :end_academic_cycle).not_draft)
+    end
+
+    def sign_off
+      params.require(:performance_profile_sign_off_form).permit(:sign_off)[:sign_off]
     end
   end
 end
