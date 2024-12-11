@@ -49,16 +49,6 @@ Rails.application.configure do
     redirect: { exclude: ->(request) { request.path.include?("ping") || request.path.include?("metrics") }, status: 307, port: 81 },
   }
 
-  # Include generic and useful information about system operation, but avoid logging too much
-  # information to avoid inadvertent exposure of personally identifiable information (PII).
-  config.log_level = :debug
-  config.active_record.logger = nil # Don't log SQL in production
-
-  config.rails_semantic_logger.add_file_appender = false
-
-  # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id]
-
   # Use a different cache store in production.
   config.cache_store = :redis_cache_store, { url: RedisSetting.new(ENV.fetch("VCAP_SERVICES", nil)).url }
 
@@ -81,22 +71,15 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Don't log any deprecations.
-  config.active_support.report_deprecations = false
-
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = Logger::Formatter.new
-
-  # Use a different logger for distributed setups.
-  # require "syslog/logger"
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
-
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new($stdout)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  ##################
+  # logging config #
+  ##################
+  config.log_level = :info # less chatter in prod
+  config.active_record.logger = nil # Don't log SQL
+  config.active_support.report_deprecations = false # Don't log any deprecations.
+  config.semantic_logger.backtrace_level = nil # no backtrace in prod
+  config.colorize_logging = false
 end
