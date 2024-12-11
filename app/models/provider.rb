@@ -118,6 +118,10 @@ class Provider < ApplicationRecord
     sign_offs.performance_profile.previous_academic_cycle.exists?
   end
 
+  def performance_profile_awaiting_sign_off?
+    !performance_profile_signed_off?
+  end
+
 private
 
   def update_courses

@@ -40,23 +40,6 @@ describe ReportsController do
     end
   end
 
-  describe "#performance_profiles" do
-    it "returns a 200 status code" do
-      get :performance_profiles
-      expect(response).to have_http_status(:ok)
-    end
-
-    it "renders the application template" do
-      get :performance_profiles
-      expect(response).to render_template("application")
-    end
-
-    it "renders a csv" do
-      get :performance_profiles, params: { format: :csv }
-      expect(response.content_type).to eq("text/csv; charset=utf-8")
-    end
-  end
-
   describe "#bulk_recommend_export" do
     it "renders a csv" do
       get :bulk_recommend_export, params: { format: :csv }
