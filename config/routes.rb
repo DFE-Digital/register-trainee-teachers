@@ -64,11 +64,11 @@ Rails.application.routes.draw do
   resources :drafts, only: :index
 
   resources :reports, only: :index do
-    get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
-    get :bulk_recommend_export, on: :collection
-    get :bulk_recommend_empty_export, on: :collection
-    get :bulk_placement_export, on: :collection
     collection do
+      get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off"
+      get :bulk_recommend_export
+      get :bulk_recommend_empty_export
+      get :bulk_placement_export
       scope module: :reports, as: :reports do
         resources :performance_profiles, path: "performance-profiles", only: %i[index new create]
       end
