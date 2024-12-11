@@ -693,7 +693,10 @@ private
   end
 
   def and_the_send_csv_processing_email_has_been_sent
-    expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call).at_least(:once)
+    expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call)
+      .with(
+        upload: BulkUpdate::TraineeUpload.last,
+      )
   end
 
   def and_i_visit_the_trainees_page
