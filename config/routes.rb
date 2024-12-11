@@ -70,7 +70,7 @@ Rails.application.routes.draw do
     get :bulk_placement_export, on: :collection
     collection do
       scope module: :reports, as: :reports do
-        resources :performance_profiles, only: %i[index]
+        resources :performance_profiles, path: "performance-profiles", only: %i[index new create]
       end
     end
   end

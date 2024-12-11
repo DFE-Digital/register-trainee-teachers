@@ -5,7 +5,7 @@ class PerformanceProfileSignOffForm
 
   validates :sign_off, presence: true, inclusion: { in: ["confirmed"] }
 
-  def initialize(sign_off: "not_confirmed", provider: nil, user:)
+  def initialize(sign_off: "not_confirmed", provider: nil, user: nil)
     @sign_off = sign_off
     @provider = provider
     @user = user
