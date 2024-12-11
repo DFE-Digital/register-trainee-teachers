@@ -659,10 +659,17 @@ private
     expect(page).to have_current_path(
       bulk_update_add_trainees_submission_path(upload),
     )
-    within(".govuk-panel") do
-      expect(page).to have_content("Trainees submitted")
+
+    if upload.in_progress?
+      expect(page).to have_content(
+        "We're currently processing #{upload.filename}",
+      )
+    else
+      within(".govuk-panel") do
+        expect(page).to have_content("Trainees submitted")
+      end
+      expect(page).to have_content("There are 3 ways to check trainee data in Register.")
     end
-    expect(page).to have_content("There are 3 ways to check trainee data in Register.")
   end
 
   def when_there_is_a_bulk_update_trainee_upload
@@ -678,7 +685,7 @@ private
   end
 
   def and_i_refresh_the_summary_page
-    visit bulk_update_trainees_submission_path(BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_submission_path(BulkUpdate::TraineeUpload.last)
   end
 
   def when_the_background_job_is_run
