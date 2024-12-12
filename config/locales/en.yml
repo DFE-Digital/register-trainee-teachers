@@ -950,6 +950,13 @@ en:
         deferral_notice_heading: Withdrawal date
         deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
+      withdrawal_trigger:
+        title: Why are you withdrawing the trainee?
+        hint: Choose an option
+        provider:
+          label: We had to withdraw the trainee
+        trainee:
+          label: The trainee chose to withdraw
       withdrawal_reasons:
         labels:
           additional_reason: Enter the reason for withdrawal
@@ -1304,6 +1311,9 @@ en:
         update:
           success: Trainee withdrawn
           error: Unable to withdraw trainee, please message support
+      triggers:
+        edit:
+          heading: Why are you withdrawing the trainee?
   activerecord:
     attributes:
       trainee:
@@ -1678,6 +1688,10 @@ en:
             reason_ids:
               blank: Select why the trainee withdrew from the course or select "Unknown"
               unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
+        withdrawal/trigger_form:
+          attributes:
+            trigger:
+              blank: Choose a reason for withdrawal
         withdrawal/date_form:
           attributes:
             date_string:

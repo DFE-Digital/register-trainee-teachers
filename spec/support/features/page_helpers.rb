@@ -274,6 +274,10 @@ module Features
       @withdrawal_reason_page ||= PageObjects::Trainees::Withdrawal::Reason.new
     end
 
+    def withdrawal_trigger_page
+      @withdrawal_trigger_page ||= PageObjects::Trainees::Withdrawal::Trigger.new
+    end
+
     def withdrawal_extra_information_page
       @withdrawal_extra_information_page ||= PageObjects::Trainees::Withdrawal::ExtraInformation.new
     end
