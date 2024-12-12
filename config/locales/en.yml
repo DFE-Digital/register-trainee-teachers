@@ -957,6 +957,15 @@ en:
           label: We had to withdraw the trainee
         trainee:
           label: The trainee chose to withdraw
+      withdrawal_future_interest:
+        title: Would this trainee be interested in becoming a teacher in the future?
+        hint: Choose an option
+        "yes":
+          label: "Yes"
+        "no":
+          label: "No"
+        unknown:
+          label: I don't know
       withdrawal_reasons:
         labels:
           additional_reason: Enter the reason for withdrawal
@@ -1314,6 +1323,9 @@ en:
       triggers:
         edit:
           heading: Why are you withdrawing the trainee?
+      future_interests:
+        edit:
+          heading: Would this trainee be interested in becoming a teacher in the future?
   activerecord:
     attributes:
       trainee:
@@ -1692,6 +1704,10 @@ en:
           attributes:
             trigger:
               blank: Choose a reason for withdrawal
+        withdrawal/future_interest_form:
+          attributes:
+            future_interest:
+              blank: Please select an option
         withdrawal/date_form:
           attributes:
             date_string:

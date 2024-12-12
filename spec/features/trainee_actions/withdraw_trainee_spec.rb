@@ -38,6 +38,12 @@ feature "Withdrawing a trainee" do
       then_i_see_the_error_message_for_trigger_not_chosen
     end
 
+    scenario "no future interest provided" do
+      when_i_am_on_the_future_interest_page
+      and_i_continue(:future_interest)
+      then_i_see_the_error_message_for_future_interest_not_chosen
+    end
+
     scenario "reason given with 'unknown' also selected" do
       when_i_am_on_the_reason_page
       when_i_check_a_reason(withdrawal_reason_unknown.name)
@@ -84,6 +90,8 @@ feature "Withdrawing a trainee" do
         when_i_add_detail(:withdraw_reasons_details, details)
         when_i_add_detail(:withdraw_reasons_dfe_details, details_dfe)
         and_i_continue(:extra_information)
+        when_i_choose_future_interest
+        and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
         and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
         and_i_continue(:confirm_detail)
@@ -105,6 +113,8 @@ feature "Withdrawing a trainee" do
         when_i_add_detail(:withdraw_reasons_details, details)
         when_i_add_detail(:withdraw_reasons_dfe_details, details_dfe)
         and_i_continue(:extra_information)
+        when_i_choose_future_interest
+        and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
         and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
         and_i_continue(:confirm_detail)
@@ -127,6 +137,8 @@ feature "Withdrawing a trainee" do
         when_i_add_detail(:withdraw_reasons_details, details)
         when_i_add_detail(:withdraw_reasons_dfe_details, details_dfe)
         and_i_continue(:extra_information)
+        when_i_choose_future_interest
+        and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
         and_i_see_the_summary_card(start_date:, withdrawal_date:, details:, details_dfe:, reason:)
         and_i_continue(:confirm_detail)
@@ -144,6 +156,8 @@ feature "Withdrawing a trainee" do
       when_i_check_a_reason(withdrawal_reason.name)
       and_i_continue(:reason)
       and_i_continue(:extra_information)
+      when_i_choose_future_interest
+      and_i_continue(:future_interest)
       and_i_continue(:confirm_detail)
       and_a_withdrawal_job_has_been_queued
     end
@@ -176,7 +190,9 @@ feature "Withdrawing a trainee" do
     and_i_continue(:trigger)
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
-    when_i_cancel_my_changes(:extra_information)
+    and_i_continue(:extra_information)
+    when_i_choose_future_interest
+    when_i_cancel_my_changes(:future_interest)
     then_i_am_redirected_to_the_record_page
     and_the_withdrawal_information_i_set_is_cleared
   end
@@ -192,6 +208,8 @@ feature "Withdrawing a trainee" do
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
     and_i_continue(:extra_information)
+    when_i_choose_future_interest
+    and_i_continue(:future_interest)
     then_i_am_redirected_to_withdrawal_confirmation_page
     and_the_deferral_date_is_used
     and_i_continue(:confirm_detail)
@@ -216,6 +234,8 @@ feature "Withdrawing a trainee" do
     when_i_check_a_reason(withdrawal_reason.name)
     and_i_continue(:reason)
     and_i_continue(:extra_information)
+    when_i_choose_future_interest
+    and_i_continue(:future_interest)
     then_i_am_redirected_to_withdrawal_confirmation_page
     and_i_click_change_start_date
     and_i_choose_they_have_started
@@ -261,6 +281,10 @@ feature "Withdrawing a trainee" do
     withdrawal_reason_page.load(id: trainee.slug)
   end
 
+  def when_i_am_on_the_future_interest_page
+    withdrawal_future_interest_page.load(id: trainee.slug)
+  end
+
   def when_i_am_on_the_extra_information_page
     withdrawal_extra_information_page.load(id: trainee.slug)
   end
@@ -281,6 +305,10 @@ feature "Withdrawing a trainee" do
 
   def when_i_choose_trainee_chose_to_withdraw
     when_i_choose(:trigger, "The trainee chose to withdraw")
+  end
+
+  def when_i_choose_future_interest
+    when_i_choose(:future_interest, "Yes")
   end
 
   def and_i_enter_a_valid_date
@@ -370,6 +398,10 @@ feature "Withdrawing a trainee" do
 
   def then_i_see_the_error_message_for_trigger_not_chosen
     expect(withdrawal_trigger_page).to have_content("Choose a reason for withdrawal")
+  end
+
+  def then_i_see_the_error_message_for_future_interest_not_chosen
+    expect(withdrawal_future_interest_page).to have_content("Please select an option")
   end
 
   def then_i_see_the_error_message_for_unknown_exclusivity
