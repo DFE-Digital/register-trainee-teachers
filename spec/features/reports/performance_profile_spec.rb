@@ -27,6 +27,12 @@ feature "performance profile sign off" do
     end
 
     context "accredited provider user" do
+      scenario "navigate to the performance profile confirmation page" do
+        given_i_am_authenticated
+        when_i_visit_the_performance_profile_confirmation_page
+        then_i_am_redirected_to_the_reports_page
+      end
+
       scenario "user signing off the performance profile from banner" do
         given_i_am_authenticated
         and_i_am_on_the_root_page
@@ -43,7 +49,7 @@ feature "performance profile sign off" do
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
         and_i_click_on("Sign off performance profile")
 
-        then_i_am_redirected_to_the_reports_page
+        then_i_am_on_the_performance_profile_confirmation_page
         and_the_provider_has_performance_profile_signed_off
       end
 
@@ -60,7 +66,7 @@ feature "performance profile sign off" do
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
         and_i_click_on("Sign off performance profile")
 
-        then_i_am_redirected_to_the_reports_page
+        then_i_am_on_the_performance_profile_confirmation_page
         and_the_provider_has_performance_profile_signed_off
       end
 
@@ -78,7 +84,7 @@ feature "performance profile sign off" do
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
         and_i_click_on("Sign off performance profile")
 
-        then_i_am_redirected_to_the_reports_page
+        then_i_am_on_the_performance_profile_confirmation_page
         and_the_provider_has_performance_profile_signed_off
       end
 
@@ -128,6 +134,10 @@ private
     expect(page).to have_current_path("/reports/performance-profiles/new")
   end
 
+  def then_i_am_on_the_performance_profile_confirmation_page
+    expect(page).to have_current_path("/reports/performance-profiles/confirmation")
+  end
+
   def and_i_can_see_the_performance_profile_information
     expect(page).to have_css(".govuk-summary-card__title", text: "Performance profile information")
 
@@ -168,6 +178,10 @@ private
 
   def when_i_visit_the_sign_off_your_performance_profile_page
     visit "/reports/performance-profiles"
+  end
+
+  def when_i_visit_the_performance_profile_confirmation_page
+    visit "/reports/performance-profiles/confirmation"
   end
 
   def then_i_am_redirected_to_the_reports_page

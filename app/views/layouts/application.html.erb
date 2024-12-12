@@ -114,7 +114,6 @@
         <% else %>
           <%= render(YearChangeBanner::View.new) %>
           <%= render(PerformanceProfileBanner::View.new(previous_academic_cycle: AcademicCycle.previous, sign_off_period: DetermineSignOffPeriod.call, provider: @current_user.organisation)) if @current_user&.provider? && request.path == root_path %>
-
         <% end %>
 
         <%= render(FlashBanner::View.new(flash: flash, trainee: @trainee)) %>

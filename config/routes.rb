@@ -70,7 +70,11 @@ Rails.application.routes.draw do
       get :bulk_recommend_empty_export
       get :bulk_placement_export
       scope module: :reports, as: :reports do
-        resources :performance_profiles, path: "performance-profiles", only: %i[index new create]
+        resources :performance_profiles, path: "performance-profiles", only: %i[index new create] do
+          collection do
+            get "confirmation", to: "performance_profiles#confirmation"
+          end
+        end
       end
     end
   end
