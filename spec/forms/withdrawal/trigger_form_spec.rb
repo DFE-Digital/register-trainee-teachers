@@ -4,11 +4,12 @@ require "rails_helper"
 
 module Withdrawal
   describe TriggerForm, type: :model do
-    let(:params) { {} }
-    let(:trainee_withdrawal) { create(:trainee_withdrawal, :untriggered) }
+    let(:params) { { trigger: "provider" } }
+    let(:trainee) { create(:trainee) }
+    let(:trainee_withdrawal) { create(:trainee_withdrawal, :untriggered, trainee:) }
     let(:form_store) { class_double(FormStore) }
 
-    subject { described_class.new(trainee_withdrawal, params: params, store: form_store) }
+    subject { described_class.new(trainee, params: params, store: form_store) }
 
     before do
       allow(form_store).to receive(:get).and_return(nil)
@@ -20,6 +21,14 @@ module Withdrawal
       end
 
       it { is_expected.to validate_inclusion_of(:trigger).in_array(inclusion_values) }
+    end
+
+    describe "#stash" do
+      it "uses FormStore to temporarily save the fields under a key combination of trainee withdrawal ID and trigger" do
+        expect(form_store).to receive(:set).with(trainee.id, :withdrawal_trigger, subject.fields)
+
+        subject.stash
+      end
     end
   end
 end

@@ -8,12 +8,6 @@ module Withdrawal
 
     validates :trigger, presence: true, inclusion: { in: %w[provider trainee] }
 
-    def save!
-      assign_attributes_to_trainee
-      trainee.save
-      clear_stash
-    end
-
   private
 
     def form_store_key
