@@ -23,7 +23,7 @@ module BulkUpdate
         @bulk_add_trainee_submit_form.save
 
         # TODO: Handle failures/errors when saving
-        SendCsvSubmittedForProcessingEmailService.call(user: current_user, upload: bulk_update_trainee_upload)
+        SendCsvSubmittedForProcessingEmailService.call(upload: bulk_update_trainee_upload)
 
         redirect_to(bulk_update_add_trainees_submission_path(bulk_update_trainee_upload))
       end
