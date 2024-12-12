@@ -66,6 +66,7 @@
       Find out more on <%= govuk_link_to("Signing off your list of trainees for the performance profiles publication", performance_profiles_guidance_path) %> and <%= govuk_link_to("managing your trainee placement data", manage_placements_guidance_path) %>.
     </p>
 
+<% if @in_performance_period%>
     <h2 class="govuk-heading-m">
       Signing off your trainee data
     </h2>
@@ -73,5 +74,22 @@
       If you have checked your data.
     </p>
     <%= govuk_button_link_to("Continue to performance profile sign off", new_reports_performance_profile_path)%>
+    <% else %>
+    <h2 class="govuk-heading-m">
+      Signing off your trainee data early
+    </h2>
+    <p class="govuk-body">
+      If you have checked your data.
+    </p>
+    <p class="govuk-body">
+      <% query_params = {
+          subject: "ITT performance profile sign off for the #{@previous_academic_cycle_label} academic year",
+          body: "Hello\nRe: ITT performance profile sign off for the #{@previous_academic_cycle_label} academic year\nOnce you've checked your data is correct, you can sign off on behalf of your organisation.\nDate:\nProvider name:\nUKPRN:\nApprover name:",
+        }
+
+         mailto_link = "mailto:becomingateacher@digital.education.gov.uk?#{query_params.to_query}" %>
+      Please confirm by sending an email to <a class="govuk-link" href=<%=mailto_link%>">becomingateacher@digital.education.gov.uk </a> for ITT performance profile sign off for the <%= @previous_academic_cycle_label %> academic year.</p>
+    </p>
+    <% end %>
   </div>
 </div>

@@ -17,7 +17,9 @@ feature "performance profile sign off" do
     scenario "navigate to the itt performance profile sign off for the academic year page" do
       given_i_am_authenticated
       when_i_visit_the_itt_performance_profile_sign_off_for_the_academic_year_page
-      then_i_am_redirected_to_the_reports_page
+      and_i_am_on_the_sign_off_your_performance_profile_page
+      and_i_see_signing_off_your_trainee_data_early
+      and_i_do_not_see_signing_off_your_trainee_data
     end
   end
 
@@ -117,6 +119,14 @@ feature "performance profile sign off" do
   end
 
 private
+
+  def and_i_see_signing_off_your_trainee_data_early
+    expect(page).to have_css(".govuk-heading-m", text: "Signing off your trainee data early")
+  end
+
+  def and_i_do_not_see_signing_off_your_trainee_data
+    expect(page).to have_css(".govuk-heading-m", text: "Signing off your trainee data")
+  end
 
   def previous_academic_cycle_label
     AcademicCycle.previous.label

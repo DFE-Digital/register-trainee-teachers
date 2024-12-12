@@ -9,6 +9,7 @@ module Reports
 
       @previous_academic_cycle = AcademicCycle.previous
       @previous_academic_cycle_label = @previous_academic_cycle.label
+      @in_performance_period = DetermineSignOffPeriod.call == :performance_period
 
       respond_to do |format|
         format.html do
@@ -34,7 +35,7 @@ module Reports
     def new
       authorize(current_user, :reports?)
 
-      redirect_to(reports_path) unless applicable_to_user?
+      redirect_to(reports_path) unless applicable_to_user? && DetermineSignOffPeriod.call == :performance_period
 
       @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new
     end
@@ -42,7 +43,7 @@ module Reports
     def create
       authorize(current_user, :reports?)
 
-      redirect_to(reports_path) unless applicable_to_user?
+      redirect_to(reports_path) unless applicable_to_user? && DetermineSignOffPeriod.call == :performance_period
 
       @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new(sign_off: sign_off, provider: current_user.organisation, user: current_user)
 
