@@ -11,15 +11,15 @@ feature "performance profile sign off" do
     scenario "navigate to the sign off your performance profile page" do
       given_i_am_authenticated
       when_i_visit_the_sign_off_your_performance_profile_page
-      then_i_am_redirected_to_the_reports_page
+      and_i_am_on_the_sign_off_your_performance_profile_page
+      and_i_see_signing_off_your_trainee_data_early
+      and_i_do_not_see_signing_off_your_trainee_data
     end
 
     scenario "navigate to the itt performance profile sign off for the academic year page" do
       given_i_am_authenticated
       when_i_visit_the_itt_performance_profile_sign_off_for_the_academic_year_page
-      and_i_am_on_the_sign_off_your_performance_profile_page
-      and_i_see_signing_off_your_trainee_data_early
-      and_i_do_not_see_signing_off_your_trainee_data
+      then_i_am_redirected_to_the_reports_page
     end
   end
 
