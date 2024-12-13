@@ -11,9 +11,8 @@ class CsvSubmittedForProcessingEmailMailer < GovukNotifyRails::Mailer
 
     set_personalisation(
       first_name: upload.submitted_by.first_name,
-      email: upload.submitted_by.email,
       file_name: upload.filename,
-      file_link: bulk_update_add_trainees_upload_url(upload),
+      status_link: bulk_update_add_trainees_uploads_url,
       submitted_at: upload.submitted_at.to_fs(:govuk_date_and_time),
     )
 

@@ -46,9 +46,9 @@ describe CsvSubmittedForProcessingEmailMailer do
       )
     end
 
-    it "includes the file link in the personalisation" do
-      expect(mail.govuk_notify_personalisation[:file_link]).to eq(
-        bulk_update_add_trainees_upload_url(upload),
+    it "includes the uploads status link in the personalisation" do
+      expect(mail.govuk_notify_personalisation[:status_link]).to eq(
+        bulk_update_add_trainees_uploads_url,
       )
     end
 
