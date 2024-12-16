@@ -6,6 +6,7 @@ describe "Trainees API" do
   let(:academic_cycle) { create(:academic_cycle, :current) }
   let(:provider) { trainee.provider }
   let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+  let!(:nationality) { create(:nationality, :british) }
 
   describe "`POST /api/v1.0-pre/trainees` endpoint" do
     let(:valid_attributes) do
@@ -77,6 +78,30 @@ describe "Trainees API" do
           expect(response).to have_http_status(:conflict)
           expect(response.parsed_body[:data].count).to be(1)
         end
+      end
+    end
+
+    context "when the trainee matches a deleted trainee" do
+      let!(:trainee) do
+        create(
+          :trainee,
+          :male,
+          :provider_led_undergrad,
+          :in_progress,
+          itt_start_date: academic_cycle.start_date,
+          course_subject_one: CourseSubjects::BIOLOGY,
+        )
+      end
+
+      before do
+        trainee.discard!
+      end
+
+      it "returns status code 201 and creates the trainee record" do
+        expect {
+          post "/api/v1.0-pre/trainees", params: valid_attributes.to_json, headers: { Authorization: token, **json_headers }
+        }.to change { Trainee.count }
+        expect(response).to have_http_status(:created)
       end
     end
   end
