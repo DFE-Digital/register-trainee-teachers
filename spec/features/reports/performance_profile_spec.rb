@@ -64,6 +64,24 @@ feature "performance profile sign off" do
         and_the_provider_has_performance_profile_signed_off
       end
 
+      scenario "a previously accredited provider signing off the performance profile from reports page" do
+        given_i_am_authenticated(user: create(:user, providers: [build(:provider, :unaccredited)]))
+        and_i_am_on_the_reports_page
+
+        and_i_click_on("Trainees who studied in the #{previous_academic_cycle_label} academic year report")
+        and_i_am_on_the_sign_off_your_performance_profile_page
+
+        when_i_click_on("Continue to performance profile sign off")
+        and_i_am_on_the_itt_performance_profile_sign_off_for_the_academic_year_page
+        and_i_can_see_the_performance_profile_information
+        and_i_am_on_the_itt_performance_profile_sign_off_for_the_academic_year_page
+        and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
+        and_i_click_on("Sign off performance profile")
+
+        then_i_am_redirected_to_the_reports_page
+        and_the_provider_has_performance_profile_signed_off
+      end
+
       context "performance profile signed off" do
         scenario "sign off your performance profile page" do
           given_i_am_authenticated

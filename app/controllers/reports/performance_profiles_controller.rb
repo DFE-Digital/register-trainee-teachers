@@ -56,7 +56,7 @@ module Reports
   private
 
     def applicable_to_user?
-      current_user.accredited_provider? && current_user.organisation.performance_profile_awaiting_sign_off? && DetermineSignOffPeriod.call == :performance_period
+      current_user.provider? && current_user.organisation.performance_profile_awaiting_sign_off? && DetermineSignOffPeriod.call == :performance_period
     end
 
     def time_now
