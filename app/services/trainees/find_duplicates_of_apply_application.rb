@@ -20,7 +20,8 @@ module Trainees
     attr_reader :application_record, :raw_trainee, :raw_course, :course
 
     def potential_duplicates
-      application_record.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
+      application_record.provider.trainees.kept
+        .and(Trainee.not_withdrawn.or(Trainee.not_awarded))
         .where(date_of_birth: raw_trainee["date_of_birth"])
         .where("last_name ILIKE ?", raw_trainee["last_name"])
     end
