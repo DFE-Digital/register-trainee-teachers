@@ -2,8 +2,7 @@
 
 module FindDuplicatesBase
   def potential_duplicates(provider)
-    provider.trainees.kept
-      .and(Trainee.not_withdrawn.or(Trainee.not_awarded))
+    provider.trainees.not_withdrawn.or(provider.trainees.not_awarded)
       .includes([:start_academic_cycle])
       .where(date_of_birth:)
       .where("last_name ILIKE ?", last_name)

@@ -347,8 +347,7 @@ class Trainee < ApplicationRecord
   scope :without_trn, -> { where(trn: nil) }
 
   scope :potential_duplicates_of, lambda { |trainee|
-    trainee.provider.trainees.kept
-      .and(Trainee.not_withdrawn.or(Trainee.not_awarded))
+    trainee.provider.trainees.not_withdrawn.or(Trainee.not_awarded)
       .where(date_of_birth: trainee.date_of_birth)
       .where("last_name ILIKE ?", trainee.last_name)
       .where("id != ?", trainee.id)
