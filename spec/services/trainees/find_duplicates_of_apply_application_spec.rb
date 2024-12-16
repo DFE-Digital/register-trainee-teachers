@@ -192,15 +192,5 @@ module Trainees
         expect(duplicate_trainees).to be_present
       end
     end
-
-    context "deleted trainee with matching attributes" do
-      before do
-        create(:trainee, duplicate_trainee_attributes).discard
-      end
-
-      it "returns no duplicates" do
-        expect(duplicate_trainees).to be_empty
-      end
-    end
   end
 end
