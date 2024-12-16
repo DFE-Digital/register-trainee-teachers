@@ -85,16 +85,13 @@ describe "Trainees API" do
       let!(:trainee) do
         create(
           :trainee,
+          :discarded,
           :male,
           :provider_led_undergrad,
           :in_progress,
           itt_start_date: academic_cycle.start_date,
           course_subject_one: CourseSubjects::BIOLOGY,
         )
-      end
-
-      before do
-        trainee.discard!
       end
 
       it "returns status code 201 and creates the trainee record" do

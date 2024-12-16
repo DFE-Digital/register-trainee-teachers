@@ -7,9 +7,11 @@ module Trainees
     let!(:current_academic_cycle) { create(:academic_cycle) }
     let!(:next_academic_cycle) { create(:academic_cycle, next_cycle: true) }
     let!(:after_next_academic_cycle) { create(:academic_cycle, one_after_next_cycle: true) }
+    let!(:provider) { create(:provider) }
 
     let(:trainee_attributes) do
       {
+        provider: provider,
         provider_trainee_id: "1234567",
         first_names: "Bob",
         last_name: "Roberts",
