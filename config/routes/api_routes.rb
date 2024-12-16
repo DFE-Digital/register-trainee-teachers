@@ -27,6 +27,10 @@ module ApiRoutes
         get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+(-pre)?/ }, as: :versioned_reference
         get "/:page" => "pages#show", as: :page
       end
+
+      namespace :csv_docs, path: "csv-docs" do
+        get "/" => "pages#show", as: :home
+      end
     end
   end
 end
