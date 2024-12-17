@@ -1531,8 +1531,8 @@ en:
         performance_profile_sign_off_form:
           attributes:
             sign_off:
-              inclusion: Please confirm sign off
-              blank: Please confirm sign off
+              inclusion: Confirm sign off
+              blank: Confirm sign off
         language_specialisms_form:
           attributes:
             course_subject_one:

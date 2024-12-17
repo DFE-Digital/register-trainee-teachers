@@ -39,7 +39,7 @@ feature "performance profile sign off" do
         and_i_can_see_the_performance_profile_information
         and_i_click_on("Sign off performance profile")
         and_i_see_there_is_a_problem
-        and_i_click_on("Please confirm sign off")
+        and_i_click_on("Confirm sign off")
         and_i_check_on("Yes, the trainee data is correct to the best of my knowledge")
         and_i_click_on("Sign off performance profile")
 

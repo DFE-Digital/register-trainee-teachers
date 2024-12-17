@@ -17,7 +17,7 @@ describe PerformanceProfileSignOffForm, type: :model do
 
       it "returns the correct error message" do
         expect(form.valid?).to be false
-        expect(error_message).to include "Please confirm sign off"
+        expect(error_message).to include "Confirm sign off"
       end
     end
 
@@ -26,7 +26,7 @@ describe PerformanceProfileSignOffForm, type: :model do
 
       it "returns the correct error message" do
         expect(form.valid?).to be false
-        expect(error_message).to include "Please confirm sign off"
+        expect(error_message).to include "Confirm sign off"
       end
     end
 
