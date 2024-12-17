@@ -11,7 +11,7 @@ module PerformanceProfileBanner
     end
 
     def render?
-      performance_period? && provider_awaiting_sign_off?
+      performance_period? && provider.performance_profile_awaiting_sign_off?
     end
 
     def banner_heading_text
@@ -27,10 +27,6 @@ module PerformanceProfileBanner
   private
 
     attr_reader :previous_academic_cycle, :provider, :sign_off_period
-
-    def provider_awaiting_sign_off?
-      !provider.performance_profile_signed_off?
-    end
 
     def performance_period?
       sign_off_period == :performance_period

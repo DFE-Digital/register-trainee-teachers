@@ -5,6 +5,7 @@ require "rails_helper"
 feature "performance profile banner" do
   context "within the performance profile date range" do
     background do
+      allow(DetermineSignOffPeriod).to receive(:call).and_return(:performance_period)
       Timecop.freeze(AcademicCycle.previous.performance_profile_date_range.to_a.sample)
     end
 
