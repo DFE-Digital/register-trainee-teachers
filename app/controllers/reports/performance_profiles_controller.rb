@@ -47,10 +47,16 @@ module Reports
       @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new(sign_off: sign_off, provider: current_user.organisation, user: current_user)
 
       if @performance_profile_sign_off_form.save!
-        redirect_to(reports_path)
+        redirect_to(confirmation_reports_performance_profiles_path)
       else
         render(:new)
       end
+    end
+
+    def confirmation
+      authorize(current_user, :reports?)
+
+      redirect_to(reports_path) unless current_user.provider? && current_user.organisation.performance_profile_signed_off? && DetermineSignOffPeriod.call == :performance_period
     end
 
   private
