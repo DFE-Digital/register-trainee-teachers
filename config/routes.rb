@@ -172,6 +172,7 @@ Rails.application.routes.draw do
         resource :date, only: %i[edit update]
         resource :reason, only: %i[edit update]
         resource :trigger, only: %i[edit update]
+        resource :future_interest, only: %i[edit update]
         resource :extra_information, only: %i[edit update], path: "extra-information"
         resource :confirm_detail, only: %i[edit update], path: "confirm"
       end
