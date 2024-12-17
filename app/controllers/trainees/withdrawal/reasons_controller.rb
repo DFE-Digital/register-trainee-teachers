@@ -3,14 +3,20 @@
 module Trainees
   module Withdrawal
     class ReasonsController < Base
+      helper_method :another_reason, :reasons
+
     private
+
+      def reasons
+        form.reasons
+      end
 
       def form_class
         ::Withdrawal::ReasonForm
       end
 
       def attribute_names
-        :reason_ids
+        form_class::FIELDS
       end
 
       def next_page

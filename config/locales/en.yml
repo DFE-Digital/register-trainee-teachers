@@ -188,6 +188,9 @@ en:
       trainee_start_date_label: Trainee start date
       withdraw_date_label: Date of withdrawal
       withdraw_reason_label: Reason for withdrawal
+      another_reason_label:
+        title: Enter the reason
+        hint: We may contact you to discuss this further
       reasons: &withdrawal_reasons
         could_not_give_enough_time: Could not give enough time to course
         course_was_not_suitable: Course was not suitable for them
@@ -1704,7 +1707,6 @@ en:
           attributes:
             reason_ids:
               blank: Select why the trainee withdrew from the course or select "Unknown"
-              unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
         withdrawal/trigger_form:
           attributes:
             trigger:
