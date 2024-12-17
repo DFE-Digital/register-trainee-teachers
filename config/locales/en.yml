@@ -183,10 +183,10 @@ en:
       trainee_name:
         blank: Draft record
     csv_field_summary:
-      fields:
+      view:
         field_name: Field name
         technical: Technical
-        hesa_aligment: HESA alignment
+        hesa_alignment: HESA alignment
         description: Description
         format: Format
         example: Example
