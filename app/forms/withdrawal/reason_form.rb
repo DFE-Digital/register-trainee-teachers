@@ -16,6 +16,19 @@ module Withdrawal
       end
     end
 
+    def save!
+      withdrawal = trainee.trainee_withdrawals.last
+      withdrawal.update!(another_reason:) if another_reason.present?
+
+      reason_ids.each do |reason_id|
+        withdrawal.trainee_withdrawal_reasons.create!(
+          withdrawal_reason_id: reason_id,
+        )
+      end
+
+      clear_stash
+    end
+
   private
 
     def provider_triggered?
