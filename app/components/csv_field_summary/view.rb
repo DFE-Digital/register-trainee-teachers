@@ -17,7 +17,7 @@ module CsvFieldSummary
     end
 
     def summary_id
-      @attributes["technical"]
+      @attributes["technical"].parameterize
     end
 
     def rows
