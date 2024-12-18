@@ -4,6 +4,8 @@
   <% end %>
 </ul>
 
-<% fields.each do |attributes| %>
-  <%= render CsvFieldSummary::View.new(attributes) %>
-<% end %>
+<div class="csv-field-list">
+  <% fields.each do |attributes| %>
+    <%= render CsvFieldSummary::View.new(attributes) %>
+  <% end %>
+</div>
