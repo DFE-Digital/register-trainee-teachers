@@ -40,7 +40,7 @@ module CsvFieldSummary
 
     def convert_value_to_html(key, value)
       if MARKDOWN_ATTRIBUTES.include?(key)
-        value.is_a?(String) ? Redcarpet::Markdown.new(markdown_render).render(value).html_safe : ''
+        value.is_a?(String) ? Redcarpet::Markdown.new(markdown_render).render(value).html_safe : ""
       else
         value
       end
