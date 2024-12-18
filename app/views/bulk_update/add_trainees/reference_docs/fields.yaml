@@ -88,13 +88,13 @@
   technical: nationality
   hesa_alignment: NATION
   description: This field defines the country of legal nationality.
-  format: HESA nationality codes
+  format: "[HESA nationality codes](https://www.hesa.ac.uk/collection/c24053/e/nation)"
   example: “GB“
 - field_name: Ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
   description: This field records a student's ethnicity.
-  format: HESA ethnicity reference codes
+  format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
   example: “103” for example is the code to use if the ethnicity is Asian - Indian
     or Indian British.
 - field_name: Disabilities
@@ -102,7 +102,7 @@
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
-  format: HESA disability reference codes
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: “51” for example is the code to use for learning difference such as dyslexia,
     dyspraxia or ADHD
 - field_name: ITT Aim
@@ -121,7 +121,7 @@
   hesa_alignment: ENTRYRTE
   description: This field describes the route by which the student has accessed Initial
     Teacher Training provision.
-  format: HESA training routes reference codes
+  format: "[HESA training routes reference codes](https://www.hesa.ac.uk/collection/c24053/e/entryrte)"
   example: “03” for example is code to use if it is School Direct salaried
 - field_name: Qualification Aim
   technical: itt_qualification_aim
@@ -129,7 +129,7 @@
   description: This field describes the qualification aim of the Initial Teacher
     Training course and is intended to record the qualification that will be attained
     as a result of successful completion of studies.
-  format: HESA qualification aim reference codes
+  format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
   example: “007” for example is the code used for a BA qualification
 - field_name: Course ITT subject
   technical: course_subject_one, course_subject_two, course_subject_three
@@ -138,7 +138,7 @@
     Subject of ITT course 
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: HESA subject codes
+  format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
   example: “100048” for example is the code used for design as a subject
 - field_name: Study mode
   technical: study_mode
@@ -174,7 +174,7 @@
   hesa_alignment: ITTPHSC
   description: This field describes in more detail the student's initial teacher
     training aim
-  format: HESA course phase reference codes
+  format: "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
   example: "“13916” for example is the code used for Accredited by the Department
     for Education (DfE) for the purpose of delivering initial teacher training programmes
     to achieve Qualified Teacher Status (QTS): Ages 7-14"
@@ -348,7 +348,7 @@
   technical: uk_degree
   hesa_alignment: DEGTYPE
   description: This records the student's previous qualification
-  format: HESA codes for previous degree type
+  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: “051” for example is Bachelor of Arts (BA)
 - field_name: Non UK degree types
   technical: non_uk_degree
@@ -360,14 +360,14 @@
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student's previous degree
-  format: HESA codes for previous degree subjects
+  format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
   example: 100048 for example is the design degree subject as part of a previous degree
 - field_name: UK degree grade
   technical: grade
   hesa_alignment: DEGCLSS
   description: This field is used to indicate the qualification class of the student's
     previous degree.
-  format: HESA codes for the qualification class of a previous degree
+  format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: “01” for example is First class honours
 - field_name: Degree graduation year
   technical: graduation_year
@@ -380,13 +380,13 @@
   hesa_alignment: DEGEST
   description: This records the provider where the student's previous qualification
     was awarded, if a UK provider.
-  format: HESA codes for previous degree establishment if a UK provider
+  format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
   example: “1101” for example is Hull College
 - field_name: Degree country
   technical: country
   hesa_alignment: DEGCTRY
   description: This records the country where the student's previous qualification
     was awarded
-  format: HESA previous degree country codes
+  format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
   example: “AU” is an example of using the previous qualification country code for 
     Australia
