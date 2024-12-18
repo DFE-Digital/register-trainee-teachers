@@ -38,5 +38,9 @@ module Withdrawal
         f[:reason_ids] = f[:reason_ids].compact_blank.map(&:to_i) if f[:reason_ids]
       end
     end
+
+    def form_store_key
+      :withdrawal_reasons
+    end
   end
 end

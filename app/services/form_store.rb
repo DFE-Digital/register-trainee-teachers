@@ -17,6 +17,7 @@ class FormStore
     withdraw
     withdrawal_date
     withdrawal_trigger
+    withdrawal_reasons
     withdrawal_future_interest
     placement_detail
     withdrawal_reasons

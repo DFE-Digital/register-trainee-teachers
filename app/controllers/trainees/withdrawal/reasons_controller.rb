@@ -3,13 +3,7 @@
 module Trainees
   module Withdrawal
     class ReasonsController < Base
-      helper_method :another_reason, :reasons
-
     private
-
-      def reasons
-        form.reasons
-      end
 
       def form_class
         ::Withdrawal::ReasonForm
@@ -20,7 +14,7 @@ module Trainees
       end
 
       def next_page
-        edit_trainee_withdrawal_extra_information_path(trainee)
+        edit_trainee_withdrawal_future_interest_path(trainee)
       end
     end
   end

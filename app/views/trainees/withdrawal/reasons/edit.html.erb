@@ -37,7 +37,7 @@
           hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
           class: "withdrawal" do %>
 
-        <% reasons.each_with_index do |reason, index| %>
+        <% form.reasons.each_with_index do |reason, index| %>
           <% unless [WithdrawalReasons::HAD_TO_WITHDRAW_TRAINEE_ANOTHER_REASON, WithdrawalReasons::TRAINEE_CHOSE_TO_WITHDRAW_ANOTHER_REASON].include?(reason.name) %>
             <%= f.govuk_check_box :reason_ids,
                 reason.id,
