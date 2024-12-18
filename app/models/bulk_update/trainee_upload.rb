@@ -46,7 +46,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
         self.submitted_at = Time.current
       end
 
-      transition %i[validated] => :in_progress
+      transition %i[validated failed] => :in_progress
     end
 
     event :succeed do
@@ -54,7 +54,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     end
 
     event :cancel do
-      transition %i[validated] => :cancelled
+      transition %i[validated failed] => :cancelled
     end
 
     event :fail do
