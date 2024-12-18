@@ -6,6 +6,8 @@ module CsvFieldSummary
 
     attr_reader :attributes
 
+    MARKDOWN_ATTRIBUTES = %w[description format example].freeze
+
     def initialize(attributes)
       @attributes = attributes
     end
@@ -19,14 +21,28 @@ module CsvFieldSummary
     end
 
     def rows
-      render = Redcarpet::Render::HTML.new(
+      @attributes.map do |key, value|
+        {
+          key: t("components.csv_field_summary.view.#{key}"),
+          value: convert_value_to_html(key, value),
+        }
+      end
+    end
+
+  private
+
+    def markdown_render
+      @markdown_render ||= Redcarpet::Render::HTML.new(
         link_attributes: { class: "govuk-link" },
         paragraph_attributes: { class: "govuk-body" },
       )
+    end
 
-      @attributes.map do |key, value|
-        html_value = value.is_a?(String) ? Redcarpet::Markdown.new(render).render(value).html_safe : ''
-        { key: t("components.csv_field_summary.view.#{key}"), value: html_value }
+    def convert_value_to_html(key, value)
+      if MARKDOWN_ATTRIBUTES.include?(key)
+        value.is_a?(String) ? Redcarpet::Markdown.new(markdown_render).render(value).html_safe : ''
+      else
+        value
       end
     end
   end
