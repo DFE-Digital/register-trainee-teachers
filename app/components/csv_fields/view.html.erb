@@ -1,6 +1,6 @@
 <ul class="govuk-list">
   <% fields.each do |attributes| %>
-    <li><a href="#summary-card-<%= attributes["technical"] %>"><%= attributes["field_name"] %></a></li>
+    <li><a href="#summary-card-<%= attributes["technical"].parameterize %>"><%= attributes["field_name"] %></a></li>
   <% end %>
 </ul>
 
