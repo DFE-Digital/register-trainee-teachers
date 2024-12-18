@@ -51,3 +51,5 @@ environment:
 google_tag_manager:
   auth_id: h9MLvalp6AuXoRufPTHO_A
   env_id: 12
+
+sign_off_period: performance_period # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb
