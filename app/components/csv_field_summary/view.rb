@@ -11,11 +11,11 @@ module CsvFieldSummary
     end
 
     def summary_title
-      @attributes[:field_name]
+      @attributes["field_name"]
     end
 
     def summary_id
-      @attributes[:technical]
+      @attributes["technical"]
     end
 
     def rows
