@@ -189,6 +189,10 @@ feature "bulk add trainees" do
 
         and_i_see_the_summary_page
         and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
         and_i_visit_the_trainees_page
         then_i_can_see_the_new_trainees
 
@@ -517,8 +521,8 @@ private
     )
   end
 
-  def when_i_try_resubmit_the_same_upload
-    visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
+  def when_i_try_resubmit_the_same_upload(upload: BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(upload)
   end
 
   def then_i_see_the_unauthorized_message
@@ -961,8 +965,8 @@ private
     )
   end
 
-  def and_i_visit_the_bulk_update_trainee_upload_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_add_trainees_upload_path(upload)
+  def when_i_click_on_home_link
+    find(".govuk-back-link", text: "Home").click
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
@@ -978,4 +982,5 @@ private
   alias_method :and_a_job_is_queued_to_process_the_upload, :then_a_job_is_queued_to_process_the_upload
   alias_method :and_the_background_job_is_run, :when_the_background_job_is_run
   alias_method :and_i_return_to_the_review_errors_page, :when_i_return_to_the_review_errors_page
+  alias_method :and_i_visit_the_bulk_update_trainee_upload_page, :when_i_try_resubmit_the_same_upload
 end
