@@ -233,6 +233,9 @@ feature "bulk add trainees" do
         and_i_see_the_review_errors_message
         and_i_see_the_review_errors_link
         and_i_dont_see_the_submit_button
+
+        when_i_click_the_cancel_bulk_updates_link
+        then_the_upload_is_cancelled
       end
 
       scenario "view the upload summary page with duplicate errors" do
