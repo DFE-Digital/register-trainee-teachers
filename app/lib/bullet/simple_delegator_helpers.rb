@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-using Bullet::Ext::Object
+using Bullet::Ext::Object unless Rails.env.production?
 
 # rubocop:disable Rails/Delegate
 module Bullet
