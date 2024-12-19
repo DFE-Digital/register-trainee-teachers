@@ -8,6 +8,10 @@ module Withdrawal
 
     attr_accessor(*FIELDS)
 
+    def withdrawal_reasons
+      WithdrawalReason.where(id: reason_ids)
+    end
+
     def reasons
       if provider_triggered?
         WithdrawalReason.where(name: WithdrawalReasons::PROVIDER_REASONS)

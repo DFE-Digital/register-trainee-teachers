@@ -7,7 +7,7 @@
 #  id                    :bigint           not null, primary key
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
-#  trainee_id            :bigint           not null
+#  trainee_id            :bigint
 #  trainee_withdrawal_id :bigint
 #  withdrawal_reason_id  :bigint           not null
 #
@@ -25,7 +25,7 @@
 #  fk_rails_...  (withdrawal_reason_id => withdrawal_reasons.id)
 #
 class TraineeWithdrawalReason < ApplicationRecord
-  belongs_to :trainee, touch: true
+  belongs_to :trainee, touch: true, optional: true
   belongs_to :withdrawal_reason
   belongs_to :trainee_withdrawal, optional: true
 

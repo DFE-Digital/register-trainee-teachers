@@ -26,6 +26,7 @@
 class TraineeWithdrawal < ApplicationRecord
   belongs_to :trainee
   has_many :trainee_withdrawal_reasons, dependent: :destroy
+  has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
 
   enum :trigger, { provider: "provider", trainee: "trainee" }, prefix: :triggered_by
   enum :future_interest, { yes: "yes", no: "no", unknown: "unknown" }, suffix: true
