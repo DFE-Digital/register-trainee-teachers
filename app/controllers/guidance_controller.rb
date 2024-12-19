@@ -16,9 +16,9 @@ class GuidanceController < ApplicationController
 
   def manage_placements
     previous_academic_cycle
-    @performance_profile_sign_off_full_deadline = sign_off_date.strftime("%d %B %Y")
-    @performance_profile_sign_off_short_deadline = sign_off_date.strftime("%B %Y")
-    @performance_profile_sign_off_start_period = Date.new(Time.zone.today.year, 12, 1).strftime("%B %Y")
+    @performance_profile_sign_off_full_deadline = performance_profile_sign_off_date.strftime("%d %B %Y")
+    @performance_profile_sign_off_short_deadline = performance_profile_sign_off_date.strftime("%B %Y")
+    @performance_profile_sign_off_start_period = previous_academic_cycle.performance_profile_date_range.begin
 
     render(layout: "application")
   end
@@ -33,6 +33,7 @@ class GuidanceController < ApplicationController
   end
 
   def dates_and_deadlines
+    @performance_profile_sign_off_full_deadline = performance_profile_sign_off_date.strftime("%d %B %Y")
     render(layout: "application")
   end
 
@@ -48,7 +49,7 @@ class GuidanceController < ApplicationController
       @current_academic_cycle_label = current_academic_cycle.label
       @previous_academic_cycle_label = previous_academic_cycle.label
       @academic_cycle_for_filter = previous_academic_cycle.start_year
-      @sign_off_deadline = sign_off_date.strftime("%d %B %Y")
+      @sign_off_deadline = performance_profile_sign_off_date.strftime("%d %B %Y")
       @sign_off_url = Settings.sign_off_performance_profiles_url
       render(layout: "application")
     when :census_period, :outside_period
@@ -62,8 +63,8 @@ private
     @previous_academic_cycle ||= AcademicCycle.previous
   end
 
-  def sign_off_date
-    @sign_off_date ||= Date.new(AcademicCycle.current.end_year, 1, 31)
+  def performance_profile_sign_off_date
+    @performance_profile_sign_off_date ||= previous_academic_cycle.performance_profile_date_range.end
   end
 
   def current_academic_cycle
