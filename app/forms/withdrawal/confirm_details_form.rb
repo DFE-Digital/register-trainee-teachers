@@ -8,7 +8,7 @@ module Withdrawal
       *ExtraInformationForm::FIELDS,
     ].freeze
 
-    attr_reader(:trainee, :reasons_form, :extra_information_form, :date_form, :start_date_form)
+    attr_reader(:trainee, :reasons_form, :trigger_form, :date_form, :start_date_form)
     attr_accessor(*FIELDS)
 
     delegate :id, to: :trainee
