@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "bullet" unless Rails.env.local?
+
 using Bullet::Ext::Object
 
 # rubocop:disable Rails/Delegate
