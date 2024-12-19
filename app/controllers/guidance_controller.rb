@@ -44,6 +44,7 @@ class GuidanceController < ApplicationController
       @previous_academic_cycle_label = previous_academic_cycle.label
       @academic_cycle_for_filter = previous_academic_cycle.start_year
       @sign_off_deadline = performance_profile_sign_off_date.to_fs(:govuk)
+      @sign_off_period_start = previous_academic_cycle.performance_profile_date_range.begin.to_fs(:govuk)
       @fix_mistakes_email_link = "mailto:becomingateacher@digital.education.gov.uk?subject=Fix mistake in #{@previous_academic_cycle_label} data for performance profiles publication"
       render(layout: "application")
     when :census_period, :outside_period
