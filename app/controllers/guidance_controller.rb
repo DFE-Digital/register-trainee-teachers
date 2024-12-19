@@ -15,11 +15,6 @@ class GuidanceController < ApplicationController
   def manually_registering_trainees; end
 
   def manage_placements
-    previous_academic_cycle
-    @performance_profile_sign_off_full_deadline = performance_profile_sign_off_date.strftime("%d %B %Y")
-    @performance_profile_sign_off_short_deadline = performance_profile_sign_off_date.strftime("%B %Y")
-    @performance_profile_sign_off_start_period = previous_academic_cycle.performance_profile_date_range.begin
-
     render(layout: "application")
   end
 
