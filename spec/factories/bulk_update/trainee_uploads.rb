@@ -97,6 +97,12 @@ FactoryBot.define do
       end
     end
 
+    trait :failed_without_errors do
+      status { "failed" }
+      submitted_by { association(:user) }
+      submitted_at { Time.current }
+    end
+
     trait :failed_with_validation_errors do
       status { "failed" }
 

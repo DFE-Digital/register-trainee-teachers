@@ -12,19 +12,13 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
   context "when the User's organisation is an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :hei), session: {}) }
 
-    %i[validated failed].each do |status|
+    %i[validated].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
         permissions :create? do
           it { is_expected.to permit(user, trainee_upload) }
         end
-      end
-    end
-
-    %i[validated].each do |status|
-      context "when the upload is #{status}" do
-        let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
         permissions :show? do
           it { is_expected.not_to permit(user, trainee_upload) }
@@ -32,7 +26,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
       end
     end
 
-    %i[in_progress succeeded].each do |status|
+    %i[in_progress succeeded failed].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 

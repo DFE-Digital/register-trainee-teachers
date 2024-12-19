@@ -8,7 +8,7 @@ module BulkUpdate
       end
 
       def create?
-        super && (trainee_upload.validated? || trainee_upload.failed?)
+        super && trainee_upload.validated?
       end
     end
   end
