@@ -36,6 +36,9 @@ module Reports
 
       redirect_to(reports_path) unless applicable_to_user?
 
+      @previous_academic_cycle = AcademicCycle.previous
+      @previous_academic_cycle_label = @previous_academic_cycle.label
+
       @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new
     end
 
@@ -49,6 +52,8 @@ module Reports
       if @performance_profile_sign_off_form.save!
         redirect_to(confirmation_reports_performance_profiles_path)
       else
+        @previous_academic_cycle = AcademicCycle.previous
+        @previous_academic_cycle_label = @previous_academic_cycle.label
         render(:new)
       end
     end
