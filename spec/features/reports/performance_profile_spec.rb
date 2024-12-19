@@ -139,6 +139,8 @@ private
   end
 
   def and_i_can_see_the_performance_profile_information
+    expect(page).to have_css(".govuk-heading-l", text: "ITT performance profile sign off for the #{previous_academic_cycle_label} academic year")
+
     expect(page).to have_css(".govuk-summary-card__title", text: "Performance profile information")
 
     expect(page).to have_css(".govuk-summary-list__key", text: "Provider name")

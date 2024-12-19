@@ -41,6 +41,9 @@ Style/MethodCallWithArgsParentheses:
 Style/HashSyntax:
   EnforcedShorthandSyntax: consistent
 
+Style/SafeNavigationChainLength:
+  Max: 3
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - "spec/**/*"
