@@ -215,6 +215,13 @@ feature "bulk add trainees" do
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
+      scenario "attempt to resubmit a failed upload" do
+        when_a_failed_upload_without_row_errors_exist
+        and_i_visit_the_bulk_update_trainee_upload_page
+        and_i_click_the_submit_button
+        then_i_see_the_unauthorized_message
+      end
+
       scenario "view the upload summary page with errors" do
         when_the_upload_has_failed_with_validation_errors
         and_i_dont_see_that_the_upload_is_processing
@@ -940,6 +947,19 @@ private
 
   def when_i_click_on_resubmit_the_file_link
     click_on "re-submit the CSV file"
+  end
+
+  def when_a_failed_upload_without_row_errors_exist
+    create(
+      :bulk_update_trainee_upload,
+      :failed_without_errors,
+      provider: current_user.organisation,
+      submitted_by: current_user,
+    )
+  end
+
+  def and_i_visit_the_bulk_update_trainee_upload_page(upload: BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(upload)
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
