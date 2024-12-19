@@ -74,10 +74,10 @@ feature "Withdrawing a trainee" do
       end
     end
 
-    xcontext "yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
+    context "yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
       let(:withdrawal_date) { Time.zone.yesterday }
 
-      xscenario "successfully" do
+      scenario "successfully", skip: "skipped until summary card work is complete" do
         when_i_choose_yesterday
         and_i_continue(:date)
         when_i_choose_trainee_chose_to_withdraw
@@ -94,10 +94,10 @@ feature "Withdrawing a trainee" do
       end
     end
 
-    xcontext "another date" do
+    context "another date" do
       let(:withdrawal_date) { nil }
 
-      scenario "successfully" do
+      scenario "successfully", skip: "skipped until summary card work is complete" do
         when_i_choose_another_day
         withdrawal_date = and_i_enter_a_valid_date
         and_i_continue(:date)
