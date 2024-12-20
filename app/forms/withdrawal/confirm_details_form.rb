@@ -8,7 +8,7 @@ module Withdrawal
       *ExtraInformationForm::FIELDS,
     ].freeze
 
-    attr_reader(:trainee, :reasons_form, :extra_information_form, :date_form, :start_date_form)
+    attr_reader(:trainee, :reasons_form, :trigger_form, :date_form, :start_date_form)
     attr_accessor(*FIELDS)
 
     delegate :id, to: :trainee
@@ -17,7 +17,7 @@ module Withdrawal
     def initialize(trainee)
       @trainee = trainee
       @reasons_form = ReasonForm.new(trainee)
-      @extra_information_form = ExtraInformationForm.new(trainee)
+      @trigger_form = TriggerForm.new(trainee)
       @date_form = DateForm.new(trainee)
       @start_date_form = ::TraineeStartStatusForm.new(trainee)
       @fields = compute_fields
@@ -26,9 +26,13 @@ module Withdrawal
 
     def save!
       if valid?
-        save_forms
-        trainee.withdraw!
-        Trainees::Withdraw.call(trainee:)
+        ActiveRecord::Base.transaction do
+          # Create empty withdrawal record that the forms can update
+          trainee.trainee_withdrawals.create!
+          save_forms
+          trainee.withdraw!
+          Trainees::Withdraw.call(trainee:)
+        end
       else
         false
       end
@@ -48,7 +52,7 @@ module Withdrawal
 
     def withdrawal_forms
       @withdrawal_forms ||= [
-        extra_information_form,
+        trigger_form,
         reasons_form,
         date_form,
         (start_date_form unless exclude_start_date_form?),

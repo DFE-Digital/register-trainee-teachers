@@ -643,6 +643,10 @@ private
 
   def then_i_see_the_review_page_without_validation_errors
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
+  end
+
+  def then_i_see_the_review_page_without_validation_errors
+    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
   end
 
