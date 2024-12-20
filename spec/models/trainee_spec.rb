@@ -144,7 +144,8 @@ describe Trainee do
 
     describe ".potential_duplicates_of and .not_marked_as_duplicate" do
       let(:trainee1) { create(:trainee, :in_progress, :with_training_route) }
-      let!(:trainee2) { create(:trainee, :in_progress, last_name: trainee1.last_name, date_of_birth: trainee1.date_of_birth, training_route: trainee1.training_route, start_academic_cycle: trainee1.start_academic_cycle) }
+      let(:provider) { trainee1.provider }
+      let!(:trainee2) { create(:trainee, :in_progress, provider: provider, last_name: trainee1.last_name, date_of_birth: trainee1.date_of_birth, training_route: trainee1.training_route, start_academic_cycle: trainee1.start_academic_cycle) }
 
       it "returns trainees with the same last_name, date_of_birth, training_route and start_academic_cycle" do
         expect(described_class.potential_duplicates_of(trainee1).not_marked_as_duplicate).to contain_exactly(trainee2)

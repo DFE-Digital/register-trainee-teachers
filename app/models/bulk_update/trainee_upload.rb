@@ -11,15 +11,18 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  provider_id        :bigint           not null
+#  submitted_by_id    :bigint
 #
 # Indexes
 #
-#  index_bulk_update_trainee_uploads_on_provider_id  (provider_id)
-#  index_bulk_update_trainee_uploads_on_status       (status)
+#  index_bulk_update_trainee_uploads_on_provider_id      (provider_id)
+#  index_bulk_update_trainee_uploads_on_status           (status)
+#  index_bulk_update_trainee_uploads_on_submitted_by_id  (submitted_by_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (submitted_by_id => users.id)
 #
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
@@ -37,6 +40,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
 
     event :submit do
       before do
+        self.submitted_by = Current.user
         self.submitted_at = Time.current
       end
 
@@ -57,6 +61,8 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   end
 
   belongs_to :provider
+  belongs_to :submitted_by, class_name: "User", optional: true
+
   has_many :trainee_upload_rows,
            class_name: "BulkUpdate::TraineeUploadRow",
            foreign_key: :bulk_update_trainee_upload_id,

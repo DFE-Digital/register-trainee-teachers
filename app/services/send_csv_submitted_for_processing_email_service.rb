@@ -4,8 +4,7 @@ class SendCsvSubmittedForProcessingEmailService
   include ServicePattern
   include Rails.application.routes.url_helpers
 
-  def initialize(user:, upload:)
-    @user = user
+  def initialize(upload:)
     @upload = upload
   end
 
@@ -13,15 +12,11 @@ class SendCsvSubmittedForProcessingEmailService
     return unless FeatureService.enabled?(:send_emails)
 
     CsvSubmittedForProcessingEmailMailer.generate(
-      first_name: user.first_name,
-      email: user.email,
-      file_name: upload.file.name,
-      file_link: bulk_update_trainees_upload_url(upload),
-      submitted_at: upload.created_at.strftime("%d.%M.%Y, %l%p"),
-    ).deliver_later
+      upload:,
+    ).deliver_later(wait: 30.seconds)
   end
 
 private
 
-  attr_reader :user, :upload
+  attr_reader :upload
 end

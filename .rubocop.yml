@@ -42,7 +42,7 @@ Style/HashSyntax:
   EnforcedShorthandSyntax: consistent
 
 Style/SafeNavigationChainLength:
-  Enabled: false
+  Max: 3
 
 Lint/AmbiguousBlockAssociation:
   Exclude:

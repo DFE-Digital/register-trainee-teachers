@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class UserWithOrganisationContext < SimpleDelegator
+  include Bullet::SimpleDelegatorHelpers if Rails.env.local?
+
   attr_reader :user
 
   def initialize(user:, session:)

@@ -68,7 +68,7 @@ gem "config", "~> 5.5"
 gem "httparty", "~> 0.22"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 4.1"
+gem "store_model", "~> 4.2"
 
 gem "pundit"
 
@@ -124,7 +124,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.6.7"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.2"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.3"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 

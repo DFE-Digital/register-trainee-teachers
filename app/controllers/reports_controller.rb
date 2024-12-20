@@ -42,30 +42,6 @@ class ReportsController < BaseTraineeController
     end
   end
 
-  def performance_profiles
-    authorize(current_user, :reports?)
-
-    respond_to do |format|
-      format.html do
-        @trainee_count = performance_profiles_trainees.count
-      end
-
-      format.csv do
-        authorize(:trainee, :export?)
-        headers["X-Accel-Buffering"] = "no"
-        headers["Cache-Control"] = "no-cache"
-        headers["Content-Type"] = "text/csv; charset=utf-8"
-        headers["Content-Disposition"] =
-          %(attachment; filename="#{performance_profiles_filename}")
-        headers["Last-Modified"] = Time.zone.now.ctime.to_s
-
-        response.status = 200
-
-        self.response_body = Exports::ReportCsvEnumeratorService.call(performance_profiles_trainees)
-      end
-    end
-  end
-
   def bulk_recommend_export
     authorize(current_user, :bulk_recommend?)
 
@@ -92,10 +68,6 @@ private
     @itt_new_starter_trainees ||= policy_scope(FindNewStarterTrainees.new(census_date(@current_academic_cycle.start_year)).call)
   end
 
-  def performance_profiles_trainees
-    Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@previous_academic_cycle.start_year] })
-  end
-
   def bulk_recommend_trainees
     policy_scope(FindBulkRecommendTrainees.call).order(last_name: :asc)
   end
@@ -106,10 +78,6 @@ private
 
   def itt_new_starter_filename
     "#{time_now}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
-  end
-
-  def performance_profiles_filename
-    "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
   end
 
   def bulk_recommend_export_filename

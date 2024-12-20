@@ -160,7 +160,7 @@ jobs:
           github-token: ${{ secrets.API_TOKEN_FOR_GITHUB_ACTION }}
           target: minor
           exclude: 'govuk-components,govuk_design_system_formbuilder,govuk-frontend,@ministryofjustice/frontend,dfe-analytics'
-          merge-method: merge
+          merge-method: squash
 
   deploy-before-production:
     name: Parallel deployment before production

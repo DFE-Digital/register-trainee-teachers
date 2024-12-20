@@ -1,7 +1,7 @@
 <%= render PageTitle::View.new(text: "Upload summary") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: new_bulk_update_add_trainees_upload_path) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -25,7 +25,7 @@
       </p>
 
       <p class="govuk-body">
-        You can also check the <%= govuk_link_to "status of new trainee files", bulk_update_trainees_uploads_path %>.
+        You can also check the <%= govuk_link_to "status of new trainee files", bulk_update_add_trainees_uploads_path %>.
       </p>
 
       <p class="govuk-body">
@@ -38,7 +38,7 @@
       </h1>
 
       <p class="govuk-body">
-        You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
+        You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.size, "trainee") %>.
       </p>
 
       <p class="govuk-body">
@@ -71,13 +71,13 @@
 
         <%= render GovukButtonLinkTo::View.new(
           body: "Review errors",
-          url: bulk_update_trainees_review_error_path(id: @bulk_update_trainee_upload.id),
+          url: bulk_update_add_trainees_review_error_path(@bulk_update_trainee_upload),
           class_option: "govuk-button"
         ) %>
       <% else %>
         <%= register_form_with(
           model: @bulk_update_trainee_upload,
-          url: bulk_update_trainees_submissions_path(@bulk_update_trainee_upload),
+          url: bulk_update_add_trainees_submissions_path(@bulk_update_trainee_upload),
           method: :post
         ) do |f| %>
           <%= f.govuk_submit("Submit") %>
@@ -86,7 +86,7 @@
       <p class="govuk-body">
         <%= register_form_with(
           model: @bulk_update_trainee_upload,
-          url: bulk_update_trainees_upload_path(@bulk_update_trainee_upload),
+          url: bulk_update_add_trainees_upload_path(@bulk_update_trainee_upload),
           method: :delete
         ) do |f| %>
           <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>

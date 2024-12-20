@@ -1,9 +1,9 @@
 ## Infrastructure Configuration
 - Add {env}.sh file to the global_config folder. For example, pen.sh.
-- Add {env}.tfvars.json, {env}_Terrafile, and {env}_backend.tfvars to terraform/aks/workspace-variables.
+- Add {env}.tfvars.json and {env}_backend.tfvars to terraform/aks/workspace-variables.
 - Update the app_config.yml in terraform/aks/workspace-variables.
 - Verify the Makefile has targets deploy-arm-resources and validate-arm-resources. If not present, add them.
--  Add register_{env}.tfvars.json and register_{env}_backend.tfvars to terraform/custom_domains/environment_domains/workspace_variables/
+- Add register_{env}.tfvars.json and register_{env}_backend.tfvars to terraform/custom_domains/environment_domains/workspace_variables/
 
 ## Application Configuration
 - Add {env}.rb to the global_config folder.

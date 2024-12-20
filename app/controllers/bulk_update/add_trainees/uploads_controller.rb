@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module BulkUpdate
-  module Trainees
+  module AddTrainees
     class UploadsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
@@ -9,6 +9,8 @@ module BulkUpdate
         @bulk_update_trainee_uploads = policy_scope(
           BulkUpdate::TraineeUpload,
         ).current_academic_cycle.includes(:file_attachment)
+
+        authorize(@bulk_update_trainee_uploads)
       end
 
       def show
@@ -35,7 +37,7 @@ module BulkUpdate
           # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
 
-          redirect_to(bulk_update_trainees_upload_path(upload), flash: { success: t(".success") })
+          redirect_to(bulk_update_add_trainees_upload_path(upload), flash: { success: t(".success") })
         else
           render(:new)
         end

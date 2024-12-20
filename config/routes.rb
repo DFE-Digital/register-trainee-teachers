@@ -64,11 +64,19 @@ Rails.application.routes.draw do
   resources :drafts, only: :index
 
   resources :reports, only: :index do
-    get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off", on: :collection
-    get "performance-profiles", to: "reports#performance_profiles", on: :collection
-    get :bulk_recommend_export, on: :collection
-    get :bulk_recommend_empty_export, on: :collection
-    get :bulk_placement_export, on: :collection
+    collection do
+      get "itt-new-starter-data-sign-off", to: "reports#itt_new_starter_data_sign_off"
+      get :bulk_recommend_export
+      get :bulk_recommend_empty_export
+      get :bulk_placement_export
+      scope module: :reports, as: :reports do
+        resources :performance_profiles, path: "performance-profiles", only: %i[index new create] do
+          collection do
+            get "confirmation", to: "performance_profiles#confirmation"
+          end
+        end
+      end
+    end
   end
 
   namespace :bulk_update, path: "bulk-update" do
@@ -87,13 +95,14 @@ Rails.application.routes.draw do
       member { get :cancel, path: "cancel" }
     end
 
-    namespace :trainees do
+    namespace :add_trainees, path: "add-trainees" do
       resources :uploads, only: %i[index show new create destroy] do
         member do
           resources :submissions, only: %i[show create]
+          resource :details, only: :show
         end
       end
-      resources :review_errors, path: "review_errors", only: %i[show], as: :review_errors
+      resources :review_errors, path: "review-errors", only: %i[show]
     end
   end
 

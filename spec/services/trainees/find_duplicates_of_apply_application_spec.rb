@@ -34,6 +34,7 @@ module Trainees
 
     let(:trainee_attributes) do
       {
+        provider: application_record.provider,
         provider_trainee_id: nil,
         first_names: candidate_info["first_name"],
         last_name: candidate_info["last_name"],
@@ -190,6 +191,16 @@ module Trainees
 
       it "returns a match" do
         expect(duplicate_trainees).to be_present
+      end
+    end
+
+    context "deleted trainee with matching attributes" do
+      before do
+        create(:trainee, :discarded, duplicate_trainee_attributes)
+      end
+
+      it "returns no duplicates" do
+        expect(duplicate_trainees).to be_empty
       end
     end
   end

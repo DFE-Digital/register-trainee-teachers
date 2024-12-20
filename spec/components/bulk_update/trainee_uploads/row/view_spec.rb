@@ -30,7 +30,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
 
     BulkUpdate::TraineeUpload.statuses.each_key do |status|
       context "when #{status}" do
-        let(:upload) { build(:bulk_update_trainee_upload, status) }
+        let(:upload) { create(:bulk_update_trainee_upload, status) }
 
         it do
           expect(
@@ -45,7 +45,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
 
   describe "#submitted_at" do
     context "when bulk_update_trainee_upload#submitted_at is nil" do
-      let(:upload) { build(:bulk_update_trainee_upload) }
+      let!(:upload) { create(:bulk_update_trainee_upload) }
 
       it do
         expect(subject.submitted_at).to be_nil
@@ -54,7 +54,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
 
     context "when bulk_update_trainee_upload#submitted_at is not nil" do
       let(:submitted_at) { Time.current }
-      let(:upload) { build(:bulk_update_trainee_upload, submitted_at:) }
+      let(:upload) { create(:bulk_update_trainee_upload, submitted_at:) }
 
       it do
         expect(subject.submitted_at).to eq(submitted_at.to_fs(:govuk_date_and_time))
