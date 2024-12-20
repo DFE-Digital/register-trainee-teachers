@@ -97,8 +97,10 @@
           </p>
 
           <ul class="govuk-list govuk-list--bullet">
-            <li>wait for an email from the Becoming a Teacher support team asking you to re-submit your CSV file, if we’re not able to fix the issue, or</li>
-            <li><%= govuk_link_to "re-submit the CSV file", bulk_update_add_trainees_upload_path(@bulk_update_trainee_upload) %> now</li>
+            <li>
+              wait for an email from the Becoming a Teacher support team asking you to
+              <%= govuk_link_to "re-submit the CSV file", bulk_update_add_trainees_upload_path(@bulk_update_trainee_upload) %>
+            </li>
           </ul>
 
           <p class="govuk-body">

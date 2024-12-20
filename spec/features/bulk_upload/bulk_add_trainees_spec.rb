@@ -746,9 +746,8 @@ private
       expect(page).not_to have_content("Upload the updated CSV file.")
       expect(page).not_to have_content("If there are no errors in the CSV file, it means we could not process the CSV file.")
       expect(page).not_to have_content("You can:")
-      expect(page).not_to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit your CSV file, if we’re not able to fix the issue, or")
+      expect(page).not_to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit the CSV file")
       expect(page).not_to have_link("re-submit the CSV file", href: bulk_update_add_trainees_upload_path(upload))
-      expect(page).not_to have_content("now")
       expect(page).not_to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
     else
       within(".govuk-panel") do
@@ -780,9 +779,8 @@ private
         expect(page).not_to have_content("Upload the updated CSV file.")
         expect(page).not_to have_content("If there are no errors in the CSV file, it means we could not process the CSV file.")
         expect(page).not_to have_content("You can:")
-        expect(page).not_to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit your CSV file, if we’re not able to fix the issue, or")
+        expect(page).not_to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit the CSV file")
         expect(page).not_to have_link("re-submit the CSV file", href: bulk_update_add_trainees_upload_path(upload))
-        expect(page).not_to have_content("now")
         expect(page).not_to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
       else
         expect(page).to have_content("Your submitted #{upload.filename} on #{upload.submitted_at.to_fs(:govuk_date_and_time)} has failed because:")
@@ -797,9 +795,8 @@ private
         expect(page).to have_content("Upload the updated CSV file.")
         expect(page).to have_content("If there are no errors in the CSV file, it means we could not process the CSV file.")
         expect(page).to have_content("You can:")
-        expect(page).to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit your CSV file, if we’re not able to fix the issue, or")
+        expect(page).to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit the CSV file")
         expect(page).to have_link("re-submit the CSV file", href: bulk_update_add_trainees_upload_path(upload))
-        expect(page).to have_content("now")
         expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
         expect(page).to have_content("view your trainee records to check your trainees directly in the service one by on")
         expect(page).to have_content("use the 'Reports' section and export a CSV of your new trainees for the current academic year")
