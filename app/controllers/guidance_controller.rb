@@ -28,7 +28,7 @@ class GuidanceController < ApplicationController
   end
 
   def dates_and_deadlines
-    @performance_profile_sign_off_full_deadline = performance_profile_sign_off_date.strftime("%d %B %Y")
+    @performance_profile_sign_off_full_deadline = performance_profile_sign_off_date.to_fs(:govuk)
     render(layout: "application")
   end
 
@@ -41,11 +41,10 @@ class GuidanceController < ApplicationController
   def performance_profiles
     case sign_off_period
     when :performance_period
-      @current_academic_cycle_label = current_academic_cycle.label
       @previous_academic_cycle_label = previous_academic_cycle.label
       @academic_cycle_for_filter = previous_academic_cycle.start_year
-      @sign_off_deadline = performance_profile_sign_off_date.strftime("%d %B %Y")
-      @sign_off_url = Settings.sign_off_performance_profiles_url
+      @sign_off_deadline = performance_profile_sign_off_date.to_fs(:govuk)
+      @fix_mistakes_email_link = "mailto:becomingateacher@digital.education.gov.uk?subject=Fix mistake in #{@previous_academic_cycle_label} data for performance profiles publication"
       render(layout: "application")
     when :census_period, :outside_period
       render(:performance_profiles_outside, layout: "application")
@@ -60,10 +59,6 @@ private
 
   def performance_profile_sign_off_date
     @performance_profile_sign_off_date ||= previous_academic_cycle.performance_profile_date_range.end
-  end
-
-  def current_academic_cycle
-    @current_academic_cycle ||= AcademicCycle.current
   end
 
   def valid_tabs
