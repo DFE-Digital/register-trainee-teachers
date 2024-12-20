@@ -12,6 +12,14 @@ FactoryBot.define do
       name { WithdrawalReasons::ANOTHER_REASON }
     end
 
+    trait :provider do
+      name { WithdrawalReasons::PROVIDER_REASONS.first }
+    end
+
+    trait :trainee do
+      name { WithdrawalReasons::TRAINEE_REASONS.first }
+    end
+
     trait :with_all_reasons do
       to_create do |_instance|
         WithdrawalReasons::SEED.each do |seed|

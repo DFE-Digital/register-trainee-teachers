@@ -19,8 +19,7 @@ module Withdrawal
     end
 
     def save!
-      assign_attributes_to_trainee
-      trainee.save
+      trainee.trainee_withdrawals.last.update!(date: withdraw_date)
       clear_stash
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_18_211759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -884,7 +884,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
   end
 
   create_table "trainee_withdrawal_reasons", force: :cascade do |t|
-    t.bigint "trainee_id", null: false
+    t.bigint "trainee_id"
     t.bigint "withdrawal_reason_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
