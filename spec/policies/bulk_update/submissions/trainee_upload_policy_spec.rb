@@ -26,7 +26,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
       end
     end
 
-    %i[in_progress succeeded].each do |status|
+    %i[in_progress succeeded failed].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
@@ -40,7 +40,7 @@ RSpec.describe BulkUpdate::Submissions::TraineeUploadPolicy, type: :policy do
       end
     end
 
-    %i[pending failed cancelled].each do |status|
+    %i[pending cancelled].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 

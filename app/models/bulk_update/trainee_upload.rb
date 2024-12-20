@@ -54,7 +54,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     end
 
     event :cancel do
-      transition %i[validated] => :cancelled
+      transition %i[validated failed] => :cancelled
     end
 
     event :fail do
