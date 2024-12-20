@@ -27,13 +27,13 @@
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
   format: 60 character maxlength
-  example: "“Smith”"
+  example: '"Smith"'
 - field_name: Last name
   technical: last_name
   hesa_alignment: SURNAME
   description: This field is the student's family name.
   format: 60 character length
-  example: "“Jane”"
+  example: '"Jane"'
 - field_name: Previous last name
   technical: previous_last_name
   hesa_alignment: PSURNAME
@@ -72,7 +72,7 @@
 
     99 Not available
   example: |-
-    “10”
+    "10"
 
     HESA code 96 ‘Information refused’ imports into Register as ‘Prefer not to say’
 
@@ -83,19 +83,19 @@
   description: This field collects email addresses for trainees on Initial Teacher
     Training courses.
   format: 80 character length
-  example: “jane.smith@example.com”
+  example: '"jane.smith@example.com"'
 - field_name: Nationality
   technical: nationality
   hesa_alignment: NATION
   description: This field defines the country of legal nationality.
   format: "[HESA nationality codes](https://www.hesa.ac.uk/collection/c24053/e/nation)"
-  example: “GB“
+  example: '"GB"'
 - field_name: Ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
   description: This field records a student's ethnicity.
   format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
-  example: “103” for example is the code to use if the ethnicity is Asian - Indian
+  example: "103" for example is the code to use if the ethnicity is Asian - Indian
     or Indian British.
 - field_name: Disabilities
   technical: disability1 to disability9
@@ -103,7 +103,7 @@
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
-  example: “51” for example is the code to use for learning difference such as dyslexia,
+  example: "51" for example is the code to use for learning difference such as dyslexia,
     dyspraxia or ADHD
 - field_name: ITT Aim
   technical: itt_aim
@@ -115,14 +115,14 @@
     201 Professional status only
 
     202 Both professional status and academic award
-  example: “201” for example is the code to use if it is Professional status only
+  example: '"201" for example is the code to use if it is Professional status only'
 - field_name: Training route
   technical: training_route
   hesa_alignment: ENTRYRTE
   description: This field describes the route by which the student has accessed Initial
     Teacher Training provision.
   format: "[HESA training routes reference codes](https://www.hesa.ac.uk/collection/c24053/e/entryrte)"
-  example: “03” for example is code to use if it is School Direct salaried
+  example: '"03" for example is code to use if it is School Direct salaried'
 - field_name: Qualification Aim
   technical: itt_qualification_aim
   hesa_alignment: QLAIM
@@ -130,7 +130,7 @@
     Training course and is intended to record the qualification that will be attained
     as a result of successful completion of studies.
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
-  example: “007” for example is the code used for a BA qualification
+  example: '"007" for example is the code used for a BA qualification'
 - field_name: Course ITT subject
   technical: course_subject_one, course_subject_two, course_subject_three
   hesa_alignment: SBJCA
@@ -139,7 +139,7 @@
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
-  example: “100048” for example is the code used for design as a subject
+  example: '"100048" for example is the code used for design as a subject'
 - field_name: Study mode
   technical: study_mode
   hesa_alignment: MODE
@@ -155,7 +155,7 @@
     63 Dormant - previously full-time
 
     64 Dormant - previously part-time
-  example: “01”
+  example: '"01"'
 - field_name: ITT start date
   technical: itt_start_date
   hesa_alignment: ITTSTARTDATE
@@ -175,9 +175,9 @@
   description: This field describes in more detail the student's initial teacher
     training aim
   format: "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
-  example: "“13916” for example is the code used for Accredited by the Department
+  example: '"13916" for example is the code used for Accredited by the Department
     for Education (DfE) for the purpose of delivering initial teacher training programmes
-    to achieve Qualified Teacher Status (QTS): Ages 7-14"
+    to achieve Qualified Teacher Status (QTS): Ages 7-14'
 - field_name: Course study mode
   technical: study_mode
   hesa_alignment: MODE
@@ -193,7 +193,7 @@
     63 Dormant - previously full-time
 
     64 Dormant - previously part-time
-  example: “01”
+  example: '"01"'
 - field_name: Course year
   technical: course_year
   hesa_alignment: YEARPRG
@@ -208,14 +208,14 @@
     2 Second year
 
     3 Third year
-  example: “1” as an example of using the code for First year.
+  example: '"1" as an example of using the code for First year.'
 - field_name: Lead partner URN
   technical: lead_school_urn
   hesa_alignment: SDLEAD
   description: This field collects the lead school for School Direct trainees
   format: Must be a 6-digit number
   example: |-
-    “115795” 
+    '"115795"' 
 
     Use this code 9000 if the provider does not have a URN
 - field_name: Employing school URN
@@ -225,7 +225,7 @@
     trainees.
   format: Must be a 6-digit number
   example: |-
-    “115795” 
+    '"115795"' 
 
     Use code 900020 if the provider does not have a URN
 - field_name: Trainee start date
@@ -247,7 +247,7 @@
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
   example: |-
-    “115795”
+    '"115795"'
 
     Use 900020 if the organisation does not have a URN.
 - field_name: Fund Code
@@ -259,7 +259,7 @@
     2 Not fundable by funding council/body
 
     7 Eligible for funding from the DfE
-  example: “2”
+  example: '"2"'
 - field_name: Funding method
   technical: funding_method
   hesa_alignment: BURSLEV
@@ -278,8 +278,8 @@
 
     D Postgraduate bursary
 
-    E Grant"
-  example: “E”
+    E Grant
+  example: '"E"'
 - field_name: Training initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
@@ -301,7 +301,7 @@
 
     036 International relocation payment
   example: |-
-    “026” is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
+    '"026"' is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
 
     The following HESA codes are not mapped to Register\:
 
@@ -333,7 +333,7 @@
     
     036 International relocation payment
   example: |-
-    “026” is an example of using the code for Now Teach
+    "026" is an example of using the code for Now Teach
 
     HESA allows you to add 2 initiatives, but Register will only import the first one.
 
@@ -349,7 +349,7 @@
   hesa_alignment: DEGTYPE
   description: This records the student's previous qualification
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
-  example: “051” for example is Bachelor of Arts (BA)
+  example: '"051"' for example is Bachelor of Arts (BA)
 - field_name: Non UK degree types
   technical: non_uk_degree
   hesa_alignment: Non HESA Field
@@ -381,12 +381,12 @@
   description: This records the provider where the student's previous qualification
     was awarded, if a UK provider.
   format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
-  example: “1101” for example is Hull College
+  example: '"1101" for example is Hull College'
 - field_name: Degree country
   technical: country
   hesa_alignment: DEGCTRY
   description: This records the country where the student's previous qualification
     was awarded
   format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
-  example: “AU” is an example of using the previous qualification country code for 
-    Australia
+  example: '"AU" is an example of using the previous qualification country code for 
+    Australia'
