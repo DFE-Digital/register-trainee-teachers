@@ -5,7 +5,7 @@ module CsvDocs
     DEFAULT_PAGE = "add_trainees"
 
     def show
-      render(params[:page] || DEFAULT_PAGE)
+      render DEFAULT_PAGE
     end
   end
 end
