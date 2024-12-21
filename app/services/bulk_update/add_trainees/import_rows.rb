@@ -11,6 +11,8 @@ module BulkUpdate
         self.trainee_upload = trainee_upload
       end
 
+      EMPTY_CSV_TEMPLATE_PATH = "/csv/bulk_create_trainee.csv"
+
       TRAINEE_HEADERS = {
         "Provider Trainee ID" => "provider_trainee_id",
         "Application ID" => "application_id",
