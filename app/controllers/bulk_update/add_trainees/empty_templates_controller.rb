@@ -9,7 +9,7 @@ module BulkUpdate
         respond_to do |format|
           format.csv do
             send_file(
-              Rails.root.join("public/csv/bulk_create_trainee.csv"),
+              Rails.public_path.join("csv/bulk_create_trainee.csv"),
               disposition: :attachment,
             )
           end
