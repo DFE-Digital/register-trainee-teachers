@@ -44,3 +44,23 @@ task generate_trainee_test_csv_with_invalid_data: :environment do
     with_invalid_records: true,
   )
 end
+
+desc "Disposable task to generate some fake CSV data with missing data."
+task generate_trainee_test_csv_with_missing_data: :environment do
+  CSV.open("tmp/trainees_with_missing_data_5.csv", "wb") do |csv|
+    csv << column_names
+    5.times do |_row|
+      csv << remove_mandatory_fields(csv_row)
+    end
+  end
+end
+
+desc "Disposable task to generate some fake CSV data with invalid data values."
+task generate_trainee_test_csv_with_missing_data: :environment do
+  CSV.open("tmp/trainees_with_invalid_data_5.csv", "wb") do |csv|
+    csv << column_names
+    5.times do |_row|
+      csv << invalidate_fields(csv_row)
+    end
+  end
+end
