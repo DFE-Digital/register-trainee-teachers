@@ -52,6 +52,16 @@ module BulkUpdate
       ).with_indifferent_access
     end
 
+    def degree_attributes
+# UK degree type
+# Non UK degree types
+# Degree subject
+# UK degree grade
+# Degree graduation year
+# Degree UK awarding institution
+# Degree country
+    end
+
     def csv_row
       row_values = generate_row_data
       column_labels.map do |column_label|
