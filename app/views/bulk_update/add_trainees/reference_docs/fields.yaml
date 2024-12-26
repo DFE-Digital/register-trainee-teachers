@@ -95,16 +95,15 @@
   hesa_alignment: ETHNIC
   description: This field records a student's ethnicity.
   format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
-  example: "103" for example is the code to use if the ethnicity is Asian - Indian
-    or Indian British.
+  example: '"103" for example is the code to use if the ethnicity is Asian - Indian
+    or Indian British.'
 - field_name: Disabilities
   technical: disability1 to disability9
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
-  example: "51" for example is the code to use for learning difference such as dyslexia,
-    dyspraxia or ADHD
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: ITT Aim
   technical: itt_aim
   hesa_alignment: ITTAIM
@@ -215,7 +214,7 @@
   description: This field collects the lead school for School Direct trainees
   format: Must be a 6-digit number
   example: |-
-    '"115795"' 
+    "115795" 
 
     Use this code 9000 if the provider does not have a URN
 - field_name: Employing school URN
@@ -225,7 +224,7 @@
     trainees.
   format: Must be a 6-digit number
   example: |-
-    '"115795"' 
+    "115795" 
 
     Use code 900020 if the provider does not have a URN
 - field_name: Trainee start date
@@ -301,7 +300,7 @@
 
     036 International relocation payment
   example: |-
-    '"026"' is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
+    "026" is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
 
     The following HESA codes are not mapped to Register\:
 
@@ -349,13 +348,13 @@
   hesa_alignment: DEGTYPE
   description: This records the student's previous qualification
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
-  example: '"051"' for example is Bachelor of Arts (BA)
+  example: '"051" for example is Bachelor of Arts (BA)'
 - field_name: Non UK degree types
   technical: non_uk_degree
   hesa_alignment: Non HESA Field
   description:
   format:
-  example: “98” Degree equivalent (inc. foreign qualifications)
+  example: '"98" Degree equivalent (inc. foreign qualifications)'
 - field_name: Degree subject
   technical: subject
   hesa_alignment: DEGSBJ
@@ -368,7 +367,7 @@
   description: This field is used to indicate the qualification class of the student's
     previous degree.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
-  example: “01” for example is First class honours
+  example: '"01" for example is First class honours'
 - field_name: Degree graduation year
   technical: graduation_year
   hesa_alignment: DEGENDDT
