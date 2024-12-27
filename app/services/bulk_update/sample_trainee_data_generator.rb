@@ -4,18 +4,27 @@ module BulkUpdate
   class SampleTraineeDataGenerator
     include ServicePattern
 
-    attr_accessor :file_name, :count, :with_invalid_records, :with_incomplete_records
+    attr_accessor :file_name,
+      :count,
+      :with_invalid_records,
+      :with_incomplete_records,
+      :with_degree,
+      :with_placement
 
     def initialize(
         file_name:,
         count:,
         with_invalid_records: false,
-        with_incomplete_records: false
+        with_incomplete_records: false,
+        with_degree: false,
+        with_placement: false
     )
       self.file_name = file_name
       self.count = count
       self.with_invalid_records = with_invalid_records
       self.with_incomplete_records = with_incomplete_records
+      self.with_degree = with_degree
+      self.with_placement = with_placement
     end
 
     def call
@@ -49,33 +58,47 @@ module BulkUpdate
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.keys.sample,
         sex: Hesa::CodeSets::Sexes::MAPPING.keys.sample,
         course_age_range: Hesa::CodeSets::AgeRanges::MAPPING.keys.sample,
+      ).merge(
+        degree_attributes,
+      ).merge(
+        placement_attributes,
       ).with_indifferent_access
     end
 
+    def placement_attributes
+      return {} unless with_placement
+
+      {
+        urn: Faker::Number.unique.number(digits: 6).to_s,
+      }
+    end
+
     def degree_attributes
-# UK degree type
-# Non UK degree types
-# Degree subject
-# UK degree grade
-# Degree graduation year
-# Degree UK awarding institution
-# Degree country
+      return {} unless with_degree
+
+      {
+        uk_degree_type: CodeSets::DegreeTypes::MAPPING.values.sample[:hesa_code],
+        degree_subject: DfE::ReferenceData::Degrees::GRADES.all.map(&:hesa_code).compact.sample,
+        degree_grade: CodeSets::Grades::MAPPING.values.map { |grade| grade[:hesa_code] }.compact.sample,
+        degree_awarding_institution: DfE::ReferenceData::Degrees::INSTITUTIONS.all.map(&:hesa_itt_code).compact.sample,
+        degree_graduation_year: Date.new(rand(2000..2020), 8, 1),
+      }
     end
 
     def csv_row
       row_values = generate_row_data
       column_labels.map do |column_label|
-        attribute_name = BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS[column_label]
+        attribute_name = BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS[column_label]
         row_values[attribute_name]
       end
     end
 
     def column_labels
-      @column_labels ||= BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.keys
+      @column_labels ||= BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
     end
 
     def column_ids
-      @column_ids ||= BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.values
+      @column_ids ||= BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.values
     end
 
     def adjust_row(row)
