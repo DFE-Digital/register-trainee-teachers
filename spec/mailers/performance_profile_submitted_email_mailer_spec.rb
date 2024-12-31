@@ -5,7 +5,7 @@ require "rails_helper"
 describe PerformanceProfileSubmittedEmailMailer do
   context "sending an email to a user" do
     let(:user) { create(:user) }
-    let(:submitted_at) { Time.new(2025, 1, 12, 12, 30) }
+    let(:submitted_at) { Time.zone.local(2025, 1, 12, 12, 30) }
     let(:mail) { described_class.generate(user:, submitted_at:) }
 
     before { mail }
