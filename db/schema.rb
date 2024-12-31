@@ -23,7 +23,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
+
+    t.exclusion_constraint "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone) WITH &&", using: :gist, name: "academic_cycles_date_range"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -259,6 +260,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
 
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
+    t.text "file"
+    t.string "file_name"
     t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

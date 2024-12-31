@@ -4,16 +4,15 @@
 #
 # Table name: bulk_update_trainee_uploads
 #
-#  id                 :bigint           not null, primary key
-#  file               :text
-#  file_name          :string
-#  number_of_trainees :integer
-#  status             :string           default("pending")
-#  submitted_at       :datetime
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
-#  provider_id        :bigint           not null
-#  submitted_by_id    :bigint
+#  id              :bigint           not null, primary key
+#  file            :text
+#  file_name       :string
+#  status          :string           default("pending")
+#  submitted_at    :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  provider_id     :bigint           not null
+#  submitted_by_id :bigint
 #
 # Indexes
 #
