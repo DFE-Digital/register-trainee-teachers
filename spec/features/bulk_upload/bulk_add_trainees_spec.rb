@@ -217,6 +217,37 @@ feature "bulk add trainees" do
         then_i_see_the_unauthorized_message
       end
 
+      scenario "the bulk add trainees page is visible and I upload a file with placements" do
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_attach_a_valid_file_with_placements
+        and_i_click_the_upload_button
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_the_review_page_without_validation_errors
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+
+        and_i_see_the_summary_page
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees_with_placements
+      end
+
       scenario "when I try to look at the status of a different providers upload" do
         when_there_is_a_bulk_update_trainee_upload
 
@@ -642,6 +673,14 @@ private
     and_i_attach_a_file(content, filename)
   end
 
+  def and_i_attach_a_valid_file_with_placements
+    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_placement.csv")
+    filename = File.basename(file)
+    content  = file.read
+
+    and_i_attach_a_file(content, filename)
+  end
+
   def when_i_attach_a_file_with_invalid_rows
     csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read
     and_i_attach_a_file(csv)
@@ -722,6 +761,7 @@ private
   end
 
   def when_i_click_the_submit_button
+    require 'pry'; binding.pry
     click_on "Submit"
   end
 
@@ -867,6 +907,17 @@ private
     expect(page).to have_content("Usha Rolfson")
     expect(page).to have_content("Fidel Hessel")
     expect(page).to have_content("Melony Kilback")
+  end
+
+  def then_i_can_see_the_new_trainees_with_placements
+    expect(page).to have_content("Jeffery Halvorson")
+    expect(page).to have_content("Farah Wolff")
+    expect(page).to have_content("Denna Jones")
+    expect(page).to have_content("Rudolf McLaughlin")
+    expect(page).to have_content("Elina Rolfson")
+
+    click_on "Jeffery Halvorson"
+    save_and_open_page
   end
 
   def when_the_upload_has_failed_with_validation_errors
