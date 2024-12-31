@@ -50,6 +50,7 @@ module Reports
       @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new(sign_off: sign_off, provider: current_user.organisation, user: current_user)
 
       if @performance_profile_sign_off_form.save!
+        email_provider_users
         redirect_to(confirmation_reports_performance_profiles_path)
       else
         @previous_academic_cycle = AcademicCycle.previous
@@ -84,6 +85,10 @@ module Reports
 
     def base_trainee_scope
       policy_scope(Trainee.includes({ provider: [:courses] }, :start_academic_cycle, :end_academic_cycle).not_draft)
+    end
+
+    def email_provider_users
+      SendPerformanceProfileSubmittedEmailService.call(provider: current_user.organisation, submitted_at: Time.zone.now)
     end
 
     def sign_off
