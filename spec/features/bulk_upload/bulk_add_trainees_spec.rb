@@ -761,7 +761,6 @@ private
   end
 
   def when_i_click_the_submit_button
-    require 'pry'; binding.pry
     click_on "Submit"
   end
 
@@ -917,7 +916,11 @@ private
     expect(page).to have_content("Elina Rolfson")
 
     click_on "Jeffery Halvorson"
-    save_and_open_page
+
+    expect(page).to have_content("Placement 1")
+    expect(page).to have_content("URN 587111")
+    expect(page).not_to have_content("First placement is missing")
+    expect(page).to have_content("Second placement is missing")
   end
 
   def when_the_upload_has_failed_with_validation_errors
