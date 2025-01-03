@@ -89,4 +89,5 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :sidekiq
   config.public_file_server.enabled = true
+  config.colorize_logging = true
 end
