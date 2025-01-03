@@ -14,7 +14,7 @@ module BulkUpdate
     let(:count) { 1 }
 
     after do
-      File.delete(file_name) if File.exist?(file_name)
+      FileUtils.rm_f(file_name)
     end
 
     describe "#call" do
