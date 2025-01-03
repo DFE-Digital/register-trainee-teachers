@@ -53,11 +53,14 @@ module BulkUpdate
         disability3: Hesa::CodeSets::Disabilities::MAPPING.keys.sample,
         previous_last_name: Faker::Name.last_name,
         nationality: "GB",
-        training_route: "11",
+        training_route: with_degree ? "03" : "11",
         study_mode: Hesa::CodeSets::StudyModes::MAPPING.keys.sample,
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.keys.sample,
         sex: Hesa::CodeSets::Sexes::MAPPING.keys.sample,
         course_age_range: Hesa::CodeSets::AgeRanges::MAPPING.keys.sample,
+        itt_start_date: "2024-10-01",
+        trainee_start_date: "2024-10-01",
+        start_date: "2024-10-01",
       ).merge(
         degree_attributes,
       ).merge(
@@ -77,8 +80,8 @@ module BulkUpdate
       return {} unless with_degree
 
       {
-        uk_degree_type: CodeSets::DegreeTypes::MAPPING.values.sample[:hesa_code],
-        degree_subject: DfE::ReferenceData::Degrees::GRADES.all.map(&:hesa_code).compact.sample,
+        uk_degree_type: DfE::ReferenceData::Degrees::TYPES.all.map(&:hesa_itt_code).compact.sample,
+        degree_subject: DfE::ReferenceData::Degrees::SINGLE_SUBJECTS.all.map(&:hecos_code).compact.sample,
         degree_grade: CodeSets::Grades::MAPPING.values.map { |grade| grade[:hesa_code] }.compact.sample,
         degree_awarding_institution: DfE::ReferenceData::Degrees::INSTITUTIONS.all.map(&:hesa_itt_code).compact.sample,
         degree_graduation_year: Date.new(rand(2000..2020), 8, 1),
