@@ -23,7 +23,7 @@ module Trainees
       end
 
       def next_page
-        edit_trainee_withdrawal_reason_path(trainee)
+        edit_trainee_withdrawal_trigger_path(trainee)
       end
 
       def form_params

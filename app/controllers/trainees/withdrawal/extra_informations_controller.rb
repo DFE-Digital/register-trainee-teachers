@@ -14,7 +14,7 @@ module Trainees
       end
 
       def next_page
-        edit_trainee_withdrawal_confirm_detail_path(trainee)
+        edit_trainee_withdrawal_future_interest_path(trainee)
       end
     end
   end

@@ -54,9 +54,19 @@ module Withdrawal
     end
 
     def reasons_html_safe
-      data_model.withdrawal_reasons.map do |reason|
+      return unless withdrawal_reasons
+
+      withdrawal_reasons.map do |reason|
         t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("<br>").html_safe
+    end
+
+    def withdrawal_reasons
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.withdrawal_reasons
+      else
+        data_model.withdrawal_reasons
+      end
     end
 
     def details

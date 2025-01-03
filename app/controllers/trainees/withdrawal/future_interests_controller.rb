@@ -2,19 +2,19 @@
 
 module Trainees
   module Withdrawal
-    class ReasonsController < Base
+    class FutureInterestsController < Base
     private
 
       def form_class
-        ::Withdrawal::ReasonForm
+        ::Withdrawal::FutureInterestForm
       end
 
       def attribute_names
-        form_class::FIELDS
+        :future_interest
       end
 
       def next_page
-        edit_trainee_withdrawal_future_interest_path(trainee)
+        edit_trainee_withdrawal_confirm_detail_path(trainee)
       end
     end
   end

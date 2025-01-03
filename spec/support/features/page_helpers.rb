@@ -262,12 +262,24 @@ module Features
       @trainee_admin_page ||= PageObjects::Trainees::Admin.new
     end
 
+    def withdrawal_start_page
+      @withdrawal_start_page ||= PageObjects::Trainees::Withdrawal::Start.new
+    end
+
     def withdrawal_date_page
       @withdrawal_date_page ||= PageObjects::Trainees::Withdrawal::Date.new
     end
 
     def withdrawal_reason_page
       @withdrawal_reason_page ||= PageObjects::Trainees::Withdrawal::Reason.new
+    end
+
+    def withdrawal_trigger_page
+      @withdrawal_trigger_page ||= PageObjects::Trainees::Withdrawal::Trigger.new
+    end
+
+    def withdrawal_future_interest_page
+      @withdrawal_future_interest_page ||= PageObjects::Trainees::Withdrawal::FutureInterest.new
     end
 
     def withdrawal_extra_information_page
