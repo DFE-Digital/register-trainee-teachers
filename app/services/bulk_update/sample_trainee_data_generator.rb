@@ -5,19 +5,19 @@ module BulkUpdate
     include ServicePattern
 
     attr_accessor :file_name,
-      :count,
-      :with_invalid_records,
-      :with_incomplete_records,
-      :with_degree,
-      :with_placement
+                  :count,
+                  :with_invalid_records,
+                  :with_incomplete_records,
+                  :with_degree,
+                  :with_placement
 
     def initialize(
-        file_name:,
-        count:,
-        with_invalid_records: false,
-        with_incomplete_records: false,
-        with_degree: false,
-        with_placement: false
+      file_name:,
+      count:,
+      with_invalid_records: false,
+      with_incomplete_records: false,
+      with_degree: false,
+      with_placement: false
     )
       self.file_name = file_name
       self.count = count
@@ -129,4 +129,3 @@ module BulkUpdate
     end
   end
 end
-

@@ -12,7 +12,7 @@ module BulkUpdate
     let(:count) { 1 }
 
     after do
-      File.delete(file_name) if File.exist?(file_name)
+      FileUtils.rm_f(file_name)
     end
 
     describe "#call" do
@@ -22,9 +22,7 @@ module BulkUpdate
           expect(File.exist?(file_name)).to be true
         end
       end
-    end
 
-    describe "#call" do
       context "with invalid data" do
         let(:with_invalid_records) { true }
 
@@ -33,9 +31,7 @@ module BulkUpdate
           expect(File.exist?(file_name)).to be true
         end
       end
-    end
 
-    describe "#call" do
       context "with incomplete data" do
         let(:with_incomplete_records) { true }
 
