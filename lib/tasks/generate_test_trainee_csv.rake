@@ -17,6 +17,16 @@ task generate_trainee_test_csv_with_placement: :environment do
   )
 end
 
+desc "Generate some valid fake CSV data including a degree."
+task generate_trainee_test_csv_with_degree: :environment do
+  BulkUpdate::SampleTraineeDataGenerator.call(
+    file_name: "tmp/trainees_degree_5.csv",
+    count: 5,
+    with_placement: false,
+    with_degree: true,
+  )
+end
+
 desc "Generate some valid fake CSV data including a placement and degree."
 task generate_trainee_test_csv_with_placement_and_degree: :environment do
   BulkUpdate::SampleTraineeDataGenerator.call(
