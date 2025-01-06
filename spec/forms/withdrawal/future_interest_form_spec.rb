@@ -24,7 +24,7 @@ module Withdrawal
 
     describe "#stash" do
       it "uses FormStore to temporarily save the fields under a key combination of trainee withdrawal ID and future interest" do
-        expect(form_store).to receive(:set).with(trainee.id, :withdrawal_future_interest, subject.fields)
+        expect(form_store).to receive(:set).with(trainee.id, :future_interest, subject.fields)
 
         subject.stash
       end
