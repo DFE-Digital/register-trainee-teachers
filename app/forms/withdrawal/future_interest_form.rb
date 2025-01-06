@@ -18,7 +18,7 @@ module Withdrawal
   private
 
     def form_store_key
-      :withdrawal_future_interest
+      :future_interest
     end
 
     def compute_fields
