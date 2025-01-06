@@ -8,6 +8,8 @@ module Withdrawal
 
     validates :trigger, presence: true, inclusion: { in: %w[provider trainee] }
 
+    # TODO: remove reasons if trigger is changed on stash
+
     def save!
       withdrawal = trainee.trainee_withdrawals.last
       withdrawal.update!(trigger:) if trigger.present?
