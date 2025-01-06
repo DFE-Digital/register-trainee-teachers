@@ -19,6 +19,7 @@ module Withdrawal
       @rows ||= [
         start_date,
         withdraw_date_from_course,
+        withdrawal_trigger,
         reasons,
         future_interest_in_teaching,
       ].compact
@@ -49,6 +50,22 @@ module Withdrawal
         data_model.trainee_withdrawals&.last&.date
       else
         data_model.withdraw_date
+      end
+    end
+
+    def withdrawal_trigger
+      mappable_field(
+        t("views.forms.withdrawal_trigger.#{trigger}.label"),
+        "How the trainee withdrew",
+        edit_trainee_withdrawal_trigger_path(trainee),
+      )
+    end
+
+    def trigger
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.trigger
+      else
+        data_model.trigger
       end
     end
 

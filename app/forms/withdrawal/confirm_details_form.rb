@@ -13,6 +13,7 @@ module Withdrawal
     delegate :id, to: :trainee
     delegate :withdrawal_reasons, to: :reasons_form
     delegate :future_interest, to: :future_interest_form
+    delegate :trigger, to: :trigger_form
 
     def initialize(trainee)
       @trainee = trainee
