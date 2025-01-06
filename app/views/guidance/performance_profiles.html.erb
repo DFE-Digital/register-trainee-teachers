@@ -10,17 +10,24 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">
-      Sign off your list of trainees from <%= @previous_academic_cycle_label %> for the performance profiles publication
+      Signing off trainees for the performance profiles publication
     </h1>
+
     <p class="govuk-body">
-      You need to sign off your list of trainee teachers from the
-      <%= @previous_academic_cycle_label %> academic year by
-      <%= @sign_off_deadline %> at 11:59pm.
+      Each year, you need to sign off your teacher trainee data from the previous
+      academic year in Register teacher trainees (Register).
     </p>
     <p class="govuk-body">
-      This is so that the data can be included in the annual initial teacher
-      training performance profiles publication. This will be published on
-      GOV.UK.
+      You’ll be asked to sign off performance profile data for registered trainees
+      with a course outcome in the 2023 to 2024 academic year, if you were an
+      accredited provider at this time.
+    </p>
+    <p class="govuk-body">
+      Registered trainees with a course outcome are trainees awarded qualified
+      teacher status (QTS) or who have withdrawn.
+    </p>
+    <p class="govuk-body">
+      This performance profile sign off period’s deadline is <%= @sign_off_deadline %>.
     </p>
 
     <h2 class="govuk-heading-m">Find your trainee data</h2>
@@ -31,12 +38,11 @@
     </p>
     <ul class="govuk-list govuk-list--bullet">
       <li>
-        downloading a
-        <a href=<%= reports_performance_profiles_path %> class="govuk-link">report with the data you need to check</a>
+        downloading a <%= govuk_link_to("report with the data you need to check", reports_performance_profiles_path) %>
       </li>
       <li>
-        exporting a
-        <a href=<%= trainees_path(academic_year: [@academic_cycle_for_filter]) %> class="govuk-link">list of registered trainees filtered to show the <%= @previous_academic_cycle_label %> academic year</a>
+        exporting a <%= govuk_link_to("list of registered trainees filtered to show the
+           #{@previous_academic_cycle_label} academic year", trainees_path(academic_year: [@academic_cycle_for_filter])) %>
       </li>
     </ul>
 
@@ -48,31 +54,79 @@
     <ul class="govuk-list govuk-list--bullet">
       <li>course details</li>
       <li>status</li>
-      <li>the date they were awarded qualified teacher status (QTS) or early years teacher status (EYTS), or deferred or withdrew from the course - unless they're still studying</li>
-      <li>a minimum of 2 placements for trainees that were QTS or EYTS awarded in the <%= @previous_academic_cycle_label %> academic year</li>
+      <li>the date they were awarded qualified teacher status (QTS) or early years
+        teacher status (EYTS), or deferred or withdrew from the course - unless
+        they're still studying</li>
+      <li>2 placements for trainees that were QTS awarded</li>
     </ul>
+    <p class="govuk-body">
+      If you’re an accredited provider who offered International qualified teacher
+      status (iQTS) in the 2023 to 2024 academic year, you need to include at least
+      one placement school in your iQTS trainee records.
+    </p>
+    <p class="govuk-body">
+      Find out more information about how to <%= govuk_link_to("manage your placement data in Register", manage_placements_guidance_path) %>.
+    </p>
 
     <h2 class="govuk-heading-m">Fix mistakes in your trainee data</h2>
-    <p class="govuk-body">You need to fix any mistakes before you sign off the data. How you do this depends on the type of organisation you work for.</p>
-
     <p class="govuk-body">
-      If the trainee is shown in this service as awarded or withdrawn, you should email
-      <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Fix mistake in <%= @previous_academic_cycle_label %> data for performance profiles publication">becomingateacher@digital.education.gov.uk</a>.
+      You need to fix any mistakes before you sign off the data.
+      How you do this depends on the type of organisation you work for.
     </p>
-    <p class="govuk-body">If the trainee is shown in this service as actively training or deferred, you should make the change in this service.</p>
+
+    <h3 class="govuk-heading-s">School centred initial teacher training (SCITT) providers</h3>
+    <p class="govuk-body">
+      If you notice a mistake, and the trainee is shown in this service as awarded or withdrawn,
+      you should email <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>.
+      Only the Becoming a Teacher team can edit this record for you.
+    </p>
+    <p class="govuk-body">
+      If you notice a mistake, for example, an incorrect start date,
+      and the trainee is shown in this service as actively training or deferred,
+      you should make the change in this service.
+    </p>
+
+    <h3 class="govuk-heading-s">Higher education institution (HEI) providers </h3>
+    <p class="govuk-body">
+      If you notice a mistake, and the trainee is shown in this service as awarded or withdrawn,
+      you should email <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>.
+      Only the Becoming a Teacher team can edit this record for you.
+    </p>
+    <p class="govuk-body">
+      If you notice a mistake, for example, an incorrect start date,
+      and the trainee is shown in this service as actively training or deferred,
+      you should:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        make the change through the Higher Education Statistics Agency (HESA)
+        if the trainee was registered through HESA and is in the 2023 to 2024
+        initial teacher training (ITT) collection
+      </li>
+      <li>
+        email <%= govuk_link_to("becomingateacher@digital.education.gov.uk", @fix_mistakes_email_link) %>
+        if the trainee was registered through HESA but is not in the 2023 to 2024 ITT collection
+      </li>
+      <li>
+        make the change in this service if the trainee was not registered through HESA
+      </li>
+    </ul>
 
     <h2 class="govuk-heading-m">Sign off your trainee data</h2>
     <p class="govuk-body">
-      You will need to complete
-      <a href=<%= @sign_off_url %> class="govuk-link" rel="noreferrer noopener" target="_blank">a form to sign off
-      the data</a> on behalf of your organisation.
+      A person from your organisation must <%= govuk_link_to("complete a form to sign off the data", new_reports_performance_profile_path) %>
     </p>
 
     <h2 class="govuk-heading-m">How your trainee data will be used</h2>
     <p class="govuk-body">
-      Read the <a href="https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-performance-profiles-methodology" class="govuk-link" rel="noreferrer noopener" target="_blank">ITT performance profiles methodology (opens in a new tab)</a> to find out how your trainee data will be used.
+      Read the <%= govuk_link_to("ITT performance profiles methodology",
+        "https://explore-education-statistics.service.gov.uk/methodology/initial-teacher-training-performance-profiles-methodology",
+        new_tab: true) %> to find out how your trainee data will be used.
     </p>
-    <p class="govuk-body">Some trainees will not be included in the ITT performance profiles publication. For example, trainees who withdrew within 90 days of the course start will not be included.</p>
+    <p class="govuk-body">
+      Some trainees will not be included in the ITT performance profiles publication.
+      For example, trainees who withdrew within 90 days of the course start will not be included.
+    </p>
   </div>
   </div>
 </div>
