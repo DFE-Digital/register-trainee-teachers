@@ -77,7 +77,7 @@
       <% else %>
         <%= register_form_with(
           model: @bulk_update_trainee_upload,
-          url: bulk_update_add_trainees_submissions_path(@bulk_update_trainee_upload),
+          url: bulk_update_add_trainees_submission_path(@bulk_update_trainee_upload),
           method: :post
         ) do |f| %>
           <%= f.govuk_submit("Submit") %>

@@ -4,7 +4,7 @@ module BulkUpdate
   module Submissions
     class TraineeUploadPolicy < BulkUpdate::TraineeUploadPolicy
       def show?
-        super && (trainee_upload.in_progress? || trainee_upload.succeeded?)
+        super && (trainee_upload.in_progress? || trainee_upload.succeeded? || trainee_upload.failed?)
       end
 
       def create?
