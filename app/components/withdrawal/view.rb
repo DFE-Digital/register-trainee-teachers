@@ -18,10 +18,9 @@ module Withdrawal
     def rows
       @rows ||= [
         start_date,
-        withdraw_date,
+        withdraw_date_from_course,
         reasons,
-        details,
-        details_dfe,
+        future_interest_in_teaching,
       ].compact
     end
 
@@ -37,12 +36,20 @@ module Withdrawal
       )
     end
 
-    def withdraw_date
+    def withdraw_date_from_course
       mappable_field(
-        data_model.withdraw_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
+        withdraw_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
         "Date the trainee withdrew",
         edit_trainee_withdrawal_date_path(trainee),
       )
+    end
+
+    def withdraw_date
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.date
+      else
+        data_model.withdraw_date
+      end
     end
 
     def reasons
@@ -69,20 +76,20 @@ module Withdrawal
       end
     end
 
-    def details
+    def future_interest_in_teaching
       mappable_field(
-        data_model.withdraw_reasons_details.presence || "-",
-        "Details of why the trainee withdrew",
-        edit_trainee_withdrawal_extra_information_path(trainee),
+        t("views.forms.withdrawal_future_interest.#{future_interest}.label"),
+        "Future interest in teaching",
+        edit_trainee_withdrawal_future_interest_path(trainee),
       )
     end
 
-    def details_dfe
-      mappable_field(
-        data_model.withdraw_reasons_dfe_details.presence || "No",
-        details_dfe_label,
-        edit_trainee_withdrawal_extra_information_path(trainee),
-      )
+    def future_interest
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.future_interest
+      else
+        data_model.future_interest
+      end
     end
 
     def details_dfe_label
