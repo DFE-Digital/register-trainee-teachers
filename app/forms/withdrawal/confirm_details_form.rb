@@ -5,14 +5,15 @@ module Withdrawal
     FIELDS = [
       *DateForm::FIELDS,
       *ReasonForm::FIELDS,
-      *ExtraInformationForm::FIELDS,
     ].freeze
 
-    attr_reader(:trainee, :reasons_form, :trigger_form, :date_form, :start_date_form)
+    attr_reader(:trainee, :reasons_form, :trigger_form, :date_form, :start_date_form, :future_interest_form)
     attr_accessor(*FIELDS)
 
     delegate :id, to: :trainee
     delegate :withdrawal_reasons, to: :reasons_form
+    delegate :future_interest, to: :future_interest_form
+    delegate :trigger, to: :trigger_form
 
     def initialize(trainee)
       @trainee = trainee
@@ -20,6 +21,7 @@ module Withdrawal
       @trigger_form = TriggerForm.new(trainee)
       @date_form = DateForm.new(trainee)
       @start_date_form = ::TraineeStartStatusForm.new(trainee)
+      @future_interest_form = FutureInterestForm.new(trainee)
       @fields = compute_fields
       assign_attributes(fields)
     end
@@ -55,6 +57,7 @@ module Withdrawal
         trigger_form,
         reasons_form,
         date_form,
+        future_interest_form,
         (start_date_form unless exclude_start_date_form?),
       ].compact
     end

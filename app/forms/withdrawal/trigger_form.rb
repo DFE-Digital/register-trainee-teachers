@@ -17,7 +17,7 @@ module Withdrawal
   private
 
     def form_store_key
-      :withdrawal_trigger
+      :trigger
     end
 
     def compute_fields

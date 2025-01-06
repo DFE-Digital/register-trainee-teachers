@@ -467,6 +467,10 @@ FactoryBot.define do
       with_withdrawal_date
 
       state { "withdrawn" }
+
+      after(:create) do |trainee|
+        create(:trainee_withdrawal, trainee:)
+      end
     end
 
     trait :deferred do
