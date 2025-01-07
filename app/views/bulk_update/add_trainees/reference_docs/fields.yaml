@@ -1,11 +1,11 @@
 ---
-- field_name: Provider trainee ID
+- field_name: Provider Trainee ID
   technical: provider_trainee_id
   hesa_alignment: OWNSTU
   description: Provider's own internal identifier for the student.
   format: 20 character max length
   example: '"99157234"'
-- field_name: Apply ID
+- field_name: Application ID
   technical: application_id
   hesa_alignment: APPLYAPPLICATIONID
   description: Unique Application ID, also called Application Number, used by the
@@ -22,32 +22,32 @@
     throughout their experience within the sector for which HESA collects data.
   format: A HUSID MUST be a 17 digit number
   example: '"1210007145123456"'
-- field_name: First name
+- field_name: First Names
   technical: first_names
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
   format: 60 character maxlength
   example: '"Smith"'
-- field_name: Last name
+- field_name: Last Name
   technical: last_name
   hesa_alignment: SURNAME
   description: This field is the student's family name.
   format: 60 character length
   example: '"Jane"'
-- field_name: Previous last name
+- field_name: Previous Last Name
   technical: previous_last_name
   hesa_alignment: PSURNAME
   description: This is the trainee's surname immediately prior to the current surname,
     if applicable.
   format: 60 character length
   example: '"Jordan-smith"'
-- field_name: Date of birth
+- field_name: Date of Birth
   technical: date_of_birth
   hesa_alignment: BIRTHDTE
   description: This field records the date of birth of the student.
   format: YYYY-MM-DD
   example: '"1985-02-13"'
-- field_name: National Insurance number
+- field_name: NI Number
   technical: ni_number
   hesa_alignment: NIN
   description: This field describes the trainee's National Insurance Number.
@@ -57,7 +57,7 @@
     A National Insurance number must be made up of 2 letters, 6 numbers and a final
     letter, which is always A, B, C, or D.
   example: '"BX5867459C"'
-- field_name: Gender
+- field_name: Sex
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
@@ -171,7 +171,7 @@
 
     202 Both professional status and academic award
   example: '"201" for example is the code to use if it is Professional status only'
-- field_name: Training route
+- field_name: Training Route
   technical: training_route
   hesa_alignment: ENTRYRTE
   description: This field describes the route by which the student has accessed Initial
@@ -186,16 +186,34 @@
     as a result of successful completion of studies.
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
   example: '"007" for example is the code used for a BA qualification'
-- field_name: Course ITT subject
-  technical: course_subject_one, course_subject_two, course_subject_three
+- field_name: Course Subject One
+  technical: course_subject_one
   hesa_alignment: SBJCA
   description: |-
-    Subject of ITT course 
+    Subject of first ITT course 
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
   example: '"100048" for example is the code used for design as a subject'
-- field_name: Study mode
+- field_name: Course Subject Two
+  technical: course_subject_two
+  hesa_alignment: SBJCA
+  description: |-
+    Subject of second ITT course 
+
+    Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
+  format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
+  example: '"100048" for example is the code used for design as a subject'
+- field_name: Course Subject Three
+  technical: course_subject_three
+  hesa_alignment: SBJCA
+  description: |-
+    Subject of third ITT course 
+
+    Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
+  format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
+  example: '"100048" for example is the code used for design as a subject'
+- field_name: Study Mode
   technical: study_mode
   hesa_alignment: MODE
   description: This field indicates the method by which a student is being taught
@@ -211,20 +229,20 @@
 
     64 Dormant - previously part-time
   example: '"01"'
-- field_name: ITT start date
+- field_name: ITT Start Date
   technical: itt_start_date
   hesa_alignment: ITTSTARTDATE
   description: This field indicates the date the ITT course (to gain QTS) officially
     start
   format: YYYY-MM-DD
   example: '"2024-09-01"'
-- field_name: ITT end date
+- field_name: ITT End Date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
   description: This field records the expected end date for the engagement
   format: YYYY-MM-DD
   example: YYYY-MM-DD
-- field_name: Course age range
+- field_name: Course Age Range
   technical: course_age_range 
   hesa_alignment: ITTPHSC
   description: This field describes in more detail the student's initial teacher
@@ -249,7 +267,7 @@
 
     64 Dormant - previously part-time
   example: '"01"'
-- field_name: Course year
+- field_name: Course Year
   technical: course_year
   hesa_alignment: YEARPRG
   description: This field indicates the year number of the course that the student
@@ -264,7 +282,7 @@
 
     3 Third year
   example: '"1" as an example of using the code for First year.'
-- field_name: Lead partner URN
+- field_name: Lead Partner URN
   technical: lead_school_urn
   hesa_alignment: SDLEAD
   description: This field collects the lead school for School Direct trainees
@@ -273,7 +291,7 @@
     "115795" 
 
     Use code 900020 if the lead partner does not have a URN
-- field_name: Employing school URN
+- field_name: Employing School URN
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
   description: This field collects the employing school for School Direct salaried
@@ -283,14 +301,14 @@
     "115795" 
 
     Use code 900020 if the school does not have a URN
-- field_name: Trainee start date
+- field_name: Trainee Start Date
   technical: trainee_start_date
   hesa_alignment: TRAINEESTARTDATE
   description: This field indicates the date the student commenced their ITT course
     where this is different to the start date of the instance as recorded in Student.COMDATE.
   format: YYYY-MM-DD
   example: "2024-09-01"
-- field_name: PG apprenticeship start date
+- field_name: PG Apprenticeship Start Date
   technical: pg_apprenticeship_start_date
   hesa_alignment: PGAPPSTDT
   description: This records the start date of a postgraduate's teaching apprenticeship.
@@ -315,7 +333,7 @@
 
     7 Eligible for funding from the DfE
   example: '"2"'
-- field_name: Funding method
+- field_name: Funding Method
   technical: funding_method
   hesa_alignment: BURSLEV
   description: This field records the training bursary awarded to the student. Bursary
@@ -335,7 +353,7 @@
 
     E Grant
   example: '"E"'
-- field_name: Training initiative
+- field_name: Training Initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
   description: This field identifies students who are part of a specific scheme that
@@ -365,7 +383,7 @@
     011 Primary with mathematics specialist
 
     019 Additional ITT place for PE with a priority subject
-- field_name: Additional training initiative
+- field_name: Additional Training Initiative
   technical: additional_training_initiative
   hesa_alignment: INITIATIVES
   description: This field records the student identifier which is to be unique to
