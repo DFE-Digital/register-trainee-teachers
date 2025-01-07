@@ -1,6 +1,10 @@
 ---
 shared:
   trainees:
+    - first_names
+    - last_name
+    - email
+    - date_of_birth
     - trn
-  :users:
+  users:
     - dfe_sign_in_uid

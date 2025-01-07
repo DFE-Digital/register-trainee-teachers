@@ -20,12 +20,8 @@
     - version
   :trainees:
     - provider_trainee_id
-    - first_names
-    - last_name
-    - date_of_birth
     - address_line_one
     - address_line_two
-    - email
     - middle_names
     - international_address
     - ethnic_group
