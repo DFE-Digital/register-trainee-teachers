@@ -97,8 +97,64 @@
   format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
   example: '"103" for example is the code to use if the ethnicity is Asian - Indian
     or Indian British.'
-- field_name: Disabilities
-  technical: disability1 to disability9
+- field_name: Disability 1
+  technical: disability1
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 2
+  technical: disability2
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 3
+  technical: disability3
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 4
+  technical: disability4
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 5
+  technical: disability5
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 6
+  technical: disability6
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 7
+  technical: disability7
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 8
+  technical: disability8
+  hesa_alignment: DISABLE
+  description: This field records the type of disability that a student has, on the
+    basis of the student's own self-assessment.
+  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
+- field_name: Disability 9
+  technical: disability9
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
