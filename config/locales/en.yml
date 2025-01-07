@@ -182,6 +182,14 @@ en:
         blank: No route provided
       trainee_name:
         blank: Draft record
+    csv_field_summary:
+      view:
+        field_name: Field name
+        technical: Technical
+        hesa_alignment: HESA alignment
+        description: Description
+        format: Format
+        example: Example
     withdrawal_details:
       summary_title: Withdrawal details
       withdrawal_date: "%{date} (date of deferral)"

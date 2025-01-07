@@ -1,0 +1,49 @@
+<%= tag.h1(
+  "How to add trainee information to the bulk add new trainee CSV template",
+  class: "govuk-heading-l",
+) %>
+
+<p class="govuk-body">
+  Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+</p>
+
+<h2 class="govuk-heading-m">Important</h2>
+<p class="govuk-body">
+  This draft guidance is for review and testing purposes only. Send your feedback or questions to <a href="mailto:registertraineeteachers@education.gov.uk" class="govuk-link">registertraineeteachers@education.gov.uk</a>.
+</p>
+
+<p class="govuk-body">
+  CSV bulk add new trainees will be available in Register trainee teachers (Register) before the start of the 2025 to 2026 academic year.
+</p>
+
+<h2 class="govuk-heading-m">Download an empty CSV file template</h2>
+
+<p class="govuk-body">
+  You must only use this CSV file template to register new trainees in Register trainee teachers (Register).
+</p>
+
+<p class="govuk-body">
+  If you use this to update already existing trainees, it will come back as an error.
+</p>
+
+<p class="govuk-body">
+  The CSV template uses HESA reference data.
+</p>
+
+<p class="govuk-body">
+  <a class="govuk-link" href="#">Download empty bulk add new trainees CSV template</a>
+</p>
+
+<h2 class="govuk-heading-m">Use this guidance to complete the CSV file template</h2>
+
+<p class="govuk-body">
+  Use the guidance to check how new trainee data maps between your student record system and Register, using the CSV upload found in the ‘Bulk updates section’ in Register.
+</p>
+
+<p class="govuk-body">
+  If mandatory fields are not filled in correctly, the CSV upload will come back as an error.
+</p>
+
+<h2 class="govuk-heading-m">Contents</h2>
+
+<%= render CsvFields::View.new %>

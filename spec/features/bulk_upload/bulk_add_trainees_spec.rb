@@ -92,11 +92,14 @@ feature "bulk add trainees" do
       scenario "the bulk add trainees page is visible" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+        then_i_see_instructions_on_how_to_bulk_add_trainees
         and_i_see_the_empty_csv_link
 
         when_i_click_the_empty_csv_link
         then_i_receive_the_empty_csv_file
+
+        when_i_click_the_guidance_link
+        then_i_see_the_bulk_add_trainees_guidance_page
 
         when_i_attach_an_empty_file
         and_i_click_the_upload_button
@@ -274,7 +277,7 @@ feature "bulk add trainees" do
       scenario "when I try to upload a file with errors then upload a corrected file" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+        then_i_see_instructions_on_how_to_bulk_add_trainees
 
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
@@ -362,7 +365,7 @@ feature "bulk add trainees" do
         when_there_is_already_one_trainee_in_register
         and_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+        then_i_see_instructions_on_how_to_bulk_add_trainees
 
         when_i_attach_a_valid_file
         and_i_click_the_upload_button
@@ -599,7 +602,7 @@ private
     click_on "Bulk add new trainees"
   end
 
-  def then_i_see_how_instructions_on_how_to_bulk_add_trainees
+  def then_i_see_instructions_on_how_to_bulk_add_trainees
     expect(page).to have_current_path(new_bulk_update_add_trainees_upload_path)
     expect(page).to have_content("Bulk add new trainees")
   end
@@ -614,6 +617,16 @@ private
 
   def then_i_receive_the_empty_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    visit new_bulk_update_add_trainees_upload_path
+  end
+
+  def when_i_click_the_guidance_link
+    click_on "guidance on how add trainee information to the CSV template"
+  end
+
+  def then_i_see_the_bulk_add_trainees_guidance_page
+    expect(page).to have_current_path(csv_docs_home_path)
+    expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
     visit new_bulk_update_add_trainees_upload_path
   end
 
