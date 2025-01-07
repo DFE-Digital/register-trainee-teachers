@@ -963,7 +963,6 @@ private
   end
 
   def then_i_can_see_the_new_trainees_with_a_degree
-
     expect(page).to have_content("Mitsuko Larkin")
     expect(page).to have_content("Ronnie White")
     expect(page).to have_content("Joannie Kuhlman")

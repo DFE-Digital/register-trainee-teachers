@@ -70,7 +70,7 @@ module BulkUpdate
       end
 
       def prepare_degree_attributes(attributes)
-        return attributes unless attributes[:uk_degree_type].present?
+        return attributes if attributes[:uk_degree_type].blank?
 
         attributes["degrees_attributes"] = [
           {
@@ -81,12 +81,12 @@ module BulkUpdate
             graduation_year: attributes["degree_graduation_year"],
             non_uk_degree: attributes["non_uk_degree_type"],
             country: attributes["degree_country"],
-          }
+          },
         ]
       end
 
       def prepare_placement_attributes(attributes)
-        return attributes unless attributes[:urn].present?
+        return attributes if attributes[:urn].blank?
 
         attributes[:placements_attributes] = [
           {
