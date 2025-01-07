@@ -95,6 +95,9 @@ feature "bulk add trainees" do
         then_i_see_how_instructions_on_how_to_bulk_add_trainees
         and_i_see_the_empty_csv_link
 
+        when_i_click_the_empty_csv_link
+        then_i_receive_the_empty_csv_file
+
         when_i_attach_an_empty_file
         and_i_click_the_upload_button
         then_i_see_the_upload_page_with_errors(empty: true)
@@ -603,6 +606,15 @@ private
 
   def and_i_see_the_empty_csv_link
     expect(page).to have_link("Download empty CSV file to add new trainees")
+  end
+
+  def when_i_click_the_empty_csv_link
+    click_on "Download empty CSV file to add new trainees"
+  end
+
+  def then_i_receive_the_empty_csv_file
+    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    visit new_bulk_update_add_trainees_upload_path
   end
 
   def when_i_attach_an_empty_file
