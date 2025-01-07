@@ -216,7 +216,7 @@
   example: |-
     "115795" 
 
-    Use this code 9000 if the provider does not have a URN
+    Use code 900020 if the lead partner does not have a URN
 - field_name: Employing school URN
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
@@ -226,7 +226,7 @@
   example: |-
     "115795" 
 
-    Use code 900020 if the provider does not have a URN
+    Use code 900020 if the school does not have a URN
 - field_name: Trainee start date
   technical: trainee_start_date
   hesa_alignment: TRAINEESTARTDATE
