@@ -134,13 +134,13 @@ module BulkUpdate
       describe "documentation cross-checks" do
         let(:documentation_fields) { YAML.load_file(CsvFields::View::FIELD_DEFINITION_PATH) }
 
-        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.values.each do |id|
+        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.each_value do |id|
           it "documents field with id #{id}" do
             expect(documentation_fields.map { |field| field["technical"] }).to include(id)
           end
         end
 
-        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.keys.each do |name|
+        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.each_key do |name|
           it "documents field with name #{name}" do
             expect(documentation_fields.map { |field| field["field_name"] }).to include(name)
           end
@@ -151,7 +151,7 @@ module BulkUpdate
         let(:file_path) { Rails.public_path.join("csv/bulk_create_trainee.csv") }
         let(:headers) { CSVSafe.new(File.open(file_path), headers: true, encoding: "UTF-8").read.headers }
 
-        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.keys.each do |name|
+        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.each_key do |name|
           it "includes column header #{name}" do
             expect(headers).to include(name)
           end
