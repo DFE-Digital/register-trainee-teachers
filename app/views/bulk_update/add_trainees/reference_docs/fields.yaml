@@ -98,63 +98,63 @@
   example: '"103" for example is the code to use if the ethnicity is Asian - Indian
     or Indian British.'
 - field_name: Disability 1
-  technical: disability1
+  technical: disability_1
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 2
-  technical: disability2
+  technical: disability_2
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 3
-  technical: disability3
+  technical: disability_3
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 4
-  technical: disability4
+  technical: disability_4
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 5
-  technical: disability5
+  technical: disability_5
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 6
-  technical: disability6
+  technical: disability_6
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 7
-  technical: disability7
+  technical: disability_7
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 8
-  technical: disability8
+  technical: disability_8
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 9
-  technical: disability9
+  technical: disability_9
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
     basis of the student's own self-assessment.
@@ -243,7 +243,7 @@
   format: YYYY-MM-DD
   example: YYYY-MM-DD
 - field_name: Course Age Range
-  technical: course_age_range 
+  technical: course_age_range
   hesa_alignment: ITTPHSC
   description: This field describes in more detail the student's initial teacher
     training aim
@@ -283,7 +283,7 @@
     3 Third year
   example: '"1" as an example of using the code for First year.'
 - field_name: Lead Partner URN
-  technical: lead_school_urn
+  technical: lead_partner_urn
   hesa_alignment: SDLEAD
   description: This field collects the lead school for School Direct trainees
   format: Must be a 6-digit number
