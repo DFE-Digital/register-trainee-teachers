@@ -50,6 +50,38 @@ module BulkUpdate
             expect(Trainee.count - original_count).to be(1)
           end
         end
+
+        context "when the row is valid and includes placement data" do
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_placement.csv").read }
+          let(:row) { parsed_csv.first }
+
+          before do
+            create(:school, urn: row["First Placement URN"])
+          end
+
+          it "creates a trainee and a placement record" do
+            original_count = Trainee.count
+            result = described_class.call(row:, current_provider:)
+            expect(result.success).to be(true)
+            expect(Trainee.count - original_count).to eq(1)
+            expect(Trainee.last.placements.count).to eq(1)
+            expect(Trainee.last.degrees.count).to eq(0)
+          end
+        end
+
+        context "when the row is valid and includes degree data" do
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_degree.csv").read }
+          let(:row) { parsed_csv.first }
+
+          it "creates a trainee and a placement record" do
+            original_count = Trainee.count
+            result = described_class.call(row:, current_provider:)
+            expect(result.success).to be(true)
+            expect(Trainee.count - original_count).to eq(1)
+            expect(Trainee.last.placements.count).to eq(0)
+            expect(Trainee.last.degrees.count).to eq(1)
+          end
+        end
       end
     end
   end
