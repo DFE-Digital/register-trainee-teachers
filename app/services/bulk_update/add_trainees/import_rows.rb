@@ -67,10 +67,11 @@ module BulkUpdate
         "Degree Subject" => "degree_subject",
         "Degree Grade" => "degree_grade",
         "Degree Graduation Year" => "degree_graduation_year",
-        "Degree UK" => "degree_uk",
-        "Awarding Institution" => "degree_uk",
+        "Awarding Institution" => "degree_awarding_institution",
         "Degree Country" => "degree_country",
       }.freeze
+
+      ALL_HEADERS = TRAINEE_HEADERS.merge(PLACEMENT_HEADERS).merge(DEGREE_HEADERS)
 
       def call
         return unless FeatureService.enabled?(:bulk_add_trainees)
