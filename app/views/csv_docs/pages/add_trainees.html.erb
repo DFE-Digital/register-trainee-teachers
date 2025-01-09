@@ -4,12 +4,14 @@
 ) %>
 
 <p class="govuk-body">
-  Training providers can register their trainees in bulk by creating trainee records and adding the required data.
+  <%= render(NotificationBanner::View.new(
+    text: "This draft guidance is for review and testing purposes only. Send your feedback or questions to <a href=\"mailto:registertraineeteachers@education.gov.uk\" class=\"govuk-notification-banner__link\">registertraineeteachers@education.gov.uk</a>.".html_safe,
+    type: :important,
+  )) %>
 </p>
 
-<h2 class="govuk-heading-m">Important</h2>
 <p class="govuk-body">
-  This draft guidance is for review and testing purposes only. Send your feedback or questions to <a href="mailto:registertraineeteachers@education.gov.uk" class="govuk-link">registertraineeteachers@education.gov.uk</a>.
+  Training providers can register their trainees in bulk by creating trainee records and adding the required data.
 </p>
 
 <p class="govuk-body">
