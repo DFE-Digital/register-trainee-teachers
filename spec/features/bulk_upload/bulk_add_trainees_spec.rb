@@ -581,11 +581,11 @@ private
       :completed,
       provider: current_user.organisation,
       training_route: :provider_led_undergrad,
-      first_names: "Jonas",
-      last_name: "Padberg",
-      email: "jonas.padberg@example.com",
-      date_of_birth: "1964-03-07",
-      itt_start_date: Date.new(2022, 9, 7),
+      first_names: "Spencer",
+      last_name: "Murphy",
+      email: "spencer.murphy@example.com",
+      date_of_birth: "1967-12-06",
+      itt_start_date: Date.new(2024, 10, 1),
     )
   end
 
@@ -940,11 +940,11 @@ private
   end
 
   def then_i_can_see_the_new_trainees
-    expect(page).to have_content("Jonas Padberg")
-    expect(page).to have_content("Myriam Bruen")
-    expect(page).to have_content("Usha Rolfson")
-    expect(page).to have_content("Fidel Hessel")
-    expect(page).to have_content("Melony Kilback")
+    expect(page).to have_content("Spencer Murphy")
+    expect(page).to have_content("Adrianne Koelpin")
+    expect(page).to have_content("Sacha Bechtelar")
+    expect(page).to have_content("Rico Corkery")
+    expect(page).to have_content("Chantelle Raynor")
   end
 
   def then_i_can_see_the_new_trainees_with_placements
