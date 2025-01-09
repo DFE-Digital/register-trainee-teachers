@@ -523,7 +523,8 @@ FactoryBot.define do
       withdraw_reasons_dfe_details { "withdraw dfe details" }
 
       after(:create) do |trainee|
-        create(:trainee_withdrawal_reason, trainee:)
+        trainee_withdrawal = create(:trainee_withdrawal, trainee:)
+        create(:trainee_withdrawal_reason, trainee:, trainee_withdrawal:)
       end
     end
 
