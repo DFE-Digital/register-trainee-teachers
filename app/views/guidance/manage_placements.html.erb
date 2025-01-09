@@ -13,13 +13,15 @@
 
     <p class="govuk-body-m">You are required to have school placement data in Register.</p>
 
-    <p class="govuk-body-m">You only need to provide location information about placements – the URN (if known) or the school/setting name and postcode.</p>
+    <p class="govuk-body-m">You only need to provide location information about placements - the URN (if known) or the school/setting name and postcode.</p>
 
     <p class="govuk-body-m">You do not need to provide duration of time spent at each placement.</p>
 
     <h2 class="govuk-heading-m">How to include placement data as part of the performance profiles sign off period</h2>
 
     <p class="govuk-body-m">A minimum of 2 placements is required for each trainee who have been awarded QTS or EYTS in each academic year.</p>
+
+    <p class="govuk-body-m">If you're an iQTS provider then at least one placement is required for each iQTS trainee in each academic year.</p>
 
     <h3 class="govuk-heading-s">Manually record placement data</h3>
 
@@ -29,15 +31,13 @@
 
     <p class="govuk-body-m">Find out <%= govuk_link_to("how to include placement data in trainee records manually", check_data_guidance_path ) %>.</p>
 
-    <% if FeatureService.enabled?(:bulk_placements) %>
-      <h3 class="govuk-heading-s">Bulk update placement data</h3>
+    <h3 class="govuk-heading-s">Bulk add placement data</h3>
 
-      <p class="govuk-body-m">Bulk update is recommended for those providers who have many registered trainees to manage.</p>
+    <p class="govuk-body-m">You can add missing placement data to multiple trainee records at the same time.</p>
 
-      <p class="govuk-body-m">You can only use bulk update if you have the school placement URN.</p>
+    <p class="govuk-body-m">You can only use bulk update if you have the school placement URN.</p>
 
-      <p class="govuk-body-m">Alternatively, you can use the <%= govuk_link_to("bulk update placement feature", bulk_upload_placement_data_guidance_path ) %> to fill in any data gaps.</p>
-    <% end %>
+    <p class="govuk-body-m">Find out how to bulk add placement data by logging into Register. Go to the 'Bulk updates' section and choose the 'Add missing placement data' option.</p>
 
     <h2 class="govuk-heading-m">Why collecting placement data is important</h2>
 
