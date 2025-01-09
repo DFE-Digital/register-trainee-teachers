@@ -78,7 +78,7 @@ jobs:
           docker compose exec -T web /bin/sh -c 'apk add chromium chromium-chromedriver'
 
       - name: "${{ inputs.use-next-academic-year && 'Next academic year' || 'Current academic year' }} ${{ matrix.test-type }} tests"
-        uses: Wandalen/wretry.action@v3.7.3
+        uses: Wandalen/wretry.action@v3.8.0
         timeout-minutes: 15
         with:
           attempt_limit: 3
