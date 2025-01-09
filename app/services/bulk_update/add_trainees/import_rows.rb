@@ -11,6 +11,8 @@ module BulkUpdate
         self.trainee_upload = trainee_upload
       end
 
+      EMPTY_CSV_TEMPLATE_PATH = "/csv/bulk_create_trainee.csv"
+
       TRAINEE_HEADERS = {
         "Provider Trainee ID" => "provider_trainee_id",
         "Application ID" => "application_id",
@@ -47,8 +49,7 @@ module BulkUpdate
         "Lead Partner URN" => "lead_partner_urn",
         "Employing School URN" => "employing_school_urn",
         "Trainee Start Date" => "trainee_start_date",
-        "PG Apprenticeship" => "pg_apprenticeship",
-        "Start Date" => "start_date",
+        "PG Apprenticeship Start Date" => "pg_apprenticeship_start_date",
         "Fund Code" => "fund_code",
         "Funding Method" => "funding_method",
         "Training Initiative" => "training_initiative",
@@ -65,10 +66,11 @@ module BulkUpdate
         "Degree Subject" => "degree_subject",
         "Degree Grade" => "degree_grade",
         "Degree Graduation Year" => "degree_graduation_year",
-        "Degree UK" => "degree_uk",
-        "Awarding Institution" => "degree_uk",
+        "Awarding Institution" => "degree_awarding_institution",
         "Degree Country" => "degree_country",
       }.freeze
+
+      ALL_HEADERS = TRAINEE_HEADERS.merge(PLACEMENT_HEADERS).merge(DEGREE_HEADERS)
 
       def call
         return unless FeatureService.enabled?(:bulk_add_trainees)

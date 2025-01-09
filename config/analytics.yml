@@ -241,6 +241,7 @@ shared:
     - created_at
     - created_from_dttp
     - created_from_hesa
+    - date_of_birth
     - defer_date
     - disability_disclosure
     - discarded_at
@@ -249,9 +250,11 @@ shared:
     - dttp_id
     - dttp_update_sha
     - ebacc
+    - email
     - employing_school_id
     - employing_school_not_applicable
     - end_academic_cycle_id
+    - first_names
     - sex
     - hesa_id
     - hesa_updated_at
@@ -259,6 +262,7 @@ shared:
     - iqts_country
     - itt_end_date
     - itt_start_date
+    - last_name
     - lead_partner_id
     - placement_detail
     - lead_partner_not_applicable

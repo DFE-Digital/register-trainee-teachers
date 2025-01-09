@@ -22,7 +22,7 @@ module BulkUpdate
 
       def call
         # Map the CSV header names to the correct attribute names
-        attributes = BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.to_h do |header_name, attribute_name|
+        attributes = BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.to_h do |header_name, attribute_name|
           [attribute_name, row[header_name]]
         end.with_indifferent_access
 
@@ -64,7 +64,36 @@ module BulkUpdate
 
       def prepare_csv_attributes_for_api(attributes)
         attributes[:lead_partner_not_applicable] = attributes[:lead_partner_urn].blank?
+        prepare_degree_attributes(attributes)
+        prepare_placement_attributes(attributes)
         attributes
+      end
+
+      def prepare_degree_attributes(attributes)
+        return attributes if attributes[:uk_degree_type].blank?
+
+        attributes["degrees_attributes"] = [
+          {
+            grade: attributes["degree_grade"],
+            subject: attributes["degree_subject"],
+            institution: attributes["degree_awarding_institution"],
+            uk_degree: attributes["uk_degree_type"],
+            graduation_year: attributes["degree_graduation_year"],
+            non_uk_degree: attributes["non_uk_degree_type"],
+            country: attributes["degree_country"],
+          },
+        ]
+      end
+
+      def prepare_placement_attributes(attributes)
+        return attributes if attributes[:urn].blank?
+
+        attributes[:placements_attributes] = [
+          {
+            name: "Placement 1",
+            urn: attributes[:urn],
+          },
+        ]
       end
     end
   end

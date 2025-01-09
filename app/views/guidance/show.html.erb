@@ -69,16 +69,13 @@
             manage_placements_guidance_path,
           ) %>
       </li>
-      <% if FeatureService.enabled?(:bulk_placements) %>
-        <li>
-          <%= govuk_link_to(
-              "Bulk upload placement data",
-              bulk_upload_placement_data_guidance_path,
-            ) %>
-        </li>
-      <% end %>
+      <li>
+        <%= govuk_link_to(
+            "Bulk add placement data",
+            bulk_upload_placement_data_guidance_path,
+          ) %>
+      </li>
     </ul>
-
 
     <% @census_sign_off = sign_off_period == :census_period ? "Sign" : "Signing" %>
     <% @performance_sign_off = sign_off_period == :performance_period ? "Sign" : "Signing" %>

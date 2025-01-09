@@ -92,8 +92,14 @@ feature "bulk add trainees" do
       scenario "the bulk add trainees page is visible" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+        then_i_see_instructions_on_how_to_bulk_add_trainees
         and_i_see_the_empty_csv_link
+
+        when_i_click_the_empty_csv_link
+        then_i_receive_the_empty_csv_file
+
+        when_i_click_the_guidance_link
+        then_i_see_the_bulk_add_trainees_guidance_page
 
         when_i_attach_an_empty_file
         and_i_click_the_upload_button
@@ -211,6 +217,68 @@ feature "bulk add trainees" do
         then_i_see_the_unauthorized_message
       end
 
+      scenario "the bulk add trainees page is visible and I upload a file with placements" do
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_attach_a_valid_file_with_placements
+        and_i_click_the_upload_button
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_the_review_page_without_validation_errors
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+
+        and_i_see_the_summary_page
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees_with_placements
+      end
+
+      scenario "the bulk add trainees page is visible and I upload a file with a degree" do
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_attach_a_valid_file_with_a_degree
+        and_i_click_the_upload_button
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_the_review_page_without_validation_errors
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+
+        and_i_see_the_summary_page
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees_with_a_degree
+      end
+
       scenario "when I try to look at the status of a different providers upload" do
         when_there_is_a_bulk_update_trainee_upload
 
@@ -271,7 +339,7 @@ feature "bulk add trainees" do
       scenario "when I try to upload a file with errors then upload a corrected file" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+        then_i_see_instructions_on_how_to_bulk_add_trainees
 
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
@@ -359,7 +427,7 @@ feature "bulk add trainees" do
         when_there_is_already_one_trainee_in_register
         and_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        then_i_see_how_instructions_on_how_to_bulk_add_trainees
+        then_i_see_instructions_on_how_to_bulk_add_trainees
 
         when_i_attach_a_valid_file
         and_i_click_the_upload_button
@@ -596,7 +664,7 @@ private
     click_on "Bulk add new trainees"
   end
 
-  def then_i_see_how_instructions_on_how_to_bulk_add_trainees
+  def then_i_see_instructions_on_how_to_bulk_add_trainees
     expect(page).to have_current_path(new_bulk_update_add_trainees_upload_path)
     expect(page).to have_content("Bulk add new trainees")
   end
@@ -605,12 +673,47 @@ private
     expect(page).to have_link("Download empty CSV file to add new trainees")
   end
 
+  def when_i_click_the_empty_csv_link
+    click_on "Download empty CSV file to add new trainees"
+  end
+
+  def then_i_receive_the_empty_csv_file
+    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    visit new_bulk_update_add_trainees_upload_path
+  end
+
+  def when_i_click_the_guidance_link
+    click_on "guidance on how add trainee information to the CSV template"
+  end
+
+  def then_i_see_the_bulk_add_trainees_guidance_page
+    expect(page).to have_current_path(csv_docs_home_path)
+    expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
+    visit new_bulk_update_add_trainees_upload_path
+  end
+
   def when_i_attach_an_empty_file
     and_i_attach_a_file("")
   end
 
   def when_i_attach_a_valid_file
     file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv")
+    filename = File.basename(file)
+    content  = file.read
+
+    and_i_attach_a_file(content, filename)
+  end
+
+  def and_i_attach_a_valid_file_with_placements
+    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_placement.csv")
+    filename = File.basename(file)
+    content  = file.read
+
+    and_i_attach_a_file(content, filename)
+  end
+
+  def and_i_attach_a_valid_file_with_a_degree
+    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_degree.csv")
     filename = File.basename(file)
     content  = file.read
 
@@ -846,6 +949,36 @@ private
     expect(page).to have_content("Usha Rolfson")
     expect(page).to have_content("Fidel Hessel")
     expect(page).to have_content("Melony Kilback")
+  end
+
+  def then_i_can_see_the_new_trainees_with_placements
+    expect(page).to have_content("Jeffery Halvorson")
+    expect(page).to have_content("Farah Wolff")
+    expect(page).to have_content("Denna Jones")
+    expect(page).to have_content("Rudolf McLaughlin")
+    expect(page).to have_content("Elina Rolfson")
+
+    click_on "Jeffery Halvorson"
+
+    expect(page).to have_content("Placement 1")
+    expect(page).to have_content("URN 587111")
+    expect(page).not_to have_content("First placement is missing")
+    expect(page).to have_content("Second placement is missing")
+  end
+
+  def then_i_can_see_the_new_trainees_with_a_degree
+    expect(page).to have_content("Mitsuko Larkin")
+    expect(page).to have_content("Ronnie White")
+    expect(page).to have_content("Joannie Kuhlman")
+    expect(page).to have_content("Angelica Anderson")
+    expect(page).to have_content("Yelena Schamberger")
+
+    click_on "Mitsuko Larkin"
+
+    expect(page).to have_content("Bachelor of Metallurgy")
+    expect(page).to have_content("Business law")
+    expect(page).to have_content("Anglia Ruskin University")
+    expect(page).to have_content("Third-class honours")
   end
 
   def when_the_upload_has_failed_with_validation_errors

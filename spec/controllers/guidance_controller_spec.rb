@@ -56,6 +56,18 @@ describe GuidanceController do
     end
   end
 
+  describe "#manage_placements" do
+    it "returns a 200 status code" do
+      get :manage_placements
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :manage_placements
+      expect(response).to render_template("application")
+    end
+  end
+
   describe "#census_sign_off" do
     it "returns a 200 status code" do
       get :census_sign_off
@@ -104,6 +116,38 @@ describe GuidanceController do
     it "renders the correct template and page" do
       get :hesa_register_data_mapping, params: { tab: "trainee_progress" }
       expect(response).to render_template("hesa_register_data_mapping")
+    end
+  end
+
+  describe "#performance_profiles" do
+    context "when the date is within the performance profiles period" do
+      before do
+        allow(controller).to receive(:sign_off_period).and_return(:performance_period)
+        get :performance_profiles
+      end
+
+      it "returns a 200 status code" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "renders the correct template and page" do
+        expect(response).to render_template("performance_profiles")
+      end
+    end
+
+    context "when the date is outside the performance profiles period" do
+      before do
+        allow(controller).to receive(:sign_off_period).and_return(:outside_period)
+        get :performance_profiles
+      end
+
+      it "returns a 200 status code" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "renders the correct template and page" do
+        expect(response).to render_template("performance_profiles_outside")
+      end
     end
   end
 end

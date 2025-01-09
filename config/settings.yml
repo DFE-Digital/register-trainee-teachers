@@ -172,7 +172,6 @@ google:
     entity_table_checks_enabled: true
 
 sign_off_trainee_data_url: https://forms.office.com/e/TB5dcbCJuF
-sign_off_performance_profiles_url: https://forms.office.com/e/ATXmqJusud)
 sign_off_period: outside_period # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb
 
 trainee_export:
