@@ -193,9 +193,9 @@ module Api
         end
 
         def lead_partner_attributes
-          if params.key?(:lead_partner_urn)
+          if params.key?(:lead_partner_urn) && params[:lead_partner_urn].present?
             lead_partner_from_urn
-          elsif params.key?(:lead_partner_ukprn)
+          elsif params.key?(:lead_partner_ukprn) && params[:lead_partner_ukprn].present?
             lead_partner_from_ukprn
           else
             { lead_partner_not_applicable: true } unless update
