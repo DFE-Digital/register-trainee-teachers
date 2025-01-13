@@ -18,9 +18,9 @@ module BulkUpdate
       attr_reader :csv, :record
 
       def header_row!
-        return unless headers == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
+        return if headers == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
 
-        record.errors.add(:file, :incorrect_headers, headers: BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(", "))
+        record.errors.add(:file, :invalid_headers, headers: BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(", "))
       end
 
       def trainees!
