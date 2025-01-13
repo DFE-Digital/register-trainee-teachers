@@ -1,6 +1,10 @@
 <tr class="govuk-table__row">
   <td class="govuk-table__cell">
-    <%= govuk_link_to created_at, upload_path %>
+    <% if upload.cancelled? %>
+      <%= created_at %>
+    <% else %>
+      <%= govuk_link_to created_at, upload_path %>
+    <% end %>
   </td>
   <td class="govuk-table__cell">
     <%= filename %>
