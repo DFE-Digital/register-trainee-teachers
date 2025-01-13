@@ -101,6 +101,9 @@ feature "bulk add trainees" do
         when_i_click_the_guidance_link
         then_i_see_the_bulk_add_trainees_guidance_page
 
+        when_i_click_the_documentation_empty_csv_link
+        then_i_receive_the_empty_csv_file
+
         when_i_attach_an_empty_file
         and_i_click_the_upload_button
         then_i_see_the_upload_page_with_errors(empty: true)
@@ -689,7 +692,10 @@ private
   def then_i_see_the_bulk_add_trainees_guidance_page
     expect(page).to have_current_path(csv_docs_home_path)
     expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
-    visit new_bulk_update_add_trainees_upload_path
+  end
+
+  def when_i_click_the_documentation_empty_csv_link
+    click_on "Download empty bulk add new trainees CSV template"
   end
 
   def when_i_attach_an_empty_file

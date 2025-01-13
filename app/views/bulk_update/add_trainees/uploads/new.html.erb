@@ -31,7 +31,10 @@
       </h2>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download empty CSV file to add new trainees", BulkUpdate::AddTrainees::ImportRows::EMPTY_CSV_TEMPLATE_PATH) %>
+        <%= govuk_link_to(
+          "Download empty CSV file to add new trainees",
+          bulk_update_add_trainees_empty_template_path(format: :csv),
+        ) %>
       </p>
 
       <h3 class="govuk-heading-s">If you're adapting the CSV file template for a direct extract from your student record system</h3>

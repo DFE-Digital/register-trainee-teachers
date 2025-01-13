@@ -33,7 +33,10 @@
 </p>
 
 <p class="govuk-body">
-  <a class="govuk-link" href="#">Download empty bulk add new trainees CSV template</a>
+  <%= govuk_link_to(
+    "Download empty bulk add new trainees CSV template",
+    bulk_update_add_trainees_empty_template_path(format: :csv),
+  ) %>
 </p>
 
 <h2 class="govuk-heading-m">Use this guidance to complete the CSV file template</h2>
