@@ -60,7 +60,7 @@ module BulkUpdate
     end
 
     context "when passed file with just a header row" do
-      let(:test_file_contents) { "trn,first_name,last_name" }
+      let(:test_file_contents) { BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(",") }
 
       it "returns validation errors and does not create a bulk_updates_trainee_upload record" do
         expect(form.valid?).to be false
@@ -70,7 +70,8 @@ module BulkUpdate
     end
 
     context "when passed a valid file" do
-      let(:test_file_contents) { "trn,first_name,last_name\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts" }
+      let(:valid_columns) { BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(",") }
+      let(:test_file_contents) { "#{valid_columns}\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts" }
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
         expect(form.valid?).to be true
