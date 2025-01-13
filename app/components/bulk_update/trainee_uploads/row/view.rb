@@ -37,8 +37,8 @@ module BulkUpdate
           }[upload.status]
         end
 
-        def submitted_at
-          upload.submitted_at&.to_fs(:govuk_date_and_time)
+        def created_at
+          upload.created_at.to_fs(:govuk_date_and_time)
         end
       end
     end
