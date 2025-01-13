@@ -12,8 +12,12 @@ class ReportsController < BaseTraineeController
 
     @partial_page = DetermineSignOffPeriod.call
 
-    if @partial_page == :performance_period && current_user.organisation.performance_profile_signed_off?
-      @partial_page = :outside_period
+    if @partial_page == :performance_period
+      if current_user.organisation.nil? && current_user.system_admin?
+        @partial_page = :system_admin_with_no_associated_provider
+      elsif current_user.organisation.performance_profile_signed_off?
+        @partial_page = :outside_period
+      end
     end
   end
 

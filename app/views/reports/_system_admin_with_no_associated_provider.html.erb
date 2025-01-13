@@ -1,0 +1,21 @@
+<%= govuk_notification_banner(title_text: "Important") do |banner| %>
+  <% banner.with_heading(text: "Your system administrator account must be associated with an accredited provider") %>
+
+  You can edit your <%= govuk_link_to("user details", user_path(current_user)) %>
+<% end %>
+
+<p class="govuk-body">You can read guidance about signing off:</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>
+    <%= govuk_link_to(
+          "#{@census_sign_off} census data",
+          census_sign_off_guidance_path,
+          ) %>
+  </li>
+  <li>
+    <%= govuk_link_to(
+          "#{@performance_sign_off} performance profiles data",
+          performance_profiles_guidance_path,
+          ) %>
+  </li>
+</ul>

@@ -114,6 +114,14 @@ feature "performance profile sign off" do
         then_i_see_the_unauthorized_message
       end
     end
+
+    context "system admin with no associated provider" do
+      scenario "system administrator account banner message is shown" do
+        given_i_am_authenticated_as_system_admin
+        when_i_visit_the_sign_off_your_performance_profile_page
+        then_i_see_the_system_administrator_account_banner
+      end
+    end
   end
 
 private
@@ -192,6 +200,14 @@ private
 
   def then_i_see_the_unauthorized_message
     expect(page).to have_content("You do not have permission to perform this action")
+  end
+
+  def then_i_see_the_system_administrator_account_banner
+    expect(page).to have_css("#govuk-notification-banner-title", text: "Important")
+    expect(page).to have_css(".govuk-notification-banner__heading", text: "Your system administrator account must be associated with an accredited provider")
+    expect(page).to have_css(".govuk-notification-banner__content", text: "You can edit your user details")
+
+    expect(page).to have_link("user details", href: "/system-admin/users/#{@current_user.id}")
   end
 
   def and_i_see_there_is_a_problem
