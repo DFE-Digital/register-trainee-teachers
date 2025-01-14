@@ -14,9 +14,13 @@ module Withdrawal
 
     def reasons
       if provider_triggered?
-        WithdrawalReason.where(name: WithdrawalReasons::PROVIDER_REASONS)
+        WithdrawalReason.where(name: WithdrawalReasons::PROVIDER_REASONS).sort_by do |reason|
+          WithdrawalReasons::PROVIDER_REASONS.index(reason.name)
+        end
       else
-        WithdrawalReason.where(name: WithdrawalReasons::TRAINEE_REASONS)
+        WithdrawalReason.where(name: WithdrawalReasons::TRAINEE_REASONS).sort_by do |reason|
+          WithdrawalReasons::TRAINEE_REASONS.index(reason.name)
+        end
       end
     end
 

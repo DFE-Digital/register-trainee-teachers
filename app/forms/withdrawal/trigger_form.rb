@@ -2,13 +2,16 @@
 
 module Withdrawal
   class TriggerForm < TraineeForm
-    FIELDS = %i[trigger].freeze
+    FIELDS = %i[trigger withdrawal_reasons].freeze
 
     attr_accessor(*FIELDS)
 
     validates :trigger, presence: true, inclusion: { in: %w[provider trainee] }
 
-    # TODO: remove reasons if trigger is changed on stash
+    def stash
+      clear_withdrawal_reasons if trigger_changed?
+      super
+    end
 
     def save!
       withdrawal = trainee.trainee_withdrawals.last
@@ -28,6 +31,16 @@ module Withdrawal
 
     def new_attributes
       fields_from_store.merge(params).symbolize_keys.slice(*FIELDS)
+    end
+
+    def clear_withdrawal_reasons
+      store.set(trainee.id, :withdrawal_reasons, {})
+    end
+
+    def trigger_changed?
+      return false if store.get(trainee.id, :trigger).nil?
+
+      store.get(trainee.id, :trigger)["trigger"] != trigger
     end
   end
 end
