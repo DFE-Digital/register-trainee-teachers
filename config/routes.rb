@@ -103,6 +103,7 @@ Rails.application.routes.draw do
         end
       end
       resources :review_errors, path: "review-errors", only: %i[show]
+      resource :empty_template, only: %i[show], path: "empty-template"
     end
   end
 

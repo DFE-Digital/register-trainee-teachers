@@ -101,6 +101,9 @@ feature "bulk add trainees" do
         when_i_click_the_guidance_link
         then_i_see_the_bulk_add_trainees_guidance_page
 
+        when_i_click_the_documentation_empty_csv_link
+        then_i_receive_the_empty_csv_file
+
         when_i_attach_an_empty_file
         and_i_click_the_upload_button
         then_i_see_the_upload_page_with_errors(empty: true)
@@ -581,11 +584,11 @@ private
       :completed,
       provider: current_user.organisation,
       training_route: :provider_led_undergrad,
-      first_names: "Jonas",
-      last_name: "Padberg",
-      email: "jonas.padberg@example.com",
-      date_of_birth: "1964-03-07",
-      itt_start_date: Date.new(2022, 9, 7),
+      first_names: "Spencer",
+      last_name: "Murphy",
+      email: "spencer.murphy@example.com",
+      date_of_birth: "1967-12-06",
+      itt_start_date: Date.new(2024, 10, 1),
     )
   end
 
@@ -689,7 +692,10 @@ private
   def then_i_see_the_bulk_add_trainees_guidance_page
     expect(page).to have_current_path(csv_docs_home_path)
     expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
-    visit new_bulk_update_add_trainees_upload_path
+  end
+
+  def when_i_click_the_documentation_empty_csv_link
+    click_on "Download empty bulk add new trainees CSV template"
   end
 
   def when_i_attach_an_empty_file
@@ -944,11 +950,11 @@ private
   end
 
   def then_i_can_see_the_new_trainees
-    expect(page).to have_content("Jonas Padberg")
-    expect(page).to have_content("Myriam Bruen")
-    expect(page).to have_content("Usha Rolfson")
-    expect(page).to have_content("Fidel Hessel")
-    expect(page).to have_content("Melony Kilback")
+    expect(page).to have_content("Spencer Murphy")
+    expect(page).to have_content("Adrianne Koelpin")
+    expect(page).to have_content("Sacha Bechtelar")
+    expect(page).to have_content("Rico Corkery")
+    expect(page).to have_content("Chantelle Raynor")
   end
 
   def then_i_can_see_the_new_trainees_with_placements
