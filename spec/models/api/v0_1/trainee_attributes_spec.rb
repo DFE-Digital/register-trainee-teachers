@@ -8,7 +8,6 @@ RSpec.describe Api::V01::TraineeAttributes do
   describe "validations" do
     it { is_expected.to validate_presence_of(:first_names) }
     it { is_expected.to validate_presence_of(:last_name) }
-    it { is_expected.to validate_presence_of(:date_of_birth) }
     it { is_expected.to validate_presence_of(:sex) }
     it { is_expected.to validate_presence_of(:itt_start_date) }
     it { is_expected.to validate_presence_of(:itt_end_date) }
@@ -87,6 +86,34 @@ RSpec.describe Api::V01::TraineeAttributes do
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
             end
           end
+        end
+      end
+    end
+
+    describe "date_of_birth" do
+      it { is_expected.to validate_presence_of(:date_of_birth) }
+
+      context "when valid" do
+        before do
+          subject.date_of_birth = Time.zone.today
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:date_of_birth]).to be_blank
+        end
+      end
+
+      context "when invalid" do
+        before do
+          subject.date_of_birth = "120284"
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:date_of_birth]).to contain_exactly("is invalid")
         end
       end
     end
