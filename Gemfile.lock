@@ -697,7 +697,7 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
-    stackprof (0.2.26)
+    stackprof (0.2.27)
     stateful_enum (0.7.0)
     store_model (4.2.0)
       activerecord (>= 7.0)
