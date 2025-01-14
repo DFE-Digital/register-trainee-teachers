@@ -8,8 +8,6 @@ module Withdrawal
 
     validates :trigger, presence: true, inclusion: { in: %w[provider trainee] }
 
-    # TODO: remove reasons if trigger is changed on stash
-
     def stash
       clear_withdrawal_reasons if trigger_changed?
       super
