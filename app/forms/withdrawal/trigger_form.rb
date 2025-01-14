@@ -40,6 +40,8 @@ module Withdrawal
     end
 
     def trigger_changed?
+      return false if store.get(trainee.id, :trigger).nil?
+
       store.get(trainee.id, :trigger)["trigger"] != trigger
     end
   end
