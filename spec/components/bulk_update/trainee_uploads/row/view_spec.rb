@@ -77,7 +77,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
         it do
           expect(
             render_inline(subject),
-          ).to have_text(upload.created_at.to_fs(:govuk_date_and_time))
+          ).not_to have_text(upload.created_at.to_fs(:govuk_date_and_time))
         end
       end
     end
