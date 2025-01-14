@@ -625,7 +625,7 @@ private
     expect(page).to have_content("Your file is being processed")
     expect(page).to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
     expect(page).to have_content("This is taking longer than usual")
-    expect(page).to have_content("You'll receive and email to tell you when this is complete.")
+    expect(page).to have_content("You'll receive an email to tell you when this is complete.")
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_link("Back to bulk updates page")
   end
@@ -635,7 +635,7 @@ private
     expect(page).not_to have_content("Your file is being processed")
     expect(page).not_to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
     expect(page).not_to have_content("This is taking longer than usual")
-    expect(page).not_to have_content("You'll receive and email to tell you when this is complete.")
+    expect(page).not_to have_content("You'll receive an email to tell you when this is complete.")
     expect(page).not_to have_content("You can also check the status of new trainee files.")
     expect(page).not_to have_link("Back to bulk updates page")
   end
@@ -826,7 +826,7 @@ private
         "We're currently processing #{upload.filename}",
       )
       expect(page).to have_content("This could take several minutes if there are a large number of trainees.")
-      expect(page).to have_content("You'll receive and email to tell you when this is complete.")
+      expect(page).to have_content("You'll receive an email to tell you when this is complete.")
       expect(page).to have_content("You can also check the")
       expect(page).to have_link("status of new trainee files", href: bulk_update_add_trainees_uploads_path)
       expect(page).to have_link("Back to bulk updates page", href: bulk_update_path)
