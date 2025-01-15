@@ -46,7 +46,7 @@ module Api
         elsif parsed_withdraw_date.blank?
           errors.add(:withdraw_date, :invalid)
         elsif date_before_itt_start_date?(parsed_withdraw_date, trainee.itt_start_date)
-          errors.add(:date, :not_before_itt_start_date)
+          errors.add(:withdraw_date, :not_before_itt_start_date)
         end
       end
 

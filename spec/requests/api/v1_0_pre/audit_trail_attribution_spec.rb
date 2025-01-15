@@ -11,10 +11,12 @@ describe "audit trail attribution" do
     let(:unknown) { create(:withdrawal_reason, :unknown) }
     let(:params) do
       {
-        reasons: [unknown.name],
-        withdraw_date: Time.zone.now.to_s,
-        withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
-        withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+        data: {
+          reasons: [unknown.name],
+          withdraw_date: Time.zone.now.to_s,
+          withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
+          withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+        },
       }
     end
 
