@@ -27,10 +27,12 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       let(:unknown) { create(:withdrawal_reason, :unknown) }
       let(:params) do
         {
-          reasons: [unknown.name],
-          withdraw_date: Time.zone.now.to_s,
-          withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
-          withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+          data: {
+            reasons: [unknown.name],
+            withdraw_date: Time.zone.now.to_s,
+            withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
+            withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+          },
         }
       end
       let(:trainee_id) { trainee.slug }
@@ -53,7 +55,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: params.to_json,
           )
-        } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:withdraw_reasons_details])
+        } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:data][:withdraw_reasons_details])
         .and change { trainee.reload.withdraw_date }.from(nil)
         .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
       end
@@ -79,7 +81,15 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       end
 
       context "with invalid params" do
-        let(:params) { { withdraw_reasons_details: nil, withdraw_date: nil } }
+        let(:params) do
+          {
+            data:
+              {
+                withdraw_reasons_details: nil,
+                withdraw_date: nil,
+              },
+          }
+        end
 
         it "returns status code 422 with a valid JSON response" do
           post(
@@ -107,11 +117,23 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
     context "with a non-withdrawable trainee" do
       let(:trainee) { create(:trainee, :itt_start_date_in_the_future, provider:) }
       let(:trainee_id) { trainee.slug }
+      let(:unknown) { create(:withdrawal_reason, :unknown) }
+      let(:params) do
+        {
+          data: {
+            reasons: [unknown.name],
+            withdraw_date: Time.zone.now.to_s,
+            withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
+            withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+          },
+        }
+      end
 
       it "returns status code 422 with a valid JSON response" do
         post(
           "/api/v1.0-pre/trainees/#{trainee_id}/withdraw",
           headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json,
         )
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body[:errors]).to contain_exactly({ error: "StateTransitionError", message: "It's not possible to perform this action while the trainee is in its current state" })
