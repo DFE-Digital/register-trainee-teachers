@@ -66,6 +66,7 @@ module BulkUpdate
         attributes[:lead_partner_not_applicable] = attributes[:lead_partner_urn].blank?
         prepare_degree_attributes(attributes)
         prepare_placement_attributes(attributes)
+        prepare_record_source_attribute(attributes)
         attributes
       end
 
@@ -94,6 +95,12 @@ module BulkUpdate
             urn: attributes[:urn],
           },
         ]
+      end
+
+      def prepare_record_source_attribute(attributes)
+        return attributes if attributes[:record_source].present?
+
+        attributes[:record_source] = Trainee::CSV_SOURCE
       end
     end
   end
