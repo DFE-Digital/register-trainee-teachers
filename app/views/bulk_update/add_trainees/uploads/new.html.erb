@@ -21,8 +21,7 @@
       <%= render GovukComponent::InsetTextComponent.new(classes: "") do %>
         <p class="govuk-body">
           You must only use this CSV file template to register new trainees.
-          If you use this to update already existing trainees, it will come back
-          as an error.
+          Using it to update already existing trainees will result in an error.
         </p>
       <% end %>
 
@@ -36,8 +35,6 @@
           bulk_update_add_trainees_empty_template_path(format: :csv),
         ) %>
       </p>
-
-      <h3 class="govuk-heading-s">If you're adapting the CSV file template for a direct extract from your student record system</h3>
 
       <p class="govuk-body">You can adapt this CSV file template to add trainee data directly from your student record system.</p>
 
