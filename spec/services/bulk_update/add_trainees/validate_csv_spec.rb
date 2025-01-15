@@ -15,14 +15,18 @@ module BulkUpdate
 
       context "given a CSV with missing columns" do
         let(:file_path) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_missing_column.csv") }
-        let(:csv) do
-          CSVSafe.new(
-            File.open(file_path),
-            headers: true,
-          ).read
-        end
+        let(:csv) { CSVSafe.new(File.open(file_path), headers: true).read }
 
         it { expect(record.errors.first.message).to eql "CSV header must include: #{BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(', ')}" }
+      end
+
+      context "given a CSV with the correct columns in the 'wrong' order" do
+        let(:file_content) do
+          "#{BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.reverse.join(',')}\nfoo,bar,baz"
+        end
+        let(:csv) { CSVSafe.new(file_content, headers: true).read }
+
+        it { expect(record.errors).to be_empty }
       end
 
       context "given a CSV file with no data (just a header)" do
