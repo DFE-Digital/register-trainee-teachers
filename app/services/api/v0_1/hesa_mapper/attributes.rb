@@ -203,7 +203,11 @@ module Api
         end
 
         def lead_partner_from_urn
-          lead_partner_id = LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
+          lead_partner_id =
+            if params[:lead_partner_urn].present?
+              LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
+            end
+
           {
             lead_partner_id: lead_partner_id,
             lead_partner_not_applicable: lead_partner_id.nil?,
@@ -211,7 +215,11 @@ module Api
         end
 
         def lead_partner_from_ukprn
-          lead_partner_id = LeadPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id
+          lead_partner_id =
+            if params[:lead_partner_ukprn].present?
+              LeadPartner.find_by(ukprn: params[:lead_partner_ukprn])&.id
+            end
+
           {
             lead_partner_id: lead_partner_id,
             lead_partner_not_applicable: lead_partner_id.nil?,
