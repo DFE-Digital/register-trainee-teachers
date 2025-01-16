@@ -50,7 +50,7 @@ private
   end
 
   def then_i_see_the_delete_placement_form
-    expect(page).to have_content("Are you sure you want to delete this placement?")
+    expect(page).to have_content("Are you sure you want to remove this placement?")
   end
 
   def when_i_click_cancel
@@ -66,7 +66,7 @@ private
   end
 
   def and_i_click_the_confirm_button
-    click_on "Yes I’m sure — delete this placement"
+    click_on "Yes I’m sure — remove this placement"
   end
 
   def when_i_click_update
