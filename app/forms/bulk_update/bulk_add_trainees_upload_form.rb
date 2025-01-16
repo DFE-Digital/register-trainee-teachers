@@ -8,8 +8,7 @@ module BulkUpdate
     include ActiveModel::AttributeAssignment
     include ActiveModel::Validations::Callbacks
 
-    # TODO: Rename this to something more generic?
-    include RecommendationsUploads::Config
+    include BulkUpdate::AddTrainees::Config
 
     validate :validate_file!
     validate :validate_csv!
