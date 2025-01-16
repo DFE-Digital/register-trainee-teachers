@@ -954,32 +954,32 @@ private
   end
 
   def then_i_can_see_the_new_trainees_with_placements
-    expect(page).to have_content("Jeffery Halvorson")
-    expect(page).to have_content("Farah Wolff")
-    expect(page).to have_content("Denna Jones")
-    expect(page).to have_content("Rudolf McLaughlin")
-    expect(page).to have_content("Elina Rolfson")
+    expect(page).to have_content("Preston Rath")
+    expect(page).to have_content("Breanne Langosh")
+    expect(page).to have_content("Kirby Gerlach")
+    expect(page).to have_content("Emilio Rippin")
+    expect(page).to have_content("Lavonda Bins")
 
-    click_on "Jeffery Halvorson"
+    click_on "Preston Rath"
 
     expect(page).to have_content("Placement 1")
-    expect(page).to have_content("URN 587111")
+    expect(page).to have_content("URN 609384")
     expect(page).not_to have_content("First placement is missing")
     expect(page).to have_content("Second placement is missing")
   end
 
   def then_i_can_see_the_new_trainees_with_a_degree
-    expect(page).to have_content("Mitsuko Larkin")
-    expect(page).to have_content("Ronnie White")
-    expect(page).to have_content("Joannie Kuhlman")
-    expect(page).to have_content("Angelica Anderson")
-    expect(page).to have_content("Yelena Schamberger")
+    expect(page).to have_content("Charissa Gibson")
+    expect(page).to have_content("Kraig Howe")
+    expect(page).to have_content("Katharyn Roberts")
+    expect(page).to have_content("Maurice Bashirian")
+    expect(page).to have_content("Bethanie Schumm")
 
-    click_on "Mitsuko Larkin"
+    click_on "Charissa Gibson"
 
-    expect(page).to have_content("Bachelor of Metallurgy")
-    expect(page).to have_content("Business law")
-    expect(page).to have_content("Anglia Ruskin University")
+    expect(page).to have_content("Bachelor of Humanities")
+    expect(page).to have_content("general or integrated engineering")
+    expect(page).to have_content("Point Blank Music School")
     expect(page).to have_content("Third-class honours")
   end
 

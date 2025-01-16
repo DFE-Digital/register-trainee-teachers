@@ -1569,6 +1569,7 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
+              invalid_headers: "CSV header must include: %{headers}"
         bulk_update/bulk_add_trainees_submit_form:
           attributes:
             file:
