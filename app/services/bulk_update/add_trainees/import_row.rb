@@ -29,7 +29,10 @@ module BulkUpdate
         attributes = prepare_csv_attributes_for_api(attributes)
 
         # Apply conversions to the attributes
-        mapper_klass = Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
+        mapper_klass = Api::GetVersionedItem.for_service(
+          model: :map_hesa_attributes,
+          version: version,
+        )
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
 
         # Save the record

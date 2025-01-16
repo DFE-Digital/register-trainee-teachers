@@ -54,6 +54,7 @@ module Api
         ethnic_background: { type: :string, options: { default: Diversities::NOT_PROVIDED } },
         course_min_age: {},
         course_max_age: {},
+        record_source: { options: { default: -> { Trainee::API_SOURCE } } },
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
@@ -81,7 +82,7 @@ module Api
       attribute :nationalisations_attributes, array: true, default: -> { [] }
       attribute :hesa_trainee_detail_attributes, array: false, default: -> {}
       attribute :trainee_disabilities_attributes, array: true, default: -> { [] }
-      attribute :record_source, default: -> { Trainee::API_SOURCE }
+      # attribute :record_source, default: -> { Trainee::API_SOURCE }
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
