@@ -29,7 +29,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         {
           data: {
             reasons: [unknown.name],
-            withdraw_date: Time.zone.now.to_s,
+            withdraw_date: Time.zone.now.iso8601,
             withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
             withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
           },
