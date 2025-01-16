@@ -9,8 +9,6 @@ RSpec.describe Api::V01::TraineeAttributes do
     it { is_expected.to validate_presence_of(:first_names) }
     it { is_expected.to validate_presence_of(:last_name) }
     it { is_expected.to validate_presence_of(:sex) }
-    it { is_expected.to validate_presence_of(:itt_start_date) }
-    it { is_expected.to validate_presence_of(:itt_end_date) }
     it { is_expected.to validate_presence_of(:diversity_disclosure) }
     it { is_expected.to validate_presence_of(:course_subject_one) }
     it { is_expected.to validate_presence_of(:study_mode) }
@@ -107,13 +105,95 @@ RSpec.describe Api::V01::TraineeAttributes do
 
       context "when invalid" do
         before do
-          subject.date_of_birth = "120284"
+          subject.date_of_birth = "14/11/23"
         end
 
         it do
           subject.validate
 
           expect(subject.errors[:date_of_birth]).to contain_exactly("is invalid")
+        end
+      end
+    end
+
+    describe "itt_start_date" do
+      it { is_expected.to validate_presence_of(:itt_start_date) }
+
+      context "when valid" do
+        before do
+          subject.itt_start_date = Time.zone.today
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_start_date]).to be_blank
+        end
+      end
+
+      context "when invalid" do
+        before do
+          subject.itt_start_date = "14/11/23"
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_start_date]).to contain_exactly("is invalid")
+        end
+      end
+    end
+
+    describe "itt_end_date" do
+      it { is_expected.to validate_presence_of(:itt_end_date) }
+
+      context "when valid" do
+        before do
+          subject.itt_end_date = Time.zone.today
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_end_date]).to be_blank
+        end
+      end
+
+      context "when invalid" do
+        before do
+          subject.itt_end_date = "14/11/23"
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_end_date]).to contain_exactly("is invalid")
+        end
+      end
+    end
+
+    describe "trainee_start_date" do
+      context "when valid" do
+        before do
+          subject.trainee_start_date = Time.zone.today
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to be_blank
+        end
+      end
+
+      context "when invalid" do
+        before do
+          subject.trainee_start_date = "14/11/23"
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("is invalid")
         end
       end
     end

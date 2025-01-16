@@ -290,7 +290,7 @@ module Api
         return true if date.is_a?(Date) || date.is_a?(DateTime)
 
         begin
-          DateTime.parse(date)
+          DateTime.iso8601(date)
           true
         rescue StandardError
           false
