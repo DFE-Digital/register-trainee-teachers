@@ -20,29 +20,37 @@ RSpec.describe "Rack::Attack settings" do
 
     context "when requests per IP > 100" do
       it "limits the amount of requests" do
-        (limit + 1).times do
-          get "/api/v0.1/info", headers: {
-                                  authorization: "Bearer #{token}",
-                                },
-                                env: { REMOTE_ADDR: ip }
-        end
+        within_same_period do
+          (limit + 1).times do
+            get "/api/v0.1/info", headers: {
+                                    authorization: "Bearer #{token}",
+                                  },
+                                  env: { REMOTE_ADDR: ip }
+          end
 
-        expect(response).to have_http_status(:too_many_requests)
-        expect(response.body).to match("Retry later")
+          expect(response).to have_http_status(:too_many_requests)
+          expect(response.body).to match("Retry later")
+        end
       end
     end
 
     context "when requests per IP <= 100" do
       it "does not limit the amount of requests" do
-        limit.times do
-          get "/api/v0.1/info", headers: {
-                                  authorization: "Bearer #{token}",
-                                },
-                                env: { REMOTE_ADDR: ip }
-        end
+        within_same_period do
+          limit.times do
+            get "/api/v0.1/info", headers: {
+                                    authorization: "Bearer #{token}",
+                                  },
+                                  env: { REMOTE_ADDR: ip }
+          end
 
-        expect(response).to have_http_status(:ok)
+          expect(response).to have_http_status(:ok)
+        end
       end
     end
+  end
+
+  def within_same_period(&block)
+    Timecop.freeze(&block)
   end
 end
