@@ -51,7 +51,7 @@ module Reports
 
       if @performance_profile_sign_off_form.save!
         email_provider_users
-        redirect_to(confirmation_reports_performance_profiles_path)
+        redirect_to(confirmation_reports_performance_profiles_path) && return
       else
         @previous_academic_cycle = AcademicCycle.previous
         @previous_academic_cycle_label = @previous_academic_cycle.label
