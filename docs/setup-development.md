@@ -138,7 +138,8 @@ psql register_trainee_teacher_data_development < ~/Downloads/backup_sanitised.sq
 In order to create and update the schools and the lead schools follow the below steps
 1. [Download Get Information about Schools data](#download-get-information-about-schools-data)
 2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
-3. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
+3. [Import schools from csv data/schools_gias.csv](#import-schools-from-csv-dataschools_giascsv)
+4. [Realign lead partner with school name](#realign-lead-partner-with-school-name)
 
 ### Download Get Information about Schools data
 1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
@@ -169,6 +170,12 @@ To import schools from csv data/schools_gias.csv, use the following rake task:
 bundle exec rake schools_data:import_gias
 ```
 
+### Realign lead partner with school name
+To realign lead partner with school name, use the following rake task:
+
+```bash
+bundle exec rake schools_data:realign_lead_partner_with_school_name
+```
 
 ## Running Apply application import against example data
 
