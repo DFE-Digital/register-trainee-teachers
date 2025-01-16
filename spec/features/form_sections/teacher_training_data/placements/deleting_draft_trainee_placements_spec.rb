@@ -46,7 +46,7 @@ private
   def when_i_visit_the_trainee_path_and_navigate_to_the_delete_placement_form
     visit trainee_path(id: @trainee.slug)
     click_on "Placements"
-    click_on "Delete placement"
+    click_on "Remove placement"
   end
 
   def then_i_see_the_delete_placement_form
