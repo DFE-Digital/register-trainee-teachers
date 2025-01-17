@@ -67,7 +67,10 @@ module Api
 
     def validation_error_response
       {
-        json: { errors: validation_errors },
+        json: {
+          message: "Validation failed: #{validation_errors.count} #{'error'.pluralize(validation_errors.count)} prohibited this trainee from being saved",
+          errors: validation_errors,
+        },
         status: :unprocessable_entity,
       }
     end
