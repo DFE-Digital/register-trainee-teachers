@@ -24,7 +24,7 @@ module Funding
     end
 
     def training_initiative_required?
-      trainee.api_record? == false
+      trainee.api_record? == false && trainee.csv_record? == false
     end
   end
 end

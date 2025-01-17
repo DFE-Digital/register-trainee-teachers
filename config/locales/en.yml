@@ -125,6 +125,7 @@ en:
         hesa: Imported from HESA
         manual: Added manually
         api: Added with API
+        csv: Added with bulk CSV upload
       trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
       progress_date_prefix:
@@ -178,6 +179,7 @@ en:
         hesa: HESA
         manual: Manual
         api: API
+        csv: CSV
       route:
         blank: No route provided
       trainee_name:

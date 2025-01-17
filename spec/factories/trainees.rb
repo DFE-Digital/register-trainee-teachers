@@ -709,6 +709,10 @@ FactoryBot.define do
       record_source { Sourceable::API_SOURCE }
     end
 
+    trait :created_from_csv do
+      record_source { Sourceable::CSV_SOURCE }
+    end
+
     trait :created_manually do
       record_source { Sourceable::MANUAL_SOURCE }
     end

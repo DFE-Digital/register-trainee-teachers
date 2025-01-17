@@ -547,6 +547,8 @@ class Trainee < ApplicationRecord
     case record_source
     when API_SOURCE
       "api"
+    when CSV_SOURCE
+      "csv"
     when HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE
       "hesa"
     when APPLY_SOURCE

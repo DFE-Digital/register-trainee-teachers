@@ -29,7 +29,10 @@ module BulkUpdate
         attributes = prepare_csv_attributes_for_api(attributes)
 
         # Apply conversions to the attributes
-        mapper_klass = Api::GetVersionedItem.for_service(model: :map_hesa_attributes, version: version)
+        mapper_klass = Api::GetVersionedItem.for_service(
+          model: :map_hesa_attributes,
+          version: version,
+        )
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
 
         # Save the record
@@ -66,6 +69,7 @@ module BulkUpdate
         attributes[:lead_partner_not_applicable] = attributes[:lead_partner_urn].blank?
         prepare_degree_attributes(attributes)
         prepare_placement_attributes(attributes)
+        prepare_record_source_attribute(attributes)
         attributes
       end
 
@@ -94,6 +98,12 @@ module BulkUpdate
             urn: attributes[:urn],
           },
         ]
+      end
+
+      def prepare_record_source_attribute(attributes)
+        return attributes if attributes[:record_source].present?
+
+        attributes[:record_source] = Trainee::CSV_SOURCE
       end
     end
   end

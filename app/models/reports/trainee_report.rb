@@ -332,6 +332,8 @@ module Reports
         "apply" => "Apply",
         "dttp" => "DTTP",
         "hesa" => "HESA",
+        "csv" => "CSV",
+        "api" => "API",
       }[trainee.derived_record_source]
     end
 

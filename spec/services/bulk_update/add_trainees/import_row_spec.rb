@@ -52,6 +52,11 @@ module BulkUpdate
             expect(Trainee.count - original_count).to be(1)
             expect(Trainee.last.lead_partner).to be_nil
           end
+
+          it "the record source is set to `CSV`" do
+            described_class.call(row:, current_provider:)
+            expect(Trainee.last.record_source).to eq(Trainee::CSV_SOURCE)
+          end
         end
 
         context "when the row is valid and includes placement data" do
