@@ -14,6 +14,14 @@ describe SchoolSearch do
       expect(described_class.call(query: school.name).schools).to match([school])
     end
 
+    context "town name with punctuation" do
+      let(:school) { create(:school, town: "World's End") }
+
+      it "can search by town" do
+        expect(described_class.call(query: school.town).schools).to match([school])
+      end
+    end
+
     it "can search by town" do
       expect(described_class.call(query: school.town).schools).to match([school])
     end
