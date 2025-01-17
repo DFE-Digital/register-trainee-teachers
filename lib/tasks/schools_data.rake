@@ -52,19 +52,16 @@ namespace :schools_data do
   desc "Realign lead partner with school name"
   task :realign_lead_partner_with_school_name do
     success_count = 0
-    failure_count = 0
     lead_partners = LeadPartner.school.joins(:school).where("lead_partners.name != schools.name")
 
-    lead_partners.each do |lead_partner|
-      puts "Updated: '#{lead_partner.name}' to '#{lead_partner.school.name}'"
+    lead_partners.find_each do |lead_partner|
+      puts "Updating: '#{lead_partner.name}' to '#{lead_partner.school.name}'"
       lead_partner.name = lead_partner.school.name
       if lead_partner.save
         success_count += 1
-      else
-        failure_count += 1
       end
     end
 
-    puts "Done! updated: #{success_count} failed: #{failure_count}"
+    puts "Done! updated: #{success_count}"
   end
 end

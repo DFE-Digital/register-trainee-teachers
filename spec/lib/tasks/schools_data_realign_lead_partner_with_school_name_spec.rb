@@ -23,9 +23,9 @@ describe "schools_data:realign_lead_partner_with_school_name" do
   end
 
   it "updates the lead partners with the school name" do
-    expect($stdout).to receive(:puts).with("Updated: 'Different Name 1' to 'Test School 1'")
-    expect($stdout).to receive(:puts).with("Updated: 'Test Lead Partner 2' to 'Test School 2'")
-    expect($stdout).to receive(:puts).with("Done! updated: 2 failed: 0")
+    expect($stdout).to receive(:puts).with("Updating: 'Different Name 1' to 'Test School 1'")
+    expect($stdout).to receive(:puts).with("Updating: 'Test Lead Partner 2' to 'Test School 2'")
+    expect($stdout).to receive(:puts).with("Done! updated: 2")
 
     subject
 
