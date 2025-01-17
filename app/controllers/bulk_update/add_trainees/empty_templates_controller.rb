@@ -2,9 +2,7 @@
 
 module BulkUpdate
   module AddTrainees
-    class EmptyTemplatesController < ApplicationController
-      before_action { require_feature_flag(:bulk_add_trainees) }
-
+    class EmptyTemplatesController < CsvDocs::BaseController
       def show
         respond_to do |format|
           format.csv do
