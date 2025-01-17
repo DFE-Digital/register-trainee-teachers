@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
+  include Rails.application.routes.url_helpers
+
   subject { described_class.new(upload:) }
 
   describe "#status" do
@@ -43,22 +45,49 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
     end
   end
 
-  describe "#submitted_at" do
-    context "when bulk_update_trainee_upload#submitted_at is nil" do
-      let!(:upload) { create(:bulk_update_trainee_upload) }
+  describe "#upload_path" do
+    context "when the upload is not 'cancelled'" do
+      BulkUpdate::TraineeUpload.statuses.except(:cancelled).each_key do |status|
+        context "when #{status}" do
+          let(:upload) { create(:bulk_update_trainee_upload, status) }
 
-      it do
-        expect(subject.submitted_at).to be_nil
+          it do
+            expect(
+              render_inline(subject),
+            ).to have_link(upload.created_at.to_fs(:govuk_date_and_time), href: upload_path(upload))
+          end
+        end
+      end
+
+      def upload_path(upload)
+        {
+          "pending" => bulk_update_add_trainees_upload_path(upload),
+          "validated" => bulk_update_add_trainees_upload_path(upload),
+          "in_progress" => bulk_update_add_trainees_submission_path(upload),
+          "succeeded" => bulk_update_add_trainees_details_path(upload),
+          "failed" => bulk_update_add_trainees_review_error_path(upload),
+        }.with_indifferent_access[upload.status]
       end
     end
 
-    context "when bulk_update_trainee_upload#submitted_at is not nil" do
-      let(:submitted_at) { Time.current }
-      let(:upload) { create(:bulk_update_trainee_upload, submitted_at:) }
+    context "when the upload is 'cancelled'" do
+      context "when cancelled" do
+        let(:upload) { create(:bulk_update_trainee_upload, :cancelled) }
 
-      it do
-        expect(subject.submitted_at).to eq(submitted_at.to_fs(:govuk_date_and_time))
+        it do
+          expect(
+            render_inline(subject),
+          ).to have_text(upload.created_at.to_fs(:govuk_date_and_time))
+        end
       end
+    end
+  end
+
+  describe "#created_at" do
+    let(:upload) { create(:bulk_update_trainee_upload) }
+
+    it do
+      expect(subject.created_at).to eq(upload.created_at.to_fs(:govuk_date_and_time))
     end
   end
 end

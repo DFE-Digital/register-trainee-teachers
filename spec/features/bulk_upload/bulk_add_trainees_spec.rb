@@ -176,7 +176,9 @@ feature "bulk add trainees" do
         when_the_unexpected_duplicate_error_is_been_reverted
         and_i_return_to_the_review_errors_page
         and_i_attach_a_valid_file
-        and_i_click_the_upload_button
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_upload_button
+        end
         then_i_see_that_the_upload_is_processing
         then_a_job_is_queued_to_process_the_upload
 
@@ -185,10 +187,7 @@ feature "bulk add trainees" do
         and_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
-
-        Timecop.travel 1.hour.from_now do
-          and_i_click_the_submit_button
-        end
+        and_i_click_the_submit_button
 
         then_a_job_is_queued_to_process_the_upload
         and_the_send_csv_processing_email_has_been_sent
@@ -209,7 +208,7 @@ feature "bulk add trainees" do
         and_i_click_on_view_status_of_uploaded_trainee_files
         then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
-        when_i_click_on_an_upload
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.succeeded.last)
         then_i_see_the_bulk_update_add_trainees_upload_details_page
 
         when_i_click_on_back_link
@@ -485,7 +484,7 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    first(:link, upload.submitted_at.to_fs(:govuk_date_and_time)).click
+    first(:link, upload.created_at.to_fs(:govuk_date_and_time)).click
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
