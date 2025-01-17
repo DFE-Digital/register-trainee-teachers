@@ -1,4 +1,4 @@
-<%= render PageTitle::View.new(text: "Are you sure you want to delete this placement?") %>
+<%= render PageTitle::View.new(text: "Are you sure you want to remove this placement?") %>
 
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
@@ -12,7 +12,7 @@
     <span class="govuk-caption-l">
       <%= trainee_name(@placements_form.trainee) %>
     </span>
-    <h1 class="govuk-heading-l">Are you sure you want to delete this placement?</h1>
+    <h1 class="govuk-heading-l">Are you sure you want to remove this placement?</h1>
 
     <div class="govuk-body">
       <p class="govuk-body govuk-!-margin-bottom-2"><%= @placement_form.placement&.name %></p>
@@ -21,7 +21,7 @@
 
     <div class="govuk-body">
       <%= govuk_button_to(
-        "Yes I’m sure — delete this placement",
+        "Yes I’m sure — remove this placement",
         trainee_placement_path(
           trainee_id: @placements_form.trainee.slug,
           id: @placement_form.slug,

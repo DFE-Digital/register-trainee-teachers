@@ -30,7 +30,7 @@
     <%= render MappableSummary::View.new(**placement_summary_args.except(:placement)) do |component| %>
       <% component.with_header_actions do %>
         <%= govuk_link_to(
-          "Delete placement",
+          "Remove placement",
           delete_trainee_placement_path(trainee_id: trainee.slug, id: placement_summary_args[:placement].slug),
         ) %>
       <% end %>
