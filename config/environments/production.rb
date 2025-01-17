@@ -2,6 +2,7 @@
 
 require "active_support/core_ext/integer/time"
 require Rails.root.join("config/initializers/redis")
+require_dependency Rails.root.join("app/lib/custom_log_formatter")
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -77,9 +78,15 @@ Rails.application.configure do
   ##################
   # logging config #
   ##################
-  config.log_level = :info # less chatter in prod
-  config.active_record.logger = nil # Don't log SQL
-  config.active_support.report_deprecations = false # Don't log any deprecations.
-  config.semantic_logger.backtrace_level = nil # no backtrace in prod
-  config.colorize_logging = false
+  config.rails_semantic_logger.add_file_appender = false
+  config.rails_semantic_logger.format = CustomLogFormatter.new
+  config.rails_semantic_logger.filter = proc { |log| log.name != "DfE::Analytics::SendEvents" }
+  config.semantic_logger.add_appender(
+    io: $stdout,
+    level: config.log_level,
+    formatter: CustomLogFormatter.new,
+    filter: config.rails_semantic_logger.filter,
+  )
+
+  config.active_record.logger = nil # Don't log SQL in production
 end

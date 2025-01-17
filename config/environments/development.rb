@@ -3,6 +3,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # Bullet gem configuration for detecting N+1 queries and more
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
@@ -10,84 +11,74 @@ Rails.application.configure do
     Bullet.unused_eager_loading_enable = false
   end
 
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # In the development environment your application's code is reloaded any time
-  # it changes. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
+  # Code reloading and eager loading settings
   config.cache_classes = false
-
-  # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports.
+  # Error reporting and debugging
   config.consider_all_requests_local = true
-
-  # Enable server timing
   config.server_timing = true
 
-  # Enable/disable caching. By default caching is disabled.
-  # Run rails dev:cache to toggle caching.
+  # Caching configuration
   if Rails.root.join("tmp/caching-dev.txt").exist?
     config.action_controller.perform_caching = true
     config.action_controller.enable_fragment_cache_logging = true
-
     config.cache_store = :redis_cache_store
     config.public_file_server.headers = {
       "Cache-Control" => "public, max-age=#{2.days.to_i}",
     }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
+  # Active Storage configuration
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
+  # Mailer configuration
   config.action_mailer.raise_delivery_errors = false
-
   config.action_mailer.perform_caching = false
 
-  # Print deprecation notices to the Rails logger.
+  # Deprecation and migration settings
   config.active_support.deprecation = :log
-
-  # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
-
-  # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
-
-  # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
-  # Highlight code that triggered database queries in logs.
+  # Database query logs
   config.active_record.verbose_query_logs = true
 
-  # Suppress logger output for asset requests.
-  # config.assets.quiet = true
-
-  # Raises error for missing translations.
+  # Internationalization
   config.i18n.raise_on_missing_translations = true
 
-  # Annotate rendered view with file names.
-  # config.action_view.annotate_rendered_view_with_filenames = true
-
-  # Uncomment if you wish to allow Action Cable access from any origin.
-  # config.action_cable.disable_request_forgery_protection = true
-
-  # Use an evented file watcher to asynchronously detect changes in source code,
-  # routes, locales, etc. This feature depends on the listen gem.
+  # File watcher
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # Security and SSL
   config.force_ssl = Settings.features.use_ssl
 
-  # We don't use hosts authorization in deployed environments and there's no value to having it in dev.
+  # Hosts authorization
   config.hosts.clear
 
+  # Active Job
   config.active_job.queue_adapter = :sidekiq
+
+  # Public file server
   config.public_file_server.enabled = true
+
+  # Logging configuration
   config.colorize_logging = true
+  config.rails_semantic_logger.semantic   = false
+  config.rails_semantic_logger.started    = true
+  config.rails_semantic_logger.processing = true
+  config.rails_semantic_logger.rendered   = true
+
+  # Uncomment to suppress logger output for asset requests
+  # config.assets.quiet = true
+
+  # Uncomment to annotate rendered view with file names
+  # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Uncomment to allow Action Cable access from any origin
+  # config.action_cable.disable_request_forgery_protection = true
 end
