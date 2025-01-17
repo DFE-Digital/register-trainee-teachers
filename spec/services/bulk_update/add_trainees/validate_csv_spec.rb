@@ -35,7 +35,7 @@ module BulkUpdate
         end
         let(:csv) { CSVSafe.new(file_content, headers: true).read }
 
-        it { expect(record.errors).to be_empty }
+        it { expect(record.errors.first.message).to eql "CSV header must include: #{BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(', ')}" }
       end
 
       context "given a CSV file with no data (just a header)" do
