@@ -34,7 +34,6 @@ module BulkUpdate
         authorize(@bulk_add_trainee_upload_form.upload)
 
         if @bulk_add_trainee_upload_form.valid?
-          # TODO: Dry run method
           upload = @bulk_add_trainee_upload_form.save
 
           redirect_to(bulk_update_add_trainees_upload_path(upload), flash: { success: t(".success") })
