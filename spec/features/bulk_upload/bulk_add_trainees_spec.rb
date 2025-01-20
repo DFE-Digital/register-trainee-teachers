@@ -441,6 +441,14 @@ feature "bulk add trainees" do
         then_i_see_the_review_errors_page_with_one_error
       end
     end
+
+    context "when the User is not authenticated" do
+      scenario "view guidance docs" do
+        when_i_visit_the_csv_docs_home_path
+        and_i_click_the_documentation_empty_csv_link
+        then_i_receive_the_empty_csv_file
+      end
+    end
   end
 
 private
@@ -691,6 +699,10 @@ private
   def then_i_see_the_bulk_add_trainees_guidance_page
     expect(page).to have_current_path(csv_docs_home_path)
     expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
+  end
+
+  def when_i_visit_the_csv_docs_home_path
+    visit csv_docs_home_path
   end
 
   def when_i_click_the_documentation_empty_csv_link
@@ -1118,4 +1130,5 @@ private
   alias_method :and_the_background_job_is_run, :when_the_background_job_is_run
   alias_method :and_i_return_to_the_review_errors_page, :when_i_return_to_the_review_errors_page
   alias_method :and_i_visit_the_bulk_update_trainee_upload_page, :when_i_try_resubmit_the_same_upload
+  alias_method :and_i_click_the_documentation_empty_csv_link, :when_i_click_the_documentation_empty_csv_link
 end
