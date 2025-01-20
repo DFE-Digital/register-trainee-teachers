@@ -287,14 +287,10 @@ module Api
       end
 
       def valid_date_string?(date)
-        return true if date.is_a?(Date) || date.is_a?(DateTime)
-
-        begin
-          DateTime.iso8601(date)
-          true
-        rescue StandardError
-          false
-        end
+        DateTime.iso8601(date)
+        true
+      rescue StandardError
+        false
       end
 
       def set_course_allocation_subject_id

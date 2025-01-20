@@ -29,7 +29,7 @@ RSpec.describe Api::V01::TraineeAttributes do
           before do
             Timecop.travel academic_cycle.start_date
 
-            subject.trainee_start_date = academic_cycle.start_date
+            subject.trainee_start_date = academic_cycle.start_date.iso8601
           end
 
           context "when AcademicCycle#start_date < 2023" do
@@ -93,7 +93,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
       context "when valid" do
         before do
-          subject.date_of_birth = Time.zone.today
+          subject.date_of_birth = Time.zone.today.iso8601
         end
 
         it do
@@ -121,7 +121,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
       context "when valid" do
         before do
-          subject.itt_start_date = Time.zone.today
+          subject.itt_start_date = Time.zone.today.iso8601
         end
 
         it do
@@ -149,7 +149,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
       context "when valid" do
         before do
-          subject.itt_end_date = Time.zone.today
+          subject.itt_end_date = Time.zone.today.iso8601
         end
 
         it do
@@ -175,7 +175,7 @@ RSpec.describe Api::V01::TraineeAttributes do
     describe "trainee_start_date" do
       context "when valid" do
         before do
-          subject.trainee_start_date = Time.zone.today
+          subject.trainee_start_date = Time.zone.today.iso8601
         end
 
         it do
