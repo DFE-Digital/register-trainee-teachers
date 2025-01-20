@@ -35,4 +35,4 @@ end
 Capybara.server = :puma, { Silent: true }
 Capybara.default_driver = :rack_test
 Capybara.javascript_driver = :cuprite
-Capybara.default_max_wait_time = 20
+Capybara.default_max_wait_time = 10
