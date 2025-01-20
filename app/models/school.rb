@@ -88,6 +88,7 @@ private
       postcode,
       postcode&.delete(" "),
       town,
+      town_normalised,
     ].join(" ")
 
     to_tsvector = Arel::Nodes::NamedFunction.new(
@@ -108,5 +109,9 @@ private
 
   def name_normalised
     ReplaceAbbreviation.call(string: StripPunctuation.call(string: name))
+  end
+
+  def town_normalised
+    ReplaceAbbreviation.call(string: StripPunctuation.call(string: town))
   end
 end
