@@ -445,7 +445,7 @@ feature "bulk add trainees" do
       end
     end
 
-    context "when the User is not authenticated" do
+    context "when the User is not authenticated", js: true do
       scenario "view guidance docs" do
         when_i_visit_the_csv_docs_home_path
         and_i_click_the_documentation_empty_csv_link
