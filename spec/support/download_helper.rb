@@ -5,7 +5,7 @@ module DownloadHelper
   PATH    = Capybara.save_path
 
   def downloads
-    Dir[PATH.join('*')]
+    Dir[PATH.join("*")]
   end
 
   def download

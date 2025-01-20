@@ -10,7 +10,7 @@ Capybara.register_driver :cuprite do |app|
       "ignore-certificate-errors": nil,
       "no-sandbox": nil,
       "disable-gpu": nil,
-      "disable-popup-blocking": nil
+      "disable-popup-blocking": nil,
     },
     process_timeout: 10,
     inspector: true,
@@ -25,10 +25,10 @@ Capybara.register_driver :cuprite do |app|
     ],
     context_attributes: {
       prefs: {
-        'download.default_directory' => DownloadHelper::PATH.to_s,
-        'download.prompt_for_download' => false,
-      }
-    }
+        "download.default_directory" => DownloadHelper::PATH.to_s,
+        "download.prompt_for_download" => false,
+      },
+    },
   )
 end
 
