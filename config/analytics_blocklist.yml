@@ -422,9 +422,8 @@
     - id
     - provider_id
     - submitted_by_id
-    - file
-    - file_name
     - status
+    - number_of_trainees
     - submitted_at
     - created_at
     - updated_at
