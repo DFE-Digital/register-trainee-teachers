@@ -287,7 +287,7 @@ module Api
       end
 
       def valid_date_string?(date)
-        DateTime.iso8601(date)
+        DateTime.iso8601(date.to_s)
         true
       rescue StandardError
         false
