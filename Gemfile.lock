@@ -656,7 +656,7 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (2.0.1)
+    sidekiq-cron (2.1.0)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
@@ -857,7 +857,7 @@ DEPENDENCIES
   sentry-sidekiq
   shoulda-matchers (~> 6.4)
   sidekiq (~> 6.5)
-  sidekiq-cron (~> 2.0)
+  sidekiq-cron (~> 2.1)
   simplecov (~> 0.22.0)
   simplecov-json
   site_prism (~> 5.1)
