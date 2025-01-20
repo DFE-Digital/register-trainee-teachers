@@ -25,7 +25,6 @@ Capybara.register_driver :cuprite do |app|
     ],
     context_attributes: {
       prefs: {
-        "download.default_directory" => DownloadHelper::PATH.to_s,
         "download.prompt_for_download" => false,
       },
     },

@@ -2,10 +2,9 @@
 
 module DownloadHelper
   TIMEOUT = 10
-  PATH    = Capybara.save_path
 
   def downloads
-    Dir[PATH.join("*")]
+    Dir[Capybara.save_path.join("*")]
   end
 
   def download

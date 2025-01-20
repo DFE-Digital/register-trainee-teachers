@@ -56,11 +56,11 @@ RSpec.configure do |config|
     create(:academic_cycle, one_after_next_cycle: true)
   end
 
-  config.before(:each, type: :feature, js: true) do
+  config.before(:each, js: true, type: :feature) do
     clear_downloads
   end
 
-  config.after(:each, type: :feature, js: true) do
+  config.after(:each, js: true, type: :feature) do
     clear_downloads
   end
 
