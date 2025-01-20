@@ -183,7 +183,7 @@ GEM
       railties (> 4.0)
     coderay (1.1.3)
     colorize (1.1.0)
-    concurrent-ruby (1.3.4)
+    concurrent-ruby (1.3.5)
     config (5.5.2)
       deep_merge (~> 1.2, >= 1.2.1)
       ostruct
@@ -328,7 +328,7 @@ GEM
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     httpclient (2.8.3)
-    i18n (1.14.6)
+    i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     io-console (0.8.0)
     irb (1.14.3)
@@ -656,7 +656,7 @@ GEM
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
-    sidekiq-cron (2.0.1)
+    sidekiq-cron (2.1.0)
       cronex (>= 0.13.0)
       fugit (~> 1.8, >= 1.11.1)
       globalid (>= 1.0.1)
@@ -857,7 +857,7 @@ DEPENDENCIES
   sentry-sidekiq
   shoulda-matchers (~> 6.4)
   sidekiq (~> 6.5)
-  sidekiq-cron (~> 2.0)
+  sidekiq-cron (~> 2.1)
   simplecov (~> 0.22.0)
   simplecov-json
   site_prism (~> 5.1)
