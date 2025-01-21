@@ -1,4 +1,5 @@
 ignore:
+  - "app/lib/custom_log_formatter.rb"
   - "lib/tasks/api.rake"
   - "lib/tasks/auto_generate_diagram.rake"
   - "lib/tasks/backfill_hesa.rake"
