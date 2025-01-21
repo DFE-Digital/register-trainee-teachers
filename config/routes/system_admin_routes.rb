@@ -89,14 +89,6 @@ module SystemAdminRoutes
             resource :confirmations, only: %i[show update]
           end
         end
-
-        scope :logging do
-          get "info", to: "logging_test#info"
-          get "warn", to: "logging_test#warn"
-          get "debug", to: "logging_test#debug"
-          get "error", to: "logging_test#error"
-          get "background-job", to: "logging_test#background_job"
-        end
       end
     end
   end
