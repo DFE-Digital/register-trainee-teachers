@@ -29,7 +29,7 @@ describe Api::V01::WithdrawalAttributes do
 
       context "invalid date" do
         before do
-          subject.withdraw_date = "invalid"
+          subject.withdraw_date = "14/11/23"
           subject.validate
         end
 
