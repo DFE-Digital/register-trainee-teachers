@@ -14,7 +14,7 @@ module Api
     end
 
     def call
-      return validation_error_response if validation_errors.any?
+      return validation_error_response(trainee_attributes_errors) if trainee_attributes_errors.any?
 
       return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
 
@@ -52,20 +52,14 @@ module Api
     def save_errors_response(trn_validator, trainee)
       validation_errors = trn_validator.all_errors.presence || trainee.errors.full_messages
 
-      {
-        json: {
-          message: "Validation failed: #{validation_errors.count} #{'error'.pluralize(validation_errors.count)} prohibited this trainee from being saved",
-          errors: validation_errors,
-        },
-        status: :unprocessable_entity,
-      }
+      validation_error_response(validation_errors)
     end
 
     def success_response(trainee)
       { json: { data: serializer_klass.new(trainee).as_hash }, status: :created }
     end
 
-    def validation_error_response
+    def validation_error_response(validation_errors)
       {
         json: {
           message: "Validation failed: #{validation_errors.count} #{'error'.pluralize(validation_errors.count)} prohibited this trainee from being saved",
@@ -75,14 +69,10 @@ module Api
       }
     end
 
-    def validation_errors
-      trainee_errors.compact.flatten
-    end
-
-    def trainee_errors
-      @trainee_errors ||= begin
+    def trainee_attributes_errors
+      @trainee_attributes_errors ||= begin
         trainee_attributes.validate
-        trainee_attributes.errors&.full_messages
+        trainee_attributes.errors&.full_messages&.compact&.flatten
       end
     end
 
