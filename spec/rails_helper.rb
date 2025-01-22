@@ -54,7 +54,6 @@ RSpec.configure do |config|
     create(:academic_cycle, :current)
     create(:academic_cycle, next_cycle: true)
     create(:academic_cycle, one_after_next_cycle: true)
-    clear_downloads
   end
 
   config.before(:each, js: true, type: :feature) do
