@@ -84,7 +84,7 @@ Rails.application.configure do
     io: $stdout,
     level: config.log_level,
     formatter: CustomLogFormatter.new,
-    filter: ->(log) { log.name != "DfE::Analytics::SendEvents" },
+    filter: ->(log) { !log.message.to_s.include?("DfE::Analytics::SendEvents") },
   )
 
   config.active_record.logger = nil # Don't log SQL in production
