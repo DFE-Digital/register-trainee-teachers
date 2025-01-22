@@ -6,9 +6,6 @@ Sidekiq.configure_server do |config|
   config.redis = {
     url: QUEUE_URL,
   }
-  config.logger = SemanticLogger["Sidekiq"]
-  # Safely filter logs with 'SendEvents' in the message
-  config.logger.filter = ->(log) { !log.message.to_s.include?("DfE::Analytics::SendEvents") }
 end
 
 Sidekiq.configure_client do |config|
