@@ -9,8 +9,6 @@ class SendPerformanceProfileSubmittedEmailService
   end
 
   def call
-    return unless FeatureService.enabled?(:send_emails)
-
     provider.users.each do |user|
       PerformanceProfileSubmittedEmailMailer.generate(
         user:,
