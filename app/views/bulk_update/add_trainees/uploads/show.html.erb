@@ -38,11 +38,7 @@
       </h1>
 
       <p class="govuk-body">
-      <% if @bulk_update_trainee_upload.trainee_upload_rows.present? %>
-        You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.trainee_upload_rows.size, "trainee") %>.
-      <% else %>
         You uploaded a CSV file with details of <%= pluralize(@bulk_update_trainee_upload.number_of_trainees, "trainee") %>.
-      <% end %>
       </p>
 
       <p class="govuk-body">

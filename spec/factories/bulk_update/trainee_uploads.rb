@@ -13,19 +13,26 @@ FactoryBot.define do
     provider
 
     after(:build) do |upload|
+      file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").open
+
       upload.file.attach(
-        io: Rails.root.join(
-          "spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv",
-        ).open,
-        filename: "five_trainees.csv",
+        io: file,
+        filename: File.basename(file.path),
       )
     end
 
+    after(:create) do |upload|
+      upload.number_of_trainees = CSV.parse(upload.file.download, headers: true).count
+      upload.save!
+    end
+
     trait(:with_errors) do
-      after(:build) do |bulk_update_trainee_upload|
-        bulk_update_trainee_upload.attach(
-          io: Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").open,
-          filename: "five_trainees_with_two_errors.csv",
+      after(:build) do |upload|
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").open
+
+        upload.file.attach(
+          io: file,
+          filename: File.basename(file.path),
         )
       end
     end
