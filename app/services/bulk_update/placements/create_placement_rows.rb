@@ -18,6 +18,7 @@ module BulkUpdate
           # Row will provide us with a special method to loop over any/all URNS
           # present in the CSV row
           row = Row.new(row)
+
           csv_row_number = index + Config::FIRST_CSV_ROW_NUMBER
 
           create_bulk_placement_rows!(row, csv_row_number)
@@ -34,6 +35,8 @@ module BulkUpdate
       # so we loop over these to create an individual row for each.
       def create_bulk_placement_rows!(row, csv_row_number)
         row.urns.each do |urn|
+          next if row.trn == Reports::BulkPlacementReport::ADDED_MANUALLY
+
           bulk_placement.rows.create(
             trn: row.trn,
             urn: urn,

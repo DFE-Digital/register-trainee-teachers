@@ -145,6 +145,11 @@ FactoryBot.define do
       placements { create_list(:placement, 2, :with_school) }
     end
 
+    trait :with_manual_placements do
+      has_placement_detail
+      placements { create_list(:placement, 2) }
+    end
+
     trait :submission_ready do
       submission_ready { true }
     end
