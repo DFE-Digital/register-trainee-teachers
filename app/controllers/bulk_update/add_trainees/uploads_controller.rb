@@ -15,6 +15,8 @@ module BulkUpdate
 
       def show
         authorize(bulk_update_trainee_upload)
+
+        render(show_template)
       end
 
       def new
@@ -51,12 +53,22 @@ module BulkUpdate
     private
 
       def bulk_update_trainee_upload
-        @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload)
-          .includes(:row_errors).find(params[:id])
+        @bulk_update_trainee_upload ||=
+          policy_scope(BulkUpdate::TraineeUpload).includes(:row_errors).find(params[:id])
       end
 
       def upload_params
         params.fetch(:bulk_update_bulk_add_trainees_upload_form, {}).permit(:file)
+      end
+
+      def show_template
+        if bulk_update_trainee_upload.succeeded?
+          :show_succeeded
+        elsif bulk_update_trainee_upload.validated?
+          :show_validated
+        else
+          :show
+        end
       end
     end
   end

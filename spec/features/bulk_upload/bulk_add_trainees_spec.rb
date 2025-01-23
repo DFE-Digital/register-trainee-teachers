@@ -129,13 +129,12 @@ feature "bulk add trainees" do
 
         when_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_pending(BulkUpdate::TraineeUpload.last)
-        and_i_click_on_back_link
 
         when_the_background_job_is_run
-        and_i_click_the_view_status_of_new_trainee_files_link
+        and_i_refresh_the_index_page
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
 
-        and_i_click_on_back_link
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
         and_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
@@ -218,8 +217,7 @@ feature "bulk add trainees" do
         then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_try_resubmit_the_same_upload
-        and_i_click_the_submit_button
-        then_i_see_the_unauthorized_message
+        then_i_see_the_bulk_update_add_trainees_upload_details_page
       end
 
       scenario "the bulk add trainees page is visible and I upload a file with placements" do
@@ -509,7 +507,7 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    first(:link, upload.created_at.to_fs(:govuk_date_and_time)).click
+    within(find('tr', text: "#{upload.filename} #{upload.status.humanize}")) { find("a") }.click
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
@@ -948,6 +946,10 @@ private
     visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
+  def and_i_refresh_the_index_page
+    visit bulk_update_add_trainees_uploads_path
+  end
+
   def and_i_refresh_the_summary_page
     visit bulk_update_add_trainees_submission_path(BulkUpdate::TraineeUpload.last)
   end
@@ -1088,7 +1090,7 @@ private
   end
 
   def and_i_visit_the_bulk_update_add_trainees_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_add_trainees_details_path(upload)
+    visit bulk_update_add_trainees_upload_path(upload)
   end
 
   def when_i_visit_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)

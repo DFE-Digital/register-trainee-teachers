@@ -1,7 +1,10 @@
 <%= render PageTitle::View.new(text: "Upload summary") %>
 
 <%= content_for(:breadcrumbs) do %>
-  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: new_bulk_update_add_trainees_upload_path) %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Back",
+    href: bulk_update_add_trainees_uploads_path
+  ) %>
 <% end %>
 
 <div class="govuk-grid-row">
