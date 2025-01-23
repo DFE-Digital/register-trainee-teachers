@@ -91,6 +91,7 @@ module BulkUpdate
 
             before do
               trainee_upload.import!
+
               allow(ImportRow).to receive(:call).and_return(
                 BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
                 BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
