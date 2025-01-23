@@ -34,6 +34,7 @@ RSpec.configure do |config|
   config.include ViewComponent::TestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
   config.include ApiHelper, type: :request
+  config.include DownloadHelper, type: :feature
 
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
@@ -47,16 +48,20 @@ RSpec.configure do |config|
   # Use t() instead of I18n.t()
   config.include AbstractController::Translation
 
-  config.before(:each, type: :system) do
-    driven_by(:rack_test)
-  end
-
   config.before(:each, type: :feature) do
     create(:academic_cycle, one_before_previous_cycle: true)
     create(:academic_cycle, previous_cycle: true)
     create(:academic_cycle, :current)
     create(:academic_cycle, next_cycle: true)
     create(:academic_cycle, one_after_next_cycle: true)
+  end
+
+  config.before(:each, js: true, type: :feature) do
+    clear_downloads
+  end
+
+  config.after(:each, js: true, type: :feature) do
+    clear_downloads
   end
 
   Faker::Config.locale = "en-GB"

@@ -5,6 +5,7 @@ require "rails_helper"
 feature "bulk add trainees" do
   include ActiveJob::TestHelper
   include ActionView::Helpers::TextHelper
+  include FileHelper
 
   before do
     and_there_is_a_current_academic_cycle
@@ -89,7 +90,7 @@ feature "bulk add trainees" do
         allow(SendCsvSubmittedForProcessingEmailService).to receive(:call)
       end
 
-      scenario "the bulk add trainees page is visible" do
+      scenario "the bulk add trainees page is visible", js: true do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         then_i_see_instructions_on_how_to_bulk_add_trainees
@@ -98,13 +99,15 @@ feature "bulk add trainees" do
         when_i_click_the_empty_csv_link
         then_i_receive_the_empty_csv_file
 
-        when_i_click_the_guidance_link
+        when_i_visit_the_new_bulk_update_add_trainees_upload_path
+        and_i_click_the_guidance_link
         then_i_see_the_bulk_add_trainees_guidance_page
 
         when_i_click_the_documentation_empty_csv_link
         then_i_receive_the_empty_csv_file
 
-        when_i_attach_an_empty_file
+        when_i_visit_the_new_bulk_update_add_trainees_upload_path
+        and_i_attach_an_empty_file
         and_i_click_the_upload_button
         then_i_see_the_upload_page_with_errors(empty: true)
 
@@ -338,7 +341,7 @@ feature "bulk add trainees" do
         and_i_dont_see_the_submit_button
       end
 
-      scenario "when I try to upload a file with errors then upload a corrected file" do
+      scenario "when I try to upload a file with errors then upload a corrected file", js: true do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         then_i_see_instructions_on_how_to_bulk_add_trainees
@@ -442,7 +445,7 @@ feature "bulk add trainees" do
       end
     end
 
-    context "when the User is not authenticated" do
+    context "when the User is not authenticated", js: true do
       scenario "view guidance docs" do
         when_i_visit_the_csv_docs_home_path
         and_i_click_the_documentation_empty_csv_link
@@ -497,8 +500,8 @@ private
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
     expect(page).to have_content("Your new trainees have been registered")
-    expect(page).to have_content("Submitted by:#{current_user.name}")
-    expect(page).to have_content("Number of registered trainees:5")
+    expect(page).to have_content(/Submitted by:\s*#{current_user.name}/)
+    expect(page).to have_content(/Number of registered trainees:\s*5/)
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
     expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
@@ -525,11 +528,11 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
-    expect(page).to have_content("#{upload.filename} Pending")
+    expect(page).to have_content("#{upload.filename} Pending", normalize_ws: true)
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
-    expect(page).to have_content("#{upload.filename} Validated")
+    expect(page).to have_content("#{upload.filename} Validated", normalize_ws: true)
   end
 
   def when_multiple_uploads_exist
@@ -689,7 +692,7 @@ private
 
   def then_i_receive_the_empty_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    visit new_bulk_update_add_trainees_upload_path
+    expect(download_content).to eq(empty_file_with_headers_content)
   end
 
   def when_i_click_the_guidance_link
@@ -714,27 +717,21 @@ private
   end
 
   def when_i_attach_a_valid_file
-    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv")
-    filename = File.basename(file)
-    content  = file.read
+    filename = "five_trainees.csv"
 
-    and_i_attach_a_file(content, filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_placements
-    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_placement.csv")
-    filename = File.basename(file)
-    content  = file.read
+    filename = "five_trainees_with_placement.csv"
 
-    and_i_attach_a_file(content, filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_a_degree
-    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_degree.csv")
-    filename = File.basename(file)
-    content  = file.read
+    filename = "five_trainees_with_degree.csv"
 
-    and_i_attach_a_file(content, filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def when_i_attach_a_file_with_invalid_rows
@@ -1052,6 +1049,8 @@ private
   def then_i_receive_the_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
+
+    expect(download_content).to eq(file_with_two_errors_content)
   end
 
   def when_i_return_to_the_review_errors_page
@@ -1116,6 +1115,14 @@ private
     find(".govuk-back-link", text: "Home").click
   end
 
+  def file_with_two_errors_content
+    file_content("bulk_update/trainee_uploads/failed_with_two_errors.csv")
+  end
+
+  def empty_file_with_headers_content
+    file_content("bulk_update/trainee_uploads/empty_file_with_headers.csv")
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
@@ -1131,4 +1138,6 @@ private
   alias_method :and_i_return_to_the_review_errors_page, :when_i_return_to_the_review_errors_page
   alias_method :and_i_visit_the_bulk_update_trainee_upload_page, :when_i_try_resubmit_the_same_upload
   alias_method :and_i_click_the_documentation_empty_csv_link, :when_i_click_the_documentation_empty_csv_link
+  alias_method :and_i_click_the_guidance_link, :when_i_click_the_guidance_link
+  alias_method :and_i_attach_an_empty_file, :when_i_attach_an_empty_file
 end
