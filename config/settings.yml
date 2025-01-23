@@ -34,7 +34,7 @@ dqt:
   api_key: <get from secrets>
 
 trs:
-  base_url: https://teacher-qualifications-api.education.gov.uk/
+  base_url: https://teacher-qualifications-api.education.gov.uk
   api_key: <get from secrets>
   version: Next
 
