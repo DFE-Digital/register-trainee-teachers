@@ -1,6 +1,9 @@
 dqt:
   base_url: https://test.teacher-qualifications-api.education.gov.uk/
 
+trs:
+  base_url: https://test.teacher-qualifications-api.education.gov.uk/
+
 features:
   home_text: true
   sign_in_method: persona
