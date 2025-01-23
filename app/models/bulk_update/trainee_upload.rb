@@ -27,6 +27,7 @@
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
   enum :status, {
+    uploaded: "uploaded",
     pending: "pending",
     validated: "validated",
     in_progress: "in_progress",
@@ -34,6 +35,10 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     cancelled: "cancelled",
     failed: "failed",
   } do
+    event :import do
+      transition %i[uploaded] => :pending
+    end
+
     event :process do
       transition %i[pending] => :validated
     end

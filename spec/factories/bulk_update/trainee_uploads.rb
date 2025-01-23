@@ -44,6 +44,10 @@ FactoryBot.define do
       end
     end
 
+    trait :uploaded do
+      status { "uploaded" }
+    end
+
     trait :pending do
       status { "pending" }
     end

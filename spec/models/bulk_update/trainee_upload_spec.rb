@@ -10,6 +10,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
   it do
     expect(subject).to define_enum_for(:status)
       .without_instance_methods.with_values(
+        uploaded: "uploaded",
         pending: "pending",
         validated: "validated",
         in_progress: "in_progress",
@@ -20,7 +21,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
   end
 
   describe "events" do
-    subject { create(:bulk_update_trainee_upload) }
+    subject { create(:bulk_update_trainee_upload, :uploaded) }
 
     let!(:user) { create(:user) }
 
@@ -32,7 +33,19 @@ RSpec.describe BulkUpdate::TraineeUpload do
       Current.user = nil
     end
 
+    describe "#import!" do
+      it do
+        expect {
+          subject.import!
+        }.to change(subject, :status).from("uploaded").to("pending")
+      end
+    end
+
     describe "#process!" do
+      before do
+        subject.import!
+      end
+
       it do
         expect {
           subject.process!
@@ -44,6 +57,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
       let!(:current_time) { Time.current.round }
 
       before do
+        subject.import!
         subject.process!
 
         Timecop.freeze(current_time)
@@ -64,6 +78,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
 
     describe "#succeed!" do
       before do
+        subject.import!
         subject.process!
         subject.submit!
       end
@@ -78,6 +93,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
     describe "#cancel!" do
       context "when the status is 'validated'" do
         before do
+          subject.import!
           subject.process!
         end
 
@@ -90,6 +106,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
 
       context "when the status is 'failed'" do
         before do
+          subject.import!
           subject.process!
           subject.fail!
         end
@@ -104,6 +121,10 @@ RSpec.describe BulkUpdate::TraineeUpload do
 
     describe "#fail!" do
       context "when the status is 'pending'" do
+        before do
+          subject.import!
+        end
+
         it do
           expect {
             subject.fail!
@@ -113,6 +134,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
 
       context "when the status is 'validated'" do
         before do
+          subject.import!
           subject.process!
         end
 
@@ -125,6 +147,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
 
       context "when the status is 'in_progress'" do
         before do
+          subject.import!
           subject.process!
           subject.submit!
         end
