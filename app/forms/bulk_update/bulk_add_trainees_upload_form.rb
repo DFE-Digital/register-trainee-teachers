@@ -44,6 +44,7 @@ module BulkUpdate
       {
         provider:,
         file:,
+        number_of_trainees:,
       }
     end
 
@@ -63,6 +64,10 @@ module BulkUpdate
       return false unless csv
 
       BulkUpdate::AddTrainees::ValidateCsv.new(csv: csv, record: self).validate!
+    end
+
+    def number_of_trainees
+      @number_of_trainees ||= csv.count
     end
   end
 end
