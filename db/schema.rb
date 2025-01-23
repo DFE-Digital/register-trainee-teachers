@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_01_20_170132) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_22_151655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -259,7 +259,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_01_20_170132) do
 
   create_table "bulk_update_trainee_uploads", force: :cascade do |t|
     t.bigint "provider_id", null: false
-    t.string "status", default: "pending"
+    t.string "status", default: "uploaded"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "submitted_at"
