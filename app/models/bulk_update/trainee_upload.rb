@@ -5,9 +5,7 @@
 # Table name: bulk_update_trainee_uploads
 #
 #  id                 :bigint           not null, primary key
-#  file               :text
-#  file_name          :string
-#  number_of_trainees :integer
+#  number_of_trainees :integer          default(0), not null
 #  status             :string           default("pending")
 #  submitted_at       :datetime
 #  created_at         :datetime         not null

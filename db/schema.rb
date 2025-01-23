@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
+ActiveRecord::Schema[7.2].define(version: 2025_01_20_170132) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -264,6 +264,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_02_115711) do
     t.datetime "updated_at", null: false
     t.datetime "submitted_at"
     t.bigint "submitted_by_id"
+    t.integer "number_of_trainees", default: 0, null: false
     t.index ["provider_id"], name: "index_bulk_update_trainee_uploads_on_provider_id"
     t.index ["status"], name: "index_bulk_update_trainee_uploads_on_status"
     t.index ["submitted_by_id"], name: "index_bulk_update_trainee_uploads_on_submitted_by_id"
