@@ -21,7 +21,7 @@ RSpec.describe BulkUpdate::TraineeUpload do
   end
 
   describe "events" do
-    subject { create(:bulk_update_trainee_upload, :uploaded) }
+    subject { create(:bulk_update_trainee_upload) }
 
     let!(:user) { create(:user) }
 
