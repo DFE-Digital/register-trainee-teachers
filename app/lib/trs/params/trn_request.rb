@@ -43,19 +43,7 @@ module Trs
             trainee.email,
           ],
           "nationalInsuranceNumber" => nil,
-          "address" => address_details,
           "gender" => GENDER_CODES[trainee.sex.to_sym],
-        }
-      end
-
-      def address_details
-        {
-          "addressLine1" => nil,
-          "addressLine2" => nil,
-          "addressLine3" => nil,
-          "city" => nil,
-          "postcode" => nil,
-          "country" => nil,
         }
       end
     end
