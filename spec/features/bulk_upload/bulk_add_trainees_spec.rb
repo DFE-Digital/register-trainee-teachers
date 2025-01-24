@@ -507,7 +507,7 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    within(find('tr', text: "#{upload.filename} #{upload.status.humanize}")) { find("a") }.click
+    within("tr", text: "#{upload.filename} #{upload.status.humanize}") { find("a") }.click
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
