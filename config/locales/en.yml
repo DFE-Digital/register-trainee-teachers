@@ -654,11 +654,12 @@ en:
       draft:
         schools:
           titles:
-            tuition: Lead partner
-            salaried: Lead partner and employing school
+            school_direct_tuition_fee: Lead partner
+            school_direct_salaried: Lead partner and employing school
             pg_teaching_apprenticeship: Lead partner and employing school
             provider_led_postgrad: Lead partner and employing school
             provider_led_undergrad: Lead partner and employing school
+            early_years_salaried: Lead partner and employing school
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
