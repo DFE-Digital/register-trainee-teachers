@@ -4,6 +4,9 @@ base_url: https://sandbox.register-trainee-teachers.service.gov.uk
 dqt:
   base_url: https://preprod.teacher-qualifications-api.education.gov.uk
 
+trs:
+  base_url: https://preprod.teacher-qualifications-api.education.gov.uk/
+
 dfe_sign_in:
   # URL that the users are redirected to for signing in
   issuer: https://oidc.signin.education.gov.uk

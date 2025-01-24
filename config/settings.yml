@@ -30,8 +30,13 @@ hesa:
   password: <get from secrets>
 
 dqt:
-  base_url: https://qualified-teachers-api-dev.london.cloudapps.digital
+  base_url: https://teacher-qualifications-api.education.gov.uk/
   api_key: <get from secrets>
+
+trs:
+  base_url: https://teacher-qualifications-api.education.gov.uk
+  api_key: <get from secrets>
+  version: Next
 
 azure:
   storage:
