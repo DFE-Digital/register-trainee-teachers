@@ -18,6 +18,8 @@ module Reports
       "The URN of the trainee’s second placement school.\n\n\nURNs must be 6 digits long.\n\n\nIf you do not know the placement school’s URN, leave the cell empty.",
     ].freeze
 
+    ADDED_MANUALLY = "ADDED MANUALLY"
+
     def initialize(csv, scope:)
       @csv = csv
       @scope = scope
@@ -49,10 +51,9 @@ module Reports
 
     def placement(trainee, position)
       placement = trainee.placements.send(position)
-
       return unless placement
 
-      placement&.school&.urn.presence || "ADDED MANUALLY"
+      placement&.school&.urn.presence || ADDED_MANUALLY
     end
   end
 end
