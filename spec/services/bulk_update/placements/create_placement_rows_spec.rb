@@ -48,6 +48,22 @@ module BulkUpdate
             )
           end
         end
+
+        context "given a csv with urns set as `ADDED MANUALLY`" do
+          let(:trainees) { create_list(:trainee, 3, :trn_received, :with_manual_placements) }
+          let(:csv) { [] }
+          let(:generate_report) { ::Reports::BulkPlacementReport.new(csv, scope: trainees).generate_report }
+
+          before do
+            generate_report
+            service
+          end
+
+          it "does not create placement rows" do
+            expect(csv).not_to be_empty
+            expect(bulk_placement.rows).to be_empty
+          end
+        end
       end
     end
   end
