@@ -83,9 +83,9 @@
           url: bulk_update_add_trainees_submission_path(@bulk_update_trainee_upload),
           method: :post
         ) do |f| %>
-          <%= f.govuk_submit("Submit") %>
+            <%= f.govuk_submit("Submit") %>
+        <% end %>
       <% end %>
-    <% end %>
       <p class="govuk-body">
         <%= register_form_with(
           model: @bulk_update_trainee_upload,
@@ -95,6 +95,6 @@
           <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
         <% end %>
       </p>
-  <% end %>
+    <% end %>
   </div>
 </div>

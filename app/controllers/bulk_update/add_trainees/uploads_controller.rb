@@ -68,6 +68,8 @@ module BulkUpdate
           :show_validated
         elsif bulk_update_trainee_upload.in_progress?
           :show_in_progress
+        elsif bulk_update_trainee_upload.pending?
+          :show_pending
         else
           :show
         end
