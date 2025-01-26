@@ -507,7 +507,11 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    find("tr a[href^='#{bulk_update_add_trainees_upload_path(upload)}']").click
+    if upload.failed?
+      find("tr a[href^='#{bulk_update_add_trainees_review_error_path(upload)}']").click
+    else
+      find("tr a[href^='#{bulk_update_add_trainees_upload_path(upload)}']").click
+    end
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
