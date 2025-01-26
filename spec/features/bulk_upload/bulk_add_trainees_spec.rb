@@ -293,8 +293,7 @@ feature "bulk add trainees" do
       scenario "attempt to resubmit a failed upload" do
         when_a_failed_upload_without_row_errors_exist
         and_i_visit_the_bulk_update_trainee_upload_page
-        and_i_click_the_submit_button
-        then_i_see_the_unauthorized_message
+        then_i_do_not_see_the_submit_button
       end
 
       scenario "view the upload summary page with errors" do
@@ -831,6 +830,10 @@ private
 
   def when_i_click_the_submit_button
     click_on "Submit"
+  end
+
+  def then_i_do_not_see_the_submit_button
+    expect(page).not_to have_button("Submit")
   end
 
   def then_a_job_is_queued_to_process_the_upload
