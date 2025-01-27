@@ -15,6 +15,9 @@ dfe_sign_in:
 dqt:
   base_url: https://teacher-qualifications-api.education.gov.uk/
 
+trs:
+  base_url: https://teacher-qualifications-api.education.gov.uk/
+
 features:
   sign_in_method: dfe-sign-in
   basic_auth: false
