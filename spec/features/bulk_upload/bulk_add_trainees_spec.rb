@@ -443,6 +443,16 @@ feature "bulk add trainees" do
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page_with_one_error
       end
+
+      context "with an upload with an uploaded status" do
+        let(:upload) { create(:bulk_update_trainee_upload, provider: current_user.organisation) }
+
+        scenario "attempt import the rows of an upload" do
+          when_a_request_is_made_to_the_imports_action(upload:)
+          and_i_visit_the_summary_page(upload:)
+          then_i_see_that_the_upload_is_processing(upload:)
+        end
+      end
     end
 
     context "when the User is not authenticated", js: true do
@@ -455,6 +465,10 @@ feature "bulk add trainees" do
   end
 
 private
+
+  def when_a_request_is_made_to_the_imports_action(upload:)
+    page.driver.post(bulk_update_add_trainees_imports_path(upload))
+  end
 
   def then_i_see_the_root_page
     expect(page).to have_content("Your trainee teachers")
@@ -630,20 +644,20 @@ private
     click_on "Back to bulk updates page"
   end
 
-  def then_i_see_that_the_upload_is_processing
+  def then_i_see_that_the_upload_is_processing(upload: BulkUpdate::TraineeUpload.last)
     expect(page).to have_content("File uploaded")
     expect(page).to have_content("Your file is being processed")
-    expect(page).to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
+    expect(page).to have_content("We're currently processing #{upload.filename}.")
     expect(page).to have_content("This is taking longer than usual")
     expect(page).to have_content("You'll receive an email to tell you when this is complete.")
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_link("Back to bulk updates page")
   end
 
-  def and_i_dont_see_that_the_upload_is_processing
+  def and_i_dont_see_that_the_upload_is_processing(upload: BulkUpdate::TraineeUpload.last)
     expect(page).not_to have_content("File uploaded")
     expect(page).not_to have_content("Your file is being processed")
-    expect(page).not_to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
+    expect(page).not_to have_content("We're currently processing #{upload.filename}.")
     expect(page).not_to have_content("This is taking longer than usual")
     expect(page).not_to have_content("You'll receive an email to tell you when this is complete.")
     expect(page).not_to have_content("You can also check the status of new trainee files.")

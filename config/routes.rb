@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     namespace :add_trainees, path: "add-trainees" do
       resources :uploads, only: %i[index show new create destroy] do
         member do
+          resource :imports, only: :create
           resource :submission, only: %i[show create]
           resource :details, only: :show
         end

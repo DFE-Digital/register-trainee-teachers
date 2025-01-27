@@ -2009,9 +2009,12 @@ en:
     add_trainees:
       uploads:
         create:
-          success: File uploaded
+          success: &file_uploaded File uploaded
         destroy:
           success: Bulk updates to records have been cancelled
+      imports:
+        create:
+          success: *file_uploaded
   system_admin:
     users:
       create:

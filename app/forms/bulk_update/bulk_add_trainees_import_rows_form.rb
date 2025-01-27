@@ -13,7 +13,7 @@ module BulkUpdate
 
       BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
 
-      upload
+      true
     end
   end
 end
