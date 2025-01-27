@@ -24,7 +24,7 @@
 
       <% summary_list.with_row do |row| %>
         <%= row.with_key(text: "Number of registered trainees:") %>
-        <%= row.with_value(text: @bulk_update_trainee_upload.trainee_upload_rows.size) %>
+        <%= row.with_value(text: @bulk_update_trainee_upload.number_of_trainees) %>
       <% end %>
     <% end %>
 

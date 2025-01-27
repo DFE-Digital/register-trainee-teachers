@@ -70,10 +70,8 @@ module BulkUpdate
           :show_in_progress
         elsif bulk_update_trainee_upload.pending?
           :show_pending
-        elsif bulk_update_trainee_upload.failed?
-          :show_failed
         else
-          :show
+          :show_failed
         end
       end
     end
