@@ -5,9 +5,6 @@ module BulkUpdate
     attr_reader :provider, :file, :upload
 
     include ActiveModel::Model
-    include ActiveModel::AttributeAssignment
-    include ActiveModel::Validations::Callbacks
-
     include BulkUpdate::AddTrainees::Config
 
     validate :validate_file!
@@ -25,9 +22,7 @@ module BulkUpdate
       upload.attributes = upload_attributes
       upload.save!
 
-      BulkUpdate::AddTrainees::ImportRowsJob.perform_later(upload)
-
-      upload
+      BulkUpdate::BulkAddTraineesImportRowsForm.new(upload:).save
     end
 
     def csv

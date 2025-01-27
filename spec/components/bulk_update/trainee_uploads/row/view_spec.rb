@@ -21,6 +21,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
 
     let(:statuses) do
       {
+        "uploaded" => "Uploaded",
         "pending" => "Pending",
         "validated" => "Validated",
         "in_progress" => "In progress",
@@ -61,6 +62,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
 
       def upload_path(upload)
         {
+          "uploaded" => bulk_update_add_trainees_upload_path(upload),
           "pending" => bulk_update_add_trainees_upload_path(upload),
           "validated" => bulk_update_add_trainees_upload_path(upload),
           "in_progress" => bulk_update_add_trainees_submission_path(upload),
