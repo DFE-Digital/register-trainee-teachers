@@ -43,31 +43,21 @@
         </li>
       <% end %>
     </ul>
-    <% if @bulk_update_trainee_upload.row_errors.present? %>
-      <p class="govuk-body">You need to review the errors before you can add new trainees</p>
-
-      <%= render GovukButtonLinkTo::View.new(
-        body: "Review errors",
-        url: bulk_update_add_trainees_review_error_path(@bulk_update_trainee_upload),
-        class_option: "govuk-button"
-      ) %>
-    <% else %>
+    <%= register_form_with(
+      model: @bulk_update_trainee_upload,
+      url: bulk_update_add_trainees_submission_path(@bulk_update_trainee_upload),
+      method: :post
+    ) do |f| %>
+      <%= f.govuk_submit("Submit") %>
+    <% end %>
+    <p class="govuk-body">
       <%= register_form_with(
         model: @bulk_update_trainee_upload,
-        url: bulk_update_add_trainees_submission_path(@bulk_update_trainee_upload),
-        method: :post
+        url: bulk_update_add_trainees_upload_path(@bulk_update_trainee_upload),
+        method: :delete
       ) do |f| %>
-        <%= f.govuk_submit("Submit") %>
+        <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
       <% end %>
-      <p class="govuk-body">
-        <%= register_form_with(
-          model: @bulk_update_trainee_upload,
-          url: bulk_update_add_trainees_upload_path(@bulk_update_trainee_upload),
-          method: :delete
-        ) do |f| %>
-          <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
-        <% end %>
-      </p>
-    <% end %>
+    </p>
   </div>
 </div>
