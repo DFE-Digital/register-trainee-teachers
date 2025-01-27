@@ -1,13 +1,3 @@
-<%= render PageTitle::View.new(text: "Upload summary") %>
-
-<%= content_for(:breadcrumbs) do %>
-  <% if request.referrer.present? && request.referrer.match?(/#{bulk_update_add_trainees_uploads_path}$/) %>
-    <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: bulk_update_add_trainees_uploads_path) %>
-  <% else %>
-    <%= render GovukComponent::BackLinkComponent.new(text: "Home", href: root_path) %>
-  <% end %>
-<% end %>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= govuk_panel(
@@ -21,7 +11,7 @@
     </h1>
 
     <p class="govuk-body">
-      We're currently processing <%= @bulk_update_trainee_upload.filename %>.
+      We're currently processing <%= upload.filename %>.
     </p>
 
     <p class="govuk-body">

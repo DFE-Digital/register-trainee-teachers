@@ -16,7 +16,7 @@ module BulkUpdate
       def show
         authorize(bulk_update_trainee_upload)
 
-        render(show_template)
+        render
       end
 
       def new
@@ -59,20 +59,6 @@ module BulkUpdate
 
       def upload_params
         params.fetch(:bulk_update_bulk_add_trainees_upload_form, {}).permit(:file)
-      end
-
-      def show_template
-        if bulk_update_trainee_upload.succeeded?
-          :show_succeeded
-        elsif bulk_update_trainee_upload.validated?
-          :show_validated
-        elsif bulk_update_trainee_upload.in_progress?
-          :show_in_progress
-        elsif bulk_update_trainee_upload.pending?
-          :show_pending
-        else
-          :show_failed
-        end
       end
     end
   end

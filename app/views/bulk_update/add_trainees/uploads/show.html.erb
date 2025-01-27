@@ -1,0 +1,14 @@
+<%= render PageTitle::View.new(text: "Upload summary") %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Back",
+    href: bulk_update_add_trainees_uploads_path
+  ) %>
+<% end %>
+
+<%= render(
+ "BulkUpdate::TraineeUploads::Show::#{@bulk_update_trainee_upload.status.capitalize}::View".constantize.new(
+   upload: @bulk_update_trainee_upload,
+ ),
+) %>
