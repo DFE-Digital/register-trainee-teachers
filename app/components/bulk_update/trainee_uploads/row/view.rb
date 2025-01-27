@@ -31,6 +31,7 @@ module BulkUpdate
 
         def upload_path
           {
+            "uploaded" => bulk_update_add_trainees_upload_path(upload),
             "pending" => bulk_update_add_trainees_upload_path(upload),
             "validated" => bulk_update_add_trainees_upload_path(upload),
             "succeeded" => bulk_update_add_trainees_details_path(upload),
