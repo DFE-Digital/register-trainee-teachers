@@ -129,13 +129,12 @@ feature "bulk add trainees" do
 
         when_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_pending(BulkUpdate::TraineeUpload.last)
-        and_i_click_on_back_link
 
         when_the_background_job_is_run
-        and_i_click_the_view_status_of_new_trainee_files_link
+        and_i_refresh_the_index_page
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
 
-        and_i_click_on_back_link
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
         and_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
@@ -218,8 +217,7 @@ feature "bulk add trainees" do
         then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_try_resubmit_the_same_upload
-        and_i_click_the_submit_button
-        then_i_see_the_unauthorized_message
+        then_i_see_the_bulk_update_add_trainees_upload_details_page
       end
 
       scenario "the bulk add trainees page is visible and I upload a file with placements" do
@@ -295,8 +293,7 @@ feature "bulk add trainees" do
       scenario "attempt to resubmit a failed upload" do
         when_a_failed_upload_without_row_errors_exist
         and_i_visit_the_bulk_update_trainee_upload_page
-        and_i_click_the_submit_button
-        then_i_see_the_unauthorized_message
+        then_i_do_not_see_the_submit_button
       end
 
       scenario "view the upload summary page with errors" do
@@ -509,7 +506,11 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    first(:link, upload.created_at.to_fs(:govuk_date_and_time)).click
+    if upload.failed?
+      find("tr a[href^='#{bulk_update_add_trainees_review_error_path(upload)}']").click
+    else
+      find("tr a[href^='#{bulk_update_add_trainees_upload_path(upload)}']").click
+    end
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
@@ -831,6 +832,10 @@ private
     click_on "Submit"
   end
 
+  def then_i_do_not_see_the_submit_button
+    expect(page).not_to have_button("Submit")
+  end
+
   def then_a_job_is_queued_to_process_the_upload
     expect(BulkUpdate::AddTrainees::ImportRowsJob).to have_been_enqueued.with(
       BulkUpdate::TraineeUpload.last,
@@ -946,6 +951,10 @@ private
 
   def and_i_refresh_the_page
     visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
+  end
+
+  def and_i_refresh_the_index_page
+    visit bulk_update_add_trainees_uploads_path
   end
 
   def and_i_refresh_the_summary_page
@@ -1088,7 +1097,7 @@ private
   end
 
   def and_i_visit_the_bulk_update_add_trainees_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_add_trainees_details_path(upload)
+    visit bulk_update_add_trainees_upload_path(upload)
   end
 
   def when_i_visit_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)

@@ -15,6 +15,8 @@ module BulkUpdate
 
       def show
         authorize(bulk_update_trainee_upload)
+
+        render
       end
 
       def new
@@ -51,8 +53,8 @@ module BulkUpdate
     private
 
       def bulk_update_trainee_upload
-        @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload)
-          .includes(:row_errors).find(params[:id])
+        @bulk_update_trainee_upload ||=
+          policy_scope(BulkUpdate::TraineeUpload).includes(:row_errors).find(params[:id])
       end
 
       def upload_params

@@ -3,11 +3,8 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t(:back),
-    href: (
-      request.referrer.present? && request.referrer.match?(/#{bulk_update_add_trainees_uploads_path}\/\d+$/)) ?
-        request.referrer : bulk_update_path
-    )
-  %>
+    href: bulk_update_path,
+  ) %>
 <% end %>
 
 <div class="govuk-grid-row">

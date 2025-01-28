@@ -28,6 +28,7 @@ module ApplicationHelper
         spellcheck: false,
       },
     }
+
     form_with(*args, **defaults.deep_merge(options), &)
   end
 

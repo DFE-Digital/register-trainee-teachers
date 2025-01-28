@@ -100,7 +100,6 @@ Rails.application.routes.draw do
         member do
           resource :imports, only: :create
           resource :submission, only: %i[show create]
-          resource :details, only: :show
         end
       end
       resources :review_errors, path: "review-errors", only: %i[show]
