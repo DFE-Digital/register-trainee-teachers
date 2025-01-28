@@ -17,7 +17,6 @@ This API allows you to access information about trainees and provides endpoints 
     - [POST /trainees](#code-post-trainees-code)
     - [POST /trainees/{trainee_id}/placements](#code-post-trainees-trainee_id-placements-code)
     - [POST /trainees/{trainee_id}/degrees](#code-post-trainees-trainee_id-degrees-code)
-    - [POST /trainees/{trainee_id}/withdraw](#code-post-trainees-trainee_id-withdraw-code)
     - [POST /trainees/{trainee_id}/recommend-for-qts](#code-post-trainees-trainee_id-recommend-for-qts-code)
     - [POST /trainees/{trainee_id}/defer](#code-post-trainees-trainee_id-defer-code)
     - [PUT|PATCH /trainees/{trainee_id}](#code-put-patch-trainees-trainee_id-code)
