@@ -11,7 +11,7 @@ FactoryBot.define do
     dfe_placementassignmentid { dttp_id }
     _dfe_contactid_value { contact_dttp_id }
     _dfe_providerid_value { provider_dttp_id }
-    _dfe_routeid_value { CodeSets::Routes::MAPPING.select { |key, _values| enabled_training_routes.include?(key) }.values.sample[:entity_id] }
+    _dfe_routeid_value { CodeSets::Routes::MAPPING.slice(*enabled_training_routes).values.sample[:entity_id] }
     _dfe_ittsubject1id_value { CodeSets::CourseSubjects::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_ittsubject2id_value { CodeSets::CourseSubjects::MAPPING.to_a.sample[1][:entity_id] }
     _dfe_ittsubject3id_value { CodeSets::CourseSubjects::MAPPING.to_a.sample[1][:entity_id] }
