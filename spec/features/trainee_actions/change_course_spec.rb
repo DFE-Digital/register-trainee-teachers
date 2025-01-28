@@ -154,7 +154,8 @@ private
     end
 
     if page.current_path.include?("language-specialism")
-      language_specialism_page.language_select_one.select(language_specialism_options.to_h.keys.compact_blank.sample)
+      language_specialism = language_specialism_options.to_h.keys.compact_blank.sample
+      language_specialism_page.language_select_one.select(language_specialism)
       language_specialism_page.submit_button.click
     end
   end
