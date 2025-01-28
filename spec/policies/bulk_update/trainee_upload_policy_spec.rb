@@ -12,7 +12,7 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
   context "when the User's organisation is an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :hei), session: {}) }
 
-    %i[pending validated in_progress succeeded failed].each do |status|
+    %i[uploaded pending validated in_progress succeeded failed].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
@@ -36,7 +36,7 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
   context "when the User's organisation is not an HEI Provider" do
     let(:user) { UserWithOrganisationContext.new(user: create(:user), session: {}) }
 
-    %i[pending validated in_progress succeeded failed cancelled].each do |status|
+    %i[uploaded pending validated in_progress succeeded failed cancelled].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
@@ -51,7 +51,7 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
     let(:user) { UserWithOrganisationContext.new(user: create(:user, :with_lead_partner_organisation), session: {}) }
     let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
 
-    %i[pending validated in_progress succeeded failed cancelled].each do |status|
+    %i[uploaded pending validated in_progress succeeded failed cancelled].each do |status|
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
