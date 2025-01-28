@@ -592,7 +592,7 @@ private
     expect(page).to have_content(
       "five_trainees.csv Validated",
     )
-    expect(page).to have_content(
+    expect(page).not_to have_content(
       "five_trainees.csv Cancelled",
     )
     expect(page).to have_content(
