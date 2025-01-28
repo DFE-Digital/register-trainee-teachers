@@ -142,6 +142,9 @@ feature "bulk add trainees" do
         when_i_click_the_cancel_bulk_updates_link
         then_the_upload_is_cancelled
 
+        when_i_visit_the_bulk_update_add_trainees_uploads_page
+        then_i_dont_see_the_cancelled_upload
+
         when_i_try_resubmit_the_same_upload
         then_i_see_the_unauthorized_message
 
@@ -1043,6 +1046,10 @@ private
     expect(page).to have_content("Bulk updates to records have been cancelled")
   end
 
+  def then_i_dont_see_the_cancelled_upload(upload: BulkUpdate::TraineeUpload.cancelled.last)
+    expect(page).not_to have_content(upload.filename)
+  end
+
   def and_i_visit_the_summary_page(upload:)
     visit bulk_update_add_trainees_upload_path(upload)
   end
@@ -1163,4 +1170,5 @@ private
   alias_method :and_i_click_the_documentation_empty_csv_link, :when_i_click_the_documentation_empty_csv_link
   alias_method :and_i_click_the_guidance_link, :when_i_click_the_guidance_link
   alias_method :and_i_attach_an_empty_file, :when_i_attach_an_empty_file
+  alias_method :when_i_visit_the_bulk_update_trainee_uploads_page, :and_i_visit_the_bulk_update_trainee_uploads_page
 end
