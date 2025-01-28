@@ -5,6 +5,12 @@
       Upload Summary
     </h1>
 
+    <% if @bulk_update_trainee_upload.trainee_upload_rows.with_errors.blank? %>
+      <h2 class="govuk-heading-l">
+        File validation passed
+      </h2>
+    <% end %>
+
     <p class="govuk-body">
       You uploaded a CSV file with details of <%= pluralize(upload.number_of_trainees, "trainee") %>.
     </p>
@@ -34,6 +40,11 @@
         </li>
       <% end %>
     </ul>
+
+    <p class="govuk-body">
+      Do you want to add the trainees to Register?
+    </p>
+
     <%= register_form_with(
       model: upload,
       url: bulk_update_add_trainees_submission_path(upload),

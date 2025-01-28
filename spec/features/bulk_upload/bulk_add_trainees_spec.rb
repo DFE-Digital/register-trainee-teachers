@@ -118,6 +118,24 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        then_i_see_the_new_bulk_update_import_page
+
+        when_i_click_on_back_link
+        then_i_see_instructions_on_how_to_bulk_add_trainees
+
+        when_i_attach_a_valid_file
+        and_i_click_the_upload_button
+        then_i_see_the_new_bulk_update_import_page
+
+        when_i_click_on_cancel_process_link
+        then_the_upload_is_cancelled
+
+        when_i_click_the_bulk_add_trainees_page
+        and_i_see_instructions_on_how_to_bulk_add_trainees
+        and_i_attach_a_valid_file
+        and_i_click_the_upload_button
+        and_i_see_the_new_bulk_update_import_page
+        and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
         and_i_dont_see_the_cancel_bulk_updates_link
 
@@ -125,6 +143,8 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_i_see_the_new_bulk_update_import_page
+        and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
 
         when_i_click_the_view_status_of_new_trainee_files_link
@@ -135,7 +155,11 @@ feature "bulk add trainees" do
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
 
         when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-        and_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page_without_validation_errors
+
+        when_i_click_on_back_link
+        and_i_see_the_review_page
+        and_i_see_file_validation_passed
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
@@ -152,12 +176,14 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_i_see_the_new_bulk_update_import_page
+        and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
 
         when_an_unexpected_duplicate_error_is_setup
         and_i_click_the_submit_button
@@ -184,12 +210,14 @@ feature "bulk add trainees" do
         Timecop.travel 1.hour.from_now do
           and_i_click_the_upload_button
         end
+        and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
         then_a_job_is_queued_to_process_the_upload
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        and_i_see_the_review_page_without_validation_errors
+        and_i_see_the_review_page
+        and_i_see_file_validation_passed
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
         and_i_click_the_submit_button
@@ -228,12 +256,13 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file_with_placements
         and_i_click_the_upload_button
+        and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
 
         Timecop.travel 1.hour.from_now do
           and_i_click_the_submit_button
@@ -259,12 +288,13 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file_with_a_degree
         and_i_click_the_upload_button
+        and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
 
         Timecop.travel 1.hour.from_now do
           and_i_click_the_submit_button
@@ -303,7 +333,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
         and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_see_the_validation_errors(number: 2)
         and_i_dont_see_any_duplicate_errors
@@ -319,7 +349,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
         and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_dont_see_any_validation_errors
         and_i_see_the_duplicate_errors(number: 2)
@@ -332,7 +362,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_and_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
         and_i_dont_the_number_of_trainees_that_can_be_added
         and_i_see_the_validation_errors(number: 2)
         and_i_see_the_duplicate_errors(number: 3)
@@ -348,9 +378,10 @@ feature "bulk add trainees" do
 
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
+        and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_without_validation_errors
+        then_i_see_the_review_page
 
         when_the_background_job_is_run
         and_i_refresh_the_page
@@ -378,6 +409,7 @@ feature "bulk add trainees" do
         when_i_return_to_the_review_errors_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
       end
 
@@ -436,22 +468,13 @@ feature "bulk add trainees" do
 
         when_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_that_there_is_one_duplicate_error
 
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page_with_one_error
-      end
-
-      context "with an upload with an uploaded status" do
-        let(:upload) { create(:bulk_update_trainee_upload, provider: current_user.organisation) }
-
-        scenario "attempt import the rows of an upload" do
-          when_a_request_is_made_to_the_imports_action(upload:)
-          and_i_visit_the_summary_page(upload:)
-          then_i_see_that_the_upload_is_processing(upload:)
-        end
       end
     end
 
@@ -465,10 +488,6 @@ feature "bulk add trainees" do
   end
 
 private
-
-  def when_a_request_is_made_to_the_imports_action(upload:)
-    page.driver.post(bulk_update_add_trainees_imports_path(upload))
-  end
 
   def then_i_see_the_root_page
     expect(page).to have_content("Your trainee teachers")
@@ -776,7 +795,12 @@ private
     expect(page).to have_content(empty ? "The selected file is empty" : "Select a CSV file")
   end
 
-  def then_i_see_the_review_page_without_validation_errors
+  def and_i_see_file_validation_passed
+    expect(page).to have_content("File validation passed")
+    expect(page).to have_content("Do you want to add the trainees to Register?")
+  end
+
+  def then_i_see_the_review_page
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
   end
@@ -1145,6 +1169,16 @@ private
     find(".govuk-back-link", text: "Home").click
   end
 
+  def then_i_see_the_new_bulk_update_import_page
+    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
+    expect(page).to have_content("It included:")
+    expect(page).to have_content("5 trainees who can be added")
+  end
+
+  def when_i_click_on_cancel_process_link
+    click_on "Cancel process"
+  end
+
   def file_with_two_errors_content
     file_content("bulk_update/trainee_uploads/failed_with_two_errors.csv")
   end
@@ -1153,13 +1187,17 @@ private
     file_content("bulk_update/trainee_uploads/empty_file_with_headers.csv")
   end
 
+  def and_i_click_on_continue_button
+    click_on "Continue"
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
   alias_method :and_i_visit_the_bulk_update_index_page, :when_i_visit_the_bulk_update_index_page
   alias_method :when_i_click_on_back_link, :and_i_click_on_back_link
   alias_method :and_i_click_the_view_status_of_new_trainee_files_link, :when_i_click_the_view_status_of_new_trainee_files_link
-  alias_method :and_i_see_the_review_page_without_validation_errors, :then_i_see_the_review_page_without_validation_errors
+  alias_method :and_i_see_the_review_page, :then_i_see_the_review_page
   alias_method :when_i_visit_the_bulk_update_index_page, :and_i_visit_the_bulk_update_index_page
   alias_method :and_i_click_on_an_upload, :when_i_click_on_an_upload
   alias_method :then_i_see_the_summary_page, :and_i_see_the_summary_page
@@ -1171,4 +1209,8 @@ private
   alias_method :and_i_click_the_guidance_link, :when_i_click_the_guidance_link
   alias_method :and_i_attach_an_empty_file, :when_i_attach_an_empty_file
   alias_method :when_i_visit_the_bulk_update_trainee_uploads_page, :and_i_visit_the_bulk_update_trainee_uploads_page
+  alias_method :when_i_click_the_bulk_add_trainees_page, :and_i_click_the_bulk_add_trainees_page
+  alias_method :and_i_see_instructions_on_how_to_bulk_add_trainees, :then_i_see_instructions_on_how_to_bulk_add_trainees
+  alias_method :and_i_see_the_new_bulk_update_import_page, :then_i_see_the_new_bulk_update_import_page
+  alias_method :then_i_see_the_review_page_without_validation_errors, :and_i_see_the_review_page_without_validation_errors
 end

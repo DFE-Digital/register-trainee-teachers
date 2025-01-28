@@ -37,7 +37,7 @@ module BulkUpdate
 
         if @bulk_add_trainee_upload_form.save
           redirect_to(
-            bulk_update_add_trainees_upload_path(@bulk_add_trainee_upload_form.upload), flash: { success: t(".success") }
+            new_bulk_update_add_trainees_imports_path(@bulk_add_trainee_upload_form.upload), flash: { success: t(".success") }
           )
         else
           render(:new)

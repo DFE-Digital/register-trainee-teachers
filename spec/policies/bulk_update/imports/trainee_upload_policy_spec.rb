@@ -13,7 +13,7 @@ RSpec.describe BulkUpdate::Imports::TraineeUploadPolicy, type: :policy do
     context "when the upload is uploaded" do
       let(:trainee_upload) { build(:bulk_update_trainee_upload, :uploaded) }
 
-      permissions :create? do
+      permissions :new?, :create? do
         it { is_expected.to permit(user, trainee_upload) }
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe BulkUpdate::Imports::TraineeUploadPolicy, type: :policy do
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
-        permissions :create? do
+        permissions :new?, :create? do
           it { is_expected.not_to permit(user, trainee_upload) }
         end
       end
@@ -36,7 +36,7 @@ RSpec.describe BulkUpdate::Imports::TraineeUploadPolicy, type: :policy do
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
-        permissions :create? do
+        permissions :new?, :create? do
           it { is_expected.not_to permit(user, trainee_upload) }
         end
       end
@@ -51,7 +51,7 @@ RSpec.describe BulkUpdate::Imports::TraineeUploadPolicy, type: :policy do
       context "when the upload is #{status}" do
         let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
 
-        permissions :create? do
+        permissions :new?, :create? do
           it { is_expected.not_to permit(user, trainee_upload) }
         end
       end

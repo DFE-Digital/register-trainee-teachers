@@ -2,6 +2,8 @@
 
 module BulkUpdate
   class BulkAddTraineesImportRowsForm
+    include ActiveModel::Model
+
     attr_reader :upload
 
     def initialize(upload:)

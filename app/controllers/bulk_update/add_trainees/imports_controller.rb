@@ -5,6 +5,15 @@ module BulkUpdate
     class ImportsController < ApplicationController
       before_action { require_feature_flag(:bulk_add_trainees) }
 
+      def new
+        @bulk_add_trainees_import_rows_form = BulkUpdate::BulkAddTraineesImportRowsForm.new(
+          upload: authorize(
+            bulk_update_trainee_upload,
+            policy_class: BulkUpdate::Imports::TraineeUploadPolicy,
+          ),
+        )
+      end
+
       def create
         BulkUpdate::BulkAddTraineesImportRowsForm.new(
           upload: authorize(

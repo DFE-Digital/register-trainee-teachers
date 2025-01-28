@@ -21,8 +21,6 @@ module BulkUpdate
 
       upload.attributes = upload_attributes
       upload.save!
-
-      BulkUpdate::BulkAddTraineesImportRowsForm.new(upload:).save
     end
 
     def csv
