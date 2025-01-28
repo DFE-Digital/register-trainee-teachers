@@ -13,7 +13,6 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
-  redirect_education_domain: true
 
 environment:
   name: beta
