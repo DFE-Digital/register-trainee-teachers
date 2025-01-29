@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "audit trail attribution" do
+describe "audit trail attribution", skip: "api endpoint has been disabled" do
   let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received) }
   let(:provider) { trainee.provider }
 
@@ -13,7 +13,7 @@ describe "audit trail attribution" do
       {
         data: {
           reasons: [unknown.name],
-          withdraw_date: Time.zone.now.to_s,
+          withdraw_date: Time.zone.now.iso8601,
           withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
           withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
         },

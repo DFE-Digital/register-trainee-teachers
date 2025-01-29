@@ -1,3 +1,5 @@
+log_level: debug
+
 dttp:
   api_base_url: "https://dttp-dev.api.crm4.dynamics.com"
   portal_host: traineeteacherportal-local.education.gov.uk

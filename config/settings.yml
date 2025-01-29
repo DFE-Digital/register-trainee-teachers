@@ -10,6 +10,8 @@ feedback_link_url: "https://forms.office.com/e/Q6LVwtEKje"
 support_email: becomingateacher@digital.education.gov.uk
 data_email: registerateacher@education.gov.uk
 
+log_level: info
+
 dttp:
   client_id: "application-registration-client-id-from-env"
   scope: "https://dttp-dev.crm4.dynamics.com/.default"
@@ -28,8 +30,13 @@ hesa:
   password: <get from secrets>
 
 dqt:
-  base_url: https://qualified-teachers-api-dev.london.cloudapps.digital
+  base_url: https://teacher-qualifications-api.education.gov.uk/
   api_key: <get from secrets>
+
+trs:
+  base_url: https://teacher-qualifications-api.education.gov.uk
+  api_key: <get from secrets>
+  version: Next
 
 azure:
   storage:

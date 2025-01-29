@@ -8,13 +8,15 @@ module BulkUpdate
       def index
         @bulk_update_trainee_uploads = policy_scope(
           BulkUpdate::TraineeUpload,
-        ).current_academic_cycle.includes(:file_attachment)
+        ).current_academic_cycle.uncancelled.includes(:file_attachment)
 
         authorize(@bulk_update_trainee_uploads)
       end
 
       def show
         authorize(bulk_update_trainee_upload)
+
+        render
       end
 
       def new
@@ -33,11 +35,10 @@ module BulkUpdate
 
         authorize(@bulk_add_trainee_upload_form.upload)
 
-        if @bulk_add_trainee_upload_form.valid?
-          # TODO: Dry run method
-          upload = @bulk_add_trainee_upload_form.save
-
-          redirect_to(bulk_update_add_trainees_upload_path(upload), flash: { success: t(".success") })
+        if @bulk_add_trainee_upload_form.save
+          redirect_to(
+            bulk_update_add_trainees_upload_path(@bulk_add_trainee_upload_form.upload), flash: { success: t(".success") }
+          )
         else
           render(:new)
         end
@@ -52,8 +53,8 @@ module BulkUpdate
     private
 
       def bulk_update_trainee_upload
-        @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload)
-          .includes(:row_errors).find(params[:id])
+        @bulk_update_trainee_upload ||=
+          policy_scope(BulkUpdate::TraineeUpload).includes(:row_errors).find(params[:id])
       end
 
       def upload_params

@@ -18,7 +18,10 @@ module BulkUpdate
       attr_reader :csv, :record
 
       def header_row!
-        true
+        return if headers.all? { |value| value.is_a?(String) } &&
+          headers.sort == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.sort
+
+        record.errors.add(:file, :invalid_headers, headers: BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(", "))
       end
 
       def trainees!
@@ -28,7 +31,7 @@ module BulkUpdate
       end
 
       def headers
-        @headers ||= csv.headers
+        @headers ||= csv.headers - ["Errors"]
       end
 
       def rows

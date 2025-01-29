@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
+describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint has been disabled" do
   context "with a valid authentication token" do
     let(:token) { "trainee_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
@@ -29,7 +29,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         {
           data: {
             reasons: [unknown.name],
-            withdraw_date: Time.zone.now.to_s,
+            withdraw_date: Time.zone.now.iso8601,
             withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
             withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
           },

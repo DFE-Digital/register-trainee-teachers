@@ -125,6 +125,7 @@ en:
         hesa: Imported from HESA
         manual: Added manually
         api: Added with API
+        csv: Added with bulk CSV upload
       trainee_start_date: &trainee_start_date Trainee start date
       trn: TRN
       progress_date_prefix:
@@ -178,6 +179,7 @@ en:
         hesa: HESA
         manual: Manual
         api: API
+        csv: CSV
       route:
         blank: No route provided
       trainee_name:
@@ -1613,6 +1615,7 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
+              invalid_headers: "CSV header must include: %{headers}"
         bulk_update/bulk_add_trainees_submit_form:
           attributes:
             file:
@@ -2057,9 +2060,12 @@ en:
     add_trainees:
       uploads:
         create:
-          success: File uploaded
+          success: &file_uploaded File uploaded
         destroy:
           success: Bulk updates to records have been cancelled
+      imports:
+        create:
+          success: *file_uploaded
   system_admin:
     users:
       create:

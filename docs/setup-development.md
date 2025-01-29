@@ -138,9 +138,8 @@ psql register_trainee_teacher_data_development < ~/Downloads/backup_sanitised.sq
 In order to create and update the schools and the lead schools follow the below steps
 1. [Download Get Information about Schools data](#download-get-information-about-schools-data)
 2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
-3. [Import schools from csv data/schools_gias.cs](#import-schools-from-csv-dataschools_giascsv)
-4. [Generate data/lead_schools_publish.csv from Publish api](#generate-datalead_schools_publishcsv-from-publish-api)
-5. [Update schools to lead schools from publish data/lead_schools_publish.csv](#update-schools-to-lead-schools-from-publish-datalead_schools_publishcsv)
+3. [Import schools from csv data/schools_gias.csv](#import-schools-from-csv-dataschools_giascsv)
+4. [Realign lead partner with school name](#realign-lead-partner-with-school-name)
 
 ### Download Get Information about Schools data
 1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
@@ -160,7 +159,7 @@ To generate the data/schools_gias.csv from GIAS data, use the following rake tas
 bundle exec rake schools_data:generate_csv_from_gias\[gias_csv_1_path,gias_csv_2_path,output_path\]
 
 # as an example
-  bundle exec rake schools_data:generate_csv_from_gias\[./data/edubaseallacademiesandfree20240708.csv,./data/edubaseallstatefunded20240708.csv\]
+  bundle exec rake schools_data:generate_csv_from_gias\[./data/edubaseallacademiesandfree20250115.csv,./data/edubaseallstatefunded20250115.csv\]
 
 ```
 
@@ -171,32 +170,12 @@ To import schools from csv data/schools_gias.csv, use the following rake task:
 bundle exec rake schools_data:import_gias
 ```
 
-### Generate data/lead_schools_publish.csv from Publish api
-
-To generate the data/lead_schools_publish.csv from Publish api data, use the following rake task:
+### Realign lead partner with school name
+To realign lead partner with school name, use the following rake task:
 
 ```bash
-
-# output_path: optional, path to the output file, default to `data/lead_schools_publish.csv`
-bundle exec rake schools_data:get_lead_schools_from_publish\[output_path\]
-
-# as an example
-bundle exec rake schools_data:get_lead_schools_from_publish
-
+bundle exec rake schools_data:realign_lead_partner_with_school_name
 ```
-
-### Update schools to lead schools from publish data/lead_schools_publish.csv
-
-To update schools to lead schools from publish data/lead_schools_publish.csv, use the following rake task:
-```bash
-
-# input_path: optional, path to the input file, default to `data/lead_schools_publish.csv`
-bundle exec rake schools_data:update_lead_schools_from_publish\[input_path\]
-
-bundle exec rake schools_data:update_lead_schools_from_publish
-
-```
-
 
 ## Running Apply application import against example data
 

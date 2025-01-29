@@ -500,6 +500,14 @@ describe Trainee do
           expect(subject).to eql("api")
         end
       end
+
+      context "csv record source" do
+        let(:trainee) { create(:trainee, :created_from_csv) }
+
+        it "returns csv record source" do
+          expect(subject).to eql("csv")
+        end
+      end
     end
   end
 

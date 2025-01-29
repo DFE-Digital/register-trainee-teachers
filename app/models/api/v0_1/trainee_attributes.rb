@@ -16,7 +16,7 @@ module Api
         first_names: {},
         middle_names: {},
         last_name: {},
-        date_of_birth: { type: :date },
+        date_of_birth: {},
         email: {},
         course_education_phase: {},
         trainee_start_date: {},
@@ -89,6 +89,7 @@ module Api
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
+      validate :validate_date_of_birth
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
       validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
@@ -98,7 +99,7 @@ module Api
 
         super(
           new_attributes.slice(
-            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys) + %i[nationalities],
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys + %i[record_source nationalities]),
           ).except(
             :placements_attributes,
             :degrees_attributes,
@@ -133,7 +134,7 @@ module Api
       def assign_attributes(new_attributes)
         super(
           new_attributes.slice(
-            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys) + %i[nationalities],
+            *(ATTRIBUTES.keys + INTERNAL_ATTRIBUTES.keys) + %i[record_source nationalities],
           ).except(
             :placements_attributes,
             :degrees_attributes,
@@ -253,6 +254,12 @@ module Api
         errors[:trainee_start_date].blank?
       end
 
+      def validate_date_of_birth
+        if date_of_birth.present? && !valid_date_string?(date_of_birth)
+          errors.add(:date_of_birth, :invalid)
+        end
+      end
+
       def validate_trainee_start_date
         return if trainee_start_date.blank?
 
@@ -280,14 +287,10 @@ module Api
       end
 
       def valid_date_string?(date)
-        return true if date.is_a?(Date) || date.is_a?(DateTime)
-
-        begin
-          DateTime.parse(date)
-          true
-        rescue StandardError
-          false
-        end
+        DateTime.iso8601(date.to_s)
+        true
+      rescue StandardError
+        false
       end
 
       def set_course_allocation_subject_id

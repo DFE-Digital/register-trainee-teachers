@@ -26,6 +26,11 @@ feature "bulk update page" do
     then_i_see_an_error_message
   end
 
+  scenario "uploading file with missing trn" do
+    when_i_upload_the_file_with_missing_trn
+    then_i_see_an_error_message
+  end
+
 private
 
   def then_i_see_how_many_trainees_i_can_bulk_update
@@ -64,6 +69,11 @@ private
 
   def when_i_upload_the_unreadable_file
     attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/un-readable.csv"))
+    click_on "Upload records"
+  end
+
+  def when_i_upload_the_file_with_missing_trn
+    attach_file("bulk_update_placements_form[file]", file_fixture("bulk_update/placements/missing_trn.csv"))
     click_on "Upload records"
   end
 

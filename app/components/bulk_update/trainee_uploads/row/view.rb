@@ -31,14 +31,17 @@ module BulkUpdate
 
         def upload_path
           {
-            "succeeded" => bulk_update_add_trainees_details_path(upload),
+            "uploaded" => bulk_update_add_trainees_upload_path(upload),
+            "pending" => bulk_update_add_trainees_upload_path(upload),
+            "validated" => bulk_update_add_trainees_upload_path(upload),
+            "succeeded" => bulk_update_add_trainees_upload_path(upload),
             "in_progress" => bulk_update_add_trainees_submission_path(upload),
             "failed" => bulk_update_add_trainees_review_error_path(upload),
           }[upload.status]
         end
 
-        def submitted_at
-          upload.submitted_at&.to_fs(:govuk_date_and_time)
+        def created_at
+          upload.created_at.to_fs(:govuk_date_and_time)
         end
       end
     end

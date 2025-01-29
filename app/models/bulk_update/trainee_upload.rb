@@ -5,8 +5,8 @@
 # Table name: bulk_update_trainee_uploads
 #
 #  id                 :bigint           not null, primary key
-#  number_of_trainees :integer
-#  status             :string           default("pending")
+#  number_of_trainees :integer          default(0), not null
+#  status             :string           default("uploaded")
 #  submitted_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -27,6 +27,7 @@
 
 class BulkUpdate::TraineeUpload < ApplicationRecord
   enum :status, {
+    uploaded: "uploaded",
     pending: "pending",
     validated: "validated",
     in_progress: "in_progress",
@@ -34,6 +35,10 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
     cancelled: "cancelled",
     failed: "failed",
   } do
+    event :import do
+      transition %i[uploaded] => :pending
+    end
+
     event :process do
       transition %i[pending] => :validated
     end
@@ -77,6 +82,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   scope :current_academic_cycle, lambda {
     where(created_at: AcademicCycle.current.start_date..AcademicCycle.current.end_date)
   }
+  scope :uncancelled, -> { where.not(status: :cancelled) }
 
   def total_rows_with_errors
     trainee_upload_rows.with_errors.size

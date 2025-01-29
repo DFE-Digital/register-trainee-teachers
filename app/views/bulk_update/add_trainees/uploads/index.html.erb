@@ -3,11 +3,8 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t(:back),
-    href: (
-      request.referrer.present? && request.referrer.match?(/#{bulk_update_add_trainees_uploads_path}\/\d+$/)) ?
-        request.referrer : bulk_update_path
-    )
-  %>
+    href: bulk_update_path,
+  ) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -27,7 +24,7 @@
       <caption class="govuk-table__caption govuk-visually-hidden">Trainee uploads</caption>
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header">Submitted</th>
+          <th class="govuk-table__header">Uploaded</th>
           <th class="govuk-table__header">Filename</th>
           <th class="govuk-table__header">Validation status</th>
         </tr>
@@ -39,6 +36,8 @@
       </tbody>
     </table>
 
-    <%= govuk_link_to "Cancel reviewing uploads", root_path %>
+    <p class="govuk-body">
+      <%= govuk_link_to "Cancel reviewing uploads", root_path %>
+    </p>
   </div>
 </div>

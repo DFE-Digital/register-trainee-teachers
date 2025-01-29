@@ -60,5 +60,8 @@ module RegisterTraineeTeachers
     config.active_record.encryption.key_derivation_salt = ENV.fetch("ACTIVE_RECORD_ENCRYPTION__KEY_DERIVATION_SALT", nil)
 
     config.active_record.raise_on_assign_to_attr_readonly = false
+
+    config.log_tags = [:request_id]
+    config.log_level = Settings.log_level
   end
 end

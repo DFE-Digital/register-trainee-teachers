@@ -14,7 +14,7 @@ gem "turbo-rails"
 gem "pg", ">= 0.18", "< 2.0"
 
 # Use Puma as the app server
-gem "puma", "~> 6.5"
+gem "puma", "~> 6.6"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -58,7 +58,7 @@ gem "govuk_design_system_formbuilder"
 
 # Background job processor
 gem "sidekiq", "~> 6.5"
-gem "sidekiq-cron", "~> 2.0"
+gem "sidekiq-cron", "~> 2.1"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
@@ -124,7 +124,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.6.7"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.3"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.4"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 

@@ -9,8 +9,6 @@ class SendCsvSubmittedForProcessingEmailService
   end
 
   def call
-    return unless FeatureService.enabled?(:send_emails)
-
     CsvSubmittedForProcessingEmailMailer.generate(
       upload:,
     ).deliver_later(wait: 30.seconds)

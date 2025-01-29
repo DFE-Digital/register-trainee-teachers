@@ -9,6 +9,7 @@ module Sourceable
   HESA_TRN_DATA_SOURCE = "hesa_trn_data"
   MANUAL_SOURCE = "manual"
   API_SOURCE = "api"
+  CSV_SOURCE = "csv"
   ALL = [
     APPLY_SOURCE,
     DTTP_SOURCE,
@@ -16,6 +17,7 @@ module Sourceable
     HESA_TRN_DATA_SOURCE,
     MANUAL_SOURCE,
     API_SOURCE,
+    CSV_SOURCE,
   ].freeze
   NON_TRN_SOURCES = ALL - [HESA_TRN_DATA_SOURCE].freeze
   HESA_SOURCES = [HESA_COLLECTION_SOURCE, HESA_TRN_DATA_SOURCE].freeze

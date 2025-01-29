@@ -1,0 +1,46 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop" >
+    <h1 class="govuk-heading-l">
+      Your new trainees have been registered
+    </h1>
+
+    <%= govuk_summary_list(actions: false, classes: "govuk-summary-list--no-border") do |summary_list| %>
+      <% summary_list.with_row do |row| %>
+        <%= row.with_key(text: "Submitted by:") %>
+        <%= row.with_value(text: upload.submitted_by.name) %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <%= row.with_key(text: "Date and time:") %>
+        <%= row.with_value(text: upload.submitted_at.to_fs(:govuk_date_and_time)) %>
+      <% end %>
+
+      <% summary_list.with_row do |row| %>
+        <%= row.with_key(text: "Number of registered trainees:") %>
+        <%= row.with_value(text: upload.number_of_trainees) %>
+      <% end %>
+    <% end %>
+
+    <p class="govuk-body">
+      You can also check the <%= govuk_link_to("status of new trainee files", bulk_update_add_trainees_uploads_path) %>.
+    </p>
+
+    <p class="govuk-heading-s">
+      Check data submitted into Register from CSV bulk add new trainees
+    </p>
+
+    <p class="govuk-body">
+      You can check your trainee data once it has been submitted into Register. At any time you can:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        view 'Choose trainee status export' from the 'Registered trainees' section, using the 'academic year' or
+        'start year' filter to select the  current academic year
+      </li>
+      <li>
+        check your trainees directly in the service one by one.
+      </li>
+    </ul>
+  </div>
+</div>

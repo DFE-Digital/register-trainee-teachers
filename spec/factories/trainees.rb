@@ -145,6 +145,11 @@ FactoryBot.define do
       placements { create_list(:placement, 2, :with_school) }
     end
 
+    trait :with_manual_placements do
+      has_placement_detail
+      placements { create_list(:placement, 2) }
+    end
+
     trait :submission_ready do
       submission_ready { true }
     end
@@ -712,6 +717,10 @@ FactoryBot.define do
 
     trait :created_from_api do
       record_source { Sourceable::API_SOURCE }
+    end
+
+    trait :created_from_csv do
+      record_source { Sourceable::CSV_SOURCE }
     end
 
     trait :created_manually do

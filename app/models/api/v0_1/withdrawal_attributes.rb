@@ -52,7 +52,7 @@ module Api
 
       def parsed_withdraw_date
         parsed_date = begin
-          DateTime.parse(withdraw_date)
+          DateTime.iso8601(withdraw_date)
         rescue StandardError
           ArgumentError
         end

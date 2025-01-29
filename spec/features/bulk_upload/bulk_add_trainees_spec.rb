@@ -5,6 +5,7 @@ require "rails_helper"
 feature "bulk add trainees" do
   include ActiveJob::TestHelper
   include ActionView::Helpers::TextHelper
+  include FileHelper
 
   before do
     and_there_is_a_current_academic_cycle
@@ -89,7 +90,7 @@ feature "bulk add trainees" do
         allow(SendCsvSubmittedForProcessingEmailService).to receive(:call)
       end
 
-      scenario "the bulk add trainees page is visible" do
+      scenario "the bulk add trainees page is visible", js: true do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         then_i_see_instructions_on_how_to_bulk_add_trainees
@@ -98,13 +99,15 @@ feature "bulk add trainees" do
         when_i_click_the_empty_csv_link
         then_i_receive_the_empty_csv_file
 
-        when_i_click_the_guidance_link
+        when_i_visit_the_new_bulk_update_add_trainees_upload_path
+        and_i_click_the_guidance_link
         then_i_see_the_bulk_add_trainees_guidance_page
 
         when_i_click_the_documentation_empty_csv_link
         then_i_receive_the_empty_csv_file
 
-        when_i_attach_an_empty_file
+        when_i_visit_the_new_bulk_update_add_trainees_upload_path
+        and_i_attach_an_empty_file
         and_i_click_the_upload_button
         then_i_see_the_upload_page_with_errors(empty: true)
 
@@ -126,19 +129,21 @@ feature "bulk add trainees" do
 
         when_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_pending(BulkUpdate::TraineeUpload.last)
-        and_i_click_on_back_link
 
         when_the_background_job_is_run
-        and_i_click_the_view_status_of_new_trainee_files_link
+        and_i_refresh_the_index_page
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
 
-        and_i_click_on_back_link
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
         and_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
         when_i_click_the_cancel_bulk_updates_link
         then_the_upload_is_cancelled
+
+        when_i_visit_the_bulk_update_add_trainees_uploads_page
+        then_i_dont_see_the_cancelled_upload
 
         when_i_try_resubmit_the_same_upload
         then_i_see_the_unauthorized_message
@@ -176,7 +181,9 @@ feature "bulk add trainees" do
         when_the_unexpected_duplicate_error_is_been_reverted
         and_i_return_to_the_review_errors_page
         and_i_attach_a_valid_file
-        and_i_click_the_upload_button
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_upload_button
+        end
         then_i_see_that_the_upload_is_processing
         then_a_job_is_queued_to_process_the_upload
 
@@ -185,10 +192,7 @@ feature "bulk add trainees" do
         and_i_see_the_review_page_without_validation_errors
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
-
-        Timecop.travel 1.hour.from_now do
-          and_i_click_the_submit_button
-        end
+        and_i_click_the_submit_button
 
         then_a_job_is_queued_to_process_the_upload
         and_the_send_csv_processing_email_has_been_sent
@@ -209,15 +213,14 @@ feature "bulk add trainees" do
         and_i_click_on_view_status_of_uploaded_trainee_files
         then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
-        when_i_click_on_an_upload
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.succeeded.last)
         then_i_see_the_bulk_update_add_trainees_upload_details_page
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_add_trainees_uploads_index_page
 
         when_i_try_resubmit_the_same_upload
-        and_i_click_the_submit_button
-        then_i_see_the_unauthorized_message
+        then_i_see_the_bulk_update_add_trainees_upload_details_page
       end
 
       scenario "the bulk add trainees page is visible and I upload a file with placements" do
@@ -293,8 +296,7 @@ feature "bulk add trainees" do
       scenario "attempt to resubmit a failed upload" do
         when_a_failed_upload_without_row_errors_exist
         and_i_visit_the_bulk_update_trainee_upload_page
-        and_i_click_the_submit_button
-        then_i_see_the_unauthorized_message
+        then_i_do_not_see_the_submit_button
       end
 
       scenario "view the upload summary page with errors" do
@@ -339,7 +341,7 @@ feature "bulk add trainees" do
         and_i_dont_see_the_submit_button
       end
 
-      scenario "when I try to upload a file with errors then upload a corrected file" do
+      scenario "when I try to upload a file with errors then upload a corrected file", js: true do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
         then_i_see_instructions_on_how_to_bulk_add_trainees
@@ -441,10 +443,32 @@ feature "bulk add trainees" do
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page_with_one_error
       end
+
+      context "with an upload with an uploaded status" do
+        let(:upload) { create(:bulk_update_trainee_upload, provider: current_user.organisation) }
+
+        scenario "attempt import the rows of an upload" do
+          when_a_request_is_made_to_the_imports_action(upload:)
+          and_i_visit_the_summary_page(upload:)
+          then_i_see_that_the_upload_is_processing(upload:)
+        end
+      end
+    end
+
+    context "when the User is not authenticated", js: true do
+      scenario "view guidance docs" do
+        when_i_visit_the_csv_docs_home_path
+        and_i_click_the_documentation_empty_csv_link
+        then_i_receive_the_empty_csv_file
+      end
     end
   end
 
 private
+
+  def when_a_request_is_made_to_the_imports_action(upload:)
+    page.driver.post(bulk_update_add_trainees_imports_path(upload))
+  end
 
   def then_i_see_the_root_page
     expect(page).to have_content("Your trainee teachers")
@@ -485,13 +509,17 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    first(:link, upload.submitted_at.to_fs(:govuk_date_and_time)).click
+    if upload.failed?
+      find("tr a[href^='#{bulk_update_add_trainees_review_error_path(upload)}']").click
+    else
+      find("tr a[href^='#{bulk_update_add_trainees_upload_path(upload)}']").click
+    end
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
     expect(page).to have_content("Your new trainees have been registered")
-    expect(page).to have_content("Submitted by:#{current_user.name}")
-    expect(page).to have_content("Number of registered trainees:5")
+    expect(page).to have_content(/Submitted by:\s*#{current_user.name}/)
+    expect(page).to have_content(/Number of registered trainees:\s*5/)
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
     expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
@@ -518,11 +546,11 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
-    expect(page).to have_content("#{upload.filename} Pending")
+    expect(page).to have_content("#{upload.filename} Pending", normalize_ws: true)
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
-    expect(page).to have_content("#{upload.filename} Validated")
+    expect(page).to have_content("#{upload.filename} Validated", normalize_ws: true)
   end
 
   def when_multiple_uploads_exist
@@ -564,7 +592,7 @@ private
     expect(page).to have_content(
       "five_trainees.csv Validated",
     )
-    expect(page).to have_content(
+    expect(page).not_to have_content(
       "five_trainees.csv Cancelled",
     )
     expect(page).to have_content(
@@ -620,20 +648,20 @@ private
     click_on "Back to bulk updates page"
   end
 
-  def then_i_see_that_the_upload_is_processing
+  def then_i_see_that_the_upload_is_processing(upload: BulkUpdate::TraineeUpload.last)
     expect(page).to have_content("File uploaded")
     expect(page).to have_content("Your file is being processed")
-    expect(page).to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
+    expect(page).to have_content("We're currently processing #{upload.filename}.")
     expect(page).to have_content("This is taking longer than usual")
     expect(page).to have_content("You'll receive an email to tell you when this is complete.")
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_link("Back to bulk updates page")
   end
 
-  def and_i_dont_see_that_the_upload_is_processing
+  def and_i_dont_see_that_the_upload_is_processing(upload: BulkUpdate::TraineeUpload.last)
     expect(page).not_to have_content("File uploaded")
     expect(page).not_to have_content("Your file is being processed")
-    expect(page).not_to have_content("We're currently processing #{BulkUpdate::TraineeUpload.last.filename}.")
+    expect(page).not_to have_content("We're currently processing #{upload.filename}.")
     expect(page).not_to have_content("This is taking longer than usual")
     expect(page).not_to have_content("You'll receive an email to tell you when this is complete.")
     expect(page).not_to have_content("You can also check the status of new trainee files.")
@@ -682,7 +710,7 @@ private
 
   def then_i_receive_the_empty_csv_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    visit new_bulk_update_add_trainees_upload_path
+    expect(download_content).to eq(empty_file_with_headers_content)
   end
 
   def when_i_click_the_guidance_link
@@ -694,6 +722,10 @@ private
     expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
   end
 
+  def when_i_visit_the_csv_docs_home_path
+    visit csv_docs_home_path
+  end
+
   def when_i_click_the_documentation_empty_csv_link
     click_on "Download empty bulk add new trainees CSV template"
   end
@@ -703,27 +735,21 @@ private
   end
 
   def when_i_attach_a_valid_file
-    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv")
-    filename = File.basename(file)
-    content  = file.read
+    filename = "five_trainees.csv"
 
-    and_i_attach_a_file(content, filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_placements
-    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_placement.csv")
-    filename = File.basename(file)
-    content  = file.read
+    filename = "five_trainees_with_placement.csv"
 
-    and_i_attach_a_file(content, filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def and_i_attach_a_valid_file_with_a_degree
-    file     = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_degree.csv")
-    filename = File.basename(file)
-    content  = file.read
+    filename = "five_trainees_with_degree.csv"
 
-    and_i_attach_a_file(content, filename)
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def when_i_attach_a_file_with_invalid_rows
@@ -811,6 +837,10 @@ private
 
   def when_i_click_the_submit_button
     click_on "Submit"
+  end
+
+  def then_i_do_not_see_the_submit_button
+    expect(page).not_to have_button("Submit")
   end
 
   def then_a_job_is_queued_to_process_the_upload
@@ -930,6 +960,10 @@ private
     visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
+  def and_i_refresh_the_index_page
+    visit bulk_update_add_trainees_uploads_path
+  end
+
   def and_i_refresh_the_summary_page
     visit bulk_update_add_trainees_submission_path(BulkUpdate::TraineeUpload.last)
   end
@@ -958,32 +992,32 @@ private
   end
 
   def then_i_can_see_the_new_trainees_with_placements
-    expect(page).to have_content("Jeffery Halvorson")
-    expect(page).to have_content("Farah Wolff")
-    expect(page).to have_content("Denna Jones")
-    expect(page).to have_content("Rudolf McLaughlin")
-    expect(page).to have_content("Elina Rolfson")
+    expect(page).to have_content("Preston Rath")
+    expect(page).to have_content("Breanne Langosh")
+    expect(page).to have_content("Kirby Gerlach")
+    expect(page).to have_content("Emilio Rippin")
+    expect(page).to have_content("Lavonda Bins")
 
-    click_on "Jeffery Halvorson"
+    click_on "Preston Rath"
 
     expect(page).to have_content("Placement 1")
-    expect(page).to have_content("URN 587111")
+    expect(page).to have_content("URN 609384")
     expect(page).not_to have_content("First placement is missing")
     expect(page).to have_content("Second placement is missing")
   end
 
   def then_i_can_see_the_new_trainees_with_a_degree
-    expect(page).to have_content("Mitsuko Larkin")
-    expect(page).to have_content("Ronnie White")
-    expect(page).to have_content("Joannie Kuhlman")
-    expect(page).to have_content("Angelica Anderson")
-    expect(page).to have_content("Yelena Schamberger")
+    expect(page).to have_content("Charissa Gibson")
+    expect(page).to have_content("Kraig Howe")
+    expect(page).to have_content("Katharyn Roberts")
+    expect(page).to have_content("Maurice Bashirian")
+    expect(page).to have_content("Bethanie Schumm")
 
-    click_on "Mitsuko Larkin"
+    click_on "Charissa Gibson"
 
-    expect(page).to have_content("Bachelor of Metallurgy")
-    expect(page).to have_content("Business law")
-    expect(page).to have_content("Anglia Ruskin University")
+    expect(page).to have_content("Bachelor of Humanities")
+    expect(page).to have_content("general or integrated engineering")
+    expect(page).to have_content("Point Blank Music School")
     expect(page).to have_content("Third-class honours")
   end
 
@@ -1016,6 +1050,10 @@ private
     expect(page).to have_content("Bulk updates to records have been cancelled")
   end
 
+  def then_i_dont_see_the_cancelled_upload(upload: BulkUpdate::TraineeUpload.cancelled.last)
+    expect(page).not_to have_content(upload.filename)
+  end
+
   def and_i_visit_the_summary_page(upload:)
     visit bulk_update_add_trainees_upload_path(upload)
   end
@@ -1045,6 +1083,8 @@ private
   def then_i_receive_the_file
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
+
+    expect(download_content).to eq(file_with_two_errors_content)
   end
 
   def when_i_return_to_the_review_errors_page
@@ -1068,7 +1108,7 @@ private
   end
 
   def and_i_visit_the_bulk_update_add_trainees_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_add_trainees_details_path(upload)
+    visit bulk_update_add_trainees_upload_path(upload)
   end
 
   def when_i_visit_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
@@ -1109,6 +1149,14 @@ private
     find(".govuk-back-link", text: "Home").click
   end
 
+  def file_with_two_errors_content
+    file_content("bulk_update/trainee_uploads/failed_with_two_errors.csv")
+  end
+
+  def empty_file_with_headers_content
+    file_content("bulk_update/trainee_uploads/empty_file_with_headers.csv")
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
@@ -1123,4 +1171,8 @@ private
   alias_method :and_the_background_job_is_run, :when_the_background_job_is_run
   alias_method :and_i_return_to_the_review_errors_page, :when_i_return_to_the_review_errors_page
   alias_method :and_i_visit_the_bulk_update_trainee_upload_page, :when_i_try_resubmit_the_same_upload
+  alias_method :and_i_click_the_documentation_empty_csv_link, :when_i_click_the_documentation_empty_csv_link
+  alias_method :and_i_click_the_guidance_link, :when_i_click_the_guidance_link
+  alias_method :and_i_attach_an_empty_file, :when_i_attach_an_empty_file
+  alias_method :when_i_visit_the_bulk_update_trainee_uploads_page, :and_i_visit_the_bulk_update_trainee_uploads_page
 end
