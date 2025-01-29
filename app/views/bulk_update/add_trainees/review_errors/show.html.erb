@@ -44,6 +44,8 @@
         </li>
 
         <%= f.govuk_submit("Upload records") %>
+
+        <%= render(BulkUpdate::TraineeUploads::HelpWithCsv::View.new) %>
       </ol>
     <% end %>
 
