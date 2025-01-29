@@ -8,6 +8,7 @@ module Placements
       let(:upload) { create(:upload, fixture_name: "placements_import.csv") }
       let!(:school1) { create(:school, urn: "137335") }
       let!(:school2) { create(:school, urn: "145787") }
+      let!(:valid_unknown_school_urn) { "900000" }
       let!(:trainee1) do
         create(
           :trainee,
@@ -32,29 +33,43 @@ module Placements
           itt_end_date: this_cycle.end_date,
         )
       end
+      let!(:trainee4) do
+        create(
+          :trainee,
+          hesa_id: "22100027187725416",
+          itt_start_date: last_cycle.start_date,
+          itt_end_date: last_cycle.end_date,
+        )
+      end
       let(:last_cycle) { create(:academic_cycle, previous_cycle: true) }
       let(:this_cycle) { create(:academic_cycle, :current) }
 
       it "creates placements for each row in the csv where there are matching school and trainee" do
         expect { described_class.call(upload_id: upload.id) }
-          .to change(Placement, :count).by(3)
+          .to change(Placement, :count).by(4)
       end
 
       it "creates placements with the correct attributes" do
         described_class.call(upload_id: upload.id)
 
-        expect(Placement.pluck(:school_id)).to contain_exactly(
+        expect(Placement.pluck(:school_id).compact).to contain_exactly(
           school1.id, school2.id, school1.id
         )
         expect(Placement.pluck(:trainee_id)).to contain_exactly(
-          trainee1.id, trainee2.id, trainee2.id
+          trainee1.id, trainee2.id, trainee2.id, trainee4.id
+        )
+        expect(Placement.pluck(:urn).compact).to contain_exactly(
+          valid_unknown_school_urn,
+        )
+        expect(Placement.pluck(:name).compact).to contain_exactly(
+          I18n.t("components.placement_detail.magic_urn.#{valid_unknown_school_urn}"),
         )
       end
 
-      it "does not create placements where there is no matching school" do
+      it "does not create placements where there is no matching school (unless a valid HESA code)" do
         described_class.call(upload_id: upload.id)
 
-        expect(Placement.all.map(&:school).map(&:urn)).not_to include("143956")
+        expect(Placement.where.not(school: nil).map(&:school).map(&:urn)).not_to include("143956")
       end
 
       it "only creates placements for trainees in the last cycle" do
@@ -69,11 +84,18 @@ module Placements
         expect(Placement.all.map(&:trainee).map(&:hesa_id)).not_to include("2010070003610")
       end
 
+      it "creates placements where the urn is one of the HESA codes for not applicable school URNs" do
+        described_class.call(upload_id: upload.id)
+
+        expect(Placement.where(urn: valid_unknown_school_urn).first.trainee_id).to eq(trainee4.id)
+      end
+
       context "matching placement already exists" do
         before do
           create(:placement, school: school1, trainee: trainee1)
           create(:placement, school: school2, trainee: trainee2)
           create(:placement, school: school1, trainee: trainee2)
+          create(:placement, urn: valid_unknown_school_urn, trainee: trainee4)
         end
 
         it "does not create duplicate placements" do
