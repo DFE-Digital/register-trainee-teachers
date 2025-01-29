@@ -42,6 +42,7 @@ RSpec.describe Trs::Client, type: :model do
     before do
       allow(Trs::Client::Request).to receive(:get).with(url, options).and_return(success_response)
       allow(Trs::Client::Request).to receive(:put).with(url, options).and_return(success_response)
+      allow(Trs::Client::Request).to receive(:post).with(url, options).and_return(success_response)
       allow(Trs::Client::Request).to receive(:patch).with(url, options).and_return(failure_response)
     end
 
@@ -54,6 +55,12 @@ RSpec.describe Trs::Client, type: :model do
     it "calls put method and handles response" do
       expect(Trs::Client::Request).to receive(:put).with(url, options)
       result = Trs::Client.put(url, options)
+      expect(result).to eq({ "key" => "value" })
+    end
+
+    it "calls post method and handles response" do
+      expect(Trs::Client::Request).to receive(:post).with(url, options)
+      result = Trs::Client.post(url, options)
       expect(result).to eq({ "key" => "value" })
     end
 
