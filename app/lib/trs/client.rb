@@ -13,8 +13,9 @@ module Trs
 
     class HttpError < StandardError; end
 
-    GET_SUCCESSES = [200].freeze
-    PUT_SUCCESSES = [200, 201].freeze
+    GET_SUCCESSES   = [200].freeze
+    PUT_SUCCESSES   = [200, 201].freeze
+    POST_SUCCESS    = [200].freeze
     PATCH_SUCCESSES = [204].freeze
 
     def self.get(...)
@@ -25,6 +26,12 @@ module Trs
 
     def self.put(...)
       response = Request.put(...)
+
+      handle_response(response: response, statuses: PUT_SUCCESSES)
+    end
+
+    def self.post(...)
+      response = Request.post(...)
 
       handle_response(response: response, statuses: PUT_SUCCESSES)
     end
