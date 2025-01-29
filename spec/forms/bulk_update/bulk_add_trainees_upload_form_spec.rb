@@ -74,12 +74,16 @@ module BulkUpdate
       let(:test_file_contents) { "#{valid_columns}\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts" }
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
-        expect(form.valid?).to be true
-        expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1).and not_change { BulkUpdate::TraineeUploadRow.count }
-        saved_upload = BulkUpdate::TraineeUpload.last
-        expect(saved_upload).to be_uploaded
-        expect(form.errors).to be_empty
-        expect(saved_upload.number_of_trainees).to be(2)
+        expect { form.save }.to change {
+          BulkUpdate::TraineeUpload.count
+        }.by(1).and not_change { BulkUpdate::TraineeUploadRow.count }
+
+        upload = BulkUpdate::TraineeUpload.last
+
+        expect(upload).to be_uploaded
+        expect(upload.provider).to eq(provider)
+        expect(upload.file.download).to eq(test_file_contents)
+        expect(upload.number_of_trainees).to be(2)
       end
     end
   end
