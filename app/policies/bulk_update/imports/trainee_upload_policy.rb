@@ -6,8 +6,6 @@ module BulkUpdate
       def create?
         user.hei_provider? && trainee_upload.uploaded?
       end
-
-      alias_method :new?, :create?
     end
   end
 end

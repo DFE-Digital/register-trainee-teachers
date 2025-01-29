@@ -127,7 +127,15 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         then_i_see_the_new_bulk_update_import_page
 
-        when_i_click_on_cancel_process_link
+        when_i_visit_the_bulk_update_add_trainees_uploads_page
+        and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.uploaded.first)
+        then_i_see_the_new_bulk_update_import_page
+
+        when_i_click_on_back_link
+        then_i_see_the_bulk_update_add_trainees_uploads_index_page
+
+        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.uploaded.first)
+        and_i_click_the_cancel_process_link
         then_the_upload_is_cancelled
 
         when_i_click_the_bulk_add_trainees_page
@@ -155,10 +163,7 @@ feature "bulk add trainees" do
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
 
         when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-        then_i_see_the_review_page_without_validation_errors
-
-        when_i_click_on_back_link
-        and_i_see_the_review_page
+        then_i_see_the_review_page
         and_i_see_file_validation_passed
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
@@ -605,6 +610,9 @@ private
     expect(page).to have_content("This will list all successful new trainee uploads for the current academic year.")
     expect(page).to have_content("Failed uploads will be removed after 30 days.")
 
+    expect(page).to have_content(
+      "five_trainees.csv Uploaded",
+    )
     expect(page).to have_content(
       "five_trainees.csv Pending",
     )
@@ -1191,6 +1199,10 @@ private
     click_on "Continue"
   end
 
+  def and_i_click_the_cancel_process_link
+    click_on "Cancel process"
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
@@ -1212,5 +1224,4 @@ private
   alias_method :when_i_click_the_bulk_add_trainees_page, :and_i_click_the_bulk_add_trainees_page
   alias_method :and_i_see_instructions_on_how_to_bulk_add_trainees, :then_i_see_instructions_on_how_to_bulk_add_trainees
   alias_method :and_i_see_the_new_bulk_update_import_page, :then_i_see_the_new_bulk_update_import_page
-  alias_method :then_i_see_the_review_page_without_validation_errors, :and_i_see_the_review_page_without_validation_errors
 end
