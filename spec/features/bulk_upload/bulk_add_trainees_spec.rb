@@ -155,6 +155,15 @@ feature "bulk add trainees" do
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
 
+        when_i_click_on_back_link
+        then_i_see_instructions_on_how_to_bulk_add_trainees
+
+        when_i_attach_a_valid_file
+        and_i_click_the_upload_button
+        and_i_see_the_new_bulk_update_import_page
+        and_i_click_on_continue_button
+        then_i_see_that_the_upload_is_processing
+
         when_i_click_the_view_status_of_new_trainee_files_link
         then_i_see_the_upload_status_row_as_pending(BulkUpdate::TraineeUpload.last)
 
@@ -346,7 +355,11 @@ feature "bulk add trainees" do
         and_i_see_the_review_errors_link
         and_i_dont_see_the_submit_button
 
-        when_i_click_the_cancel_bulk_updates_link
+        when_i_click_on_back_link
+        then_i_see_instructions_on_how_to_bulk_add_trainees
+
+        when_i_visit_the_summary_page(upload: @failed_upload)
+        and_i_click_the_cancel_bulk_updates_link
         then_the_upload_is_cancelled
       end
 
@@ -1224,4 +1237,6 @@ private
   alias_method :when_i_click_the_bulk_add_trainees_page, :and_i_click_the_bulk_add_trainees_page
   alias_method :and_i_see_instructions_on_how_to_bulk_add_trainees, :then_i_see_instructions_on_how_to_bulk_add_trainees
   alias_method :and_i_see_the_new_bulk_update_import_page, :then_i_see_the_new_bulk_update_import_page
+  alias_method :when_i_visit_the_summary_page, :and_i_visit_the_summary_page
+  alias_method :and_i_click_the_cancel_bulk_updates_link, :when_i_click_the_cancel_bulk_updates_link
 end
