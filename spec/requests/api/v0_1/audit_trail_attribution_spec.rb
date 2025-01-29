@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "audit trail attribution" do
+describe "audit trail attribution", skip: "api endpoint has been disabled" do
   let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received) }
   let(:provider) { trainee.provider }
 
