@@ -77,7 +77,7 @@ module BulkUpdate
         expect(form.valid?).to be true
         expect { form.save }.to change { BulkUpdate::TraineeUpload.count }.by(1).and not_change { BulkUpdate::TraineeUploadRow.count }
         saved_upload = BulkUpdate::TraineeUpload.last
-        expect(saved_upload).to be_pending
+        expect(saved_upload).to be_uploaded
         expect(form.errors).to be_empty
         expect(saved_upload.number_of_trainees).to be(2)
       end
