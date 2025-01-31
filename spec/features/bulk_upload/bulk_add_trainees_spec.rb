@@ -711,18 +711,20 @@ private
   end
 
   def when_i_click_the_guidance_link
-    click_on "guidance on how add trainee information to the CSV template"
+    @guidance_window = window_opened_by do
+      click_on "guidance on how add trainee information to the CSV template"
+    end
   end
 
   def then_i_see_the_bulk_add_trainees_guidance_page
-    within_window(windows.last) do
+    within_window(@guidance_window) do
       expect(page).to have_current_path(csv_docs_home_path)
       expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
 
       when_i_click_the_documentation_empty_csv_link
       then_i_receive_the_empty_csv_file
     end
-    windows.last.close
+    @guidance_window.close
     switch_to_window(windows.first)
   end
 
