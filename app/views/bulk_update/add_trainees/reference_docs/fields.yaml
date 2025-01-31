@@ -27,13 +27,13 @@
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
   format: 60 character maxlength
-  example: '"Smith"'
+  example: '"Jane"'
 - field_name: Last Name
   technical: last_name
   hesa_alignment: SURNAME
   description: This field is the student's family name.
   format: 60 character length
-  example: '"Jane"'
+  example: '"Smith"'
 - field_name: Previous Last Name
   technical: previous_last_name
   hesa_alignment: PSURNAME
@@ -51,12 +51,12 @@
   technical: ni_number
   hesa_alignment: NIN
   description: This field describes the trainee's National Insurance Number.
-  format: |- 
+  format: |-
     9 character length
 
     A National Insurance number must be made up of 2 letters, 6 numbers and a final
     letter, which is always A, B, C, or D.
-  example: '"BX5867459C"'
+  example: '"BX586745C"'
 - field_name: Sex
   technical: sex
   hesa_alignment: SEXID
@@ -163,7 +163,7 @@
 - field_name: ITT Aim
   technical: itt_aim
   hesa_alignment: ITTAIM
-  description: This field is a one character field completed for students on courses
+  description: This field is a three characters field completed for students on courses
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
   format: |-
@@ -190,7 +190,7 @@
   technical: course_subject_one
   hesa_alignment: SBJCA
   description: |-
-    Subject of first ITT course 
+    Subject of first ITT course
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
@@ -199,7 +199,7 @@
   technical: course_subject_two
   hesa_alignment: SBJCA
   description: |-
-    Subject of second ITT course 
+    Subject of second ITT course
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
@@ -208,7 +208,7 @@
   technical: course_subject_three
   hesa_alignment: SBJCA
   description: |-
-    Subject of third ITT course 
+    Subject of third ITT course
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
@@ -258,7 +258,7 @@
     their course.
   format: |-
     01 Full-time according to funding council definitions
-    
+
     02 Other full-time
 
     31 Part-time
@@ -288,7 +288,7 @@
   description: This field collects the lead school for School Direct trainees
   format: Must be a 6-digit number
   example: |-
-    "115795" 
+    "115795"
 
     Use code 900020 if the lead partner does not have a URN
 - field_name: Employing School URN
@@ -298,7 +298,7 @@
     trainees.
   format: Must be a 6-digit number
   example: |-
-    "115795" 
+    "115795"
 
     Use code 900020 if the school does not have a URN
 - field_name: Trainee Start Date
@@ -403,7 +403,7 @@
     025 Transition to Teach
 
     026 Now Teach
-    
+
     036 International relocation payment
   example: |-
     "026" is an example of using the code for Now Teach
@@ -461,5 +461,5 @@
   description: This records the country where the student's previous qualification
     was awarded
   format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
-  example: '"AU" is an example of using the previous qualification country code for 
+  example: '"AU" is an example of using the previous qualification country code for
     Australia'
