@@ -80,7 +80,6 @@ features:
   integrate_with_dqt: false
   integrate_with_trs: false
   funding: true
-  redirect_education_domain: true
   hesa_trn_requests: false
   hesa_import:
     test_mode: false
