@@ -9,6 +9,7 @@ module Placements
       let!(:school1) { create(:school, urn: "137335") }
       let!(:school2) { create(:school, urn: "145787") }
       let!(:valid_unknown_school_urn) { "900000" }
+      let!(:name) { I18n.t("components.placement_detail.magic_urn.#{valid_unknown_school_urn}") }
       let!(:trainee1) do
         create(
           :trainee,
@@ -62,7 +63,7 @@ module Placements
           valid_unknown_school_urn,
         )
         expect(Placement.pluck(:name).compact).to contain_exactly(
-          I18n.t("components.placement_detail.magic_urn.#{valid_unknown_school_urn}"),
+          name,
         )
       end
 
@@ -70,6 +71,11 @@ module Placements
         described_class.call(upload_id: upload.id)
 
         expect(Placement.where.not(school: nil).map(&:school).map(&:urn)).not_to include("143956")
+      end
+
+      it "adds unmatched urns to the unmatched_urns array" do
+        import = described_class.call(upload_id: upload.id)
+        expect(import.unmatched_urns).to include("143956")
       end
 
       it "only creates placements for trainees in the last cycle" do
@@ -95,7 +101,7 @@ module Placements
           create(:placement, school: school1, trainee: trainee1)
           create(:placement, school: school2, trainee: trainee2)
           create(:placement, school: school1, trainee: trainee2)
-          create(:placement, urn: valid_unknown_school_urn, trainee: trainee4)
+          create(:placement, urn: valid_unknown_school_urn, name: name, trainee: trainee4)
         end
 
         it "does not create duplicate placements" do

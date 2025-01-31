@@ -20,8 +20,7 @@ module Placements
         if (trainee = matching_trainee_in_previous_cycle(row[:hesa_id]))
           urn = row[:urn]
           if valid_unknown_school_urn?(urn)
-            # Update name separately to avoid unique constraint violation with index on trainee_id and urn
-            Placement.find_or_create_by(trainee:, urn:).update(name: I18n.t("components.placement_detail.magic_urn.#{urn}"))
+            Placement.find_or_create_by!(trainee: trainee, urn: urn, name: I18n.t("components.placement_detail.magic_urn.#{urn}"))
           elsif (school = School.find_by(urn:))
             Placement.find_or_create_by(trainee:, school:)
           else
