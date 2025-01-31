@@ -16,13 +16,6 @@ Rails.application.routes.draw do
     end
   end
 
-  if Settings.features.redirect_education_domain
-    constraints(->(req) { req.host.end_with?("education.gov.uk") }) do
-      root to: redirect(Settings.base_url), as: :education_domain_root
-      get "/:path", to: redirect("#{Settings.base_url}/%{path}"), as: :education_domain
-    end
-  end
-
   get :ping, controller: :heartbeat
   get :healthcheck, controller: :heartbeat
   get :sha, controller: :heartbeat
