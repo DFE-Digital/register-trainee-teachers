@@ -169,12 +169,11 @@ feature "bulk add trainees" do
         then_i_see_the_upload_status_row_as_validated(BulkUpdate::TraineeUpload.last)
 
         when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-        then_i_see_the_review_page
         and_i_see_file_validation_passed
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
 
-        when_i_click_the_cancel_bulk_updates_link
+        when_i_click_the_cancel_submission_link
         then_the_upload_is_cancelled
 
         when_i_visit_the_bulk_update_add_trainees_uploads_page
@@ -194,7 +193,7 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page
+        then_i_see_file_validation_passed
 
         when_an_unexpected_duplicate_error_is_setup
         and_i_click_the_submit_button
@@ -227,7 +226,6 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        and_i_see_the_review_page
         and_i_see_file_validation_passed
         and_i_dont_see_the_review_errors_link
         and_i_dont_see_the_back_to_bulk_updates_link
@@ -344,8 +342,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page
-        and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
+        then_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_see_the_validation_errors(number: 2)
         and_i_dont_see_any_duplicate_errors
         and_i_see_the_review_errors_message
@@ -364,7 +361,6 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page
         and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
         and_i_dont_see_any_validation_errors
         and_i_see_the_duplicate_errors(number: 2)
@@ -377,8 +373,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_and_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_review_page
-        and_i_dont_the_number_of_trainees_that_can_be_added
+        then_i_dont_the_number_of_trainees_that_can_be_added
         and_i_see_the_validation_errors(number: 2)
         and_i_see_the_duplicate_errors(number: 3)
         and_i_see_the_review_errors_message
@@ -394,9 +389,6 @@ feature "bulk add trainees" do
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
         and_i_click_on_continue_button
-        when_the_background_job_is_run
-        and_i_refresh_the_page
-        then_i_see_the_review_page
 
         when_the_background_job_is_run
         and_i_refresh_the_page
@@ -693,6 +685,10 @@ private
     click_on "Cancel bulk updates to records"
   end
 
+  def when_i_click_the_cancel_submission_link
+    click_on "Cancel trainee submission to Register"
+  end
+
   def and_the_bulk_upload_is_cancelled
     expect(BulkUpdate::TraineeUpload.last).to be_cancelled
   end
@@ -845,13 +841,15 @@ private
   end
 
   def and_i_see_file_validation_passed
-    expect(page).to have_content("File validation passed")
-    expect(page).to have_content("Do you want to add the trainees to Register?")
+    expect(page).to have_content("Your file has been approved")
   end
 
   def then_i_see_the_review_page
-    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
-    expect(page).to have_content("It included:")
+    expect(page).to have_content("Your file has been approved")
+  end
+
+  def then_i_see_the_review_page_without_validation_errors
+    expect(page).to have_content("Your trainees_5.csv file has 5 trainees that can now be submitted and added to the Register service.")
   end
 
   def then_i_see_that_there_is_one_duplicate_error
@@ -864,7 +862,7 @@ private
     expect(page).to have_content("#{number} trainees who can be added")
   end
 
-  def and_i_dont_the_number_of_trainees_that_can_be_added
+  def then_i_dont_the_number_of_trainees_that_can_be_added
     expect(page).not_to have_content("trainees who can be added")
   end
 
@@ -1267,4 +1265,6 @@ private
   alias_method :and_i_see_the_new_bulk_update_import_page, :then_i_see_the_new_bulk_update_import_page
   alias_method :when_i_visit_the_summary_page, :and_i_visit_the_summary_page
   alias_method :and_i_click_the_cancel_bulk_updates_link, :when_i_click_the_cancel_bulk_updates_link
+  alias_method :then_i_see_the_number_of_trainees_that_can_be_added, :and_i_see_the_number_of_trainees_that_can_be_added
+  alias_method :then_i_see_file_validation_passed, :and_i_see_file_validation_passed
 end
