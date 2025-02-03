@@ -2,7 +2,7 @@
 
 module Withdrawal
   class ReasonForm < TraineeForm
-    validates_presence_of :reason_ids
+    validate :reason_ids_present?
 
     FIELDS = %i[reason_ids another_reason].freeze
 
@@ -62,6 +62,14 @@ module Withdrawal
 
     def form_store_key
       :withdrawal_reasons
+    end
+
+    def reason_ids_present?
+      return true unless reason_ids.empty?
+
+      error = I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.#{trigger_form.trigger}.blank").html_safe
+
+      errors.add(:reason_ids, error)
     end
   end
 end

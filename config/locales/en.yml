@@ -1743,7 +1743,10 @@ en:
         withdrawal/reason_form:
           attributes:
             reason_ids:
-              blank: Select why the trainee withdrew from the course or select "Unknown"
+              trainee:
+                blank: Choose a reason for the trainee's decision to withdraw
+              provider:
+                blank: Choose a reason for removing the trainee
         withdrawal/trigger_form:
           attributes:
             trigger:

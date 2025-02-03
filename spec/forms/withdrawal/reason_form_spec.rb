@@ -15,7 +15,32 @@ module Withdrawal
     end
 
     describe "validations" do
-      it { is_expected.to validate_presence_of(:reason_ids) }
+      let(:params) { { reason_ids: [] } }
+      let(:trigger_form) { instance_double(Withdrawal::TriggerForm, trigger:) }
+
+      before do
+        allow(Withdrawal::TriggerForm).to receive(:new).and_return(trigger_form)
+      end
+
+      context "when provider has withdrawn the trainee" do
+        let(:trigger) { "provider" }
+
+        it "provides the correct error message" do
+          subject.validate
+
+          expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.provider.blank"))
+        end
+      end
+
+      context "when the trainee has chosen to withdraw" do
+        let(:trigger) { "trainee" }
+
+        it "provides the correct error message" do
+          subject.validate
+
+          expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.trainee.blank"))
+        end
+      end
     end
 
     describe "#stash" do
