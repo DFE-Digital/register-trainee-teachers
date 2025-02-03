@@ -43,6 +43,13 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           uk_degree: "083",
           graduation_year: graduation_year,
         },
+        {
+          grade: "02",
+          subject: "100485",
+          non_uk_degree: "097",
+          country: "MX",
+          graduation_year: graduation_year,
+        },
       ],
       placements_attributes: [
         {
@@ -156,25 +163,41 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     it "creates the degrees if provided in the request body" do
       post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      degree_attributes = response.parsed_body[:data][:degrees]&.first
+      first_degree_attributes, second_degree_attributes =
+        response.parsed_body[:data][:degrees]
 
-      expect(degree_attributes[:subject]).to eq("100485")
-      expect(degree_attributes[:institution]).to eq("0117")
-      expect(degree_attributes[:graduation_year]).to eq(2003)
-      expect(degree_attributes[:subject]).to eq("100485")
-      expect(degree_attributes[:grade]).to eq("02")
-      expect(degree_attributes[:uk_degree]).to eq("083")
-      expect(degree_attributes[:country]).to be_nil
+      expect(first_degree_attributes[:subject]).to eq("100485")
+      expect(first_degree_attributes[:institution]).to eq("0117")
+      expect(first_degree_attributes[:graduation_year]).to eq(2003)
+      expect(first_degree_attributes[:subject]).to eq("100485")
+      expect(first_degree_attributes[:grade]).to eq("02")
+      expect(first_degree_attributes[:uk_degree]).to eq("083")
+      expect(first_degree_attributes[:country]).to be_nil
 
-      degree = Degree.last
+      expect(second_degree_attributes[:grade]).to eq("02")
+      expect(second_degree_attributes[:subject]).to eq("100485")
+      expect(second_degree_attributes[:non_uk_degree]).to eq("097")
+      expect(second_degree_attributes[:country]).to eq("MX")
+      expect(second_degree_attributes[:graduation_year]).to eq(2003)
 
-      expect(degree.locale_code).to eq("uk")
-      expect(degree.subject).to eq("Law")
-      expect(degree.institution).to eq("University of East Anglia")
-      expect(degree.graduation_year).to eq(2003)
-      expect(degree.grade).to eq("Upper second-class honours (2:1)")
-      expect(degree.uk_degree).to eq("Bachelor of Science")
-      expect(degree.country).to be_nil
+      first_degree, second_degree = Degree.all
+
+      expect(first_degree.locale_code).to eq("uk")
+      expect(first_degree.subject).to eq("Law")
+      expect(first_degree.institution).to eq("University of East Anglia")
+      expect(first_degree.graduation_year).to eq(2003)
+      expect(first_degree.grade).to eq("Upper second-class honours (2:1)")
+      expect(first_degree.uk_degree).to eq("Bachelor of Science")
+      expect(first_degree.country).to be_nil
+
+      expect(second_degree.locale_code).to eq("non_uk")
+      expect(second_degree.subject).to eq("Law")
+      expect(second_degree.institution).to be_nil
+      expect(second_degree.graduation_year).to eq(2003)
+      expect(second_degree.grade).to eq("Upper second-class honours (2:1)")
+      expect(second_degree.uk_degree).to be_nil
+      expect(second_degree.non_uk_degree).to eq("Bachelor of Education Scotland and Northern Ireland")
+      expect(second_degree.country).to eq("Mexico")
     end
 
     context "with lead_partner and employing_school attributes" do

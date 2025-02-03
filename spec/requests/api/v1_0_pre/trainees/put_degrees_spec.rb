@@ -66,6 +66,40 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         end
       end
 
+      context "with a non_uk_degree" do
+        let(:non_uk_degree) { "097" }
+        let(:country) { "MX" }
+
+        it "updates the degree and returns a 200 status (ok)" do
+          put(
+            "/api/v1.0-pre/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: { non_uk_degree:, country: },
+            }.to_json,
+          )
+
+          # binding.pry
+          expect(response).to have_http_status(:ok)
+
+          degree_attributes = response.parsed_body["data"]
+
+          expect(degree_attributes[:country]).to eq("MX")
+          expect(degree_attributes[:non_uk_degree]).to eq("097")
+          expect(degree_attributes[:locale_code]).to be_nil
+          expect(degree_attributes[:uk_degree]).to be_nil
+          expect(degree_attributes[:uk_degree_uuid]).to be_nil
+
+          degree.reload
+
+          expect(degree.locale_code).to eq("non_uk")
+          expect(degree.country).to eq("Mexico")
+          expect(degree.non_uk_degree).to eq("Bachelor of Education Scotland and Northern Ireland")
+          expect(degree.uk_degree).to be_nil
+          expect(degree.uk_degree_uuid).to be_nil
+        end
+      end
+
       context "when using multiple HESA attributes" do
         let(:degrees_attributes) do
           {

@@ -24,6 +24,7 @@ module Api
             institution:,
             country:,
             uk_degree:,
+            non_uk_degree:,
             grade:,
           })
       end
@@ -55,6 +56,14 @@ module Api
       def uk_degree
         types = DfE::ReferenceData::Degrees::TYPES.all_as_hash
         matching_type = types.find { |_, item| item[:name] == @degree.uk_degree }&.last
+
+        return if matching_type.blank?
+
+        matching_type[:hesa_itt_code]
+      end
+
+      def non_uk_degree
+        matching_type = DfE::ReferenceData::Degrees::TYPES.all.detect { |type| type[:name] == @degree.non_uk_degree }
 
         return if matching_type.blank?
 
