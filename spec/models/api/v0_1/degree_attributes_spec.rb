@@ -28,7 +28,20 @@ RSpec.describe Api::V01::DegreeAttributes do
       before { degree_attributes.locale_code = "non_uk" }
 
       it { is_expected.to validate_presence_of(:country) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:country).in_array(
+          Hesa::CodeSets::Countries::MAPPING.values,
+        )
+      }
+
       it { is_expected.to validate_presence_of(:non_uk_degree) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:non_uk_degree).in_array(
+          DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        )
+      }
     end
 
     context "with duplicate" do
