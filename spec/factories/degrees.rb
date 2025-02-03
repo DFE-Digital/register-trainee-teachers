@@ -34,6 +34,7 @@ FactoryBot.define do
       locale_code { :non_uk }
       uk_degree { nil }
       non_uk_degree { ENIC_NON_UK.sample }
+      uk_degree_uuid { nil }
     end
 
     trait :non_uk_degree_with_details do
