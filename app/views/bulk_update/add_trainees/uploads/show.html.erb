@@ -12,7 +12,7 @@
 <% end %>
 
 <%= render(
- "BulkUpdate::TraineeUploads::Show::#{@bulk_update_trainee_upload.status.capitalize}::View".constantize.new(
+ "BulkUpdate::TraineeUploads::Show::#{@bulk_update_trainee_upload.status.camelcase}::View".constantize.new(
    upload: @bulk_update_trainee_upload,
    current_user: current_user,
    bulk_add_trainee_upload_form: bulk_add_trainee_upload_form,
