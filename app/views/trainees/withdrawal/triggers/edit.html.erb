@@ -19,7 +19,9 @@
         <%= trainee_name(trainee) %>
       </span>
 
-      <%= f.govuk_radio_buttons_fieldset(:trigger, legend: { text: t("views.forms.withdrawal_trigger.title"), hint: t("views.forms.withdrawal_trigger.hint"), size: "m" }) do %>
+      <%= f.govuk_radio_buttons_fieldset(:trigger, 
+      legend: { text: t("views.forms.withdrawal_trigger.title"), size: "m"},
+      hint: { text: t("views.forms.withdrawal_trigger.hint") }) do %>
       <%= f.govuk_radio_button(
         :trigger,
         :provider,
