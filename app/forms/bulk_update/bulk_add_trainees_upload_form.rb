@@ -21,16 +21,6 @@ module BulkUpdate
 
       upload.attributes = upload_attributes
       upload.save!
-
-      BulkUpdate::BulkAddTraineesImportRowsForm.new(upload:).save
-    end
-
-    def csv
-      return if file.nil? || errors[:file].present?
-
-      file.tempfile.rewind
-
-      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
   private
@@ -43,8 +33,12 @@ module BulkUpdate
       }
     end
 
-    def build_upload
-      BulkUpdate::TraineeUpload.new
+    def csv
+      return if file.nil? || errors[:file].present?
+
+      file.tempfile.rewind
+
+      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
     end
 
     def tempfile
@@ -63,6 +57,10 @@ module BulkUpdate
 
     def number_of_trainees
       @number_of_trainees ||= csv.count
+    end
+
+    def build_upload
+      BulkUpdate::TraineeUpload.new
     end
   end
 end

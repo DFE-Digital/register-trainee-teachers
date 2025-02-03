@@ -1,0 +1,41 @@
+<h1 class="govuk-heading-l">
+  <span class="govuk-caption-xl"><%= organisation_name %></span>
+  Upload Summary
+</h1>
+
+<p class="govuk-body">
+  You uploaded a CSV file with details of <%= pluralize(upload.number_of_trainees, "trainee") %>.
+</p>
+
+<p class="govuk-body">
+  It included:
+</p>
+
+<ul class="govuk-list govuk-list--bullet">
+  <li>
+    <%= pluralize(upload.number_of_trainees, "trainee") %> who can be added
+  </li>
+
+</ul>
+
+<p class="govuk-body">
+  <%= register_form_with(
+    builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+    model: upload,
+    method: :post,
+    url: bulk_update_add_trainees_imports_path(upload),
+  ) do |f| %>
+    <%= f.govuk_submit "Continue" %>
+  <% end %>
+</p>
+
+<p class="govuk-body">
+  <%= register_form_with(
+    model: upload,
+    url: bulk_update_add_trainees_upload_path(upload),
+    method: :delete
+  ) do |f| %>
+    <%= f.submit "Cancel process", class: "govuk-link app-button--link govuk-body" %>
+  <% end %>
+</p>
+
