@@ -42,6 +42,7 @@
             <%= f.govuk_check_box :reason_ids,
                 reason.id,
                 label: { text: t("components.withdrawal_details.reasons.#{reason.name}") },
+                hint: { text: t("components.withdrawal_details.hints.#{reason.name}") },
                 link_errors: index.zero? %>
           <% else %>
             <%= f.govuk_check_box :reason_ids, reason.id, label: { text: t("components.withdrawal_details.reasons.#{reason.name}") },
