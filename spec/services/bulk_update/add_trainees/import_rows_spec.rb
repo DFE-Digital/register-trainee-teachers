@@ -130,6 +130,28 @@ module BulkUpdate
               ).to eq(["Add at least one degree"])
             end
           end
+
+          context "when some rows cause an exception in the API service classes" do
+            let(:trainee_upload) { create(:bulk_update_trainee_upload, :pending) }
+
+            before do
+              allow(ImportRow).to receive(:call).and_raise(StandardError.new("Server on fire"))
+            end
+
+            it "sets the status to `failed`" do
+              described_class.call(trainee_upload)
+              expect(trainee_upload.reload).to be_failed
+            end
+
+            it "creates an error record for the failing row" do
+              expect { described_class.call(trainee_upload) }.to(
+                change { BulkUpdate::RowError.count }.by(5),
+              )
+              expect(
+                trainee_upload.trainee_upload_rows[0].row_errors.pluck(:message),
+              ).to eq(["runtime failure: Server on fire"])
+            end
+          end
         end
       end
 
