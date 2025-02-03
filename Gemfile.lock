@@ -471,7 +471,7 @@ GEM
     progress_bar (1.3.4)
       highline (>= 1.6)
       options (~> 2.3.0)
-    prometheus-client (4.2.3)
+    prometheus-client (4.2.4)
       base64
     pry (0.14.1)
       coderay (~> 1.1)
