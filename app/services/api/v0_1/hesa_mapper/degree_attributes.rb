@@ -91,19 +91,19 @@ module Api
         def uk_degree
           return unless uk_country_or_uk_institution_present?
 
-          degree_type&.name
+          uk_degree_type&.name
         end
 
         def uk_degree_uuid
           return unless uk_country_or_uk_institution_present?
 
-          degree_type&.id
+          uk_degree_type&.id
         end
 
         def non_uk_degree
           return if uk_country_or_uk_institution_present?
 
-          @params[:non_uk_degree].in?(ENIC_NON_UK) ? @params[:non_uk_degree] : NON_ENIC
+          non_uk_degree_type&.name
         end
 
         def grade
@@ -150,8 +150,12 @@ module Api
           @country_from_mapping ||= Hesa::CodeSets::Countries::MAPPING[@params[:country]]
         end
 
-        def degree_type
-          @degree_type ||= DfEReference::DegreesQuery.find_type(hesa_code: @params[:uk_degree])
+        def uk_degree_type
+          @uk_degree_type ||= DfEReference::DegreesQuery.find_type(hesa_code: @params[:uk_degree])
+        end
+
+        def non_uk_degree_type
+          @non_uk_degree_type ||= DfEReference::DegreesQuery.find_type(hesa_code: @params[:non_uk_degree])
         end
 
         def grade_from_hesa_code
