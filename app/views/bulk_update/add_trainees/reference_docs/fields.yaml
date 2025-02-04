@@ -427,10 +427,10 @@
   example: '"051" for example is Bachelor of Arts (BA)'
 - field_name: Non UK degree types
   technical: non_uk_degree
-  hesa_alignment: Non HESA Field
+  hesa_alignment: DEGTYPE
   description:
-  format:
-  example: '"98" Degree equivalent (inc. foreign qualifications)'
+  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
+  example: '"051" for example is Bachelor of Arts (BA)'
 - field_name: Degree subject
   technical: subject
   hesa_alignment: DEGSBJ
