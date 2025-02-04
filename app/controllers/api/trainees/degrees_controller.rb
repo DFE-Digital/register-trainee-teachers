@@ -62,7 +62,21 @@ module Api
           params.require(:data).permit(
             hesa_mapper_class::ATTRIBUTES,
           ),
-        ).slice(*params[:data].keys.map(&:to_sym))
+        ).slice(*map_param_keys_for_update)
+      end
+
+      def map_param_keys_for_update
+        param_keys = params[:data].keys.map(&:to_sym)
+
+        if param_keys.include?(:uk_degree) || param_keys.include?(:non_uk_degree)
+          param_keys << :locale_code
+          param_keys << :uk_degree
+          param_keys << :uk_degree_uuid
+          param_keys << :non_uk_degree
+          param_keys << :country
+        end
+
+        param_keys.uniq
       end
 
       def hesa_mapper_class
