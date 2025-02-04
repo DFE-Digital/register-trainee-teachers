@@ -20,7 +20,15 @@ RSpec.describe Api::V01::DegreeAttributes do
       before { degree_attributes.locale_code = "uk" }
 
       it { is_expected.to validate_presence_of(:institution) }
+
       it { is_expected.to validate_presence_of(:uk_degree) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:uk_degree).in_array(
+          DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        )
+      }
+
       it { is_expected.to validate_presence_of(:grade) }
     end
 
