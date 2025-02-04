@@ -81,6 +81,8 @@ module Withdrawal
       return unless withdrawal_reasons
 
       withdrawal_reasons.map do |reason|
+        return withdrawal.another_reason if reason.name == "another_reason"
+
         t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("<br>").html_safe
     end

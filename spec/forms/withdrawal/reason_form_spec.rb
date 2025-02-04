@@ -11,6 +11,7 @@ module Withdrawal
     subject { described_class.new(trainee, params: params, store: form_store) }
 
     before do
+      WithdrawalReason.upsert_all(WithdrawalReasons::SEED, unique_by: :name)
       allow(form_store).to receive(:get).and_return(nil)
     end
 
@@ -42,7 +43,8 @@ module Withdrawal
         end
 
         context "when another reason has been chosen" do
-          let(:params) { { reason_ids: [], another_reason: another_reason } }
+          let(:another_reason_id) { WithdrawalReason.where(name: "trainee_chose_to_withdraw_another_reason").first.id }
+          let(:params) { { reason_ids: [another_reason_id], another_reason: another_reason } }
 
           context "when the reason provided is blank" do
             let(:another_reason) { "" }
@@ -77,7 +79,6 @@ module Withdrawal
 
     describe "#reasons" do
       before do
-        WithdrawalReason.upsert_all(WithdrawalReasons::SEED, unique_by: :name)
         allow(subject).to receive(:provider_triggered?).and_return(provider_triggered)
       end
 

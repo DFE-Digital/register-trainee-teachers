@@ -2,7 +2,7 @@
 
 module Withdrawal
   class ReasonForm < TraineeForm
-    validate :reason_ids_present?
+    validate :reasons_present?
 
     FIELDS = %i[reason_ids another_reason].freeze
 
@@ -64,12 +64,20 @@ module Withdrawal
       :withdrawal_reasons
     end
 
-    def reason_ids_present?
-      return true unless reason_ids.empty? && another_reason.blank?
+    def reasons_present?
+      return true unless reason_ids.empty? || another_reason_text_not_supplied?
 
       error = I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.#{trigger_form.trigger}.blank").html_safe
 
       errors.add(:reason_ids, error)
+    end
+
+    def another_reason_text_not_supplied?
+      another_reason.blank? && another_reason_id_provided?
+    end
+
+    def another_reason_id_provided?
+      !(WithdrawalReason.where("name like ?", "%another_reason").pluck(:id) & reason_ids).empty?
     end
   end
 end
