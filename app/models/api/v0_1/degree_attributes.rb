@@ -34,7 +34,9 @@ module Api
       validates :subject, presence: true
       with_options if: -> { locale_code == "uk" } do
         validates :institution, presence: true
-        validates :uk_degree, presence: true
+        validates :uk_degree, presence: true, inclusion: {
+          in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        }
         validates :grade, presence: true
       end
       with_options if: -> { locale_code == "non_uk" } do
