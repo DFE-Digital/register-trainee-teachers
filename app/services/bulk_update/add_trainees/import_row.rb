@@ -33,6 +33,7 @@ module BulkUpdate
           model: :map_hesa_attributes,
           version: version,
         )
+
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
 
         # Save the record
@@ -74,7 +75,7 @@ module BulkUpdate
       end
 
       def prepare_degree_attributes(attributes)
-        return attributes if attributes[:uk_degree_type].blank?
+        return attributes if attributes[:uk_degree_type].blank? && attributes[:non_uk_degree_type].blank?
 
         attributes["degrees_attributes"] = [
           {

@@ -902,6 +902,17 @@ private
     expect(page).to have_content("general or integrated engineering")
     expect(page).to have_content("Point Blank Music School")
     expect(page).to have_content("Third-class honours")
+    expect(page).to have_content("2010")
+
+    click_on "All records"
+
+    click_on "Bethanie Schumm"
+
+    expect(page).to have_content("Non-UK Master of Social Studies: offshore engineering")
+    expect(page).to have_content("Mexico")
+    expect(page).to have_content("Offshore engineering")
+    expect(page).to have_content("Master of Social Studies")
+    expect(page).to have_content("2001")
   end
 
   def when_the_upload_has_failed_with_validation_errors
