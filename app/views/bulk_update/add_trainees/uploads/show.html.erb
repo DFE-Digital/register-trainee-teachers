@@ -3,7 +3,11 @@
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: "Back",
-    href: bulk_update_add_trainees_uploads_path
+    href: [
+      request.url,
+      bulk_update_add_trainees_review_error_url(@bulk_update_trainee_upload),
+      nil,
+    ].include?(request.referrer) ? new_bulk_update_add_trainees_upload_path : request.referrer
   ) %>
 <% end %>
 

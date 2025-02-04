@@ -91,6 +91,14 @@ RSpec.describe BulkUpdate::TraineeUpload do
     end
 
     describe "#cancel!" do
+      context "when the status is 'uploaded'" do
+        it do
+          expect {
+            subject.cancel!
+          }.to change(subject, :status).from("uploaded").to("cancelled")
+        end
+      end
+
       context "when the status is 'validated'" do
         before do
           subject.import!
