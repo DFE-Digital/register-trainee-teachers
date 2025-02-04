@@ -202,31 +202,9 @@ en:
         title: Enter the reason
         hint: We may contact you to discuss this further
       hints:
-        could_not_give_enough_time: ""
-        course_was_not_suitable: ""
-        did_not_make_progress: ""
-        did_not_meet_entry_requirements: ""
-        does_not_want_to_become_a_teacher: ""
-        family_problems: ""
-        financial_problems: ""
-        got_a_job: ""
-        problems_with_their_health: ""
-        stopped_responding_to_messages: ""
-        teaching_placement_problems: ""
         unacceptable_behaviour: For example, fitness to practise
-        unhappy_with_course_provider_or_employing_school: ""
-        another_reason: ""
-        unknown: ""
-        record_added_in_error: ""
         mandatory_reasons: For example, lack of right to work, DBS issues
-        lack_of_progress_during_placements: ""
-        not_meeting_qts_standards: ""
-        trainee_workload_issues: ""
         change_in_personal_or_health_circumstances: For example, financial or mental health issues
-        never_intended_to_obtain_qts: ""
-        moved_to_different_itt_course: ""
-        had_to_withdraw_trainee_another_reason: ""
-        trainee_chose_to_withdraw_another_reason: ""
       reasons: &withdrawal_reasons
         could_not_give_enough_time: Could not give enough time to course
         course_was_not_suitable: Course was not suitable for them
