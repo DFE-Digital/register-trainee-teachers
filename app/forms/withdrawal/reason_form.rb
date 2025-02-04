@@ -65,7 +65,7 @@ module Withdrawal
     end
 
     def reason_ids_present?
-      return true unless reason_ids.empty?
+      return true unless reason_ids.empty? && another_reason.blank?
 
       error = I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.#{trigger_form.trigger}.blank").html_safe
 

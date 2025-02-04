@@ -242,6 +242,7 @@ feature "Withdrawing a trainee" do
   end
 
   def when_i_am_on_the_reason_page
+    allow(Withdrawal::TriggerForm).to receive(:new).and_return(instance_double(Withdrawal::TriggerForm, trigger: "trainee"))
     withdrawal_reason_page.load(id: trainee.slug)
   end
 
@@ -353,7 +354,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_reason_not_chosen
-    expect(withdrawal_reason_page).to have_content('Select why the trainee withdrew from the course or select "Unknown"')
+    expect(withdrawal_reason_page).to have_content("Choose a reason for the trainee's decision to withdraw")
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen

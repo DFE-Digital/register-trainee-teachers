@@ -40,6 +40,30 @@ module Withdrawal
 
           expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.trainee.blank"))
         end
+
+        context "when another reason has been chosen" do
+          let(:params) { { reason_ids: [], another_reason: another_reason } }
+
+          context "when the reason provided is blank" do
+            let(:another_reason) { "" }
+
+            it "provides the correct error message" do
+              subject.validate
+
+              expect(subject.errors[:reason_ids]).to include(I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.trainee.blank"))
+            end
+          end
+
+          context "when the reason provided is not blank" do
+            let(:another_reason) { "This is another reason" }
+
+            it "provides the correct error message" do
+              subject.validate
+
+              expect(subject.errors).to be_empty
+            end
+          end
+        end
       end
     end
 
