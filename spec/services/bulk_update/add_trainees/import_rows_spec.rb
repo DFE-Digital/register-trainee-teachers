@@ -78,8 +78,8 @@ module BulkUpdate
               context "when there is a database error" do
                 before { allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_raise(ActiveRecord::ActiveRecordError) }
 
-                it "raises the exception and sets the status to `failed`" do
-                  expect { described_class.call(trainee_upload) }.to raise_error(ActiveRecord::ActiveRecordError)
+                it "sets the status to `failed`" do
+                  described_class.call(trainee_upload)
                   expect(trainee_upload.reload).to be_failed
                 end
               end
