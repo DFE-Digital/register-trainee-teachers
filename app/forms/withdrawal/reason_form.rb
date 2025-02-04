@@ -77,7 +77,7 @@ module Withdrawal
     end
 
     def another_reason_id_provided?
-      !(WithdrawalReason.where("name like ?", "%another_reason").pluck(:id) & reason_ids).empty?
+      !!WithdrawalReason.where("name like ?", "%another_reason").pluck(:id).intersect?(reason_ids)
     end
   end
 end
