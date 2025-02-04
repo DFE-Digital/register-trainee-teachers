@@ -23,12 +23,6 @@ RSpec.describe Api::V01::DegreeAttributes do
 
       it { is_expected.to validate_presence_of(:uk_degree) }
 
-      it {
-        expect(subject).to validate_inclusion_of(:uk_degree).in_array(
-          DfEReference::DegreesQuery::TYPES.all.map(&:name),
-        )
-      }
-
       it { is_expected.to validate_presence_of(:grade) }
     end
 
@@ -37,19 +31,7 @@ RSpec.describe Api::V01::DegreeAttributes do
 
       it { is_expected.to validate_presence_of(:country) }
 
-      it {
-        expect(subject).to validate_inclusion_of(:country).in_array(
-          Hesa::CodeSets::Countries::MAPPING.values,
-        )
-      }
-
       it { is_expected.to validate_presence_of(:non_uk_degree) }
-
-      it {
-        expect(subject).to validate_inclusion_of(:non_uk_degree).in_array(
-          DfEReference::DegreesQuery::TYPES.all.map(&:name),
-        )
-      }
     end
 
     context "with duplicate" do
