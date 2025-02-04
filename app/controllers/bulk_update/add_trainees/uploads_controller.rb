@@ -15,21 +15,8 @@ module BulkUpdate
 
       def show
         authorize(bulk_update_trainee_upload)
-        setup_upload_form
 
         render
-      end
-
-      def setup_upload_form
-        if requires_upload_form?
-          @bulk_add_trainee_upload_form = BulkUpdate::BulkAddTraineesUploadForm.new(
-            provider: current_user.organisation,
-          )
-        end
-      end
-
-      def requires_upload_form?
-        bulk_update_trainee_upload.failed?
       end
 
       def new

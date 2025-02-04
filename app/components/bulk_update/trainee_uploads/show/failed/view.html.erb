@@ -1,11 +1,15 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= register_form_with(model: @bulk_add_trainee_upload_form, url: bulk_update_add_trainees_uploads_path) do |f| %>
+    <%= register_form_with(
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+      model: @bulk_add_trainee_upload_form,
+      url: bulk_update_add_trainees_uploads_path,
+    ) do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-xl"><%= organisation_name %></span>
-        Review errors for <%= pluralize(@bulk_update_trainee_upload.total_rows_with_errors, "trainee") %>  in the CSV that you uploaded
+        Review errors for <%= pluralize(upload.total_rows_with_errors, "trainee") %> in the CSV you uploaded
       </h1>
 
       <p class="govuk-body">
@@ -17,7 +21,7 @@
         <li>
           <%= govuk_link_to(
             "Download your CSV file with errors indicated",
-            bulk_update_add_trainees_review_error_path(@bulk_update_trainee_upload, format: :csv),
+            bulk_update_add_trainees_review_error_path(upload, format: :csv),
           ) %>
         </li>
 
@@ -37,8 +41,8 @@
 
     <p class="govuk-body">
       <%= register_form_with(
-        model: @bulk_update_trainee_upload,
-        url: bulk_update_add_trainees_upload_path(@bulk_update_trainee_upload),
+        model: upload,
+        url: bulk_update_add_trainees_upload_path(upload),
         method: :delete
       ) do |f| %>
         <%= f.submit "Cancel bulk updates to records", class: "govuk-link app-button--link govuk-body" %>
