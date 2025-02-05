@@ -849,7 +849,7 @@ private
   end
 
   def then_i_see_the_review_page_without_validation_errors
-    expect(page).to have_content("Your trainees_5.csv file has 5 trainees that can now be submitted and added to the Register service.")
+    expect(page).to have_content("Your file has 5 trainees that can now be submitted and added to the Register service.")
   end
 
   def then_i_see_that_there_is_one_duplicate_error
