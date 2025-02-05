@@ -13,7 +13,7 @@ FactoryBot.define do
     end
 
     trait :provider do
-      name { WithdrawalReasons::PROVIDER_REASONS.first }
+      name { WithdrawalReasons::PROVIDER_REASONS.sample }
     end
 
     trait :trainee do
