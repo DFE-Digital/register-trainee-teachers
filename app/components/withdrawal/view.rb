@@ -81,7 +81,7 @@ module Withdrawal
       return unless withdrawal_reasons
 
       withdrawal_reasons.map do |reason|
-        return withdrawal.another_reason if reason.name == "another_reason"
+        return another_reason if reason.name.match?("another_reason")
 
         t("components.withdrawal_details.reasons.#{reason.name}")
       end.join("<br>").html_safe
@@ -108,6 +108,14 @@ module Withdrawal
         data_model.trainee_withdrawals&.last&.future_interest
       else
         data_model.future_interest
+      end
+    end
+
+    def another_reason
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.another_reason
+      else
+        data_model.another_reason
       end
     end
 

@@ -1725,6 +1725,8 @@ en:
                 blank: Choose a reason for the trainee's decision to withdraw
               provider:
                 blank: Choose a reason for removing the trainee
+            another_reason:
+              blank: Enter another reason
         withdrawal/trigger_form:
           attributes:
             trigger:
