@@ -169,20 +169,6 @@ module TaskListHelper
 private
 
   def lead_partner_and_employing_school_details_title(route)
-    tuition_title = I18n.t("components.review_draft.draft.schools.titles.tuition")
-    salaried_title = I18n.t("components.review_draft.draft.schools.titles.salaried")
-    pg_teaching_apprenticeship_title = I18n.t("components.review_draft.draft.schools.titles.pg_teaching_apprenticeship")
-    provider_led_postgrad_title = I18n.t("components.review_draft.draft.schools.titles.provider_led_postgrad")
-    provider_led_undergrad_title = I18n.t("components.review_draft.draft.schools.titles.provider_led_undergrad")
-    early_years_salaried_title = I18n.t("components.review_draft.draft.schools.titles.salaried")
-
-    {
-      school_direct_tuition_fee: tuition_title,
-      school_direct_salaried: salaried_title,
-      pg_teaching_apprenticeship: pg_teaching_apprenticeship_title,
-      provider_led_postgrad: provider_led_postgrad_title,
-      provider_led_undergrad: provider_led_undergrad_title,
-      early_years_salaried: early_years_salaried_title,
-    }[route.to_sym]
+    I18n.t("components.review_draft.draft.schools.titles.#{route}")
   end
 end
