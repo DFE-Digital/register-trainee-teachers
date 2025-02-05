@@ -701,22 +701,22 @@ private
     click_on "Back to bulk updates page"
   end
 
-  def then_i_see_that_the_upload_is_processing(upload: BulkUpdate::TraineeUpload.last)
+  def then_i_see_that_the_upload_is_processing
     expect(page).to have_content("File uploaded")
     expect(page).to have_content("Your file is being processed")
-    expect(page).to have_content("We're currently processing #{upload.filename}.")
-    expect(page).to have_content("This is taking longer than usual")
-    expect(page).to have_content("You'll receive an email to tell you when this is complete.")
+    expect(page).to have_content("We are processing your trainee records to check if they are correct")
+    expect(page).to have_content("This may take several minutes")
+    expect(page).to have_content("You’ll receive an email to tell you if the upload has been successful or if you need to fix any mistakes")
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_link("Back to bulk updates page")
   end
 
-  def and_i_dont_see_that_the_upload_is_processing(upload: BulkUpdate::TraineeUpload.last)
+  def and_i_dont_see_that_the_upload_is_processing
     expect(page).not_to have_content("File uploaded")
     expect(page).not_to have_content("Your file is being processed")
-    expect(page).not_to have_content("We're currently processing #{upload.filename}.")
-    expect(page).not_to have_content("This is taking longer than usual")
-    expect(page).not_to have_content("You'll receive an email to tell you when this is complete.")
+    expect(page).not_to have_content("We are processing your trainee records to check if they are correct")
+    expect(page).not_to have_content("This may take several minutes")
+    expect(page).not_to have_content("You’ll receive an email to tell you if the upload has been successful or if you need to fix any mistakes")
     expect(page).not_to have_content("You can also check the status of new trainee files.")
     expect(page).not_to have_link("Back to bulk updates page")
   end
