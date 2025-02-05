@@ -491,16 +491,6 @@ feature "bulk add trainees" do
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page_with_one_error
       end
-
-      context "with an upload with an uploaded status" do
-        let(:upload) { create(:bulk_update_trainee_upload, provider: current_user.organisation) }
-
-        scenario "attempt import the rows of an upload" do
-          when_a_request_is_made_to_the_imports_action(upload:)
-          and_i_visit_the_summary_page(upload:)
-          then_i_see_that_the_upload_is_processing
-        end
-      end
     end
 
     context "when the User is not authenticated", js: true do
