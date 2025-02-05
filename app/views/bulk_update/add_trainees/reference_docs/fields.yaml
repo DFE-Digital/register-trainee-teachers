@@ -251,22 +251,6 @@
   example: '"13916" for example is the code used for Accredited by the Department
     for Education (DfE) for the purpose of delivering initial teacher training programmes
     to achieve Qualified Teacher Status (QTS): Ages 7-14'
-- field_name: Course study mode
-  technical: study_mode
-  hesa_alignment: MODE
-  description: This field indicates the method by which a student is being taught
-    their course.
-  format: |-
-    01 Full-time according to funding council definitions
-
-    02 Other full-time
-
-    31 Part-time
-
-    63 Dormant - previously full-time
-
-    64 Dormant - previously part-time
-  example: '"01"'
 - field_name: Course Year
   technical: course_year
   hesa_alignment: YEARPRG
