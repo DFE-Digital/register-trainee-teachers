@@ -491,6 +491,22 @@ feature "bulk add trainees" do
         when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page_with_one_error
       end
+
+      scenario "when I try to upload a file that throws an exception in the API layer" do
+        when_there_is_already_one_trainee_in_register
+        and_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+
+        when_i_attach_a_file_with_an_unparseable_date
+        and_i_click_the_upload_button
+        and_i_click_on_continue_button
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        and_i_see_the_validation_errors(number: 1)
+
+        when_i_click_the_review_errors_link
+        then_i_see_the_review_errors_page_with_one_error
+      end
     end
 
     context "when the User is not authenticated", js: true do
@@ -786,6 +802,12 @@ private
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
+  def when_i_attach_a_file_with_an_unparseable_date
+    filename = "five_trainees_with_unparseable_date.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
   def and_i_attach_a_valid_file_with_placements
     filename = "five_trainees_with_placement.csv"
 
@@ -847,7 +869,7 @@ private
   end
 
   def and_i_see_the_validation_errors(number:)
-    expect(page).to have_content("#{number} trainees with errors in their details")
+    expect(page).to have_content("#{pluralize(number, 'trainee')} with errors in their details")
   end
 
   def and_i_see_the_duplicate_errors(number:)
