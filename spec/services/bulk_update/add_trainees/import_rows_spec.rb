@@ -78,9 +78,20 @@ module BulkUpdate
               context "when there is a database error" do
                 before { allow(BulkUpdate::AddTrainees::ImportRow).to receive(:call).and_raise(ActiveRecord::ActiveRecordError) }
 
-                it "raises the exception and sets the status to `failed`" do
-                  expect { described_class.call(trainee_upload) }.to raise_error(ActiveRecord::ActiveRecordError)
+                it "sets the status to `failed`" do
+                  described_class.call(trainee_upload)
                   expect(trainee_upload.reload).to be_failed
+                end
+
+                it "sends the exception to Sentry" do
+                  expect(Sentry).to receive(:capture_exception).at_least(5).times.with(
+                    an_instance_of(ActiveRecord::ActiveRecordError),
+                    extra: {
+                      provider_id: trainee_upload.provider_id,
+                      user_id: trainee_upload.submitted_by_id,
+                    },
+                  )
+                  described_class.call(trainee_upload)
                 end
               end
             end
@@ -128,6 +139,28 @@ module BulkUpdate
               expect(
                 trainee_upload.trainee_upload_rows[4].row_errors.pluck(:message),
               ).to eq(["Add at least one degree"])
+            end
+          end
+
+          context "when some rows cause an exception in the API service classes" do
+            let(:trainee_upload) { create(:bulk_update_trainee_upload, :pending) }
+
+            before do
+              allow(ImportRow).to receive(:call).and_raise(StandardError.new("Server on fire"))
+            end
+
+            it "sets the status to `failed`" do
+              described_class.call(trainee_upload)
+              expect(trainee_upload.reload).to be_failed
+            end
+
+            it "creates an error record for the failing row" do
+              expect { described_class.call(trainee_upload) }.to(
+                change { BulkUpdate::RowError.count }.by(5),
+              )
+              expect(
+                trainee_upload.trainee_upload_rows[0].row_errors.pluck(:message),
+              ).to eq(["runtime failure: Server on fire"])
             end
           end
         end
