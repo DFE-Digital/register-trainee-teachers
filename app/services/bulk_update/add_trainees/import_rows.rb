@@ -95,10 +95,7 @@ module BulkUpdate
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
               BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
             rescue StandardError => e
-              BulkUpdate::AddTrainees::ImportRow::Result.new(
-                false,
-                ["runtime failure: #{e.message}"],
-              )
+              capture_exception(e)
             end
 
             # Commit or rollback the transaction depending on whether all rows were error free
@@ -155,6 +152,20 @@ module BulkUpdate
         end
 
         messages
+      end
+
+      def capture_exception(exception)
+        Sentry.capture_exception(
+          exception,
+          extra: {
+            provider_id: trainee_upload.provider_id,
+            user_id: trainee_upload.submitted_by_id,
+          },
+        )
+        BulkUpdate::AddTrainees::ImportRow::Result.new(
+          false,
+          ["runtime failure: #{exception.message}"],
+        )
       end
     end
   end

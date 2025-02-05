@@ -82,6 +82,17 @@ module BulkUpdate
                   described_class.call(trainee_upload)
                   expect(trainee_upload.reload).to be_failed
                 end
+
+                it "sends the exception to Sentry" do
+                  expect(Sentry).to receive(:capture_exception).at_least(5).times.with(
+                    an_instance_of(ActiveRecord::ActiveRecordError),
+                    extra: {
+                      provider_id: trainee_upload.provider_id,
+                      user_id: trainee_upload.submitted_by_id,
+                    },
+                  )
+                  described_class.call(trainee_upload)
+                end
               end
             end
           end
