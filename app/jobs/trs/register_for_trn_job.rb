@@ -9,7 +9,10 @@ module Trs
       return unless FeatureService.enabled?(:integrate_with_trs)
       return if trainee.trn.present?
 
-      RegisterForTrn.call(trainee:)
+      trn_request = RegisterForTrn.call(trainee:)
+      RetrieveTrnJob.perform_later(trn_request) if trn_request && !trn_request.failed?
+
+      trn_request
     end
   end
 end
