@@ -17,7 +17,7 @@ FactoryBot.define do
     end
 
     trait :trainee do
-      name { WithdrawalReasons::TRAINEE_REASONS.first }
+      name { WithdrawalReasons::TRAINEE_REASONS.sample }
     end
 
     trait :with_all_reasons do
