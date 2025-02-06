@@ -587,7 +587,7 @@ class Trainee < ApplicationRecord
   end
 
   def current_withdrawal
-    trainee_withdrawals.where(discarded_at: nil).order(:created_at).last
+    trainee_withdrawals.where(discarded_at: nil).order(:created_at)&.last
   end
 
 private
