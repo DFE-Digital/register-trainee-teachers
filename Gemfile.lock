@@ -554,7 +554,7 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rdoc (6.11.0)
+    rdoc (6.12.0)
       psych (>= 4.0.0)
     redcarpet (3.6.0)
     redis (4.8.1)
@@ -581,7 +581,7 @@ GEM
       benchmark-perf (~> 0.6)
       benchmark-trend (~> 0.4)
       rspec (>= 3.0)
-    rspec-core (3.13.2)
+    rspec-core (3.13.3)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
       diff-lcs (>= 1.2.0, < 2.0)
@@ -593,7 +593,7 @@ GEM
       actionpack (>= 5.2.0)
       rails-dom-testing
       rspec-core
-    rspec-rails (7.1.0)
+    rspec-rails (7.1.1)
       actionpack (>= 7.0)
       activesupport (>= 7.0)
       railties (>= 7.0)
@@ -603,7 +603,7 @@ GEM
       rspec-support (~> 3.13)
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
-    rspec-support (3.13.1)
+    rspec-support (3.13.2)
     rubocop (1.71.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -848,7 +848,7 @@ DEPENDENCIES
   rotp
   rspec-benchmark
   rspec-openapi
-  rspec-rails (~> 7.1.0)
+  rspec-rails (~> 7.1.1)
   rspec-retry
   rubocop-capybara
   rubocop-factory_bot
