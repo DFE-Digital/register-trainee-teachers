@@ -1346,6 +1346,18 @@ en:
       future_interests:
         edit:
           heading: Would this trainee be interested in becoming a teacher in the future?
+  bulk_updates:
+    trainee_uploads:
+      row:
+        view:
+          statuses:
+            uploaded: "Uploaded"
+            pending: "Pending"
+            validated: "Ready to submit"
+            in_progress: "In progress"
+            succeeded: "Trainees registered"
+            cancelled: "Cancelled"
+            failed: "Failed"
   activerecord:
     attributes:
       trainee:

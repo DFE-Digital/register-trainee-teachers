@@ -23,9 +23,9 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
       {
         "uploaded" => "Uploaded",
         "pending" => "Pending",
-        "validated" => "Validated",
+        "validated" => "Ready to submit",
         "in_progress" => "In progress",
-        "succeeded" => "Succeeded",
+        "succeeded" => "Trainees registered",
         "failed" => "Failed",
         "cancelled" => "Cancelled",
       }.with_indifferent_access
