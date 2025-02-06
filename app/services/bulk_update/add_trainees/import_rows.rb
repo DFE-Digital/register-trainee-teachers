@@ -57,7 +57,9 @@ module BulkUpdate
       }.freeze
 
       PLACEMENT_HEADERS = {
-        "First Placement URN" => "urn",
+        "Placement 1 URN" => "placement_urn_1",
+        "Placement 2 URN" => "placement_urn_2",
+        "Placement 3 URN" => "placement_urn_3",
       }.freeze
 
       DEGREE_HEADERS = {

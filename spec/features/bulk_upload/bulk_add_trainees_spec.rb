@@ -1069,9 +1069,25 @@ private
 
     expect(page).to have_content("Placement 1")
     expect(page).to have_content("URN 609384")
+    expect(page).to have_content("Placement 2")
+    expect(page).to have_content("URN 325900")
+    expect(page).to have_content("Placement 3")
+    expect(page).to have_content("URN 894261")
+
+    expect(page).not_to have_content("First placement is missing")
+    expect(page).not_to have_content("Second placement is missing")
+
+    click_on "All records"
+
+    click_on "Lavonda Bins"
+
+    expect(page).to have_content("Placement 1")
+    expect(page).to have_content("URN 773124")
+
     expect(page).not_to have_content("First placement is missing")
     expect(page).to have_content("Second placement is missing")
   end
+  
 
   def then_i_can_see_the_new_trainees_with_a_degree
     expect(page).to have_content("Charissa Gibson")
