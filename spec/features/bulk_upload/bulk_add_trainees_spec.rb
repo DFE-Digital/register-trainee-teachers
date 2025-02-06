@@ -835,7 +835,7 @@ private
 
   def and_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.last)
     expect(page).to have_current_path(
-      bulk_update_add_trainees_submission_path(upload),
+      bulk_update_add_trainees_upload_path(upload),
     )
 
     if upload.in_progress?
@@ -949,7 +949,7 @@ private
   end
 
   def and_i_refresh_the_summary_page
-    visit bulk_update_add_trainees_submission_path(BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
   def when_the_background_job_is_run
