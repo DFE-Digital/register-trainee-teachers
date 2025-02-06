@@ -9,7 +9,7 @@ module Withdrawal
     validates :future_interest, presence: true, inclusion: { in: %w[yes no unknown] }
 
     def save!
-      withdrawal = trainee.current_withdrawal
+      withdrawal = trainee.trainee_withdrawals.last
       withdrawal.update!(future_interest:)
 
       clear_stash

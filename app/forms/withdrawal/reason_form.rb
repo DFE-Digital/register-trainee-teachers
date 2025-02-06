@@ -26,7 +26,7 @@ module Withdrawal
     end
 
     def save!
-      withdrawal = trainee.current_withdrawal
+      withdrawal = trainee.trainee_withdrawals.last
       withdrawal.update!(another_reason:) if another_reason.present?
 
       reason_ids.each do |reason_id|
@@ -78,7 +78,7 @@ module Withdrawal
     end
 
     def another_reason_id_provided?
-      WithdrawalReason.where("name like ?", "%another_reason").exists?(id: reason_ids)
+      !!WithdrawalReason.where("name like ?", "%another_reason").pluck(:id).intersect?(reason_ids)
     end
   end
 end

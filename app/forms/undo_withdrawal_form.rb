@@ -19,7 +19,7 @@ class UndoWithdrawalForm
   def save
     return false unless valid?
 
-    withdrawal = trainee.current_withdrawal
+    withdrawal = trainee.trainee_withdrawals.last
     withdrawal.update(discarded_at: Time.zone.now)
     trainee.update(
       state: previous_state,

@@ -19,7 +19,7 @@ module Withdrawal
     end
 
     def save!
-      trainee.current_withdrawal.update!(date: withdraw_date)
+      trainee.trainee_withdrawals.last.update!(date: withdraw_date)
       clear_stash
     end
 
