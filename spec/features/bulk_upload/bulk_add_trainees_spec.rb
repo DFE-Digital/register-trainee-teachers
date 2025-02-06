@@ -853,11 +853,6 @@ private
     expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
   end
 
-  def then_i_see_the_review_page_without_validation_errors
-    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
-    expect(page).to have_content("It included:")
-  end
-
   def then_i_see_that_there_is_one_duplicate_error
     expect(page).to have_content("You uploaded a CSV file")
     expect(page).to have_content("It included:")
