@@ -95,9 +95,7 @@ module BulkUpdate
           :placement_urn2,
           :placement_urn3,
         ).compact.each_with_index do |(_placement, urn), index|
-          attributes[:placements_attributes] ||= []
-
-          attributes[:placements_attributes] << {
+          (attributes[:placements_attributes] ||= []) << {
             name: "Placement #{index + 1}",
             urn: urn,
           }
