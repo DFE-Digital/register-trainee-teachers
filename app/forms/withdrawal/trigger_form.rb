@@ -14,7 +14,7 @@ module Withdrawal
     end
 
     def save!
-      withdrawal = trainee.trainee_withdrawals.last
+      withdrawal = trainee.current_withdrawal
       withdrawal.update!(trigger:) if trigger.present?
       clear_stash
     end
