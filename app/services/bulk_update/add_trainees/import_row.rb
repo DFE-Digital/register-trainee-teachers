@@ -91,15 +91,15 @@ module BulkUpdate
 
       def prepare_placement_attributes(attributes)
         attributes.slice(
-          :placement_urn_1,
-          :placement_urn_2,
-          :placement_urn_3,
-        ).compact.each_with_index do |(placement, urn), index|
+          :placement_urn1,
+          :placement_urn2,
+          :placement_urn3,
+        ).compact.each_with_index do |(_placement, urn), index|
           attributes[:placements_attributes] ||= []
 
           attributes[:placements_attributes] << {
             name: "Placement #{index + 1}",
-            urn:
+            urn: urn,
           }
         end
       end

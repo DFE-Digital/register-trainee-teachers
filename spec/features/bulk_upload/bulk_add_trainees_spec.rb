@@ -1087,7 +1087,6 @@ private
     expect(page).not_to have_content("First placement is missing")
     expect(page).to have_content("Second placement is missing")
   end
-  
 
   def then_i_can_see_the_new_trainees_with_a_degree
     expect(page).to have_content("Charissa Gibson")

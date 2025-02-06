@@ -94,16 +94,16 @@ module BulkUpdate
               placements = Trainee.last.placements
               expect(placements.count).to eq(3)
 
-              placement_1, placement_2, placement_3 = placements
+              placement1, placement2, placement3 = placements
 
-              expect(placement_1.name).to eq("Placement 1")
-              expect(placement_1.urn).to eq("609384")
+              expect(placement1.name).to eq("Placement 1")
+              expect(placement1.urn).to eq("609384")
 
-              expect(placement_2.name).to eq("Placement 2")
-              expect(placement_2.urn).to eq("325900")
+              expect(placement2.name).to eq("Placement 2")
+              expect(placement2.urn).to eq("325900")
 
-              expect(placement_3.name).to eq("Placement 3")
-              expect(placement_3.urn).to eq("894261")
+              expect(placement3.name).to eq("Placement 3")
+              expect(placement3.urn).to eq("894261")
 
               expect(Trainee.last.degrees.count).to eq(0)
             end
