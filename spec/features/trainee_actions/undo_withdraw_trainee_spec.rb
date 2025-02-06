@@ -12,7 +12,7 @@ feature "Undo trainee withdrawal" do
     when_i_am_on_the_undo_withdrawal_page
   end
 
-  let(:withdrawal) { trainee.trainee_withdrawals.last }
+  let(:withdrawal) { trainee.current_withdrawal }
 
   context "validations" do
     context "comment validation" do
