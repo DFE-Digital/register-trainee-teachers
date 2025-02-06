@@ -31,9 +31,9 @@ RSpec.describe Degrees::TraineePolicy, type: :policy do
   permissions :new?, :create? do
     it { is_expected.to permit(provider_user, provider_trainee) }
     it { is_expected.to permit(system_admin_user, provider_trainee) }
+    it { is_expected.to permit(unaccredited_provider_user, unaccredited_provider_trainee) }
 
     it { is_expected.not_to permit(lead_partner_user, lead_partner_trainee) }
     it { is_expected.not_to permit(read_only_provider_user, provider_trainee) }
-    it { is_expected.not_to permit(unaccredited_provider_user, unaccredited_provider_trainee) }
   end
 end
