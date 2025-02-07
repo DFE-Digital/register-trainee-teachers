@@ -81,7 +81,7 @@ module Funding
       let(:bursary_array) {
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: "Primary and secondary",
             subject: "Maths",
             lead_partner: "BAT Academy",
             trainees: maths_bursary_trainees,
@@ -102,7 +102,7 @@ module Funding
       let(:scholarship_array) do
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: "Primary and secondary",
             subject: "Biology",
             lead_partner: "Regminster College",
             trainees: biology_scholarship_trainees,
@@ -110,7 +110,7 @@ module Funding
             total: "£8,000",
           },
           {
-            route: "Primary and secondary (postgrad)",
+            route: "Primary and secondary",
             subject: "Maths",
             lead_partner: "BAT Academy",
             trainees: maths_scholarship_trainees,
@@ -131,7 +131,7 @@ module Funding
       let(:tiered_bursary_array) do
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: "Primary and secondary",
             tier: "Tier 1",
             trainees: biology_tiered_bursary_trainees,
             amount_per_trainee: "£1,000",
@@ -151,7 +151,7 @@ module Funding
       let(:grant_array) do
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: "Primary and secondary",
             subject: "Maths",
             trainees: maths_grant_trainees,
             amount_per_trainee: "£3,000",
