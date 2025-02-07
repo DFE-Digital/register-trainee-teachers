@@ -1219,8 +1219,7 @@ private
   end
 
   def then_i_see_the_new_bulk_update_import_page
-    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
-    expect(page).to have_content("It included:")
+    expect(page).to have_content("You uploaded a CSV file with details of:")
     expect(page).to have_content("5 trainees who can be added")
   end
 
@@ -1237,11 +1236,11 @@ private
   end
 
   def and_i_click_on_continue_button
-    click_on "Continue"
+    click_on "Process bulk upload"
   end
 
   def and_i_click_the_cancel_process_link
-    click_on "Cancel process"
+    click_on "Cancel bulk upload"
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
