@@ -1235,9 +1235,9 @@ en:
           provider_led_undergrad: *provider_led_hint
         lede: Primary and secondary training is run by higher education institutions (HEIs) or school centred initial teacher training (SCITTs) providers.
         training_course_routes:
-          postgrad_fee_funded: Postgrad (fee funded)
-          postgrad_salaried: Postgrad (salaried)
-          undergrad_fee_funded: Undergrad (fee funded)
+          postgrad_fee_funded: Postgraduate (fee funded)
+          postgrad_salaried: Postgraduate (salaried)
+          undergrad_fee_funded: Undergraduate (fee funded)
           other: Other
     start_statuses:
       edit:
@@ -1315,13 +1315,13 @@ en:
           early_years_salaried: Early years graduate employment based
           early_years_undergrad: Early years undergraduate
           iqts: International qualified teacher status (iQTS)
-          provider_led_postgrad: &provider_led_postgrad Primary and secondary (postgrad)
-          provider_led_undergrad: &provider_led_undergrad Primary and secondary (undergrad)
+          provider_led_postgrad: &provider_led_postgrad Primary and secondary (postgraduate)
+          provider_led_undergrad: &provider_led_undergrad Primary and secondary (undergraduate)
           school_direct_salaried: School direct (salaried)
           school_direct_tuition_fee: School direct (fee funded)
-          pg_teaching_apprenticeship: Teaching apprenticeship (postgrad)
+          pg_teaching_apprenticeship: Teaching apprenticeship (postgraduate)
           hpitt_postgrad: HPITT
-          opt_in_undergrad: Opt-in (undergrad)
+          opt_in_undergrad: Opt-in (undergraduate)
           itt: &itt_routes
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
@@ -1329,9 +1329,9 @@ en:
             early_years_salaried: Early years
             early_years_undergrad: Early years
             iqts: International qualified teacher status (iQTS)
-            provider_led_postgrad: *provider_led_postgrad
-            provider_led_undergrad: *provider_led_undergrad
-            pg_teaching_apprenticeship: Teaching apprenticeship
+            provider_led_postgrad: &provider_led Primary and secondary
+            provider_led_undergrad: *provider_led
+            pg_teaching_apprenticeship: Teacher apprenticeship
             school_direct_salaried: School direct
             school_direct_tuition_fee: School direct (fee funded)
             hpitt_postgrad: HPITT
