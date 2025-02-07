@@ -11,11 +11,11 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
     let(:colours) do
       {
         "pending" => "govuk-tag--light-blue",
-        "validated" => "govuk-tag--turquoise",
-        "in_progress" => "govuk-tag--blue",
+        "validated" => "govuk-tag--yellow",
+        "in_progress" => "govuk-tag--light-blue",
         "succeeded" => "govuk-tag--green",
         "failed" => "govuk-tag--red",
-        "cancelled" => "govuk-tag--yellow",
+        "cancelled" => "govuk-tag--red",
       }.with_indifferent_access
     end
 
