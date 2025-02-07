@@ -9,10 +9,11 @@ module BulkUpdate
           include OrganisationHelper
           include ApplicationHelper
 
-          attr_reader :upload
+          attr_reader :upload, :current_user
 
-          def initialize(upload:)
+          def initialize(upload:, current_user: nil)
             @upload = upload
+            @current_user = current_user
           end
         end
       end
