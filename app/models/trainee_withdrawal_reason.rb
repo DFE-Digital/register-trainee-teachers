@@ -16,10 +16,12 @@
 #  index_trainee_withdrawal_reasons_on_trainee_id            (trainee_id)
 #  index_trainee_withdrawal_reasons_on_withdrawal_reason_id  (withdrawal_reason_id)
 #  uniq_idx_trainee_withdawal_reasons                        (trainee_id,withdrawal_reason_id) UNIQUE
+#  uniq_idx_trainee_withdrawal_id_withdrawal_reason_id       (trainee_withdrawal_id,withdrawal_reason_id) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (trainee_id => trainees.id)
+#  fk_rails_...  (trainee_withdrawal_id => trainee_withdrawals.id)
 #  fk_rails_...  (withdrawal_reason_id => withdrawal_reasons.id)
 #
 class TraineeWithdrawalReason < ApplicationRecord
