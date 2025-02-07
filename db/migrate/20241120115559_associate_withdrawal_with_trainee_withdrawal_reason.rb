@@ -4,9 +4,6 @@ class AssociateWithdrawalWithTraineeWithdrawalReason < ActiveRecord::Migration[7
   disable_ddl_transaction!
 
   def up
-    # Add the withdrawal_id column
-    # add_column :trainee_withdrawal_reasons, :trainee_withdrawal_id, :bigint
-
     # Add the foreign key without validation
     add_foreign_key :trainee_withdrawal_reasons, :trainee_withdrawals, column: :trainee_withdrawal_id, validate: false
 
@@ -23,8 +20,5 @@ class AssociateWithdrawalWithTraineeWithdrawalReason < ActiveRecord::Migration[7
 
     # Remove the foreign key
     remove_foreign_key :trainee_withdrawal_reasons, column: :trainee_withdrawal_id
-
-    # Remove the trainee_withdrawal_id column
-    remove_column :trainee_withdrawal_reasons, :trainee_withdrawal_id
   end
 end
