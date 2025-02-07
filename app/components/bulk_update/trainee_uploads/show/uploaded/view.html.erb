@@ -1,14 +1,10 @@
 <h1 class="govuk-heading-l">
   <span class="govuk-caption-xl"><%= organisation_name %></span>
-  Upload Summary
+  Upload summary
 </h1>
 
 <p class="govuk-body">
-  You uploaded a CSV file with details of <%= pluralize(upload.number_of_trainees, "trainee") %>.
-</p>
-
-<p class="govuk-body">
-  It included:
+  You uploaded a CSV file with details of:
 </p>
 
 <ul class="govuk-list govuk-list--bullet">
@@ -25,7 +21,7 @@
     method: :post,
     url: bulk_update_add_trainees_imports_path(upload),
   ) do |f| %>
-    <%= f.govuk_submit "Continue" %>
+    <%= f.govuk_submit "Process bulk upload" %>
   <% end %>
 </p>
 
@@ -35,7 +31,7 @@
     url: bulk_update_add_trainees_upload_path(upload),
     method: :delete
   ) do |f| %>
-    <%= f.submit "Cancel process", class: "govuk-link app-button--link govuk-body" %>
+    <%= f.submit "Cancel bulk upload", class: "govuk-link app-button--link govuk-body" %>
   <% end %>
 </p>
 
