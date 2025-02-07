@@ -299,7 +299,7 @@
   format: YYYY-MM-DD
   example: "2024-09-01"
 - field_name: Placement 1 URN
-  technical: urn
+  technical: placement_urn1
   hesa_alignment: PLMNTSCH
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
