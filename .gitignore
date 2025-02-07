@@ -55,6 +55,7 @@ config/settings.local.yml
 config/settings/*.local.yml
 config/environments/*.local.yml
 config/initializers/developer_persona.rb
+config/initializers/sanitised_data_users_persona.rb
 
 # Localhost ssl related
 config/localhost/https/localhost.key
