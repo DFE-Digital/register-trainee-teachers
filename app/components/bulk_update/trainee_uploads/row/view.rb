@@ -8,11 +8,11 @@ module BulkUpdate
 
         COLOURS = {
           "pending" => "govuk-tag--light-blue",
-          "validated" => "govuk-tag--turquoise",
-          "in_progress" => "govuk-tag--blue",
+          "validated" => "govuk-tag--yellow",
+          "in_progress" => "govuk-tag--light-blue",
           "succeeded" => "govuk-tag--green",
           "failed" => "govuk-tag--red",
-          "cancelled" => "govuk-tag--yellow",
+          "cancelled" => "govuk-tag--red",
         }.freeze
 
         attr_reader :upload
