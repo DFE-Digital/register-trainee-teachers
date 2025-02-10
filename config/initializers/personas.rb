@@ -13,3 +13,4 @@ PERSONAS = [
 ].push((DEVELOPER_PERSONA if defined?(DEVELOPER_PERSONA))).compact.freeze
 
 PERSONA_EMAILS = PERSONAS.map { |persona| persona[:email] }
+PERSONA_IDS = defined?(SANITISED_DATA_USERS_IDS_PERSONA) ? SANITISED_DATA_USERS_IDS_PERSONA : []

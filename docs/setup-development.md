@@ -130,6 +130,17 @@ Then run the following command to populate the database:
 ```bash
 psql register_trainee_teacher_data_development < ~/Downloads/backup_sanitised.sql
 ```
+#### Using a sanitised data users as persona (optional)
+
+This will allow you to use an existing user - useful for support dev, user and provider testing and debugging
+
+create the file `config/initializers/sanitised_data_users_persona.rb`
+
+```ruby
+SANITISED_DATA_USERS_IDS_PERSONA = [
+  # add the user id
+]
+```
 
 ## Schools data
 [Get Information about Schools](https://get-information-schools.service.gov.uk) holds the most complete information for schools.

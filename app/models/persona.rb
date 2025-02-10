@@ -27,7 +27,20 @@
 #  index_users_on_discarded_at     (discarded_at)
 #
 class Persona < User
-  def self.sanitised_user_ids = %w[600 874 296 732 846 605 1302 567 56 1199]
+  def self.notable_user_ids
+    popular_providers = Provider.kept
+      .joins(:trainees)
+      .group(:id)
+      .order("COUNT(trainees.id) DESC")
+      .limit(10)
 
-  default_scope { where(email: PERSONA_EMAILS).or(where(id: sanitised_user_ids)) }
+    user_ids = popular_providers
+      .flat_map { |provider| provider.users.kept.sample.id }
+
+    user_ids += PERSONA_IDS
+
+    user_ids
+  end
+
+  default_scope { where(email: PERSONA_EMAILS).or(where(id: notable_user_ids)) }
 end
