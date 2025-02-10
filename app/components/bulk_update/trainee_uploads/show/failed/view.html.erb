@@ -1,46 +1,43 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l">
-      <span class="govuk-caption-xl"><%= organisation_name %></span>
-      Upload Summary
-    </h1>
+    <%= register_form_with(
+      builder: GOVUKDesignSystemFormBuilder::FormBuilder,
+      model: @bulk_add_trainee_upload_form,
+      url: bulk_update_add_trainees_uploads_path,
+    ) do |f| %>
+      <%= f.govuk_error_summary %>
 
-    <p class="govuk-body">
-      You uploaded a CSV file with details of <%= pluralize(upload.number_of_trainees, "trainee") %>.
-    </p>
+      <h1 class="govuk-heading-l">
+        <span class="govuk-caption-xl"><%= organisation_name %></span>
+        Review errors for <%= pluralize(upload.total_rows_with_errors, "trainee") %> in the CSV you uploaded
+      </h1>
 
-    <p class="govuk-body">
-      It included:
-    </p>
+      <p class="govuk-body">
+        You cannot add new trainees if there’s an error in their row in the CSV file.
+        You need to fix the errors if you want to add them.
+      </p>
 
-    <ul class="govuk-list govuk-list--bullet">
-      <% if upload.trainee_upload_rows.without_errors.present? %>
+      <ol class="govuk-list govuk-list--number">
         <li>
-          <%= pluralize(upload.trainee_upload_rows.without_errors.size, "trainee") %> who can be added
+          <%= govuk_link_to(
+            "Download your CSV file with errors indicated",
+            bulk_update_add_trainees_review_error_path(upload, format: :csv),
+          ) %>
         </li>
-      <% end %>
 
-      <% if upload.row_errors.duplicate.present? %>
         <li>
-          <%= pluralize(upload.trainee_upload_rows.with_duplicate_errors.size, "trainee") %>
-          who will not be added, as they already exist in Register
+          Fix the errors. If you cannot fix an error,
+          you can delete the row and the trainee will not be included.
         </li>
-      <% end %>
 
-      <% if upload.row_errors.validation.present? %>
         <li>
-          <%= pluralize(upload.trainee_upload_rows.with_validation_errors.size, "trainee") %>
-          with errors in their details
+          Upload the updated CSV file.
+          <%= f.govuk_file_field(:file, label: { hidden: true }, accept: ".csv") %>
         </li>
-      <% end %>
-    </ul>
-    <p class="govuk-body">You need to review the errors before you can add new trainees</p>
 
-    <%= render GovukButtonLinkTo::View.new(
-      body: "Review errors",
-      url: bulk_update_add_trainees_review_error_path(upload),
-      class_option: "govuk-button"
-    ) %>
+        <%= f.govuk_submit("Upload records") %>
+      </ol>
+    <% end %>
 
     <p class="govuk-body">
       <%= register_form_with(
