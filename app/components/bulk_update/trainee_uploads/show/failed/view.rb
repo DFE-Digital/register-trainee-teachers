@@ -4,7 +4,8 @@ module BulkUpdate
   module TraineeUploads
     module Show
       module Failed
-        class View < BulkUpdate::TraineeUploads::Show::Base::View; end
+        class View < BulkUpdate::TraineeUploads::Show::Base::View
+        end
       end
     end
   end

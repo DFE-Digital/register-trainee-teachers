@@ -204,15 +204,8 @@ feature "bulk add trainees" do
         and_i_see_the_summary_page
 
         when_i_click_on_resubmit_the_file_link
-        and_i_see_the_number_of_trainees_that_can_be_added(number: 4)
-        and_i_dont_see_any_validation_errors
-        and_i_see_the_duplicate_errors(number: 1)
-        and_i_see_the_review_errors_message
-        and_i_see_the_review_errors_link
+        then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
-
-        when_i_click_the_review_errors_link
-        then_i_see_the_review_errors_page_with_one_error
 
         when_the_unexpected_duplicate_error_is_been_reverted
         and_i_return_to_the_review_errors_page
@@ -271,7 +264,7 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page
+        and_i_see_file_validation_passed
 
         Timecop.travel 1.hour.from_now do
           and_i_click_the_submit_button
@@ -303,7 +296,7 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page
+        and_i_see_file_validation_passed
 
         Timecop.travel 1.hour.from_now do
           and_i_click_the_submit_button
@@ -342,11 +335,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_see_the_number_of_trainees_that_can_be_added(number: 3)
-        and_i_see_the_validation_errors(number: 2)
-        and_i_dont_see_any_duplicate_errors
-        and_i_see_the_review_errors_message
-        and_i_see_the_review_errors_link
+        then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
 
         when_i_click_on_back_link
@@ -361,11 +350,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        and_i_see_the_number_of_trainees_that_can_be_added(number: 3)
-        and_i_dont_see_any_validation_errors
-        and_i_see_the_duplicate_errors(number: 2)
-        and_i_see_the_review_errors_message
-        and_i_see_the_review_errors_link
+        then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
       end
 
@@ -373,11 +358,7 @@ feature "bulk add trainees" do
         when_the_upload_has_failed_with_validation_and_duplicate_errors
         and_i_dont_see_that_the_upload_is_processing
         and_i_visit_the_summary_page(upload: @failed_upload)
-        then_i_dont_the_number_of_trainees_that_can_be_added
-        and_i_see_the_validation_errors(number: 2)
-        and_i_see_the_duplicate_errors(number: 3)
-        and_i_see_the_review_errors_message
-        and_i_see_the_review_errors_link
+        then_i_see_the_review_errors_page(upload: @failed_upload)
         and_i_dont_see_the_submit_button
       end
 
@@ -389,25 +370,12 @@ feature "bulk add trainees" do
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
         and_i_click_on_continue_button
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        then_i_see_the_review_errors_page
 
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_the_review_page_with_validation_errors
-
-        when_i_click_the_review_errors_link
-        then_i_see_the_review_errors_page
-
-        when_i_click_on_back_link
-        then_i_see_the_review_page_with_validation_errors
-
-        when_i_click_the_review_errors_link
-        then_i_see_the_review_errors_page
-
-        when_i_visit_the_review_errors_page
-        and_i_click_on_back_link
-        then_i_see_the_review_page_with_validation_errors
-
-        when_i_click_the_review_errors_link
         then_i_see_the_review_errors_page
 
         when_i_click_on_the_download_link
@@ -478,10 +446,7 @@ feature "bulk add trainees" do
         and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
-        then_i_see_that_there_is_one_duplicate_error
-
-        when_i_click_the_review_errors_link
-        then_i_see_the_review_errors_page_with_one_error
+        then_i_see_the_review_errors_page
       end
 
       scenario "when I try to upload a file that throws an exception in the API layer" do
@@ -494,10 +459,7 @@ feature "bulk add trainees" do
         and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
-        and_i_see_the_validation_errors(number: 1)
-
-        when_i_click_the_review_errors_link
-        then_i_see_the_review_errors_page_with_one_error
+        then_i_see_the_review_errors_page
       end
     end
 
@@ -551,11 +513,7 @@ private
   end
 
   def when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.last)
-    if upload.failed?
-      find("tr a[href^='#{bulk_update_add_trainees_review_error_path(upload)}']").click
-    else
-      find("tr a[href^='#{bulk_update_add_trainees_upload_path(upload)}']").click
-    end
+    find("tr a[href^='#{bulk_update_add_trainees_upload_path(upload)}']").click
   end
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
@@ -844,58 +802,17 @@ private
     expect(page).to have_content("Your file has been approved")
   end
 
-  def then_i_see_the_review_page
-    expect(page).to have_content("Your file has been approved")
-  end
-
-  def then_i_see_the_review_page_without_validation_errors
-    expect(page).to have_content("Your file has 5 trainees that can now be submitted and added to the Register service.")
-  end
-
-  def then_i_see_that_there_is_one_duplicate_error
-    expect(page).to have_content("You uploaded a CSV file")
+  def then_i_see_the_validated_upload_page
+    expect(page).to have_content("You uploaded a CSV file with details of 5 trainees.")
     expect(page).to have_content("It included:")
-    and_i_see_the_duplicate_errors(number: 1)
-  end
-
-  def and_i_see_the_number_of_trainees_that_can_be_added(number:)
-    expect(page).to have_content("#{number} trainees who can be added")
-  end
-
-  def then_i_dont_the_number_of_trainees_that_can_be_added
-    expect(page).not_to have_content("trainees who can be added")
-  end
-
-  def and_i_see_the_validation_errors(number:)
-    expect(page).to have_content("#{pluralize(number, 'trainee')} with errors in their details")
-  end
-
-  def and_i_see_the_duplicate_errors(number:)
-    expect(page).to have_content("#{pluralize(number, 'trainee')} who will not be added, as they already exist in Register")
-  end
-
-  def and_i_see_the_review_errors_message
-    expect(page).to have_content("You need to review the errors before you can add new trainees")
   end
 
   def and_i_dont_see_the_review_errors_message
     expect(page).not_to have_content("You need to review the errors before you can add new trainees")
   end
 
-  def and_i_dont_see_any_validation_errors
-    expect(page).not_to have_content("0 trainees with errors in their details")
-  end
-
-  def and_i_dont_see_any_duplicate_errors
-    expect(page).not_to have_content("0 trainees who will not be added, as they already exist in Register")
-  end
-
   def and_i_dont_see_the_submit_button
     expect(page).not_to have_button("Submit")
-  end
-
-  def and_i_see_the_review_errors_link
-    expect(page).to have_link("Review errors")
   end
 
   def and_i_dont_see_the_review_errors_link
@@ -1125,22 +1042,13 @@ private
     visit bulk_update_add_trainees_upload_path(upload)
   end
 
-  def then_i_see_the_review_page_with_validation_errors
-    expect(page).to have_content("2 trainees with errors in their details")
-  end
-
   def when_i_click_the_review_errors_link
     click_on "Review errors"
   end
 
   def then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
-    expect(page).to have_current_path(bulk_update_add_trainees_review_error_path(upload))
-    expect(page).to have_content("Review errors for #{pluralize(upload.total_rows_with_errors, 'trainee')} in the CSV that you uploaded")
-  end
-
-  def then_i_see_the_review_errors_page_with_one_error
-    expect(page).to have_current_path(bulk_update_add_trainees_review_error_path(id: BulkUpdate::TraineeUpload.last.id))
-    expect(page).to have_content("Review errors for 1 trainee in the CSV that you uploaded")
+    expect(page).to have_content("Review errors for #{pluralize(upload.total_rows_with_errors, 'trainee')} in the CSV you uploaded")
+    expect(page).to have_content("You cannot add new trainees if there’s an error in their row in the CSV file")
   end
 
   def when_i_click_on_the_download_link
@@ -1155,7 +1063,7 @@ private
   end
 
   def when_i_return_to_the_review_errors_page
-    visit bulk_update_add_trainees_review_error_path(BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
   def then_i_see_the_bulk_update_index_page
@@ -1176,10 +1084,6 @@ private
 
   def and_i_visit_the_bulk_update_add_trainees_upload_details_page(upload: BulkUpdate::TraineeUpload.last)
     visit bulk_update_add_trainees_upload_path(upload)
-  end
-
-  def when_i_visit_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
-    visit bulk_update_add_trainees_review_error_path(upload)
   end
 
   def when_an_unexpected_duplicate_error_is_setup
@@ -1247,7 +1151,6 @@ private
   alias_method :and_i_visit_the_bulk_update_index_page, :when_i_visit_the_bulk_update_index_page
   alias_method :when_i_click_on_back_link, :and_i_click_on_back_link
   alias_method :and_i_click_the_view_status_of_new_trainee_files_link, :when_i_click_the_view_status_of_new_trainee_files_link
-  alias_method :and_i_see_the_review_page, :then_i_see_the_review_page
   alias_method :when_i_visit_the_bulk_update_index_page, :and_i_visit_the_bulk_update_index_page
   alias_method :and_i_click_on_an_upload, :when_i_click_on_an_upload
   alias_method :then_i_see_the_summary_page, :and_i_see_the_summary_page
@@ -1264,6 +1167,5 @@ private
   alias_method :and_i_see_the_new_bulk_update_import_page, :then_i_see_the_new_bulk_update_import_page
   alias_method :when_i_visit_the_summary_page, :and_i_visit_the_summary_page
   alias_method :and_i_click_the_cancel_bulk_updates_link, :when_i_click_the_cancel_bulk_updates_link
-  alias_method :then_i_see_the_number_of_trainees_that_can_be_added, :and_i_see_the_number_of_trainees_that_can_be_added
   alias_method :then_i_see_file_validation_passed, :and_i_see_file_validation_passed
 end

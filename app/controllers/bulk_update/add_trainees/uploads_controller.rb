@@ -50,6 +50,15 @@ module BulkUpdate
         redirect_to(bulk_update_path, flash: { success: t(".success") })
       end
 
+      def bulk_add_trainee_upload_form
+        @bulk_add_trainee_upload_form ||=
+          BulkUpdate::BulkAddTraineesUploadForm.new(
+            provider: current_user.organisation,
+          )
+      end
+
+      helper_method :bulk_add_trainee_upload_form
+
     private
 
       def bulk_update_trainee_upload
