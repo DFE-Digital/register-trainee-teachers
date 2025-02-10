@@ -710,6 +710,38 @@ Get a single degree for a trainee.
 
 Create a trainee.
 
+
+#### Trainee duplication validations
+<p class="govuk-body">
+  When creating a trainee, a duplication validation is performed this is to ensure that duplicate trainees are not created. This validation is a two-step process:
+</p>
+<ol class="govuk-list govuk-list--number">
+  <li>Potential duplicates
+    <ul class='govuk-list govuk-list--bullet'>
+      <li>same birthday</li>
+      <li>similar last name</li>
+      <li>active and not awarded or withdrawn</li>
+    </ul>
+    <p class="govuk-body">
+      These trainees are identified as potential matches based on their initial characteristics.
+    </p>
+  </li>
+  <li>Confirmed duplicates
+    <ul class='govuk-list govuk-list--bullet'>
+      <li>same training year</li>
+      <li>same training type</li>
+      <li>same first name or email address</li>
+    </ul>
+    <p class="govuk-body">
+      These trainees are verified as confirmed duplicates after passing the additional verification checks.
+    </p>
+  </li>
+</ol>
+
+<p class="govuk-body">
+  This validation ensures that duplicate trainee records are not created, and helps to maintain the data accuracy and data integrity.
+</p>
+
 #### Request
 
 `POST /api/v1.0-pre/trainees`
@@ -1087,6 +1119,22 @@ Trainee details
 
 Create a placement for this trainee.
 
+#### Placement duplication validations
+When creating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks for the following attributes:
+
+<ul class="govuk-list">
+  <li>Placement attributes
+    <ul class='govuk-list govuk-list--bullet'>
+      <li>URN (must be unique for each trainee)</li>
+    </ul>
+    If a placement with the same URN or postcode already exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
+  </li>
+</ul>
+
+<p class="govuk-body">
+  This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the accuracy and integrity of our data.
+</p>
+
 #### Request
 
 `POST /api/v1.0-pre/trainees/{trainee_id}/placements`
@@ -1224,6 +1272,27 @@ Placement details
 ### `POST /trainees/{trainee_id}/degrees`
 
 Create a degree for this trainee.
+
+#### Degree duplication validations
+When creating a degree, a duplication validation is performed to ensure that duplicate degrees are not created. This validation checks for the following attributes:
+
+<ul class="govuk-list">
+  <li>Degree attributes
+    <ul class='govuk-list govuk-list--bullet'>
+      <li>subject</li>
+      <li>graduation Year</li>
+      <li>country</li>
+      <li>UK Degree</li>
+      <li>Non-UK Degree</li>
+      <li>grade</li>
+    </ul>
+    If a degree with these exact attributes already exists, it is considered a duplicate.
+  </li>
+</ul>
+
+<p class="govuk-body">
+  This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the accuracy and integrity of our data.
+</p>
 
 #### Request
 
@@ -2178,6 +2247,22 @@ Trainee details
 
 Updates an existing placement for this trainee.
 
+#### Placement duplication validations
+When updating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks for the following attributes:
+
+<ul class="govuk-list">
+  <li>Placement attributes
+    <ul class='govuk-list govuk-list--bullet'>
+      <li>URN (must be unique for each trainee)</li>
+    </ul>
+    If a placement with the same URN or postcode already exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
+  </li>
+</ul>
+
+<p class="govuk-body">
+  This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the accuracy and integrity of our data.
+</p>
+
 #### Request
 
 `PUT /api/v1.0-pre/trainees/{trainee_id}/placements/{placement_id}`
@@ -2293,6 +2378,28 @@ Placement details
 ### `PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`
 
 Updates an existing degree for this trainee.
+
+#### Degree duplication validations
+When updating a degree, a duplication validation is performed to ensure that duplicate degrees are not created. This validation checks for the following attributes:
+
+<ul class="govuk-list">
+  <li>Degree attributes
+    <ul class='govuk-list govuk-list--bullet'>
+      <li>subject</li>
+      <li>graduation Year</li>
+      <li>country</li>
+      <li>UK Degree</li>
+      <li>Non-UK Degree</li>
+      <li>grade</li>
+    </ul>
+    If a degree with these exact attributes already exists, it is considered a duplicate.
+  </li>
+</ul>
+
+<p class="govuk-body">
+  This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the accuracy and integrity of our data.
+</p>
+
 
 #### Request
 
