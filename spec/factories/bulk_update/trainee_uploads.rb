@@ -1,13 +1,5 @@
 # frozen_string_literal: true
 
-UPLOAD_ERROR_MESSAGES = [
-  "Invalid email address",
-  "Invalid date of birth",
-  "Invalid degree grade",
-  "Missing placement data",
-  "Missing degree data",
-].freeze
-
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
