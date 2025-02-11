@@ -51,6 +51,8 @@ module Api
         end
 
         def subject
+          return HesaMapperConstants::INVALID if @params[:subject].present? && dfe_reference_subject.blank?
+
           dfe_reference_subject&.name
         end
 
@@ -89,7 +91,7 @@ module Api
         end
 
         def uk_degree
-          return unless uk_country_or_uk_institution_present?
+          return HesaMapperConstants::INVALID if @params[:uk_degree].present? && uk_degree_type.blank?
 
           uk_degree_type&.name
         end

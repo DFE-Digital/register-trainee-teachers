@@ -1970,6 +1970,14 @@ en:
           attributes:
             comment:
               blank: Enter a comment
+        api/v01/trainee_attributes:
+          attributes:
+            course_subject_one:
+              inclusion: &course_subject_invalid is invalid
+            course_subject_two:
+              inclusion: *course_subject_invalid
+            course_subject_three:
+              inclusion: *course_subject_invalid
         api/v01/withdrawal_attributes:
           attributes:
             reasons:
@@ -1984,6 +1992,11 @@ en:
             withdraw_reasons_dfe_details:
               too_long: What the Department for Education could have done must be 1000 characters or less
         api/v01/degree_attributes:
+          attributes:
+            subject:
+              inclusion: *course_subject_invalid
+            uk_degree:
+              inclusion: *course_subject_invalid
           duplicate: This is a duplicate degree
         api/trainees/award_recommendation_service:
           attributes:

@@ -93,6 +93,8 @@ module Api
       validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
       validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
+      validates :course_subject_one, :course_subject_two, :course_subject_three,
+                inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
