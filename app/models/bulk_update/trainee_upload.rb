@@ -6,7 +6,7 @@
 #
 #  id                 :bigint           not null, primary key
 #  number_of_trainees :integer          default(0), not null
-#  status             :string           default("pending")
+#  status             :string           default("uploaded")
 #  submitted_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
