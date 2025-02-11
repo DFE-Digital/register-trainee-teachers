@@ -28,7 +28,7 @@
         <%= trainee_name(trainee) %>
       </span>
 
-      <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: heading, tag: "h1", size: "l" }, class: "withdrawal-date") do %>
+      <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: heading, tag: "h1", size: "l" }, hint: { text: t("trainees.withdrawals.dates.edit.hint") }, class: "withdrawal-date") do %>
         <%= f.govuk_radio_button :date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
         <%= f.govuk_radio_button :date_string, :yesterday, label: { text: t("views.forms.common.yesterday") } %>
         <%= f.govuk_radio_button :date_string, :other, label: { text: t("views.forms.common.specific_date") } do %>

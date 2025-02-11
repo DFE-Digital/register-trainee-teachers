@@ -55,7 +55,7 @@ module Withdrawal
 
     def withdrawal_trigger
       mappable_field(
-        t("views.forms.withdrawal_trigger.#{trigger}.label"),
+        t("views.forms.withdrawal_trigger.#{trigger}.label", default: "-"),
         "How the trainee withdrew",
         edit_trainee_withdrawal_trigger_path(trainee),
       )
@@ -83,7 +83,7 @@ module Withdrawal
       withdrawal_reasons.map do |reason|
         return another_reason if reason.name.match?("another_reason")
 
-        t("components.withdrawal_details.reasons.#{reason.name}")
+        t("components.withdrawal_details.reasons.#{reason.name}", default: "-")
       end.join("<br>").html_safe
     end
 
@@ -97,7 +97,7 @@ module Withdrawal
 
     def future_interest_in_teaching
       mappable_field(
-        t("views.forms.withdrawal_future_interest.#{future_interest}.label"),
+        t("views.forms.withdrawal_future_interest.#{future_interest}.label", default: "-"),
         "Future interest in teaching",
         edit_trainee_withdrawal_future_interest_path(trainee),
       )

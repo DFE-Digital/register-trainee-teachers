@@ -215,7 +215,7 @@ en:
         financial_problems: Financial problems
         got_a_job: Got a job
         problems_with_their_health: Problems with their health
-        stopped_responding_to_messages: Stopped responding to messages
+        stopped_responding_to_messages: They stopped attending/communicating
         teaching_placement_problems: Teaching placement problems
         unacceptable_behaviour: Trainee behaviour or attitude
         unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
@@ -1323,9 +1323,10 @@ en:
       dates:
         edit:
           heading: When did the trainee withdraw?
+          hint: This is the last day they trained for QTS
       reasons:
         edit:
-          heading: Why did the trainee withdraw from the course?
+          heading: Why did the trainee choose to withdraw?
           hint: Select all reasons that apply
       extra_informations:
         edit:
