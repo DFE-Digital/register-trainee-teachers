@@ -298,8 +298,26 @@
   description: This records the start date of a postgraduate's teaching apprenticeship.
   format: YYYY-MM-DD
   example: "2024-09-01"
-- field_name: First Placement URN
-  technical: urn
+- field_name: Placement 1 URN
+  technical: placement_urn1
+  hesa_alignment: PLMNTSCH
+  description: This field describes a school where a trainee is undertaking a placement.
+  format: MUST be a 6 digit number
+  example: |-
+    '"115795"'
+
+    Use 900020 if the organisation does not have a URN.
+- field_name: Placement 2 URN
+  technical: placement_urn2
+  hesa_alignment: PLMNTSCH
+  description: This field describes a school where a trainee is undertaking a placement.
+  format: MUST be a 6 digit number
+  example: |-
+    '"115795"'
+
+    Use 900020 if the organisation does not have a URN.
+- field_name: Placement 3 URN
+  technical: placement_urn3
   hesa_alignment: PLMNTSCH
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
