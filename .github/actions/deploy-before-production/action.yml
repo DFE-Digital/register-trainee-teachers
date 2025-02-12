@@ -1,0 +1,40 @@
+name: Deploy Before Production
+description: Deploy application to other environments before production
+inputs:
+  environment: { description: 'Environment to deploy to', required: true }
+  skip-environments: { description: 'List of environments to skip', required: false, default: '[]' }
+  skip-environments-message: { description: 'Message to send when skipping environments', required: false, default: 'Deployment was skipped' }
+  azure-credentials: { description: 'Azure credentials', required: true }
+  slack-webhook: { description: 'Slack webhook URL', required: true }
+  smoke-test-username: { description: 'Smoke test username', required: true }
+  smoke-test-password: { description: 'Smoke test password', required: true }
+  basic-auth-username: { description: 'Basic auth username', required: true }
+  basic-auth-password: { description: 'Basic auth password', required: true }
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Deploy app to ${{ inputs.environment }}
+      id: deploy_app_before_production
+      if: ${{ !contains(inputs.skip-environments, inputs.environment) }}
+      uses: ./.github/actions/deploy/
+      with:
+        azure-credentials: ${{ inputs.azure-credentials }}
+        environment: ${{ inputs.environment }}
+        sha: ${{ github.sha }}
+        slack-webhook: ${{ inputs.slack-webhook }}
+        smoke-test-username: ${{ inputs.smoke-test-username }}
+        smoke-test-password: ${{ inputs.smoke-test-password }}
+        basic-auth-username: ${{ inputs.basic-auth-username }}
+        basic-auth-password: ${{ inputs.basic-auth-password }}
+
+    - name: Notify Slack channel on deployment skip
+      uses: ./.github/actions/send-slack-notification/
+      if: ${{ contains(inputs.skip-environments, inputs.environment) }}
+      with:
+        slack-title: 'Deployment skipped on ${{ inputs.environment }}'
+        slack-message: ':skip: ${{ inputs.skip-environments-message }}'
+        slack-webhook: ${{ inputs.slack-webhook }}
+        slack-color: '#FF9900'

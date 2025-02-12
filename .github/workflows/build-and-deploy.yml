@@ -164,10 +164,7 @@ jobs:
 
   deploy-before-production:
     name: Parallel deployment before production
-    environment:
-      name: ${{ matrix.environment }}
-      url: ${{ steps.deploy_app_before_production.outputs.deploy-url }}
-    if: ${{ success() && github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: [test, next_academic_year_test]
     runs-on: ubuntu-latest
     strategy:
@@ -175,16 +172,15 @@ jobs:
       matrix:
         environment: [qa, staging]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Deploy app to ${{ matrix.environment }}
-      id: deploy_app_before_production
-      uses: ./.github/actions/deploy/
+    - name: Deploy before production
+      uses: ./.github/actions/deploy-before-production
       with:
-        azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
         environment: ${{ matrix.environment }}
-        sha: ${{ github.sha }}
+        # NOTE: Uncomment the below and make it required changes
+        #       Can use `@twd-register-devs` and such to inform,
+        # skip-environments: [qa]
+        # skip-environments-message: 'PUT SOMETHING MEANINGFUL'
+        azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
         smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
         smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
