@@ -39,7 +39,6 @@ module BulkUpdate
       end
 
       context "given a CSV file with no data (just a header)" do
-        let(:file_path) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_missing_column.csv") }
         let(:csv) do
           CSVSafe.new(
             BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(","),
@@ -47,7 +46,18 @@ module BulkUpdate
           ).read
         end
 
-        it { expect(record.errors.first.message).to eql "The selected file must contain at least one trainee" }
+        it { expect(record.errors.first&.message).to eql "The selected file must contain at least one trainee" }
+      end
+
+      context "given a CSV file with no data (just a header and some empty lines)" do
+        let(:csv) do
+          CSVSafe.new(
+            BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(",") + "\n\n\n",
+            headers: true,
+          ).read
+        end
+
+        it { expect(record.errors.first&.message).to eql "The selected file must contain at least one trainee" }
       end
     end
   end

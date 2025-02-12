@@ -25,7 +25,7 @@ module BulkUpdate
       end
 
       def trainees!
-        return unless csv.empty?
+        return unless rows.empty?
 
         record.errors.add(:file, :no_trainees)
       end
@@ -35,7 +35,7 @@ module BulkUpdate
       end
 
       def rows
-        @rows ||= csv.entries
+        @rows ||= csv.entries.reject { |entry| entry.to_h.values.all?(&:blank?) }
       end
     end
   end
