@@ -52,7 +52,7 @@ module BulkUpdate
       context "given a CSV file with no data (just a header and some empty lines)" do
         let(:csv) do
           CSVSafe.new(
-            BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(",") + "\n\n\n",
+            "#{BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(',')}\n\n\n",
             headers: true,
           ).read
         end
