@@ -18,7 +18,9 @@ module HasCourseAttributes
       course_allocation_subject:,
     }
 
-    return attributes.merge(primary_course_subjects) if primary_education_phase?
+    if primary_education_phase? && !attributes.values.include?(HesaMapperConstants::INVALID)
+      return attributes.merge(primary_course_subjects)
+    end
 
     attributes
   end
