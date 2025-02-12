@@ -65,7 +65,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
           "uploaded" => bulk_update_add_trainees_upload_path(upload),
           "pending" => bulk_update_add_trainees_upload_path(upload),
           "validated" => bulk_update_add_trainees_upload_path(upload),
-          "in_progress" => bulk_update_add_trainees_submission_path(upload),
+          "in_progress" => bulk_update_add_trainees_upload_path(upload),
           "succeeded" => bulk_update_add_trainees_upload_path(upload),
           "failed" => bulk_update_add_trainees_upload_path(upload),
         }.with_indifferent_access[upload.status]

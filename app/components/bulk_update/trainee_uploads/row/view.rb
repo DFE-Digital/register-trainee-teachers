@@ -35,7 +35,7 @@ module BulkUpdate
             "pending" => bulk_update_add_trainees_upload_path(upload),
             "validated" => bulk_update_add_trainees_upload_path(upload),
             "succeeded" => bulk_update_add_trainees_upload_path(upload),
-            "in_progress" => bulk_update_add_trainees_submission_path(upload),
+            "in_progress" => bulk_update_add_trainees_upload_path(upload),
             "failed" => bulk_update_add_trainees_upload_path(upload),
           }[upload.status]
         end
