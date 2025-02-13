@@ -7,7 +7,7 @@ feature "Early years undergrad end-to-end journey" do
 
   include_context "perform enqueued jobs"
 
-  fscenario "submit for TRN", "feature_routes.early_years_undergrad": true do
+  scenario "submit for TRN", "feature_routes.early_years_undergrad": true do
     given_i_have_created_an_early_years_undergrad_trainee
     and_the_personal_details_is_complete
     and_the_contact_details_is_complete

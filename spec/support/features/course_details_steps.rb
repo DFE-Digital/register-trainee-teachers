@@ -16,7 +16,6 @@ module Features
     def and_the_course_details_is_complete(
       assessment_only: false, early_years_undergrad: false
     )
-
       given_subject_specialisms_are_available_for_selection
       and_the_course_education_phase_is_completed
       course_details_page.load(id: trainee_from_url.slug)
