@@ -8,11 +8,11 @@ module BulkUpdate
 
         COLOURS = {
           "pending" => "govuk-tag--light-blue",
-          "validated" => "govuk-tag--turquoise",
-          "in_progress" => "govuk-tag--blue",
+          "validated" => "govuk-tag--yellow",
+          "in_progress" => "govuk-tag--light-blue",
           "succeeded" => "govuk-tag--green",
           "failed" => "govuk-tag--red",
-          "cancelled" => "govuk-tag--yellow",
+          "cancelled" => "govuk-tag--red",
         }.freeze
 
         attr_reader :upload
@@ -25,7 +25,7 @@ module BulkUpdate
 
         def status
           content_tag(:span, class: "govuk-tag #{COLOURS[upload.status]}") do
-            upload.status.humanize
+            status_label
           end
         end
 
@@ -42,6 +42,15 @@ module BulkUpdate
 
         def created_at
           upload.created_at.to_fs(:govuk_date_and_time)
+        end
+
+      private
+
+        def status_label
+          I18n.t(
+            "bulk_updates.trainee_uploads.row.view.statuses.#{upload.status}",
+            default: upload.status.humanize,
+          )
         end
       end
     end

@@ -541,7 +541,7 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
-    expect(page).to have_content("#{upload.filename} Validated", normalize_ws: true)
+    expect(page).to have_content("#{upload.filename} Ready to submit", normalize_ws: true)
   end
 
   def when_multiple_uploads_exist
@@ -574,7 +574,6 @@ private
 
     expect(page).to have_content("Status of new trainee files")
     expect(page).to have_content("View the status of recently uploaded files containing new trainees.")
-    expect(page).to have_content("This will list all successful new trainee uploads for the current academic year.")
     expect(page).to have_content("Failed uploads will be removed after 30 days.")
 
     expect(page).to have_content(
@@ -584,7 +583,7 @@ private
       "five_trainees.csv Pending",
     )
     expect(page).to have_content(
-      "five_trainees.csv Validated",
+      "five_trainees.csv Ready to submit",
     )
     expect(page).not_to have_content(
       "five_trainees.csv Cancelled",
@@ -593,7 +592,7 @@ private
       "#{BulkUpdate::TraineeUpload.in_progress.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv In progress",
     )
     expect(page).to have_content(
-      "#{BulkUpdate::TraineeUpload.succeeded.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Succeeded",
+      "#{BulkUpdate::TraineeUpload.succeeded.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Trainees registered",
     )
     expect(page).to have_content(
       "#{BulkUpdate::TraineeUpload.failed.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Failed",
