@@ -13,12 +13,17 @@ module Features
       and_the_course_details_is_marked_completed
     end
 
-    def and_the_course_details_is_complete(assessment_only: false)
+    def and_the_course_details_is_complete(
+      assessment_only: false, early_years_undergrad: false
+    )
+
       given_subject_specialisms_are_available_for_selection
       and_the_course_education_phase_is_completed
       course_details_page.load(id: trainee_from_url.slug)
-      course_details_page.subject.select(subject_specialism_name)
-      course_details_page.main_age_range_11_to_16.choose
+      unless early_years_undergrad
+        course_details_page.subject.select(subject_specialism_name)
+        course_details_page.main_age_range_11_to_16.choose
+      end
       and_the_course_study_mode_field_is_completed unless assessment_only
       and_the_course_date_fields_are_completed
       and_the_course_details_are_submitted

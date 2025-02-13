@@ -91,7 +91,15 @@ PLACEMENTS_ROUTES = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:assessment_only, :early_years_assessment_only).exclude?(training_route)
 }.freeze
 
-LEAD_PARTNER_ROUTES = %i[school_direct_salaried school_direct_tuition_fee pg_teaching_apprenticeship provider_led_postgrad provider_led_undergrad early_years_salaried iqts].freeze
+LEAD_PARTNER_ROUTES = %i[
+  school_direct_salaried
+  school_direct_tuition_fee
+  pg_teaching_apprenticeship
+  provider_led_postgrad provider_led_undergrad
+  early_years_salaried
+  early_years_undergrad
+  iqts
+].freeze
 EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship early_years_salaried].freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
