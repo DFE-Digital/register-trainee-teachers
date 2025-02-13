@@ -81,9 +81,9 @@
 
       <%= f.govuk_file_field(:file, label: { hidden: true }, accept: ".csv") %>
 
-      <%= f.govuk_submit("Upload records") %>
-
       <%= render(BulkUpdate::TraineeUploads::HelpWithCsv::View.new) %>
+
+      <%= f.govuk_submit("Upload records") %>
     <% end %>
   </div>
 </div>
