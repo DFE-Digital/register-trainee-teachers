@@ -198,22 +198,39 @@ en:
       trainee_start_date_label: Trainee start date
       withdraw_date_label: Date of withdrawal
       withdraw_reason_label: Reason for withdrawal
+      another_reason_label:
+        title: Enter the reason
+        hint: We may contact you to discuss this further
+      hints:
+        unacceptable_behaviour: For example, fitness to practise
+        mandatory_reasons: For example, lack of right to work, DBS issues
+        change_in_personal_or_health_circumstances: For example, financial or mental health issues
       reasons: &withdrawal_reasons
         could_not_give_enough_time: Could not give enough time to course
         course_was_not_suitable: Course was not suitable for them
-        did_not_make_progress: Did not make progress in course
+        did_not_make_progress: Lack of academic progress
         did_not_meet_entry_requirements: Did not meet entry requirements
-        does_not_want_to_become_a_teacher: Does not want to become a teacher
+        does_not_want_to_become_a_teacher: No longer want to pursue a teaching career
         family_problems: Family problems
         financial_problems: Financial problems
         got_a_job: Got a job
         problems_with_their_health: Problems with their health
-        stopped_responding_to_messages: Stopped responding to messages
+        stopped_responding_to_messages: They stopped attending/communicating
         teaching_placement_problems: Teaching placement problems
-        unacceptable_behaviour: Unacceptable behaviour
+        unacceptable_behaviour: Trainee behaviour or attitude
         unhappy_with_course_provider_or_employing_school: Unhappy with course, provider or employing school
         another_reason: Another reason
         unknown: Unknown
+        record_added_in_error: This training record was added in error
+        mandatory_reasons: Trainee removed for mandatory reasons
+        lack_of_progress_during_placements: Lack of progress during placements
+        not_meeting_qts_standards: Not meeting QTS standards
+        trainee_workload_issues: Trainee workload issues
+        change_in_personal_or_health_circumstances: Change in their personal or health situation
+        never_intended_to_obtain_qts: They never intended to obtain QTS
+        moved_to_different_itt_course: They moved to a different ITT course
+        had_to_withdraw_trainee_another_reason: Another reason
+        trainee_chose_to_withdraw_another_reason: Another reason
     award_details:
         waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
     confirmation:
@@ -952,6 +969,22 @@ en:
         deferral_notice_heading: Withdrawal date
         deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
+      withdrawal_trigger:
+        title: Why are you withdrawing the trainee?
+        hint: Choose an option
+        provider:
+          label: We had to withdraw the trainee
+        trainee:
+          label: The trainee chose to withdraw
+      withdrawal_future_interest:
+        title: Would this trainee be interested in becoming a teacher in the future?
+        hint: Choose an option
+        "yes":
+          label: "Yes"
+        "no":
+          label: "No"
+        unknown:
+          label: I don't know
       withdrawal_reasons:
         labels:
           additional_reason: Enter the reason for withdrawal
@@ -1278,12 +1311,22 @@ en:
         label: Which country or territory is the trainee studying in?
         hint: If the trainee is studying in more than one country or territory, choose the one where they’ll spend the most time.
     withdrawals:
+      start:
+        show:
+          heading: "Withdraw the trainee"
+          before_you_start:
+            header: "Before you start"
+            body: "Make sure you have all the background information to why this trainee has withdrawn."
+          how_your_answers_will_help:
+            header: "How your answers will help us"
+            body: "Your answers will help us better understand withdrawal reasons and inform policy with the aim to increase trainee retention."
       dates:
         edit:
           heading: When did the trainee withdraw?
+          hint: This is the last day they trained for QTS
       reasons:
         edit:
-          heading: Why did the trainee withdraw from the course?
+          heading: Why did the trainee choose to withdraw?
           hint: Select all reasons that apply
       extra_informations:
         edit:
@@ -1297,6 +1340,12 @@ en:
         update:
           success: Trainee withdrawn
           error: Unable to withdraw trainee, please message support
+      triggers:
+        edit:
+          heading: Why are you withdrawing the trainee?
+      future_interests:
+        edit:
+          heading: Would this trainee be interested in becoming a teacher in the future?
   activerecord:
     attributes:
       trainee:
@@ -1675,8 +1724,20 @@ en:
         withdrawal/reason_form:
           attributes:
             reason_ids:
-              blank: Select why the trainee withdrew from the course or select "Unknown"
-              unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
+              trainee:
+                blank: Choose a reason for the trainee's decision to withdraw
+              provider:
+                blank: Choose a reason for removing the trainee
+            another_reason:
+              blank: Enter another reason
+        withdrawal/trigger_form:
+          attributes:
+            trigger:
+              blank: Choose a reason for withdrawal
+        withdrawal/future_interest_form:
+          attributes:
+            future_interest:
+              blank: Please select an option
         withdrawal/date_form:
           attributes:
             date_string:

@@ -2,10 +2,10 @@
 
 module Withdrawal
   class ReasonForm < TraineeForm
-    validates_presence_of :reason_ids
-    validate :unknown_exclusively
+    validate :reasons_present?
+    validates :another_reason, presence: true, if: :another_reason_id_provided?
 
-    FIELDS = %i[reason_ids].freeze
+    FIELDS = %i[reason_ids another_reason].freeze
 
     attr_accessor(*FIELDS)
 
@@ -13,36 +13,72 @@ module Withdrawal
       WithdrawalReason.where(id: reason_ids)
     end
 
+    def reasons
+      if provider_triggered?
+        WithdrawalReason.where(name: WithdrawalReasons::PROVIDER_REASONS).sort_by do |reason|
+          WithdrawalReasons::PROVIDER_REASONS.index(reason.name)
+        end
+      else
+        WithdrawalReason.where(name: WithdrawalReasons::TRAINEE_REASONS).sort_by do |reason|
+          WithdrawalReasons::TRAINEE_REASONS.index(reason.name)
+        end
+      end
+    end
+
     def save!
-      trainee.withdrawal_reasons << withdrawal_reasons
-      trainee.save
+      withdrawal = trainee.current_withdrawal
+      withdrawal.update!(another_reason:) if another_reason.present?
+
+      reason_ids.each do |reason_id|
+        withdrawal.trainee_withdrawal_reasons.create!(
+          withdrawal_reason_id: reason_id,
+        )
+      end
+
       clear_stash
     end
 
   private
 
-    def unknown_exclusively
-      return unless unknown_reason? && withdrawal_reasons.count > 1
-
-      errors.add(:reason_ids, :unknown_exclusively)
+    def provider_triggered?
+      trigger_form.trigger == "provider"
     end
 
-    def unknown_reason?
-      withdrawal_reasons.pluck(:name).include?(WithdrawalReasons::UNKNOWN)
+    def trigger_form
+      @trigger_form ||= TriggerForm.new(trainee)
+    end
+
+    def compute_fields
+      {
+        reason_ids: [],
+        another_reason: nil,
+      }.merge(new_attributes)
+    end
+
+    def new_attributes
+      fields_from_store.merge(params).symbolize_keys.tap do |f|
+        f[:reason_ids] = f[:reason_ids].compact_blank.map(&:to_i) if f[:reason_ids]
+      end
     end
 
     def form_store_key
       :withdrawal_reasons
     end
 
-    def compute_fields
-      trainee.attributes.symbolize_keys.slice(*FIELDS).merge(new_attributes)
+    def reasons_present?
+      return true unless reason_ids.empty?
+
+      error = I18n.t("activemodel.errors.models.withdrawal/reason_form.attributes.reason_ids.#{trigger_form.trigger}.blank").html_safe
+
+      errors.add(:reason_ids, error)
     end
 
-    def new_attributes
-      fields_from_store.merge(params).symbolize_keys.slice(*FIELDS).tap do |f|
-        f[:reason_ids] = f[:reason_ids].map(&:to_i).reject(&:zero?) if f[:reason_ids]
-      end
+    def another_reason_text_supplied?
+      another_reason.present?
+    end
+
+    def another_reason_id_provided?
+      WithdrawalReason.where("name like ?", "%another_reason").exists?(id: reason_ids)
     end
   end
 end

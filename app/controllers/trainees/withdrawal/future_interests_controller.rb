@@ -2,15 +2,15 @@
 
 module Trainees
   module Withdrawal
-    class ExtraInformationsController < Base
+    class FutureInterestsController < Base
     private
 
       def form_class
-        ::Withdrawal::ExtraInformationForm
+        ::Withdrawal::FutureInterestForm
       end
 
       def attribute_names
-        %i[withdraw_reasons_details withdraw_reasons_dfe_details]
+        :future_interest
       end
 
       def next_page

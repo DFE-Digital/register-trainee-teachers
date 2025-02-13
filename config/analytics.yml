@@ -329,9 +329,20 @@ shared:
     - created_at
     - updated_at
     - name
+  :trainee_withdrawals:
+    - id
+    - trainee_id
+    - date
+    - trigger
+    - another_reason
+    - future_interest
+    - discarded_at
+    - created_at
+    - updated_at
   :trainee_withdrawal_reasons:
     - id
     - trainee_id
     - withdrawal_reason_id
+    - trainee_withdrawal_id
     - created_at
     - updated_at
