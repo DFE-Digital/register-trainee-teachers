@@ -22,7 +22,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
     let(:statuses) do
       {
         "uploaded" => "Uploaded",
-        "pending" => "Pending",
+        "pending" => "In progress",
         "validated" => "Ready to submit",
         "in_progress" => "In progress",
         "succeeded" => "Trainees registered",

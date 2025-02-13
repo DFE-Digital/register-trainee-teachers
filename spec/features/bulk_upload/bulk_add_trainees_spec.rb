@@ -537,7 +537,7 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
-    expect(page).to have_content("#{upload.filename} Pending", normalize_ws: true)
+    expect(page).to have_content("#{upload.filename} In progress", normalize_ws: true)
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
@@ -580,7 +580,7 @@ private
       "five_trainees.csv Uploaded",
     )
     expect(page).to have_content(
-      "five_trainees.csv Pending",
+      "five_trainees.csv In progress",
     )
     expect(page).to have_content(
       "five_trainees.csv Ready to submit",
