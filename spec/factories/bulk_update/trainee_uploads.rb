@@ -29,6 +29,17 @@ FactoryBot.define do
       end
     end
 
+    trait(:with_blank_rows) do
+      after(:build) do |upload|
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/three_trainees_with_blank_rows.csv").open
+
+        upload.file.attach(
+          io: file,
+          filename: File.basename(file.path),
+        )
+      end
+    end
+
     trait :with_rows do
       validated
 
