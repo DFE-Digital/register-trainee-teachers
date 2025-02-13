@@ -8,6 +8,8 @@ module BulkUpdate
       def call
         BulkUpdate::TraineeUpload.cancelled.or(
           BulkUpdate::TraineeUpload.failed,
+        ).or(
+          BulkUpdate::TraineeUpload.uploaded,
         ).destroy_all
       end
     end

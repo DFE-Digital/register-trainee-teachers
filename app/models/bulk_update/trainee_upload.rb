@@ -82,7 +82,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   scope :current_academic_cycle, lambda {
     where(created_at: AcademicCycle.current.start_date..AcademicCycle.current.end_date)
   }
-  scope :uncancelled, -> { where.not(status: :cancelled) }
+  scope :not_cancelled_or_uploaded, -> { where.not(status: :cancelled).where.not(status: :uploaded) }
 
   def total_rows_with_errors
     trainee_upload_rows.with_errors.size
