@@ -291,7 +291,7 @@ FactoryBot.define do
 
     trait :with_publish_course_details do
       training_route { TRAINING_ROUTES_FOR_COURSE.keys.sample }
-      course_uuid { create(:course_with_subjects, route: training_route, accredited_body_code: provider.code).uuid }
+      course_uuid { create(:course_with_subjects, :secondary, route: training_route, accredited_body_code: provider.code).uuid }
       with_secondary_course_details
     end
 
