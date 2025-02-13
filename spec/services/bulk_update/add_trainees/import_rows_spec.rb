@@ -186,7 +186,7 @@ module BulkUpdate
         let(:file_path) { Rails.public_path.join("csv/bulk_create_trainee.csv") }
         let(:headers) { CSVSafe.new(File.open(file_path), headers: true, encoding: "UTF-8").read.headers }
 
-        BulkUpdate::AddTrainees::ImportRows::TRAINEE_HEADERS.each_key do |name|
+        BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.each_key do |name|
           it "includes column header #{name}" do
             expect(headers).to include(name)
           end
