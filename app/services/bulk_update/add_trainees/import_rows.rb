@@ -78,7 +78,7 @@ module BulkUpdate
         dry_run = !trainee_upload.in_progress?
         success = true
 
-        ActiveRecord::Base.transaction do |_transaction|
+        ActiveRecord::Base.transaction do
           if dry_run
             CSV.parse(trainee_upload.file.download, headers: true).reject { |entry| entry.to_h.values.all?(&:blank?) }.map.with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
