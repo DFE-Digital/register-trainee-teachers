@@ -28,7 +28,7 @@
         PLACEMENT_DETAIL_ENUMS.values,
         ->(value) { value },
         ->(label) { I18n.t("views.forms.placement_details.label_names.#{label}") },
-        legend: { text: "Do you have any of the trainee's placement details?", tag: "h2" },
+        legend: { text: "Do you have any of the trainee’s placement details?", tag: "h2" },
       ) %>
 
       <%= f.govuk_submit("Continue") %>

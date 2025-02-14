@@ -2734,7 +2734,7 @@ Deletes an existing degree for this trainee.
         string (limited to 20 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Provider's student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider's own identifier for student field</a>
+        The unique ID of the trainee in the Provider’s student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider’s own identifier for student field</a>
       </p>
       <p class="govuk-body">
         Example: <code>99157234</code>
@@ -2930,7 +2930,7 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The qualification aim of the trainee's course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/qlaim">HESA qualification aim field</a>
+        The qualification aim of the trainee’s course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/qlaim">HESA qualification aim field</a>
       </p>
       <p class="govuk-body">
         Example: <code>004</code>
@@ -2944,7 +2944,7 @@ Deletes an existing degree for this trainee.
         string (limited to 6 characters), <code>course_subject_one</code> is required
       </p>
       <p class="govuk-body">
-        The subjects included in the trainee's course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>
+        The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -2958,7 +2958,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        This indicates whether the trainee's course is full time or part time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/mode">HESA mode of study field</a>
+        This indicates whether the trainee’s course is full time or part time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/mode">HESA mode of study field</a>
       </p>
       <p class="govuk-body">
         Example: <code>01</code>
@@ -3042,7 +3042,7 @@ Deletes an existing degree for this trainee.
         string
       </p>
       <p class="govuk-body">
-        The start date of a trainee's postgraduate teaching apprenticeship. Dates should be in ISO 8601 format.
+        The start date of a trainee’s postgraduate teaching apprenticeship. Dates should be in ISO 8601 format.
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -3154,7 +3154,7 @@ Deletes an existing degree for this trainee.
         string (limited to 9 characters)
       </p>
       <p class="govuk-body">
-        The trainee's National Insurance Number.
+        The trainee’s National Insurance Number.
       </p>
       <p class="govuk-body">
         Example: <code>BX5867459C</code>

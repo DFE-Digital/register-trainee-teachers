@@ -12,7 +12,7 @@ endpoint is activated.
 
 ## Healthcheck
 
-Use the `/healthcheck` to check whether that the app's dependencies are working.
+Use the `/healthcheck` to check whether that the app’s dependencies are working.
 This returns a JSON structure that lists the checks it performs and their
 results. For example:
 
@@ -45,7 +45,7 @@ looking at what jobs we have queued up.
 
 #### Failures caused by stale jobs
 
-This check will fail if there are stale jobs in a queue that doesn't have a
+This check will fail if there are stale jobs in a queue that doesn’t have a
 processor running. You can check which queues have jobs by starting the Rails
 console and running:
 
@@ -58,8 +58,8 @@ stats.queues.keys.each do |queue|
 end
 ```
 
-If you see jobs in a queue that shouldn't be running anymore (e.g. we've retired
-`find_sync` and shouldn't see any jobs for it) then you'll need to remove any
+If you see jobs in a queue that shouldn’t be running any more (e.g. we’ve retired
+`find_sync` and shouldn’t see any jobs for it) then you’ll need to remove any
 job queues that exist for it for this test to return `true`. If, on the other
 hand, you only have the queues you expected listed, but no process is listed for
 them, then you have a problem.
