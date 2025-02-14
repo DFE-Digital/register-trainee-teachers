@@ -25,6 +25,6 @@ All specs are run on the time date of
 time = Time.zone.local(current_academic_year, 9, 15, 12, 34, 56)
 ```
 
-Specs that is `time sensitives` need to marked as `time_sensitive: true` to it's metadata in order for it to run using the `real` time.
-Specs that is not needed should be marked as `openapi: false` to it's metadata.
+Specs that is `time sensitives` need to marked as `time_sensitive: true` to its metadata in order for it to run using the `real` time.
+Specs that is not needed should be marked as `openapi: false` to its metadata.
 Specs are run in a defined order.

@@ -593,7 +593,7 @@ class Trainee < ApplicationRecord
 private
 
   def value_digest
-    # this returns a comma separated string of values from this object and it's associations
+    # this returns a comma separated string of values from this object and its associations
     # we use this to determine if we need to update DTTP. We use values only and exclude nils to avoid
     # sending updates when we add a field to the schema.
 
@@ -620,7 +620,7 @@ private
     # Use the TRN validator when dealing with drafts trainees and if they're also an apply draft.
     # Before trn submission, when invalid_data on an apply application is cleared, the application is
     # updated but not the trainee. The trainee will be set to submitted_for_trn by the transition
-    # callbacks but theoritically still a draft as it hasn't been saved so we need to check for this.
+    # callbacks but theoretically still a draft as it hasn't been saved so we need to check for this.
     draft_or_just_changed_from_draft = draft? || (state_changed? && state_was == "draft")
     draft_and_apply = draft_or_just_changed_from_draft && apply_application?
 
