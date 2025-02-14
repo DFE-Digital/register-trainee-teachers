@@ -678,7 +678,7 @@ en:
             provider_led_postgrad: *lead_partner_and_employing_school
             provider_led_undergrad: *lead_partner_and_employing_school
             early_years_salaried: *lead_partner_and_employing_school
-            early_years_undergrad: *lead_partner_and_employing_school
+            early_years_undergrad: *lead_partner
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
