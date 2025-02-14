@@ -354,7 +354,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_reason_not_chosen
-    expect(withdrawal_reason_page).to have_content("Choose a reason for the trainee's decision to withdraw")
+    expect(withdrawal_reason_page).to have_content("Choose a reason for the trainee’s decision to withdraw")
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen
