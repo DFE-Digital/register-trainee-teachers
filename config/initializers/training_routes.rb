@@ -95,7 +95,8 @@ LEAD_PARTNER_ROUTES = %i[
   school_direct_salaried
   school_direct_tuition_fee
   pg_teaching_apprenticeship
-  provider_led_postgrad provider_led_undergrad
+  provider_led_postgrad
+  provider_led_undergrad
   early_years_salaried
   early_years_undergrad
   iqts
