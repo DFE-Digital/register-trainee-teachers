@@ -135,7 +135,7 @@ feature "add lead partner and employing school" do
       "The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
     )
     expect(edit_lead_partner_page).to have_content(
-      "The lead partner you select will be able to view trainee's record.",
+      "The lead partner you select will be able to view trainee’s record.",
     )
     expect(edit_lead_partner_page).to have_content(
       "Search for a lead partner by name, postcode, school URN or training provider UKPRN",
