@@ -27,7 +27,7 @@ Add a file to config/settings called development.local.yml containing the follow
 
 ## Start the server
 
-To start all the processes you'll need to first create a local `Procfile.dev` file with the following:
+To start all the processes you’ll need to first create a local `Procfile.dev` file with the following:
 
 ```
 web: bin/rails server -p 3000

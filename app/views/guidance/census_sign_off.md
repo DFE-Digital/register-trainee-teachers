@@ -16,7 +16,7 @@ If your teacher trainee data is accurate and signed off by 31 October 2023, it w
 
 Your accurate census data also helps the DfE understand new entrants to teacher training in England for the 2023 to 2024 academic year, and to inform future policy.
 
-If you do not sign off your data by 31 October, your organisation's data may not be included in the census publication.
+If you do not sign off your data by 31 October, your organisation’s data may not be included in the census publication.
 
 ## Checking your trainee data in the 'Reports' section of Register
 
@@ -24,7 +24,7 @@ Register all your new trainees for the 2023 to 2024 academic year, if you have n
 
 You can check your trainee data is correct by exporting your trainee records as a CSV file from the Reports section in Register. You should carefully check:
 
-* number of trainees - if you have 'zero' or a lower number than you expect, check you've registered all your new trainees for the 2023 to 2024 academic year
+* number of trainees - if you have 'zero' or a lower number than you expect, check you’ve registered all your new trainees for the 2023 to 2024 academic year
 * courses - this may impact on any grants or bursaries trainees are able to receive
 * start date - the correct start date will help trainees receive funding on time, if applicable
 

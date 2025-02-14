@@ -36,9 +36,9 @@ en:
           <li>the pages you visit on Register trainee teachers</li>
           <li>how long you spend on each page</li>
           <li>how you got to the site</li>
-          <li>what you click on while you're visiting the site</li>
+          <li>what you click on while you’re visiting the site</li>
         </ul>
-        <p class='govuk-body'>We don't allow Google to use or share our analytics data. We anonymise any personally identifiable data, like your IP address or your postcode before we share it with Google.</p>
+        <p class='govuk-body'>We don’t allow Google to use or share our analytics data. We anonymise any personally identifiable data, like your IP address or your postcode before we share it with Google.</p>
         <p class='govuk-body' id='google_analytics_cookies_desc'>Google Analytics sets the following cookies:</p>
 
         <table class='govuk-table' aria-describedby='google_analytics_cookies_desc'>

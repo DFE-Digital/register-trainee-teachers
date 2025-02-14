@@ -64,7 +64,7 @@ You’ll need the following information about a trainee to register them manuall
 Expected end date
 </ul>
 
-### If it's not a course on Publish teacher training courses
+### If it’s not a course on Publish teacher training courses
 
 <ul class="govuk-list">
 <li> Primary or secondary </li>
@@ -75,7 +75,7 @@ Expected end date
 <li> Expected end date </li>
 </ul>
 
-### If it's a course leading to Early Years Teacher Status (EYTS)
+### If it’s a course leading to Early Years Teacher Status (EYTS)
 
 <ul class="govuk-list">
 <li> Full or part time </li>
