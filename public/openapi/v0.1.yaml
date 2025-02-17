@@ -2146,7 +2146,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: iBGYr9v5ms9imv5XWmqNzPSo
+                    placement_id: fGyQSSqpwYUtELkt7oCtVccv
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2162,9 +2162,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: sQaFa9jLY3DdZaKyyJWmp1kf
+                    degree_id: Vgv6yJ13tfLqez7m8TQWQo3e
                   state: submitted_for_trn
-                  trainee_id: UFjFsVkgNVVSZBJSf1UiEkei
+                  trainee_id: B3fPZRuG6zcayKe4rRdUTa9W
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: true
@@ -3208,7 +3208,7 @@ paths:
         required: true
         schema:
           type: string
-        example: HkE3eP6LQLWDd3o2QQqHfMus
+        example: xQ56oBCM5rSzcKFTxMdcPFAD
       responses:
         '200':
           description: updates the trainee
@@ -3669,7 +3669,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: VKgxRe11z14jKVxvTh62R9b8
+                    placement_id: yYNfQgkS1yHFTxBdB6r5QBX4
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3685,9 +3685,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: s94FZzyfxhMPEEc7ydBcxJzX
+                    degree_id: HwHvqjLv1fuybPvDvMAAWKjR
                   state: submitted_for_trn
-                  trainee_id: HkE3eP6LQLWDd3o2QQqHfMus
+                  trainee_id: xQ56oBCM5rSzcKFTxMdcPFAD
                   application_id:
                   disability2: '57'
         '401':
@@ -4514,7 +4514,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: JQMDgcxhSLna8MZLarZnNj8K
+                  degree_id: mhYLxpUo2RGX3He1meC2i3qj
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4561,54 +4561,56 @@ paths:
                       - error
                       - message
                   data:
-                    type: object
-                    properties:
-                      uk_degree:
-                        type: string
-                      non_uk_degree:
-                        nullable: true
-                      created_at:
-                        type: string
-                      updated_at:
-                        type: string
-                      subject:
-                        type: string
-                      institution:
-                        type: string
-                      graduation_year:
-                        type: integer
-                      grade:
-                        nullable: true
-                      country:
-                        nullable: true
-                      other_grade:
-                        nullable: true
-                      institution_uuid:
-                        type: string
-                      uk_degree_uuid:
-                        type: string
-                      subject_uuid:
-                        type: string
-                      grade_uuid:
-                        type: string
-                      degree_id:
-                        type: string
-                    required:
-                    - uk_degree
-                    - non_uk_degree
-                    - created_at
-                    - updated_at
-                    - subject
-                    - institution
-                    - graduation_year
-                    - grade
-                    - country
-                    - other_grade
-                    - institution_uuid
-                    - uk_degree_uuid
-                    - subject_uuid
-                    - grade_uuid
-                    - degree_id
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        uk_degree:
+                          type: string
+                        non_uk_degree:
+                          nullable: true
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        subject:
+                          type: string
+                        institution:
+                          type: string
+                        graduation_year:
+                          type: integer
+                        grade:
+                          nullable: true
+                        country:
+                          nullable: true
+                        other_grade:
+                          nullable: true
+                        institution_uuid:
+                          type: string
+                        uk_degree_uuid:
+                          type: string
+                        subject_uuid:
+                          type: string
+                        grade_uuid:
+                          type: string
+                        degree_id:
+                          type: string
+                      required:
+                      - uk_degree
+                      - non_uk_degree
+                      - created_at
+                      - updated_at
+                      - subject
+                      - institution
+                      - graduation_year
+                      - grade
+                      - country
+                      - other_grade
+                      - institution_uuid
+                      - uk_degree_uuid
+                      - subject_uuid
+                      - grade_uuid
+                      - degree_id
                 required:
                 - errors
                 - data
@@ -4617,7 +4619,7 @@ paths:
                 - error: Conflict
                   message: This is a duplicate degree
                 data:
-                  uk_degree: '098'
+                - uk_degree: '098'
                   non_uk_degree:
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
@@ -5470,7 +5472,7 @@ paths:
                   postcode: DN8 3BN
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: fp6yErE8aTB1CTwxWTwGXxcR
+                  placement_id: Cj6oFXkm38u5q7ugQX4RMyny
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
