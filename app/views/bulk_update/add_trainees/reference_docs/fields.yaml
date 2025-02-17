@@ -256,7 +256,7 @@
 
     64 Dormant - previously part-time
   example: '"01"'
-  validation: Mandatory ()
+  validation: Conditional mandatory - mandatory when the training route is not `assessment_only` or `early_years_assessment_only` (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47)
 - field_name: ITT Start Date
   technical: itt_start_date
   hesa_alignment: ITTSTARTDATE
@@ -264,12 +264,14 @@
     start
   format: YYYY-MM-DD
   example: '"2024-09-01"'
+  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L67)
 - field_name: ITT End Date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
   description: This field records the expected end date for the engagement
   format: YYYY-MM-DD
   example: YYYY-MM-DD
+  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L68)
 - field_name: Course Age Range
   technical: course_age_range
   hesa_alignment: ITTPHSC
@@ -279,6 +281,7 @@
   example: '"13916" for example is the code used for Accredited by the Department
     for Education (DfE) for the purpose of delivering initial teacher training programmes
     to achieve Qualified Teacher Status (QTS): Ages 7-14'
+  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L29)
 - field_name: Course Year
   technical: course_year
   hesa_alignment: YEARPRG
@@ -294,6 +297,7 @@
 
     3 Third year
   example: '"1" as an example of using the code for First year.'
+  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L28)
 - field_name: Lead Partner URN
   technical: lead_partner_urn
   hesa_alignment: SDLEAD
@@ -303,6 +307,7 @@
     "115795"
 
     Use code 900020 if the lead partner does not have a URN
+  validation: Optional
 - field_name: Employing School URN
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
@@ -313,6 +318,7 @@
     "115795"
 
     Use code 900020 if the school does not have a URN
+  validation: Optional
 - field_name: Trainee Start Date
   technical: trainee_start_date
   hesa_alignment: TRAINEESTARTDATE
@@ -320,12 +326,14 @@
     where this is different to the start date of the instance as recorded in Student.COMDATE.
   format: YYYY-MM-DD
   example: "2024-09-01"
+  validation: Optional
 - field_name: PG Apprenticeship Start Date
   technical: pg_apprenticeship_start_date
   hesa_alignment: PGAPPSTDT
   description: This records the start date of a postgraduate's teaching apprenticeship.
   format: YYYY-MM-DD
   example: "2024-09-01"
+  validation: Optional
 - field_name: Placement 1 URN
   technical: placement_urn1
   hesa_alignment: PLMNTSCH
@@ -335,6 +343,7 @@
     '"115795"'
 
     Use 900020 if the organisation does not have a URN.
+  validation: Optional
 - field_name: Placement 2 URN
   technical: placement_urn2
   hesa_alignment: PLMNTSCH
@@ -344,6 +353,7 @@
     '"115795"'
 
     Use 900020 if the organisation does not have a URN.
+  validation: Optional
 - field_name: Placement 3 URN
   technical: placement_urn3
   hesa_alignment: PLMNTSCH
@@ -353,6 +363,7 @@
     '"115795"'
 
     Use 900020 if the organisation does not have a URN.
+  validation: Optional
 - field_name: Fund Code
   technical: fund_code
   hesa_alignment: FUNDCODE
@@ -363,6 +374,7 @@
 
     7 Eligible for funding from the DfE
   example: '"2"'
+  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L30).
 - field_name: Funding Method
   technical: funding_method
   hesa_alignment: BURSLEV
@@ -383,6 +395,7 @@
 
     E Grant
   example: '"E"'
+  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L31).
 - field_name: Training Initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
@@ -413,6 +426,7 @@
     011 Primary with mathematics specialist
 
     019 Additional ITT place for PE with a priority subject
+  validation: Conditional mandatory - only mandatory if NOT importing via API or CSV (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14).
 - field_name: Additional Training Initiative
   technical: additional_training_initiative
   hesa_alignment: INITIATIVES
@@ -447,24 +461,28 @@
     011 Primary with mathematics specialist
 
     019 Additional ITT place for PE with a priority subject
+  validation: Optional
 - field_name: UK degree type
   technical: uk_degree
   hesa_alignment: DEGTYPE
   description: This records the student's previous qualification
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
+  validation: Conditional mandatory - mandatory if specifying a UK degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L37)
 - field_name: Non UK degree types
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description:
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
+  validation: Conditional mandatory - mandatory if specifying a non-UK degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L42)
 - field_name: Degree subject
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student's previous degree
   format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
   example: 100048 for example is the design degree subject as part of a previous degree
+  validation: Conditional mandatory - mandatory if specifying a degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L34)
 - field_name: UK degree grade
   technical: grade
   hesa_alignment: DEGCLSS
@@ -472,12 +490,14 @@
     previous degree.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"01" for example is First class honours'
+  validation: Conditional mandatory - mandatory if specifying a UK degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L38)
 - field_name: Degree graduation year
   technical: graduation_year
   hesa_alignment: DEGENDDT
   description: This records the end date of the student's previous qualification.
   format: YYYY-MM-DD
   example: "1985-02-13"
+  validation: Conditional mandatory - mandatory if specifying any degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33)
 - field_name: Degree UK awarding institution
   technical: institution
   hesa_alignment: DEGEST
@@ -485,6 +505,7 @@
     was awarded, if a UK provider.
   format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
   example: '"1101" for example is Hull College'
+  validation: Conditional mandatory - mandatory if specifying a UK degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L36)
 - field_name: Degree country
   technical: country
   hesa_alignment: DEGCTRY
@@ -493,3 +514,4 @@
   format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
   example: '"AU" is an example of using the previous qualification country code for
     Australia'
+  validation: Conditional mandatory - mandatory if specifying a non-UK degree (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L41)
