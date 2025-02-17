@@ -2,8 +2,11 @@
 
 module Api
   class CreateTrainee
+    include ActiveModel::Model
+
     include ServicePattern
     include Serializable
+    include ErrorResponse
 
     attr_accessor :current_provider, :trainee_attributes, :version
 
@@ -16,7 +19,11 @@ module Api
     def call
       return validation_error_response(trainee_attributes_errors) if trainee_attributes_errors.any?
 
-      return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
+      if duplicate_trainees.present?
+        errors.add(:base, :duplicate)
+
+        return conflict_errors_response(errors: errors, duplicates: duplicate_trainees)
+      end
 
       trainee = current_provider.trainees.build(trainee_attributes.deep_attributes)
       validator = Submissions::ApiTrnValidator.new(trainee:)
