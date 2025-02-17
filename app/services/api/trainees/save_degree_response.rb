@@ -24,7 +24,7 @@ module Api
         elsif duplicates?
           conflict_errors_response(
             errors: degree_attributes.errors.where(:base, :duplicate),
-            duplicates: serializer_klass.new(degree_attributes.duplicates.take).as_hash
+            duplicates: serializer_klass.new(degree_attributes.duplicates.take).as_hash,
           )
         else
           validation_errors_response(errors:)

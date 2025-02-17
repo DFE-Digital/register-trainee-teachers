@@ -222,7 +222,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
             message: "This is a duplicate degree" },
         )
         expect(response.parsed_body["data"]).to eq(
-          JSON.parse(Api::V01::DegreeSerializer.new(trainee.degrees.non_uk.first).as_hash.to_json)
+          JSON.parse(Api::V01::DegreeSerializer.new(trainee.degrees.non_uk.first).as_hash.to_json),
         )
         expect {
           uk_degree.reload

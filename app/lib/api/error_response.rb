@@ -9,15 +9,15 @@ module Api
         status: status,
         json: {
           errors: error_responses,
-        }
+        },
       }
     end
 
     def conflict_errors_response(errors:, duplicates:)
-      validation_errors_response(errors:, status: :conflict).deep_merge(
+      validation_errors_response(errors: errors, status: :conflict).deep_merge(
         json: {
-          data: duplicates
-        }
+          data: duplicates,
+        },
       )
     end
 
@@ -27,9 +27,9 @@ module Api
         json: {
           errors: errors(
             "StateTransitionError",
-            "It's not possible to perform this action while the #{model_name} is in its current state"
+            "It's not possible to perform this action while the #{model_name} is in its current state",
           ),
-        }
+        },
       }
     end
 

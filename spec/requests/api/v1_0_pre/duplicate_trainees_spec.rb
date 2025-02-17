@@ -57,7 +57,7 @@ describe "Trainees API" do
         expect(response).to have_http_status(:conflict)
         expect(response.parsed_body[:errors]).to contain_exactly(
           error: "Conflict",
-          message: "This trainee is already in Register"
+          message: "This trainee is already in Register",
         )
         expect(response.parsed_body[:data].count).to be(1)
       end
@@ -84,7 +84,7 @@ describe "Trainees API" do
           expect(response).to have_http_status(:conflict)
           expect(response.parsed_body[:errors]).to contain_exactly(
             error: "Conflict",
-            message: "This trainee is already in Register"
+            message: "This trainee is already in Register",
           )
           expect(response.parsed_body[:data].count).to be(1)
         end

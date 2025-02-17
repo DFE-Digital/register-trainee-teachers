@@ -146,7 +146,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         )
 
         expect(response.parsed_body["data"]).to eq(
-          JSON.parse(Api::V01::DegreeSerializer.new(trainee.degrees.first).as_hash.to_json)
+          JSON.parse(Api::V01::DegreeSerializer.new(trainee.degrees.first).as_hash.to_json),
         )
         expect(trainee.reload.degrees.count).to eq(1)
       end
