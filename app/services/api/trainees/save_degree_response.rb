@@ -22,7 +22,10 @@ module Api
           update_progress
           { json: { data: serializer_klass.new(degree).as_hash }, status: status }
         elsif duplicates?
-          conflict_errors_response(errors: degree_attributes.errors.where(:base, :duplicate))
+          conflict_errors_response(
+            errors: degree_attributes.errors.where(:base, :duplicate),
+            duplicates: serializer_klass.new(degree_attributes.duplicates.take).as_hash
+          )
         else
           validation_errors_response(errors:)
         end

@@ -6,19 +6,29 @@ module Api
       error_responses = errors.map { |error| { error: status.to_s.camelize, message: error.full_message } }
 
       {
-        status: status, json: {
+        status: status,
+        json: {
           errors: error_responses,
         }
       }
     end
 
-    def conflict_errors_response(errors:) = validation_errors_response(errors: errors, status: :conflict)
+    def conflict_errors_response(errors:, duplicates:)
+      validation_errors_response(errors:, status: :conflict).deep_merge(
+        json: {
+          data: duplicates
+        }
+      )
+    end
 
     def transition_error_response(model_name: "trainee")
       {
-        status: :unprocessable_entity, json: {
-          errors: errors("StateTransitionError",
-                         "It's not possible to perform this action while the #{model_name} is in its current state"),
+        status: :unprocessable_entity,
+        json: {
+          errors: errors(
+            "StateTransitionError",
+            "It's not possible to perform this action while the #{model_name} is in its current state"
+          ),
         }
       }
     end

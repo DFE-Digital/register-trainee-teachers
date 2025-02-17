@@ -138,10 +138,15 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
             data: degrees_attributes,
           }.to_json,
         )
+
         expect(response).to have_http_status(:conflict)
-        expect(response.parsed_body["errors"].first).to match(
-          { error: "Conflict",
-            message: "This is a duplicate degree" },
+        expect(response.parsed_body["errors"]).to contain_exactly(
+          error: "Conflict",
+          message: "This is a duplicate degree",
+        )
+
+        expect(response.parsed_body["data"]).to eq(
+          JSON.parse(Api::V01::DegreeSerializer.new(trainee.degrees.first).as_hash.to_json)
         )
         expect(trainee.reload.degrees.count).to eq(1)
       end
