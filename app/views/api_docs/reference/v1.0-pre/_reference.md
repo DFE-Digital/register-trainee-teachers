@@ -3262,13 +3262,13 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>non_uk_degree</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required if degree is <strong>not</strong> from the UK
+        string (limited to 3 characters), required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
-        The UK ENIC comparable degree type for non-UK degrees.
+        The type of non-UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degtype">HESA degree type field</a>
       </p>
       <p class="govuk-body">
-        Example: <code>Ordinary bachelor degree</code>
+        Example: <code>051</code>
       </p>
     </dd>
   </div>

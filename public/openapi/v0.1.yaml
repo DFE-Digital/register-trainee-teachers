@@ -4403,16 +4403,13 @@ paths:
                       type: string
                     country:
                       type: string
-                    locale_code:
+                    non_uk_degree:
                       type: string
                   required:
                   - grade
                   - subject
-                  - institution
-                  - uk_degree
                   - graduation_year
                   - country
-                  - locale_code
               required:
               - data
             example:
@@ -4422,8 +4419,8 @@ paths:
                 institution: '0117'
                 uk_degree: '083'
                 graduation_year: '2015-01-01'
-                country: XF
-                locale_code: uk
+                country: GL
+                non_uk_degree: '083'
       responses:
         '201':
           description: creates a new degree and returns a 201 (created) status
@@ -4437,8 +4434,10 @@ paths:
                     properties:
                       uk_degree:
                         type: string
+                        nullable: true
                       non_uk_degree:
                         nullable: true
+                        type: string
                       created_at:
                         type: string
                       updated_at:
@@ -4447,18 +4446,22 @@ paths:
                         type: string
                       institution:
                         type: string
+                        nullable: true
                       graduation_year:
                         type: integer
                       grade:
                         type: string
                       country:
                         nullable: true
+                        type: string
                       other_grade:
                         nullable: true
                       institution_uuid:
                         type: string
+                        nullable: true
                       uk_degree_uuid:
                         type: string
+                        nullable: true
                       subject_uuid:
                         type: string
                       grade_uuid:
@@ -5110,26 +5113,24 @@ paths:
                   properties:
                     subject:
                       type: string
+                    uk_degree:
+                      type: string
                     grade:
                       type: string
                     institution:
-                      type: string
-                    uk_degree:
                       type: string
                     graduation_year:
                       type: string
                     country:
                       type: string
-                  required:
-                  - subject
               required:
               - data
             example:
               data:
                 subject: '100425'
+                uk_degree: '083'
                 grade: '02'
                 institution: '0117'
-                uk_degree: '083'
                 graduation_year: '2015-01-01'
                 country: XF
       responses:

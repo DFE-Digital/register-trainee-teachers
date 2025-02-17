@@ -21,11 +21,10 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         uk_degree: "083",
         graduation_year: "2015-01-01",
         country: "XF",
-        locale_code: "uk",
       }
     end
 
-    context "with a valid trainee and degree" do
+    context "with a valid trainee and uk degree" do
       it "creates a new degree and returns a 201 (created) status" do
         post(
           "/api/v1.0-pre/trainees/#{trainee.slug}/degrees",
@@ -67,11 +66,63 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
       end
     end
 
+    context "with a valid trainee and non uk degree" do
+      let(:degrees_attributes) do
+        {
+          grade: "02",
+          subject: "100425",
+          non_uk_degree: "083",
+          graduation_year: "2015-01-01",
+          country: "GL",
+        }
+      end
+
+      it "creates a new degree and returns a 201 (created) status" do
+        post(
+          "/api/v1.0-pre/trainees/#{trainee.slug}/degrees",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: {
+            data: degrees_attributes,
+          }.to_json,
+        )
+
+        expect(response).to have_http_status(:created)
+
+        degree_attributes = response.parsed_body["data"]
+
+        expect(degree_attributes["grade"]).to eq("02")
+        expect(degree_attributes["subject"]).to eq("100425")
+        expect(degree_attributes["institution"]).to be_nil
+        expect(degree_attributes["uk_degree"]).to be_nil
+        expect(degree_attributes["graduation_year"]).to eq(2015)
+        expect(degree_attributes["country"]).to eq("GL")
+        expect(degree_attributes["locale_code"]).to be_nil
+
+        expect(trainee.reload.progress[:degrees]).to be(true)
+        expect(trainee.degrees.count).to eq(1)
+
+        degree = trainee.degrees.last
+
+        expect(degree.grade).to eq("Upper second-class honours (2:1)")
+        expect(degree.grade_uuid).to eq("e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f")
+        expect(degree.subject).to eq("Physics")
+        expect(degree.subject_uuid).to eq("918170f0-5dce-e911-a985-000d3ab79618")
+        expect(degree.institution).to be_nil
+        expect(degree.institution_uuid).to be_nil
+        expect(degree.uk_degree).to be_nil
+        expect(degree.uk_degree_uuid).to be_nil
+
+        expect(degree.graduation_year).to eq(2015)
+        expect(degree.country).to eq("Greenland")
+        expect(degree.locale_code).to eq("non_uk")
+      end
+    end
+
     context "with duplicate degree" do
       let(:trainee) { create(:trainee, :with_degree) }
       let(:degrees_attributes) do
         attributes = Api::V10Pre::DegreeSerializer.new(trainee.degrees.first).as_hash.symbolize_keys.slice(
-          :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :locale_code
+          :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year
         )
         attributes[:graduation_year] = Date.new(attributes[:graduation_year]).to_s
         attributes
@@ -119,7 +170,6 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
           institution: "University of Oxford",
           uk_degree: "Bachelor of Witchcraft & Wizardry",
           graduation_year: (Time.zone.now.year + 2).to_s,
-          locale_code: "uk",
         }
       end
 

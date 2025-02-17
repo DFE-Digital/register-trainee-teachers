@@ -20,7 +20,9 @@ RSpec.describe Api::V01::DegreeAttributes do
       before { degree_attributes.locale_code = "uk" }
 
       it { is_expected.to validate_presence_of(:institution) }
+
       it { is_expected.to validate_presence_of(:uk_degree) }
+
       it { is_expected.to validate_presence_of(:grade) }
     end
 
@@ -28,6 +30,7 @@ RSpec.describe Api::V01::DegreeAttributes do
       before { degree_attributes.locale_code = "non_uk" }
 
       it { is_expected.to validate_presence_of(:country) }
+
       it { is_expected.to validate_presence_of(:non_uk_degree) }
     end
 

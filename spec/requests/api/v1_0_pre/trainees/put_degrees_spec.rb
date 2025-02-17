@@ -44,15 +44,20 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response).to have_http_status(:ok)
 
-          degree_attributes = response.parsed_body["data"]
+          degree_attributes = response.parsed_body[:data]
 
-          expect(degree_attributes["grade"]).to eq("05")
-          expect(degree_attributes["subject"]).to eq(new_subject)
-          expect(degree_attributes["institution"]).to eq("0030")
-          expect(degree_attributes["uk_degree"]).to eq("051")
-          expect(degree_attributes["graduation_year"]).to eq(1978)
-          expect(degree_attributes["country"]).to be_nil
-          expect(degree_attributes["locale_code"]).to be_nil
+          expect(degree_attributes[:grade]).to eq("05")
+          expect(degree_attributes[:subject]).to eq(new_subject)
+          expect(degree_attributes[:institution]).to eq("0030")
+          expect(degree_attributes[:graduation_year]).to eq(1978)
+          expect(degree_attributes[:country]).to be_nil
+          expect(degree_attributes[:locale_code]).to be_nil
+          expect(degree_attributes[:uk_degree]).to eq("051")
+          expect(degree_attributes[:uk_degree_uuid]).not_to be_nil
+          expect(degree_attributes[:institution_uuid]).not_to be_nil
+          expect(degree_attributes[:subject_uuid]).not_to be_nil
+          expect(degree_attributes[:grade_uuid]).not_to be_nil
+          expect(degree_attributes[:degree_id]).not_to be_nil
 
           degree.reload
 
@@ -60,6 +65,82 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(degree.subject).to eq("Accounting")
           expect(degree.institution).to eq("Ravensbourne University London")
           expect(degree.uk_degree).to eq("Bachelor of Arts")
+          expect(degree.graduation_year).to eq(1978)
+          expect(degree.country).to be_nil
+          expect(degree.locale_code).to eq("uk")
+        end
+      end
+
+      context "with a non_uk_degree" do
+        let(:uk_degree) { "051" }
+        let(:non_uk_degree) { "097" }
+        let(:country) { "MX" }
+
+        it "updates the degree and returns a 200 status (ok)" do
+          put(
+            "/api/v1.0-pre/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: { non_uk_degree:, country: },
+            }.to_json,
+          )
+
+          expect(response).to have_http_status(:ok)
+
+          degree_attributes = response.parsed_body[:data]
+
+          expect(degree_attributes[:grade]).to eq("05")
+          expect(degree_attributes[:subject]).to eq("100104")
+          expect(degree_attributes[:country]).to eq("MX")
+          expect(degree_attributes[:non_uk_degree]).to eq("097")
+          expect(degree_attributes[:locale_code]).to be_nil
+          expect(degree_attributes[:uk_degree]).to be_nil
+          expect(degree_attributes[:uk_degree_uuid]).to be_nil
+          expect(degree_attributes[:institution_uuid]).not_to be_nil
+          expect(degree_attributes[:subject_uuid]).not_to be_nil
+          expect(degree_attributes[:grade_uuid]).not_to be_nil
+          expect(degree_attributes[:degree_id]).not_to be_nil
+
+          degree.reload
+
+          expect(degree.locale_code).to eq("non_uk")
+          expect(degree.country).to eq("Mexico")
+          expect(degree.non_uk_degree).to eq("Bachelor of Education Scotland and Northern Ireland")
+          expect(degree.uk_degree).to be_nil
+          expect(degree.uk_degree_uuid).to be_nil
+
+          put(
+            "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: {
+              data: { uk_degree: },
+            }.to_json,
+          )
+
+          expect(response).to have_http_status(:ok)
+
+          degree_attributes = response.parsed_body["data"]
+
+          expect(degree_attributes[:grade]).to eq("05")
+          expect(degree_attributes[:subject]).to eq("100104")
+          expect(degree_attributes[:institution]).to eq("0030")
+          expect(degree_attributes[:graduation_year]).to eq(1978)
+          expect(degree_attributes[:country]).to be_nil
+          expect(degree_attributes[:locale_code]).to be_nil
+          expect(degree_attributes[:uk_degree]).to eq("051")
+          expect(degree_attributes[:uk_degree_uuid]).not_to be_nil
+          expect(degree_attributes[:institution_uuid]).not_to be_nil
+          expect(degree_attributes[:subject_uuid]).not_to be_nil
+          expect(degree_attributes[:grade_uuid]).not_to be_nil
+          expect(degree_attributes[:degree_id]).not_to be_nil
+
+          degree.reload
+
+          expect(degree.grade).to eq("Third-class honours")
+          expect(degree.subject).to eq("Accountancy")
+          expect(degree.institution).to eq("Ravensbourne University London")
+          expect(degree.uk_degree).to eq("Bachelor of Arts")
+          expect(degree.uk_degree_uuid).not_to be_nil
           expect(degree.graduation_year).to eq(1978)
           expect(degree.country).to be_nil
           expect(degree.locale_code).to eq("uk")
