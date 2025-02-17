@@ -124,14 +124,6 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         then_i_see_the_new_bulk_update_import_page
 
-        when_i_visit_the_bulk_update_add_trainees_uploads_page
-        and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.uploaded.first)
-        then_i_see_the_new_bulk_update_import_page
-
-        when_i_click_on_back_link
-        then_i_see_the_bulk_update_add_trainees_uploads_index_page
-
-        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.uploaded.first)
         and_i_click_the_cancel_process_link
         then_the_upload_is_cancelled
 
@@ -537,7 +529,7 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
-    expect(page).to have_content("#{upload.filename} Pending", normalize_ws: true)
+    expect(page).to have_content("#{upload.filename} In progress", normalize_ws: true)
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
@@ -576,11 +568,11 @@ private
     expect(page).to have_content("View the status of recently uploaded files containing new trainees.")
     expect(page).to have_content("Failed uploads will be removed after 30 days.")
 
-    expect(page).to have_content(
+    expect(page).not_to have_content(
       "five_trainees.csv Uploaded",
     )
     expect(page).to have_content(
-      "five_trainees.csv Pending",
+      "five_trainees.csv In progress",
     )
     expect(page).to have_content(
       "five_trainees.csv Ready to submit",
