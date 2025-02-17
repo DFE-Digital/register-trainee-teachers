@@ -2,11 +2,11 @@
 
 module Api
   class CreateTrainee
-    include ActiveModel::Model
-
     include ServicePattern
     include Serializable
     include ErrorResponse
+
+    include ActiveModel::Model
 
     attr_accessor :current_provider, :trainee_attributes, :version
 
