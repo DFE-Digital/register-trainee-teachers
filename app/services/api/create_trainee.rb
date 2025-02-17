@@ -46,16 +46,6 @@ module Api
       )
     end
 
-    def duplicate_trainees_response(duplicate_trainees)
-      {
-        json: {
-          errors: "This trainee is already in Register",
-          data: duplicate_trainees,
-        },
-        status: :conflict,
-      }
-    end
-
     def save_errors_response(trn_validator, trainee)
       validation_errors = trn_validator.all_errors.presence || trainee.errors.full_messages
 
