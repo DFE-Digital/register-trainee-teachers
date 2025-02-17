@@ -2146,7 +2146,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: wnAC8vkTpSB1QZWcrCReg5zb
+                    placement_id: iBGYr9v5ms9imv5XWmqNzPSo
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2162,9 +2162,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: pHkBg89GRbmXZStfd1RBCoep
+                    degree_id: sQaFa9jLY3DdZaKyyJWmp1kf
                   state: submitted_for_trn
-                  trainee_id: kZ5TyKaZVen43GPWFXBC4LnU
+                  trainee_id: UFjFsVkgNVVSZBJSf1UiEkei
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: true
@@ -2180,7 +2180,17 @@ paths:
                 type: object
                 properties:
                   errors:
-                    type: string
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - error
+                      - message
                   data:
                     type: array
                     items:
@@ -2470,7 +2480,9 @@ paths:
                 - errors
                 - data
               example:
-                errors: This trainee is already in Register
+                errors:
+                - error: Conflict
+                  message: This trainee is already in Register
                 data:
                 - first_names: Dallas
                   last_name: Konopelski
@@ -3196,7 +3208,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 5p2zTmHBxFiPwBcxaaiPYNTk
+        example: HkE3eP6LQLWDd3o2QQqHfMus
       responses:
         '200':
           description: updates the trainee
@@ -3657,7 +3669,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: Dp3UyQVYrLVoiQczhL4navGL
+                    placement_id: VKgxRe11z14jKVxvTh62R9b8
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3673,9 +3685,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: DBQBq2Gw9cAonGeQRDSzfKmh
+                    degree_id: s94FZzyfxhMPEEc7ydBcxJzX
                   state: submitted_for_trn
-                  trainee_id: 5p2zTmHBxFiPwBcxaaiPYNTk
+                  trainee_id: HkE3eP6LQLWDd3o2QQqHfMus
                   application_id:
                   disability2: '57'
         '401':
@@ -4381,7 +4393,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 9sazajzibihajni3wxhe15rw
+        example: utg727eno6hyr6gyk8zts1r3
       requestBody:
         content:
           application/json:
@@ -4488,21 +4500,21 @@ paths:
                 - data
               example:
                 data:
-                  uk_degree: '083'
-                  non_uk_degree:
+                  uk_degree:
+                  non_uk_degree: '083'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   subject: '100425'
-                  institution: '0117'
+                  institution:
                   graduation_year: 2015
                   grade: '02'
-                  country:
+                  country: GL
                   other_grade:
-                  institution_uuid: 1271f34a-2887-e711-80d8-005056ac45bb
-                  uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
+                  institution_uuid:
+                  uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: jwbSKhv8LioWk8GYx8nKYSb1
+                  degree_id: JQMDgcxhSLna8MZLarZnNj8K
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4548,12 +4560,78 @@ paths:
                       required:
                       - error
                       - message
+                  data:
+                    type: object
+                    properties:
+                      uk_degree:
+                        type: string
+                      non_uk_degree:
+                        nullable: true
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      subject:
+                        type: string
+                      institution:
+                        type: string
+                      graduation_year:
+                        type: integer
+                      grade:
+                        nullable: true
+                      country:
+                        nullable: true
+                      other_grade:
+                        nullable: true
+                      institution_uuid:
+                        type: string
+                      uk_degree_uuid:
+                        type: string
+                      subject_uuid:
+                        type: string
+                      grade_uuid:
+                        type: string
+                      degree_id:
+                        type: string
+                    required:
+                    - uk_degree
+                    - non_uk_degree
+                    - created_at
+                    - updated_at
+                    - subject
+                    - institution
+                    - graduation_year
+                    - grade
+                    - country
+                    - other_grade
+                    - institution_uuid
+                    - uk_degree_uuid
+                    - subject_uuid
+                    - grade_uuid
+                    - degree_id
                 required:
                 - errors
+                - data
               example:
                 errors:
                 - error: Conflict
                   message: This is a duplicate degree
+                data:
+                  uk_degree: '098'
+                  non_uk_degree:
+                  created_at: '2024-09-15T12:34:56.000Z'
+                  updated_at: '2024-09-15T12:34:56.000Z'
+                  subject: '100765'
+                  institution: '0132'
+                  graduation_year: 2020
+                  grade:
+                  country:
+                  other_grade:
+                  institution_uuid: 0b9017b0-a141-e811-80ff-3863bb351d40
+                  uk_degree_uuid: 396a5652-c197-e711-80d8-005056ac45bb
+                  subject_uuid: 698370f0-5dce-e911-a985-000d3ab79618
+                  grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
+                  degree_id: rhadtn9kuc9yh138xr5hbtl1
         '422':
           description: does not create a new degree and returns a 422 status (unprocessable_entity)
             status
@@ -4608,13 +4686,6 @@ paths:
         schema:
           type: string
         example: 8zhrn6ob0u6w7h4gkpsnqh1y
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-            example: {}
       responses:
         '200':
           description: deletes the degree and returns a 200 status (ok)
@@ -5095,13 +5166,13 @@ paths:
         required: true
         schema:
           type: string
-        example: yu1nnw46rya8kjx9soauj2hd
+        example: mnouoq8kb5qndp8wyi3zt351
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: skf01hhgm2tndci9wu5h142w
+        example: 6osj3gmd9z1f7q5depyayhik
       requestBody:
         content:
           application/json:
@@ -5204,11 +5275,11 @@ paths:
                   grade: '02'
                   country:
                   other_grade:
-                  institution_uuid: 793e182c-1425-ec11-b6e6-000d3adf095a
-                  uk_degree_uuid: 0b6a5652-c197-e711-80d8-005056ac45bb
+                  institution_uuid: 233e182c-1425-ec11-b6e6-000d3adf095a
+                  uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 917f70f0-5dce-e911-a985-000d3ab79618
-                  grade_uuid: aaba4427-287c-4610-a838-1970dd9090c1
-                  degree_id: 9clitmiab7xgjmrvkaoeqanz
+                  grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
+                  degree_id: ic8uy5zen62qpm37mra3j6fk
         '404':
           description: does not update the degree and returns a 404 status (not_found)
           content:
@@ -5331,7 +5402,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 84pqt50x7ik2f6kudo1kb68a
+        example: itk0bz5ctas0m3aub7n2n96h
       requestBody:
         content:
           application/json:
@@ -5353,9 +5424,9 @@ paths:
               - data
             example:
               data:
-                urn: '491594'
-                name: Vandervort Academy
-                postcode: UF5B 5NB
+                urn: '418109'
+                name: Southern Oregon Institute
+                postcode: DN8 3BN
       responses:
         '201':
           description: creates a new placement and returns a 201 (created) status
@@ -5393,13 +5464,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '491594'
-                  name: Vandervort Academy
-                  address: URN 491594, UF5B 5NB
-                  postcode: UF5B 5NB
+                  urn: '418109'
+                  name: Southern Oregon Institute
+                  address: URN 418109, DN8 3BN
+                  postcode: DN8 3BN
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: ugVYVBrnH6UrYtN4ZYPszZ2z
+                  placement_id: fp6yErE8aTB1CTwxWTwGXxcR
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5888,13 +5959,6 @@ paths:
                 errors:
                 - error: NotFound
                   message: Placement(s) not found
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties: {}
-            example: {}
     get:
       summary: show
       tags:
@@ -6003,13 +6067,13 @@ paths:
         required: true
         schema:
           type: string
-        example: j1i031cbyhn1olcl3y7leadm
+        example: oewh712c2i7xpkkl9g30z93z
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: gqrayxkohbzjt35c3rs5zzmj
+        example: 2lm6f187ep282qh6si9ci90l
       requestBody:
         content:
           application/json:
@@ -6029,8 +6093,8 @@ paths:
               - data
             example:
               data:
-                urn: '104684'
-                name: Satterfield Academy
+                urn: '465879'
+                name: McLaughlin Academy
                 postcode: GU1 1AA
       responses:
         '200':
@@ -6071,13 +6135,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '449098'
-                  name: North Christiansen
-                  address: URN 449098, GU1 1AA
+                  urn: '473335'
+                  name: Southern Mississippi Academy
+                  address: URN 473335, GU1 1AA
                   postcode: GU1 1AA
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: rvay98pmo0b9i7f18emcdfei
+                  placement_id: na43nwxbnqampr9sz8h6h9f3
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -6147,7 +6211,7 @@ paths:
         required: true
         schema:
           type: string
-        example: bpzo4rmew5mbm9ygls1tcgc3
+        example: wanbt6sv67ewrrgq3276bn7c
       requestBody:
         content:
           application/json:
@@ -6456,13 +6520,13 @@ paths:
               example:
                 data:
                   recommended_for_award_at: '2024-09-15T12:34:56Z'
-                  first_names: Tien
-                  middle_names: Thiel
-                  last_name: Aufderhar
-                  email: Tien.Aufderhar@example.com
+                  first_names: Miquel
+                  middle_names: Ebert
+                  last_name: Treutel
+                  email: Miquel.Treutel@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '3574865'
+                  trn: '7477976'
                   withdraw_reasons_details:
                   withdraw_reasons_dfe_details:
                   region:
@@ -6470,7 +6534,7 @@ paths:
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
-                  date_of_birth: '1970-10-06'
+                  date_of_birth: '1960-10-23'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   training_route:
@@ -6478,13 +6542,13 @@ paths:
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2024-08-01'
+                  itt_start_date: '2024-08-24'
                   outcome_date: '2024-09-15'
-                  itt_end_date: '2026-07-13'
+                  itt_end_date: '2026-07-03'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
-                  trainee_start_date: '2024-08-08'
+                  trainee_start_date: '2024-08-27'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -6508,15 +6572,15 @@ paths:
                   hesa_editable: false
                   slug_sent_to_dqt_at:
                   placement_detail:
-                  provider_trainee_id: 24/25-547
-                  ukprn: '19836039'
+                  provider_trainee_id: 24/25-548
+                  ukprn: '83349002'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-01'
+                  course_itt_start_date: '2024-08-24'
                   course_age_range:
-                  expected_end_date: '2026-07-13'
+                  expected_end_date: '2026-07-03'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
@@ -6540,9 +6604,9 @@ paths:
                     uk_degree_uuid: dd695652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 5d8470f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                    degree_id: u9xsn7k9uzgdo644nr2qng3r
+                    degree_id: fzy1kk2nluv3mi00lmpe2wur
                   state: recommended_for_award
-                  trainee_id: gzitk0bz5ctas0m3aub7n2n9
+                  trainee_id: sxy4qrzlea7r59if8frr0acj
                   application_id:
         '404':
           description: returns status code 404
