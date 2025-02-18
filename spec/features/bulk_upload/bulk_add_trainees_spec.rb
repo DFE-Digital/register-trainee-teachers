@@ -501,8 +501,8 @@ private
 
   def then_i_see_the_bulk_update_add_trainees_upload_details_page
     expect(page).to have_content("Your new trainees have been registered")
-    expect(page).to have_content(/Submitted by:\s*#{current_user.name}/)
-    expect(page).to have_content(/Number of registered trainees:\s*5/)
+    expect(page).to have_content(/Submitted by\s*#{current_user.name}/)
+    expect(page).to have_content(/Number of registered trainees\s*5/)
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
     expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
