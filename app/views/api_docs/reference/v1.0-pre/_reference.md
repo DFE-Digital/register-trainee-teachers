@@ -1082,7 +1082,7 @@ Trainee details
 </details>
 
 #### Trainee duplication validations
-When creating a trainee, a duplication validation is performed is to ensure that duplicate trainees are not created. This validation checks the following fields:
+When creating a trainee, a duplication validation is performed to ensure that duplicate trainees are not created. This validation checks the following fields:
 
 <ul class='govuk-list govuk-list--bullet'>
   <li><code>date_of_birth</code></li>
@@ -2510,7 +2510,7 @@ When updating a degree, a duplication validation is performed to ensure that dup
   <li><code>grade</code></li>
 </ul>
 
-If a degree with these exact attributes already exists, it is considered a duplicate.
+If a degree with these exact fields already exists, it is considered a duplicate.
 
 This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
 
