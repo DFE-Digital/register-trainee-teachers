@@ -20,14 +20,14 @@ module BulkUpdate
       send_updates_to_dqt if result.present?
     end
 
-  private
-
-    attr_reader :recommendations_upload
-
     # We include provider_id as part of the attributes even though it won't change.
     # This is because `upsert_all` requires all NOT NULL fields to be present for a successful upsert operation
     # (this is because it may have to INSERT, even though in this case it will always be an UPDATE - it doesn't know this)
     ATTRIBUTES = %i[slug outcome_date state recommended_for_award_at provider_id].freeze
+
+  private
+
+    attr_reader :recommendations_upload
 
     # Builds a hash of trainees, indexed by ID, who meet all criteria for an award.
     def original

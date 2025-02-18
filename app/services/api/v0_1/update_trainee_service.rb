@@ -30,12 +30,6 @@ module Api
         end
       end
 
-    private
-
-      attr_reader :trainee, :attributes
-
-      alias_method :trainee_attributes, :attributes
-
       TraineeAttributesValidation = Struct.new(:trainee_attributes) do
         def errors_count = validation_errors.count
         def all_errors = validation_errors
@@ -52,6 +46,12 @@ module Api
           end
         end
       end
+
+    private
+
+      attr_reader :trainee, :attributes
+
+      alias_method :trainee_attributes, :attributes
 
       def validation
         @validation ||= Submissions::ApiTrnValidator.new(trainee:)
