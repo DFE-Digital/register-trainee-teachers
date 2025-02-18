@@ -1,6 +1,5 @@
 require:
   - rubocop-rails
-  - rubocop-rspec
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rspec_rails
@@ -8,6 +7,9 @@ require:
   - ./lib/rubocop/cop/govuk/govuk_link_to.rb
   - ./lib/rubocop/cop/govuk/govuk_submit.rb
   - ./lib/rubocop/cop/register/register_form_with.rb
+
+plugins:
+  - rubocop-rspec
 
 inherit_from:
   - ./config/rubocop/layout.yml
