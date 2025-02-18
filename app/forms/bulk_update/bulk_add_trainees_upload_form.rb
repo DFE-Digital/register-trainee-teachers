@@ -56,7 +56,7 @@ module BulkUpdate
     end
 
     def number_of_trainees
-      @number_of_trainees ||= csv.count
+      @number_of_trainees ||= csv.entries.reject { |entry| entry.to_h.values.all?(&:blank?) }.count
     end
 
     def build_upload
