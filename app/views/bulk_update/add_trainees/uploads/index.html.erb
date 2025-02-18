@@ -32,8 +32,12 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body"><tr class="govuk-table__row">
-        <% @bulk_update_trainee_uploads.each do |bulk_update_trainee_upload| %>
-          <%= render(BulkUpdate::TraineeUploads::Row::View.new(upload: bulk_update_trainee_upload)) %>
+        <% if @bulk_update_trainee_uploads.any? %>
+          <% @bulk_update_trainee_uploads.each do |bulk_update_trainee_upload| %>
+            <%= render(BulkUpdate::TraineeUploads::Row::View.new(upload: bulk_update_trainee_upload)) %>
+          <% end %>
+        <% else %>
+          <td class="govuk-table__cell" colspan="3">You have no recently submitted files</td>
         <% end %>
       </tbody>
     </table>
