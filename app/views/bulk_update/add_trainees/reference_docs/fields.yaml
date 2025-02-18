@@ -14,7 +14,7 @@
     Department for Education’s apply for teacher training online service.
   format: 10 character max length
   example: '"11fc0d3b2f"'
-  validation: Optional (used only for trainees imported from Apply)
+  validation: Optional - used only for trainees imported from Apply
 - field_name: HESA ID
   technical: hesa_id
   hesa_alignment: HUSID
@@ -268,7 +268,7 @@
 
     64 Dormant - previously part-time
   example: '"01"'
-  validation: Conditional mandatory - mandatory when the training route is not `assessment_only` or `early_years_assessment_only`
+  validation: Conditional - mandatory when the training route is not `assessment_only` or `early_years_assessment_only`
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
 - field_name: ITT Start Date
   technical: itt_start_date
@@ -413,7 +413,8 @@
 
     E Grant
   example: '"E"'
-  validation: Mandatory (https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L31).
+  validation: Mandatory
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L31
 - field_name: Training Initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
@@ -444,7 +445,7 @@
     011 Primary with mathematics specialist
 
     019 Additional ITT place for PE with a priority subject
-  validation: Conditional mandatory - only mandatory if NOT importing via API or CSV
+  validation: Conditional - only mandatory if NOT importing via API or CSV
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
 - field_name: Additional Training Initiative
   technical: additional_training_initiative
@@ -487,7 +488,7 @@
   description: This records the student's previous qualification
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
-  validation: Conditional mandatory - mandatory if specifying a UK degree
+  validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L37
 - field_name: Non UK degree types
   technical: non_uk_degree
@@ -495,7 +496,7 @@
   description:
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
-  validation: Conditional mandatory - mandatory if specifying a non-UK degree
+  validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L42
 - field_name: Degree subject
   technical: subject
@@ -503,7 +504,7 @@
   description: This field holds the subject(s) of the student's previous degree
   format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
   example: 100048 for example is the design degree subject as part of a previous degree
-  validation: Conditional mandatory - mandatory if specifying a degree
+  validation: Conditional - mandatory if specifying a degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L34
 - field_name: UK degree grade
   technical: grade
@@ -512,7 +513,7 @@
     previous degree.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"01" for example is First class honours'
-  validation: Conditional mandatory - mandatory if specifying a UK degree
+  validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L38
 - field_name: Degree graduation year
   technical: graduation_year
@@ -520,7 +521,7 @@
   description: This records the end date of the student's previous qualification.
   format: YYYY-MM-DD
   example: "1985-02-13"
-  validation: Conditional mandatory - mandatory if specifying any degree
+  validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33
 - field_name: Degree UK awarding institution
   technical: institution
@@ -529,7 +530,7 @@
     was awarded, if a UK provider.
   format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
   example: '"1101" for example is Hull College'
-  validation: Conditional mandatory - mandatory if specifying a UK degree
+  validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L36
 - field_name: Degree country
   technical: country
@@ -539,5 +540,5 @@
   format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
   example: '"AU" is an example of using the previous qualification country code for
     Australia'
-  validation: Conditional mandatory - mandatory if specifying a non-UK degree
+  validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L41
