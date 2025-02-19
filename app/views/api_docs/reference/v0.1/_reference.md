@@ -3154,7 +3154,7 @@ Deletes an existing degree for this trainee.
         string (limited to 9 characters)
       </p>
       <p class="govuk-body">
-        The trainee’s National Insurance Number.
+        The trainee’s National Insurance number.
       </p>
       <p class="govuk-body">
         Example: <code>BX5867459C</code>
