@@ -1,4 +1,5 @@
-require: rubocop-rails
+plugins:
+  - rubocop-rails
 
 Rails/BulkChangeTable:
   Enabled: false
