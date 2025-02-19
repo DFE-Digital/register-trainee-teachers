@@ -121,7 +121,7 @@ DEVELOPER_PERSONA = { first_name: "first", last_name: "last", email: "first.last
 If you want to seed the database with a sanitised production dump, follow the steps below:
 
 - Download the sanitised production dump from the Azure Storage Account.
-- In the Azure portal, go to 'Storage Accounts' -> 's189p01rttdbbkpsanpdsa' -> 'Containers' -> 'database-backup'
+- In the Azure portal, go to ‘Storage Accounts’ -> s189p01rttdbbkpsanpdsa -> ‘Containers’ -> ‘database-backup’
 - Download the latest sanitised backup.
 - Unzip the file and you should see a file called `backup_sanitised.sql`.
 
