@@ -290,6 +290,7 @@ describe Reports::TraineeReport do
 
     context "when placement data is available" do
       let(:audit_user) { nil }
+
       context "when there are 2 placements" do
         let!(:placements) do
           Audited.audit_class.as_user(audit_user) do

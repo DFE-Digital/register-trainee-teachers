@@ -87,7 +87,7 @@ module Placements
       it "does not create placements where trainee is in a different cycle" do
         described_class.call(upload_id: upload.id)
 
-        expect(Placement.all.includes([:trainee]).map(&:trainee).map(&:hesa_id)).not_to include("2010070003610")
+        expect(Placement.includes([:trainee]).map(&:trainee).map(&:hesa_id)).not_to include("2010070003610")
       end
 
       it "creates placements where the urn is one of the HESA codes for not applicable school URNs" do
