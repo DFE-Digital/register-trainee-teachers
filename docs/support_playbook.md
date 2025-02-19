@@ -73,7 +73,7 @@ status: 404, body: {"title":"Teacher with specified TRN not found","status":404,
 
 * This can happen when there is a mismatch between the date of birth that Register holds for the trainee vs what DQT holds (we send both TRN and DOB to DQT to match trainees)
 
-* I've also seen this error come up when the trainee’s TRN is inactive on the DQT side
+* I’ve also seen this error come up when the trainee’s TRN is inactive on the DQT side
 
 Speak with the DQT team to work out if it’s one of the above issues. Align the date of birth on both services and re-run the job.
 
@@ -86,7 +86,7 @@ status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode"
 ```
 
 * There might be a trainee state mismatch here between DQT and Register
-* We've seen this error when a trainee has been withdrawn on DQT and awarded on Register
+* We’ve seen this error when a trainee has been withdrawn on DQT and awarded on Register
 * We have some known examples of trainees like this so it’s worth checking with our support team to see if there are existing comms about the trainee
 * In this case you might need to check with the provider what the state of the record should be
 
@@ -97,7 +97,7 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 * If this error came from the award job, then the trainee might be stuck in recommended for award state
 * If everything matches on DQT’s side (trainee details, the provider) then you may be able to just award the trainee on Register’s side
 * If any doubt then check with the provider
-* We've also seen this error on the withdraw job - cross-reference with DQT and check with provider if necessary to see what state the trainee should be in
+* We’ve also seen this error on the withdraw job - cross-reference with DQT and check with provider if necessary to see what state the trainee should be in
 
 ```json
 "qualification.providerUkprn":["Organisation not found"]
@@ -112,7 +112,7 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 {"initialTeacherTraining.programmeType":["Teacher already has QTS/EYTS date"]}
 ```
 
-* We've noticed there is likely a race condition sometimes causing this error
+* We’ve noticed there is likely a race condition sometimes causing this error
 * When we run an award job, an update job is also kicked off
 * We think that sometimes the award job succeeds before the update job, which causes this error on the update job
 * Cross reference the trainee details on Register with the trainee details on DQT, you can use the DQT API for this - checking the trainee timeline on Register can also be helful
@@ -274,7 +274,7 @@ kubectl -n bat-production describe deployment/register-production
 
 Previously `DfE Analytics` caused a exponential spike on system load, leading to the system becoming non-responsive, for a extended period of time, with the initial cause being a few days prior.
 
-By setting the `send_data_to_big_query` to `false` it in turns set DfE Analytics' `enable_analytics`.
+By setting the `send_data_to_big_query` to `false` it in turns set DfE Analytics’ `enable_analytics`.
 
 This will disables DfE Analytics.
 
@@ -366,7 +366,7 @@ This command will:
       - `import_applications_from_apply`
       - `create_trainees_from_apply`
 
-Note: This process will import a fresh copy of the applicants' details and use them to create new records. This ensures that the system realigns with its normal mode of operation, correcting any issues caused by previously imported, potentially stale data.
+Note: This process will import a fresh copy of the applicants’ details and use them to create new records. This ensures that the system realigns with its normal mode of operation, correcting any issues caused by previously imported, potentially stale data.
 
 ## Lead partners
 ### Converting a provider into lead partner
@@ -380,7 +380,7 @@ If a provider loses accreditation and needs to be converted into a lead partner,
 bundle exec rails 'copy_providers_to_lead_partners:copy[<provider ids separated by spaces>, <provider type, eg hei or scitt>]'
 ```
 
-This task should create the new lead partner and associate the providers' users with the new lead partner record.
+This task should create the new lead partner and associate the providers’ users with the new lead partner record.
 
 
 ### Creating a lead partner from a school

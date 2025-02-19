@@ -14,7 +14,7 @@ We have introduced the concept of academic cycles. All trainees, courses and fun
 
 We need a way to "associate" all of the given entities above to reliably know a trainee’s academic cycle and the associated funding rules applied for that cycle.
 
-Our `funding_methods` table will have a foreign key linking to the `academic cyles` table. Since funding rules are cycle specific, it made sense to have a hard association between these two tables as their start and end dates correlate.
+Our `funding_methods` table will have a foreign key linking to the `academic cycles` table. Since funding rules are cycle specific, it made sense to have a hard association between these two tables as their start and end dates correlate.
 
 ## Consequences
 
@@ -22,4 +22,4 @@ In doing the above, we’ll be able to query trainees via the `AcademicCycle` mo
 
 The `AcademicCycle` model will return all the trainees and courses with start dates falling within its period.
 
-We'll also be able to check the funding rules since we’ll have a hard association between the cycle and the funding rules.
+We’ll also be able to check the funding rules since we’ll have a hard association between the cycle and the funding rules.
