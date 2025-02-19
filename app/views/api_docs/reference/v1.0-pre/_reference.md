@@ -1082,18 +1082,15 @@ Trainee details
 </details>
 
 #### Trainee duplication validations
-When creating a trainee, a duplication validation is performed to ensure that duplicate trainees are not created. This validation checks the following fields:
+When creating a trainee, a duplication validation is performed to ensure that duplicate trainees are not created. A trainee will be flagged as a duplicate if:
 
 <ul class='govuk-list govuk-list--bullet'>
-  <li><code>date_of_birth</code></li>
-  <li><code>last_name</code></li>
-  <li><code>itt_start_date</code></li>
-  <li><code>training_route</code></li>
-  <li><code>first_names</code></li>
-  <li><code>email</code></li>
+  <li>there is an exact match on <code>date_of_birth</code> and <code>training_route</code> and <code>last_name</code> (ignoring case)</li>
+  <li><strong>and</strong> their start date (based on <code>trainee_start_date</code> or <code>itt_start_date</code>) is in the same academic year</li>
+  <li><strong>and</strong> there is a match on either <code>first_names</code> (ignoring case, punctuation, and special characters) or <code>email</code> (ignoring case)</li>
 </ul>
 
-If the new trainee with two or more fields exists for the an existing trainee, it is considered a duplicate and will return an error message indicating already been taken.
+If the new trainee is flagged as a duplicate against an existing trainee, it is considered a duplicate and will return an error message indicating it is a duplicate.
 
 This validation ensures that duplicate trainee records are not created, and helps to maintain the data accuracy and data integrity.
 
@@ -1381,7 +1378,7 @@ Degree details
           "subject_uuid": "338370f0-5dce-e911-a985-000d3ab79618",
           "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
           "degree_id": "ao53fi469ar7kjfc04uys0dc"
-        } 
+        }
       ]
     }
     </pre>
