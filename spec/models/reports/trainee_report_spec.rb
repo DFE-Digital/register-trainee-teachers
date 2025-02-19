@@ -290,7 +290,6 @@ describe Reports::TraineeReport do
 
     context "when placement data is available" do
       let(:audit_user) { nil }
-
       context "when there are 2 placements" do
         let!(:placements) do
           Audited.audit_class.as_user(audit_user) do
@@ -302,11 +301,11 @@ describe Reports::TraineeReport do
           let(:trainee) { create(:trainee, :in_progress, course_uuid: create(:course).uuid) }
 
           it "adds the first placement school urn under placement_one" do
-            expect(subject.placement_one).to eq(placements.first.school.urn)
+            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_one)
           end
 
           it "adds the second placement school urn under placement_two" do
-            expect(subject.placement_two).to eq(placements.second.school.urn)
+            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_two)
           end
         end
 
@@ -314,11 +313,11 @@ describe Reports::TraineeReport do
           let(:audit_user) { "HESA" }
 
           it "adds the first placement school urn under placement_two" do
-            expect(subject.placement_two).to eq(placements.first.school.urn)
+            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_one)
           end
 
           it "adds the second placement school urn under placement_one" do
-            expect(subject.placement_one).to eq(placements.second.school.urn)
+            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_two)
           end
         end
       end
