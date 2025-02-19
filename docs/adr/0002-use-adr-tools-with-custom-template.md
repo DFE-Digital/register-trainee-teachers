@@ -41,7 +41,7 @@ in their ADR template which I want to re-use in our own template.
 
 #### Cons
 
-- seems quite a bit more complicated (not necessarily in usage, didn’t get that
+- seems quite a bit more complicated (not necessarily in usage, did not get that
   far, just looking at their plethora of repos)
 - lots of extra features we may not need
 - JavaScript based, so more complicated than just a bunch of bash scripts

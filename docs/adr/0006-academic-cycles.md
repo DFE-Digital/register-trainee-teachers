@@ -12,7 +12,7 @@ We have introduced the concept of academic cycles. All trainees, courses and fun
 
 ## Decision
 
-We need a way to "associate" all of the given entities above to reliably know a trainee’s academic cycle and the associated funding rules applied for that cycle.
+We need a way to “associate” all of the given above entities to reliably determine a trainee’s academic cycle and the associated funding rules applied for that cycle.
 
 Our `funding_methods` table will have a foreign key linking to the `academic cycles` table. Since funding rules are cycle specific, it made sense to have a hard association between these two tables as their start and end dates correlate.
 

@@ -44,10 +44,10 @@ Use a 32 character UUID
 #### Cons
 
 - predictable
-- perceived as not looking 'professional'
+- perceived as not looking ‘professional’
 - dependent on DB
 
-### 3. Use Rails built in  `has_secure_token`
+### 3. Use Rails built in `has_secure_token`
 
 #### Pros
 
@@ -58,11 +58,11 @@ Use a 32 character UUID
 
 #### Cons
 
-- record now has two 'IDs'
+- record now has two ‘IDs’
 
 ## Decision
 
-We chose to use option 3 as it met the needs we had with the minimum of effort and avoided the really long URLs that 
+We chose to use option 3 as it met the needs we had with the minimum of effort and avoided the really long URLs that
 option 1 would have caused.
 
 ## Consequences
