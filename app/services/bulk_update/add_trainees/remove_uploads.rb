@@ -10,7 +10,7 @@ module BulkUpdate
           BulkUpdate::TraineeUpload.failed,
         ).or(
           BulkUpdate::TraineeUpload.uploaded,
-        ).destroy_all
+        ).includes([:row_errors]).destroy_all
       end
     end
   end
