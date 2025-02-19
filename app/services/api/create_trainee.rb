@@ -4,6 +4,9 @@ module Api
   class CreateTrainee
     include ServicePattern
     include Serializable
+    include ErrorResponse
+
+    include ActiveModel::Model
 
     attr_accessor :current_provider, :trainee_attributes, :version
 
@@ -16,7 +19,11 @@ module Api
     def call
       return validation_error_response(trainee_attributes_errors) if trainee_attributes_errors.any?
 
-      return duplicate_trainees_response(duplicate_trainees) if duplicate_trainees.present?
+      if duplicate_trainees.present?
+        errors.add(:base, :duplicate)
+
+        return conflict_errors_response(errors: errors, duplicates: duplicate_trainees)
+      end
 
       trainee = current_provider.trainees.build(trainee_attributes.deep_attributes)
       validator = Submissions::ApiTrnValidator.new(trainee:)
@@ -37,16 +44,6 @@ module Api
         trainee_attributes:,
         serializer_klass:,
       )
-    end
-
-    def duplicate_trainees_response(duplicate_trainees)
-      {
-        json: {
-          errors: "This trainee is already in Register",
-          data: duplicate_trainees,
-        },
-        status: :conflict,
-      }
     end
 
     def save_errors_response(trn_validator, trainee)

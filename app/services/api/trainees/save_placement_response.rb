@@ -20,7 +20,7 @@ module Api
           update_progress
           { json: { data: serializer_klass.new(placement).as_hash }, status: status }
         elsif duplicate?
-          conflict_errors_response(errors:)
+          conflict_errors_response(errors:, duplicates:)
         else
           validation_errors_response(errors:)
         end
@@ -32,6 +32,13 @@ module Api
     private
 
       attr_reader :placement, :placement_attributes, :version, :status
+
+      def duplicates
+        @duplicates ||= trainee
+          .placements
+          .where(urn: errors.first.detail[:value])
+          .map { |placement| serializer_klass.new(placement).as_hash }
+      end
 
       def save
         assign_attributes(attributes)
