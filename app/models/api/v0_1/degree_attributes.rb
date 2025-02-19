@@ -61,7 +61,11 @@ module Api
       end
 
       def duplicates?
-        existing_degrees&.exists?(
+        duplicates.present?
+      end
+
+      def duplicates
+        existing_degrees&.where(
           attributes.with_indifferent_access.slice(
             :subject,
             :graduation_year,
