@@ -191,7 +191,7 @@ In this scenario we must also contact DQT to fix the trainee award status and up
 ```ruby
 trainee = Trainee.find_by(slug: "limax")
 
-trainee.update(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil, audit_comment: 'fill in the blanks')
+trainee.update(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil, outcome_date: nil, audit_comment: 'fill in the blanks')
 
 ```
 
