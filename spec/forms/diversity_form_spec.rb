@@ -2,75 +2,37 @@
 
 require "rails_helper"
 
+shared_examples "a delegate method" do |method_name, form_class|
+  describe "##{method_name}" do
+    let(:form) { form_class.new(trainee) }
+
+    before do
+      allow(form_class).to receive(:new).and_return(form)
+    end
+
+    it "delegates to #{form_class}##{method_name}" do
+      expect(form).to receive(method_name).at_least(:once)
+      subject.send(method_name)
+    end
+  end
+end
+
 describe DiversityForm, type: :model do
   let(:trainee) { build(:trainee) }
 
   subject { described_class.new(trainee) }
 
-  describe "#diversity_disclosure" do
-    before do
-      allow(Diversities::EthnicBackgroundForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
-      allow(Diversities::DisabilityDisclosureForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
-      allow(Diversities::DisabilityDetailForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
-      allow(Diversities::EthnicGroupForm).to receive(:new) # form also calls diversity_disclosure() on initialisation
-    end
+  delegate_methods = {
+    Diversities::DisclosureForm => %i[diversity_not_disclosed? diversity_disclosure diversity_disclosed?],
+    Diversities::DisabilityDisclosureForm => %i[disabled? no_disability?],
+    Diversities::DisabilityDetailForm => %i[disabilities additional_disability],
+    Diversities::EthnicGroupForm => %i[ethnic_group not_provided_ethnic_group?],
+    Diversities::EthnicBackgroundForm => %i[ethnic_background additional_ethnic_background],
+  }
 
-    it "delegates to Diversities::DisclosureForm#diversity_disclosure" do
-      expect_any_instance_of(Diversities::DisclosureForm).to receive(:diversity_disclosure)
-
-      subject.diversity_disclosure
-    end
-  end
-
-  describe "#disabled?" do
-    before do
-      allow(Diversities::DisabilityDetailForm).to receive(:new) # form also calls disabled?() on initialisation
-    end
-
-    it "delegates to Diversities::DisabilityDisclosureForm#disabled?" do
-      expect_any_instance_of(Diversities::DisabilityDisclosureForm).to receive(:disabled?)
-
-      subject.disabled?
-    end
-  end
-
-  describe "#no_disability??" do
-    it "delegates to Diversities::DisabilityDisclosureForm#no_disability?" do
-      expect_any_instance_of(Diversities::DisabilityDisclosureForm).to receive(:no_disability?)
-
-      subject.no_disability?
-    end
-  end
-
-  describe "#disabilities" do
-    it "delegates to Diversities::DisabilityDetailForm#disabilities" do
-      expect_any_instance_of(Diversities::DisabilityDetailForm).to receive(:disabilities)
-
-      subject.disabilities
-    end
-  end
-
-  describe "#ethnic_group" do
-    it "delegates to Diversities::EthnicGroupForm#ethnic_group" do
-      expect_any_instance_of(Diversities::EthnicGroupForm).to receive(:ethnic_group)
-
-      subject.ethnic_group
-    end
-  end
-
-  describe "#ethnic_background" do
-    it "delegates to Diversities::EthnicBackgroundForm#ethnic_background" do
-      expect_any_instance_of(Diversities::EthnicBackgroundForm).to receive(:ethnic_background)
-
-      subject.ethnic_background
-    end
-  end
-
-  describe "#additional_ethnic_background" do
-    it "delegates to Diversities::EthnicBackgroundForm#additional_ethnic_background" do
-      expect_any_instance_of(Diversities::EthnicBackgroundForm).to receive(:additional_ethnic_background)
-
-      subject.additional_ethnic_background
+  delegate_methods.each do |form_class, method_names|
+    method_names.each do |method_name|
+      include_examples "a delegate method", method_name, form_class
     end
   end
 

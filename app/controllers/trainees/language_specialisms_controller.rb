@@ -17,9 +17,7 @@ module Trainees
       end
     end
 
-    def non_language_subject
-      @language_specialisms_form.non_language_subject
-    end
+    delegate :non_language_subject, to: :@language_specialisms_form
 
     helper_method :non_language_subject
 
