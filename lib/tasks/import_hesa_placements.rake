@@ -10,13 +10,13 @@ namespace :import_hesa_placements do
     import = Placements::ImportFromCsv.call(upload_id:)
 
     puts("")
-    puts("HESA ids which don’t match any trainees in Register:")
+    puts("HESA ids which do not match any trainees in Register:")
     import.unmatched_hesa_ids.uniq.each do |hesa_id|
       puts("  hesa_id: #{hesa_id}")
     end
 
     puts("")
-    puts("URNs which don’t match any Schools in Register:")
+    puts("URNs which do not match any Schools in Register:")
     import.unmatched_urns.uniq.each do |urn|
       puts("  URN: #{urn}")
     end

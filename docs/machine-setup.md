@@ -33,4 +33,4 @@ asdf install
 When the versions are updated in main run `asdf install` again to update your
 installation.
 
-(We don’t mandate asdf, you can use other tools if you prefer.)
+(We do not mandate asdf, you can use other tools if you prefer.)

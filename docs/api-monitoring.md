@@ -65,23 +65,23 @@ To add new dashboards or modify existing ones in Grafana, follow the Monitoring 
 ### Grafana Overview
 Once we know that Prometheus is ingesting the data correctly, you’ll likely want to setup a dashboard in Grafana to visualise the data. To do this, follow these steps:
 
-1. Log in to Grafana and choose "Dashboards" from the menu on the right:
+1. Log in to Grafana and choose “Dashboards” from the menu on the right:
 
 <img width="1323" alt="Screenshot 2024-10-21 at 11 38 58" src="https://github.com/user-attachments/assets/681da559-e96b-4cff-93d9-b2fddb931e3e">
 
-2. Either choose from the list of dashboards, or choose "New" to create a new dashboard. Here’s the Register API dashboard for example:
+2. Either choose from the list of dashboards, or choose “New” to create a new dashboard. Here’s the Register API dashboard for example:
 
 <img width="1322" alt="Screenshot 2024-10-21 at 11 39 26" src="https://github.com/user-attachments/assets/178deb28-b125-4268-b8fc-1c1b8fb647e4">
 
-3. Choose "Add" from the menu at the top of the page, and then choose "Visualisation"
+3. Choose “Add” from the menu at the top of the page, and then choose "Visualisation"
 
 <img width="1321" alt="Screenshot 2024-10-21 at 11 39 40" src="https://github.com/user-attachments/assets/0bf49e07-2fd5-49e1-8e2b-371528aecc6a">
 
-4. You should now see a blank visualisation with no data. To add data, click on the "Metric" dropdown to choose which metric you want to see:
+4. You should now see a blank visualisation with no data. To add data, click on the “Metric” dropdown to choose which metric you want to see:
 
 <img width="1322" alt="Screenshot 2024-10-21 at 11 40 14" src="https://github.com/user-attachments/assets/a65c88b3-b90f-4147-b06f-42b0debcaaa3">
 
-5. From the dropdown, click on the option at the top for "Metrics Explorer". Not all available metrics will appear in the initial list, so it’s best to do the search here.
+5. From the dropdown, click on the option at the top for “Metrics Explorer”. Not all available metrics will appear in the initial list, so it’s best to search here.
 
 <img width="1323" alt="Screenshot 2024-10-21 at 11 40 24" src="https://github.com/user-attachments/assets/2e516378-53d9-41c3-9e3a-665b9b87a33d">
 
@@ -101,7 +101,7 @@ Once we know that Prometheus is ingesting the data correctly, you’ll likely wa
 
 <img width="1372" alt="Screenshot 2024-10-21 at 12 05 05" src="https://github.com/user-attachments/assets/f28c2e12-6570-443e-83b7-418540828c40">
 
-This is filtering by the "controller" property and providing a regular expression to show only those controllers with the "api" prefix.
+This is filtering by the “controller” property and providing a regular expression to show only those controllers with the “api” prefix.
 
 10. You can also sum the results to show the data across all instances as a single value:
 

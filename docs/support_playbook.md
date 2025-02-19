@@ -2,7 +2,7 @@
 
 ## Making data changes
 
-If you’re making a data change, you must include an `audit_comment` so that we can see why we did this. E.g
+If you’re making a data change, you must include an `audit_comment` so that we can see why we did this. For example:
 
 ```ruby
 trainee.update(date_of_birth: <whatevs>, audit_comment: 'Update from the trainee via DQT')
@@ -51,7 +51,7 @@ If the trainee has a TRN already, call this (where `t` is the trainee):
 Dqt::RetrieveTeacher.call(trainee: t)
 ```
 
-If the trainee doesn’t have a TRN yet, call this instead:
+If the trainee does not have a TRN yet, call this instead:
 
 ```ruby
 Dqt::FindTeacher.call(trainee: t)
@@ -195,7 +195,7 @@ trainee.update(state: :trn_received, recommended_for_award_at: nil, awarded_at: 
 
 ```
 
-All record changes should be sent to DQT unless otherwise specified or impossible (e.g. we can’t send a DOB update). If DQT already has that info (e.g. they’re awarded on DQT, and we’re just awarding on Register) we should not send any information.
+All record changes should be sent to DQT unless otherwise specified or impossible (for example, we cannot send a DOB update). If DQT already has that info (for example, they’re awarded on DQT, and we’re just awarding on Register) we should not send any information.
 
 Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
 
@@ -307,7 +307,7 @@ rake trainee:remove_duplicates <path_to_csv_file>
 
 **Parameters:**
 
-- `path_to_csv_file`: This should be replaced with the path to the CSV file that contains the trainee IDs. The CSV file should contain a header row with an "trainee_id" and an "email" field. See below:
+- `path_to_csv_file`: This should be replaced with the path to the CSV file that contains the trainee IDs. The CSV file should contain a header row with an “trainee_id” and an “email” field. See below:
 
 ```csv
 trainee_id,email
@@ -327,7 +327,7 @@ bundle exec rake trainee:remove_duplicates\[trainees.csv\]
 
 This command will:
 1. Open the `trainees.csv` file.
-2. Run through each row, using the "id" field to find the corresponding trainee in the database.
+2. Run through each row, using the “id” field to find the corresponding trainee in the database.
 3. If found, it will find and discard any other trainee that has the same email address.
 4. If not found, it will print a message stating that the trainee was not found.
 5. Once the task finishes running through all rows in the CSV, it will print "Task completed."
