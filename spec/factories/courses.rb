@@ -32,7 +32,7 @@ FactoryBot.define do
     end
 
     trait :secondary do
-      name { PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING.keys.sample }
+      name { (PUBLISH_SECONDARY_SUBJECT_SPECIALISM_MAPPING.keys - [PublishSubjects::MODERN_LANGUAGES]).sample }
     end
 
     trait :with_full_time_dates do

@@ -6,10 +6,9 @@ describe Withdrawal::View do
   include SummaryHelper
 
   let!(:trainee) { create(:trainee, :withdrawn_for_specific_reason, withdraw_date: 2.days.ago, trainee_start_date: 3.days.ago) }
+  let(:trainee_withdrawal) { trainee.current_withdrawal }
   let(:withdraw_date) { trainee.withdraw_date }
   let(:withdrawal_reasons) { trainee.withdrawal_reasons }
-  let(:withdraw_reasons_details) { "not enough coffee" }
-  let(:withdraw_reasons_dfe_details) { "could provide unlimited coffee" }
 
   let(:data_model) do
     OpenStruct.new(
@@ -17,8 +16,8 @@ describe Withdrawal::View do
       trainee_start_date: trainee.trainee_start_date,
       withdraw_date: withdraw_date,
       withdrawal_reasons: withdrawal_reasons,
-      withdraw_reasons_details: withdraw_reasons_details,
-      withdraw_reasons_dfe_details: withdraw_reasons_dfe_details,
+      trigger: trainee_withdrawal.trigger,
+      future_interest: trainee_withdrawal.future_interest,
     )
   end
 
@@ -35,16 +34,18 @@ describe Withdrawal::View do
       expect(rendered_content).to have_text(date_for_summary_view(withdraw_date))
     end
 
-    it "renders the withdrawal details" do
-      expect(rendered_content).to have_text(withdraw_reasons_details)
+    it "renders the reasons for withdrawal" do
+      withdrawal_reasons.each do |withdrawal_reason|
+        expect(rendered_content).to have_text(I18n.t("components.withdrawal_details.reasons.#{withdrawal_reason.name}"))
+      end
     end
 
-    it "renders the withdrawal dfe details" do
-      expect(rendered_content).to have_text(withdraw_reasons_dfe_details)
+    it "renders the trigger for withdrawal" do
+      expect(rendered_content).to have_text(I18n.t("views.forms.withdrawal_trigger.#{trainee_withdrawal.trigger}.label"))
     end
 
-    it "renders the reason for withdrawal" do
-      expect(rendered_content).to have_text(I18n.t("components.withdrawal_details.reasons.#{withdrawal_reasons.first.name}"))
+    it "renders the candidates' future interest in teaching" do
+      expect(rendered_content).to have_text(I18n.t("views.forms.withdrawal_future_interest.#{trainee_withdrawal.future_interest}.label"))
     end
 
     context "with no withdrawal date present" do

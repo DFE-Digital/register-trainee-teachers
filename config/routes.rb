@@ -91,8 +91,8 @@ Rails.application.routes.draw do
     namespace :add_trainees, path: "add-trainees" do
       resources :uploads, only: %i[index show new create destroy] do
         member do
-          resource :imports, only: %i[create]
-          resource :submission, only: %i[show create]
+          resource :imports, only: :create
+          resource :submission, only: %i[create]
         end
       end
       resources :review_errors, path: "review-errors", only: %i[show]
@@ -171,8 +171,11 @@ Rails.application.routes.draw do
       resource :award_recommendations, only: %i[create]
 
       namespace :withdrawal do
+        resource :start, only: :show
         resource :date, only: %i[edit update]
         resource :reason, only: %i[edit update]
+        resource :trigger, only: %i[edit update]
+        resource :future_interest, only: %i[edit update]
         resource :extra_information, only: %i[edit update], path: "extra-information"
         resource :confirm_detail, only: %i[edit update], path: "confirm"
       end

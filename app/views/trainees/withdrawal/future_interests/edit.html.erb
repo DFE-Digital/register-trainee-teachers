@@ -1,0 +1,49 @@
+<% heading = t("trainees.withdrawals.future_interests.edit.heading") %>
+
+<%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
+
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: edit_trainee_withdrawal_reason_path(trainee),
+    ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: form, url: trainee_withdrawal_future_interest_path(trainee), local: true, method: :put) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(trainee) %>
+      </span>
+
+      <%= f.govuk_radio_buttons_fieldset(:future_interest, legend: { text: t("views.forms.withdrawal_future_interest.title"), size: "l" }, hint: { text: t("views.forms.withdrawal_future_interest.hint") } ) do %>
+      <%= f.govuk_radio_button(
+        :future_interest,
+        :yes,
+        label: { text: t("views.forms.withdrawal_future_interest.yes.label") },
+        link_errors: true,
+      ) %>
+
+      <%= f.govuk_radio_button(
+        :future_interest,
+        :no,
+        label: { text: t("views.forms.withdrawal_future_interest.no.label") },
+      ) %>
+
+      <%= f.govuk_radio_button(
+        :future_interest,
+        :unknown,
+        label: { text: t("views.forms.withdrawal_future_interest.unknown.label") },
+      ) %>
+  <% end %>
+
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>

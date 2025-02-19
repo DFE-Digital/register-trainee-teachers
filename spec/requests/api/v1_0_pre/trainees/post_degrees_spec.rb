@@ -141,6 +141,9 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
           { error: "Conflict",
             message: "This is a duplicate degree" },
         )
+        expect(response.parsed_body["data"]).to contain_exactly(
+          JSON.parse(Api::V10Pre::DegreeSerializer.new(trainee.degrees.first).as_hash.to_json),
+        )
         expect(trainee.reload.degrees.count).to eq(1)
       end
     end

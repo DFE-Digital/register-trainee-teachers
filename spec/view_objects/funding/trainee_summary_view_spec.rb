@@ -37,6 +37,8 @@ module Funding
       end
     end
 
+    let(:route) { "Primary and secondary" }
+
     subject { TraineeSummaryView.new(trainee_summary: summary) }
 
     describe "#summary" do
@@ -81,7 +83,7 @@ module Funding
       let(:bursary_array) {
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: route,
             subject: "Maths",
             lead_partner: "BAT Academy",
             trainees: maths_bursary_trainees,
@@ -102,7 +104,7 @@ module Funding
       let(:scholarship_array) do
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: route,
             subject: "Biology",
             lead_partner: "Regminster College",
             trainees: biology_scholarship_trainees,
@@ -110,7 +112,7 @@ module Funding
             total: "£8,000",
           },
           {
-            route: "Primary and secondary (postgrad)",
+            route: route,
             subject: "Maths",
             lead_partner: "BAT Academy",
             trainees: maths_scholarship_trainees,
@@ -131,7 +133,7 @@ module Funding
       let(:tiered_bursary_array) do
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: route,
             tier: "Tier 1",
             trainees: biology_tiered_bursary_trainees,
             amount_per_trainee: "£1,000",
@@ -151,7 +153,7 @@ module Funding
       let(:grant_array) do
         [
           {
-            route: "Primary and secondary (postgrad)",
+            route: route,
             subject: "Maths",
             trainees: maths_grant_trainees,
             amount_per_trainee: "£3,000",

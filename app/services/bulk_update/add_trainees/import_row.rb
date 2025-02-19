@@ -91,14 +91,16 @@ module BulkUpdate
       end
 
       def prepare_placement_attributes(attributes)
-        return attributes if attributes[:urn].blank?
-
-        attributes[:placements_attributes] = [
-          {
-            name: "Placement 1",
-            urn: attributes[:urn],
-          },
-        ]
+        attributes.slice(
+          :placement_urn1,
+          :placement_urn2,
+          :placement_urn3,
+        ).compact.each_with_index do |(_placement, urn), index|
+          (attributes[:placements_attributes] ||= []) << {
+            name: "Placement #{index + 1}",
+            urn: urn,
+          }
+        end
       end
 
       def prepare_record_source_attribute(attributes)

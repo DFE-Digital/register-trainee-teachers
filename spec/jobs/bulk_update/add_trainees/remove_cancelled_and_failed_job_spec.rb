@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe BulkUpdate::AddTrainees::RemoveCancelledAndFailedJob do
   context "when the feature is enabled", feature_bulk_add_trainees: true do
-    it "calls the RemoveDeadDuplicates service" do
+    it "calls the RemoveUploads service" do
       allow(BulkUpdate::AddTrainees::RemoveUploads).to receive(:call)
 
       subject.perform
@@ -14,7 +14,7 @@ RSpec.describe BulkUpdate::AddTrainees::RemoveCancelledAndFailedJob do
   end
 
   context "when the feature is disabled", feature_bulk_add_trainees: false do
-    it "does not call the RemoveDeadDuplicates service" do
+    it "does not call the RemoveUploads service" do
       allow(BulkUpdate::AddTrainees::RemoveUploads).to receive(:call)
 
       subject.perform

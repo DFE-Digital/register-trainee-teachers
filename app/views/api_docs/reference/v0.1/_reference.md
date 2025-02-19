@@ -952,7 +952,12 @@ Trainee details
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
-      "errors": "This trainee is already in Register",
+      "errors": [
+        {
+          "error": "Conflict",
+          "message": "This trainee is already in Register"
+        }
+      ],
       "data": [
         {
           "first_names": "John",
@@ -1198,6 +1203,17 @@ Placement details
           "error": "Conflict",
           "message": "Urn has already been taken"
         }
+      ],
+      "data": [
+        {
+          "urn": "896801",
+          "name": "existing placement",
+          "address": "URN 896801, ZV24 7ET",
+          "postcode": "ZV24 7ET",
+          "created_at": "2025-02-17T16:07:07.856Z",
+          "updated_at": "2025-02-17T16:07:07.873Z",
+          "placement_id": "fpe10ornjexqakjg4sgzjyhj"
+        }
       ]
     }
     </pre>
@@ -1336,6 +1352,25 @@ Degree details
         {
           "error": "Conflict",
           "message": "This is a duplicate degree"
+        },
+      ],
+      "data": [
+        {
+          "uk_degree": null,
+          "non_uk_degree": null,
+          "created_at": "2025-02-17T15:43:01.197Z",
+          "updated_at": "2025-02-17T15:43:01.197Z",
+          "subject": "100734",
+          "institution": "0023",
+          "graduation_year": 2022,
+          "grade": "01",
+          "country": null,
+          "other_grade": null,
+          "institution_uuid": "dc70f34a-2887-e711-80d8-005056ac45bb",
+          "uk_degree_uuid": "3e042de2-a453-47dc-9452-90a23399e9ee",
+          "subject_uuid": "338370f0-5dce-e911-a985-000d3ab79618",
+          "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
+          "degree_id": "ao53fi469ar7kjfc04uys0dc"
         }
       ]
     }
@@ -2384,6 +2419,25 @@ Degree details
         {
           "error": "Conflict",
           "message": "This is a duplicate degree"
+        },
+      ],
+      "data": [
+        {
+          "uk_degree": null,
+          "non_uk_degree": null,
+          "created_at": "2025-02-17T15:43:01.197Z",
+          "updated_at": "2025-02-17T15:43:01.197Z",
+          "subject": "100734",
+          "institution": "0023",
+          "graduation_year": 2022,
+          "grade": "01",
+          "country": null,
+          "other_grade": null,
+          "institution_uuid": "dc70f34a-2887-e711-80d8-005056ac45bb",
+          "uk_degree_uuid": "3e042de2-a453-47dc-9452-90a23399e9ee",
+          "subject_uuid": "338370f0-5dce-e911-a985-000d3ab79618",
+          "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
+          "degree_id": "ao53fi469ar7kjfc04uys0dc"
         }
       ]
     }

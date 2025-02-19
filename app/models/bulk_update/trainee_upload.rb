@@ -6,7 +6,7 @@
 #
 #  id                 :bigint           not null, primary key
 #  number_of_trainees :integer          default(0), not null
-#  status             :string           default("pending")
+#  status             :string           default("uploaded")
 #  submitted_at       :datetime
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
@@ -82,7 +82,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   scope :current_academic_cycle, lambda {
     where(created_at: AcademicCycle.current.start_date..AcademicCycle.current.end_date)
   }
-  scope :uncancelled, -> { where.not(status: :cancelled) }
+  scope :not_cancelled_or_uploaded, -> { where.not(status: %i[uploaded cancelled]) }
 
   def total_rows_with_errors
     trainee_upload_rows.with_errors.size

@@ -120,9 +120,12 @@ describe Api::Trainees::SavePlacementResponse do
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:conflict)
-        expect(subject[:json][:data]).to be_blank
-        expect(subject[:json][:errors]).to include(
-          { error: "Conflict", message: "Urn has already been taken" },
+        expect(subject[:json][:errors]).to contain_exactly(
+          error: "Conflict",
+          message: "Urn has already been taken",
+        )
+        expect(subject[:json][:data]).to contain_exactly(
+          Api::V01::PlacementSerializer.new(existing_placement).as_hash,
         )
       end
     end

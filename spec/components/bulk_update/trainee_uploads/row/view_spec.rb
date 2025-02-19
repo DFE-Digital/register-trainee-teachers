@@ -11,21 +11,21 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
     let(:colours) do
       {
         "pending" => "govuk-tag--light-blue",
-        "validated" => "govuk-tag--turquoise",
-        "in_progress" => "govuk-tag--blue",
+        "validated" => "govuk-tag--yellow",
+        "in_progress" => "govuk-tag--light-blue",
         "succeeded" => "govuk-tag--green",
         "failed" => "govuk-tag--red",
-        "cancelled" => "govuk-tag--yellow",
+        "cancelled" => "govuk-tag--red",
       }.with_indifferent_access
     end
 
     let(:statuses) do
       {
         "uploaded" => "Uploaded",
-        "pending" => "Pending",
-        "validated" => "Validated",
+        "pending" => "In progress",
+        "validated" => "Ready to submit",
         "in_progress" => "In progress",
-        "succeeded" => "Succeeded",
+        "succeeded" => "Trainees registered",
         "failed" => "Failed",
         "cancelled" => "Cancelled",
       }.with_indifferent_access
@@ -65,7 +65,7 @@ RSpec.describe BulkUpdate::TraineeUploads::Row::View, type: :component do
           "uploaded" => bulk_update_add_trainees_upload_path(upload),
           "pending" => bulk_update_add_trainees_upload_path(upload),
           "validated" => bulk_update_add_trainees_upload_path(upload),
-          "in_progress" => bulk_update_add_trainees_submission_path(upload),
+          "in_progress" => bulk_update_add_trainees_upload_path(upload),
           "succeeded" => bulk_update_add_trainees_upload_path(upload),
           "failed" => bulk_update_add_trainees_upload_path(upload),
         }.with_indifferent_access[upload.status]

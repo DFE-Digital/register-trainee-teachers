@@ -1,0 +1,45 @@
+<% heading = t("trainees.withdrawals.triggers.edit.heading") %>
+
+<%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
+
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: t("back"),
+    href: edit_trainee_withdrawal_date_path(trainee),
+    ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: form, url: trainee_withdrawal_trigger_path(trainee), local: true, method: :put) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(trainee) %>
+      </span>
+
+      <%= f.govuk_radio_buttons_fieldset(:trigger,
+      legend: { text: t("views.forms.withdrawal_trigger.title"), size: "l"},
+      hint: { text: t("views.forms.withdrawal_trigger.hint") }) do %>
+      <%= f.govuk_radio_button(
+        :trigger,
+        :provider,
+        label: { text: t("views.forms.withdrawal_trigger.provider.label") },
+        link_errors: true,
+      ) %>
+
+      <%= f.govuk_radio_button(
+        :trigger,
+        :trainee,
+        label: { text: t("views.forms.withdrawal_trigger.trainee.label") },
+      ) %>
+  <% end %>
+
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>

@@ -1,0 +1,8 @@
+<%= govuk_details(summary_text: "Help with the CSV file") do %>
+  <p class="govuk-body">The CSV file must include the following headers in the first row:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <% headers.each do |header| %>
+      <li><%= header %></li>
+    <% end %>
+  </ul>
+<% end %>

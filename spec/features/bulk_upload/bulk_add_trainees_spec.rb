@@ -124,14 +124,6 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         then_i_see_the_new_bulk_update_import_page
 
-        when_i_visit_the_bulk_update_add_trainees_uploads_page
-        and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.uploaded.first)
-        then_i_see_the_new_bulk_update_import_page
-
-        when_i_click_on_back_link
-        then_i_see_the_bulk_update_add_trainees_uploads_index_page
-
-        when_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.uploaded.first)
         and_i_click_the_cancel_process_link
         then_the_upload_is_cancelled
 
@@ -201,9 +193,6 @@ feature "bulk add trainees" do
         and_the_send_csv_processing_email_has_been_sent
         and_the_background_job_is_run
         and_i_refresh_the_summary_page
-        and_i_see_the_summary_page
-
-        when_i_click_on_resubmit_the_file_link
         then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
 
@@ -229,8 +218,6 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_summary_page
-
-        and_i_see_the_summary_page
         and_i_dont_see_the_review_errors_message
 
         when_i_click_on_home_link
@@ -275,7 +262,6 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_summary_page
 
-        and_i_see_the_summary_page
         and_i_dont_see_the_review_errors_message
 
         when_i_click_on_home_link
@@ -306,8 +292,6 @@ feature "bulk add trainees" do
 
         when_the_background_job_is_run
         and_i_refresh_the_summary_page
-
-        and_i_see_the_summary_page
         and_i_dont_see_the_review_errors_message
 
         when_i_click_on_home_link
@@ -412,7 +396,6 @@ feature "bulk add trainees" do
 
         when_i_click_the_view_status_of_new_trainee_files_link(full_link: true)
         and_i_click_on_an_upload(upload: BulkUpdate::TraineeUpload.in_progress.first)
-        then_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.in_progress.first)
 
         when_i_click_on_back_link
         then_i_see_the_bulk_update_add_trainees_uploads_index_page
@@ -546,11 +529,11 @@ private
   end
 
   def then_i_see_the_upload_status_row_as_pending(upload)
-    expect(page).to have_content("#{upload.filename} Pending", normalize_ws: true)
+    expect(page).to have_content("#{upload.filename} In progress", normalize_ws: true)
   end
 
   def then_i_see_the_upload_status_row_as_validated(upload)
-    expect(page).to have_content("#{upload.filename} Validated", normalize_ws: true)
+    expect(page).to have_content("#{upload.filename} Ready to submit", normalize_ws: true)
   end
 
   def when_multiple_uploads_exist
@@ -583,17 +566,16 @@ private
 
     expect(page).to have_content("Status of new trainee files")
     expect(page).to have_content("View the status of recently uploaded files containing new trainees.")
-    expect(page).to have_content("This will list all successful new trainee uploads for the current academic year.")
     expect(page).to have_content("Failed uploads will be removed after 30 days.")
 
-    expect(page).to have_content(
+    expect(page).not_to have_content(
       "five_trainees.csv Uploaded",
     )
     expect(page).to have_content(
-      "five_trainees.csv Pending",
+      "five_trainees.csv In progress",
     )
     expect(page).to have_content(
-      "five_trainees.csv Validated",
+      "five_trainees.csv Ready to submit",
     )
     expect(page).not_to have_content(
       "five_trainees.csv Cancelled",
@@ -602,7 +584,7 @@ private
       "#{BulkUpdate::TraineeUpload.in_progress.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv In progress",
     )
     expect(page).to have_content(
-      "#{BulkUpdate::TraineeUpload.succeeded.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Succeeded",
+      "#{BulkUpdate::TraineeUpload.succeeded.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Trainees registered",
     )
     expect(page).to have_content(
       "#{BulkUpdate::TraineeUpload.failed.take.submitted_at.to_fs(:govuk_date_and_time)} five_trainees.csv Failed",
@@ -808,7 +790,8 @@ private
   end
 
   def and_i_dont_see_the_review_errors_message
-    expect(page).not_to have_content("You need to review the errors before you can add new trainees")
+    expect(page).not_to have_content("Review errors for")
+    expect(page).not_to have_content("You cannot add new trainees if there’s an error in their row in the CSV file")
   end
 
   def and_i_dont_see_the_submit_button
@@ -833,105 +816,6 @@ private
     )
   end
 
-  def and_i_see_the_summary_page(upload: BulkUpdate::TraineeUpload.last)
-    expect(page).to have_current_path(
-      bulk_update_add_trainees_submission_path(upload),
-    )
-
-    if upload.in_progress?
-      expect(page).to have_content("Your file is being processed")
-      expect(page).to have_content(
-        "We're currently processing #{upload.filename}",
-      )
-      expect(page).to have_content("This could take several minutes if there are a large number of trainees.")
-      expect(page).to have_content("You'll receive an email to tell you when this is complete.")
-      expect(page).to have_content("You can also check the")
-      expect(page).to have_link("status of new trainee files", href: bulk_update_add_trainees_uploads_path)
-      expect(page).to have_link("Back to bulk updates page", href: bulk_update_path)
-
-      expect(page).not_to have_content("Trainees submitted")
-      expect(page).not_to have_content("You can view your trainee records to check if they are correct.")
-      expect(page).not_to have_content("There are 3 ways to check trainee data in Register.")
-      expect(page).not_to have_content("Choose whichever one of the following that suits you:")
-      expect(page).not_to have_content("view your trainee records to check your trainees directly in the service one by on")
-      expect(page).not_to have_content("use the 'Reports' section and export a CSV of your new trainees for the current academic year")
-      expect(page).not_to have_content("export a CSV of your trainees in the 'Registered trainees' section, using the 'start year' filter to select the current academic year")
-      expect(page).not_to have_content("View trainees' teacher reference number (TRN)")
-      expect(page).not_to have_content("Once a trainee is registered, a TRN is created for each trainee record.")
-      expect(page).not_to have_content("This is when the trainee becomes registered with the Department for Education (DfE).")
-      expect(page).not_to have_content("You can view trainee TRNs in the Register service. This may take several minutes to appear after the bulk upload.")
-      expect(page).not_to have_content("Trainees will receive their TRN by email.")
-
-      expect(page).not_to have_content("Your submitted #{upload.filename} on #{upload.submitted_at.to_fs(:govuk_date_and_time)} has failed because:")
-      expect(page).not_to have_content("you have errors in the CSV file, or")
-      expect(page).not_to have_content("we could not process the CSV file")
-      expect(page).not_to have_content("What you can do next")
-      expect(page).not_to have_content("Check for errors in the CSV file by viewing")
-      expect(page).not_to have_content("Errors are indicated in the CSV row. If you find errors then you can:")
-      expect(page).not_to have_content("fix the errors in your data")
-      expect(page).not_to have_content("if you cannot fix the error, you can delete the row and the trainee will not be included")
-      expect(page).not_to have_content("Upload the updated CSV file.")
-      expect(page).not_to have_content("If there are no errors in the CSV file, it means we could not process the CSV file.")
-      expect(page).not_to have_content("You can:")
-      expect(page).not_to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit the CSV file")
-      expect(page).not_to have_link("re-submit the CSV file", href: bulk_update_add_trainees_upload_path(upload))
-      expect(page).not_to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
-    else
-      within(".govuk-panel") do
-        expect(page).to have_content("Trainees submitted")
-      end
-
-      if upload.succeeded?
-        expect(page).to have_content("You can view your trainee records to check if they are correct.")
-        expect(page).to have_content("There are 3 ways to check trainee data in Register.")
-        expect(page).to have_content("Choose whichever one of the following that suits you:")
-        expect(page).to have_content("view your trainee records to check your trainees directly in the service one by on")
-        expect(page).to have_content("use the 'Reports' section and export a CSV of your new trainees for the current academic year")
-        expect(page).to have_content("export a CSV of your trainees in the 'Registered trainees' section, using the 'start year' filter to select the current academic year")
-        expect(page).to have_content("View trainees' teacher reference number (TRN)")
-        expect(page).to have_content("Once a trainee is registered, a TRN is created for each trainee record.")
-        expect(page).to have_content("This is when the trainee becomes registered with the Department for Education (DfE).")
-        expect(page).to have_content("You can view trainee TRNs in the Register service. This may take several minutes to appear after the bulk upload.")
-        expect(page).to have_content("Trainees will receive their TRN by email.")
-
-        expect(page).not_to have_content("Your submitted #{upload.filename} on #{upload.submitted_at.to_fs(:govuk_date_and_time)} has failed because:")
-        expect(page).not_to have_content("you have errors in the CSV file, or")
-        expect(page).not_to have_content("we could not process the CSV file")
-        expect(page).not_to have_content("What you can do next")
-        expect(page).not_to have_content("Check for errors in the CSV file by viewing")
-        expect(page).not_to have_link("status of new trainee files", href: bulk_update_add_trainees_uploads_path)
-        expect(page).not_to have_content("Errors are indicated in the CSV row. If you find errors then you can:")
-        expect(page).not_to have_content("fix the errors in your data")
-        expect(page).not_to have_content("if you cannot fix the error, you can delete the row and the trainee will not be included")
-        expect(page).not_to have_content("Upload the updated CSV file.")
-        expect(page).not_to have_content("If there are no errors in the CSV file, it means we could not process the CSV file.")
-        expect(page).not_to have_content("You can:")
-        expect(page).not_to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit the CSV file")
-        expect(page).not_to have_link("re-submit the CSV file", href: bulk_update_add_trainees_upload_path(upload))
-        expect(page).not_to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
-      else
-        expect(page).to have_content("Your submitted #{upload.filename} on #{upload.submitted_at.to_fs(:govuk_date_and_time)} has failed because:")
-        expect(page).to have_content("you have errors in the CSV file, or")
-        expect(page).to have_content("we could not process the CSV file")
-        expect(page).to have_content("What you can do next")
-        expect(page).to have_content("Check for errors in the CSV file by viewing")
-        expect(page).to have_link("status of new trainee files", href: bulk_update_add_trainees_uploads_path)
-        expect(page).to have_content("Errors are indicated in the CSV row. If you find errors then you can:")
-        expect(page).to have_content("fix the errors in your data")
-        expect(page).to have_content("if you cannot fix the error, you can delete the row and the trainee will not be included")
-        expect(page).to have_content("Upload the updated CSV file.")
-        expect(page).to have_content("If there are no errors in the CSV file, it means we could not process the CSV file.")
-        expect(page).to have_content("You can:")
-        expect(page).to have_content("wait for an email from the Becoming a Teacher support team asking you to re-submit the CSV file")
-        expect(page).to have_link("re-submit the CSV file", href: bulk_update_add_trainees_upload_path(upload))
-        expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
-        expect(page).to have_content("view your trainee records to check your trainees directly in the service one by on")
-        expect(page).to have_content("use the 'Reports' section and export a CSV of your new trainees for the current academic year")
-        expect(page).to have_content("export a CSV of your trainees in the 'Registered trainees' section, using the 'start year' filter to select the current academic year")
-      end
-    end
-  end
-
   def when_there_is_a_bulk_update_trainee_upload
     @upload_for_different_provider = create(:bulk_update_trainee_upload)
   end
@@ -949,7 +833,7 @@ private
   end
 
   def and_i_refresh_the_summary_page
-    visit bulk_update_add_trainees_submission_path(BulkUpdate::TraineeUpload.last)
+    visit bulk_update_add_trainees_upload_path(BulkUpdate::TraineeUpload.last)
   end
 
   def when_the_background_job_is_run
@@ -986,6 +870,21 @@ private
 
     expect(page).to have_content("Placement 1")
     expect(page).to have_content("URN 609384")
+    expect(page).to have_content("Placement 2")
+    expect(page).to have_content("URN 325900")
+    expect(page).to have_content("Placement 3")
+    expect(page).to have_content("URN 894261")
+
+    expect(page).not_to have_content("First placement is missing")
+    expect(page).not_to have_content("Second placement is missing")
+
+    click_on "All records"
+
+    click_on "Lavonda Bins"
+
+    expect(page).to have_content("Placement 1")
+    expect(page).to have_content("URN 773124")
+
     expect(page).not_to have_content("First placement is missing")
     expect(page).to have_content("Second placement is missing")
   end
@@ -1128,7 +1027,7 @@ private
   end
 
   def when_i_click_on_home_link
-    find(".govuk-back-link", text: "Home").click
+    click_on("Home")
   end
 
   def then_i_see_the_new_bulk_update_import_page
@@ -1164,7 +1063,6 @@ private
   alias_method :and_i_click_the_view_status_of_new_trainee_files_link, :when_i_click_the_view_status_of_new_trainee_files_link
   alias_method :when_i_visit_the_bulk_update_index_page, :and_i_visit_the_bulk_update_index_page
   alias_method :and_i_click_on_an_upload, :when_i_click_on_an_upload
-  alias_method :then_i_see_the_summary_page, :and_i_see_the_summary_page
   alias_method :and_a_job_is_queued_to_process_the_upload, :then_a_job_is_queued_to_process_the_upload
   alias_method :and_the_background_job_is_run, :when_the_background_job_is_run
   alias_method :and_i_return_to_the_review_errors_page, :when_i_return_to_the_review_errors_page

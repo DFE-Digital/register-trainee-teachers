@@ -57,7 +57,9 @@ module BulkUpdate
       }.freeze
 
       PLACEMENT_HEADERS = {
-        "First Placement URN" => "urn",
+        "Placement 1 URN" => "placement_urn1",
+        "Placement 2 URN" => "placement_urn2",
+        "Placement 3 URN" => "placement_urn3",
       }.freeze
 
       DEGREE_HEADERS = {
@@ -78,9 +80,9 @@ module BulkUpdate
         dry_run = !trainee_upload.in_progress?
         success = true
 
-        ActiveRecord::Base.transaction do |_transaction|
+        ActiveRecord::Base.transaction do
           if dry_run
-            CSV.parse(trainee_upload.file.download, headers: true).map.with_index do |row, index|
+            CSV.parse(trainee_upload.file.download, headers: true).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
                 trainee_upload: trainee_upload,
                 data: row.to_h,

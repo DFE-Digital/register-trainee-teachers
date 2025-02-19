@@ -8,15 +8,17 @@
 <% end %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+  <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-xl"><%= organisation_name %></span>
       Status of new trainee files
     </h1>
 
     <p class="govuk-body">
-      View the status of recently uploaded files containing new trainees.<br>
-      This will list all successful new trainee uploads for the current academic year.<br>
+      View the status of recently uploaded files containing new trainees.
+    </p>
+
+    <p class="govuk-body">
       Failed uploads will be removed after 30 days.
     </p>
 
@@ -30,8 +32,12 @@
         </tr>
       </thead>
       <tbody class="govuk-table__body"><tr class="govuk-table__row">
-        <% @bulk_update_trainee_uploads.each do |bulk_update_trainee_upload| %>
-          <%= render(BulkUpdate::TraineeUploads::Row::View.new(upload: bulk_update_trainee_upload)) %>
+        <% if @bulk_update_trainee_uploads.any? %>
+          <% @bulk_update_trainee_uploads.each do |bulk_update_trainee_upload| %>
+            <%= render(BulkUpdate::TraineeUploads::Row::View.new(upload: bulk_update_trainee_upload)) %>
+          <% end %>
+        <% else %>
+          <td class="govuk-table__cell" colspan="3">You have no recently submitted files</td>
         <% end %>
       </tbody>
     </table>

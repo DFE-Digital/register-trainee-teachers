@@ -21,11 +21,11 @@ module BulkUpdate
         return if headers.all? { |value| value.is_a?(String) } &&
           headers.sort == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.sort
 
-        record.errors.add(:file, :invalid_headers, headers: BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(", "))
+        record.errors.add(:file, :invalid_headers)
       end
 
       def trainees!
-        return unless csv.empty?
+        return unless rows.empty?
 
         record.errors.add(:file, :no_trainees)
       end
@@ -35,7 +35,7 @@ module BulkUpdate
       end
 
       def rows
-        @rows ||= csv.entries
+        @rows ||= csv.entries.reject { |entry| entry.to_h.values.all?(&:blank?) }
       end
     end
   end
