@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: f6349961e0b912cc11b7e47b5cb1eed2dbd69ffe
-  tag: v3.6.7
+  revision: 5f88319f6db790092fd66548b9391f5e7756e999
+  tag: v3.6.8
   specs:
-    dfe-reference-data (3.6.7)
+    dfe-reference-data (3.6.8)
       activesupport
       tzinfo
 
@@ -369,7 +369,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.5)
+    logger (1.6.6)
     loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
