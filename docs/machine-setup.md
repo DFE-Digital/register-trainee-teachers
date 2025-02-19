@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-You'll need to have the libraries below to be able to develop the application locally. You can install them manually, or using a package manager like [Homebrew](https://brew.sh/). We also have instructions for if you’re using ASDF below.
+You’ll need to have the libraries below to be able to develop the application locally. You can install them manually, or using a package manager like [Homebrew](https://brew.sh/). We also have instructions for if you’re using ASDF below.
 
 - [Ruby](https://www.ruby-lang.org/en/)
 - [Node.js](https://nodejs.org/en/)
