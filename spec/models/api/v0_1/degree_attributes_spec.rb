@@ -67,7 +67,7 @@ RSpec.describe Api::V01::DegreeAttributes do
     end
 
     context "without duplicate" do
-      it "returns the duplicate degrees" do
+      it "returns no duplicate degrees" do
         expect(subject.duplicates).to be_empty
       end
     end
