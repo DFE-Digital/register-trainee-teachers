@@ -50,7 +50,7 @@
 - field_name: NI Number
   technical: ni_number
   hesa_alignment: NIN
-  description: This field describes the trainee’s National Insurance Number.
+  description: This field describes the trainee’s National Insurance number.
   format: |-
     9 character length
 
