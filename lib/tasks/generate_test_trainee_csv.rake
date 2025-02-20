@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 desc "Generate some valid fake CSV data."
+task generate_all_test_csvs: %i[generate_trainee_test_csv generate_trainee_test_csv_with_placement generate_trainee_test_csv_with_degree generate_trainee_test_csv_with_placement_and_degree generate_trainee_test_csv_with_incomplete_data generate_trainee_test_csv_with_invalid_data]
+
+desc "Generate some valid fake CSV data."
 task generate_trainee_test_csv: :environment do
   BulkUpdate::SampleTraineeDataGenerator.call(
     file_name: "tmp/trainees_5.csv",
