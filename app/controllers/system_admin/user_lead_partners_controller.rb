@@ -22,7 +22,6 @@ module SystemAdmin
       end
 
       if @lead_partner_form.save
-        SendWelcomeEmailService.call(user: @user)
         redirect_to(user_path(@user), flash: { success: "Lead partner added" })
       else
         @lead_partner_search = LeadPartnerSearch.call(query: params[:query])
