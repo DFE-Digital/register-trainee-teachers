@@ -1081,6 +1081,19 @@ Trainee details
   </div>
 </details>
 
+#### Trainee duplication validations
+When creating a trainee, a duplication validation is performed to ensure that duplicate trainees are not created. A trainee will be flagged as a duplicate if:
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li>there is an exact match on <code>date_of_birth</code> and <code>training_route</code> and <code>last_name</code> (ignoring case)</li>
+  <li><strong>and</strong> their start date (based on <code>trainee_start_date</code> or <code>itt_start_date</code>) is in the same academic year</li>
+  <li><strong>and</strong> there is a match on either <code>first_names</code> (ignoring case, punctuation, and special characters) or <code>email</code> (ignoring case)</li>
+</ul>
+
+If the new trainee is flagged as a duplicate, an error message will be returned indicating it is a duplicate.
+
+This validation ensures that duplicate trainee records are not created, and helps to maintain the data accuracy and data integrity.
+
 ---
 
 ### `POST /trainees/{trainee_id}/placements`
@@ -1218,6 +1231,17 @@ Placement details
   </div>
 </details>
 
+#### Placement duplication validations
+When creating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks the following fields:
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li><code>urn</code></li>
+</ul>
+
+If a placement with the same `urn` already exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
+
+This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
+
 ---
 
 
@@ -1354,7 +1378,7 @@ Degree details
           "subject_uuid": "338370f0-5dce-e911-a985-000d3ab79618",
           "grade_uuid": "8741765a-13d8-4550-a413-c5a860a59d25",
           "degree_id": "ao53fi469ar7kjfc04uys0dc"
-        } 
+        }
       ]
     }
     </pre>
@@ -1376,6 +1400,22 @@ Degree details
     </pre>
   </div>
 </details>
+
+#### Degree duplication validations
+When creating a degree, a duplication validation is performed to ensure that duplicate degrees are not created. This validation checks the following fields:
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li><code>subject</code></li>
+  <li><code>graduation_year</code></li>
+  <li><code>country</code></li>
+  <li><code>uk_degree</code></li>
+  <li><code>non_uk_degree</code></li>
+  <li><code>grade</code></li>
+</ul>
+
+If a degree with these exact fields already exists, it is considered a duplicate.
+
+This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
 
 ---
 
@@ -2286,13 +2326,23 @@ Placement details
   </div>
 </details>
 
+#### Placement duplication validations
+When updating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks the following fields:
 
+<ul class='govuk-list govuk-list--bullet'>
+  <li><code>urn</code></li>
+</ul>
+
+If a placement with the same `urn` exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
+
+This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
 
 ---
 
 ### `PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`
 
 Updates an existing degree for this trainee.
+
 
 #### Request
 
@@ -2445,6 +2495,21 @@ Degree details
   </div>
 </details>
 
+#### Degree duplication validations
+When updating a degree, a duplication validation is performed to ensure that duplicate degrees are not created. This validation checks the following fields:
+
+<ul class='govuk-list govuk-list--bullet'>
+  <li><code>subject</code></li>
+  <li><code>graduation_year</code></li>
+  <li><code>country</code></li>
+  <li><code>uk_degree</code></li>
+  <li><code>non_uk_degree</code></li>
+  <li><code>grade</code></li>
+</ul>
+
+If a degree with these exact fields already exists, it is considered a duplicate.
+
+This validation ensures that duplicate degree records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
 
 ---
 
