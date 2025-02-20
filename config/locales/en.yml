@@ -1749,7 +1749,7 @@ en:
         withdrawal/trigger_form:
           attributes:
             trigger:
-              blank: Choose a reason for withdrawal
+              blank: Please select an option
         withdrawal/future_interest_form:
           attributes:
             future_interest:
@@ -2050,17 +2050,17 @@ en:
         api/v01/withdrawal_attributes:
           attributes:
             reasons:
-              inclusion: Choose one or more reasons why the trainee withdrew from the course, or select "Unknown"
+              inclusion: Choose a reason for withdrawal
               unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
               invalid: Reasons selected are not valid for this trigger
             withdraw_date:
               blank: Choose a withdrawal date
               invalid: Choose a valid withdrawal date
               not_before_itt_start_date: *not_before_itt_start_date
-            withdraw_reasons_details:
-              too_long: Details about why the trainee withdrew must be 1000 characters or less
-            withdraw_reasons_dfe_details:
-              too_long: What the Department for Education could have done must be 1000 characters or less
+            trigger:
+              blank: Please select an option
+            future_interest:
+              blank: Please select an option
         api/v01/degree_attributes:
           duplicate: This is a duplicate degree
         api/create_trainee:

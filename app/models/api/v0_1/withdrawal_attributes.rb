@@ -10,8 +10,8 @@ module Api
       include DatesHelper
 
       validate :withdraw_date_valid
-      validates :reasons, presence: true
-      validate :withdrawal_reasons_valid?
+      validate :withdrawal_reasons_valid?, unless: -> { reasons.nil? }
+      validate :withdrawal_reasons_provided?
       validates :trigger, inclusion: { in: %w[provider trainee] }
       validates :future_interest, inclusion: { in: %w[yes no unknown] }
 
@@ -63,8 +63,11 @@ module Api
         end
       end
 
-      def withdrawal_reasons_valid?
+      def withdrawal_reasons_provided?
         errors.add(:reasons, :inclusion) if reasons.blank? || reasons.empty?
+      end
+
+      def withdrawal_reasons_valid?
         errors.add(:reasons, :invalid) unless (reasons - valid_reasons).empty?
       end
 
