@@ -1090,7 +1090,7 @@ When creating a trainee, a duplication validation is performed to ensure that du
   <li><strong>and</strong> there is a match on either <code>first_names</code> (ignoring case, punctuation, and special characters) or <code>email</code> (ignoring case)</li>
 </ul>
 
-If the new trainee is flagged as a duplicate against an existing trainee, it is considered a duplicate and will return an error message indicating it is a duplicate.
+If the new trainee is flagged as a duplicate, an error message will be returned indicating it is a duplicate.
 
 This validation ensures that duplicate trainee records are not created, and helps to maintain the data accuracy and data integrity.
 
