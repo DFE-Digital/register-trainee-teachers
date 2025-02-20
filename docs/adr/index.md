@@ -9,3 +9,4 @@
 * [7. Store academic cycles on trainees](0007-store-academic-cycles-on-trainees.md)
 * [8. Enable course year picker](0008-enable-course-year-picker.md)
 * [9. Enable Sidekiq worker on productiondata](0009-enable-sidekiq-worker-on-productiondata.md)
+* [10. Use token authentication for API access](0010-use-token-authentication-for-api-access.md)
