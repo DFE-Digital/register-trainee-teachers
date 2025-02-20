@@ -12,8 +12,8 @@
   hesa_alignment: APPLYAPPLICATIONID
   description: Unique Application ID, also called Application Number, used by the
     Department for Education’s apply for teacher training online service.
-  format: 10 character max length
-  example: '"11fc0d3b2f"'
+  format: integer
+  example: '123456'
   validation: Optional - but should be included for all trainees with an application in the Apply service
 - field_name: HESA ID
   technical: hesa_id
@@ -107,8 +107,7 @@
   description: This field defines the country of legal nationality.
   format: "[HESA nationality codes](https://www.hesa.ac.uk/collection/c24053/e/nation)"
   example: '"GB"'
-  validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L87
+  validation: Optional
 - field_name: Ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
