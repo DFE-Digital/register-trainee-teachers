@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_20_135307) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -28,7 +28,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.date "end_date", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone)", name: "academic_cycles_date_range", using: :gist
+
+    t.exclusion_constraint "tsrange((start_date)::timestamp without time zone, (end_date)::timestamp without time zone) WITH &&", using: :gist, name: "academic_cycles_date_range"
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -294,9 +295,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.integer "duration_in_years", null: false
     t.string "course_length"
     t.integer "qualification", null: false
+    t.integer "level", null: false
     t.integer "route", null: false
     t.string "summary", null: false
-    t.integer "level", null: false
     t.string "accredited_body_code", null: false
     t.integer "min_age"
     t.integer "max_age"
@@ -776,8 +777,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.citext "slug"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["slug", "trainee_id"], name: "index_placements_on_slug_and_trainee_id", unique: true
-    t.index ["trainee_id", "address", "postcode"], name: "index_placements_on_trainee_id_and_address_and_postcode", unique: true, where: "(school_id IS NULL)"
-    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "((urn IS NOT NULL) AND ((urn)::text <> ''::text) AND (school_id IS NULL))"
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
   end
 
@@ -805,8 +804,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "dttp_id"
-    t.boolean "apply_sync_enabled", default: false
     t.string "code"
+    t.boolean "apply_sync_enabled", default: false
     t.string "ukprn"
     t.string "accreditation_id"
     t.datetime "discarded_at"
@@ -897,7 +896,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
   end
 
   create_table "trainee_withdrawals", force: :cascade do |t|
-    t.bigint "trainee_id", null: false
+    t.bigint "trainee_id"
     t.date "date"
     t.enum "trigger", enum_type: "trigger_type"
     t.string "another_reason"
@@ -951,14 +950,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.text "course_subject_two"
     t.text "course_subject_three"
     t.datetime "awarded_at", precision: nil
-    t.boolean "applying_for_bursary"
     t.integer "training_initiative"
+    t.boolean "applying_for_bursary"
     t.integer "bursary_tier"
     t.integer "study_mode"
     t.boolean "ebacc", default: false
     t.string "region"
-    t.integer "course_education_phase"
     t.boolean "applying_for_scholarship"
+    t.integer "course_education_phase"
     t.boolean "applying_for_grant"
     t.uuid "course_uuid"
     t.boolean "lead_partner_not_applicable", default: false
