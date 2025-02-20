@@ -10,19 +10,18 @@ module Api
       include DatesHelper
 
       validate :withdraw_date_valid
-      validates :withdraw_reasons_details, length: { maximum: 1000 }, allow_blank: true
-      validates :withdraw_reasons_dfe_details, length: { maximum: 1000 }, allow_blank: true
-      validates :reasons, inclusion: { in: WithdrawalReasons::REASONS }
-
-      validate :unknown_exclusively
+      validates :reasons, presence: true
+      validate :withdrawal_reasons_valid?
+      validates :trigger, inclusion: { in: %w[provider trainee] }
+      validates :future_interest, inclusion: { in: %w[yes no unknown] }
 
       attr_accessor :trainee
 
       ATTRIBUTES = %i[
         reasons
         withdraw_date
-        withdraw_reasons_details
-        withdraw_reasons_dfe_details
+        trigger
+        future_interest
       ].freeze
 
       ATTRIBUTES.each do |attr|
@@ -64,14 +63,15 @@ module Api
         end
       end
 
-      def unknown_exclusively
-        return unless unknown_reason? && withdrawal_reasons.count > 1
-
-        errors.add(:reasons, :unknown_exclusively)
+      def withdrawal_reasons_valid?
+        errors.add(:reasons, :inclusion) if reasons.blank? || reasons.empty?
+        errors.add(:reasons, :invalid) unless (reasons - valid_reasons).empty?
       end
 
-      def unknown_reason?
-        withdrawal_reasons.pluck(:name).include?(WithdrawalReasons::UNKNOWN)
+      def valid_reasons
+        return WithdrawalReasons::PROVIDER_REASONS if trigger == "provider"
+
+        WithdrawalReasons::TRAINEE_REASONS
       end
 
       def withdrawal_reasons

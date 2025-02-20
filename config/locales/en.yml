@@ -1327,7 +1327,10 @@ en:
           hint: This is the last day they trained for QTS
       reasons:
         edit:
-          heading: Why did the trainee choose to withdraw?
+          trainee:
+            heading: Why did the trainee choose to withdraw?
+          provider:
+            heading: Why did you have to withdraw the trainee?
           hint: Select all reasons that apply
       extra_informations:
         edit:
@@ -2049,6 +2052,7 @@ en:
             reasons:
               inclusion: Choose one or more reasons why the trainee withdrew from the course, or select "Unknown"
               unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
+              invalid: Reasons selected are not valid for this trigger
             withdraw_date:
               blank: Choose a withdrawal date
               invalid: Choose a valid withdrawal date

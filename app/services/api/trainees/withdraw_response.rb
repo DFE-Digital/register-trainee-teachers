@@ -46,7 +46,8 @@ module Api
         assign_attributes(params)
 
         if valid?
-          update!(attributes_to_save)
+          trainee.update!(attributes_to_save.except(:trigger, :future_interest, :withdrawal_reasons))
+          trainee.trainee_withdrawals.create!(attributes_to_save.except(:withdraw_date))
           withdraw!
           ::Trainees::Withdraw.call(trainee:)
           true

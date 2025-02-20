@@ -343,6 +343,10 @@ paths:
                           type: string
                         application_id:
                           nullable: true
+                        withdrawal_trigger:
+                          nullable: true
+                        withdrawal_future_interest:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -507,6 +511,8 @@ paths:
                   fund_code:
                   bursary_level:
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -596,6 +602,8 @@ paths:
                   fund_code:
                   bursary_level:
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -695,6 +703,8 @@ paths:
                   itt_qualification_aim: '001'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -794,6 +804,8 @@ paths:
                   itt_qualification_aim: '004'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -893,6 +905,8 @@ paths:
                   itt_qualification_aim: '002'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -992,6 +1006,8 @@ paths:
                   itt_qualification_aim: '020'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1091,6 +1107,8 @@ paths:
                   itt_qualification_aim: '032'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1190,6 +1208,8 @@ paths:
                   itt_qualification_aim: '032'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1289,6 +1309,8 @@ paths:
                   itt_qualification_aim: '021'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1388,6 +1410,8 @@ paths:
                   itt_qualification_aim: '031'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1487,6 +1511,8 @@ paths:
                   itt_qualification_aim: '004'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1586,6 +1612,8 @@ paths:
                   itt_qualification_aim: '001'
                   hesa_disabilities: {}
                   nationality: VA
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -1944,6 +1972,10 @@ paths:
                         type: string
                       application_id:
                         nullable: true
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
                     required:
                     - first_names
                     - last_name
@@ -2123,7 +2155,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: wrFx2dAPg3p3kyhwhBuy5dng
+                    placement_id: sQPCRusPRNTi79127raz9GNt
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2139,10 +2171,12 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: iRxa1T2DjCAJMYRG9nsiqtC1
+                    degree_id: EP4oj8VLNzXECDBS9xJLxc4p
                   state: submitted_for_trn
-                  trainee_id: dZ94TLeAueNtTxKHp8G3GinQ
+                  trainee_id: 3WV8Ey1a1qkA61zYp4GpeUN2
                   application_id:
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -2368,6 +2402,10 @@ paths:
                           type: string
                         application_id:
                           nullable: true
+                        withdrawal_trigger:
+                          nullable: true
+                        withdrawal_future_interest:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2519,6 +2557,8 @@ paths:
                   fund_code:
                   bursary_level:
                   nationality:
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -2925,6 +2965,10 @@ paths:
                     properties: {}
                   nationality:
                     nullable: true
+                  withdrawal_trigger:
+                    nullable: true
+                  withdrawal_future_interest:
+                    nullable: true
                   withdraw_reasons:
                     type: array
                     items: {}
@@ -3019,6 +3063,8 @@ paths:
                 - itt_qualification_aim
                 - hesa_disabilities
                 - nationality
+                - withdrawal_trigger
+                - withdrawal_future_interest
                 - withdraw_reasons
                 - placements
                 - degrees
@@ -3104,6 +3150,8 @@ paths:
                 itt_qualification_aim: '007'
                 hesa_disabilities: {}
                 nationality:
+                withdrawal_trigger:
+                withdrawal_future_interest:
                 withdraw_reasons: []
                 placements: []
                 degrees: []
@@ -3151,7 +3199,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 8aw3JsVQkVBTJMk3FJPoRyiU
+        example: 3po8HR34wY7M8TwfbH8sYa6Y
       responses:
         '200':
           description: updates the trainee
@@ -3346,6 +3394,10 @@ paths:
                       nationality:
                         nullable: true
                         type: string
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
                       withdraw_reasons:
                         type: array
                         items: {}
@@ -3507,6 +3559,8 @@ paths:
                     - fund_code
                     - bursary_level
                     - nationality
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
                     - withdraw_reasons
                     - placements
                     - degrees
@@ -3598,6 +3652,8 @@ paths:
                     disability1: '55'
                     disability2: '57'
                   nationality: GB
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements:
                   - urn: '900020'
@@ -3606,7 +3662,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: A6Tc5ZcqwMQPtEn9DgSD5g3u
+                    placement_id: Tn8kATiB122EFinuZYEv9S2r
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3622,9 +3678,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: CUV47LZRbLMF4Tf8c3qAy3y1
+                    degree_id: wUW2KT5E5dvDhRXtrzDf3Gem
                   state: submitted_for_trn
-                  trainee_id: 8aw3JsVQkVBTJMk3FJPoRyiU
+                  trainee_id: 3po8HR34wY7M8TwfbH8sYa6Y
                   application_id:
                   disability2: '57'
         '401':
@@ -3952,6 +4008,10 @@ paths:
                         nullable: true
                       nationality:
                         type: string
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
                       withdraw_reasons:
                         type: array
                         items: {}
@@ -4084,6 +4144,8 @@ paths:
                     - fund_code
                     - bursary_level
                     - nationality
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
                     - withdraw_reasons
                     - placements
                     - degrees
@@ -4162,6 +4224,8 @@ paths:
                   fund_code:
                   bursary_level:
                   nationality: SD
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
@@ -4451,7 +4515,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: kJ24ivMPsDMW5mUPySiWvVhA
+                  degree_id: C7oyiuKEcCxd1vHUHxHDWMXi
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4772,6 +4836,10 @@ paths:
                         nullable: true
                       nationality:
                         nullable: true
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
                       withdraw_reasons:
                         type: array
                         items: {}
@@ -4856,6 +4924,8 @@ paths:
                     - fund_code
                     - bursary_level
                     - nationality
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
                     - withdraw_reasons
                     - placements
                     - degrees
@@ -4934,6 +5004,8 @@ paths:
                   fund_code:
                   bursary_level:
                   nationality:
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees: []
@@ -5408,7 +5480,7 @@ paths:
                   postcode: TM3A 6JB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: 2P7SDGwNjYCsphzvSaqKwFcJ
+                  placement_id: dJZv2MPe1y1v1NkuniaJGXyG
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5653,6 +5725,10 @@ paths:
                         properties: {}
                       nationality:
                         nullable: true
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
                       withdraw_reasons:
                         type: array
                         items: {}
@@ -5771,6 +5847,8 @@ paths:
                     - itt_qualification_aim
                     - hesa_disabilities
                     - nationality
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
                     - withdraw_reasons
                     - placements
                     - degrees
@@ -5859,6 +5937,8 @@ paths:
                   itt_qualification_aim: '032'
                   hesa_disabilities: {}
                   nationality:
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements:
                   - urn: '245290'
@@ -6315,6 +6395,10 @@ paths:
                         nullable: true
                       nationality:
                         type: string
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
                       withdraw_reasons:
                         type: array
                         items: {}
@@ -6447,6 +6531,8 @@ paths:
                     - fund_code
                     - bursary_level
                     - nationality
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
                     - withdraw_reasons
                     - placements
                     - degrees
@@ -6525,6 +6611,8 @@ paths:
                   fund_code:
                   bursary_level:
                   nationality: BM
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
                   withdraw_reasons: []
                   placements: []
                   degrees:
