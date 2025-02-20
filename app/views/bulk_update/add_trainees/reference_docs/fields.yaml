@@ -14,7 +14,7 @@
     Department for Education’s apply for teacher training online service.
   format: 10 character max length
   example: '"11fc0d3b2f"'
-  validation: Optional - used only for trainees imported from Apply
+  validation: Optional - but should be included for all trainees with an application in the Apply service
 - field_name: HESA ID
   technical: hesa_id
   hesa_alignment: HUSID
