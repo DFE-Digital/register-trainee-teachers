@@ -5,12 +5,6 @@
       Your file has been approved
     </h1>
 
-    <% if upload.trainee_upload_rows.with_errors.blank? %>
-      <h2 class="govuk-heading-l">
-        File validation passed
-      </h2>
-    <% end %>
-
     <p class="govuk-body">
       Your file has <%= pluralize(upload.number_of_trainees, "trainee") %> that can now be submitted and added to the Register service.
     </p>
