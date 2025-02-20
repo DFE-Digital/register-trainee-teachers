@@ -414,7 +414,7 @@ module Reports
   private
 
     def placements
-      @placements ||= PlacementsImportedFromHesa.call(trainee:) ? trainee.placements.includes([:school]).reverse : trainee.placements.includes([:school])
+      @placements ||= PlacementsImportedFromHesa.call(trainee:) ? trainee.placements.includes(:school).reverse : trainee.placements.includes([:school])
     end
   end
 end
