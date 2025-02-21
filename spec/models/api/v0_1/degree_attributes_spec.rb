@@ -16,12 +16,24 @@ RSpec.describe Api::V01::DegreeAttributes do
     it { is_expected.to validate_presence_of(:graduation_year) }
     it { is_expected.to validate_presence_of(:subject) }
 
+    it {
+      expect(subject).to validate_inclusion_of(:country).in_array(
+        Hesa::CodeSets::Countries::MAPPING.values,
+      )
+    }
+
     context 'when locale_code is "uk"' do
       before { degree_attributes.locale_code = "uk" }
 
       it { is_expected.to validate_presence_of(:institution) }
 
       it { is_expected.to validate_presence_of(:uk_degree) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:uk_degree).in_array(
+          DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        ).allow_blank
+      }
 
       it { is_expected.to validate_presence_of(:grade) }
     end
@@ -32,6 +44,12 @@ RSpec.describe Api::V01::DegreeAttributes do
       it { is_expected.to validate_presence_of(:country) }
 
       it { is_expected.to validate_presence_of(:non_uk_degree) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:non_uk_degree).in_array(
+          DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        ).allow_blank
+      }
     end
 
     context "with duplicate" do
