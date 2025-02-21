@@ -261,7 +261,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           "/api/v1.0-pre/trainees/#{trainee.slug}/degrees/#{degree.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
-            data: data,
+            data:,
           }.to_json,
         )
       end
@@ -305,7 +305,6 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
         end
       end
     end
-
 
     context "with an invalid request structure" do
       it "does not update the degree and returns a 422 status (unprocessable_entity)" do

@@ -150,9 +150,11 @@ module Api
           @country_from_mapping ||= begin
             mapped_value = Hesa::CodeSets::Countries::MAPPING[@params[:country]]
 
-            return HesaMapperConstants::INVALID if @params[:country].present? && mapped_value.nil?
-
-            mapped_value
+            if @params[:country].present? && mapped_value.nil?
+              HesaMapperConstants::INVALID
+            else
+              mapped_value
+            end
           end
         end
 
