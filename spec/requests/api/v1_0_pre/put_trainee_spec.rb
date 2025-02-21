@@ -248,7 +248,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
 
     context "when course_age_range is invalid" do
-      let(:data) { { course_age_range: "invalid" } }
+      let(:data) { { course_age_range: "1234" } }
 
       before do
         put(
@@ -260,7 +260,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range is invalid")
       end
     end
 
@@ -282,7 +282,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
 
     context "when sex is invalid" do
-      let(:data) { { sex: "invalid" } }
+      let(:data) { { sex: "3" } }
 
       before do
         put(
@@ -294,7 +294,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex is invalid")
       end
     end
 
@@ -741,14 +741,14 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         let(:params) do
           {
             data: {
-              ethnicity: "1000",
+              ethnicity: "Irish",
             },
           }
         end
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+          expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is invalid")
         end
       end
     end
@@ -836,7 +836,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Training route is not included in the list")
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route is invalid")
         end
       end
     end
@@ -1030,6 +1030,146 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
           expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
           expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+        end
+      end
+
+      context "when course_subject_one is invalid" do
+        let(:course_subject_one) { "chemistry" }
+        let(:params) do
+          { data: { course_subject_one: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Course subject one is invalid")
+        end
+      end
+
+      context "when course_subject_two is invalid" do
+        let(:course_subject_two) { "child development" }
+        let(:params) do
+          { data: { course_subject_two: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Course subject two is invalid")
+        end
+      end
+
+      context "when course_subject_three is invalid" do
+        let(:course_subject_three) { "classical studies" }
+        let(:params) do
+          { data: { course_subject_three: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Course subject three is invalid")
+        end
+      end
+
+      context "when study_mode is invalid" do
+        let(:study_mode) { 1 }
+        let(:params) do
+          { data: { study_mode: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Study mode is invalid")
+        end
+      end
+
+      context "when nationality is invalid" do
+        let(:nationality) { "british" }
+        let(:params) do
+          { data: { nationality: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Nationality is invalid")
+        end
+      end
+
+      context "when training_initiative is invalid" do
+        let(:training_initiative) { "now_teach" }
+        let(:params) do
+          { data: { training_initiative: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Training initiative is invalid")
+        end
+      end
+
+      context "when funding_method is invalid" do
+        let(:funding_method) { "8c629dd7-bfc3-eb11-bacc-000d3addca7a" }
+        let(:params) do
+          { data: { funding_method: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Funding method is invalid")
         end
       end
     end
