@@ -50,7 +50,7 @@
       items: header_items(@current_user),
     ) %>
 
-    <%= render OrganisationSwitcher::View.new %>
+    <%= render OrganisationSwitcher::View.new(current_user:) %>
 
     <% unless current_page?(:organisations) %>
       <% if request.path.split('/').second == "api-docs" %>
@@ -73,7 +73,6 @@
             ({ name: "Bulk updates", url: bulk_update_path, current: active_link_for("bulk") } if can_bulk_update?),
             ({ name: "Reports", url: reports_path, current: active_link_for("reports") } if can_view_reports?),
             ({ name: "Funding", url: funding_payment_schedule_path, current: active_link_for("funding") } if can_view_funding?),
-            ({ name: current_user.organisation.name, url: organisations_path, align_right: true } if show_organisation_link?),
           ],
           current_path: request.path,
           current_user: @current_user,
