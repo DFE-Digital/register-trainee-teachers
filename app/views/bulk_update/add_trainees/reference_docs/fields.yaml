@@ -2,7 +2,7 @@
 - field_name: Provider Trainee ID
   technical: provider_trainee_id
   hesa_alignment: OWNSTU
-  description: Provider's own internal identifier for the student.
+  description: Provider’s own internal identifier for the student.
   format: 20 character max length
   example: '"99157234"'
 - field_name: Application ID
@@ -31,13 +31,13 @@
 - field_name: Last Name
   technical: last_name
   hesa_alignment: SURNAME
-  description: This field is the student's family name.
+  description: This field is the student’s family name.
   format: 60 character length
   example: '"Smith"'
 - field_name: Previous Last Name
   technical: previous_last_name
   hesa_alignment: PSURNAME
-  description: This is the trainee's surname immediately prior to the current surname,
+  description: This is the trainee’s surname immediately prior to the current surname,
     if applicable.
   format: 60 character length
   example: '"Jordan-smith"'
@@ -50,7 +50,7 @@
 - field_name: NI Number
   technical: ni_number
   hesa_alignment: NIN
-  description: This field describes the trainee's National Insurance Number.
+  description: This field describes the trainee’s National Insurance number.
   format: |-
     9 character length
 
@@ -93,7 +93,7 @@
 - field_name: Ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
-  description: This field records a student's ethnicity.
+  description: This field records a student’s ethnicity.
   format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
   example: '"103" for example is the code to use if the ethnicity is Asian - Indian
     or Indian British.'
@@ -101,63 +101,63 @@
   technical: disability_1
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 2
   technical: disability_2
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 3
   technical: disability_3
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 4
   technical: disability_4
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 5
   technical: disability_5
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 6
   technical: disability_6
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 7
   technical: disability_7
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 8
   technical: disability_8
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: Disability 9
   technical: disability_9
   hesa_alignment: DISABLE
   description: This field records the type of disability that a student has, on the
-    basis of the student's own self-assessment.
+    basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
 - field_name: ITT Aim
@@ -245,7 +245,7 @@
 - field_name: Course Age Range
   technical: course_age_range
   hesa_alignment: ITTPHSC
-  description: This field describes in more detail the student's initial teacher
+  description: This field describes in more detail the student’s initial teacher
     training aim
   format: "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
   example: '"13916" for example is the code used for Accredited by the Department
@@ -295,7 +295,7 @@
 - field_name: PG Apprenticeship Start Date
   technical: pg_apprenticeship_start_date
   hesa_alignment: PGAPPSTDT
-  description: This records the start date of a postgraduate's teaching apprenticeship.
+  description: This records the start date of a postgraduate’s teaching apprenticeship.
   format: YYYY-MM-DD
   example: "2024-09-01"
 - field_name: Placement 1 URN
@@ -422,7 +422,7 @@
 - field_name: UK degree type
   technical: uk_degree
   hesa_alignment: DEGTYPE
-  description: This records the student's previous qualification
+  description: This records the student’s previous qualification
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
 - field_name: Non UK degree types
@@ -434,33 +434,33 @@
 - field_name: Degree subject
   technical: subject
   hesa_alignment: DEGSBJ
-  description: This field holds the subject(s) of the student's previous degree
+  description: This field holds the subject(s) of the student’s previous degree
   format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
   example: 100048 for example is the design degree subject as part of a previous degree
 - field_name: UK degree grade
   technical: grade
   hesa_alignment: DEGCLSS
-  description: This field is used to indicate the qualification class of the student's
+  description: This field is used to indicate the qualification class of the student’s
     previous degree.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"01" for example is First class honours'
 - field_name: Degree graduation year
   technical: graduation_year
   hesa_alignment: DEGENDDT
-  description: This records the end date of the student's previous qualification.
+  description: This records the end date of the student’s previous qualification.
   format: YYYY-MM-DD
   example: "1985-02-13"
 - field_name: Degree UK awarding institution
   technical: institution
   hesa_alignment: DEGEST
-  description: This records the provider where the student's previous qualification
+  description: This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
   format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
   example: '"1101" for example is Hull College'
 - field_name: Degree country
   technical: country
   hesa_alignment: DEGCTRY
-  description: This records the country where the student's previous qualification
+  description: This records the country where the student’s previous qualification
     was awarded
   format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
   example: '"AU" is an example of using the previous qualification country code for

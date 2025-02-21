@@ -8,11 +8,11 @@ Accepted
 
 ## Context
 
-It's handy to use tooling to create ADRs. There are a couple of options available.
+It’s handy to use tooling to create ADRs. There are a couple of options available.
 
 ## Options
 
-### 1. npryce's adr-tools
+### 1. npryce’s adr-tools
 
 These appear to be the original tools for managing tools. See
 [npryce/adr-tools](https://github.com/npryce/adr-tools) on GitHub.
@@ -30,7 +30,7 @@ These appear to be the original tools for managing tools. See
 
 ### 2. Markdown Architectural Decision Records (madr)
 
-These are a branch of npryce's adr-tools. See
+These are a branch of npryce’s adr-tools. See
 [adr/madr](https://github.com/adr/madr). They seem to have added a whole bunch
 of extra stuff that I'm not sure we need, although I do like some of the ideas
 in their ADR template which I want to re-use in our own template.
@@ -41,14 +41,14 @@ in their ADR template which I want to re-use in our own template.
 
 #### Cons
 
-- seems quite a bit more complicated (not necessarily in usage, didn't get that
+- seems quite a bit more complicated (not necessarily in usage, did not get that
   far, just looking at their plethora of repos)
 - lots of extra features we may not need
 - JavaScript based, so more complicated than just a bunch of bash scripts
 
 ## Decision
 
-Use npryce's adr-tools.
+Use npryce’s adr-tools.
 
 ## Consequences
 

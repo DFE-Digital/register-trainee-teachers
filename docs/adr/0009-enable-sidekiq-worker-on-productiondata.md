@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-In preparation for the next academic year we need to test the changes that we've made in the `productiondata` environment.
+In preparation for the next academic year we need to test the changes that we’ve made in the `productiondata` environment.
 
 Generally the worker is off as there is no need for it to be running all the time.
 

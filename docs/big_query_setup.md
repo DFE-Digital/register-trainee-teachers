@@ -11,13 +11,13 @@ To prepare a BigQuery data set to allow this:
     * Don’t worry about granting anything, just create
 * Create a dataset - In the BigQuery console (https://console.cloud.google.com/bigquery)
     * Create data set on the root
-    * Data set Id e.g. register_events_<environment>
+    * Data set Id, for example `register_events_<environment>`
     * Data location europe-west2 (London)
     * Don’t enable expiry
     * Customer managed key
 * Create a table ‘events’
     * Export the schema from an existing table.
-        * Install the gcloud CLI if you don't have it (https://cloud.google.com/sdk/docs/install)
+        * Install the gcloud CLI if you do not have it (https://cloud.google.com/sdk/docs/install)
         * `gcloud auth login`
         * Select `rugged-abacus-218110` as the default project
         * Dump the schema `bq show --schema register_events_test.events` (dataset.table_name) of the table to copy
@@ -25,7 +25,7 @@ To prepare a BigQuery data set to allow this:
     * Create a new table from the schema (back in the BigQuery console)
         * Create from ‘Empty table’
         * Project - rugged-abacus-218110
-        * Data set id - whatever was chosen up there ^ e.g. register_events_qa
+        * Data set id - whatever was chosen up there ^, for example `register_events_qa`
         * Table name - events
         * Table type - Native table
         * Schema - edit as text and then paste the JSON array schema in
@@ -40,9 +40,9 @@ To prepare a BigQuery data set to allow this:
         * Save
 * Setup the service account for workload identity federation.
 	* See the DfE Analytics [README](https://github.com/DFE-Digital/dfe-analytics) on how to setup a service account for workload identity federation
-	* Open your shiny new service account in ‘Workload Identity Federation‘ by clicking on: 
+	* Open your shiny new service account in ‘Workload Identity Federation‘ by clicking on:
 	   IAM -> Workload Identity Federation
-	* Navigate to the ‘CONNECTED SERVICE ACCOUNTS‘ for your pool and provider ie 
+	* Navigate to the ‘CONNECTED SERVICE ACCOUNTS‘ for your pool and provider ie
 	   ‘azure-cip-identity-pool‘ and ‘azure-cip-oidc-provider‘
 	* Download the ‘Client library config‘ JSON for your service account
 	* We add this JSON as a single line string to the env so get that with
@@ -50,4 +50,4 @@ To prepare a BigQuery data set to allow this:
         * `JSON.parse(File.read(<filepath>)).to_json` in a ruby console. Parsing and to_json-ing is needed to strip the newlines
 		* Put that where it needs to go. Register has a `GOOGLE_CLOUD_CREDENTIALS` env var set in the secrets.
 
-The data set should be ready to receive events from a client authenticated with the credentials associated with the service account. 
+The data set should be ready to receive events from a client authenticated with the credentials associated with the service account.

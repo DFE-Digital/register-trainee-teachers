@@ -14,5 +14,5 @@ To be able to detect breaking changes as soon as possible, the Register environm
 This is achieved by setting `TERRAFORM_MODULES_TAG` in the `global_config` environment sh files. The version can point at a branch such as
 main or a feature branch. Or a tag such as testing, stable or any commit id.
 
-If an environment fails because of a module update, report it to the infra team. If it's blocking delivery, change the version to testing or stable
+If an environment fails because of a module update, report it to the infra team. If it’s blocking delivery, change the version to testing or stable
 while this is being investigated.

@@ -39,7 +39,7 @@ values. If this is not clear, then reach out to the funding team to clarify.
 
 ### Importing trainee summaries
 
-1. Download the trainee summary file e.g. 'SDS_subject_breakdown_January.csv'
+1. Download the trainee summary file, for example, ‘SDS_subject_breakdown_January.csv’
 
 2. Copy the CSV to your clipboard
 
@@ -47,7 +47,7 @@ values. If this is not clear, then reach out to the funding team to clarify.
     cat ~/Desktop/SDS_subject_breakdown_January.csv | pbcopy
     ```
 
-3. Check that you've definitely copied the correct thing! Paste it somewhere
+3. Check that you’ve definitely copied the correct thing! Paste it somewhere
 
 4. SSH onto register-worker-production, navigate into the app directory and
   create a new file
@@ -90,4 +90,4 @@ February = 2 etc.
 
 ### Gotchas
 
-1. `TB_summary_upload_{Month}.csv` are received every 2 months (so don't expect to see one each time)
+1. `TB_summary_upload_{Month}.csv` are received every 2 months (so do not expect to see one each time)

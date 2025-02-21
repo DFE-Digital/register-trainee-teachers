@@ -18,15 +18,15 @@ the academic cycle that they finish in.
 We decided to associate `trainees` with `academic_cycles`, storing two foreign
 keys on the trainee table:
 
-* `start_academic_cycle_id` to record the academic cycle the trainee 'started'
+* `start_academic_cycle_id` to record the academic cycle the trainee ‘started’
   training in, and
-* `end_academic_cycle_id` to record the academic cycle the trainee 'finished'
+* `end_academic_cycle_id` to record the academic cycle the trainee ‘finished’
   in.
 
 ### Setting the associations
 
-At various times during the trainee's lifecycle the data can change requiring us
-to update the academic cycles e.g. we have a trainee with an course end date in
+At various times during the trainee’s lifecycle the data can change requiring us
+to update the academic cycles, for example, we have a trainee with a course end date in
 August that ends up getting awarded in October.
 
 We decided to create a service `Trainees::SetAcademicCycles` which is
@@ -38,7 +38,7 @@ turn kicked off from within our `Trainees::Update` service.
 
 This `Trainees::Update` service is invoked explicitly by us whenever a trainee
 is updated via the UI (i.e. in all form objects). Setting the academic cycles
-here means that we catch all occurences of actions that might affect the cycles
+here means that we catch all occurrences of actions that might affect the cycles
 without the risk of mass-updates caused by a callback.
 
 We can also use this new service to backfill the associations on all existing
@@ -48,13 +48,13 @@ trainees.
 
 Rules for determining start academic cycle:
 
-1. Use the trainee's start date.
+1. Use the trainee’s start date.
 2. If trainee start date is missing, use their ITT start date.
 3. If the ITT start date is missing, default to the current cycle.
 
 Rules for determining end academic cycle:
 
-1. Use the trainee's award date or withdrawal date.
+1. Use the trainee’s award date or withdrawal date.
 2. If neither of those dates are present, use their ITT end date.
 3. If ITT end date is missing, use their course duration (from HESA) in
   combination with their ITT start date.
@@ -68,4 +68,4 @@ Rules for determining end academic cycle:
 
 This association between trainees and academic years makes it easier and quicker
 for us to query for all trainees starting in a particular academic year, which
-is especially useful for our 'start year' and 'end year' filters.
+is especially useful for our ‘start year’ and ‘end year’ filters.
