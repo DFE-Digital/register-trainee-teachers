@@ -9,7 +9,7 @@ module BulkUpdate
         let(:bulk_update_placement) { create(:bulk_update_placement) }
         let(:service) { described_class.call(bulk_update_placement) }
         let(:provider) { bulk_update_placement.provider }
-        let(:rows) { bulk_update_placement.rows }
+        let(:rows) { bulk_update_placement.rows.includes(:row_errors) }
 
         before do
           create_rows_for_bulk_placement(trns)
