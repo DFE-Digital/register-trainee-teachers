@@ -106,6 +106,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(degree.locale_code).to eq("non_uk")
           expect(degree.country).to eq("Mexico")
           expect(degree.non_uk_degree).to eq("Bachelor of Education Scotland and Northern Ireland")
+
           expect(degree.uk_degree).to be_nil
           expect(degree.uk_degree_uuid).to be_nil
 
