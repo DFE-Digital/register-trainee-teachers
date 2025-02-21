@@ -13,9 +13,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
 
     describe "course_age_range" do
       it { is_expected.to validate_presence_of(:course_age_range) }
-
       it {
-        expect(subject).to validate_inclusion_of(:course_age_range)
+        is_expected.to validate_inclusion_of(:course_age_range)
           .in_array(Hesa::CodeSets::AgeRanges::MAPPING.keys)
       }
     end
