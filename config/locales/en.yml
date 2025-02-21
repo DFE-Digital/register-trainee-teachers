@@ -192,6 +192,7 @@ en:
         description: Description
         format: Format
         example: Example
+        validation: Validation
     withdrawal_details:
       summary_title: Withdrawal details
       withdrawal_date: "%{date} (date of deferral)"

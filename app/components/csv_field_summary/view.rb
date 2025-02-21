@@ -21,7 +21,7 @@ module CsvFieldSummary
     end
 
     def rows
-      @attributes.map do |key, value|
+      @attributes.select { |key, _value| I18n.exists?("components.csv_field_summary.view.#{key}") }.map do |key, value|
         {
           key: t("components.csv_field_summary.view.#{key}"),
           value: convert_value_to_html(key, value),
