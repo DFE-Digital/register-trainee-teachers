@@ -306,7 +306,6 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       end
     end
 
-
     context "with an invalid request structure" do
       it "does not update the degree and returns a 422 status (unprocessable_entity)" do
         put(
