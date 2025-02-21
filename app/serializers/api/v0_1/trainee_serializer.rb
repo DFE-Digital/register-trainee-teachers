@@ -49,6 +49,8 @@ module Api
             training_route: training_route,
             nationality: nationality,
             training_initiative: training_initiative,
+            withdrawal_trigger: @trainee.current_withdrawal&.trigger,
+            withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
             withdraw_reasons: withdraw_reasons,
             placements: placements,
             degrees: degrees,

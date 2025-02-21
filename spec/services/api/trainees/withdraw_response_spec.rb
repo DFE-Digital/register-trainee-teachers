@@ -7,13 +7,17 @@ describe Api::Trainees::WithdrawResponse do
   let(:withdraw_response) { described_class.call(trainee:, params:, version:) }
   let(:params) do
     {
-      reasons: [unknown.name],
-      withdraw_date: Time.zone.now.iso8601,
-      withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
-      withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+      reasons:,
+      withdraw_date:,
+      trigger:,
+      future_interest:,
     }
   end
-  let(:unknown) { create(:withdrawal_reason, :unknown) }
+  let(:reason) { create(:withdrawal_reason, :provider) }
+  let(:reasons) { [reason.name] }
+  let(:trigger) { "provider" }
+  let(:future_interest) { "no" }
+  let(:withdraw_date) { Time.zone.now.iso8601 }
 
   subject { withdraw_response }
 
@@ -28,8 +32,9 @@ describe Api::Trainees::WithdrawResponse do
     it "change the trainee" do
       expect {
         subject
-      } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:withdraw_reasons_details])
+      } .to change { trainee.reload.current_withdrawal&.trigger }.from(nil).to("provider")
       .and change { trainee.reload.withdraw_date }.from(nil)
+      .and change { trainee.reload.current_withdrawal&.future_interest }.from(nil).to("no")
       .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
     end
 
@@ -40,13 +45,17 @@ describe Api::Trainees::WithdrawResponse do
     end
 
     context "with invalid params" do
-      let(:params) { { withdraw_reasons_details: nil, withdraw_date: nil } }
+      let(:trigger) { nil }
+      let(:future_interest) { nil }
+      let(:withdraw_date) { nil }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
-          { error: "UnprocessableEntity", message: "Reasons Choose one or more reasons why the trainee withdrew from the course, or select \"Unknown\"" },
+          { error: "UnprocessableEntity", message: "Reasons Reasons selected are not valid for this trigger" },
+          { error: "UnprocessableEntity", message: "Future interest is not included in the list" },
+          { error: "UnprocessableEntity", message: "Trigger is not included in the list" },
         )
       end
 
