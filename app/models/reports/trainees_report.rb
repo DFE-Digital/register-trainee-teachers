@@ -77,8 +77,8 @@ module Reports
          return_from_deferral_date
          withdraw_date
          withdraw_reasons
-         withdraw_reasons_details
-         withdraw_reasons_dfe_details]
+         withdrawal_trigger
+         withdrawal_future_interest]
     end
 
     alias trainees scope
@@ -191,8 +191,8 @@ module Reports
         trainee_report.return_from_deferral_date,
         trainee_report.withdraw_date,
         trainee_report.withdraw_reasons,
-        trainee_report.withdraw_reasons_details,
-        trainee_report.withdraw_reasons_dfe_details,
+        trainee_report.withdrawal_trigger,
+        trainee_report.withdrawal_future_interest,
       ].map { |value| CsvValueSanitiser.new(value).sanitise }
     end
   end

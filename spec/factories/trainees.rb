@@ -524,8 +524,6 @@ FactoryBot.define do
 
     trait :withdrawn_for_specific_reason do
       withdrawn
-      withdraw_reasons_details { "withdraw details" }
-      withdraw_reasons_dfe_details { "withdraw dfe details" }
 
       after(:create) do |trainee|
         trainee_withdrawal = create(:trainee_withdrawal, trainee:)
