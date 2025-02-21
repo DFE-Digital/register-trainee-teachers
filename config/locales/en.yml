@@ -1327,7 +1327,9 @@ en:
           hint: This is the last day they trained for QTS
       reasons:
         edit:
-          heading: Why did the trainee choose to withdraw?
+          heading:
+            trainee: Why did the trainee choose to withdraw?
+            provider: Why did you have to withdraw the trainee?
           hint: Select all reasons that apply
       extra_informations:
         edit:
