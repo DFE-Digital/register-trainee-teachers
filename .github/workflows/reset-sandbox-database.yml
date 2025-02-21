@@ -19,29 +19,14 @@ jobs:
     - uses: actions/checkout@v4
       name: Checkout
 
-    - name: Set KV environment variables
-      run: |
-        tf_vars_file=terraform/aks/workspace-variables/production.tfvars.json
-        echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-
     - name: Set env variable
       run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
-
-    - uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
-
-    - name: Set Connection String
-      run: |
-        STORAGE_CONN_STR="$(az keyvault secret show --name REGISTER-BACKUP-STORAGE-CONNECTION-STRING-AKS --vault-name ${{ env.key_vault_name }} | jq -r .value)"
-        echo "::add-mask::$STORAGE_CONN_STR"
-        echo "STORAGE_CONN_STR=$STORAGE_CONN_STR" >> $GITHUB_ENV
 
     - name: Download Backup
       run: |
         az storage blob download --container-name database-backup \
         --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
-        --connection-string '${{ env.STORAGE_CONN_STR }}'
+        --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
         az logout
 
     - uses: azure/login@v2
