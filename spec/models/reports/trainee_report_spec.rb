@@ -384,11 +384,11 @@ describe Reports::TraineeReport do
       )
     end
 
-    it "includes the withdraw_trigger" do
+    it "includes the withdrawal_trigger" do
       expect(subject.withdrawal_trigger).to eq(trainee.current_withdrawal.trigger)
     end
 
-    it "includes the withdraw_future_interest" do
+    it "includes the withdrawal_future_interest" do
       expect(subject.withdrawal_future_interest).to eq(trainee.current_withdrawal.future_interest)
     end
   end
