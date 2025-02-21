@@ -302,11 +302,11 @@ describe Reports::TraineeReport do
           let(:trainee) { create(:trainee, :in_progress, course_uuid: create(:course).uuid) }
 
           it "adds the first placement school urn under placement_one" do
-            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_one)
+            expect(subject.placement_one).to eq(placements.first.school.urn)
           end
 
           it "adds the second placement school urn under placement_two" do
-            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_two)
+            expect(subject.placement_two).to eq(placements.second.school.urn)
           end
         end
 
@@ -314,11 +314,11 @@ describe Reports::TraineeReport do
           let(:audit_user) { "HESA" }
 
           it "adds the first placement school urn under placement_two" do
-            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_one)
+            expect(subject.placement_two).to eq(placements.first.school.urn)
           end
 
           it "adds the second placement school urn under placement_one" do
-            expect(placements.map { |placement| placement.school.urn }).to include(subject.placement_two)
+            expect(subject.placement_one).to eq(placements.second.school.urn)
           end
         end
       end
