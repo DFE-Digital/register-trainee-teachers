@@ -1,5 +1,4 @@
 require:
-  - rubocop-rails
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-rspec_rails
@@ -9,6 +8,7 @@ require:
   - ./lib/rubocop/cop/register/register_form_with.rb
 
 plugins:
+  - rubocop-rails
   - rubocop-rspec
 
 inherit_from:

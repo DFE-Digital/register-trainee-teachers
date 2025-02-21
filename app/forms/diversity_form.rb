@@ -21,52 +21,8 @@ class DiversityForm
     ]
   end
 
-  def diversity_disclosure
-    @disclosure_form.diversity_disclosure
-  end
-
-  def diversity_disclosed?
-    @disclosure_form.diversity_disclosed?
-  end
-
-  def diversity_not_disclosed?
-    @disclosure_form.diversity_not_disclosed?
-  end
-
-  def disability_disclosure
-    @disability_disclosure_form.disability_disclosure
-  end
-
-  def disabled?
-    @disability_disclosure_form.disabled?
-  end
-
-  def no_disability?
-    @disability_disclosure_form.no_disability?
-  end
-
-  def disabilities
-    @disability_detail_form.disabilities
-  end
-
-  def additional_disability
-    @disability_detail_form.additional_disability
-  end
-
-  def ethnic_group
-    @ethnic_group_form.ethnic_group
-  end
-
   def ethnic_group_provided?
-    !@ethnic_group_form.not_provided_ethnic_group?
-  end
-
-  def ethnic_background
-    @ethnic_background_form.ethnic_background
-  end
-
-  def additional_ethnic_background
-    @ethnic_background_form.additional_ethnic_background
+    !not_provided_ethnic_group?
   end
 
   def save!
@@ -89,4 +45,14 @@ class DiversityForm
   def errors
     diversity_forms.flat_map { |diversity_forms| diversity_forms.errors.to_a }
   end
+
+  delegate :diversity_disclosure, :diversity_disclosed?, :diversity_not_disclosed?, to: :@disclosure_form
+
+  delegate :disability_disclosure, :disabled?, :no_disability?, to: :@disability_disclosure_form
+
+  delegate :disabilities, :additional_disability, to: :@disability_detail_form
+
+  delegate :ethnic_group, :not_provided_ethnic_group?, to: :@ethnic_group_form
+
+  delegate :ethnic_background, :additional_ethnic_background, to: :@ethnic_background_form
 end
