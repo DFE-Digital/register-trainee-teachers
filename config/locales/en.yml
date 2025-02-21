@@ -2088,6 +2088,13 @@ en:
               too_long: What the Department for Education could have done must be 1000 characters or less
         api/v01/degree_attributes:
           duplicate: This is a duplicate degree
+          attributes:
+            country:
+              inclusion: *attribute_invalid
+            non_uk_degree:
+              inclusion: *attribute_invalid
+            uk_degree:
+              inclusion: *attribute_invalid
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:

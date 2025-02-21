@@ -89,7 +89,7 @@ module Api
         end
 
         def uk_degree
-          return unless uk_country_or_uk_institution_present?
+          return HesaMapperConstants::INVALID if @params[:uk_degree].present? && uk_degree_type.blank?
 
           uk_degree_type&.name
         end
@@ -101,7 +101,7 @@ module Api
         end
 
         def non_uk_degree
-          return if uk_country_or_uk_institution_present?
+          return HesaMapperConstants::INVALID if @params[:non_uk_degree].present? && non_uk_degree_type.blank?
 
           non_uk_degree_type&.name
         end
@@ -147,7 +147,13 @@ module Api
         end
 
         def country_from_mapping
-          @country_from_mapping ||= Hesa::CodeSets::Countries::MAPPING[@params[:country]]
+          @country_from_mapping ||= begin
+            mapped_value = Hesa::CodeSets::Countries::MAPPING[@params[:country]]
+
+            return HesaMapperConstants::INVALID if @params[:country].present? && mapped_value.nil?
+
+            mapped_value
+          end
         end
 
         def uk_degree_type

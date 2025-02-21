@@ -248,17 +248,61 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
     end
 
     context "with an invalid degree" do
-      it "does not update the degree and returns a 422 status (unprocessable_entity)" do
+      let(:degrees_attributes) do
+        {
+          grade: "First",
+          subject: "Practical Magic",
+          graduation_year: (Time.zone.now.year + 2).to_s,
+        }
+      end
+
+      before do
         put(
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
-            data: { graduation_year: (Time.zone.today.year + 2).to_s },
+            data: data,
           }.to_json,
         )
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]&.count).to eq(2)
-        expect(trainee.reload.degrees.first.subject).to eq(original_subject)
+      end
+
+      context "with a uk_degree" do
+        let(:data) do
+          degrees_attributes.merge(
+            uk_degree: "Bachelor of Arts",
+            institution: "University of Oxford",
+            country: "France",
+          )
+        end
+
+        it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
+            { "error" => "UnprocessableEntity", "message" => "Uk degree is invalid" },
+            { "error" => "UnprocessableEntity", "message" => "Grade can't be blank" },
+          )
+        end
+      end
+
+      context "with a non_uk_degree" do
+        let(:data) do
+          degrees_attributes.merge(
+            country: "France",
+            non_uk_degree: "Bachelor of Arts",
+          )
+        end
+
+        it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
+            { "error" => "UnprocessableEntity", "message" => "Non uk degree is invalid" },
+            { "error" => "UnprocessableEntity", "message" => "Country is invalid" },
+          )
+        end
       end
     end
 
