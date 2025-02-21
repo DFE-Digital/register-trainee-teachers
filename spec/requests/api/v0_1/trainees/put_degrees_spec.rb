@@ -261,7 +261,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
-            data: data,
+            data:,
           }.to_json,
         )
       end
