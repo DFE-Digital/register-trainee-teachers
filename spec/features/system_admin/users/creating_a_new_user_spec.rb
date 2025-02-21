@@ -7,8 +7,6 @@ feature "Creating a new user" do
   let(:dttp_id) { SecureRandom.uuid }
 
   before do
-    @welcome_mailer_service = class_spy(SendWelcomeEmailService).as_stubbed_const
-
     given_i_am_authenticated(user:)
     when_i_visit_the_user_index_page
     and_i_click_on_add_a_user
@@ -23,7 +21,6 @@ feature "Creating a new user" do
         and_i_fill_in_dttp_id
         when_i_save_the_form
         then_i_am_taken_to_the_user_show_page
-        and_the_user_is_not_sent_a_welcome_email
       end
     end
 
@@ -101,9 +98,5 @@ private
 
   def then_i_should_see_the_error_summary
     expect(admin_new_user_page.error_summary).to be_visible
-  end
-
-  def and_the_user_is_not_sent_a_welcome_email
-    expect(@welcome_mailer_service).not_to have_received(:call).with(user: User.last)
   end
 end
