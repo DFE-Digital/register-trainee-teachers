@@ -11,3 +11,7 @@ variable "storage_account_replication_type" {
 }
 
 variable "deploy_temp_data_storage_account" { default = true }
+
+variable "sanitised_storage_account_name" { default = null }
+
+variable "enable_sanitised_storage" { default = false }

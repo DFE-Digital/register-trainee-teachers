@@ -89,6 +89,7 @@ variable "azure_resource_group_name" { default = null }
 variable "azure_tempdata_storage_account_name" { default = null }
 variable "azure_storage_account_replication_type" { default = "LRS" }
 variable "deploy_temp_data_storage_account" { default = true }
+variable "enable_sanitised_storage" { default = false }
 
 locals {
   app_name_suffix   = var.app_name == null ? var.app_environment : var.app_name
@@ -124,4 +125,5 @@ locals {
   )
   default_azure_tempdata_storage_account_name = replace("${var.azure_resource_prefix}${var.service_short}${local.app_name_suffix}tmp", "-", "")
   azure_tempdata_storage_account_name         = var.azure_tempdata_storage_account_name != null ? var.azure_tempdata_storage_account_name : local.default_azure_tempdata_storage_account_name
+  azure_sanitised_storage_account_name        = "${var.azure_resource_prefix}${var.service_short}dbbkpsan${var.config_short}sa"
 }
