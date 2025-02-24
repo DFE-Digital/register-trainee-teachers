@@ -5,6 +5,8 @@ module Withdrawal
     validate :reasons_present?
     validates :another_reason, presence: true, if: :another_reason_id_provided?
 
+    delegate :trigger, to: :trigger_form
+
     FIELDS = %i[reason_ids another_reason].freeze
 
     attr_accessor(*FIELDS)
