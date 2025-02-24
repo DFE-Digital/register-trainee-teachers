@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-For Register API access, bearer tokens will be used by external clients. The clients can self-service with tokens through admin screens in the Register App.
+For Register API access, bearer tokens will be used by external clients. The clients can self-service with tokens through token management screens in the Register App.
 
 Although the preferred method of external client API Access is OAuth, this requires a solution for ITT Providers that provides a self-service customer management portal that is also consistent with the offering from Apply as the same ITT Providers use both systems and consistency needs to be a key consideration.
 
@@ -16,7 +16,7 @@ The OAuth solution is still in the discussion / design phase, so will not be rea
 
 ## Decision
 
-Use bearer tokens for API Authentication for external clients. Admin screens to manage the tokens will be developed in the Register App.
+Use bearer tokens for API Authentication for external clients. Token management screens will be developed in the Register App.
 
 ## Consequences
 
