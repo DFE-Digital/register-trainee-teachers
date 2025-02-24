@@ -892,6 +892,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   context "when a degree is invalid" do
     before do
       params[:data][:degrees_attributes].first[:graduation_year] = "3000-01-01"
+
       post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
@@ -900,6 +901,20 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       expect(response.parsed_body["message"]).to include("Validation failed: 2 errors prohibited this trainee from being saved")
       expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a graduation year that is in the past, for example 2014")
       expect(response.parsed_body["errors"]).to include("Degrees graduation year Enter a valid graduation year")
+    end
+
+    context "with invalid degree attributes" do
+      before do
+        params[:data][:degrees_attributes].first[:uk_degree] = "Bachelor of Arts"
+
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
+        expect(response.parsed_body["errors"]).to include("Degrees attributes Uk degree is invalid")
+      end
     end
   end
 end
