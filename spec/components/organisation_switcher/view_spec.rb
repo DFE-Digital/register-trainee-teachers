@@ -14,8 +14,7 @@ module OrganisationSwitcher
     let(:current_user) { UserWithOrganisationContext.new(user:, session:) }
 
     before do
-      allow(current_user).to receive(:organisation).and_return(organisation)
-      allow(current_user).to receive(:multiple_organisations?).and_return(multiple_organisations)
+      allow(current_user).to receive_messages(organisation: organisation, multiple_organisations?: multiple_organisations)
 
       render_inline(described_class.new(current_user:))
     end
