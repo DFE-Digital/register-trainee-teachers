@@ -145,7 +145,7 @@ GEM
       smart_properties
     bigdecimal (3.1.9)
     bindata (2.5.0)
-    blazer (3.1.0)
+    blazer (3.2.0)
       activerecord (>= 6.1)
       chartkick (>= 5)
       csv
@@ -176,7 +176,7 @@ GEM
       xpath (~> 3.2)
     cgi (0.4.1)
     charlock_holmes (0.7.9)
-    chartkick (5.1.0)
+    chartkick (5.1.4)
     childprocess (5.1.0)
       logger (~> 1.5)
     choice (0.2.0)
