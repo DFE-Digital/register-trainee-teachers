@@ -13,9 +13,18 @@ on:
         required: true
         type: boolean
 
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment:
+      name: review
 
     strategy:
       fail-fast: false
@@ -64,7 +73,9 @@ jobs:
       - name: Bring docker image up
         uses: ./.github/actions/bring-docker-image-up/
         with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           docker-image: ${{ inputs.docker-image}}
           image-tag: ${{ inputs.image-tag }}
 

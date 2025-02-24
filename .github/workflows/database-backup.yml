@@ -23,11 +23,20 @@ on:
   schedule: # 03:00 UTC
     - cron: '0 3 * * *'
 
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   backup:
     name: Backup AKS Database (production)
     if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.overwriteThisMorningsBackup == 'true') }}
     runs-on: ubuntu-latest
+    environment:
+      name: production
     services:
       postgres:
         image: postgres:11.10
@@ -38,6 +47,7 @@ jobs:
         ports:
         - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
     - uses: actions/checkout@v4
       name: Checkout
@@ -53,14 +63,18 @@ jobs:
 
     - uses: azure/login@v2
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
     - name: Install kubectl
       uses: DFE-Digital/github-actions/set-kubectl@master
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
     - name: K8 setup
       shell: bash
@@ -76,7 +90,7 @@ jobs:
 
     - name: Backup Prod DB
       run: |
-        bin/konduit.sh -t 7200 register-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
+        bin/konduit.sh -n ${{ env.namespace }} -t 7200 register-production -- pg_dump -E utf8 --clean --if-exists --no-owner --verbose --no-password -f ${BACKUP_FILE_NAME}.sql
         tar -cvzf ${BACKUP_FILE_NAME}.tar.gz ${BACKUP_FILE_NAME}.sql
 
     - name: Set Connection String
@@ -96,15 +110,15 @@ jobs:
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionDataEnv == 'true') }}
       shell: bash
       run: |
-        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
+        bin/konduit.sh -n ${{ env.namespace }} -i ${{ env.BACKUP_FILE_NAME }}.sql -t 7200 register-productiondata -- psql
 
     - name: Restore backup to aks analysis database
       if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToProductionAnalysisEnv == 'true') }}
       shell: bash
       run: |
-        bin/konduit.sh -i ${{ env.BACKUP_FILE_NAME }}.sql -p ANALYSIS_DATABASE_URL -t 7200 register-production -- psql
-        bin/konduit.sh -p ANALYSIS_DATABASE_URL -t 300 register-production -- psql -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "${{ env.SQLPAD_USER }}"'
-        bin/konduit.sh -p ANALYSIS_DATABASE_URL -t 300 register-production -- psql -c 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "${{ env.SQLPAD_USER }}"'
+        bin/konduit.sh -n ${{ env.namespace }} -i ${{ env.BACKUP_FILE_NAME }}.sql -p ANALYSIS_DATABASE_URL -t 7200 register-production -- psql
+        bin/konduit.sh -n ${{ env.namespace }} -p ANALYSIS_DATABASE_URL -t 300 register-production -- psql -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "${{ env.SQLPAD_USER }}"'
+        bin/konduit.sh -n ${{ env.namespace }} -p ANALYSIS_DATABASE_URL -t 300 register-production -- psql -c 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO "${{ env.SQLPAD_USER }}"'
       env:
         SQLPAD_USER: ${{ secrets.SQLPAD_USER }}
 
@@ -173,6 +187,8 @@ jobs:
     name: restore Database (staging)
     if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.restoreToStagingEnv == 'true') }}
     runs-on: ubuntu-latest
+    environment:
+      name: staging
 
     steps:
     - uses: actions/checkout@v4
@@ -189,14 +205,20 @@ jobs:
 
     - uses: azure/login@v2
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        # staging
 
     - name: Install kubectl
       uses: DFE-Digital/github-actions/set-kubectl@master
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_STAGING }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        # staging
 
     - name: K8 setup
       shell: bash
@@ -207,7 +229,7 @@ jobs:
     - name: Restore backup to aks env database
       shell: bash
       run: |
-        bin/konduit.sh -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
+        bin/konduit.sh -n bat-staging -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-staging -- psql
 
     - name: Check for Failure
       uses: ./.github/actions/send-slack-notification/

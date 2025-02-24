@@ -3,12 +3,30 @@ name: Lint
 description: Run various linters on the codebase
 
 inputs:
-  linter-type: { description: 'Type of linter to run', required: true }
-  command: { description: 'Command to run for the linter', required: true }
-  docker-image: { description: 'Docker image to use', required: true }
-  image-tag: { description: 'Image tag to use', required: true }
-  slack-webhook: { description: 'Slack webhook to use', required: true }
-  azure-credentials: { description: 'Azure credentials to use', required: true }
+  linter-type:
+    description: Type of linter to run
+    required: true
+  command:
+    description: Command to run for the linter
+    required: true
+  docker-image:
+    description: Docker image to use
+    required: true
+  image-tag:
+    description: Image tag to use
+    required: true
+  slack-webhook:
+    description: Slack webhook to use
+    required: true
+  azure-client-id:
+    description: Managed identity client ID
+    required: true
+  azure-subscription-id:
+    description: Azure subscription ID
+    required: true
+  azure-tenant-id:
+    description: Azure tenant ID
+    required: true
 
 runs:
   using: 'composite'
@@ -16,7 +34,9 @@ runs:
     - name: Bring docker image up
       uses: ./.github/actions/bring-docker-image-up/
       with:
-        azure-credentials: ${{ inputs.azure-credentials }}
+        azure-client-id: ${{ inputs.azure-client-id}}
+        azure-subscription-id: ${{ inputs.azure-subscription-id}}
+        azure-tenant-id: ${{ inputs.azure-tenant-id}}
         docker-image: ${{ inputs.docker-image }}
         image-tag: ${{ inputs.image-tag }}
 

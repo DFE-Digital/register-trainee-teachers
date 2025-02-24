@@ -13,6 +13,7 @@ permissions:
   deployments: write
   packages: write
   pull-requests: write
+  id-token: write
 
 jobs:
   build:
@@ -26,6 +27,8 @@ jobs:
       docker-image: ${{ env.DOCKER_IMAGE }}
       image-tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
+    environment:
+      name: review
 
     steps:
       - name: Checkout
@@ -36,12 +39,16 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
   lint:
     name: Lint
     needs: [build]
     runs-on: ubuntu-latest
+    environment:
+      name: review
 
     strategy:
       fail-fast: false
@@ -78,7 +85,9 @@ jobs:
           docker-image: ${{ needs.build.outputs.docker-image }}
           image-tag: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
   test:
     name: Test
@@ -106,16 +115,10 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && (contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'dependencies')) }}
     needs: [build]
     runs-on: ubuntu-latest
-    steps:
-      - name: Start review-${{ github.event.pull_request.number }} Deployment
-        uses: bobheadxi/deployments@v1
-        id: deployment
-        with:
-          env: review-${{ github.event.pull_request.number }}
-          ref: ${{ github.head_ref }}
-          step:  start
-          token: ${{ secrets.GITHUB_TOKEN }}
+    environment:
+      name: review
 
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -123,27 +126,20 @@ jobs:
         id: deploy_review
         uses: ./.github/actions/deploy/
         with:
-          azure-credentials:  ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           environment: review
           pr-number: ${{ github.event.pull_request.number }}
           sha: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
-      - name: Update review-${{ github.event.pull_request.number }} status
-        if: always()
-        uses: bobheadxi/deployments@v1
+      - name: Post comment to Pull Request ${{ github.event.number }}
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          env:  review-${{ github.event.pull_request.number }}
-          ref: ${{ github.head_ref }}
-          step: finish
-          token:  ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: ${{ steps.deploy_review.outputs.deploy-url }}
-          smoke-test-username: ${{ secrets.SMOKE_TEST_USERNAME }}
-          smoke-test-password: ${{ secrets.SMOKE_TEST_PASSWORD }}
-          basic-auth-username: ${{ secrets.BASIC_AUTH_USERNAME }}
-          basic-auth-password: ${{ secrets.BASIC_AUTH_PASSWORD }}
+          header: aks
+          message: |
+            Review app deployed to ${{ steps.deploy_review.outputs.deploy-url }}
 
   merge-dependabot:
     name: Merge dependabot
@@ -182,7 +178,9 @@ jobs:
       id: deploy_app_before_production
       uses: ./.github/actions/deploy/
       with:
-        azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
@@ -207,7 +205,9 @@ jobs:
       id: deploy_app
       uses: ./.github/actions/deploy/
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         environment: production
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
@@ -236,7 +236,9 @@ jobs:
       id: deploy_app_after_production
       uses: ./.github/actions/deploy/
       with:
-        azure-credentials: ${{ secrets[format('AZURE_CREDENTIALS_{0}', matrix.environment)] }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         environment: ${{ matrix.environment }}
         sha: ${{ github.sha }}
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
