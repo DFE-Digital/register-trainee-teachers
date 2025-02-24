@@ -50,7 +50,7 @@
       items: header_items(@current_user),
     ) %>
 
-    <%= render OrganisationSwitcher::View.new(current_user:) %>
+    <%= render OrganisationSwitcher::View.new(current_user: @current_user) %>
 
     <% unless current_page?(:organisations) %>
       <% if request.path.split('/').second == "api-docs" %>
