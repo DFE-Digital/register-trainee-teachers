@@ -1,10 +1,9 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <div class="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7">
-      <h1 class="govuk-panel__title">
-        Your file is being processed
-      </h1>
-    </div>
+    <%= govuk_panel(
+      title_text: "Your file is being processed",
+      classes: "govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-7",
+    ) %>
 
     <p class="govuk-body">
       We are processing your trainee records to check if they are correct.
