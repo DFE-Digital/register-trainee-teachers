@@ -14,7 +14,7 @@ class OrganisationSwitcher::View < ViewComponent::Base
   end
 
   def organisation_name
-    current_user&.organisation&.name
+    current_user.organisation.name
   end
 
   def link_to_switch_organisation
