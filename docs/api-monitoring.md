@@ -73,7 +73,7 @@ Once we know that Prometheus is ingesting the data correctly, you’ll likely wa
 
 <img width="1322" alt="Screenshot 2024-10-21 at 11 39 26" src="https://github.com/user-attachments/assets/178deb28-b125-4268-b8fc-1c1b8fb647e4">
 
-3. Choose “Add” from the menu at the top of the page, and then choose "Visualisation"
+3. Choose “Add” from the menu at the top of the page, and then choose “Visualisation”
 
 <img width="1321" alt="Screenshot 2024-10-21 at 11 39 40" src="https://github.com/user-attachments/assets/0bf49e07-2fd5-49e1-8e2b-371528aecc6a">
 

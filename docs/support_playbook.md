@@ -330,7 +330,7 @@ This command will:
 2. Run through each row, using the “id” field to find the corresponding trainee in the database.
 3. If found, it will find and discard any other trainee that has the same email address.
 4. If not found, it will print a message stating that the trainee was not found.
-5. Once the task finishes running through all rows in the CSV, it will print "Task completed."
+5. Once the task finishes running through all rows in the CSV, it will print “Task completed.”
 
 ## Resolving Incorrect `provider_type` on Publish: Ensuring Trainees are Created on Register
 
