@@ -23,8 +23,6 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment:
-      name: review
 
     strategy:
       fail-fast: false
@@ -73,9 +71,6 @@ jobs:
       - name: Bring docker image up
         uses: ./.github/actions/bring-docker-image-up/
         with:
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           docker-image: ${{ inputs.docker-image}}
           image-tag: ${{ inputs.image-tag }}
 

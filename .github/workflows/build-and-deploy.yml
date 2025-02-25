@@ -47,8 +47,6 @@ jobs:
     name: Lint
     needs: [build]
     runs-on: ubuntu-latest
-    environment:
-      name: review
 
     strategy:
       fail-fast: false
@@ -85,9 +83,6 @@ jobs:
           docker-image: ${{ needs.build.outputs.docker-image }}
           image-tag: ${{ needs.build.outputs.image-tag }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
   test:
     name: Test
