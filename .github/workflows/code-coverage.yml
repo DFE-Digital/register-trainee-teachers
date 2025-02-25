@@ -12,6 +12,7 @@ permissions:
   deployments: write
   packages: write
   pull-requests: write
+  id-token: write
 
 jobs:
   build:
@@ -25,6 +26,8 @@ jobs:
       docker-image: ${{ env.DOCKER_IMAGE }}
       image-tag: ${{ env.IMAGE_TAG }}
     runs-on: ubuntu-latest
+    environment:
+      name: review
 
     steps:
       - name: Checkout
@@ -35,13 +38,18 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
   coverage_tests:
     name: Coverage tests
     needs: [build]
 
     runs-on: ubuntu-latest
+    environment:
+      name: review
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,5 +61,7 @@ jobs:
           image-tag: ${{ needs.build.outputs.image-tag }}
           use-next-academic-year: false
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS_REVIEW }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
           codecov-token: ${{ secrets.CODECOV_TOKEN }}
