@@ -186,7 +186,6 @@ jobs:
         az storage blob download --container-name database-backup \
         --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
         --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
-        az logout
 
     - uses: azure/login@v2
       with:
