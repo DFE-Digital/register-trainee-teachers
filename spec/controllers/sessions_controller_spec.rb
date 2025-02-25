@@ -12,11 +12,6 @@ describe SessionsController do
 
   describe "#callback" do
     context "existing database user" do
-      it "does not call send welcome email service" do
-        expect(SendWelcomeEmailService).not_to receive(:call)
-        request_callback
-      end
-
       it "creates a session for the signed in user" do
         request_callback
         expect(session[:dfe_sign_in_user]["dfe_sign_in_uid"]).to eq(user.dfe_sign_in_uid)
@@ -46,11 +41,6 @@ describe SessionsController do
 
     context "non existing database user" do
       let(:user) { build(:user) }
-
-      it "does not call send welcome email service" do
-        expect(SendWelcomeEmailService).not_to receive(:call)
-        request_callback
-      end
 
       it "do not creates a session for the user" do
         request_callback

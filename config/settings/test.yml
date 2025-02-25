@@ -22,7 +22,6 @@ trainee_export:
 
 govuk_notify:
   api_key: please_change_me
-  welcome_email_template_id: test-uuid
   otp_email_template_id: test-uuid
   csv_submitted_for_processing:
     in_progress_template_id: in-progress-uuid
