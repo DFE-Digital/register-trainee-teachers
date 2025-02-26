@@ -8,62 +8,38 @@ feature "Organisation details" do
   end
 
   context "when a User belongs to a Provider organisation" do
-    let(:provider) { create(:provider) }
-    let(:user) { create(:user, providers: [provider]) }
+    let(:organisation) { create(:provider) }
+    let(:user) { create(:user, providers: [organisation]) }
 
-    let!(:provider_user_one) { create(:user, providers: [provider]) }
-    let!(:provider_user_two) { create(:user, providers: [provider]) }
-    let!(:other_provider_user) { create(:user) }
+    let!(:user_one) { create(:user, providers: [organisation]) }
+    let!(:user_two) { create(:user, providers: [organisation]) }
+    let!(:user_three) { create(:user) }
 
     scenario "a user views the organisation settings page" do
-      organisation_settings_page.settings_link.click
-
-      expect(organisation_settings_page).to have_content(provider.name)
-      expect(organisation_settings_page).to have_content("About your organisation")
-      expect(organisation_settings_page).to have_content("Organisation typeAccredited provider")
-
-      expect(organisation_settings_page).to have_content("Accreditation ID#{provider.accreditation_id}")
-      expect(organisation_settings_page).to have_content("Team members")
-
-      expect(organisation_settings_page).to have_content("#{user.name}(you) – #{user.email}")
-      expect(organisation_settings_page).to have_content("#{provider_user_one.name} – #{provider_user_one.email}")
-      expect(organisation_settings_page).to have_content("#{provider_user_two.name} – #{provider_user_two.email}")
-      expect(organisation_settings_page).not_to have_content("#{other_provider_user.name} – #{other_provider_user.email}")
-
-      expect(organisation_settings_page).to have_content(
-        "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
-      )
+      when_i_click_on_the_organisation_settings_link
+      then_i_see_the_organisation_details
+      and_i_see_the_organisation_team_members
+      and_i_see_the_contact_support_email
     end
   end
 
   context "when a User belongs to a Lead Partner organisation" do
-    let(:lead_partner) { create(:lead_partner, :hei) }
-    let(:user) { create(:user, lead_partners: [lead_partner]) }
+    let(:organisation) { create(:lead_partner, :hei) }
+    let(:user) { create(:user, lead_partners: [organisation]) }
 
-    let!(:lead_partner_user_one) { create(:user, lead_partners: [lead_partner]) }
-    let!(:lead_partner_user_two) { create(:user, lead_partners: [lead_partner]) }
-    let!(:other_lead_partner_user) { create(:user, :with_lead_partner_organisation) }
+    let!(:user_one) { create(:user, lead_partners: [organisation]) }
+    let!(:user_two) { create(:user, lead_partners: [organisation]) }
+    let!(:user_three) { create(:user, :with_lead_partner_organisation) }
+
+    before do
+      give_i_have_clicked_on_the_organisation_name_link
+    end
 
     scenario "a user views the organisation settings page" do
-      click_on lead_partner.name
-
-      organisation_settings_page.settings_link.click
-
-      expect(organisation_settings_page).to have_content(lead_partner.name)
-      expect(organisation_settings_page).to have_content("About your organisation")
-      expect(organisation_settings_page).to have_content("Organisation typeLead partner")
-
-      expect(organisation_settings_page).to have_content("Accreditation ID#{lead_partner.accreditation_id}")
-      expect(organisation_settings_page).to have_content("Team members")
-
-      expect(organisation_settings_page).to have_content("#{user.name}(you) – #{user.email}")
-      expect(organisation_settings_page).to have_content("#{lead_partner_user_one.name} – #{lead_partner_user_one.email}")
-      expect(organisation_settings_page).to have_content("#{lead_partner_user_two.name} – #{lead_partner_user_two.email}")
-      expect(organisation_settings_page).not_to have_content("#{other_lead_partner_user.name} – #{other_lead_partner_user.email}")
-
-      expect(organisation_settings_page).to have_content(
-        "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
-      )
+      when_i_click_on_the_organisation_settings_link
+      then_i_see_the_organisation_details
+      and_i_see_the_organisation_team_members
+      and_i_see_the_contact_support_email
     end
   end
 
@@ -79,5 +55,38 @@ feature "Organisation details" do
         "You do not have permission to perform this action",
       )
     end
+  end
+
+  private
+
+  def give_i_have_clicked_on_the_organisation_name_link
+    click_on organisation.name
+  end
+
+  def when_i_click_on_the_organisation_settings_link
+    organisation_settings_page.settings_link.click
+  end
+
+  def then_i_see_the_organisation_details
+    expect(organisation_settings_page).to have_content(organisation.name)
+    expect(organisation_settings_page).to have_content("About your organisation")
+    expect(organisation_settings_page).to have_content(
+      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Lead partner'}"
+    )
+    expect(organisation_settings_page).to have_content("Accreditation ID#{organisation.accreditation_id}")
+  end
+
+  def and_i_see_the_organisation_team_members
+    expect(organisation_settings_page).to have_content("Team members")
+    expect(organisation_settings_page).to have_content("#{current_user.name}(you) – #{current_user.email}")
+    expect(organisation_settings_page).to have_content("#{user_one.name} – #{user_one.email}")
+    expect(organisation_settings_page).to have_content("#{user_two.name} – #{user_two.email}")
+    expect(organisation_settings_page).not_to have_content("#{user_three.name} – #{user_three.email}")
+  end
+
+  def and_i_see_the_contact_support_email
+    expect(organisation_settings_page).to have_content(
+      "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
+    )
   end
 end
