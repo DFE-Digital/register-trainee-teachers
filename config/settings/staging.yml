@@ -37,6 +37,7 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
+    teacher_degree_apprenticeship: true
   integrate_with_dqt: false
   integrate_with_trs: false
   hesa_trn_requests: false

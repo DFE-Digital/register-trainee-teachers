@@ -21,6 +21,7 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
+    teacher_degree_apprenticeship: true
   user_can_have_multiple_organisations: true
   funding: true
   google:
