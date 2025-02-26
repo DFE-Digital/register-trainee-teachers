@@ -129,4 +129,32 @@ describe LeadPartner do
       end
     end
   end
+
+  describe "#accreditation_id" do
+    context "when schools exists" do
+      subject(:lead_partner) { create(:lead_partner, :school) }
+
+      it "returns the school#accreditation_id" do
+        expect(lead_partner.accreditation_id).to be_nil
+      end
+    end
+
+    context "when provider exists" do
+      subject(:lead_partner) { create(:lead_partner, :hei) }
+
+      it "returns the provider#accreditation_id" do
+        expect(lead_partner.accreditation_id).to eq(
+          lead_partner.provider.accreditation_id,
+        )
+      end
+    end
+
+    context "when school and provider are nil" do
+      subject(:lead_partner) { build(:lead_partner) }
+
+      it "returns nil" do
+        expect(lead_partner.accreditation_id).to be_nil
+      end
+    end
+  end
 end

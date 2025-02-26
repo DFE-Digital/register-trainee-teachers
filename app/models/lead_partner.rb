@@ -64,6 +64,10 @@ class LeadPartner < ApplicationRecord
     name
   end
 
+  def accreditation_id
+    provider&.accreditation_id
+  end
+
   def self.find_by_ukprn_or_urn(str)
     return if str.blank?
 

@@ -40,6 +40,7 @@ en:
     items:
       sign_out: Sign out
       system_admin: Support for Register
+      organisation_settings: Organisation settings
   contact_details:
     view:
       address: &address Address
@@ -1362,6 +1363,8 @@ en:
             cancelled: "Cancelled"
             failed: "Failed"
   activerecord:
+    models:
+      provider: Accredited provider
     attributes:
       trainee:
         record_sources:
