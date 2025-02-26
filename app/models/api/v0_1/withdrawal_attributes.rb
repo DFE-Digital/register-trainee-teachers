@@ -12,8 +12,8 @@ module Api
       validate :withdraw_date_valid
       validate :withdrawal_reasons_valid?, unless: -> { reasons.nil? }
       validate :withdrawal_reasons_provided?
-      validates :trigger, inclusion: { in: %w[provider trainee] }
-      validates :future_interest, inclusion: { in: %w[yes no unknown] }
+      validates :trigger, inclusion: { in: TraineeWithdrawal.triggers.keys }
+      validates :future_interest, inclusion: { in: TraineeWithdrawal.future_interests.keys }
 
       attr_accessor :trainee
 
