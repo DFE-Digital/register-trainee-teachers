@@ -505,7 +505,7 @@ private
     expect(page).to have_content(/Number of registered trainees\s*5/)
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
-    expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
+    expect(page).to have_content("You can check your trainee data in Register. At any time you can:")
     expect(page).to have_content(
       "view ‘Choose trainee status export’ from the ‘Registered trainees’ section, using the ‘academic year’ or ‘start year’ filter to select the current academic year",
     )
