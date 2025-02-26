@@ -20,6 +20,9 @@ feature "Organisation details" do
       then_i_see_the_organisation_details
       and_i_see_the_organisation_team_members
       and_i_see_the_contact_support_email
+
+      when_i_click_on_back_link
+      then_i_see_the_root_page
     end
   end
 
@@ -57,7 +60,7 @@ feature "Organisation details" do
     end
   end
 
-  private
+private
 
   def give_i_have_clicked_on_the_organisation_name_link
     click_on organisation.name
@@ -71,7 +74,7 @@ feature "Organisation details" do
     expect(organisation_settings_page).to have_content(organisation.name)
     expect(organisation_settings_page).to have_content("About your organisation")
     expect(organisation_settings_page).to have_content(
-      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Lead partner'}"
+      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Lead partner'}",
     )
     expect(organisation_settings_page).to have_content("Accreditation ID#{organisation.accreditation_id}")
   end
@@ -88,5 +91,13 @@ feature "Organisation details" do
     expect(organisation_settings_page).to have_content(
       "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
     )
+  end
+
+  def when_i_click_on_back_link
+    organisation_settings_page.back_link.click
+  end
+
+  def then_i_see_the_root_page
+    expect(page).to have_content("Your trainee teachers")
   end
 end
