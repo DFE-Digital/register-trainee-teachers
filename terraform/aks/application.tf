@@ -27,7 +27,8 @@ module "web_application" {
   kubernetes_cluster_id   = module.cluster_data.kubernetes_id
   enable_logit            = var.enable_logit
 
-  enable_prometheus_monitoring = var.enable_prometheus_monitoring
+  enable_prometheus_monitoring     = var.enable_prometheus_monitoring
+  send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
 }
 
 module "worker_application" {
