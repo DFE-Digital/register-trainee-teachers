@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "charlock_holmes"
-
 module BulkUpdate
   module RecommendationsUploads
     class ValidateFile
@@ -32,8 +30,23 @@ module BulkUpdate
       def detection
         @detection ||= begin
           contents = File.read(file)
-          CharlockHolmes::EncodingDetector.detect(contents)
+          detect_encoding(contents)
         end
+      end
+
+      def detect_encoding(contents)
+        # Try to detect UTF-8 first
+        if contents.force_encoding("UTF-8").valid_encoding?
+          return { encoding: "UTF-8" }
+        end
+        
+        # Try ISO-8859-1 (Latin-1) which accepts any byte sequence
+        if contents.force_encoding("ISO-8859-1").valid_encoding?
+          return { encoding: "ISO-8859-1" }
+        end
+        
+        # Default to binary if we can't determine the encoding
+        { encoding: "BINARY" }
       end
 
       def encoding
