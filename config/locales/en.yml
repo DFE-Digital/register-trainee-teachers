@@ -186,8 +186,8 @@ en:
         blank: Draft record
     csv_field_summary:
       view:
-        field_name: Field name
-        technical: Technical
+        field_name: CSV field name
+        technical: API field name
         hesa_alignment: HESA alignment
         description: Description
         format: Format
