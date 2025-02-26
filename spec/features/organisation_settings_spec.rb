@@ -31,7 +31,7 @@ feature "Organisation details" do
       expect(organisation_settings_page).not_to have_content("#{other_provider_user.name} – #{other_provider_user.email}")
 
       expect(organisation_settings_page).to have_content(
-        "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk."
+        "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
       )
     end
   end
@@ -62,7 +62,7 @@ feature "Organisation details" do
       expect(organisation_settings_page).not_to have_content("#{other_lead_partner_user.name} – #{other_lead_partner_user.email}")
 
       expect(organisation_settings_page).to have_content(
-        "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk."
+        "If you need to add or remove team members, contact us at becomingateacher@digital.education.gov.uk.",
       )
     end
   end
@@ -76,7 +76,7 @@ feature "Organisation details" do
       organisation_settings_page.load
 
       expect(page).to have_content(
-        "You do not have permission to perform this action"
+        "You do not have permission to perform this action",
       )
     end
   end

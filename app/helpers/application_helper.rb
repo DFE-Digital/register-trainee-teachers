@@ -36,7 +36,7 @@ module ApplicationHelper
     return unless current_user
 
     items = [
-      { name: t("header.items.sign_out"), url: sign_out_path }
+      { name: t("header.items.sign_out"), url: sign_out_path },
     ]
 
     if policy(:organisation_settings).show?
