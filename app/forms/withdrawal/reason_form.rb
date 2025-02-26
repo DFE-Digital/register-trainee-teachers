@@ -73,10 +73,6 @@ module Withdrawal
       errors.add(:reason_ids, error)
     end
 
-    def another_reason_text_supplied?
-      another_reason.present?
-    end
-
     def another_reason_id_provided?
       WithdrawalReason.where("name like ?", "%another_reason").exists?(id: reason_ids)
     end

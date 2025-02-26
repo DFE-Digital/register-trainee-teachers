@@ -14,6 +14,7 @@ module Api
       validate :withdrawal_reasons_provided?
       validates :trigger, inclusion: { in: TraineeWithdrawal.triggers.keys }
       validates :future_interest, inclusion: { in: TraineeWithdrawal.future_interests.keys }
+      validate :another_reason_text_provided?
 
       attr_accessor :trainee
 
@@ -22,6 +23,7 @@ module Api
         withdraw_date
         trigger
         future_interest
+        another_reason
       ].freeze
 
       ATTRIBUTES.each do |attr|
@@ -64,7 +66,7 @@ module Api
       end
 
       def withdrawal_reasons_provided?
-        errors.add(:reasons, :inclusion) if reasons.blank? || reasons.empty?
+        errors.add(:reasons, :inclusion) if reasons.blank?
       end
 
       def withdrawal_reasons_valid?
@@ -79,6 +81,10 @@ module Api
 
       def withdrawal_reasons
         @withdrawal_reasons ||= WithdrawalReason.where(name: reasons)
+      end
+
+      def another_reason_text_provided?
+        errors.add(:another_reason, :blank) if reasons&.any? { |x| x.include?("another_reason") } && another_reason.blank?
       end
     end
   end

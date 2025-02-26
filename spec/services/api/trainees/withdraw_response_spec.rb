@@ -11,6 +11,7 @@ describe Api::Trainees::WithdrawResponse do
       withdraw_date:,
       trigger:,
       future_interest:,
+      another_reason:,
     }
   end
   let(:reason) { create(:withdrawal_reason, :provider) }
@@ -18,6 +19,7 @@ describe Api::Trainees::WithdrawResponse do
   let(:trigger) { "provider" }
   let(:future_interest) { "no" }
   let(:withdraw_date) { Time.zone.now.iso8601 }
+  let(:another_reason) { "" }
 
   subject { withdraw_response }
 
@@ -36,6 +38,7 @@ describe Api::Trainees::WithdrawResponse do
       .and change { trainee.reload.withdraw_date }.from(nil)
       .and change { trainee.reload.current_withdrawal&.future_interest }.from(nil).to("no")
       .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
+      .and change { trainee.reload.current_withdrawal_reasons&.pluck(:name) }.from(nil).to(reasons)
     end
 
     it "uses the trainee serializer" do
@@ -63,6 +66,17 @@ describe Api::Trainees::WithdrawResponse do
         expect {
           subject
         }.not_to change(trainee, :withdraw_date)
+      end
+
+      context "with another reason selected but the another_reason text not provided" do
+        let(:reason) { create(:withdrawal_reason, :another_reason) }
+
+        it "returns status unprocessable entity with error response" do
+          expect(subject[:status]).to be(:unprocessable_entity)
+          expect(subject[:json][:errors]).to include(
+            { error: "UnprocessableEntity", message: "Another reason Enter another reason" },
+          )
+        end
       end
     end
   end

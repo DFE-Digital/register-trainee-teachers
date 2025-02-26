@@ -2058,6 +2058,8 @@ en:
               blank: Please select an option
             future_interest:
               blank: Please select an option
+            another_reason:
+              blank: Enter another reason
         api/v01/degree_attributes:
           duplicate: This is a duplicate degree
         api/create_trainee:
