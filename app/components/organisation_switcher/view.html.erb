@@ -1,0 +1,6 @@
+<div class="app-organisation-switcher govuk-width-container" aria-label="Organisation switcher">
+  <div class="app-organisation-switcher__title"><%= organisation_name %></div>
+  <% if show_organisation_link? %>
+    <a href="<%= link_to_switch_organisation %>" class="govuk-link--no-visited-state app-organisation-switcher__link">Change organisation</a>
+  <% end %>
+</div>

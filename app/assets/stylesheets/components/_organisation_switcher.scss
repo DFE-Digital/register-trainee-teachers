@@ -1,0 +1,20 @@
+.app-organisation-switcher {
+  @include govuk-clearfix;
+  margin-top: govuk-spacing(2);
+  margin-bottom: govuk-spacing(2);
+}
+
+.app-organisation-switcher__title {
+  @include govuk-font($size: 19, $weight: "bold");
+  @include govuk-media-query($from: tablet) {
+    width: 75%;
+    float: left;
+  }
+}
+
+.app-organisation-switcher__link {
+  @include govuk-link-common;
+  @include govuk-media-query($from: tablet) {
+    float: right;
+  }
+}
