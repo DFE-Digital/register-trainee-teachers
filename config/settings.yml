@@ -71,6 +71,7 @@ features:
     hpitt_postgrad: false
     pg_teaching_apprenticeship: false
     iqts: false
+    teacher_degree_apprenticeship: false
   google:
     send_data_to_big_query: false
   filters:

@@ -30,6 +30,7 @@ features:
     pg_teaching_apprenticeship: true
     opt_in_undergrad: true
     iqts: true
+    teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: true
 
