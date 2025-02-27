@@ -103,8 +103,14 @@ LEAD_PARTNER_ROUTES = %i[
   early_years_salaried
   early_years_undergrad
   iqts
+  teacher_degree_apprenticeship
 ].freeze
-EMPLOYING_SCHOOL_ROUTES = %i[school_direct_salaried pg_teaching_apprenticeship early_years_salaried].freeze
+EMPLOYING_SCHOOL_ROUTES = %i[
+  school_direct_salaried
+  pg_teaching_apprenticeship
+  early_years_salaried
+  teacher_degree_apprenticeship
+].freeze
 
 TRAINING_ROUTE_FEATURE_FLAGS = TRAINING_ROUTE_ENUMS.keys.reject { |training_route|
   %i[assessment_only].include?(training_route)
