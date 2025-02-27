@@ -31,7 +31,7 @@
         content_tag("div", class: "govuk-!-margin-bottom-6") do
           content_tag(:h3, class: "govuk-heading-s") do
             raw(
-              "#{user.name}#{'(you)' if user == current_user.user} #{content_tag(:span, "– #{user.email}", class: "govuk-!-font-weight-regular")}"
+              "#{user.name} #{'(you)' if user == current_user.user} #{content_tag(:span, "– #{user.email}", class: "govuk-!-font-weight-regular")}"
             )
           end
         end

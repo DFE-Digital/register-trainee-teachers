@@ -35,7 +35,7 @@ feature "Organisation details" do
     let!(:user_three) { create(:user, :with_lead_partner_organisation) }
 
     before do
-      give_i_have_clicked_on_the_organisation_name_link
+      given_i_have_clicked_on_the_organisation_name_link
     end
 
     scenario "a user views the organisation settings page" do
@@ -62,7 +62,7 @@ feature "Organisation details" do
 
 private
 
-  def give_i_have_clicked_on_the_organisation_name_link
+  def given_i_have_clicked_on_the_organisation_name_link
     click_on organisation.name
   end
 
@@ -81,7 +81,7 @@ private
 
   def and_i_see_the_organisation_team_members
     expect(organisation_settings_page).to have_content("Team members")
-    expect(organisation_settings_page).to have_content("#{current_user.name}(you) – #{current_user.email}")
+    expect(organisation_settings_page).to have_content("#{current_user.name} (you) – #{current_user.email}")
     expect(organisation_settings_page).to have_content("#{user_one.name} – #{user_one.email}")
     expect(organisation_settings_page).to have_content("#{user_two.name} – #{user_two.email}")
     expect(organisation_settings_page).not_to have_content("#{user_three.name} – #{user_three.email}")
