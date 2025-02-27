@@ -21,7 +21,7 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
-    teacher_degree_apprenticeship: true
+    teacher_degree_apprenticeship: false
   funding: true
 
 pagination:
