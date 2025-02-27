@@ -8,7 +8,8 @@ feature "Organisation details" do
   end
 
   context "when a User belongs to a Provider organisation" do
-    let(:organisation) { create(:provider) }
+    let(:accreditation_id) { Faker::Number.unique.number(digits: 4) }
+    let(:organisation) { create(:provider, accreditation_id:) }
     let(:user) { create(:user, providers: [organisation]) }
 
     let!(:user_one) { create(:user, providers: [organisation]) }
@@ -27,6 +28,7 @@ feature "Organisation details" do
   end
 
   context "when a User belongs to a Lead Partner organisation" do
+    let(:accreditation_id) { nil }
     let(:organisation) { create(:lead_partner, :hei) }
     let(:user) { create(:user, lead_partners: [organisation]) }
 
@@ -76,7 +78,7 @@ private
     expect(organisation_settings_page).to have_content(
       "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Lead partner'}",
     )
-    expect(organisation_settings_page).to have_content("Accreditation ID#{organisation.accreditation_id}")
+    expect(organisation_settings_page).to have_content("Accreditation ID#{accreditation_id}")
   end
 
   def and_i_see_the_organisation_team_members

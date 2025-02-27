@@ -20,7 +20,7 @@
 
       summary_list.with_row do |row|
         row.with_key(text: "Accreditation ID")
-        row.with_value(text: current_user.organisation.accreditation_id)
+        row.with_value(text: current_user.organisation.try(:accreditation_id))
       end
     end %>
 
