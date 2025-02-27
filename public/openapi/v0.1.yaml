@@ -345,6 +345,8 @@ paths:
                           nullable: true
                         withdrawal_future_interest:
                           nullable: true
+                        withdrawal_another_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -512,6 +514,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree:
@@ -603,6 +606,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '061'
@@ -704,6 +708,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '306'
@@ -805,6 +810,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '208'
@@ -906,6 +912,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '077'
@@ -1007,6 +1014,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '085'
@@ -1108,6 +1116,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '202'
@@ -1209,6 +1218,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '003'
@@ -1310,6 +1320,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '056'
@@ -1411,6 +1422,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '082'
@@ -1512,6 +1524,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '094'
@@ -1613,6 +1626,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '210'
@@ -1974,6 +1988,8 @@ paths:
                         nullable: true
                       withdrawal_future_interest:
                         nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                     required:
                     - first_names
                     - last_name
@@ -2178,7 +2194,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: fAcRGAKw18vcKYaHcStZ1a4s
+                    placement_id: yQEem4JzrnxnbUPZRhUNmsGy
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2194,9 +2210,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: zVBsS3n8GYJwDfW9ro1wMsE9
+                    degree_id: T7eA1Z2A775BCQdTVDK5v91J
                   state: submitted_for_trn
-                  trainee_id: SCRTu6TqVpXsimT1rxgkcapk
+                  trainee_id: XZUPiufKdVMUNFzcimrNUstY
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: true
@@ -2205,6 +2221,7 @@ paths:
                   application_id:
                   withdrawal_trigger:
                   withdrawal_future_interest:
+                  withdrawal_another_reason:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -2444,6 +2461,8 @@ paths:
                           nullable: true
                         withdrawal_future_interest:
                           nullable: true
+                        withdrawal_another_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2593,6 +2612,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '301'
@@ -3029,6 +3049,8 @@ paths:
                   withdraw_reasons:
                     type: array
                     items: {}
+                  withdrawal_another_reason:
+                    nullable: true
                   placements:
                     type: array
                     items: {}
@@ -3123,6 +3145,7 @@ paths:
                 - withdrawal_trigger
                 - withdrawal_future_interest
                 - withdraw_reasons
+                - withdrawal_another_reason
                 - placements
                 - degrees
                 - state
@@ -3210,6 +3233,7 @@ paths:
                 withdrawal_trigger:
                 withdrawal_future_interest:
                 withdraw_reasons: []
+                withdrawal_another_reason:
                 placements: []
                 degrees: []
                 state: draft
@@ -3256,7 +3280,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 6DvaoEopcja4dXJakQYm5UHF
+        example: WPkDrV56vDckW6m7DgAKEN1Y
       responses:
         '200':
           description: updates the trainee
@@ -3454,6 +3478,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items:
@@ -3625,6 +3651,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -3718,6 +3745,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
@@ -3725,7 +3753,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: rsH1r6kFxV1ZAzmhtxMyvL5k
+                    placement_id: 19N6hgG5ti4diRnVDVSdshuq
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3741,9 +3769,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: v1DwWJwrY9g8nqwNxHbqCB6E
+                    degree_id: tsHJVpEphxmnGPzUshPNEe4K
                   state: submitted_for_trn
-                  trainee_id: 6DvaoEopcja4dXJakQYm5UHF
+                  trainee_id: WPkDrV56vDckW6m7DgAKEN1Y
                   application_id:
                   disability2: '57'
         '401':
@@ -4078,6 +4106,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -4210,6 +4240,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -4290,6 +4321,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '216'
@@ -4578,7 +4610,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: M6U8yexazrjGJnJqCPgcaKFv
+                  degree_id: PEKSBb4KPEuaTLbnLsxNp2ih
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4906,6 +4938,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -4990,6 +5024,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -5070,6 +5105,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees: []
                   state: draft
@@ -5240,13 +5276,13 @@ paths:
         required: true
         schema:
           type: string
-        example: mnouoq8kb5qndp8wyi3zt351
+        example: beq81ryae44zk3riu9ay3r36
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: 6osj3gmd9z1f7q5depyayhik
+        example: p8wyi3zt351p7alki1hclikd
       requestBody:
         content:
           application/json:
@@ -5353,7 +5389,7 @@ paths:
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 917f70f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                  degree_id: ic8uy5zen62qpm37mra3j6fk
+                  degree_id: rrsfc43oyquw5cp9j37c03zf
         '404':
           description: does not update the degree and returns a 404 status (not_found)
           content:
@@ -5476,7 +5512,7 @@ paths:
         required: true
         schema:
           type: string
-        example: itk0bz5ctas0m3aub7n2n96h
+        example: sxy4qrzlea7r59if8frr0acj
       requestBody:
         content:
           application/json:
@@ -5544,7 +5580,7 @@ paths:
                   postcode: DN8 3BN
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: xuUd8iMKYMFV4AphbMhR6z2W
+                  placement_id: 5zwDDbimiRZpVk9EJTibsjJT
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5571,6 +5607,36 @@ paths:
                 errors:
                 - error: NotFound
                   message: Trainee(s) not found
+        '409':
+          description: returns a 409 (conflict) status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - error
+                      - message
+                  data:
+                    type: array
+                    items: {}
+                required:
+                - errors
+                - data
+              example:
+                errors:
+                - error: Conflict
+                  message: School has already been taken
+                data: []
         '422':
           description: does not create a new placements and returns a 422 status (unprocessable_entity)
             status
@@ -5796,6 +5862,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items:
@@ -5914,6 +5982,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -6004,6 +6073,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements:
                   - urn: '969063'
                     name: Marblewald 119 High School
@@ -6149,13 +6219,13 @@ paths:
         required: true
         schema:
           type: string
-        example: oewh712c2i7xpkkl9g30z93z
+        example: lreqwaxyksuo79xsiwcu4yc7
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: 2lm6f187ep282qh6si9ci90l
+        example: c6fupmcrekhvsjj65gtp4dj1
       requestBody:
         content:
           application/json:
@@ -6175,8 +6245,8 @@ paths:
               - data
             example:
               data:
-                urn: '465879'
-                name: McLaughlin Academy
+                urn: '425701'
+                name: Bashirian Academy
                 postcode: GU1 1AA
       responses:
         '200':
@@ -6217,13 +6287,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '473335'
-                  name: Southern Mississippi Academy
-                  address: URN 473335, GU1 1AA
+                  urn: '554967'
+                  name: North Olson
+                  address: URN 554967, GU1 1AA
                   postcode: GU1 1AA
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: na43nwxbnqampr9sz8h6h9f3
+                  placement_id: 5lpw10jwr1jjfku2ahsz8ois
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -6250,6 +6320,36 @@ paths:
                 errors:
                 - error: NotFound
                   message: Trainee(s) not found
+        '409':
+          description: returns a 409 (conflict) status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - error
+                      - message
+                  data:
+                    type: array
+                    items: {}
+                required:
+                - errors
+                - data
+              example:
+                errors:
+                - error: Conflict
+                  message: School has already been taken
+                data: []
         '422':
           description: does not create a new placements and returns a 422 status (unprocessable_entity)
             status
@@ -6293,7 +6393,7 @@ paths:
         required: true
         schema:
           type: string
-        example: wanbt6sv67ewrrgq3276bn7c
+        example: f6qlouwpdwutmmmq68fvm2wc
       requestBody:
         content:
           application/json:
@@ -6392,7 +6492,7 @@ paths:
                       awarded_at:
                         nullable: true
                       training_initiative:
-                        type: string
+                        nullable: true
                       study_mode:
                         nullable: true
                       ebacc:
@@ -6466,6 +6566,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -6489,7 +6591,7 @@ paths:
                             graduation_year:
                               type: integer
                             grade:
-                              type: string
+                              nullable: true
                             country:
                               nullable: true
                             other_grade:
@@ -6598,6 +6700,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -6608,13 +6711,13 @@ paths:
               example:
                 data:
                   recommended_for_award_at: '2024-09-15T12:34:56Z'
-                  first_names: Miquel
-                  middle_names: Ebert
-                  last_name: Treutel
-                  email: Miquel.Treutel@example.com
+                  first_names: Daron
+                  middle_names: Kuphal
+                  last_name: Klein
+                  email: Daron.Klein@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '7477976'
+                  trn: '1602576'
                   withdraw_reasons_details:
                   withdraw_reasons_dfe_details:
                   region:
@@ -6622,7 +6725,7 @@ paths:
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
-                  date_of_birth: '1960-10-23'
+                  date_of_birth: '1995-04-19'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   training_route:
@@ -6630,18 +6733,18 @@ paths:
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2024-08-24'
+                  itt_start_date: '2024-08-08'
                   outcome_date: '2024-09-15'
-                  itt_end_date: '2026-07-03'
+                  itt_end_date: '2026-07-01'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
-                  trainee_start_date: '2024-08-27'
+                  trainee_start_date: '2024-08-11'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
                   awarded_at:
-                  training_initiative: '036'
+                  training_initiative:
                   study_mode:
                   ebacc: false
                   course_education_phase: secondary
@@ -6660,43 +6763,44 @@ paths:
                   hesa_editable: false
                   slug_sent_to_dqt_at:
                   placement_detail:
-                  provider_trainee_id: 24/25-548
-                  ukprn: '83349002'
+                  provider_trainee_id: 24/25-549
+                  ukprn: '47775984'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-24'
+                  course_itt_start_date: '2024-08-08'
                   course_age_range:
-                  expected_end_date: '2026-07-03'
+                  expected_end_date: '2026-07-01'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
                   bursary_level:
-                  nationality: PH
+                  nationality: RS
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
-                  - uk_degree: '052'
+                  - uk_degree: '203'
                     non_uk_degree:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    subject: '100918'
-                    institution: '0179'
-                    graduation_year: 1983
-                    grade: '05'
+                    subject: '100130'
+                    institution: '0072'
+                    graduation_year: 1997
+                    grade:
                     country:
                     other_grade:
-                    institution_uuid: 0ff35f0b-7042-e811-80ff-3863bb3640b8
-                    uk_degree_uuid: dd695652-c197-e711-80d8-005056ac45bb
-                    subject_uuid: 5d8470f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                    degree_id: fzy1kk2nluv3mi00lmpe2wur
+                    institution_uuid: f070f34a-2887-e711-80d8-005056ac45bb
+                    uk_degree_uuid: 416a5652-c197-e711-80d8-005056ac45bb
+                    subject_uuid: b77f70f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
+                    degree_id: b6mc0j1wxouuysvr6dxg703u
                   state: recommended_for_award
-                  trainee_id: sxy4qrzlea7r59if8frr0acj
+                  trainee_id: v3mi00lmpe2wureh31hwpbps
                   application_id:
         '404':
           description: returns status code 404

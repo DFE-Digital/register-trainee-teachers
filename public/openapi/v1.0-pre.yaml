@@ -347,6 +347,8 @@ paths:
                           nullable: true
                         withdrawal_future_interest:
                           nullable: true
+                        withdrawal_another_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -514,6 +516,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree:
@@ -605,6 +608,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '061'
@@ -706,6 +710,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '306'
@@ -807,6 +812,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '208'
@@ -908,6 +914,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '077'
@@ -1009,6 +1016,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '085'
@@ -1110,6 +1118,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '202'
@@ -1211,6 +1220,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '003'
@@ -1312,6 +1322,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '056'
@@ -1413,6 +1424,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '082'
@@ -1514,6 +1526,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '094'
@@ -1615,6 +1628,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '210'
@@ -1976,6 +1990,8 @@ paths:
                         nullable: true
                       withdrawal_future_interest:
                         nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                     required:
                     - first_names
                     - last_name
@@ -2155,7 +2171,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: sQPCRusPRNTi79127raz9GNt
+                    placement_id: kN8ZRGHFikrmaD9M4Pi4Tf7M
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2171,12 +2187,13 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: EP4oj8VLNzXECDBS9xJLxc4p
+                    degree_id: EvXgbwZYRo7VhqR9e1djAojP
                   state: submitted_for_trn
-                  trainee_id: 3WV8Ey1a1qkA61zYp4GpeUN2
+                  trainee_id: H5TBbegSi428266xqVi7bkUA
                   application_id:
                   withdrawal_trigger:
                   withdrawal_future_interest:
+                  withdrawal_another_reason:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -2406,6 +2423,8 @@ paths:
                           nullable: true
                         withdrawal_future_interest:
                           nullable: true
+                        withdrawal_another_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2560,6 +2579,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '301'
@@ -2972,6 +2992,8 @@ paths:
                   withdraw_reasons:
                     type: array
                     items: {}
+                  withdrawal_another_reason:
+                    nullable: true
                   placements:
                     type: array
                     items: {}
@@ -3066,6 +3088,7 @@ paths:
                 - withdrawal_trigger
                 - withdrawal_future_interest
                 - withdraw_reasons
+                - withdrawal_another_reason
                 - placements
                 - degrees
                 - state
@@ -3153,6 +3176,7 @@ paths:
                 withdrawal_trigger:
                 withdrawal_future_interest:
                 withdraw_reasons: []
+                withdrawal_another_reason:
                 placements: []
                 degrees: []
                 state: draft
@@ -3199,7 +3223,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 3po8HR34wY7M8TwfbH8sYa6Y
+        example: e42HvKC6bmuo5WGJ5PdzGLzj
       responses:
         '200':
           description: updates the trainee
@@ -3401,6 +3425,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items:
@@ -3562,6 +3588,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -3655,6 +3682,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
@@ -3662,7 +3690,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: Tn8kATiB122EFinuZYEv9S2r
+                    placement_id: GqRuCfD9nsZNS9QedhCnn1Rz
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3678,9 +3706,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: wUW2KT5E5dvDhRXtrzDf3Gem
+                    degree_id: xMj4Nk5Q1vAdP69CbKMzAxPm
                   state: submitted_for_trn
-                  trainee_id: 3po8HR34wY7M8TwfbH8sYa6Y
+                  trainee_id: e42HvKC6bmuo5WGJ5PdzGLzj
                   application_id:
                   disability2: '57'
         '401':
@@ -4015,6 +4043,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -4147,6 +4177,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -4227,6 +4258,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '213'
@@ -4515,7 +4547,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: C7oyiuKEcCxd1vHUHxHDWMXi
+                  degree_id: NNqxntxWX6oRFVpw9LKjqXwE
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4843,6 +4875,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -4927,6 +4961,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -5007,6 +5042,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees: []
                   state: draft
@@ -5480,7 +5516,7 @@ paths:
                   postcode: TM3A 6JB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: dJZv2MPe1y1v1NkuniaJGXyG
+                  placement_id: YBgFx3QLRt1i6UGPqDz7m8C3
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5732,6 +5768,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items:
@@ -5850,6 +5888,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -5940,6 +5979,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements:
                   - urn: '245290'
                     name: Ironbarrow 122 High
@@ -6402,6 +6442,8 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -6534,6 +6576,7 @@ paths:
                     - withdrawal_trigger
                     - withdrawal_future_interest
                     - withdraw_reasons
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -6614,6 +6657,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdraw_reasons: []
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '076'
