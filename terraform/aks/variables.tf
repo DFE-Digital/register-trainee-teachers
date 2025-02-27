@@ -91,6 +91,12 @@ variable "azure_storage_account_replication_type" { default = "LRS" }
 variable "deploy_temp_data_storage_account" { default = true }
 variable "enable_sanitised_storage" { default = false }
 
+variable "send_traffic_to_maintenance_page" {
+  description = "During a maintenance operation, keep sending traffic to the maintenance page instead of resetting the ingress"
+  type        = bool
+  default     = false
+}
+
 locals {
   app_name_suffix   = var.app_name == null ? var.app_environment : var.app_name
 

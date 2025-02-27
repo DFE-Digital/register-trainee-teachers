@@ -27,7 +27,7 @@ module Api
         json: {
           errors: errors(
             "StateTransitionError",
-            "It's not possible to perform this action while the #{model_name} is in its current state",
+            "It’s not possible to perform this action while the #{model_name} is in its current state",
           ),
         },
       }

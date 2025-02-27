@@ -22,8 +22,6 @@ module Reports
              :first_names,
              :middle_names,
              :trn,
-             :withdraw_reasons_details,
-             :withdraw_reasons_dfe_details,
              :course_subject_one,
              :course_subject_two,
              :course_subject_three,
@@ -391,8 +389,16 @@ module Reports
       trainee.award_type
     end
 
+    def withdrawal_trigger
+      trainee.current_withdrawal&.trigger
+    end
+
+    def withdrawal_future_interest
+      trainee.current_withdrawal&.future_interest
+    end
+
     def withdraw_reasons
-      trainee.current_withdrawal_reasons&.map do |reason|
+      trainee.current_withdrawal&.withdrawal_reasons&.map do |reason|
         I18n.t("components.withdrawal_details.reasons.#{reason.name}")
       end&.join("\n")
     end
@@ -414,7 +420,7 @@ module Reports
   private
 
     def placements
-      @placements ||= PlacementsImportedFromHesa.call(trainee:) ? trainee.placements.reverse : trainee.placements
+      @placements ||= PlacementsImportedFromHesa.call(trainee:) ? trainee.placements.includes(:school).reverse : trainee.placements.includes([:school])
     end
   end
 end

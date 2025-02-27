@@ -100,16 +100,8 @@ module Api
         attributes
       end
 
-      def ethnic_group
-        @trainee.ethnic_group
-      end
-
       def ethnicity
         Hesa::CodeSets::Ethnicities::MAPPING.key(@trainee.ethnic_background)
-      end
-
-      def disability_disclosure
-        @trainee.disability_disclosure
       end
 
       def course_attributes
@@ -149,10 +141,6 @@ module Api
         ::Hesa::CodeSets::CourseSubjects::MAPPING.key(@trainee.course_subject_three)
       end
 
-      def course_education_phase
-        @trainee.course_education_phase
-      end
-
       def course_study_mode
         @trainee&.hesa_trainee_detail&.course_study_mode
       end
@@ -167,10 +155,6 @@ module Api
 
       def expected_end_date
         @trainee.itt_end_date&.iso8601
-      end
-
-      def trainee_start_date
-        @trainee.trainee_start_date
       end
 
       def recommended_for_award_at
@@ -241,6 +225,8 @@ module Api
       def withdraw_reasons
         @trainee.withdrawal_reasons&.map(&:name)
       end
+
+      delegate :ethnic_group, :disability_disclosure, :course_education_phase, :trainee_start_date, to: :@trainee
     end
   end
 end

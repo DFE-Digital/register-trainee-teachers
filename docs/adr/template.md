@@ -28,7 +28,7 @@ Describe the first option, particularly context that explains any pros and cons 
 
 ## Decision
 
-The change option that we're proposing or have agreed to implement.
+The change option that we’re proposing or have agreed to implement.
 
 ## Consequences
 

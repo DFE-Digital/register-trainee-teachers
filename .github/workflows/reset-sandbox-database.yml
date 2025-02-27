@@ -9,51 +9,49 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+  pull-requests: write
+  id-token: write
+
 jobs:
   restore_sandbox:
     name: restore Database (sandbox)
     if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'true') }}
     runs-on: ubuntu-latest
+    environment:
+      name: sandbox
 
     steps:
     - uses: actions/checkout@v4
       name: Checkout
 
-    - name: Set KV environment variables
-      run: |
-        tf_vars_file=terraform/aks/workspace-variables/production.tfvars.json
-        echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-
     - name: Set env variable
       run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
-
-    - uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
-
-    - name: Set Connection String
-      run: |
-        STORAGE_CONN_STR="$(az keyvault secret show --name REGISTER-BACKUP-STORAGE-CONNECTION-STRING-AKS --vault-name ${{ env.key_vault_name }} | jq -r .value)"
-        echo "::add-mask::$STORAGE_CONN_STR"
-        echo "STORAGE_CONN_STR=$STORAGE_CONN_STR" >> $GITHUB_ENV
 
     - name: Download Backup
       run: |
         az storage blob download --container-name database-backup \
         --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
-        --connection-string '${{ env.STORAGE_CONN_STR }}'
+        --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
         az logout
 
     - uses: azure/login@v2
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_SANDBOX }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
     - name: Install kubectl
       uses: DFE-Digital/github-actions/set-kubectl@master
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ secrets.AZURE_CREDENTIALS_SANDBOX }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
 
     - name: K8 setup
       shell: bash
@@ -64,7 +62,7 @@ jobs:
     - name: Restore backup to aks env database
       shell: bash
       run: |
-        bin/konduit.sh -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-sandbox -- psql
+        bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-sandbox -- psql
 
     - name: Swap providers to vendor
       shell: bash

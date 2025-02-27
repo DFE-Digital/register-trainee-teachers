@@ -187,7 +187,7 @@ module Trainees
       context "with an associated degree" do
         let(:degree) { create(:degree, trainee:) }
         let(:associated_audit) do
-          trainee.own_and_associated_audits.find { |a| a.auditable_type == "Degree" }
+          trainee.own_and_associated_audits.includes(%i[user auditable]).find { |a| a.auditable_type == "Degree" }
         end
 
         subject { described_class.call(audit: associated_audit, current_user: current_user) }

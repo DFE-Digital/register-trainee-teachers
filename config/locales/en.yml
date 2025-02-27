@@ -186,8 +186,8 @@ en:
         blank: Draft record
     csv_field_summary:
       view:
-        field_name: Field name
-        technical: Technical
+        field_name: CSV field name
+        technical: API field name
         hesa_alignment: HESA alignment
         description: Description
         format: Format
@@ -985,7 +985,7 @@ en:
         "no":
           label: "No"
         unknown:
-          label: I don't know
+          label: I don’t know
       withdrawal_reasons:
         labels:
           additional_reason: Enter the reason for withdrawal
@@ -1022,12 +1022,12 @@ en:
             If you’re not sure if the trainee is on an initiative you could check with a colleague or ask the trainee directly.
         bursaries:
           non_tiered:
-            description: You can apply now for a %{amount} bursary for the trainee's %{subject} course. You must have checked that they’re eligible.
+            description: You can apply now for a %{amount} bursary for the trainee’s %{subject} course. You must have checked that they’re eligible.
             early_years_description: "%{training_route} has a bursary available of %{amount}. You need to check if the trainee is eligible for this bursary."
             title: Funding type
           scholarship_and_bursary:
             description: "The trainee may get funding for their %{subject} course if either:"
-            bursary: you apply now for a %{amount} bursary - you must have checked that they're eligible
+            bursary: you apply now for a %{amount} bursary - you must have checked that they’re eligible
             scholarship: they apply for a %{amount} scholarship
           grant:
             description: The trainee can apply for a %{amount} grant for their %{subject} course.
@@ -1224,7 +1224,7 @@ en:
       edit:
         heading: Lead partner
         hint: Search for a lead partner by name, postcode, school URN or training provider UKPRN
-        description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee's record.</p>
+        description: <p>The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.</p><p>The lead partner you select will be able to view trainee’s record.</p>
         not_applicable_details:
           summary_text: Lead partner is not listed, or the trainee is funded or employed privately
           label_text: Lead partner is not applicable
@@ -1327,7 +1327,9 @@ en:
           hint: This is the last day they trained for QTS
       reasons:
         edit:
-          heading: Why did the trainee choose to withdraw?
+          heading:
+            trainee: Why did the trainee choose to withdraw?
+            provider: Why did you have to withdraw the trainee?
           hint: Select all reasons that apply
       extra_informations:
         edit:
@@ -1738,7 +1740,7 @@ en:
           attributes:
             reason_ids:
               trainee:
-                blank: Choose a reason for the trainee's decision to withdraw
+                blank: Choose a reason for the trainee’s decision to withdraw
               provider:
                 blank: Choose a reason for removing the trainee
             another_reason:

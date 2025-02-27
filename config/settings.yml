@@ -58,7 +58,6 @@ features:
   sync_from_dttp: false
   sync_trainees_from_dttp: false
   import_trainees_from_dttp: false
-  send_emails: false
   routes:
     early_years_assessment_only: false
     early_years_salaried: false
@@ -156,7 +155,6 @@ track_validation_errors: true
 
 govuk_notify:
   api_key: please_change_me
-  welcome_email_template_id: 6577aefe-8a88-41c1-a6d6-9eb8bcd49af0
   otp_email_template_id: 4b4bda40-2b2f-4041-ac0e-cc5de3d683ef
   csv_submitted_for_processing:
     in_progress_template_id: 66682854-a9f1-43b3-85e9-0e168fc42b0c

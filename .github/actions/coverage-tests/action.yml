@@ -12,9 +12,6 @@ inputs:
   use-next-academic-year:
     required: true
     type: boolean
-  azure-credentials:
-    required: true
-    type: string
   slack-webhook:
     required: true
     type: string
@@ -31,7 +28,6 @@ runs:
     - name: Bring docker image up
       uses: ./.github/actions/bring-docker-image-up/
       with:
-        azure-credentials: ${{ inputs.azure-credentials }}
         docker-image: ${{ inputs.docker-image}}
         image-tag: ${{ inputs.image-tag }}
 
