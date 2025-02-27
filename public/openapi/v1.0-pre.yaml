@@ -2123,7 +2123,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: X85eQL3RLpEMrp2G2JC7rGog
+                    placement_id: sxYVcfAoLUYRvpvW7gcbsFxi
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2139,9 +2139,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: kuDjw7Zo4VAzFdeHDVF9CU6F
+                    degree_id: HjexKbDMao1CQk3VZVJ8x3ar
                   state: submitted_for_trn
-                  trainee_id: 55yVAGvN2VTQdzNc6x2tJos3
+                  trainee_id: AtrJnFBTQ9mvyCSQ2cRHhndj
                   application_id:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
@@ -2569,7 +2569,7 @@ paths:
                 - errors
               example:
                 errors:
-                - Degrees attributes Uk degree is invalid
+                - Degrees attributes Uk degree has invalid reference data values
                 message: 'Validation failed: 1 error prohibited this trainee from
                   being saved'
       requestBody:
@@ -3149,7 +3149,7 @@ paths:
         required: true
         schema:
           type: string
-        example: xJki7EW1kB9sbs8rAxVsE4Qy
+        example: SnNbZM7g1K1RuNukG6zfVqxD
       responses:
         '200':
           description: updates the trainee
@@ -3604,7 +3604,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: 3mTzf34AwqHiTicqmChQA8p2
+                    placement_id: eZP3z4kT9r3ejBGFfiL8nzjh
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3620,9 +3620,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: eZdBv9Ktr8QybN83fDW5pVtP
+                    degree_id: GyHTCoR1iJjwzYfFznf9fBFq
                   state: submitted_for_trn
-                  trainee_id: xJki7EW1kB9sbs8rAxVsE4Qy
+                  trainee_id: SnNbZM7g1K1RuNukG6zfVqxD
                   application_id:
                   disability2: '57'
         '401':
@@ -3701,7 +3701,8 @@ paths:
                 message: 'Validation failed: 1 error prohibited this trainee from
                   being saved'
                 errors:
-                - Hesa trainee detail attributes Funding method is invalid
+                - Hesa trainee detail attributes Funding method has invalid reference
+                  data values
       requestBody:
         content:
           application/json:
@@ -4444,7 +4445,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: sdJnWh2DyNnT5sANGpbi5qy9
+                  degree_id: Ny1tXrp8nwkep72rjvynqPXh
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4591,9 +4592,9 @@ paths:
                 - error: UnprocessableEntity
                   message: Subject can't be blank
                 - error: UnprocessableEntity
-                  message: Country is invalid
+                  message: Country has invalid reference data values
                 - error: UnprocessableEntity
-                  message: Non uk degree is invalid
+                  message: Non uk degree has invalid reference data values
   "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
@@ -5401,7 +5402,7 @@ paths:
                   postcode: SC2W 4RH
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: UPjcvnkQ1xFSkzfWH8LGQhwa
+                  placement_id: xdAh9MmDZ43aJTRTaKjecrT3
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
