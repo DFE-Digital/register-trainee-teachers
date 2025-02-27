@@ -14,9 +14,7 @@ module BulkUpdate
         ).save
 
         redirect_to(
-          bulk_update_add_trainees_upload_path(
-            bulk_update_trainee_upload,
-          ), flash: { success: t(".success") }
+          bulk_update_add_trainees_upload_path(bulk_update_trainee_upload),
         )
       end
 

@@ -505,7 +505,7 @@ private
     expect(page).to have_content(/Number of registered trainees\s*5/)
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
-    expect(page).to have_content("You can check your trainee data once it has been submitted into Register. At any time you can:")
+    expect(page).to have_content("You can check your trainee data in Register. At any time you can:")
     expect(page).to have_content(
       "view ‘Choose trainee status export’ from the ‘Registered trainees’ section, using the ‘academic year’ or ‘start year’ filter to select the current academic year",
     )
@@ -638,12 +638,12 @@ private
   end
 
   def then_i_see_that_the_upload_is_processing
-    expect(page).to have_content("File uploaded")
     expect(page).to have_content("Your file is being processed")
     expect(page).to have_content("We are processing your trainee records to check if they are correct")
     expect(page).to have_content("This may take several minutes")
     expect(page).to have_content("You’ll receive an email to tell you if the upload has been successful or if you need to fix any mistakes")
     expect(page).to have_content("You can also check the status of new trainee files.")
+    expect(page).not_to have_content("File uploaded")
     expect(page).to have_link("Back to bulk updates page")
   end
 
@@ -1033,6 +1033,7 @@ private
   def then_i_see_the_new_bulk_update_import_page
     expect(page).to have_content("You uploaded a CSV file with details of:")
     expect(page).to have_content("5 trainees who can be added")
+    expect(page).to have_content("File uploaded")
   end
 
   def when_i_click_on_cancel_process_link
