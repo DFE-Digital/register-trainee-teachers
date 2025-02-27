@@ -204,7 +204,6 @@ feature "Add a placement" do
     then_i_see_the_trainee_page
   end
 
-
 private
 
   def then_i_see_the_trainee_page

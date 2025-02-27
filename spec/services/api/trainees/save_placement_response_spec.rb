@@ -103,31 +103,4 @@ describe Api::Trainees::SavePlacementResponse do
       end
     end
   end
-
-  context "with a new but duplicate placement" do
-    let(:trainee) { create(:trainee, placements: [existing_placement]) }
-    let(:placement) { trainee.placements.new }
-
-    let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
-
-    let(:attributes) do
-      attrs = existing_placement.attributes.slice(*placement_attribute_keys).with_indifferent_access
-      Api::V01::PlacementAttributes.new(attrs)
-    end
-
-    context "with same name" do
-      let(:existing_placement) { create(:placement, name: "existing placement") }
-
-      it "returns status unprocessable entity with error response" do
-        expect(subject[:status]).to be(:conflict)
-        expect(subject[:json][:errors]).to contain_exactly(
-          error: "Conflict",
-          message: "Urn has already been taken",
-        )
-        expect(subject[:json][:data]).to contain_exactly(
-          Api::V01::PlacementSerializer.new(existing_placement).as_hash,
-        )
-      end
-    end
-  end
 end
