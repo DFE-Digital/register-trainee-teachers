@@ -167,11 +167,11 @@ module CodeSets
           # Level 7 qualifications
           "Integrated master",
           "Integrated masters",
-          "Integrated master's degree",
+          "Integrated master’s degree",
           "Level 7 award",
           "Level 7 certificate",
           "Level 7 national diploma",
-          "Level 7 NVQ",
+          "Level 7 NVQ",
           "Postgraduate certificate",
           "Postgraduate certificate in education",
           "PGCE",

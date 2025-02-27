@@ -71,7 +71,7 @@ This generator focuses on copying all request specs for the existing version and
 
 ### Notes
 
-- Ensure that the version format provided is `vx.x` (e.g., `v0.1` or `v1.0-pre`).
+- Ensure that the version format provided is `vx.x` (for example `v0.1` or `v1.0-pre`).
 - The generators handle version conversion and inheritance, making it easy to create new versions of the API and corresponding specs.
 
 This documentation should provide clear guidance on how to use the versioning system and the utility services for generating new API code and specs.
