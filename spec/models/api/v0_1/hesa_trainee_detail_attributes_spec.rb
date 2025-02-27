@@ -44,7 +44,7 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
 
         it {
           expect(subject).not_to be_valid
-          expect(subject.errors[:funding_method]).to contain_exactly("is invalid")
+          expect(subject.errors[:funding_method]).to contain_exactly("has invalid reference data values")
         }
       end
 

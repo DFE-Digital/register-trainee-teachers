@@ -280,7 +280,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
-            { "error" => "UnprocessableEntity", "message" => "Uk degree is invalid" },
+            { "error" => "UnprocessableEntity", "message" => "Uk degree has invalid reference data values" },
             { "error" => "UnprocessableEntity", "message" => "Grade can't be blank" },
           )
         end
@@ -299,8 +299,8 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
-            { "error" => "UnprocessableEntity", "message" => "Non uk degree is invalid" },
-            { "error" => "UnprocessableEntity", "message" => "Country is invalid" },
+            { "error" => "UnprocessableEntity", "message" => "Non uk degree has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "Country has invalid reference data values" },
           )
         end
       end

@@ -50,7 +50,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
         it {
           expect(subject).not_to be_valid
-          expect(subject.errors[:sex]).to contain_exactly("is invalid")
+          expect(subject.errors[:sex]).to contain_exactly("has invalid reference data values")
         }
       end
 
@@ -90,7 +90,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
         it {
           expect(subject).not_to be_valid
-          expect(subject.errors[:course_subject_one]).to contain_exactly("is invalid")
+          expect(subject.errors[:course_subject_one]).to contain_exactly("has invalid reference data values")
         }
       end
 
@@ -138,7 +138,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
         it {
           expect(subject).not_to be_valid
-          expect(subject.errors[:study_mode]).to contain_exactly("is invalid")
+          expect(subject.errors[:study_mode]).to contain_exactly("has invalid reference data values")
         }
       end
 

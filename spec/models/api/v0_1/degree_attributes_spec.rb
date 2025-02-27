@@ -52,7 +52,7 @@ RSpec.describe Api::V01::DegreeAttributes do
 
           it {
             expect(subject).not_to be_valid
-            expect(subject.errors[:uk_degree]).to contain_exactly("is invalid")
+            expect(subject.errors[:uk_degree]).to contain_exactly("has invalid reference data values")
           }
         end
 
@@ -98,7 +98,7 @@ RSpec.describe Api::V01::DegreeAttributes do
 
           it {
             expect(subject).not_to be_valid
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("is invalid")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("has invalid reference data values")
           }
         end
 
