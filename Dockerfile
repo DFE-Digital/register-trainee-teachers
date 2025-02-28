@@ -1,6 +1,6 @@
 FROM ruby:3.4.2-alpine3.20
 
-ENV APP_HOME /app
+ENV APP_HOME=/app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
@@ -10,10 +10,13 @@ RUN apk add --update --no-cache tzdata && \
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
+# Install build dependencies and runtime libraries
 RUN apk add --update --no-cache --virtual build-dependencies \
-    postgresql-dev build-base git icu-dev cmake pkgconf g++ && \
-    apk add --update --no-cache libpq yarn shared-mime-info icu-libs && \
-    bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
+    postgresql-dev build-base git icu-dev cmake pkgconf g++ zlib-dev yaml-dev && \
+    apk add --update --no-cache libpq yarn shared-mime-info icu-libs zlib yaml
+
+# Configure and install gems with all dependencies
+RUN bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
     bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
     bundle config build.charlock_holmes --with-cxxflags="-std=c++17" && \
     bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
@@ -38,5 +41,4 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-CMD bundle exec rails db:migrate && \
-    bundle exec rails server -b 0.0.0.0
+CMD bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0
