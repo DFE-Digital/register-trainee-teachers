@@ -11,7 +11,7 @@ RUN apk add --update --no-cache tzdata && \
 COPY .tool-versions Gemfile Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
-    postgresql-dev build-base git icu-dev cmake pkg-config && \
+    postgresql-dev build-base git icu-dev cmake pkgconf && \
     apk add --update --no-cache libpq yarn shared-mime-info icu-libs && \
     bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
     bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
