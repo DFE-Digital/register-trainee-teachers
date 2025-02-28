@@ -10,6 +10,7 @@ RUN apk add --update --no-cache tzdata && \
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
+# Install build dependencies and runtime libraries
 RUN apk add --update --no-cache --virtual build-dependencies \
     build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev && \
     apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib && \
