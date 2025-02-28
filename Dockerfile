@@ -1,4 +1,4 @@
-FROM ruby:3.3.5-alpine3.20
+FROM ruby:3.4.2-alpine3.20
 
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
@@ -11,8 +11,12 @@ RUN apk add --update --no-cache tzdata && \
 COPY .tool-versions Gemfile Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
-    postgresql-dev build-base git && \
-    apk add --update --no-cache libpq yarn shared-mime-info && \
+    postgresql-dev build-base git icu-dev cmake pkgconf && \
+    apk add --update --no-cache libpq yarn shared-mime-info icu-libs && \
+    bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
+    bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
+    bundle config build.charlock_holmes --with-cxxflags="-std=c++17" && \
+    bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
     bundle install --jobs=4 && \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependances
