@@ -888,6 +888,20 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         )
       end
     end
+
+    context "when itt_qualification_aim has invalid reference data values" do
+      let(:itt_qualification_aim) { "321" }
+      let(:params) do
+        { data: data.merge({ itt_qualification_aim: }) }
+      end
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to contain_exactly(
+          "Hesa trainee detail attributes Itt qualification aim has invalid reference data values"
+        )
+      end
+    end
   end
 
   context "when a placement has invalid reference data values" do

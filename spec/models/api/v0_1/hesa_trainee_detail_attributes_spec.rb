@@ -6,7 +6,6 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
   subject { described_class.new }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:itt_qualification_aim) }
     it { is_expected.to validate_presence_of(:course_year) }
     it { is_expected.to validate_presence_of(:fund_code) }
 
@@ -25,11 +24,51 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
       end
 
       context "when not included in the list of HESA itt aim codes" do
-        subject { described_class.new(itt_aim: 300) }
+        subject { described_class.new(itt_aim: "300") }
 
         it {
           expect(subject).not_to be_valid
           expect(subject.errors[:itt_aim]).to contain_exactly("has invalid reference data values")
+        }
+      end
+    end
+
+    describe "itt_qualification_aim" do
+      context "when empty" do
+        subject { described_class.new(itt_qualification_aim: "") }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:itt_qualification_aim]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when nil" do
+        subject { described_class.new(itt_qualification_aim: nil) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:itt_qualification_aim]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when included in the list of HESA itt qualification aim codes" do
+        ::Hesa::CodeSets::IttQualificationAims::MAPPING.keys.each do |itt_qualification_aim|
+          subject { described_class.new(itt_qualification_aim: ) }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:itt_qualification_aim]).to be_blank
+          }
+        end
+      end
+
+      context "when not included in the list of HESA itt qualification aim codes" do
+        subject { described_class.new(itt_qualification_aim: "300") }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:itt_qualification_aim]).to contain_exactly("has invalid reference data values")
         }
       end
     end
