@@ -1197,33 +1197,6 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "Conflict",
-          "message": "Urn has already been taken"
-        }
-      ],
-      "data": [
-        {
-          "urn": "896801",
-          "name": "existing placement",
-          "address": "URN 896801, ZV24 7ET",
-          "postcode": "ZV24 7ET",
-          "created_at": "2025-02-17T16:07:07.856Z",
-          "updated_at": "2025-02-17T16:07:07.873Z",
-          "placement_id": "fpe10ornjexqakjg4sgzjyhj"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
