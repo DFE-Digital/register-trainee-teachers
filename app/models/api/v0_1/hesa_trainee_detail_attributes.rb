@@ -37,7 +37,8 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
 
-      validates(:course_age_range, inclusion: Hesa::CodeSets::AgeRanges::MAPPING.keys, allow_blank: true)
+      validates(:course_age_range, inclusion: { in: Hesa::CodeSets::AgeRanges::MAPPING.keys }, allow_blank: true)
+      validates(:funding_method, inclusion: { in: Hesa::CodeSets::BursaryLevels::MAPPING.keys }, allow_blank: true)
     end
   end
 end

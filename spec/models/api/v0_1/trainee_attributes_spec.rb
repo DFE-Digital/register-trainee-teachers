@@ -8,16 +8,156 @@ RSpec.describe Api::V01::TraineeAttributes do
   describe "validations" do
     it { is_expected.to validate_presence_of(:first_names) }
     it { is_expected.to validate_presence_of(:last_name) }
-    it { is_expected.to validate_presence_of(:sex) }
     it { is_expected.to validate_presence_of(:diversity_disclosure) }
-    it { is_expected.to validate_presence_of(:course_subject_one) }
     it { is_expected.to validate_presence_of(:study_mode) }
     it { is_expected.to validate_presence_of(:hesa_id) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_length_of(:email).is_at_most(255) }
 
-    it { is_expected.to validate_inclusion_of(:sex).in_array(Hesa::CodeSets::Sexes::MAPPING.values) }
-    it { is_expected.to validate_inclusion_of(:ethnicity).in_array(Hesa::CodeSets::Ethnicities::MAPPING.keys).allow_nil }
+    it {
+      expect(subject).to validate_inclusion_of(:nationality)
+        .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values).allow_blank
+    }
+
+    it {
+      expect(subject).to validate_inclusion_of(:training_initiative)
+        .in_array(
+          Hesa::CodeSets::TrainingInitiatives::MAPPING.values + [ROUTE_INITIATIVES_ENUMS[:no_initiative]],
+        )
+    }
+
+    describe "sex" do
+      context "when empty" do
+        subject { described_class.new(sex: "") }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:sex]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when nil" do
+        subject { described_class.new(sex: nil) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:sex]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when not included in the list of HESA sexes" do
+        subject { described_class.new(sex: 100) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:sex]).to contain_exactly("has invalid reference data values")
+        }
+      end
+
+      context "when included in the list of HESA sexes" do
+        Hesa::CodeSets::Sexes::MAPPING.each_value do |sex|
+          subject { described_class.new(sex:) }
+
+          it "is expected to allow #{sex}" do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:sex]).to be_blank
+          end
+        end
+      end
+    end
+
+    describe "course_subject_one" do
+      context "when empty" do
+        subject { described_class.new(course_subject_one: "") }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when nil" do
+        subject { described_class.new(course_subject_one: nil) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when not included in the list of HESA course subjects" do
+        subject { described_class.new(course_subject_one: "random subject") }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:course_subject_one]).to contain_exactly("has invalid reference data values")
+        }
+      end
+
+      context "when included in the list of HESA course subjects" do
+        Hesa::CodeSets::CourseSubjects::MAPPING.each_value do |course_subject|
+          subject { described_class.new(course_subject_one: course_subject) }
+
+          it "is expected to allow #{course_subject}" do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:course_subject_one]).to be_blank
+          end
+        end
+      end
+    end
+
+    %i[course_subject_two course_subject_three].each do |course_subject|
+      it {
+        expect(subject).to validate_inclusion_of(course_subject).in_array(
+          Hesa::CodeSets::CourseSubjects::MAPPING.values,
+        ).allow_blank
+      }
+    end
+
+    describe "study_mode" do
+      context "when empty" do
+        subject { described_class.new(study_mode: "") }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:study_mode]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when nil" do
+        subject { described_class.new(study_mode: nil) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:study_mode]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when not included in the list of HESA study modes" do
+        subject { described_class.new(study_mode: 2) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:study_mode]).to contain_exactly("has invalid reference data values")
+        }
+      end
+
+      context "when included in the list of HESA study modes" do
+        TRAINEE_STUDY_MODE_ENUMS.each_key do |study_mode|
+          subject { described_class.new(study_mode:) }
+
+          it "is expected to allow #{study_mode}" do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:study_mode]).to be_blank
+          end
+        end
+      end
+    end
+
+    it {
+      expect(subject).to validate_inclusion_of(:ethnicity)
+        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq).allow_blank
+    }
 
     describe "training_route" do
       it { is_expected.to validate_presence_of(:training_route) }

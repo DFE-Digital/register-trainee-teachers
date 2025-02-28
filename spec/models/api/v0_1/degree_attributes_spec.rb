@@ -16,14 +16,57 @@ RSpec.describe Api::V01::DegreeAttributes do
     it { is_expected.to validate_presence_of(:graduation_year) }
     it { is_expected.to validate_presence_of(:subject) }
 
+    it {
+      expect(subject).to validate_inclusion_of(:country).in_array(
+        Hesa::CodeSets::Countries::MAPPING.values,
+      )
+    }
+
     context 'when locale_code is "uk"' do
       before { degree_attributes.locale_code = "uk" }
 
       it { is_expected.to validate_presence_of(:institution) }
-
-      it { is_expected.to validate_presence_of(:uk_degree) }
-
       it { is_expected.to validate_presence_of(:grade) }
+
+      describe "uk_degree" do
+        context "when empty" do
+          before { subject.uk_degree = "" }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
+          }
+        end
+
+        context "when nil" do
+          before { subject.uk_degree = nil }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
+          }
+        end
+
+        context "when not included in the list of HESA uk degrees" do
+          before { subject.uk_degree = "Random subject" }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:uk_degree]).to contain_exactly("has invalid reference data values")
+          }
+        end
+
+        context "when included in the list of HESA uk degrees" do
+          DfEReference::DegreesQuery::TYPES.all.map(&:name).each do |name|
+            before { subject.uk_degree = name }
+
+            it "is expected to allow #{name}" do
+              expect(subject).not_to be_valid
+              expect(subject.errors[:uk_degree]).to be_blank
+            end
+          end
+        end
+      end
     end
 
     context 'when locale_code is "non_uk"' do
@@ -31,7 +74,45 @@ RSpec.describe Api::V01::DegreeAttributes do
 
       it { is_expected.to validate_presence_of(:country) }
 
-      it { is_expected.to validate_presence_of(:non_uk_degree) }
+      describe "non_uk_degree" do
+        context "when empty" do
+          before { subject.non_uk_degree = "" }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
+          }
+        end
+
+        context "when nil" do
+          before { subject.uk_degree = nil }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
+          }
+        end
+
+        context "when not included in the list of HESA non uk degrees" do
+          before { subject.non_uk_degree = "Random subject" }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("has invalid reference data values")
+          }
+        end
+
+        context "when included in the list of HESA non uk degrees" do
+          DfEReference::DegreesQuery::TYPES.all.map(&:name).each do |name|
+            before { subject.non_uk_degree = name }
+
+            it "is expected to allow #{name}" do
+              expect(subject).not_to be_valid
+              expect(subject.errors[:non_uk_degree]).to be_blank
+            end
+          end
+        end
+      end
     end
 
     context "with duplicate" do
