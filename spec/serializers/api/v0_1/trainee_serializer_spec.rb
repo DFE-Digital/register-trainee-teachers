@@ -31,9 +31,10 @@ RSpec.describe Api::V01::TraineeSerializer do
         trn
         submitted_for_trn_at
         withdraw_date
-        withdraw_reasons_dfe_details
-        withdraw_reasons_details
         withdraw_reasons
+        withdrawal_trigger
+        withdrawal_future_interest
+        withdrawal_another_reason
         defer_date
         recommended_for_award_at
         trainee_start_date

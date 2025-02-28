@@ -358,7 +358,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen
-    expect(withdrawal_trigger_page).to have_content("Choose a reason for withdrawal")
+    expect(withdrawal_trigger_page).to have_content("Please select an option")
   end
 
   def then_i_see_the_error_message_for_future_interest_not_chosen

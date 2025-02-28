@@ -10,19 +10,20 @@ module Api
       include DatesHelper
 
       validate :withdraw_date_valid
-      validates :withdraw_reasons_details, length: { maximum: 1000 }, allow_blank: true
-      validates :withdraw_reasons_dfe_details, length: { maximum: 1000 }, allow_blank: true
-      validates :reasons, inclusion: { in: WithdrawalReasons::REASONS }
-
-      validate :unknown_exclusively
+      validate :withdrawal_reasons_valid?, unless: -> { reasons.nil? }
+      validate :withdrawal_reasons_provided?
+      validates :trigger, inclusion: { in: TraineeWithdrawal.triggers.keys }
+      validates :future_interest, inclusion: { in: TraineeWithdrawal.future_interests.keys }
+      validate :another_reason_text_provided?
 
       attr_accessor :trainee
 
       ATTRIBUTES = %i[
         reasons
         withdraw_date
-        withdraw_reasons_details
-        withdraw_reasons_dfe_details
+        trigger
+        future_interest
+        another_reason
       ].freeze
 
       ATTRIBUTES.each do |attr|
@@ -64,18 +65,26 @@ module Api
         end
       end
 
-      def unknown_exclusively
-        return unless unknown_reason? && withdrawal_reasons.count > 1
-
-        errors.add(:reasons, :unknown_exclusively)
+      def withdrawal_reasons_provided?
+        errors.add(:reasons, :inclusion) if reasons.blank?
       end
 
-      def unknown_reason?
-        withdrawal_reasons.pluck(:name).include?(WithdrawalReasons::UNKNOWN)
+      def withdrawal_reasons_valid?
+        errors.add(:reasons, :invalid) unless (reasons - valid_reasons).empty?
+      end
+
+      def valid_reasons
+        return WithdrawalReasons::PROVIDER_REASONS if trigger == "provider"
+
+        WithdrawalReasons::TRAINEE_REASONS
       end
 
       def withdrawal_reasons
         @withdrawal_reasons ||= WithdrawalReason.where(name: reasons)
+      end
+
+      def another_reason_text_provided?
+        errors.add(:another_reason, :blank) if reasons&.any? { |x| x.include?("another_reason") } && another_reason.blank?
       end
     end
   end
