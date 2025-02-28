@@ -850,7 +850,6 @@ Trainee details
         "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
         "state": "deferred",
         "withdraw_date": null,
-
         "defer_date": "2023-10-17",
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
@@ -1884,26 +1883,12 @@ Note that multiple values for the reasons parameter can be provided by repeating
 
 
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
-
-
 | ------------- | ------- | -------- | ------------ | --------------- |
-
-
 | **trainee_id** | path | string | true | The unique ID of the trainee |
-
-
-| **trigger** |query| string | true | The party responsible for initialting the withdrawal. Valid values are `trainee` <br>, `provider |
-
-
+| **trigger** |query| string | true | The party responsible for initiating the withdrawal. Valid values are `trainee` <br>, `provider |
 | **reasons** | query | array of strings | true | The reason(s) for the withdrawal. Valid values with trigger `trainee` are `unacceptable_behaviour`, <br> `did_not_make_progress`, <br> `lack_of_progress_during_placements`, <br> `trainee_workload_issues`, <br> `not_meeting_qts_standards`, <br> `change_in_personal_or_health_circumstances`, <br> `does_not_want_to_become_a_teacher`, <br> `never_intended_to_obtain_qts`, <br> `moved_to_different_itt_course`, <br> `trainee_chose_to_withdraw_another_reason`, <br>. Valid values with trigger `provider` are `record_added_in_error`, <br> `mandatory_reasons`, <br> `stopped_responding_to_messages`, <br> `unacceptable_behaviour`, <br> `lack_of_progress_during_placements`, <br> `did_not_make_progress`, <br> `not_meeting_qts_standards`, <br> `had_to_withdraw_trainee_another_reason` |
-
-
 | **another_reason** | query | string | if `reasons` include `trainee_chose_to_withdraw_another_reason` or `had_to_withdraw_trainee_another_reason` | The reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew |
-
-
 | **future_interest** | query | string | true | The trainee's interest in becoming a teacher in the future. Valid values are `yes`, <br> `no`, <br> `unknown`|
-
-
 | **withdraw_date** | query | string | true | The date and time of the withdrawal in ISO 8601 format |
 
 
