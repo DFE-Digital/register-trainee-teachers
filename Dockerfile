@@ -11,8 +11,8 @@ RUN apk add --update --no-cache tzdata && \
 COPY .tool-versions Gemfile Gemfile.lock ./
 
 RUN apk add --update --no-cache --virtual build-dependances \
-    postgresql-dev build-base git cmake && \
-    apk add --update --no-cache libpq yarn shared-mime-info && \
+    postgresql-dev build-base git icu-dev && \
+    apk add --update --no-cache libpq yarn shared-mime-info icu-libs && \
     bundle install --jobs=4 && \
     rm -rf /usr/local/bundle/cache && \
     apk del build-dependances
