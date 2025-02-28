@@ -1190,7 +1190,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to contain_exactly(
-            "Hesa trainee detail attributes Itt aim has invalid reference data values"
+            "Hesa trainee detail attributes Itt aim has invalid reference data values",
           )
         end
       end
@@ -1212,133 +1212,134 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to contain_exactly(
-            "Hesa trainee detail attributes Itt qualification aim has invalid reference data values"
+            "Hesa trainee detail attributes Itt qualification aim has invalid reference data values",
           )
         end
-    end
-  end
-
-  context "Updating a newly created trainee" do
-    let(:token) { "trainee_token" }
-    let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
-    let!(:nationality) { create(:nationality, :british) }
-
-    let(:headers) { { Authorization: token, **json_headers } }
-
-    let(:start_academic_cycle) { create(:academic_cycle, :current) }
-    let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }
-
-    let(:params_for_create) do
-      {
-        data: {
-          first_names: "John",
-          last_name: "Doe",
-          date_of_birth: "1990-01-01",
-          sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
-          email: "john.doe@example.com",
-          nationality: "GB",
-          training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
-          itt_start_date: start_academic_cycle.start_date,
-          itt_end_date: end_academic_cycle.end_date,
-          course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[course_subject],
-          study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
-          degrees_attributes: [
-            {
-              grade: "02",
-              subject: "100425",
-              institution: "0116",
-              uk_degree: "083",
-              graduation_year: "2003-06-01",
-            },
-          ],
-          placements_attributes: [
-            {
-              urn: "900020",
-            },
-          ],
-          itt_aim: "202",
-          itt_qualification_aim: "001",
-          course_year: "2012",
-          course_age_range: "13915",
-          fund_code: "7",
-          funding_method: "4",
-          hesa_id: "0310261553101",
-        },
-      }
+      end
     end
 
-    let(:course_allocation_subject) do
-      subject_specialism = create(:subject_specialism, name: course_subject)
+    context "Updating a newly created trainee" do
+      let(:token) { "trainee_token" }
+      let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+      let!(:nationality) { create(:nationality, :british) }
 
-      subject_specialism.allocation_subject
-    end
+      let(:headers) { { Authorization: token, **json_headers } }
 
-    [CourseSubjects::PHYSICS, CourseSubjects::BIOLOGY].each do |cs|
-      context "when creating a new trainee with #{cs} course with valid params" do
-        if cs == CourseSubjects::PHYSICS
-          let!(:funding_method) {
-            funding_method = create(:funding_method, :bursary, amount: 9000, training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: course_allocation_subject)
-          }
-        end
+      let(:start_academic_cycle) { create(:academic_cycle, :current) }
+      let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
-        let(:course_subject) { cs }
-        let(:slug) { response.parsed_body[:data][:trainee_id] }
-        let(:trainee) { Trainee.last.reload }
-
-        before do
-          allow(Api::V10Pre::HesaMapper::Attributes).to receive(:call).and_call_original
-          allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
-
-          post "/api/v1.0-pre/trainees", params: params_for_create.to_json, headers: headers
-        end
-
-        it "creates a trainee" do
-          expect(response).to have_http_status(:created)
-          expect(Trainee.count).to eq(1)
-
-          expect(trainee.state).to eq("submitted_for_trn")
-          expect(trainee.slug).to eq(slug)
-        end
-
-        context "when updating a newly created trainee with valid params" do
-          let(:params_for_update) do
-            {
-              data:
+      let(:params_for_create) do
+        {
+          data: {
+            first_names: "John",
+            last_name: "Doe",
+            date_of_birth: "1990-01-01",
+            sex: Hesa::CodeSets::Sexes::MAPPING.invert[Trainee.sexes[:male]],
+            email: "john.doe@example.com",
+            nationality: "GB",
+            training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
+            itt_start_date: start_academic_cycle.start_date,
+            itt_end_date: end_academic_cycle.end_date,
+            course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[course_subject],
+            study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
+            degrees_attributes: [
               {
-                first_names: "Alice",
-                study_mode: "63",
+                grade: "02",
+                subject: "100425",
+                institution: "0116",
+                uk_degree: "083",
+                graduation_year: "2003-06-01",
               },
+            ],
+            placements_attributes: [
+              {
+                urn: "900020",
+              },
+            ],
+            itt_aim: "202",
+            itt_qualification_aim: "001",
+            course_year: "2012",
+            course_age_range: "13915",
+            fund_code: "7",
+            funding_method: "4",
+            hesa_id: "0310261553101",
+          },
+        }
+      end
+
+      let(:course_allocation_subject) do
+        subject_specialism = create(:subject_specialism, name: course_subject)
+
+        subject_specialism.allocation_subject
+      end
+
+      [CourseSubjects::PHYSICS, CourseSubjects::BIOLOGY].each do |cs|
+        context "when creating a new trainee with #{cs} course with valid params" do
+          if cs == CourseSubjects::PHYSICS
+            let!(:funding_method) {
+              funding_method = create(:funding_method, :bursary, amount: 9000, training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
+              create(:funding_method_subject, funding_method: funding_method, allocation_subject: course_allocation_subject)
             }
           end
 
-          it "updates the trainee" do
-            put(
-              "/api/v1.0-pre/trainees/#{slug}",
-              params: params_for_update.to_json,
-              headers: headers,
-            )
+          let(:course_subject) { cs }
+          let(:slug) { response.parsed_body[:data][:trainee_id] }
+          let(:trainee) { Trainee.last.reload }
 
-            expect(response).to have_http_status(:ok)
-            expect(trainee.first_names).to eq("Alice")
+          before do
+            allow(Api::V10Pre::HesaMapper::Attributes).to receive(:call).and_call_original
+            allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
-            expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
-            expect(response.parsed_body[:data][:study_mode]).to eq("63")
+            post "/api/v1.0-pre/trainees", params: params_for_create.to_json, headers: headers
           end
-        end
 
-        context "when request body is not valid JSON" do
-          let(:params_for_update) { "{ \"data\": { \"first_names\": \"Alice\", \"last_name\": \"Roberts\", } }" }
+          it "creates a trainee" do
+            expect(response).to have_http_status(:created)
+            expect(Trainee.count).to eq(1)
 
-          it "does not update the trainee and returns a meaningful error", openapi: false do
-            put(
-              "/api/v1.0-pre/trainees/#{slug}",
-              headers: headers,
-              params: params_for_update,
-            )
-            expect(response).to have_http_status(:bad_request)
-            expect(trainee.reload.first_names).to eq("John")
-            expect(response.parsed_body).to have_key(:errors)
+            expect(trainee.state).to eq("submitted_for_trn")
+            expect(trainee.slug).to eq(slug)
+          end
+
+          context "when updating a newly created trainee with valid params" do
+            let(:params_for_update) do
+              {
+                data:
+                {
+                  first_names: "Alice",
+                  study_mode: "63",
+                },
+              }
+            end
+
+            it "updates the trainee" do
+              put(
+                "/api/v1.0-pre/trainees/#{slug}",
+                params: params_for_update.to_json,
+                headers: headers,
+              )
+
+              expect(response).to have_http_status(:ok)
+              expect(trainee.first_names).to eq("Alice")
+
+              expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
+              expect(response.parsed_body[:data][:study_mode]).to eq("63")
+            end
+          end
+
+          context "when request body is not valid JSON" do
+            let(:params_for_update) { "{ \"data\": { \"first_names\": \"Alice\", \"last_name\": \"Roberts\", } }" }
+
+            it "does not update the trainee and returns a meaningful error", openapi: false do
+              put(
+                "/api/v1.0-pre/trainees/#{slug}",
+                headers: headers,
+                params: params_for_update,
+              )
+              expect(response).to have_http_status(:bad_request)
+              expect(trainee.reload.first_names).to eq("John")
+              expect(response.parsed_body).to have_key(:errors)
+            end
           end
         end
       end
