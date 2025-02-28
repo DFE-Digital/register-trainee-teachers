@@ -155,12 +155,6 @@ module Api
           params[:itt_end_date]
         end
 
-        # In hesa_trainee_detail_attributes
-        #
-        def itt_qualification_aim
-          ::Hesa::CodeSets::IttQualificationAims::MAPPING[params[:itt_qualification_aim]]
-        end
-
         # Is this been used?
         #
         def fundability
