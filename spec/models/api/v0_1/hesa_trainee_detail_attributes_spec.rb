@@ -34,22 +34,24 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
     end
 
     describe "itt_qualification_aim" do
-      context "when empty" do
-        subject { described_class.new(itt_qualification_aim: "") }
-
-        it {
-          expect(subject).not_to be_valid
-          expect(subject.errors[:itt_qualification_aim]).to contain_exactly("can't be blank")
-        }
+      context "when itt_aim is nil" do
+        it { is_expected.to validate_presence_of(:itt_qualification_aim) }
       end
 
-      context "when nil" do
-        subject { described_class.new(itt_qualification_aim: nil) }
+      context "when itt_aim is 202" do
+        before do
+          subject.itt_aim = 202
+        end
 
-        it {
-          expect(subject).not_to be_valid
-          expect(subject.errors[:itt_qualification_aim]).to contain_exactly("can't be blank")
-        }
+        it { is_expected.to validate_presence_of(:itt_qualification_aim) }
+      end
+
+      context "when itt_aim is 201" do
+        before do
+          subject.itt_aim = 201
+        end
+
+        it { is_expected.not_to validate_presence_of(:itt_qualification_aim) }
       end
 
       context "when included in the list of HESA itt qualification aim codes" do
@@ -70,6 +72,7 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
           expect(subject).not_to be_valid
           expect(subject.errors[:itt_qualification_aim]).to contain_exactly("has invalid reference data values")
         }
+
       end
     end
 

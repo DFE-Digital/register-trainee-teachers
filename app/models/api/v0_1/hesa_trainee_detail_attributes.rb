@@ -24,18 +24,21 @@ module Api
 
       REQUIRED_ATTRIBUTES = %i[
         itt_aim
-        itt_qualification_aim
         course_year
         course_age_range
         fund_code
         funding_method
       ].freeze
 
+      ITT_AIM_REQUIRED_CODE = 202
+
       ATTRIBUTES.each do |attr|
         attribute attr
       end
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
+
+      validates(:itt_qualification_aim, presence: true, if: -> { itt_aim == ITT_AIM_REQUIRED_CODE || itt_aim.blank? })
 
       validates(:itt_aim, inclusion: { in: Hesa::CodeSets::IttAims::MAPPING.keys }, allow_blank: true)
       validates(:itt_qualification_aim, inclusion: { in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys }, allow_blank: true)
