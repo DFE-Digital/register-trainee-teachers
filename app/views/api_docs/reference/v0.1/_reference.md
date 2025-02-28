@@ -2927,7 +2927,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>itt_qualification_aim</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 3 characters), required
+        string (limited to 3 characters), required if <code>itt_aim</code> is <code>202</code>
       </p>
       <p class="govuk-body">
         The qualification aim of the trainee’s course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/qlaim">HESA qualification aim field</a>.
