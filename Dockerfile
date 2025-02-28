@@ -10,8 +10,8 @@ RUN apk add --update --no-cache tzdata && \
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
-RUN apk add --update --no-cache --virtual build-dependances \
-    postgresql-dev build-base git icu-dev cmake pkgconf && \
+RUN apk add --update --no-cache --virtual build-dependencies \
+    postgresql-dev build-base git icu-dev cmake pkgconf g++ && \
     apk add --update --no-cache libpq yarn shared-mime-info icu-libs && \
     bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
     bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
@@ -19,7 +19,7 @@ RUN apk add --update --no-cache --virtual build-dependances \
     bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
     bundle install --jobs=4 && \
     rm -rf /usr/local/bundle/cache && \
-    apk del build-dependances
+    apk del build-dependencies
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
