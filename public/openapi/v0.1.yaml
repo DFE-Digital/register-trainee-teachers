@@ -2146,7 +2146,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: vvJpJKhf4oHTQaRnpC2KzMa2
+                    placement_id: kEBsk5DHDh9pK5pMgW1jF7bS
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3206,7 +3206,7 @@ paths:
         required: true
         schema:
           type: string
-        example: rEZgp2HYoYHd8JMG3qzhohLP
+        example: hf91dDhhY7ACVpUaYSMCfPHY
       responses:
         '200':
           description: updates the trainee
@@ -4508,7 +4508,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: 43RJpft9of6e3mSbqod5qy2n
+                  degree_id: 5u4HxfvFYQG9F6gKBhwkpoT1
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -5466,7 +5466,7 @@ paths:
                   postcode: Z2C 4LJ
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: yDLw7XZweL16jP2F5qi2w199
+                  placement_id: Qa4dNemCiesznoP7FVv9hNUB
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
