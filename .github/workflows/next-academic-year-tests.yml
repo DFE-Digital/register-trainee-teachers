@@ -22,24 +22,21 @@ jobs:
       DB_PASSWORD: postgres
       DB_HOSTNAME: localhost
     outputs:
-      docker-image: ${{ env.DOCKER_IMAGE }}
-      image-tag: ${{ env.IMAGE_TAG }}
+      docker-image: ${{ steps.build-image.outputs.image }}
+      image-tag: ${{ steps.build-image.outputs.tag }}
     runs-on: ubuntu-latest
-    environment:
-      name: review
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
-        uses: ./.github/actions/build/
+      - name: Build and push docker image
+        id: build-image
+        uses: DFE-Digital/github-actions/build-docker-image@master
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          context: ""
 
   test:
     name: Test
@@ -47,7 +44,7 @@ jobs:
     uses: ./.github/workflows/tests.yml
     secrets: inherit
     with:
-      docker-image: ${{needs.build.outputs.docker-image}}
+      docker-image: ${{ needs.build.outputs.docker-image }}
       image-tag: ${{ needs.build.outputs.image-tag }}
       use-next-academic-year: false
 
@@ -57,6 +54,6 @@ jobs:
     uses: ./.github/workflows/tests.yml
     secrets: inherit
     with:
-      docker-image: ${{needs.build.outputs.docker-image}}
+      docker-image: ${{ needs.build.outputs.docker-image }}
       image-tag: ${{ needs.build.outputs.image-tag }}
       use-next-academic-year: true

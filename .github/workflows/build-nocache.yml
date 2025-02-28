@@ -16,11 +16,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment:
-      name: review
     outputs:
-      image_tag: ${{ env.IMAGE_TAG }}
-      docker_image: ${{ env.DOCKER_IMAGE }}
+      docker-image: ${{ steps.build-image.outputs.image }}
+      image-tag: ${{ steps.build-image.outputs.tag }}
     env:
       DOCKER_IMAGE: ghcr.io/dfe-digital/register-trainee-teachers
 
@@ -28,67 +26,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Environment variable
-        run: |
-          GIT_BRANCH=${GITHUB_REF##*/}
-          echo "BRANCH_TAG=$GIT_BRANCH" >> $GITHUB_ENV
-          echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
-          # tag build to the review env for vars and secrets
-          tf_vars_file=terraform/aks/workspace-variables/review.tfvars.json
-          echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-          echo "KEY_VAULT_INFRA_SECRET_NAME=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-
-      - uses: azure/login@v2
+      - name: Build without cache and push docker image
+        id: build-image
+        uses: DFE-Digital/github-actions/build-docker-image@master
         with:
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-
-      - name: Validate Azure Key Vault secrets
-        uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
-        with:
-          KEY_VAULT: ${{ env.KEY_VAULT_NAME }}
-          SECRETS: |
-            ${{ env.KEY_VAULT_INFRA_SECRET_NAME }}
-
-      - uses: DFE-Digital/keyvault-yaml-secret@v1
-        id: get-secret
-        with:
-          keyvault: ${{ env.KEY_VAULT_NAME }}
-          secret: ${{ env.KEY_VAULT_INFRA_SECRET_NAME }}
-          key: SNYK_TOKEN
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build Docker Image
-        uses: docker/build-push-action@v6
-        with:
-          tags: |
-            ${{env.DOCKER_IMAGE}}:${{env.IMAGE_TAG}}
-            ${{env.DOCKER_IMAGE}}:${{env.BRANCH_TAG}}
-          load: true
-          cache-to: type=inline
-          push: false
-          build-args: COMMIT_SHA=${{ github.sha }}
-
-      - name: Run Snyk to check Docker image for vulnerabilities
-        uses: snyk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ steps.get-secret.outputs.snyk_token }}
-        with:
-          image: ${{ env.DOCKER_IMAGE }}:${{ env.IMAGE_TAG }}
-          args: --file=Dockerfile --exclude-app-vulns
-
-      - name: Push ${{ env.DOCKER_IMAGE }} images
-        if: ${{ success() }}
-        run: |
-          docker push ${{ env.DOCKER_IMAGE }}:${{env.IMAGE_TAG}}
-          docker push ${{ env.DOCKER_IMAGE }}:${{env.BRANCH_TAG}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          max-cache: true
+          reuse-cache: false
+          snyk-token: ${{ secrets.SNYK_TOKEN }}
+          context: ""
 
       - name: Check for Failure
         uses: ./.github/actions/send-slack-notification/
@@ -108,10 +54,10 @@ jobs:
 
       - name: Set environment variables
         run: |
-          echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ needs.build.outputs.image-tag }}" >> $GITHUB_ENV
 
       - name: Pull docker images
-        run: docker pull ${{ needs.build.outputs.docker_image }}:$IMAGE_TAG
+        run: docker pull ${{ needs.build.outputs.docker-image }}
 
       - name: Bring images up
         run: |

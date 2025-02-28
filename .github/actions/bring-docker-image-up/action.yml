@@ -17,7 +17,7 @@ runs:
 
     - name: Pull docker image
       shell: bash
-      run: docker pull ${{ inputs.docker-image }}:${{ inputs.image-tag }}
+      run: docker pull ${{ inputs.docker-image }}
 
     - name: Bring image up
       shell: bash
