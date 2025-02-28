@@ -11,6 +11,7 @@ features:
   publish_course_details: true
   routes:
     provider_led_postgrad: true
+    assessment_only: true
     early_years_assessment_only: true
     early_years_salaried: true
     early_years_postgrad: true

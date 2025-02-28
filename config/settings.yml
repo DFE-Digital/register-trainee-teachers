@@ -59,6 +59,7 @@ features:
   sync_trainees_from_dttp: false
   import_trainees_from_dttp: false
   routes:
+    assessment_only: false
     early_years_assessment_only: false
     early_years_salaried: false
     early_years_postgrad: false
