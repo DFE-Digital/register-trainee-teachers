@@ -114,29 +114,6 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
           end
         end
       end
-
-      context "with a duplicate placement" do
-        let(:params) do
-          { data: }.with_indifferent_access
-        end
-        let(:trainee) { existing_placement.trainee }
-
-        context "with a school urn" do
-          let(:existing_placement) { create(:placement, :with_school) }
-
-          let(:data) { { urn: existing_placement.school.urn } }
-
-          it "returns a 409 (conflict) status" do
-            expect {
-              post "/api/v0.1//trainees/#{trainee_slug}/placements", params: params.to_json, headers: { Authorization: token, **json_headers }
-            }.not_to change {
-              trainee.placements.count
-            }
-
-            expect(response).to have_http_status(:conflict)
-          end
-        end
-      end
     end
   end
 end

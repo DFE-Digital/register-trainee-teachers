@@ -19,8 +19,6 @@ module Api
         if save
           update_progress
           { json: { data: serializer_klass.new(placement).as_hash }, status: status }
-        elsif duplicate?
-          conflict_errors_response(errors:, duplicates:)
         else
           validation_errors_response(errors:)
         end
@@ -33,13 +31,6 @@ module Api
 
       attr_reader :placement, :placement_attributes, :version, :status
 
-      def duplicates
-        @duplicates ||= trainee
-          .placements
-          .where(urn: errors.first.detail[:value])
-          .map { |placement| serializer_klass.new(placement).as_hash }
-      end
-
       def save
         assign_attributes(attributes)
 
@@ -49,10 +40,6 @@ module Api
       def model = :placement
 
       def errors = placement_attributes.errors.presence || placement.errors
-
-      def duplicate?
-        placement.errors.details.values.flatten.any? { |error| error[:error] == :taken }
-      end
 
       def update_progress
         if placement.trainee.placements.present?
