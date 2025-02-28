@@ -39,7 +39,6 @@ module Api
         end
 
         def name
-          urn = @params[:urn]
           return @params[:name] if school_urn_applicable?(urn)
 
           I18n.t("components.placement_detail.magic_urn.#{urn}")

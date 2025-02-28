@@ -147,15 +147,27 @@ module Api
         end
 
         def course_subject_one
-          course_subject_name(params[:course_subject_one])
+          name = course_subject_name(params[:course_subject_one])
+
+          return HesaMapperConstants::INVALID if params[:course_subject_one].present? && name.nil?
+
+          name
         end
 
         def course_subject_two
-          course_subject_name(params[:course_subject_two])
+          name = course_subject_name(params[:course_subject_two])
+
+          return HesaMapperConstants::INVALID if params[:course_subject_two].present? && name.nil?
+
+          name
         end
 
         def course_subject_three
-          course_subject_name(params[:course_subject_three])
+          name = course_subject_name(params[:course_subject_three])
+
+          return HesaMapperConstants::INVALID if params[:course_subject_three].present? && name.nil?
+
+          name
         end
 
         def course_education_phase
