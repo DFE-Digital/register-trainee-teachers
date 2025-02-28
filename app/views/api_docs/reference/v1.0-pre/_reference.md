@@ -1204,17 +1204,6 @@ Placement details
   </div>
 </details>
 
-#### Placement duplication validations
-When creating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks the following fields:
-
-<ul class='govuk-list govuk-list--bullet'>
-  <li><code>urn</code></li>
-</ul>
-
-If a placement with the same `urn` already exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
-
-This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
-
 ---
 
 
@@ -2298,17 +2287,6 @@ Placement details
     </pre>
   </div>
 </details>
-
-#### Placement duplication validations
-When updating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks the following fields:
-
-<ul class='govuk-list govuk-list--bullet'>
-  <li><code>urn</code></li>
-</ul>
-
-If a placement with the same `urn` exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
-
-This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
 
 ---
 
