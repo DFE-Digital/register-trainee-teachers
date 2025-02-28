@@ -1172,6 +1172,28 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Funding method has invalid reference data values")
         end
       end
+
+      context "when itt_aim has invalid reference data values" do
+        let(:itt_aim) { "321" }
+        let(:params) do
+          { data: { itt_aim: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly(
+            "Hesa trainee detail attributes Itt aim has invalid reference data values"
+          )
+        end
+      end
     end
   end
 
@@ -1213,7 +1235,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
               urn: "900020",
             },
           ],
-          itt_aim: 202,
+          itt_aim: "202",
           itt_qualification_aim: "001",
           course_year: "2012",
           course_age_range: "13915",

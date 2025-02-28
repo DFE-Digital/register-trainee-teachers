@@ -6,10 +6,33 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
   subject { described_class.new }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:itt_aim) }
     it { is_expected.to validate_presence_of(:itt_qualification_aim) }
     it { is_expected.to validate_presence_of(:course_year) }
     it { is_expected.to validate_presence_of(:fund_code) }
+
+    describe "itt_aim" do
+      it { is_expected.to validate_presence_of(:itt_aim) }
+
+      context "when included in the list of HESA itt aim codes" do
+        Hesa::CodeSets::IttAims::MAPPING.keys.each do |itt_aim|
+          subject { described_class.new(itt_aim: ) }
+
+          it {
+            expect(subject).not_to be_valid
+            expect(subject.errors[:itt_aim]).to be_blank
+          }
+        end
+      end
+
+      context "when not included in the list of HESA itt aim codes" do
+        subject { described_class.new(itt_aim: 300) }
+
+        it {
+          expect(subject).not_to be_valid
+          expect(subject.errors[:itt_aim]).to contain_exactly("has invalid reference data values")
+        }
+      end
+    end
 
     describe "course_age_range" do
       it { is_expected.to validate_presence_of(:course_age_range) }
