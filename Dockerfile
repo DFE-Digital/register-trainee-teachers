@@ -12,11 +12,9 @@ COPY .tool-versions Gemfile Gemfile.lock ./
 
 # Install build dependencies and runtime libraries
 RUN apk add --update --no-cache --virtual build-dependencies \
-    postgresql-dev build-base git icu-dev cmake pkgconf g++ zlib-dev yaml-dev && \
-    apk add --update --no-cache libpq yarn shared-mime-info icu-libs zlib yaml
-
-# Configure and install gems with all dependencies
-RUN bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
+    build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev && \
+    apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib && \
+    bundle config build.charlock_holmes --with-icu-dir=/usr/lib && \
     bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
     bundle config build.charlock_holmes --with-cxxflags="-std=c++17" && \
     bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
@@ -38,7 +36,13 @@ ENV ENV="/root/.ashrc"
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
+# Create startup script
+RUN echo '#!/bin/sh' > /start.sh && \
+    echo 'bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0' >> /start.sh && \
+    chmod +x /start.sh
+
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-CMD bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0
+# Use exec form with startup script
+CMD ["/start.sh"]
