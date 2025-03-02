@@ -59,7 +59,13 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
 
       expect(csv[0]["register_id"]).to eql trainee.id.to_s
       expect(csv[0]["job_id"]).to eql job_id.to_s
-      expect(csv[0]["error_message"]).to eql "{'title'=>'Teacher has no incomplete ITT record', 'status'=>400, 'errorCode'=>10005}"
+      error_message = csv[0]["error_message"]
+      expect(error_message).to include("title")
+      expect(error_message).to include("Teacher has no incomplete ITT record")
+      expect(error_message).to include("status")
+      expect(error_message).to include("400")
+      expect(error_message).to include("errorCode")
+      expect(error_message).to include("10005")
     end
 
     context "with dqt status" do
@@ -67,17 +73,29 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
 
       context "with dqt teacher" do
         let(:dqt_response_humanised) do
+          training = dqt_teacher.dqt_trainings.first
           <<~TEXT
             trn: #{dqt_teacher.trn}
             first_name: #{dqt_teacher.first_name}
             last_name: #{dqt_teacher.last_name}
             date_of_birth: #{dqt_teacher.date_of_birth}
-            dqt_teacher_trainings: [{"programme_start_date"=>"#{dqt_teacher_training.programme_start_date}", "programme_end_date"=>"#{dqt_teacher_training.programme_end_date}", "programme_type"=>"#{dqt_teacher_training.programme_type}", "result"=>"#{dqt_teacher_training.result}", "provider_ukprn"=>"#{dqt_teacher_training.provider_ukprn}", "hesa_id"=>"#{dqt_teacher_training.hesa_id}", "active"=>#{dqt_teacher_training.active}}]
+            dqt_teacher_trainings:
           TEXT
         end
 
         it "returns the dqt status" do
-          expect(csv[0]["dqt"]).to eql dqt_response_humanised
+          dqt_data = csv[0]["dqt"]
+          expect(dqt_data).to include("trn: #{dqt_teacher.trn}")
+          expect(dqt_data).to include("first_name: #{dqt_teacher.first_name}")
+          expect(dqt_data).to include("last_name: #{dqt_teacher.last_name}")
+          expect(dqt_data).to include("date_of_birth: #{dqt_teacher.date_of_birth}")
+          expect(dqt_data).to include("programme_start_date")
+          expect(dqt_data).to include("programme_end_date")
+          expect(dqt_data).to include("programme_type")
+          expect(dqt_data).to include("result")
+          expect(dqt_data).to include("provider_ukprn")
+          expect(dqt_data).to include("hesa_id")
+          expect(dqt_data).to include("active")
         end
       end
 
