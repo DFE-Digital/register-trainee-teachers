@@ -73,7 +73,7 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
 
       context "with dqt teacher" do
         let(:dqt_response_humanised) do
-          training = dqt_teacher.dqt_trainings.first
+          dqt_teacher.dqt_trainings.first
           <<~TEXT
             trn: #{dqt_teacher.trn}
             first_name: #{dqt_teacher.first_name}
