@@ -36,13 +36,8 @@ ENV ENV="/root/.ashrc"
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
-# Create startup script
-RUN echo '#!/bin/sh' > /start.sh && \
-    echo 'bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0' >> /start.sh && \
-    chmod +x /start.sh
-
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-# Use exec form with startup script
-CMD ["/start.sh"]
+# Use direct command instead of a separate startup script
+CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"]
