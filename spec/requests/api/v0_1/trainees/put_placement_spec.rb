@@ -177,9 +177,9 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
 
       context "with a school" do
         let!(:placement) { create(:placement, :with_school, trainee:) }
-        let!(:existing_placement) { create(:placement, :with_school, trainee:) }
+        let!(:placement_two) { create(:placement, :with_school, trainee:) }
 
-        let(:data) { { urn: existing_placement.school.urn } }
+        let(:data) { { urn: placement_two.school.urn } }
 
         it "updates the placement and returns a 200 (ok) status" do
           expect {
@@ -192,25 +192,25 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
 
           expect(response.parsed_body["data"]).to include(
             placement_id: slug,
-            urn: existing_placement.urn,
-            name: existing_placement.name,
-            postcode: existing_placement.postcode,
-            address: existing_placement.full_address,
+            urn: placement_two.urn,
+            name: placement_two.name,
+            postcode: placement_two.postcode,
+            address: placement_two.full_address,
           )
 
           placement.reload
 
-          expect(placement.school_id).to eq(existing_placement.school.id)
-          expect(placement.urn).to eq(existing_placement.urn)
-          expect(placement.name).to eq(existing_placement.name)
-          expect(placement.postcode).to eq(existing_placement.postcode)
+          expect(placement.school_id).to eq(placement_two.school.id)
+          expect(placement.urn).to eq(placement_two.urn)
+          expect(placement.name).to eq(placement_two.name)
+          expect(placement.postcode).to eq(placement_two.postcode)
           expect(placement.address).to be_blank
         end
       end
 
       context "without a school" do
         let!(:placement) { create(:placement, trainee:) }
-        let!(:existing_placement) { create(:placement, trainee:) }
+        let!(:placement_two) { create(:placement, trainee:) }
 
         let(:params) do
           { data: placement.attributes.except("urn").slice(*placement_attribute_keys) }.with_indifferent_access
