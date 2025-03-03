@@ -169,5 +169,79 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
         )
       end
     end
+
+    context "with a duplicate placement" do
+      let(:params) do
+        { data: }.with_indifferent_access
+      end
+
+      context "with a school" do
+        let!(:placement) { create(:placement, :with_school, trainee:) }
+        let!(:existing_placement) { create(:placement, :with_school, trainee:) }
+
+        let(:data) { { urn: existing_placement.school.urn } }
+
+        it "updates the placement and returns a 200 (ok) status" do
+          expect {
+            put "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.not_to change {
+            trainee.placements.count
+          }
+
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body["data"]).to include(
+            placement_id: slug,
+            urn: existing_placement.urn,
+            name: existing_placement.name,
+            postcode: existing_placement.postcode,
+            address: existing_placement.full_address,
+          )
+
+          placement.reload
+
+          expect(placement.school_id).to eq(existing_placement.school.id)
+          expect(placement.urn).to eq(existing_placement.urn)
+          expect(placement.name).to eq(existing_placement.name)
+          expect(placement.postcode).to eq(existing_placement.postcode)
+          expect(placement.address).to be_blank
+        end
+      end
+
+      context "without a school" do
+        let!(:placement) { create(:placement, trainee:) }
+        let!(:existing_placement) { create(:placement, trainee:) }
+
+        let(:params) do
+          { data: placement.attributes.except("urn").slice(*placement_attribute_keys) }.with_indifferent_access
+        end
+
+        it "updates the placement and returns a 200 (ok) status" do
+          expect {
+            put "/api/v0.1/trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.not_to change {
+            trainee.placements.count
+          }
+
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body["data"]).to include(
+            "placement_id" => slug,
+            "address" => placement.full_address,
+            "name" => params.dig(:data, :name),
+            "postcode" => params.dig(:data, :postcode),
+            "urn" => placement.urn,
+          )
+
+          placement.reload
+
+          expect(placement.school_id).to be_nil
+          expect(placement.address).to be_nil
+          expect(placement.name).to eq(params.dig(:data, :name))
+          expect(placement.postcode).to eq(params.dig(:data, :postcode))
+          expect(placement.urn).not_to be_blank
+        end
+      end
+    end
   end
 end
