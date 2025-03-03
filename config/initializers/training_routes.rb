@@ -65,7 +65,7 @@ TRAINING_ROUTES = {
   TRAINING_ROUTE_ENUMS[:opt_in_undergrad] => 10,
   TRAINING_ROUTE_ENUMS[:hpitt_postgrad] => 11,
   TRAINING_ROUTE_ENUMS[:iqts] => 12,
-  TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 13,
+  TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
 }.freeze
 
 ROUTE_INITIATIVES = {
