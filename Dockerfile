@@ -10,7 +10,6 @@ RUN apk add --update --no-cache tzdata && \
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
-# Install build dependencies and runtime libraries
 RUN apk add --update --no-cache --virtual build-dependencies \
     build-base cmake g++ git icu-dev pkgconf postgresql-dev yaml-dev zlib-dev && \
     apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib && \
@@ -41,5 +40,4 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-# Use direct command instead of a separate startup script
 CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"]
