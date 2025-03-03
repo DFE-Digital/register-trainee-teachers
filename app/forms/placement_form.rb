@@ -156,14 +156,6 @@ class PlacementForm
 
 private
 
-  def existing_urns
-    trainee.placements.filter_map do |placement|
-      next if placement.slug == slug
-
-      placement.school&.urn || placement.urn
-    end
-  end
-
   def placement_number
     (placements_form.placements.index { |form| form.placement.slug == placement.slug } || placements_form.placements.count) + 1
   end
