@@ -146,7 +146,7 @@ describe TrainingRouteManager do
       end
     end
 
-    %i[early_years_undergrad provider_led_undergrad opt_in_undergrad].each do |route|
+    %i[early_years_undergrad provider_led_undergrad opt_in_undergrad teacher_degree_apprenticeship].each do |route|
       context "undergrad route" do
         let(:trainee) { build(:trainee, route) }
 
