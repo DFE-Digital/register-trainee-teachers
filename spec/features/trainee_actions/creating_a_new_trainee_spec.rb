@@ -38,6 +38,13 @@ feature "Create trainee journey" do
     then_i_should_see_a_validation_error
   end
 
+  scenario "setting up a teacher degree apprenticeship record" do
+    and_i_select_teacher_degree_apprenticeship_route
+    and_i_save_the_form
+    then_i_should_see_the_new_trainee_overview
+    and_trainee_record_source_is_set_to_manual
+  end
+
 private
 
   def when_i_am_viewing_the_list_of_trainees
@@ -58,6 +65,10 @@ private
 
   def and_i_select_early_years_undergrad_route
     new_trainee_page.early_years_undergrad.click
+  end
+
+  def and_i_select_teacher_degree_apprenticeship_route
+    new_trainee_page.teacher_degree_apprenticeship.click
   end
 
   def and_i_should_not_see_school_direct_tuition_fee_route
