@@ -45,6 +45,10 @@ class UserWithOrganisationContext < SimpleDelegator
     (user.lead_partners + user.providers).count > 1
   end
 
+  def organisation?
+    organisation.present?
+  end
+
   def provider?
     organisation.is_a?(Provider)
   end
