@@ -394,6 +394,10 @@ module Features
       @delete_forbidden_page ||= PageObjects::Trainees::DeleteForbidden.new
     end
 
+    def organisation_settings_page
+      @organisation_settings_page ||= PageObjects::OrganisationSettings.new
+    end
+
     def incomplete
       progress_with_prefix(I18n.t("incomplete"))
     end

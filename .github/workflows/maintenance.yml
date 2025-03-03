@@ -8,6 +8,7 @@ on:
         type: choice
         options:
         - qa
+        - staging
         - production
       mode:
         required: true
