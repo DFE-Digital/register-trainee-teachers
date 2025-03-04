@@ -32,4 +32,6 @@ class TraineeWithdrawal < ApplicationRecord
 
   enum :trigger, { provider: "provider", trainee: "trainee" }, prefix: :triggered_by
   enum :future_interest, { yes: "yes", no: "no", unknown: "unknown" }, suffix: true
+
+  audited
 end
