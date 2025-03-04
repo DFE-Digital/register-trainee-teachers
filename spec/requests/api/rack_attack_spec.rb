@@ -50,7 +50,7 @@ RSpec.describe "Rack::Attack settings" do
     end
   end
 
-  def within_same_period(&block)
-    Timecop.freeze(&block)
+  def within_same_period(&)
+    Timecop.freeze(&)
   end
 end
