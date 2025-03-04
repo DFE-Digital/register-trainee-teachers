@@ -22,4 +22,3 @@ RSpec.describe TraineeWithdrawal do
     it { is_expected.to be_audited }
   end
 end
-
