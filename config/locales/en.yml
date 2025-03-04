@@ -2076,6 +2076,10 @@ en:
               inclusion: *invalid_reference_data
             funding_method:
               inclusion: *invalid_reference_data
+            itt_aim:
+              inclusion: *invalid_reference_data
+            itt_qualification_aim:
+              inclusion: *invalid_reference_data
         api/v01/withdrawal_attributes:
           attributes:
             reasons:

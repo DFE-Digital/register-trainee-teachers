@@ -31,7 +31,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(sex: "") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:sex]).to contain_exactly("can't be blank")
         }
       end
@@ -40,7 +41,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(sex: nil) }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:sex]).to contain_exactly("can't be blank")
         }
       end
@@ -49,7 +51,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(sex: 100) }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:sex]).to contain_exactly("has invalid reference data values")
         }
       end
@@ -59,7 +62,8 @@ RSpec.describe Api::V01::TraineeAttributes do
           subject { described_class.new(sex:) }
 
           it "is expected to allow #{sex}" do
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:sex]).to be_blank
           end
         end
@@ -71,7 +75,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(course_subject_one: "") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
         }
       end
@@ -80,7 +85,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(course_subject_one: nil) }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
         }
       end
@@ -89,7 +95,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(course_subject_one: "random subject") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:course_subject_one]).to contain_exactly("has invalid reference data values")
         }
       end
@@ -98,8 +105,11 @@ RSpec.describe Api::V01::TraineeAttributes do
         Hesa::CodeSets::CourseSubjects::MAPPING.each_value do |course_subject|
           subject { described_class.new(course_subject_one: course_subject) }
 
+          before do
+            subject.validate
+          end
+
           it "is expected to allow #{course_subject}" do
-            expect(subject).not_to be_valid
             expect(subject.errors[:course_subject_one]).to be_blank
           end
         end
@@ -119,7 +129,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(study_mode: "") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:study_mode]).to contain_exactly("can't be blank")
         }
       end
@@ -128,7 +139,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(study_mode: nil) }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:study_mode]).to contain_exactly("can't be blank")
         }
       end
@@ -137,7 +149,8 @@ RSpec.describe Api::V01::TraineeAttributes do
         subject { described_class.new(study_mode: 2) }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:study_mode]).to contain_exactly("has invalid reference data values")
         }
       end
@@ -147,7 +160,8 @@ RSpec.describe Api::V01::TraineeAttributes do
           subject { described_class.new(study_mode:) }
 
           it "is expected to allow #{study_mode}" do
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:study_mode]).to be_blank
           end
         end
