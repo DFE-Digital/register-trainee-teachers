@@ -22,19 +22,21 @@ A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask suppor
 
 `update_training_route!` no longer kicks off an update to DQT so that will need to be done manually if needed.
 
-## Unwithdrawing a withdrawn trainee
 
-Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. You can find the previous trainee state by running `trainee.audits` and comparing the numbers to the enum in `trainee.rb`.
 
-Here is an example of unwithdrawing a trainee. Note that the audit trail should be left intact.
+## Changing the witdrawal date for a withdrawn trainee
+
+Sometimes support will ask a dev to change the withdrawal date for a trainee.
 
 
 ```ruby
 trainee = Trainee.find_by(slug: "XXX")
-
-trainee.withdrawal_reasons.clear
-trainee.update_columns(state: "XXX", withdraw_reasons_details: nil, withdraw_reasons_dfe_details: nil, withdraw_date: nil)
+trainee.current_withdrawal.update!(date: Date.new(2024, 3, 3), audit_comment: "Reason for changing the date")
 ```
+
+## Unwithdrawing a withdrawn trainee
+
+Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. When logged in as a system admin the trainee's withdrawal can be reverted by clicking on `Undo withdrawal` at the `Withdrawal details` section in the trainee show page `/trainees/:slug`
 
 ## Error codes on DQT trainee jobs
 
