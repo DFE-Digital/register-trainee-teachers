@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_27_152625) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_04_121701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -895,7 +895,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_27_152625) do
   end
 
   create_table "trainee_withdrawals", force: :cascade do |t|
-    t.bigint "trainee_id"
+    t.bigint "trainee_id", null: false
     t.date "date"
     t.enum "trigger", enum_type: "trigger_type"
     t.string "another_reason"
