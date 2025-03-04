@@ -17,4 +17,9 @@ RSpec.describe TraineeWithdrawal do
       expect(described_class.future_interests).to eq("yes" => "yes", "no" => "no", "unknown" => "unknown")
     end
   end
+
+  describe "auditing" do
+    it { is_expected.to be_audited }
+  end
 end
+
