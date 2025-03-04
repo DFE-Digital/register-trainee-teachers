@@ -41,6 +41,7 @@ module Api
         applying_for_grant: {},
         applying_for_scholarship: {},
         bursary_tier: {},
+        nationality: {},
       }.freeze.each do |name, config|
         attribute(name, config[:type], **config.fetch(:options, {}))
       end
@@ -85,14 +86,22 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
-      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.keys, allow_nil: true
+      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq, allow_blank: true
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
       validate :validate_date_of_birth
-      validates(:sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true)
+      validates :sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
       validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
+      validates :course_subject_one, :course_subject_two, :course_subject_three,
+                inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
+      validates :study_mode,
+                inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, allow_blank: true
+      validates :nationality,
+                inclusion: { in: RecruitsApi::CodeSets::Nationalities::MAPPING.values }, allow_blank: true
+      validates :training_initiative,
+                inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
@@ -159,7 +168,9 @@ module Api
           trainee_disabilities_attributes << { disability_id: disability.id }
         end
 
-        self.attributes = primary_course_subjects if primary_education_phase?
+        if primary_education_phase? && !new_attributes.values.include?(HesaMapperConstants::INVALID) && primary_education_phase?
+          self.attributes = primary_course_subjects
+        end
       end
 
       def update_hesa_trainee_detail_attributes(new_attributes)
@@ -215,7 +226,7 @@ module Api
       end
 
       def deep_attributes
-        deep_attributes = attributes.except("ethnicity").transform_values do |value|
+        deep_attributes = attributes.except("ethnicity", "nationality").transform_values do |value|
           if value.is_a?(Array)
             value.map { |item| item.respond_to?(:attributes) ? item.attributes : item }
           elsif value.respond_to?(:attributes)

@@ -32,14 +32,19 @@ module Api
       validates :locale_code, presence: true
       validates :graduation_year, presence: true
       validates :subject, presence: true
+
+      validates :country, inclusion: { in: Hesa::CodeSets::Countries::MAPPING.values }, allow_blank: true
+
       with_options if: -> { locale_code == "uk" } do
         validates :institution, presence: true
         validates :uk_degree, presence: true
+        validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_blank: true
         validates :grade, presence: true
       end
       with_options if: -> { locale_code == "non_uk" } do
         validates :country, presence: true
         validates :non_uk_degree, presence: true
+        validates :non_uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_blank: true
       end
 
       validate :check_for_duplicates

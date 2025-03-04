@@ -167,27 +167,61 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
     context "with invalid degree attributes" do
       let(:degrees_attributes) do
         {
-          country: "UK",
           grade: "First",
           subject: "Practical Magic",
-          institution: "University of Oxford",
-          uk_degree: "Bachelor of Witchcraft & Wizardry",
           graduation_year: (Time.zone.now.year + 2).to_s,
         }
       end
 
-      it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
+      before do
         post(
           "/api/v1.0-pre/trainees/#{trainee.slug}/degrees",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: {
-            data: degrees_attributes,
+            data:,
           }.to_json,
         )
+      end
 
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]&.count).to eq(3)
-        expect(trainee.reload.degrees.count).to eq(0)
+      context "with a uk_degree" do
+        let(:data) do
+          degrees_attributes.merge(
+            uk_degree: "Bachelor of Arts",
+            institution: "University of Oxford",
+            country: "France",
+          )
+        end
+
+        it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
+            { "error" => "UnprocessableEntity", "message" => "Uk degree has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "Grade can't be blank" },
+          )
+          expect(trainee.reload.degrees.count).to eq(0)
+        end
+      end
+
+      context "with a non_uk_degree" do
+        let(:data) do
+          degrees_attributes.merge(
+            country: "France",
+            non_uk_degree: "Bachelor of Arts",
+          )
+        end
+
+        it "does not create a new degree and returns a 422 status (unprocessable_entity) status" do
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
+            { "error" => "UnprocessableEntity", "message" => "Non uk degree has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "Country has invalid reference data values" },
+          )
+          expect(trainee.reload.degrees.count).to eq(0)
+        end
       end
     end
   end

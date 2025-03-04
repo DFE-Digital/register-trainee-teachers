@@ -2050,6 +2050,32 @@ en:
           attributes:
             comment:
               blank: Enter a comment
+        api/v01/trainee_attributes:
+          attributes:
+            course_subject_one:
+              inclusion: &invalid_reference_data has invalid reference data values
+            course_subject_two:
+              inclusion: *invalid_reference_data
+            course_subject_three:
+              inclusion: *invalid_reference_data
+            ethnicity:
+              inclusion: *invalid_reference_data
+            training_route:
+              inclusion: *invalid_reference_data
+            sex:
+              inclusion: *invalid_reference_data
+            study_mode:
+              inclusion: *invalid_reference_data
+            nationality:
+              inclusion: *invalid_reference_data
+            training_initiative:
+              inclusion: *invalid_reference_data
+        api/v01/hesa_trainee_detail_attributes:
+          attributes:
+            course_age_range:
+              inclusion: *invalid_reference_data
+            funding_method:
+              inclusion: *invalid_reference_data
         api/v01/withdrawal_attributes:
           attributes:
             reasons:
@@ -2065,6 +2091,13 @@ en:
               too_long: What the Department for Education could have done must be 1000 characters or less
         api/v01/degree_attributes:
           duplicate: This is a duplicate degree
+          attributes:
+            country:
+              inclusion: *invalid_reference_data
+            non_uk_degree:
+              inclusion: *invalid_reference_data
+            uk_degree:
+              inclusion: *invalid_reference_data
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:
