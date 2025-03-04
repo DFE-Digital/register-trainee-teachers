@@ -6,7 +6,7 @@ describe TrainingRouteManager do
   subject { described_class.new(trainee) }
 
   describe "#requires_lead_partner?" do
-    %w[school_direct_tuition_fee school_direct_salaried].each do |route|
+    %w[school_direct_tuition_fee school_direct_salaried teacher_degree_apprenticeship].each do |route|
       context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": true do
         context "with a school direct trainee" do
           let(:trainee) { build(:trainee, route.to_sym) }
@@ -30,17 +30,19 @@ describe TrainingRouteManager do
   end
 
   describe "#requires_employing_school?" do
-    context "with the :routes_school_direct_salaried feature flag enabled", "feature_routes.school_direct_salaried": true do
-      context "with a school direct salaried trainee" do
-        let(:trainee) { build(:trainee, :school_direct_salaried) }
+    %w[school_direct_salaried pg_teaching_apprenticeship early_years_salaried teacher_degree_apprenticeship].each do |route|
+      context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": true do
+        context "with a #{route} trainee" do
+          let(:trainee) { build(:trainee, route) }
 
-        it "returns true" do
-          expect(subject.requires_employing_school?).to be true
+          it "returns true" do
+            expect(subject.requires_employing_school?).to be true
+          end
         end
       end
 
-      context "with a non school direct trainee" do
-        let(:trainee) { build(:trainee) }
+      context "with the :routes_#{route} feature flag disabled", "feature_routes.#{route}": false do
+        let(:trainee) { build(:trainee, route) }
 
         it "returns false" do
           expect(subject.requires_employing_school?).to be false
@@ -48,11 +50,15 @@ describe TrainingRouteManager do
       end
     end
 
-    context "with the :routes_school_direct_salaried feature flag disabled", "feature_routes.school_direct_salaried": false do
-      let(:trainee) { build(:trainee) }
+    %w[assessment_only early_years_postgrad early_years_assessment_only provider_led_postgrad opt_in_undergrad].each do |route|
+      context "with the :routes_#{route} feature flag enabled", "feature_routes.#{route}": true do
+        context "with a #{route} trainee" do
+          let(:trainee) { build(:trainee, route) }
 
-      it "returns false" do
-        expect(subject.requires_employing_school?).to be false
+          it "returns false" do
+            expect(subject.requires_employing_school?).to be false
+          end
+        end
       end
     end
   end
@@ -140,7 +146,7 @@ describe TrainingRouteManager do
       end
     end
 
-    %i[early_years_undergrad provider_led_undergrad opt_in_undergrad].each do |route|
+    %i[early_years_undergrad provider_led_undergrad opt_in_undergrad teacher_degree_apprenticeship].each do |route|
       context "undergrad route" do
         let(:trainee) { build(:trainee, route) }
 

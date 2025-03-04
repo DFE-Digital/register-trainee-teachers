@@ -54,6 +54,10 @@ module Features
       choose_training_route_for(TRAINING_ROUTE_ENUMS[:iqts])
     end
 
+    def given_i_have_created_a_teacher_degree_apprenticeship_trainee
+      choose_training_route_for(TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship])
+    end
+
   private
 
     def choose_training_route_for(route)

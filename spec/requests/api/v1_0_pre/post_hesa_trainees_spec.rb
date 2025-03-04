@@ -317,6 +317,33 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
               expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
             end
           end
+
+          context "when lead_partner_urn and employing school urn are present and training route is `teacher_degree_apprenticeship`", "feature_routes.teacher_degree_apprenticeship": true do
+            let(:params) do
+              {
+                data: data.merge(
+                  lead_partner_urn: lead_partner.urn,
+                  employing_school_urn: employing_school.urn,
+                  training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]],
+                ),
+              }
+            end
+
+            let(:lead_partner) { create(:lead_partner, :school) }
+            let(:employing_school) { create(:school) }
+
+            it "sets employing_school_urn to employing_school#urn" do
+              expect(response.parsed_body[:data][:employing_school_urn]).to eq(employing_school.urn)
+            end
+
+            it "sets employing_school_not_applicable to false" do
+              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+            end
+
+            it "sets lead_partner_urn to lead_partner#urn" do
+              expect(response.parsed_body[:data][:lead_partner_urn]).to eq(lead_partner.urn)
+            end
+          end
         end
       end
     end

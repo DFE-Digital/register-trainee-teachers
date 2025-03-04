@@ -13,6 +13,10 @@ module TrainingRoutesHelper
     end
   end
 
+  def enabled_route?(route)
+    FeatureService.enabled?("routes.#{route}")
+  end
+
 private
 
   def enabled_routes
