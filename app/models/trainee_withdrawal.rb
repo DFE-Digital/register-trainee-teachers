@@ -24,6 +24,8 @@
 #  fk_rails_...  (trainee_id => trainees.id)
 #
 class TraineeWithdrawal < ApplicationRecord
+  include Discard::Model
+
   belongs_to :trainee
   has_many :trainee_withdrawal_reasons, dependent: :destroy
   has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
