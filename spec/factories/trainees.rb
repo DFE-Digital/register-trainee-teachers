@@ -530,8 +530,7 @@ FactoryBot.define do
       withdrawn
 
       after(:create) do |trainee|
-        trainee_withdrawal = create(:trainee_withdrawal, trainee:)
-        create(:trainee_withdrawal_reason, trainee:, trainee_withdrawal:)
+        create(:trainee_withdrawal_reason, trainee: trainee, trainee_withdrawal: trainee.current_withdrawal)
       end
     end
 
