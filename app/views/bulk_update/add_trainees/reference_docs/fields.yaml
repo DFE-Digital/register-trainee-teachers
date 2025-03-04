@@ -218,8 +218,8 @@
     as a result of successful completion of studies.
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
   example: '"007" for example is the code used for a BA qualification'
-  validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L27
+  validation: Mandatory if itt_aim is 202
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
   technical: course_subject_one
   hesa_alignment: SBJCA
