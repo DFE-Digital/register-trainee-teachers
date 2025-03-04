@@ -33,7 +33,8 @@ RSpec.describe Api::V01::DegreeAttributes do
           before { subject.uk_degree = "" }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
           }
         end
@@ -42,7 +43,8 @@ RSpec.describe Api::V01::DegreeAttributes do
           before { subject.uk_degree = nil }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
           }
         end
@@ -51,7 +53,8 @@ RSpec.describe Api::V01::DegreeAttributes do
           before { subject.uk_degree = "Random subject" }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:uk_degree]).to contain_exactly("has invalid reference data values")
           }
         end
@@ -61,7 +64,8 @@ RSpec.describe Api::V01::DegreeAttributes do
             before { subject.uk_degree = name }
 
             it "is expected to allow #{name}" do
-              expect(subject).not_to be_valid
+              subject.validate
+
               expect(subject.errors[:uk_degree]).to be_blank
             end
           end
@@ -79,7 +83,8 @@ RSpec.describe Api::V01::DegreeAttributes do
           before { subject.non_uk_degree = "" }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
           }
         end
@@ -88,7 +93,8 @@ RSpec.describe Api::V01::DegreeAttributes do
           before { subject.uk_degree = nil }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
           }
         end
@@ -97,7 +103,8 @@ RSpec.describe Api::V01::DegreeAttributes do
           before { subject.non_uk_degree = "Random subject" }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:non_uk_degree]).to contain_exactly("has invalid reference data values")
           }
         end
@@ -107,7 +114,8 @@ RSpec.describe Api::V01::DegreeAttributes do
             before { subject.non_uk_degree = name }
 
             it "is expected to allow #{name}" do
-              expect(subject).not_to be_valid
+              subject.validate
+
               expect(subject.errors[:non_uk_degree]).to be_blank
             end
           end
@@ -116,7 +124,7 @@ RSpec.describe Api::V01::DegreeAttributes do
     end
 
     context "with duplicate" do
-      before { subject.valid? }
+      before { subject.validate }
 
       let(:degree) { trainee.degrees.first }
 
@@ -128,7 +136,7 @@ RSpec.describe Api::V01::DegreeAttributes do
     end
 
     context "without duplicate" do
-      before { subject.valid? }
+      before { subject.validate }
 
       describe "validations" do
         it "returns no error for base duplicates" do

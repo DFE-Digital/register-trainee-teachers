@@ -17,7 +17,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
           subject { described_class.new(itt_aim:) }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:itt_aim]).to be_blank
           }
         end
@@ -27,7 +28,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         subject { described_class.new(itt_aim: "300") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:itt_aim]).to contain_exactly("has invalid reference data values")
         }
       end
@@ -59,7 +61,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
           subject { described_class.new(itt_qualification_aim:) }
 
           it {
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:itt_qualification_aim]).to be_blank
           }
         end
@@ -69,7 +72,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         subject { described_class.new(itt_qualification_aim: "300") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:itt_qualification_aim]).to contain_exactly("has invalid reference data values")
         }
       end
@@ -89,7 +93,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         subject { described_class.new(funding_method: "") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:funding_method]).to contain_exactly("can't be blank")
         }
       end
@@ -98,7 +103,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         subject { described_class.new(funding_method: nil) }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:funding_method]).to contain_exactly("can't be blank")
         }
       end
@@ -107,7 +113,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         subject { described_class.new(funding_method: "AD") }
 
         it {
-          expect(subject).not_to be_valid
+          subject.validate
+
           expect(subject.errors[:funding_method]).to contain_exactly("has invalid reference data values")
         }
       end
@@ -117,7 +124,8 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
           subject { described_class.new(funding_method:) }
 
           it "is expected to allow #{funding_method}" do
-            expect(subject).not_to be_valid
+            subject.validate
+
             expect(subject.errors[:funding_method]).to be_blank
           end
         end
