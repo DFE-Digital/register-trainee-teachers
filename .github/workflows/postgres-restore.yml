@@ -52,6 +52,7 @@ jobs:
         source global_config/${{ inputs.environment }}.sh
         tf_vars_file=${{ env.TF_VARS_PATH }}/${{ inputs.environment }}.tfvars.json
         echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
+        echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
         echo "RESOURCE_GROUP_NAME=${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
         echo "STORAGE_ACCOUNT_NAME=${RESOURCE_NAME_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
         echo "DB_SERVER=${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg" >> $GITHUB_ENV
@@ -71,6 +72,7 @@ jobs:
         resource-group: ${{ env.RESOURCE_GROUP_NAME }}
         app-name: ${{ env.SERVICE_NAME }}-${{ inputs.environment }}
         cluster: ${{ env.CLUSTER }}
+        namespace: ${{ env.NAMESPACE }}
         azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
         azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
