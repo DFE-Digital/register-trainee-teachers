@@ -1,0 +1,45 @@
+<%= render PageTitle::View.new(text: current_user.organisation.name) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Back",
+    href: root_path,
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l"><%= current_user.organisation.name %></h1>
+    <h2 class="govuk-heading-m">About your organisation</h2>
+
+    <%= govuk_summary_list(actions: false, html_attributes: { class: "govuk-!-margin-bottom-9" }) do |summary_list|
+      summary_list.with_row do |row|
+        row.with_key(text: "Organisation type")
+        row.with_value(text: current_user.organisation.model_name.human)
+      end
+
+      summary_list.with_row do |row|
+        row.with_key(text: "Accreditation ID")
+        row.with_value(text: current_user.organisation.try(:accreditation_id))
+      end
+    end %>
+
+    <h2 class="govuk-heading-m">Team members</h2>
+
+    <%= govuk_list(
+      current_user.organisation.users.map do |user|
+        content_tag("div", class: "govuk-!-margin-bottom-6") do
+          content_tag(:h3, class: "govuk-heading-s") do
+            raw(
+              "#{user.name} #{'(you)' if user == current_user.user} #{content_tag(:span, "– #{user.email}", class: "govuk-!-font-weight-regular")}"
+            )
+          end
+        end
+      end
+    )%>
+
+    <p class="govuk-body">
+      If you need to add or remove team members, contact us at <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Add or remove team members from Register trainee teachers" <%= support_email(subject: "Get access to Register trainee teachers") %>.
+    </p>
+  </div>
+</div>

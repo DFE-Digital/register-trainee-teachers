@@ -421,6 +421,10 @@ FactoryBot.define do
       training_route { TRAINING_ROUTE_ENUMS[:opt_in_undergrad] }
     end
 
+    trait :teacher_degree_apprenticeship do
+      training_route { TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] }
+    end
+
     trait :iqts do
       training_route { TRAINING_ROUTE_ENUMS[:iqts] }
       iqts_country { CodeSets::Countries::MAPPING.keys.sample }
@@ -526,8 +530,7 @@ FactoryBot.define do
       withdrawn
 
       after(:create) do |trainee|
-        trainee_withdrawal = create(:trainee_withdrawal, trainee:)
-        create(:trainee_withdrawal_reason, trainee:, trainee_withdrawal:)
+        create(:trainee_withdrawal_reason, trainee: trainee, trainee_withdrawal: trainee.current_withdrawal)
       end
     end
 

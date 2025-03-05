@@ -26,6 +26,7 @@ features:
   import_applications_from_apply: false
   publish_course_details: true
   routes:
+    assessment_only: true
     early_years_assessment_only: true
     early_years_postgrad: true
     early_years_salaried: true
@@ -37,6 +38,7 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
+    teacher_degree_apprenticeship: true
   integrate_with_dqt: false
   integrate_with_trs: false
   hesa_trn_requests: false

@@ -21,6 +21,7 @@ features:
   routes:
     provider_led_postgrad: true
     provider_led_undergrad: true
+    assessment_only: true
     early_years_assessment_only: true
     early_years_postgrad: true
     early_years_salaried: true
@@ -30,6 +31,7 @@ features:
     pg_teaching_apprenticeship: true
     opt_in_undergrad: true
     iqts: true
+    teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: true
 
