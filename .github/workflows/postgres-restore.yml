@@ -65,7 +65,7 @@ jobs:
         echo "BACKUP_FILE=$BACKUP_FILE" >> $GITHUB_ENV
 
     - name: Restore ${{ inputs.environment }} postgres
-      uses: DFE-Digital/github-actions/restore-postgres-backup@master
+      uses: DFE-Digital/github-actions/restore-postgres-backup@dr-testing
       with:
         storage-account: ${{ env.STORAGE_ACCOUNT_NAME }}
         resource-group: ${{ env.RESOURCE_GROUP_NAME }}
