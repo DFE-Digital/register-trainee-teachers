@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_04_121701) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -200,7 +200,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_121701) do
     t.string "urn", null: false
     t.string "trn", null: false
     t.bigint "school_id"
-    t.index ["bulk_update_placement_id", "csv_row_number", "trn", "urn"], name: "idx_uniq_placement_rows", unique: true
     t.index ["bulk_update_placement_id"], name: "index_bulk_update_placement_rows_on_bulk_update_placement_id"
     t.index ["school_id"], name: "index_bulk_update_placement_rows_on_school_id"
   end
