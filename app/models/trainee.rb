@@ -590,6 +590,10 @@ class Trainee < ApplicationRecord
     trainee_withdrawals.kept.last
   end
 
+  def current_withdrawal_reasons
+    current_withdrawal&.withdrawal_reasons
+  end
+
 private
 
   def value_digest

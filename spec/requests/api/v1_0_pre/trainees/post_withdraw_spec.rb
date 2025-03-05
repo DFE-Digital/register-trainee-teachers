@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint has been disabled" do
+describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
   context "with a valid authentication token" do
     let(:token) { "trainee_token" }
     let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
@@ -24,14 +24,14 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint h
 
     context "with a withdrawable trainee" do
       let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received, provider:) }
-      let(:unknown) { create(:withdrawal_reason, :unknown) }
+      let(:reason) { create(:withdrawal_reason, :provider) }
       let(:params) do
         {
           data: {
-            reasons: [unknown.name],
+            reasons: [reason.name],
             withdraw_date: Time.zone.now.iso8601,
-            withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
-            withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+            trigger: "provider",
+            future_interest: "no",
           },
         }
       end
@@ -55,8 +55,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint h
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: params.to_json,
           )
-        } .to change { trainee.reload.withdraw_reasons_details }.from(nil).to(params[:data][:withdraw_reasons_details])
-        .and change { trainee.reload.withdraw_date }.from(nil)
+        } .to change { trainee.reload.withdraw_date }.from(nil)
         .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
       end
 
@@ -85,7 +84,6 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint h
           {
             data:
               {
-                withdraw_reasons_details: nil,
                 withdraw_date: nil,
               },
           }
@@ -102,7 +100,9 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint h
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
-            { error: "UnprocessableEntity", message: "Reasons Choose one or more reasons why the trainee withdrew from the course, or select \"Unknown\"" },
+            { error: "UnprocessableEntity", message: "Reasons Choose a reason for withdrawal" },
+            { error: "UnprocessableEntity", message: "Future interest is not included in the list" },
+            { error: "UnprocessableEntity", message: "Trigger is not included in the list" },
           )
         end
 
@@ -117,14 +117,14 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint h
     context "with a non-withdrawable trainee" do
       let(:trainee) { create(:trainee, :itt_start_date_in_the_future, provider:) }
       let(:trainee_id) { trainee.slug }
-      let(:unknown) { create(:withdrawal_reason, :unknown) }
+      let(:reason) { create(:withdrawal_reason, :provider) }
       let(:params) do
         {
           data: {
-            reasons: [unknown.name],
+            reasons: [reason.name],
             withdraw_date: Time.zone.now.to_s,
-            withdraw_reasons_details: Faker::JapaneseMedia::CowboyBebop.quote,
-            withdraw_reasons_dfe_details: Faker::JapaneseMedia::StudioGhibli.quote,
+            trigger: "provider",
+            future_interest: "no",
           },
         }
       end
@@ -136,7 +136,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint", skip: "api endpoint h
           params: params.to_json,
         )
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly({ error: "StateTransitionError", message: "It's not possible to perform this action while the trainee is in its current state" })
+        expect(response.parsed_body[:errors]).to contain_exactly({ "error" => "StateTransitionError", "message" => "It’s not possible to perform this action while the trainee is in its current state" })
       end
 
       it "did not change the trainee" do
