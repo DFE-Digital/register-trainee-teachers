@@ -47,7 +47,7 @@
     <% end %>
 
     <%= f.govuk_radio_buttons_fieldset(:training_route, legend: { size: "s", text: t(".training_course_routes.other"), tag: "h2" }) do %>
-      <% [:assessment_only, :early_years_assessment_only, :iqts].each do |option| %>
+      <% %i[assessment_only early_years_assessment_only iqts teacher_degree_apprenticeship].select { |route| enabled_route?(route) }.each do |option| %>
         <%= f.govuk_radio_button(
           :training_route,
           TRAINING_ROUTE_ENUMS[option],

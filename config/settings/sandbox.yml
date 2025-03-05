@@ -24,6 +24,7 @@ features:
   import_applications_from_apply: true
   publish_course_details: true
   routes:
+    assessment_only: true
     early_years_assessment_only: true
     early_years_postgrad: true
     early_years_salaried: true

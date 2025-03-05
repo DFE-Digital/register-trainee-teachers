@@ -75,7 +75,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
-    context "when request body is invalid (not a serialised trainee)" do
+    context "when request body has invalid reference data values (not a serialised trainee)" do
       let(:params) { { foo: { bar: "Alice" } } }
 
       before do
@@ -92,7 +92,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
-    context "when the request data is invalid (has an invalid attribute value)" do
+    context "when the request data has invalid reference data values (has an invalid attribute value)" do
       before do
         put(
           endpoint,
@@ -247,8 +247,8 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
-    context "when course_age_range is invalid" do
-      let(:data) { { course_age_range: "invalid" } }
+    context "when course_age_range has invalid reference data values" do
+      let(:data) { { course_age_range: "1234" } }
 
       before do
         put(
@@ -260,7 +260,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range has invalid reference data values")
       end
     end
 
@@ -281,8 +281,8 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       end
     end
 
-    context "when sex is invalid" do
-      let(:data) { { sex: "invalid" } }
+    context "when sex has invalid reference data values" do
+      let(:data) { { sex: "3" } }
 
       before do
         put(
@@ -294,7 +294,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Sex is not included in the list")
+        expect(response.parsed_body["errors"]).to contain_exactly("Sex has invalid reference data values")
       end
     end
 
@@ -741,14 +741,14 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         let(:params) do
           {
             data: {
-              ethnicity: "1000",
+              ethnicity: "Irish",
             },
           }
         end
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity is not included in the list")
+          expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity has invalid reference data values")
         end
       end
     end
@@ -836,7 +836,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Training route is not included in the list")
+          expect(response.parsed_body[:errors]).to contain_exactly("Training route has invalid reference data values")
         end
       end
     end
@@ -1032,6 +1032,190 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
         end
       end
+
+      context "when course_subject_one has invalid reference data values" do
+        let(:course_subject_one) { "chemistry" }
+        let(:params) do
+          { data: { course_subject_one: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Course subject one has invalid reference data values")
+        end
+      end
+
+      context "when course_subject_two has invalid reference data values" do
+        let(:course_subject_two) { "child development" }
+        let(:params) do
+          { data: { course_subject_two: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Course subject two has invalid reference data values")
+        end
+      end
+
+      context "when course_subject_three has invalid reference data values" do
+        let(:course_subject_three) { "classical studies" }
+        let(:params) do
+          { data: { course_subject_three: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Course subject three has invalid reference data values")
+        end
+      end
+
+      context "when study_mode has invalid reference data values" do
+        let(:study_mode) { 1 }
+        let(:params) do
+          { data: { study_mode: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Study mode has invalid reference data values")
+        end
+      end
+
+      context "when nationality has invalid reference data values" do
+        let(:nationality) { "british" }
+        let(:params) do
+          { data: { nationality: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Nationality has invalid reference data values")
+        end
+      end
+
+      context "when training_initiative has invalid reference data values" do
+        let(:training_initiative) { "now_teach" }
+        let(:params) do
+          { data: { training_initiative: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Training initiative has invalid reference data values")
+        end
+      end
+
+      context "when funding_method has invalid reference data values" do
+        let(:funding_method) { "8c629dd7-bfc3-eb11-bacc-000d3addca7a" }
+        let(:params) do
+          { data: { funding_method: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Funding method has invalid reference data values")
+        end
+      end
+
+      context "when itt_aim has invalid reference data values" do
+        let(:itt_aim) { "321" }
+        let(:params) do
+          { data: { itt_aim: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly(
+            "Hesa trainee detail attributes Itt aim has invalid reference data values",
+          )
+        end
+      end
+
+      context "when itt_qualification_aim has invalid reference data values" do
+        let(:itt_qualification_aim) { "321" }
+        let(:params) do
+          { data: { itt_qualification_aim: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly(
+            "Hesa trainee detail attributes Itt qualification aim has invalid reference data values",
+          )
+        end
+      end
     end
   end
 
@@ -1073,7 +1257,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
               urn: "900020",
             },
           ],
-          itt_aim: 202,
+          itt_aim: "202",
           itt_qualification_aim: "001",
           course_year: "2012",
           course_age_range: "13915",

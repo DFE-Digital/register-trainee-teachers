@@ -11,6 +11,7 @@ features:
   publish_course_details: true
   routes:
     provider_led_postgrad: true
+    assessment_only: true
     early_years_assessment_only: true
     early_years_salaried: true
     early_years_postgrad: true
@@ -21,6 +22,7 @@ features:
     provider_led_undergrad: true
     opt_in_undergrad: true
     iqts: true
+    teacher_degree_apprenticeship: true
   user_can_have_multiple_organisations: true
   funding: true
   google:
