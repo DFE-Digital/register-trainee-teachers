@@ -1863,43 +1863,13 @@ Deferral details
 
 ### `POST /trainees/{trainee_id}/withdraw`
 
-
-
-
-
-
 Withdraw a trainee.
-
-
-
-
 
 #### Request
 
-
-
-
-
-`POST /api/v0.1/trainees/{trainee_id}/withdraw?reasons[]={reasons}&withdraw_date={withdraw_date}&trigger={trigger}&future_interest={future_interest}&another_reason={another_reason}`
-
-
-
-
-
-There is no request body for this endpoint.
-
-
-
-
-
-Note that multiple values for the reasons parameter can be provided by repeating the parameter in the query string, e.g. `reasons[]=trainee_workload_issues&reasons[]=not_meeting_qts_standards`
-
+`POST /api/v0.1/trainees/{trainee_id}/withdraw`
 
 #### Parameters
-
-
-
-
 
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
@@ -1910,378 +1880,206 @@ Note that multiple values for the reasons parameter can be provided by repeating
 | **future_interest** | query | string | true | The trainee's interest in becoming a teacher in the future. Valid values are `yes`, <br> `no`, <br> `unknown`|
 | **withdraw_date** | query | string | true | The date and time of the withdrawal in ISO 8601 format |
 
+#### Request body
 
+Withdraw details
 
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>data</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        <a class="govuk-link" href="#withdraw-object">Withdraw</a> object
+      </p>
+    </dd>
+  </div>
+</dl>
+
+<details class="govuk-details">
+  <summary class="govuk-details__summary">Example request body</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "trigger": "provider,
+        "future_interest": "no",
+        "withdraw_date": "2025-03-05",
+        "reasons": [
+          "unacceptable_behavior",
+          "had_to_withdraw_trainee_another_reason"
+        ]
+      }
+    }
+    </pre>
+  </div>
+</details>
 
 #### Possible responses
 
-
-
-
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "data": {
+        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
+        "provider_trainee_id": "abc1234",
+        "first_names": "Trainee",
+        "last_name": "TraineeUser644065",
+        "date_of_birth": "2000-01-01",
+        "created_at": "2023-10-20T14:54:47.374Z",
+        "updated_at": "2024-01-24T16:03:28.721Z",
+        "email": "trainee_644065@example.com",
+        "middle_names": null,
+        "training_route": "11",
+        "sex": "10",
+        "diversity_disclosure": "diversity_disclosed",
+        "ethnic_group": "black_ethnic_group",
+        "ethnic_background": "African",
+        "additional_ethnic_background": null,
+        "disability_disclosure": "no_disability",
+        "course_subject_one": "100425",
+        "itt_start_date": "2023-09-04",
+        "outcome_date": null,
+        "itt_end_date": "2023-10-17",
+        "trn": "6440650",
+        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
+        "state": "deferred",
+        "withdraw_date": null,
+        "defer_date": "2023-10-17",
+        "recommended_for_award_at": null,
+        "trainee_start_date": "2023-09-04",
+        "reinstate_date": null,
+        "course_min_age": 5,
+        "course_max_age": 11,
+        "course_subject_two": null,
+        "course_subject_three": null,
+        "awarded_at": null,
+        "training_initiative": "009",
+        "applying_for_bursary": false,
+        "bursary_tier": null,
+        "study_mode": "01",
+        "ebacc": false,
+        "region": null,
+        "applying_for_scholarship": false,
+        "course_education_phase": "primary",
+        "applying_for_grant": false,
+        "course_uuid": null,
+        "lead_partner_not_applicable": false,
+        "employing_school_not_applicable": false,
+        "submission_ready": true,
+        "commencement_status": null,
+        "discarded_at": null,
+        "created_from_dttp": false,
+        "hesa_id": "87960005710008762",
+        "additional_dttp_data": null,
+        "created_from_hesa": false,
+        "hesa_updated_at": null
+        "record_source": "api",
+        "iqts_country": null,
+        "hesa_editable": true,
+        "withdrawal_future_interest": null,
+        "withdrawal_trigger": null,
+        "withdrawal_reasons": null,
+        "placement_detail": null,
+        "ukprn": "10000571",
+        "ethnicity": "120",
+        "course_qualification": "QTS",
+        "course_title": null,
+        "course_level": "undergrad",
+        "course_itt_start_date": "2022-09-01",
+        "course_age_range": null,
+        "expected_end_date": "2023-07-01",
+        "employing_school_urn": null,
+        "lead_partner_ukprn": null,
+        "lead_partner_urn": null,
+        "fund_code": "7",
+        "bursary_level": "4",
+        "course_year": "2",
+        "funding_method": "4",
+        "itt_aim": "201",
+        "itt_qualification_aim": "004",
+        "ni_number": null,
+        "previous_last_name": null,
+        "hesa_disabilities": null,
+        "additional_training_initiative": null,
+        "placements": [
+          {
+            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
+            "urn": "123456",
+            "name": "Meadow Creek School",
+            "address": "URN 123456, AB1 2CD",
+            "postcode": "AB1 2CD",
+            "created_at": "2024-01-18T08:02:42.672Z",
+            "updated_at": "2024-01-18T08:02:42.672Z"
+          }
+        ],
+        "degrees": [
+          {
+            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
+            "uk_degree": "083",
+            "non_uk_degree": null,
+            "created_at": "2024-01-18T08:02:41.955Z",
+            "updated_at": "2024-01-18T08:02:41.955Z",
+            "subject": "100425",
+            "institution": "0116",
+            "graduation_year": 2022,
+            "grade": "02",
+            "country": null,
+            "other_grade": null,
+            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
+            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
+            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
+            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
+          }
+        ]
+      }
+    }
+    </pre>
+  </div>
+</details>
 
 <details class="govuk-details">
-
-
-  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
-
-
+  <summary class="govuk-details__summary">HTTP 401<span> - Unauthorized</span></summary>
   <div class="govuk-details__text">
-
-
     <pre class="json-code-sample">
-
-
     {
-
-
-      "data": {
-
-
-        "trainee_id": "vcGjpBCn987jJSqMQxjhdv9Y",
-
-
-        "provider_trainee_id": "abc1234",
-
-
-        "first_names": "Trainee",
-
-
-        "last_name": "TraineeUser644065",
-
-
-        "date_of_birth": "2000-01-01",
-
-
-        "created_at": "2023-10-20T14:54:47.374Z",
-
-
-        "updated_at": "2024-01-24T16:03:28.721Z",
-
-
-        "email": "trainee_644065@example.com",
-
-
-        "middle_names": null,
-
-
-        "training_route": "11",
-
-
-        "sex": "10",
-
-
-        "diversity_disclosure": "diversity_disclosed",
-
-
-        "ethnic_group": "black_ethnic_group",
-
-
-        "ethnic_background": "African",
-
-
-        "additional_ethnic_background": null,
-
-
-        "disability_disclosure": "no_disability",
-
-
-        "course_subject_one": "100425",
-
-
-        "itt_start_date": "2023-09-04",
-
-
-        "outcome_date": null,
-
-
-        "itt_end_date": "2023-10-17",
-
-
-        "trn": "6440650",
-
-
-        "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-
-
-        "state": "deferred",
-
-
-        "withdraw_date": null,
-
-
-        "defer_date": "2023-10-17",
-
-
-        "recommended_for_award_at": null,
-
-
-        "trainee_start_date": "2023-09-04",
-
-
-        "reinstate_date": null,
-
-
-        "course_min_age": 5,
-
-
-        "course_max_age": 11,
-
-
-        "course_subject_two": null,
-
-
-        "course_subject_three": null,
-
-
-        "awarded_at": null,
-
-
-        "training_initiative": "009",
-
-
-        "applying_for_bursary": false,
-
-
-        "bursary_tier": null,
-
-
-        "study_mode": "01",
-
-
-        "ebacc": false,
-
-
-        "region": null,
-
-
-        "applying_for_scholarship": false,
-
-
-        "course_education_phase": "primary",
-
-
-        "applying_for_grant": false,
-
-
-        "course_uuid": null,
-
-
-        "lead_partner_not_applicable": false,
-
-
-        "employing_school_not_applicable": false,
-
-
-        "submission_ready": true,
-
-
-        "commencement_status": null,
-
-
-        "discarded_at": null,
-
-
-        "created_from_dttp": false,
-
-
-        "hesa_id": "87960005710008762",
-
-
-        "additional_dttp_data": null,
-
-
-        "created_from_hesa": false,
-
-
-        "hesa_updated_at": null
-
-
-        "record_source": "api",
-
-
-        "iqts_country": null,
-
-
-        "hesa_editable": true,
-
-
-        "_interest": null,
-
-
-        "withdrawal_trigger": null,
-
-
-        "withdrawal_reasons": null,
-
-
-        "placement_detail": null,
-
-
-        "ukprn": "10000571",
-
-
-        "ethnicity": "120",
-
-
-        "course_qualification": "QTS",
-
-
-        "course_title": null,
-
-
-        "course_level": "undergrad",
-
-
-        "course_itt_start_date": "2022-09-01",
-
-
-        "course_age_range": null,
-
-
-        "expected_end_date": "2023-07-01",
-
-
-        "employing_school_urn": null,
-
-
-        "lead_partner_ukprn": null,
-
-
-        "lead_partner_urn": null,
-
-
-        "fund_code": "7",
-
-
-        "bursary_level": "4",
-
-
-        "course_year": "2",
-
-
-        "funding_method": "4",
-
-
-        "itt_aim": "201",
-
-
-        "itt_qualification_aim": "004",
-
-
-        "ni_number": null,
-
-
-        "previous_last_name": null,
-
-
-        "hesa_disabilities": null,
-
-
-        "additional_training_initiative": null,
-
-
-        "placements": [
-
-
-          {
-
-
-            "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-
-
-            "urn": "123456",
-
-
-            "name": "Meadow Creek School",
-
-
-            "address": "URN 123456, AB1 2CD",
-
-
-            "postcode": "AB1 2CD",
-
-
-            "created_at": "2024-01-18T08:02:42.672Z",
-
-
-            "updated_at": "2024-01-18T08:02:42.672Z"
-
-
-          }
-
-
-        ],
-
-
-        "degrees": [
-
-
-          {
-
-
-            "degree_id": "E1phsAcP3hDFMhx19qVGhchR",
-
-
-            "uk_degree": "083",
-
-
-            "non_uk_degree": null,
-
-
-            "created_at": "2024-01-18T08:02:41.955Z",
-
-
-            "updated_at": "2024-01-18T08:02:41.955Z",
-
-
-            "subject": "100425",
-
-
-            "institution": "0116",
-
-
-            "graduation_year": 2022,
-
-
-            "grade": "02",
-
-
-            "country": null,
-
-
-            "other_grade": null,
-
-
-            "institution_uuid": "0271f34a-2887-e711-80d8-005056ac45bb",
-
-
-            "uk_degree_uuid": "db695652-c197-e711-80d8-005056ac45bb",
-
-
-            "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
-
-
-            "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
-
-
-          }
-
-
-        ]
-
-
-      }
-
-
+      "error": "Unauthorized"
     }
-
-
     </pre>
-
-
   </div>
+</details>
 
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 404<span> - Not found</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "NotFound",
+          "message": "Trainee(s) not found"
+        }
+      ]
+    }
+    </pre>
+  </div>
+</details>
 
+<details class="govuk-details">
+  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
+  <div class="govuk-details__text">
+    <pre class="json-code-sample">
+    {
+      "errors": [
+        {
+          "error": "UnprocessableEntity",
+          "message": "Withdraw date Choose a withdrawal date"
+        }
+      ]
+    }
+    </pre>
+  </div>
 </details>
 
 ---
