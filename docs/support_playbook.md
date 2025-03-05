@@ -24,7 +24,7 @@ A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask suppor
 
 
 
-## Changing the witdrawal date for a withdrawn trainee
+## Changing the withdrawal date for a withdrawn trainee
 
 Sometimes support will ask a dev to change the withdrawal date for a trainee.
 
