@@ -20,6 +20,7 @@ module PageObjects
       element :hpitt_postgrad, "#trainee-training-route-hpitt-postgrad-field"
       element :opt_in_undergrad, "#trainee-training-route-opt-in-undergrad-field"
       element :iqts, "#trainee-training-route-iqts-field"
+      element :teacher_degree_apprenticeship, "#trainee-training-route-teacher-degree-apprenticeship-field"
 
       element :other, "#trainee-training-route-other-field"
 

@@ -9,10 +9,12 @@ features:
   sign_in_method: dfe-sign-in
   basic_auth: false
   routes:
+    assessment_only: true
     provider_led_postgrad: true
     school_direct_salaried: true
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
+    teacher_degree_apprenticeship: true
 
 environment:
   name: beta

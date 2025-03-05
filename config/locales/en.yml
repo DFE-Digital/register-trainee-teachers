@@ -681,6 +681,7 @@ en:
             provider_led_undergrad: *lead_partner_and_employing_school
             early_years_salaried: *lead_partner_and_employing_school
             early_years_undergrad: *lead_partner
+            teacher_degree_apprenticeship: *lead_partner_and_employing_school
     personas:
       view:
         provider_user: "Belongs to <strong>%{provider_name}</strong> and is responsible for managing trainees."
@@ -1390,6 +1391,7 @@ en:
           pg_teaching_apprenticeship: Teaching apprenticeship (postgraduate)
           hpitt_postgrad: HPITT
           opt_in_undergrad: Opt-in (undergraduate)
+          teacher_degree_apprenticeship: &teacher_degree_apprenticeship Teacher degree apprenticeship (salaried)
           itt: &itt_routes
             assessment_only: Assessment only
             early_years_assessment_only: Early years assessment only
@@ -1404,6 +1406,7 @@ en:
             school_direct_tuition_fee: School direct (fee funded)
             hpitt_postgrad: HPITT
             opt_in_undergrad: Opt-in
+            teacher_degree_apprenticeship: *teacher_degree_apprenticeship
         states:
           draft: Draft
           apply_draft: Apply Draft
