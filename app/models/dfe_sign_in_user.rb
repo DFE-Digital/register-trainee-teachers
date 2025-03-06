@@ -51,9 +51,9 @@ class DfESignInUser
     session.destroy
   end
 
-  def logout_url
+  def logout_url(request)
     if signed_in_from_dfe?
-      dfe_logout_url
+      dfe_logout_url(request)
     else
       "/auth/developer/sign-out"
     end
@@ -91,11 +91,11 @@ private
     @provider == "dfe"
   end
 
-  def dfe_logout_url
+  def dfe_logout_url(request)
     uri = URI("#{Settings.dfe_sign_in.issuer}/session/end")
     uri.query = {
       id_token_hint: @id_token,
-      post_logout_redirect_uri: "#{Settings.base_url}/auth/dfe/sign-out",
+      post_logout_redirect_uri: "#{request.base_url}/auth/dfe/sign-out",
     }.to_query
     uri.to_s
   end
