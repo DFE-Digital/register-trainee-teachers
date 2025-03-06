@@ -8,32 +8,35 @@ when "dfe-sign-in"
   OmniAuth.config.logger = Rails.logger
 
   dfe_sign_in_issuer_uri = URI.parse(Settings.dfe_sign_in.issuer)
-  dfe_sign_in_redirect_uri = URI.join(Settings.base_url, "/auth/dfe/callback")
   dfe_sign_in_issuer_uri_with_port = "#{dfe_sign_in_issuer_uri}:#{dfe_sign_in_issuer_uri.port}" if dfe_sign_in_issuer_uri.present?
 
-  client_options = {
-    identifier: Settings.dfe_sign_in.identifier,
+  SETUP_PROC = lambda do |env|
+    request = Rack::Request.new(env)
 
-    port: dfe_sign_in_issuer_uri.port,
-    scheme: dfe_sign_in_issuer_uri.scheme,
-    host: dfe_sign_in_issuer_uri.host,
+    dfe_sign_in_redirect_uri = URI.join(request.base_url, "/auth/dfe/callback")
 
-    secret: Settings.dfe_sign_in.secret,
-    redirect_uri: dfe_sign_in_redirect_uri&.to_s,
-  }
+    env["omniauth.strategy"].options.client_options = {
+      port: dfe_sign_in_issuer_uri.port,
+      scheme: dfe_sign_in_issuer_uri.scheme,
+      host: dfe_sign_in_issuer_uri.host,
+      identifier: Settings.dfe_sign_in.identifier,
+      secret: Settings.dfe_sign_in.secret,
+      redirect_uri: dfe_sign_in_redirect_uri,
+    }
+  end
 
-  options = {
-    name: :dfe,
-    discovery: true,
-    response_type: :code,
-    scope: %i[email profile],
-    path_prefix: "/auth",
-    callback_path: "/auth/dfe/callback",
-    client_options: client_options,
-    issuer: dfe_sign_in_issuer_uri_with_port,
-  }.compact
-
-  Rails.application.config.middleware.use(OmniAuth::Strategies::OpenIDConnect, options)
+  Rails.application.config.middleware.use(OmniAuth::Builder) do
+    provider(:openid_connect, {
+      name: :dfe,
+      discovery: true,
+      scope: %i[email profile],
+      response_type: :code,
+      path_prefix: "/auth",
+      callback_path: "/auth/dfe/callback",
+      issuer: dfe_sign_in_issuer_uri_with_port,
+      setup: SETUP_PROC,
+    })
+  end
 
 when "persona"
 
