@@ -10,21 +10,30 @@ class HesaCodeChecker
   end
 
   def call(file_name)
-    puts("Checking HESA #{file_name} against Register reference data...")
+    puts("## #{file_name.humanize}")
+    puts("Checking HESA codes against Register reference data...")
+
+    puts("| HESA Code | HESA Label | Register Value |")
+    puts("| --------- | ---------- | -------------- |")
+
     CSV.parse(File.read(HESA_CSV_PATH.join("#{file_name}.csv")), headers: true).each do |row|
       hesa_code = HesaCode.new(row["Code"], row["Label"])
       register_value = yield(hesa_code)
       @missing << hesa_code if register_value.nil?
-      puts "Code: #{hesa_code.code} Label: #{hesa_code.label} Register: #{register_value ? register_value : "NOT FOUND"}"
+      puts "| #{hesa_code.code} | #{hesa_code.label} | #{register_value ? register_value : "NOT FOUND"} |"
     end
 
     if @missing.any?
-      puts("***************** Missing mappings: *****************")
+      puts("### Missing mappings 🚨")
+
+      puts("| HESA Code | HESA Label |")
+      puts("| --------- | ---------- |")
+
       @missing.each do |hesa_code|
-        puts("Code: #{hesa_code.code} Label: #{hesa_code.label}")
+        puts("| #{hesa_code.code} | #{hesa_code.label} |")
       end
     else
-      puts("No missing mappings found")
+      puts("*All HESA codes are mapped!* 🎉")
     end
     puts("\n\n")
   end
