@@ -2086,17 +2086,16 @@ en:
         api/v01/withdrawal_attributes:
           attributes:
             reasons:
-              inclusion: Choose a reason for withdrawal
-              unknown_exclusively: Only select "Unknown" if no other withdrawal reasons apply
+              inclusion: Choose one or more reasons why the trainee withdrew from the course
               invalid: Reasons selected are not valid for this trigger
             withdraw_date:
               blank: Choose a withdrawal date
               invalid: Choose a valid withdrawal date
               not_before_itt_start_date: *not_before_itt_start_date
             trigger:
-              blank: Please select an option
+              blank: Please select an option for the trigger. Valid options are provider or trainee.
             future_interest:
-              blank: Please select an option
+              blank: Please select an option. Valid options are yes, no and unknown.
             another_reason:
               blank: Enter another reason
         api/v01/degree_attributes:

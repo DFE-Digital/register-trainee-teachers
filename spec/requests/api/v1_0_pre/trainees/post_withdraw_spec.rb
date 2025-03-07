@@ -100,7 +100,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
-            { error: "UnprocessableEntity", message: "Reasons Choose a reason for withdrawal" },
+            { error: "UnprocessableEntity", message: "Reasons Choose one or more reasons why the trainee withdrew from the course" },
             { error: "UnprocessableEntity", message: "Future interest is not included in the list" },
             { error: "UnprocessableEntity", message: "Trigger is not included in the list" },
           )
