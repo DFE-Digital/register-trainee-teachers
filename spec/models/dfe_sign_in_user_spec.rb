@@ -75,5 +75,28 @@ describe DfESignInUser do
       end
     end
   end
+
+  describe "#logout_url" do
+    it "returns the dfe logout url" do
+      session = {
+        "dfe_sign_in_user" => {
+          "first_name" => "Example",
+          "last_name" => "User",
+          "email" => "example_user@example.com",
+          "last_active_at" => 1.hour.ago,
+          "dfe_sign_in_uid" => "123",
+          "id_token" => "123",
+          "provider" => "dfe",
+        },
+      }
+      dfe_sign_in_user = described_class.load_from_session(session)
+      request = instance_double(ActionDispatch::Request, base_url: "dfe_url")
+
+      expect(dfe_sign_in_user.logout_url(request)).to eq(
+        "https://test-oidc.signin.education.gov.uk/session/end?id_token_hint=" \
+        "123&post_logout_redirect_uri=dfe_url%2Fauth%2Fdfe%2Fsign-out",
+      )
+    end
+  end
 end
 # rubocop:enable RSpec/SpecFilePathFormat
