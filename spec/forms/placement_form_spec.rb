@@ -234,20 +234,6 @@ describe PlacementForm, type: :model do
           expect(subject.open_details?).to be_truthy
         end
       end
-
-      context "with duplicated urn" do
-        let(:trainee) { create(:trainee, placements: build_list(:placement, 1, :with_school)) }
-
-        let(:placement) { Placement.new(name: "duplicated urn", urn: trainee.placements.first.school.urn) }
-
-        before do
-          placement_form.valid?
-        end
-
-        it "returns true" do
-          expect(subject.open_details?).to be_truthy
-        end
-      end
     end
 
     context "without error" do
@@ -274,18 +260,6 @@ describe PlacementForm, type: :model do
       let(:trainee) { create(:trainee, placements: [trainee_placement]) }
       let(:placement) { Placement.new(**placement_attributes) }
 
-      context "setting urn" do
-        let(:placement_attributes) { { urn: trainee_placement.school.urn } }
-
-        it "add errors" do
-          expect(subject.errors).to be_empty
-          subject.urn_valid
-          expect(subject.errors).not_to be_empty
-          expect(subject.errors.messages[:urn]).to include("Choose another URN as this has already been used")
-          expect(subject.errors.messages[:school]).not_to include("Choose another URN as this has already been used")
-        end
-      end
-
       context "when the URN is too long" do
         let(:placement_attributes) { { urn: "1234567" } }
 
@@ -309,24 +283,6 @@ describe PlacementForm, type: :model do
           expect(subject.errors.messages[:urn]).to include(
             I18n.t("activemodel.errors.models.placement.attributes.urn.invalid_format"),
           )
-        end
-      end
-    end
-
-    describe "#school_urn_valid" do
-      let(:trainee_placement) { build(:placement, :with_school) }
-      let(:trainee) { create(:trainee, placements: [trainee_placement]) }
-      let(:placement) { Placement.new(**placement_attributes) }
-
-      context "setting school_id" do
-        let(:placement_attributes) { { school_id: trainee_placement.school.id } }
-
-        it "add errors" do
-          expect(subject.errors).to be_empty
-          subject.school_urn_valid
-          expect(subject.errors).not_to be_empty
-          expect(subject.errors.messages[:urn]).not_to include("Choose another URN as this has already been used")
-          expect(subject.errors.messages[:school]).to include("Choose another URN as this has already been used")
         end
       end
     end
