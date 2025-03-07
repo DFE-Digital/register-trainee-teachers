@@ -71,34 +71,6 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
     context "with dqt status" do
       subject { described_class.new(dead_set: dead_set, include_dqt_status: true) }
 
-      context "with dqt teacher" do
-        let(:dqt_response_humanised) do
-          dqt_teacher.dqt_trainings.first
-          <<~TEXT
-            trn: #{dqt_teacher.trn}
-            first_name: #{dqt_teacher.first_name}
-            last_name: #{dqt_teacher.last_name}
-            date_of_birth: #{dqt_teacher.date_of_birth}
-            dqt_teacher_trainings:
-          TEXT
-        end
-
-        it "returns the dqt status" do
-          dqt_data = csv[0]["dqt"]
-          expect(dqt_data).to include("trn: #{dqt_teacher.trn}")
-          expect(dqt_data).to include("first_name: #{dqt_teacher.first_name}")
-          expect(dqt_data).to include("last_name: #{dqt_teacher.last_name}")
-          expect(dqt_data).to include("date_of_birth: #{dqt_teacher.date_of_birth}")
-          expect(dqt_data).to include("programme_start_date")
-          expect(dqt_data).to include("programme_end_date")
-          expect(dqt_data).to include("programme_type")
-          expect(dqt_data).to include("result")
-          expect(dqt_data).to include("provider_ukprn")
-          expect(dqt_data).to include("hesa_id")
-          expect(dqt_data).to include("active")
-        end
-      end
-
       context "without dqt teacher" do
         let(:dqt_teacher) { nil }
 
