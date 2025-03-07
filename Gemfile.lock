@@ -240,10 +240,10 @@ GEM
     erubi (1.13.1)
     et-orbi (1.2.11)
       tzinfo
-    factory_bot (6.2.1)
-      activesupport (>= 5.0.0)
-    factory_bot_rails (6.2.0)
-      factory_bot (~> 6.2.0)
+    factory_bot (6.5.1)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.4.4)
+      factory_bot (~> 6.5)
       railties (>= 5.0.0)
     faker (3.5.1)
       i18n (>= 1.8.11, < 2)
@@ -260,7 +260,9 @@ GEM
       concurrent-ruby (~> 1.1)
       webrick (~> 1.7)
       websocket-driver (~> 0.7)
-    ffi (1.16.3)
+    ffi (1.17.1-arm64-darwin)
+    ffi (1.17.1-x86_64-linux-gnu)
+    ffi (1.17.1-x86_64-linux-musl)
     flamegraph (0.9.5)
     foreman (0.88.1)
     front_matter_parser (1.0.1)
@@ -401,7 +403,7 @@ GEM
     mime-types-data (3.2025.0107)
     mini_mime (1.1.5)
     minitest (5.25.4)
-    msgpack (1.7.2)
+    msgpack (1.8.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
     mutex_m (0.3.0)
@@ -637,7 +639,7 @@ GEM
       rubocop-rspec (~> 3, >= 3.0.1)
     ruby-graphviz (1.2.5)
       rexml
-    ruby-next-core (1.0.1)
+    ruby-next-core (1.1.1)
     ruby-progressbar (1.13.0)
     rubyntlm (0.6.5)
       base64
@@ -891,7 +893,7 @@ DEPENDENCIES
   yabeda-rails
 
 RUBY VERSION
-   ruby 3.3.5p100
+   ruby 3.4.2p28
 
 BUNDLED WITH
-   2.5.22
+   2.6.5
