@@ -10,10 +10,19 @@ module Trainees
 
     def call
       Dqt::WithdrawTraineeJob.perform_later(trainee)
+      Survey::ScheduleJob.perform_later(trainee:, event_type: :withdraw) if trainee_withdrawal_valid_for_survey?
     end
 
   private
 
     attr_reader :trainee
+
+    def trainee_withdrawal_valid_for_survey?
+      reason_names = trainee&.current_withdrawal&.withdrawal_reasons&.pluck(:name)
+      return false if reason_names.blank?
+      
+      # Only prevent survey if RECORD_ADDED_IN_ERROR is the sole reason
+      !(reason_names == [WithdrawalReasons::RECORD_ADDED_IN_ERROR])
+    end
   end
 end
