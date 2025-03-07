@@ -7,7 +7,7 @@ module BulkUpdate
 
       def initialize(placement_row)
         @placement_row = placement_row
-        @urn = placement_row.urn
+        @urn           = placement_row.urn
       end
 
       def call
@@ -29,7 +29,8 @@ module BulkUpdate
 
       def create_placement
         placement_row.update(school: school, state: :imported)
-        ::Placement.find_or_create_by(trainee:, school:)
+
+        ::Placement.create(trainee:, school:)
       end
 
       def record_errors
