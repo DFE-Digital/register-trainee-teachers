@@ -97,4 +97,4 @@ module Survey
       Settings.qualtrics.library_id
     end
   end
-end 
+end

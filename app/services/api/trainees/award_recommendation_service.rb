@@ -34,7 +34,7 @@ module Api
         trainee.attributes = trainee_attributes
 
         Dqt::RecommendForAwardJob.perform_later(trainee)
-        Survey::ScheduleJob.perform_later(trainee:, event_type: :award) if survey_should_be_scheduled?
+        Survey::ScheduleJob.perform_later(trainee: trainee, event_type: :award) if survey_should_be_scheduled?
 
         true
       end

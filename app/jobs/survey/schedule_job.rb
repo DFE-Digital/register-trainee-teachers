@@ -11,4 +11,4 @@ module Survey
       SendJob.set(wait: 7.days).perform_later(trainee:, event_type:)
     end
   end
-end 
+end
