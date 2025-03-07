@@ -2,6 +2,7 @@
   "engines": {
     "node": "20.x"
   },
+  "type": "module",
   "scripts": {
     "js:lint": "standard",
     "js:lint:fix": "standard --fix",
@@ -14,7 +15,7 @@
   },
   "dependencies": {
     "@hotwired/turbo-rails": "^8.0.13",
-    "@ministryofjustice/frontend": "^3.3.1",
+    "@ministryofjustice/frontend": "^3.6.0",
     "accessible-autocomplete": "^3.0.1",
     "govuk-country-and-territory-autocomplete": "^2.0.0",
     "govuk-frontend": "^5.8.0",
