@@ -25,6 +25,8 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        withdraw_reasons_details
+        withdraw_reasons_dfe_details
       ].freeze
 
       def initialize(trainee)
@@ -50,6 +52,9 @@ module Api
             nationality: nationality,
             training_initiative: training_initiative,
             withdraw_reasons: withdraw_reasons,
+            withdrawal_trigger: @trainee.current_withdrawal&.trigger,
+            withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
+            withdrawal_another_reason: @trainee.current_withdrawal&.another_reason,
             placements: placements,
             degrees: degrees,
             state: @trainee.state,

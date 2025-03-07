@@ -398,7 +398,7 @@ module Reports
     end
 
     def withdraw_reasons
-      trainee.current_withdrawal&.withdrawal_reasons&.map do |reason|
+      trainee.current_withdrawal_reasons&.map do |reason|
         I18n.t("components.withdrawal_details.reasons.#{reason.name}")
       end&.join("\n")
     end
