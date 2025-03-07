@@ -18,3 +18,4 @@ ignore:
   - "lib/tasks/remove_duplicates.rake"
   - "lib/tasks/trainees_create_from_csv.rake"
   - "lib/tasks/trainees_hpitt_bulk_submit.rake"
+  - ".github"
