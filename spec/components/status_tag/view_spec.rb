@@ -23,6 +23,22 @@ describe StatusTag::View do
     end
   end
 
+  context "with a trainee teacher degree apprenticeship recommended for QTS" do
+    let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :recommended_for_award) }
+
+    it "renders the correct status" do
+      expect(rendered_content).to have_text("QTS recommended")
+    end
+  end
+
+  context "with a trainee teacher degree apprenticeship awarded QTS" do
+    let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :awarded) }
+
+    it "renders the correct status" do
+      expect(rendered_content).to have_text("QTS awarded")
+    end
+  end
+
   context "with a trainee recommended for QTS" do
     let(:trainee) { build(:trainee, :recommended_for_award) }
 

@@ -134,6 +134,7 @@ TRAINING_ROUTE_AWARD_TYPE = {
   opt_in_undergrad: QTS_AWARD_TYPE,
   hpitt_postgrad: QTS_AWARD_TYPE,
   iqts: QTS_AWARD_TYPE,
+  teacher_degree_apprenticeship: QTS_AWARD_TYPE,
 }.freeze
 
 EARLY_YEARS_ROUTE_NAME_PREFIX = "early_years"
