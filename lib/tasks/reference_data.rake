@@ -32,7 +32,26 @@ end
 
 namespace :reference_data do
   desc "All HESA reference data checks"
-  task all: %i[ethnicities sexes countries disabilities itt_aims itt_qualification_aims training_routes degree_subjects]
+  task all: %i[
+    ethnicities
+    sexes
+    countries
+    disabilities
+    itt_aims
+    itt_qualification_aims
+    training_routes
+    course_subjects
+    study_modes
+    age_ranges
+    fund_codes
+    funding_methods
+    training_initiatives
+    degree_types
+    degree_subjects
+    degree_grades
+    degree_institutions
+    degree_countries
+  ]
 
   desc "HESA ethnicities reference data checks"
   task ethnicities: :environment do
@@ -89,11 +108,96 @@ namespace :reference_data do
     end
   end
 
+  desc "HESA training routes reference data checks"
+  task training_routes: :environment do
+    HesaCodeChecker.new.call("training_routes") do |hesa_code|
+      Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_code.code]
+    end
+  end
+
+  desc "HESA course subjects reference data checks"
+  task course_subjects: :environment do
+    HesaCodeChecker.new.call("course_subjects") do |hesa_code|
+      name = Hesa::CodeSets::CourseSubjects::MAPPING[hesa_code.code]
+      CodeSets::CourseSubjects::MAPPING.key?(name) ? name : nil
+    end
+  end
+
+  desc "HESA study modes reference data checks"
+  task study_modes: :environment do
+    HesaCodeChecker.new.call("study_modes") do |hesa_code|
+      Hesa::CodeSets::StudyModes::MAPPING[hesa_code.code]
+    end
+  end
+
+  desc "HESA course age ranges reference data checks"
+  task age_ranges: :environment do
+    HesaCodeChecker.new.call("age_ranges") do |hesa_code|
+      range = Hesa::CodeSets::AgeRanges::MAPPING[hesa_code.code]
+      range ? "#{range[0]} - #{range[1]}" : nil
+    end
+  end
+
+  desc "HESA fund code reference data checks"
+  task fund_codes: :environment do
+    HesaCodeChecker.new.call("fund_codes") do |hesa_code|
+      Hesa::CodeSets::FundCodes::MAPPING[hesa_code.code]
+    end
+  end
+
+  desc "HESA funding methods reference data checks"
+  task funding_methods: :environment do
+    HesaCodeChecker.new.call("funding_methods") do |hesa_code|
+      entity_id = Hesa::CodeSets::BursaryLevels::MAPPING[hesa_code.code]
+      CodeSets::BursaryDetails::MAPPING.find { |_, value| value[:entity_id] == entity_id }&.first
+    end
+  end
+
+  desc "HESA training initiatives reference data checks"
+  task training_initiatives: :environment do
+    HesaCodeChecker.new.call("training_initiatives") do |hesa_code|
+      name = Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_code.code]
+      CodeSets::TrainingInitiatives::MAPPING.key?(name) ? name : nil
+    end
+  end
+
+  desc "HESA degree types reference data checks"
+  task degree_types: :environment do
+    HesaCodeChecker.new.call("degree_types") do |hesa_code|
+      degree_type = DfEReference::DegreesQuery.find_type(hesa_code: hesa_code.code)
+      degree_type&.name
+    end
+  end
+
   desc "HESA degree subjects reference data checks"
   task degree_subjects: :environment do
     HesaCodeChecker.new.call("degree_subjects") do |hesa_code|
-      name = Hesa::CodeSets::CourseSubjects::MAPPING[hesa_code.code]
-      CodeSets::CourseSubjects::MAPPING.key?(name) ? name : nil
+      degree_subject = DfEReference::DegreesQuery.find_subject(hecos_code: hesa_code.code)
+      degree_subject&.name
+    end
+  end
+
+  desc "HESA degree grades reference data checks"
+  task degree_grades: :environment do
+    HesaCodeChecker.new.call("degree_grades") do |hesa_code|
+      grade = DfEReference::DegreesQuery.find_grade(hesa_code: hesa_code.code)
+      grade&.name
+    end
+  end
+
+  desc "HESA degree institutions reference data checks"
+  task degree_institutions: :environment do
+    HesaCodeChecker.new.call("degree_institutions") do |hesa_code|
+      institution = DfEReference::DegreesQuery.find_institution(hesa_code: hesa_code.code)
+      institution&.name
+    end
+  end
+
+  desc "HESA degree institutions reference data checks"
+  task degree_countries: :environment do
+    HesaCodeChecker.new.call("degree_countries") do |hesa_code|
+      country_name = Hesa::CodeSets::Countries::MAPPING[hesa_code.code]
+      CodeSets::Countries::MAPPING.key?(country_name) ? country_name : nil
     end
   end
 end
