@@ -4,7 +4,7 @@ require "rails_helper"
 
 module TeacherTrainingApi
   RSpec.describe PublishProviderChecker, type: :service do
-    let(:recruitment_cycle_year) { 2023 }
+    let(:recruitment_cycle_year) { Settings.current_recruitment_cycle_year }
 
     describe "#call" do
       before do
