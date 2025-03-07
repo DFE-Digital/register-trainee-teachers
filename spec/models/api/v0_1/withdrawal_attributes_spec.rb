@@ -51,7 +51,7 @@ describe Api::V01::WithdrawalAttributes do
 
         it "is invalid" do
           expect(subject.errors[:reasons]).to contain_exactly(
-            "Choose a reason for withdrawal",
+            "Choose one or more reasons why the trainee withdrew from the course",
           )
         end
       end
