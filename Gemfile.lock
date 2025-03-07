@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 5f88319f6db790092fd66548b9391f5e7756e999
-  tag: v3.6.8
+  revision: 2837469518d193aa819cc9fdedc40854dafa8284
+  tag: v3.6.10
   specs:
-    dfe-reference-data (3.6.8)
+    dfe-reference-data (3.6.10)
       activesupport
       tzinfo
 
@@ -620,8 +620,9 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-capybara (2.21.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.26.1)
-      rubocop (~> 1.61)
+    rubocop-factory_bot (2.27.0)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     rubocop-rails (2.30.3)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)

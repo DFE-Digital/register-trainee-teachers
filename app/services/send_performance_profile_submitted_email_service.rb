@@ -9,7 +9,7 @@ class SendPerformanceProfileSubmittedEmailService
   end
 
   def call
-    provider.users.each do |user|
+    provider.users.kept.each do |user|
       PerformanceProfileSubmittedEmailMailer.generate(
         user:,
         submitted_at:,
