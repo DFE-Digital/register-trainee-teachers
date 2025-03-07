@@ -1,81 +1,14 @@
 # frozen_string_literal: true
 
 module Survey
-  class Award
+  # Service for sending QTS award surveys to trainees
+  # This class handles the specific implementation details for award surveys
+  class Award < Base
     include ServicePattern
+    
+    delegate :awarded_at, to: :trainee
 
-    def initialize(trainee:)
-      @trainee = trainee
-    end
-
-    def call
-      create_contact_in_mailing_list_body = create_contact_in_mailing_list_response.body
-      contact_lookup_id = JSON.parse(create_contact_in_mailing_list_body)["result"]["contactLookupId"]
-      create_distribution_response(contact_lookup_id)
-    end
-
-  private
-
-    attr_reader :trainee
-
-    delegate :first_names, :last_name, :email, :awarded_at, :training_route, to: :trainee
-
-    def create_contact_in_mailing_list_response
-      @create_contact_in_mailing_list_response ||= QualtricsApi::Client::Request.post("/directories/#{directory_id}/mailinglists/#{mailing_list_id}/contacts", body: create_contact_in_mailing_list_body)
-    end
-
-    def create_contact_in_mailing_list_body
-      {
-        "email" => email,
-        "firstName" => first_names,
-        "lastName" => last_name,
-        embeddedData: {
-          "award_date" => awarded_at,
-          "training_route" => training_route,
-        },
-      }.to_json
-    end
-
-    def create_distribution_body(contact_lookup_id)
-      {
-        message: {
-          libraryId: library_id,
-          messageId: message_id,
-        },
-        recipients: {
-          mailingListId: mailing_list_id,
-          contactId: contact_lookup_id,
-        },
-        header: {
-          fromEmail: Settings.data_email,
-          fromName: "Teacher Training Support",
-          subject: "QTS Award Survey",
-          replyToEmail: Settings.data_email,
-        },
-        surveyLink: {
-          surveyId: survey_id,
-          expirationDate: expiration_date,
-          type: "Individual",
-        },
-        sendDate: send_date,
-        embeddedData: {
-          award_date: awarded_at,
-          training_route: training_route,
-        },
-      }.to_json
-    end
-
-    def create_distribution_response(contact_lookup_id)
-      @create_distribution_response ||= QualtricsApi::Client::Request.post("/distributions", body: create_distribution_body(contact_lookup_id))
-    end
-
-    def send_date
-      5.minutes.from_now.utc.iso8601
-    end
-
-    def expiration_date
-      5.days.from_now.utc.iso8601
-    end
+    private
 
     def survey_id
       Settings.qualtrics.award.survey_id
@@ -89,12 +22,22 @@ module Survey
       Settings.qualtrics.award.message_id
     end
 
-    def directory_id
-      Settings.qualtrics.directory_id
+    def subject
+      "QTS Award Survey"
     end
 
-    def library_id
-      Settings.qualtrics.library_id
+    def embedded_data_for_contact
+      {
+        "award_date" => awarded_at,
+        "training_route" => training_route,
+      }
+    end
+
+    def embedded_data_for_distribution
+      {
+        award_date: awarded_at,
+        training_route: training_route,
+      }
     end
   end
-end
+end 

@@ -47,7 +47,7 @@ module Api
 
       def survey_should_be_scheduled?
         # Don't send survey for Assessment Only routes or EYTS awards
-        trainee.training_route != :assessment_only &&
+        trainee.training_route != TRAINING_ROUTE_ENUMS[:assessment_only] &&
           trainee.training_route_manager.award_type != EYTS_AWARD_TYPE
       end
 
