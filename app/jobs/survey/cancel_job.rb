@@ -5,7 +5,7 @@ module Survey
     queue_as :default
 
     def perform(trainee:)
-      return unless FeatureService.enabled?(:qualtrics_survey)
+      nil unless FeatureService.enabled?(:qualtrics_survey)
 
       # TODO: Implement Qualtrics API call to cancel scheduled distributions
       # This will require:
@@ -14,4 +14,4 @@ module Survey
       # 3. Canceling those distributions
     end
   end
-end 
+end
