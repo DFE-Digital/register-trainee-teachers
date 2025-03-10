@@ -71,7 +71,7 @@ feature "Add a placement" do
     end
   end
 
-  scenario "Add two new placements to an existing trainee" do
+  scenario "Add two new placements to an existing trainee with the details of a new school" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_two_schools_exist
@@ -104,7 +104,7 @@ feature "Add a placement" do
     then_i_see_the_trainee_page
   end
 
-  scenario "Add two new placements for to an existing trainee" do
+  scenario "Add two new placements to an existing trainee with schools that exist" do
     given_i_am_authenticated
     and_a_trainee_exists_with_trn_received
     and_two_schools_exist
@@ -124,6 +124,73 @@ feature "Add a placement" do
     and_i_click_continue
     then_i_see_the_confirmation_page
     and_i_see_the_other_existing_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_update
+    then_i_see_a_flash_message
+    and_two_new_placements_are_created
+
+    when_i_revisit_the_placements_confirmation_page
+    and_i_click_update
+    and_no_new_placements_are_created
+
+    then_i_see_the_trainee_page
+  end
+
+  scenario "Add two new placements to an existing trainee to the same school that exists" do
+    given_i_am_authenticated
+    and_a_trainee_exists_with_trn_received
+
+    and_two_schools_exist
+    and_i_navigate_to_the_new_placement_form
+    then_i_see_the_new_placement_form
+
+    when_i_select_an_existing_school
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_new_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_add_a_placement
+    then_i_see_the_second_new_placement_form
+
+    when_i_select_an_existing_school
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_second_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_update
+    then_i_see_a_flash_message
+    and_two_new_placements_are_created
+
+    when_i_revisit_the_placements_confirmation_page
+    and_i_click_update
+    and_no_new_placements_are_created
+
+    then_i_see_the_trainee_page
+  end
+
+  scenario "Add two new placements to an existing trainee to the same new school" do
+    given_i_am_authenticated
+    and_a_trainee_exists_with_trn_received
+    and_i_navigate_to_the_new_placement_form
+    then_i_see_the_new_placement_form
+
+    when_i_enter_details_for_a_new_school
+    and_i_click_continue
+
+    then_i_see_the_confirmation_page
+    and_i_see_the_first_placement_ready_for_confirmation
+    and_no_placements_are_created
+
+    when_i_click_add_a_placement
+    then_i_see_the_second_new_placement_form
+
+    when_i_enter_details_for_a_new_school
+    and_i_click_continue
+    then_i_see_the_confirmation_page
+    and_i_see_the_second_new_placement_ready_for_confirmation
     and_no_placements_are_created
 
     when_i_click_update
@@ -208,15 +275,38 @@ private
 
   def and_i_see_the_new_placement_ready_for_confirmation
     expect(page).to have_content("First placement")
-    expect(page).to have_content(@school.name)
-    expect(page).to have_content(@school.postcode)
-    expect(page).to have_content("URN #{@school.urn}")
+
+    within("#school-or-setting-1") do
+      expect(page).to have_content(@school.name)
+      expect(page).to have_content(@school.postcode)
+      expect(page).to have_content("URN #{@school.urn}")
+    end
+  end
+
+  def and_i_see_the_second_placement_ready_for_confirmation
+    expect(page).to have_content("Second placement")
+
+    within("#school-or-setting-2") do
+      expect(page).to have_content(@school.name)
+      expect(page).to have_content(@school.postcode)
+      expect(page).to have_content("URN #{@school.urn}")
+    end
   end
 
   def when_i_enter_details_for_a_new_school
     fill_in("School or setting name", with: "St. Alice's Primary School", visible: false)
     fill_in("School unique reference number (URN) - if it has one", with: "654321", visible: false)
     fill_in("Postcode", with: "OX1 1AA", visible: false)
+  end
+
+  def and_i_see_the_first_placement_ready_for_confirmation
+    expect(page).to have_content("First placement")
+
+    within("#school-or-setting-1") do
+      expect(page).to have_content("St. Alice's Primary School")
+      expect(page).to have_content("OX1 1AA")
+      expect(page).to have_content("URN 654321")
+    end
   end
 
   def and_i_see_the_second_new_placement_ready_for_confirmation
