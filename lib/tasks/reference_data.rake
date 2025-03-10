@@ -20,7 +20,7 @@ class HesaCodeChecker
       hesa_code = HesaCode.new(row["Code"], row["Label"])
       register_value = yield(hesa_code)
       @missing << hesa_code if register_value.nil?
-      puts "| #{hesa_code.code} | #{hesa_code.label} | #{register_value ? register_value : "NOT FOUND"} |"
+      puts("| #{hesa_code.code} | #{hesa_code.label} | #{register_value || 'NOT FOUND'} |")
     end
 
     if @missing.any?
@@ -33,6 +33,7 @@ class HesaCodeChecker
         puts("| #{hesa_code.code} | #{hesa_code.label} |")
       end
     else
+      puts("\n")
       puts("*All HESA codes are mapped!* 🎉")
     end
     puts("\n\n")
