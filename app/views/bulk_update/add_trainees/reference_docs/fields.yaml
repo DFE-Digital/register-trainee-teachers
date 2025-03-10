@@ -455,7 +455,7 @@
   hesa_alignment: DEGCLSS
   description: This field is used to indicate the qualification class of the student’s
     previous degree.
-  format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
+  format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
   example: '"01" for example is First class honours'
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L38
@@ -472,7 +472,7 @@
   hesa_alignment: DEGEST
   description: This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
-  format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
+  format: "[HESA codes for degree establishment if a UK provider](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"1101" for example is Hull College'
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L36
