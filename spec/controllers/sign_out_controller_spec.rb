@@ -48,7 +48,7 @@ private
     uri = URI("#{Settings.dfe_sign_in.issuer}/session/end")
     uri.query = {
       id_token_hint: "id_token",
-      post_logout_redirect_uri: "#{Settings.base_url}/auth/dfe/sign-out",
+      post_logout_redirect_uri: "#{request.base_url}/auth/dfe/sign-out",
     }.to_query
     uri.to_s
   end
