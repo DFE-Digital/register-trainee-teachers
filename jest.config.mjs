@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   moduleDirectories: ['node_modules', 'app/javascript'],
   moduleFileExtensions: ['js'],
   automock: false,
