@@ -89,6 +89,6 @@ private
 
   def then_i_should_see_the_outside_period_content
     expect(reports_page).to have_text("No reports are currently available.")
-    expect(reports_page).to have_text("When they’re available, you’ll be able to download reports showing:")
+    expect(reports_page).not_to have_text("When they’re available, you’ll be able to download reports showing:")
   end
 end
