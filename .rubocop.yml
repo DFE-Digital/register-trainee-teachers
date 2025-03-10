@@ -1,15 +1,16 @@
 require:
-  - rubocop-capybara
-  - rubocop-factory_bot
-  - rubocop-rspec_rails
   - ./lib/rubocop/cop/govuk/govuk_button_to.rb
   - ./lib/rubocop/cop/govuk/govuk_link_to.rb
   - ./lib/rubocop/cop/govuk/govuk_submit.rb
   - ./lib/rubocop/cop/register/register_form_with.rb
 
 plugins:
+  - rubocop-capybara
+
+  - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 inherit_from:
   - ./config/rubocop/layout.yml
