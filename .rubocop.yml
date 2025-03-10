@@ -3,9 +3,10 @@ require:
   - ./lib/rubocop/cop/govuk/govuk_link_to.rb
   - ./lib/rubocop/cop/govuk/govuk_submit.rb
   - ./lib/rubocop/cop/register/register_form_with.rb
-  - rubocop-capybara
 
 plugins:
+  - rubocop-capybara
+
   - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec
