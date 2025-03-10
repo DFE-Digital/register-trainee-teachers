@@ -7,6 +7,7 @@ feature "Viewing duplicate HESA trainees" do
 
   scenario "menu item is hidden when feature flag is off", feature_duplicate_checking: false do
     given_i_am_authenticated(user:)
+    when_i_visit users_path
     then_i_should_not_see_the_duplicate_hesa_trainees_link
   end
 
@@ -37,12 +38,11 @@ feature "Viewing duplicate HESA trainees" do
   end
 
   def when_i_visit_the_duplicate_hesa_trainees_index_page
-    visit users_path
+    when_i_visit users_path
     click_on "Duplicate HESA trainees"
   end
 
   def then_i_should_not_see_the_duplicate_hesa_trainees_link
-    visit users_path
     expect(page).not_to have_link("Duplicate HESA trainees")
   end
 
@@ -59,4 +59,6 @@ feature "Viewing duplicate HESA trainees" do
     expect(page).to have_content(@trainee_one.full_name)
     expect(page).to have_current_path(trainee_review_drafts_path(@trainee_one))
   end
+
+  alias_method :when_i_visit, :visit
 end
