@@ -1855,26 +1855,10 @@ Withdraw a trainee.
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
-| **trigger** |query| string | true | The party responsible for initiating the withdrawal. Valid values are `trainee` <br>, `provider |
-| **reasons** | query | array of strings | true | The reason(s) for the withdrawal. Valid values with trigger `trainee` are `unacceptable_behaviour`, <br> `did_not_make_progress`, <br> `lack_of_progress_during_placements`, <br> `trainee_workload_issues`, <br> `not_meeting_qts_standards`, <br> `change_in_personal_or_health_circumstances`, <br> `does_not_want_to_become_a_teacher`, <br> `never_intended_to_obtain_qts`, <br> `moved_to_different_itt_course`, <br> `trainee_chose_to_withdraw_another_reason`, <br>. Valid values with trigger `provider` are `record_added_in_error`, <br> `mandatory_reasons`, <br> `stopped_responding_to_messages`, <br> `unacceptable_behaviour`, <br> `lack_of_progress_during_placements`, <br> `did_not_make_progress`, <br> `not_meeting_qts_standards`, <br> `had_to_withdraw_trainee_another_reason` |
-| **another_reason** | query | string | conditional | The reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew <br> Required if `reasons` include `trainee_chose_to_withdraw_another_reason` or `had_to_withdraw_trainee_another_reason` |
-| **future_interest** | query | string | true | The trainee's interest in becoming a teacher in the future. Valid values are `yes`, <br> `no`, <br> `unknown`|
-| **withdraw_date** | query | string | true | The date and time of the withdrawal in ISO 8601 format |
 
 #### Request body
 
 Withdraw details
-
-<dl class="govuk-summary-list">
-  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>data</code></dt>
-    <dd class="govuk-summary-list__value">
-      <p class="govuk-body">
-        <a class="govuk-link" href="#withdraw-object">Withdraw</a> object
-      </p>
-    </dd>
-  </div>
-</dl>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</span></summary>
