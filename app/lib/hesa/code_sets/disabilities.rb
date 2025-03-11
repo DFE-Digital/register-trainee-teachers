@@ -33,6 +33,7 @@ module Hesa
         "Other" => Diversities::OTHER,
         "Physical disability or mobility issue" => Diversities::PHYSICAL_DISABILITY,
         "Social or communication impairment" => Diversities::SOCIAL_IMPAIRMENT,
+        "Development condition" => Diversities::DEVELOPMENT_CONDITION,
       }.freeze
     end
   end

@@ -14,6 +14,7 @@ module CodeSets
       ::Diversities::OTHER => { entity_id: "ef98eae7-4ba5-e711-80da-005056ac45bb" },
       ::Diversities::PHYSICAL_DISABILITY => { entity_id: "e398eae7-4ba5-e711-80da-005056ac45bb" },
       ::Diversities::SOCIAL_IMPAIRMENT => { entity_id: "dd98eae7-4ba5-e711-80da-005056ac45bb" },
+      ::Diversities::DEVELOPMENT_CONDITION => { entity_id: "82e2ad24-5568-4e0b-a362-41666a668fb9" },
     }.freeze
   end
 end
