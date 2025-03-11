@@ -2087,7 +2087,7 @@ en:
           attributes:
             reasons:
               inclusion: Choose one or more reasons why the trainee withdrew from the course
-              invalid: Reasons selected are not valid for this trigger
+              invalid: Reason(s) selected are not valid for this trigger
             withdraw_date:
               blank: Choose a withdrawal date
               invalid: Choose a valid withdrawal date
