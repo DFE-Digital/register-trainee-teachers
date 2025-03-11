@@ -1867,7 +1867,7 @@ Withdraw a trainee.
 
 #### Request
 
-`POST /api/v0.1/trainees/{trainee_id}/withdraw`
+`POST /api/v1.0-pre/trainees/{trainee_id}/withdraw`
 
 #### Parameters
 
