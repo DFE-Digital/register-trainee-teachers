@@ -1879,6 +1879,78 @@ Withdraw a trainee.
 
 Withdraw details
 
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>trigger</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, required
+    </p>
+    <p class="govuk-body">
+      The party who initiated the withdrawal. Must be either <code>provider</code> or <code>trainee</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>provider</code>
+    </p>
+  </dd>
+</div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>future_interest</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, required
+    </p>
+    <p class="govuk-body">
+      Whether the trainee would be intereted in resuming training in the future. Must be either <code>yes</code>, <code>no</code> or <code>unknown</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>no</code>
+    </p>
+  </dd>
+  </div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>withdraw_date</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, required
+    </p>
+    <p class="govuk-body">
+      The date that the trainee is withdrawing from the course.
+    </p>
+    <p class="govuk-body">
+      Example: <code>2025-02-03</code>
+    </p>
+  </dd>
+  </div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>reasons</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      array, required
+    </p>
+    <p class="govuk-body">
+      The reason(s) for the withdrawal. Valid values with trigger <code>trainee</code> are <code>unacceptable_behaviour</code>, <code>did_not_make_progress</code>, <code>lack_of_progress_during_placements</code>, <code>trainee_workload_issues</code>, <code>not_meeting_qts_standards</code>, <code>change_in_personal_or_health_circumstances</code>, <code>does_not_want_to_become_a_teacher</code>, <code>never_intended_to_obtain_qts</code>, <code>moved_to_different_itt_course</code>, <code>trainee_chose_to_withdraw_another_reason</code>.
+      Valid values with trigger <code>provider</code> are <code>record_added_in_error</code>, <code>mandatory_reasons</code>, <code>stopped_responding_to_messages</code>, <code>unacceptable_behaviour</code>, <code>lack_of_progress_during_placements</code>, <code>did_not_make_progress</code>, <code>not_meeting_qts_standards</code>, <code>had_to_withdraw_trainee_another_reason</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>[`unacceptable_behaviour`]</code>
+    </p>
+  </dd>
+</div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>another_reason</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string, conditional
+    </p>
+    <p class="govuk-body">
+       The reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew. Required if <code>reasons</code> include <code>trainee_chose_to_withdraw_another_reason</code> or <code>had_to_withdraw_trainee_another_reason</code>.
+    </p>
+    <p class="govuk-body">
+      Example: <code>Bespoke reason</code>
+    </p>
+  </dd>
+</div>
+
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</span></summary>
   <div class="govuk-details__text">
