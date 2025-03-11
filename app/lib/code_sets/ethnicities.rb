@@ -22,6 +22,7 @@ module CodeSets
       Diversities::NOT_PROVIDED => { ethnic_minority: false, entity_id: "da0bb892-2b9d-e711-80d9-005056ac45bb" },
       Diversities::PAKISTANI => { ethnic_minority: true, entity_id: "c60bb892-2b9d-e711-80d9-005056ac45bb" },
       Diversities::TRAVELLER_OR_GYPSY => { ethnic_minority: false, entity_id: "ba0bb892-2b9d-e711-80d9-005056ac45bb" },
+      Diversities::ROMA => { ethnic_minority: false, entity_id: "d592490b-0682-49b6-937b-fa8d987e7a42" },
       Diversities::WHITE_BRITISH => { ethnic_minority: false, entity_id: "b20bb892-2b9d-e711-80d9-005056ac45bb" },
     }.freeze
 
