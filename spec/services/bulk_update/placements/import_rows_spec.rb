@@ -15,9 +15,10 @@ module BulkUpdate
         context "when there is a valid trainee for each row" do
           let(:trainee_one) { create(:trainee, :trn_received, provider:) }
           let(:trainee_two) { create(:trainee, :trn_received, provider:) }
+          let(:trainee_three) { create(:trainee, :trn_received, :with_manual_placements, number_of_placements: 1, provider: provider) }
 
           context "with urns of different schools" do
-            let(:trainee_one_placement_row_one) do
+            let!(:trainee_one_placement_row_one) do
               create(
                 :bulk_update_placement_row,
                 bulk_update_placement: bulk_update_placement,
@@ -27,7 +28,7 @@ module BulkUpdate
               )
             end
 
-            let(:trainee_two_placement_row_two) do
+            let!(:trainee_two_placement_row_two) do
               create(
                 :bulk_update_placement_row,
                 bulk_update_placement: bulk_update_placement,
@@ -37,9 +38,14 @@ module BulkUpdate
               )
             end
 
-            before do
-              trainee_one_placement_row_one
-              trainee_two_placement_row_two
+            let!(:trainee_three_placement_row_three) do
+              create(
+                :bulk_update_placement_row,
+                bulk_update_placement: bulk_update_placement,
+                trn: trainee_three.trn,
+                school: school_two,
+                csv_row_number: 3,
+              )
             end
 
             it "imports rows without errors" do
@@ -50,12 +56,15 @@ module BulkUpdate
 
               expect(trainee_two.placements.count).to eq(1)
               expect(trainee_two.placements.where(school: school_two).count).to eq(1)
+
+              expect(trainee_three.placements.count).to eq(2)
+              expect(trainee_three.placements.where(school: school_two).count).to eq(1)
             end
 
             context "when attempting to import the same placements" do
               let(:bulk_update_placement_two) { create(:bulk_update_placement, provider:) }
 
-              let(:trainee_one_placement_row_three) do
+              let!(:trainee_one_placement_row_four) do
                 create(
                   :bulk_update_placement_row,
                   bulk_update_placement: bulk_update_placement_two,
@@ -65,7 +74,7 @@ module BulkUpdate
                 )
               end
 
-              let(:trainee_two_placement_row_four) do
+              let!(:trainee_two_placement_row_five) do
                 create(
                   :bulk_update_placement_row,
                   bulk_update_placement: bulk_update_placement_two,
@@ -75,12 +84,14 @@ module BulkUpdate
                 )
               end
 
-              before do
-                trainee_one_placement_row_one
-                trainee_two_placement_row_two
-
-                trainee_one_placement_row_three
-                trainee_two_placement_row_four
+              let!(:trainee_three_placement_row_six) do
+                create(
+                  :bulk_update_placement_row,
+                  bulk_update_placement: bulk_update_placement_two,
+                  trn: trainee_three.trn,
+                  school: school_two,
+                  csv_row_number: 3,
+                )
               end
 
               it "imports rows without errors and replaces any existing placements" do
@@ -90,6 +101,8 @@ module BulkUpdate
                   .and change { trainee_one.placements.where(school: school_one).count }.by(1)
                   .and change { trainee_two.placements.count }.from(0).to(1)
                   .and change { trainee_two.placements.where(school: school_two).count }.by(1)
+                  .and change { trainee_three.placements.count }.from(1).to(2)
+                  .and change { trainee_three.placements.where(school: school_two).count }.by(1)
 
                 expect {
                   described_class.call(bulk_update_placement_two)
@@ -97,12 +110,14 @@ module BulkUpdate
                   .and not_change { trainee_one.placements.where(school: school_one).count }
                   .and not_change { trainee_two.placements.count }
                   .and not_change { trainee_two.placements.where(school: school_two).count }
+                  .and not_change { trainee_three.placements.count }
+                  .and not_change { trainee_three.placements.where(school: school_two).count }
               end
             end
           end
 
           context "with urns of the same school" do
-            let(:trainee_one_placement_row_one) do
+            let!(:trainee_one_placement_row_one) do
               create(
                 :bulk_update_placement_row,
                 bulk_update_placement: bulk_update_placement,
@@ -112,7 +127,7 @@ module BulkUpdate
               )
             end
 
-            let(:trainee_two_placement_row_two) do
+            let!(:trainee_two_placement_row_two) do
               create(
                 :bulk_update_placement_row,
                 bulk_update_placement: bulk_update_placement,
@@ -122,7 +137,7 @@ module BulkUpdate
               )
             end
 
-            let(:trainee_two_placement_row_three) do
+            let!(:trainee_two_placement_row_three) do
               create(
                 :bulk_update_placement_row,
                 bulk_update_placement: bulk_update_placement,
@@ -130,12 +145,6 @@ module BulkUpdate
                 school: school_two,
                 csv_row_number: 3,
               )
-            end
-
-            before do
-              trainee_one_placement_row_one
-              trainee_two_placement_row_two
-              trainee_two_placement_row_three
             end
 
             it "imports rows without errors" do
@@ -150,7 +159,7 @@ module BulkUpdate
             context "when attempting to import the same placements" do
               let(:bulk_update_placement_two) { create(:bulk_update_placement, provider:) }
 
-              let(:trainee_one_placement_row_three) do
+              let!(:trainee_one_placement_row_three) do
                 create(
                   :bulk_update_placement_row,
                   bulk_update_placement: bulk_update_placement_two,
@@ -160,7 +169,7 @@ module BulkUpdate
                 )
               end
 
-              let(:trainee_two_placement_row_four) do
+              let!(:trainee_two_placement_row_four) do
                 create(
                   :bulk_update_placement_row,
                   bulk_update_placement: bulk_update_placement_two,
@@ -170,7 +179,7 @@ module BulkUpdate
                 )
               end
 
-              let(:trainee_two_placement_row_five) do
+              let!(:trainee_two_placement_row_five) do
                 create(
                   :bulk_update_placement_row,
                   bulk_update_placement: bulk_update_placement_two,
@@ -178,14 +187,6 @@ module BulkUpdate
                   school: school_two,
                   csv_row_number: 3,
                 )
-              end
-
-              before do
-                trainee_one_placement_row_one
-                trainee_two_placement_row_two
-                trainee_one_placement_row_three
-                trainee_two_placement_row_four
-                trainee_two_placement_row_five
               end
 
               it "imports rows without errors and replaces any existing placements" do

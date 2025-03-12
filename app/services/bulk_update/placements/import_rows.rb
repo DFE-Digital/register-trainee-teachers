@@ -56,7 +56,7 @@ module BulkUpdate
       end
 
       def clear_placements!(trainee)
-        trainee.placements.destroy_all
+        trainee.placements.with_school.destroy_all
       end
 
       def import_rows(rows)

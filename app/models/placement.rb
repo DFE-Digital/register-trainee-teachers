@@ -35,6 +35,7 @@ class Placement < ApplicationRecord
   audited associated_with: :trainee
 
   scope :with_urn, -> { where.not(urn: nil) }
+  scope :with_school, -> { joins(:school) }
 
   def name
     school&.name || super
