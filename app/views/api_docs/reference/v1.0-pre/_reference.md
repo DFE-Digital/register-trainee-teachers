@@ -3193,7 +3193,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>nationality</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 2 characters), required
+        string (limited to 2 characters)
       </p>
       <p class="govuk-body">
         The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/nation">HESA nationality field</a>
