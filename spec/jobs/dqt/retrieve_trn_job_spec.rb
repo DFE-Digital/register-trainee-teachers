@@ -48,9 +48,9 @@ module Dqt
       end
     end
 
-    context "when trainee already has a TRN and is in trn_received state" do
+    context "when trainee already has a TRN" do
       let(:existing_trn) { "12345678" }
-      let(:trainee) { create(:trainee, :trn_received, trn: existing_trn) }
+      let(:trainee) { create(:trainee, trn: existing_trn) }
 
       context "when trn_request is not in received state" do
         let(:trn_request) { create(:dqt_trn_request, trainee: trainee, state: :requested) }

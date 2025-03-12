@@ -15,6 +15,12 @@ module Trs
       @timeout_after = timeout_after
       @trainee = trn_request.trainee
 
+      # Return early if the trainee already has a TRN
+      if trainee.trn.present?
+        trn_request.received! unless trn_request.received?
+        return
+      end
+
       if @timeout_after.nil?
         schedule_next_attempt
         return
