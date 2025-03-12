@@ -39,7 +39,7 @@ module Diversities
     end
 
     describe "#save!" do
-      let(:ethnic_background) { (CodeSets::Ethnicities::MAPPING.keys - [trainee.ethnic_background]).sample }
+      let(:ethnic_background) { (Hesa::CodeSets::Ethnicities::MAPPING.values - [trainee.ethnic_background]).sample }
 
       before do
         allow(form_store).to receive(:get).and_return({ "ethnic_background" => ethnic_background })

@@ -333,7 +333,7 @@ FactoryBot.define do
     end
 
     trait :with_ethnic_background do
-      ethnic_background { CodeSets::Ethnicities::MAPPING.keys.sample }
+      ethnic_background { Hesa::CodeSets::Ethnicities::MAPPING.values.sample }
     end
 
     trait :disabled do
