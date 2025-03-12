@@ -70,7 +70,7 @@ describe Api::V01::WithdrawalAttributes do
             it "is invalid" do
               subject.validate
               expect(subject.errors[:reasons]).to contain_exactly(
-                "Reasons selected are not valid for this trigger",
+                "Reason(s) selected are not valid for this trigger",
               )
             end
           end
@@ -100,7 +100,7 @@ describe Api::V01::WithdrawalAttributes do
             it "is invalid" do
               subject.validate
               expect(subject.errors[:reasons]).to contain_exactly(
-                "Reasons selected are not valid for this trigger",
+                "Reason(s) selected are not valid for this trigger",
               )
             end
           end

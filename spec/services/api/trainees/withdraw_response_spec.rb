@@ -56,7 +56,7 @@ describe Api::Trainees::WithdrawResponse do
         expect(subject[:status]).to be(:unprocessable_entity)
         expect(subject[:json][:errors]).to contain_exactly(
           { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
-          { error: "UnprocessableEntity", message: "Reasons Reasons selected are not valid for this trigger" },
+          { error: "UnprocessableEntity", message: "Reasons Reason(s) selected are not valid for this trigger" },
           { error: "UnprocessableEntity", message: "Future interest is not included in the list" },
           { error: "UnprocessableEntity", message: "Trigger is not included in the list" },
         )

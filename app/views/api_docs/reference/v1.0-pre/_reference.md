@@ -1963,7 +1963,8 @@ Withdraw details
         "reasons": [
           "unacceptable_behavior",
           "had_to_withdraw_trainee_another_reason"
-        ]
+        ],
+        "another_reason": "Bespoke reason"
       }
     }
     </pre>
