@@ -1881,7 +1881,7 @@ Withdraw details
       string, required
     </p>
     <p class="govuk-body">
-      Whether the trainee would be intereted in resuming training in the future. Must be either <code>yes</code>, <code>no</code> or <code>unknown</code>.
+      Whether the trainee would be interested in resuming training in the future. Must be either <code>yes</code>, <code>no</code> or <code>unknown</code>.
     </p>
     <p class="govuk-body">
       Example: <code>no</code>
