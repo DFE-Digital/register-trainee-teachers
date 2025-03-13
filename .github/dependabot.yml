@@ -5,30 +5,26 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: simplecov
-    versions:
-    - "> 0.19.0, < 0.20"
-  - dependency-name: govuk_design_system_formbuilder
-    versions:
-    - 2.4.0
-  - dependency-name: mimemagic
-    versions:
-    - 0.3.10
-    - 0.3.9
-    - 0.4.3
-  - dependency-name: govuk-components
-    versions:
-    - 1.1.5
+  groups:
+    govuk-dependencies:
+      patterns:
+        - govuk-components
+        - govuk_design_system_formbuilder
+        - dfe-analytics
+      labels:
+        - deploy
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  ignore:
-  - dependency-name: core-js
-    versions:
-    - 3.10.2
+  groups:
+    govuk-dependencies:
+      patterns:
+        - govuk-frontend
+        - "@ministryofjustice/frontend"
+      labels:
+        - deploy
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
