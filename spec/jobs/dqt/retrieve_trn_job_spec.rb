@@ -20,6 +20,26 @@ module Dqt
       allow(SlackNotifierService).to receive(:call)
     end
 
+    context "when trainee is discarded" do
+      let(:trainee) { create(:trainee, :submitted_for_trn, discarded_at: Time.zone.now) }
+
+      it "destroys the trn_request" do
+        expect {
+          described_class.perform_now(trn_request, timeout_date)
+        }.to change { Dqt::TrnRequest.count }.by(-1)
+      end
+
+      it "doesn't call RetrieveTrn" do
+        expect(RetrieveTrn).not_to receive(:call)
+        described_class.perform_now(trn_request, timeout_date)
+      end
+
+      it "doesn't queue another job" do
+        described_class.perform_now(trn_request, timeout_date)
+        expect(RetrieveTrnJob).not_to have_been_enqueued
+      end
+    end
+
     context "when timeout_after is nil" do
       context "during October" do
         let(:timeout_date) { trainee.submitted_for_trn_at + (configured_poll_timeout_days + 6).days }
