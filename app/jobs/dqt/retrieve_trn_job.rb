@@ -15,6 +15,12 @@ module Dqt
       @timeout_after = timeout_after
       @trainee = trn_request.trainee
 
+      # Return early if the trainee already has a TRN
+      if trainee.trn.present?
+        trn_request.received! unless trn_request.received?
+        return
+      end
+
       if @timeout_after.nil?
         self.class.perform_later(trn_request, trainee.submitted_for_trn_at + timeout)
         return

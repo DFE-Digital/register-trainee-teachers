@@ -74,16 +74,7 @@
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
-  format: |-
-    10 Female
-
-    11 Male
-
-    12 Other
-
-    96 Information refused
-
-    99 Not available
+  format: "[HESA sex codes](https://www.hesa.ac.uk/collection/c24053/e/sexid)"
   example: |-
     "10"
 
@@ -194,10 +185,7 @@
   description: This field is a three characters field completed for students on courses
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
-  format: |-
-    201 Professional status only
-
-    202 Both professional status and academic award
+  format: "[HESA ITT aim codes](https://www.hesa.ac.uk/collection/c24053/e/ittaim)"
   example: '"201" for example is the code to use if it is Professional status only'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L26
@@ -256,16 +244,7 @@
   hesa_alignment: MODE
   description: This field indicates the method by which a student is being taught
     their course.
-  format: |-
-    01 Full-time according to funding council definitions
-
-    02 Other full-time
-
-    31 Part-time
-
-    63 Dormant - previously full-time
-
-    64 Dormant - previously part-time
+  format: "[HESA study mode codes](https://www.hesa.ac.uk/collection/c24053/e/mode)"
   example: '"01"'
   validation: Conditional - mandatory when the training route is not `assessment_only` or `early_years_assessment_only`
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
@@ -303,14 +282,7 @@
   description: This field indicates the year number of the course that the student
     is currently studying. This could be different from the year of student if the
     student has changed course or re-taken a year.
-  format: |-
-    0 Foundation year
-
-    1 First year
-
-    2 Second year
-
-    3 Third year
+  format: "[HESA course year codes](https://www.hesa.ac.uk/collection/c24053/e/yearprg)"
   example: '"1" as an example of using the code for First year.'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L28
@@ -385,10 +357,7 @@
   hesa_alignment: FUNDCODE
   description: This field indicates whether the student is counted as 'fundable',
     i.e. 'eligible for funding' for the course by the appropriate funding council/body.
-  format: |-
-    2 Not fundable by funding council/body
-
-    7 Eligible for funding from the DfE
+  format: "[HESA fund code codes](https://www.hesa.ac.uk/collection/c24053/e/fundcode)"
   example: '"2"'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L30
@@ -399,18 +368,7 @@
     levels will vary according to the level of study of the student, their degree
     classification if applicable and the subject specialism in which they wish to
     train to teach.
-  format: |-
-    4 Scholarship
-
-    6 No bursary, scholarship or grant awarded
-
-    B Undergraduate bursary
-
-    C Veteran Teaching undergraduate bursary
-
-    D Postgraduate bursary
-
-    E Grant
+  format: "[HESA funding method codes](https://www.hesa.ac.uk/collection/c24053/e/burslev)"
   example: '"E"'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L31
@@ -420,20 +378,7 @@
   description: This field identifies students who are part of a specific scheme that
     is to be monitored independently. Valid entries will change from year to year
     to reflect current schemes.
-  format: |-
-    001 Abridged ITT course
-
-    009 Maths and Physics Chairs Programme
-
-    011 Primary mathematics specialist
-
-    019 Additional ITT place for PE with a priority subject
-
-    025 Transition to Teach
-
-    026 Now Teach
-
-    036 International relocation payment
+  format: "[HESA training initiative codes](https://www.hesa.ac.uk/collection/c24053/e/initiatives)"
   example: |-
     "026" is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
 
@@ -510,7 +455,7 @@
   hesa_alignment: DEGCLSS
   description: This field is used to indicate the qualification class of the student’s
     previous degree.
-  format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degest)"
+  format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
   example: '"01" for example is First class honours'
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L38
@@ -527,7 +472,7 @@
   hesa_alignment: DEGEST
   description: This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
-  format: "[HESA codes for degree establishment if a UK provider](https://educationgovuk.sharepoint.com/:w:/r/sites/TeacherServices/Shared%20Documents/Becoming%20a%20Teacher/TWD-REGISTER/Send%20trainee%20data%20direct%20(BAT%20without%20HESA)/Content%20design/Previous%20degree%20establishment%20%E2%80%93%20HESA%20reference%20code.docx?d=wf81961e5a671455ea6d325f87721d814&csf=1&web=1&e=1fjACa)"
+  format: "[HESA codes for degree establishment if a UK provider](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"1101" for example is Hull College'
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L36

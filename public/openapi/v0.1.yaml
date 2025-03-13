@@ -341,6 +341,12 @@ paths:
                           type: string
                         application_id:
                           nullable: true
+                        withdrawal_trigger:
+                          nullable: true
+                        withdrawal_future_interest:
+                          nullable: true
+                        withdrawal_another_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -363,7 +369,6 @@ paths:
                       - trn
                       - submitted_for_trn_at
                       - withdraw_date
-                      - withdraw_reasons_details
                       - defer_date
                       - recommended_for_award_at
                       - trainee_start_date
@@ -392,7 +397,6 @@ paths:
                       - record_source
                       - iqts_country
                       - hesa_editable
-                      - withdraw_reasons_dfe_details
                       - slug_sent_to_dqt_at
                       - placement_detail
                       - provider_trainee_id
@@ -458,7 +462,6 @@ paths:
                   trn:
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-09-08'
@@ -487,7 +490,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-334
@@ -506,6 +508,9 @@ paths:
                   bursary_level:
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree:
@@ -547,7 +552,6 @@ paths:
                   trn:
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-29'
@@ -576,7 +580,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-332
@@ -595,6 +598,9 @@ paths:
                   bursary_level:
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '061'
@@ -636,7 +642,6 @@ paths:
                   trn: '6668504'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-17'
@@ -665,7 +670,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-329
@@ -694,6 +698,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '306'
@@ -735,7 +742,6 @@ paths:
                   trn: '3746708'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-09-01'
@@ -764,7 +770,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-326
@@ -793,6 +798,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '208'
@@ -834,7 +842,6 @@ paths:
                   trn: '6910814'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-09-04'
@@ -863,7 +870,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-323
@@ -892,6 +898,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '077'
@@ -933,7 +942,6 @@ paths:
                   trn: '9407527'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-09-15'
@@ -962,7 +970,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-320
@@ -991,6 +998,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '085'
@@ -1032,7 +1042,6 @@ paths:
                   trn: '3243994'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-15'
@@ -1061,7 +1070,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-317
@@ -1090,6 +1098,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '202'
@@ -1131,7 +1142,6 @@ paths:
                   trn: '2463446'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-10'
@@ -1160,7 +1170,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-314
@@ -1189,6 +1198,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '003'
@@ -1230,7 +1242,6 @@ paths:
                   trn: '7180039'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-29'
@@ -1259,7 +1270,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-311
@@ -1288,6 +1298,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '056'
@@ -1329,7 +1342,6 @@ paths:
                   trn: '7909223'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-19'
@@ -1358,7 +1370,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-308
@@ -1387,6 +1398,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '082'
@@ -1428,7 +1442,6 @@ paths:
                   trn: '3669815'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-29'
@@ -1457,7 +1470,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-305
@@ -1486,6 +1498,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '094'
@@ -1527,7 +1542,6 @@ paths:
                   trn: '6939975'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-04'
@@ -1556,7 +1570,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-302
@@ -1585,6 +1598,9 @@ paths:
                   hesa_disabilities: {}
                   nationality: VA
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '210'
@@ -1942,6 +1958,12 @@ paths:
                       lead_partner_urn:
                         nullable: true
                         type: string
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                     required:
                     - first_names
                     - last_name
@@ -1964,7 +1986,6 @@ paths:
                     - trn
                     - submitted_for_trn_at
                     - withdraw_date
-                    - withdraw_reasons_details
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -1992,7 +2013,6 @@ paths:
                     - record_source
                     - iqts_country
                     - hesa_editable
-                    - withdraw_reasons_dfe_details
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
@@ -2146,7 +2166,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: hnopoQddbTxZmUro9KwiJ95s
+                    placement_id: u72FAvcKv6wTA9MMmjKDS2p9
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2162,15 +2182,18 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: RXx7vWGYtGPepdAV1Y5HtsHv
+                    degree_id: MvFZBMFJpTHY6uNuETuh11nM
                   state: submitted_for_trn
-                  trainee_id: eas6LGKxsGhf648dUhcAA4wX
+                  trainee_id: AuPz5zmwJeaFteGQkdGDgX4X
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: true
                   lead_partner_ukprn:
                   lead_partner_urn:
                   application_id:
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -2406,6 +2429,12 @@ paths:
                           nullable: true
                         lead_partner_urn:
                           nullable: true
+                        withdrawal_trigger:
+                          nullable: true
+                        withdrawal_future_interest:
+                          nullable: true
+                        withdrawal_another_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2428,7 +2457,6 @@ paths:
                       - trn
                       - submitted_for_trn_at
                       - withdraw_date
-                      - withdraw_reasons_details
                       - defer_date
                       - recommended_for_award_at
                       - trainee_start_date
@@ -2456,7 +2484,6 @@ paths:
                       - record_source
                       - iqts_country
                       - hesa_editable
-                      - withdraw_reasons_dfe_details
                       - slug_sent_to_dqt_at
                       - placement_detail
                       - provider_trainee_id
@@ -2505,7 +2532,6 @@ paths:
                   trn:
                   submitted_for_trn_at:
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-12-08'
@@ -2534,7 +2560,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 25/26-3
@@ -2553,6 +2578,9 @@ paths:
                   bursary_level:
                   nationality:
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '301'
@@ -2868,8 +2896,6 @@ paths:
                     nullable: true
                   withdraw_date:
                     nullable: true
-                  withdraw_reasons_details:
-                    nullable: true
                   defer_date:
                     nullable: true
                   recommended_for_award_at:
@@ -2926,8 +2952,6 @@ paths:
                     nullable: true
                   hesa_editable:
                     type: boolean
-                  withdraw_reasons_dfe_details:
-                    nullable: true
                   slug_sent_to_dqt_at:
                     nullable: true
                   placement_detail:
@@ -2986,6 +3010,12 @@ paths:
                   withdraw_reasons:
                     type: array
                     items: {}
+                  withdrawal_trigger:
+                    nullable: true
+                  withdrawal_future_interest:
+                    nullable: true
+                  withdrawal_another_reason:
+                    nullable: true
                   placements:
                     type: array
                     items: {}
@@ -3020,7 +3050,6 @@ paths:
                 - trn
                 - submitted_for_trn_at
                 - withdraw_date
-                - withdraw_reasons_details
                 - defer_date
                 - recommended_for_award_at
                 - trainee_start_date
@@ -3049,7 +3078,6 @@ paths:
                 - record_source
                 - iqts_country
                 - hesa_editable
-                - withdraw_reasons_dfe_details
                 - slug_sent_to_dqt_at
                 - placement_detail
                 - provider_trainee_id
@@ -3078,6 +3106,9 @@ paths:
                 - hesa_disabilities
                 - nationality
                 - withdraw_reasons
+                - withdrawal_trigger
+                - withdrawal_future_interest
+                - withdrawal_another_reason
                 - placements
                 - degrees
                 - state
@@ -3105,7 +3136,6 @@ paths:
                 trn:
                 submitted_for_trn_at:
                 withdraw_date:
-                withdraw_reasons_details:
                 defer_date:
                 recommended_for_award_at:
                 trainee_start_date:
@@ -3134,7 +3164,6 @@ paths:
                 record_source: manual
                 iqts_country:
                 hesa_editable: false
-                withdraw_reasons_dfe_details:
                 slug_sent_to_dqt_at:
                 placement_detail:
                 provider_trainee_id: 24/25-11
@@ -3163,6 +3192,9 @@ paths:
                 hesa_disabilities: {}
                 nationality:
                 withdraw_reasons: []
+                withdrawal_trigger:
+                withdrawal_future_interest:
+                withdrawal_another_reason:
                 placements: []
                 degrees: []
                 state: draft
@@ -3209,7 +3241,7 @@ paths:
         required: true
         schema:
           type: string
-        example: hAc99kwsjBnJVphhLMfs91Kk
+        example: LVTtXJCjyJxTc7LidWEd5fbF
       responses:
         '200':
           description: updates the trainee
@@ -3267,8 +3299,6 @@ paths:
                         nullable: true
                         type: string
                       withdraw_date:
-                        nullable: true
-                      withdraw_reasons_details:
                         nullable: true
                       defer_date:
                         nullable: true
@@ -3328,8 +3358,6 @@ paths:
                         nullable: true
                       hesa_editable:
                         type: boolean
-                      withdraw_reasons_dfe_details:
-                        nullable: true
                       slug_sent_to_dqt_at:
                         nullable: true
                       placement_detail:
@@ -3403,6 +3431,12 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items:
@@ -3514,7 +3548,6 @@ paths:
                     - trn
                     - submitted_for_trn_at
                     - withdraw_date
-                    - withdraw_reasons_details
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -3543,7 +3576,6 @@ paths:
                     - record_source
                     - iqts_country
                     - hesa_editable
-                    - withdraw_reasons_dfe_details
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
@@ -3572,6 +3604,9 @@ paths:
                     - hesa_disabilities
                     - nationality
                     - withdraw_reasons
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -3602,7 +3637,6 @@ paths:
                   trn:
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date: '2024-08-01'
@@ -3631,7 +3665,6 @@ paths:
                   record_source: api
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id:
@@ -3663,6 +3696,9 @@ paths:
                     disability2: '57'
                   nationality: GB
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements:
                   - urn: '900020'
                     name: Establishment does not have a URN
@@ -3670,7 +3706,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: Et3xzCsUMmPMJ812b78aWK7Y
+                    placement_id: 8FjN8jb2iQT5wKv5XCsvr1bW
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3686,9 +3722,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: 6sUkNj4A6ErLxK8cwGCpw5DN
+                    degree_id: k3G54EDb68RLmiBqXw24uGz1
                   state: submitted_for_trn
-                  trainee_id: hAc99kwsjBnJVphhLMfs91Kk
+                  trainee_id: LVTtXJCjyJxTc7LidWEd5fbF
                   application_id:
                   disability2: '57'
         '401':
@@ -3896,10 +3932,6 @@ paths:
                         nullable: true
                       trn:
                         type: string
-                      withdraw_reasons_details:
-                        nullable: true
-                      withdraw_reasons_dfe_details:
-                        nullable: true
                       region:
                         nullable: true
                       hesa_id:
@@ -4015,6 +4047,12 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -4086,8 +4124,6 @@ paths:
                     - ethnic_background
                     - additional_ethnic_background
                     - trn
-                    - withdraw_reasons_details
-                    - withdraw_reasons_dfe_details
                     - region
                     - hesa_id
                     - course_subject_one
@@ -4145,6 +4181,9 @@ paths:
                     - bursary_level
                     - nationality
                     - withdraw_reasons
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -4164,8 +4203,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   trn: '6335476'
-                  withdraw_reasons_details:
-                  withdraw_reasons_dfe_details:
                   region:
                   hesa_id:
                   course_subject_one: '100403'
@@ -4223,6 +4260,9 @@ paths:
                   bursary_level:
                   nationality: TG
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree: '005'
@@ -4511,7 +4551,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: bhq3QVXYx75mdY6u73AdJV4U
+                  degree_id: UhgLu4yNADFfUz6kzhi2GuRw
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4738,8 +4778,6 @@ paths:
                         nullable: true
                       withdraw_date:
                         nullable: true
-                      withdraw_reasons_details:
-                        nullable: true
                       defer_date:
                         nullable: true
                       recommended_for_award_at:
@@ -4796,8 +4834,6 @@ paths:
                         nullable: true
                       hesa_editable:
                         type: boolean
-                      withdraw_reasons_dfe_details:
-                        nullable: true
                       slug_sent_to_dqt_at:
                         nullable: true
                       placement_detail:
@@ -4835,6 +4871,12 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -4869,7 +4911,6 @@ paths:
                     - trn
                     - submitted_for_trn_at
                     - withdraw_date
-                    - withdraw_reasons_details
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -4898,7 +4939,6 @@ paths:
                     - record_source
                     - iqts_country
                     - hesa_editable
-                    - withdraw_reasons_dfe_details
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
@@ -4917,6 +4957,9 @@ paths:
                     - bursary_level
                     - nationality
                     - withdraw_reasons
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -4947,7 +4990,6 @@ paths:
                   trn:
                   submitted_for_trn_at:
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date:
@@ -4976,7 +5018,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-524
@@ -4995,6 +5036,9 @@ paths:
                   bursary_level:
                   nationality:
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees: []
                   state: draft
@@ -5165,13 +5209,13 @@ paths:
         required: true
         schema:
           type: string
-        example: fecsq2bbrfiz7q340ofyopo5
+        example: wl7ppdbac9880v33c3j0hpqy
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: 0g148s2n75r9f2t9uzdhrmfe
+        example: gt8gaxrud6pi6x1pjpbhvndo
       requestBody:
         content:
           application/json:
@@ -5274,11 +5318,11 @@ paths:
                   grade: '02'
                   country:
                   other_grade:
-                  institution_uuid: 103e182c-1425-ec11-b6e6-000d3adf095a
+                  institution_uuid: 183f182c-1425-ec11-b6e6-000d3adf095a
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 917f70f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                  degree_id: 3rmwhwuah5p92s3u5pe17v6f
+                  degree_id: y9xx6gpk6udvp1qbofcqfna1
         '404':
           description: does not update the degree and returns a 404 status (not_found)
           content:
@@ -5469,7 +5513,7 @@ paths:
                   postcode: WY3 8BF
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: WRpv5UG4fYs6P5ure1BhwTT2
+                  placement_id: BnRtpWFzox5HKkC2RrGbv7RK
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -5629,8 +5673,6 @@ paths:
                         nullable: true
                       withdraw_date:
                         nullable: true
-                      withdraw_reasons_details:
-                        nullable: true
                       defer_date:
                         nullable: true
                       recommended_for_award_at:
@@ -5687,8 +5729,6 @@ paths:
                         nullable: true
                       hesa_editable:
                         type: boolean
-                      withdraw_reasons_dfe_details:
-                        nullable: true
                       slug_sent_to_dqt_at:
                         nullable: true
                       placement_detail:
@@ -5747,6 +5787,12 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items:
@@ -5805,7 +5851,6 @@ paths:
                     - trn
                     - submitted_for_trn_at
                     - withdraw_date
-                    - withdraw_reasons_details
                     - defer_date
                     - recommended_for_award_at
                     - trainee_start_date
@@ -5834,7 +5879,6 @@ paths:
                     - record_source
                     - iqts_country
                     - hesa_editable
-                    - withdraw_reasons_dfe_details
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
@@ -5863,6 +5907,9 @@ paths:
                     - hesa_disabilities
                     - nationality
                     - withdraw_reasons
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -5893,7 +5940,6 @@ paths:
                   trn:
                   submitted_for_trn_at:
                   withdraw_date:
-                  withdraw_reasons_details:
                   defer_date:
                   recommended_for_award_at:
                   trainee_start_date:
@@ -5922,7 +5968,6 @@ paths:
                   record_source: manual
                   iqts_country:
                   hesa_editable: false
-                  withdraw_reasons_dfe_details:
                   slug_sent_to_dqt_at:
                   placement_detail: has_placement_detail
                   provider_trainee_id: 24/25-534
@@ -5951,6 +5996,9 @@ paths:
                   hesa_disabilities: {}
                   nationality:
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements:
                   - urn: '410091'
                     name: Brookville 137 High
@@ -6096,13 +6144,13 @@ paths:
         required: true
         schema:
           type: string
-        example: bm9wanm308fotb5rtu9lff8v
+        example: 7am1tuec8adlzc6v61zwy809
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: pwhv1ep23rkdev16yhzgijt9
+        example: zj4t553jj1snd5hoxixnzjid
       requestBody:
         content:
           application/json:
@@ -6122,8 +6170,8 @@ paths:
               - data
             example:
               data:
-                urn: '775904'
-                name: Wunsch Academy
+                urn: '619056'
+                name: Northern Stehr Academy
                 postcode: GU1 1AA
       responses:
         '200':
@@ -6164,13 +6212,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '738696'
-                  name: Leannon University
-                  address: URN 738696, GU1 1AA
+                  urn: '312826'
+                  name: Mitchell College
+                  address: URN 312826, GU1 1AA
                   postcode: GU1 1AA
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: lzj1rlhkj38ls6ty7psj6qyg
+                  placement_id: zx6ovxjl1e61y8lzq5nb04mv
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -6316,10 +6364,6 @@ paths:
                         nullable: true
                       trn:
                         type: string
-                      withdraw_reasons_details:
-                        nullable: true
-                      withdraw_reasons_dfe_details:
-                        nullable: true
                       region:
                         nullable: true
                       hesa_id:
@@ -6439,6 +6483,12 @@ paths:
                       withdraw_reasons:
                         type: array
                         items: {}
+                      withdrawal_trigger:
+                        nullable: true
+                      withdrawal_future_interest:
+                        nullable: true
+                      withdrawal_another_reason:
+                        nullable: true
                       placements:
                         type: array
                         items: {}
@@ -6508,8 +6558,6 @@ paths:
                     - ethnic_background
                     - additional_ethnic_background
                     - trn
-                    - withdraw_reasons_details
-                    - withdraw_reasons_dfe_details
                     - region
                     - hesa_id
                     - course_subject_one
@@ -6569,6 +6617,9 @@ paths:
                     - bursary_level
                     - nationality
                     - withdraw_reasons
+                    - withdrawal_trigger
+                    - withdrawal_future_interest
+                    - withdrawal_another_reason
                     - placements
                     - degrees
                     - state
@@ -6586,8 +6637,6 @@ paths:
                   ethnic_background:
                   additional_ethnic_background:
                   trn: '9051676'
-                  withdraw_reasons_details:
-                  withdraw_reasons_dfe_details:
                   region:
                   hesa_id:
                   course_subject_one: '100403'
@@ -6647,6 +6696,9 @@ paths:
                   bursary_level:
                   nationality: TN
                   withdraw_reasons: []
+                  withdrawal_trigger:
+                  withdrawal_future_interest:
+                  withdrawal_another_reason:
                   placements: []
                   degrees:
                   - uk_degree:
@@ -6718,4 +6770,632 @@ paths:
                 - error: UnprocessableEntity
                   message: Trainee degree information must be completed before QTS
                     recommendation
+  "/api/{api_version}/trainees/{trainee_id}/withdraw":
+    post:
+      summary: create
+      tags:
+      - Api::Trainees::Withdraw
+      parameters:
+      - name: api_version
+        in: path
+        required: true
+        schema:
+          type: string
+        example: v0.1
+      - name: trainee_id
+        in: path
+        required: true
+        schema:
+          type: string
+        example: 2jiyb34zb9j85nza62juik8a
+      responses:
+        '200':
+          description: uses the trainee serializer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      commencement_status:
+                        nullable: true
+                      withdraw_date:
+                        type: string
+                        nullable: true
+                      first_names:
+                        type: string
+                      middle_names:
+                        type: string
+                      last_name:
+                        type: string
+                      email:
+                        type: string
+                      ethnic_background:
+                        nullable: true
+                      additional_ethnic_background:
+                        nullable: true
+                      trn:
+                        type: string
+                      region:
+                        nullable: true
+                      hesa_id:
+                        type: string
+                      course_subject_one:
+                        type: string
+                      course_subject_two:
+                        nullable: true
+                      course_subject_three:
+                        nullable: true
+                      record_source:
+                        type: string
+                      date_of_birth:
+                        type: string
+                      created_at:
+                        type: string
+                      updated_at:
+                        type: string
+                      training_route:
+                        nullable: true
+                        type: string
+                      sex:
+                        type: string
+                      diversity_disclosure:
+                        type: string
+                      ethnic_group:
+                        nullable: true
+                      disability_disclosure:
+                        nullable: true
+                      itt_start_date:
+                        type: string
+                      outcome_date:
+                        nullable: true
+                      itt_end_date:
+                        type: string
+                      submitted_for_trn_at:
+                        type: string
+                      defer_date:
+                        nullable: true
+                      recommended_for_award_at:
+                        nullable: true
+                      trainee_start_date:
+                        type: string
+                      reinstate_date:
+                        nullable: true
+                      course_min_age:
+                        type: integer
+                      course_max_age:
+                        type: integer
+                      awarded_at:
+                        nullable: true
+                      training_initiative:
+                        type: string
+                        nullable: true
+                      study_mode:
+                        type: string
+                      ebacc:
+                        type: boolean
+                      course_education_phase:
+                        type: string
+                      course_uuid:
+                        nullable: true
+                      lead_partner_not_applicable:
+                        type: boolean
+                      employing_school_not_applicable:
+                        type: boolean
+                      submission_ready:
+                        type: boolean
+                      discarded_at:
+                        nullable: true
+                      created_from_dttp:
+                        type: boolean
+                      additional_dttp_data:
+                        nullable: true
+                      created_from_hesa:
+                        type: boolean
+                      hesa_updated_at:
+                        nullable: true
+                      iqts_country:
+                        nullable: true
+                      hesa_editable:
+                        type: boolean
+                      slug_sent_to_dqt_at:
+                        nullable: true
+                      placement_detail:
+                        nullable: true
+                      provider_trainee_id:
+                        type: string
+                      ukprn:
+                        type: string
+                      ethnicity:
+                        nullable: true
+                      course_qualification:
+                        type: string
+                      course_title:
+                        nullable: true
+                      course_level:
+                        type: string
+                      course_itt_start_date:
+                        type: string
+                      course_age_range:
+                        type: string
+                      expected_end_date:
+                        type: string
+                      employing_school_urn:
+                        nullable: true
+                      lead_partner_ukprn:
+                        nullable: true
+                      lead_partner_urn:
+                        nullable: true
+                      fund_code:
+                        type: string
+                      bursary_level:
+                        type: string
+                      previous_last_name:
+                        type: string
+                      itt_aim:
+                        type: string
+                      course_study_mode:
+                        type: string
+                      course_year:
+                        type: integer
+                      pg_apprenticeship_start_date:
+                        type: string
+                      funding_method:
+                        type: string
+                      ni_number:
+                        type: string
+                      additional_training_initiative:
+                        type: string
+                      itt_qualification_aim:
+                        type: string
+                      hesa_disabilities:
+                        type: object
+                        properties: {}
+                      nationality:
+                        type: string
+                      withdraw_reasons:
+                        type: array
+                        items: {}
+                      withdrawal_trigger:
+                        type: string
+                      withdrawal_future_interest:
+                        type: string
+                      withdrawal_another_reason:
+                        nullable: true
+                      placements:
+                        type: array
+                        items: {}
+                      degrees:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            uk_degree:
+                              nullable: true
+                              type: string
+                            non_uk_degree:
+                              nullable: true
+                            created_at:
+                              type: string
+                            updated_at:
+                              type: string
+                            subject:
+                              type: string
+                              nullable: true
+                            institution:
+                              type: string
+                            graduation_year:
+                              type: integer
+                            grade:
+                              type: string
+                              nullable: true
+                            country:
+                              nullable: true
+                            other_grade:
+                              nullable: true
+                            institution_uuid:
+                              type: string
+                            uk_degree_uuid:
+                              type: string
+                            subject_uuid:
+                              type: string
+                            grade_uuid:
+                              type: string
+                            degree_id:
+                              type: string
+                          required:
+                          - uk_degree
+                          - non_uk_degree
+                          - created_at
+                          - updated_at
+                          - subject
+                          - institution
+                          - graduation_year
+                          - grade
+                          - country
+                          - other_grade
+                          - institution_uuid
+                          - uk_degree_uuid
+                          - subject_uuid
+                          - grade_uuid
+                          - degree_id
+                      state:
+                        type: string
+                      trainee_id:
+                        type: string
+                      application_id:
+                        nullable: true
+                      id:
+                        type: integer
+                      dttp_id:
+                        type: string
+                      progress:
+                        type: object
+                        properties:
+                          personal_details:
+                            type: boolean
+                          contact_details:
+                            type: boolean
+                          degrees:
+                            type: boolean
+                          placements:
+                            type: boolean
+                          diversity:
+                            type: boolean
+                          course_details:
+                            type: boolean
+                          training_details:
+                            type: boolean
+                          trainee_start_status:
+                            type: boolean
+                          trainee_data:
+                            type: boolean
+                          schools:
+                            type: boolean
+                          funding:
+                            type: boolean
+                          iqts_country:
+                            type: boolean
+                        required:
+                        - personal_details
+                        - contact_details
+                        - degrees
+                        - placements
+                        - diversity
+                        - course_details
+                        - training_details
+                        - trainee_start_status
+                        - trainee_data
+                        - schools
+                        - funding
+                        - iqts_country
+                      provider_id:
+                        type: integer
+                      placement_assignment_dttp_id:
+                        nullable: true
+                      withdraw_reasons_details:
+                        nullable: true
+                      slug:
+                        type: string
+                      dttp_update_sha:
+                        nullable: true
+                      dormancy_dttp_id:
+                        nullable: true
+                      employing_school_id:
+                        nullable: true
+                      apply_application_id:
+                        nullable: true
+                      applying_for_bursary:
+                        type: boolean
+                      bursary_tier:
+                        nullable: true
+                      applying_for_scholarship:
+                        type: boolean
+                      applying_for_grant:
+                        type: boolean
+                      course_allocation_subject_id:
+                        nullable: true
+                      start_academic_cycle_id:
+                        nullable: true
+                      end_academic_cycle_id:
+                        nullable: true
+                      hesa_trn_submission_id:
+                        nullable: true
+                      withdraw_reasons_dfe_details:
+                        nullable: true
+                      application_choice_id:
+                        nullable: true
+                      lead_partner_id:
+                        nullable: true
+                    required:
+                    - first_names
+                    - last_name
+                    - date_of_birth
+                    - created_at
+                    - updated_at
+                    - email
+                    - middle_names
+                    - training_route
+                    - sex
+                    - diversity_disclosure
+                    - ethnic_group
+                    - ethnic_background
+                    - additional_ethnic_background
+                    - disability_disclosure
+                    - course_subject_one
+                    - itt_start_date
+                    - outcome_date
+                    - itt_end_date
+                    - trn
+                    - submitted_for_trn_at
+                    - state
+                    - withdraw_date
+                    - defer_date
+                    - recommended_for_award_at
+                    - trainee_start_date
+                    - reinstate_date
+                    - course_min_age
+                    - course_max_age
+                    - course_subject_two
+                    - course_subject_three
+                    - awarded_at
+                    - training_initiative
+                    - study_mode
+                    - ebacc
+                    - region
+                    - course_education_phase
+                    - course_uuid
+                    - lead_partner_not_applicable
+                    - employing_school_not_applicable
+                    - submission_ready
+                    - commencement_status
+                    - discarded_at
+                    - created_from_dttp
+                    - hesa_id
+                    - additional_dttp_data
+                    - created_from_hesa
+                    - hesa_updated_at
+                    - record_source
+                    - iqts_country
+                    - hesa_editable
+                    - slug_sent_to_dqt_at
+                    - placement_detail
+                    - provider_trainee_id
+                required:
+                - data
+              example:
+                data:
+                  commencement_status:
+                  withdraw_date:
+                  first_names: Ulysses
+                  middle_names: Yost
+                  last_name: Bergnaum
+                  email: Ulysses.Bergnaum@example.com
+                  ethnic_background:
+                  additional_ethnic_background:
+                  trn: '7241438'
+                  region:
+                  hesa_id: '9882031103911'
+                  course_subject_one: mathematics
+                  course_subject_two:
+                  course_subject_three:
+                  record_source: manual
+                  date_of_birth: '1984-02-26'
+                  created_at: '2024-09-15T12:34:56.000Z'
+                  updated_at: '2024-09-15T12:34:56.000Z'
+                  training_route: assessment_only
+                  sex: prefer_not_to_say
+                  diversity_disclosure: diversity_not_disclosed
+                  ethnic_group:
+                  disability_disclosure:
+                  itt_start_date: '2024-08-13'
+                  outcome_date:
+                  itt_end_date: '2025-07-16'
+                  submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
+                  defer_date:
+                  recommended_for_award_at:
+                  trainee_start_date: '2024-08-13'
+                  reinstate_date:
+                  course_min_age: 11
+                  course_max_age: 18
+                  awarded_at:
+                  training_initiative: future_teaching_scholars
+                  study_mode: full_time
+                  ebacc: false
+                  course_education_phase: secondary
+                  course_uuid:
+                  lead_partner_not_applicable: false
+                  employing_school_not_applicable: false
+                  submission_ready: true
+                  discarded_at:
+                  created_from_dttp: false
+                  additional_dttp_data:
+                  created_from_hesa: false
+                  hesa_updated_at:
+                  iqts_country:
+                  hesa_editable: false
+                  slug_sent_to_dqt_at:
+                  placement_detail:
+                  provider_trainee_id: 24/25-596
+                  ukprn: '54417026'
+                  ethnicity:
+                  course_qualification: QTS
+                  course_title:
+                  course_level: postgrad
+                  course_itt_start_date: '2024-08-28'
+                  course_age_range: '13916'
+                  expected_end_date: '2026-07-26'
+                  employing_school_urn:
+                  lead_partner_ukprn:
+                  lead_partner_urn:
+                  fund_code: '7'
+                  bursary_level: '8'
+                  previous_last_name: Berge
+                  itt_aim: '202'
+                  course_study_mode: '01'
+                  course_year: 2024
+                  pg_apprenticeship_start_date: '2024-09-15'
+                  funding_method: '8'
+                  ni_number: QQ 12 34 56 C
+                  additional_training_initiative: '026'
+                  itt_qualification_aim: '007'
+                  hesa_disabilities: {}
+                  nationality: FR
+                  withdraw_reasons: []
+                  withdrawal_trigger: provider
+                  withdrawal_future_interest: 'no'
+                  withdrawal_another_reason:
+                  placements: []
+                  degrees:
+                  - uk_degree: '070'
+                    non_uk_degree:
+                    created_at: '2024-09-15T12:34:56.000Z'
+                    updated_at: '2024-09-15T12:34:56.000Z'
+                    subject:
+                    institution: '0131'
+                    graduation_year: 1976
+                    grade: '12'
+                    country:
+                    other_grade:
+                    institution_uuid: d270f34a-2887-e711-80d8-005056ac45bb
+                    uk_degree_uuid: 016a5652-c197-e711-80d8-005056ac45bb
+                    subject_uuid: 4d5548c7-9692-422f-b04b-e64dbac18947
+                    grade_uuid: 1bb9f02f-da6a-4184-8db0-d43b14ccaf1d
+                    degree_id: rpb4oab5d0tsv1gdvqgay24y
+                  state: trn_received
+                  trainee_id: 280ps9e20cl25ody0huo9fda
+                  application_id:
+                  id: 708
+                  dttp_id: 47f4f5e8-b824-4b6f-8ac4-f2ffc1fbbfe0
+                  progress:
+                    personal_details: true
+                    contact_details: true
+                    degrees: true
+                    placements: false
+                    diversity: true
+                    course_details: true
+                    training_details: true
+                    trainee_start_status: false
+                    trainee_data: true
+                    schools: true
+                    funding: true
+                    iqts_country: false
+                  provider_id: 525
+                  placement_assignment_dttp_id:
+                  withdraw_reasons_details:
+                  slug: tcedvowtbq1ns7oewoqcd5ke
+                  dttp_update_sha:
+                  dormancy_dttp_id:
+                  employing_school_id:
+                  apply_application_id:
+                  applying_for_bursary: false
+                  bursary_tier:
+                  applying_for_scholarship: false
+                  applying_for_grant: false
+                  course_allocation_subject_id:
+                  start_academic_cycle_id:
+                  end_academic_cycle_id:
+                  hesa_trn_submission_id:
+                  withdraw_reasons_dfe_details:
+                  application_choice_id:
+                  lead_partner_id:
+        '401':
+          description: did not change the trainee
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                required:
+                - error
+              example:
+                error: Unauthorized
+        '404':
+          description: returns status code 404 with a valid JSON response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - error
+                      - message
+                required:
+                - errors
+              example:
+                errors:
+                - error: NotFound
+                  message: Trainee(s) not found
+        '422':
+          description: returns status code 422 with a valid JSON response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        error:
+                          type: string
+                        message:
+                          type: string
+                      required:
+                      - error
+                      - message
+                required:
+                - errors
+              example:
+                errors:
+                - error: StateTransitionError
+                  message: It’s not possible to perform this action while the trainee
+                    is in its current state
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    reasons:
+                      type: array
+                      items:
+                        type: string
+                    withdraw_date:
+                      type: string
+                    trigger:
+                      type: string
+                    future_interest:
+                      type: string
+                  required:
+                  - reasons
+                  - withdraw_date
+                  - trigger
+                  - future_interest
+              required:
+              - data
+            example:
+              data:
+                reasons:
+                - record_added_in_error
+                withdraw_date: '2024-09-15T12:34:56Z'
+                trigger: provider
+                future_interest: 'no'
 servers: []

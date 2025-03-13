@@ -48,6 +48,51 @@ module Dqt
       end
     end
 
+    context "when trainee already has a TRN" do
+      let(:existing_trn) { "12345678" }
+      let(:trainee) { create(:trainee, trn: existing_trn) }
+
+      context "when trn_request is not in received state" do
+        let(:trn_request) { create(:dqt_trn_request, trainee: trainee, state: :requested) }
+
+        it "updates the trn_request to received state" do
+          expect {
+            described_class.perform_now(trn_request, timeout_date)
+          }.to change { trn_request.reload.state }.from("requested").to("received")
+        end
+
+        it "doesn't call RetrieveTrn" do
+          expect(RetrieveTrn).not_to receive(:call)
+          described_class.perform_now(trn_request, timeout_date)
+        end
+
+        it "doesn't queue another job" do
+          described_class.perform_now(trn_request, timeout_date)
+          expect(RetrieveTrnJob).not_to have_been_enqueued
+        end
+      end
+
+      context "when trn_request is already in received state" do
+        let(:trn_request) { create(:dqt_trn_request, trainee: trainee, state: :received) }
+
+        it "doesn't change the trn_request state" do
+          expect {
+            described_class.perform_now(trn_request, timeout_date)
+          }.not_to change { trn_request.reload.state }
+        end
+
+        it "doesn't call RetrieveTrn" do
+          expect(RetrieveTrn).not_to receive(:call)
+          described_class.perform_now(trn_request, timeout_date)
+        end
+
+        it "doesn't queue another job" do
+          described_class.perform_now(trn_request, timeout_date)
+          expect(RetrieveTrnJob).not_to have_been_enqueued
+        end
+      end
+    end
+
     context "TRN is available" do
       let(:trn) { "123" }
 
