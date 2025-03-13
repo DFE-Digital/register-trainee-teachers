@@ -5,26 +5,11 @@ updates:
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  groups:
-    govuk-dependencies:
-      patterns:
-        - govuk-components
-        - govuk_design_system_formbuilder
-        - dfe-analytics
-      labels:
-        - deploy
 - package-ecosystem: npm
   directory: "/"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-  groups:
-    govuk-dependencies:
-      patterns:
-        - govuk-frontend
-        - "@ministryofjustice/frontend"
-      labels:
-        - deploy
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
