@@ -293,7 +293,7 @@ module Api
         def training_initiative
           return ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] if veteran_teaching_undergraduate_bursary?
 
-          mapped_value = ::Hesa::CodeSets::TrainingInitiatives::MAPPING[params[:training_initiative]]
+          mapped_value = HESA_MAPPING[__method__][params[:training_initiative]]
 
           return HesaMapperConstants::INVALID if params[:training_initiative].present? && mapped_value.nil?
 
