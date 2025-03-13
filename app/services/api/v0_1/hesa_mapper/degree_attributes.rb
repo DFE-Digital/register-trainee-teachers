@@ -22,6 +22,15 @@ module Api
           other_grade
         ].freeze
 
+        HESA_MAPPING = {
+          uk_degree: DfEReference::DegreesQuery::TYPES.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
+          non_uk_degree: DfEReference::DegreesQuery::TYPES.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
+          countries: Hesa::CodeSets::Countries::MAPPING,
+          institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
+          grades: DfEReference::DegreesQuery::GRADES.all.pluck(:hesa_code, :name).to_h.reject { |k, _v| k.nil? },
+          subject: DfEReference::DegreesQuery::SUBJECTS.all.pluck(:hecos_code, :name).to_h.reject { |k, _v| k.nil? },
+        }.freeze
+
         def initialize(params)
           @params = params
         end
@@ -88,22 +97,26 @@ module Api
           uk_country_or_uk_institution_present? ? nil : country_from_mapping
         end
 
-        def uk_degree
-          return HesaMapperConstants::INVALID if @params[:uk_degree].present? && uk_degree_type.blank?
+        def non_uk_degree
+          mapped_value = HESA_MAPPING[__method__][@params[:non_uk_degree]]
 
-          uk_degree_type&.name
+          return HesaMapperConstants::INVALID if @params[:non_uk_degree].present? && mapped_value.blank?
+
+          mapped_value
+        end
+
+        def uk_degree
+          mapped_value = HESA_MAPPING[__method__][@params[:uk_degree]]
+
+          return HesaMapperConstants::INVALID if @params[:uk_degree].present? && mapped_value.blank?
+
+          mapped_value
         end
 
         def uk_degree_uuid
           return unless uk_country_or_uk_institution_present?
 
           uk_degree_type&.id
-        end
-
-        def non_uk_degree
-          return HesaMapperConstants::INVALID if @params[:non_uk_degree].present? && non_uk_degree_type.blank?
-
-          non_uk_degree_type&.name
         end
 
         def grade

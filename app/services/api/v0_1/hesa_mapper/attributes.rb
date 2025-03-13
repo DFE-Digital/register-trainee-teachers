@@ -21,6 +21,23 @@ module Api
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
         DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
 
+        HESA_MAPPING = {
+          sex: ::Hesa::CodeSets::Sexes::MAPPING,
+          nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
+          ethnicity: ::Hesa::CodeSets::Ethnicities::MAPPING,
+          ethnic_background: ::Hesa::CodeSets::Ethnicities::MAPPING,
+          disabilities: ::Hesa::CodeSets::Disabilities::MAPPING,
+          training_route: ::Hesa::CodeSets::TrainingRoutes::MAPPING,
+          course_education_phase: COURSE_EDUCATION_PHASE_ENUMS,
+          course_subject_one: ::Hesa::CodeSets::CourseSubjects::MAPPING,
+          course_subject_two: ::Hesa::CodeSets::CourseSubjects::MAPPING,
+          course_subject_three: ::Hesa::CodeSets::CourseSubjects::MAPPING,
+          course_age_range: DfE::ReferenceData::AgeRanges::HESA_CODE_SETS,
+          study_mode: ::Hesa::CodeSets::StudyModes::MAPPING,
+          funding_method: ::Hesa::CodeSets::BursaryLevels::MAPPING,
+          training_initiative: ::Hesa::CodeSets::TrainingInitiatives::MAPPING,
+        }.freeze
+
         def self.disability_attributes(params)
           params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
         end
@@ -80,7 +97,7 @@ module Api
         def ethnic_background
           return Diversities::NOT_PROVIDED if params.key?(:ethnicity) && params[:ethnicity].blank?
 
-          ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
+          HESA_MAPPING[__method__][params[:ethnicity]]
         end
 
         def ethnicity
@@ -100,7 +117,7 @@ module Api
         end
 
         def sex
-          mapped_value = ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]]
+          mapped_value = HESA_MAPPING[__method__][params[:sex]]
 
           return HesaMapperConstants::INVALID if params[:sex].present? && mapped_value.nil?
 
@@ -108,7 +125,7 @@ module Api
         end
 
         def training_route
-          mapped_value = ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
+          mapped_value = HESA_MAPPING[__method__][params[:training_route]]
 
           return HesaMapperConstants::INVALID if params[:training_route].present? && mapped_value.nil?
 
@@ -166,7 +183,7 @@ module Api
         end
 
         def course_subject_name(course_subject)
-          mapped_value = ::Hesa::CodeSets::CourseSubjects::MAPPING[params[course_subject]]
+          mapped_value = HESA_MAPPING[course_subject][params[course_subject]]
 
           return HesaMapperConstants::INVALID if params[course_subject].present? && mapped_value.nil?
 
@@ -192,7 +209,7 @@ module Api
         end
 
         def study_mode
-          mapped_value = ::Hesa::CodeSets::StudyModes::MAPPING[params[:study_mode]]
+          mapped_value = HESA_MAPPING[__method__][params[:study_mode]]
 
           return HesaMapperConstants::INVALID if params[:study_mode].present? && mapped_value.nil?
 
@@ -200,7 +217,7 @@ module Api
         end
 
         def course_age_range
-          DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[params[:course_age_range]]
+          HESA_MAPPING[__method__][params[:course_age_range]]
         end
 
         def course_study_mode
@@ -220,7 +237,7 @@ module Api
         end
 
         def funding_entity_id
-          ::Hesa::CodeSets::BursaryLevels::MAPPING[params[:funding_method]]
+          HESA_MAPPING[:funding_method][params[:funding_method]]
         end
 
         def lead_partner_attributes
