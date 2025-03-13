@@ -8,7 +8,7 @@ module ApiDocs
     helper_method :degree_hesa_mapper_class
     helper_method :version
 
-    def index;end
+    def index; end
 
   private
 

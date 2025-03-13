@@ -22,6 +22,7 @@ module Api
           other_grade
         ].freeze
 
+        # rubocop:disable Rails/RedundantActiveRecordAllMethod
         HESA_MAPPING = {
           uk_degree: DfEReference::DegreesQuery::TYPES.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
           non_uk_degree: DfEReference::DegreesQuery::TYPES.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
@@ -30,6 +31,7 @@ module Api
           grades: DfEReference::DegreesQuery::GRADES.all.pluck(:hesa_code, :name).to_h.reject { |k, _v| k.nil? },
           subject: DfEReference::DegreesQuery::SUBJECTS.all.pluck(:hecos_code, :name).to_h.reject { |k, _v| k.nil? },
         }.freeze
+        # rubocop:enable Rails/RedundantActiveRecordAllMethod
 
         def initialize(params)
           @params = params
