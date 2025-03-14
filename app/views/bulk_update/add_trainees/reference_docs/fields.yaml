@@ -270,7 +270,13 @@
   hesa_alignment: ITTPHSC
   description: This field describes in more detail the student’s initial teacher
     training aim
-  format: "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
+  format: |-
+    "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
+
+    The following HESA values are invalid for this field:
+
+      - `99801` - Teacher training qualification: Further education/Higher education
+      - `99803` - Teacher training qualification: Other
   example: '"13916" for example is the code used for Accredited by the Department
     for Education (DfE) for the purpose of delivering initial teacher training programmes
     to achieve Qualified Teacher Status (QTS): Ages 7-14'
