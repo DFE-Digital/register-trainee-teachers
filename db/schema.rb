@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -200,7 +200,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.string "urn", null: false
     t.string "trn", null: false
     t.bigint "school_id"
-    t.index ["bulk_update_placement_id", "csv_row_number", "trn", "urn"], name: "idx_uniq_placement_rows", unique: true
     t.index ["bulk_update_placement_id"], name: "index_bulk_update_placement_rows_on_bulk_update_placement_id"
     t.index ["school_id"], name: "index_bulk_update_placement_rows_on_school_id"
   end
@@ -678,10 +677,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
@@ -776,8 +775,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_07_134402) do
     t.citext "slug"
     t.index ["school_id"], name: "index_placements_on_school_id"
     t.index ["slug", "trainee_id"], name: "index_placements_on_slug_and_trainee_id", unique: true
-    t.index ["trainee_id", "address", "postcode"], name: "index_placements_on_trainee_id_and_address_and_postcode", unique: true, where: "(school_id IS NULL)"
-    t.index ["trainee_id", "urn"], name: "index_placements_on_trainee_id_and_urn", unique: true, where: "((urn IS NOT NULL) AND ((urn)::text <> ''::text) AND (school_id IS NULL))"
     t.index ["trainee_id"], name: "index_placements_on_trainee_id"
   end
 

@@ -217,4 +217,15 @@ RSpec.describe Placement do
       end
     end
   end
+
+  describe "scopes" do
+    describe "::with_school" do
+      let!(:placement) { create(:placement) }
+      let!(:placement_with_school) { create(:placement, :with_school) }
+
+      it "returns only the trainees with a school" do
+        expect(Placement.with_school).to contain_exactly(placement_with_school)
+      end
+    end
+  end
 end
