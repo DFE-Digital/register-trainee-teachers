@@ -3322,7 +3322,7 @@ Deletes an existing degree for this trainee.
         Example: <code>13918</code>
       </p>
       <p class="govuk-body">
-        Note that the following HESA values are invalid for this field:
+        The following HESA values are invalid for this field:
         <ul class='govuk-list govuk-list--bullet'>
           <li><code>99801</code> - Teacher training qualification: Further education/Higher education</li>
           <li><code>99803</code> - Teacher training qualification: Other</li>

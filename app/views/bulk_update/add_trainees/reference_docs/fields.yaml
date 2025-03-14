@@ -273,7 +273,7 @@
   format: |-
     "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
 
-    Note that the following HESA values are invalid for this field:
+    The following HESA values are invalid for this field:
 
       - `99801` - Teacher training qualification: Further education/Higher education
       - `99803` - Teacher training qualification: Other
