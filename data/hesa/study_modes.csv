@@ -1,0 +1,6 @@
+"Field","Code","Label"
+"MODE","01","Full-time according to funding council definitions"
+"MODE","02","Other full-time"
+"MODE","31","Part-time"
+"MODE","63","Dormant - previously full-time"
+"MODE","64","Dormant - previously part-time"
