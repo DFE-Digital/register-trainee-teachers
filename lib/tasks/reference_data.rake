@@ -67,9 +67,7 @@ namespace :reference_data do
   desc "HESA ethnicities reference data checks"
   task ethnicities: :environment do
     HesaCodeChecker.new.call("ethnicities") do |hesa_code|
-      code_set_key = Hesa::CodeSets::Ethnicities::MAPPING[hesa_code.code]
-      code_set = code_set_key ? CodeSets::Ethnicities::MAPPING[code_set_key] : nil
-      code_set ? code_set_key : nil
+      Hesa::CodeSets::Ethnicities::MAPPING[hesa_code.code]
     end
   end
 
@@ -83,8 +81,7 @@ namespace :reference_data do
   desc "HESA countries reference data checks"
   task countries: :environment do
     HesaCodeChecker.new.call("countries") do |hesa_code|
-      country_name = Hesa::CodeSets::Countries::MAPPING[hesa_code.code]
-      CodeSets::Countries::MAPPING.key?(country_name) ? country_name : nil
+      Hesa::CodeSets::Countries::MAPPING[hesa_code.code]
     end
   end
 
