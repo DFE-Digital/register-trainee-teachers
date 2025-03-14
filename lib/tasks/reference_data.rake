@@ -88,24 +88,21 @@ namespace :reference_data do
   desc "HESA disabilities reference data checks"
   task disabilities: :environment do
     HesaCodeChecker.new.call("disabilities") do |hesa_code|
-      disability_name = Hesa::CodeSets::Disabilities::MAPPING[hesa_code.code]
-      CodeSets::Disabilities::MAPPING.key?(disability_name) ? disability_name : nil
+      Hesa::CodeSets::Disabilities::MAPPING[hesa_code.code]
     end
   end
 
   desc "HESA ITT aims reference data checks"
   task itt_aims: :environment do
     HesaCodeChecker.new.call("itt_aims") do |hesa_code|
-      name = Hesa::CodeSets::IttAims::MAPPING[hesa_code.code]
-      CodeSets::IttAims::MAPPING.values.include?(name) ? name : nil
+      Hesa::CodeSets::IttAims::MAPPING[hesa_code.code]
     end
   end
 
   desc "HESA ITT qualification aims reference data checks"
   task itt_qualification_aims: :environment do
     HesaCodeChecker.new.call("itt_qualification_aims") do |hesa_code|
-      name = Hesa::CodeSets::IttQualificationAims::MAPPING[hesa_code.code]
-      CodeSets::IttQualificationAims::MAPPING.values.include?(name) ? name : nil
+      Hesa::CodeSets::IttQualificationAims::MAPPING[hesa_code.code]
     end
   end
 
@@ -126,8 +123,7 @@ namespace :reference_data do
   desc "HESA course subjects reference data checks"
   task course_subjects: :environment do
     HesaCodeChecker.new.call("course_subjects") do |hesa_code|
-      name = Hesa::CodeSets::CourseSubjects::MAPPING[hesa_code.code]
-      CodeSets::CourseSubjects::MAPPING.key?(name) ? name : nil
+      Hesa::CodeSets::CourseSubjects::MAPPING[hesa_code.code]
     end
   end
 
@@ -164,8 +160,7 @@ namespace :reference_data do
   desc "HESA training initiatives reference data checks"
   task training_initiatives: :environment do
     HesaCodeChecker.new.call("training_initiatives") do |hesa_code|
-      name = Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_code.code]
-      CodeSets::TrainingInitiatives::MAPPING.key?(name) ? name : nil
+      Hesa::CodeSets::TrainingInitiatives::MAPPING[hesa_code.code]
     end
   end
 
@@ -204,8 +199,7 @@ namespace :reference_data do
   desc "HESA degree institutions reference data checks"
   task degree_countries: :environment do
     HesaCodeChecker.new.call("degree_countries") do |hesa_code|
-      country_name = Hesa::CodeSets::Countries::MAPPING[hesa_code.code]
-      CodeSets::Countries::MAPPING.key?(country_name) ? country_name : nil
+      Hesa::CodeSets::Countries::MAPPING[hesa_code.code]
     end
   end
 end
