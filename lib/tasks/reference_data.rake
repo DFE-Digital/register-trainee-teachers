@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Data is from the HESA ITT collection for 2024/25, downloaded from https://www.hesa.ac.uk/collection/c24053/
 HESA_CSV_PATH = Rails.root.join("data/hesa/").freeze
 
 HesaCode = Struct.new(:code, :label)
