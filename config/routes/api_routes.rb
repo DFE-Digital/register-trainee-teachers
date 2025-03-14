@@ -23,9 +23,16 @@ module ApiRoutes
       namespace :api_docs, path: "api-docs" do
         get "/" => "pages#show", as: :home
         get "/reference" => "reference#show", as: :reference
-        get "/:api_version/openapi" => "openapi#show", constraints: { api_version: /v[.0-9]+(-pre)?/ }, as: :openapi
-        get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+(-pre)?/ }, as: :versioned_reference
+        get "/hesa-reference" => "hesa_reference#index", as: :hesa_reference
         get "/:page" => "pages#show", as: :page
+
+        constraints(api_version: /v[.0-9]+(-pre)?/) do
+          get "/:api_version/openapi" => "openapi#show", as: :openapi
+          get "/:api_version/reference" => "reference#show", as: :versioned_reference
+          get "/:api_version/hesa-reference" => "hesa_reference#index", as: :versioned_hesa_reference
+          get "/:api_version/hesa-reference/trainee/:attribute" => "hesa_references/trainees#show", as: :hesa_reference_trainee_attribute
+          get "/:api_version/hesa-reference/degree/:attribute" => "hesa_references/degrees#show", as: :hesa_reference_degree_attribute
+        end
       end
 
       namespace :csv_docs, path: "csv-docs" do
