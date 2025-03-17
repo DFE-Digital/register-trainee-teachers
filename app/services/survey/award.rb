@@ -2,13 +2,10 @@
 
 module Survey
   # Service for sending QTS award surveys to trainees
-  # This class handles the specific implementation details for award surveys
   class Award < Base
-    include ServicePattern
-    
     delegate :awarded_at, to: :trainee
 
-    private
+  private
 
     def survey_id
       Settings.qualtrics.award.survey_id
@@ -40,4 +37,4 @@ module Survey
       }
     end
   end
-end 
+end

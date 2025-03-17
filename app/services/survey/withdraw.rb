@@ -2,13 +2,10 @@
 
 module Survey
   # Service for sending withdrawal surveys to trainees
-  # This class handles the specific implementation details for withdrawal surveys
   class Withdraw < Base
-    include ServicePattern
-    
     delegate :withdraw_date, to: :trainee
 
-    private
+  private
 
     def survey_id
       Settings.qualtrics.withdraw.survey_id
@@ -20,10 +17,6 @@ module Survey
 
     def message_id
       Settings.qualtrics.withdraw.message_id
-    end
-
-    def from_name
-      "Teacher Training Support"
     end
 
     def subject
@@ -39,9 +32,9 @@ module Survey
 
     def embedded_data_for_distribution
       {
-        withdraw_date: withdraw_date,
-        training_route: training_route,
+        withdraw_date:,
+        training_route:,
       }
     end
   end
-end 
+end
