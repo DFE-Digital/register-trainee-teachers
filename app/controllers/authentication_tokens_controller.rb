@@ -5,9 +5,9 @@ class AuthenticationTokensController < ApplicationController
     authorize(tokens)
   end
 
-  private
+private
 
-    def tokens
-      @tokens ||= policy_scope(AuthenticationToken)
-    end
+  def tokens
+    @tokens ||= policy_scope(AuthenticationToken).includes(:provider)
+  end
 end

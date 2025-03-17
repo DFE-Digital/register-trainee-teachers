@@ -7,10 +7,15 @@ feature "Organisation details" do
     given_i_am_authenticated(user:)
   end
 
+  let!(:token_1) { create(:authentication_token, provider:) }
+  let!(:token_2) { create(:authentication_token, provider: provider, expires_at: (1.month.ago + 1.day)) }
+  let!(:token_3) { create(:authentication_token) }
+
   context "when a User belongs to a Provider organisation" do
     let(:accreditation_id) { Faker::Number.unique.number(digits: 4) }
     let(:organisation) { create(:provider, accreditation_id:) }
     let(:user) { create(:user, providers: [organisation]) }
+    let(:provider) { organisation }
 
     let!(:user_one) { create(:user, providers: [organisation]) }
     let!(:user_two) { create(:user, providers: [organisation]) }
@@ -36,6 +41,9 @@ feature "Organisation details" do
 
       when_i_click_on_manage_your_tokens_link
       then_i_see_the_token_management_page
+
+      when_i_click_on_back_link
+      and_i_see_api_tokens_details
     end
   end
 
@@ -43,6 +51,7 @@ feature "Organisation details" do
     let(:accreditation_id) { nil }
     let(:organisation) { create(:lead_partner, :hei) }
     let(:user) { create(:user, lead_partners: [organisation]) }
+    let(:provider) { organisation.provider }
 
     let!(:user_one) { create(:user, lead_partners: [organisation]) }
     let!(:user_two) { create(:user, lead_partners: [organisation]) }
@@ -58,15 +67,39 @@ feature "Organisation details" do
       and_i_see_the_organisation_team_members
       and_i_see_the_contact_support_email
     end
+
+    scenario "a user views the authentication tokens page", js: true do
+      when_i_click_on_the_organisation_settings_link
+      and_i_see_api_tokens_details
+
+      and_i_click_on_view_docs_link do |window|
+        then_i_see_the_documentation(window)
+      end
+
+      when_i_click_on_manage_your_tokens_link
+      then_i_see_the_token_management_page
+
+      when_i_click_on_back_link
+      and_i_see_api_tokens_details
+    end
   end
 
   context "when a user is a system admin with no organisation" do
     let(:user) { create(:user, :system_admin) }
+    let(:provider) { create(:provider) }
 
     scenario "a user attempts to view the organisation settings page" do
       expect(page).not_to have_link("Organisation settings")
 
       organisation_settings_page.load
+
+      expect(page).to have_content(
+        "You do not have permission to perform this action",
+      )
+    end
+
+    scenario "a user attempts to view the token management page" do
+      token_management_page.load
 
       expect(page).to have_content(
         "You do not have permission to perform this action",
@@ -87,39 +120,38 @@ private
   def and_i_see_api_tokens_details
     expect(organisation_settings_page).to have_content("API Tokens")
     expect(organisation_settings_page).to have_content(
-      "If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token."
+      "If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.",
     )
     expect(organisation_settings_page).to have_content(
-      "What is an API token?"
+      "What is an API token?",
     )
     expect(organisation_settings_page).to have_content(
-      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your Student Record System directly into the Register service via the Register API (piece of software)."
+      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your Student Record System directly into the Register service via the Register API (piece of software).",
     )
 
     expect("Your token is needed by the developers who are managing your Register API integration.")
     expect(organisation_settings_page).to have_content(
-      "You can view and use the Register API technical documentation (opens in new tab)."
+      "You can view and use the Register API technical documentation (opens in new tab).",
     )
     expect(organisation_settings_page).to have_content(
-      "How to manage your API token"
+      "How to manage your API token",
     )
     expect(organisation_settings_page).to have_content(
-      "The Register API is used to make trainee data transfer quicker and easier."
+      "The Register API is used to make trainee data transfer quicker and easier.",
     )
     expect(organisation_settings_page).to have_content(
-      "You must make sure the token is securely sent to the developers managing your Register API integration."
+      "You must make sure the token is securely sent to the developers managing your Register API integration.",
     )
     expect(organisation_settings_page).to have_content(
-      "In the 'Manage your API token' screen, you can:"
+      "In the 'Manage your API token' screen, you can:",
     )
     expect(organisation_settings_page).to have_content(
-      "view a list of tokens, their description, expiry date, date last used"
+      "view a list of tokens, their description, expiry date, date last used",
     )
     expect(organisation_settings_page).to have_content(
-      "generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token"
+      "generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token",
     )
   end
-
 
   def then_i_see_the_token_management_page
     expect(token_management_page).to have_content("Manage your API tokens")
@@ -127,23 +159,24 @@ private
     expect(token_management_page).to have_content("You must make sure the token is securely sent to the developers managing your Register API integration.")
     expect(token_management_page).to have_content("Previously created tokens")
 
-    within(all(".govuk-summary-card__title-wrapper").first) do
-      expect(token_management_page).to have_content("Token 1")
-      expect(token_management_page).to have_content("Status Active")
-      expect(token_management_page).to have_content("Created by")
-      expect(token_management_page).to have_content("Last used")
+    within("#token-#{token_1.id}") do
+      expect(token_management_page).to have_content("Token #{AuthenticationToken.pluck(:id).index(token_1.id) + 1}")
+      expect(token_management_page).to have_content("Status\tActive")
+      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Revoked by")
       expect(token_management_page).to have_content("Expired")
     end
 
-    within(all(".govuk-summary-card__title-wrapper").first) do
-      expect(token_management_page).to have_content("Token 2")
-      expect(token_management_page).to have_content("Status Active")
-      expect(token_management_page).to have_content("Created by")
-      expect(token_management_page).to have_content("Last used")
-      expect(token_management_page).to have_content("Revoked by")
-      expect(token_management_page).to have_content("Expired")
+    within("#token-#{token_2.id}") do
+      expect(token_management_page).to have_content("Token #{AuthenticationToken.pluck(:id).index(token_2.id) + 1}")
+      expect(token_management_page).to have_content("Status\tExpired")
+      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_content("Expired\t#{token_2.expires_at.to_fs(:govuk)}")
     end
+
+    expect(page).not_to have_css("#token-#{token_3.id}")
   end
 
   def and_i_click_on_view_docs_link

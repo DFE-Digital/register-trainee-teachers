@@ -248,6 +248,8 @@ Rails.application.routes.draw do
   resources :organisations, only: %i[index show], path: "organisations"
   resource :organisation_settings, only: :show, path: "organisation-settings"
 
+  resources :authentication_tokens, only: :index, path: "token-manage"
+
   resource :guidance, only: %i[show], controller: "guidance" do
     get "/about-register-trainee-teachers", to: "guidance#about_register_trainee_teachers"
     get "/dates-and-deadlines", to: "guidance#dates_and_deadlines"

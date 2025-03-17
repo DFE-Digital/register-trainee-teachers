@@ -1,0 +1,33 @@
+<%= render PageTitle::View.new(text: current_user.organisation.name) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Back",
+    href: organisation_settings_path,
+  ) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">Manage your API tokens</h1>
+
+    <p class="govuk-body">
+      These API tokens are unique to your organisation.
+    </p>
+
+    <p class="govuk-body">
+      You must make sure the token is securely sent to the developers managing your Register API integration.
+    </p>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full-from-desktop">
+    <h3 class="govuk-heading-m govuk-!-margin-top-5">Previously created tokens</h3>
+
+    <% @tokens.each do |token| %>
+      <%= render AuthenticationTokens::Details::View.new(token) %>
+    <% end %>
+  </div>
+</div>
