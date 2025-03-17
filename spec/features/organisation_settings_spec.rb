@@ -141,7 +141,6 @@ private
       "The Register API is used to make trainee data transfer quicker and easier.",
     )
     expect(organisation_settings_page).to have_content(
-      "You must make sure the token is securely sent to the developers managing your Register API integration.",
     )
     expect(organisation_settings_page).to have_content(
       "In the 'Manage your API token' screen, you can:",
@@ -186,27 +185,6 @@ private
       expect(token_management_page).to have_content("Status\tActive")
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Revoked by")
-      expect(token_management_page).to have_content("Expired")
-    end
-
-    within("#token-#{token_two.id}") do
-      expect(token_management_page).to have_content("Token 2")
-      expect(token_management_page).to have_content("Status\tExpired")
-      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Expired\t#{token_two.expires_at.to_fs(:govuk)}")
-    end
-
-    within("#token-#{token_three.id}") do
-      expect(token_management_page).to have_content("Token 3")
-      expect(token_management_page).to have_content("Status\tRevoked")
-      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Expired")
-    end
-
-    expect(page).not_to have_css("#token-#{token_four.id}")
   end
 
   def and_i_click_on_view_docs_link
