@@ -21,14 +21,16 @@ module BulkUpdate
       attr_reader :bulk_placement, :provider
 
       def grouped_rows_by_trn
-        bulk_placement.rows.group_by(&:trn)
+        bulk_placement.rows.includes(:row_errors).group_by(&:trn)
       end
 
       def handle_trainee_rows(trn, rows)
         trainees = find_trainees(trn)
+
         return unless valid_trainee?(trainees, trn, rows)
 
         clear_placements!(trainees.first)
+
         import_rows(rows)
       end
 
@@ -54,7 +56,7 @@ module BulkUpdate
       end
 
       def clear_placements!(trainee)
-        trainee.placements.with_urn.destroy_all
+        trainee.placements.with_school.destroy_all
       end
 
       def import_rows(rows)

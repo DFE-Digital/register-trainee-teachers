@@ -170,5 +170,79 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
         )
       end
     end
+
+    context "with a duplicate placement" do
+      let(:params) do
+        { data: }.with_indifferent_access
+      end
+
+      context "with a school" do
+        let!(:placement) { create(:placement, :with_school, trainee:) }
+        let!(:placement_two) { create(:placement, :with_school, trainee:) }
+
+        let(:data) { { urn: placement_two.school.urn } }
+
+        it "updates the placement and returns a 200 (ok) status" do
+          expect {
+            put "/api/v1.0-pre/trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.not_to change {
+            trainee.placements.count
+          }
+
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body["data"]).to include(
+            placement_id: slug,
+            urn: placement_two.urn,
+            name: placement_two.name,
+            postcode: placement_two.postcode,
+            address: placement_two.full_address,
+          )
+
+          placement.reload
+
+          expect(placement.school_id).to eq(placement_two.school.id)
+          expect(placement.urn).to eq(placement_two.urn)
+          expect(placement.name).to eq(placement_two.name)
+          expect(placement.postcode).to eq(placement_two.postcode)
+          expect(placement.address).to be_blank
+        end
+      end
+
+      context "without a school" do
+        let!(:placement) { create(:placement, trainee:) }
+        let!(:placement_two) { create(:placement, trainee:) }
+
+        let(:params) do
+          { data: placement.attributes.except("urn").slice(*placement_attribute_keys) }.with_indifferent_access
+        end
+
+        it "updates the placement and returns a 200 (ok) status" do
+          expect {
+            put "/api/v1.0-pre/trainees/#{trainee_slug}/placements/#{slug}", params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.not_to change {
+            trainee.placements.count
+          }
+
+          expect(response).to have_http_status(:ok)
+
+          expect(response.parsed_body["data"]).to include(
+            "placement_id" => slug,
+            "address" => placement.full_address,
+            "name" => params.dig(:data, :name),
+            "postcode" => params.dig(:data, :postcode),
+            "urn" => placement.urn,
+          )
+
+          placement.reload
+
+          expect(placement.school_id).to be_nil
+          expect(placement.address).to be_nil
+          expect(placement.name).to eq(params.dig(:data, :name))
+          expect(placement.postcode).to eq(params.dig(:data, :postcode))
+          expect(placement.urn).not_to be_blank
+        end
+      end
+    end
   end
 end

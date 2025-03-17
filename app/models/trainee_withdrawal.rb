@@ -12,7 +12,7 @@
 #  trigger         :enum
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  trainee_id      :bigint
+#  trainee_id      :bigint           not null
 #
 # Indexes
 #

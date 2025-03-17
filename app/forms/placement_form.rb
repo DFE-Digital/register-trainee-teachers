@@ -12,7 +12,6 @@ class PlacementForm
 
   validate :school_valid, on: %i[create update]
   validate :school_or_search_valid
-  validate :school_urn_valid
   validates :name, presence: true, if: -> { school_id.blank? && school_search.blank? }
   validate :urn_valid
   validate :postcode_valid
@@ -143,17 +142,7 @@ class PlacementForm
     %i[name urn].intersect?(errors.attribute_names)
   end
 
-  def school_urn_valid
-    if school_id.present? && existing_urns.any?(School.find(school_id).urn)
-      errors.add(:school, :unique)
-    end
-  end
-
   def urn_valid
-    if urn.present? && existing_urns.any?(urn)
-      errors.add(:urn, :unique)
-    end
-
     if urn.present? && !urn.match?(URN_REGEX)
       errors.add(:urn, :invalid_format)
     end
@@ -166,14 +155,6 @@ class PlacementForm
   end
 
 private
-
-  def existing_urns
-    trainee.placements.filter_map do |placement|
-      next if placement.slug == slug
-
-      placement.school&.urn || placement.urn
-    end
-  end
 
   def placement_number
     (placements_form.placements.index { |form| form.placement.slug == placement.slug } || placements_form.placements.count) + 1

@@ -7,7 +7,7 @@ module BulkUpdate
         Config::MAX_PLACEMENTS.times.map do |index|
           number = index + 1
           csv_row["placement #{number} urn"].presence
-        end.compact.uniq
+        end.compact
       end
 
     private
