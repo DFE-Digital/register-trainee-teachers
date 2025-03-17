@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :authentication_token do
-    hashed_token { Digest::SHA256.hexdigest(Time.zone.now.to_s) }
+    hashed_token { Digest::SHA256.hexdigest(SecureRandom.hex(10)) }
     enabled { true }
     provider
     created_by { provider.users.first }

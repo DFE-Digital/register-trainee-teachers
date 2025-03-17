@@ -398,6 +398,10 @@ module Features
       @organisation_settings_page ||= PageObjects::OrganisationSettings.new
     end
 
+    def token_management_page
+      @token_management_page ||= PageObjects::Tokens::Index.new
+    end
+
     def incomplete
       progress_with_prefix(I18n.t("incomplete"))
     end
