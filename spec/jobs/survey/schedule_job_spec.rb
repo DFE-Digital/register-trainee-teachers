@@ -17,9 +17,9 @@ module Survey
 
       it "schedules the SendJob to run in 7 days" do
         expect(SendJob).to receive(:set).with(wait: 7.days)
-        expect(SendJob).to receive(:perform_later).with(trainee: trainee, event_type: event_type)
+        expect(SendJob).to receive(:perform_later).with(trainee:, event_type:)
 
-        described_class.perform_now(trainee: trainee, event_type: event_type)
+        described_class.perform_now(trainee:, event_type:)
       end
     end
 
@@ -33,8 +33,8 @@ module Survey
         expect(SendJob).not_to receive(:set)
         expect(SendJob).not_to receive(:perform_later)
 
-        described_class.perform_now(trainee: trainee, event_type: event_type)
+        described_class.perform_now(trainee:, event_type:)
       end
     end
   end
-end 
+end

@@ -18,10 +18,10 @@ module Survey
         let(:event_type) { :withdraw }
 
         it "calls the Withdraw service" do
-          expect(Withdraw).to receive(:call).with(trainee: trainee)
+          expect(Withdraw).to receive(:call).with(trainee:)
           expect(Award).not_to receive(:call)
 
-          described_class.perform_now(trainee: trainee, event_type: event_type)
+          described_class.perform_now(trainee:, event_type:)
         end
       end
 
@@ -29,10 +29,10 @@ module Survey
         let(:event_type) { :award }
 
         it "calls the Award service" do
-          expect(Award).to receive(:call).with(trainee: trainee)
+          expect(Award).to receive(:call).with(trainee:)
           expect(Withdraw).not_to receive(:call)
 
-          described_class.perform_now(trainee: trainee, event_type: event_type)
+          described_class.perform_now(trainee:, event_type:)
         end
       end
     end
@@ -51,4 +51,4 @@ module Survey
       end
     end
   end
-end 
+end

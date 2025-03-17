@@ -11,6 +11,8 @@ module Dqt
       enable_features(:integrate_with_dqt)
       allow(RecommendForAward).to receive(:call).with(trainee:).and_return(award_date)
       allow(SlackNotifierService).to receive(:call)
+      allow(Survey::ScheduleJob).to receive(:perform_later)
+      allow(Trainees::Update).to receive(:call)
     end
 
     context "we receive an award date" do
@@ -32,6 +34,43 @@ module Dqt
         expect {
           described_class.perform_now(trainee)
         }.to change(trainee, :state).to("awarded")
+      end
+
+      context "survey scheduling" do
+        before do
+          allow(trainee).to receive(:training_route).and_return(training_route)
+          allow(trainee.training_route_manager).to receive(:award_type).and_return(award_type)
+        end
+
+        context "when trainee is on a non-Assessment Only route and has a QTS award" do
+          let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+          let(:award_type) { "QTS" }
+
+          it "schedules a survey" do
+            expect(Survey::ScheduleJob).to receive(:perform_later).with(trainee: trainee, event_type: :award)
+            described_class.perform_now(trainee)
+          end
+        end
+
+        context "when trainee is on an Assessment Only route" do
+          let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
+          let(:award_type) { "QTS" }
+
+          it "does not schedule a survey" do
+            expect(Survey::ScheduleJob).not_to receive(:perform_later)
+            described_class.perform_now(trainee)
+          end
+        end
+
+        context "when trainee has an EYTS award" do
+          let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
+          let(:award_type) { "EYTS" }
+
+          it "does not schedule a survey" do
+            expect(Survey::ScheduleJob).not_to receive(:perform_later)
+            described_class.perform_now(trainee)
+          end
+        end
       end
     end
 
