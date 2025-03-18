@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe SystemAdmin::UsersView do
   let(:provider) { create(:provider) }
-  let(:user) { create(:user, providers: [provider]) }
+  let(:user) { provider.users.first }
 
   subject { described_class.new(provider) }
 
