@@ -3,10 +3,11 @@
 require "rails_helper"
 
 RSpec.describe AuthenticationToken do
-  let(:provider) { create(:provider) }
+  let(:user) { create(:user, :with_multiple_organisations) }
+  let(:provider) { user.providers.first }
 
   describe ".create_with_random_token" do
-    let(:token) { "Bearer #{described_class.create_with_random_token(provider_id: provider.id, name: 'Provider test token')}" }
+    let(:token) { "Bearer #{described_class.create_with_random_token(provider_id: provider.id, name: 'Provider test token', created_by: user)}" }
 
     subject(:authentication_token) { AuthenticationToken.authenticate(token) }
 
@@ -30,7 +31,7 @@ RSpec.describe AuthenticationToken do
 
     it { is_expected.to belong_to(:provider) }
 
-    it { is_expected.to belong_to(:created_by).optional }
+    it { is_expected.to belong_to(:created_by) }
 
     it { is_expected.to belong_to(:revoked_by).optional }
 
@@ -38,18 +39,16 @@ RSpec.describe AuthenticationToken do
   end
 
   describe ".revoke" do
-    let(:revoking_user) { provider.users.first }
+    subject(:authentication_token) { described_class.create(provider_id: provider.id, name: "Provider test token", created_by: user) }
 
-    subject(:authentication_token) { described_class.create(provider_id: provider.id, name: "Provider test token") }
-
-    before { subject.revoke(user: revoking_user) }
+    before { subject.revoke(user:) }
 
     it "revokes the token" do
       expect(subject.revoked?).to be(true)
     end
 
     it "associates the user who revoked the token" do
-      expect(subject.revoked_by).to eq(revoking_user)
+      expect(subject.revoked_by).to eq(user)
     end
 
     it "adds the revocation date for the token" do

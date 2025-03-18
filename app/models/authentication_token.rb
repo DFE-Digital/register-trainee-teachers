@@ -33,7 +33,7 @@
 
 class AuthenticationToken < ApplicationRecord
   belongs_to :provider
-  belongs_to :created_by, class_name: "User", optional: true
+  belongs_to :created_by, class_name: "User"
   belongs_to :revoked_by, class_name: "User", optional: true
 
   validates :hashed_token, presence: true, uniqueness: true
@@ -43,7 +43,7 @@ class AuthenticationToken < ApplicationRecord
     token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
 
-    create(attributes.merge(hashed_token:))
+    create!(attributes.merge(hashed_token:))
     token
   end
 
@@ -61,6 +61,6 @@ class AuthenticationToken < ApplicationRecord
   end
 
   def revoked?
-    !revoked_at.nil?
+    revoked_at.present?
   end
 end
