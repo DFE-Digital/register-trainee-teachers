@@ -35,19 +35,27 @@ module Survey
       expect(described_class.included_modules).to include(ServicePattern)
     end
 
-    # A simple test to verify that the class has the expected behavior
-    it "defines the required abstract methods" do
-      required_methods = %i[
+    describe "abstract methods" do
+      # Use allocate to create an instance without calling initialize
+      let(:base_instance) do
+        instance = described_class.allocate
+        instance.instance_variable_set(:@trainee, trainee)
+        instance
+      end
+
+      %i[
         survey_id
         mailing_list_id
         message_id
         subject
         embedded_data_for_contact
         embedded_data_for_distribution
-      ]
-
-      required_methods.each do |method_name|
-        expect(described_class.instance_methods(false) + described_class.private_instance_methods(false)).to include(method_name)
+      ].each do |method_name|
+        it "raises NotImplementedError for #{method_name}" do
+          expect { base_instance.send(method_name) }.to raise_error(
+            NotImplementedError, "Subclasses must implement #{method_name}"
+          )
+        end
       end
     end
   end
