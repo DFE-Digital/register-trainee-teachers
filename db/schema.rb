@@ -686,10 +686,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_18_153401) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
-    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
+    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
