@@ -33,16 +33,63 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
   end
 
   describe described_class::Scope do
-    let!(:provider_user) { create(:user) }
-    let!(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
+    context "when the User is a Provider" do
+      let!(:provider_user) { create(:user) }
+      let!(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
-    let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: provider_user_context.organisation) }
-    let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
+      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: provider_user_context.organisation) }
+      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
 
-    subject { described_class.new(provider_user_context, AuthenticationToken) }
+      subject { described_class.new(provider_user_context, AuthenticationToken) }
 
-    it "returns only the authentication tokens that belong to the provider of the current user" do
-      expect(subject.resolve).to match_array(provider_user_authentication_tokens)
+      it "returns only the authentication tokens that belong to the provider of the current user" do
+        expect(subject.resolve).to match_array(provider_user_authentication_tokens)
+      end
+    end
+
+    context "when the User is a Lead Partner Provider" do
+      let!(:lead_partner) { create(:lead_partner, :hei) }
+      let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
+      let!(:lead_partner_user_context) {
+        UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
+      }
+
+      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
+      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: lead_partner_user_context.organisation.provider) }
+
+      subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
+
+      it "returns only the authentication tokens that belong to the LeadPartner provider of the current user" do
+        expect(subject.resolve).to match_array(provider_user_authentication_tokens)
+      end
+    end
+
+    context "when the User is a Lead Partner School" do
+      let!(:lead_partner) { create(:lead_partner, :school) }
+      let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
+      let!(:lead_partner_user_context) {
+        UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
+      }
+
+      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
+      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: lead_partner_user.providers.take) }
+
+      subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
+
+      it "returns empty" do
+        expect(subject.resolve).to be_empty
+      end
+    end
+
+    context "when the User does not have an organisation" do
+      let!(:user) { create(:user, :with_no_organisation_in_db) }
+      let!(:user_context) { UserWithOrganisationContext.new(user: user, session: {}) }
+
+      subject { described_class.new(user_context, AuthenticationToken) }
+
+      it "returns empty" do
+        expect(subject.resolve).to be_empty
+      end
     end
   end
 end

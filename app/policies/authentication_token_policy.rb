@@ -11,7 +11,11 @@ class AuthenticationTokenPolicy
     end
 
     def resolve
-      scope.where(provider: user.organisation)
+      if user.lead_partner?
+        scope.where(provider_id: user.organisation.provider_id)
+      else
+        scope.where(provider_id: user&.organisation&.id)
+      end
     end
   end
 
