@@ -73,11 +73,11 @@ class AuthenticationToken < ApplicationRecord
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
 
   def self.create_with_random_token(attributes = {})
-    token = "#{Rails.env}_" + SecureRandom.hex(10)
-    hashed_token = hash_token(token)
+    token_string = "#{Rails.env}_" + SecureRandom.hex(10)
+    hashed_token = hash_token(token_string)
 
-    create(attributes.merge(hashed_token:))
-    token
+    authentication_token = create(attributes.merge(hashed_token:))
+    [authentication_token, token_string]
   end
 
   def self.hash_token(token)

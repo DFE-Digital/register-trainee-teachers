@@ -14,12 +14,16 @@ class AuthenticationTokensController < ApplicationController
 
   def create
     authorize(AuthenticationToken, :create?)
-    @token, auth_token = AuthenticationToken.create_with_random_token(token_params)
-
-    # TODO: Set the `created_by` attribute to the current user
+    @token, token_string = AuthenticationToken.create_with_random_token(
+      token_params.merge(
+        provider: current_user.organisation,
+        created_by: current_user,
+      ),
+    )
 
     if @token.persisted?
-      redirect_to(authentication_tokens_path)
+      flash[:token] = token_string
+      redirect_to(authentication_token_path(@token))
     else
       render(:new)
     end
@@ -34,7 +38,6 @@ private
   end
 
   def token_params
-    #TODO: Add the `name` to the strong params
-    params.require(:authentication_token).permit(:expires_at)
+    params.require(:authentication_token).permit(:expires_at, :name)
   end
 end

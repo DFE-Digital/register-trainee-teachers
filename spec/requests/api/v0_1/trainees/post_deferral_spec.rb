@@ -3,8 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "POST /trainees/{trainee_id}/defer" do
-  let!(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider, created_by: trainee.provider.users.first, name: "test token") }
-
+  let!(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider, created_by: trainee.provider.users.first, name: "test token").last }
   let(:defer_date) { Time.zone.today.iso8601 }
 
   describe "success" do

@@ -33,7 +33,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
   end
 
   context "with an valid authentication token and the feature flag off", feature_register_api: false do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
 
     it "returns status code 404 not found" do
       put(
@@ -47,7 +47,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
   end
 
   context "with a valid authentication token" do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
     let(:slug) { trainee.slug }
     let(:endpoint) { "/api/v1.0-pre/trainees/#{slug}" }
     let(:data) { { first_names: "Alice" } }
@@ -955,7 +955,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
 
     context "with course subjects" do
-      let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
+      let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
 
       context "when HasCourseAttributes#primary_education_phase? is true" do
         before do
