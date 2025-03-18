@@ -12,6 +12,11 @@ FactoryBot.define do
       provider.accreditation_id ||= "#{provider.name.include?('University') ? 1 : 5}#{Faker::Number.unique.number(digits: 4)}"
     end
 
+    after(:create) do |provider|
+      user = create(:user)
+      create(:provider_user, user:, provider:)
+    end
+
     trait :unaccredited do
       accredited { false }
     end
