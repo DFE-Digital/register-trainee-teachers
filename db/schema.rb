@@ -754,15 +754,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_141354) do
     t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
   end
 
-  create_table "lead_school_users", force: :cascade do |t|
-    t.bigint "lead_school_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lead_school_id"], name: "index_lead_school_users_on_lead_school_id"
-    t.index ["user_id"], name: "index_lead_school_users_on_user_id"
-  end
-
   create_table "nationalisations", force: :cascade do |t|
     t.bigint "trainee_id", null: false
     t.bigint "nationality_id", null: false
