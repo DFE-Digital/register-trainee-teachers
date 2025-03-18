@@ -58,6 +58,25 @@ class AuthenticationToken < ApplicationRecord
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
 
+  enum :status, {
+    active: "active",
+    expired: "expired",
+    revoked: "revoked",
+  } do
+    event :revoke do
+      before do
+        self.revoked_by = Current.user
+        self.revoked_at = Time.current
+      end
+
+      transition [:active] => :revoked
+    end
+
+    event :expire do
+      transition [:active] => :expired
+    end
+  end
+
   def self.create_with_random_token(attributes = {})
     token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
