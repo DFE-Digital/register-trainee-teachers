@@ -131,11 +131,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_18_153401) do
     t.date "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
     t.string "name", null: false
-=======
-    t.string "name"
->>>>>>> d2c52f898 (rename attributes and update revoke method)
     t.datetime "revoked_at"
     t.datetime "last_used_at"
     t.bigint "created_by_id"
