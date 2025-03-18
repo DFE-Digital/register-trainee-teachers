@@ -50,9 +50,10 @@ module Dqt
           let(:award_type) { "QTS" }
 
           it "schedules a survey with the configured delay" do
-            expect(Survey::SendJob).to receive(:set).with(wait: days_delayed.days).and_return(delayed_job)
-            expect(delayed_job).to receive(:perform_later).with(trainee: trainee, event_type: :award)
+            allow(Survey::SendJob).to receive(:set).with(wait: days_delayed.days).and_return(delayed_job)
             described_class.perform_now(trainee)
+            expect(Survey::SendJob).to have_received(:set).with(wait: days_delayed.days)
+            expect(delayed_job).to have_received(:perform_later).with(trainee: trainee, event_type: :award)
           end
         end
 
