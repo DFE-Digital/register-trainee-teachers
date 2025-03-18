@@ -7,6 +7,7 @@ feature "View users" do
     let(:user) { create(:user, system_admin: true) }
 
     before do
+      provider.users = [user]
       given_i_am_authenticated(user:)
       and_a_provider_exists
       when_i_visit_the_provider_index_page
@@ -40,6 +41,6 @@ feature "View users" do
   end
 
   def provider
-    @provider ||= create(:provider, users: [build(:user)])
+    @provider ||= create(:provider)
   end
 end
