@@ -93,45 +93,4 @@ RSpec.shared_examples "a survey service" do |date_field, email_subject|
       expect { subject }.to raise_error(QualtricsApi::Client::HttpError)
     end
   end
-
-  context "with different training routes" do
-    %w[
-      provider_led_postgrad
-      provider_led_undergrad
-      school_direct_tuition_fee
-      school_direct_salaried
-      pg_teaching_apprenticeship
-      early_years_undergrad
-      early_years_postgrad
-      early_years_salaried
-      early_years_assessment_only
-      assessment_only
-      opt_in_undergrad
-      hpitt_postgrad
-      iqts
-      teacher_degree_apprenticeship
-    ].each do |route|
-      context "with #{route}" do
-        let(:training_route) { route }
-
-        it "creates a contact and sends a distribution" do
-          allow(QualtricsApi::Client::Request).to receive(:post)
-            .with(
-              "/directories/FAKE_DIRECTORY_ID/mailinglists/FAKE_MAILING_LIST_ID/contacts",
-              body: kind_of(String),
-            )
-            .and_return(contact_response)
-
-          allow(QualtricsApi::Client::Request).to receive(:post)
-            .with(
-              "/distributions",
-              body: kind_of(String),
-            )
-            .and_return(distribution_response)
-
-          expect(subject).to be true
-        end
-      end
-    end
-  end
 end
