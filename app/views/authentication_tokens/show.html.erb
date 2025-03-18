@@ -1,0 +1,36 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: authentication_tokens_path) %>
+<% end %>
+
+<%= render PageTitle::View.new(
+  text: "Organisation – #{current_user.organisation.name}",
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govuk_panel(
+      title_text: "Token generated",
+      classes: "govuk-panel govuk-panel--confirmation",
+    ) do %>
+      <p>
+        Your API token is
+        <br/>
+        <strong><%= flash[:token] %></strong>
+      </p>
+    <% end %>
+
+    <%= register_form_with(model: @token, url: authentication_tokens_path) do |f| %>
+      <p class="govuk-body">Make sure to copy your API token now as you will not be able to see it again.</p>
+
+      <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+
+      <%= f.govuk_submit("Copy token") %>
+
+      <p class="govuk-body">
+        <a class="govuk-link" href="<%= authentication_tokens_path %>">
+          Continue to manage tokens
+        </a>
+      </p>
+    <% end %>
+  </div>
+</div>
