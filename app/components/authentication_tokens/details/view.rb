@@ -25,7 +25,7 @@ module AuthenticationTokens
             key: { text: "Status" }, value: { text: status }
           },
           {
-            key: { text: "Created by" }, value: { text: created_by.present? ? "#{created_by.name} on #{created_at.to_date.to_fs(:govuk)}" : nil }
+            key: { text: "Created by" }, value: { text: ("#{created_by.name} on #{created_at.to_date.to_fs(:govuk)}" if created_by.present?) }
           },
           {
             key: { text: "Last used" }, value: { text: last_used_at&.to_date&.to_fs(:govuk) }
