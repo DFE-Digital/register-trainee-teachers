@@ -1,0 +1,41 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h2 class="govuk-heading-l">Create a token</h2>
+
+    <p class="govuk-body">This API token is unique to your organisation.</p>
+
+    <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+
+    <%= register_form_with(model: @token, url: authentication_tokens_path) do |f| %>
+      <%= f.govuk_text_field(
+        :name,
+        label: {
+          text: "Token name",
+          size: "s",
+          classes: "govuk-fieldset__legend--s govuk-!-font-weight-bold",
+        },
+        hint: { text: "Give this token a name to identify where it's being used" },
+        value: "",
+        width: "three-quarters",
+        spellcheck: false,
+        classes: "govuk-input--extra-letter-spacing",
+      ) %>
+
+      <%= f.govuk_date_field(:expires_at,
+        legend: {
+          text: "Expiration date (optional)",
+          size: "s",
+          classes: "govuk-fieldset__legend--s govuk-!-font-weight-bold",
+        },
+        hint: {
+          text: "For example, 27 3 2024",
+        },
+      ) %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit("Generate token") %>
+        <a class="govuk-link" href='javascript:history.back();'>Cancel</a>
+      </div>
+    <% end %>
+  </div>
+</div>
