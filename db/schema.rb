@@ -132,9 +132,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_141354) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
-    t.boolean "revoked", default: false, null: false
-    t.datetime "revocation_date"
-    t.datetime "last_used_date"
+    t.datetime "revoked_at"
+    t.datetime "last_used_at"
     t.bigint "created_by_id"
     t.bigint "revoked_by_id"
     t.index ["created_by_id"], name: "index_authentication_tokens_on_created_by_id"

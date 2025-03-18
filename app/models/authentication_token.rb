@@ -4,19 +4,18 @@
 #
 # Table name: authentication_tokens
 #
-#  id              :bigint           not null, primary key
-#  enabled         :boolean          default(TRUE), not null
-#  expires_at      :date
-#  hashed_token    :string           not null
-#  last_used_date  :datetime
-#  name            :string
-#  revocation_date :datetime
-#  revoked         :boolean          default(FALSE), not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  created_by_id   :bigint
-#  provider_id     :bigint           not null
-#  revoked_by_id   :bigint
+#  id            :bigint           not null, primary key
+#  enabled       :boolean          default(TRUE), not null
+#  expires_at    :date
+#  hashed_token  :string           not null
+#  last_used_at  :datetime
+#  name          :string
+#  revoked_at    :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  created_by_id :bigint
+#  provider_id   :bigint           not null
+#  revoked_by_id :bigint
 #
 # Indexes
 #
@@ -58,6 +57,10 @@ class AuthenticationToken < ApplicationRecord
   end
 
   def revoke(user:)
-    update(revoked: true, revoked_by: user, revocation_date: Time.zone.now)
+    update(revoked_by: user, revoked_at: Time.zone.now)
+  end
+
+  def revoked?
+    !revoked_at.nil?
   end
 end

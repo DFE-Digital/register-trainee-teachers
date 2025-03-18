@@ -53,7 +53,7 @@ RSpec.describe AuthenticationToken do
     end
 
     it "adds the revocation date for the token" do
-      expect(subject.revocation_date).not_to be_nil
+      expect(subject.revoked_at).not_to be_nil
     end
   end
 end
