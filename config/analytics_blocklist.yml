@@ -71,6 +71,12 @@
     - expires_at
     - created_at
     - updated_at
+    - name
+    - revoked
+    - revocation_date
+    - last_used_date
+    - created_by_id
+    - revoked_by_id
   :disabilities:
     - name
     - description

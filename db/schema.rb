@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_14_141354) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -131,8 +131,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
     t.date "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.boolean "revoked", default: false, null: false
+    t.datetime "revocation_date"
+    t.datetime "last_used_date"
+    t.bigint "created_by_id"
+    t.bigint "revoked_by_id"
+    t.index ["created_by_id"], name: "index_authentication_tokens_on_created_by_id"
     t.index ["hashed_token"], name: "index_authentication_tokens_on_hashed_token", unique: true
     t.index ["provider_id"], name: "index_authentication_tokens_on_provider_id"
+    t.index ["revoked_by_id"], name: "index_authentication_tokens_on_revoked_by_id"
   end
 
   create_table "blazer_audits", force: :cascade do |t|
@@ -677,10 +685,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
+    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
-    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
@@ -745,6 +753,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
     t.index ["school_id"], name: "index_lead_partners_on_school_id", unique: true
     t.index ["ukprn"], name: "index_lead_partners_on_ukprn", unique: true
     t.index ["urn"], name: "index_lead_partners_on_urn", unique: true
+  end
+
+  create_table "lead_school_users", force: :cascade do |t|
+    t.bigint "lead_school_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lead_school_id"], name: "index_lead_school_users_on_lead_school_id"
+    t.index ["user_id"], name: "index_lead_school_users_on_user_id"
   end
 
   create_table "nationalisations", force: :cascade do |t|
@@ -1056,6 +1073,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_05_123050) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
   add_foreign_key "authentication_tokens", "providers"
+  add_foreign_key "authentication_tokens", "users", column: "created_by_id"
+  add_foreign_key "authentication_tokens", "users", column: "revoked_by_id"
   add_foreign_key "bulk_update_placement_rows", "bulk_update_placements"
   add_foreign_key "bulk_update_placement_rows", "schools"
   add_foreign_key "bulk_update_placements", "providers"
