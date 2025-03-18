@@ -36,4 +36,24 @@ RSpec.describe AuthenticationToken do
 
     it { is_expected.to validate_length_of(:name).is_at_most(200) }
   end
+
+  describe ".revoke" do
+    let(:revoking_user) { provider.users.first }
+
+    subject(:authentication_token) { described_class.create(provider_id: provider.id, name: "Provider test token") }
+
+    before { subject.revoke(user: revoking_user) }
+
+    it "revokes the token" do
+      expect(subject.revoked?).to be(true)
+    end
+
+    it "associates the user who revoked the token" do
+      expect(subject.revoked_by).to eq(revoking_user)
+    end
+
+    it "adds the revocation date for the token" do
+      expect(subject.revocation_date).not_to be_nil
+    end
+  end
 end

@@ -56,4 +56,8 @@ class AuthenticationToken < ApplicationRecord
     token_without_prefix = unhashed_token.split.last
     find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
   end
+
+  def revoke(user:)
+    update(revoked: true, revoked_by: user, revocation_date: Time.zone.now)
+  end
 end
