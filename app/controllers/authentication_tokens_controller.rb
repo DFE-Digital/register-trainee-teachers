@@ -7,6 +7,11 @@ class AuthenticationTokensController < ApplicationController
     authorize(tokens)
   end
 
+  def new
+    @token = AuthenticationToken.new
+    authorize(@token)
+  end
+
 private
 
   def tokens
