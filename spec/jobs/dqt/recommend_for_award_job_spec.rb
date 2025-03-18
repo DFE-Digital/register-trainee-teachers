@@ -6,13 +6,16 @@ module Dqt
   describe RecommendForAwardJob do
     let(:award_date) { nil }
     let(:trainee) { create(:trainee, :recommended_for_award) }
+    let(:delayed_job) { double(perform_later: true) }
+    let(:days_delayed) { 7 }
 
     before do
       enable_features(:integrate_with_dqt)
       allow(RecommendForAward).to receive(:call).with(trainee:).and_return(award_date)
       allow(SlackNotifierService).to receive(:call)
-      allow(Survey::ScheduleJob).to receive(:perform_later)
+      allow(Survey::SendJob).to receive(:set).and_return(delayed_job)
       allow(Trainees::Update).to receive(:call)
+      allow(Settings).to receive_message_chain(:qualtrics, :days_delayed).and_return(days_delayed)
     end
 
     context "we receive an award date" do
@@ -46,8 +49,9 @@ module Dqt
           let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
           let(:award_type) { "QTS" }
 
-          it "schedules a survey" do
-            expect(Survey::ScheduleJob).to receive(:perform_later).with(trainee: trainee, event_type: :award)
+          it "schedules a survey with the configured delay" do
+            expect(Survey::SendJob).to receive(:set).with(wait: days_delayed.days).and_return(delayed_job)
+            expect(delayed_job).to receive(:perform_later).with(trainee: trainee, event_type: :award)
             described_class.perform_now(trainee)
           end
         end
@@ -57,7 +61,7 @@ module Dqt
           let(:award_type) { "QTS" }
 
           it "does not schedule a survey" do
-            expect(Survey::ScheduleJob).not_to receive(:perform_later)
+            expect(Survey::SendJob).not_to receive(:set)
             described_class.perform_now(trainee)
           end
         end
@@ -67,7 +71,7 @@ module Dqt
           let(:award_type) { "EYTS" }
 
           it "does not schedule a survey" do
-            expect(Survey::ScheduleJob).not_to receive(:perform_later)
+            expect(Survey::SendJob).not_to receive(:set)
             described_class.perform_now(trainee)
           end
         end

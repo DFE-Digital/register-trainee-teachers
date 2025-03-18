@@ -14,7 +14,7 @@ module Dqt
 
       if award_date
         trainee.award_qts!(award_date)
-        Survey::ScheduleJob.perform_later(trainee: trainee, event_type: :award) if survey_should_be_scheduled?
+        Survey::SendJob.set(wait: Settings.qualtrics.days_delayed.days).perform_later(trainee: trainee, event_type: :award) if survey_should_be_scheduled?
         Trainees::Update.call(trainee: trainee, update_dqt: false)
       else
         raise(

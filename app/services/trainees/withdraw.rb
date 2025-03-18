@@ -10,7 +10,7 @@ module Trainees
 
     def call
       Dqt::WithdrawTraineeJob.perform_later(trainee)
-      Survey::ScheduleJob.perform_later(trainee: trainee, event_type: :withdraw) if trainee_withdrawal_valid_for_survey?
+      Survey::SendJob.set(wait: Settings.qualtrics.days_delayed.days).perform_later(trainee: trainee, event_type: :withdraw) if trainee_withdrawal_valid_for_survey?
     end
 
   private
