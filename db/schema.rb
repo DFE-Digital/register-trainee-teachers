@@ -131,7 +131,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_14_141354) do
     t.date "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.string "name", default: "Test token", null: false
     t.datetime "revoked_at"
     t.datetime "last_used_at"
     t.bigint "created_by_id"
