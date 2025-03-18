@@ -7,9 +7,9 @@ feature "Organisation details" do
     given_i_am_authenticated(user:)
   end
 
-  let!(:token_1) { create(:authentication_token, provider:) }
-  let!(:token_2) { create(:authentication_token, provider: provider, expires_at: (1.month.ago + 1.day)) }
-  let!(:token_3) { create(:authentication_token) }
+  let!(:token_one) { create(:authentication_token, provider:) }
+  let!(:token_two) { create(:authentication_token, provider: provider, expires_at: (1.month.ago + 1.day)) }
+  let!(:token_three) { create(:authentication_token) }
 
   context "when a User belongs to a Provider organisation" do
     let(:accreditation_id) { Faker::Number.unique.number(digits: 4) }
@@ -51,7 +51,7 @@ feature "Organisation details" do
     let(:accreditation_id) { nil }
     let(:organisation) { create(:lead_partner, :hei) }
     let(:user) { create(:user, lead_partners: [organisation]) }
-    let(:provider) { organisation.provider }
+    let!(:provider) { organisation.provider }
 
     let!(:user_one) { create(:user, lead_partners: [organisation]) }
     let!(:user_two) { create(:user, lead_partners: [organisation]) }
@@ -159,8 +159,8 @@ private
     expect(token_management_page).to have_content("You must make sure the token is securely sent to the developers managing your Register API integration.")
     expect(token_management_page).to have_content("Previously created tokens")
 
-    within("#token-#{token_1.id}") do
-      expect(token_management_page).to have_content("Token #{AuthenticationToken.pluck(:id).index(token_1.id) + 1}")
+    within("#token-#{token_one.id}") do
+      expect(token_management_page).to have_content("Token #{AuthenticationToken.pluck(:id).index(token_one.id) + 1}")
       expect(token_management_page).to have_content("Status\tActive")
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
@@ -168,15 +168,15 @@ private
       expect(token_management_page).to have_content("Expired")
     end
 
-    within("#token-#{token_2.id}") do
-      expect(token_management_page).to have_content("Token #{AuthenticationToken.pluck(:id).index(token_2.id) + 1}")
+    within("#token-#{token_two.id}") do
+      expect(token_management_page).to have_content("Token #{AuthenticationToken.pluck(:id).index(token_two.id) + 1}")
       expect(token_management_page).to have_content("Status\tExpired")
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Expired\t#{token_2.expires_at.to_fs(:govuk)}")
+      expect(token_management_page).to have_content("Expired\t#{token_two.expires_at.to_fs(:govuk)}")
     end
 
-    expect(page).not_to have_css("#token-#{token_3.id}")
+    expect(page).not_to have_css("#token-#{token_three.id}")
   end
 
   def and_i_click_on_view_docs_link
