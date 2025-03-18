@@ -89,11 +89,11 @@ module Survey
     end
 
     def send_date
-      5.seconds.from_now.utc.iso8601
+      Settings.qualtrics.minutes_delayed.minutes.from_now.utc.iso8601
     end
 
     def expiration_date
-      5.days.from_now.utc.iso8601
+      Settings.qualtrics.days_delayed.days.from_now.utc.iso8601
     end
 
     def directory_id

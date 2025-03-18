@@ -204,6 +204,8 @@ qualtrics:
   directory_id: POOL_please_change_me
   base_url: https://fra1.qualtrics.com/API/v3/
   library_id: UR_please_change_me
+  minutes_delayed: 5
+  days_delayed: 7
   withdraw:
     survey_id: SV_please_change_me
     mailing_list_id: CG_please_change_me
@@ -212,4 +214,3 @@ qualtrics:
     survey_id: SV_please_change_me
     mailing_list_id: CG_please_change_me
     message_id: MS_please_change_me
-  survey_delay_days: 7

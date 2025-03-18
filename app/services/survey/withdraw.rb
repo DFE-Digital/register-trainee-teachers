@@ -3,7 +3,6 @@
 module Survey
   # Service for sending withdrawal surveys to trainees
   class Withdraw < Base
-
     delegate :withdraw_date, to: :trainee
 
   private

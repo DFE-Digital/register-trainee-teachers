@@ -3,6 +3,8 @@
 module Survey
   # Service for sending QTS award surveys to trainees
   class Award < Base
+    include ServicePattern
+
     delegate :awarded_at, to: :trainee
 
   private
