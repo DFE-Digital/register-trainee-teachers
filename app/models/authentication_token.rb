@@ -9,7 +9,7 @@
 #  expires_at    :date
 #  hashed_token  :string           not null
 #  last_used_at  :datetime
-#  name          :string           default("Test token"), not null
+#  name          :string           not null
 #  revoked_at    :datetime
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
