@@ -1197,33 +1197,6 @@ Placement details
 </details>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 409<span> - Conflict</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "Conflict",
-          "message": "Urn has already been taken"
-        }
-      ],
-      "data": [
-        {
-          "urn": "896801",
-          "name": "existing placement",
-          "address": "URN 896801, ZV24 7ET",
-          "postcode": "ZV24 7ET",
-          "created_at": "2025-02-17T16:07:07.856Z",
-          "updated_at": "2025-02-17T16:07:07.873Z",
-          "placement_id": "fpe10ornjexqakjg4sgzjyhj"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
   <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
@@ -1238,17 +1211,6 @@ Placement details
     </pre>
   </div>
 </details>
-
-#### Placement duplication validations
-When creating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks the following fields:
-
-<ul class='govuk-list govuk-list--bullet'>
-  <li><code>urn</code></li>
-</ul>
-
-If a placement with the same `urn` already exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
-
-This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
 
 ---
 
@@ -2624,17 +2586,6 @@ Placement details
   </div>
 </details>
 
-#### Placement duplication validations
-When updating a placement, a duplication validation is performed to ensure that duplicate placements are not created. This validation checks the following fields:
-
-<ul class='govuk-list govuk-list--bullet'>
-  <li><code>urn</code></li>
-</ul>
-
-If a placement with the same `urn` exists for the same trainee, it is considered a duplicate and will return an error message indicating already been taken.
-
-This validation ensures that duplicate placement records for the same trainee are not created, and helps to maintain the data accuracy and data integrity.
-
 ---
 
 ### `PUT|PATCH /trainees/{trainee_id}/degrees/{degree_id}`
@@ -3396,6 +3347,13 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
+      </p>
+      <p class="govuk-body">
+        The following HESA values are invalid for this field:
+        <ul class='govuk-list govuk-list--bullet'>
+          <li><code>99801</code> - Teacher training qualification: Further education/Higher education</li>
+          <li><code>99803</code> - Teacher training qualification: Other</li>
+        </ul>
       </p>
     </dd>
   </div>

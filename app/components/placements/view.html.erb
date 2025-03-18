@@ -26,8 +26,8 @@
     has_errors: has_errors,
   ) %>
 <% else %>
-  <% placement_summaries.each do |placement_summary_args| %>
-    <%= render MappableSummary::View.new(**placement_summary_args.except(:placement)) do |component| %>
+  <% placement_summaries.each_with_index do |placement_summary_args, index| %>
+    <%= render MappableSummary::View.new(**placement_summary_args.except(:placement), id_suffix: index + 1) do |component| %>
       <% component.with_header_actions do %>
         <%= govuk_link_to(
           "Remove placement",

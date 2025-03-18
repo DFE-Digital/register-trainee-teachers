@@ -579,7 +579,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     end
 
     context "when read only attributes are submitted", openapi: false do
-      let(:ethnic_background) { CodeSets::Ethnicities::MAPPING.keys.sample }
+      let(:ethnic_background) { Hesa::CodeSets::Ethnicities::MAPPING.values.uniq.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
       let(:trainee) do
         create(
@@ -679,7 +679,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           ethnic_background:,
         )
       end
-      let(:ethnic_background) { CodeSets::Ethnicities::MAPPING.keys.sample }
+      let(:ethnic_background) { Hesa::CodeSets::Ethnicities::MAPPING.values.uniq.sample }
       let(:ethnic_group) { Diversities::BACKGROUNDS.select { |_key, values| values.include?(ethnic_background) }&.keys&.first }
 
       before do
