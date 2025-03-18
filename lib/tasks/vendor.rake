@@ -44,7 +44,7 @@ namespace :vendor do
 
     AuthenticationToken.where(provider: existing_provider).find_each(&:delete)
 
-    token = AuthenticationToken.create_with_random_token(provider: existing_provider)
+    token = AuthenticationToken.create_with_random_token(provider: existing_provider, created_by: existing_provider.users.first, name: "Token")
 
     puts "Token: `#{token}`"
   end

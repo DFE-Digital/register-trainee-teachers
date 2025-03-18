@@ -16,7 +16,6 @@
 #
 # Indexes
 #
-#  idx_uniq_placement_rows                                       (bulk_update_placement_id,csv_row_number,trn,urn) UNIQUE
 #  index_bulk_update_placement_rows_on_bulk_update_placement_id  (bulk_update_placement_id)
 #  index_bulk_update_placement_rows_on_school_id                 (school_id)
 #

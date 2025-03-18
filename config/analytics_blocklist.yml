@@ -1,477 +1,464 @@
 ---
 :shared:
-  :audits:
-    - id
-    - auditable_id
-    - auditable_type
-    - associated_id
-    - associated_type
-    - user_id
-    - user_type
-    - username
-    - action
-    - audited_changes
-    - version
-    - comment
-    - remote_address
-    - request_uuid
-    - created_at
-  :data_migrations:
-    - version
-  :trainees:
-    - provider_trainee_id
-    - address_line_one
-    - address_line_two
-    - middle_names
-    - international_address
-    - ethnic_group
-    - ethnic_background
-    - additional_ethnic_background
-    - additional_dttp_data
-  :active_storage_attachments:
-    - id
-    - name
-    - record_type
-    - record_id
-    - blob_id
-    - created_at
-  :active_storage_blobs:
-    - id
-    - key
-    - filename
-    - content_type
-    - metadata
-    - service_name
-    - byte_size
-    - checksum
-    - created_at
-  :active_storage_variant_records:
-    - id
-    - blob_id
-    - variation_digest
-  :allocation_subjects:
-    - dttp_id
-    - deprecated_on
-  :apply_applications:
-    - application
-    - invalid_data
-    - application_choice_id
-  :apply_application_sync_requests:
-    - id
-    - response_code
-    - successful
-    - created_at
-    - recruitment_cycle_year
-    - updated_at
-  :authentication_tokens:
-    - id
-    - hashed_token
-    - enabled
-    - provider_id
-    - expires_at
-    - created_at
-    - updated_at
-  :disabilities:
-    - name
-    - description
-    - uuid
-  :dttp_accounts:
-    - id
-    - dttp_id
-    - ukprn
-    - name
-    - response
-    - created_at
-    - updated_at
-    - urn
-    - accreditation_id
-  :dttp_bursary_details:
-    - id
-    - response
-    - dttp_id
-    - created_at
-    - updated_at
-  :dttp_degree_qualifications:
-    - id
-    - response
-    - state
-    - dttp_id
-    - contact_dttp_id
-    - created_at
-    - updated_at
-  :dttp_dormant_periods:
-    - id
-    - response
-    - dttp_id
-    - placement_assignment_dttp_id
-    - created_at
-    - updated_at
-  :dttp_placement_assignments:
-    - id
-    - response
-    - dttp_id
-    - contact_dttp_id
-    - created_at
-    - updated_at
-    - provider_dttp_id
-    - academic_year
-    - programme_start_date
-    - programme_end_date
-    - trainee_status
-  :dttp_providers:
-    - response
-  :dttp_trainees:
-    - id
-    - response
-    - state
-    - dttp_id
-    - provider_dttp_id
-    - created_at
-    - updated_at
-    - status
-  :dttp_training_initiatives:
-    - id
-    - response
-    - dttp_id
-    - created_at
-    - updated_at
-  :dttp_users:
-    - id
-    - first_name
-    - last_name
-    - email
-    - dttp_id
-    - provider_dttp_id
-    - created_at
-    - updated_at
-  :funding_payment_schedules:
-    - id
-    - payable_id
-    - payable_type
-    - created_at
-    - updated_at
-  :funding_payment_schedule_rows:
-    - id
-    - funding_payment_schedule_id
-    - description
-    - created_at
-    - updated_at
-  :funding_payment_schedule_row_amounts:
-    - id
-    - funding_payment_schedule_row_id
-    - month
-    - year
-    - amount_in_pence
-    - predicted
-    - created_at
-    - updated_at
-  :funding_trainee_summaries:
-    - id
-    - payable_id
-    - payable_type
-    - academic_year
-    - created_at
-    - updated_at
-  :funding_trainee_summary_rows:
-    - id
-    - funding_trainee_summary_id
-    - subject
-    - route
-    - training_route
-    - lead_school_name
-    - lead_school_urn
-    - lead_partner_urn
-    - lead_partner_name
-    - cohort_level
-    - created_at
-    - updated_at
-  :funding_trainee_summary_row_amounts:
-    - id
-    - funding_trainee_summary_row_id
-    - payment_type
-    - tier
-    - amount_in_pence
-    - number_of_trainees
-    - created_at
-    - updated_at
-  :funding_uploads:
-    - id
-    - month
-    - funding_type
-    - status
-    - csv_data
-    - created_at
-    - updated_at
-  :hesa_collection_requests:
-    - id
-    - collection_reference
-    - response_body
-    - created_at
-    - updated_at
-  :hesa_students:
-    - id
-    - hesa_id
-    - previous_hesa_id
-    - first_names
-    - last_name
-    - email
-    - date_of_birth
-    - ethnic_background
-    - sex
-    - ukprn
-    - provider_trainee_id
-    - course_subject_one
-    - course_subject_two
-    - course_subject_three
-    - itt_start_date
-    - itt_end_date
-    - employing_school_urn
-    - lead_school_urn
-    - lead_partner_urn
-    - mode
-    - course_age_range
-    - trainee_start_date
-    - training_initiative
-    - end_date
-    - reason_for_leaving
-    - bursary_level
-    - trn
-    - training_route
-    - nationality
-    - hesa_updated_at
-    - itt_aim
-    - itt_qualification_aim
-    - fund_code
-    - study_length
-    - study_length_unit
-    - service_leaver
-    - course_programme_title
-    - pg_apprenticeship_start_date
-    - year_of_course
-    - degrees
-    - placements
-    - created_at
-    - updated_at
-    - collection_reference
-    - commencement_date
-    - itt_commencement_date
-    - disability1
-    - disability2
-    - disability3
-    - disability4
-    - disability5
-    - disability6
-    - disability7
-    - disability8
-    - disability9
-    - itt_key
-    - rec_id
-    - status
-    - allocated_place
-    - provider_course_id
-    - initiatives_two
-    - ni_number
-    - numhus
-    - previous_surname
-    - surname16
-    - ttcid
-    - hesa_committed_at
-    - application_choice_id
-    - itt_start_date
-    - trainee_start_date
-  hesa_trainee_details:
-    - id
-    - previous_last_name
-    - itt_aim
-    - course_study_mode
-    - course_year
-    - course_age_range
-    - pg_apprenticeship_start_date
-    - funding_method
-    - ni_number
-    - hesa_disabilities
-    - additional_training_initiative
-    - trainee_id
-    - created_at
-    - updated_at
-    - itt_qualification_aim
-    - fund_code
-  :hesa_trn_requests:
-    - id
-    - collection_reference
-    - state
-    - response_body
-    - created_at
-    - updated_at
-  :hesa_trn_submissions:
-    - payload
-  :users:
-    - first_name
-    - last_name
-    - email
-    - read_only
-    - otp_secret
-  :schools:
-    - searchable
-  :providers:
-    - searchable
-  :trainee_disabilities:
-    - id
-    - trainee_id
-    - disability_id
-    - created_at
-    - updated_at
-    - additional_disability
-  :validation_errors:
-    - id
-    - user_id
-    - form_object
-    - details
-    - created_at
-    - updated_at
   :sessions:
-    - id
-    - session_id
-    - data
-    - created_at
-    - updated_at
-  :schema_migrations:
-    - version
-  :ar_internal_metadata:
-    - key
-    - value
-    - created_at
-    - updated_at
-  :blazer_audits:
-    - id
-    - user_id
-    - query_id
-    - statement
-    - data_source
-    - created_at
-  :blazer_checks:
-    - id
-    - creator_id
-    - query_id
-    - state
-    - schedule
-    - emails
-    - slack_channels
-    - check_type
-    - message
-    - last_run_at
-    - created_at
-    - updated_at
-  :blazer_dashboards:
-    - id
-    - creator_id
-    - name
-    - created_at
-    - updated_at
-  :blazer_dashboard_queries:
-    - id
-    - dashboard_id
-    - query_id
-    - position
-    - created_at
-    - updated_at
+  - id
+  - session_id
+  - data
+  - created_at
+  - updated_at
+  :audits:
+  - id
+  - auditable_id
+  - auditable_type
+  - associated_id
+  - associated_type
+  - user_id
+  - user_type
+  - username
+  - action
+  - audited_changes
+  - version
+  - comment
+  - remote_address
+  - request_uuid
+  - created_at
   :blazer_queries:
-    - id
-    - creator_id
-    - name
-    - description
-    - statement
-    - data_source
-    - status
-    - created_at
-    - updated_at
-  :uploads:
-    - id
-    - name
-    - user_id
-    - malware_scan_result
-    - created_at
-    - updated_at
-  :dqt_teachers:
-    - id
-    - trn
-    - hesa_id
-    - first_name
-    - last_name
-    - date_of_birth
-    - qts_date
-    - eyts_date
-    - early_years_status_name
-    - early_years_status_value
-    - created_at
-    - updated_at
-    - allowed_pii_updates
+  - id
+  - creator_id
+  - name
+  - description
+  - statement
+  - data_source
+  - status
+  - created_at
+  - updated_at
+  :blazer_dashboard_queries:
+  - id
+  - dashboard_id
+  - query_id
+  - position
+  - created_at
+  - updated_at
+  :blazer_dashboards:
+  - id
+  - creator_id
+  - name
+  - created_at
+  - updated_at
+  :blazer_checks:
+  - id
+  - creator_id
+  - query_id
+  - state
+  - schedule
+  - emails
+  - slack_channels
+  - check_type
+  - message
+  - last_run_at
+  - created_at
+  - updated_at
+  :blazer_audits:
+  - id
+  - user_id
+  - query_id
+  - statement
+  - data_source
+  - created_at
+  :active_storage_variant_records:
+  - id
+  - blob_id
+  - variation_digest
+  :active_storage_attachments:
+  - id
+  - name
+  - record_type
+  - record_id
+  - blob_id
+  - created_at
+  :active_storage_blobs:
+  - id
+  - key
+  - filename
+  - content_type
+  - metadata
+  - service_name
+  - byte_size
+  - checksum
+  - created_at
+  :funding_uploads:
+  - id
+  - month
+  - funding_type
+  - status
+  - csv_data
+  - created_at
+  - updated_at
+  :hesa_trn_submissions:
+  - payload
+  :hesa_trn_requests:
+  - id
+  - collection_reference
+  - state
+  - response_body
+  - created_at
+  - updated_at
+  :hesa_trainee_details:
+  - id
+  - trainee_id
+  - previous_last_name
+  - itt_aim
+  - course_study_mode
+  - course_year
+  - course_age_range
+  - pg_apprenticeship_start_date
+  - funding_method
+  - ni_number
+  - additional_training_initiative
+  - created_at
+  - updated_at
+  - itt_qualification_aim
+  - fund_code
+  - hesa_disabilities
+  :hesa_students:
+  - id
+  - hesa_id
+  - first_names
+  - last_name
+  - email
+  - date_of_birth
+  - ethnic_background
+  - sex
+  - ukprn
+  - course_subject_one
+  - course_subject_two
+  - course_subject_three
+  - itt_end_date
+  - employing_school_urn
+  - mode
+  - course_age_range
+  - training_initiative
+  - disability1
+  - end_date
+  - reason_for_leaving
+  - bursary_level
+  - trn
+  - training_route
+  - nationality
+  - hesa_updated_at
+  - itt_aim
+  - itt_qualification_aim
+  - fund_code
+  - study_length
+  - study_length_unit
+  - service_leaver
+  - course_programme_title
+  - pg_apprenticeship_start_date
+  - year_of_course
+  - degrees
+  - placements
+  - created_at
+  - updated_at
+  - collection_reference
+  - commencement_date
+  - itt_commencement_date
+  - disability2
+  - disability3
+  - disability4
+  - disability5
+  - disability6
+  - disability7
+  - disability8
+  - disability9
+  - itt_key
+  - rec_id
+  - status
+  - allocated_place
+  - provider_course_id
+  - initiatives_two
+  - ni_number
+  - numhus
+  - previous_surname
+  - surname16
+  - ttcid
+  - hesa_committed_at
+  - previous_hesa_id
+  - application_choice_id
+  - itt_start_date
+  - trainee_start_date
+  - provider_trainee_id
+  - lead_partner_urn
+  :hesa_collection_requests:
+  - id
+  - collection_reference
+  - response_body
+  - created_at
+  - updated_at
+  :funding_trainee_summary_row_amounts:
+  - id
+  - funding_trainee_summary_row_id
+  - payment_type
+  - tier
+  - amount_in_pence
+  - number_of_trainees
+  - created_at
+  - updated_at
+  :funding_trainee_summary_rows:
+  - id
+  - funding_trainee_summary_id
+  - subject
+  - route
+  - lead_school_name
+  - lead_school_urn
+  - cohort_level
+  - created_at
+  - updated_at
+  - lead_partner_urn
+  - training_route
+  - lead_partner_name
+  :funding_trainee_summaries:
+  - id
+  - payable_id
+  - payable_type
+  - academic_year
+  - created_at
+  - updated_at
+  :funding_payment_schedule_row_amounts:
+  - id
+  - funding_payment_schedule_row_id
+  - month
+  - year
+  - amount_in_pence
+  - predicted
+  - created_at
+  - updated_at
+  :funding_payment_schedule_rows:
+  - id
+  - funding_payment_schedule_id
+  - description
+  - created_at
+  - updated_at
+  :funding_payment_schedules:
+  - id
+  - payable_id
+  - payable_type
+  - created_at
+  - updated_at
+  :dttp_users:
+  - id
+  - first_name
+  - last_name
+  - email
+  - dttp_id
+  - provider_dttp_id
+  - created_at
+  - updated_at
+  :dttp_training_initiatives:
+  - id
+  - response
+  - dttp_id
+  - created_at
+  - updated_at
+  :dttp_trainees:
+  - id
+  - response
+  - state
+  - dttp_id
+  - provider_dttp_id
+  - created_at
+  - updated_at
+  - status
+  :dttp_providers:
+  - response
+  :dttp_placement_assignments:
+  - id
+  - response
+  - dttp_id
+  - contact_dttp_id
+  - created_at
+  - updated_at
+  - provider_dttp_id
+  - academic_year
+  - programme_start_date
+  - programme_end_date
+  - trainee_status
+  :dttp_dormant_periods:
+  - id
+  - response
+  - dttp_id
+  - placement_assignment_dttp_id
+  - created_at
+  - updated_at
+  :dttp_degree_qualifications:
+  - id
+  - response
+  - state
+  - dttp_id
+  - contact_dttp_id
+  - created_at
+  - updated_at
+  :dttp_bursary_details:
+  - id
+  - response
+  - dttp_id
+  - created_at
+  - updated_at
+  :dttp_accounts:
+  - id
+  - dttp_id
+  - ukprn
+  - name
+  - response
+  - created_at
+  - updated_at
+  - urn
+  - accreditation_id
   :dqt_teacher_trainings:
-    - id
-    - dqt_teacher_id
-    - hesa_id
-    - programme_start_date
-    - programme_end_date
-    - programme_type
-    - result
-    - active
-    - provider_ukprn
-    - created_at
-    - updated_at
-  :bulk_update_trainee_uploads:
-    - id
-    - provider_id
-    - submitted_by_id
-    - status
-    - number_of_trainees
-    - submitted_at
-    - created_at
-    - updated_at
+  - id
+  - dqt_teacher_id
+  - programme_start_date
+  - programme_end_date
+  - programme_type
+  - result
+  - provider_ukprn
+  - created_at
+  - updated_at
+  - hesa_id
+  - active
+  :dqt_teachers:
+  - id
+  - trn
+  - first_name
+  - last_name
+  - date_of_birth
+  - qts_date
+  - eyts_date
+  - early_years_status_name
+  - early_years_status_value
+  - created_at
+  - updated_at
+  - hesa_id
+  - allowed_pii_updates
   :bulk_update_trainee_upload_rows:
-    - id
-    - bulk_update_trainee_upload_id
-    - row_number
-    - data
-    - error_messages
-    - created_at
-    - updated_at
-  :bulk_update_recommendations_uploads:
-    - id
-    - created_at
-    - updated_at
-    - provider_id
+  - id
+  - bulk_update_trainee_upload_id
+  - row_number
+  - data
+  - created_at
+  - updated_at
+  :bulk_update_trainee_uploads:
+  - id
+  - provider_id
+  - status
+  - created_at
+  - updated_at
+  - submitted_at
+  - submitted_by_id
+  - number_of_trainees
   :bulk_update_recommendations_upload_rows:
-    - id
-    - created_at
-    - updated_at
-    - bulk_update_recommendations_upload_id
-    - csv_row_number
-    - trn
-    - hesa_id
-    - standards_met_at
-    - provider_trainee_id
-    - first_names
-    - last_names
-    - lead_school
-    - lead_partner
-    - qts_or_eyts
-    - route
-    - phase
-    - age_range
-    - subject
-    - matched_trainee_id
-  :bulk_update_placements:
-    - id
-    - created_at
-    - updated_at
-    - provider_id
+  - id
+  - created_at
+  - updated_at
+  - bulk_update_recommendations_upload_id
+  - csv_row_number
+  - trn
+  - hesa_id
+  - standards_met_at
+  - provider_trainee_id
+  - last_names
+  - first_names
+  - qts_or_eyts
+  - route
+  - phase
+  - age_range
+  - subject
+  - matched_trainee_id
+  - lead_partner
+  :bulk_update_recommendations_uploads:
+  - id
+  - created_at
+  - updated_at
+  - provider_id
   :bulk_update_placement_rows:
-    - id
-    - created_at
-    - updated_at
-    - state
-    - bulk_update_placement_id
-    - csv_row_number
-    - urn
-    - trn
-    - school_id
+  - id
+  - created_at
+  - updated_at
+  - state
+  - bulk_update_placement_id
+  - csv_row_number
+  - urn
+  - trn
+  - school_id
+  :bulk_update_placements:
+  - id
+  - provider_id
+  - created_at
+  - updated_at
+  :validation_errors:
+  - id
+  - user_id
+  - form_object
+  - details
+  - created_at
+  - updated_at
+  :uploads:
+  - id
+  - created_at
+  - updated_at
+  - name
+  - user_id
+  - malware_scan_result
+  :trainee_disabilities:
+  - id
+  - trainee_id
+  - disability_id
+  - created_at
+  - updated_at
+  - additional_disability
+  :schools:
+  - searchable
+  :providers:
+  - searchable
+  :users:
+  - first_name
+  - last_name
+  - email
+  - read_only
+  - otp_secret
+  :disabilities:
+  - name
+  - description
+  - uuid
+  :authentication_tokens:
+  - id
+  - hashed_token
+  - enabled
+  - provider_id
+  - expires_at
+  - created_at
+  - updated_at
+  - name
+  - revoked_at
+  - last_used_at
+  - created_by_id
+  - revoked_by_id
+  :apply_application_sync_requests:
+  - id
+  - response_code
+  - successful
+  - created_at
+  - updated_at
+  - recruitment_cycle_year
+  :apply_applications:
+  - application
+  - invalid_data
+  :allocation_subjects:
+  - dttp_id
+  - deprecated_on
+  :trainees:
+  - middle_names
+  - ethnic_group
+  - ethnic_background
+  - additional_ethnic_background
+  - additional_dttp_data
+  - provider_trainee_id
