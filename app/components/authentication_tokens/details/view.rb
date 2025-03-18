@@ -22,7 +22,7 @@ module AuthenticationTokens
       def rows
         [
           {
-            key: { text: "Status" }, value: { text: status }
+            key: { text: "Status" }, value: { text: status.capitalize }
           },
           {
             key: { text: "Created by" }, value: { text: ("#{created_by.name} on #{created_at.to_date.to_fs(:govuk)}" if created_by.present?) }

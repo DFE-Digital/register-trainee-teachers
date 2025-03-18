@@ -8,6 +8,7 @@ class AuthenticationTokensController < ApplicationController
 private
 
   def tokens
-    @tokens ||= policy_scope(AuthenticationToken).includes(:provider)
+    @tokens ||= policy_scope(AuthenticationToken)
+      .includes(:provider, :created_by, :revoked_by)
   end
 end
