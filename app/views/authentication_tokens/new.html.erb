@@ -1,3 +1,11 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: authentication_tokens_path) %>
+<% end %>
+
+<%= render PageTitle::View.new(
+  text: "Organisation – #{current_user.organisation.name}",
+) %>
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h2 class="govuk-heading-l">Create a token</h2>

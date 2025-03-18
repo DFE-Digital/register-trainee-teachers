@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :authentication_tokens, only: %i[new create]
+  resources :authentication_tokens, only: %i[new create show]
 
   namespace :bulk_update, path: "bulk-update" do
     get "/", to: "bulk_updates#index"
