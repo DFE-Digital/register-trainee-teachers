@@ -202,7 +202,7 @@ api:
 qualtrics:
   api_token: please_change_me
   directory_id: POOL_please_change_me
-  base_url: https://{{data_centre_id}}.qualtrics.com/API/v3/
+  base_url: https://fra1.qualtrics.com/API/v3/
   library_id: UR_please_change_me
   withdraw:
     survey_id: SV_please_change_me
