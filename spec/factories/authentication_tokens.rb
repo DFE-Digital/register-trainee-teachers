@@ -18,6 +18,8 @@ FactoryBot.define do
 
     trait :revoked do
       status { :revoked }
+
+      revoked_at { Time.current }
     end
   end
 end
