@@ -23,18 +23,15 @@ module Survey
       "Teacher Training Withdrawal Survey"
     end
 
-    def embedded_data_for_contact
-      {
-        "withdraw_date" => withdraw_date,
-        "training_route" => training_route,
-      }
-    end
-
     def embedded_data_for_distribution
       {
         withdraw_date:,
         training_route:,
       }
+    end
+
+    def embedded_data_for_contact
+      embedded_data_for_distribution.stringify_keys
     end
   end
 end

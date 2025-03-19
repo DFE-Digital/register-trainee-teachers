@@ -25,18 +25,15 @@ module Survey
       "QTS Award Survey"
     end
 
-    def embedded_data_for_contact
-      {
-        "award_date" => awarded_at,
-        "training_route" => training_route,
-      }
-    end
-
     def embedded_data_for_distribution
       {
         award_date: awarded_at,
         training_route: training_route,
       }
+    end
+
+    def embedded_data_for_contact
+      embedded_data_for_distribution.stringify_keys
     end
   end
 end
