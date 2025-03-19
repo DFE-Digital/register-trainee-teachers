@@ -9,21 +9,25 @@ feature "create a new authentication token" do
     and_i_can_generate_an_authentication_token
   end
 
+  let(:invalid_expires_at) { Date.new(Date.current.year - 1, 12, 31) }
   let(:expires_at) { Date.new(Date.current.year + 1, 12, 31) }
 
   scenario "create a token" do
     # TODO: Navigate from the authentication tokens index page to the new page
 
     given_i_navigate_to_the_new_authentication_token_page
-    and_i_fill_in_the_form_with_valid_data
+    and_i_enter_an_expiry_date_in_the_past
+    and_i_click_the_submit_button
+    then_i_should_see_validation_error_messages
+
+    when_i_fill_in_the_form_with_valid_data
     and_i_click_the_submit_button
     then_i_should_see_the_new_token_confirmation_page
 
-    when_i_click_the_copy_token_button
-    then_the_token_should_be_copied_to_my_clipboard
-
     when_i_refresh_the_page
     then_i_can_no_longer_see_the_token
+
+    # TODO: Navigate to the index page and check that the token is there
   end
 
 private
@@ -39,11 +43,24 @@ private
     visit new_authentication_token_path
   end
 
-  def and_i_fill_in_the_form_with_valid_data
+  def and_i_enter_an_expiry_date_in_the_past
+    fill_in "Day", with: invalid_expires_at.day.to_s
+    fill_in "Month", with: invalid_expires_at.month.to_s
+    fill_in "Year", with: invalid_expires_at.year.to_s
+  end
+
+  def then_i_should_see_validation_error_messages
+    expect(page).to have_content("Create a token")
+    expect(page).to have_content("There is a problem")
+    expect(page).to have_content("Enter the token name")
+    expect(page).to have_content("Enter an expiration date in the future")
+  end
+
+  def when_i_fill_in_the_form_with_valid_data
     fill_in "Token name", with: "My new token"
-    fill_in "authentication_token_expires_at_3i", with: "31"
-    fill_in "authentication_token_expires_at_2i", with: "12"
-    fill_in "authentication_token_expires_at_1i", with: expires_at.year.to_s
+    fill_in "Day", with: expires_at.day.to_s
+    fill_in "Month", with: expires_at.month.to_s
+    fill_in "Year", with: expires_at.year.to_s
   end
 
   def and_i_click_the_submit_button
@@ -63,8 +80,4 @@ private
   def then_i_can_no_longer_see_the_token
     expect(page).not_to have_content("test_#{@token_string}")
   end
-
-  def when_i_click_the_copy_token_button; end
-
-  def then_the_token_should_be_copied_to_my_clipboard; end
 end
