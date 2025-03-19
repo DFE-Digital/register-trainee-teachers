@@ -41,7 +41,7 @@ module Dqt
 
       context "survey scheduling" do
         before do
-          allow(trainee).to receive(:training_route).and_return(training_route)
+          trainee.update(training_route:)
           allow(trainee.training_route_manager).to receive(:award_type).and_return(award_type)
         end
 
