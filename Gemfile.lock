@@ -204,7 +204,7 @@ GEM
     cuprite (0.15.1)
       capybara (~> 3.0)
       ferrum (~> 0.15.0)
-    data_migrate (11.2.0)
+    data_migrate (11.3.0)
       activerecord (>= 6.1)
       railties (>= 6.1)
     database_cleaner-active_record (2.2.0)
@@ -403,7 +403,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2025.0107)
     mini_mime (1.1.5)
-    minitest (5.25.4)
+    minitest (5.25.5)
     msgpack (1.8.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -424,11 +424,11 @@ GEM
       net-protocol
     nio4r (2.7.4)
     nkf (0.2.0)
-    nokogiri (1.18.3-arm64-darwin)
+    nokogiri (1.18.5-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.3-x86_64-linux-gnu)
+    nokogiri (1.18.5-x86_64-linux-gnu)
       racc (~> 1.4)
-    nokogiri (1.18.3-x86_64-linux-musl)
+    nokogiri (1.18.5-x86_64-linux-musl)
       racc (~> 1.4)
     notifications-ruby-client (6.2.0)
       jwt (>= 1.5, < 3)
@@ -811,7 +811,7 @@ DEPENDENCIES
   cssbundling-rails
   csv-safe
   cuprite (~> 0.15)
-  data_migrate (= 11.2.0)
+  data_migrate (= 11.3.0)
   database_cleaner-active_record
   debug
   dfe-analytics!
