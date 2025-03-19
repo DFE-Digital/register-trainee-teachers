@@ -32,7 +32,7 @@ feature "Organisation details" do
       then_i_see_the_root_page
     end
 
-    scenario "a user views the authentication tokens page", js: true do
+    scenario "a user views the authentication tokens page", js: true, feature_token_management: true do
       when_i_click_on_the_organisation_settings_link
       and_i_see_api_tokens_details
 
@@ -69,7 +69,7 @@ feature "Organisation details" do
       and_i_see_the_contact_support_email
     end
 
-    scenario "a user views the authentication tokens page", js: true do
+    scenario "a user views the authentication tokens page", js: true, feature_token_management: true do
       when_i_click_on_the_organisation_settings_link
       and_i_see_api_tokens_details
 
@@ -99,7 +99,7 @@ feature "Organisation details" do
       )
     end
 
-    scenario "a user attempts to view the token management page" do
+    scenario "a user attempts to view the token management page", feature_token_management: true do
       token_management_page.load
 
       expect(page).to have_content(

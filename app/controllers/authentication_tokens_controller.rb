@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AuthenticationTokensController < ApplicationController
+  before_action { require_feature_flag(:token_management) }
+
   def index
     authorize(tokens)
   end

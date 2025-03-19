@@ -9,6 +9,7 @@ features:
   sign_in_method: persona
   enable_feedback_link: true
   publish_course_details: true
+  token_management: true
   routes:
     provider_led_postgrad: true
     assessment_only: true
