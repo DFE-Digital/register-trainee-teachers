@@ -156,8 +156,29 @@ private
 
   def then_i_see_the_token_management_page
     expect(token_management_page).to have_content("Manage your API tokens")
-    expect(token_management_page).to have_content("These API tokens are unique to your organisation.")
-    expect(token_management_page).to have_content("You must make sure the token is securely sent to the developers managing your Register API integration.")
+
+    expect(token_management_page).to have_content("You can:")
+
+    expect(token_management_page).to have_content(
+      "view a list of tokens, their description, expiry date, date last used"
+    )
+
+    expect(token_management_page).to have_content(
+      "generate a new token, give it a name, set an expiry date (optional) and revoke a token"
+    )
+
+    expect(token_management_page).to have_content(
+      "These API tokens are unique to your organisation."
+    )
+
+    expect(token_management_page).to have_content(
+      "You should let the developers managing your Register API integration know if you create, set an expiry date or revoke a token."
+    )
+
+    expect(token_management_page).to have_content(
+      "You must make sure the token is securely sent to the developers managing your Register API integration."
+    )
+
     expect(token_management_page).to have_content("Previously created tokens")
 
     within("#token-#{token_one.id}") do
