@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :provider_user do
     provider
-    user
+
+    association(:user, :with_no_organisation_in_db)
   end
 end
