@@ -32,13 +32,6 @@
 #
 
 class AuthenticationToken < ApplicationRecord
-  belongs_to :provider
-  belongs_to :created_by, class_name: "User"
-  belongs_to :revoked_by, class_name: "User", optional: true
-
-  validates :hashed_token, presence: true, uniqueness: true
-  validates :name, presence: true, length: { maximum: 200 }
-
   enum :status, {
     active: "active",
     expired: "expired",
@@ -57,6 +50,13 @@ class AuthenticationToken < ApplicationRecord
       transition [:active] => :expired
     end
   end
+
+  belongs_to :provider
+  belongs_to :created_by, class_name: "User"
+  belongs_to :revoked_by, class_name: "User", optional: true
+
+  validates :hashed_token, presence: true, uniqueness: true
+  validates :name, presence: true, length: { maximum: 200 }
 
   def self.create_with_random_token(attributes = {})
     token = "#{Rails.env}_" + SecureRandom.hex(10)
