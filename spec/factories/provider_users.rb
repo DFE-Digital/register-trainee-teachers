@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :provider_user do
     provider
 
-    association(:user, :with_no_organisation_in_db)
+    user factory: %i[user with_no_organisation_in_db]
   end
 end
