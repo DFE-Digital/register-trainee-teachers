@@ -24,6 +24,45 @@
       end
     end %>
 
+    <h2 class="govuk-heading-m">API Tokens</h2>
+    <p class="govuk-body">If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.</p>
+
+    <h3 class="govuk-heading-m">What is an API token?</h3>
+    <p class="govuk-body">
+      The API token is unique to your organisation and is a code that authenticates the transfer of your
+      trainee data from your Student Record System directly into the Register service via the Register API (piece of software).
+    </p>
+
+    <p class="govuk-body">
+      Your token is needed by the developers who are managing your Register API integration.
+    </p>
+
+    <p class="govuk-body">
+      You can view and use the Register API technical documentation (opens in new tab).
+    </p>
+
+    <h3 class="govuk-heading-m">How to manage your API token</h3>
+    <p class="govuk-body">
+      The Register API is used to make trainee data transfer quicker and easier.
+    </p>
+
+    <p class="govuk-body">
+      You must make sure the token is securely sent to the developers managing your Register API integration.
+    </p>
+
+    <p class="govuk-body">
+      In the 'Manage your API token' screen, you can:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>view a list of tokens, their description, expiry date, date last used</li>
+      <li>generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token</li>
+    </ul>
+
+    <p class="govuk-body govuk-!-margin-bottom-9">
+      <%= govuk_link_to "Manage your tokens", "#" %>
+    </p>
+
     <h2 class="govuk-heading-m">Team members</h2>
 
     <%= govuk_list(
