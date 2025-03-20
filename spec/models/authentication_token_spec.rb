@@ -6,6 +6,28 @@ RSpec.describe AuthenticationToken do
   let(:user) { create(:user, :with_multiple_organisations) }
   let(:provider) { user.providers.first }
 
+  it do
+    expect(subject).to define_enum_for(:status)
+      .without_instance_methods.with_values({
+        active: "active",
+        expired: "expired",
+        revoked: "revoked",
+      }).backed_by_column_of_type(:string)
+  end
+
+  describe "validations" do
+    subject(:authentication_token) { build(:authentication_token) }
+
+    it { is_expected.to validate_uniqueness_of(:hashed_token) }
+    it { is_expected.to validate_length_of(:name).is_at_most(200) }
+  end
+
+  describe "associations" do
+    it { is_expected.to belong_to(:provider) }
+    it { is_expected.to belong_to(:created_by) }
+    it { is_expected.to belong_to(:revoked_by).optional }
+  end
+
   describe ".create_with_random_token" do
     let(:token) { "Bearer #{described_class.create_with_random_token(provider_id: provider.id, name: 'Provider test token', created_by: user)}" }
 
@@ -13,6 +35,7 @@ RSpec.describe AuthenticationToken do
 
     it "creates a new AuthenticationToken" do
       expect(authentication_token).to be_persisted
+      expect(authentication_token).to be_active
     end
 
     it "sets the hashed_token" do
@@ -26,33 +49,39 @@ RSpec.describe AuthenticationToken do
     it "includes the environment name in the token" do
       expect(token.split.last.split("_").first).to eq("test")
     end
-
-    it { is_expected.to validate_uniqueness_of(:hashed_token) }
-
-    it { is_expected.to belong_to(:provider) }
-
-    it { is_expected.to belong_to(:created_by) }
-
-    it { is_expected.to belong_to(:revoked_by).optional }
-
-    it { is_expected.to validate_length_of(:name).is_at_most(200) }
   end
 
-  describe ".revoke" do
-    subject(:authentication_token) { described_class.create(provider_id: provider.id, name: "Provider test token", created_by: user) }
+  describe "events" do
+    subject(:authentication_token) { create(:authentication_token) }
 
-    before { subject.revoke(user:) }
-
-    it "revokes the token" do
-      expect(subject.revoked?).to be(true)
+    before do
+      Current.user = user
     end
 
-    it "associates the user who revoked the token" do
-      expect(subject.revoked_by).to eq(user)
+    after do
+      Current.user = nil
     end
 
-    it "adds the revocation date for the token" do
-      expect(subject.revoked_at).not_to be_nil
+    describe ".revoke!" do
+      let(:current_time) { Time.current.beginning_of_day }
+
+      it "revokes the token" do
+        Timecop.freeze(current_time) do
+          subject.revoke!
+
+          expect(subject.revoked?).to be(true)
+          expect(subject.revoked_by).to eq(user)
+          expect(subject.revoked_at).to eq(current_time)
+        end
+      end
+    end
+
+    describe ".expire!" do
+      it "revokes the token" do
+        subject.expire!
+
+        expect(subject.expired?).to be(true)
+      end
     end
   end
 end

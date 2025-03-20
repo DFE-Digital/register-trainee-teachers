@@ -7,7 +7,7 @@ module Personas
     alias_method :component, :page
 
     let(:persona_id) { 1 }
-    let(:persona) { create(:user, id: persona_id, providers: create_list(:provider, 1)) }
+    let(:persona) { create(:user, id: persona_id, providers: build_list(:provider, 1)) }
 
     before do
       render_inline(described_class.new(persona:))
@@ -29,7 +29,7 @@ module Personas
     end
 
     context "multiple providers" do
-      let(:persona) { create(:user, id: persona_id, providers: create_list(:provider, 2)) }
+      let(:persona) { create(:user, id: persona_id, providers: build_list(:provider, 2)) }
 
       it "renders the all provider names" do
         persona.providers.each do |provider|

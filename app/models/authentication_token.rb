@@ -32,6 +32,25 @@
 #
 
 class AuthenticationToken < ApplicationRecord
+  enum :status, {
+    active: "active",
+    expired: "expired",
+    revoked: "revoked",
+  } do
+    event :revoke do
+      before do
+        self.revoked_by = Current.user
+        self.revoked_at = Time.current
+      end
+
+      transition [:active] => :revoked
+    end
+
+    event :expire do
+      transition [:active] => :expired
+    end
+  end
+
   belongs_to :provider
   belongs_to :created_by, class_name: "User"
   belongs_to :revoked_by, class_name: "User", optional: true
@@ -54,13 +73,5 @@ class AuthenticationToken < ApplicationRecord
   def self.authenticate(unhashed_token)
     token_without_prefix = unhashed_token.split.last
     find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
-  end
-
-  def revoke(user:)
-    update(revoked_by: user, revoked_at: Time.zone.now)
-  end
-
-  def revoked?
-    revoked_at.present?
   end
 end
