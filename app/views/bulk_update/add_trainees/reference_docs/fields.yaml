@@ -334,7 +334,11 @@
 - field_name: PG Apprenticeship Start Date
   technical: pg_apprenticeship_start_date
   hesa_alignment: PGAPPSTDT
-  description: This records the start date of a postgraduate’s teaching apprenticeship.
+  description: |-
+    This records the start date of a postgraduate’s teaching apprenticeship.
+
+    Apprenticeships may start earlier than the start of the academic year, for example, from 1 June 2024. However, the first grant payment will not be made before September 2024, even if the apprentice starts before this date.
+
   format: YYYY-MM-DD
   example: "2024-09-01"
   validation: Optional
