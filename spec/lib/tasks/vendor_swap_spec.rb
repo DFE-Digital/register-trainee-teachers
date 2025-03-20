@@ -17,7 +17,7 @@ describe "vendor:swap" do
 
   it "swapped the provider with vendor" do
     expect($stdout).to receive(:puts).with(swapped_message)
-    expect(AuthenticationToken).to receive(:create_with_random_token).with(provider: existing_provider).and_call_original
+    expect(AuthenticationToken).to receive(:create_with_random_token).with(provider: existing_provider, created_by: existing_provider.users.first, name: "Token").and_call_original
     expect($stdout).to receive(:puts)
 
     expect {

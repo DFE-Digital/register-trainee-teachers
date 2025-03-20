@@ -4,31 +4,43 @@
 #
 # Table name: authentication_tokens
 #
-#  id           :bigint           not null, primary key
-#  enabled      :boolean          default(TRUE), not null
-#  expires_at   :date
-#  hashed_token :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  provider_id  :bigint           not null
+#  id            :bigint           not null, primary key
+#  enabled       :boolean          default(TRUE), not null
+#  expires_at    :date
+#  hashed_token  :string           not null
+#  last_used_at  :datetime
+#  name          :string           not null
+#  revoked_at    :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  created_by_id :bigint
+#  provider_id   :bigint           not null
+#  revoked_by_id :bigint
 #
 # Indexes
 #
-#  index_authentication_tokens_on_hashed_token  (hashed_token) UNIQUE
-#  index_authentication_tokens_on_provider_id   (provider_id)
+#  index_authentication_tokens_on_created_by_id  (created_by_id)
+#  index_authentication_tokens_on_hashed_token   (hashed_token) UNIQUE
+#  index_authentication_tokens_on_provider_id    (provider_id)
+#  index_authentication_tokens_on_revoked_by_id  (revoked_by_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (created_by_id => users.id)
 #  fk_rails_...  (provider_id => providers.id)
+#  fk_rails_...  (revoked_by_id => users.id)
 #
 
 class AuthenticationToken < ApplicationRecord
   belongs_to :provider
+  belongs_to :created_by, class_name: "User"
+  belongs_to :revoked_by, class_name: "User", optional: true
 
   validates :hashed_token, presence: true, uniqueness: true
+  validates :name, presence: true, length: { maximum: 200 }
 
   def self.create_with_random_token(attributes = {})
-    token = SecureRandom.hex(10)
+    token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
 
     create(attributes.merge(hashed_token:))
@@ -42,5 +54,13 @@ class AuthenticationToken < ApplicationRecord
   def self.authenticate(unhashed_token)
     token_without_prefix = unhashed_token.split.last
     find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
+  end
+
+  def revoke(user:)
+    update(revoked_by: user, revoked_at: Time.zone.now)
+  end
+
+  def revoked?
+    revoked_at.present?
   end
 end

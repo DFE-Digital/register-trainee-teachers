@@ -11,7 +11,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
     let!(:user_two) { create(:user) }
 
     before do
-      provider_two.users << user_one
+      provider_two.users = [user_one]
     end
 
     context "when record_type is hei" do

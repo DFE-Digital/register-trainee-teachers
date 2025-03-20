@@ -13,6 +13,7 @@ module ProviderCard
       let(:norman) { create(:user, discarded_at: 2.weeks.ago) }
 
       before do
+        provider.users = []
         provider.users << bob << alice << norman
 
         render_inline(View.new(provider:))

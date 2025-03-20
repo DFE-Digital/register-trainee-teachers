@@ -6,7 +6,7 @@ describe "Trainees API" do
   let!(:nationality) { create(:nationality, :british) }
   let(:academic_cycle) { create(:academic_cycle, :current) }
   let(:provider) { trainee.provider }
-  let(:token) { AuthenticationToken.create_with_random_token(provider:) }
+  let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
 
   describe "`POST /api/v0.1/trainees` endpoint" do
     let(:valid_attributes) do
