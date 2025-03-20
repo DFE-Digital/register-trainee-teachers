@@ -5,7 +5,7 @@ module Api
     include Api::ErrorResponse
     include ApiMonitorable
 
-    before_action :check_feature_flag!, :authenticate!
+    before_action :check_feature_flag!, :authenticate!, :update_last_used_at!
 
     rescue_from ActiveRecord::RecordNotFound do |e|
       render_not_found(message: "#{e.model}(s) not found")
@@ -58,6 +58,12 @@ module Api
 
     def current_version
       params[:api_version]
+    end
+
+    def update_last_used_at!
+      return unless valid_authentication_token?
+
+      auth_token.update_last_used_at!
     end
 
   private
