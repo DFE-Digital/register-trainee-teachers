@@ -22,8 +22,9 @@ module Survey
     end
 
     def call
-      create_distribution
-      true
+      unless response.success?
+        raise(StandardError, "Failed to create distribution:\n\n#{response.body}\n")
+      end
     end
 
   private
@@ -31,6 +32,10 @@ module Survey
     attr_reader :trainee
 
     delegate :first_names, :last_name, :email, :training_route, to: :trainee
+
+    def response
+      @response ||= create_distribution
+    end
 
     def contact_id
       @contact_id ||= begin
