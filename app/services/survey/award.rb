@@ -7,7 +7,17 @@ module Survey
 
     delegate :awarded_at, to: :trainee
 
+    def call
+      return false unless trainee_still_awarded?
+
+      super
+    end
+
   private
+
+    def trainee_still_awarded?
+      trainee.awarded_at.present? && trainee.awarded?
+    end
 
     def survey_id
       Settings.qualtrics.award.survey_id

@@ -5,6 +5,12 @@ module Survey
   class Withdraw < Base
     delegate :withdraw_date, to: :trainee
 
+    def call
+      return false unless trainee.withdrawn?
+
+      super
+    end
+
   private
 
     def survey_id
