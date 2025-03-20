@@ -5,13 +5,11 @@ module Survey
   class Withdraw < Base
     delegate :withdraw_date, to: :trainee
 
-    def call
-      return false unless trainee.withdrawn?
-
-      super
-    end
-
   private
+
+    def should_send_survey?
+      trainee.withdrawn?
+    end
 
     def survey_id
       Settings.qualtrics.withdraw.survey_id

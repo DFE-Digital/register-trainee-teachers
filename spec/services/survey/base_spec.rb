@@ -50,6 +50,7 @@ module Survey
         subject
         embedded_data_for_contact
         embedded_data_for_distribution
+        should_send_survey?
       ].each do |method_name|
         it "raises NotImplementedError for #{method_name}" do
           expect { base_instance.send(method_name) }.to raise_error(

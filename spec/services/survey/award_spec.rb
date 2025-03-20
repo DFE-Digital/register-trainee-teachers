@@ -45,7 +45,9 @@ module Survey
     before do
       settings_stub
       allow(QualtricsApi::Client::Request).to receive(:post).and_return(
-        instance_double(Response, body: { result: { contactLookupId: "contact-123" } }.to_json),
+        instance_double(HTTParty::Response,
+                        body: { result: { contactLookupId: "contact-123" } }.to_json,
+                        success?: true),
       )
     end
 

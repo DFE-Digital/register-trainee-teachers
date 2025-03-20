@@ -2,15 +2,15 @@
 
 RSpec.shared_examples "a survey service" do |date_field, email_subject|
   let(:contact_response) do
-    double(
-      body: { result: { contactLookupId: "CONTACT_ID_123" } }.to_json,
-    )
+    instance_double(HTTParty::Response,
+                    body: { result: { contactLookupId: "CONTACT_ID_123" } }.to_json,
+                    success?: true)
   end
 
   let(:distribution_response) do
-    double(
-      body: { result: { distributionId: "DIST_123" } }.to_json,
-    )
+    instance_double(HTTParty::Response,
+                    body: { result: { distributionId: "DIST_123" } }.to_json,
+                    success?: true)
   end
 
   it "creates a contact with the correct data" do

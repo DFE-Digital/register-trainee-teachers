@@ -11,6 +11,7 @@ module Survey
   # - subject: The subject line for the email
   # - embedded_data_for_contact: The data to embed in the contact
   # - embedded_data_for_distribution: The data to embed in the distribution
+  # - should_send_survey?: Check if the survey should be sent based on trainee state
   #
   # Subclasses may override:
   # - from_name: The name to display in the from field (defaults to "Teacher Training Support")
@@ -22,9 +23,13 @@ module Survey
     end
 
     def call
+      return false unless should_send_survey?
+
       unless response.success?
-        raise(StandardError, "Failed to create distribution:\n\n#{response.body}\n")
+        raise(StandardError, response.body)
       end
+
+      true
     end
 
   private
@@ -114,6 +119,10 @@ module Survey
     end
 
     # Methods that subclasses must implement
+    def should_send_survey?
+      raise(NotImplementedError, "Subclasses must implement should_send_survey?")
+    end
+
     def survey_id
       raise(NotImplementedError, "Subclasses must implement survey_id")
     end

@@ -3,19 +3,11 @@
 module Survey
   # Service for sending QTS award surveys to trainees
   class Award < Base
-    include ServicePattern
-
     delegate :awarded_at, to: :trainee
-
-    def call
-      return false unless trainee_still_awarded?
-
-      super
-    end
 
   private
 
-    def trainee_still_awarded?
+    def should_send_survey?
       trainee.awarded_at.present? && trainee.awarded?
     end
 
