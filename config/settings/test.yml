@@ -8,7 +8,6 @@ slack:
 features:
   sign_in_method: dfe-sign-in
   basic_auth: false
-  token_management: true
   routes:
     assessment_only: true
     provider_led_postgrad: true

@@ -18,7 +18,6 @@ features:
   import_courses_from_ttapi: true
   publish_course_details: true
   course_study_mode: true
-  token_management: true
   routes:
     provider_led_postgrad: true
     provider_led_undergrad: true
