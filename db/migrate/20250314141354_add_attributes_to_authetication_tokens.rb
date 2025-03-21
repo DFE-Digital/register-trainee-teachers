@@ -3,7 +3,7 @@
 class AddAttributesToAutheticationTokens < ActiveRecord::Migration[7.2]
   class AuthenticationToken < ApplicationRecord
     belongs_to :provider
-    belongs_to :created_by, class_name: "User", optional: true
+    belongs_to :created_by, class_name: "User"
     belongs_to :revoked_by, class_name: "User", optional: true
   end
 
