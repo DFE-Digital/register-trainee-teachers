@@ -15,22 +15,22 @@
       <p>
         Your API token is
         <br/>
-        <strong><%= flash[:token] %></strong>
+        <strong id="token-text"><%= flash[:token] %></strong>
       </p>
     <% end %>
 
-    <%= register_form_with(model: @token, url: authentication_tokens_path) do |f| %>
-      <p class="govuk-body">Make sure to copy your API token now as you will not be able to see it again.</p>
+    <p class="govuk-body">Make sure to copy your API token now as you will not be able to see it again.</p>
 
-      <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+    <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
 
-      <%= f.govuk_submit("Copy token") %>
+    <button id="copy-to-clipboard-button" class="govuk-button govuk-visually-hidden">
+      Copy token
+    </button>
 
-      <p class="govuk-body">
-        <a class="govuk-link" href="<%= authentication_tokens_path %>">
-          Continue to manage tokens
-        </a>
-      </p>
-    <% end %>
+    <p class="govuk-body">
+      <a class="govuk-link" href="<%= authentication_tokens_path %>">
+        Continue to manage tokens
+      </a>
+    </p>
   </div>
 </div>
