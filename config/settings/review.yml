@@ -5,7 +5,6 @@ trs:
   base_url: https://test.teacher-qualifications-api.education.gov.uk/
 
 features:
-  qualtrics_survey: true
   home_text: true
   sign_in_method: persona
   enable_feedback_link: true
@@ -34,21 +33,3 @@ pagination:
 
 environment:
   name: review
-
-sign_off_period: # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb
-
-qualtrics:
-  api_token: change_me
-  directory_id: POOL_03wzmFoShC0dJRP
-  base_url: https://fra1.qualtrics.com/API/v3/
-  library_id: UR_0qTPqmqVt86pGL4
-  withdraw:
-    survey_id: SV_1UkX0PVjRun4I9U
-    mailing_list_id: CG_2bZrlBdyq2DWcLV
-    message_id: MS_UaqTY612tQhJaZl
-  award:
-    survey_id: SV_1UkX0PVjRun4I9U
-    mailing_list_id: CG_2bZrlBdyq2DWcLV
-    message_id: MS_UaqTY612tQhJaZl
-  minutes_delayed: 0
-  days_delayed: 0
