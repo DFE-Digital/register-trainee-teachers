@@ -12,20 +12,28 @@
       title_text: "Token generated",
       classes: "govuk-panel govuk-panel--confirmation app-authentication-token-success-panel",
     ) do %>
-      <p>
-        Your API token is
-        <br/>
-        <strong id="token-text"><%= flash[:token] %></strong>
-      </p>
+      <% if flash[:token].present? %>
+        <p>
+          Your API token is
+          <br/>
+          <strong id="token-text"><%= flash[:token] %></strong>
+        </p>
+      <% end %>
     <% end %>
 
-    <p class="govuk-body">Make sure to copy your API token now as you will not be able to see it again.</p>
+    <% if flash[:token].present? %>
+      <p class="govuk-body">Make sure to copy your API token now as you will not be able to see it again.</p>
 
-    <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+      <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
 
-    <button id="copy-to-clipboard-button" class="govuk-button govuk-visually-hidden">
-      Copy token
-    </button>
+      <button id="copy-to-clipboard-button" class="govuk-button govuk-visually-hidden">
+        Copy token
+      </button>
+    <% else %>
+      <p class="govuk-body">
+        Your API token has already been displayed and cannot be shown again. If you did not copy it, you can generate a new token.
+      </p>
+    <% end %>
 
     <p class="govuk-body">
       <a class="govuk-link" href="<%= authentication_tokens_path %>">
