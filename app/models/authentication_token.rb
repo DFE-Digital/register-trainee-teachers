@@ -58,6 +58,8 @@ class AuthenticationToken < ApplicationRecord
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
 
+  scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
+
   def self.create_with_random_token(attributes = {})
     token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
