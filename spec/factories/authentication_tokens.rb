@@ -7,8 +7,11 @@ FactoryBot.define do
     provider
     created_by { provider.users.first }
     name { "test token" }
-    expires_at { Faker::Date.forward(days: 30) }
     last_used_at { Time.current }
+
+    trait :will_expire do
+      expires_at { 1.month.from_now }
+    end
 
     trait :expired do
       status { :expired }
@@ -20,6 +23,7 @@ FactoryBot.define do
       status { :revoked }
 
       revoked_at { Time.current }
+      revoked_by { created_by }
     end
   end
 end
