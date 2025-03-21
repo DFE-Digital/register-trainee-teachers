@@ -33,5 +33,3 @@ pagination:
 
 environment:
   name: review
-
-sign_off_period: # census_period, performance_period, outside_period. See app/services/determine_sign_off_period.rb

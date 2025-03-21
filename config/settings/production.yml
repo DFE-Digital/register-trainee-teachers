@@ -25,6 +25,7 @@ features:
   import_courses_from_ttapi: true
   import_applications_from_apply: true
   publish_course_details: true
+  qualtrics_survey: true
   routes:
     assessment_only: true
     early_years_assessment_only: true
