@@ -19,7 +19,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
 
     permissions :index? do
-      it { is_expected.to permit(lead_partner_user_context) }
+      it { is_expected.not_to permit(lead_partner_user_context) }
     end
   end
 
@@ -59,8 +59,8 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
 
       subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
 
-      it "returns only the authentication tokens that belong to the LeadPartner provider of the current user" do
-        expect(subject.resolve).to match_array(provider_user_authentication_tokens)
+      it "returns empty" do
+        expect(subject.resolve).to be_empty
       end
     end
 

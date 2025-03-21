@@ -24,7 +24,7 @@
       end
     end %>
 
-    <% if FeatureService.enabled?(:token_management) %>
+    <% if FeatureService.enabled?(:token_management) && policy(AuthenticationToken).index? %>
       <h2 class="govuk-heading-m">API Tokens</h2>
 
       <p class="govuk-body">

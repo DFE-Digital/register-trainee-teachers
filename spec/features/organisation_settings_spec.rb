@@ -33,7 +33,7 @@ feature "Organisation details" do
       then_i_see_the_root_page
     end
 
-    scenario "a user views the authentication tokens page", feature_token_management: true, js: true do
+    scenario "a user views the token management page", feature_token_management: true, js: true do
       when_i_click_on_the_organisation_settings_link
       and_i_see_api_tokens_details
 
@@ -68,21 +68,15 @@ feature "Organisation details" do
       then_i_see_the_organisation_details
       and_i_see_the_organisation_team_members
       and_i_see_the_contact_support_email
+      and_i_dont_see_api_tokens_details
     end
 
-    scenario "a user views the authentication tokens page", feature_token_management: true, js: true do
+    scenario "a user views the token management page", feature_token_management: true, js: true do
       when_i_click_on_the_organisation_settings_link
-      and_i_see_api_tokens_details
+      then_i_dont_see_api_tokens_details
 
-      and_i_click_on_view_docs_link do |window|
-        then_i_see_the_documentation(window)
-      end
-
-      when_i_click_on_manage_your_tokens_link
-      then_i_see_the_token_management_page
-
-      when_i_click_on_back_link
-      and_i_see_api_tokens_details
+      when_i_attempt_to_visit_the_token_management_page
+      then_i_see_the_unauthorized_message
     end
   end
 
@@ -101,11 +95,8 @@ feature "Organisation details" do
     end
 
     scenario "a user attempts to view the token management page", feature_token_management: true do
-      token_management_page.load
-
-      expect(page).to have_content(
-        "You do not have permission to perform this action",
-      )
+      when_i_attempt_to_visit_the_token_management_page
+      then_i_see_the_unauthorized_message
     end
   end
 
@@ -151,6 +142,42 @@ private
       "view a list of tokens, their description, expiry date, date last used",
     )
     expect(organisation_settings_page).to have_content(
+      "generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token",
+    )
+  end
+
+  def and_i_dont_see_api_tokens_details
+    expect(organisation_settings_page).not_to have_content("API Tokens")
+    expect(organisation_settings_page).not_to have_content(
+      "If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "What is an API token?",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your Student Record System directly into the Register service via the Register API (piece of software).",
+    )
+
+    expect("Your token is needed by the developers who are managing your Register API integration.")
+    expect(organisation_settings_page).not_to have_content(
+      "You can view and use the Register API technical documentation (opens in new tab).",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "How to manage your API token",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "The Register API is used to make trainee data transfer quicker and easier.",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "You must make sure the token is securely sent to the developers managing your Register API integration.",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "In the 'Manage your API token' screen, you can:",
+    )
+    expect(organisation_settings_page).not_to have_content(
+      "view a list of tokens, their description, expiry date, date last used",
+    )
+    expect(organisation_settings_page).not_to have_content(
       "generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token",
     )
   end
@@ -280,4 +307,14 @@ private
   def then_i_see_the_root_page
     expect(page).to have_content("Your trainee teachers")
   end
+
+  def then_i_see_the_unauthorized_message
+    expect(page).to have_content("You do not have permission to perform this action")
+  end
+
+  def when_i_attempt_to_visit_the_token_management_page
+    token_management_page.load
+  end
+
+  alias_method :then_i_dont_see_api_tokens_details, :and_i_dont_see_api_tokens_details
 end
