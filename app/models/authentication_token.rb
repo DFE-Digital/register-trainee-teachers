@@ -11,6 +11,7 @@
 #  last_used_at  :datetime
 #  name          :string           not null
 #  revoked_at    :datetime
+#  status        :string           default("active")
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  created_by_id :bigint
@@ -23,6 +24,7 @@
 #  index_authentication_tokens_on_hashed_token   (hashed_token) UNIQUE
 #  index_authentication_tokens_on_provider_id    (provider_id)
 #  index_authentication_tokens_on_revoked_by_id  (revoked_by_id)
+#  index_authentication_tokens_on_status         (status)
 #
 # Foreign Keys
 #
