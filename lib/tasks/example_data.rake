@@ -111,6 +111,10 @@ namespace :example_data do
       FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
       FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)
 
+      FactoryBot.create(:authentication_token, provider:)
+      FactoryBot.create(:authentication_token, :expired, provider:)
+      FactoryBot.create(:authentication_token, :revoked, provider: provider, revoked_by: persona)
+
       if persona_attributes[:lead_partner]
         lead_partner = lead_partners.sample
         LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)

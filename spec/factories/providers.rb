@@ -13,8 +13,9 @@ FactoryBot.define do
     end
 
     after(:create) do |provider|
-      user = create(:user, :with_no_organisation_in_db)
-      create(:provider_user, user:, provider:)
+      if provider.provider_users.empty?
+        create(:provider_user, provider:)
+      end
     end
 
     trait :unaccredited do

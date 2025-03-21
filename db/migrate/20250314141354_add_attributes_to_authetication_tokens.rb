@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AddAttributesToAutheticationTokens < ActiveRecord::Migration[7.2]
+  class AuthenticationToken < ApplicationRecord; end
+
   def change
     safety_assured do
       add_column :authentication_tokens, :name, :string
