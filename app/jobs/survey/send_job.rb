@@ -3,7 +3,8 @@
 module Survey
   class SendJob < ApplicationJob
     queue_as :default
-    retry_on StandardError, wait: 5.seconds, attempts: 3
+
+    sidekiq_options retry: 3
 
     def perform(trainee:, event_type:)
       return unless FeatureService.enabled?(:qualtrics_survey)
