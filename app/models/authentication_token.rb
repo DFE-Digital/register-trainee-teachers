@@ -74,4 +74,10 @@ class AuthenticationToken < ApplicationRecord
     token_without_prefix = unhashed_token.split.last
     find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
   end
+
+  def update_last_used_at!
+    return if last_used_at.today?
+
+    update(last_used_at: Time.current)
+  end
 end
