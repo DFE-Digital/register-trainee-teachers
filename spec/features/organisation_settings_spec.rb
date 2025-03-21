@@ -7,10 +7,11 @@ feature "Organisation details" do
     given_i_am_authenticated(user:)
   end
 
+  let!(:token_four) { create(:authentication_token, :revoked, provider: provider, name: "Token 4", created_by: user) }
+  let!(:token_two) { create(:authentication_token, :will_expire, name: "Token 2", provider: provider, created_by: user, last_used_at: 1.day.ago) }
   let!(:token_one) { create(:authentication_token, name: "Token 1", provider: provider, created_by: user) }
-  let!(:token_two) { create(:authentication_token, :expired, provider: provider, name: "Token 2", created_by: user) }
-  let!(:token_three) { create(:authentication_token, :revoked, provider: provider, name: "Token 3", created_by: user) }
-  let!(:token_four) { create(:authentication_token, name: "Token 4", created_by: user) }
+  let!(:token_three) { create(:authentication_token, :expired, provider: provider, name: "Token 3", created_by: user) }
+  let!(:token_five) { create(:authentication_token, name: "Token 5", created_by: user) }
 
   context "when a User belongs to a Provider organisation" do
     let(:accreditation_id) { Faker::Number.unique.number(digits: 4) }
@@ -181,32 +182,49 @@ private
 
     expect(token_management_page).to have_content("Previously created tokens")
 
+    token_names = all(".govuk-summary-card__title").map(&:text)
+
+    expect(token_names).to eq(["Token 1", "Token 2", "Token 3", "Token 4"])
+
     within("#token-#{token_one.id}") do
       expect(token_management_page).to have_content("Token 1")
       expect(token_management_page).to have_content("Status\tActive")
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Revoked by")
-      expect(token_management_page).to have_content("Expired")
+      expect(token_management_page).not_to have_content("Revoked by")
+      expect(token_management_page).not_to have_content("Expires at")
+      expect(token_management_page).not_to have_content("Expired")
     end
 
     within("#token-#{token_two.id}") do
       expect(token_management_page).to have_content("Token 2")
-      expect(token_management_page).to have_content("Status\tExpired")
+      expect(token_management_page).to have_content("Status\tActive")
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Expired\t#{token_two.expires_at.to_fs(:govuk)}")
+      expect(token_management_page).to have_content("Last used\t#{1.day.ago.to_date.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_content("Revoked by")
+      expect(token_management_page).to have_content("Expires at\t#{1.month.from_now.to_date.to_fs(:govuk)}")
     end
 
     within("#token-#{token_three.id}") do
       expect(token_management_page).to have_content("Token 3")
+      expect(token_management_page).to have_content("Status\tExpired")
+      expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_content("Revoked by")
+      expect(token_management_page).to have_content("Expired\t#{1.day.ago.to_date.to_fs(:govuk)}")
+    end
+
+    within("#token-#{token_four.id}") do
+      expect(token_management_page).to have_content("Token 4")
       expect(token_management_page).to have_content("Status\tRevoked")
       expect(token_management_page).to have_content("Created by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
-      expect(token_management_page).to have_content("Expired")
+      expect(token_management_page).to have_content("Revoked by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_content("Expires at")
+      expect(token_management_page).not_to have_content("Expired")
     end
 
-    expect(page).not_to have_css("#token-#{token_four.id}")
+    expect(page).not_to have_css("#token-#{token_five.id}")
   end
 
   def and_i_click_on_view_docs_link
