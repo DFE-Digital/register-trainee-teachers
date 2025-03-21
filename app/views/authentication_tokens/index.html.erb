@@ -33,6 +33,15 @@
     <p class="govuk-body">
       You must make sure the token is securely sent to the developers managing your Register API integration.
     </p>
+
+    <form action="<%= new_authentication_token_path %>" method="get" novalidate="">
+      <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Generate a new token
+        </button>
+        <a class="govuk-link" href="javascript:history.back();">Cancel</a>
+      </div>
+    </form>
   </div>
 </div>
 

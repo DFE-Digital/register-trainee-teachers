@@ -5,17 +5,17 @@ require "rails_helper"
 feature "create a new authentication token" do
   background do
     given_i_am_authenticated
-    and_the_authentication_tokens_feature_flag_is_enabled
     and_i_can_generate_an_authentication_token
   end
 
   let(:invalid_expires_at) { Date.new(Date.current.year - 1, 12, 31) }
   let(:expires_at) { Date.new(Date.current.year + 1, 12, 31) }
 
-  scenario "create a token" do
-    # TODO: Navigate from the authentication tokens index page to the new page
+  scenario "create a token", feature_token_management: true do
+    given_i_navigate_to_the_authentication_token_index_page
+    and_i_click_the_generate_new_token_button
+    then_i_should_see_the_new_token_form
 
-    given_i_navigate_to_the_new_authentication_token_page
     and_i_enter_an_expiry_date_in_the_past
     and_i_click_the_submit_button
     then_i_should_see_validation_error_messages
@@ -27,20 +27,27 @@ feature "create a new authentication token" do
     when_i_refresh_the_page
     then_i_can_no_longer_see_the_token
 
-    # TODO: Navigate to the index page and check that the token is there
+    when_i_click_the_continue_to_manage_tokens_button
+    then_i_should_see_the_new_token_in_the_list
   end
 
 private
-
-  def and_the_authentication_tokens_feature_flag_is_enabled; end
 
   def and_i_can_generate_an_authentication_token
     @token_string = "1a2b3c4d5e"
     allow(SecureRandom).to receive(:hex).with(10).and_return(@token_string)
   end
 
-  def given_i_navigate_to_the_new_authentication_token_page
-    visit new_authentication_token_path
+  def given_i_navigate_to_the_authentication_token_index_page
+    visit authentication_tokens_path
+  end
+
+  def and_i_click_the_generate_new_token_button
+    click_on "Generate a new token"
+  end
+
+  def then_i_should_see_the_new_token_form
+    expect(page).to have_content("Create a token")
   end
 
   def and_i_enter_an_expiry_date_in_the_past
@@ -79,5 +86,13 @@ private
 
   def then_i_can_no_longer_see_the_token
     expect(page).not_to have_content("test_#{@token_string}")
+  end
+
+  def when_i_click_the_continue_to_manage_tokens_button
+    click_on "Continue to manage tokens"
+  end
+
+  def then_i_should_see_the_new_token_in_the_list
+    expect(page).to have_content("My new token")
   end
 end
