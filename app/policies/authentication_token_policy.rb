@@ -11,13 +11,9 @@ class AuthenticationTokenPolicy
     end
 
     def resolve
-      return scope.none unless user.organisation?
+      return scope.none unless user.provider?
 
-      if user.lead_partner?
-        scope.where(provider_id: user.organisation.provider_id)
-      else
-        scope.where(provider_id: user.organisation.id)
-      end
+      scope.where(provider_id: user.organisation.id)
     end
   end
 
@@ -28,6 +24,6 @@ class AuthenticationTokenPolicy
   end
 
   def index?
-    user.organisation?
+    user.provider?
   end
 end
