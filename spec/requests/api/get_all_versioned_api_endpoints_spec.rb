@@ -4,6 +4,9 @@ require "rails_helper"
 
 paths_to_exclude = ["/api-docs/:api_version/openapi",
                     "/api-docs/:api_version/reference",
+                    "/api-docs/:api_version/hesa-reference",
+                    "/api-docs/:api_version/hesa-reference/trainee/:attribute",
+                    "/api-docs/:api_version/hesa-reference/degree/:attribute",
                     "/api/:api_version/info"]
 
 paths = Rails.application.routes.routes.select { |route| route.verb == "GET" && route.parts.include?(:api_version) }

@@ -1,0 +1,22 @@
+<%= render PageTitle::View.new(text: "Register API HESA reference") %>
+
+<%= tag.h1("Register API HESA reference", class: "govuk-heading-l") %>
+
+<%= render TabNavigation::View.new(
+  items: Settings.api.allowed_versions.map do |version|
+    {
+      url: api_docs_versioned_hesa_reference_path(version),
+      name: version,
+      current: version == api_version,
+    }
+  end
+) %>
+
+<%= tag.h2("Trainee", class: "govuk-heading-m") %>
+
+<%= govuk_list(trainee_hesa_mapper_class::HESA_MAPPING.keys.map { |attribute| govuk_link_to(attribute.to_s.humanize, api_docs_hesa_reference_trainee_attribute_path(attribute:, api_version: api_version)) }) %>
+
+<%= tag.h2("Degree", class: "govuk-heading-m") %>
+
+<%= govuk_list(degree_hesa_mapper_class::HESA_MAPPING.keys.map { |attribute| govuk_link_to(attribute.to_s.humanize, api_docs_hesa_reference_degree_attribute_path(attribute:, api_version: api_version)) }) %>
+

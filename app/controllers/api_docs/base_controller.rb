@@ -3,6 +3,7 @@
 module ApiDocs
   class BaseController < ::ApplicationController
     layout "api_docs/pages"
+
     skip_before_action :authenticate
     before_action { require_feature_flag(:register_api) }
     before_action :check_version
