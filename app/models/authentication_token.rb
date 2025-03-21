@@ -11,6 +11,7 @@
 #  last_used_at  :datetime
 #  name          :string           not null
 #  revoked_at    :datetime
+#  status        :string           default("active")
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  created_by_id :bigint
@@ -23,6 +24,7 @@
 #  index_authentication_tokens_on_hashed_token   (hashed_token) UNIQUE
 #  index_authentication_tokens_on_provider_id    (provider_id)
 #  index_authentication_tokens_on_revoked_by_id  (revoked_by_id)
+#  index_authentication_tokens_on_status         (status)
 #
 # Foreign Keys
 #
@@ -57,13 +59,14 @@ class AuthenticationToken < ApplicationRecord
 
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
+  validates :expires_at, comparison: { greater_than_or_equal_to: -> { Time.zone.today }, allow_nil: true }
 
   def self.create_with_random_token(attributes = {})
-    token = "#{Rails.env}_" + SecureRandom.hex(10)
-    hashed_token = hash_token(token)
+    token_string = "#{Rails.env}_" + SecureRandom.hex(10)
+    hashed_token = hash_token(token_string)
 
-    create(attributes.merge(hashed_token:))
-    token
+    authentication_token = create(attributes.merge(hashed_token:))
+    [authentication_token, token_string]
   end
 
   def self.hash_token(token)

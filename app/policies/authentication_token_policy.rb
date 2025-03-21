@@ -30,4 +30,12 @@ class AuthenticationTokenPolicy
   def index?
     user.organisation?
   end
+
+  def new?
+    user.organisation?
+  end
+
+  def create?
+    user.organisation?
+  end
 end
