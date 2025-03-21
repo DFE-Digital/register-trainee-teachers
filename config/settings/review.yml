@@ -5,6 +5,7 @@ trs:
   base_url: https://test.teacher-qualifications-api.education.gov.uk/
 
 features:
+  qualtrics_survey: true
   home_text: true
   sign_in_method: persona
   enable_feedback_link: true
