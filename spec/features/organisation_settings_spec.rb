@@ -28,6 +28,7 @@ feature "Organisation details" do
       then_i_see_the_organisation_details
       and_i_see_the_organisation_team_members
       and_i_see_the_contact_support_email
+      and_i_dont_see_api_tokens_details
 
       when_i_click_on_back_link
       then_i_see_the_root_page
@@ -85,13 +86,9 @@ feature "Organisation details" do
     let(:provider) { create(:provider) }
 
     scenario "a user attempts to view the organisation settings page" do
-      expect(page).not_to have_link("Organisation settings")
-
-      organisation_settings_page.load
-
-      expect(page).to have_content(
-        "You do not have permission to perform this action",
-      )
+      given_the_organisation_settings_link_is_not_visible
+      when_i_attempt_to_visit_the_organisation_settings_page
+      then_i_see_the_unauthorized_message
     end
 
     scenario "a user attempts to view the token management page", feature_token_management: true do
@@ -102,8 +99,16 @@ feature "Organisation details" do
 
 private
 
+  def given_the_organisation_settings_link_is_not_visible
+    expect(page).not_to have_link("Organisation settings")
+  end
+
   def given_i_have_clicked_on_the_organisation_name_link
     click_on organisation.name
+  end
+
+  def when_i_attempt_to_visit_the_organisation_settings_page
+    organisation_settings_page.load
   end
 
   def when_i_click_on_the_organisation_settings_link
