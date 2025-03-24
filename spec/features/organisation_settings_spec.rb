@@ -116,18 +116,16 @@ private
   end
 
   def and_i_see_api_tokens_details
-    expect(organisation_settings_page).to have_content("API Tokens")
+    expect(organisation_settings_page).to have_content("Register API Tokens")
     expect(organisation_settings_page).to have_content(
-      "If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.",
+      "You need an API token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.",
     )
     expect(organisation_settings_page).to have_content(
-      "What is an API token?",
+      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your student record system directly into the Register service.",
     )
     expect(organisation_settings_page).to have_content(
-      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your Student Record System directly into the Register service via the Register API (piece of software).",
+      "Your token is needed by the developers who are managing your Register API integration.",
     )
-
-    expect("Your token is needed by the developers who are managing your Register API integration.")
     expect(organisation_settings_page).to have_content(
       "You can view and use the Register API technical documentation (opens in new tab).",
     )
@@ -152,18 +150,16 @@ private
   end
 
   def and_i_dont_see_api_tokens_details
-    expect(organisation_settings_page).not_to have_content("API Tokens")
+    expect(organisation_settings_page).not_to have_content("Register API Tokens")
     expect(organisation_settings_page).not_to have_content(
-      "If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.",
+      "You need an API token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.",
     )
     expect(organisation_settings_page).not_to have_content(
-      "What is an API token?",
+      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your student record system directly into the Register service.",
     )
     expect(organisation_settings_page).not_to have_content(
-      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your Student Record System directly into the Register service via the Register API (piece of software).",
+      "Your token is needed by the developers who are managing your Register API integration.",
     )
-
-    expect("Your token is needed by the developers who are managing your Register API integration.")
     expect(organisation_settings_page).not_to have_content(
       "You can view and use the Register API technical documentation (opens in new tab).",
     )
