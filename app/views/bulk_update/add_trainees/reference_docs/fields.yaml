@@ -88,7 +88,7 @@
   description: |-
     This field collects the personal email address for a trainee on their Initial Teacher Training course.
 
-    This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they’ve have left their training course, for example, regarding their QTS.
+    This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left their training course, for example, regarding their QTS.
   format: 80 character length
   example: '"jane.smith@example.com"'
   validation: Mandatory
