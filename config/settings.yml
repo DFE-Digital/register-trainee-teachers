@@ -58,6 +58,7 @@ features:
   sync_from_dttp: false
   sync_trainees_from_dttp: false
   import_trainees_from_dttp: false
+  qualtrics_survey: false
   routes:
     assessment_only: false
     early_years_assessment_only: false
@@ -198,3 +199,19 @@ api:
     ip: []
   allowed_versions: [v0.1, v1.0-pre]
   current_version: v1.0-pre
+
+qualtrics:
+  api_token: please_change_me
+  directory_id: POOL_please_change_me
+  base_url: https://fra1.qualtrics.com/API/v3/
+  library_id: UR_please_change_me
+  minutes_delayed: 5
+  days_delayed: 7
+  withdraw:
+    survey_id: SV_please_change_me
+    mailing_list_id: CG_please_change_me
+    message_id: MS_please_change_me
+  award:
+    survey_id: SV_please_change_me
+    mailing_list_id: CG_please_change_me
+    message_id: MS_please_change_me
