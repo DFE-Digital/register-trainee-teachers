@@ -76,7 +76,7 @@ class AuthenticationToken < ApplicationRecord
   end
 
   def update_last_used_at!
-    return if last_used_at.today?
+    return if last_used_at&.today?
 
     update(last_used_at: Time.current)
   end
