@@ -46,7 +46,7 @@ module AuthenticationTokens
         if expires_at.present?
           row += [
             {
-              key: { text: expired? ? "Expired" : "Expires at" }, value: { text: expires_at.to_fs(:govuk) }
+              key: { text: expired? ? "Expired" : "Expires on" }, value: { text: expires_at.to_fs(:govuk) }
             },
           ]
         end
