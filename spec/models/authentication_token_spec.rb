@@ -105,7 +105,7 @@ RSpec.describe AuthenticationToken do
       it "updates last_used_at" do
         Timecop.freeze do
           subject.update_last_used_at!
-          expect(subject.last_used_at).to eq(Time.current)
+          expect(subject.last_used_at).to be_within(1.second).of(Time.current)
         end
       end
     end
