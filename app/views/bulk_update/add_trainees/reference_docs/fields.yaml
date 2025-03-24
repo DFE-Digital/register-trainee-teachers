@@ -469,7 +469,7 @@
   technical: graduation_year
   hesa_alignment: DEGENDDT
   description: The year of graduation.
-  format: This can be formatted as just the year, or as ISO-8601 format date YYYY-MM-DD
+  format: This can be formatted as just the year, or as an ISO-8601 format date YYYY-MM-DD
   example: '"2012-07-31"'
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33
