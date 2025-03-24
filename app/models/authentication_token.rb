@@ -69,7 +69,6 @@ class AuthenticationToken < ApplicationRecord
 
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
-  validates :expires_at, comparison: { greater_than_or_equal_to: -> { Time.zone.today }, allow_nil: true }
 
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
 
