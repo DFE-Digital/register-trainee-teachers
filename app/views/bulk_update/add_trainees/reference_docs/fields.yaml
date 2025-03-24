@@ -323,11 +323,12 @@
   technical: trainee_start_date
   hesa_alignment: TRAINEESTARTDATE
   description: |-
-    The field is used for trainees who do not commence on the official start date of the ITT course.
+    This field is used for trainees who do not commence on the official start date of the ITT course.
 
     For example:
 
     - when a trainee is joining an ITT course at an advanced stage because they have passed comparable ITT provision elsewhere
+    - when a trainee commences with the provider on an integrated Foundation Year, only starting their ITT course upon progressing to their second study year
   format: YYYY-MM-DD
   example: "2024-09-01"
   validation: Optional
