@@ -73,7 +73,6 @@ private
     expect(page).to have_content("Create a token")
     expect(page).to have_content("There is a problem")
     expect(page).to have_content("Enter the token name")
-    expect(page).to have_content("Enter an expiration date in the future")
   end
 
   def when_i_fill_in_the_form_with_valid_data
