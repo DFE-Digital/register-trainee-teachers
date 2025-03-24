@@ -11,7 +11,12 @@ feature "create a new authentication token" do
   let(:invalid_expires_at) { Date.new(Date.current.year - 1, 12, 31) }
   let(:expires_at) { Date.new(Date.current.year + 1, 12, 31) }
 
-  scenario "create a token", feature_token_management: true do
+  scenario "when the feature flag is off I cannot access the create token form", feature_token_management: false do
+    when_i_navigate_to_the_create_authentication_token_page
+    then_i_see_a_not_found_message
+  end
+
+  scenario "when the feature flag is on I can create a token", feature_token_management: true do
     given_i_navigate_to_the_authentication_token_index_page
     and_i_click_the_generate_new_token_button
     then_i_should_see_the_new_token_form
@@ -32,6 +37,14 @@ feature "create a new authentication token" do
   end
 
 private
+
+  def when_i_navigate_to_the_create_authentication_token_page
+    visit new_authentication_token_path
+  end
+
+  def then_i_see_a_not_found_message
+    expect(page).to have_content("Page not found")
+  end
 
   def and_i_can_generate_an_authentication_token
     @token_string = "1a2b3c4d5e"
