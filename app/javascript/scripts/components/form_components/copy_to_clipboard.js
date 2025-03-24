@@ -4,11 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (button) {
     const token = document.getElementById('token-text').innerHTML
 
-    copyTokenToClipboard = () => {
+    const copyTokenToClipboard = () => {
       navigator.clipboard.writeText(token)
     }
 
-    button.classList.remove('govuk-visually-hidden');
+    button.classList.remove('govuk-visually-hidden')
     button.addEventListener('click', copyTokenToClipboard)
   }
 })
