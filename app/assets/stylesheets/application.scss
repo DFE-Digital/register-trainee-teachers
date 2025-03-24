@@ -38,12 +38,11 @@ $mobile-big-end: 501px;
   .govuk-panel__title {
     @include govuk-font(36, bold);
   }
+
   .govuk-panel__body {
     @include govuk-font(24);
   }
 }
-
-
 
 // Dashed list (used in Contents links list)
 .app-list--dash li {
