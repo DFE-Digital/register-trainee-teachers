@@ -445,7 +445,7 @@
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
-  format: HESA codes for degree type list of unique 3 digit numbers.
+  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype) for degree type list of unique 3 digit numbers."
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L42
