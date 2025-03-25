@@ -25,13 +25,16 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
     context "with a withdrawable trainee" do
       let(:trainee) { create(:trainee, :with_hesa_trainee_detail, :trn_received, provider:) }
       let(:reason) { create(:withdrawal_reason, :provider) }
+      let(:withdraw_date) { Time.zone.today.iso8601 }
+      let(:trigger) { "provider" }
+      let(:future_interest) { "no" }
       let(:params) do
         {
           data: {
             reasons: [reason.name],
-            withdraw_date: Time.zone.now.iso8601,
-            trigger: "provider",
-            future_interest: "no",
+            withdraw_date: withdraw_date,
+            trigger: trigger,
+            future_interest: future_interest,
           },
         }
       end
@@ -46,6 +49,10 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         expect(response).to have_http_status(:ok)
 
         expect(response.parsed_body.dig(:data, :trainee_id)).to eql(trainee_id)
+        expect(response.parsed_body.dig(:data, :withdraw_reasons)).to include(reason.name)
+        expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+        expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
+        expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
       end
 
       it "change the trainee", openapi: false do

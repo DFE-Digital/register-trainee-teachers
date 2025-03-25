@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Api::Trainees::WithdrawResponse do
-  let(:version) { "v0.1" }
+  let(:version) { "v1.0-pre" }
   let(:withdraw_response) { described_class.call(trainee:, params:, version:) }
   let(:params) do
     {
@@ -18,7 +18,7 @@ describe Api::Trainees::WithdrawResponse do
   let(:reasons) { [reason.name] }
   let(:trigger) { "provider" }
   let(:future_interest) { "no" }
-  let(:withdraw_date) { Time.zone.now.iso8601 }
+  let(:withdraw_date) { Time.zone.today.iso8601 }
   let(:another_reason) { "" }
 
   subject { withdraw_response }
@@ -35,7 +35,7 @@ describe Api::Trainees::WithdrawResponse do
       expect {
         subject
       } .to change { trainee.reload.current_withdrawal&.trigger }.from(nil).to("provider")
-      .and change { trainee.reload.withdraw_date }.from(nil)
+      .and change { trainee.reload.current_withdrawal&.date&.iso8601 }.from(nil).to(withdraw_date)
       .and change { trainee.reload.current_withdrawal&.future_interest }.from(nil).to("no")
       .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
       .and change { trainee.reload.current_withdrawal_reasons&.pluck(:name) }.from(nil).to(reasons)
