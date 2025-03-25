@@ -24,17 +24,19 @@
       end
     end %>
 
-    <% if FeatureService.enabled?(:token_management) %>
-      <h2 class="govuk-heading-m">API Tokens</h2>
+    <% if FeatureService.enabled?(:token_management) && policy(AuthenticationToken).index? %>
+      <h2 class="govuk-heading-m">Register API Tokens</h2>
 
       <p class="govuk-body">
-        If you want to use the Register API to send your trainee data from your Students Record System directly to the Register service, you will need an API token.
+        You need an API token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.
       </p>
 
-      <h3 class="govuk-heading-s">What is an API token?</h3>
+      <p class="govuk-body">
+        The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your student record system directly into the Register service.
+      </p>
 
       <p class="govuk-body">
-        The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your Student Record System directly into the Register service via the Register API (piece of software).
+        Your token is needed by the developers who are managing your Register API integration.
       </p>
 
       <p class="govuk-body">
