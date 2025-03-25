@@ -250,7 +250,7 @@ module Api
     private
 
       def valid_training_routes
-        if start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
+        if start_year.present? && start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
           Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
         else
           Hesa::CodeSets::TrainingRoutes::MAPPING.values
