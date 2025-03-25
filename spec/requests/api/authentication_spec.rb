@@ -24,7 +24,7 @@ describe ".update_last_used_at_on_token!" do
     end
   end
 
-  context "for an disabled token" do
+  context "for an revoked token" do
     let(:status) { "revoked" }
 
     it "doesn't call update_last_used_at! on the auth_token" do
