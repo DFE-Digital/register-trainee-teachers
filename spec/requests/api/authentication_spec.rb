@@ -33,7 +33,7 @@ describe ".update_last_used_at_on_token!" do
       end
     end
 
-    it "doesn't causes the token to update last_used_at attribute" do
+    it "doesn't cause the token to update last_used_at attribute" do
       get "/api/v0.1/info", headers: { Authorization: token }
 
       auth_token.reload
