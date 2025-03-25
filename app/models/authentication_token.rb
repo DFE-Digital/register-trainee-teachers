@@ -58,6 +58,14 @@ class AuthenticationToken < ApplicationRecord
   belongs_to :created_by, class_name: "User"
   belongs_to :revoked_by, class_name: "User", optional: true
 
+  scope :will_expire, lambda { |date = nil|
+    if date.present?
+      active.where(expires_at: ..date)
+    else
+      active.where.not(expires_at: nil)
+    end
+  }
+
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
 
