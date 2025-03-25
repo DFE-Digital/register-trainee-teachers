@@ -287,14 +287,7 @@
   technical: course_year
   hesa_alignment: YEARPRG
   description: The year number of the course that the trainee is currently studying.
-  format: |-
-    0 Foundation year
-
-    1 First year
-
-    2 Second year
-
-    3 Third year
+  format: "[HESA course year codes](https://www.hesa.ac.uk/collection/c24053/e/yearprg)"
   example: '"1" as an example of using the code for First year.'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L28
