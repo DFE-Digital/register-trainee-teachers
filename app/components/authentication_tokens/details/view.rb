@@ -13,6 +13,9 @@ module AuthenticationTokens
                :expires_at,
                :last_used_at,
                :revoked_by,
+               :revoked_at,
+               :revoked?,
+               :expired?,
                to: :token
 
       def initialize(token)
@@ -20,7 +23,7 @@ module AuthenticationTokens
       end
 
       def rows
-        [
+        row = [
           {
             key: { text: "Status" }, value: { text: status.capitalize }
           },
@@ -30,19 +33,25 @@ module AuthenticationTokens
           {
             key: { text: "Last used" }, value: { text: last_used_at&.to_date&.to_fs(:govuk) }
           },
-          {
-            key: { text: "Revoked by" }, value: { text: revoked_by&.name }
-          },
-          {
-            key: { text: "Expired" }, value: { text: expired_at&.to_date&.to_fs(:govuk) }
-          },
         ]
-      end
 
-    private
+        if revoked?
+          row += [
+            {
+              key: { text: "Revoked by" }, value: { text: "#{revoked_by.name} on #{revoked_at.to_date.to_fs(:govuk)}" }
+            },
+          ]
+        end
 
-      def expired_at
-        expires_at if expires_at.present? && (expires_at < Time.zone.today)
+        if expires_at.present?
+          row += [
+            {
+              key: { text: expired? ? "Expired" : "Expires on" }, value: { text: expires_at.to_fs(:govuk) }
+            },
+          ]
+        end
+
+        row
       end
     end
   end

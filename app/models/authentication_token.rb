@@ -19,10 +19,12 @@
 #
 # Indexes
 #
-#  index_authentication_tokens_on_created_by_id  (created_by_id)
-#  index_authentication_tokens_on_hashed_token   (hashed_token) UNIQUE
-#  index_authentication_tokens_on_provider_id    (provider_id)
-#  index_authentication_tokens_on_revoked_by_id  (revoked_by_id)
+#  index_authentication_tokens_on_created_by_id            (created_by_id)
+#  index_authentication_tokens_on_hashed_token             (hashed_token) UNIQUE
+#  index_authentication_tokens_on_provider_id              (provider_id)
+#  index_authentication_tokens_on_revoked_by_id            (revoked_by_id)
+#  index_authentication_tokens_on_status                   (status)
+#  index_authentication_tokens_on_status_and_last_used_at  (status,last_used_at)
 #
 # Foreign Keys
 #
@@ -59,6 +61,8 @@ class AuthenticationToken < ApplicationRecord
   validates :name, presence: true, length: { maximum: 200 }
 
   self.ignored_columns += ["enabled"]
+  
+  scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
 
   def self.create_with_random_token(attributes = {})
     token = "#{Rails.env}_" + SecureRandom.hex(10)
