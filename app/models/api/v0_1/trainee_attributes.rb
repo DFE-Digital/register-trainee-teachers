@@ -73,9 +73,9 @@ module Api
         hesa_id
       ].freeze
 
-      ITT_REFORM_YEAR = 2024
+      PROVIDER_LED_POSTGRAD_START_YEAR = 2022
 
-      private_constant :ITT_REFORM_YEAR
+      private_constant :PROVIDER_LED_POSTGRAD_START_YEAR
 
       attribute :placements_attributes, array: true, default: -> { [] }
       attribute :degrees_attributes, array: true, default: -> { [] }
@@ -250,7 +250,7 @@ module Api
     private
 
       def valid_training_routes
-        if start_year.to_i >= ITT_REFORM_YEAR
+        if start_year.to_i < PROVIDER_LED_POSTGRAD_START_YEAR
           Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
         else
           Hesa::CodeSets::TrainingRoutes::MAPPING.values
