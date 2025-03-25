@@ -6,7 +6,7 @@ describe ".update_last_used_at_on_token!" do
   let(:token) { "auth_token" }
   let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token), last_used_at: 1.week.ago, status: status) }
 
-  context "for an enabled token" do
+  context "for an active token" do
     let(:status) { "active" }
 
     it "calls update_last_used_at! on the auth_token" do
