@@ -432,8 +432,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         end
 
         it "sets the lead_partner_not_applicable and employing_school_not_applicable to true" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+          trainee.reload
+
+          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.employing_school_not_applicable).to be(true)
         end
 
         context "with existing lead_partner_not_applicable and employing_school_not_applicable set to true" do
@@ -454,8 +456,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           end
 
           it "does not change lead_partner_not_applicable and employing_school_not_applicable" do
-            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-            expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+            trainee.reload
+
+            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.employing_school_not_applicable).to be(true)
           end
         end
       end
@@ -477,8 +481,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           end
 
           it "sets lead_partner_not_applicable to true and employing_school_not_applicable to true" do
-            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-            expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+            trainee.reload
+
+            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.employing_school_not_applicable).to be(true)
           end
         end
 
@@ -501,8 +507,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to false and employing_school_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+              trainee.reload
+
+              expect(trainee.lead_partner_not_applicable).to be(false)
+              expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
 
@@ -511,7 +519,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
             it "sets lead_partner_urn to nil and lead_partner_not_applicable to true" do
               expect(response.parsed_body[:data][:lead_partner_urn]).to be_nil
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+
+              trainee.reload
+
+              expect(trainee.lead_partner_not_applicable).to be(true)
             end
           end
         end
@@ -532,8 +543,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           end
 
           it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
-            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-            expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+            trainee.reload
+
+            expect(trainee.lead_partner_not_applicable).to be(true)
+            expect(trainee.employing_school_not_applicable).to be(true)
           end
         end
 
@@ -556,8 +569,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to true and employing_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+              trainee.reload
+
+              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(trainee.employing_school_not_applicable).to be(false)
             end
           end
 
@@ -570,8 +585,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             end
 
             it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+              trainee.reload
+
+              expect(trainee.lead_partner_not_applicable).to be(true)
+              expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
         end

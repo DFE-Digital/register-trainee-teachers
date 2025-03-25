@@ -5,19 +5,35 @@ module Api
     class TraineeSerializer
       EXCLUDED_ATTRIBUTES = %w[
         id
+        iqts_country
+        additional_dttp_data
+        course_uuid
+        commencement_status
+        created_from_dttp
+        created_from_hesa
+        discarded_at
+        hesa_updated_at
+        hesa_editable
         slug
+        slug_sent_to_dqt_at
         state
+        submission_ready
         progress
         provider_id
         dttp_id
         placement_assignment_dttp_id
+        placement_detail
         dttp_update_sha
         dormancy_dttp_id
         lead_partner_id
+        lead_partner_not_applicable
         employing_school_id
+        employing_school_not_applicable
         course_allocation_subject_id
         start_academic_cycle_id
         end_academic_cycle_id
+        ebacc
+        region
         hesa_trn_submission_id
         application_choice_id
         apply_application_id
@@ -25,6 +41,7 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
+        withdraw_date
         withdraw_reasons_details
         withdraw_reasons_dfe_details
       ].freeze
