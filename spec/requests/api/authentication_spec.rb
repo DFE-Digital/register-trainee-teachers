@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe ".update_last_used_at_on_token!" do
   let(:token) { "auth_token" }
-  let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token), last_used_at: 1.week.ago, status:) }
+  let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token), last_used_at: 1.week.ago, status: status) }
 
   context "for an enabled token" do
     let(:status) { "active" }
@@ -20,7 +20,7 @@ describe ".update_last_used_at_on_token!" do
 
       auth_token.reload
 
-      expect(auth_token.last_used_at.today?).to eq(true)
+      expect(auth_token.last_used_at.today?).to be(true)
     end
   end
 
@@ -38,7 +38,7 @@ describe ".update_last_used_at_on_token!" do
 
       auth_token.reload
 
-      expect(auth_token.last_used_at.today?).to eq(false)
+      expect(auth_token.last_used_at.today?).to be(false)
     end
   end
 end

@@ -5,12 +5,12 @@
 # Table name: authentication_tokens
 #
 #  id            :bigint           not null, primary key
-#  enabled       :boolean          default(TRUE), not null
 #  expires_at    :date
 #  hashed_token  :string           not null
 #  last_used_at  :datetime
 #  name          :string           not null
 #  revoked_at    :datetime
+#  status        :string           default("active")
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  created_by_id :bigint
@@ -57,6 +57,8 @@ class AuthenticationToken < ApplicationRecord
 
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
+
+  self.ignored_columns += ["enabled"]
 
   def self.create_with_random_token(attributes = {})
     token = "#{Rails.env}_" + SecureRandom.hex(10)
