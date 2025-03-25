@@ -25,7 +25,7 @@ remove_duplicate_dead_jobs:
 # Jobs that run once a day at a specific time, sorted by their running time
 expire_authentication_tokens:
   cron: "0 0 * * *" # Every day at 00:00 (midnight).
-  class: "AuthenticationTokens::ExpireTokensJob "
+  class: "AuthenticationTokens::ExpireTokensJob"
   queue: default
 truncate_activerecord_session_store:
   cron: "0 0 * * *" # Every day at 00:00 (midnight).
