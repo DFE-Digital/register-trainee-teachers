@@ -32,6 +32,7 @@ RSpec.describe AuthenticationToken do
     describe "::will_expire" do
       let!(:active_token) { create(:authentication_token) }
       let!(:active_token_will_expire_today) { create(:authentication_token, expires_at: date) }
+      let!(:active_token_should_have_expired_yesterday) { create(:authentication_token, expires_at: 1.day.ago) }
       let!(:active_token_will_expire_in_the_future) { create(:authentication_token, :will_expire) }
       let!(:expired_token) { create(:authentication_token, :expired) }
       let!(:revoked_token) { create(:authentication_token, :will_expire, :revoked) }
@@ -40,14 +41,18 @@ RSpec.describe AuthenticationToken do
 
       context "when date is present" do
         it "returns only the active tokens which will expire at the provided date" do
-          expect(described_class.will_expire(date)).to contain_exactly(active_token_will_expire_today)
+          expect(described_class.will_expire(date)).to contain_exactly(
+            active_token_will_expire_today, active_token_should_have_expired_yesterday
+          )
         end
       end
 
       context "when date is not present" do
         it "returns all the active tokens with an expired_at date" do
           expect(described_class.will_expire).to contain_exactly(
-            active_token_will_expire_today, active_token_will_expire_in_the_future
+            active_token_will_expire_today,
+            active_token_should_have_expired_yesterday,
+            active_token_will_expire_in_the_future,
           )
         end
       end

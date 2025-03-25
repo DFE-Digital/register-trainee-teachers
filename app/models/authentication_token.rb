@@ -60,7 +60,7 @@ class AuthenticationToken < ApplicationRecord
 
   scope :will_expire, lambda { |date = nil|
     if date.present?
-      active.where(expires_at: date)
+      active.where(expires_at: ..date)
     else
       active.where.not(expires_at: nil)
     end
