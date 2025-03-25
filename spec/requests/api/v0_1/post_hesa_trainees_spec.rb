@@ -152,12 +152,12 @@ describe "`POST /api/v0.1/trainees` endpoint" do
     it "sets the correct school attributes" do
       post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      parsed_body = response.parsed_body[:data]
+      trainee = Trainee.last
 
-      expect(parsed_body[:lead_partner_not_applicable]).to be(true)
-      expect(parsed_body[:lead_partner]).to be_nil
-      expect(parsed_body[:employing_school_not_applicable]).to be(true)
-      expect(parsed_body[:employing_school]).to be_nil
+      expect(trainee.lead_partner_not_applicable).to be(true)
+      expect(trainee.lead_partner_id).to be_nil
+      expect(trainee.employing_school_not_applicable).to be(true)
+      expect(trainee.employing_school_id).to be_nil
     end
 
     it "creates the degrees if provided in the request body" do
@@ -219,8 +219,10 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         end
 
         it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+          trainee = Trainee.last
+
+          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.employing_school_not_applicable).to be(true)
         end
       end
 
@@ -242,7 +244,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
           end
 
           it "sets lead_partner_not_applicable to true" do
-            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+            trainee = Trainee.last
+
+            expect(trainee.lead_partner_not_applicable).to be(true)
           end
         end
 
@@ -265,7 +269,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to false" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.lead_partner_not_applicable).to be(false)
             end
           end
 
@@ -279,7 +285,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+              trainee = Trainee.last
+
+              expect(trainee.lead_partner_not_applicable).to be(true)
             end
           end
         end
@@ -301,7 +309,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to true" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
 
@@ -322,7 +332,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(false)
             end
           end
         end
