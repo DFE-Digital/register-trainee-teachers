@@ -51,6 +51,7 @@ module Api
             training_route: training_route,
             nationality: nationality,
             training_initiative: training_initiative,
+            withdraw_date: @trainee.current_withdrawal&.date&.iso8601,
             withdraw_reasons: withdraw_reasons,
             withdrawal_trigger: @trainee.current_withdrawal&.trigger,
             withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
@@ -223,7 +224,7 @@ module Api
       end
 
       def withdraw_reasons
-        @trainee.withdrawal_reasons&.map(&:name)
+        @trainee.current_withdrawal_reasons&.map(&:name)
       end
 
       delegate :ethnic_group, :disability_disclosure, :course_education_phase, :trainee_start_date, to: :@trainee
