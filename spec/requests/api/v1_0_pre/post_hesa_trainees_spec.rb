@@ -731,9 +731,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
 
         context "when invalid - provider_led_postgrad in 2024" do
-          let(:itt_start_date) { "2024-08-01" }
-          let(:itt_end_date)   { "2025-01-01" }
-          let(:cycle_year) { 2024 }
+          let(:itt_start_date) { "2021-08-01" }
+          let(:itt_end_date)   { "2022-01-01" }
+          let(:cycle_year) { 2021 }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
