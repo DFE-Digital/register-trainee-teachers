@@ -84,6 +84,12 @@ productiondata:
 	$(eval DEPLOY_ENV=productiondata)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
+csv-sandbox:
+	$(eval include global_config/csv-sandbox.sh)
+	$(if $(or ${SKIP_CONFIRM}, ${CONFIRM_PRODUCTION}), , $(error Missing CONFIRM_PRODUCTION=yes))
+	$(eval DEPLOY_ENV=csv-sandbox)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
 sandbox:
 	$(eval include global_config/sandbox.sh)
 	$(eval DEPLOY_ENV=sandbox)
