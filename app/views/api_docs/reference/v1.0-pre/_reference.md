@@ -3513,7 +3513,62 @@ Deletes an existing degree for this trainee.
       </p>
     </dd>
   </div>
-
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>reinstate_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        date
+      </p>
+      <p class="govuk-body">
+        The trainee’s reinstate date. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>2023-10-01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_education_phase</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s course education phase. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>primary</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>record_source</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record source. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>api</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>state</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record state. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>submitted_for_trn</code>
+      </p>
+    </dd>
+  </div>
 </dl>
 
 ### Placement object
