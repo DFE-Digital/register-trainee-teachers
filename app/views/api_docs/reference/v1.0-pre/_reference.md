@@ -3629,6 +3629,12 @@ Deletes an existing degree for this trainee.
         string (limited to 3 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
+        This records the student’s previous UK qualification.
+      </p>
+      <p class="govuk-body">
+        Only the highest previous degree qualification should be submitted.
+      </p>
+      <p class="govuk-body">
         The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degtype">HESA degree type field</a>
       </p>
       <p class="govuk-body">
