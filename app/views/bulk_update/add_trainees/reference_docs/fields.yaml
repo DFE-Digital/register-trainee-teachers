@@ -18,12 +18,11 @@
 - field_name: HESA ID
   technical: hesa_id
   hesa_alignment: HUSID
-  description: This field records the student identifier which is to be unique to
-    each student. It is intended that the identifier is to be transferred with the
-    student to each provider of higher education he or she may attend. The objective
-    is that the use of this number will facilitate the accurate tracking of students
-    throughout their experience within the sector for which HESA collects data.
-  format: A HUSID MUST be a 17 digit number
+  description: The HESA unique student identifier for the trainee.
+  format: |-
+    Limited to 17 digit numbers.
+
+    Previously assigned 13 character HUSID are accepted.
   example: '"1210007145123456"'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L72
@@ -86,8 +85,10 @@
 - field_name: Email
   technical: email
   hesa_alignment: NQTEMAIL
-  description: This field collects email addresses for trainees on Initial Teacher
-    Training courses.
+  description: |-
+    This field collects the personal email address for a trainee on their Initial Teacher Training course.
+
+    This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left their training course, for example, regarding their QTS.
   format: 80 character length
   example: '"jane.smith@example.com"'
   validation: Mandatory
@@ -212,7 +213,7 @@
   technical: course_subject_one
   hesa_alignment: SBJCA
   description: |-
-    Subject of first ITT course
+    First subject of the ITT course
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
@@ -223,7 +224,7 @@
   technical: course_subject_two
   hesa_alignment: SBJCA
   description: |-
-    Subject of second ITT course
+    Second subject of the ITT course.
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
@@ -233,7 +234,7 @@
   technical: course_subject_three
   hesa_alignment: SBJCA
   description: |-
-    Subject of third ITT course
+    Third subject of the ITT course.
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
   format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
@@ -252,7 +253,7 @@
   technical: itt_start_date
   hesa_alignment: ITTSTARTDATE
   description: This field indicates the date the ITT course (to gain QTS) officially
-    start
+    starts
   format: YYYY-MM-DD
   example: '"2024-09-01"'
   validation: Mandatory
@@ -260,9 +261,9 @@
 - field_name: ITT End Date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
-  description: This field records the expected end date for the engagement
+  description: The end date of the Initial Teacher Training part of their course.
   format: YYYY-MM-DD
-  example: YYYY-MM-DD
+  example: '"2025-03-11"'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L68
 - field_name: Course Age Range
@@ -285,9 +286,7 @@
 - field_name: Course Year
   technical: course_year
   hesa_alignment: YEARPRG
-  description: This field indicates the year number of the course that the student
-    is currently studying. This could be different from the year of student if the
-    student has changed course or re-taken a year.
+  description: The year number of the course that the trainee is currently studying.
   format: "[HESA course year codes](https://www.hesa.ac.uk/collection/c24053/e/yearprg)"
   example: '"1" as an example of using the code for First year.'
   validation: Mandatory
@@ -316,15 +315,24 @@
 - field_name: Trainee Start Date
   technical: trainee_start_date
   hesa_alignment: TRAINEESTARTDATE
-  description: This field indicates the date the student commenced their ITT course
-    where this is different to the start date of the instance as recorded in Student.COMDATE.
+  description: |-
+    This field is used for trainees who do not commence on the official start date of the ITT course.
+
+    For example:
+
+    - when a trainee is joining an ITT course at an advanced stage because they have passed comparable ITT provision elsewhere
+    - when a trainee commences with the provider on an integrated Foundation Year, only starting their ITT course upon progressing to their second study year
   format: YYYY-MM-DD
   example: "2024-09-01"
   validation: Optional
 - field_name: PG Apprenticeship Start Date
   technical: pg_apprenticeship_start_date
   hesa_alignment: PGAPPSTDT
-  description: This records the start date of a postgraduate’s teaching apprenticeship.
+  description: |-
+    This records the start date of a postgraduate’s teaching apprenticeship.
+
+    Apprenticeships may start earlier than the start of the academic year, for example, from 1 June 2024. However, the first grant payment will not be made before September 2024, even if the apprentice starts before this date.
+
   format: YYYY-MM-DD
   example: "2024-09-01"
   validation: Optional
@@ -400,11 +408,7 @@
 - field_name: Additional Training Initiative
   technical: additional_training_initiative
   hesa_alignment: INITIATIVES
-  description: This field records the student identifier which is to be unique to
-    each student. It is intended that the identifier is to be transferred with the
-    student to each provider of higher education he or she may attend. The objective
-    is that the use of this number will facilitate the accurate tracking of students
-    throughout their experience within the sector for which HESA collects data.
+  description: The secondary training initiative that the trainee is on.
   format: |-
     001 Abridged ITT course
 
@@ -421,16 +425,6 @@
     036 International relocation payment
   example: |-
     "026" is an example of using the code for Now Teach
-
-    HESA allows you to add 2 initiatives, but Register will only import the first one.
-
-    The following HESA codes are not mapped to Register\:
-
-    001 Abridged ITT course
-
-    011 Primary with mathematics specialist
-
-    019 Additional ITT place for PE with a priority subject
   validation: Optional
 - field_name: UK degree type
   technical: uk_degree
@@ -443,8 +437,8 @@
 - field_name: Non UK degree types
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
-  description:
-  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
+  description: The type of non-UK degree.
+  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype) for degree type list of unique 3 digit numbers."
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L42
@@ -459,8 +453,7 @@
 - field_name: UK degree grade
   technical: grade
   hesa_alignment: DEGCLSS
-  description: This field is used to indicate the qualification class of the student’s
-    previous degree.
+  description: This field is used to indicate the qualification class of the student’s previous degree. Only the highest previous degree qualification should be submitted.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
   example: '"01" for example is First class honours'
   validation: Conditional - mandatory if specifying a UK degree
@@ -468,9 +461,9 @@
 - field_name: Degree graduation year
   technical: graduation_year
   hesa_alignment: DEGENDDT
-  description: This records the end date of the student’s previous qualification.
-  format: YYYY-MM-DD
-  example: "1985-02-13"
+  description: The year of graduation.
+  format: This can be formatted as just the year, or as an ISO-8601 format date YYYY-MM-DD
+  example: '"2012-07-31"'
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33
 - field_name: Degree UK awarding institution
