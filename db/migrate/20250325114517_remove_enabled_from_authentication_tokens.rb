@@ -3,7 +3,7 @@
 class RemoveEnabledFromAuthenticationTokens < ActiveRecord::Migration[7.2]
   def up
     safety_assured do
-      AuthenticationToken.where(status: "active").where(enabled: false).update_all(status: "revoked")
+      AuthenticationToken.active.where(enabled: false).update_all(status: "revoked")
 
       remove_column :authentication_tokens, :enabled
     end
