@@ -730,7 +730,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
           post endpoint, params: params, headers: { Authorization: token }, as: :json
         end
 
-        context "when invalid - provider_led_postgrad in 2024" do
+        context "when invalid - provider_led_postgrad in 2021" do
           let(:itt_start_date) { "2021-08-01" }
           let(:itt_end_date)   { "2022-01-01" }
           let(:cycle_year) { 2021 }
