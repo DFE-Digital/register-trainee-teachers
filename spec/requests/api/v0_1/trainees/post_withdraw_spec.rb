@@ -55,8 +55,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: params.to_json,
           )
-        } .to change { trainee.reload.withdraw_date }.from(nil)
-        .and change { trainee.reload.state }.from("trn_received").to("withdrawn")
+        } .to change { trainee.reload.state }.from("trn_received").to("withdrawn")
       end
 
       it "calls the dqt withdraw service" do

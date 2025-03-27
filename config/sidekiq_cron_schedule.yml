@@ -1,5 +1,4 @@
 # Jobs that run once a month at a specific time, sorted by their running time
-
 delete_cancelled_and_failed_bulk_update_trainee_uploads:
   cron: "0 0 1 * *" # Every month at 00:00 (midnight).
   class: "BulkUpdate::AddTrainees::RemoveCancelledAndFailedJob"
@@ -24,6 +23,10 @@ remove_duplicate_dead_jobs:
   queue: default
 
 # Jobs that run once a day at a specific time, sorted by their running time
+expire_authentication_tokens:
+  cron: "0 0 * * *" # Every day at 00:00 (midnight).
+  class: "AuthenticationTokens::ExpireTokensJob"
+  queue: default
 truncate_activerecord_session_store:
   cron: "0 0 * * *" # Every day at 00:00 (midnight).
   class: "SessionStoreTruncateJob"

@@ -185,10 +185,10 @@ class Trainee < ApplicationRecord
 
   has_many :placements, dependent: :destroy, inverse_of: :trainee
 
-  # this is the old relation which will be retired
+  # This is the old relation which will be retired
   has_many :trainee_withdrawal_reasons, inverse_of: :trainee
   has_many :withdrawal_reasons, through: :trainee_withdrawal_reasons
-  # going forward, withdrawal_reasons  belong to a a trainee's withdrawal record within "trainee_withdrawals"
+  # Going forward, withdrawal_reasons belong to a trainee's withdrawal record within "trainee_withdrawals"
   has_many :trainee_withdrawals, dependent: :destroy
 
   has_many :potential_duplicate_trainees, dependent: :destroy

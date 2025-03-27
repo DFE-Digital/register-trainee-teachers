@@ -137,6 +137,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_25_114517) do
     t.bigint "revoked_by_id"
     t.string "status", default: "active"
     t.index ["created_by_id"], name: "index_authentication_tokens_on_created_by_id"
+    t.index ["expires_at"], name: "index_authentication_tokens_on_expires_at"
     t.index ["hashed_token"], name: "index_authentication_tokens_on_hashed_token", unique: true
     t.index ["provider_id"], name: "index_authentication_tokens_on_provider_id"
     t.index ["revoked_by_id"], name: "index_authentication_tokens_on_revoked_by_id"
