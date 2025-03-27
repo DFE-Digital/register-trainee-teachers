@@ -1,3 +1,5 @@
+# Creating a new environment
+
 ## Infrastructure Configuration
 - Add {env}.sh file to the global_config folder. For example, pen.sh.
 - Add {env}.tfvars.json and {env}_backend.tfvars to terraform/aks/workspace-variables.
