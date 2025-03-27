@@ -113,13 +113,6 @@ namespace :reference_data do
     end
   end
 
-  desc "HESA training routes reference data checks"
-  task training_routes: :environment do
-    HesaCodeChecker.new.call("training_routes") do |hesa_code|
-      Hesa::CodeSets::TrainingRoutes::MAPPING[hesa_code.code]
-    end
-  end
-
   desc "HESA course subjects reference data checks"
   task course_subjects: :environment do
     HesaCodeChecker.new.call("course_subjects") do |hesa_code|
