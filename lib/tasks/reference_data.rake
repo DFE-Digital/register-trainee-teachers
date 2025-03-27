@@ -152,8 +152,11 @@ namespace :reference_data do
   desc "HESA funding methods reference data checks"
   task funding_methods: :environment do
     HesaCodeChecker.new.call("funding_methods") do |hesa_code|
+      bursary_level = Hesa::CodeSets::BursaryLevels::VALUES[hesa_code.code]
       entity_id = Hesa::CodeSets::BursaryLevels::MAPPING[hesa_code.code]
-      CodeSets::BursaryDetails::MAPPING.find { |_, value| value[:entity_id] == entity_id }&.first
+      next if bursary_level.nil? || entity_id.nil?
+
+      "#{bursary_level} - #{Trainees::MapFundingFromDttpEntityId.call(funding_entity_id: entity_id)}"
     end
   end
 
