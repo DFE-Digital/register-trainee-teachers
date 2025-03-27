@@ -243,6 +243,7 @@ shared:
     - created_from_hesa
     - date_of_birth
     - defer_date
+    - defer_reason
     - disability_disclosure
     - discarded_at
     - diversity_disclosure
