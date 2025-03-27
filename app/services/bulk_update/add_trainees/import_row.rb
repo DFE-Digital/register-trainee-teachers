@@ -35,6 +35,7 @@ module BulkUpdate
         )
 
         trainee_attributes = trainee_attributes_service.new(mapper_klass.call(params: attributes))
+        trainee_attributes.context = :csv
 
         # Save the record
         json_result = Api::CreateTrainee.call(
