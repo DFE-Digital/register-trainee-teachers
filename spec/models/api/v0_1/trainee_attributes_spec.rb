@@ -229,9 +229,6 @@ RSpec.describe Api::V01::TraineeAttributes do
           context "when AcademicCycle::for_date is 2021" do
             let(:cycle_year) { 2021 }
 
-            before do
-              allow(AcademicCycle).to receive(:for_date).and_return(academic_cycle)
-            end
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
@@ -242,9 +239,6 @@ RSpec.describe Api::V01::TraineeAttributes do
           context "when AcademicCycle::for_date is 2024" do
             let(:cycle_year) { 2024 }
 
-            before do
-              allow(AcademicCycle).to receive(:for_date).and_return(academic_cycle)
-            end
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
