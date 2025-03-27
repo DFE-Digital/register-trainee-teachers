@@ -141,8 +141,6 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     it "sets the correct lead partner and employing school attributes" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      response.parsed_body[:data]
-
       trainee = Trainee.last
 
       expect(trainee.lead_partner_not_applicable).to be(true)
