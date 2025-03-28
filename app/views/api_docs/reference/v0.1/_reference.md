@@ -3520,7 +3520,7 @@ Deletes an existing degree for this trainee.
         string
       </p>
       <p class="govuk-body">
-        The trainee’s record state. (read-only)
+        The trainee’s record state (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>submitted_for_trn</code>
