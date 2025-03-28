@@ -3509,8 +3509,16 @@ Deletes an existing degree for this trainee.
         Where the trainee record originally came from when it was created (read-only).
       </p>
       <p class="govuk-body">
-        Example: <code>api</code>
+        Possible values:
       </p>
+      <ul>
+        <li><code>manual</code></li>
+        <li><code>api</code></li>
+        <li><code>csv</code></li>
+        <li><code>hesa</code></li>
+        <li><code>apply</code></li>
+        <li><code>dttp</code></li>
+      </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
