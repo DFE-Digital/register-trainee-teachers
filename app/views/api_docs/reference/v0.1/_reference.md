@@ -3478,7 +3478,7 @@ Deletes an existing degree for this trainee.
         date
       </p>
       <p class="govuk-body">
-        The trainee’s reinstate date. (read-only)
+        The date that a deferred trainee returned to the course (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>2023-10-01</code>
