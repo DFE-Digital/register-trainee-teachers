@@ -35,6 +35,7 @@ module BulkUpdate
             expect(result.success).to be(false)
             expect(result.error_type).to eq(:validation)
             expect(result.errors[:errors]).to include("ITT Start Date can't be blank")
+            expect(result.errors[:errors]).to include("Date of Birth can't be blank")
           end
         end
 
