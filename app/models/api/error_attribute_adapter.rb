@@ -2,9 +2,8 @@
 
 module Api
   module ErrorAttributeAdapter
-    attr_accessor :context
-
     def self.included(base)
+      base.attr_accessor(:record_source)
       base.extend(ClassMethods)
       base.class_attribute(:csv_field_mappings)
     end
@@ -19,8 +18,8 @@ module Api
         end
       end
 
-      def human_attribute_name(attr, _options = {})
-        if context == :csv && attribute_mappings.key?(attr.to_sym)
+      def human_attribute_name(attr, options = {})
+        if options[:base]&.record_source == :csv && attribute_mappings.key?(attr.to_sym)
           attribute_mappings[attr.to_sym]
         end || super
       end
