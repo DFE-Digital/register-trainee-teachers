@@ -3475,7 +3475,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>reinstate_date</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        date
+        string
       </p>
       <p class="govuk-body">
         The date that a deferred trainee returned to the course (read-only).
