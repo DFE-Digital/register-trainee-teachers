@@ -28,10 +28,10 @@ class AuthenticationTokenPolicy
   end
 
   def new?
-    user.organisation?
+    user.provider?
   end
 
   def create?
-    user.organisation?
+    user.provider?
   end
 end
