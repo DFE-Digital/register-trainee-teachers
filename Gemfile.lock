@@ -325,7 +325,7 @@ GEM
       activesupport (>= 6.1.4.4)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
-    httparty (0.22.0)
+    httparty (0.23.0)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -829,7 +829,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   govuk_markdown
   govuk_notify_rails
-  httparty (~> 0.22)
+  httparty (~> 0.23)
   jsbundling-rails
   kaminari
   launchy
