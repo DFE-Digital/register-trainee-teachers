@@ -3531,8 +3531,17 @@ Deletes an existing degree for this trainee.
         The trainee’s record state (read-only).
       </p>
       <p class="govuk-body">
-        Example: <code>submitted_for_trn</code>
+        Possible values:
       </p>
+      <ul>
+        <li><code>draft</code></li>
+        <li><code>submitted_for_trn</code></li>
+        <li><code>trn_received</code></li>
+        <li><code>recommended_for_award</code></li>
+        <li><code>withdrawn</code></li>
+        <li><code>deferred</code></li>
+        <li><code>awarded</code></li>
+      </ul>
     </dd>
   </div>
 </dl>
