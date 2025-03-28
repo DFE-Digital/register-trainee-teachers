@@ -3506,7 +3506,7 @@ Deletes an existing degree for this trainee.
         string
       </p>
       <p class="govuk-body">
-        The trainee’s record source. (read-only)
+        Where the trainee record originally came from when it was created (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>api</code>
