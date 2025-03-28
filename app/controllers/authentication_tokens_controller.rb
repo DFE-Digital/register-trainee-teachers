@@ -13,7 +13,7 @@ class AuthenticationTokensController < ApplicationController
   end
 
   def create
-    authorize(AuthenticationToken, :create?)
+    authorize(AuthenticationToken)
     @token, token_string = AuthenticationToken.create_with_random_token(
       token_params.merge(
         provider: current_user.organisation,
