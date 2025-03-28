@@ -820,11 +820,11 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           }
         end
 
-        let(:itt_start_date) { "2024-08-01" }
-        let(:itt_end_date)   { "2025-01-01" }
+        let(:itt_start_date) { "2021-08-01" }
+        let(:itt_end_date)   { "2022-01-01" }
         let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
 
-        let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024, next_cycle: true) }
+        let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2021, next_cycle: true) }
 
         before do
           put(
