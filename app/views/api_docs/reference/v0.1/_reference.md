@@ -3492,7 +3492,7 @@ Deletes an existing degree for this trainee.
         string
       </p>
       <p class="govuk-body">
-        The trainee’s course education phase. (read-only)
+        The trainee’s course education phase (read-only).
       </p>
       <p class="govuk-body">
         Example: <code>primary</code>
