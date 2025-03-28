@@ -235,15 +235,6 @@ RSpec.describe Api::V01::TraineeAttributes do
             end
           end
 
-          context "when AcademicCycle::for_date is 2024" do
-            let(:cycle_year) { 2024 }
-
-            it do
-              expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
-            end
-          end
-
           context "when trainee_start_date is not valid" do
             let(:cycle_year) { 2025 }
 
