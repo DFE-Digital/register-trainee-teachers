@@ -9,7 +9,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     let(:provider_user) { create(:user) }
     let(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
-    permissions :index? do
+    permissions :index?, :create?, :new? do
       it { is_expected.to permit(provider_user_context) }
     end
   end
@@ -18,7 +18,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     let(:lead_partner_user) { create(:user, :with_lead_partner_organisation) }
     let(:lead_partner_user_context) { UserWithOrganisationContext.new(user: lead_partner_user, session: {}) }
 
-    permissions :index? do
+    permissions :index?, :create?, :new? do
       it { is_expected.not_to permit(lead_partner_user_context) }
     end
   end
@@ -27,7 +27,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
     let(:user_with_no_organisation) { create(:user, :with_no_organisation_in_db) }
     let(:user_with_no_organisation_context) { UserWithOrganisationContext.new(user: user_with_no_organisation, session: {}) }
 
-    permissions :index? do
+    permissions :index?, :create?, :new? do
       it { is_expected.not_to permit(user_with_no_organisation_context) }
     end
   end
