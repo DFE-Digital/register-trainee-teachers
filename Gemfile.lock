@@ -307,7 +307,7 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (>= 6, < 10)
       view_component (>= 3.18, < 3.22)
-    govuk_design_system_formbuilder (5.8.0)
+    govuk_design_system_formbuilder (5.9.0)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
@@ -325,7 +325,7 @@ GEM
       activesupport (>= 6.1.4.4)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
-    httparty (0.22.0)
+    httparty (0.23.0)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -371,7 +371,7 @@ GEM
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    logger (1.6.6)
+    logger (1.7.0)
     loofah (2.24.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -829,7 +829,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   govuk_markdown
   govuk_notify_rails
-  httparty (~> 0.22)
+  httparty (~> 0.23)
   jsbundling-rails
   kaminari
   launchy
