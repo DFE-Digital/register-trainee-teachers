@@ -141,12 +141,12 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     it "sets the correct lead partner and employing school attributes" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      parsed_body = response.parsed_body[:data]
+      trainee = Trainee.last
 
-      expect(parsed_body[:lead_partner_not_applicable]).to be(true)
-      expect(parsed_body[:lead_partner]).to be_nil
-      expect(parsed_body[:employing_school_not_applicable]).to be(true)
-      expect(parsed_body[:employing_school]).to be_nil
+      expect(trainee.lead_partner_not_applicable).to be(true)
+      expect(trainee.lead_partner_id).to be_nil
+      expect(trainee.employing_school_not_applicable).to be(true)
+      expect(trainee.employing_school_id).to be_nil
     end
 
     it "creates the degrees if provided in the request body" do
@@ -194,8 +194,10 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
 
         it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+          trainee = Trainee.last
+
+          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.employing_school_not_applicable).to be(true)
         end
       end
 
@@ -217,7 +219,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
 
         it "sets lead_partner_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
+          trainee = Trainee.last
+
+          expect(trainee.lead_partner_not_applicable).to be(false)
         end
       end
 
@@ -238,7 +242,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
           end
 
           it "sets lead_partner_not_applicable to true" do
-            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+            trainee = Trainee.last
+
+            expect(trainee.lead_partner_not_applicable).to be(true)
           end
         end
 
@@ -261,7 +267,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to false" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.lead_partner_not_applicable).to be(false)
             end
           end
 
@@ -274,7 +282,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+              trainee = Trainee.last
+
+              expect(trainee.lead_partner_not_applicable).to be(true)
             end
           end
         end
@@ -295,7 +305,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to true" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
 
@@ -316,7 +328,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(false)
             end
           end
 
@@ -339,7 +353,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(false)
             end
 
             it "sets lead_partner_urn to lead_partner#urn" do
