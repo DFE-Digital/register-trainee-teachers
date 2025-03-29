@@ -347,6 +347,8 @@ paths:
                           nullable: true
                         withdrawal_another_reason:
                           nullable: true
+                        defer_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -441,13 +443,13 @@ paths:
                 - meta
               example:
                 data:
-                - first_names: Jamey
-                  last_name: Hamill
-                  date_of_birth: '1994-05-27'
+                - first_names: Teresita
+                  last_name: Bergnaum
+                  date_of_birth: '1967-01-26'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Jamey.Hamill@example.com
-                  middle_names: Price
+                  email: Teresita.Bergnaum@example.com
+                  middle_names: Connelly
                   training_route:
                   sex: '10'
                   diversity_disclosure: diversity_not_disclosed
@@ -456,15 +458,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-24'
+                  itt_start_date: '2024-08-27'
                   outcome_date:
-                  itt_end_date: '2025-07-23'
+                  itt_end_date: '2025-07-14'
                   trn:
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-09-08'
+                  trainee_start_date: '2024-09-03'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
@@ -493,14 +495,15 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-334
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-24'
+                  course_itt_start_date: '2024-08-27'
                   course_age_range:
-                  expected_end_date: '2025-07-23'
+                  expected_end_date: '2025-07-14'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
@@ -527,17 +530,17 @@ paths:
                     uk_degree_uuid: 3e042de2-a453-47dc-9452-90a23399e9ee
                     subject_uuid: b78270f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 1bb9f02f-da6a-4184-8db0-d43b14ccaf1d
-                    degree_id: all6rp0dssieq2wg5ve26h64
+                    degree_id: l0pn3chfvqheqrnkjsvzt7hy
                   state: submitted_for_trn
-                  trainee_id: q4kkuakxlvo0yt5q96djbx50
+                  trainee_id: vrmzatstmi8xrlgadjxxqzwc
                   application_id:
-                - first_names: Adela
-                  last_name: Larkin
-                  date_of_birth: '1979-03-05'
+                - first_names: Francine
+                  last_name: Parisian
+                  date_of_birth: '1975-05-17'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Adela.Larkin@example.com
-                  middle_names: Hand
+                  email: Francine.Parisian@example.com
+                  middle_names: Terry
                   training_route:
                   sex: '10'
                   diversity_disclosure: diversity_not_disclosed
@@ -546,15 +549,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-29'
+                  itt_start_date: '2024-08-04'
                   outcome_date:
-                  itt_end_date: '2026-07-15'
+                  itt_end_date: '2026-07-23'
                   trn:
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-29'
+                  trainee_start_date: '2024-08-07'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -583,14 +586,15 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-332
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-29'
+                  course_itt_start_date: '2024-08-04'
                   course_age_range:
-                  expected_end_date: '2026-07-15'
+                  expected_end_date: '2026-07-23'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
@@ -617,17 +621,17 @@ paths:
                     uk_degree_uuid: ef695652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 438270f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: vwb0flpcyy7lprdoxh3ly44i
+                    degree_id: 759rd0755jn9r4t7jqqyet9r
                   state: submitted_for_trn
-                  trainee_id: 9t02bvell3u7frm4z74a525q
+                  trainee_id: tjjt6ngqcjgkz9wziq307xgf
                   application_id:
-                - first_names: Andreas
-                  last_name: Gorczany
-                  date_of_birth: '1975-02-07'
+                - first_names: Leif
+                  last_name: Brekke
+                  date_of_birth: '1997-06-10'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Andreas.Gorczany@example.com
-                  middle_names: Farrell
+                  email: Leif.Brekke@example.com
+                  middle_names: Maggio
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
@@ -636,15 +640,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-14'
+                  itt_start_date: '2024-08-07'
                   outcome_date:
-                  itt_end_date: '2026-07-09'
-                  trn: '6668504'
+                  itt_end_date: '2026-07-07'
+                  trn: '9480898'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-17'
+                  trainee_start_date: '2024-08-14'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
@@ -663,7 +667,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '1698802260900'
+                  hesa_id: '1393782982477'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -673,20 +677,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-329
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-14'
+                  course_itt_start_date: '2024-08-07'
                   course_age_range: '13916'
-                  expected_end_date: '2026-07-09'
+                  expected_end_date: '2026-07-07'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: C
-                  previous_last_name: Langworth
+                  previous_last_name: Fahey
                   itt_aim: '201'
                   course_study_mode: '01'
                   course_year: 2024
@@ -717,17 +722,17 @@ paths:
                     uk_degree_uuid: 676a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 898270f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
-                    degree_id: axt0pt1ml13k75f78vbe7vzv
+                    degree_id: ui3u4ek1rr6d94vgrx5aeanw
                   state: trn_received
-                  trainee_id: 3wxoyskjiog2nkqby7usyjr1
+                  trainee_id: f8pwx04mwdzn6bljt5hqczfv
                   application_id:
-                - first_names: Coy
-                  last_name: Aufderhar
-                  date_of_birth: '1982-05-27'
+                - first_names: Wiley
+                  last_name: Denesik
+                  date_of_birth: '2003-02-08'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Coy.Aufderhar@example.com
-                  middle_names: Bernhard
+                  email: Wiley.Denesik@example.com
+                  middle_names: Kuvalis
                   training_route:
                   sex: '99'
                   diversity_disclosure: diversity_not_disclosed
@@ -736,15 +741,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-27'
+                  itt_start_date: '2024-08-02'
                   outcome_date:
-                  itt_end_date: '2026-07-04'
-                  trn: '3746708'
+                  itt_end_date: '2026-07-19'
+                  trn: '9910603'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-09-01'
+                  trainee_start_date: '2024-08-07'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
@@ -763,7 +768,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '2983104752473'
+                  hesa_id: '5430014709296'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -773,20 +778,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-326
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-27'
+                  course_itt_start_date: '2024-08-02'
                   course_age_range: '13912'
-                  expected_end_date: '2026-07-04'
+                  expected_end_date: '2026-07-19'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: '8'
-                  previous_last_name: Johnston
+                  previous_last_name: Lang
                   itt_aim: '202'
                   course_study_mode: '01'
                   course_year: 2024
@@ -817,17 +823,17 @@ paths:
                     uk_degree_uuid: 4b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 9d8670f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                    degree_id: 0yry58hkaehwrcjos3j3lh0j
+                    degree_id: umz3cs557ne80a5zx7en8rri
                   state: trn_received
-                  trainee_id: u0wbzymoevekkbt1xrsk36wc
+                  trainee_id: 4w3rjexeppg5q0jqzjkbnxe1
                   application_id:
-                - first_names: Gavin
-                  last_name: Dicki
-                  date_of_birth: '2000-03-29'
+                - first_names: Nathanial
+                  last_name: Rice
+                  date_of_birth: '1971-08-22'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Gavin.Dicki@example.com
-                  middle_names: Labadie
+                  email: Nathanial.Rice@example.com
+                  middle_names: Greenholt
                   training_route:
                   sex: '99'
                   diversity_disclosure: diversity_not_disclosed
@@ -836,15 +842,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-29'
+                  itt_start_date: '2024-08-12'
                   outcome_date:
-                  itt_end_date: '2026-07-23'
-                  trn: '6910814'
+                  itt_end_date: '2026-07-11'
+                  trn: '8049521'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-09-04'
+                  trainee_start_date: '2024-08-26'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -863,7 +869,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '1281301358018'
+                  hesa_id: '1222202436259'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -873,20 +879,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-323
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-29'
+                  course_itt_start_date: '2024-08-12'
                   course_age_range: '13914'
-                  expected_end_date: '2026-07-23'
+                  expected_end_date: '2026-07-11'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '2'
                   bursary_level: D
-                  previous_last_name: Hilll
+                  previous_last_name: Lind
                   itt_aim: '201'
                   course_study_mode: '01'
                   course_year: 2024
@@ -917,17 +924,17 @@ paths:
                     uk_degree_uuid: 0f6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: d58370f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: 9lebs9d9eti281c445ksfcaf
+                    degree_id: 817d8l19qd20bbuvkalw6n12
                   state: trn_received
-                  trainee_id: anfvxp51hp45f32xxu6nuzox
+                  trainee_id: wewnjzpy9w49svlf2oh5a1aq
                   application_id:
-                - first_names: Leandro
-                  last_name: Larkin
-                  date_of_birth: '1993-09-08'
+                - first_names: Damion
+                  last_name: MacGyver
+                  date_of_birth: '1960-01-22'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Leandro.Larkin@example.com
-                  middle_names: Lowe
+                  email: Damion.MacGyver@example.com
+                  middle_names: DuBuque
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
@@ -936,15 +943,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-31'
+                  itt_start_date: '2024-08-08'
                   outcome_date:
-                  itt_end_date: '2025-07-01'
-                  trn: '9407527'
+                  itt_end_date: '2025-07-26'
+                  trn: '3265674'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-09-15'
+                  trainee_start_date: '2024-08-22'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
@@ -963,7 +970,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '2837333044619'
+                  hesa_id: '3483614413277'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -973,20 +980,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-320
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-31'
+                  course_itt_start_date: '2024-08-08'
                   course_age_range: '13918'
-                  expected_end_date: '2025-07-01'
+                  expected_end_date: '2025-07-26'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: C
-                  previous_last_name: Barrows
+                  previous_last_name: Dickinson
                   itt_aim: '202'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1017,17 +1025,17 @@ paths:
                     uk_degree_uuid: 1f6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 2b8370f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                    degree_id: f57hulqp4m2tl87vumzo8jnd
+                    degree_id: t5zjw0694zod81b26aknhy3b
                   state: trn_received
-                  trainee_id: jkxms4qp6s1gkepuw2omgct2
+                  trainee_id: mzev5nhke4c2afrid0ku7a92
                   application_id:
-                - first_names: Kieth
-                  last_name: Welch
-                  date_of_birth: '1965-07-14'
+                - first_names: Miquel
+                  last_name: Schamberger
+                  date_of_birth: '1971-08-29'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Kieth.Welch@example.com
-                  middle_names: Cremin
+                  email: Miquel.Schamberger@example.com
+                  middle_names: MacGyver
                   training_route:
                   sex: '10'
                   diversity_disclosure: diversity_not_disclosed
@@ -1036,15 +1044,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-11'
+                  itt_start_date: '2024-08-15'
                   outcome_date:
-                  itt_end_date: '2026-07-26'
-                  trn: '3243994'
+                  itt_end_date: '2026-07-14'
+                  trn: '2667989'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-15'
+                  trainee_start_date: '2024-08-19'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -1063,7 +1071,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '2306595020807'
+                  hesa_id: '7158943250229'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -1073,20 +1081,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-317
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-11'
+                  course_itt_start_date: '2024-08-15'
                   course_age_range: '13911'
-                  expected_end_date: '2026-07-26'
+                  expected_end_date: '2026-07-14'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: '6'
-                  previous_last_name: O'Hara
+                  previous_last_name: Frami
                   itt_aim: '201'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1117,17 +1126,17 @@ paths:
                     uk_degree_uuid: 3f6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: a38270f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
-                    degree_id: pvc8oosbxuly0dfxqnfp2diq
+                    degree_id: y6tblctpef8xt4urb7mqiihl
                   state: trn_received
-                  trainee_id: 1fpi8v9p55wrfihrk2t8fays
+                  trainee_id: kth7vs29uoyiqe4wtamqm3gz
                   application_id:
-                - first_names: Demarcus
-                  last_name: Oberbrunner
-                  date_of_birth: '1961-11-22'
+                - first_names: Marion
+                  last_name: Franecki
+                  date_of_birth: '1993-07-23'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Demarcus.Oberbrunner@example.com
-                  middle_names: Gerlach
+                  email: Marion.Franecki@example.com
+                  middle_names: Stokes
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
@@ -1136,15 +1145,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-08'
+                  itt_start_date: '2024-08-01'
                   outcome_date:
-                  itt_end_date: '2026-07-10'
-                  trn: '2463446'
+                  itt_end_date: '2026-07-29'
+                  trn: '7041699'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-10'
+                  trainee_start_date: '2024-08-02'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
@@ -1163,7 +1172,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '9147974291105'
+                  hesa_id: '9196535714235'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -1173,20 +1182,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-314
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-08'
+                  course_itt_start_date: '2024-08-01'
                   course_age_range: '13915'
-                  expected_end_date: '2026-07-10'
+                  expected_end_date: '2026-07-29'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '2'
                   bursary_level: C
-                  previous_last_name: Kassulke
+                  previous_last_name: Hermann
                   itt_aim: '202'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1217,17 +1227,17 @@ paths:
                     uk_degree_uuid: 7ba49954-7595-437c-8df0-6a777c97307b
                     subject_uuid: 518770f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: qx5bv8ekn0x6sac64yvfnl3j
+                    degree_id: 1vxrbo629yqlvsmr6gnt8d3g
                   state: trn_received
-                  trainee_id: dam354sar5pg7q7lcsv4z9hi
+                  trainee_id: jyik1e5yva2rhrhd9ol1lrlw
                   application_id:
-                - first_names: Rae
-                  last_name: Lang
-                  date_of_birth: '1981-12-17'
+                - first_names: Nelly
+                  last_name: Lowe
+                  date_of_birth: '1962-04-29'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Rae.Lang@example.com
-                  middle_names: Streich
+                  email: Nelly.Lowe@example.com
+                  middle_names: Rosenbaum
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
@@ -1236,15 +1246,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-24'
+                  itt_start_date: '2024-08-30'
                   outcome_date:
-                  itt_end_date: '2025-07-03'
-                  trn: '7180039'
+                  itt_end_date: '2025-07-15'
+                  trn: '2155420'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-29'
+                  trainee_start_date: '2024-09-04'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -1263,7 +1273,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '2941739266947'
+                  hesa_id: '3128032973525'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -1273,20 +1283,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-311
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-24'
+                  course_itt_start_date: '2024-08-30'
                   course_age_range: '13918'
-                  expected_end_date: '2025-07-03'
+                  expected_end_date: '2025-07-15'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '2'
                   bursary_level: '9'
-                  previous_last_name: Hirthe
+                  previous_last_name: Smitham
                   itt_aim: '201'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1317,17 +1328,17 @@ paths:
                     uk_degree_uuid: e5695652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 858270f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: 9j786p81xmp4f6ml2zm5j30u
+                    degree_id: 9zmslznd0ufuljpw6kuxd9k2
                   state: trn_received
-                  trainee_id: bskeyo7k3jdf0pj41cs3r618
+                  trainee_id: 5gnc5m1ed8yxcbxnu568sgwd
                   application_id:
-                - first_names: Rea
-                  last_name: Moen
-                  date_of_birth: '1988-03-09'
+                - first_names: Gordon
+                  last_name: Kerluke
+                  date_of_birth: '1981-07-28'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Rea.Moen@example.com
-                  middle_names: Gulgowski
+                  email: Gordon.Kerluke@example.com
+                  middle_names: Kuhic
                   training_route:
                   sex: '96'
                   diversity_disclosure: diversity_not_disclosed
@@ -1336,15 +1347,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-13'
+                  itt_start_date: '2024-08-15'
                   outcome_date:
-                  itt_end_date: '2025-07-02'
-                  trn: '7909223'
+                  itt_end_date: '2025-07-27'
+                  trn: '2899321'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-19'
+                  trainee_start_date: '2024-08-21'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -1363,7 +1374,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '4046574084455'
+                  hesa_id: '8042194863713'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -1373,20 +1384,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-308
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-13'
+                  course_itt_start_date: '2024-08-15'
                   course_age_range: '13909'
-                  expected_end_date: '2025-07-02'
+                  expected_end_date: '2025-07-27'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: D
-                  previous_last_name: Simonis
+                  previous_last_name: Ondricka
                   itt_aim: '202'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1417,17 +1429,17 @@ paths:
                     uk_degree_uuid: 196a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: e8599844-7783-4707-b090-e7f9d5abc6bc
                     grade_uuid: aaba4427-287c-4610-a838-1970dd9090c1
-                    degree_id: 1nugmaoap5ybqo2zjnkha18d
+                    degree_id: inbna7vkt7eshceofgcg6sz3
                   state: trn_received
-                  trainee_id: s773qqslcz919e5u1azi7d8n
+                  trainee_id: ajsn5dwajc58d6b1f399frwp
                   application_id:
-                - first_names: Denver
-                  last_name: Wyman
-                  date_of_birth: '2000-11-17'
+                - first_names: Hobert
+                  last_name: Rohan
+                  date_of_birth: '1992-04-17'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Denver.Wyman@example.com
-                  middle_names: Gulgowski
+                  email: Hobert.Rohan@example.com
+                  middle_names: Raynor
                   training_route:
                   sex: '12'
                   diversity_disclosure: diversity_not_disclosed
@@ -1436,15 +1448,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-17'
+                  itt_start_date: '2024-08-30'
                   outcome_date:
-                  itt_end_date: '2026-07-19'
-                  trn: '3669815'
+                  itt_end_date: '2026-07-20'
+                  trn: '9567613'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-29'
+                  trainee_start_date: '2024-09-15'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 16
@@ -1463,7 +1475,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '5555653226995'
+                  hesa_id: '2037253202990'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -1473,20 +1485,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-305
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-17'
+                  course_itt_start_date: '2024-08-30'
                   course_age_range: '13918'
-                  expected_end_date: '2026-07-19'
+                  expected_end_date: '2026-07-20'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: D
-                  previous_last_name: Yost
+                  previous_last_name: Hackett
                   itt_aim: '202'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1517,17 +1530,17 @@ paths:
                     uk_degree_uuid: 316a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 2f8470f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
-                    degree_id: fgoenyk6agv98s1f6qp3w2ul
+                    degree_id: 9lxhzbvdmxurnrg9amwcsfrj
                   state: trn_received
-                  trainee_id: 9ozdp15qhzxf4ydgtrnyt97a
+                  trainee_id: 4mhevwdhu9nspwj86k7sd2a2
                   application_id:
-                - first_names: Jamel
-                  last_name: Morissette
-                  date_of_birth: '1959-10-08'
+                - first_names: Courtney
+                  last_name: Bailey
+                  date_of_birth: '1966-05-21'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Jamel.Morissette@example.com
-                  middle_names: Graham
+                  email: Courtney.Bailey@example.com
+                  middle_names: Dicki
                   training_route:
                   sex: '99'
                   diversity_disclosure: diversity_not_disclosed
@@ -1536,15 +1549,15 @@ paths:
                   additional_ethnic_background:
                   disability_disclosure:
                   course_subject_one: '100403'
-                  itt_start_date: '2024-08-03'
+                  itt_start_date: '2024-08-30'
                   outcome_date:
-                  itt_end_date: '2025-07-28'
-                  trn: '6939975'
+                  itt_end_date: '2025-07-07'
+                  trn: '3731013'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-04'
+                  trainee_start_date: '2024-09-03'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -1563,7 +1576,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '8638794389861'
+                  hesa_id: '7092167562491'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -1573,20 +1586,21 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-302
-                  ukprn: '61465306'
+                  defer_reason:
+                  ukprn: '58581439'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-03'
+                  course_itt_start_date: '2024-08-30'
                   course_age_range: '13909'
-                  expected_end_date: '2025-07-28'
+                  expected_end_date: '2025-07-07'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '2'
                   bursary_level: D
-                  previous_last_name: Von
+                  previous_last_name: Effertz
                   itt_aim: '201'
                   course_study_mode: '01'
                   course_year: 2024
@@ -1617,9 +1631,9 @@ paths:
                     uk_degree_uuid: 4f6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: a58370f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
-                    degree_id: 2w2nbhh0nqphgvzdmb6n8bjk
+                    degree_id: hv09zmec9bhmsv5nd24fs7wp
                   state: trn_received
-                  trainee_id: yprpfehjf7hqsd8kg9nstq2t
+                  trainee_id: g8ktc1dsom8muuhglfxpy9nj
                   application_id:
                 meta:
                   current_page: 1
@@ -1964,6 +1978,8 @@ paths:
                         nullable: true
                       withdrawal_another_reason:
                         nullable: true
+                      defer_reason:
+                        nullable: true
                     required:
                     - first_names
                     - last_name
@@ -2132,7 +2148,7 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id:
-                  ukprn: '18449948'
+                  ukprn: '66903033'
                   ethnicity: '997'
                   course_qualification: QTS
                   course_title:
@@ -2166,7 +2182,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: u72FAvcKv6wTA9MMmjKDS2p9
+                    placement_id: T8djFDz8ximgdkqUh34DSCuG
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -2182,9 +2198,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: MvFZBMFJpTHY6uNuETuh11nM
+                    degree_id: v5GyaSLgMTp2bnuaTQB7zPft
                   state: submitted_for_trn
-                  trainee_id: AuPz5zmwJeaFteGQkdGDgX4X
+                  trainee_id: UV6ZdLqXUNxj5PjkYNQKQZub
                   disability1: '58'
                   disability2: '57'
                   lead_partner_not_applicable: true
@@ -2194,6 +2210,7 @@ paths:
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
+                  defer_reason:
         '409':
           description: returns status code 409 (conflict) with the potential duplicates
             and does not create a trainee record
@@ -2435,6 +2452,8 @@ paths:
                           nullable: true
                         withdrawal_another_reason:
                           nullable: true
+                        defer_reason:
+                          nullable: true
                       required:
                       - first_names
                       - last_name
@@ -2511,13 +2530,13 @@ paths:
                 - error: Conflict
                   message: This trainee is already in Register
                 data:
-                - first_names: Dallas
-                  last_name: Konopelski
-                  date_of_birth: '2000-05-20'
+                - first_names: Nathalie
+                  last_name: Howe
+                  date_of_birth: '1969-04-08'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Dallas.Konopelski@example.com
-                  middle_names: Cummings
+                  email: Nathalie.Howe@example.com
+                  middle_names: Denesik
                   training_route: '11'
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
@@ -2528,13 +2547,13 @@ paths:
                   course_subject_one: '100346'
                   itt_start_date: '2025-01-01'
                   outcome_date:
-                  itt_end_date: '2027-07-12'
+                  itt_end_date: '2027-07-28'
                   trn:
                   submitted_for_trn_at:
                   withdraw_date:
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-12-08'
+                  trainee_start_date: '2024-11-29'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -2563,14 +2582,15 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 25/26-3
-                  ukprn: '19642955'
+                  defer_reason:
+                  ukprn: '74874387'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: undergrad
                   course_itt_start_date: '2025-01-01'
                   course_age_range:
-                  expected_end_date: '2027-07-12'
+                  expected_end_date: '2027-07-28'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
@@ -2597,9 +2617,9 @@ paths:
                     uk_degree_uuid: 5d6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 318070f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: r85cie1nsl27v6edbno8fhj3
+                    degree_id: 9rcaf6jqur3y3l57sajb0vf2
                   state: draft
-                  trainee_id: uohuo9xlx66bakzfsi9g7rqu
+                  trainee_id: 1yfmo7cfrb7cuwrss1sb13up
                   application_id:
         '422':
           description: return status code 422 with a meaningful error message
@@ -2819,7 +2839,7 @@ paths:
                 pg_apprenticeship_start_date: '2024-03-11'
                 ethnicity: '142'
                 lead_school_urn: '697414'
-                employing_school_urn: '449336'
+                employing_school_urn: '176214'
                 trn: '567899'
                 ethnic_group: mixed_ethnic_group
                 ethnic_background: Another Mixed background
@@ -2958,6 +2978,8 @@ paths:
                     nullable: true
                   provider_trainee_id:
                     type: string
+                  defer_reason:
+                    nullable: true
                   ukprn:
                     type: string
                   ethnicity:
@@ -3081,6 +3103,7 @@ paths:
                 - slug_sent_to_dqt_at
                 - placement_detail
                 - provider_trainee_id
+                - defer_reason
                 - ukprn
                 - ethnicity
                 - course_qualification
@@ -3115,13 +3138,13 @@ paths:
                 - trainee_id
                 - application_id
               example:
-                first_names: Ulysses
-                last_name: Champlin
-                date_of_birth: '1975-11-28'
+                first_names: Hellen
+                last_name: Connelly
+                date_of_birth: '1966-06-29'
                 created_at: '2024-09-15T12:34:56.000Z'
                 updated_at: '2024-09-15T12:34:56.000Z'
-                email: Ulysses.Champlin@example.com
-                middle_names: Mertz
+                email: Hellen.Connelly@example.com
+                middle_names: Christiansen
                 training_route:
                 sex: '11'
                 diversity_disclosure: diversity_not_disclosed
@@ -3157,7 +3180,7 @@ paths:
                 commencement_status:
                 discarded_at:
                 created_from_dttp: false
-                hesa_id: '8222873848302'
+                hesa_id: '3303408379909'
                 additional_dttp_data:
                 created_from_hesa: false
                 hesa_updated_at:
@@ -3167,7 +3190,8 @@ paths:
                 slug_sent_to_dqt_at:
                 placement_detail:
                 provider_trainee_id: 24/25-11
-                ukprn: '96857874'
+                defer_reason:
+                ukprn: '79605183'
                 ethnicity:
                 course_qualification: QTS
                 course_title:
@@ -3180,7 +3204,7 @@ paths:
                 lead_partner_urn:
                 fund_code: '2'
                 bursary_level: B
-                previous_last_name: Rippin
+                previous_last_name: Huels
                 itt_aim: '201'
                 course_study_mode: '01'
                 course_year: 2024
@@ -3241,7 +3265,7 @@ paths:
         required: true
         schema:
           type: string
-        example: LVTtXJCjyJxTc7LidWEd5fbF
+        example: nUqEts8eY8VbgzXHe2h5CFYK
       responses:
         '200':
           description: updates the trainee
@@ -3364,6 +3388,8 @@ paths:
                         nullable: true
                       provider_trainee_id:
                         type: string
+                        nullable: true
+                      defer_reason:
                         nullable: true
                       ukprn:
                         type: string
@@ -3579,6 +3605,7 @@ paths:
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
+                    - defer_reason
                     - ukprn
                     - ethnicity
                     - course_qualification
@@ -3668,7 +3695,8 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id:
-                  ukprn: '87041753'
+                  defer_reason:
+                  ukprn: '70344668'
                   ethnicity: '997'
                   disability1: '55'
                   course_qualification: QTS
@@ -3706,7 +3734,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: 8FjN8jb2iQT5wKv5XCsvr1bW
+                    placement_id: nXjLbqwzjrrfQJL4f1UP2CVq
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3722,9 +3750,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: k3G54EDb68RLmiBqXw24uGz1
+                    degree_id: 9A1XFC8cVWc8LH57i13zW3CF
                   state: submitted_for_trn
-                  trainee_id: LVTtXJCjyJxTc7LidWEd5fbF
+                  trainee_id: nUqEts8eY8VbgzXHe2h5CFYK
                   application_id:
                   disability2: '57'
         '401':
@@ -3855,7 +3883,7 @@ paths:
                 nationality: FR
                 course_age_range: '13909'
                 lead_partner_urn: '900020'
-                employing_school_urn: '841870'
+                employing_school_urn: '859845'
                 ethnicity:
                 itt_start_date: '2023-01-01'
                 training_route:
@@ -3882,7 +3910,7 @@ paths:
         required: true
         schema:
           type: string
-        example: ozt2318jhrz8i9oxlho0qwgh
+        example: flny65dv684w1808ybloweaj
       requestBody:
         content:
           application/json:
@@ -3894,13 +3922,17 @@ paths:
                   properties:
                     defer_date:
                       type: string
+                    defer_reason:
+                      type: string
                   required:
                   - defer_date
+                  - defer_reason
               required:
               - data
             example:
               data:
                 defer_date: '2024-09-15'
+                defer_reason: vibmh0azdx2b6x13zfax5qnjqtakam89kaepeo8a50np141bkzs43gmtuympgmk6lt6sdvl3mu4y5l1h03yv7xzcjispiily9uvq7zk3yuiqcku36lnkjgzamd27vldyy9c8rbwry8lnlr0fejh5f5wffk9sucqvuyrxj3m1ql1wad2qoda6xrgx9c9ma7bhlokld1ey2uvi5ubhniw90ta1dzq81xu64gzobacgxfja65k2srvt0yih1r89g3xnsukuf03ifi6ok0ext4spt19zlhnfe8atxskel39pmqxncknepd9vvb56hhr3ag2b5bw1cqzjlu12fnkjwd4dza5ps4vxcs1ieywzzaqly6esko43imk44tkooj6jxjphct51p36agwywq1ro3npl9g67mxu802kbyacpvckz5k8p82jamq4szp2l7bfsjbjoi55dsnugj3ofxqvcdlk2yp6b7mu1wxov4kazqskatffswsxyrxsv
       responses:
         '200':
           description: defers a trainee
@@ -3915,6 +3947,8 @@ paths:
                       commencement_status:
                         nullable: true
                       defer_date:
+                        type: string
+                      defer_reason:
                         type: string
                       trainee_start_date:
                         type: string
@@ -4116,6 +4150,7 @@ paths:
                     required:
                     - commencement_status
                     - defer_date
+                    - defer_reason
                     - trainee_start_date
                     - first_names
                     - middle_names
@@ -4195,21 +4230,22 @@ paths:
                 data:
                   commencement_status:
                   defer_date: '2024-09-15'
-                  trainee_start_date: '2024-08-15'
-                  first_names: Stacy
-                  middle_names: Gulgowski
-                  last_name: Schmeler
-                  email: Stacy.Schmeler@example.com
+                  defer_reason: vibmh0azdx2b6x13zfax5qnjqtakam89kaepeo8a50np141bkzs43gmtuympgmk6lt6sdvl3mu4y5l1h03yv7xzcjispiily9uvq7zk3yuiqcku36lnkjgzamd27vldyy9c8rbwry8lnlr0fejh5f5wffk9sucqvuyrxj3m1ql1wad2qoda6xrgx9c9ma7bhlokld1ey2uvi5ubhniw90ta1dzq81xu64gzobacgxfja65k2srvt0yih1r89g3xnsukuf03ifi6ok0ext4spt19zlhnfe8atxskel39pmqxncknepd9vvb56hhr3ag2b5bw1cqzjlu12fnkjwd4dza5ps4vxcs1ieywzzaqly6esko43imk44tkooj6jxjphct51p36agwywq1ro3npl9g67mxu802kbyacpvckz5k8p82jamq4szp2l7bfsjbjoi55dsnugj3ofxqvcdlk2yp6b7mu1wxov4kazqskatffswsxyrxsv
+                  trainee_start_date: '2024-08-23'
+                  first_names: Isiah
+                  middle_names: Moen
+                  last_name: Paucek
+                  email: Isiah.Paucek@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '6335476'
+                  trn: '7690453'
                   region:
                   hesa_id:
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
                   record_source: manual
-                  date_of_birth: '1962-01-05'
+                  date_of_birth: '1980-06-17'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   training_route:
@@ -4217,9 +4253,9 @@ paths:
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2024-08-15'
+                  itt_start_date: '2024-08-23'
                   outcome_date:
-                  itt_end_date: '2025-07-29'
+                  itt_end_date: '2025-07-21'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   recommended_for_award_at:
@@ -4245,14 +4281,14 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-555
-                  ukprn: '18380244'
+                  ukprn: '86932506'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-15'
+                  course_itt_start_date: '2024-08-23'
                   course_age_range:
-                  expected_end_date: '2025-07-29'
+                  expected_end_date: '2025-07-21'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
@@ -4279,9 +4315,9 @@ paths:
                     uk_degree_uuid: c6aeedca-9147-4e88-886a-a90302f3d097
                     subject_uuid: 318770f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: 8741765a-13d8-4550-a413-c5a860a59d25
-                    degree_id: hgm2tndci9wu5h142w7t0tyu
+                    degree_id: b5oj303exva5no5gwzwpzh87
                   state: deferred
-                  trainee_id: wu9g51m7ked4nvje43t2pv6h
+                  trainee_id: tiwub7temlglnb30ee619g2b
                   application_id:
         '404':
           description: returns status code 404
@@ -4333,6 +4369,8 @@ paths:
                 errors:
                 - error: UnprocessableEntity
                   message: Defer date can't be blank
+                - error: UnprocessableEntity
+                  message: Defer reason is too long (maximum is 500 characters)
   "/api/{api_version}/trainees/{trainee_id}/degrees":
     get:
       summary: index
@@ -4350,7 +4388,7 @@ paths:
         required: true
         schema:
           type: string
-        example: hivuw8z6jn9neudvwikkdt5f
+        example: cbmk6m6kft2ue0cq9es2fmwj
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -4430,7 +4468,7 @@ paths:
         required: true
         schema:
           type: string
-        example: j1i031cbyhn1olcl3y7leadm
+        example: fte7s2v1yvxglyexihi8o7a9
       requestBody:
         content:
           application/json:
@@ -4551,7 +4589,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: UhgLu4yNADFfUz6kzhi2GuRw
+                  degree_id: t19j7nUhX6F8MUTZ4v7JBign
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4670,7 +4708,7 @@ paths:
                   uk_degree_uuid: ff695652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 2d8370f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: 1bb9f02f-da6a-4184-8db0-d43b14ccaf1d
-                  degree_id: dysb781e9jcshgwia59urdwb
+                  degree_id: yn7bvsuquzlcn8k2ca13ytia
         '422':
           description: does not create a new degree and returns a 422 status (unprocessable_entity)
             status
@@ -4718,13 +4756,13 @@ paths:
         required: true
         schema:
           type: string
-        example: zdxfz6n1eisq0ktpak4ikizd
+        example: o4fahd97i0p1moqlz1cqz3q1
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: qd3fezwotcz66puc796s521h
+        example: 842a2n3kh72d8xlg1i00xi40
       responses:
         '200':
           description: deletes the degree and returns a 200 status (ok)
@@ -4840,6 +4878,8 @@ paths:
                         nullable: true
                       provider_trainee_id:
                         type: string
+                      defer_reason:
+                        nullable: true
                       ukprn:
                         type: string
                       ethnicity:
@@ -4942,6 +4982,7 @@ paths:
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
+                    - defer_reason
                     - ukprn
                     - ethnicity
                     - course_qualification
@@ -4969,13 +5010,13 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Chanda
-                  last_name: Schmitt
-                  date_of_birth: '1990-03-30'
+                  first_names: Cherri
+                  last_name: Wilderman
+                  date_of_birth: '1984-09-16'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Chanda.Schmitt@example.com
-                  middle_names: Aufderhar
+                  email: Cherri.Wilderman@example.com
+                  middle_names: Conroy
                   training_route:
                   sex: '11'
                   diversity_disclosure: diversity_not_disclosed
@@ -5021,7 +5062,8 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail:
                   provider_trainee_id: 24/25-524
-                  ukprn: '19640743'
+                  defer_reason:
+                  ukprn: '76464167'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
@@ -5042,7 +5084,7 @@ paths:
                   placements: []
                   degrees: []
                   state: draft
-                  trainee_id: inwth2p1mlyai81xu5f2s6sb
+                  trainee_id: u6t2ix5vgeiumm2djkmlgz27
                   application_id:
         '404':
           description: does not delete the degree and returns a 404 status (not_found)
@@ -5091,7 +5133,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 0acj8u9xsn7k9uzgdo644nr2
+        example: 2y199tkmkawpx57apdzvjnps
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -5167,7 +5209,7 @@ paths:
                   uk_degree_uuid: 2f6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: a38170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: 3d57e5f7-7904-4895-a982-ed953fff3f94
-                  degree_id: x95md5u236q8qwfotcxh9sxy
+                  degree_id: vgyyxwilnvz97fzh38tp93ak
         '404':
           description: returns status code 404 with a valid JSON response
           content:
@@ -5209,13 +5251,13 @@ paths:
         required: true
         schema:
           type: string
-        example: wl7ppdbac9880v33c3j0hpqy
+        example: 60qhrtkx8jmeu1bq90xs53mi
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: gt8gaxrud6pi6x1pjpbhvndo
+        example: yzqetg1bvv137r1yt5omp3yx
       requestBody:
         content:
           application/json:
@@ -5322,7 +5364,7 @@ paths:
                   uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                   subject_uuid: 917f70f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: 377a46ea-d6c6-4e87-9728-c1f0dd0ef109
-                  degree_id: y9xx6gpk6udvp1qbofcqfna1
+                  degree_id: 7swvgd5zh7grlse0lnao96br
         '404':
           description: does not update the degree and returns a 404 status (not_found)
           content:
@@ -5389,7 +5431,7 @@ paths:
         required: true
         schema:
           type: string
-        example: jayyhqyhzkkjpfxlbuurawpa
+        example: jwmss2xv9h8k1fjzhvdgjg3k
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -5445,7 +5487,7 @@ paths:
         required: true
         schema:
           type: string
-        example: cqhcgl1hyrqdbuk914cz8884
+        example: cg5nj0at5ul5lw2gfr5h68e1
       requestBody:
         content:
           application/json:
@@ -5467,9 +5509,9 @@ paths:
               - data
             example:
               data:
-                urn: '779331'
-                name: West Wisconsin College
-                postcode: WY3 8BF
+                urn: '384908'
+                name: Cronin Institute
+                postcode: RG2V 4BD
       responses:
         '201':
           description: creates a new placement and returns a 201 (created) status
@@ -5507,15 +5549,15 @@ paths:
                 - data
               example:
                 data:
-                  urn: '779331'
-                  name: West Wisconsin College
-                  address: URN 779331, WY3 8BF
-                  postcode: WY3 8BF
+                  urn: '384908'
+                  name: Cronin Institute
+                  address: URN 384908, RG2V 4BD
+                  postcode: RG2V 4BD
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: BnRtpWFzox5HKkC2RrGbv7RK
+                  placement_id: 2nucK5ed3GbkAvPeV9MX18qg
         '404':
-          description: does not create a new placement and returns a 422 status (unprocessable_entity)
+          description: does not create a new placement and returns a 404 status (not_found)
             status
           content:
             application/json:
@@ -5540,36 +5582,6 @@ paths:
                 errors:
                 - error: NotFound
                   message: Trainee(s) not found
-        '409':
-          description: returns a 409 (conflict) status
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        error:
-                          type: string
-                        message:
-                          type: string
-                      required:
-                      - error
-                      - message
-                  data:
-                    type: array
-                    items: {}
-                required:
-                - errors
-                - data
-              example:
-                errors:
-                - error: Conflict
-                  message: School has already been taken
-                data: []
         '422':
           description: does not create a new placements and returns a 422 status (unprocessable_entity)
             status
@@ -5613,13 +5625,13 @@ paths:
         required: true
         schema:
           type: string
-        example: bqczeg5l0rb9l08pp59o7mi6
+        example: j50kage6inr8qsj29u9yza6x
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: evz0xjlerju0tlch6cpr8qd8
+        example: s24egv6gy75nuwhlumm6d8hn
       responses:
         '200':
           description: removes the specified placement
@@ -5735,6 +5747,8 @@ paths:
                         type: string
                       provider_trainee_id:
                         type: string
+                      defer_reason:
+                        nullable: true
                       ukprn:
                         type: string
                       ethnicity:
@@ -5882,6 +5896,7 @@ paths:
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
+                    - defer_reason
                     - ukprn
                     - ethnicity
                     - course_qualification
@@ -5919,13 +5934,13 @@ paths:
                 - data
               example:
                 data:
-                  first_names: Austin
-                  last_name: Dach
-                  date_of_birth: '2006-05-09'
+                  first_names: Emmett
+                  last_name: Blick
+                  date_of_birth: '1969-09-13'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  email: Austin.Dach@example.com
-                  middle_names: Haag
+                  email: Emmett.Blick@example.com
+                  middle_names: Heaney
                   training_route:
                   sex: '99'
                   diversity_disclosure: diversity_not_disclosed
@@ -5961,7 +5976,7 @@ paths:
                   commencement_status:
                   discarded_at:
                   created_from_dttp: false
-                  hesa_id: '9719694602076'
+                  hesa_id: '4600621977560'
                   additional_dttp_data:
                   created_from_hesa: false
                   hesa_updated_at:
@@ -5971,7 +5986,8 @@ paths:
                   slug_sent_to_dqt_at:
                   placement_detail: has_placement_detail
                   provider_trainee_id: 24/25-534
-                  ukprn: '25263394'
+                  defer_reason:
+                  ukprn: '48645625'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
@@ -5984,7 +6000,7 @@ paths:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: D
-                  previous_last_name: Howell
+                  previous_last_name: Kihn
                   itt_aim: '201'
                   course_study_mode: '01'
                   course_year: 2024
@@ -6000,16 +6016,16 @@ paths:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
                   placements:
-                  - urn: '410091'
-                    name: Brookville 137 High
-                    address: URN 410091, Bernhardtown, YA4 2ZA
-                    postcode: YA4 2ZA
+                  - urn: '632468'
+                    name: Ostbarrow 137 High
+                    address: URN 632468, New Adrianchester, Y3D 2EN
+                    postcode: Y3D 2EN
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: 3ytzj326658xvux1qzpmg7ox
+                    placement_id: gbe64ftj3kk5pgh4jweehlay
                   degrees: []
                   state: draft
-                  trainee_id: evz0xjlerju0tlch6cpr8qd8
+                  trainee_id: s24egv6gy75nuwhlumm6d8hn
                   application_id:
         '404':
           description: returns status code 404 with a valid JSON response
@@ -6058,7 +6074,7 @@ paths:
         required: true
         schema:
           type: string
-        example: bn7cu523a4bt82b4xnou6vnq
+        example: 28ammqqnuhqj5jnit2eqxm6b
       responses:
         '200':
           description: returns status code 200 with a valid JSON response
@@ -6096,13 +6112,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '544343'
-                  name: Ironston 139 High
-                  address: URN 544343, Diannashire, NV7 3JP
-                  postcode: NV7 3JP
+                  urn: '964801'
+                  name: Brighthurst 139 Secondary College
+                  address: URN 964801, Everettshire, WW4 6LA
+                  postcode: WW4 6LA
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: gls1tcgc3jqzax5ylz210e2r
+                  placement_id: 01p139krftf38wb58wbxv6o8
         '404':
           description: returns status code 404 with a valid JSON response
           content:
@@ -6144,13 +6160,13 @@ paths:
         required: true
         schema:
           type: string
-        example: 7am1tuec8adlzc6v61zwy809
+        example: 6099w9wcielngijycbn8d2m1
       - name: trainee_id
         in: path
         required: true
         schema:
           type: string
-        example: zj4t553jj1snd5hoxixnzjid
+        example: wm6wslfm8wfeh4m6rfdkabu7
       requestBody:
         content:
           application/json:
@@ -6170,13 +6186,12 @@ paths:
               - data
             example:
               data:
-                urn: '619056'
-                name: Northern Stehr Academy
-                postcode: GU1 1AA
+                urn: '488927'
+                name: East Daniel University
+                postcode: R4 1JW
       responses:
         '200':
-          description: partial update of an existing placement returns status code
-            200 (ok) status
+          description: updates the placement and returns a 200 (ok) status
           content:
             application/json:
               schema:
@@ -6212,13 +6227,13 @@ paths:
                 - data
               example:
                 data:
-                  urn: '312826'
-                  name: Mitchell College
-                  address: URN 312826, GU1 1AA
-                  postcode: GU1 1AA
+                  urn: '852133'
+                  name: East Daniel University
+                  address: URN 852133, R4 1JW
+                  postcode: R4 1JW
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: zx6ovxjl1e61y8lzq5nb04mv
+                  placement_id: 6099w9wcielngijycbn8d2m1
         '404':
           description: does not create a new placement and returns a 422 status (unprocessable_entity)
             status
@@ -6245,36 +6260,6 @@ paths:
                 errors:
                 - error: NotFound
                   message: Trainee(s) not found
-        '409':
-          description: returns a 409 (conflict) status
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        error:
-                          type: string
-                        message:
-                          type: string
-                      required:
-                      - error
-                      - message
-                  data:
-                    type: array
-                    items: {}
-                required:
-                - errors
-                - data
-              example:
-                errors:
-                - error: Conflict
-                  message: School has already been taken
-                data: []
         '422':
           description: does not create a new placements and returns a 422 status (unprocessable_entity)
             status
@@ -6318,7 +6303,7 @@ paths:
         required: true
         schema:
           type: string
-        example: p8qb6twj4vjgia919noze9lt
+        example: mvvi96zkmezt7sa64nwf1tvt
       requestBody:
         content:
           application/json:
@@ -6413,7 +6398,7 @@ paths:
                       awarded_at:
                         nullable: true
                       training_initiative:
-                        type: string
+                        nullable: true
                       study_mode:
                         nullable: true
                       ebacc:
@@ -6452,6 +6437,8 @@ paths:
                         nullable: true
                       provider_trainee_id:
                         type: string
+                      defer_reason:
+                        nullable: true
                       ukprn:
                         type: string
                       ethnicity:
@@ -6498,7 +6485,7 @@ paths:
                           type: object
                           properties:
                             uk_degree:
-                              nullable: true
+                              type: string
                             non_uk_degree:
                               nullable: true
                             created_at:
@@ -6512,7 +6499,7 @@ paths:
                             graduation_year:
                               type: integer
                             grade:
-                              nullable: true
+                              type: string
                             country:
                               nullable: true
                             other_grade:
@@ -6602,6 +6589,7 @@ paths:
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
+                    - defer_reason
                     - ukprn
                     - ethnicity
                     - course_qualification
@@ -6630,38 +6618,38 @@ paths:
               example:
                 data:
                   recommended_for_award_at: '2024-09-15T12:34:56Z'
-                  first_names: Glennis
-                  middle_names: Huels
-                  last_name: Davis
-                  email: Glennis.Davis@example.com
+                  first_names: Edmond
+                  middle_names: Nikolaus
+                  last_name: Keeling
+                  email: Edmond.Keeling@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '9051676'
+                  trn: '3746992'
                   region:
                   hesa_id:
                   course_subject_one: '100403'
                   course_subject_two:
                   course_subject_three:
-                  date_of_birth: '1995-10-24'
+                  date_of_birth: '1968-09-02'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   training_route:
-                  sex: '10'
+                  sex: '96'
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2024-08-03'
+                  itt_start_date: '2024-08-13'
                   outcome_date: '2024-09-15'
-                  itt_end_date: '2026-07-20'
+                  itt_end_date: '2025-07-09'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   withdraw_date:
                   defer_date:
-                  trainee_start_date: '2024-08-06'
+                  trainee_start_date: '2024-08-29'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
                   awarded_at:
-                  training_initiative: '009'
+                  training_initiative:
                   study_mode:
                   ebacc: false
                   course_education_phase: secondary
@@ -6680,44 +6668,45 @@ paths:
                   hesa_editable: false
                   slug_sent_to_dqt_at:
                   placement_detail:
-                  provider_trainee_id: 24/25-577
-                  ukprn: '52142558'
+                  provider_trainee_id: 24/25-578
+                  defer_reason:
+                  ukprn: '82718545'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-03'
+                  course_itt_start_date: '2024-08-13'
                   course_age_range:
-                  expected_end_date: '2026-07-20'
+                  expected_end_date: '2025-07-09'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code:
                   bursary_level:
-                  nationality: TN
+                  nationality: KZ
                   withdraw_reasons: []
                   withdrawal_trigger:
                   withdrawal_future_interest:
                   withdrawal_another_reason:
                   placements: []
                   degrees:
-                  - uk_degree:
+                  - uk_degree: '213'
                     non_uk_degree:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    subject: '100875'
-                    institution: '0269'
-                    graduation_year: 1988
-                    grade:
+                    subject: '101168'
+                    institution: '0033'
+                    graduation_year: 2008
+                    grade: '14'
                     country:
                     other_grade:
-                    institution_uuid: f63d182c-1425-ec11-b6e6-000d3adf095a
-                    uk_degree_uuid: '0584565a-1c98-4c1d-ae64-c241542c0879'
-                    subject_uuid: 1d8470f0-5dce-e911-a985-000d3ab79618
-                    grade_uuid: 4182ef37-df1c-4f1e-9be6-feb66037f775
-                    degree_id: cmbhu7tn0hw69msuzmpscxid
+                    institution_uuid: 61f3791d-7042-e811-80ff-3863bb3640b8
+                    uk_degree_uuid: 556a5652-c197-e711-80d8-005056ac45bb
+                    subject_uuid: bb8570f0-5dce-e911-a985-000d3ab79618
+                    grade_uuid: aaba4427-287c-4610-a838-1970dd9090c1
+                    degree_id: r5zf8053pxutstvpexkumaej
                   state: recommended_for_award
-                  trainee_id: 7t5is4apbqubxliqrni854im
+                  trainee_id: 39w0r11key1r3sn72bjiwrt1
                   application_id:
         '404':
           description: returns status code 404
@@ -6787,7 +6776,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 2jiyb34zb9j85nza62juik8a
+        example: 92f07g2st3gy3azqmjtgfidn
       responses:
         '200':
           description: uses the trainee serializer
@@ -6906,6 +6895,8 @@ paths:
                         nullable: true
                       provider_trainee_id:
                         type: string
+                      defer_reason:
+                        nullable: true
                       ukprn:
                         type: string
                       ethnicity:
@@ -7163,26 +7154,27 @@ paths:
                     - slug_sent_to_dqt_at
                     - placement_detail
                     - provider_trainee_id
+                    - defer_reason
                 required:
                 - data
               example:
                 data:
                   commencement_status:
                   withdraw_date:
-                  first_names: Ulysses
-                  middle_names: Yost
-                  last_name: Bergnaum
-                  email: Ulysses.Bergnaum@example.com
+                  first_names: Ardath
+                  middle_names: Parker
+                  last_name: Hane
+                  email: Ardath.Hane@example.com
                   ethnic_background:
                   additional_ethnic_background:
-                  trn: '7241438'
+                  trn: '3016327'
                   region:
-                  hesa_id: '9882031103911'
+                  hesa_id: '7473079010989'
                   course_subject_one: mathematics
                   course_subject_two:
                   course_subject_three:
                   record_source: manual
-                  date_of_birth: '1984-02-26'
+                  date_of_birth: '1968-06-06'
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
                   training_route: assessment_only
@@ -7190,13 +7182,13 @@ paths:
                   diversity_disclosure: diversity_not_disclosed
                   ethnic_group:
                   disability_disclosure:
-                  itt_start_date: '2024-08-13'
+                  itt_start_date: '2024-08-09'
                   outcome_date:
-                  itt_end_date: '2025-07-16'
+                  itt_end_date: '2025-07-15'
                   submitted_for_trn_at: '2024-09-15T12:34:56.000Z'
                   defer_date:
                   recommended_for_award_at:
-                  trainee_start_date: '2024-08-13'
+                  trainee_start_date: '2024-08-10'
                   reinstate_date:
                   course_min_age: 11
                   course_max_age: 18
@@ -7218,21 +7210,22 @@ paths:
                   hesa_editable: false
                   slug_sent_to_dqt_at:
                   placement_detail:
-                  provider_trainee_id: 24/25-596
-                  ukprn: '54417026'
+                  provider_trainee_id: 24/25-597
+                  defer_reason:
+                  ukprn: '39071986'
                   ethnicity:
                   course_qualification: QTS
                   course_title:
                   course_level: postgrad
-                  course_itt_start_date: '2024-08-28'
+                  course_itt_start_date: '2024-08-02'
                   course_age_range: '13916'
-                  expected_end_date: '2026-07-26'
+                  expected_end_date: '2026-07-09'
                   employing_school_urn:
                   lead_partner_ukprn:
                   lead_partner_urn:
                   fund_code: '7'
                   bursary_level: '8'
-                  previous_last_name: Berge
+                  previous_last_name: Cruickshank
                   itt_aim: '202'
                   course_study_mode: '01'
                   course_year: 2024
@@ -7263,12 +7256,12 @@ paths:
                     uk_degree_uuid: 016a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 4d5548c7-9692-422f-b04b-e64dbac18947
                     grade_uuid: 1bb9f02f-da6a-4184-8db0-d43b14ccaf1d
-                    degree_id: rpb4oab5d0tsv1gdvqgay24y
+                    degree_id: 0qwlq426gpltq295oqqrvjr2
                   state: trn_received
-                  trainee_id: 280ps9e20cl25ody0huo9fda
+                  trainee_id: n36ci30u7iwrek2vu8gj70md
                   application_id:
-                  id: 708
-                  dttp_id: 47f4f5e8-b824-4b6f-8ac4-f2ffc1fbbfe0
+                  id: 709
+                  dttp_id: a205716a-3b67-4632-9097-7f9389189f68
                   progress:
                     personal_details: true
                     contact_details: true
@@ -7282,10 +7275,10 @@ paths:
                     schools: true
                     funding: true
                     iqts_country: false
-                  provider_id: 525
+                  provider_id: 526
                   placement_assignment_dttp_id:
                   withdraw_reasons_details:
-                  slug: tcedvowtbq1ns7oewoqcd5ke
+                  slug: sdgv6qgi2l1wl3gvo35czz0j
                   dttp_update_sha:
                   dormancy_dttp_id:
                   employing_school_id:
