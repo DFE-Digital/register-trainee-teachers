@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "POST /api/v1.0-pre/trainees/:trainee_id/recommend-for-qts" do
-  let(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider, created_by: trainee.provider.users.first, name: "test token") }
+  let(:token) { AuthenticationToken.create_with_random_token(provider: trainee.provider, created_by: trainee.provider.users.first, name: "test token").last }
 
   let(:trainee) do
     create(
