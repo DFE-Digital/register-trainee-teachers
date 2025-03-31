@@ -62,7 +62,7 @@ module BulkUpdate
         elsif json_result[:status] == :conflict
           Result.new(false, ["This trainee is already in Register"], :duplicate)
         else
-          Result.new(false, json_result.fetch(:json, :errors), :validation)
+          Result.new(false, json_result.dig(:json, :errors), :validation)
         end
       end
 

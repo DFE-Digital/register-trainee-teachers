@@ -128,10 +128,17 @@ FactoryBot.define do
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
             )
-          else
+          elsif index == 3
             create(
               :bulk_update_trainee_upload_row,
               :with_errors,
+              trainee_upload: bulk_update_trainee_upload,
+              data: row.to_h,
+            )
+          else
+            create(
+              :bulk_update_trainee_upload_row,
+              :with_multiple_errors,
               trainee_upload: bulk_update_trainee_upload,
               data: row.to_h,
             )
