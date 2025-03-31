@@ -3283,6 +3283,34 @@ Deletes an existing degree for this trainee.
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_min_age</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        integer
+      </p>
+      <p class="govuk-body">
+        The lower bound of the age range of children taught on the course (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>7</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_max_age</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        integer
+      </p>
+      <p class="govuk-body">
+        The upper bound of the age range of children taught on the course (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>11</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
     <dt class="govuk-summary-list__key"><code>course_age_range</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
@@ -3443,7 +3471,79 @@ Deletes an existing degree for this trainee.
       </p>
     </dd>
   </div>
-
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>reinstate_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The date that a deferred trainee returned to the course (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>2023-10-01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_education_phase</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s course education phase (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>primary</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>record_source</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        Where the trainee record originally came from when it was created (read-only).
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>manual</code></li>
+        <li><code>api</code></li>
+        <li><code>csv</code></li>
+        <li><code>hesa</code></li>
+        <li><code>apply</code></li>
+        <li><code>dttp</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>state</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record state (read-only).
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>draft</code></li>
+        <li><code>submitted_for_trn</code></li>
+        <li><code>trn_received</code></li>
+        <li><code>recommended_for_award</code></li>
+        <li><code>withdrawn</code></li>
+        <li><code>deferred</code></li>
+        <li><code>awarded</code></li>
+      </ul>
+    </dd>
+  </div>
 </dl>
 
 ### Placement object
@@ -3619,6 +3719,20 @@ Deletes an existing degree for this trainee.
       </p>
       <p class="govuk-body">
         Example: <code>2012-07-31</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>locale_code</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The locale code `uk` or `non_uk` (read-only).
+      </p>
+      <p class="govuk-body">
+        Example: <code>uk</code>
       </p>
     </dd>
   </div>

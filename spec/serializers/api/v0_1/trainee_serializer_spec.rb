@@ -47,22 +47,8 @@ RSpec.describe Api::V01::TraineeSerializer do
         awarded_at
         training_initiative
         study_mode
-        ebacc
-        region
         course_education_phase
-        course_uuid
-        lead_partner_not_applicable
-        employing_school_not_applicable
-        submission_ready
-        commencement_status
-        discarded_at
-        additional_dttp_data
-        hesa_updated_at
         record_source
-        iqts_country
-        hesa_editable
-        slug_sent_to_dqt_at
-        placement_detail
         ukprn
         course_qualification
         course_title
@@ -89,8 +75,6 @@ RSpec.describe Api::V01::TraineeSerializer do
         application_id
         ethnic_background
         additional_ethnic_background
-        created_from_dttp
-        created_from_hesa
         bursary_level
         funding_method
         itt_qualification_aim

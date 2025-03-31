@@ -3513,7 +3513,79 @@ Deletes an existing degree for this trainee.
       </p>
     </dd>
   </div>
-
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>reinstate_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        date
+      </p>
+      <p class="govuk-body">
+        The trainee’s reinstate date. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>2023-10-01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_education_phase</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s course education phase. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>primary</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>record_source</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record source. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>manual</code></li>
+        <li><code>api</code></li>
+        <li><code>csv</code></li>
+        <li><code>hesa</code></li>
+        <li><code>apply</code></li>
+        <li><code>dttp</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>state</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record state. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>draft</code></li>
+        <li><code>submitted_for_trn</code></li>
+        <li><code>trn_received</code></li>
+        <li><code>recommended_for_award</code></li>
+        <li><code>withdrawn</code></li>
+        <li><code>deferred</code></li>
+        <li><code>awarded</code></li>
+      </ul>
+    </dd>
+  </div>
 </dl>
 
 ### Placement object
