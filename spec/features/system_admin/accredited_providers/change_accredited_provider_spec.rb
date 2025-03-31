@@ -9,7 +9,9 @@ feature "Change a trainee's accredited provider" do
     let!(:new_provider) { create(:provider) }
 
     before do
+      enable_features(:integrate_with_dqt)
       allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
+      allow(Dqt::RetrieveTeacher).to receive(:call).and_return(nil)
       given_i_am_authenticated(user:)
     end
 
