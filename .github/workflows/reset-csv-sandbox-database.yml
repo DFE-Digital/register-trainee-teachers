@@ -1,0 +1,88 @@
+name: Reset CSV sandbox database
+concurrency: restore-sanitised-csv-sandbox-database-with-hei-access
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  deployments: write
+  packages: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  restore_csv-sandbox:
+    name: restore Database (csv-sandbox)
+    if: ${{ (github.event_name == 'workflow_dispatch' && github.event.inputs.confirm == 'true') }}
+    runs-on: ubuntu-latest
+    environment:
+      name: csv-sandbox
+
+    steps:
+    - uses: actions/checkout@v4
+      name: Checkout
+
+    - name: Set env variable
+      run: echo "SANITISED_FILE_NAME=register_sanitised_$(date +"%F")" >> $GITHUB_ENV
+
+    - name: Download Backup
+      run: |
+        az storage blob download --container-name database-backup \
+        --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
+        --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
+        az logout
+
+    - uses: azure/login@v2
+      with:
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: Install kubectl
+      uses: DFE-Digital/github-actions/set-kubectl@master
+
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: K8 setup
+      shell: bash
+      run: |
+        make ci csv-sandbox get-cluster-credentials
+        make install-konduit
+
+    - name: Restore backup to aks env database
+      shell: bash
+      run: |
+        bin/konduit.sh -n bat-production -i ${SANITISED_FILE_NAME}.sql.gz -c -t 7200 register-csv-sandbox -- psql
+
+    - name: Check for Failure
+      uses: ./.github/actions/send-slack-notification/
+      if: ${{ failure() }}
+      env:
+        slack-title: 'Reset :sadpit: database Failure'
+        slack-message: ':alert: Reset csv-sandbox database failure for sadpit :sadparrot:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+
+    - name: Print out vendor_create.txt
+      if: ${{ success() }}
+      shell: bash
+      run: |
+        cat vendor_create.txt
+
+    - name: Check for Success
+      uses: ./.github/actions/send-slack-notification/
+      if: ${{ success() }}
+      with:
+        slack-color: '#37d67a'
+        slack-title: 'Reset :sadpit: database Success'
+        slack-message: ':alert-green: Reset csv-sandbox database success for sadpit :char-dance:'
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
