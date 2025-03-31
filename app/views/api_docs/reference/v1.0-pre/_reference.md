@@ -1665,7 +1665,7 @@ Deferral details
     {
       "data": {
         "defer_date": "2024-06-17",
-        "defer_reason": null,
+        "defer_reason": "The trainee's circumstances changed so they want to defer"
       }
     }
     </pre>
