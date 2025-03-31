@@ -3,7 +3,6 @@
 module Api
   module ErrorAttributeAdapter
     def self.included(base)
-      base.attr_accessor(:record_source)
       base.extend(ClassMethods)
       base.class_attribute(:csv_field_mappings)
     end
