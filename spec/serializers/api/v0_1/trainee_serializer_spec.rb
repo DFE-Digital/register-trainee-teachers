@@ -36,6 +36,7 @@ RSpec.describe Api::V01::TraineeSerializer do
         withdrawal_future_interest
         withdrawal_another_reason
         defer_date
+        defer_reason
         recommended_for_award_at
         trainee_start_date
         reinstate_date

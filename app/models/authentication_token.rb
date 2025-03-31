@@ -21,6 +21,7 @@
 # Indexes
 #
 #  index_authentication_tokens_on_created_by_id            (created_by_id)
+#  index_authentication_tokens_on_expires_at               (expires_at)
 #  index_authentication_tokens_on_hashed_token             (hashed_token) UNIQUE
 #  index_authentication_tokens_on_provider_id              (provider_id)
 #  index_authentication_tokens_on_revoked_by_id            (revoked_by_id)

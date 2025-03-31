@@ -24,6 +24,7 @@
 #  created_from_hesa               :boolean          default(FALSE), not null
 #  date_of_birth                   :date
 #  defer_date                      :date
+#  defer_reason                    :string
 #  disability_disclosure           :integer
 #  discarded_at                    :datetime
 #  diversity_disclosure            :integer

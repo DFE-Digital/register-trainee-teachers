@@ -192,6 +192,7 @@ current academic cycle.
           "withdraw_date": null,
 
           "defer_date": "2023-10-17",
+          "defer_reason": null,
           "recommended_for_award_at": null,
           "trainee_start_date": "2023-09-04",
           "reinstate_date": null,
@@ -347,6 +348,7 @@ Get a single trainee.
         "state": "deferred",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -851,6 +853,7 @@ Trainee details
         "state": "deferred",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -991,6 +994,7 @@ Trainee details
           "withdraw_date": null,
 
           "defer_date": null,
+          "defer_reason": null,
           "recommended_for_award_at": null,
           "trainee_start_date": "2023-01-01",
           "reinstate_date": null,
@@ -1460,6 +1464,7 @@ Recommendation details
         "withdraw_date": null,
 
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": "2024-06-17T09:05:48Z",
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -1630,6 +1635,20 @@ Deferral details
     </p>
   </dd>
 </div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>defer_reason</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string (limited to 500 characters)
+    </p>
+    <p class="govuk-body">
+      The reason that the Trainee deferred.
+    </p>
+    <p class="govuk-body">
+      Example: <code>Cannot attend course</code>
+    </p>
+  </dd>
+</div>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</span></summary>
@@ -1637,7 +1656,8 @@ Deferral details
     <pre class="json-code-sample">
     {
       "data": {
-        "defer_date": "2024-06-17"
+        "defer_date": "2024-06-17",
+        "defer_reason": null,
       }
     }
     </pre>
@@ -3787,6 +3807,10 @@ Deletes an existing degree for this trainee.
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.ethnicity.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.defer_reason.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">500</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.disability1.maxLength</th>

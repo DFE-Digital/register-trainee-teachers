@@ -163,9 +163,10 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
             trainee.placements.count
           }.from(1).to(2)
 
-          placement = trainee.reload.placements.last
+          placement = trainee.reload.placements.order(:id).last
 
           expect(response).to have_http_status(:created)
+
           expect(response.parsed_body["data"]).to include(
             urn: data[:urn],
             name: data[:name],

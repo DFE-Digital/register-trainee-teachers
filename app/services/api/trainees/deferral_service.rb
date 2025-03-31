@@ -8,10 +8,12 @@ module Api
       include ServicePattern
 
       attribute :defer_date
+      attribute :defer_reason
 
       attr_reader :trainee
 
       validates :defer_date, presence: true, date: true
+      validates :defer_reason, length: { maximum: 500 }
 
       validates_with DeferralValidator
 
@@ -36,6 +38,7 @@ module Api
       def trainee_attributes
         {}.tap do |hash|
           hash[:defer_date]         = defer_date
+          hash[:defer_reason]       = defer_reason
           hash[:trainee_start_date] = itt_start_date if itt_start_date.is_a?(Date)
         end
       end

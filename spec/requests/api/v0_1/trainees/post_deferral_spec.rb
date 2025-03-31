@@ -8,20 +8,21 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
   let(:defer_date) { Time.zone.today.iso8601 }
 
   describe "success" do
-    context "when a defer date is required" do
-      let(:trainee) do
-        create(:trainee, :trn_received)
-      end
+    let(:defer_reason) { Faker::Lorem.characters(number: 500) }
 
-      it "defers a trainee" do
-        post "/api/v0.1/trainees/#{trainee.slug}/defer",
-             headers: { authorization: "Bearer #{token}" },
-             params: { data: { defer_date: } }, as: :json
+    let(:trainee) do
+      create(:trainee, :trn_received)
+    end
 
-        expect(response).to have_http_status(:ok)
-        expect(response.parsed_body).not_to have_key(:errors)
-        expect(response.parsed_body[:data][:defer_date]).to eq(defer_date)
-      end
+    it "defers a trainee" do
+      post "/api/v0.1/trainees/#{trainee.slug}/defer",
+           headers: { authorization: "Bearer #{token}" },
+           params: { data: { defer_date:, defer_reason: } }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(response.parsed_body).not_to have_key(:errors)
+      expect(response.parsed_body[:data][:defer_date]).to eq(defer_date)
+      expect(response.parsed_body[:data][:defer_reason]).to eq(defer_reason)
     end
   end
 
@@ -47,7 +48,7 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
     it "does not defer the trainee" do
       post "/api/v0.1/trainees/#{trainee.slug}/defer",
            headers: { authorization: "Bearer #{token}" },
-           params: { data: { defer_date: nil } }, as: :json
+           params: { data: { defer_date: nil, defer_reason: Faker::Lorem.characters(number: 501) } }, as: :json
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body[:errors]).not_to be_empty
@@ -55,6 +56,10 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
         {
           "error" => "UnprocessableEntity",
           "message" => "Defer date can't be blank",
+        },
+        {
+          "error" => "UnprocessableEntity",
+          "message" => "Defer reason is too long (maximum is 500 characters)",
         },
       )
 
