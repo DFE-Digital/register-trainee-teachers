@@ -12,11 +12,35 @@ feature "create a new authentication token" do
   let(:expires_at) { Date.new(Date.current.year + 1, 12, 31) }
 
   scenario "when the feature flag is off I cannot access the create token form", feature_token_management: false do
+    given_i_am_authenticated
+    and_i_can_generate_an_authentication_token
+
     when_i_navigate_to_the_create_authentication_token_page
     then_i_see_a_not_found_message
   end
 
+  scenario "when I am logged in as a lead partner the feature flag is on I CANNOT create a token", feature_token_management: true do
+    given_i_am_authenticated_as_a_lead_partner_user
+    and_i_can_generate_an_authentication_token
+
+    given_i_navigate_to_the_authentication_token_index_page
+    then_i_see_an_unauthorised_message
+    and_i_cannot_see_the_generate_new_token_button
+  end
+
+  scenario "when I am logged in as a system admin the feature flag is on I CANNOT create a token", feature_token_management: true do
+    given_i_am_authenticated_as_system_admin
+    and_i_can_generate_an_authentication_token
+
+    given_i_navigate_to_the_authentication_token_index_page
+    then_i_see_an_unauthorised_message
+    and_i_cannot_see_the_generate_new_token_button
+  end
+
   scenario "when the feature flag is on I can create a token", feature_token_management: true do
+    given_i_am_authenticated
+    and_i_can_generate_an_authentication_token
+
     given_i_navigate_to_the_authentication_token_index_page
     and_i_click_the_generate_new_token_button
     then_i_should_see_the_new_token_form
@@ -106,5 +130,13 @@ private
 
   def then_i_should_see_the_new_token_in_the_list
     expect(page).to have_content("My new token")
+  end
+
+  def then_i_see_an_unauthorised_message
+    expect(page).to have_content("You do not have permission to perform this action")
+  end
+
+  def and_i_cannot_see_the_generate_new_token_button
+    expect(page).not_to have_button("Generate a new token")
   end
 end

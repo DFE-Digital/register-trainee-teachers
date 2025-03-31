@@ -14,15 +14,15 @@ class AuthenticationTokensController < ApplicationController
 
   def create
     authorize(AuthenticationToken)
-    @token, token_string = AuthenticationToken.create_with_random_token(
-      token_params.merge(
-        provider: current_user.organisation,
-        created_by: current_user,
-      ),
+    @token = AuthenticationToken.create_with_random_token(
+      provider: current_user.organisation,
+      created_by: current_user,
+      name: token_params[:name],
+      expires_at: token_params[:expires_at],
     )
 
     if @token.persisted?
-      flash[:token] = token_string
+      flash[:token] = @token.token
       redirect_to(authentication_token_path(@token))
     else
       render(:new)
