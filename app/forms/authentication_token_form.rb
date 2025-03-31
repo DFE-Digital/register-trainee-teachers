@@ -24,6 +24,9 @@ class AuthenticationTokenForm
 
   def expires_at
     date_hash = { year:, month:, day: }
+
+    return nil if date_hash.values.all?(&:blank?)
+
     date_args = date_hash.values.map(&:to_i)
 
     valid_date?(date_args) ? Date.new(*date_args) : InvalidDate.new(date_hash)
@@ -45,7 +48,7 @@ class AuthenticationTokenForm
 private
 
   def expires_at_valid
-    if !expires_at.is_a?(Date)
+    if expires_at.present? && !expires_at.is_a?(Date)
       errors.add(:expires_at, :invalid)
     end
   end
