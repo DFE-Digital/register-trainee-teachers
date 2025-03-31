@@ -3,27 +3,30 @@
 class AuthenticationTokensController < ApplicationController
   before_action { require_feature_flag(:token_management) }
 
+  PARAM_CONVERSION = {
+    "expires_at(3i)" => "day",
+    "expires_at(2i)" => "month",
+    "expires_at(1i)" => "year",
+  }.freeze
+
   def index
     authorize(tokens)
   end
 
   def new
-    @token = AuthenticationToken.new
-    authorize(@token)
+    authorize(AuthenticationToken)
+
+    @token_form = AuthenticationTokenForm.new(current_user)
   end
 
   def create
     authorize(AuthenticationToken)
-    @token = AuthenticationToken.create_with_random_token(
-      provider: current_user.organisation,
-      created_by: current_user,
-      name: token_params[:name],
-      expires_at: token_params[:expires_at],
-    )
 
-    if @token.persisted?
-      flash[:token] = @token.token
-      redirect_to(authentication_token_path(@token))
+    @token_form = AuthenticationTokenForm.new(current_user, params: token_params)
+
+    if @token_form.save!
+      flash[:token] = @token_form.authentication_token.token
+      redirect_to(authentication_token_path(@token_form.authentication_token))
     else
       render(:new)
     end
@@ -38,6 +41,9 @@ private
   end
 
   def token_params
-    params.require(:authentication_token).permit(:expires_at, :name)
+    params.require(:authentication_token_form).permit(:name, *PARAM_CONVERSION.keys)
+          .transform_keys do |key|
+      PARAM_CONVERSION.keys.include?(key) ? PARAM_CONVERSION[key] : key
+    end
   end
 end

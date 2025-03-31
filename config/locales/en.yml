@@ -1519,8 +1519,6 @@ en:
           attributes:
             name:
               blank: Enter the token name
-            expires_at:
-              greater_than_or_equal_to: Enter an expiration date in the future
   activemodel:
     attributes:
       course_details_form:
@@ -2053,6 +2051,12 @@ en:
             code:
               blank: Enter the code from your email
               invalid_code: The code is incorrect or has expired
+        authentication_token_form:
+          attributes:
+            name:
+              blank: Enter the token name
+            expires_at:
+              invalid: Enter a valid expiration date
         undo_withdrawal_form:
           attributes:
             comment:

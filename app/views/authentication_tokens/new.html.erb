@@ -9,7 +9,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h2 class="govuk-heading-l">Create a token</h2>
-    <%= register_form_with(model: @token, url: authentication_tokens_path) do |f| %>
+    <%= register_form_with(model: @token_form, url: authentication_tokens_path) do |f| %>
       <%= f.govuk_error_summary %>
 
       <p class="govuk-body">This API token is unique to your organisation.</p>
