@@ -5,7 +5,7 @@ require "rails_helper"
 describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
   context "with a valid authentication token" do
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
     let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES }

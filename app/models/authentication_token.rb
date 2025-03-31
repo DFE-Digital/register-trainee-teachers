@@ -74,7 +74,12 @@ class AuthenticationToken < ApplicationRecord
 
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
 
-  def self.create_with_random_token(name:, provider:, expires_at: nil, created_by: Current.user)
+  def self.create_with_random_token(
+    name:,
+    provider:,
+    expires_at: nil,
+    created_by: Current.user
+  )
     token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
 

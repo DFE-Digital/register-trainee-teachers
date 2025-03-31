@@ -5,7 +5,7 @@ require "rails_helper"
 describe "Trainees API" do
   let(:academic_cycle) { create(:academic_cycle, :current) }
   let(:provider) { trainee.provider }
-  let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
+  let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
   let!(:nationality) { create(:nationality, :british) }
 
   describe "`POST /api/v1.0-pre/trainees` endpoint" do

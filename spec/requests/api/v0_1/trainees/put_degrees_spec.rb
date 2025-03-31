@@ -8,7 +8,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
     let(:accounting_subject_uuid) { "937f70f0-5dce-e911-a985-000d3ab79618" }
 
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:auth_token) do
       create(
         :authentication_token,

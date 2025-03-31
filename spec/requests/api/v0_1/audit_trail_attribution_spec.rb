@@ -7,7 +7,7 @@ describe "audit trail attribution", skip: "api endpoint has been disabled" do
   let(:provider) { trainee.provider }
 
   context "with a valid authentication token and the feature flag on" do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).last }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:unknown) { create(:withdrawal_reason, :unknown) }
     let(:params) do
       {
