@@ -20,7 +20,7 @@ FactoryBot.define do
 
     trait(:with_errors) do
       after(:build) do |upload|
-        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").open
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_failed.csv").open
 
         upload.file.attach(
           io: file,

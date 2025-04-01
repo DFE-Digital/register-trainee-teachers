@@ -757,7 +757,7 @@ private
   end
 
   def when_i_attach_a_file_with_invalid_rows
-    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_errors.csv").read
+    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_failed.csv").read
     and_i_attach_a_file(csv)
   end
 
@@ -969,7 +969,7 @@ private
     expect(page.response_headers["Content-Type"]).to eq("text/csv")
     expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
 
-    expect(parsed_download_content).to eq(parsed_file_with_two_errors_content)
+    expect(parsed_download_content).to eq(parsed_file_with_two_failed_content)
   end
 
   def when_i_return_to_the_review_errors_page
@@ -1040,16 +1040,16 @@ private
     click_on "Cancel process"
   end
 
-  def parsed_file_with_two_errors_content
-    CSV.parse(file_with_two_errors_content, headers: true).map(&:to_h)
+  def parsed_file_with_two_failed_content
+    CSV.parse(file_with_two_failed_content, headers: true).map(&:to_h)
   end
 
   def parsed_download_content
     CSV.parse(download_content, headers: true).map(&:to_h)
   end
 
-  def file_with_two_errors_content
-    file_content("bulk_update/trainee_uploads/failed_with_two_errors.csv")
+  def file_with_two_failed_content
+    file_content("bulk_update/trainee_uploads/failed_with_two_failed.csv")
   end
 
   def empty_file_with_headers_content
