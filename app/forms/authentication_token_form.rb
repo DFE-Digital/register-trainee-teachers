@@ -2,8 +2,6 @@
 
 class AuthenticationTokenForm
   include ActiveModel::Model
-  include ActiveModel::AttributeAssignment
-  include ActiveModel::Validations::Callbacks
   include DatesHelper
 
   FIELDS = %i[name day month year].freeze
