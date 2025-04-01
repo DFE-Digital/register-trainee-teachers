@@ -209,7 +209,7 @@ RSpec.describe Api::V01::TraineeAttributes do
 
             it do
               expect(subject).to validate_inclusion_of(:training_route)
-                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
             end
           end
 
@@ -223,6 +223,15 @@ RSpec.describe Api::V01::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+            end
+          end
+
+          context "when AcademicCycle::for_date is 2021" do
+            let(:cycle_year) { 2021 }
+
+            it do
+              expect(subject).to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
             end
           end
 

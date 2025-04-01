@@ -5,7 +5,7 @@ require "rails_helper"
 describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
   context "with a valid authentication token" do
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
     let(:placement_attribute_keys) { Api::V10Pre::PlacementAttributes::ATTRIBUTES }
@@ -163,9 +163,10 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
             trainee.placements.count
           }.from(1).to(2)
 
-          placement = trainee.reload.placements.last
+          placement = trainee.reload.placements.order(:id).last
 
           expect(response).to have_http_status(:created)
+
           expect(response.parsed_body["data"]).to include(
             urn: data[:urn],
             name: data[:name],

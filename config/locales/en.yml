@@ -1515,6 +1515,10 @@ en:
             file:
               invalid_content_type: Upload a valid file type (csv, xml or zip)
               invalid_file_size: Upload a file less than 50mb
+        authentication_token:
+          attributes:
+            name:
+              blank: Enter the token name
   activemodel:
     attributes:
       course_details_form:
@@ -2047,6 +2051,12 @@ en:
             code:
               blank: Enter the code from your email
               invalid_code: The code is incorrect or has expired
+        authentication_token_form:
+          attributes:
+            name:
+              blank: Enter the token name
+            expires_at:
+              invalid: Enter a valid expiration date
         undo_withdrawal_form:
           attributes:
             comment:

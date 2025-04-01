@@ -156,6 +156,7 @@ current academic cycle.
           "state": "deferred",
           "withdraw_date": null,
           "defer_date": "2023-10-17",
+          "defer_reason": null,
           "recommended_for_award_at": null,
           "trainee_start_date": "2023-09-04",
           "reinstate_date": null,
@@ -312,6 +313,7 @@ Get a single trainee.
         "state": "deferred",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -823,6 +825,7 @@ Trainee details
         "submitted_for_trn_at": "2024-09-11T15:12:45.345Z",
         "withdraw_date": null,
         "defer_date": null,
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-01-01",
         "reinstate_date": null,
@@ -972,6 +975,7 @@ Trainee details
           "submitted_for_trn_at": "2024-09-11T15:12:45.345Z",
           "withdraw_date": null,
           "defer_date": null,
+          "defer_reason": null,
           "recommended_for_award_at": null,
           "trainee_start_date": "2023-01-01",
           "reinstate_date": null,
@@ -1468,6 +1472,7 @@ Recommendation details
         "state": "recommended_for_award",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": "2024-06-17T09:05:48Z",
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -1638,6 +1643,20 @@ Deferral details
     </p>
   </dd>
 </div>
+<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+  <dt class="govuk-summary-list__key"><code>defer_reason</code></dt>
+  <dd class="govuk-summary-list__value">
+    <p class="govuk-body">
+      string (limited to 500 characters)
+    </p>
+    <p class="govuk-body">
+      The reason that the Trainee deferred.
+    </p>
+    <p class="govuk-body">
+      Example: <code>Cannot attend course</code>
+    </p>
+  </dd>
+</div>
 
 <details class="govuk-details">
   <summary class="govuk-details__summary">Example request body</span></summary>
@@ -1645,7 +1664,8 @@ Deferral details
     <pre class="json-code-sample">
     {
       "data": {
-        "defer_date": "2024-06-17"
+        "defer_date": "2024-06-17",
+        "defer_reason": "The trainee's circumstances changed so they want to defer"
       }
     }
     </pre>
@@ -1685,6 +1705,7 @@ Deferral details
         "state": "recommended_for_award",
         "withdraw_date": null,
         "defer_date": "2024-06-17",
+        "defer_reason": null,
         "recommended_for_award_at": nil,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -1966,6 +1987,7 @@ Withdraw details
         "state": "deferred",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -2155,6 +2177,7 @@ Deletes an existing degree for this trainee.
         "withdrawal_reasons": null,
         "withdrawal_another_reason": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -2339,6 +2362,7 @@ Trainee details
         "withdrawal_reasons": null,
         "withdrawal_another_reason": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -2814,6 +2838,7 @@ Deletes an existing placement for this trainee.
         "withdrawal_reasons": null,
         "withdrawal_another_reason": null,
         "defer_date": "2023-10-17",
+        "defer_reason": null,
         "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
@@ -3513,7 +3538,79 @@ Deletes an existing degree for this trainee.
       </p>
     </dd>
   </div>
-
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>reinstate_date</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        date
+      </p>
+      <p class="govuk-body">
+        The trainee’s reinstate date. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>2023-10-01</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>course_education_phase</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s course education phase. (read-only)
+      </p>
+      <p class="govuk-body">
+        Example: <code>primary</code>
+      </p>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>record_source</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record source. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>manual</code></li>
+        <li><code>api</code></li>
+        <li><code>csv</code></li>
+        <li><code>hesa</code></li>
+        <li><code>apply</code></li>
+        <li><code>dttp</code></li>
+      </ul>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+    <dt class="govuk-summary-list__key"><code>state</code></dt>
+    <dd class="govuk-summary-list__value">
+      <p class="govuk-body">
+        string
+      </p>
+      <p class="govuk-body">
+        The trainee’s record state. (read-only)
+      </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>draft</code></li>
+        <li><code>submitted_for_trn</code></li>
+        <li><code>trn_received</code></li>
+        <li><code>recommended_for_award</code></li>
+        <li><code>withdrawn</code></li>
+        <li><code>deferred</code></li>
+        <li><code>awarded</code></li>
+      </ul>
+    </dd>
+  </div>
 </dl>
 
 ### Placement object
@@ -3757,6 +3854,10 @@ Deletes an existing degree for this trainee.
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.ethnicity.maxLength</th>
       <td class="govuk-table__cell govuk-table__cell--numeric">3</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.defer_reason.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">500</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.disability1.maxLength</th>

@@ -16,8 +16,10 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   let(:graduation_year) { "2003" }
   let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
+  let(:trainee_start_date) { itt_start_date }
   let(:itt_start_date) { "2023-01-01" }
   let(:itt_end_date) { "2023-10-01" }
+  let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
 
   let(:endpoint) { "/api/v1.0-pre/trainees" }
 
@@ -30,7 +32,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       sex: sex,
       email: "john.doe@example.com",
       nationality: "GB",
-      training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]],
+      training_route: training_route,
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
       course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
@@ -139,12 +141,12 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     it "sets the correct lead partner and employing school attributes" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
-      parsed_body = response.parsed_body[:data]
+      trainee = Trainee.last
 
-      expect(parsed_body[:lead_partner_not_applicable]).to be(true)
-      expect(parsed_body[:lead_partner]).to be_nil
-      expect(parsed_body[:employing_school_not_applicable]).to be(true)
-      expect(parsed_body[:employing_school]).to be_nil
+      expect(trainee.lead_partner_not_applicable).to be(true)
+      expect(trainee.lead_partner_id).to be_nil
+      expect(trainee.employing_school_not_applicable).to be(true)
+      expect(trainee.employing_school_id).to be_nil
     end
 
     it "creates the degrees if provided in the request body" do
@@ -192,8 +194,10 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
 
         it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
-          expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+          trainee = Trainee.last
+
+          expect(trainee.lead_partner_not_applicable).to be(true)
+          expect(trainee.employing_school_not_applicable).to be(true)
         end
       end
 
@@ -215,7 +219,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
 
         it "sets lead_partner_not_applicable to false" do
-          expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
+          trainee = Trainee.last
+
+          expect(trainee.lead_partner_not_applicable).to be(false)
         end
       end
 
@@ -236,7 +242,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
           end
 
           it "sets lead_partner_not_applicable to true" do
-            expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+            trainee = Trainee.last
+
+            expect(trainee.lead_partner_not_applicable).to be(true)
           end
         end
 
@@ -259,7 +267,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to false" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.lead_partner_not_applicable).to be(false)
             end
           end
 
@@ -272,7 +282,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets lead_partner_not_applicable to true" do
-              expect(response.parsed_body[:data][:lead_partner_not_applicable]).to be(true)
+              trainee = Trainee.last
+
+              expect(trainee.lead_partner_not_applicable).to be(true)
             end
           end
         end
@@ -293,7 +305,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to true" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(true)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(true)
             end
           end
 
@@ -314,7 +328,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(false)
             end
           end
 
@@ -337,7 +353,9 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
             end
 
             it "sets employing_school_not_applicable to false" do
-              expect(response.parsed_body[:data][:employing_school_not_applicable]).to be(false)
+              trainee = Trainee.last
+
+              expect(trainee.employing_school_not_applicable).to be(false)
             end
 
             it "sets lead_partner_urn to lead_partner#urn" do
@@ -709,21 +727,18 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         end
       end
 
-      context "when invalid" do
+      describe "provider_led_postgrad training route" do
         let(:params) do
           {
             data: data.merge(
               itt_start_date: itt_start_date,
               itt_end_date: itt_end_date,
-              training_route: "opt_in_undergrad",
+              trainee_start_date: itt_start_date,
+              training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]],
             ),
           }
         end
-
-        let(:itt_start_date) { "2024-08-01" }
-        let(:itt_end_date)   { "2025-01-01" }
-
-        let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
+        let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
 
         before do
           Timecop.travel(itt_start_date)
@@ -731,9 +746,26 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
           post endpoint, params: params, headers: { Authorization: token }, as: :json
         end
 
-        it do
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Training route has invalid reference data values")
+        context "when invalid - provider_led_postgrad before 2022" do
+          let(:itt_start_date) { "2021-08-01" }
+          let(:itt_end_date)   { "2022-01-01" }
+          let(:cycle_year) { 2021 }
+
+          it do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to contain_exactly("Training route has invalid reference data values")
+          end
+        end
+
+        context "when valid - provider_led_postgrad after 2022" do
+          let(:itt_start_date) { "2023-08-01" }
+          let(:itt_end_date)   { "2024-01-01" }
+          let(:cycle_year) { 2023 }
+
+          it do
+            expect(response).to have_http_status(:created)
+            expect(response.parsed_body[:errors]).to be_blank
+          end
         end
       end
     end

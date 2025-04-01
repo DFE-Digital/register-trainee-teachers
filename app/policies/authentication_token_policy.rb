@@ -26,4 +26,12 @@ class AuthenticationTokenPolicy
   def index?
     user.provider?
   end
+
+  def new?
+    user.provider?
+  end
+
+  def create?
+    user.provider?
+  end
 end

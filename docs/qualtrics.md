@@ -20,10 +20,16 @@ testing this integration during development:
 
 ## API Key
 
-API keys can be generated on the [dashboard page](https://dferesearch.eu.qualtrics.com/admin/account-settings-portal/user-settings). When generating a new key:
+API keys can be generated on the [dashboard page](https://dferesearch.eu.qualtrics.com/admin/account-settings-portal/user-settings).
+When generating a new key:
 
 1. Go to Account Settings > Qualtrics IDs
 2. Under API, select "Generate Token"
+
+## Survey IDs
+
+In an abundance of caution, any survey IDs should be added to the ENV instead of the settings. See [configurations](./configuration.md) on how
+to add this to each environment
 
 ## Testing the Integration
 

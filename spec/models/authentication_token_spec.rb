@@ -60,9 +60,16 @@ RSpec.describe AuthenticationToken do
   end
 
   describe ".create_with_random_token" do
-    let(:token) { "Bearer #{described_class.create_with_random_token(provider_id: provider.id, name: 'Provider test token', created_by: user)}" }
+    let(:result) do
+      described_class.create_with_random_token(
+        provider: provider,
+        name: "Provider test token",
+        created_by: user,
+      )
+    end
+    let(:token) { "Bearer #{result.token}" }
 
-    subject(:authentication_token) { AuthenticationToken.authenticate(token) }
+    subject(:authentication_token) { result }
 
     it "creates a new AuthenticationToken" do
       expect(authentication_token).to be_persisted

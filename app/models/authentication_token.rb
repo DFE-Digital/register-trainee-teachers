@@ -20,6 +20,7 @@
 # Indexes
 #
 #  index_authentication_tokens_on_created_by_id            (created_by_id)
+#  index_authentication_tokens_on_expires_at               (expires_at)
 #  index_authentication_tokens_on_hashed_token             (hashed_token) UNIQUE
 #  index_authentication_tokens_on_provider_id              (provider_id)
 #  index_authentication_tokens_on_revoked_by_id            (revoked_by_id)
@@ -53,6 +54,8 @@ class AuthenticationToken < ApplicationRecord
     end
   end
 
+  attr_accessor :token
+
   belongs_to :provider
   belongs_to :created_by, class_name: "User"
   belongs_to :revoked_by, class_name: "User", optional: true
@@ -72,12 +75,16 @@ class AuthenticationToken < ApplicationRecord
 
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
 
-  def self.create_with_random_token(attributes = {})
+  def self.create_with_random_token(
+    name:,
+    provider:,
+    expires_at: nil,
+    created_by:
+  )
     token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
 
-    create(attributes.merge(hashed_token:))
-    token
+    create(name:, provider:, created_by:, expires_at:, hashed_token:, token:)
   end
 
   def self.hash_token(token)

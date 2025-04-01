@@ -21,11 +21,11 @@
     "govuk-frontend": "^5.8.0",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8",
-    "sass": "^1.86.0",
+    "sass": "^1.86.1",
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "esbuild": "^0.25.1",
+    "esbuild": "^0.25.2",
     "esbuild-jest-transform": "^2.0.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",

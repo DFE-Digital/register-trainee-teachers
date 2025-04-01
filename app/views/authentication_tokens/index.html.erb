@@ -33,6 +33,11 @@
     <p class="govuk-body">
       You must make sure the token is securely sent to the developers managing your Register API integration.
     </p>
+
+    <div class="govuk-button-group">
+      <%= govuk_link_to "Generate a new token", new_authentication_token_path, class: "govuk-button" %>
+      <%= govuk_link_to "Cancel", organisation_settings_path %>
+    </div>
   </div>
 </div>
 

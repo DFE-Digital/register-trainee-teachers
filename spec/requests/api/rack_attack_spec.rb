@@ -13,7 +13,7 @@ RSpec.describe "Rack::Attack settings" do
 
   describe "Rate limiting" do
     let(:provider) { create(:provider) }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
 
     let(:limit) { 100 }
     let(:ip) { Faker::Internet.ip_v4_address }
