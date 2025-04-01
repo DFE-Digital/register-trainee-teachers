@@ -34,14 +34,10 @@
       You must make sure the token is securely sent to the developers managing your Register API integration.
     </p>
 
-    <form action="<%= new_authentication_token_path %>" method="get" novalidate="">
-      <div class="govuk-button-group">
-        <button type="submit" class="govuk-button" data-module="govuk-button">
-          Generate a new token
-        </button>
-        <a class="govuk-link" href=<%= organisation_settings_path %>>Cancel</a>
-      </div>
-    </form>
+    <div class="govuk-button-group">
+      <%= govuk_link_to "Generate a new token", new_authentication_token_path, class: "govuk-button" %>
+      <%= govuk_link_to "Cancel", organisation_settings_path %>
+    </div>
   </div>
 </div>
 
