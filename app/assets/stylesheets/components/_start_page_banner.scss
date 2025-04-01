@@ -20,6 +20,11 @@
   color: govuk-colour("white");
 }
 
+.app-phase-banner__env--csv-sandbox .govuk-tag {
+  background-color: govuk-colour("turquoise");
+  color: govuk-colour("white");
+}
+
 .app-header__env--development,
 .app-header__env--development .govuk-header__container {
   border-color: govuk-colour("dark-grey");
