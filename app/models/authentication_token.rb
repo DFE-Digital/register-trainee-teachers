@@ -5,7 +5,6 @@
 # Table name: authentication_tokens
 #
 #  id            :bigint           not null, primary key
-#  enabled       :boolean          default(TRUE), not null
 #  expires_at    :date
 #  hashed_token  :string           not null
 #  last_used_at  :datetime
@@ -72,6 +71,8 @@ class AuthenticationToken < ApplicationRecord
   validates :hashed_token, presence: true, uniqueness: true
   validates :name, presence: true, length: { maximum: 200 }
 
+  self.ignored_columns += ["enabled"]
+
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
 
   def self.create_with_random_token(
@@ -93,5 +94,11 @@ class AuthenticationToken < ApplicationRecord
   def self.authenticate(unhashed_token)
     token_without_prefix = unhashed_token.split.last
     find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
+  end
+
+  def update_last_used_at!
+    return if last_used_at&.today?
+
+    update!(last_used_at: Time.current)
   end
 end
