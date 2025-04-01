@@ -78,7 +78,7 @@ class AuthenticationToken < ApplicationRecord
     name:,
     provider:,
     expires_at: nil,
-    created_by: Current.user
+    created_by:
   )
     token = "#{Rails.env}_" + SecureRandom.hex(10)
     hashed_token = hash_token(token)
