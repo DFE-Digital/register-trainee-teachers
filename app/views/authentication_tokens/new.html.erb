@@ -1,0 +1,50 @@
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(text: "Back", href: authentication_tokens_path) %>
+<% end %>
+
+<%= render PageTitle::View.new(
+  text: "Organisation – #{current_user.organisation.name}",
+) %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h2 class="govuk-heading-l">Create a token</h2>
+    <%= register_form_with(model: @token_form, url: authentication_tokens_path) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <p class="govuk-body">This API token is unique to your organisation.</p>
+
+      <p class="govuk-body">You must make sure the token is securely sent to the developers managing your Register API integration.</p>
+
+      <%= f.govuk_text_field(
+        :name,
+        label: {
+          text: "Token name",
+          size: "s",
+          classes: "govuk-fieldset__legend--s govuk-!-font-weight-bold",
+        },
+        hint: { text: "Give this token a name to identify where it's being used" },
+        value: "",
+        width: "three-quarters",
+        spellcheck: false,
+        classes: "govuk-input--extra-letter-spacing",
+      ) %>
+
+      <%= f.govuk_date_field(:expires_at,
+        legend: {
+          text: "Expiration date (optional)",
+          size: "s",
+          classes: "govuk-fieldset__legend--s govuk-!-font-weight-bold",
+        },
+        hint: {
+          text: "For example, 27 3 2024",
+        },
+      ) %>
+
+      <div class="govuk-button-group">
+        <%= f.govuk_submit("Generate token") %>
+        <%= govuk_link_to "Cancel", organisation_settings_path %>
+      </div>
+    <% end %>
+  </div>
+</div>

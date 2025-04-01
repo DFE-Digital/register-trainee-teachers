@@ -5,7 +5,7 @@ require "rails_helper"
 describe "`DELETE /trainees/:trainee_slug/degrees/:slug` endpoint" do
   context "with a valid authentication token and the feature flag on" do
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first) }
+    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:auth_token) do
       create(
         :authentication_token,
