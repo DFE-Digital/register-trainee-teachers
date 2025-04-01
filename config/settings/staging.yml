@@ -53,6 +53,7 @@ features:
 
 environment:
   name: staging
+  display_name: Staging
 
 google_tag_manager:
   auth_id: h9MLvalp6AuXoRufPTHO_A

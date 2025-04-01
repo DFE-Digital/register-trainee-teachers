@@ -48,4 +48,5 @@ features:
   register_api: false
 
 environment:
-  name: CSV Sandbox
+  name: csv-sandbox
+  display_name: CSV Sandbox

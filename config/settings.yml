@@ -147,7 +147,8 @@ teacher_training_api:
   base_url: "https://api.publish-teacher-training-courses.service.gov.uk/api/public/v1"
 
 environment:
-  name: qa
+  name: beta
+  display_name: Beta
 
 slack:
   webhooks:

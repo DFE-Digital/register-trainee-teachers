@@ -85,7 +85,7 @@
         <div class="govuk-phase-banner">
           <p class="govuk-phase-banner__content">
             <strong class="govuk-tag govuk-phase-banner__content__tag">
-              <%= Settings.environment.name.titlecase %>
+              <%= Settings.environment.display_name %>
             </strong>
             <span class="govuk-phase-banner__text" role="status">
                 This is a new service - <% if FeatureService.enabled?("enable_feedback_link") %>
