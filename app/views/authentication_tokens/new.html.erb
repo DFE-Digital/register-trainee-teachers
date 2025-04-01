@@ -43,7 +43,7 @@
 
       <div class="govuk-button-group">
         <%= f.govuk_submit("Generate token") %>
-        <a class="govuk-link" href=<%= organisation_settings_path %>>Cancel</a>
+        <%= govuk_link_to "Cancel", organisation_settings_path %>
       </div>
     <% end %>
   </div>
