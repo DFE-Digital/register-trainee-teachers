@@ -54,7 +54,7 @@ class TraineePolicy
   end
 
   def create?
-    (user_in_provider_context? && user.accredited_provider?) && !user_is_read_only?
+    user_in_provider_context? && user.accredited_provider? && !user_is_read_only?
   end
 
   def update?
