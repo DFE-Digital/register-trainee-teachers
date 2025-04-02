@@ -71,12 +71,6 @@ jobs:
         slack-message: ':alert: Reset csv-sandbox database failure for sadpit :sadparrot:'
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
 
-    - name: Print out vendor_create.txt
-      if: ${{ success() }}
-      shell: bash
-      run: |
-        cat vendor_create.txt
-
     - name: Check for Success
       uses: ./.github/actions/send-slack-notification/
       if: ${{ success() }}
