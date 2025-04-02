@@ -48,7 +48,7 @@ private
     @sign_in_user ||= [
       DfESignInUser.load_from_session(session),
       OtpSignInUser.load_from_session(session),
-    ].select { _1.try(:user) }.first
+    ].select { it.try(:user) }.first
   end
 
   def current_user

@@ -7,7 +7,7 @@ module Dqt
     describe TrnRequest do
       let(:trainee_attributes) { {} }
       let(:degree) { build(:degree, :uk_degree_with_details) }
-      let(:hesa_code) { DfEReference::DegreesQuery::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
+      let(:hesa_code) { DfEReference::DegreesQuery::SUBJECTS.all.find { it.name == degree.subject }&.hecos_code }
       let(:hesa_metadatum) { build(:hesa_metadatum) }
       let(:trainee) do
         create(:trainee,
