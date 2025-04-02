@@ -18,7 +18,7 @@ features:
 
 environment:
   name: test
-  display_name: Test
+  display_name: Beta
 
 trainee_export:
   record_limit: 100
