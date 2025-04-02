@@ -18,7 +18,7 @@ module Api
       end
 
       def human_attribute_name(attr, options = {})
-        if options[:base]&.record_source == :csv && attribute_mappings.key?(attr.to_sym)
+        if options[:base]&.record_source == Trainee::CSV_SOURCE && attribute_mappings.key?(attr.to_sym)
           attribute_mappings[attr.to_sym]
         end || super
       end
