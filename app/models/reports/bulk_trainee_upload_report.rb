@@ -2,7 +2,9 @@
 
 module Reports
   class BulkTraineeUploadReport < TemplateClassCsv
-    HEADERS = (BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys + ["Errors"]).freeze
+    include ActionView::Helpers::TextHelper
+
+    HEADERS = (BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys + ["Validation results", "Errors"]).freeze
 
     def initialize(csv, scope:)
       @csv = csv
@@ -25,7 +27,8 @@ module Reports
 
     def add_row_to_csv(row)
       data = row.data.merge(
-        "Errors" => row.row_errors.pluck(:message).join(", "),
+        "Validation results" => row.row_errors.present? ? "#{pluralize(row.row_errors.size, 'error')} found" : "Validation passed",
+        "Errors" => row.row_errors.pluck(:message).join(";\n").presence,
       )
       csv << (HEADERS.map do |key|
         CsvValueSanitiser.new(data[key]).sanitise

@@ -136,6 +136,7 @@ module BulkUpdate
           next if results[index].success
 
           error_type = results[index].error_type
+
           extract_error_messages(errors: results[index].errors).each do |message|
             upload_row.row_errors.create!(message:, error_type:)
           end

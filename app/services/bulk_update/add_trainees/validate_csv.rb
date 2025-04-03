@@ -31,7 +31,7 @@ module BulkUpdate
       end
 
       def headers
-        @headers ||= csv.headers - ["Errors"]
+        @headers ||= csv.headers - ["Validation results", "Errors"]
       end
 
       def rows
