@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Trs
-  module Config
+module CodeSets
+  module Trs
     # Gender code mappings for TRS API
     GENDER_CODES = {
       male: "Male",
@@ -17,4 +17,4 @@ module Trs
       awarded
     ].freeze
   end
-end
+end 

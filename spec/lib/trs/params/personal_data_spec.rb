@@ -4,7 +4,7 @@ require "rails_helper"
 
 module Trs
   module Params
-    describe PersonPii do
+    describe PersonalData do
       let(:trainee) do
         build(
           :trainee,
@@ -62,4 +62,4 @@ module Trs
       end
     end
   end
-end
+end 

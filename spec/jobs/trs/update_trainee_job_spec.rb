@@ -6,39 +6,54 @@ module Trs
   describe UpdateTraineeJob do
     include ActiveJob::TestHelper
 
-    subject { described_class.new.perform(trainee) }
-
     before do
-      enable_features(:integrate_with_trs)
-      allow(UpdatePersonPii).to receive(:call)
+      allow(FeatureService).to receive(:enabled?).with(any_args).and_return(false)
+      allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(true)
     end
 
-    context "when integrate_with_trs is enabled" do
-      context "with a trainee that has a TRN and is in a valid state" do
+    subject { described_class.new.perform(trainee) }
+
+    describe "#perform" do
+      context "with the feature enabled and a trn in a valid state" do
         let(:trainee) { create(:trainee, :trn_received) }
 
-        it "calls the UpdatePersonPii service" do
+        before do
+          allow(trainee).to receive(:reload).and_return(trainee)
+          allow(UpdatePersonalData).to receive(:call)
+        end
+
+        it "calls the UpdatePersonalData service" do
           subject
-          expect(UpdatePersonPii).to have_received(:call).with(trainee:)
+          expect(UpdatePersonalData).to have_received(:call).with(trainee:)
         end
       end
 
       context "with a trainee that does not have a TRN" do
         let(:trainee) { create(:trainee, :trn_received, trn: nil) }
 
-        it "does not call the UpdatePersonPii service" do
+        before do
+          allow(trainee).to receive(:reload).and_return(trainee)
+          allow(UpdatePersonalData).to receive(:call)
+        end
+
+        it "does not call the UpdatePersonalData service" do
           subject
-          expect(UpdatePersonPii).not_to have_received(:call)
+          expect(UpdatePersonalData).not_to have_received(:call)
         end
       end
 
-      Config::INVALID_UPDATE_STATES.each do |state|
+      CodeSets::Trs::INVALID_UPDATE_STATES.each do |state|
         context "with a trainee in the #{state} state" do
           let(:trainee) { create(:trainee, state.to_sym, trn: "12345678") }
 
-          it "does not call the UpdatePersonPii service" do
+          before do
+            allow(trainee).to receive(:reload).and_return(trainee)
+            allow(UpdatePersonalData).to receive(:call)
+          end
+
+          it "does not call the UpdatePersonalData service" do
             subject
-            expect(UpdatePersonPii).not_to have_received(:call)
+            expect(UpdatePersonalData).not_to have_received(:call)
           end
         end
       end
@@ -48,12 +63,14 @@ module Trs
       let(:trainee) { create(:trainee, :trn_received) }
 
       before do
-        disable_features(:integrate_with_trs)
+        allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(false)
+        allow(trainee).to receive(:reload).and_return(trainee)
+        allow(UpdatePersonalData).to receive(:call)
       end
 
-      it "does not call the UpdatePersonPii service" do
+      it "does not call the UpdatePersonalData service" do
         subject
-        expect(UpdatePersonPii).not_to have_received(:call)
+        expect(UpdatePersonalData).not_to have_received(:call)
       end
     end
   end
