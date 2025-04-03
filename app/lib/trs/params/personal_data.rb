@@ -2,7 +2,7 @@
 
 module Trs
   module Params
-    class PersonPii
+    class PersonalData
       def initialize(trainee:)
         @trainee = trainee
       end
@@ -24,7 +24,7 @@ module Trs
           "emailAddresses" => [
             trainee.email,
           ],
-          "gender" => Config::GENDER_CODES[trainee.sex.to_sym],
+          "gender" => CodeSets::Trs::GENDER_CODES[trainee.sex.to_sym],
         }
       end
     end

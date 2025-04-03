@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Trs
-  describe UpdatePersonPii do
+  describe UpdatePersonalData do
     describe "#call" do
       let(:trainee) { create(:trainee, :trn_received) }
       let(:expected_path) { "/v3/persons/#{trainee.trn}" }
@@ -46,8 +46,8 @@ module Trs
 
       context "when trainee has all required fields" do
         it "calls the TRS API with the correct parameters" do
-          payload = instance_double(Trs::Params::PersonPii, to_json: '{"test": "data"}')
-          allow(Trs::Params::PersonPii).to receive(:new).with(trainee:).and_return(payload)
+          payload = instance_double(Trs::Params::PersonalData, to_json: '{"test": "data"}')
+          allow(Trs::Params::PersonalData).to receive(:new).with(trainee:).and_return(payload)
 
           described_class.call(trainee:)
 
@@ -73,4 +73,4 @@ module Trs
       end
     end
   end
-end
+end 
