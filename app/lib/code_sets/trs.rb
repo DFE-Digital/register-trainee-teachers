@@ -2,7 +2,6 @@
 
 module CodeSets
   module Trs
-    # Gender code mappings for TRS API
     GENDER_CODES = {
       male: "Male",
       female: "Female",
@@ -17,4 +16,4 @@ module CodeSets
       awarded
     ].freeze
   end
-end 
+end
