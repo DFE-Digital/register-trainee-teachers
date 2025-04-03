@@ -6,6 +6,8 @@ module Api
       validates_with RulesValidator
 
       include Api::ErrorAttributeAdapter
+
+      attr_accessor :record_source
     end
   end
 end
