@@ -74,7 +74,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["errors"]).to contain_exactly(
               "error" => "UnprocessableEntity",
-              "message" => "Name can't be blank",
+              "message" => "name can't be blank",
             )
           end
         end
