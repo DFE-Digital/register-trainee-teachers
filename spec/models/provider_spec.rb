@@ -3,6 +3,35 @@
 require "rails_helper"
 
 describe Provider do
+  describe "scopes" do
+    describe ".with_active_hei" do
+      let(:active_hei_provider) { create(:provider, :hei) }
+      let(:inactive_hei_provider) { create(:provider, :hei) }
+      let(:unaccredited_hei_provider) { create(:provider, :hei, :unaccredited) }
+      let(:active_scitt_provider) { create(:provider, :scitt) }
+      let(:inactive_scitt_provider) { create(:provider, :scitt) }
+      let(:unaccredited_scitt_provider) { create(:provider, :scitt, :unaccredited) }
+
+      before do
+        active_hei_provider
+        inactive_hei_provider.discard
+        unaccredited_hei_provider
+        active_scitt_provider
+        inactive_scitt_provider.discard
+        unaccredited_scitt_provider
+      end
+
+      it "returns providers that are accredited and have a valid accreditation_id" do
+        expect(described_class.with_active_hei).to include(active_hei_provider)
+        expect(described_class.with_active_hei).not_to include(inactive_hei_provider)
+        expect(described_class.with_active_hei).not_to include(unaccredited_hei_provider)
+        expect(described_class.with_active_hei).not_to include(active_scitt_provider)
+        expect(described_class.with_active_hei).not_to include(inactive_scitt_provider)
+        expect(described_class.with_active_hei).not_to include(unaccredited_scitt_provider)
+      end
+    end
+  end
+
   context "fields" do
     it "validates presence" do
       expect(subject).to validate_presence_of(:name).with_message("Enter a provider name")
