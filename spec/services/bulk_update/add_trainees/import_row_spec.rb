@@ -36,6 +36,8 @@ module BulkUpdate
             expect(result.error_type).to eq(:validation)
             expect(result.errors[:errors]).to include("ITT Start Date can't be blank")
             expect(result.errors[:errors]).to include("Date of Birth can't be blank")
+            expect(result.errors[:errors]).to include("ITT Aim has invalid reference data values")
+            expect(result.errors[:errors]).to include("Qualification Aim has invalid reference data values")
           end
         end
 
