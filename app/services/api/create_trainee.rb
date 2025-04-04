@@ -69,7 +69,7 @@ module Api
     def trainee_attributes_errors
       @trainee_attributes_errors ||= begin
         trainee_attributes.validate
-        trainee_attributes.errors&.full_messages&.compact&.flatten
+        trainee_attributes.errors&.full_messages&.compact&.flatten.map(&:strip)
       end
     end
 
