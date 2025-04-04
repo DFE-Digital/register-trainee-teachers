@@ -7,11 +7,15 @@ module Api
       base.class_attribute(:csv_field_mappings)
     end
 
-    NESTED_ATTRIBUTE_NAMES = {
+    NESTED_CSV_ATTRIBUTE_NAMES = {
       hesa_trainee_detail_attributes: "",
       placement_attributes: "",
       degree_attributes: "",
-    }
+    }.freeze
+
+    NESTED_API_ATTRIBUTE_NAMES = {
+      hesa_trainee_detail_attributes: "",
+    }.freeze
 
     module ClassMethods
       def attribute_mappings
@@ -25,9 +29,9 @@ module Api
 
       def human_attribute_name(attr, options = {})
         if options[:base]&.record_source == Trainee::CSV_SOURCE
-          attribute_mappings[attr.to_sym] || NESTED_ATTRIBUTE_NAMES[attr.to_sym]
+          attribute_mappings[attr.to_sym] || NESTED_CSV_ATTRIBUTE_NAMES[attr.to_sym]
         else
-          attr.to_s
+          NESTED_API_ATTRIBUTE_NAMES[attr.to_sym] || attr.to_s
         end || super
       end
     end
