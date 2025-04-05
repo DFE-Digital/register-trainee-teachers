@@ -52,8 +52,10 @@ features:
   register_api: false
   bulk_add_trainees: false
   duplicate_checking: true
+
 environment:
   name: beta
+  display_name: Beta
 
 google_tag_manager:
   auth_id: XYyafYf931M1IT_2vjH8DA

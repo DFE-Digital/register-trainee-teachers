@@ -37,3 +37,7 @@ features:
 
 pagination:
   records_per_page: 30
+
+environment:
+  name: qa
+  display_name: QA
