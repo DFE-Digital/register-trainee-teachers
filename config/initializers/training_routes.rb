@@ -49,6 +49,9 @@ ROUTE_INITIATIVES_ENUMS = {
   no_initiative: "no_initiative",
   veterans_teaching_undergraduate_bursary: "veterans_teaching_undergraduate_bursary",
   international_relocation_payment: "international_relocation_payment",
+  abridged_itt_course: "abridged_itt_course",
+  primary_mathematics_specialist: "primary_mathematics_specialist",
+  additional_itt_place_for_pe_with_a_priority_subject: "additional_itt_place_for_pe_with_a_priority_subject",
 }.freeze
 
 TRAINING_ROUTES = {
@@ -77,6 +80,9 @@ ROUTE_INITIATIVES = {
   ROUTE_INITIATIVES_ENUMS[:troops_to_teachers] => 5,
   ROUTE_INITIATIVES_ENUMS[:veterans_teaching_undergraduate_bursary] => 6,
   ROUTE_INITIATIVES_ENUMS[:international_relocation_payment] => 7,
+  ROUTE_INITIATIVES_ENUMS[:abridged_itt_course] => 8,
+  ROUTE_INITIATIVES_ENUMS[:primary_mathematics_specialist] => 9,
+  ROUTE_INITIATIVES_ENUMS[:additional_itt_place_for_pe_with_a_priority_subject] => 10,
 }.freeze
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|

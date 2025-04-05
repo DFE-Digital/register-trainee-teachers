@@ -8,6 +8,9 @@ module FundingHelper
       maths_physics_chairs_programme_researchers_in_schools
       transition_to_teach
       future_teaching_scholars
+      abridged_itt_course
+      primary_mathematics_specialist
+      additional_itt_place_for_pe_with_a_priority_subject
     ]).sort
   end
 
