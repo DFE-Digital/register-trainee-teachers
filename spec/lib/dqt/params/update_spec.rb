@@ -7,7 +7,7 @@ module Dqt
     describe Update do
       let(:trainee) { create(:trainee, :completed, sex: "female", hesa_id: 1) }
       let(:degree) { trainee.degrees.first }
-      let(:hesa_code) { DfEReference::DegreesQuery::SUBJECTS.all.find { _1.name == degree.subject }&.hecos_code }
+      let(:hesa_code) { DfEReference::DegreesQuery::SUBJECTS.all.find { it.name == degree.subject }&.hecos_code }
       let(:ukprn) { DfEReference::DegreesQuery::INSTITUTIONS.one(degree.institution_uuid)[:ukprn] }
       let(:dqt_degree_type) { "BachelorOfArts" }
       let(:uk_degree_uuid) { "db695652-c197-e711-80d8-005056ac45bb" }
