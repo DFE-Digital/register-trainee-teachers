@@ -94,6 +94,8 @@ describe OutcomeDateForm, type: :model do
   end
 
   describe "#save!" do
+    before { enable_features(:integrate_with_dqt) }
+
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
 
