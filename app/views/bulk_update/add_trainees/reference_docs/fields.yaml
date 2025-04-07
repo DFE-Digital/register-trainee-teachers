@@ -429,7 +429,7 @@
 - field_name: UK degree type
   technical: uk_degree
   hesa_alignment: DEGTYPE
-  description: This records the student’s previous qualification
+  description: The type of UK degree. Only the highest previous degree qualification should be submitted.
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a UK degree
@@ -453,7 +453,7 @@
 - field_name: UK degree grade
   technical: grade
   hesa_alignment: DEGCLSS
-  description: This field is used to indicate the qualification class of the student’s previous degree. Only the highest previous degree qualification should be submitted.
+  description: The grade of the degree. Only the highest previous degree qualification should be submitted.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
   example: '"01" for example is First class honours'
   validation: Conditional - mandatory if specifying a UK degree
