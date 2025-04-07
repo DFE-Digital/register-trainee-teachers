@@ -1,26 +1,28 @@
 # frozen_string_literal: true
 
 module Trs
-  class UpdatePersonalData
+  class UpdateProfessionalStatus
     include ServicePattern
 
-    class PersonalDataUpdateError < StandardError; end
-    class PersonUpdateMissingTrn < StandardError; end
+    class ProfessionalStatusUpdateError < StandardError; end
+    class ProfessionalStatusUpdateMissingTrn < StandardError; end
 
     def initialize(trainee:)
       @trainee = trainee
-      @payload = Params::PersonalData.new(trainee:)
+      @payload = Params::ProfessionalStatus.new(trainee:)
     end
 
     def call
       return unless FeatureService.enabled?(:integrate_with_trs)
+
+      # Only update if trainee is in a valid state
       return unless valid_update_state?
 
       if trainee.trn.blank?
         raise(
-          PersonUpdateMissingTrn,
+          ProfessionalStatusUpdateMissingTrn,
           <<~TEXT,
-            Cannot update person personal data on TRS without a TRN
+            Cannot update professional status on TRS without a TRN
             slug: #{trainee.slug}
             id: #{trainee.id}
             #{Settings.base_url}/trainees/#{trainee.slug}
@@ -28,7 +30,8 @@ module Trs
         )
       end
 
-      update_personal_data
+      update_professional_status
+      nil
     end
 
   private
@@ -36,11 +39,12 @@ module Trs
     attr_reader :trainee, :payload
 
     def valid_update_state?
+      # Could be more specific about valid states for this endpoint
       ::CodeSets::Trs.valid_for_update?(trainee.state)
     end
 
-    def update_personal_data
-      Client.put("/v3/persons/#{trainee.trn}", body: payload.to_json)
+    def update_professional_status
+      Client.put("/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}", body: payload.to_json)
     end
   end
 end

@@ -4,6 +4,11 @@ module BulkUpdate
   class Recommend
     include ServicePattern
 
+    # We include provider_id as part of the attributes even though it won't change.
+    # This is because `upsert_all` requires all NOT NULL fields to be present for a successful upsert operation
+    # (this is because it may have to INSERT, even though in this case it will always be an UPDATE - it doesn't know this)
+    ATTRIBUTES = %i[slug outcome_date state recommended_for_award_at provider_id].freeze
+
     def initialize(recommendations_upload:)
       @recommendations_upload = recommendations_upload
     end
@@ -17,13 +22,9 @@ module BulkUpdate
         model: Trainee,
         unique_by: :slug,
       )
-      send_updates_to_dqt if result.present?
-    end
 
-    # We include provider_id as part of the attributes even though it won't change.
-    # This is because `upsert_all` requires all NOT NULL fields to be present for a successful upsert operation
-    # (this is because it may have to INSERT, even though in this case it will always be an UPDATE - it doesn't know this)
-    ATTRIBUTES = %i[slug outcome_date state recommended_for_award_at provider_id].freeze
+      send_updates if result.present?
+    end
 
   private
 
@@ -55,8 +56,8 @@ module BulkUpdate
       end.with_indifferent_access
     end
 
-    def send_updates_to_dqt
-      trainees.each { |t| Dqt::RecommendForAwardJob.perform_later(t) }
+    def send_updates
+      trainees.each { |t| Trainees::UpdateIttData.call(trainee: t) }
     end
 
     def trainees
