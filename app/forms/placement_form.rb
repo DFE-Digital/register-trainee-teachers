@@ -133,7 +133,7 @@ class PlacementForm
   end
 
   def school_or_search_valid
-    if school_id.blank? && school_search.blank? && (name.blank? && urn.blank? && postcode.blank?)
+    if school_id.blank? && school_search.blank? && name.blank? && urn.blank? && postcode.blank?
       errors.add(:school, :blank)
     end
   end
