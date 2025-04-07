@@ -62,7 +62,7 @@ class TraineePolicy
   end
 
   def withdraw?
-    allow_actions? && (defer? || trainee.deferred? || user_is_system_admin?)
+    defer? || user_is_system_admin?
   end
 
   def undo_withdraw?
@@ -70,7 +70,7 @@ class TraineePolicy
   end
 
   def defer?
-    allow_actions? && (trainee.submitted_for_trn? || trainee.trn_received?)
+    allow_actions? && (trainee.submitted_for_trn? || trainee.trn_received? || trainee.deferred?)
   end
 
   def reinstate?
