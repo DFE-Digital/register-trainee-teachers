@@ -6,31 +6,8 @@ module Trainees
   describe Update do
     let(:trainee) { create(:trainee, trn: "12345678") }
 
-    # Helper methods to configure feature flags
-    def enable_only_dqt
-      allow(FeatureService).to receive(:enabled?).and_call_original
-      allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(true)
-      allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(false)
-    end
-
-    def enable_only_trs
-      allow(FeatureService).to receive(:enabled?).and_call_original
-      allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(false)
-      allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(true)
-    end
-
-    def disable_all_integrations
-      allow(FeatureService).to receive(:enabled?).and_call_original
-      allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(false)
-      allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(false)
-    end
-
     describe "conflicting integrations" do
-      context "when both integrations are enabled" do
-        before do
-          enable_features(:integrate_with_dqt, :integrate_with_trs)
-        end
-
+      context "when both integrations are enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: true do
         it "raises an error when both feature flags are enabled" do
           expect {
             described_class.call(trainee:)
@@ -49,10 +26,9 @@ module Trainees
       context "valid params" do
         let(:params) { { first_names: "Dave", last_name: "Hill" } }
 
-        context "with DQT integration enabled" do
+        context "with DQT integration enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
           before do
             allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
-            enable_only_dqt
           end
 
           it "updates the trainee" do
@@ -102,10 +78,9 @@ module Trainees
           end
         end
 
-        context "with TRS integration enabled" do
+        context "with TRS integration enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
           before do
             allow(Trs::UpdateTraineeJob).to receive(:perform_later)
-            enable_only_trs
           end
 
           it "queues an update to TRS" do
@@ -139,11 +114,10 @@ module Trainees
           end
         end
 
-        context "with integrations disabled" do
+        context "with integrations disabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
           before do
             allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
             allow(Trs::UpdateTraineeJob).to receive(:perform_later)
-            disable_all_integrations
           end
 
           it "does not queue updates when both features are disabled" do
@@ -160,10 +134,9 @@ module Trainees
         end
       end
 
-      context "passed a trainee that has had attributes set" do
+      context "passed a trainee that has had attributes set", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
         before do
           allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
-          enable_only_dqt
         end
 
         context "with no params" do
