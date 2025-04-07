@@ -901,7 +901,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         end
       end
 
-      context "when disability1 & disability2 is set" do
+      context "when disability1 & disability2 are set" do
         let(:params) do
           {
             data: {
@@ -920,6 +920,24 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
 
           expect(trainee.disabilities.count).to eq(2)
           expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
+        end
+      end
+
+      context "when disability1 & disability2 have the same code values" do
+        let(:params) do
+          {
+            data: {
+              disability1: "58",
+              disability2: "58",
+            },
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            "Trainee disabilities attributes contain duplicate values"
+          )
         end
       end
     end

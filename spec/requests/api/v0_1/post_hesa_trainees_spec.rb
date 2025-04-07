@@ -18,6 +18,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:itt_start_date) { "2023-01-01" }
   let(:itt_end_date) { "2023-10-01" }
+  let(:disability1) { "58" }
+  let(:disability2) { "57" }
 
   let(:data) do
     {
@@ -33,8 +35,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       itt_end_date: itt_end_date,
       course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
-      disability1: "58",
-      disability2: "57",
+      disability1:,
+      disability2:,
       degrees_attributes: [
         {
           grade: "02",
@@ -338,6 +340,22 @@ describe "`POST /api/v0.1/trainees` endpoint" do
             end
           end
         end
+      end
+    end
+
+    context "when disabilities have the same code values" do
+      let(:disability1) { "58" }
+      let(:disability2) { "58" }
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+
+        parsed_body = response.parsed_body[:data]
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("Trainee disabilities attributes contain duplicate values")
       end
     end
 
