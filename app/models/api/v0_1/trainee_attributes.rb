@@ -104,7 +104,6 @@ module Api
                 inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
       validates :trainee_disabilities_attributes, uniqueness: true
 
-
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
 

@@ -39,8 +39,8 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       itt_end_date: itt_end_date,
       course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
-      disability1:,
-      disability2:,
+      disability1: disability1,
+      disability2: disability2,
       degrees_attributes: [
         {
           grade: "02",
@@ -377,7 +377,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
         expect(response).to have_http_status(:unprocessable_entity)
 
-        parsed_body = response.parsed_body[:data]
+        response.parsed_body[:data]
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include("Trainee disabilities attributes contain duplicate values")

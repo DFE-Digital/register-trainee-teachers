@@ -936,7 +936,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "Trainee disabilities attributes contain duplicate values"
+            "Trainee disabilities attributes contain duplicate values",
           )
         end
       end
