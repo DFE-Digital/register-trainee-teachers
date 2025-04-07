@@ -46,6 +46,8 @@ features:
     test_mode: true
     sync_trn_data: false
   register_api: false
+  show_csv_sandbox_banner: true
+
 
 environment:
   name: csv-sandbox
