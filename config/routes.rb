@@ -245,7 +245,11 @@ Rails.application.routes.draw do
   resource :cookie_preferences, only: %i[show update], path: "/cookies"
 
   resources :service_updates, only: %i[index], path: "service-updates"
-  resources :organisations, only: %i[index show], path: "organisations"
+  resources :organisations, only: %i[index show], path: "organisations" do
+    resources :authentication_tokens, only: %i[] do
+      resource :revoke, only: %i[show update], controller: "authentication_tokens/revokes"
+    end
+  end
   resource :organisation_settings, only: :show, path: "organisation-settings"
 
   resources :authentication_tokens, only: %i[index new create show], path: "token-manage"

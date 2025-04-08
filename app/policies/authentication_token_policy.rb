@@ -34,4 +34,12 @@ class AuthenticationTokenPolicy
   def create?
     user.provider?
   end
+
+  def show?
+    user.organisation?
+  end
+
+  def update?
+    user.organisation?
+  end
 end

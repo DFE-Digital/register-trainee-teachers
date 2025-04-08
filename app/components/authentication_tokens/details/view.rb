@@ -16,6 +16,7 @@ module AuthenticationTokens
                :revoked_at,
                :revoked?,
                :expired?,
+               :provider_id,
                to: :token
 
       def initialize(token)
