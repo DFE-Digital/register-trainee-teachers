@@ -36,7 +36,6 @@ jobs:
         az storage blob download --container-name database-backup \
         --file ${SANITISED_FILE_NAME}.sql.gz --name ${SANITISED_FILE_NAME}.sql.gz \
         --connection-string '${{ secrets.AZURE_STORAGE_CONNECTION_STRING_SANITISED }}'
-        az logout
 
     - uses: azure/login@v2
       with:
@@ -67,16 +66,10 @@ jobs:
     - name: Check for Failure
       uses: ./.github/actions/send-slack-notification/
       if: ${{ failure() }}
-      env:
+      with:
         slack-title: 'Reset :sadpit: database Failure'
         slack-message: ':alert: Reset csv-sandbox database failure for sadpit :sadparrot:'
         slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
-
-    - name: Print out vendor_create.txt
-      if: ${{ success() }}
-      shell: bash
-      run: |
-        cat vendor_create.txt
 
     - name: Check for Success
       uses: ./.github/actions/send-slack-notification/
