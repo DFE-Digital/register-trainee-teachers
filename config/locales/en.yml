@@ -1435,6 +1435,9 @@ en:
           no_initiative: Not on a training initiative
           veterans_teaching_undergraduate_bursary: Veteran teaching undergraduate bursary
           international_relocation_payment: International Relocation Payment
+          abridged_itt_course: Abridged ITT course
+          primary_mathematics_specialist: Primary mathematics specialist
+          additional_itt_place_for_pe_with_a_priority_subject: Additional ITT place for PE with a priority subject
         levels:
           early_years: Early years
           primary: Primary
