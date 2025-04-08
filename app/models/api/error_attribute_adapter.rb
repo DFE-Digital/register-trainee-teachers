@@ -9,8 +9,8 @@ module Api
 
     NESTED_CSV_ATTRIBUTE_NAMES = {
       hesa_trainee_detail_attributes: "",
-      placement_attributes: "",
-      degree_attributes: "",
+      placements_attributes: "",
+      degrees_attributes: "",
     }.freeze
 
     NESTED_API_ATTRIBUTE_NAMES = {
