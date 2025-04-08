@@ -48,3 +48,5 @@ features:
 
 environment:
   name: productiondata
+  display_name: Production Data
+
