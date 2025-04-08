@@ -722,10 +722,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@ministryofjustice/frontend@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-4.0.1.tgz#5e9ed308e208982179e26e7884173bce553eec87"
-  integrity sha512-LljgnzLtTIw9z8mw/pK1xLIyR3TtHrFa9Z/i7X+6odzN5MlQ0dYLDXunoAhniXeOlXz5sNbdsmGuf/iNxv0keA==
+"@ministryofjustice/frontend@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-5.1.1.tgz#5adb2b8787b48afa7568e4accb5c3b184b334650"
+  integrity sha512-Zexc4aVrrg2oTMb5Y7Ye9d++pQj1Mb42RMGMQQf5XKGSN9puKAGdFTqb1DxGEg5Ng8NMSJMLjj4ROSlL9LWfHw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
