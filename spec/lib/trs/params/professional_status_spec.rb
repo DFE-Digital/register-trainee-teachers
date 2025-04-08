@@ -16,7 +16,7 @@ module Trs
 
         it "returns a hash including route and training attributes" do
           expect(subject).to include({
-            "routeTypeId" => "AssessmentOnlyRoute",
+            "routeTypeId" => "57b86cef-98e2-4962-a74a-d47c7a34b838",
             "trainingStartDate" => trainee.itt_start_date.iso8601,
             "trainingEndDate" => trainee.itt_end_date.iso8601,
             "trainingProviderUkprn" => trainee.provider.ukprn,
@@ -48,7 +48,7 @@ module Trs
           end
 
           it "includes the degree type mapping" do
-            expect(subject["degreeTypeId"]).to eq("BAHons")
+            expect(subject["degreeTypeId"]).to eq("dbb7c27b-8a27-4a94-908d-4b4404acebd5")
           end
         end
 
@@ -80,11 +80,11 @@ module Trs
           let(:trainee) { create(:trainee, :completed, :recommended_for_award) }
 
           before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Recommended")
+            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Approved")
           end
 
-          it "sets the status to Recommended" do
-            expect(subject["status"]).to eq("Recommended")
+          it "sets the status to Approved" do
+            expect(subject["status"]).to eq("Approved")
           end
         end
 
@@ -92,11 +92,11 @@ module Trs
           let(:trainee) { create(:trainee, :completed, :awarded) }
 
           before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Pass")
+            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Awarded")
           end
 
-          it "sets the status to Pass" do
-            expect(subject["status"]).to eq("Pass")
+          it "sets the status to Awarded" do
+            expect(subject["status"]).to eq("Awarded")
             expect(subject["awardedDate"]).to eq(trainee.awarded_at.to_date.iso8601)
           end
         end
@@ -113,7 +113,7 @@ module Trs
           end
 
           it "sets the correct route type ID" do
-            expect(subject["routeTypeId"]).to eq("ProviderLedPostgrad")
+            expect(subject["routeTypeId"]).to eq("97497716-5ac5-49aa-a444-27fa3e2c152a")
           end
         end
 
@@ -121,7 +121,7 @@ module Trs
           let(:trainee) { create(:trainee, :completed, :iqts, iqts_country: "Ireland") }
           let(:country_ref) { "IE" }
           let(:professional_status) { instance_double(described_class) }
-          let(:params_result) { { "trainingCountryReference" => country_ref, "routeTypeId" => "InternationalQualifiedTeacherStatus" } }
+          let(:params_result) { { "trainingCountryReference" => country_ref, "routeTypeId" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1" } }
 
           before do
             allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("UnderAssessment")
@@ -132,7 +132,7 @@ module Trs
           it "sets the route type and training country code appropriately" do
             expect(professional_status.params).to include({
               "trainingCountryReference" => country_ref,
-              "routeTypeId" => "InternationalQualifiedTeacherStatus",
+              "routeTypeId" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1",
             })
           end
         end

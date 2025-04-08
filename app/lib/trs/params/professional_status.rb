@@ -65,21 +65,12 @@ module Trs
       end
 
       def subject_reference(subject_name)
-        # In the real implementation, this would need to return the correct reference format
-        # expected by TRS API. For now, using the HESA code as a reference.
-        code = subject_code(subject_name)
-        return nil unless code
-
-        code
-      end
-
-      def subject_code(subject_name)
         # these three subjects are not coded by HESA so we've agreed these encodings with the DQT team
         return "999001" if subject_name == ::CourseSubjects::CITIZENSHIP
         return "999002" if subject_name == ::CourseSubjects::PHYSICAL_EDUCATION
         return "999003" if subject_name == ::CourseSubjects::DESIGN_AND_TECHNOLOGY
 
-        Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name]
+        Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name].presence
       end
 
       def training_age_specialism
