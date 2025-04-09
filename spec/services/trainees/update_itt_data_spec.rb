@@ -7,24 +7,14 @@ module Trainees
     let(:trainee) { create(:trainee, :trn_received) }
 
     describe "#call" do
-      context "when TRS integration is enabled" do
-        before do
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(false)
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(true)
-        end
-
+      context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
         it "calls TRS update professional status job" do
           expect(Trs::UpdateProfessionalStatusJob).to receive(:perform_later).with(trainee)
           described_class.call(trainee:)
         end
       end
 
-      context "when DQT integration is enabled" do
-        before do
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(true)
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(false)
-        end
-
+      context "when DQT integration is enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
         context "when trainee is recommended for award" do
           let(:trainee) { create(:trainee, :trn_received, :recommended_for_award) }
 
