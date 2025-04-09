@@ -17,7 +17,8 @@ features:
     teacher_degree_apprenticeship: true
 
 environment:
-  name: beta
+  name: test
+  display_name: Beta
 
 trainee_export:
   record_limit: 100

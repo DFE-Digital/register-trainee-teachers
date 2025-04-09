@@ -33,3 +33,4 @@ pagination:
 
 environment:
   name: review
+  display_name: Review

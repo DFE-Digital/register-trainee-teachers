@@ -31,7 +31,7 @@ pagination:
 
 environment:
   name: development
-
+  display_name: Development
 track_validation_errors: false
 
 blazer_database_url: postgresql://localhost/register_trainee_teacher_data_development
