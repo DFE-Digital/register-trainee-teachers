@@ -11,16 +11,11 @@ module Reports
 
     HEADERS = [TRN, DATE_OF_BIRTH, NINO, SUBJECT_CODE, DESCRIPTION].freeze
 
-    def initialize(csv, scope:)
-      @csv = csv
-      @scope = scope
-    end
-
     def headers
       HEADERS
     end
 
-    alias trainees scope
+    alias qualifications scope
 
   private
 
@@ -29,27 +24,29 @@ module Reports
     end
 
     def add_report_rows
-      trainees.strict_loading.includes(:hesa_trainee_detail).find_each do |trainee|
-        add_trainee_to_csv(trainee)
+      qualifications.each do |qualication|
+        add_qualication_to_csv(qualication)
       end
     end
 
-    def add_trainee_to_csv(trainee)
-      csv << csv_row(trainee)
+    def add_qualication_to_csv(qualification)
+      csv << csv_row(qualification)
     end
 
-    def csv_row(trainee)
-      report = Reports::TraineeReport.new(trainee)
-
+    def csv_row(degree)
       row = [
-        report.trn,
-        report.date_of_birth,
-        report.ni_number,
-        report.subject_code,
-        report.description,
+        degree.trainee.trn,
+        degree.trainee.date_of_birth&.iso8601,
+        degree.trainee.hesa_trainee_detail&.ni_number,
+        degree_subject(degree)&.hecos_code,
+        degree_subject(degree)&.name,
       ].map { |value| CsvValueSanitiser.new(value).sanitise }
 
       row
+    end
+
+    def degree_subject(degree)
+      DfEReference::DegreesQuery::SUBJECTS.one(degree.subject_uuid)
     end
   end
 end

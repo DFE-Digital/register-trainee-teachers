@@ -26,5 +26,13 @@ module Reports
         end
       end
     end
+
+  private
+
+    def he_qualifications
+      # TODO: filter by date or academic cycle?
+
+      Degree.include(:trainee).order(:trainee_id)
+    end
   end
 end
