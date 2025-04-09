@@ -22,12 +22,7 @@ describe Provider do
       end
 
       it "returns providers that are accredited and have a valid accreditation_id" do
-        expect(described_class.with_active_hei).to include(active_hei_provider)
-        expect(described_class.with_active_hei).not_to include(inactive_hei_provider)
-        expect(described_class.with_active_hei).not_to include(unaccredited_hei_provider)
-        expect(described_class.with_active_hei).not_to include(active_scitt_provider)
-        expect(described_class.with_active_hei).not_to include(inactive_scitt_provider)
-        expect(described_class.with_active_hei).not_to include(unaccredited_scitt_provider)
+        expect(described_class.with_active_hei).to contain_exactly(active_hei_provider)
       end
     end
   end

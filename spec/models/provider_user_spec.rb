@@ -5,12 +5,12 @@ require "rails_helper"
 describe ProviderUser do
   describe "scopes" do
     describe ".with_active_hei_providers" do
-      let(:active_hei_provider_user) { create(:provider_user, provider: create(:provider, :hei)) }
-      let(:inactive_hei_provider_user) { create(:provider_user, provider: create(:provider, :hei)) }
-      let(:unaccredited_hei_provider_user) { create(:provider_user, provider: create(:provider, :hei, :unaccredited)) }
-      let(:active_scitt_provider_user) { create(:provider_user, provider: create(:provider, :scitt)) }
-      let(:inactive_scitt_provider_user) { create(:provider_user, provider: create(:provider, :scitt)) }
-      let(:unaccredited_scitt_provider_user) { create(:provider_user, provider: create(:provider, :scitt, :unaccredited)) }
+      let(:active_hei_provider_user) { create(:provider_user, provider: build(:provider, :hei)) }
+      let(:inactive_hei_provider_user) { create(:provider_user, provider: build(:provider, :hei)) }
+      let(:unaccredited_hei_provider_user) { create(:provider_user, provider: build(:provider, :hei, :unaccredited)) }
+      let(:active_scitt_provider_user) { create(:provider_user, provider: build(:provider, :scitt)) }
+      let(:inactive_scitt_provider_user) { create(:provider_user, provider: build(:provider, :scitt)) }
+      let(:unaccredited_scitt_provider_user) { create(:provider_user, provider: build(:provider, :scitt, :unaccredited)) }
 
       before do
         inactive_hei_provider_user.provider.discard
@@ -25,12 +25,7 @@ describe ProviderUser do
       end
 
       it "returns provider user that have providers that are accredited and have a valid accreditation_id" do
-        expect(described_class.with_active_hei_providers).to include(active_hei_provider_user)
-        expect(described_class.with_active_hei_providers).not_to include(inactive_hei_provider_user)
-        expect(described_class.with_active_hei_providers).not_to include(unaccredited_hei_provider_user)
-        expect(described_class.with_active_hei_providers).not_to include(active_scitt_provider_user)
-        expect(described_class.with_active_hei_providers).not_to include(inactive_scitt_provider_user)
-        expect(described_class.with_active_hei_providers).not_to include(unaccredited_scitt_provider_user)
+        expect(described_class.with_active_hei_providers).to contain_exactly(active_hei_provider_user)
       end
     end
   end
