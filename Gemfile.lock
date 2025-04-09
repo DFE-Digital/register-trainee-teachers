@@ -312,7 +312,7 @@ GEM
       activemodel (>= 6.1)
       activesupport (>= 6.1)
       html-attributes-utils (~> 1)
-    govuk_markdown (2.0.2)
+    govuk_markdown (2.0.3)
       activesupport
       redcarpet
     govuk_notify_rails (3.0.0)
@@ -560,7 +560,7 @@ GEM
       ffi (~> 1.0)
     rdoc (6.13.0)
       psych (>= 4.0.0)
-    redcarpet (3.6.0)
+    redcarpet (3.6.1)
     redis (4.8.1)
     regexp_parser (2.10.0)
     reline (0.6.0)
