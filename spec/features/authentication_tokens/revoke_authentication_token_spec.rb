@@ -60,6 +60,6 @@ private
 
   def and_i_should_see_when_the_token_was_revoked
     expect(page).to have_content("Revoked by")
-    expect(page).to have_content("on #{Date.today.to_fs(:govuk)}")
+    expect(page).to have_content("on #{Time.zone.today.to_fs(:govuk)}")
   end
 end
