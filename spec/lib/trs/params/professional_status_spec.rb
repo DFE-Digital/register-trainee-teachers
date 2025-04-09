@@ -125,7 +125,7 @@ module Trs
 
           before do
             allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("UnderAssessment")
-            allow(described_class).to receive(:new).with(trainee: trainee).and_return(professional_status)
+            allow(described_class).to receive(:new).with(trainee:).and_return(professional_status)
             allow(professional_status).to receive(:params).and_return(params_result)
           end
 
@@ -190,7 +190,7 @@ module Trs
               .to receive(:some)
               .with(name: "NonexistentCountry")
               .and_return([])
-              
+
             # Instead of trying to stub the MAPPING hash (which is frozen),
             # we'll stub the specific behavior of the find method
             instance = described_class.new(trainee:)

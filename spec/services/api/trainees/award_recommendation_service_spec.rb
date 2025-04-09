@@ -23,12 +23,12 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         expect(success).to be(true)
         expect(errors).to be_blank
 
-        expect(Trainees::UpdateIttData).to have_received(:call).with(trainee: trainee)
+        expect(Trainees::UpdateIttData).to have_received(:call).with(trainee:)
         expect(Trs::UpdateProfessionalStatusJob).to have_received(:perform_later).with(trainee)
         expect(trainee.recommended_for_award?).to be(true)
       end
 
-      it "returns true", feature_integrate_with_trs: false, feature_integrate_with_dqt: true do
+      it "returns true", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
         allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
 
         success, errors = subject.call(params, trainee)

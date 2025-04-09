@@ -16,7 +16,6 @@ module Trs
         params.to_json
       end
 
-      # Exposing params method for testing
       def params
         @params ||= {
           "routeTypeId" => route_type_id,
@@ -39,8 +38,7 @@ module Trs
 
       def route_type_id
         # Map the training route to the TRS route type
-        route_type = ::CodeSets::Trs::ROUTE_TYPES[trainee.training_route]
-        route_type.presence
+        ::CodeSets::Trs::ROUTE_TYPES[trainee.training_route]
       end
 
       def status
@@ -50,8 +48,7 @@ module Trs
       def degree_type_id
         return nil if trainee.hesa_metadatum&.itt_qualification_aim.blank?
 
-        degree_type = ::CodeSets::Trs::DEGREE_TYPES[trainee.hesa_metadatum&.itt_qualification_aim]
-        degree_type.presence
+        ::CodeSets::Trs::DEGREE_TYPES[trainee.hesa_metadatum&.itt_qualification_aim]
       end
 
       def training_subject_references
@@ -70,7 +67,7 @@ module Trs
         return "999002" if subject_name == ::CourseSubjects::PHYSICAL_EDUCATION
         return "999003" if subject_name == ::CourseSubjects::DESIGN_AND_TECHNOLOGY
 
-        Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name].presence
+        Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name]
       end
 
       def training_age_specialism
