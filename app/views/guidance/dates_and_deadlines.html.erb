@@ -9,78 +9,95 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Dates and deadlines for training providers</h1>
-    <h2 class="govuk-heading-l govuk-!-margin-bottom-5">Deadlines for all training providers</h2>
-    <%= govuk_table do |table| %>
-      <% table.with_caption(size: 'm', text: '2024 to 2025 academic year') %>
-      <% table.with_head do |head|%>
-        <% head.with_row do |row| %>
-          <% row.with_cell(header: true, text: "Date", width: "one-third") %>
-          <% row.with_cell(header: true, text: "What happens") %>
-        <% end %>
-      <% end %>
-      <% table.with_body do |body| %>
-        <% body.with_row do |row| %>
-          <% row.with_cell do %>
-              <span class="no-wrap">9 October 2024</span>
-          <% end %>
-          <% row.with_cell(text: "The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training.")%>
-        <% end %>
-        <% body.with_row do |row| %>
-            <% row.with_cell do %>
-              <span class="no-wrap">31 October 2024</span>
-            <% end %>
-          <% row.with_cell(text: "This data will be used for the ITT census publication.")%>
-        <% end %>
-        <% body.with_row do |row| %>
-            <% row.with_cell do %>
-              <span class="no-wrap"><%= @performance_profile_sign_off_full_deadline %></span>
-            <% end %>
-          <% row.with_cell(text: "Some of this data will be used for the ITT performance profiles publication.")%>
-        <% end %>
-      <% end %>
-    <% end %>
+      <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Dates and deadlines for training providers</h1>
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-5">Deadlines for all training providers</h2>
+      <h2 class="govuk-heading-m govuk-!-margin-top-9 govuk-!-margin-bottom-5">2025 to 2026 academic year</h2>
 
-    <h2 class="govuk-heading-l govuk-!-margin-top-9 govuk-!-margin-bottom-5">Deadlines for higher education institutions (HEIs) that use HESA</h2>
-    <div class="govuk-inset-text">
-      HEIs who use HESA will continue to do so in the 2024 to 2025 academic year
-    </div>
-    <%= govuk_table do |table| %>
-      <% table.with_caption(size: 'm', text: "2024 to 2025 academic year") %>
-      <% table.with_head do |head|%>
-        <% head.with_row do |row| %>
-          <% row.with_cell(header: true, text: "Date", width: "one-third") %>
-          <% row.with_cell(header: true, text: "What happens") %>
-        <% end %>
-      <% end %>
-      <% table.with_body do |body| %>
-        <% body.with_row do |row| %>
-            <% row.with_cell do %>
-              <span class="no-wrap">1 September 2024</span>
-            <% end %>
-          <% row.with_cell(text: "HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA.")%>
-        <% end %>
-        <% body.with_row do |row| %>
-            <% row.with_cell do %>
-              <span class="no-wrap">17 October 2024</span>
-            <% end %>
-          <% row.with_cell(text: "First data submission required to HESA. Training providers should have started submitting data by this date.")%>
-        <% end %>
-        <% body.with_row do |row| %>
-            <% row.with_cell do %>
-              <span class="no-wrap">31 October 2024</span>
-            <% end %>
-          <% row.with_cell(text: "HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication.")%>
-        <% end %>
-        <% body.with_row do |row| %>
-          <% row.with_cell do %>
-            <div class="no-wrap">15 to 31 January 2025</div>
-            <div class="no-wrap">15 to 30 April 2025</div>
-            <div class="no-wrap">15 to 31 July 2025</div>
+      <p class="govuk-body">
+        All providers can add and update trainee data at any time.
+      </p>
+
+      <p class="govuk-body">
+        You’ll check and sign-off trainee data twice a year for:
+
+        <ul class="govuk-list govuk-list--bullet">
+          <li>ITT census publication</li>
+          <li>ITT performance profiles publication</li>
+        </ul>
+      </p>
+
+      <%= govuk_table do |table| %>
+        <% table.with_head do |head|%>
+          <% head.with_row do |row| %>
+            <% row.with_cell(header: true, text: "Date", width: "one-third") %>
+            <% row.with_cell(header: true, text: "What happens") %>
           <% end %>
-          <% row.with_cell(text: "ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods.")%>
+        <% end %>
+        <% table.with_body do |body| %>
+          <% body.with_row do |row| %>
+            <% row.with_cell do %>
+                <span class="no-wrap">8 October 2025</span>
+            <% end %>
+            <% row.with_cell(text: "The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training.")%>
+          <% end %>
+          <% body.with_row do |row| %>
+              <% row.with_cell do %>
+                <span class="no-wrap">31 October 2025</span>
+              <% end %>
+            <% row.with_cell(text: "This data will be used for the ITT census publication.")%>
+          <% end %>
+          <% body.with_row do |row| %>
+              <% row.with_cell do %>
+                <span class="no-wrap">27 February 2026</span>
+              <% end %>
+            <% row.with_cell(text: "Some of this data will be used for the ITT performance profiles publication.")%>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+
+      <h2 class="govuk-heading-l govuk-!-margin-top-9 govuk-!-margin-bottom-5">
+        Deadlines for higher education institutions (HEIs) that use HESA for 2024 to 2025 academic year
+      </h2>
+
+      <div class="govuk-inset-text">
+        HEIs will no longer use the ITT data collection update periods in the 2025 to 2026 academic year
+      </div>
+
+      <%= govuk_table do |table| %>
+        <% table.with_head do |head|%>
+          <% head.with_row do |row| %>
+            <% row.with_cell(header: true, text: "Date", width: "one-third") %>
+            <% row.with_cell(header: true, text: "What happens") %>
+          <% end %>
+        <% end %>
+        <% table.with_body do |body| %>
+          <% body.with_row do |row| %>
+              <% row.with_cell do %>
+                <span class="no-wrap">1 September 2024</span>
+              <% end %>
+            <% row.with_cell(text: "HESA data collection system opens. Training providers can start submitting their ITT trainee data to the DfE through HESA.")%>
+          <% end %>
+          <% body.with_row do |row| %>
+              <% row.with_cell do %>
+                <span class="no-wrap">17 October 2024</span>
+              <% end %>
+            <% row.with_cell(text: "First data submission required to HESA. Training providers should have started submitting data by this date.")%>
+          <% end %>
+          <% body.with_row do |row| %>
+              <% row.with_cell do %>
+                <span class="no-wrap">31 October 2024</span>
+              <% end %>
+            <% row.with_cell(text: "HESA data collection system closes. ITT trainee data must be submitted and signed off on or before the data collection system closes. Not doing this, will mean the DfE has inaccurate data which could affect the ITT census publication.")%>
+          <% end %>
+          <% body.with_row do |row| %>
+            <% row.with_cell do %>
+              <div class="no-wrap">15 to 31 January 2025</div>
+              <div class="no-wrap">15 to 30 April 2025</div>
+              <div class="no-wrap">15 to 31 July 2025</div>
+            <% end %>
+            <% row.with_cell(text: "ITT data collection update periods where you can update your trainee data through HESA if anything has changed. Data will be imported into Register. You do not need to sign off your data during these update periods.")%>
+          <% end %>
+        <% end %>
+      <% end %>
     </div>
   </div>
