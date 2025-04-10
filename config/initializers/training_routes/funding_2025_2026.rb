@@ -63,41 +63,6 @@ BURSARIES_2025_TO_2026 = [
       AllocationSubjects::PHYSICS,
     ],
   ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-    amount: 28_000,
-    allocation_subjects: [
-      AllocationSubjects::CHEMISTRY,
-      AllocationSubjects::COMPUTING,
-      AllocationSubjects::MATHEMATICS,
-      AllocationSubjects::PHYSICS,
-    ],
-  ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-    amount: 25_000,
-    allocation_subjects: [
-      AllocationSubjects::ANCIENT_LANGUAGES,
-      AllocationSubjects::BIOLOGY,
-      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
-      AllocationSubjects::GEOGRAPHY,
-      AllocationSubjects::MODERN_LANGUAGES,
-      AllocationSubjects::FRENCH_LANGUAGE,
-      AllocationSubjects::GERMAN_LANGUAGE,
-      AllocationSubjects::SPANISH_LANGUAGE,
-    ],
-  ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-    amount: 10_000,
-    allocation_subjects: [
-      AllocationSubjects::ART_AND_DESIGN,
-      AllocationSubjects::DESIGN_AND_TECHNOLOGY,
-      AllocationSubjects::ENGLISH,
-      AllocationSubjects::MUSIC,
-      AllocationSubjects::RELIGIOUS_EDUCATION,
-    ],
-  ),
 ].freeze
 
 SCHOLARSHIPS_2025_TO_2026 = [
@@ -114,25 +79,6 @@ SCHOLARSHIPS_2025_TO_2026 = [
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
     amount: 28_000,
-    allocation_subjects: [
-      AllocationSubjects::FRENCH_LANGUAGE,
-      AllocationSubjects::GERMAN_LANGUAGE,
-      AllocationSubjects::SPANISH_LANGUAGE,
-    ],
-  ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-    amount: 30_000,
-    allocation_subjects: [
-      AllocationSubjects::CHEMISTRY,
-      AllocationSubjects::COMPUTING,
-      AllocationSubjects::MATHEMATICS,
-      AllocationSubjects::PHYSICS,
-    ],
-  ),
-  OpenStruct.new(
-    training_route: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-    amount: 27_000,
     allocation_subjects: [
       AllocationSubjects::FRENCH_LANGUAGE,
       AllocationSubjects::GERMAN_LANGUAGE,
