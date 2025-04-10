@@ -4,7 +4,6 @@ module AuthenticationTokens
   module Details
     class View < ViewComponent::Base
       include Pundit::Authorization
-      include UsersHelper
 
       attr_reader :token, :current_user
 
@@ -21,8 +20,9 @@ module AuthenticationTokens
                :expired?,
                to: :token
 
-      def initialize(token)
+      def initialize(token, current_user = Current.user)
         @token = token
+        @current_user = current_user
       end
 
       def rows
@@ -55,10 +55,6 @@ module AuthenticationTokens
         end
 
         row
-      end
-
-      def revokable?
-        @revokable ||= AuthenticationTokenPolicy.new(current_user, token)
       end
     end
   end
