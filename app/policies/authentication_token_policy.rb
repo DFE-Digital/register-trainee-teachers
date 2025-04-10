@@ -38,7 +38,7 @@ class AuthenticationTokenPolicy
   end
 
   def show?
-    user.provider? && !token.revoked?
+    user.provider? && token.can_revoke?
   end
 
   def update?
