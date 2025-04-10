@@ -1,4 +1,4 @@
 <%= govuk_summary_card(title: name, html_attributes: { id: "token-#{id}" }) do |card|
-  card.with_action { govuk_link_to("Revoke", authentication_token_revoke_path(authentication_token_id: id)) } if token.active? && revokable?
+  card.with_action { govuk_link_to("Revoke", authentication_token_revoke_path(authentication_token_id: id)) } if policy(token).update?
   card.with_summary_list(rows: rows)
 end %>
