@@ -61,7 +61,7 @@ describe "user:retain_hei_and_system_admin_users_only" do
     expect(inactive_scitt_provider.users.reload.pluck(:dfe_sign_in_uid).compact).to be_blank
     expect(unaccredited_scitt_provider.users.reload.pluck(:dfe_sign_in_uid).compact).to be_blank
 
-    expect(Provider.with_active_hei.count).to eq(1)
+    expect(Provider.active_hei.count).to eq(1)
     expect(User.pluck(:dfe_sign_in_uid).compact.count).to eq(2)
   end
 end

@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe Provider do
   describe "scopes" do
-    describe ".with_active_hei" do
+    describe ".active_hei" do
       let(:active_hei_provider) { create(:provider, :hei) }
       let(:inactive_hei_provider) { create(:provider, :hei) }
       let(:unaccredited_hei_provider) { create(:provider, :hei, :unaccredited) }
@@ -22,7 +22,7 @@ describe Provider do
       end
 
       it "returns providers that are accredited and have a valid accreditation_id" do
-        expect(described_class.with_active_hei).to contain_exactly(active_hei_provider)
+        expect(described_class.active_hei).to contain_exactly(active_hei_provider)
       end
     end
   end

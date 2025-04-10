@@ -29,5 +29,5 @@ class ProviderUser < ApplicationRecord
 
   audited associated_with: :provider
 
-  scope :with_active_hei_providers, -> { where(provider: Provider.with_active_hei) }
+  scope :with_active_hei_providers, -> { where(provider: Provider.active_hei) }
 end
