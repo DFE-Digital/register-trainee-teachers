@@ -11,7 +11,7 @@ BURSARIES_2025_TO_2026 = [
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-    amount: 28_000,
+    amount: 29_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
