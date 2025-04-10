@@ -1,0 +1,10 @@
+<%= govuk_notification_banner(title_text: "Important") do |banner| %>
+  <% banner.with_heading(text: "CSV sandbox is for review and testing purposes only") %>
+  <p class="govuk-body">
+    You must not use real trainee data that contains personally identifiable information.
+  </p>
+
+  <p class="govuk-body">
+    Send your feedback or questions to <a href="mailto:registertraineeteachers@education.gov.uk">registertraineeteachers@education.gov.uk</a>.
+  </p>
+<% end %>
