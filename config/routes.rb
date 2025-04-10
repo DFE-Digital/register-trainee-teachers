@@ -245,14 +245,14 @@ Rails.application.routes.draw do
   resource :cookie_preferences, only: %i[show update], path: "/cookies"
 
   resources :service_updates, only: %i[index], path: "service-updates"
-  resources :organisations, only: %i[index show], path: "organisations" do
-    resources :authentication_tokens, only: %i[] do
-      resource :revoke, only: %i[show update], controller: "authentication_tokens/revokes"
-    end
-  end
+
+  resources :organisations, only: %i[index show], path: "organisations"
+
   resource :organisation_settings, only: :show, path: "organisation-settings"
 
-  resources :authentication_tokens, only: %i[index new create show], path: "token-manage"
+  resources :authentication_tokens, only: %i[index new create show], path: "token-manage" do
+    resource :revoke, only: %i[show update], controller: "authentication_tokens/revokes"
+  end
 
   resource :guidance, only: %i[show], controller: "guidance" do
     get "/about-register-trainee-teachers", to: "guidance#about_register_trainee_teachers"

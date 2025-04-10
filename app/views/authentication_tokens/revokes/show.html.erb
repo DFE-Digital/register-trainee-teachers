@@ -14,7 +14,7 @@
 <p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.</p>
 
 <p class="govuk-body">
-  <%= register_form_with(url: organisation_authentication_token_revoke_path(organisation: current_user.organisation, authentication_token: @token),method: :put) do |f| %>
+  <%= register_form_with(url: authentication_token_revoke_path(authentication_token: @token),method: :put) do |f| %>
     <%= f.submit"Yes I’m sure — revoke this token", class: "govuk-button govuk-button--warning" %>
   <% end %>
 </p>
