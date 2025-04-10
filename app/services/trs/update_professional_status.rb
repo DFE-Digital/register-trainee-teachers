@@ -14,9 +14,6 @@ module Trs
     def call
       return unless FeatureService.enabled?(:integrate_with_trs)
 
-      # Only update if trainee is in a valid state
-      return unless valid_update_state?
-
       if trainee.trn.blank?
         raise_professional_status_update_missing_trn_message
       end
