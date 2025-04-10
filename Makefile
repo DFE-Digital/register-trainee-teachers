@@ -95,6 +95,11 @@ sandbox:
 	$(eval DEPLOY_ENV=sandbox)
 	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
 
+pen:
+	$(eval include global_config/pen.sh)
+	$(eval DEPLOY_ENV=pen)
+	$(eval export TF_VARS=-var config_short=${CONFIG_SHORT} -var service_short=${SERVICE_SHORT} -var service_name=${SERVICE_NAME} -var azure_resource_prefix=${RESOURCE_NAME_PREFIX})
+
 set-azure-account:
 	echo "Logging on to ${AZ_SUBSCRIPTION}"
 	az account set -s ${AZ_SUBSCRIPTION}
