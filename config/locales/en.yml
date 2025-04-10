@@ -1550,6 +1550,7 @@ en:
           other_nationality2: *nationality
           other_nationality3: *nationality
           iqts_country: Enter the country or territory the trainee is studying in
+        uniqueness: contain duplicate values
       models:
         placements_form:
           attributes:
