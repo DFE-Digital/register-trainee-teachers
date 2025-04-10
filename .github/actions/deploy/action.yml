@@ -117,6 +117,10 @@ runs:
             echo "cluster_rg=s189p01-tsc-pd-rg" >> $GITHUB_ENV
             echo "cluster_name=s189p01-tsc-production-aks" >> $GITHUB_ENV
             ;;
+          platform-test)
+            echo "cluster_rg=s189t01-tsc-pt-rg" >> $GITHUB_ENV
+            echo "cluster_name=s189t01-tsc-platform-test-aks" >> $GITHUB_ENV
+            ;;
           *)
             echo "unknown cluster"
             ;;
@@ -143,7 +147,7 @@ runs:
 
     - name: Delete redis queues for csv-sandbox or productiondata
       shell: bash
-      if: ${{ contains(fromJSON('["csv-sandbox", "productiondata"]'), inputs.environment) &&  env.worker_app_instances == 0 }}
+      if: ${{ contains(fromJSON('["csv-sandbox", "pen", "productiondata"]'), inputs.environment) &&  env.worker_app_instances == 0 }}
       run: |
         sudo apt-get install -y redis-tools redis-server
         bin/konduit.sh -n ${{ env.namespace }} -r REDIS_QUEUE_URL register-${{ env.app_environment }} -- redis-cli del queues
