@@ -38,9 +38,15 @@ BURSARIES_2025_TO_2026 = [
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
-      AllocationSubjects::ENGLISH,
       AllocationSubjects::MUSIC,
       AllocationSubjects::RELIGIOUS_EDUCATION,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
+    amount: 5_000,
+    allocation_subjects: [
+      AllocationSubjects::ENGLISH,
     ],
   ),
   OpenStruct.new(
