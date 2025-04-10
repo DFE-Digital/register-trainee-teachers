@@ -28,39 +28,30 @@
       <h2 class="govuk-heading-m">Register API Tokens</h2>
 
       <p class="govuk-body">
-        You need an API token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.
+        You need an application programming interface (API) token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.
       </p>
 
       <p class="govuk-body">
-        The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your student record system directly into the Register service.
-      </p>
-
-      <p class="govuk-body">
-        Your token is needed by the developers who are managing your Register API integration.
-      </p>
-
-      <p class="govuk-body">
-        <%= link_to "You can view and use the Register API technical documentation (opens in new tab).", api_docs_reference_path, target: "_blank" %>
+        You can <%= link_to "view and use the Register API technical documentation (opens in new tab)", api_docs_reference_path, target: "_blank" %>.
       </p>
 
       <h4 class="govuk-heading-s">How to manage your API token</h4>
 
       <p class="govuk-body">
-        The Register API is used to make trainee data transfer quicker and easier.
+        The Register API is used to make trainee data transfer quicker, easier and more secure.
       </p>
 
       <p class="govuk-body">
-        You must make sure the token is securely sent to the developers managing your Register API integration.
+        The API token is unique to your organisation.
       </p>
 
       <p class="govuk-body">
-        In the 'Manage your API token' screen, you can:
+        Your token will need to be copied and added to the student record system which is connecting to the Register API. Contact your student record system provider about this.
       </p>
 
-      <ul class="govuk-list govuk-list--bullet">
-        <li>view a list of tokens, their description, expiry date, date last used</li>
-        <li>generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token</li>
-      </ul>
+      <p class="govuk-body">
+        You must make sure the token is securely sent to those responsible for managing your Register API integration.
+      </p>
 
       <p class="govuk-body govuk-!-margin-bottom-9">
         <%= govuk_link_to "Manage your tokens", authentication_tokens_path %>
