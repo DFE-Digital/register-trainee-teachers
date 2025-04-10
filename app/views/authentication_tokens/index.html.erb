@@ -18,7 +18,7 @@
     <p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>view a list of tokens, their description, expiry date, date last used</li>
+      <li>view a list of tokens, their name, expiry date and date last used</li>
       <li>generate a new token, give it a name, set an expiry date (optional) and revoke a token</li>
     </ul>
 
@@ -27,11 +27,26 @@
     </p>
 
     <p class="govuk-body">
-      You should let the developers managing your Register API integration know if you create, set an expiry date or revoke a token.
+      Your token will need to be set up in the student record system which is connecting to the Register API. Contact your student record system provider about this.
     </p>
 
     <p class="govuk-body">
-      You must make sure the token is securely sent to the developers managing your Register API integration.
+      You must make sure the token is securely sent to those responsible for managing your Register API integration.
+    </p>
+
+    <h3 class="govuk-heading-m">Revoking a token</h3>
+
+    <p class="govuk-body">
+      Revoking a token removes access to the Register API. You may want to revoke a token:
+    </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>for security reasons, for example, when a person leaves a provider organisation who’s had access to the Register API</li>
+      <li>If you change your student record system</li>
+    </ul>
+
+    <p class="govuk-body">
+      Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.
     </p>
 
     <div class="govuk-button-group">
