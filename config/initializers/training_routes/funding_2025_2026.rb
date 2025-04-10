@@ -113,7 +113,7 @@ SCHOLARSHIPS_2025_TO_2026 = [
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:provider_led_postgrad],
-    amount: 27_000,
+    amount: 28_000,
     allocation_subjects: [
       AllocationSubjects::FRENCH_LANGUAGE,
       AllocationSubjects::GERMAN_LANGUAGE,
