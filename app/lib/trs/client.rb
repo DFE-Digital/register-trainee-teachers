@@ -14,7 +14,7 @@ module Trs
     class HttpError < StandardError; end
 
     GET_SUCCESSES   = [200].freeze
-    PUT_SUCCESSES   = [200, 201].freeze
+    PUT_SUCCESSES   = [200, 201, 204].freeze
     POST_SUCCESS    = [200].freeze
     PATCH_SUCCESSES = [204].freeze
 
