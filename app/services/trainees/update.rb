@@ -3,8 +3,7 @@
 module Trainees
   class Update
     include ServicePattern
-
-    class ConflictingIntegrationsError < StandardError; end
+    include HandlesIntegrationConflicts
 
     def initialize(trainee:, params: {}, update_dqt: true)
       @trainee = trainee
@@ -15,7 +14,8 @@ module Trainees
     end
 
     def call
-      check_for_conflicting_integrations
+      # Pass update_dqt as a condition to the conflict check
+      check_for_conflicting_integrations { update_dqt }
 
       save_trainee
 
@@ -27,12 +27,6 @@ module Trainees
   private
 
     attr_reader :trainee, :params, :update_dqt, :dqt_enabled, :trs_enabled
-
-    def check_for_conflicting_integrations
-      if update_dqt && dqt_enabled && trs_enabled
-        raise(ConflictingIntegrationsError, "Both DQT and TRS integrations are enabled. Only one should be active at a time.")
-      end
-    end
 
     def save_trainee
       if params.present?
