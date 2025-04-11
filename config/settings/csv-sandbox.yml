@@ -19,7 +19,7 @@ dfe_sign_in:
   profile: https://profile.signin.education.gov.uk
 
 features:
-  basic_auth: true
+  basic_auth: false
   sign_in_method: dfe-sign-in
   enable_feedback_link: false
   import_courses_from_ttapi: true
@@ -46,6 +46,8 @@ features:
     test_mode: true
     sync_trn_data: false
   register_api: false
+  show_csv_sandbox_banner: true
+
 
 environment:
   name: csv-sandbox

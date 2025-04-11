@@ -102,6 +102,7 @@ module Api
                 inclusion: { in: RecruitsApi::CodeSets::Nationalities::MAPPING.values }, allow_blank: true
       validates :training_initiative,
                 inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
+      validates :trainee_disabilities_attributes, uniqueness: true
 
       def initialize(new_attributes = {})
         new_attributes = new_attributes.to_h.with_indifferent_access
@@ -135,6 +136,7 @@ module Api
         end
 
         self.trainee_disabilities_attributes = []
+
         new_attributes[:disabilities]&.each do |disability|
           trainee_disabilities_attributes << { disability_id: disability.id }
         end

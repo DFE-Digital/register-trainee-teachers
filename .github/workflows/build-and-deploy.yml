@@ -220,7 +220,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [sandbox, productiondata]
+        environment: [sandbox, csv-sandbox, productiondata]
     steps:
     - name: Checkout
       uses: actions/checkout@v4
