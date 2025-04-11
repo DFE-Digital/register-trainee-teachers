@@ -51,4 +51,4 @@ features:
 
 environment:
   name: csv-sandbox
-  display_name: CSV Sandbox
+  display_name: CSV sandbox
