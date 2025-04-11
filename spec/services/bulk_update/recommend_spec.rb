@@ -28,7 +28,7 @@ module BulkUpdate
 
         it "calls the UpdateIttData service" do
           subject
-          expect(::Trainees::UpdateIttData).to have_received(:call).with(trainee: trainee)
+          expect(::Trainees::UpdateIttData).to have_received(:call).with(trainee:)
         end
       end
 
@@ -43,7 +43,7 @@ module BulkUpdate
 
         it "does not call the UpdateIttData service" do
           subject
-          expect(::Trainees::UpdateIttData).not_to have_received(:call).with(trainee: trainee)
+          expect(::Trainees::UpdateIttData).not_to have_received(:call).with(trainee:)
         end
       end
     end
