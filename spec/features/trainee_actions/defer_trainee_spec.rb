@@ -144,9 +144,26 @@ feature "Deferring a trainee" do
     and_the_defer_date_i_chose_is_cleared
   end
 
+  scenario "changing the deferral date" do
+    given_a_trainee_exists_with_a_deferral_date
+    and_i_am_on_the_trainee_record_page
+    and_i_click_on_change_date_of_deferral
+    when_i_choose_today
+    and_i_continue
+    then_i_am_redirected_to_deferral_confirmation_page
+    and_i_see_my_date(Time.zone.today)
+    when_i_defer
+    then_the_defer_date_is_updated
+    then_i_am_redirected_to_the_record_page
+  end
+
   def given_i_initiate_a_deferral
     and_i_am_on_the_trainee_record_page
     and_i_click_on_defer
+  end
+
+  def and_i_click_on_change_date_of_deferral
+    record_page.change_date_of_deferral.click
   end
 
   def given_i_am_on_the_deferral_confirmation_page
@@ -256,7 +273,7 @@ feature "Deferring a trainee" do
   end
 
   def given_a_trainee_exists_with_a_deferral_date
-    given_a_trainee_exists(%i[submitted_for_trn trn_received].sample,
+    given_a_trainee_exists(:deferred,
                            trainee_start_date: 1.month.ago,
                            itt_start_date: 1.year.ago,
                            itt_end_date: 1.year.from_now,
