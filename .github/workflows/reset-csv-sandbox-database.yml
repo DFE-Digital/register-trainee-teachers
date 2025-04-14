@@ -67,7 +67,7 @@ jobs:
       shell: bash
       run: |
         sudo apt-get install -y redis-tools redis-server
-        bin/konduit.sh -n bat-production -r REDIS_QUEUE_URL register-register-csv-sandbox -- redis-cli del queues
+        bin/konduit.sh -n bat-production -r REDIS_QUEUE_URL register-csv-sandbox -- redis-cli del queues
 
     - name: Retains HEI and system admin users only
       shell: bash
