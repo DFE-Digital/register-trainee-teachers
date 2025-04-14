@@ -15,7 +15,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
       end
 
       it "returns true", feature_integrate_with_trs: true do
-        allow(Trainees::UpdateIttData).to receive(:call).and_call_original
+        allow(Trainees::UpdateIttDataInTra).to receive(:call).and_call_original
         allow(Trs::UpdateProfessionalStatusJob).to receive(:perform_later).and_call_original
 
         success, errors = subject.call(params, trainee)
@@ -23,7 +23,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         expect(success).to be(true)
         expect(errors).to be_blank
 
-        expect(Trainees::UpdateIttData).to have_received(:call).with(trainee:)
+        expect(Trainees::UpdateIttDataInTra).to have_received(:call).with(trainee:)
         expect(Trs::UpdateProfessionalStatusJob).to have_received(:perform_later).with(trainee)
         expect(trainee.recommended_for_award?).to be(true)
       end

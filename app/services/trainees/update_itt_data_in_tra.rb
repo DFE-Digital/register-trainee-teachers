@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trainees
-  class UpdateIttData
+  class UpdateIttDataInTra
     include ServicePattern
 
     class ConflictingIntegrationsError < StandardError; end

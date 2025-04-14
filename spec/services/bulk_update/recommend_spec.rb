@@ -11,7 +11,7 @@ module BulkUpdate
 
     before do
       allow(::Trainees::FindDuplicatesOfHesaTrainee).to receive(:call).and_return([])
-      allow(::Trainees::UpdateIttData).to receive(:call)
+      allow(::Trainees::UpdateIttDataInTra).to receive(:call)
     end
 
     describe "#call" do
@@ -26,9 +26,9 @@ module BulkUpdate
             .from(nil).to(recommendations_upload_row.standards_met_at)
         end
 
-        it "calls the UpdateIttData service" do
+        it "calls the UpdateIttDataInTra service" do
           subject
-          expect(::Trainees::UpdateIttData).to have_received(:call).with(trainee:)
+          expect(::Trainees::UpdateIttDataInTra).to have_received(:call).with(trainee:)
         end
       end
 
@@ -41,9 +41,9 @@ module BulkUpdate
           expect(trainee.outcome_date).to be_nil
         end
 
-        it "does not call the UpdateIttData service" do
+        it "does not call the UpdateIttDataInTra service" do
           subject
-          expect(::Trainees::UpdateIttData).not_to have_received(:call).with(trainee:)
+          expect(::Trainees::UpdateIttDataInTra).not_to have_received(:call).with(trainee:)
         end
       end
     end

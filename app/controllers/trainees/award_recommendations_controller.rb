@@ -6,7 +6,7 @@ module Trainees
       if OutcomeDateForm.new(trainee, update_dqt: false).save! && trainee.submission_ready?
         trainee.recommend_for_award!
 
-        Trainees::UpdateIttData.call(trainee:)
+        Trainees::UpdateIttDataInTra.call(trainee:)
 
         redirect_to(recommended_trainee_outcome_details_path(trainee))
       end

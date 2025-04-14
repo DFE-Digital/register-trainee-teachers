@@ -3,7 +3,7 @@
 require "rails_helper"
 
 module Trainees
-  describe UpdateIttData do
+  describe UpdateIttDataInTra do
     let(:trainee) { create(:trainee, :trn_received) }
 
     describe "#call" do

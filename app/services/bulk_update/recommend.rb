@@ -57,7 +57,7 @@ module BulkUpdate
     end
 
     def send_updates
-      trainees.each { |t| Trainees::UpdateIttData.call(trainee: t) }
+      trainees.each { |t| Trainees::UpdateIttDataInTra.call(trainee: t) }
     end
 
     def trainees
