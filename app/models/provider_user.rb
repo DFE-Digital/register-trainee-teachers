@@ -28,4 +28,6 @@ class ProviderUser < ApplicationRecord
   validates :user, uniqueness: { scope: :provider_id }
 
   audited associated_with: :provider
+
+  scope :with_active_hei_providers, -> { where(provider: Provider.active_hei) }
 end

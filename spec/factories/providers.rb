@@ -46,11 +46,11 @@ FactoryBot.define do
     end
 
     trait :hei do
-      accreditation_id { "1234" }
+      accreditation_id { Faker::Number.within(range: 1000..1999)    }
     end
 
     trait :scitt do
-      accreditation_id { "5432" }
+      accreditation_id { Faker::Number.within(range: 5000..5999)    }
     end
 
     trait :performance_profile_sign_off do

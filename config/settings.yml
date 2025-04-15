@@ -101,6 +101,8 @@ features:
   duplicate_checking: true
   bulk_add_trainees: true
   token_management: false
+  show_csv_sandbox_banner: false
+
 dfe_sign_in:
   # Our service name
   identifier: rtt
