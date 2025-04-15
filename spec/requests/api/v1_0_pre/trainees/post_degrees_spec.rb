@@ -18,7 +18,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         grade: "02",
         subject: "100425",
         institution: "0117",
-        uk_degree: "083",
+        uk_degree: "014",
         graduation_year: "2015-01-01",
         country: "XF",
       }
@@ -41,7 +41,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         expect(degree_attributes["grade"]).to eq("02")
         expect(degree_attributes["subject"]).to eq("100425")
         expect(degree_attributes["institution"]).to eq("0117")
-        expect(degree_attributes["uk_degree"]).to eq("083")
+        expect(degree_attributes["uk_degree"]).to eq("014")
         expect(degree_attributes["graduation_year"]).to eq(2015)
         expect(degree_attributes["country"]).to be_nil
         expect(degree_attributes["locale_code"]).to be_nil
@@ -57,8 +57,8 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         expect(degree.subject_uuid).to eq("918170f0-5dce-e911-a985-000d3ab79618")
         expect(degree.institution).to eq("University of East Anglia")
         expect(degree.institution_uuid).to eq("1271f34a-2887-e711-80d8-005056ac45bb")
-        expect(degree.uk_degree).to eq("Bachelor of Science")
-        expect(degree.uk_degree_uuid).to eq("1b6a5652-c197-e711-80d8-005056ac45bb")
+        expect(degree.uk_degree).to eq("Bachelor of Arts (Hons) with intercalated PGCE")
+        expect(degree.uk_degree_uuid).to eq("0caa1ea5-868a-47a4-9b26-4b7470528b67")
 
         expect(degree.graduation_year).to eq(2015)
         expect(degree.country).to be_nil

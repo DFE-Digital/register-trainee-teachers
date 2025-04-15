@@ -1,10 +1,5 @@
 # The url for this app, also used by `dfe_sign_in`
-base_url: https://register-csv-sandbox.teacherservices.cloud
-
-
-dttp:
-  scope: https://dttp.crm4.dynamics.com/.default
-  api_base_url: https://dttp.crm4.dynamics.com/api/data/v9.1
+base_url: https://pen.register-trainee-teachers.service.gov.uk
 
 dqt:
   base_url: https://preprod.teacher-qualifications-api.education.gov.uk
@@ -14,16 +9,19 @@ trs:
 
 dfe_sign_in:
   # URL that the users are redirected to for signing in
-  issuer: https://oidc.signin.education.gov.uk
+  issuer: https://pp-oidc.signin.education.gov.uk
   # URL of the users profile
-  profile: https://profile.signin.education.gov.uk
+  profile: https://pp-profile.signin.education.gov.uk
+
+recruits_api:
+  base_url: "https://sandbox.apply-for-teacher-training.service.gov.uk/register-api"
 
 features:
   basic_auth: false
   sign_in_method: dfe-sign-in
   enable_feedback_link: false
   import_courses_from_ttapi: true
-  import_applications_from_apply: false
+  import_applications_from_apply: true
   publish_course_details: true
   routes:
     assessment_only: true
@@ -38,17 +36,17 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
+  integrate_with_dqt: true
+  integrate_with_trs: false
+  register_api: true
   google:
     send_data_to_big_query: false
-  integrate_with_dqt: false
-  integrate_with_trs: false
-  hesa_import:
-    test_mode: true
-    sync_trn_data: false
-  register_api: false
-  show_csv_sandbox_banner: true
-
+  token_management: true
 
 environment:
-  name: csv-sandbox
-  display_name: CSV sandbox
+  name: pen
+  display_name: Pen Test
+
+google:
+  big_query:
+    entity_table_checks_enabled: false

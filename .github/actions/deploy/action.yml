@@ -117,6 +117,10 @@ runs:
             echo "cluster_rg=s189p01-tsc-pd-rg" >> $GITHUB_ENV
             echo "cluster_name=s189p01-tsc-production-aks" >> $GITHUB_ENV
             ;;
+          platform-test)
+            echo "cluster_rg=s189t01-tsc-pt-rg" >> $GITHUB_ENV
+            echo "cluster_name=s189t01-tsc-platform-test-aks" >> $GITHUB_ENV
+            ;;
           *)
             echo "unknown cluster"
             ;;
@@ -141,9 +145,9 @@ runs:
       if: inputs.environment == 'review'
       run: kubectl -n ${{ env.namespace }} exec deployment/register-${APP_NAME} -- /bin/sh -c "cd /app && bundle exec rails db:seed example_data:generate"
 
-    - name: Delete redis queues for csv-sandbox or productiondata
+    - name: Delete redis queues for productiondata
       shell: bash
-      if: ${{ contains(fromJSON('["csv-sandbox", "productiondata"]'), inputs.environment) &&  env.worker_app_instances == 0 }}
+      if: ${{ contains(fromJSON('["productiondata"]'), inputs.environment) &&  env.worker_app_instances == 0 }}
       run: |
         sudo apt-get install -y redis-tools redis-server
         bin/konduit.sh -n ${{ env.namespace }} -r REDIS_QUEUE_URL register-${{ env.app_environment }} -- redis-cli del queues
