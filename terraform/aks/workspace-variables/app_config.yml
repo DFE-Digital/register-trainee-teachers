@@ -40,3 +40,8 @@ csv-sandbox:
   <<: *default
   RAILS_ENV: csv-sandbox
   RACK_ENV: csv-sandbox
+
+pen:
+  <<: *default
+  RAILS_ENV: pen
+  RACK_ENV: pen
