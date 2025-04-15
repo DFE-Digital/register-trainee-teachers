@@ -18,16 +18,10 @@ module Trainees
       allow(trainee).to receive(:current_withdrawal).and_return(withdrawal)
       allow(withdrawal_reasons).to receive(:pluck).with(:name).and_return(reason_names)
       allow(Settings).to receive_message_chain(:qualtrics, :days_delayed).and_return(days_delayed)
-      allow(FeatureService).to receive(:enabled?).and_return(false)
     end
 
     describe "#call" do
       context "when DQT integration is enabled and TRS is disabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
-        before do
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(true)
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(false)
-        end
-
         it "queues a withdrawal to DQT" do
           expect(Dqt::WithdrawTraineeJob).to receive(:perform_later).with(trainee)
           expect(Trs::UpdateProfessionalStatusJob).not_to receive(:perform_later)
@@ -36,11 +30,6 @@ module Trainees
       end
 
       context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
-        before do
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(false)
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(true)
-        end
-
         it "queues an update to TRS" do
           expect(Trs::UpdateProfessionalStatusJob).to receive(:perform_later).with(trainee)
           expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later)
@@ -49,11 +38,6 @@ module Trainees
       end
 
       context "when both TRS and DQT integrations are enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: true do
-        before do
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(true)
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(true)
-        end
-
         it "raises a ConflictingIntegrationsError" do
           expect {
             described_class.call(trainee:)
@@ -62,11 +46,6 @@ module Trainees
       end
 
       context "when neither integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
-        before do
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_dqt).and_return(false)
-          allow(FeatureService).to receive(:enabled?).with(:integrate_with_trs).and_return(false)
-        end
-
         it "does not queue any integration jobs" do
           expect(Trs::UpdateProfessionalStatusJob).not_to receive(:perform_later)
           expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later)
