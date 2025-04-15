@@ -23,7 +23,7 @@ module BulkUpdate
         unique_by: :slug,
       )
 
-      send_updates if result.present?
+      send_updates_to_tra if result.present?
     end
 
   private
@@ -56,7 +56,7 @@ module BulkUpdate
       end.with_indifferent_access
     end
 
-    def send_updates
+    def send_updates_to_tra
       trainees.each { |t| Trainees::UpdateIttDataInTra.call(trainee: t) }
     end
 

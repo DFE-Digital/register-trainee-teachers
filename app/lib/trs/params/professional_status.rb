@@ -36,6 +36,10 @@ module Trs
 
       attr_reader :trainee
 
+      def itt_qualification_aim
+        trainee.hesa_metadatum&.itt_qualification_aim || trainee.hesa_trainee_detail&.itt_qualification_aim
+      end
+
       def route_type_id
         # Map the training route to the TRS route type
         ::CodeSets::Trs::ROUTE_TYPES[trainee.training_route]
@@ -46,9 +50,9 @@ module Trs
       end
 
       def degree_type_id
-        return nil if trainee.hesa_metadatum&.itt_qualification_aim.blank?
+        return nil if itt_qualification_aim.blank?
 
-        ::CodeSets::Trs::DEGREE_TYPES[trainee.hesa_metadatum&.itt_qualification_aim]
+        ::CodeSets::Trs::DEGREE_TYPES[itt_qualification_aim]
       end
 
       def training_subject_references
