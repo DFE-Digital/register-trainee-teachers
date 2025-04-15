@@ -1,0 +1,3 @@
+# frozen_string_literal: true
+
+SCHOLARSHIPS_2021_TO_2022 = SCHOLARSHIPS_2020_TO_2021
