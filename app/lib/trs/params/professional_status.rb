@@ -85,7 +85,7 @@ module Trs
       end
 
       def training_country_reference
-        return nil unless trainee.training_route == "iqts" && trainee.iqts_country.present?
+        return nil unless trainee.iqts? && trainee.iqts_country.present?
 
         find_country_code(trainee.iqts_country)
       end

@@ -23,8 +23,8 @@ module Trs
         subject
       end
 
-      it "returns nil" do
-        expect(subject).to be_nil
+      it "returns the result of the API call" do
+        expect(subject).to eq(api_response)
       end
 
       context "when the trainee is in an invalid state" do

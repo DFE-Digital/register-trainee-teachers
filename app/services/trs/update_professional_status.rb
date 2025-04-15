@@ -4,7 +4,6 @@ module Trs
   class UpdateProfessionalStatus
     include ServicePattern
 
-    class ProfessionalStatusUpdateError < StandardError; end
     class ProfessionalStatusUpdateMissingTrn < StandardError; end
 
     def initialize(trainee:)
@@ -19,24 +18,27 @@ module Trs
       return unless valid_update_state?
 
       if trainee.trn.blank?
-        raise(
-          ProfessionalStatusUpdateMissingTrn,
-          <<~TEXT,
-            Cannot update professional status on TRS without a TRN
-            slug: #{trainee.slug}
-            id: #{trainee.id}
-            #{Settings.base_url}/trainees/#{trainee.slug}
-          TEXT
-        )
+        raise_professional_status_update_missing_trn_message
       end
 
       update_professional_status
-      nil
     end
 
   private
 
     attr_reader :trainee, :payload
+
+    def raise_professional_status_update_missing_trn_message
+      raise(
+        ProfessionalStatusUpdateMissingTrn,
+        <<~TEXT,
+          Cannot update professional status on TRS without a TRN
+          slug: #{trainee.slug}
+          id: #{trainee.id}
+          #{Settings.base_url}/trainees/#{trainee.slug}
+        TEXT
+      )
+    end
 
     def valid_update_state?
       # Could be more specific about valid states for this endpoint
