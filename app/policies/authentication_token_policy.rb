@@ -18,9 +18,11 @@ class AuthenticationTokenPolicy
   end
 
   attr_reader :user
+  attr_reader :token
 
-  def initialize(user, _record)
+  def initialize(user, token)
     @user = user
+    @token = token
   end
 
   def index?
@@ -33,5 +35,13 @@ class AuthenticationTokenPolicy
 
   def create?
     user.provider?
+  end
+
+  def show?
+    user.provider? && token.can_revoke?
+  end
+
+  def update?
+    user.provider? && token.can_revoke?
   end
 end
