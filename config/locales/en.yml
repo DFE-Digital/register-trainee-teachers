@@ -2096,7 +2096,7 @@ en:
             itt_qualification_aim:
               inclusion: *invalid_reference_data
             fund_code:
-              not_eligible: is not eligible
+              ineligible: is ineligible
         api/v01/withdrawal_attributes:
           attributes:
             reasons:
