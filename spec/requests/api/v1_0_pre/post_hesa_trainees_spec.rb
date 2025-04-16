@@ -61,7 +61,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       itt_qualification_aim: "001",
       course_year: "2012",
       course_age_range: course_age_range,
-      fund_code:,
+      fund_code: fund_code,
       funding_method: "4",
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",

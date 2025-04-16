@@ -10,7 +10,7 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
   describe "validations" do
     it "uses the RulesValidator" do
       expect(described_class.validators.map(&:class)).to include(
-        Api::V10Pre::HesaTraineeDetailAttributes::RulesValidator
+        Api::V10Pre::HesaTraineeDetailAttributes::RulesValidator,
       )
     end
   end
