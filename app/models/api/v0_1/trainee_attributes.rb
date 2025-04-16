@@ -132,7 +132,11 @@ module Api
 
         new_hesa_trainee_detail_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
         if new_hesa_trainee_detail_attributes.present?
-          self.hesa_trainee_detail_attributes = V01::HesaTraineeDetailAttributes.new(new_hesa_trainee_detail_attributes)
+          self.hesa_trainee_detail_attributes = self.class.module_parent::HesaTraineeDetailAttributes.new(
+            new_hesa_trainee_detail_attributes.merge(
+              trainee_attributes: self,
+            ),
+          )
         end
 
         self.trainee_disabilities_attributes = []
