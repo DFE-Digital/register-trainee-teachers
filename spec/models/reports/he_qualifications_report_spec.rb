@@ -26,6 +26,9 @@ describe Reports::HeQualificationsReport do
       @trainees.each_with_index do |trainee, index|
         create_list(:degree, index + 1, :uk_degree_with_details, trainee:)
       end
+      multi_subject_trainee = create(:trainee, :trn_received, :with_hesa_trainee_detail)
+      create(:degree, :uk_degree_with_details, trainee: multi_subject_trainee, subject_uuid: "54dc5ee9-3397-4615-b4cd-0a2ad1c2ac60")
+      @trainees << multi_subject_trainee
 
       report = described_class.new(CSV.new(csv), scope: qualifications)
       report.generate_report
@@ -37,10 +40,24 @@ describe Reports::HeQualificationsReport do
 
     it "outputs one row for each qualification" do
       qualifications.each do |degree|
-        degree_subject = DfEReference::DegreesQuery::SUBJECTS.one(degree.subject_uuid)
-        expect(csv.string).to include(
-          "#{degree.trainee.trn},#{degree.trainee.date_of_birth.iso8601},#{degree.trainee.hesa_trainee_detail.ni_number},#{degree_subject.hecos_code},#{CsvValueSanitiser.new(degree_subject.name).sanitise}\n",
-        )
+        top_level_degree_subject = DfEReference::DegreesQuery::SUBJECTS.one(degree.subject_uuid)
+
+        degree_subjects =
+          if top_level_degree_subject&.hecos_code.present?
+            [top_level_degree_subject]
+          elsif top_level_degree_subject&.subject_ids.present?
+            top_level_degree_subject.subject_ids.map do |subject_id|
+              DfEReference::DegreesQuery::SUBJECTS.one(subject_id)
+            end.compact
+          else
+            []
+          end
+
+        degree_subjects.each do |degree_subject|
+          expect(csv.string).to include(
+            "#{degree.trainee.trn},#{degree.trainee.date_of_birth.iso8601},#{degree.trainee.hesa_trainee_detail.ni_number},#{degree_subject.hecos_code},#{CsvValueSanitiser.new(degree_subject.name).sanitise}\n",
+          )
+        end
       end
     end
   end
