@@ -1377,6 +1377,30 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             expect(response.parsed_body).to have_key(:errors)
           end
         end
+
+        context "with a fund_code is ineligible for funding" do
+          let(:params_for_update) do
+            {
+              data: {
+                training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:opt_in_undergrad]],
+              },
+            }
+          end
+
+          before do
+            put("/api/v1.0-pre/trainees/#{slug}", params: params_for_update.to_json, headers: headers)
+          end
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["message"]).to eq(
+              "Validation failed: 1 error prohibited this trainee from being saved",
+            )
+            expect(response.parsed_body["errors"]).to contain_exactly(
+              "Hesa trainee detail attributes Fund code is not eligible",
+            )
+          end
+        end
       end
     end
   end

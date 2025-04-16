@@ -22,6 +22,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
+  let(:fund_code) { "7" }
 
   let(:endpoint) { "/api/v1.0-pre/trainees" }
 
@@ -60,7 +61,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       itt_qualification_aim: "001",
       course_year: "2012",
       course_age_range: course_age_range,
-      fund_code: "7",
+      fund_code:,
       funding_method: "4",
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",
@@ -176,6 +177,8 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     context "with lead_partner_and_employing_school_attributes" do
+      let(:fund_code) { "2" }
+
       before do
         post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
       end
@@ -1031,6 +1034,24 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include("Degrees attributes Uk degree has invalid reference data values")
       end
+    end
+  end
+
+  context "with a fund_code is ineligible for funding" do
+    before do
+      params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
+
+      post "/api/v1.0-pre/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "return status code 422 with a meaningful error message" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["message"]).to eq(
+        "Validation failed: 1 error prohibited this trainee from being saved",
+      )
+      expect(response.parsed_body["errors"]).to contain_exactly(
+        "Hesa trainee detail attributes Fund code is not eligible",
+      )
     end
   end
 end
