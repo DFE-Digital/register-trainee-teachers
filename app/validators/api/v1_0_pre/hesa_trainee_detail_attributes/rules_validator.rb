@@ -7,7 +7,7 @@ module Api
         def validate(record)
           return if record.errors.present?
 
-          record.errors.add(:fund_code, :not_eligible) unless Rules::FundCode.valid?(record)
+          record.errors.add(:fund_code, :ineligible) unless Rules::FundCode.valid?(record)
         end
       end
     end
