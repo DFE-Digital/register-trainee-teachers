@@ -118,13 +118,13 @@ private
   def and_i_see_api_tokens_details
     expect(organisation_settings_page).to have_content("Register API Tokens")
     expect(organisation_settings_page).to have_content(
-      "You need an API token if you want to use the Register API to send your trainee data from your students record system directly to the Register service.",
+      "You need an application programming interface (API) token if you want to use the Register API to send your trainee data from your students record system directly to the Register service",
     )
     expect(organisation_settings_page).to have_content(
-      "The API token is unique to your organisation and is a code that authenticates the transfer of your trainee data from your student record system directly into the Register service.",
+      "The API token is unique to your organisation.",
     )
     expect(organisation_settings_page).to have_content(
-      "Your token is needed by the developers who are managing your Register API integration.",
+      "Your token will need to be copied and added to the student record system which is connecting to the Register API. Contact your student record system provider about this.",
     )
     expect(organisation_settings_page).to have_content(
       "You can view and use the Register API technical documentation (opens in new tab).",
@@ -133,19 +133,13 @@ private
       "How to manage your API token",
     )
     expect(organisation_settings_page).to have_content(
-      "The Register API is used to make trainee data transfer quicker and easier.",
+      "The Register API is used to make trainee data transfer quicker, easier and more secure.",
     )
     expect(organisation_settings_page).to have_content(
-      "You must make sure the token is securely sent to the developers managing your Register API integration.",
+      "Your token will need to be copied and added to the student record system which is connecting to the Register API. Contact your student record system provider about this.",
     )
     expect(organisation_settings_page).to have_content(
-      "In the 'Manage your API token' screen, you can:",
-    )
-    expect(organisation_settings_page).to have_content(
-      "view a list of tokens, their description, expiry date, date last used",
-    )
-    expect(organisation_settings_page).to have_content(
-      "generate a new token and give it a name, a description (optional) and set an expiry date (optional) revoke a token",
+      "You must make sure the token is securely sent to those responsible for managing your Register API integration.",
     )
   end
 
@@ -189,7 +183,7 @@ private
     expect(token_management_page).to have_content("You can:")
 
     expect(token_management_page).to have_content(
-      "view a list of tokens, their description, expiry date, date last used",
+      "view a list of tokens, their name, expiry date and date last used",
     )
 
     expect(token_management_page).to have_content(
@@ -201,11 +195,11 @@ private
     )
 
     expect(token_management_page).to have_content(
-      "You should let the developers managing your Register API integration know if you create, set an expiry date or revoke a token.",
+      "Your token will need to be set up in the student record system which is connecting to the Register API. Contact your student record system provider about this.",
     )
 
     expect(token_management_page).to have_content(
-      "You must make sure the token is securely sent to the developers managing your Register API integration.",
+      "You must make sure the token is securely sent to those responsible for managing your Register API integration.",
     )
 
     expect(token_management_page).to have_content("Previously created tokens")
