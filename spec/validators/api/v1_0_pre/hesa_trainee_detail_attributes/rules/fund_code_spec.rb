@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable RSpec/SpecFilePathFormat
 RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundCode do
   subject { described_class }
 
@@ -17,8 +18,8 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundCode do
   describe "::valid?" do
     context "when the fund_code != 7" do
       let(:fund_code) { "2" }
-      let(:course_age_range) {}
-      let(:training_route) {}
+      let(:course_age_range) { nil }
+      let(:training_route) { nil }
 
       it "returns true" do
         expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
@@ -63,3 +64,4 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundCode do
     end
   end
 end
+# rubocop:enable RSpec/SpecFilePathFormat
