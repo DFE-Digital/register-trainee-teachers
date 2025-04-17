@@ -30,7 +30,7 @@ module Dqt
 
     def survey_should_be_scheduled?
       # Don't send survey for Assessment Only routes or EYTS awards
-      !trainee.assessment_only? && trainee.training_route_manager.award_type != EYTS_AWARD_TYPE
+      !(trainee.assessment_only? || trainee.training_route_manager.award_type == EYTS_AWARD_TYPE)
     end
   end
 end

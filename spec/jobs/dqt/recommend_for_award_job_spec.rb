@@ -45,21 +45,20 @@ module Dqt
           allow(trainee.training_route_manager).to receive(:award_type).and_return(award_type)
         end
 
-        context "when trainee is on a non-Assessment Only route and has a QTS award" do
+        context "when trainee has QTS award and is not on Assessment Only route" do
           let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
-          let(:award_type) { "QTS" }
+          let(:award_type) { QTS_AWARD_TYPE }
 
           it "schedules a survey with the configured delay" do
-            allow(Survey::SendJob).to receive(:set).with(wait: days_delayed.days).and_return(delayed_job)
+            expect(Survey::SendJob).to receive(:set).with(wait: days_delayed.days).and_return(delayed_job)
             described_class.perform_now(trainee)
-            expect(Survey::SendJob).to have_received(:set).with(wait: days_delayed.days)
             expect(delayed_job).to have_received(:perform_later).with(trainee: trainee, event_type: :award)
           end
         end
 
         context "when trainee is on an Assessment Only route" do
           let(:training_route) { TRAINING_ROUTE_ENUMS[:assessment_only] }
-          let(:award_type) { "QTS" }
+          let(:award_type) { QTS_AWARD_TYPE }
 
           it "does not schedule a survey" do
             expect(Survey::SendJob).not_to receive(:set)
@@ -69,7 +68,7 @@ module Dqt
 
         context "when trainee has an EYTS award" do
           let(:training_route) { TRAINING_ROUTE_ENUMS[:provider_led_postgrad] }
-          let(:award_type) { "EYTS" }
+          let(:award_type) { EYTS_AWARD_TYPE }
 
           it "does not schedule a survey" do
             expect(Survey::SendJob).not_to receive(:set)
