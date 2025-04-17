@@ -201,7 +201,6 @@ feature "bulk add trainees" do
         and_i_see_there_is_a_problem_errors(empty: false)
 
         when_the_unexpected_duplicate_error_is_been_reverted
-        and_i_return_to_the_review_errors_page
         and_i_attach_a_valid_file
         Timecop.travel 1.hour.from_now do
           and_i_click_the_upload_button
