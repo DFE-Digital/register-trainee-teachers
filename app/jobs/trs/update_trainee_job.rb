@@ -17,7 +17,6 @@ module Trs
     def trainee_updatable?(trainee)
       current_trainee = trainee.reload
 
-      # Must have a TRN and not be in an invalid state
       current_trainee.trn.present? &&
         ::CodeSets::Trs.valid_for_update?(current_trainee.state)
     end

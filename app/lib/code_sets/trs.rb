@@ -24,6 +24,14 @@ module CodeSets
       "school_direct_salaried" => "12a742c3-1cd4-43b7-a2fa-1000bd4cc373",
       "teach_first" => "5b7f5e90-1ca6-4529-baa0-dfba68e698b8",
       "iqts" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1",
+      "early_years_undergrad" => "c97c0fd2-fd84-4949-97c7-b0e2422fb3c8",
+      "school_direct_tuition_fee" => "d9490e58-acdc-4a38-b13e-5a5c21417737",
+      "pg_teaching_apprenticeship" => "6987240e-966e-485f-b300-23b54937fb3a",
+      "early_years_assessment_only" => "d9eef3f8-fde6-4a3f-a361-f6655a42fa1e",
+      "early_years_salaried" => "4477e45d-c531-4c63-9f4b-e157766366fb",
+      "early_years_postgrad" => "dbc4125b-9235-41e4-abd2-baabbf63f829",
+      "opt_in_undergrad" => "20f67e38-f117-4b42-bbfc-5812aa717b94",
+      "hpitt_postgrad" => "bfef20b2-5ac4-486d-9493-e5a4538e1be9",
     }.freeze
 
     DEGREE_TYPES = {
@@ -38,6 +46,7 @@ module CodeSets
       "Undergraduate Master of Teaching" => "dba69141-4101-4e05-80e0-524e3967d589",
       "Professional Graduate Certificate in Education" => "d8e267d2-ed85-4eee-8119-45d0c6cc5f6b",
       "Masters, not by research" => "9cf31754-5ac5-46a1-99e5-5c98cba1b881",
+      "Unknown" => "9cf31754-5ac5-46a1-99e5-5c98cba1b881",
     }.freeze
 
     ROUTE_STATUSES = {
