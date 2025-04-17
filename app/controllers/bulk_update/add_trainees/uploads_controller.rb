@@ -40,8 +40,12 @@ module BulkUpdate
             bulk_update_add_trainees_upload_path(@bulk_add_trainee_upload_form.upload),
             flash: { success: t(".success") },
           )
+        elsif bulk_update_trainee_upload_id
+          authorize(bulk_update_trainee_upload)
+
+          render :show
         else
-          render(:new)
+          render :new
         end
       end
 
@@ -63,8 +67,12 @@ module BulkUpdate
     private
 
       def bulk_update_trainee_upload
-        @bulk_update_trainee_upload ||=
-          policy_scope(BulkUpdate::TraineeUpload).includes(:row_errors).find(params[:id])
+        @bulk_update_trainee_upload ||= policy_scope(BulkUpdate::TraineeUpload)
+          .includes(:row_errors).find(bulk_update_trainee_upload_id)
+      end
+
+      def bulk_update_trainee_upload_id
+        params[:id] || params.dig(:bulk_update_bulk_add_trainees_upload_form, :id)
       end
 
       def upload_params
