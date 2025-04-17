@@ -4,12 +4,10 @@ require "rails_helper"
 
 module Trs
   describe UpdateProfessionalStatusJob, feature_integrate_with_trs: true do
-    let(:trainee) { create(:trainee, :trn_received) }
-    let(:eyts_award_type) { EYTS_AWARD_TYPE }
+    let(:trainee) { create(:trainee) }
 
     describe "#perform" do
       before do
-        # Mock the UpdateProfessionalStatus service to prevent real HTTP calls
         allow(UpdateProfessionalStatus).to receive(:call).with(trainee:)
       end
 
@@ -18,14 +16,15 @@ module Trs
         described_class.perform_now(trainee)
       end
 
+      it "does not schedule a survey" do
+        expect { described_class.perform_now(trainee) }.not_to have_enqueued_job(Survey::SendJob)
+      end
+
       context "when trainee is recommended for award" do
-        let(:trainee) { create(:trainee, :trn_received, :recommended_for_award) }
-        let(:training_route_manager) { instance_double(TrainingRouteManager, award_type: QTS_AWARD_TYPE) }
+        let(:trainee) { create(:trainee, :qts_recommended) }
 
         before do
           allow(UpdateProfessionalStatus).to receive(:call).with(trainee:)
-          allow(trainee).to receive_messages(assessment_only?: false, training_route_manager: training_route_manager)
-          allow(Settings).to receive_message_chain(:qualtrics, :days_delayed, :days).and_return(3.days)
         end
 
         it "does not award the trainee" do
@@ -38,9 +37,7 @@ module Trs
         end
 
         context "when trainee is assessment only" do
-          before do
-            allow(trainee).to receive(:assessment_only?).and_return(true)
-          end
+          let(:trainee) { create(:trainee, :assessment_only) }
 
           it "does not schedule a survey" do
             expect { described_class.perform_now(trainee) }.not_to have_enqueued_job(Survey::SendJob)
@@ -48,7 +45,7 @@ module Trs
         end
 
         context "when trainee has EYTS award type" do
-          let(:training_route_manager) { instance_double(TrainingRouteManager, award_type: EYTS_AWARD_TYPE) }
+          let(:trainee) { create(:trainee, :eyts_awarded) }
 
           it "does not schedule a survey" do
             expect { described_class.perform_now(trainee) }.not_to have_enqueued_job(Survey::SendJob)

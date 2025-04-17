@@ -17,13 +17,13 @@ module CodeSets
     ].freeze
 
     ROUTE_TYPES = {
-      "assessment_only" => "57b86cef-98e2-4962-a74a-d47c7a34b838", # Assessment Only Route
-      "provider_led_postgrad" => "97497716-5ac5-49aa-a444-27fa3e2c152a", # Provider led Postgrad
-      "provider_led_undergrad" => "53a7fbda-25fd-4482-9881-5cf65053888d", # Provider led Undergrad
-      "school_direct" => "d9490e58-acdc-4a38-b13e-5a5c21417737", # School Direct Training Programme
-      "school_direct_salaried" => "12a742c3-1cd4-43b7-a2fa-1000bd4cc373", # School Direct Training Programme Salaried
-      "teach_first" => "5b7f5e90-1ca6-4529-baa0-dfba68e698b8", # Teach First Programme
-      "iqts" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1", # International Qualified Teacher Status
+      "assessment_only" => "57b86cef-98e2-4962-a74a-d47c7a34b838",
+      "provider_led_postgrad" => "97497716-5ac5-49aa-a444-27fa3e2c152a",
+      "provider_led_undergrad" => "53a7fbda-25fd-4482-9881-5cf65053888d",
+      "school_direct" => "d9490e58-acdc-4a38-b13e-5a5c21417737",
+      "school_direct_salaried" => "12a742c3-1cd4-43b7-a2fa-1000bd4cc373",
+      "teach_first" => "5b7f5e90-1ca6-4529-baa0-dfba68e698b8",
+      "iqts" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1",
     }.freeze
 
     DEGREE_TYPES = {
@@ -43,8 +43,8 @@ module CodeSets
     ROUTE_STATUSES = {
       "withdrawn" => "Withdrawn",
       "deferred" => "Deferred",
-      "awarded" => "Awarded", # Changed from "Pass" to "Awarded" to match TRS statuses
-      "recommended_for_award" => "Approved", # Changed from "Recommended" to "Approved" to match TRS statuses
+      "awarded" => "Awarded",
+      "recommended_for_award" => "Approved",
     }.freeze
 
     # Special case statuses based on state and route
