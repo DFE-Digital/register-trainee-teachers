@@ -16,7 +16,16 @@ module BulkUpdate
       def show
         authorize(bulk_update_trainee_upload)
 
-        render
+        respond_to do |format|
+          format.html
+          format.csv do
+            send_data(
+              Exports::BulkTraineeUploadExport.call(trainee_upload: @bulk_update_trainee_upload),
+              filename: "trainee-upload-errors-#{@bulk_update_trainee_upload.id}.csv",
+              disposition: :attachment,
+            )
+          end
+        end
       end
 
       def new
