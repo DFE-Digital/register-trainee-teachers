@@ -52,9 +52,9 @@ module BulkUpdate
         elsif bulk_update_trainee_upload_id
           authorize(bulk_update_trainee_upload)
 
-          render :show
+          render(:show)
         else
-          render :new
+          render(:new)
         end
       end
 
