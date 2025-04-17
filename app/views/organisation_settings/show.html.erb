@@ -70,7 +70,7 @@
     <h2 class="govuk-heading-m">Team members</h2>
 
     <%= govuk_list(
-      current_user.organisation.users.map do |user|
+      current_user.organisation.users.kept.map do |user|
         content_tag("div", class: "govuk-!-margin-bottom-6") do
           content_tag(:h3, class: "govuk-heading-s") do
             raw(
