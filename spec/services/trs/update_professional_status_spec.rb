@@ -27,15 +27,13 @@ module Trs
         expect(subject).to eq(api_response)
       end
 
-      context "when the trainee is in an invalid state" do
-        before do
-          allow(CodeSets::Trs).to receive(:valid_for_update?)
-            .with(trainee.state)
-            .and_return(false)
-        end
+      context "when the trainee is withdrawn" do
+        let(:trainee) { create(:trainee, :withdrawn) }
 
-        it "doesn't make a request to TRS" do
-          expect(Client).not_to receive(:put)
+        it "makes a request to TRS" do
+          path = "/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}"
+          body = instance_of(String)
+          expect(Client).to receive(:put).with(path, body:)
           subject
         end
       end
