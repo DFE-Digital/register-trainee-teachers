@@ -95,7 +95,6 @@ Rails.application.routes.draw do
           resource :submission, only: %i[create]
         end
       end
-      resources :review_errors, path: "review-errors", only: %i[show]
       resource :empty_template, only: %i[show], path: "empty-template"
     end
   end

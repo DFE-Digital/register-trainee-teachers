@@ -196,8 +196,11 @@ feature "bulk add trainees" do
         then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
 
+        when_i_click_the_upload_button
+        then_i_see_the_review_errors_page
+        and_i_see_there_is_a_problem_errors(empty: false)
+
         when_the_unexpected_duplicate_error_is_been_reverted
-        and_i_return_to_the_review_errors_page
         and_i_attach_a_valid_file
         Timecop.travel 1.hour.from_now do
           and_i_click_the_upload_button
@@ -776,6 +779,10 @@ private
 
   def then_i_see_the_upload_page_with_errors(empty:)
     expect(page).to have_current_path(bulk_update_add_trainees_uploads_path)
+    and_i_see_there_is_a_problem_errors(empty:)
+  end
+
+  def and_i_see_there_is_a_problem_errors(empty:)
     expect(page).to have_content("There is a problem")
     expect(page).to have_content(empty ? "The selected file is empty" : "Select a CSV file")
   end
