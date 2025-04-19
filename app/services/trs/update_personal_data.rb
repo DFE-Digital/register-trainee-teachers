@@ -36,7 +36,7 @@ module Trs
     attr_reader :trainee, :payload
 
     def valid_update_state?
-      !trainee.state.in?(CodeSets::Trs::INVALID_UPDATE_STATES)
+      ::CodeSets::Trs.valid_for_update?(trainee.state)
     end
 
     def update_personal_data

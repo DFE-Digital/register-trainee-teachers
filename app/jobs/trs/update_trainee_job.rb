@@ -18,7 +18,7 @@ module Trs
       current_trainee = trainee.reload
 
       current_trainee.trn.present? &&
-        !current_trainee.state.in?(CodeSets::Trs::INVALID_UPDATE_STATES)
+        ::CodeSets::Trs.valid_for_update?(current_trainee.state)
     end
   end
 end

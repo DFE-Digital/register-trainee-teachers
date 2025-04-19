@@ -33,7 +33,7 @@ module Api
         trainee.recommend_for_award!
         trainee.attributes = trainee_attributes
 
-        Dqt::RecommendForAwardJob.perform_later(trainee)
+        ::Trainees::UpdateIttDataInTra.call(trainee:)
 
         true
       end
