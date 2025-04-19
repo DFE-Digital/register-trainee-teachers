@@ -36,6 +36,8 @@ module Api
         attribute attr
       end
 
+      attr_accessor :trainee_attributes
+
       validates(*REQUIRED_ATTRIBUTES, presence: true)
 
       validates(:itt_qualification_aim, presence: true, if: -> { itt_aim == ITT_AIM_REQUIRED_CODE || itt_aim.blank? })
