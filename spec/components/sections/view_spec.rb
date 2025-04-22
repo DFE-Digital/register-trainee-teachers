@@ -63,29 +63,29 @@ module Sections
     context "trainee incomplete" do
       let(:trainee) { create(:trainee, :incomplete, start_academic_cycle: AcademicCycle.first) }
 
-      include_examples renders_incomplete_section, :personal_details, :incomplete
-      include_examples renders_incomplete_section, :contact_details, :incomplete
-      include_examples renders_incomplete_section, :diversity, :incomplete
-      include_examples renders_incomplete_section, :degrees, :incomplete
-      include_examples renders_incomplete_section, :course_details, :incomplete
-      include_examples renders_incomplete_section, :training_details, :incomplete
-      include_examples renders_incomplete_section, :trainee_data, :incomplete
+      it_behaves_like renders_incomplete_section, :personal_details, :incomplete
+      it_behaves_like renders_incomplete_section, :contact_details, :incomplete
+      it_behaves_like renders_incomplete_section, :diversity, :incomplete
+      it_behaves_like renders_incomplete_section, :degrees, :incomplete
+      it_behaves_like renders_incomplete_section, :course_details, :incomplete
+      it_behaves_like renders_incomplete_section, :training_details, :incomplete
+      it_behaves_like renders_incomplete_section, :trainee_data, :incomplete
 
       context "requires school" do
-        include_examples renders_incomplete_section, :schools, :incomplete
+        it_behaves_like renders_incomplete_section, :schools, :incomplete
       end
 
       context "trainee on publish course" do
         let(:provider) { create(:provider, :with_courses) }
         let(:trainee) { create(:trainee, :incomplete, training_route: provider.courses.first.route, provider: provider) }
 
-        include_examples renders_incomplete_section, :course_details, :incomplete
+        it_behaves_like renders_incomplete_section, :course_details, :incomplete
       end
 
       context "trainee on early years route" do
         let(:trainee) { create(:trainee, :incomplete, training_route: "early_years_undergrad", start_academic_cycle: AcademicCycle.first) }
 
-        include_examples renders_incomplete_section, :course_details, :incomplete
+        it_behaves_like renders_incomplete_section, :course_details, :incomplete
       end
 
       context "trainee incomplete funding section" do
@@ -96,7 +96,7 @@ module Sections
           render_inline(trainees_sections_component)
         }
 
-        include_examples renders_incomplete_section, :funding, :incomplete
+        it_behaves_like renders_incomplete_section, :funding, :incomplete
       end
     end
 
@@ -104,18 +104,18 @@ module Sections
       let(:trainee) { create(:trainee, :in_progress) }
 
       # Personal details is invalid due to nationalities being missing
-      include_examples renders_incomplete_section, :personal_details, :in_progress_invalid
-      include_examples renders_incomplete_section, :contact_details, :in_progress_valid
-      include_examples renders_incomplete_section, :diversity, :in_progress_valid
-      include_examples renders_incomplete_section, :degrees, :in_progress_valid
-      include_examples renders_incomplete_section, :course_details, :in_progress_valid
-      include_examples renders_incomplete_section, :training_details, :in_progress_valid
-      include_examples renders_incomplete_section, :trainee_data, :in_progress_valid
+      it_behaves_like renders_incomplete_section, :personal_details, :in_progress_invalid
+      it_behaves_like renders_incomplete_section, :contact_details, :in_progress_valid
+      it_behaves_like renders_incomplete_section, :diversity, :in_progress_valid
+      it_behaves_like renders_incomplete_section, :degrees, :in_progress_valid
+      it_behaves_like renders_incomplete_section, :course_details, :in_progress_valid
+      it_behaves_like renders_incomplete_section, :training_details, :in_progress_valid
+      it_behaves_like renders_incomplete_section, :trainee_data, :in_progress_valid
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_partner, :in_progress) }
 
-        include_examples renders_incomplete_section, :schools, :in_progress_valid
+        it_behaves_like renders_incomplete_section, :schools, :in_progress_valid
       end
 
       context "trainee in progress funding section" do
@@ -124,26 +124,26 @@ module Sections
           render_inline(trainees_sections_component)
         end
 
-        include_examples renders_incomplete_section, :funding, :in_progress_valid
+        it_behaves_like renders_incomplete_section, :funding, :in_progress_valid
       end
     end
 
     context "trainee completed" do
       let(:trainee) { create(:trainee, :completed) }
 
-      include_examples renders_confirmation, :personal_details
-      include_examples renders_confirmation, :contact_details
-      include_examples renders_confirmation, :diversity
-      include_examples renders_confirmation, :degrees
-      include_examples renders_confirmation, :course_details
-      include_examples renders_confirmation, :training_details
-      include_examples renders_confirmation, :trainee_data
-      include_examples renders_confirmation, :funding
+      it_behaves_like renders_confirmation, :personal_details
+      it_behaves_like renders_confirmation, :contact_details
+      it_behaves_like renders_confirmation, :diversity
+      it_behaves_like renders_confirmation, :degrees
+      it_behaves_like renders_confirmation, :course_details
+      it_behaves_like renders_confirmation, :training_details
+      it_behaves_like renders_confirmation, :trainee_data
+      it_behaves_like renders_confirmation, :funding
 
       context "requires school" do
         let(:trainee) { create(:trainee, :with_lead_partner, :completed) }
 
-        include_examples renders_confirmation, :schools
+        it_behaves_like renders_confirmation, :schools
       end
     end
 

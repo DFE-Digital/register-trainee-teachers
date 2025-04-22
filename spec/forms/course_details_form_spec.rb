@@ -289,14 +289,14 @@ describe CourseDetailsForm, type: :model do
             end
           end
 
-          include_examples date_error_message, :itt_start_date, :blank,
-                           "", "", ""
-          include_examples date_error_message, :itt_start_date, :invalid,
-                           "foo", "foo", "foo"
+          it_behaves_like date_error_message, :itt_start_date, :blank,
+                          "", "", ""
+          it_behaves_like date_error_message, :itt_start_date, :invalid,
+                          "foo", "foo", "foo"
 
           start_date = 10.years.ago
-          include_examples date_error_message, :itt_start_date, :too_old,
-                           start_date.day, start_date.month, start_date.year
+          it_behaves_like date_error_message, :itt_start_date, :too_old,
+                          start_date.day, start_date.month, start_date.year
 
           context "the start date fields are too far in future" do
             let(:start_date_attributes) do
@@ -353,14 +353,14 @@ describe CourseDetailsForm, type: :model do
             end
           end
 
-          include_examples date_error_message, :itt_end_date, :blank,
-                           "", "", ""
-          include_examples date_error_message, :itt_end_date, :invalid,
-                           "foo", "foo", "foo"
-          include_examples date_error_message, :itt_end_date, :before_or_same_as_start_date,
-                           start_date.day, start_date.month, start_date.year
-          include_examples date_error_message, :itt_end_date, :before_or_same_as_start_date,
-                           start_date.day, start_date.month, start_date.year - 1
+          it_behaves_like date_error_message, :itt_end_date, :blank,
+                          "", "", ""
+          it_behaves_like date_error_message, :itt_end_date, :invalid,
+                          "foo", "foo", "foo"
+          it_behaves_like date_error_message, :itt_end_date, :before_or_same_as_start_date,
+                          start_date.day, start_date.month, start_date.year
+          it_behaves_like date_error_message, :itt_end_date, :before_or_same_as_start_date,
+                          start_date.day, start_date.month, start_date.year - 1
 
           context "the end date fields are too far in future" do
             let(:end_date_attributes) do

@@ -18,30 +18,30 @@ describe "Settings" do
     end
   end
 
-  include_examples expected_value_test, :port, settings, 5000
-  include_examples expected_value_test, :base_url, settings, "https://localhost:5000"
+  it_behaves_like expected_value_test, :port, settings, 5000
+  it_behaves_like expected_value_test, :base_url, settings, "https://localhost:5000"
 
   describe ".features" do
     features = settings[:features]
 
-    include_examples expected_value_test, :use_ssl, features, true
-    include_examples expected_value_test, :sign_in_method, features, "dfe-sign-in"
-    include_examples expected_value_test, :home_text, features, false
+    it_behaves_like expected_value_test, :use_ssl, features, true
+    it_behaves_like expected_value_test, :sign_in_method, features, "dfe-sign-in"
+    it_behaves_like expected_value_test, :home_text, features, false
   end
 
   describe ".dfe_sign_in" do
     dfe_sign_in = settings[:dfe_sign_in]
 
-    include_examples expected_value_test, :identifier, dfe_sign_in, "rtt"
-    include_examples expected_value_test, :issuer, dfe_sign_in, "https://test-oidc.signin.education.gov.uk"
-    include_examples expected_value_test, :profile, dfe_sign_in, "https://test-profile.signin.education.gov.uk"
-    include_examples expected_value_test, :secret, dfe_sign_in, "secret required value"
+    it_behaves_like expected_value_test, :identifier, dfe_sign_in, "rtt"
+    it_behaves_like expected_value_test, :issuer, dfe_sign_in, "https://test-oidc.signin.education.gov.uk"
+    it_behaves_like expected_value_test, :profile, dfe_sign_in, "https://test-profile.signin.education.gov.uk"
+    it_behaves_like expected_value_test, :secret, dfe_sign_in, "secret required value"
   end
 
   describe ".jobs" do
     jobs = settings[:jobs]
 
-    include_examples expected_value_test, :poll_delay_hours, jobs, 1
-    include_examples expected_value_test, :max_poll_duration_days, jobs, 4
+    it_behaves_like expected_value_test, :poll_delay_hours, jobs, 1
+    it_behaves_like expected_value_test, :max_poll_duration_days, jobs, 4
   end
 end
