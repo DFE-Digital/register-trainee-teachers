@@ -1050,7 +1050,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "Hesa trainee detail attributes Fund code is not eligible",
+        "Hesa trainee detail attributes Fund code is ineligible",
       )
     end
   end
