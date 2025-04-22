@@ -192,7 +192,8 @@ module Api
         new_hesa_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
         return if new_hesa_attributes.blank?
 
-        updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes.new({})
+        updated_hesa_attributes = hesa_trainee_detail_attributes ||
+          HesaTraineeDetailAttributes.new(trainee_attributes: self)
 
         updated_hesa_attributes.assign_attributes(new_hesa_attributes)
 

@@ -20,7 +20,10 @@ module Api
 
         new_hesa_trainee_detail_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
         if new_hesa_trainee_detail_attributes.present?
-          self.hesa_trainee_detail_attributes = V10Pre::HesaTraineeDetailAttributes.new(new_hesa_trainee_detail_attributes, record_source:)
+          self.hesa_trainee_detail_attributes = V10Pre::HesaTraineeDetailAttributes.new(
+            new_hesa_trainee_detail_attributes.merge(trainee_attributes: self),
+            record_source:,
+          )
         end
       end
     end
