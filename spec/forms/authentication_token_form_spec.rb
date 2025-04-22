@@ -28,7 +28,7 @@ describe AuthenticationTokenForm, type: :model do
       end
 
       context "when in the past" do
-        let(:params) { super().merge({ day: Date.yesterday.day, month: Date.current.month, year: Date.current.year }) }
+        let(:params) { super().merge({ day: 1.year.ago.day, month: Date.current.month, year: Date.current.year }) }
 
         it "returns false" do
           expect(subject.valid?).to be(false)
@@ -46,7 +46,7 @@ describe AuthenticationTokenForm, type: :model do
       end
 
       context "when in the future" do
-        let(:params) { super().merge({ day: Date.tomorrow.day, month: Date.current.month, year: Date.current.year }) }
+        let(:params) { super().merge({ day: 1.day.from_now.day, month: Date.current.month, year: Date.current.year }) }
 
         it "returns true" do
           expect(subject.valid?).to be(true)

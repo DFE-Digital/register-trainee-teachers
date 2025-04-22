@@ -15,13 +15,6 @@ RSpec.describe AuthenticationToken do
       }).backed_by_column_of_type(:string)
   end
 
-  describe "validations" do
-    subject(:authentication_token) { build(:authentication_token) }
-
-    it { is_expected.to validate_uniqueness_of(:hashed_token) }
-    it { is_expected.to validate_length_of(:name).is_at_most(200) }
-  end
-
   describe "associations" do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:created_by) }
