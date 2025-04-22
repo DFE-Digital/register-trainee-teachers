@@ -68,9 +68,6 @@ class AuthenticationToken < ApplicationRecord
     end
   }
 
-  validates :hashed_token, presence: true, uniqueness: true
-  validates :name, presence: true, length: { maximum: 200 }
-
   self.ignored_columns += ["enabled"]
 
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }

@@ -2061,6 +2061,7 @@ en:
               blank: Enter the token name
             expires_at:
               invalid: Enter a valid expiration date
+              future: Must be in the future
         undo_withdrawal_form:
           attributes:
             comment:

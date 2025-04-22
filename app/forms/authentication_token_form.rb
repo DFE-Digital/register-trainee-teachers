@@ -8,8 +8,8 @@ class AuthenticationTokenForm
 
   attr_accessor(:name, :day, :month, :year, :user, :params, :authentication_token)
 
-  validates :name, presence: true
-  validate :expires_at_valid
+  validates :name, presence: true, length: { maximum: 200 }
+  validates :expires_at, date: true, future_date: true
 
   def initialize(user, params: {})
     @user = user
@@ -40,14 +40,6 @@ class AuthenticationTokenForm
       )
     else
       false
-    end
-  end
-
-private
-
-  def expires_at_valid
-    if expires_at.present? && !expires_at.is_a?(Date)
-      errors.add(:expires_at, :invalid)
     end
   end
 end
