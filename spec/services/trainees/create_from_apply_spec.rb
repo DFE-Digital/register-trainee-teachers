@@ -95,6 +95,28 @@ module Trainees
       end
     end
 
+    context "apply application status is 'pending_conditions'" do
+      let(:application_data) do
+        JSON.parse(ApiStubs::RecruitsApi.application(candidate_attributes: candidate_attributes,
+                                                     course_attributes: course_attributes.merge(recruitment_cycle_year:),
+                                                     status: "pending_conditions"))
+      end
+
+      it "creates a draft trainee" do
+        expect {
+          create_trainee_from_apply
+        }.to change(Trainee.draft, :count).by(1)
+      end
+
+      it "created trainee against the apply_application status as 'pending_conditions'" do
+        expect(trainee.apply_application.application.dig("attributes", "status")).to eq("pending_conditions")
+      end
+    end
+
+    it "created trainee against the apply_application status as 'recruited'" do
+      expect(trainee.apply_application.application.dig("attributes", "status")).to eq("recruited")
+    end
+
     it { is_expected.to have_attributes(trainee_attributes) }
 
     it "associates the created trainee against the apply_application and provider" do
