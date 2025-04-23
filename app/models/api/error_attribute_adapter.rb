@@ -15,6 +15,7 @@ module Api
 
     NESTED_API_ATTRIBUTE_NAMES = {
       hesa_trainee_detail_attributes: "",
+      trainee_disabilities_attributes: "disabilities",
     }.freeze
 
     module ClassMethods
