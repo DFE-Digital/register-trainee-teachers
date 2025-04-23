@@ -27,6 +27,6 @@ describe ReviewDraft::ApplyDraft::View do
       end
     end
 
-    include_examples "rendering the funding section"
+    it_behaves_like "rendering the funding section"
   end
 end

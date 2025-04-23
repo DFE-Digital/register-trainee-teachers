@@ -83,7 +83,7 @@ describe Api::GetVersionedItem do
     end
   end
 
-  include_examples get_versioned_item, :service, %i[map_hesa_attributes degree placement update_trainee]
-  include_examples get_versioned_item, :attributes, %i[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
-  include_examples get_versioned_item, :serializer, %i[degree hesa_trainee_detail placement trainee]
+  it_behaves_like get_versioned_item, :service, %i[map_hesa_attributes degree placement update_trainee]
+  it_behaves_like get_versioned_item, :attributes, %i[degree hesa_trainee_detail nationality placement trainee withdrawal trainee_filter_params]
+  it_behaves_like get_versioned_item, :serializer, %i[degree hesa_trainee_detail placement trainee]
 end

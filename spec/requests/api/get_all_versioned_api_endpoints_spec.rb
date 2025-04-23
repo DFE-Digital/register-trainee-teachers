@@ -13,13 +13,13 @@ paths = Rails.application.routes.routes.select { |route| route.verb == "GET" && 
 describe "GET all versioned api endpoints" do
   context "Version v0.1" do
     paths.each do |path|
-      include_examples "register versioned api GET request", "v0.1", path, true
+      it_behaves_like "register versioned api GET request", "v0.1", path, true
     end
   end
 
   context "Version v1.0-pre" do
     paths.each do |path|
-      include_examples "register versioned api GET request", "v1.0-pre", path, true
+      it_behaves_like "register versioned api GET request", "v1.0-pre", path, true
     end
   end
 end

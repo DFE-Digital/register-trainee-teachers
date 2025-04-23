@@ -75,7 +75,7 @@ describe OutcomeDateForm, type: :model do
         end
       end
 
-      include_examples "date is not before itt start date", :outcome_date_form
+      it_behaves_like "date is not before itt start date", :outcome_date_form
     end
   end
 
