@@ -8,6 +8,43 @@ module Trs
         "CY" => "XC",
       }.freeze
 
+      # This is a fallback mapping for territories that are no longer in the reference data gem
+      TERRITORY_FALLBACK_MAPPING = {
+        # United Arab Emirates
+        "Ajman" => "AE",
+        "Abu Dhabi" => "AE",
+        "Dubai" => "AE",
+        "Fujairah" => "AE",
+        "Ras al-Khaimah" => "AE",
+        "Sharjah" => "AE",
+        "Umm al-Quwain" => "AE",
+
+        # Caribbean Netherlands - special municipalities of the Netherlands
+        "Bonaire" => "NL",
+        "Saba" => "NL",
+        "Sint Eustatius" => "NL",
+
+        # Spain territories - autonomous cities of Spain
+        "Ceuta" => "ES",
+        "Melilla" => "ES",
+
+        # Saint Helena - British Overseas Territories
+        "Ascension" => "GB",
+        "Saint Helena" => "GB",
+        "Tristan da Cunha" => "GB",
+
+        # United States Minor Outlying Islands - use US code
+        "Johnston Atoll" => "US",
+        "Midway Islands" => "US",
+        "Navassa Island" => "US",
+        "Wake Island" => "US",
+        "Baker Island" => "US",
+        "Howland Island" => "US",
+        "Jarvis Island" => "US",
+        "Kingman Reef" => "US",
+        "Palmyra Atoll" => "US",
+      }.freeze
+
       def initialize(trainee:)
         @trainee = trainee
       end
@@ -28,7 +65,7 @@ module Trs
           "trainingCountryReference" => training_country_reference,
           "trainingProviderUkprn" => trainee.provider.ukprn,
           "degreeTypeId" => degree_type_id,
-          "isExemptFromInduction" => exempt_from_induction?,
+          "isExemptFromInduction" => nil,
         }.compact
       end
 
@@ -85,7 +122,7 @@ module Trs
       end
 
       def training_country_reference
-        return nil unless trainee.iqts? && trainee.iqts_country.present?
+        return "GB" unless trainee.iqts? && trainee.iqts_country.present?
 
         find_country_code(trainee.iqts_country)
       end
@@ -93,9 +130,17 @@ module Trs
       def find_country_code(country)
         return if country.blank?
 
+        # Check for direct mapping in territory fallback first
+        return TERRITORY_FALLBACK_MAPPING[country] if TERRITORY_FALLBACK_MAPPING.key?(country)
+
+        # Try the reference data lookup
         country_territory_code =
-          DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
-          Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+          DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id
+
+        # If reference data lookup fails, try the HESA mapping as fallback
+        if country_territory_code.blank?
+          country_territory_code = Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+        end
 
         country_code = strip_territory_component(country_territory_code)
         apply_special_case_country_code_mappings(country_code)
@@ -113,12 +158,6 @@ module Trs
 
         # Use the same mappings as DQT
         COUNTRY_CODE_EXCEPTIONS.key?(country_code) ? COUNTRY_CODE_EXCEPTIONS[country_code] : country_code
-      end
-
-      def exempt_from_induction?
-        # For the TRS API, returning nil when not applicable
-        # Currently no induction exemption data available in the trainee model
-        false
       end
     end
   end

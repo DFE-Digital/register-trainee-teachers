@@ -110,7 +110,15 @@ module Trs
           end
         end
 
-        # Check country code correctly returned for international trainees
+        # Check default country code correctly returned for non-iQTS trainees
+        context "when trainee is not iQTS" do
+          let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
+
+          it "defaults to GB as the country reference" do
+            expect(subject["trainingCountryReference"]).to eq("GB")
+          end
+        end
+
         context "trainee is iQTS" do
           let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Ireland") }
 
@@ -127,11 +135,11 @@ module Trs
           end
         end
 
-        context "trainee is iQTS with territory in country code" do
-          let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Saint Helena") }
+        context "trainee is iQTS with a territory country that's in the fallback mapping" do
+          let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Abu Dhabi") }
 
-          it "strips territory component from country code" do
-            expect(subject["trainingCountryReference"]).to eq("SH")
+          it "uses the fallback mapping to get the country code" do
+            expect(subject["trainingCountryReference"]).to eq("AE")
           end
         end
 
