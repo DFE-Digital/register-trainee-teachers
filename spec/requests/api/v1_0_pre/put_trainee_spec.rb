@@ -966,7 +966,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "Trainee disabilities attributes contain duplicate values",
+            "disabilities contain duplicate values",
           )
         end
       end
@@ -1397,7 +1397,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "Hesa trainee detail attributes Fund code is ineligible",
+              "fund_code is ineligible",
             )
           end
         end
