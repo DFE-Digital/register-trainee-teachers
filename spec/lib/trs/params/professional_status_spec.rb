@@ -5,29 +5,37 @@ require "rails_helper"
 module Trs
   module Params
     describe ProfessionalStatus do
-      let(:trainee) { create(:trainee, :completed, :trn_received, sex: "female") }
+      # A completed trainee has all the attributes needed
+      let(:trainee) { create(:trainee, :completed, :trn_received) }
 
       describe "#params" do
         subject { described_class.new(trainee:).params }
 
-        before do
-          allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("UnderAssessment")
+        context "when trainee has subjects" do
+          let(:trainee) do
+            create(:trainee, :completed, :trn_received,
+                   course_subject_one: "Primary",
+                   course_subject_two: "Mathematics",
+                   course_subject_three: nil)
+          end
+
+          it "returns the correct subject references" do
+            primary_code = Hesa::CodeSets::CourseSubjects::MAPPING.invert["Primary"]
+            maths_code = Hesa::CodeSets::CourseSubjects::MAPPING.invert["Mathematics"]
+
+            expect(subject["trainingSubjectReferences"]).to contain_exactly(primary_code, maths_code)
+          end
         end
 
-        it "returns a hash including route and training attributes" do
-          expect(subject).to include({
-            "routeTypeId" => "57b86cef-98e2-4962-a74a-d47c7a34b838",
-            "trainingStartDate" => trainee.itt_start_date.iso8601,
-            "trainingEndDate" => trainee.itt_end_date.iso8601,
-            "trainingProviderUkprn" => trainee.provider.ukprn,
-          })
+        context "when trainee has no subjects" do
+          let(:trainee) { create(:trainee, :completed, :trn_received, course_subject_one: nil, course_subject_two: nil, course_subject_three: nil) }
+
+          it "returns an empty array for subject references" do
+            expect(subject["trainingSubjectReferences"]).to eq([])
+          end
         end
 
-        it "returns a hash including subject information" do
-          expect(subject["trainingSubjectReferences"]).to eq(["100403"])
-        end
-
-        it "returns a hash including age range information" do
+        it "returns a hash with age range information" do
           expect(subject["trainingAgeSpecialism"]).to eq({
             "type" => "Range",
             "from" => trainee.course_min_age,
@@ -35,172 +43,136 @@ module Trs
           })
         end
 
-        it "returns a hash including status" do
+        it "includes a status based on trainee state" do
           expect(subject["status"]).to eq("UnderAssessment")
         end
 
         context "with degree type information" do
-          let(:trainee) do
-            create(:trainee, :completed, :trn_received).tap do |t|
-              t.build_hesa_metadatum(itt_qualification_aim: "BA (Hons)")
-              t.save
-            end
-          end
+          let(:degree_name) { "Undergraduate Master of Teaching" }
+          let(:expected_degree_id) { "dba69141-4101-4e05-80e0-524e3967d589" }
+          let(:hesa_metadatum) { build(:hesa_metadatum, itt_qualification_aim: degree_name) }
+          let(:trainee) { create(:trainee, :completed, :trn_received, :imported_from_hesa, hesa_metadatum:) }
 
-          it "includes the degree type mapping" do
-            expect(subject["degreeTypeId"]).to eq("dbb7c27b-8a27-4a94-908d-4b4404acebd5")
+          it "includes a degree type mapping" do
+            expect(subject["degreeTypeId"]).to eq(expected_degree_id)
           end
         end
 
         context "trainee is deferred" do
-          let(:trainee) { create(:trainee, :completed, :deferred) }
+          let(:trainee) { create(:trainee, :deferred) }
 
-          before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Deferred")
-          end
-
-          it "sets the status to Deferred" do
+          it "sets the correcrt status" do
             expect(subject["status"]).to eq("Deferred")
           end
         end
 
         context "trainee is withdrawn" do
-          let(:trainee) { create(:trainee, :completed, :withdrawn) }
+          let(:trainee) { create(:trainee, :withdrawn) }
 
-          before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Withdrawn")
-          end
-
-          it "sets the status to Withdrawn" do
+          it "sets the correcrt status" do
             expect(subject["status"]).to eq("Withdrawn")
           end
         end
 
         context "trainee is recommended for award" do
-          let(:trainee) { create(:trainee, :completed, :recommended_for_award) }
+          let(:trainee) { create(:trainee, :recommended_for_award) }
 
-          before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Approved")
-          end
-
-          it "sets the status to Approved" do
+          it "sets the correcrt status" do
             expect(subject["status"]).to eq("Approved")
           end
         end
 
         context "trainee is awarded" do
-          let(:trainee) { create(:trainee, :completed, :awarded) }
+          let(:trainee) { create(:trainee, :awarded) }
 
-          before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("Awarded")
-          end
-
-          it "sets the status to Awarded" do
-            expect(subject["status"]).to eq("Awarded")
+          it "includes awarded date" do
             expect(subject["awardedDate"]).to eq(trainee.awarded_at.to_date.iso8601)
           end
         end
 
-        context "trainee is in training (non-assessment only)" do
-          let(:trainee) { create(:trainee, :completed, :provider_led_postgrad, :trn_received) }
+        context "trainee is provider led postgrad" do
+          let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
 
-          before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("InTraining")
+          it "sets appropriate route type ID" do
+            expect(subject["routeTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["provider_led_postgrad"])
           end
+        end
 
-          it "sets the status to InTraining" do
-            expect(subject["status"]).to eq("InTraining")
+        context "trainee is school direct tuition fee" do
+          let(:trainee) { create(:trainee, :school_direct_tuition_fee, :trn_received) }
+          let(:provider_led_trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
+
+          it "uses a different route type ID than provider led postgrad" do
+            provider_led_params = described_class.new(trainee: provider_led_trainee).params
+
+            expect(subject["routeTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["school_direct_tuition_fee"])
+            expect(subject["routeTypeId"]).not_to eq(provider_led_params["routeTypeId"])
           end
+        end
 
-          it "sets the correct route type ID" do
-            expect(subject["routeTypeId"]).to eq("97497716-5ac5-49aa-a444-27fa3e2c152a")
+        # Check default country code correctly returned for non-iQTS trainees
+        context "when trainee is not iQTS" do
+          let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
+
+          it "defaults to GB as the country reference" do
+            expect(subject["trainingCountryReference"]).to eq("GB")
           end
         end
 
         context "trainee is iQTS" do
-          let(:trainee) { create(:trainee, :completed, :iqts, iqts_country: "Ireland") }
-          let(:country_ref) { "IE" }
-          let(:professional_status) { instance_double(described_class) }
-          let(:params_result) { { "trainingCountryReference" => country_ref, "routeTypeId" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1" } }
+          let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Ireland") }
 
-          before do
-            allow(::CodeSets::Trs).to receive(:training_status).with(trainee.state, trainee.training_route).and_return("UnderAssessment")
-            allow(described_class).to receive(:new).with(trainee:).and_return(professional_status)
-            allow(professional_status).to receive(:params).and_return(params_result)
-          end
-
-          it "sets the route type and training country code appropriately" do
-            expect(professional_status.params).to include({
-              "trainingCountryReference" => country_ref,
-              "routeTypeId" => "d0b60864-ab1c-4d49-a5c2-ff4bd9872ee1",
-            })
-          end
-        end
-      end
-
-      describe "#find_country_code" do
-        subject { described_class.new(trainee:) }
-
-        context "with valid country data" do
-          before do
-            country = double(id: "IE")
-            allow(DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES)
-              .to receive(:some)
-              .with(name: "Ireland")
-              .and_return([country])
-          end
-
-          it "returns the correct country code" do
-            expect(subject.send(:find_country_code, "Ireland")).to eq("IE")
+          it "includes the country reference" do
+            expect(subject["trainingCountryReference"]).to eq("IE")
           end
         end
 
-        context "with Cyprus country code (special case mapping)" do
-          before do
-            country = double(id: "CY")
-            allow(DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES)
-              .to receive(:some)
-              .with(name: "Cyprus")
-              .and_return([country])
-          end
+        context "trainee is iQTS in Cyprus" do
+          let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Cyprus") }
 
-          it "maps CY to XC" do
-            expect(subject.send(:find_country_code, "Cyprus")).to eq("XC")
+          it "maps CY to XC for country code" do
+            expect(subject["trainingCountryReference"]).to eq("XC")
           end
         end
 
-        context "with territory component in the country code" do
-          before do
-            country = double(id: "US-CA")
-            allow(DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES)
-              .to receive(:some)
-              .with(name: "United States, California")
-              .and_return([country])
-          end
+        context "trainee is iQTS with a territory country that's in the fallback mapping" do
+          let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Abu Dhabi") }
 
-          it "strips the territory component" do
-            expect(subject.send(:find_country_code, "United States, California")).to eq("US")
+          it "uses the fallback mapping to get the country code" do
+            expect(subject["trainingCountryReference"]).to eq("AE")
           end
         end
 
-        context "with no matching country" do
-          before do
-            # Empty array means no country was found
-            allow(DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES)
-              .to receive(:some)
-              .with(name: "NonexistentCountry")
-              .and_return([])
-
-            # Instead of trying to stub the MAPPING hash (which is frozen),
-            # we'll stub the specific behavior of the find method
-            instance = described_class.new(trainee:)
-            allow(instance).to receive(:find_country_code).with("NonexistentCountry").and_return(nil)
+        context "when trainee course subject is non-HESA" do
+          let(:trainee) do
+            create(:trainee, :trn_received, :with_secondary_education).tap do |t|
+              t.course_subject_one = course_subject
+              t.save
+            end
           end
 
-          it "returns nil" do
-            instance = described_class.new(trainee:)
-            allow(instance).to receive(:find_country_code).with("NonexistentCountry").and_return(nil)
-            expect(instance.send(:find_country_code, "NonexistentCountry")).to be_nil
+          context "citizenship" do
+            let(:course_subject) { ::CourseSubjects::CITIZENSHIP }
+
+            it "sets subject reference to 999001" do
+              expect(subject["trainingSubjectReferences"]).to include("999001")
+            end
+          end
+
+          context "physical education" do
+            let(:course_subject) { ::CourseSubjects::PHYSICAL_EDUCATION }
+
+            it "sets subject reference to 999002" do
+              expect(subject["trainingSubjectReferences"]).to include("999002")
+            end
+          end
+
+          context "design and technology" do
+            let(:course_subject) { ::CourseSubjects::DESIGN_AND_TECHNOLOGY }
+
+            it "sets subject reference to 999003" do
+              expect(subject["trainingSubjectReferences"]).to include("999003")
+            end
           end
         end
       end

@@ -3,7 +3,9 @@
 module AuthenticationTokens
   module Details
     class View < ViewComponent::Base
-      attr_reader :token
+      include Pundit::Authorization
+
+      attr_reader :token, :current_user
 
       delegate :id,
                :name,
@@ -18,8 +20,9 @@ module AuthenticationTokens
                :expired?,
                to: :token
 
-      def initialize(token)
+      def initialize(token, current_user = Current.user)
         @token = token
+        @current_user = current_user
       end
 
       def rows
