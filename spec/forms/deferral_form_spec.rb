@@ -85,7 +85,7 @@ describe DeferralForm, type: :model do
         end
       end
 
-      include_examples "date is not before itt start date", :deferral_form
+      it_behaves_like "date is not before itt start date", :deferral_form
     end
   end
 

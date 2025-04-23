@@ -105,37 +105,37 @@ describe TraineeFilter do
     context "with 'All subjects'" do
       let(:params) { { subject: "All subjects" } }
 
-      include_examples returns_nil
+      it_behaves_like returns_nil
     end
 
     context "with invalid record_source" do
       let(:params) { { record_source: %w[hackerman] } }
 
-      include_examples returns_nil
+      it_behaves_like returns_nil
     end
 
     context "with invalid training route" do
       let(:params) { { training_route: %w[not_a_training_route] } }
 
-      include_examples returns_nil
+      it_behaves_like returns_nil
     end
 
     context "with invalid status" do
       let(:params) { { status: %w[not_a_status] } }
 
-      include_examples returns_nil
+      it_behaves_like returns_nil
     end
 
     context "with invalid provider id" do
       let(:params) { { provider: "not an id" } }
 
-      include_examples returns_nil
+      it_behaves_like returns_nil
     end
 
     context "with empty params" do
       let(:params) { {} }
 
-      include_examples returns_nil
+      it_behaves_like returns_nil
     end
 
     context "with trainee start year" do
