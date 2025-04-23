@@ -58,8 +58,8 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
         expect(degree.subject_uuid).to eq("918170f0-5dce-e911-a985-000d3ab79618")
         expect(degree.institution).to eq("Blackburn College")
         expect(degree.institution_uuid).to eq("c63d87ce-7c3d-4e5a-93e2-337b71426d8f")
-        expect(degree.uk_degree).to eq("Bachelor of Science")
-        expect(degree.uk_degree_uuid).to eq("1b6a5652-c197-e711-80d8-005056ac45bb")
+        expect(degree.uk_degree).to eq("Bachelor of Arts (Hons) with intercalated PGCE")
+        expect(degree.uk_degree_uuid).to eq("0caa1ea5-868a-47a4-9b26-4b7470528b67")
         expect(degree.non_uk_degree).to be_nil
 
         expect(degree.graduation_year).to eq(2015)
