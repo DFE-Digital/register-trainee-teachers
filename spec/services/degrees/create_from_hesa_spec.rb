@@ -119,7 +119,7 @@ module Degrees
                 graduation_date: "2003-06-01",
                 degree_type: "400",
                 subject_one: "100485",
-                institution: "1250",
+                institution: "1000",
                 grade: "02",
                 country: nil,
               },
