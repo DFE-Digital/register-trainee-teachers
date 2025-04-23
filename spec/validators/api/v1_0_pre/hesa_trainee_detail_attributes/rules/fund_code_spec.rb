@@ -8,9 +8,8 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundCode do
 
   let(:hesa_trainee_detail_attributes) do
     Api::V10Pre::HesaTraineeDetailAttributes.new(
-      trainee_attributes:,
-      fund_code:,
-      course_age_range:,
+      { trainee_attributes:, fund_code:, course_age_range: },
+      record_source: "api",
     )
   end
   let(:trainee_attributes) { Api::V10Pre::TraineeAttributes.new(training_route:) }
