@@ -429,7 +429,12 @@
 - field_name: UK degree type
   technical: uk_degree
   hesa_alignment: DEGTYPE
-  description: The type of UK degree. Only the highest previous degree qualification should be submitted.
+  description: |-
+    This records the student’s previous qualification.
+
+    The type of UK degree if the trainee holds any previous UK degrees.
+
+    Only the highest previous degree qualification should be submitted.
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a UK degree
