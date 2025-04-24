@@ -14,7 +14,6 @@ module Trs
     def call
       return unless FeatureService.enabled?(:integrate_with_trs)
 
-      # Only update if trainee is in a valid state
       return unless valid_update_state?
 
       if trainee.trn.blank?
@@ -41,7 +40,6 @@ module Trs
     end
 
     def valid_update_state?
-      # Could be more specific about valid states for this endpoint
       ::CodeSets::Trs.valid_for_update?(trainee.state)
     end
 
