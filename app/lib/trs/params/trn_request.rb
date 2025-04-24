@@ -3,14 +3,6 @@
 module Trs
   module Params
     class TrnRequest
-      GENDER_CODES = {
-        male: "Male",
-        female: "Female",
-        other: "Other",
-        prefer_not_to_say: "NotProvided",
-        sex_not_provided: "NotAvailable",
-      }.freeze
-
       def initialize(trainee:, request_id:)
         @trainee = trainee
         @request_id = request_id
@@ -43,7 +35,7 @@ module Trs
             trainee.email,
           ],
           "nationalInsuranceNumber" => nil,
-          "gender" => GENDER_CODES[trainee.sex.to_sym],
+          "gender" => ::CodeSets::Trs::GENDER_CODES[trainee.sex.to_sym],
         }
       end
     end
