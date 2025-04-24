@@ -3712,7 +3712,7 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The grade of the degree.  Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degclss">HESA degree class field</a>
+        The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degclss">HESA degree class field</a>
       </p>
       <p class="govuk-body">
         Example: <code>02</code>
