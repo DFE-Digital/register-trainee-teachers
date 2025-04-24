@@ -48,7 +48,7 @@ describe TraineeStartDateForm, type: :model do
       end
     end
 
-    include_examples "start date validations"
+    it_behaves_like "start date validations"
 
     context "date is more than 10 years in the past" do
       let(:params) { { year: "2009", month: "12", day: "20" } }

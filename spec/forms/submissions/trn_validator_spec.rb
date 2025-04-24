@@ -233,12 +233,12 @@ module Submissions
           }
         end
 
-        include_examples "error"
+        it_behaves_like "error"
 
         context "requires school but incomplete" do
           let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_partner, progress: progress.merge(schools: false)) }
 
-          include_examples "error"
+          it_behaves_like "error"
         end
       end
 
@@ -247,7 +247,7 @@ module Submissions
 
         let(:progress) { {} }
 
-        include_examples "error"
+        it_behaves_like "error"
       end
 
       context "with incomplete trainee" do

@@ -32,7 +32,7 @@ describe DiversityForm, type: :model do
 
   delegate_methods.each do |form_class, method_names|
     method_names.each do |method_name|
-      include_examples "a delegate method", method_name, form_class
+      it_behaves_like "a delegate method", method_name, form_class
     end
   end
 
