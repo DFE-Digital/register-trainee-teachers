@@ -78,7 +78,6 @@ module Trs
       end
 
       def route_type_id
-        # Map the training route to the TRS route type
         ::CodeSets::Trs::ROUTE_TYPES[trainee.training_route]
       end
 

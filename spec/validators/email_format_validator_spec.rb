@@ -30,62 +30,62 @@ describe EmailFormatValidator do
     context "that is only @" do
       let(:email) { "@" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that doesn't contain @" do
       let(:email) { "invalid" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that doesn't match the email regex" do
       let(:email) { "invalid@b" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that is too long" do
       let(:email) { "#{SecureRandom.alphanumeric(321)}@example.com" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that has two consecutive periods" do
       let(:email) { "invalid..@example.com" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that has a hostname that is too long" do
       valid_part = SecureRandom.alphanumeric(63)
       let(:email) { "invalid@#{Array.new(4, valid_part).join('.')}.com" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that has a hostname with fewer than two parts" do
       let(:email) { "invalid@example" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that has a hostname with a part that is too long" do
       let(:email) { "invalid@#{SecureRandom.alphanumeric(64)}.com" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that has a hostname with a part that doesn't match the regex" do
       let(:email) { "invalid@example.#.com" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
 
     context "that has a hostname with a final part that doesn't match the TLD regex" do
       let(:email) { "invalid@example.a" }
 
-      include_examples error_test
+      it_behaves_like error_test
     end
   end
 end

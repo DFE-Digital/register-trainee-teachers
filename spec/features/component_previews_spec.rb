@@ -25,6 +25,6 @@ feature "component previews" do
   end
 
   all_links.each do |link|
-    include_examples "navigate to", link
+    it_behaves_like "navigate to", link
   end
 end

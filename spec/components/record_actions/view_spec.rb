@@ -23,7 +23,7 @@ describe RecordActions::View do
     context "draft" do
       let(:trait) { :draft }
 
-      include_examples "no actions"
+      it_behaves_like "no actions"
     end
 
     context "submitted for TRN" do
@@ -31,7 +31,7 @@ describe RecordActions::View do
 
       it { is_expected.to include("This trainee is pending a TRN", "Defer", "withdraw") }
 
-      include_examples "no button"
+      it_behaves_like "no button"
     end
 
     context "TRN received" do
@@ -43,13 +43,13 @@ describe RecordActions::View do
     context "recommended for QTS" do
       let(:trait) { :recommended_for_award }
 
-      include_examples "no actions"
+      it_behaves_like "no actions"
     end
 
     context "withdrawn" do
       let(:trait) { :withdrawn }
 
-      include_examples "no actions"
+      it_behaves_like "no actions"
     end
 
     context "deferred" do
@@ -57,20 +57,20 @@ describe RecordActions::View do
 
       it { is_expected.to include("This trainee is deferred", "Reinstate", "withdraw") }
 
-      include_examples "no button"
+      it_behaves_like "no button"
     end
 
     context "QTS awarded" do
       let(:trait) { :awarded }
 
-      include_examples "no actions"
+      it_behaves_like "no actions"
     end
   end
 
   context "when course date is in the future" do
     let(:trainee) { build(:trainee, :submitted_for_trn, itt_start_date: 1.day.from_now) }
 
-    include_examples "no button"
+    it_behaves_like "no button"
 
     it "renders the ITT starts in the future text" do
       expect(subject).to include("The trainee’s ITT starts on #{date_for_summary_view(trainee.itt_start_date)}")
@@ -102,7 +102,7 @@ describe RecordActions::View do
 
     subject { render_inline(described_class.new(trainee, has_missing_fields: true)).text }
 
-    include_examples "no button"
+    it_behaves_like "no button"
 
     it "renders the missing fields text" do
       expect(subject).to include("This trainee record requires additional details")

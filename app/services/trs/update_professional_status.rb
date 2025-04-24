@@ -37,11 +37,6 @@ module Trs
       )
     end
 
-    def valid_update_state?
-      # Could be more specific about valid states for this endpoint
-      ::CodeSets::Trs.valid_for_update?(trainee.state)
-    end
-
     def update_professional_status
       Client.put("/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}", body: payload.to_json)
     end
