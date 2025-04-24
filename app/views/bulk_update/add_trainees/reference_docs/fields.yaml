@@ -10,10 +10,11 @@
 - field_name: Application ID
   technical: application_id
   hesa_alignment: APPLYAPPLICATIONID
-  description: Unique Application ID, also called Application Number, used by the
+  description:
+    Unique Application ID, also called Application Number, used by the
     Department for Education’s apply for teacher training online service.
   format: integer
-  example: '123456'
+  example: "123456"
   validation: Optional - but should be included for all trainees with an application in the Apply service
 - field_name: HESA ID
   technical: hesa_id
@@ -45,7 +46,8 @@
 - field_name: Previous Last Name
   technical: previous_last_name
   hesa_alignment: PSURNAME
-  description: This is the trainee’s surname immediately prior to the current surname,
+  description:
+    This is the trainee’s surname immediately prior to the current surname,
     if applicable.
   format: 60 character length
   example: '"Jordan-smith"'
@@ -105,13 +107,15 @@
   hesa_alignment: ETHNIC
   description: This field records a student’s ethnicity.
   format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
-  example: '"103" for example is the code to use if the ethnicity is Asian - Indian
+  example:
+    '"103" for example is the code to use if the ethnicity is Asian - Indian
     or Indian British.'
   validation: Optional
 - field_name: Disability 1
   technical: disability_1
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -119,7 +123,8 @@
 - field_name: Disability 2
   technical: disability_2
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -127,7 +132,8 @@
 - field_name: Disability 3
   technical: disability_3
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -135,7 +141,8 @@
 - field_name: Disability 4
   technical: disability_4
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -143,7 +150,8 @@
 - field_name: Disability 5
   technical: disability_5
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -151,7 +159,8 @@
 - field_name: Disability 6
   technical: disability_6
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -159,7 +168,8 @@
 - field_name: Disability 7
   technical: disability_7
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -167,7 +177,8 @@
 - field_name: Disability 8
   technical: disability_8
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -175,7 +186,8 @@
 - field_name: Disability 9
   technical: disability_9
   hesa_alignment: DISABLE
-  description: This field records the type of disability that a student has, on the
+  description:
+    This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
   format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
@@ -183,7 +195,8 @@
 - field_name: ITT Aim
   technical: itt_aim
   hesa_alignment: ITTAIM
-  description: This field is a three characters field completed for students on courses
+  description:
+    This field is a three characters field completed for students on courses
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
   format: "[HESA ITT aim codes](https://www.hesa.ac.uk/collection/c24053/e/ittaim)"
@@ -193,7 +206,8 @@
 - field_name: Training Route
   technical: training_route
   hesa_alignment: ENTRYRTE
-  description: This field describes the route by which the student has accessed Initial
+  description:
+    This field describes the route by which the student has accessed Initial
     Teacher Training provision.
   format: "[HESA training routes reference codes](https://www.hesa.ac.uk/collection/c24053/e/entryrte)"
   example: '"03" for example is code to use if it is School Direct salaried'
@@ -243,7 +257,8 @@
 - field_name: Study Mode
   technical: study_mode
   hesa_alignment: MODE
-  description: This field indicates the method by which a student is being taught
+  description:
+    This field indicates the method by which a student is being taught
     their course.
   format: "[HESA study mode codes](https://www.hesa.ac.uk/collection/c24053/e/mode)"
   example: '"01"'
@@ -252,7 +267,8 @@
 - field_name: ITT Start Date
   technical: itt_start_date
   hesa_alignment: ITTSTARTDATE
-  description: This field indicates the date the ITT course (to gain QTS) officially
+  description:
+    This field indicates the date the ITT course (to gain QTS) officially
     starts
   format: YYYY-MM-DD
   example: '"2024-09-01"'
@@ -278,7 +294,8 @@
 
       - `99801` - Teacher training qualification: Further education/Higher education
       - `99803` - Teacher training qualification: Other
-  example: '"13916" for example is the code used for Accredited by the Department
+  example:
+    '"13916" for example is the code used for Accredited by the Department
     for Education (DfE) for the purpose of delivering initial teacher training programmes
     to achieve Qualified Teacher Status (QTS): Ages 7-14'
   validation: Mandatory
@@ -304,7 +321,8 @@
 - field_name: Employing School URN
   technical: employing_school_urn
   hesa_alignment: SDEMPLOY
-  description: This field collects the employing school for School Direct salaried
+  description:
+    This field collects the employing school for School Direct salaried
     trainees.
   format: Must be a 6-digit number
   example: |-
@@ -369,7 +387,8 @@
 - field_name: Fund Code
   technical: fund_code
   hesa_alignment: FUNDCODE
-  description: This field indicates whether the student is counted as 'fundable',
+  description:
+    This field indicates whether the student is counted as 'fundable',
     i.e. 'eligible for funding' for the course by the appropriate funding council/body.
   format: "[HESA fund code codes](https://www.hesa.ac.uk/collection/c24053/e/fundcode)"
   example: '"2"'
@@ -378,7 +397,8 @@
 - field_name: Funding Method
   technical: funding_method
   hesa_alignment: BURSLEV
-  description: This field records the training bursary awarded to the student. Bursary
+  description:
+    This field records the training bursary awarded to the student. Bursary
     levels will vary according to the level of study of the student, their degree
     classification if applicable and the subject specialism in which they wish to
     train to teach.
@@ -389,7 +409,8 @@
 - field_name: Training Initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
-  description: This field identifies students who are part of a specific scheme that
+  description:
+    This field identifies students who are part of a specific scheme that
     is to be monitored independently. Valid entries will change from year to year
     to reflect current schemes.
   format: "[HESA training initiative codes](https://www.hesa.ac.uk/collection/c24053/e/initiatives)"
@@ -458,7 +479,7 @@
 - field_name: UK degree grade
   technical: grade
   hesa_alignment: DEGCLSS
-  description: The grade of the degree. Only the highest previous degree qualification should be submitted.
+  description: The grade of the degree.
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
   example: '"01" for example is First class honours'
   validation: Conditional - mandatory if specifying a UK degree
@@ -474,7 +495,8 @@
 - field_name: Degree UK awarding institution
   technical: institution
   hesa_alignment: DEGEST
-  description: This records the provider where the student’s previous qualification
+  description:
+    This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
   format: "[HESA codes for degree establishment if a UK provider](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"1101" for example is Hull College'
@@ -483,10 +505,12 @@
 - field_name: Degree country
   technical: country
   hesa_alignment: DEGCTRY
-  description: This records the country where the student’s previous qualification
+  description:
+    This records the country where the student’s previous qualification
     was awarded
   format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
-  example: '"AU" is an example of using the previous qualification country code for
+  example:
+    '"AU" is an example of using the previous qualification country code for
     Australia'
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L41
