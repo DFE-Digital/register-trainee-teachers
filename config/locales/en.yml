@@ -1533,6 +1533,9 @@ en:
       api/trainees/award_recommendation_service:
         qts_standards_met_date: QTS standards met date
     errors:
+      messages:
+        future: must be in the future
+        not_future: must not be in the future
       validators:
         postcode:
           invalid: Enter a valid postcode (for example, BN1 1AA)
@@ -2061,7 +2064,7 @@ en:
               blank: Enter the token name
             expires_at:
               invalid: Enter a valid expiration date
-              future: Must be in the future
+              future: Expiration date must be in the future
         undo_withdrawal_form:
           attributes:
             comment:
@@ -2131,7 +2134,6 @@ en:
               submission_ready: submission ready is invalid must be true
               degrees: degree information must be completed before QTS recommendation
             qts_standards_met_date:
-              future: must be in the past
               itt_start_date: &qts_itt_start_date must not be before the ITT start date
         api/trainees/deferral_service:
           attributes:

@@ -9,7 +9,7 @@ class AuthenticationTokenForm
   attr_accessor(:name, :day, :month, :year, :user, :params, :authentication_token)
 
   validates :name, presence: true, length: { maximum: 200 }
-  validates :expires_at, date: true, future_date: true
+  validates :expires_at, date: true, date_relative_to_time: { future: true }
 
   def initialize(user, params: {})
     @user = user

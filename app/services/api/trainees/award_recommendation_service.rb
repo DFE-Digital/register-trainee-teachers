@@ -16,7 +16,7 @@ module Api
       validates :qts_standards_met_date,
                 presence: true,
                 date: true,
-                not_future_date: true,
+                date_relative_to_time: { future: false },
                 after_itt_start_date: true
 
       validates_with AwardRecommendationValidator

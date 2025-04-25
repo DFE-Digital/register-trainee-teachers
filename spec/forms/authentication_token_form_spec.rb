@@ -32,7 +32,7 @@ describe AuthenticationTokenForm, type: :model do
 
         it "returns false" do
           expect(subject.valid?).to be(false)
-          expect(subject.errors[:expires_at]).to contain_exactly("Must be in the future")
+          expect(subject.errors[:expires_at]).to contain_exactly("Expiration date must be in the future")
         end
       end
 
@@ -41,7 +41,7 @@ describe AuthenticationTokenForm, type: :model do
 
         it "returns false" do
           expect(subject.valid?).to be(false)
-          expect(subject.errors[:expires_at]).to contain_exactly("Must be in the future")
+          expect(subject.errors[:expires_at]).to contain_exactly("Expiration date must be in the future")
         end
       end
 
