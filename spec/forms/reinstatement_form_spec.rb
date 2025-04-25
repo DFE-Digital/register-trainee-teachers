@@ -53,7 +53,7 @@ describe ReinstatementForm, type: :model do
         end
       end
 
-      include_examples "date is not before itt start date", :reinstatement_form
+      it_behaves_like "date is not before itt start date", :reinstatement_form
     end
   end
 

@@ -21,7 +21,7 @@
         <li>
           <%= govuk_link_to(
             "Download your CSV file with errors indicated",
-            bulk_update_add_trainees_review_error_path(upload, format: :csv),
+            bulk_update_add_trainees_upload_path(upload, format: :csv),
           ) %>
         </li>
 
@@ -35,8 +35,10 @@
           <%= f.govuk_file_field(:file, label: { hidden: true }, accept: ".csv") %>
         </li>
 
-        <%= f.govuk_submit("Upload records") %>
+        <%= f.hidden_field :id, value: upload.id %>
       </ol>
+
+      <%= f.govuk_submit("Upload records") %>
     <% end %>
 
     <p class="govuk-body">

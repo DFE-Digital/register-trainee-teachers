@@ -11,6 +11,7 @@ module BulkUpdate
 
     before do
       allow(::Trainees::FindDuplicatesOfHesaTrainee).to receive(:call).and_return([])
+      allow(::Trainees::UpdateIttDataInTra).to receive(:call)
     end
 
     describe "#call" do
@@ -25,9 +26,9 @@ module BulkUpdate
             .from(nil).to(recommendations_upload_row.standards_met_at)
         end
 
-        it "updates DQT with the changes" do
-          expect { subject }
-            .to have_enqueued_job(Dqt::RecommendForAwardJob).once
+        it "calls the UpdateIttDataInTra service" do
+          subject
+          expect(::Trainees::UpdateIttDataInTra).to have_received(:call).with(trainee:)
         end
       end
 
@@ -40,9 +41,9 @@ module BulkUpdate
           expect(trainee.outcome_date).to be_nil
         end
 
-        it "does not update DQT" do
-          expect { subject }
-            .not_to have_enqueued_job(Dqt::RecommendForAwardJob).once
+        it "does not call the UpdateIttDataInTra service" do
+          subject
+          expect(::Trainees::UpdateIttDataInTra).not_to have_received(:call).with(trainee:)
         end
       end
     end

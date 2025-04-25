@@ -22,6 +22,7 @@ feature "Organisation details" do
     let!(:user_one) { create(:user, providers: [organisation]) }
     let!(:user_two) { create(:user, providers: [organisation]) }
     let!(:user_three) { create(:user) }
+    let!(:discarded_user) { create(:user, providers: [organisation], discarded_at: 1.day.ago) }
 
     scenario "a user views the organisation settings page" do
       when_i_click_on_the_organisation_settings_link
@@ -59,6 +60,7 @@ feature "Organisation details" do
     let!(:user_one) { create(:user, lead_partners: [organisation]) }
     let!(:user_two) { create(:user, lead_partners: [organisation]) }
     let!(:user_three) { create(:user, :with_lead_partner_organisation) }
+    let!(:discarded_user) { create(:user, lead_partners: [organisation], discarded_at: 1.day.ago) }
 
     before do
       given_i_have_clicked_on_the_organisation_name_link
@@ -287,6 +289,7 @@ private
     expect(organisation_settings_page).to have_content("#{user_one.name} – #{user_one.email}")
     expect(organisation_settings_page).to have_content("#{user_two.name} – #{user_two.email}")
     expect(organisation_settings_page).not_to have_content("#{user_three.name} – #{user_three.email}")
+    expect(organisation_settings_page).not_to have_content("#{discarded_user.name} – #{discarded_user.email}")
   end
 
   def and_i_see_the_contact_support_email

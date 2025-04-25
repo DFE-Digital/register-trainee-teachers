@@ -18,7 +18,7 @@ RSpec.describe Trs::Params::TrnRequest, type: :model do
           "dateOfBirth" => trainee.date_of_birth.iso8601,
           "emailAddresses" => [trainee.email],
           "nationalInsuranceNumber" => nil,
-          "gender" => Trs::Params::TrnRequest::GENDER_CODES[trainee.sex.to_sym],
+          "gender" => CodeSets::Trs::GENDER_CODES[trainee.sex.to_sym],
         },
         "identityVerified" => nil,
         "oneLoginUserSubject" => nil,
