@@ -6,20 +6,25 @@
     href: authentication_tokens_path
   ) %>
 <% end %>
-<h1 class="govuk-heading-l">
-  Are you sure you want to revoke this token?
-</h1>
-<p class="govuk-body">Revoking a token removes access to the Register API.</p>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">
+      Are you sure you want to revoke this token?
+    </h1>
 
-<p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.</p>
+    <%= render GovukComponent::WarningTextComponent.new(text: "Revoking a token removes access to the Register API.") %>
 
-<p class="govuk-body">
-  <%= register_form_with(url: authentication_token_revoke_path(authentication_token: @token),method: :put) do |f| %>
-    <%= f.submit"Yes I’m sure — revoke this token", class: "govuk-button govuk-button--warning" %>
-  <% end %>
-</p>
-<div class="govuk-body">
-  <%= govuk_link_to(
-    "Cancel revoking this API token",
-    authentication_tokens_path) %>
+    <p class="govuk-body">Before revoking a current token, you should generate a new token if you want to continue transferring your trainee data to Register via the API.</p>
+
+    <p class="govuk-body">
+      <%= register_form_with(url: authentication_token_revoke_path(authentication_token: @token),method: :put) do |f| %>
+        <%= f.submit"Yes I’m sure — revoke this token", class: "govuk-button govuk-button--warning" %>
+      <% end %>
+    </p>
+    <p class="govuk-body">
+      <%= govuk_link_to(
+        "Cancel revoking this API token",
+        authentication_tokens_path) %>
+    </p>
+  </div>
 </div>
