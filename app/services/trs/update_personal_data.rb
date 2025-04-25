@@ -4,7 +4,6 @@ module Trs
   class UpdatePersonalData
     include ServicePattern
 
-    class PersonalDataUpdateError < StandardError; end
     class PersonUpdateMissingTrn < StandardError; end
 
     def initialize(trainee:)
