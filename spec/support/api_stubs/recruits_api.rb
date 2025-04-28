@@ -14,22 +14,23 @@ module ApiStubs
       { data: [application(id: "3774")] }.to_json
     end
 
-    def self.application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
+    def self.application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {}, status: "recruited")
       uk_application(
         id:,
         course_attributes:,
         candidate_attributes:,
         degree_attributes:,
+        status:,
       ).to_json
     end
 
-    def self.uk_application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {})
+    def self.uk_application(id: "3772", course_attributes: {}, candidate_attributes: {}, degree_attributes: {}, status: "recruited")
       {
         id: id,
         type: "application",
         attributes: {
           support_reference: "NV6357",
-          status: "recruited",
+          status: status,
           updated_at: "2020-06-17T09:05:53+01:00",
           submitted_at: "2020-06-11T15:54:15+01:00",
           recruited_at: "2020-06-17T09:05:53.165+01:00",
