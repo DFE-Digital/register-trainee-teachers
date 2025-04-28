@@ -11,6 +11,7 @@ feature "bulk add trainees" do
     and_there_is_a_current_academic_cycle
     and_there_is_a_previous_academic_cycle
     and_there_is_a_nationality
+    and_there_are_disabilities
   end
 
   context "when the feature flag is off", feature_bulk_add_trainees: false do
@@ -302,6 +303,36 @@ feature "bulk add trainees" do
 
         and_i_visit_the_trainees_page
         then_i_can_see_the_new_trainees_with_a_degree
+      end
+
+      scenario "the bulk add trainees page is visible and I upload a file with a disability" do
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_attach_a_valid_file_with_a_disability
+        and_i_click_the_upload_button
+        and_i_click_on_continue_button
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        and_i_see_file_validation_passed
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees_with_a_disability
       end
 
       scenario "when I try to look at the status of a different providers upload" do
@@ -664,6 +695,20 @@ private
     create(:nationality, :british)
   end
 
+  def and_there_are_disabilities
+    %i[
+        deaf
+        blind
+        development_condition
+        learning_difficulty
+        long_standing_illness
+        mental_health_condition
+        physical_disability_or_mobility_issue
+        social_or_communication_impairment
+        other
+      ].each { |name| create(:disability, name) }
+  end
+
   def when_i_visit_the_bulk_update_index_page
     visit bulk_update_path
   end
@@ -755,6 +800,12 @@ private
 
   def and_i_attach_a_valid_file_with_a_degree
     filename = "five_trainees_with_degree.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
+  def and_i_attach_a_valid_file_with_a_disability
+    filename = "five_trainees_with_disability.csv"
 
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
@@ -920,6 +971,26 @@ private
     expect(page).to have_content("Offshore engineering")
     expect(page).to have_content("Master of Social Studies")
     expect(page).to have_content("2001")
+  end
+
+  def then_i_can_see_the_new_trainees_with_a_disability
+    expect(page).to have_content("Preston Rath")
+    expect(page).to have_content("Breanne Langosh")
+    expect(page).to have_content("Kirby Gerlach")
+    expect(page).to have_content("Emilio Rippin")
+    expect(page).to have_content("Lavonda Bins")
+
+    click_on "Preston Rath"
+
+    expect(page).to have_content("deaf")
+    expect(page).to have_content("blind")
+    expect(page).to have_content("development condition")
+    expect(page).to have_content("learning difficulty")
+    expect(page).to have_content("long-standing illness")
+    expect(page).to have_content("mental health condition")
+    expect(page).to have_content("physical disability or mobility issue")
+    expect(page).to have_content("social or communication impairment")
+    expect(page).to have_content("other")
   end
 
   def when_the_upload_has_failed_with_validation_errors
