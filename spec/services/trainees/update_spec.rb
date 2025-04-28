@@ -11,7 +11,7 @@ module Trainees
         it "raises an error when both feature flags are enabled" do
           expect {
             described_class.call(trainee:)
-          }.to raise_error(HandlesIntegrationConflicts::ConflictingIntegrationsError)
+          }.to raise_error(HandlesIntegrationConflicts::ConflictingIntegrationsError, "Both DQT and TRS integrations are enabled. Only one should be active at a time.")
         end
 
         it "does not raise an error if update_dqt is false" do
