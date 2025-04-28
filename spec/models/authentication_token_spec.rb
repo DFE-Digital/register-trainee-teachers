@@ -15,13 +15,6 @@ RSpec.describe AuthenticationToken do
       }).backed_by_column_of_type(:string)
   end
 
-  describe "validations" do
-    subject(:authentication_token) { build(:authentication_token) }
-
-    it { is_expected.to validate_uniqueness_of(:hashed_token) }
-    it { is_expected.to validate_length_of(:name).is_at_most(200) }
-  end
-
   describe "associations" do
     it { is_expected.to belong_to(:provider) }
     it { is_expected.to belong_to(:created_by) }
@@ -86,6 +79,23 @@ RSpec.describe AuthenticationToken do
 
     it "includes the environment name in the token" do
       expect(token.split.last.split("_").first).to eq("test")
+    end
+
+    context "when the hashed token already exists" do
+      let(:hex) { SecureRandom.hex(10) }
+      let(:new_hex) { SecureRandom.hex(10) }
+
+      let(:hashed_token) { described_class.hash_token("test_#{hex}") }
+
+      let!(:existing_token) { create(:authentication_token, hashed_token:) }
+
+      before do
+        allow(SecureRandom).to receive(:hex).with(10).and_return(hex, new_hex)
+      end
+
+      it "creates another hashed token" do
+        expect(subject).to be_persisted
+      end
     end
   end
 

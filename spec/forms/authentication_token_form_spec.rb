@@ -3,35 +3,75 @@
 require "rails_helper"
 
 describe AuthenticationTokenForm, type: :model do
+  let(:user) { UserWithOrganisationContext.new(user: create(:user, :hei), session: {}) }
+
   let(:params) { {} }
-  let(:user) { UserWithOrganisationContext.new(user: build(:user, :hei), session: {}) }
 
   subject { described_class.new(user, params:) }
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:name) }
+    describe "#name" do
+      it { is_expected.to validate_presence_of(:name) }
+      it { is_expected.to validate_length_of(:name).is_at_most(200) }
+    end
+
+    describe "#expires_at" do
+      let(:params) { { name: "Token name" } }
+
+      context "when not a date" do
+        let(:params) { super().merge({ day: Faker::Alphanumeric.alpha, month: Date.current.month, year: Date.current.year }) }
+
+        it "returns false" do
+          expect(subject.valid?).to be(false)
+          expect(subject.errors[:expires_at]).to contain_exactly("Enter a valid expiration date")
+        end
+      end
+
+      context "when in the past" do
+        let(:params) { super().merge({ day: 1.year.ago.day, month: Date.current.month, year: Date.current.year }) }
+
+        it "returns false" do
+          expect(subject.valid?).to be(false)
+          expect(subject.errors[:expires_at]).to contain_exactly("Expiration date must be in the future")
+        end
+      end
+
+      context "when in the present" do
+        let(:params) { super().merge({ day: Date.current.day, month: Date.current.month, year: Date.current.year }) }
+
+        it "returns false" do
+          expect(subject.valid?).to be(false)
+          expect(subject.errors[:expires_at]).to contain_exactly("Expiration date must be in the future")
+        end
+      end
+
+      context "when in the future" do
+        let(:params) { super().merge({ day: 1.day.from_now.day, month: Date.current.month, year: Date.current.year }) }
+
+        it "returns true" do
+          expect(subject.valid?).to be(true)
+        end
+      end
+    end
   end
 
   describe "#save!" do
-    let(:authentication_token) { build(:authentication_token) }
-
-    before do
-      allow(AuthenticationToken).to receive(:create_with_random_token).and_return(authentication_token)
-    end
-
     context "without an expiry date" do
       let(:params) { { name: "New token" } }
 
       it "generates a new token" do
-        expect(AuthenticationToken).to receive(:create_with_random_token).with(
-          provider: user.organisation,
-          created_by: user,
-          name: "New token",
-          expires_at: nil,
-        )
-        subject.save!
+        expect {
+          subject.save!
+        }.to change {
+          AuthenticationToken.count
+        }.by(1)
 
-        expect(subject.authentication_token).to eq(authentication_token)
+        token = subject.authentication_token
+
+        expect(token.provider).to eq(user.organisation)
+        expect(token.created_by).to eq(user)
+        expect(token.name).to eq("New token")
+        expect(token.expires_at).to be_nil
       end
     end
 
@@ -39,15 +79,18 @@ describe AuthenticationTokenForm, type: :model do
       let(:params) { { name: "New token", year: "2025", month: "12", day: "25" } }
 
       it "generates a new token" do
-        expect(AuthenticationToken).to receive(:create_with_random_token).with(
-          provider: user.organisation,
-          created_by: user,
-          name: "New token",
-          expires_at: Date.new(2025, 12, 25),
-        )
-        subject.save!
+        expect {
+          subject.save!
+        }.to change {
+          AuthenticationToken.count
+        }.by(1)
 
-        expect(subject.authentication_token).to eq(authentication_token)
+        token = subject.authentication_token
+
+        expect(token.provider).to eq(user.organisation)
+        expect(token.created_by).to eq(user)
+        expect(token.name).to eq("New token")
+        expect(token.expires_at).to eq(Date.new(2025, 12, 25))
       end
     end
   end

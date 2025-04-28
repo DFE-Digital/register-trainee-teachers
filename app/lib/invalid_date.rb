@@ -8,4 +8,8 @@ InvalidDate = Struct.new(:day, :month, :year, keyword_init: true) do
   def future?
     false
   end
+
+  def to_s
+    values.join("/")
+  end
 end

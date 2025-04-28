@@ -27,6 +27,7 @@ feature "revoke an authentication token" do
 
     and_i_click_the_revoke_token_confirmation_button
     then_the_token_should_have_a_revoked_status
+    and_i_cannot_see_the_revoke_action
 
     and_i_navigate_to_the_revoke_token_page
     then_i_see_an_unauthorised_message

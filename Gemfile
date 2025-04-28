@@ -208,7 +208,7 @@ group :test do
   gem "cuprite", "~> 0.15"
   gem "selenium-webdriver"
 
-  gem "shoulda-matchers", "~> 6.4"
+  gem "shoulda-matchers", "~> 6.5"
   # Code coverage reporter
   gem "simplecov", "~> 0.22.0", require: false
   gem "simplecov-json"

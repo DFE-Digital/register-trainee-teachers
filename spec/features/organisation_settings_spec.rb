@@ -218,6 +218,7 @@ private
       expect(token_management_page).not_to have_content("Revoked by")
       expect(token_management_page).not_to have_content("Expires on")
       expect(token_management_page).not_to have_content("Expired")
+      expect(token_management_page).to have_link("Revoke")
     end
 
     within("#token-#{token_two.id}") do
@@ -227,6 +228,7 @@ private
       expect(token_management_page).to have_content("Last used\t#{1.day.ago.to_date.to_fs(:govuk)}")
       expect(token_management_page).not_to have_content("Revoked by")
       expect(token_management_page).to have_content("Expires on\t#{1.month.from_now.to_date.to_fs(:govuk)}")
+      expect(token_management_page).to have_link("Revoke")
     end
 
     within("#token-#{token_three.id}") do
@@ -236,6 +238,7 @@ private
       expect(token_management_page).to have_content("Last used\t#{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).not_to have_content("Revoked by")
       expect(token_management_page).to have_content("Expired\t#{1.day.ago.to_date.to_fs(:govuk)}")
+      expect(token_management_page).not_to have_link("Revoke")
     end
 
     within("#token-#{token_four.id}") do
@@ -246,6 +249,7 @@ private
       expect(token_management_page).to have_content("Revoked by\t#{user.name} on #{Time.zone.today.to_fs(:govuk)}")
       expect(token_management_page).not_to have_content("Expires on")
       expect(token_management_page).not_to have_content("Expired")
+      expect(token_management_page).not_to have_link("Revoke")
     end
 
     expect(page).not_to have_css("#token-#{token_five.id}")

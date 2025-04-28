@@ -18,3 +18,6 @@ Lint/StructNewOverride:
 
 Lint/MissingSuper:
   Enabled: false
+
+Lint/Loop:
+  Enabled: false
