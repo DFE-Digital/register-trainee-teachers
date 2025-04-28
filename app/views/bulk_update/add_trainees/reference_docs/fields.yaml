@@ -209,7 +209,20 @@
   description:
     This field describes the route by which the student has accessed Initial
     Teacher Training provision.
-  format: "[HESA training routes reference codes](https://www.hesa.ac.uk/collection/c24053/e/entryrte)"
+  format: |-
+    02 School Direct tuition fee
+
+    03 School Direct salaried
+
+    09 Undergraduate Opt-in
+
+    10 Postgraduate teaching apprenticeship
+
+    11 Primary and Secondary Undergraduate Fee Funded
+
+    12 Primary and Secondary Postgraduate Fee Funded
+
+    14 Teacher Degree Apprenticeship
   example: '"03" for example is code to use if it is School Direct salaried'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/trainee.rb#L213-L215
