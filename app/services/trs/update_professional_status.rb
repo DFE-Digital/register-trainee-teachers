@@ -14,8 +14,6 @@ module Trs
     def call
       return unless FeatureService.enabled?(:integrate_with_trs)
 
-      return unless valid_update_state?
-
       if trainee.trn.blank?
         raise_professional_status_update_missing_trn_message
       end
@@ -37,10 +35,6 @@ module Trs
           #{Settings.base_url}/trainees/#{trainee.slug}
         TEXT
       )
-    end
-
-    def valid_update_state?
-      ::CodeSets::Trs.valid_for_update?(trainee.state)
     end
 
     def update_professional_status

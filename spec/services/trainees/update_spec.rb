@@ -4,14 +4,14 @@ require "rails_helper"
 
 module Trainees
   describe Update do
-    let(:trainee) { create(:trainee, trn: "12345678") }
+    let(:trainee) { create(:trainee, :trn_received) }
 
     describe "conflicting integrations" do
       context "when both integrations are enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: true do
         it "raises an error when both feature flags are enabled" do
           expect {
             described_class.call(trainee:)
-          }.to raise_error(Update::ConflictingIntegrationsError)
+          }.to raise_error(HandlesIntegrationConflicts::ConflictingIntegrationsError, "Both DQT and TRS integrations are enabled. Only one should be active at a time.")
         end
 
         it "does not raise an error if update_dqt is false" do
