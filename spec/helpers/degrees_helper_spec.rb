@@ -91,8 +91,9 @@ describe DegreesHelper do
   describe "#countries_options" do
     it "iterates over array and prints out correct countries values" do
       expect(countries_options.first.value).to be_nil
-      expect(countries_options.second.value).to eq "Andorra"
-      expect(countries_options.second.text).to eq "Andorra"
+      # Pre and post-DfE::ReferenceData::CountriesAndTerritories update https://github.com/DFE-Digital/dfe-reference-data/pull/139/
+      expect(countries_options.second.value).to eq("Abu Dhabi").or eq("Afghanistan")
+      expect(countries_options.second.text).to eq("Abu Dhabi").or eq("Afghanistan")
     end
   end
 end
