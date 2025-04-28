@@ -129,16 +129,16 @@ module BulkUpdate
 
           before do
             %i[
-                deaf
-                blind
-                development_condition
-                learning_difficulty
-                long_standing_illness
-                mental_health_condition
-                physical_disability_or_mobility_issue
-                social_or_communication_impairment
-                other
-              ].each { |name| create(:disability, name) }
+              deaf
+              blind
+              development_condition
+              learning_difficulty
+              long_standing_illness
+              mental_health_condition
+              physical_disability_or_mobility_issue
+              social_or_communication_impairment
+              other
+            ].each { |name| create(:disability, name) }
           end
 
           it "creates a trainee and 9 disability records" do
