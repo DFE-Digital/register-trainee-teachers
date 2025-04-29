@@ -76,7 +76,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       end
 
       it "uses the trainee serializer", openapi: false do
-        expect(Api::V10Pre::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
+        expect(Api::V10Rc::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
         post(
           "/api/v1.0-pre/trainees/#{trainee_id}/withdraw",

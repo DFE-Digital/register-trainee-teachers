@@ -3,6 +3,12 @@ page_title: Register API release notes
 title: Register API release notes
 ---
 
+## v1.0-rc - 29 April 2025
+
+Release canidate of first major version of the Register API. This version is not
+yet live but is available for testing. All requests for `v1.0-pre` will redirect to
+this version.
+
 ## v1.0-pre — 12 August 2024
 
 Pre-release of the first major version of the Register API. This version is not

@@ -1843,7 +1843,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: 2o5cDNtpu2cvu4fSEXaqr5U4
+                    placement_id: qauafaRD12uFMYBUX7rk6SQw
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -1859,9 +1859,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: ikP7apMv1mCQtcu7xN7e9kuv
+                    degree_id: X7xKLSozQF2WzwhvZeKD4hPg
                   state: submitted_for_trn
-                  trainee_id: szhnREr6Hmi5otYfDvPpFDkn
+                  trainee_id: Cj9D5VTcRpdWnKq1Tco3bpAq
                   application_id:
                   disability1: '58'
                   disability2: '57'
@@ -2760,7 +2760,7 @@ paths:
         required: true
         schema:
           type: string
-        example: 5kxHBa3P9v1tRfkEDHBWpkrS
+        example: bn65LNZes4iy15T3j4c1SRjU
       responses:
         '200':
           description: updates the trainee
@@ -3159,7 +3159,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: QDtAxHRy78LNKZkXFXJUEapR
+                    placement_id: YthB96HdTPiHsTjC8wSeQazU
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3175,9 +3175,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: zBz7p43VetgnS9bUA7MHENKN
+                    degree_id: VajqANoBc6jgxHKJeY2eeiSp
                   state: submitted_for_trn
-                  trainee_id: xJZey8vRY9PYPtsyjfPKmgfr
+                  trainee_id: GjR5jr7fxAcDYsB2jKbJ3UHL
                   application_id:
                   disability2: '57'
         '401':
@@ -3942,7 +3942,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: s6N2wQSeGarp4TSWPv6ogQLQ
+                  degree_id: xoxZKTagfoX4Q5DAtZdcdjDS
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4842,7 +4842,7 @@ paths:
                   postcode: Z1 6WB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: TrP93pAMoesTWGBBD7AcrTnb
+                  placement_id: uB9V1MsLgjB4HDvjj4QXHdcW
         '404':
           description: does not create a new placement and returns a 404 status (not_found)
             status

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
+RSpec.describe Api::V10Rc::HesaTraineeDetailAttributes do
   subject { described_class }
 
   it { is_expected.to be < Api::V01::HesaTraineeDetailAttributes }
@@ -10,7 +10,7 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
   describe "validations" do
     it "uses the RulesValidator" do
       expect(described_class.validators.map(&:class)).to include(
-        Api::V10Pre::HesaTraineeDetailAttributes::RulesValidator,
+        Api::V10Rc::HesaTraineeDetailAttributes::RulesValidator,
       )
     end
   end

@@ -1323,7 +1323,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
         let(:trainee) { Trainee.last.reload }
 
         before do
-          allow(Api::V10Pre::HesaMapper::Attributes).to receive(:call).and_call_original
+          allow(Api::V10Rc::HesaMapper::Attributes).to receive(:call).and_call_original
           allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
           post "/api/v1.0-pre/trainees", params: params_for_create.to_json, headers: headers

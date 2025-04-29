@@ -47,7 +47,7 @@ Find out about [how we make updates to the API](/api-docs#api-versioning-strateg
 
 ### OpenAPI
 
-The OpenAPI spec for this API is <a href="/api-docs/v1.0-pre/openapi" target="_blank">available in YAML format</a>.
+The OpenAPI spec for this API is <a href="/api-docs/v1.0-rc/openapi" target="_blank">available in YAML format</a>.
 
 ### Authentication
 
@@ -70,7 +70,7 @@ Provides general information about the API.
 
 #### Request
 
-`GET /api/v1.0-pre/info`
+`GET /api/v1.0-rc/info`
 
 #### Possible responses
 
@@ -108,7 +108,7 @@ current academic cycle.
 
 #### Request
 
-`GET /api/v1.0-pre/trainees`
+`GET /api/v1.0-rc/trainees`
 
 #### Parameters
 
@@ -272,7 +272,7 @@ Get a single trainee.
 
 #### Request
 
-`GET /api/v1.0-pre/trainees/{trainee_id}`
+`GET /api/v1.0-rc/trainees/{trainee_id}`
 
 #### Parameters
 
@@ -443,7 +443,7 @@ Get many placements for a trainee.
 
 #### Request
 
-`GET /api/v1.0-pre/trainees/{trainee_id}/placements`
+`GET /api/v1.0-rc/trainees/{trainee_id}/placements`
 
 #### Parameters
 
@@ -509,7 +509,7 @@ Get a single placement for a trainee.
 
 #### Request
 
-`GET /api/v1.0-pre/trainees/{trainee_id}/placements/{placement_id}`
+`GET /api/v1.0-rc/trainees/{trainee_id}/placements/{placement_id}`
 
 #### Parameters
 
@@ -574,7 +574,7 @@ Get many degrees for a trainee.
 
 #### Request
 
-`GET /api/v1.0-pre/trainees/{trainee_id}/degrees`
+`GET /api/v1.0-rc/trainees/{trainee_id}/degrees`
 
 #### Parameters
 
@@ -648,7 +648,7 @@ Get a single degree for a trainee.
 
 #### Request
 
-`GET /api/v1.0-pre/trainees/{trainee_id}/degrees/{degree_id}`
+`GET /api/v1.0-rc/trainees/{trainee_id}/degrees/{degree_id}`
 
 #### Parameters
 
@@ -721,7 +721,7 @@ Create a trainee.
 
 #### Request
 
-`POST /api/v1.0-pre/trainees`
+`POST /api/v1.0-rc/trainees`
 
 #### Request body
 
@@ -1114,7 +1114,7 @@ Create a placement for this trainee.
 
 #### Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/placements`
+`POST /api/v1.0-rc/trainees/{trainee_id}/placements`
 
 #### Parameters
 
@@ -1225,7 +1225,7 @@ Create a degree for this trainee.
 
 #### Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/degrees`
+`POST /api/v1.0-rc/trainees/{trainee_id}/degrees`
 
 #### Parameters
 
@@ -1617,7 +1617,7 @@ Defer a trainee.
 
 #### Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/defer`
+`POST /api/v1.0-rc/trainees/{trainee_id}/defer`
 
 #### Parameters
 
@@ -1850,7 +1850,7 @@ Withdraw a trainee.
 
 #### Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/withdraw`
+`POST /api/v1.0-rc/trainees/{trainee_id}/withdraw`
 
 #### Parameters
 
@@ -2131,7 +2131,7 @@ Deletes an existing degree for this trainee.
 
 #### Request
 
-`DELETE /api/v1.0-pre/trainees/{trainee_id}/degrees/{degree_id}`
+`DELETE /api/v1.0-rc/trainees/{trainee_id}/degrees/{degree_id}`
 
 #### Parameters
 
@@ -2285,11 +2285,11 @@ Updates an existing trainee.
 
 #### Request
 
-`PUT /api/v1.0-pre/trainees/{trainee_id}`
+`PUT /api/v1.0-rc/trainees/{trainee_id}`
 
 or
 
-`PATCH /api/v1.0-pre/trainees/{trainee_id}`
+`PATCH /api/v1.0-rc/trainees/{trainee_id}`
 
 #### Parameters
 
@@ -2504,11 +2504,11 @@ Updates an existing placement for this trainee.
 
 #### Request
 
-`PUT /api/v1.0-pre/trainees/{trainee_id}/placements/{placement_id}`
+`PUT /api/v1.0-rc/trainees/{trainee_id}/placements/{placement_id}`
 
 or
 
-`PATCH /api/v1.0-pre/trainees/{trainee_id}/placements/{placement_id}`
+`PATCH /api/v1.0-rc/trainees/{trainee_id}/placements/{placement_id}`
 
 #### Parameters
 
@@ -2619,11 +2619,11 @@ Updates an existing degree for this trainee.
 
 #### Request
 
-`PUT /api/v1.0-pre/trainees/{trainee_id}/degrees/{degree_id}`
+`PUT /api/v1.0-rc/trainees/{trainee_id}/degrees/{degree_id}`
 
 or
 
-`PATCH /api/v1.0-pre/trainees/{trainee_id}/degrees/{degree_id}`
+`PATCH /api/v1.0-rc/trainees/{trainee_id}/degrees/{degree_id}`
 
 #### Parameters
 
@@ -2792,7 +2792,7 @@ Deletes an existing placement for this trainee.
 
 #### Request
 
-`DELETE /api/v1.0-pre/trainees/{trainee_id}/placements/{placement_id}`
+`DELETE /api/v1.0-rc/trainees/{trainee_id}/placements/{placement_id}`
 
 #### Parameters
 
@@ -2964,7 +2964,7 @@ Deletes an existing degree for this trainee.
 
 #### Request
 
-`DELETE /api/v1.0-pre/trainees/{trainee_id}/degrees/{degree_id}`
+`DELETE /api/v1.0-rc/trainees/{trainee_id}/degrees/{degree_id}`
 
 #### Parameters
 

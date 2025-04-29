@@ -3,17 +3,17 @@
 require "rails_helper"
 
 # rubocop:disable RSpec/SpecFilePathFormat
-RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundCode do
+RSpec.describe Api::V10Rc::HesaTraineeDetailAttributes::Rules::FundCode do
   subject { described_class }
 
   let(:hesa_trainee_detail_attributes) do
-    Api::V10Pre::HesaTraineeDetailAttributes.new(
+    Api::V10Rc::HesaTraineeDetailAttributes.new(
       trainee_attributes:,
       fund_code:,
       course_age_range:,
     )
   end
-  let(:trainee_attributes) { Api::V10Pre::TraineeAttributes.new(training_route:) }
+  let(:trainee_attributes) { Api::V10Rc::TraineeAttributes.new(training_route:) }
 
   describe "::valid?" do
     context "when the fund_code != 7" do

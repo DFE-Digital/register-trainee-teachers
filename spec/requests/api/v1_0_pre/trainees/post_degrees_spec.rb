@@ -121,7 +121,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
     context "with duplicate degree" do
       let(:trainee) { create(:trainee, :with_degree) }
       let(:degrees_attributes) do
-        attributes = Api::V10Pre::DegreeSerializer.new(trainee.degrees.first).as_hash.symbolize_keys.slice(
+        attributes = Api::V10Rc::DegreeSerializer.new(trainee.degrees.first).as_hash.symbolize_keys.slice(
           :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year
         )
         attributes[:graduation_year] = Date.new(attributes[:graduation_year]).to_s
@@ -142,7 +142,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
             message: "This is a duplicate degree" },
         )
         expect(response.parsed_body["data"]).to contain_exactly(
-          JSON.parse(Api::V10Pre::DegreeSerializer.new(trainee.degrees.first).as_hash.to_json),
+          JSON.parse(Api::V10Rc::DegreeSerializer.new(trainee.degrees.first).as_hash.to_json),
         )
         expect(trainee.reload.degrees.count).to eq(1)
       end
