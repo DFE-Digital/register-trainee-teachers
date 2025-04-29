@@ -10,8 +10,6 @@ module RouteConstraints
       AVAILABLE_VERSIONS.include?(request.path_parameters[:api_version])
     end
 
-  private
-
     def self.redirect_pre_release_requests_to_release_canidiate(request)
       request.path_parameters[:api_version] = "v1.0-rc" if request.path_parameters[:api_version] == "v1.0-pre"
     end
