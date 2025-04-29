@@ -201,7 +201,7 @@ api:
     ua: []
     ip: []
   allowed_versions: [v0.1, v1.0-pre, v1.0-rc]
-  current_version: v1.0-pre
+  current_version: v1.0-rc
 
 qualtrics:
   api_token: please_change_me
