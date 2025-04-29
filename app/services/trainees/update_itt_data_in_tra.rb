@@ -3,8 +3,7 @@
 module Trainees
   class UpdateIttDataInTra
     include ServicePattern
-
-    class ConflictingIntegrationsError < StandardError; end
+    include HandlesIntegrationConflicts
 
     def initialize(trainee:)
       @trainee = trainee
@@ -29,12 +28,6 @@ module Trainees
   private
 
     attr_reader :trainee, :dqt_enabled, :trs_enabled
-
-    def check_for_conflicting_integrations
-      if dqt_enabled && trs_enabled
-        raise(ConflictingIntegrationsError, "Both DQT and TRS integrations are enabled. Only one should be active at a time.")
-      end
-    end
 
     def trainee_updatable?
       %w[submitted_for_trn trn_received deferred].include?(trainee.state)

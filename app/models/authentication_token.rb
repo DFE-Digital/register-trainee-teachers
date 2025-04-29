@@ -68,9 +68,6 @@ class AuthenticationToken < ApplicationRecord
     end
   }
 
-  validates :hashed_token, presence: true, uniqueness: true
-  validates :name, presence: true, length: { maximum: 200 }
-
   self.ignored_columns += ["enabled"]
 
   scope :by_status_and_last_used_at, -> { order(:status, last_used_at: :desc) }
@@ -81,10 +78,12 @@ class AuthenticationToken < ApplicationRecord
     expires_at: nil,
     created_by:
   )
-    token = "#{Rails.env}_" + SecureRandom.hex(10)
-    hashed_token = hash_token(token)
+    begin
+      token = "#{Rails.env}_" + SecureRandom.hex(10)
+      hashed_token = hash_token(token)
+    end while exists?(hashed_token:)
 
-    create(name:, provider:, created_by:, expires_at:, hashed_token:, token:)
+    create!(name:, provider:, created_by:, expires_at:, hashed_token:, token:)
   end
 
   def self.hash_token(token)
