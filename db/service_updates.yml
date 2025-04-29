@@ -1,3 +1,17 @@
+- date: '2025-03-01'
+  title: Changes to trainee data fields for the 2025 to 2026 academic year
+  content: |
+    These are changes to the trainee data fields when submitting directly to Register via the 'Bulk add new trainees' CSV template or the API, for the upcoming 2025 to 2026 academic year.
+
+      <ul>
+          <li>COURSEID or CTITLE do not need to be provided</li>
+          <li>Degree type is now required for non-UK previous degrees — use the 'non-UK degree type' field and the HESA DEGTYPE reference codes</li>
+          <li>‘UK degree grade’ for trainees with previous qualifications:</li>
+          <ul>
+            <li>API - you should add all multiple previous qualifications</li>
+            <li>CSV template – you should only use their highest-level previous qualification</li>
+        </ul>
+      </ul>
 - date: '2024-07-18'
   title: Updating how you recommend trainees for qualified teacher status (QTS) or early years teacher status (EYTS)
   content: |
