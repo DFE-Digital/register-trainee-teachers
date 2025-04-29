@@ -1,3 +1,202 @@
+- date: '2025-04-25'
+  title: Funding updates for the 2025 to 2026 academic year
+  content: |
+    Initial teacher training (ITT) funding for the academic year 2025 to 2026
+
+    2025 to 2026 bursary levels will be set at:
+
+    <ul>
+      <li>£29,000 in chemistry, computing, mathematics and physics</li>
+      <li>£26,000 in biology, design and technology, geography and languages (including ancient languages)</li>
+      <li>£10,000 in art and design, music and religious education (RE)</li>
+      <li>£5,000 in English</li>
+    </ul>
+
+    Applicants may be eligible for a bursary if they have 1st, 2:1, 2:2, PhD or master’s.
+
+    2025 to 2026 scholarships are:
+    <ul>
+      <li>£31,000 in chemistry, computing, mathematics and physics</li>
+      <li>£28,000 in French, German and Spanish (no other languages) </li>
+    </ul>
+
+    For more information go to <a href="https://www.gov.uk/government/publications/funding-initial-teacher-training-itt/funding-initial-teacher-training-itt-academic-year-2025-to-2026">Funding: initial teacher training (ITT), academic year 2025 to 2026</a>.
+
+    If you’re using the Register API or the bulk add new trainees CSV template, the FUNDCODE and BURSLEV reference data remains unchanged for the 2025 to 2026 academic year.
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        FUNDCODE
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">
+            Code
+          </th>
+          <th class="govuk-table__header" scope="col">
+            Label
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            2
+          </td>
+          <td class="govuk-table__cell">
+            Not fundable by funding council/body
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            7
+          </td>
+          <td class="govuk-table__cell">
+            Eligible for funding from the DfE
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            4
+          </td>
+          <td class="govuk-table__cell">
+            Scholarship
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            6
+          </td>
+          <td class="govuk-table__cell">
+            No bursary, scholarship or grant awarded
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            B
+          </td>
+          <td class="govuk-table__cell">
+            Undergraduate bursary
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            C
+          </td>
+          <td class="govuk-table__cell">
+            Veteran Teaching undergraduate bursary
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            D
+          </td>
+          <td class="govuk-table__cell">
+            Postgraduate bursary
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            E
+          </td>
+          <td class="govuk-table__cell">
+            Grant
+          </td>
+        </tr>
+      </tbody>
+    </table>
+- date: '2025-04-24'
+  title: Teacher degree apprenticeship (TDA) training route
+  content: |
+    Some ITT providers have been selected to offer a new teacher degree apprenticeship in the academic year 2025 to 2026.
+
+    In the Register service, this new training route will be labelled ‘Teacher degree apprenticeship (salaried)’ under ‘Other’ as an option to the question ‘What type of training are they doing?’.
+
+    If you’re using the Register API or the bulk add new trainees CSV template, the ENTRYRTE reference data will include ‘14’ for new TDA route for the 2025 to 2026 academic year:
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        ENTRYRTE
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">
+            Code
+          </th>
+          <th class="govuk-table__header" scope="col">
+            Label
+          </th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            02
+          </td>
+          <td class="govuk-table__cell">
+            School Direct tuition fee
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            03
+          </td>
+          <td class="govuk-table__cell">
+            School Direct salaried
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            09
+          </td>
+          <td class="govuk-table__cell">
+            Undergraduate Opt-in
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            10
+          </td>
+          <td class="govuk-table__cell">
+            Postgraduate teaching apprenticeship
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            11
+          </td>
+          <td class="govuk-table__cell">
+            Primary and Secondary Undergraduate Fee Funded
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            12
+          </td>
+          <td class="govuk-table__cell">
+            Primary and Secondary Postgraduate Fee Funded
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            13
+          </td>
+          <td class="govuk-table__cell">
+            Provider-led salaried (postgraduate)
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            14
+          </td>
+          <td class="govuk-table__cell">
+            Teacher degree apprenticeship salaried
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    For more information go to  <a class='govuk-link' href="https://www.gov.uk/guidance/offer-a-teacher-degree-apprenticeship">https://www.gov.uk/guidance/offer-a-teacher-degree-apprenticeship</a>.
 - date: '2025-03-01'
   title: Changes to trainee data fields for the 2025 to 2026 academic year
   content: |
