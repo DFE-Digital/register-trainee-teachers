@@ -9,7 +9,7 @@ describe "API Monitoring" do
   let(:metrics) { Yabeda::CollectorsRegistry.all }
   let(:response) do
     get(
-      "/api/v1.0-pre/trainees/#{trainee.slug}",
+      "/api/v1.0-rc/trainees/#{trainee.slug}",
       headers: { Authorization: "Bearer #{token}" },
     )
   end
