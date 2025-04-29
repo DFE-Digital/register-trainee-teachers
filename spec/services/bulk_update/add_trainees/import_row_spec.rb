@@ -122,6 +122,39 @@ module BulkUpdate
             expect(Trainee.last.degrees.count).to eq(1)
           end
         end
+
+        context "when the row is valid and includes disabilities data" do
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_disability.csv").read }
+          let(:row) { parsed_csv[0] }
+
+          before do
+            %i[
+              deaf
+              blind
+              development_condition
+              learning_difficulty
+              long_standing_illness
+              mental_health_condition
+              physical_disability_or_mobility_issue
+              social_or_communication_impairment
+              other
+            ].each { |name| create(:disability, name) }
+          end
+
+          it "creates a trainee and 9 disability records" do
+            expect { result }.to change { Trainee.count }.by(1)
+
+            expect(result.success).to be(true)
+
+            trainee = Trainee.last
+
+            expect(trainee.disabilities.count).to eq(9)
+
+            Disability.pluck(:name).each do |name|
+              expect(trainee.disabilities.exists?(name:)).to be(true)
+            end
+          end
+        end
       end
     end
   end

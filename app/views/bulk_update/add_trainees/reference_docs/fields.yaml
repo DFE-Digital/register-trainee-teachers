@@ -112,7 +112,7 @@
     or Indian British.'
   validation: Optional
 - field_name: Disability 1
-  technical: disability_1
+  technical: disability1
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -121,7 +121,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 2
-  technical: disability_2
+  technical: disability2
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -130,7 +130,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 3
-  technical: disability_3
+  technical: disability3
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -139,7 +139,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 4
-  technical: disability_4
+  technical: disability4
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -148,7 +148,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 5
-  technical: disability_5
+  technical: disability5
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -157,7 +157,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 6
-  technical: disability_6
+  technical: disability6
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -166,7 +166,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 7
-  technical: disability_7
+  technical: disability7
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -175,7 +175,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 8
-  technical: disability_8
+  technical: disability8
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
@@ -184,7 +184,7 @@
   example: '"51" for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD'
   validation: Optional
 - field_name: Disability 9
-  technical: disability_9
+  technical: disability9
   hesa_alignment: DISABLE
   description:
     This field records the type of disability that a student has, on the
