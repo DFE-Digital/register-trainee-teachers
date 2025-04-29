@@ -46,7 +46,7 @@ describe Api::GetVersionedItem do
                 model: item_model,
                 version: "v1.0-rc",
               ),
-            ).to be(Object.const_get("Api::V10Pre::#{expected_module(item_type, item_model)}"))
+            ).to be(Object.const_get("Api::V10Rc::#{expected_module(item_type, item_model)}"))
           end
         end
       end
