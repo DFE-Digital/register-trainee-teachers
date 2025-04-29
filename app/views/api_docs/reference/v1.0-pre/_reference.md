@@ -3754,7 +3754,7 @@ Deletes an existing degree for this trainee.
         string (limited to 6 characters), required
       </p>
       <p class="govuk-body">
-        The degree subject. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degsbj">HESA degree subject field</a>
+        The degree subject. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degsbj">HESA degree subject field</a>
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>

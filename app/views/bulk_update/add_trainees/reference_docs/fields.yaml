@@ -471,7 +471,7 @@
 - field_name: Degree subject
   technical: subject
   hesa_alignment: DEGSBJ
-  description: This field holds the subject(s) of the student’s previous degree
+  description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
   format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
   example: 100048 for example is the design degree subject as part of a previous degree
   validation: Conditional - mandatory if specifying a degree
