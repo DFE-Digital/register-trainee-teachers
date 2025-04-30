@@ -488,7 +488,7 @@
   example: '"2012-07-31"'
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33
-- field_name: Awarding institution
+- field_name: Awarding Institution
   technical: institution
   hesa_alignment: DEGEST
   description:
