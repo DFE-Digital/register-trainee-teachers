@@ -55,6 +55,23 @@
             Eligible for funding from the DfE
           </td>
         </tr>
+      </tbody>
+    </table>
+
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">
+        BURSLEV
+      </caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">
+            Code
+          </th>
+          <th class="govuk-table__header" scope="col">
+            Label
+          </th>
+        </tr>
+      </thead>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">
             4
