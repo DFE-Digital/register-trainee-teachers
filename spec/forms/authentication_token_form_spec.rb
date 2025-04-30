@@ -16,10 +16,10 @@ describe AuthenticationTokenForm, type: :model do
     end
 
     describe "#expires_at" do
-      let(:params) { { name: "Token name" } }
+      let(:params) { { name: "Token name", day: date.day, month: date.month, year: date.year } }
 
       context "when not a date" do
-        let(:params) { super().merge({ day: Faker::Alphanumeric.alpha, month: Date.current.month, year: Date.current.year }) }
+        let(:params) { { day: Faker::Alphanumeric.alpha, month: Date.current.month, year: Date.current.year } }
 
         it "returns false" do
           expect(subject.valid?).to be(false)
@@ -28,7 +28,7 @@ describe AuthenticationTokenForm, type: :model do
       end
 
       context "when in the past" do
-        let(:params) { super().merge({ day: 1.year.ago.day, month: Date.current.month, year: Date.current.year }) }
+        let(:date) { Date.yesterday }
 
         it "returns false" do
           expect(subject.valid?).to be(false)
@@ -37,7 +37,7 @@ describe AuthenticationTokenForm, type: :model do
       end
 
       context "when in the present" do
-        let(:params) { super().merge({ day: Date.current.day, month: Date.current.month, year: Date.current.year }) }
+        let(:date) { Date.current }
 
         it "returns false" do
           expect(subject.valid?).to be(false)
@@ -46,7 +46,7 @@ describe AuthenticationTokenForm, type: :model do
       end
 
       context "when in the future" do
-        let(:params) { super().merge({ day: 1.day.from_now.day, month: Date.current.month, year: Date.current.year }) }
+        let(:date) { Date.tomorrow }
 
         it "returns true" do
           expect(subject.valid?).to be(true)
