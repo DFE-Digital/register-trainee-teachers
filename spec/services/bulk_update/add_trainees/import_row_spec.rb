@@ -25,6 +25,23 @@ module BulkUpdate
           end
         end
 
+        context "when the row is invalid with customised field names" do
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_three_errors.csv").read }
+          let(:row) { parsed_csv[0] }
+
+          it "does not create a trainee record" do
+            expect { result }.not_to change { Trainee.count }
+
+            expect(result.success).to be(false)
+            expect(result.error_type).to eq(:validation)
+            expect(result.errors).to include("UK degree grade can't be blank")
+            expect(result.errors).to include("ITT Start Date can't be blank")
+            expect(result.errors).to include("Date of Birth can't be blank")
+            expect(result.errors).to include("ITT Aim has invalid reference data values")
+            expect(result.errors).to include("Qualification Aim has invalid reference data values")
+          end
+        end
+
         context "when the row is a duplicate" do
           let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").read }
           let(:row) { parsed_csv.first }

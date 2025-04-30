@@ -118,6 +118,15 @@ module Api
             :trainee_disabilities_attributes,
           ))
 
+        build_nested_models(new_attributes)
+
+        self.trainee_disabilities_attributes = []
+        new_attributes[:disabilities]&.each do |disability|
+          trainee_disabilities_attributes << { disability_id: disability.id }
+        end
+      end
+
+      def build_nested_models(new_attributes)
         new_attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << PlacementAttributes.new(placement_params)
         end
@@ -183,7 +192,8 @@ module Api
         new_hesa_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
         return if new_hesa_attributes.blank?
 
-        updated_hesa_attributes = hesa_trainee_detail_attributes || HesaTraineeDetailAttributes.new({})
+        updated_hesa_attributes = hesa_trainee_detail_attributes ||
+          HesaTraineeDetailAttributes.new(trainee_attributes: self)
 
         updated_hesa_attributes.assign_attributes(new_hesa_attributes)
 
