@@ -36,7 +36,7 @@ module Api
         def invalid? = !errors_count.zero?
 
         def validation_errors
-          trainee_errors.compact.flatten
+          trainee_errors.compact.flatten.map(&:strip)
         end
 
         def trainee_errors
