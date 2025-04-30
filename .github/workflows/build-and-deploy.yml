@@ -220,7 +220,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        environment: [sandbox, csv-sandbox, productiondata]
+        environment: [sandbox, csv-sandbox] # productiondata temporarily disabled
     steps:
     - name: Checkout
       uses: actions/checkout@v4
