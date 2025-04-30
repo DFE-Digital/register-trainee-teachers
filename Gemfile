@@ -121,7 +121,8 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.7.1"
+# Test against updated reference data
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", branch: "TRS-Reference-Data-Updates"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.5"
