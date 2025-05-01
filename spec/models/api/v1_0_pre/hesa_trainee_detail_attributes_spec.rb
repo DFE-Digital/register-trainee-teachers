@@ -35,7 +35,7 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
                 :funding_method,
                 training_route: :provider_led_postgrad,
                 funding_type: :bursary,
-                academic_cycle:,
+                academic_cycle: academic_cycle,
               )
               @allocation_subject = create(
                 :allocation_subject,
