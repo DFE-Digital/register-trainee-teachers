@@ -50,7 +50,6 @@ features:
   dqt_import:
     sync_teachers: true
   register_api: false
-  bulk_add_trainees: false
   duplicate_checking: true
 
 environment:

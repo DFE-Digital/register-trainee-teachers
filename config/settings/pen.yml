@@ -42,6 +42,7 @@ features:
   google:
     send_data_to_big_query: false
   token_management: true
+  bulk_add_trainees: true
 
 environment:
   name: pen
