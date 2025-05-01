@@ -9,14 +9,14 @@ class ApiRequestTestController < Api::BaseController
   end
 
   def authenticate!
-    @current_provider = UserWithOrganisationContext.new(user: User.last, session: {})
+    @current_provider = Provider.last
   end
 
   attr_reader :current_provider
 end
 
 describe "sending request events" do
-  let!(:user) { create(:user) }
+  let!(:provider) { create(:provider) }
   let(:headers) do
     {
       "HTTP_USER_AGENT" => "Toaster/1.23",
