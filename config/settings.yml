@@ -36,7 +36,7 @@ dqt:
 trs:
   base_url: https://teacher-qualifications-api.education.gov.uk
   api_key: <get from secrets>
-  version: 20250425
+  version: "20250425"
 
 azure:
   storage:
