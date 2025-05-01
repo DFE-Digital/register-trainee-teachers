@@ -18,9 +18,11 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
 
     describe "funding_method" do
       describe "Postgraduate bursaries require a certain degree and course type (QR.C24053.Student.BURSLEV.20)" do
+        let(:course_subject_one) { "mathematics" }
         let(:trainee_attributes) do
           Api::V10Pre::TraineeAttributes.new(
-            training_route: "provider_led_postgraduate",
+            training_route: "provider_led_postgrad",
+            course_subject_one: course_subject_one,
           )
         end
 
@@ -28,6 +30,28 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
 
         context "when funding_method is 'D' (postgraduate bursary)" do
           context "when course subject is declared by a `FundingMethod` record" do
+            before do
+              @funding_method = create(
+                :funding_method,
+                training_route: :provider_led_postgrad,
+                funding_type: :bursary,
+                academic_cycle:,
+              )
+              @allocation_subject = create(
+                :allocation_subject,
+              )
+              @subject_specialism = create(
+                :subject_specialism,
+                allocation_subject: @allocation_subject,
+                name: course_subject_one,
+              )
+              @funding_method_subject = create(
+                :funding_method_subject,
+                funding_method: @funding_method,
+                allocation_subject: @allocation_subject,
+              )
+            end
+
             it "funding_method should be valid" do
               subject.validate
               expect(subject.errors[:funding_method]).to be_blank

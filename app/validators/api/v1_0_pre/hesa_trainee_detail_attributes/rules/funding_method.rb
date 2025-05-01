@@ -20,30 +20,30 @@ module Api
           def call
             return true if fund_code != Hesa::CodeSets::FundCodes::ELIGIBLE || training_route.nil?
 
-            funding_method = ::FundingMethod.joins(allocation_subjects: :subject_specialisms).where(
+            funding_rule = ::FundingMethod.joins(allocation_subjects: :subject_specialisms).where(
               academic_cycle_id: AcademicCycle.current&.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
             ).first
 
-            funding_method.present?
+            funding_rule.present?
           end
 
         private
 
           def funding_type
             @funding_type ||= {
-              Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES[:scholarship],
+              Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES["scholarship"],
               Hesa::CodeSets::BursaryLevels::NONE => nil,
-              Hesa::CodeSets::BursaryLevels::TIER_ONE => FUNDING_TYPES[:bursary],
-              Hesa::CodeSets::BursaryLevels::TIER_TWO => FUNDING_TYPES[:bursary],
-              Hesa::CodeSets::BursaryLevels::TIER_THREE => FUNDING_TYPES[:bursary],
-              Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY => FUNDING_TYPES[:bursary],
-              Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY => FUNDING_TYPES[:bursary],
-              Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY => FUNDING_TYPES[:bursary],
-              Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES[:grant],
-            }[funding_method]
+              Hesa::CodeSets::BursaryLevels::TIER_ONE => FUNDING_TYPES["bursary"],
+              Hesa::CodeSets::BursaryLevels::TIER_TWO => FUNDING_TYPES["bursary"],
+              Hesa::CodeSets::BursaryLevels::TIER_THREE => FUNDING_TYPES["bursary"],
+              Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
+              Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
+              Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
+              Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES["grant"],
+            }.fetch(funding_method)
           end
         end
       end
