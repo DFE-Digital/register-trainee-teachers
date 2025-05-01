@@ -31,7 +31,7 @@ module Api
         end
       end
 
-      private
+    private
 
       def require_subject?
         EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)

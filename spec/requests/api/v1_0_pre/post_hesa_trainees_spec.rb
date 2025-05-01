@@ -597,7 +597,6 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
               course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
             ),
           }
-
         end
 
         it do
@@ -619,7 +618,6 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
               course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
             ),
           }
-
         end
 
         it do
