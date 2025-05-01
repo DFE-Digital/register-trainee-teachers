@@ -417,13 +417,11 @@
   example: |-
     "026" is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
 
-    The following HESA codes are not mapped to Register\:
+    The following HESA codes are not mapped to Register:
 
-    001 Abridged ITT course
-
-    011 Primary with mathematics specialist
-
-    019 Additional ITT place for PE with a priority subject
+      - `001` - Abridged ITT course
+      - `011` - Primary with mathematics specialist
+      - `019` - Additional ITT place for PE with a priority subject
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
 - field_name: Additional Training Initiative
@@ -437,11 +435,9 @@
 
     The following HESA codes are not mapped to Register:
 
-    001 Abridged ITT course
-
-    011 Primary with mathematics specialist
-
-    019 Additional ITT place for PE with a priority subject
+      - `001` - Abridged ITT course
+      - `011` - Primary with mathematics specialist
+      - `019` - Additional ITT place for PE with a priority subject
   validation: Optional
 - field_name: UK degree type
   technical: uk_degree
