@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: b897f00b89a91182d569b57c8dbb6bb153daca32
-  branch: TRS-Reference-Data-Updates
+  revision: 392090cc0448bf5f6555c0b180ff924bf2c6c5a0
+  tag: v3.7.1
   specs:
-    dfe-reference-data (3.6.10)
+    dfe-reference-data (3.7.1)
       activesupport
       tzinfo
 
