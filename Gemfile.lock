@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 6a9762ca826b38d1d09256228ba15092ca08790c
-  branch: add-274-missing-institutions-for-previous-degrees
+  revision: 392090cc0448bf5f6555c0b180ff924bf2c6c5a0
+  tag: v3.7.1
   specs:
-    dfe-reference-data (3.7.0)
+    dfe-reference-data (3.7.1)
       activesupport
       tzinfo
 
