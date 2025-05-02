@@ -3242,8 +3242,20 @@ Deletes an existing degree for this trainee.
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The training route that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/entryrte">HESA entry route field</a>
+        The training route that the trainee is on.
       </p>
+      <p class="govuk-body">
+        Possible values:
+      </p>
+      <ul>
+        <li><code>02</code> - School Direct tuition fee</li>
+        <li><code>03</code> - School Direct salaried</li>
+        <li><code>09</code> - Undergraduate Opt-in</li>
+        <li><code>10</code> - Postgraduate teaching apprenticeship</li>
+        <li><code>11</code> - Primary and Secondary Undergraduate Fee Funded</li>
+        <li><code>12</code> - Primary and Secondary Postgraduate Fee Funded</li>
+        <li><code>14</code> - Teacher Degree Apprenticeship</li>
+        </ul>
       <p class="govuk-body">
         Example: <code>11</code>
       </p>
