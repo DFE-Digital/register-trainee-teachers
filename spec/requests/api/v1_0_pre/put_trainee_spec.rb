@@ -1387,7 +1387,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
               data: {
                 training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:opt_in_undergrad]],
                 fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE,
-                funding_method: "4",
+                funding_method: Hesa::CodeSets::BursaryLevels::NONE,
               },
             }
           end
