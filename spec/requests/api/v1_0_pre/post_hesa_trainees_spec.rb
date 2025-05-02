@@ -22,7 +22,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
-  let(:fund_code) { "7" }
+  let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
 
   let(:endpoint) { "/api/v1.0-pre/trainees" }
 
@@ -134,7 +134,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(Trainee.last.applying_for_scholarship).to be(true)
       expect(Trainee.last.applying_for_bursary).to be(false)
       expect(Trainee.last.applying_for_grant).to be(false)
-      expect(parsed_body[:fund_code]).to eq("7")
+      expect(parsed_body[:fund_code]).to eq(Hesa::CodeSets::FundCodes::NOT_ELIGIBLE)
       expect(parsed_body[:bursary_level]).to eq("4")
       expect(parsed_body[:applying_for_scholarship]).to be_nil
       expect(parsed_body[:applying_for_bursary]).to be_nil
@@ -177,7 +177,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     context "with lead_partner_and_employing_school_attributes" do
-      let(:fund_code) { "2" }
+      let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
 
       before do
         post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
@@ -1106,6 +1106,8 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   end
 
   context "with a fund_code is ineligible for funding" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+
     before do
       params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
 
@@ -1115,10 +1117,11 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body["message"]).to eq(
-        "Validation failed: 1 error prohibited this trainee from being saved",
+        "Validation failed: 2 errors prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
         "fund_code is ineligible",
+        "funding_method is ineligible",
       )
     end
   end
