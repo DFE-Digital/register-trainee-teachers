@@ -70,6 +70,23 @@ module Dqt
         "CY" => "XC",
       }.freeze
 
+      COUNTRY_EXCEPTIONS = {
+        "Ajman" => "AE",
+        "Abu Dhabi" => "AE",
+        "Dubai" => "AE",
+        "Fujairah" => "AE",
+        "Ras al-Khaimah" => "AE",
+        "Sharjah" => "AE",
+        "Umm al-Quwain" => "AE",
+        "Cyprus (European Union)" => "XA",
+        "Cyprus (non European Union)" => "XB",
+        "Taiwan" => "CN",
+        "French Guiana" => "FR",
+        "Guadeloupe" => "FR",
+        "Puerto Rico" => "US",
+        "Tristan da Cunha" => "GB",
+      }.freeze
+
       attr_reader :params
 
       def initialize(trainee:)
@@ -197,7 +214,8 @@ module Dqt
 
         country_territory_code =
           DfE::ReferenceData::CountriesAndTerritories::COUNTRIES_AND_TERRITORIES.some(name: country).first&.id ||
-          Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first
+            Hesa::CodeSets::Countries::MAPPING.find { |_, name| name.start_with?(country) }&.first ||
+            COUNTRY_EXCEPTIONS[country]
 
         country_code = strip_territory_component(country_territory_code)
         apply_special_case_country_code_mappings(country_code)

@@ -4,6 +4,7 @@ module Api
   class BaseController < ActionController::API
     include Api::ErrorResponse
     include ApiMonitorable
+    include DfE::Analytics::ApiRequests
 
     before_action :check_feature_flag!, :authenticate!, :update_last_used_at_on_token!
 
@@ -49,6 +50,10 @@ module Api
     end
 
     def audit_user
+      current_provider
+    end
+
+    def current_user
       current_provider
     end
 

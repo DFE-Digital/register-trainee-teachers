@@ -221,7 +221,7 @@
     as a result of successful completion of studies.
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
   example: '"007" for example is the code used for a BA qualification'
-  validation: Mandatory if itt_aim is 202
+  validation: Conditional - mandatory if ITT Aim is 202
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
   technical: course_subject_one
@@ -417,35 +417,27 @@
   example: |-
     "026" is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
 
-    The following HESA codes are not mapped to Register\:
+    The following HESA codes are not mapped to Register:
 
-    001 Abridged ITT course
-
-    011 Primary with mathematics specialist
-
-    019 Additional ITT place for PE with a priority subject
-  validation: Conditional - only mandatory if NOT importing via API or CSV
+      - `001` - Abridged ITT course
+      - `011` - Primary with mathematics specialist
+      - `019` - Additional ITT place for PE with a priority subject
+  validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
 - field_name: Additional Training Initiative
   technical: additional_training_initiative
   hesa_alignment: INITIATIVES
   description: The secondary training initiative that the trainee is on.
   format: |-
-    001 Abridged ITT course
-
-    009 Maths and Physics Chairs Programme
-
-    011 Primary mathematics specialist
-
-    019 Additional ITT place for PE with a priority subject
-
-    025 Transition to Teach
-
-    026 Now Teach
-
-    036 International relocation payment
+    [HESA training initiative codes](https://www.hesa.ac.uk/collection/c24053/e/initiatives)
   example: |-
-    "026" is an example of using the code for Now Teach
+    "026" is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
+
+    The following HESA codes are not mapped to Register:
+
+      - `001` - Abridged ITT course
+      - `011` - Primary with mathematics specialist
+      - `019` - Additional ITT place for PE with a priority subject
   validation: Optional
 - field_name: UK degree type
   technical: uk_degree
@@ -460,7 +452,7 @@
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L37
-- field_name: Non UK degree types
+- field_name: Non UK degree type
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
@@ -492,7 +484,7 @@
   example: '"2012-07-31"'
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33
-- field_name: Degree UK awarding institution
+- field_name: Awarding Institution
   technical: institution
   hesa_alignment: DEGEST
   description:
