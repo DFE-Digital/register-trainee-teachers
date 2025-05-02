@@ -30,25 +30,27 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes do
 
         context "when funding_method is 'D' (postgraduate bursary)" do
           context "when course subject is declared by a `FundingMethod` record" do
-            before do
-              @funding_method = create(
+            let(:allocation_subject) { create(:allocation_subject) }
+            let!(:subject_specialism) do
+              create(
+                :subject_specialism,
+                allocation_subject: allocation_subject,
+                name: course_subject_one,
+              )
+            end
+            let(:funding_rule) do
+              create(
                 :funding_method,
                 training_route: :provider_led_postgrad,
                 funding_type: :bursary,
                 academic_cycle: academic_cycle,
               )
-              @allocation_subject = create(
-                :allocation_subject,
-              )
-              @subject_specialism = create(
-                :subject_specialism,
-                allocation_subject: @allocation_subject,
-                name: course_subject_one,
-              )
-              @funding_method_subject = create(
+            end
+            let!(:funding_method_subject) do
+              create(
                 :funding_method_subject,
-                funding_method: @funding_method,
-                allocation_subject: @allocation_subject,
+                funding_method: funding_rule,
+                allocation_subject: allocation_subject,
               )
             end
 

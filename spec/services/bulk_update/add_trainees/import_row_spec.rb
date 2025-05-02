@@ -9,6 +9,42 @@ module BulkUpdate
       let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").read }
       let(:parsed_csv) { CSV.parse(csv, headers: true) }
       let!(:nationality) { create(:nationality, :british) }
+      let(:academic_cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
+      let(:allocation_subject) { create(:allocation_subject) }
+      let(:undergrad_funding_rule) do
+        create(
+          :funding_method,
+          training_route: :provider_led_undergrad,
+          funding_type: :scholarship,
+          academic_cycle: academic_cycle,
+        )
+      end
+      let(:school_direct_funding_rule) do
+        create(
+          :funding_method,
+          training_route: :school_direct_salaried,
+          funding_type: :scholarship,
+          academic_cycle: academic_cycle,
+        )
+      end
+
+      before do
+        create(
+          :subject_specialism,
+          allocation_subject: allocation_subject,
+          name: "primary teaching",
+        )
+        create(
+          :funding_method_subject,
+          funding_method: undergrad_funding_rule,
+          allocation_subject: allocation_subject,
+        )
+        create(
+          :funding_method_subject,
+          funding_method: school_direct_funding_rule,
+          allocation_subject: allocation_subject,
+        )
+      end
 
       describe "#call" do
         let(:result) { described_class.call(row:, current_provider:) }
