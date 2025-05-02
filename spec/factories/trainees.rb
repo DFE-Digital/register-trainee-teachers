@@ -757,6 +757,11 @@ FactoryBot.define do
       hesa_trainee_detail
     end
 
+    trait :with_no_funding_hesa_trainee_detail do
+      hesa_id { Faker::Number.number(digits: 13) }
+      hesa_trainee_detail { create(:hesa_trainee_detail, fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE) }
+    end
+
     trait :with_hesa_student do
       hesa_id { Faker::Number.number(digits: 13) }
       hesa_students { create_list(:hesa_student, 1, hesa_id:) }
