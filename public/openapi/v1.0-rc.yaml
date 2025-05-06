@@ -2,7 +2,7 @@
 openapi: 3.0.3
 info:
   title: Register API
-  version: v1.0
+  version: v1.0-rc
 servers: []
 paths:
   "/api/{api_version}/info":
@@ -1843,7 +1843,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: qauafaRD12uFMYBUX7rk6SQw
+                    placement_id: BPMyPZNpj2y5hBb3ecAXXwwT
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -1859,9 +1859,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: X7xKLSozQF2WzwhvZeKD4hPg
+                    degree_id: 8V41A7yCybJf2y2BnaNdkMWT
                   state: submitted_for_trn
-                  trainee_id: Cj9D5VTcRpdWnKq1Tco3bpAq
+                  trainee_id: ERut6Qcrex3q69Wuz2Mh4Vsj
                   application_id:
                   disability1: '58'
                   disability2: '57'
@@ -2236,7 +2236,7 @@ paths:
                 message: 'Validation failed: 1 error prohibited this trainee from
                   being saved'
                 errors:
-                - Hesa trainee detail attributes Fund code is ineligible
+                - fund_code is ineligible
       requestBody:
         content:
           application/json:
@@ -2760,7 +2760,7 @@ paths:
         required: true
         schema:
           type: string
-        example: bn65LNZes4iy15T3j4c1SRjU
+        example: yhfbyHEKhT243QughctXNekt
       responses:
         '200':
           description: updates the trainee
@@ -3159,7 +3159,7 @@ paths:
                     postcode:
                     created_at: '2024-09-15T12:34:56.000Z'
                     updated_at: '2024-09-15T12:34:56.000Z'
-                    placement_id: YthB96HdTPiHsTjC8wSeQazU
+                    placement_id: t6JaXzvDjWD9594gGfdZ99db
                   degrees:
                   - uk_degree: '083'
                     non_uk_degree:
@@ -3175,9 +3175,9 @@ paths:
                     uk_degree_uuid: 1b6a5652-c197-e711-80d8-005056ac45bb
                     subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                     grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                    degree_id: VajqANoBc6jgxHKJeY2eeiSp
+                    degree_id: eTc9zCMDyt4yVYHd6hrci5ba
                   state: submitted_for_trn
-                  trainee_id: GjR5jr7fxAcDYsB2jKbJ3UHL
+                  trainee_id: VipYYMG7xswgCmHHtGCkHM7q
                   application_id:
                   disability2: '57'
         '401':
@@ -3256,7 +3256,7 @@ paths:
                 message: 'Validation failed: 1 error prohibited this trainee from
                   being saved'
                 errors:
-                - Hesa trainee detail attributes Fund code is ineligible
+                - fund_code is ineligible
       requestBody:
         content:
           application/json:
@@ -3942,7 +3942,7 @@ paths:
                   uk_degree_uuid:
                   subject_uuid: 918170f0-5dce-e911-a985-000d3ab79618
                   grade_uuid: e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f
-                  degree_id: xoxZKTagfoX4Q5DAtZdcdjDS
+                  degree_id: me4S9jPtDS33rYSD6r5SKoJW
         '404':
           description: does not create a new degree and returns a 404 status (not_found)
             status
@@ -4087,11 +4087,11 @@ paths:
               example:
                 errors:
                 - error: UnprocessableEntity
-                  message: Subject can't be blank
+                  message: subject can't be blank
                 - error: UnprocessableEntity
-                  message: Country has invalid reference data values
+                  message: country has invalid reference data values
                 - error: UnprocessableEntity
-                  message: Non uk degree has invalid reference data values
+                  message: non_uk_degree has invalid reference data values
   "/api/{api_version}/trainees/{trainee_id}/degrees/{degree_id}":
     delete:
       summary: destroy
@@ -4842,7 +4842,7 @@ paths:
                   postcode: Z1 6WB
                   created_at: '2024-09-15T12:34:56.000Z'
                   updated_at: '2024-09-15T12:34:56.000Z'
-                  placement_id: uB9V1MsLgjB4HDvjj4QXHdcW
+                  placement_id: 5H7aLpjb6vCiCPAttJsVAnzE
         '404':
           description: does not create a new placement and returns a 404 status (not_found)
             status
@@ -4894,7 +4894,7 @@ paths:
               example:
                 errors:
                 - error: UnprocessableEntity
-                  message: Name can't be blank
+                  message: name can't be blank
   "/api/{api_version}/trainees/{trainee_id}/placements/{placement_id}":
     delete:
       summary: destroy
@@ -5507,7 +5507,7 @@ paths:
               example:
                 errors:
                 - error: UnprocessableEntity
-                  message: Name can't be blank
+                  message: name can't be blank
   "/api/{api_version}/trainees/{trainee_id}/recommend-for-qts":
     post:
       summary: create

@@ -6,6 +6,7 @@
 API versions are incremented semantically as follows:
 
 - `v0.1` (draft version)
+- `v1.0-pre` (pre-release candidate of first major release)
 - `v1.0-rc` (release candidate of first major release)
 
 We namespace at the module level and indicate the major and minor version in the directory with underscores:
@@ -27,7 +28,7 @@ end
 A utility service can be called via rake task to generate new API code:
 
 ```sh
-rake api:generate_new_version[v0.1,v1.0-rc]
+rake api:generate_new_version[v0.1,v1.0-pre,v1.0-rc]
 ```
 
 This will copy all API services, models, and serializers into a new namespace, properly defining inheritance from the previous version. For example:
@@ -47,11 +48,22 @@ end
 Will be copied to:
 
 ```ruby
+# app/models/api/v1.0-pre/trainee_attributes.rb
+
+module Api
+  module V10Pre
+    class TraineeAttributes < Api::V01::TraineeAttributes
+    end
+  end
+end
+```
+
+```ruby
 # app/models/api/v1.0-rc/trainee_attributes.rb
 
 module Api
-  module v10Rc
-    class TraineeAttributes < Api::v10Rc::TraineeAttributes
+  module V10Rc
+    class TraineeAttributes < Api::V01::TraineeAttributes
     end
   end
 end
@@ -64,7 +76,7 @@ end
 Specs can also be generated using a similar rake task:
 
 ```sh
-rake api:generate_new_spec_version[v0.1,v1.0-rc]
+rake api:generate_new_spec_version[v0.1,v1.0-pre,v1.0-rc]
 ```
 
 This generator focuses on copying all request specs for the existing version and performing a find-and-replace for all instances of `vX.X` (in its various forms) to the new version.

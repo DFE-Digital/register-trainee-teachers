@@ -2,7 +2,7 @@
 
 module RouteConstraints
   class RegisterApiConstraint
-    AVAILABLE_VERSIONS = ["v0.1", "v1.0-rc"].freeze
+    AVAILABLE_VERSIONS = ["v0.1", "v1.0-pre", "v1.0-rc"].freeze
 
     def self.matches?(request)
       redirect_pre_release_requests_to_release_canidiate(request)
