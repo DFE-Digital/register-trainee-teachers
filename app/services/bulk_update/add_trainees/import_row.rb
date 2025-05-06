@@ -5,7 +5,7 @@ module BulkUpdate
     class ImportRow
       include ServicePattern
 
-      CURRENT_API_VERSION = "v1.0-rc"
+      CURRENT_API_VERSION = "v2025.0-rc"
 
       attr_accessor :row, :current_provider
 
