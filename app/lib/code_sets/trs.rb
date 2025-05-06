@@ -53,7 +53,7 @@ module CodeSets
       "withdrawn" => "Withdrawn",
       "deferred" => "Deferred",
       "awarded" => "Awarded",
-      "recommended_for_award" => "Approved",
+      "recommended_for_award" => "Awarded",
     }.freeze
 
     # Special case statuses based on state and route
