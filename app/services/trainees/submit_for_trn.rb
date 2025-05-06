@@ -13,7 +13,7 @@ module Trainees
 
     def call
       check_for_conflicting_integrations
-      
+
       trainee.submit_for_trn!
 
       if trs_enabled

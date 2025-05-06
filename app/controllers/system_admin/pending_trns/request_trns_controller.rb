@@ -17,7 +17,7 @@ module SystemAdmin
         redirect_to(pending_trns_path, dqt_error: "API error: #{e.inspect}")
       end
 
-      private
+    private
 
       def request_trn
         if FeatureService.enabled?(:integrate_with_trs)
@@ -25,7 +25,7 @@ module SystemAdmin
         elsif FeatureService.enabled?(:integrate_with_dqt)
           Dqt::RegisterForTrnJob.perform_now(trainee.reload)
         else
-          raise StandardError, "No integration is enabled"
+          raise(StandardError, "No integration is enabled")
         end
       end
     end

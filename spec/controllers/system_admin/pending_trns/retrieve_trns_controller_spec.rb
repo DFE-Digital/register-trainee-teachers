@@ -7,7 +7,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
   let(:trainee) { create(:trainee, :submitted_for_trn) }
   let(:request_id) { SecureRandom.uuid }
   let(:trn) { "1234567" }
-  let(:trn_request) { create(:dqt_trn_request, trainee: trainee, request_id: request_id) }
+  let(:trn_request) { create(:dqt_trn_request, trainee:, request_id:) }
 
   before do
     allow(Trainee).to receive(:from_param).and_return(trainee)
@@ -15,13 +15,13 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
   end
 
   describe "#update" do
-    context "when TRS integration is enabled", feature_integrate_with_trs: true, feature_integrate_with_dqt: false do
+    context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
       before do
         allow(trainee).to receive(:dqt_trn_request).and_return(trn_request)
       end
 
       it "uses Trs::RetrieveTrn when TRN is available" do
-        expect(Trs::RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_return(trn)
+        allow(Trs::RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
         expect(trainee).to receive(:trn_received!).with(trn)
         expect(trn_request).to receive(:received!)
 
@@ -32,7 +32,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
 
       it "handles case when TRN is not available" do
-        expect(Trs::RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_return(nil)
+        allow(Trs::RetrieveTrn).to receive(:call).with(trn_request:).and_return(nil)
         expect(trainee).not_to receive(:trn_received!)
         expect(trn_request).not_to receive(:received!)
 
@@ -43,7 +43,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
 
       it "handles API errors" do
-        expect(Trs::RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_raise(
+        allow(Trs::RetrieveTrn).to receive(:call).with(trn_request:).and_raise(
           Trs::Client::HttpError.new("API error"),
         )
 
@@ -60,7 +60,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
 
       it "uses Dqt::RetrieveTrn when TRN is available" do
-        expect(Dqt::RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_return(trn)
+        allow(Dqt::RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
         expect(trainee).to receive(:trn_received!).with(trn)
         expect(trn_request).to receive(:received!)
 
@@ -71,7 +71,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
 
       it "handles case when TRN is not available" do
-        expect(Dqt::RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_return(nil)
+        allow(Dqt::RetrieveTrn).to receive(:call).with(trn_request:).and_return(nil)
         expect(trainee).not_to receive(:trn_received!)
         expect(trn_request).not_to receive(:received!)
 
@@ -82,7 +82,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
 
       it "handles API errors" do
-        expect(Dqt::RetrieveTrn).to receive(:call).with(trn_request: trn_request).and_raise(
+        allow(Dqt::RetrieveTrn).to receive(:call).with(trn_request:).and_raise(
           Dqt::Client::HttpError.new("API error"),
         )
 
@@ -118,4 +118,4 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
       end
     end
   end
-end 
+end

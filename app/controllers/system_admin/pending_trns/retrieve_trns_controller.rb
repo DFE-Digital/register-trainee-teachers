@@ -27,7 +27,7 @@ module SystemAdmin
         elsif FeatureService.enabled?(:integrate_with_dqt)
           Dqt::RetrieveTrn.call(trn_request:)
         else
-          raise StandardError, "No integration is enabled"
+          raise(StandardError, "No integration is enabled")
         end
       end
 
