@@ -46,7 +46,7 @@ module Api
     end
 
     def current_provider
-      @current_provider ||= auth_token.provider
+      @current_provider ||= auth_token&.provider
     end
 
     def audit_user
@@ -80,15 +80,13 @@ module Api
     end
 
     def auth_token
-      return @auth_token if defined?(@auth_token)
+      return if bearer_token.blank?
 
-      bearer_token = request.headers["Authorization"]
+      @auth_token ||= AuthenticationToken.authenticate(bearer_token)
+    end
 
-      if bearer_token.blank?
-        @auth_token = nil
-      else
-        @auth_token = AuthenticationToken.authenticate(bearer_token)
-      end
+    def bearer_token
+      @bearer_token ||= request.headers["Authorization"]
     end
   end
 end
