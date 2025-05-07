@@ -5,6 +5,18 @@ module Api
     class HesaTraineeDetailAttributes
       module Rules
         class FundingMethod < Api::Rules::Base
+          FUNDING_TYPES = {
+            Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES["scholarship"],
+            Hesa::CodeSets::BursaryLevels::NONE => nil,
+            Hesa::CodeSets::BursaryLevels::TIER_ONE => FUNDING_TYPES["bursary"],
+            Hesa::CodeSets::BursaryLevels::TIER_TWO => FUNDING_TYPES["bursary"],
+            Hesa::CodeSets::BursaryLevels::TIER_THREE => FUNDING_TYPES["bursary"],
+            Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
+            Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
+            Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
+            Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES["grant"],
+          }.freeze
+
           attr_reader :hesa_trainee_detail_attributes
 
           delegate :fund_code,
@@ -31,17 +43,7 @@ module Api
         private
 
           def funding_type
-            @funding_type ||= {
-              Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES["scholarship"],
-              Hesa::CodeSets::BursaryLevels::NONE => nil,
-              Hesa::CodeSets::BursaryLevels::TIER_ONE => FUNDING_TYPES["bursary"],
-              Hesa::CodeSets::BursaryLevels::TIER_TWO => FUNDING_TYPES["bursary"],
-              Hesa::CodeSets::BursaryLevels::TIER_THREE => FUNDING_TYPES["bursary"],
-              Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
-              Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
-              Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY => FUNDING_TYPES["bursary"],
-              Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES["grant"],
-            }.fetch(funding_method)
+            @funding_type ||= FUNDING_TYPES.fetch(funding_method)
           end
         end
       end
