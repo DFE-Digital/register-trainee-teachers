@@ -29,11 +29,14 @@ module Trs
         described_class.perform_now(trainee)
       end
 
-      it "calls RetrieveTrnJob if trn_request is not failed" do
+      it "calls RetrieveTrnJob with a 1-minute delay if trn_request is not failed" do
         allow(RegisterForTrn).to(receive(:call).with(trainee:).and_return(trn_request))
         allow(trn_request).to(receive(:failed?).and_return(false))
 
-        expect(RetrieveTrnJob).to(receive(:perform_later).with(trn_request))
+        retrieve_job = instance_double(ActiveJob::ConfiguredJob)
+        allow(RetrieveTrnJob).to(receive(:set).with(wait: 1.minute).and_return(retrieve_job))
+        expect(retrieve_job).to(receive(:perform_later).with(trn_request))
+
         described_class.perform_now(trainee)
       end
 
@@ -41,6 +44,7 @@ module Trs
         allow(RegisterForTrn).to(receive(:call).with(trainee:).and_return(trn_request))
         allow(trn_request).to(receive(:failed?).and_return(true))
 
+        expect(RetrieveTrnJob).not_to(receive(:set))
         expect(RetrieveTrnJob).not_to(receive(:perform_later))
         described_class.perform_now(trainee)
       end

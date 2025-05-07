@@ -20,7 +20,7 @@ module Trs
         @params ||= {
           "requestId" => request_id,
           "person" => person_details,
-          "identityVerified" => true,
+          "identityVerified" => false,
           "oneLoginUserSubject" => nil,
         }
       end
