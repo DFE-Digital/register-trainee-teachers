@@ -32,11 +32,11 @@ feature "References documentation page for Register API" do
   end
 
   def when_i_click_on_a_link_to_another_version
-    click_on "v1.0-rc"
+    click_on "v2025.0-rc"
   end
 
   def then_i_should_see_the_api_reference_for_the_other_version
     expect(page).to have_content("Register API reference")
-    expect(page).to have_current_path(api_docs_versioned_reference_path(api_version: "v1.0-rc"))
+    expect(page).to have_current_path(api_docs_versioned_reference_path(api_version: "v2025.0-rc"))
   end
 end
