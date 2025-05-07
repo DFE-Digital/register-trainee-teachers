@@ -19,7 +19,7 @@ module Api
       trainee_disabilities_attributes: "disabilities",
     }.freeze
 
-    NO_ATTRIBUTE_NAMES = {
+    EXCLUDE_ATTRIBUTE_NAMES = {
       course_subject_two: %i[api.duplicate csv.duplicate],
       course_subject_three: %i[api.duplicate csv.duplicate],
     }.freeze
@@ -60,7 +60,7 @@ module Api
 
         err.define_singleton_method(:full_messages) do
           errors.map do |error|
-            mapped_error = NO_ATTRIBUTE_NAMES[error.attribute]
+            mapped_error = EXCLUDE_ATTRIBUTE_NAMES[error.attribute]
 
             if mapped_error.present? && error.type.in?(mapped_error)
               error.message
