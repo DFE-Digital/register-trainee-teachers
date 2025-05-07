@@ -53,17 +53,18 @@ title: Accessibility statement for Register trainee teachers
 
 <p class='govuk-body'>The content is non-accessible for the following reasons:</p>
 
-<h3 class='govuk-heading-s'>Non-compliance with the accessibility regulations</h3>
-
-<p class='govuk-body'>Specific error suggestions are not provided for some fields on forms. This can be seen on date fields, if the user inputs an incorrectly formatted date, the error message does not provide a suggestion on how to rectify it. This fails WCAG 2.2 success criterion 3.3.1 Error Identification.</p>
-
-<p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
-
-<p class='govuk-body'>Unsupported ARIA attributes are present on some form inputs. This may cause issues for users of assistive technology. This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.</p>
+<h3 class='govuk-heading-s'>Specific error suggestions are not provided for some fields on forms</h3>
+<p class='govuk-body'>This can be seen on date fields, if the user inputs an incorrectly formatted date, the error message does not provide a suggestion on how to rectify it. This fails WCAG 2.2 success criterion 3.3.1 Error Identification.</p>
 
 <p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
 
-<p class='govuk-body'>While navigating with JAWS, parts of error messages are announced multiple times. This fails WCAG 2.2 success criterion 4.1.2 Name. Role, Value.</p>
+<h3 class='govuk-heading-s'>Unsupported ARIA attributes are present on some form inputs</h3> 
+<p class='govuk-body'>This may cause issues for users of assistive technology. This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.</p>
+
+<p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
+
+<h3 class='govuk-heading-s'>While navigating with JAWS, parts of error messages are announced multiple times</h3>
+<p class='govuk-body'>This fails WCAG 2.2 success criterion 4.1.2 Name. Role, Value.</p>
 
 <p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
 
