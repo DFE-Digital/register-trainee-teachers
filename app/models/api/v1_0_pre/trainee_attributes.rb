@@ -50,14 +50,12 @@ module Api
       end
 
       def itt_end_date_valid
-        return if itt_start_date.nil? || itt_end_date.nil?
+        return if !valid_date_string?(itt_start_date) || !valid_date_string?(itt_end_date)
 
         parsed_itt_start_date = itt_start_date.is_a?(String) ? Date.iso8601(itt_start_date) : itt_start_date
         parsed_itt_end_date   = itt_end_date.is_a?(String) ? Date.iso8601(itt_end_date) : itt_end_date
 
         errors.add(:itt_end_date, :before_or_same_as_start_date) if parsed_itt_start_date >= parsed_itt_end_date
-
-      rescue Date::Error
       end
     end
   end
