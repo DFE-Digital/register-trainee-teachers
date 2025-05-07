@@ -5,8 +5,10 @@
 .collapsible {
   position: relative;
 }
+
 .collapsible__body {
   display: none;
+
   .collapsible.is-open & {
     display: block
   }
@@ -39,6 +41,7 @@
   position: absolute;
   top: 0;
   right: 20px;
+
   &::after {
     content: '';
     display: block;
@@ -49,6 +52,7 @@
     height: 10px;
     margin-top: 10px;
   }
+
   .collapsible.is-open &::after {
     transform: rotate(315deg);
     margin-top: 18px;
