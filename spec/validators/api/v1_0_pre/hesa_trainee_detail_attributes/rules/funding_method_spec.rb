@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable RSpec/SpecFilePathFormat
 RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundingMethod do
   subject { described_class }
 
@@ -70,3 +71,4 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundingMethod do
     end
   end
 end
+# rubocop:enable RSpec/SpecFilePathFormat
