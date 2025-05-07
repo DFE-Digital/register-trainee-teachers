@@ -30,11 +30,11 @@ module Api
           end
 
           def call
-            return true if (fund_code != Hesa::CodeSets::FundCodes::ELIGIBLE && funding_method.blank?) ||
+            return true if (fund_code_not_eligible? && no_funding_method?) ||
               training_route.nil?
 
-            return false if (fund_code == Hesa::CodeSets::FundCodes::ELIGIBLE && funding_method.blank?) ||
-              (fund_code == Hesa::CodeSets::FundCodes::NOT_ELIGIBLE && funding_method.present?)
+            return false if (fund_code_eligible? && no_funding_method?) ||
+              (fund_code_not_eligible? && funding_method?)
 
             ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: AcademicCycle.current&.id,
@@ -46,8 +46,24 @@ module Api
 
         private
 
+          def fund_code_not_eligible?
+            !fund_code_eligible?
+          end
+
+          def fund_code_eligible?
+            fund_code == Hesa::CodeSets::FundCodes::ELIGIBLE
+          end
+
+          def funding_method?
+            !no_funding_method?
+          end
+
+          def no_funding_method?
+            funding_method.blank? || funding_method == Hesa::CodeSets::BursaryLevels::NONE
+          end
+
           def funding_type
-            @funding_type ||= FUNDING_TYPES.fetch(funding_method)
+            @funding_type ||= FUNDING_TYPES[funding_method]
           end
         end
       end

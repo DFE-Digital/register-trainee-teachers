@@ -22,11 +22,29 @@ RSpec.describe Api::V10Pre::HesaTraineeDetailAttributes::Rules::FundingMethod do
   end
 
   describe "::valid?" do
-    context "when the fund_code is NOT eligible" do
+    context "when the fund_code is NOT eligible and funding_method is blank" do
       let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+      let(:funding_method) { nil }
 
       it "returns true" do
         expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+      end
+    end
+
+    context "when the fund_code is NOT eligible and funding_method is NONE" do
+      let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+      let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
+
+      it "returns true" do
+        expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+      end
+    end
+
+    context "when the fund_code is NOT eligible and funding_method is set" do
+      let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+
+      it "returns false" do
+        expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
       end
     end
 
