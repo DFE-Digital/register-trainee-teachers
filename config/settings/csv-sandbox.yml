@@ -39,7 +39,7 @@ features:
     school_direct_tuition_fee: true
     iqts: true
   google:
-    send_data_to_big_query: false
+    send_data_to_big_query: true
   integrate_with_dqt: false
   integrate_with_trs: false
   hesa_import:
