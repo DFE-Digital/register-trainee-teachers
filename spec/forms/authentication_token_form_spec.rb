@@ -19,7 +19,7 @@ describe AuthenticationTokenForm, type: :model do
       let(:params) { { name: "Token name", day: date.day, month: date.month, year: date.year } }
 
       context "when not a date" do
-        let(:params) { { day: Faker::Alphanumeric.alpha, month: Date.current.month, year: Date.current.year } }
+        let(:date) { OpenStruct.new(day: Faker::Alphanumeric.alpha, month: Date.current.month, year: Date.current.year) }
 
         it "returns false" do
           expect(subject.valid?).to be(false)

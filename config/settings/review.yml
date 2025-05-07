@@ -9,7 +9,6 @@ features:
   sign_in_method: persona
   enable_feedback_link: true
   publish_course_details: true
-  token_management: true
   routes:
     provider_led_postgrad: true
     assessment_only: true
@@ -28,8 +27,9 @@ features:
   funding: true
   google:
     send_data_to_big_query: true
+  token_management: true
+  bulk_add_trainees: true
   show_csv_sandbox_banner: true
-
 
 pagination:
   records_per_page: 30

@@ -4,6 +4,7 @@ module Api
   class BaseController < ActionController::API
     include Api::ErrorResponse
     include ApiMonitorable
+    include DfE::Analytics::ApiRequests
 
     before_action :check_feature_flag!, :authenticate!, :update_last_used_at_on_token!
 
@@ -45,10 +46,14 @@ module Api
     end
 
     def current_provider
-      @current_provider ||= auth_token.provider
+      @current_provider ||= auth_token&.provider
     end
 
     def audit_user
+      current_provider
+    end
+
+    def current_user
       current_provider
     end
 
@@ -75,15 +80,13 @@ module Api
     end
 
     def auth_token
-      return @auth_token if defined?(@auth_token)
+      return if bearer_token.blank?
 
-      bearer_token = request.headers["Authorization"]
+      @auth_token ||= AuthenticationToken.authenticate(bearer_token)
+    end
 
-      if bearer_token.blank?
-        @auth_token = nil
-      else
-        @auth_token = AuthenticationToken.authenticate(bearer_token)
-      end
+    def bearer_token
+      @bearer_token ||= request.headers["Authorization"]
     end
   end
 end

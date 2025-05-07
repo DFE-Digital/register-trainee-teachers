@@ -99,7 +99,7 @@ features:
   register_api: true
   itt_reform: true
   duplicate_checking: true
-  bulk_add_trainees: true
+  bulk_add_trainees: false
   token_management: false
   show_csv_sandbox_banner: false
 
