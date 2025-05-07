@@ -1,0 +1,139 @@
+$input-size: 40px;
+
+@include govuk-media-query($media-type: screen) {
+  .page-title + .search {
+    margin-top: govuk-spacing(6);
+  }
+}
+
+@include govuk-media-query($media-type: print) {
+  .search {
+    display: none;
+  }
+}
+
+.js .search__label {
+  @extend .govuk-visually-hidden;
+}
+
+.search__form {
+  position: relative;
+}
+
+.search__input {
+  width: 230px;
+  width: calc(100% - #{$input-size});
+}
+
+.search__button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: 0;
+  background-color: govuk-colour('blue');
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  width: $input-size;
+  height: 100%;
+  background-image: image-url('/images/search-button.png');
+  background-repeat: no-repeat;
+  background-position: 2px 50%;
+  text-indent: -5000px;
+  overflow: hidden;
+  &:focus {
+    outline: $govuk-focus-width solid $govuk-focus-colour;
+    outline-offset: 0;
+    box-shadow: inset 0 0 0 $govuk-border-width-form-element * 2 govuk-colour("black");
+  }
+}
+
+@include govuk-media-query($until: tablet) {
+  html.js.has-search-results-open:not(.toc-open) {
+    .toc {
+      display: block;
+      padding-bottom: 0;
+    }
+
+    .toc__close {
+      display: none;
+    }
+
+    .toc__list {
+      display: none;
+    }
+  }
+}
+
+.search-results {
+  @include govuk-media-query(tablet) {
+    // Create basis for the search results caret (below)
+    position: relative;
+
+    @include govuk-font($size: 16);
+    padding-top: govuk-spacing(6);
+  }
+
+  a {
+    @include govuk-link-common;
+    @include govuk-link-style-no-visited-state;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+.search-results__inner {
+  background: govuk-colour("white");
+  border-top: 1px solid govuk-colour("mid-grey");
+  max-width: 40rem;
+  padding: 15px;
+  @include govuk-media-query(tablet) {
+    padding: 15px 200px 50px 40px;
+    border: 1px solid govuk-colour("mid-grey");
+    &::after {
+      content: '';
+      position: absolute;
+      top: 35px;
+      left: -9px;
+      width: 10px;
+      height: 20px;
+      background: no-repeat image-url('/images/search-result-caret.svg') center right;
+      background-size: contain;
+    }
+  }
+}
+.search-results__title {
+  @include govuk-font($size: 27, $weight: bold);
+  margin-bottom: govuk-spacing(6);
+}
+.search-result {
+  margin-bottom: govuk-spacing(6);
+}
+.search-result mark {
+  background-color: transparent;
+  color: inherit;
+  font-weight: bold;
+
+  // In forced color mode some browsers will keep the background transparent
+  // but set the text colour black, making the highlighted text unreadable.
+  // The following blocks fix this by setting the text colour to be the same as
+  // other text in a way that forced color mode will respect.
+
+  @media screen and (-ms-high-contrast: active) {
+    // IE does not support `CanvasText`,
+    // and `currentColor` does not work with Blink
+    color: currentColor;
+  }
+
+  @media screen and (forced-colors: active) {
+    background-color: Canvas;  // needed for Firefox
+    color: CanvasText;
+  }
+}
+
+.js .search-help__no-js {
+  display: none;
+}

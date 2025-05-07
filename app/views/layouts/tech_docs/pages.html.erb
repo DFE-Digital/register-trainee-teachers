@@ -1,0 +1,11 @@
+<%= content_for :title, @front_matter["page_title"] %>
+
+<%= render(
+  "layouts/tech_docs_markdown_page",
+  {
+    page_title: @front_matter["page_title"],
+    title: @front_matter["title"],
+    breadcrumbs_text: "Back",
+    breadcrumbs_href: root_path,
+  },
+) %>
