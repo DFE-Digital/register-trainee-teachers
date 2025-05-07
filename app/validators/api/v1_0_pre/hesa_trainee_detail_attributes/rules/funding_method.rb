@@ -20,14 +20,12 @@ module Api
           def call
             return true if fund_code != Hesa::CodeSets::FundCodes::ELIGIBLE || training_route.nil?
 
-            funding_rule = ::FundingMethod.joins(allocation_subjects: :subject_specialisms).where(
+            ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: AcademicCycle.current&.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
-            ).first
-
-            funding_rule.present?
+            )
           end
 
         private
