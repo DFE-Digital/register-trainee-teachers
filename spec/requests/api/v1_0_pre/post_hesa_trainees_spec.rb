@@ -601,7 +601,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Enter different subject to course_subject_one")
+          expect(response.parsed_body[:errors]).to contain_exactly("Course subject attributes contain duplicate values")
         end
       end
 
@@ -613,7 +613,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         let(:params) do
           {
             data: data.merge(
-              course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PRIMARY_TEACHING],
               course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
               course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
             ),
@@ -622,7 +622,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Enter different subject to course_subject_one and course_subject_two")
+          expect(response.parsed_body[:errors]).to contain_exactly("Course subject attributes contain duplicate values")
         end
       end
 

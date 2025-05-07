@@ -20,8 +20,8 @@ module Api
     }.freeze
 
     EXCLUDE_ATTRIBUTE_NAMES = {
-      course_subject_two: %i[api.duplicate csv.duplicate],
-      course_subject_three: %i[api.duplicate csv.duplicate],
+      course_subject_two: %i[duplicate],
+      course_subject_three: %i[duplicate],
     }.freeze
 
     module ClassMethods

@@ -40,7 +40,7 @@ module Api
       def course_subject_two_valid
         return if course_subject_two.nil?
 
-        errors.add(:course_subject_two, :duplicate) if course_subject_one == course_subject_two && course_subject_three.nil?
+        errors.add(:course_subject_two, :duplicate) if course_subject_one == course_subject_two
       end
 
       def course_subject_three_valid
