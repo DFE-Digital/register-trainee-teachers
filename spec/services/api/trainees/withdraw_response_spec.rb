@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Api::Trainees::WithdrawResponse do
-  let(:version) { "v1.0-rc" }
+  let(:version) { "v2025.0-rc" }
   let(:withdraw_response) { described_class.call(trainee:, params:, version:) }
   let(:params) do
     {

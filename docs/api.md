@@ -62,7 +62,7 @@ end
 # app/models/api/v1.0-rc/trainee_attributes.rb
 
 module Api
-  module V10Rc
+  module V20250Rc
     class TraineeAttributes < Api::V01::TraineeAttributes
     end
   end
