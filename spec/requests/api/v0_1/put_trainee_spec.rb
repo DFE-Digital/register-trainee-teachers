@@ -940,6 +940,38 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
           )
         end
       end
+
+      %w[95 98 99].each do |code|
+        let(:disability_disclosures) {
+          {
+            "95" => "no_disability",
+            "98" => "disability_not_provided",
+            "99" => "disability_not_provided",
+          }
+        }
+
+        context "when disability1 has code #{code}" do
+          let(:params) do
+            {
+              data: {
+                disability1: code,
+              }
+            }
+          end
+
+          it do
+            expect(response).to have_http_status(:success)
+
+            expect(response.parsed_body[:data][:disability_disclosure]).to eq(disability_disclosures[code])
+            expect(response.parsed_body[:data][:disability1]).to eq(code)
+
+            trainee.reload
+
+            expect(trainee.disability_disclosure).to eq(disability_disclosures[code])
+            expect(trainee.disabilities).to be_empty
+          end
+        end
+      end
     end
 
     context "with course subjects" do
