@@ -2,7 +2,7 @@
 page_title: Accessibility statement for Register trainee teachers
 title: Accessibility statement for Register trainee teachers
 ---
-<p class='govuk-body'>This accessibility statement applies to Register Trainee Teachers.</p>
+<p class='govuk-body'>This accessibility statement applies to Register trainee teachers.</p>
 <p class='govuk-body'>This website is run by the Department for Education. We want as many people as possible to be able to use this website. For example, that means you should be able to:</p>
 <ul class='govuk-list govuk-list--bullet'>
   <li>change colours, contrast levels and fonts</li>
