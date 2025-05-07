@@ -30,7 +30,11 @@ module Api
           end
 
           def call
-            return true if fund_code != Hesa::CodeSets::FundCodes::ELIGIBLE || training_route.nil?
+            return true if (fund_code != Hesa::CodeSets::FundCodes::ELIGIBLE && funding_method.blank?) ||
+              training_route.nil?
+
+            return false if (fund_code == Hesa::CodeSets::FundCodes::ELIGIBLE && funding_method.blank?) ||
+              (fund_code == Hesa::CodeSets::FundCodes::NOT_ELIGIBLE && funding_method.present?)
 
             ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: AcademicCycle.current&.id,
