@@ -24,7 +24,6 @@ title: Accessibility statement for Register trainee teachers
   <li>files cannot be uploaded whilst navigating with speech recognition software</li>
 </ul>
 
-
 <h2 class='govuk-heading-m'>Feedback and contact information</h2>
 
 <p class='govuk-body'>If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:</p> 
@@ -34,7 +33,6 @@ title: Accessibility statement for Register trainee teachers
 </ul>
 
 <p class='govuk-body'>We’ll consider your request and get back to you in 5 days.</p>
-
 
 <h2 class='govuk-heading-m'>Reporting accessibility problems with Register trainee teachers</h2>
 
@@ -69,7 +67,6 @@ title: Accessibility statement for Register trainee teachers
 
 <p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
 
-
 <h2 class='govuk-heading-m'>Disproportionate burden</h2>
 
 <p class='govuk-body'>We have determined that there is a disproportionate burden to meet all the requirements for the following reasons:
@@ -82,7 +79,6 @@ title: Accessibility statement for Register trainee teachers
 
 <h2 class='govuk-heading-m'>What we’re doing to improve accessibility</h2>
 <p class='govuk-body'>We have a backlog of tickets created for ongoing accessibility improvements. We conduct regular user testing and audits. We will continue to use the accessibility manual to enhance knowledge within the team and resolve accessibility issues when identified.</p>
-
 
 <h2 class='govuk-heading-m'>Preparation of this accessibility statement</h2>
 
