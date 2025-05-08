@@ -2071,8 +2071,6 @@ en:
               blank: Enter a comment
         api/v01/trainee_attributes:
           attributes:
-            date_of_birth:
-              future: enter a date that is in the past, for example "1980-03-31"
             course_subject_one:
               inclusion: &invalid_reference_data has invalid reference data values
             course_subject_two:
