@@ -601,7 +601,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Course subject attributes contain duplicate values")
+          expect(response.parsed_body[:errors]).to contain_exactly("Course subject fields contain duplicate values")
         end
       end
 
@@ -622,7 +622,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Course subject attributes contain duplicate values")
+          expect(response.parsed_body[:errors]).to contain_exactly("Course subject fields contain duplicate values")
         end
       end
 
