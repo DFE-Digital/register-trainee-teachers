@@ -41,6 +41,7 @@ features:
   register_api: true
   google:
     send_data_to_big_query: false
+  bulk_add_trainees: true
 
 environment:
   name: sandbox
