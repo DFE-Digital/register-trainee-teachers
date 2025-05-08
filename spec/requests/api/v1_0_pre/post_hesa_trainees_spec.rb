@@ -62,7 +62,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       course_year: "2012",
       course_age_range: course_age_range,
       fund_code: fund_code,
-      funding_method: "4",
+      funding_method: Hesa::CodeSets::BursaryLevels::NONE,
       hesa_id: "0310261553101",
       provider_trainee_id: "99157234/2/01",
       pg_apprenticeship_start_date: "2024-03-11",
@@ -131,11 +131,11 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       parsed_body = response.parsed_body[:data]
 
       expect(Trainees::MapFundingFromDttpEntityId).to have_received(:call).once
-      expect(Trainee.last.applying_for_scholarship).to be(true)
+      expect(Trainee.last.applying_for_scholarship).to be(false)
       expect(Trainee.last.applying_for_bursary).to be(false)
       expect(Trainee.last.applying_for_grant).to be(false)
       expect(parsed_body[:fund_code]).to eq(Hesa::CodeSets::FundCodes::NOT_ELIGIBLE)
-      expect(parsed_body[:bursary_level]).to eq("4")
+      expect(parsed_body[:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::NONE)
       expect(parsed_body[:applying_for_scholarship]).to be_nil
       expect(parsed_body[:applying_for_bursary]).to be_nil
       expect(parsed_body[:applying_for_grant]).to be_nil
@@ -1000,7 +1000,10 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("funding_method has invalid reference data values")
+        expect(response.parsed_body["errors"]).to contain_exactly(
+          "funding_method has invalid reference data values",
+          "funding_method is ineligible",
+        )
       end
     end
 

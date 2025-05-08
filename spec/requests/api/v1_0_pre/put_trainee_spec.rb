@@ -1204,7 +1204,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body["errors"]).to contain_exactly("funding_method has invalid reference data values")
+          expect(response.parsed_body["errors"]).to contain_exactly(
+            "funding_method has invalid reference data values",
+            "funding_method is ineligible",
+          )
         end
       end
 
