@@ -5,6 +5,10 @@ module Api
     class TraineeAttributes < Api::V01::TraineeAttributes
       include Api::ErrorAttributeAdapter
 
+      validate :course_subject_two_valid, if: :require_subject?
+      validate :course_subject_three_valid, if: :require_subject?
+      validate :itt_end_date_valid
+
       def build_nested_models(new_attributes)
         new_attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << PlacementAttributes.new(placement_params, record_source:)
@@ -25,6 +29,33 @@ module Api
             record_source:,
           )
         end
+      end
+
+    private
+
+      def require_subject?
+        EARLY_YEARS_TRAINING_ROUTES.exclude?(training_route)
+      end
+
+      def course_subject_two_valid
+        return if course_subject_two.nil?
+
+        errors.add(:course_subject_two, :duplicate) if course_subject_one == course_subject_two
+      end
+
+      def course_subject_three_valid
+        return if course_subject_three.nil?
+
+        errors.add(:course_subject_three, :duplicate) if [course_subject_one, course_subject_two].include?(course_subject_three)
+      end
+
+      def itt_end_date_valid
+        return if !valid_date_string?(itt_start_date) || !valid_date_string?(itt_end_date)
+
+        parsed_itt_start_date = itt_start_date.is_a?(String) ? Date.iso8601(itt_start_date) : itt_start_date
+        parsed_itt_end_date   = itt_end_date.is_a?(String) ? Date.iso8601(itt_end_date) : itt_end_date
+
+        errors.add(:itt_end_date, :before_or_same_as_start_date) if parsed_itt_start_date >= parsed_itt_end_date
       end
     end
   end

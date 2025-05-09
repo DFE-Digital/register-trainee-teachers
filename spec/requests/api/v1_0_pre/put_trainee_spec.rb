@@ -379,7 +379,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
-      expect(response.parsed_body[:errors]).to contain_exactly(["course_details", { "itt_end_date" => ["The Expected end date must be after the start date"] }])
+      expect(response.parsed_body[:errors]).to contain_exactly("itt_end_date must be after itt_start_date")
       expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
       expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
     end

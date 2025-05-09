@@ -15,7 +15,13 @@ module Api
 
     NESTED_API_ATTRIBUTE_NAMES = {
       hesa_trainee_detail_attributes: "",
+      degrees_attributes: "",
       trainee_disabilities_attributes: "disabilities",
+    }.freeze
+
+    EXCLUDE_ATTRIBUTE_NAMES = {
+      course_subject_two: %i[duplicate],
+      course_subject_three: %i[duplicate],
     }.freeze
 
     module ClassMethods
@@ -34,6 +40,35 @@ module Api
         else
           NESTED_API_ATTRIBUTE_NAMES[attr.to_sym] || attr.to_s
         end || super
+      end
+    end
+
+    def errors
+      model = self
+
+      super.tap do |err|
+        err.define_singleton_method(:add) do |attribute, type = :invalid, **options|
+          translation_key = "activemodel.errors.models.#{model.class.name.underscore}.attributes.#{attribute}.#{model.record_source}.#{type}"
+
+          record_source_type = if I18n.exists?(translation_key)
+                                 :"#{model.record_source}.#{type}"
+                               else
+                                 type
+                               end
+          super(attribute, record_source_type, **options)
+        end
+
+        err.define_singleton_method(:full_messages) do
+          errors.map do |error|
+            mapped_error = EXCLUDE_ATTRIBUTE_NAMES[error.attribute]
+
+            if mapped_error.present? && error.type.in?(mapped_error)
+              error.message
+            else
+              error.full_message
+            end
+          end
+        end
       end
     end
   end
