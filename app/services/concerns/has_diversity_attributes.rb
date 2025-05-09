@@ -23,7 +23,7 @@ module HasDiversityAttributes
   end
 
   def disability_attributes
-    if !disability_disclosed?
+    if disabilities.empty? || disabilities == [Diversities::NOT_PROVIDED]
       return {
         disability_disclosure: Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided],
       }
@@ -50,7 +50,7 @@ module HasDiversityAttributes
   end
 
   def disability_disclosed?
-    disabilities.any? && disabilities != [Diversities::NOT_PROVIDED]
+    disabilities.present? && (disabilities & [Diversities::NOT_PROVIDED, Diversities::NO_KNOWN_DISABILITY]).empty?
   end
 
   def ethnicity_disclosed?
