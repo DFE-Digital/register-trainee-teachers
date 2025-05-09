@@ -27,6 +27,7 @@ $mobile-big-end: 501px;
 @import "utilities";
 @import "api-docs";
 @import "csv-docs";
+@import "tech_docs_gem/govuk_tech_docs";
 
 .govuk-cookie-banner__hide {
   display: none;

@@ -1,5 +1,5 @@
 <header class="govuk-header app-header__env--<%= Settings.environment.name %>" role="banner" data-module="govuk-header">
-  <div class="govuk-header__container govuk-width-container">
+  <div class="govuk-header__container <%= controller.respond_to?(:full_width) && controller.full_width ? 'govuk-header__container--full-width' : 'govuk-width-container' %>">
     <div class="govuk-header__logo app-header__logo">
       <%= govuk_link_to "/", class: "govuk-header__link govuk-header__link--homepage" do %>
         <span class="govuk-header__logotype">

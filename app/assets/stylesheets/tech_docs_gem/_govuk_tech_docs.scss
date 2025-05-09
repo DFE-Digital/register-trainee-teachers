@@ -1,0 +1,29 @@
+// IE8 support is removed in govuk-frontend v5
+// but as we still use IE8 mixin and generate a
+// separate stylesheet, we'll supress the warning for now
+// https://frontend.design-system.service.gov.uk/sass-api-reference/#govuk-suppressed-warnings
+$govuk-suppressed-warnings: (
+  ie8
+);
+$govuk-assets-path: "/assets/govuk/assets/" !default;
+
+// legacy palette is getting deprecated so new one needs to be used
+$govuk-new-organisation-colours: true;
+
+// Include only the bits of GOV.UK Frontend we need
+$govuk-new-link-styles: true;
+
+
+@import "govuk-frontend/dist/govuk/components/footer/index";
+@import "govuk-frontend/dist/govuk/components/header/index";
+@import "govuk-frontend/dist/govuk/components/inset-text/index";
+@import "govuk-frontend/dist/govuk/components/input/index";
+@import "govuk-frontend/dist/govuk/components/tag/index";
+@import "govuk-frontend/dist/govuk/components/skip-link/index";
+@import "govuk-frontend/dist/govuk/components/warning-text/index";
+
+@import "govuk-frontend/dist/govuk/utilities/index";
+@import "govuk-frontend/dist/govuk/overrides/index";
+
+@import "core";
+@import "vendor/fixedsticky";

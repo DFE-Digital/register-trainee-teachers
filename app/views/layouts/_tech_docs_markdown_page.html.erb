@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template ">
+  <head>
+    <title><%= yield :page_title %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= canonical_tag %>
+
+    <%= tag.meta(name: "viewport", content: "width=device-width, initial-scale=1") %>
+    <%= tag.meta(property: "og:image", content: image_path("govuk-opengraph-image.png")) %>
+    <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
+    <%= tag.meta(name: "format-detection", content: "telephone=no") %>
+
+    <%= favicon_link_tag image_path("favicon.ico"), type: nil, sizes: "48x48" %>
+    <%= favicon_link_tag image_path("favicon.svg"), type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag image_path("govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
+    <%= favicon_link_tag image_path("govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
+
+    <%= stylesheet_link_tag "accessible-autocomplete/dist/accessible-autocomplete.min" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <% if google_analytics_allowed? %>
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=<%= Settings.google_tag_manager.auth_id %>&gtm_preview=env-<%= Settings.google_tag_manager.env_id %>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','<%= Settings.google_tag_manager.tracking_id %>');</script>
+    <% end %>
+
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="govuk-template__body flexbox <%= yield :body_class %>">
+    <div class="app-pane">
+        <%= render Header::View.new(
+          service_name: I18n.t("service_name"),
+          items: header_items(@current_user),
+        ) %>
+
+      <div class="app-pane__body" data-module="in-page-navigation">
+        <div class="app-pane__toc">
+          <%= render "layouts/tech_docs/toc" %>
+        </div>
+        <div class="app-pane__content toc-open-disabled" aria-label="Content" tabindex="0" aria-hidden="">
+          <% if google_analytics_allowed? %>
+            <noscript>
+              <iframe title="Google Tag Manager" src="https://www.googletagmanager.com/ns.html?id=<%= Settings.google_tag_manager.tracking_id %>&<%= Settings.google_tag_manager.auth_id %>&gtm_preview=env-<%= Settings.google_tag_manager.env_id %>&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+            </noscript>
+          <% end %>
+
+          <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+          <% unless hide_cookie_banner? %>
+            <%= render("layouts/cookie_banner") %>
+          <% end %>
+
+          <%= govuk_skip_link %>
+
+          <%= render OrganisationSwitcher::View.new(current_user: @current_user) %>
+
+          <% unless current_page?(:organisations) %>
+            <% if request.path.split('/').second == "api-docs" %>
+              <%= render NavigationBar::View.new(
+                items: [
+                  { name: "Home", url: api_docs_home_path },
+                  { name: "API reference", url: api_docs_reference_path },
+                  { name: "Release notes", url: api_docs_page_path("release-notes") },
+                  { name: "Get help", url: api_docs_page_path("help") },
+                ],
+                current_path: request.path,
+                render_without_current_user: true,
+              ) %>
+            <% else %>
+              <%= render NavigationBar::View.new(
+                items: [
+                  { name: "Home", url: root_path },
+                  ({ name: "Draft trainees", url: drafts_path, current: active_link_for("drafts", @trainee) } if can_view_drafts?),
+                  { name: "Registered trainees", url: trainees_path, current: active_link_for("trainees", @trainee) },
+                  ({ name: "Bulk updates", url: bulk_update_path, current: active_link_for("bulk") } if can_bulk_update?),
+                  ({ name: "Reports", url: reports_path, current: active_link_for("reports") } if can_view_reports?),
+                  ({ name: "Funding", url: funding_payment_schedule_path, current: active_link_for("funding") } if can_view_funding?),
+                ],
+                current_path: request.path,
+                current_user: @current_user,
+              ) %>
+            <% end %>
+          <% end %>
+
+          <div class="app-phase-banner app-phase-banner__env--<%= Settings.environment.name %>">
+            <div class="technical-documentation">
+              <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content">
+                  <strong class="govuk-tag govuk-phase-banner__content__tag">
+                    <%= Settings.environment.display_name %>
+                  </strong>
+                  <span class="govuk-phase-banner__text" role="status">
+                      This is a new service - <% if FeatureService.enabled?("enable_feedback_link") %>
+                        your <%= govuk_link_to "feedback", Settings.feedback_link_url, class: "govuk-link--no-visited-state" %> will help us improve it
+                      <% else %>
+                        <%= support_email(name: "report a problem", subject: "Register trainee teachers support", classes: "govuk-link--no-visited-state") %>
+                      <% end %>
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="technical-documentation">
+            <%= yield :breadcrumbs %>
+          </div>
+
+          <main class="govuk-main-wrapper " id="main-content" role="main">
+            <%= yield :start_page_banner %>
+            <div class="technical-documentation">
+              <% if FeatureService.enabled?(:maintenance_banner) %>
+                <%= govuk_notification_banner(title_text: "Important") do |banner|
+                      banner.heading(text: "Register will be unavailable on Wednesday 19 July from 5pm")
+
+                      content_tag(:p, "You will be able to use the service from 9am on Thursday 20 July 2023.", class: "govuk-body")
+                    end %>
+              <% else %>
+                <%= render(YearChangeBanner::View.new) %>
+                <%= render(CsvSandboxBanner::View.new) if @current_user&.present? && request.path == root_path %>
+                <%= render(PerformanceProfileBanner::View.new(previous_academic_cycle: AcademicCycle.previous, sign_off_period: DetermineSignOffPeriod.call, provider: @current_user.organisation)) if @current_user&.provider? && request.path == root_path %>
+              <% end %>
+
+              <%= render(FlashBanner::View.new(flash: flash, trainee: @trainee)) %>
+
+              <!-- Copied from _markdown.html.erb -->
+              <%= render PageTitle::View.new(text: page_title) if page_title.present? %>
+
+              <%= content_for(:breadcrumbs) do %>
+                <%= render GovukComponent::BackLinkComponent.new(
+                    text: breadcrumbs_text,
+                    href: breadcrumbs_href,
+                ) %>
+              <% end %>
+
+              <%= tag.h1(title, class: "govuk-heading-l") if title.present? %>
+              <%= yield %>
+              <!-- END Copied from _markdown.html.erb -->
+            </div>
+          </main>
+
+          <footer class="govuk-footer govuk-footer--app" role="contentinfo">
+            <div class="technical-documentation">
+
+              <div class="govuk-footer__meta">
+                <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+                  <h2 class="govuk-visually-hidden">Support links</h2>
+                  <div class="govuk-footer__meta-custom">
+                    <div class="govuk-grid-row">
+                      <div class="govuk-grid-column-one-half">
+                        <h2 class="govuk-heading-s">
+                          Get support
+                        </h2>
+                        <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
+                          <li>Email: <%= support_email(subject: "Register trainee teachers support", classes: "govuk-footer__link") %></li>
+                          <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
+                        </ul>
+                      </div>
+                      <div class="govuk-grid-column-one-half">
+                        <h2 class="govuk-heading-s">
+                          Give feedback
+                        </h2>
+                        <p><%= govuk_link_to "Give feedback to help us improve Register trainee teachers", Settings.feedback_link_url, class: "govuk-footer__link" %></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
+                    <li class="govuk-footer__inline-list-item">
+                      <%= govuk_link_to "How to use this service", guidance_path, class: "govuk-footer__link" %>
+                    </li>
+                    <li class="govuk-footer__inline-list-item">
+                      <%= govuk_link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>
+                    </li>
+                    <li class="govuk-footer__inline-list-item">
+                      <%= govuk_link_to "Cookies", cookie_preferences_path, class: "govuk-footer__link" %>
+                    </li>
+                    <li class="govuk-footer__inline-list-item">
+                      <%= govuk_link_to "Privacy", privacy_notice_path, class: "govuk-footer__link" %>
+                    </li>
+                  </ul>
+
+                </div>
+                <div class="govuk-footer__meta-item">
+                  <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
