@@ -40,7 +40,7 @@ features:
   integrate_with_trs: false
   register_api: true
   google:
-    send_data_to_big_query: false
+    send_data_to_big_query: true
   bulk_add_trainees: true
 
 environment:
