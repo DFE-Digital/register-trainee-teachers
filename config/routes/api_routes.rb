@@ -3,7 +3,7 @@
 module ApiRoutes
   def self.extended(router)
     router.instance_exec do
-      namespace :api, path: "api/:api_version", api_version: /v[.0-9]+(-pre)?/, defaults: { format: :json } do
+      namespace :api, path: "api/:api_version", api_version: /v[.0-9]+(-pre|-rc)?/, defaults: { format: :json } do
         resources :trainees, param: :slug, only: %i[index show update create], constraints: RouteConstraints::RegisterApiConstraint do
           scope module: :trainees do
             resource :withdraw, controller: :withdraw, only: :create
@@ -23,8 +23,8 @@ module ApiRoutes
       namespace :api_docs, path: "api-docs" do
         get "/" => "pages#show", as: :home
         get "/reference" => "reference#show", as: :reference
-        get "/:api_version/openapi" => "openapi#show", constraints: { api_version: /v[.0-9]+(-pre)?/ }, as: :openapi
-        get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+(-pre)?/ }, as: :versioned_reference
+        get "/:api_version/openapi" => "openapi#show", constraints: { api_version: /v[.0-9]+(-pre|-rc)?/ }, as: :openapi
+        get "/:api_version/reference" => "reference#show", constraints: { api_version: /v[.0-9]+(-pre|-rc)?/ }, as: :versioned_reference
         get "/:page" => "pages#show", as: :page
       end
 

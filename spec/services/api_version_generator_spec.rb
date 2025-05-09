@@ -3,19 +3,19 @@
 require "rails_helper"
 
 RSpec.describe ApiVersionGenerator do
-  let(:old_version) { "v0.1" }
-  let(:new_version) { "v1.0" }
+  let(:old_version) { "v2025.0-rc" }
+  let(:new_version) { "v2025.0" }
   let(:service) { described_class.call(old_version:, new_version:) }
 
   describe "#generate_new_version" do
-    let(:example_file) { "app/models/api/v0_1/trainee_filter_params_attributes.rb" }
-    let(:new_file) { "app/models/api/v1_0/trainee_filter_params_attributes.rb" }
+    let(:example_file) { "app/models/api/v2025_0_rc/trainee_filter_params_attributes.rb" }
+    let(:new_file) { "app/models/api/v2025_0/trainee_filter_params_attributes.rb" }
     let(:file_content) do
       <<~RUBY
         # frozen_string_literal: true
 
         module Api
-          module V01
+          module V20250Rc
             class TraineeFilterParamsAttributes
               # ... code
             end
@@ -24,14 +24,14 @@ RSpec.describe ApiVersionGenerator do
       RUBY
     end
 
-    let(:extra_module_file) { "app/services/api/v0_1/hesa_mapper/degree_attributes.rb" }
-    let(:new_extra_module_file) { "app/services/api/v1_0/hesa_mapper/degree_attributes.rb" }
+    let(:extra_module_file) { "app/services/api/v2025_0_rc/hesa_mapper/degree_attributes.rb" }
+    let(:new_extra_module_file) { "app/services/api/v2025_0/hesa_mapper/degree_attributes.rb" }
     let(:extra_module_file_content) do
       <<~RUBY
         # frozen_string_literal: true
 
         module Api
-          module V01
+          module V20250Rc
             module HesaMapper
               class DegreeAttributes
                 # ... code
@@ -51,8 +51,8 @@ RSpec.describe ApiVersionGenerator do
     end
 
     it "creates the new directory" do
-      expect(FileUtils).to receive(:mkdir_p).with("app/models/api/v1_0")
-      expect(FileUtils).to receive(:mkdir_p).with("app/services/api/v1_0/hesa_mapper")
+      expect(FileUtils).to receive(:mkdir_p).with("app/models/api/v2025_0")
+      expect(FileUtils).to receive(:mkdir_p).with("app/services/api/v2025_0/hesa_mapper")
       service
     end
 
@@ -61,8 +61,8 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V10
-            class TraineeFilterParamsAttributes < Api::V01::TraineeFilterParamsAttributes
+          module V20250
+            class TraineeFilterParamsAttributes < Api::V20250Rc::TraineeFilterParamsAttributes
             end
           end
         end
@@ -77,9 +77,9 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V10
+          module V20250
             module HesaMapper
-              class DegreeAttributes < Api::V01::HesaMapper::DegreeAttributes
+              class DegreeAttributes < Api::V20250Rc::HesaMapper::DegreeAttributes
               end
             end
           end

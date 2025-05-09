@@ -3,7 +3,7 @@
 class ApiVersionService
   include ServicePattern
 
-  VERSION_FORMAT = /^v\d+\.\d+(-pre)?$/
+  VERSION_FORMAT = /^v\d+\.\d+(-pre|-rc)?$/
 
   def initialize(old_version:, new_version:)
     validate_version_format(old_version)
