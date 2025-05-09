@@ -28,17 +28,17 @@ private
   def given_i_am_not_logged_in; end
 
   def then_i_do_not_see_the_csv_sandbox_banner
-    expect(page).not_to have_css(".govuk-notification-banner__heading", text: "CSV sandbox is for review and testing purposes only")
-    expect(page).not_to have_css(".govuk-notification-banner__content .govuk-body", text: "You must not use real trainee data that contains personally identifiable information.")
-    expect(page).not_to have_css(".govuk-notification-banner__content .govuk-body", text: "Send your feedback or questions to registertraineeteachers@education.gov.uk.")
+    expect(page).not_to have_css(".govuk-notification-banner__heading", text: "The CSV sandbox is for review and testing purposes only")
+    expect(page).not_to have_css(".govuk-notification-banner__content .govuk-warning-text__text", text: "You must not use real trainee data that contains personally identifiable information")
+    expect(page).not_to have_css(".govuk-notification-banner__content .govuk-body", text: "Send us your feedback or questions")
   end
 
   def then_i_can_see_the_csv_sandbox_banner
     expect(page).to have_css(".govuk-notification-banner")
 
     expect(page).to have_css("#govuk-notification-banner-title", text: "Important")
-    expect(page).to have_css(".govuk-notification-banner__heading", text: "CSV sandbox is for review and testing purposes only")
-    expect(page).to have_css(".govuk-notification-banner__content .govuk-body", text: "You must not use real trainee data that contains personally identifiable information.")
-    expect(page).to have_css(".govuk-notification-banner__content .govuk-body", text: "Send your feedback or questions to registertraineeteachers@education.gov.uk.")
+    expect(page).to have_css(".govuk-notification-banner__heading", text: "The CSV sandbox is for review and testing purposes only")
+    expect(page).to have_css(".govuk-notification-banner__content .govuk-warning-text__text", text: "You must not use real trainee data that contains personally identifiable information")
+    expect(page).to have_css(".govuk-notification-banner__content .govuk-body", text: "Send us your feedback or questions")
   end
 end
