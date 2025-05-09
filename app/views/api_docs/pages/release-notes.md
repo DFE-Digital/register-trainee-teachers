@@ -3,11 +3,19 @@ page_title: Register API release notes
 title: Register API release notes
 ---
 
-## v2025.0-rc - 29 April 2025
+## v2025.0-rc - 12 May 2025
 
 Release canidate of first major version of the Register API. This version is not
 yet live but is available for testing. All requests for `v1.0-pre` will redirect to
 this version.
+
+### Changes
+
+* Checks for uniqueness of `trainee_disability_attributes`
+* Add support for deferreal reason for `POST /trainees/{trainee_id}/defer` endpoint
+* Update data received and displayed by `POST /trainees/{trainee_id}/withdraw` endpoint and re-instate the endpoint
+* Add degree validation for `POST /trainees/{trainee_id}/recommend-for-qts` endpoint
+* Add support for Lead Partner UKPRN
 
 ## v1.0-pre — 12 August 2024
 
