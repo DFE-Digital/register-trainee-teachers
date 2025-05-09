@@ -49,6 +49,7 @@ module Trs
       if trn
         trainee.trn_received!(trn)
         trn_request.received!
+        UpdateProfessionalStatusJob.set(wait: 1.minute).perform_later(trainee)
       elsif continue_polling?
         requeue
       else

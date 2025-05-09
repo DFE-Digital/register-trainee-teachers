@@ -57,7 +57,7 @@ module Trs
         @params ||= {
           "routeTypeId" => route_type_id,
           "status" => status,
-          "awardedDate" => trainee.awarded_at&.to_date&.iso8601,
+          "awardedDate" => trainee.outcome_date&.to_date&.iso8601,
           "trainingStartDate" => trainee.itt_start_date.iso8601,
           "trainingEndDate" => trainee.itt_end_date&.iso8601,
           "trainingSubjectReferences" => training_subject_references,

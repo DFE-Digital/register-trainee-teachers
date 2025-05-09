@@ -6,8 +6,8 @@ module CodeSets
       male: "Male",
       female: "Female",
       other: "Other",
-      prefer_not_to_say: "NotProvided",
-      sex_not_provided: "NotAvailable",
+      prefer_not_to_say: "Other",
+      sex_not_provided: "Other",
     }.freeze
 
     # States in which trainee updates are NOT valid
@@ -53,7 +53,7 @@ module CodeSets
       "withdrawn" => "Withdrawn",
       "deferred" => "Deferred",
       "awarded" => "Awarded",
-      "recommended_for_award" => "Approved",
+      "recommended_for_award" => "Awarded",
     }.freeze
 
     # Special case statuses based on state and route

@@ -20,7 +20,7 @@ RSpec.describe Trs::Params::TrnRequest, type: :model do
           "nationalInsuranceNumber" => nil,
           "gender" => CodeSets::Trs::GENDER_CODES[trainee.sex.to_sym],
         },
-        "identityVerified" => nil,
+        "identityVerified" => false,
         "oneLoginUserSubject" => nil,
       }.to_json
 

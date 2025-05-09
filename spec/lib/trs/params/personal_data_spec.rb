@@ -52,12 +52,12 @@ module Trs
 
         it "maps prefer_not_to_say correctly" do
           trainee.sex = "prefer_not_to_say"
-          expect(JSON.parse(params.to_json)["gender"]).to eq("NotProvided")
+          expect(JSON.parse(params.to_json)["gender"]).to eq("Other")
         end
 
         it "maps sex_not_provided correctly" do
           trainee.sex = "sex_not_provided"
-          expect(JSON.parse(params.to_json)["gender"]).to eq("NotAvailable")
+          expect(JSON.parse(params.to_json)["gender"]).to eq("Other")
         end
       end
     end
