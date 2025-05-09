@@ -437,6 +437,8 @@ module Trainees
           end
 
           it "sets no disabilities on the trainee" do
+            trainee.reload
+
             expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
             expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
             expect(trainee.disabilities).to be_empty
