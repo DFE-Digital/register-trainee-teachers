@@ -243,7 +243,6 @@ module Trainees
       feature_duplicate_checking: true,
       feature_integrate_with_dqt: true,
     ) do
-
       before do
         described_class.call(
           hesa_trainee: student_attributes,
@@ -272,7 +271,6 @@ module Trainees
       feature_duplicate_checking: false,
       feature_integrate_with_dqt: true,
     ) do
-
       before do
         described_class.call(
           hesa_trainee: student_attributes,
@@ -749,7 +747,7 @@ module Trainees
 
           described_class.call(
             hesa_trainee: student_attributes,
-            record_source: record_source
+            record_source: record_source,
           )
         end
 

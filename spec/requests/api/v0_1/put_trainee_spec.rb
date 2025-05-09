@@ -955,7 +955,7 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
             {
               data: {
                 disability1: code,
-              }
+              },
             }
           end
 
