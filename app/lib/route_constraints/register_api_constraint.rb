@@ -11,7 +11,7 @@ module RouteConstraints
     end
 
     def self.redirect_pre_release_requests_to_release_candidate(request)
-      request.path_parameters[:api_version] = "v2025.0-rc" if request.path_parameters[:api_version] == "v1.0-pre"
+      request.path_parameters[:api_version] = "v2025.0-rc" if request.path_parameters[:api_version] == "v1.0-pre" && request.path_parameters[:controller] != "api/info"
     end
   end
 end
