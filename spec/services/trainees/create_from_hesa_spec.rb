@@ -46,10 +46,6 @@ module Trainees
       create(:lead_partner, :school, school:)
       create(:withdrawal_reason, :with_all_reasons)
       create_custom_state
-      described_class.call(
-        hesa_trainee: student_attributes,
-        record_source: record_source,
-      )
     end
 
     after do
@@ -57,6 +53,13 @@ module Trainees
     end
 
     describe "HESA information imported from XML" do
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
+
       it "updates the Trainee ID, HESA ID and record_source" do
         expect(trainee.provider_trainee_id).to eq(student_attributes[:provider_trainee_id])
         expect(trainee.hesa_id).to eq(student_attributes[:hesa_id])
@@ -99,7 +102,7 @@ module Trainees
 
       context "when lead_partner_not_applicable was previously set to true" do
         before do
-          trainee.update(lead_partner_not_applicable: true, lead_partner_id: nil)
+          trainee.update!(lead_partner_not_applicable: true, lead_partner_id: nil)
           described_class.call(hesa_trainee: student_attributes, record_source: record_source)
           trainee.reload
         end
@@ -197,6 +200,13 @@ module Trainees
         create(:trainee, hesa_id: student_attributes[:hesa_id], trn: existing_trn, record_source: Trainee::HESA_TRN_DATA_SOURCE)
       end
 
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
+
       it "updates the trainee record source to be HESA collection" do
         expect(trainee.hesa_collection_record?).to be(true)
       end
@@ -204,6 +214,13 @@ module Trainees
 
     context "when the trainee is submitted via TRN data" do
       let(:record_source) { Trainee::HESA_TRN_DATA_SOURCE }
+
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
 
       it "sets record source to HESA_TRN_DATA" do
         expect(trainee.hesa_trn_data_record?).to be(true)
@@ -226,6 +243,13 @@ module Trainees
       feature_duplicate_checking: true,
       feature_integrate_with_dqt: true,
     ) do
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
+
       context "when there is a potential duplicate" do
         let(:duplicate_trainee) { create(:trainee) }
         let(:duplicate_trainees) { [duplicate_trainee] }
@@ -247,6 +271,13 @@ module Trainees
       feature_duplicate_checking: false,
       feature_integrate_with_dqt: true,
     ) do
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
+
       context "when there is a potential duplicate" do
         let(:duplicate_trainee) { create(:trainee) }
         let(:duplicate_trainees) { [duplicate_trainee] }
@@ -266,6 +297,13 @@ module Trainees
       context "when ethnicity is missing" do
         let(:hesa_stub_attributes) { { ethnic_background: nil } }
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "sets the ethnic_group and background to 'Not provided'" do
           expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:not_provided])
           expect(trainee.ethnic_background).to eq(Diversities::NOT_PROVIDED)
@@ -275,6 +313,13 @@ module Trainees
       context "when ethnicity is explicitly 'not provided'" do
         let(:hesa_stub_attributes) do
           { ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED] }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "sets the ethnic_group and background to 'Not provided'" do
@@ -291,6 +336,13 @@ module Trainees
           }
         end
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "sets the diversity disclosure to 'diversity_not_disclosed'" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
           expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
@@ -305,9 +357,21 @@ module Trainees
           }
         end
 
-        it "sets the disclosures to 'not_disclosed'" do
+        before do
+          trainee.disabilities << first_disability
+
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
+        it "sets the disclosures to 'not_disclosed' and removes the disabilities" do
+          trainee.reload
+
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_not_disclosed])
           expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:not_provided])
+          expect(trainee.disabilities).to be_empty
         end
       end
 
@@ -317,6 +381,13 @@ module Trainees
             ethnic_background: hesa_ethnicity_codes[Diversities::NOT_PROVIDED],
             disability1: hesa_disability_codes[first_disability_name],
           }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "correctly sets the disclosures and the disability on the trainee" do
@@ -335,6 +406,13 @@ module Trainees
           }
         end
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "correctly sets the disclosures and all the disabilities on the trainee" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
           expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:disabled])
@@ -350,10 +428,40 @@ module Trainees
           }
         end
 
-        it "sets no disabilities on the trainee" do
-          expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
-          expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
-          expect(trainee.disabilities).to be_empty
+        context "when the trainee does not have existing disabilities" do
+          before do
+            described_class.call(
+              hesa_trainee: student_attributes,
+              record_source: record_source,
+            )
+          end
+
+          it "sets no disabilities on the trainee" do
+            trainee.reload
+
+            expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+            expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
+            expect(trainee.disabilities).to be_empty
+          end
+        end
+
+        context "when the trainee has existing disabilities" do
+          before do
+            trainee.disabilities << first_disability
+
+            described_class.call(
+              hesa_trainee: student_attributes,
+              record_source: record_source,
+            )
+          end
+
+          it "removes the disabilities" do
+            trainee.reload
+
+            expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
+            expect(trainee.disability_disclosure).to eq(Diversities::DISABILITY_DISCLOSURE_ENUMS[:no_disability])
+            expect(trainee.disabilities).to be_empty
+          end
         end
       end
 
@@ -362,6 +470,13 @@ module Trainees
           {
             course_subject_one: "invalid course subject one codeset",
           }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "raises an error" do
@@ -374,6 +489,13 @@ module Trainees
           {
             disability1: "disability not in codeset",
           }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "raises an error" do
@@ -389,6 +511,13 @@ module Trainees
           }
         end
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "sets the diversity disclosure to 'diversity_disclosed' and the correct ethnic group and background" do
           expect(trainee.diversity_disclosure).to eq(Diversities::DIVERSITY_DISCLOSURE_ENUMS[:diversity_disclosed])
           expect(trainee.ethnic_group).to eq(Diversities::ETHNIC_GROUP_ENUMS[:black])
@@ -402,6 +531,13 @@ module Trainees
           { bursary_level: hesa_bursary_level_codes[CodeSets::BursaryDetails::UNDERGRADUATE_BURSARY] }
         end
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "uses the MapFundingFromDttpEntityId service to determine bursary information" do
           expect(trainee.applying_for_bursary).to be(true)
         end
@@ -409,9 +545,15 @@ module Trainees
 
       context "when training initiative is available and mappable" do
         let(:hesa_training_initiative_codes) { ::Hesa::CodeSets::TrainingInitiatives::MAPPING.invert }
-
         let(:hesa_stub_attributes) do
           { training_initiative: hesa_training_initiative_codes[ROUTE_INITIATIVES_ENUMS[:now_teach]] }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "maps the the HESA code to the register enum" do
@@ -426,6 +568,13 @@ module Trainees
           }
         end
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "maps the `application_choice_id` to `Trainee#application_choice_id`" do
           expect(trainee.application_choice_id).to eq(123456)
         end
@@ -434,6 +583,13 @@ module Trainees
       context "when bursary level indicates veteran teaching undergraduate bursary" do
         let(:hesa_stub_attributes) do
           { bursary_level: described_class::VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "maps the trainee to the veteran teaching undergraduate bursary" do
@@ -447,6 +603,13 @@ module Trainees
             course_age_range: hesa_age_range_codes[DfE::ReferenceData::AgeRanges::SEVEN_TO_ELEVEN],
             course_subject_one: hesa_course_subject_codes[CourseSubjects::DESIGN],
           }
+        end
+
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "adds 'primary teaching' and places it in the course_subject_one column" do
@@ -464,6 +627,13 @@ module Trainees
           }
         end
 
+        before do
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
+        end
+
         it "moves 'primary teaching' to be the first subject" do
           expect(trainee.course_subject_one).to eq(CourseSubjects::PRIMARY_TEACHING)
           expect(trainee.course_subject_two).to eq(CourseSubjects::DESIGN)
@@ -474,6 +644,13 @@ module Trainees
     context "trainee is already awarded with conflicting data to hesa" do
       let(:create_custom_state) { create(:trainee, :awarded, itt_end_date: DateTime.new(2024, 5, 11), hesa_id: student_attributes[:hesa_id]) }
 
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
+
       it "does not update the trainee" do
         expect(trainee.itt_end_date).to eq(DateTime.new(2024, 5, 11))
       end
@@ -481,12 +658,17 @@ module Trainees
 
     context "when the trainee's itt start date has changed by more than 30 days" do
       before do
-        trainee.update(itt_start_date: DateTime.new(2023, 9, 20))
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+
+        trainee.update!(itt_start_date: DateTime.new(2023, 9, 20))
       end
 
       context "when the trainee is withdrawn" do
         before do
-          trainee.update(state: :withdrawn)
+          trainee.update!(state: :withdrawn)
         end
 
         it "creates a new record" do
@@ -498,7 +680,7 @@ module Trainees
 
       context "when the trainee is awarded" do
         before do
-          trainee.update(state: :awarded)
+          trainee.update!(state: :awarded)
         end
 
         it "creates a new record" do
@@ -518,9 +700,16 @@ module Trainees
     end
 
     context "when the trainee's itt start date has not changed by more than 30 days" do
+      before do
+        described_class.call(
+          hesa_trainee: student_attributes,
+          record_source: record_source,
+        )
+      end
+
       context "when the trainee is withdrawn" do
         before do
-          trainee.update(state: :withdrawn)
+          trainee.update!(state: :withdrawn)
         end
 
         it "does not create a new record" do
@@ -538,7 +727,7 @@ module Trainees
 
       context "when the trainee is awarded" do
         before do
-          trainee.update(state: :awarded)
+          trainee.update!(state: :awarded)
         end
 
         it "does not create a new record" do
@@ -556,9 +745,12 @@ module Trainees
 
       context "when the trainee is neither awarded nor withdrawn" do
         before do
-          trainee.update(state: :draft)
+          trainee.update!(state: :draft)
 
-          described_class.call(hesa_trainee: student_attributes, record_source: record_source)
+          described_class.call(
+            hesa_trainee: student_attributes,
+            record_source: record_source,
+          )
         end
 
         it "updates the existing trainee" do

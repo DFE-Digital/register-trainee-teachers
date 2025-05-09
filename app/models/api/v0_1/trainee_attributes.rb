@@ -119,11 +119,6 @@ module Api
           ))
 
         build_nested_models(new_attributes)
-
-        self.trainee_disabilities_attributes = []
-        new_attributes[:disabilities]&.each do |disability|
-          trainee_disabilities_attributes << { disability_id: disability.id }
-        end
       end
 
       def build_nested_models(new_attributes)
@@ -140,6 +135,7 @@ module Api
         end
 
         new_hesa_trainee_detail_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
+
         if new_hesa_trainee_detail_attributes.present?
           self.hesa_trainee_detail_attributes = self.class.module_parent::HesaTraineeDetailAttributes.new(
             new_hesa_trainee_detail_attributes.merge(
