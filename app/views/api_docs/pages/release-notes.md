@@ -11,11 +11,19 @@ this version.
 
 ### Changes
 
-* Checks for uniqueness of `trainee_disability_attributes`
-* Add support for deferreal reason for `POST /trainees/{trainee_id}/defer` endpoint
-* Update data received and displayed by `POST /trainees/{trainee_id}/withdraw` endpoint and re-instate the endpoint
-* Add degree validation for `POST /trainees/{trainee_id}/recommend-for-qts` endpoint
-* Add support for Lead Partner UKPRN
+* Checks for uniqueness of disabilities
+* Adds support for deferral reason to `POST /trainees/{trainee_id}/defer` endpoint
+* Updated `POST /trainees/{trainee_id}/withdraw` endpoint with new data requirements to support the new withdrawal journey
+* Added degree validation for `POST /trainees/{trainee_id}/recommend-for-qts` endpoint
+* Added support for Lead Partner UKPRN
+* Fixed placement creation when creating trainees
+* Added additional validations
+* Improved the responses when duplicate degree and placements are detected
+* Removed some internal fields from responses
+* Added support for some missing HESA data values
+* Improved error messages to include exact field names in error response
+* Updated reference documentation
+
 
 ## v1.0-pre — 12 August 2024
 
