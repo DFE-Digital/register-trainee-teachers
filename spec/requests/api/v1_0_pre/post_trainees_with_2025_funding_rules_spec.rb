@@ -12,8 +12,8 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:trainee_start_date) { itt_start_date }
-  let(:itt_start_date) { "2023-01-01" }
-  let(:itt_end_date) { "2023-10-01" }
+  let(:itt_start_date) { "2024-10-01" }
+  let(:itt_end_date) { "2025-08-01" }
   let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
