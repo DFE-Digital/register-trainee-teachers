@@ -400,6 +400,19 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       end
     end
 
+    context "when `itt_end_date` is before itt_start_date" do
+      let(:itt_end_date) { "2022-01-30" }
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      it "does not create a trainee record and returns a 422 status with meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("itt_end_date must be after itt_start_date")
+      end
+    end
+
     context "when graduation_year is in 'yyyy-mm-dd' format" do
       let(:graduation_year) { "2003-01-01" }
 
@@ -572,6 +585,47 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     end
 
     context "with course subjects" do
+      context "when there course_subject_two is a duplicate" do
+        before do
+          post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+        end
+
+        let(:params) do
+          {
+            data: data.merge(
+              course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+            ),
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Course subject fields contain duplicate values")
+        end
+      end
+
+      context "when there course_subject_three is a duplicate" do
+        before do
+          post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+        end
+
+        let(:params) do
+          {
+            data: data.merge(
+              course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PRIMARY_TEACHING],
+              course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+              course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+            ),
+          }
+        end
+
+        it do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("Course subject fields contain duplicate values")
+        end
+      end
+
       context "when HasCourseAttributes#primary_education_phase? is true" do
         let(:course_age_range) { "13914" }
 
@@ -1032,8 +1086,22 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
-        expect(response.parsed_body["errors"]).to include("degrees_attributes uk_degree has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include("uk_degree has invalid reference data values")
       end
+    end
+  end
+
+  context "when a degree is missing" do
+    before do
+      params[:data][:degrees_attributes].first.delete(:uk_degree)
+
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "return status code 422 with a meaningful error message" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
+      expect(response.parsed_body["errors"]).to include("uk_degree must be entered if specifying a previous UK degree")
     end
   end
 
