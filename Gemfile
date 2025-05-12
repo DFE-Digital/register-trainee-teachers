@@ -44,7 +44,7 @@ gem "sentry-sidekiq"
 gem "stackprof"
 
 # Logging
-gem "amazing_print", "~> 1.7"
+gem "amazing_print", "~> 1.8"
 
 # There seems to be an issue with 4.17.0 where the workers log the sql
 gem "rails_semantic_logger", github: "kennyevil/rails_semantic_logger", branch: "filter-bind-values"
@@ -167,7 +167,7 @@ group :development, :test do
   gem "bullet"
 
   # Testing framework
-  gem "rspec-rails", "~> 7.1.1"
+  gem "rspec-rails", "~> 8.0.0"
 
   gem "rails-controller-testing"
 
