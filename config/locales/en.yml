@@ -2089,6 +2089,17 @@ en:
               inclusion: *invalid_reference_data
             training_initiative:
               inclusion: *invalid_reference_data
+        api/v10_pre/trainee_attributes:
+          attributes:
+            itt_end_date:
+              api:
+                before_or_same_as_start_date: must be after itt_start_date
+              csv:
+                before_or_same_as_start_date: must be after ITT start date
+            course_subject_two:
+              duplicate: &duplicate_course_subjects Course subject fields contain duplicate values
+            course_subject_three:
+              duplicate: *duplicate_course_subjects
         api/v01/hesa_trainee_detail_attributes:
           attributes:
             course_age_range:
@@ -2125,6 +2136,10 @@ en:
               inclusion: *invalid_reference_data
             uk_degree:
               inclusion: *invalid_reference_data
+        api/v10_pre/degree_attributes:
+          attributes:
+            uk_degree:
+              blank: must be entered if specifying a previous UK degree
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:
