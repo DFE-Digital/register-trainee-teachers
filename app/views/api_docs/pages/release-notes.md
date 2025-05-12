@@ -5,9 +5,8 @@ title: Register API release notes
 
 ## v2025.0-rc - 12 May 2025
 
-Release canidate of first major version of the Register API. This version is not
-yet live but is available for testing. All requests for `v1.0-pre` will redirect to
-this version.
+Release candidate of the 2025.0 version of the Register API. This version is not
+yet live but is available for testing.
 
 ### Changes
 
