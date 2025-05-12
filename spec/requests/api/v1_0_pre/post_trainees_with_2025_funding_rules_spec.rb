@@ -77,12 +77,11 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:previous_last_name]).to eq("Smith")
-      expect(response.parsed_body[:data][:pg_apprenticeship_start_date]).to eq("2024-03-11")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::NONE)
     end
   end
 
-  context "when the request is valid and includes a bursary" do
+  context "when the request is valid and includes a postgrad bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
 
@@ -92,8 +91,114 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       expect(response).to be_successful
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:previous_last_name]).to eq("Smith")
-      expect(response.parsed_body[:data][:pg_apprenticeship_start_date]).to eq("2024-03-11")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY)
+    end
+  end
+
+  context "when the request is valid and includes a undergrad bursary" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+    it "creates a trainee with a bursary" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY)
+    end
+  end
+
+  context "when the request is valid and includes a tier one bursary" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::TIER_ONE }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+    it "creates a trainee with a bursary" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::TIER_ONE)
+    end
+  end
+
+  context "when the request is valid and includes a tier two bursary" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::TIER_TWO }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+    it "creates a trainee with a bursary" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::TIER_TWO)
+    end
+  end
+
+  context "when the request is valid and includes a tier three bursary" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::TIER_THREE }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+    it "creates a trainee with a bursary" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::TIER_THREE)
+    end
+  end
+
+  context "when the request is valid and includes a veterans bursary" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
+
+    it "creates a trainee with a bursary" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::VETERAN_TEACHING_UNDERGRADUATE_BURSARY)
+    end
+  end
+
+  context "when the request is valid and includes a scholarship" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::SCHOLARSHIP }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
+    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PHYSICS] }
+
+    it "creates a trainee with a scholarship" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::SCHOLARSHIP)
+    end
+  end
+
+  context "when the request is valid and includes a grant" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::GRANT }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:school_direct_salaried]] }
+    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::MUSIC_EDUCATION_AND_TEACHING] }
+
+    it "creates a trainee with a grant" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to be_successful
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:bursary_level]).to eq(Hesa::CodeSets::BursaryLevels::GRANT)
     end
   end
 end
