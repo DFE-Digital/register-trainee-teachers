@@ -37,7 +37,7 @@ module Api
               (fund_code_not_eligible? && funding_method?)
 
             ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
-              academic_cycle_id: AcademicCycle.current&.id,
+              academic_cycle_id: AcademicCycle.current.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
