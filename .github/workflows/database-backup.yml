@@ -152,11 +152,10 @@ jobs:
     - name: Setup postgres client
       uses: DFE-Digital/github-actions/install-postgres-client@master
 
-    # Temporarily disabled productiondata restore - will be restored later
-    # - name: Restore backup to aks productiondata database
-    #   shell: bash
-    #   run: |
-    #     bin/konduit.sh -n bat-production -i ${{ env.BACKUP_FILE }} -c -t 7200 register-productiondata -- psql
+    - name: Restore backup to aks productiondata database
+      shell: bash
+      run: |
+        bin/konduit.sh -n bat-production -i ${{ env.BACKUP_FILE }} -c -t 7200 register-productiondata -- psql
 
     - name: Restore backup to aks analysis database
       shell: bash
