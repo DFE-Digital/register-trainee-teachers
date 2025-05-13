@@ -17,6 +17,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
   end
   let(:other_trainee) { create(:trainee, :in_progress, first_names: "Bob") }
   let(:provider) { trainee.provider }
+  let!(:academic_cycle) { create(:academic_cycle, :current) }
 
   context "with an invalid authentication token" do
     let(:token) { "not-a-valid-token" }
@@ -1206,7 +1207,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to contain_exactly(
             "funding_method has invalid reference data values",
-            "funding_method is ineligible",
+            "funding_method is not valid for this trainee",
           )
         end
       end
@@ -1406,7 +1407,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
               "fund_code is ineligible",
-              "funding_method is ineligible",
+              "funding_method is not valid for this trainee",
             )
           end
         end

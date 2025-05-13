@@ -2106,7 +2106,7 @@ en:
               inclusion: *invalid_reference_data
             funding_method:
               inclusion: *invalid_reference_data
-              ineligible: is ineligible
+              ineligible: is not valid for this trainee
             itt_aim:
               inclusion: *invalid_reference_data
             itt_qualification_aim:

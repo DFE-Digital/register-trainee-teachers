@@ -25,6 +25,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
   let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
 
   let(:endpoint) { "/api/v1.0-pre/trainees" }
+  let!(:academic_cycle) { create(:academic_cycle, :current) }
 
   let(:data) do
     {
@@ -852,6 +853,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
     end
 
     let(:params) { { data: { email: "Doe" } } }
+    let!(:academic_cycle) { create(:academic_cycle, :current) }
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
@@ -1002,7 +1004,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly(
           "funding_method has invalid reference data values",
-          "funding_method is ineligible",
+          "funding_method is not valid for this trainee",
         )
       end
     end
@@ -1124,7 +1126,7 @@ describe "`POST /api/v1.0-pre/trainees` endpoint" do
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
         "fund_code is ineligible",
-        "funding_method is ineligible",
+        "funding_method is not valid for this trainee",
       )
     end
   end
