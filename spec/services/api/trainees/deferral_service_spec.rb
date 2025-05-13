@@ -29,7 +29,7 @@ RSpec.describe Api::Trainees::DeferralService do
       end
 
       it "calls Trainees::Update to trigger TRS/DQT updates" do
-        expect(::Trainees::Update).to receive(:call).with(trainee: trainee)
+        expect(Trainees::Update).to receive(:call).with(trainee:)
         subject.call(params, trainee)
       end
 
@@ -122,7 +122,7 @@ RSpec.describe Api::Trainees::DeferralService do
 
       it "does not call Trainees::Update when deferral fails" do
         params = { defer_date: nil }
-        expect(::Trainees::Update).not_to receive(:call)
+        expect(Trainees::Update).not_to receive(:call)
         subject.call(params, trainee)
       end
     end
