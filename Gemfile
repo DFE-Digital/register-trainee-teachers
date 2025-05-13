@@ -58,7 +58,7 @@ gem "govuk_design_system_formbuilder"
 
 # Background job processor
 gem "sidekiq", "~> 6.5"
-gem "sidekiq-cron", "~> 2.2"
+gem "sidekiq-cron", "~> 2.3"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
@@ -205,7 +205,7 @@ end
 
 group :test do
   # Headless browser testing kit
-  gem "cuprite", "~> 0.15"
+  gem "cuprite", "~> 0.17"
   gem "selenium-webdriver"
 
   gem "shoulda-matchers", "~> 6.5"

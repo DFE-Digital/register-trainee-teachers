@@ -12,6 +12,40 @@ feature "bulk add trainees" do
     and_there_is_a_previous_academic_cycle
     and_there_is_a_nationality
     and_there_are_disabilities
+    and_there_are_funding_rules
+  end
+
+  def and_there_are_funding_rules
+    undergrad_funding_rule = create(
+      :funding_method,
+      training_route: :provider_led_undergrad,
+      funding_type: :scholarship,
+      academic_cycle: @academic_cycle,
+    )
+    school_direct_funding_rule = create(
+      :funding_method,
+      training_route: :school_direct_salaried,
+      funding_type: :scholarship,
+      academic_cycle: @academic_cycle,
+    )
+    allocation_subject = create(
+      :allocation_subject,
+    )
+    create(
+      :subject_specialism,
+      allocation_subject: allocation_subject,
+      name: "primary teaching",
+    )
+    create(
+      :funding_method_subject,
+      funding_method: undergrad_funding_rule,
+      allocation_subject: allocation_subject,
+    )
+    create(
+      :funding_method_subject,
+      funding_method: school_direct_funding_rule,
+      allocation_subject: allocation_subject,
+    )
   end
 
   context "when the feature flag is off", feature_bulk_add_trainees: false do
@@ -518,11 +552,11 @@ private
   end
 
   def and_there_is_a_current_academic_cycle
-    create(:academic_cycle, :current)
+    @academic_cycle = AcademicCycle.current || create(:academic_cycle, :current)
   end
 
   def and_there_is_a_previous_academic_cycle
-    create(:academic_cycle, :previous)
+    AcademicCycle.previous || create(:academic_cycle, :previous)
   end
 
   def then_i_see_the_bulk_update_add_trainees_uploads_index_page
