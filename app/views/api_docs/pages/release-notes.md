@@ -3,7 +3,7 @@ page_title: Register API release notes
 title: Register API release notes
 ---
 
-## v2025.0-rc - 12 May 2025
+## v2025.0-rc - 13 May 2025
 
 Release candidate of the 2025.0 version of the Register API. This version is not
 yet live but is available for testing.
