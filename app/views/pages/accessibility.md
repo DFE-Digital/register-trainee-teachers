@@ -2,91 +2,90 @@
 page_title: Accessibility statement for Register trainee teachers
 title: Accessibility statement for Register trainee teachers
 ---
-<p class='govuk-body'>This accessibility statement applies to Register trainee teachers.</p>
-<p class='govuk-body'>This website is run by the Department for Education. We want as many people as possible to be able to use this website. For example, that means you should be able to:</p>
-<ul class='govuk-list govuk-list--bullet'>
-  <li>change colours, contrast levels and fonts</li>
-  <li>zoom in up to 400% without the text spilling off the screen</li>
-  <li>navigate most of the service using just a keyboard</li>
-  <li>navigate most of the service using speech recognition software</li>
-  <li>listen to most of the content on the service using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
-</ul>
-<p class='govuk-body'>We’ve also made the text on the service as simple as possible to understand.</p>
-<p class='govuk-body'><a href='https://mcmw.abilitynet.org.uk/' class='govuk-link' rel='noreferrer noopener' target="_blank">AbilityNet (opens in new tab)</a> has advice on making your device easier to use if you have a disability.</p>
 
-<h2 class='govuk-heading-m'>How accessible this service is</h2>
+This accessibility statement applies to Register trainee teachers.
 
-<p class='govuk-body'>We know some parts of this website are not fully accessible:</p>
-<ul class='govuk-list govuk-list--bullet'>
-  <li>some of our forms do not provide suggestions on how to rectify information that has been input incorrectly</li>
-  <li>unsupported ARIA (Accessible Rich Internet Applications) attributes are used on some form inputs</li>
-  <li>error messages are announced twice to users of JAWS (Job Access With Speech)</li>
-  <li>files cannot be uploaded whilst navigating with speech recognition software</li>
-</ul>
+This website is run by the Department for Education. We want as many people as possible to be able to use this website. For example, that means you should be able to:
 
-<h2 class='govuk-heading-m'>Feedback and contact information</h2>
+  - change colours, contrast levels and fonts
+  - zoom in up to 400% without the text spilling off the screen
+  - navigate most of the service using just a keyboard
+  - navigate most of the service using speech recognition software
+  - listen to most of the content on the service using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)
 
-<p class='govuk-body'>If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille:</p> 
+We’ve also made the text on the service as simple as possible to understand.
+<a href='https://mcmw.abilitynet.org.uk/' class='govuk-link' rel='noreferrer noopener' target="_blank">AbilityNet (opens in new tab)</a> has advice on making your device easier to use if you have a disability.
 
-<ul class='govuk-list govuk-list--bullet'>
-  <li>email <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a></li>
-</ul>
+## How accessible this service is
 
-<p class='govuk-body'>We’ll consider your request and get back to you in 5 days.</p>
+We know some parts of this website are not fully accessible:
 
-<h2 class='govuk-heading-m'>Reporting accessibility problems with Register trainee teachers</h2>
+  - some of our forms do not provide suggestions on how to rectify information that has been input incorrectly
+  - unsupported ARIA (Accessible Rich Internet Applications) attributes are used on some form inputs
+  - error messages are announced twice to users of JAWS (Job Access With Speech)
+  - files cannot be uploaded whilst navigating with speech recognition software
 
-<p class='govuk-body govuk-!-margin-bottom-7'>We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a>. Include ‘Accessibility’ in the subject line of your email.</p>
+## Feedback and contact information
 
-<h2 class='govuk-heading-m'>Enforcement procedure</h2>
-<p class='govuk-body'>The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, <a href='https://www.equalityadvisoryservice.com/' class='govuk-link' target="_blank">contact the Equality Advisory and Support Service (opens in a new tab)</a>.</p>
+If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille: 
 
-<h2 class='govuk-heading-m'>Technical information about this service’s accessibility</h2>
+  - email <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a>
 
-<p class='govuk-body'>The Department for Education is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.</p>
+We’ll consider your request and get back to you in 5 days.
 
-<h2 class='govuk-heading-m'>Compliance status</h2>
+## Reporting accessibility problems with Register trainee teachers
 
-<p class='govuk-body'>This website is partially compliant with the WCAG (Web Content Accessibility Guidelines) version 2.2 AA standard, due to the following non-compliances (and/or) the following exemptions.</p>
+We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a>. Include ‘Accessibility’ in the subject line of your email.
 
-<h2 class='govuk-heading-m'>Non-accessible content</h2>
+## Enforcement procedure
+The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, <a href='https://www.equalityadvisoryservice.com/' class='govuk-link' rel='noreferrer noopener' target="_blank">contact the Equality Advisory and Support Service (opens in a new tab)</a>.
 
-<p class='govuk-body'>The content is non-accessible for the following reasons:</p>
+## Technical information about this service’s accessibility
 
-<h3 class='govuk-heading-s'>Specific error suggestions are not provided for some fields on forms</h3>
-<p class='govuk-body'>This can be seen on date fields, if the user inputs an incorrectly formatted date, the error message does not provide a suggestion on how to rectify it. This fails WCAG 2.2 success criterion 3.3.1 Error Identification.</p>
+The Department for Education is committed to making its websites accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.
 
-<p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
+## Compliance status
 
-<h3 class='govuk-heading-s'>Unsupported ARIA attributes are present on some form inputs</h3> 
-<p class='govuk-body'>This may cause issues for users of assistive technology. This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.</p>
+This website is partially compliant with the WCAG (Web Content Accessibility Guidelines) version 2.2 AA standard, due to the following non-compliances (and/or) the following exemptions.
 
-<p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
+## Non-accessible content
 
-<h3 class='govuk-heading-s'>While navigating with JAWS, parts of error messages are announced multiple times</h3>
-<p class='govuk-body'>This fails WCAG 2.2 success criterion 4.1.2 Name. Role, Value.</p>
+The content is non-accessible for the following reasons:
 
-<p class='govuk-body'>We’re waiting on third parties to assist with remediation so a fix date cannot be provided.</p>
+### Specific error suggestions are not provided for some fields on forms
+This can be seen on date fields, if the user inputs an incorrectly formatted date, the error message does not provide a suggestion on how to rectify it. This fails WCAG 2.2 success criterion 3.3.1 Error Identification.
 
-<h2 class='govuk-heading-m'>Disproportionate burden</h2>
+We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
 
-<p class='govuk-body'>We have determined that there is a disproportionate burden to meet all the requirements for the following reasons:
+### Unsupported ARIA attributes are present on some form inputs
+This may cause issues for users of assistive technology. This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.
 
-<h3 class='govuk-heading-s'>Interactive tools</h3>
+We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
 
-<p class='govuk-body'>The upload file function is unavailable whilst navigating using speech recognition software. This is a known flaw of speech recognition software.</p>
+### While navigating with JAWS, parts of error messages are announced multiple times
+This fails WCAG 2.2 success criterion 4.1.2 Name. Role, Value.
 
-<p class='govuk-body'>We’ve assessed the cost of fixing the navigation issues and accessing information, as well as the costs associated with interactive tools and transactions. We believe that proceeding with these changes now would place a <a class='govuk-link' href="https://www.legislation.gov.uk/uksi/2018/952/regulation/7/made" rel="noreferrer noopener" target="_blank">disproportionate burden (opens in new tab)</a> within the meaning of the accessibility regulations. We will conduct another assessment when the supplier contract is up for renewal, likely in 2026.</p>
+We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
 
-<h2 class='govuk-heading-m'>What we’re doing to improve accessibility</h2>
-<p class='govuk-body'>We have a backlog of tickets created for ongoing accessibility improvements. We conduct regular user testing and audits. We will continue to use the accessibility manual to enhance knowledge within the team and resolve accessibility issues when identified.</p>
+## Disproportionate burden
 
-<h2 class='govuk-heading-m'>Preparation of this accessibility statement</h2>
+We have determined that there is a disproportionate burden to meet all the requirements for the following reasons:
 
-<p class='govuk-body'>This statement was prepared on 29/02/2024. It was last reviewed on 07/05/2025.</p> 
+### Interactive tools
 
-<p class='govuk-body'>This website was last tested on 29/02/2024.The test was carried out by Zoonou.</p>
+The upload file function is unavailable whilst navigating using speech recognition software. This is a known flaw of speech recognition software.
 
-<p class='govuk-body'>Zoonou used <a class='govuk-link' href="https://www.w3.org/TR/WCAG-EM" target="_blank">WCAG-EM</a> to define the pages tested and test approach.</p>
+We’ve assessed the cost of fixing the navigation issues and accessing information, as well as the costs associated with interactive tools and transactions. We believe that proceeding with these changes now would place a <a class='govuk-link' href="https://www.legislation.gov.uk/uksi/2018/952/regulation/7/made" rel="noreferrer noopener" target="_blank">disproportionate burden (opens in new tab)</a> within the meaning of the accessibility regulations. We will conduct another assessment when the supplier contract is up for renewal, likely in 2026.
 
-<p class='govuk-body'>Accessibility statement version: 2.0.0</p>
+## What we’re doing to improve accessibility
+We have a backlog of tickets created for ongoing accessibility improvements. We conduct regular user testing and audits. We will continue to use the accessibility manual to enhance knowledge within the team and resolve accessibility issues when identified.
+
+## Preparation of this accessibility statement
+
+This statement was prepared on 29 February 2024. It was last reviewed on 7 May 2025. 
+
+This website was last tested on 29 February 2024. The test was carried out by Zoonou.
+
+Zoonou used <a class='govuk-link' href="https://www.w3.org/TR/WCAG-EM" rel='noreferrer noopener' target="_blank">WCAG-EM</a> to define the pages tested and test approach.
+
+Accessibility statement version: 2.0.0
