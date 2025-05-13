@@ -76,7 +76,7 @@ title: Accessibility statement for Register trainee teachers
 
 <p class='govuk-body'>The upload file function is unavailable whilst navigating using speech recognition software. This is a known flaw of speech recognition software.</p>
 
-<p class='govuk-body'>We’ve assessed the cost of fixing the navigation issues and accessing information, as well as the costs associated with interactive tools and transactions. We believe that proceeding with these changes now would place a <a class='govuk-link' href="https://www.legislation.gov.uk/uksi/2018/952/regulation/7/made" target="_blank">disproportionate burden (opens in a new tab)</a> within the meaning of the accessibility regulations. We will conduct another assessment when the supplier contract is up for renewal, likely in 2026.</p>
+<p class='govuk-body'>We’ve assessed the cost of fixing the navigation issues and accessing information, as well as the costs associated with interactive tools and transactions. We believe that proceeding with these changes now would place a <a class='govuk-link' href="https://www.legislation.gov.uk/uksi/2018/952/regulation/7/made" rel="noreferrer noopener" target="_blank">disproportionate burden (opens in new tab)</a> within the meaning of the accessibility regulations. We will conduct another assessment when the supplier contract is up for renewal, likely in 2026.</p>
 
 <h2 class='govuk-heading-m'>What we’re doing to improve accessibility</h2>
 <p class='govuk-body'>We have a backlog of tickets created for ongoing accessibility improvements. We conduct regular user testing and audits. We will continue to use the accessibility manual to enhance knowledge within the team and resolve accessibility issues when identified.</p>
