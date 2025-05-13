@@ -12,7 +12,7 @@ title: Accessibility statement for Register trainee teachers
   <li>listen to most of the content on the service using a screen reader (including the most recent versions of JAWS, NVDA and VoiceOver)</li>
 </ul>
 <p class='govuk-body'>We’ve also made the text on the service as simple as possible to understand.</p>
-<p class='govuk-body'><a href='https://mcmw.abilitynet.org.uk/' class='govuk-link' target="_blank">AbilityNet (opens in a new tab)</a> has advice on making your device easier to use if you have a disability.</p>
+<p class='govuk-body'><a href='https://mcmw.abilitynet.org.uk/' class='govuk-link' rel='noreferrer noopener' target="_blank">AbilityNet (opens in new tab)</a> has advice on making your device easier to use if you have a disability.</p>
 
 <h2 class='govuk-heading-m'>How accessible this service is</h2>
 
