@@ -33,12 +33,16 @@ module "job_configuration" {
 
   count = var.airbyte_enabled ? 1 : 0
 
+  depends_on = [ module.airbyte ]
+
   namespace              = var.namespace
   environment            = local.app_name_suffix
   service_name           = var.service_name
   docker_image           = "ghcr.io/dfe-digital/teacher-services-cloud:curl-3.21.3"
   commands               = ["/bin/sh"]
-  arguments              = ["-c", "curl --request PATCH --url ${local.ab_secrets.server_url}/connections/${module.airbyte[0].connection_id} --header 'accept: application/json' --header 'content-type: application/json' --data '${local.connection_streams}'" ]
+#  arguments              = ["-c", "curl --request PATCH --url ${local.ab_secrets.server_url}/connections/${module.airbyte[0].connection_id} --header 'accept: application/json' --header 'content-type: application/json' --data '${local.connection_streams}'" ]
+#  arguments              = ["-c", "curl --request POST --url ${local.ab_secrets.server_url}/api/v1/applications/token --header 'accept: application/json' --header 'content-type: application/json' --data '{ "client_id": "${local.ab_secrets.client_id}", "client_secret": "${local.ab_secrets.client_secret}", "grant-type": "client_credentials" }' | jq -r '.access_token' | awk '{print "Authorization: Bearer", $1}'| curl --request PATCH --url ${local.ab_secrets.server_url}/api/public/v1/connections/${module.airbyte[0].connection_id} --header 'accept: application/json' --header 'content-type: application/json' --data '${local.connection_streams}'" --header "@-"]
+  arguments              = ["-c", "${local.curlCommand}" ]
   job_name               = "airbyte-streams-config"
   enable_logit           = var.enable_logit
 
@@ -63,6 +67,8 @@ resource "kubernetes_secret" "airbyte-sql" {
 resource "kubernetes_job" "airbyte-database-setup" {
 
   count = var.airbyte_db_config ? 1 : 0
+
+  depends_on = [ module.airbyte ]
 
   metadata {
     name      = "${var.service_name}-${local.app_name_suffix}-ab-db-setup-${kubernetes_secret.airbyte-sql[0].metadata[0].name}"
@@ -186,9 +192,20 @@ locals {
     database_name  = module.postgres.name
   }
 
+  template_variable_map_curl = {
+    server_url         = local.ab_secrets.server_url
+    client_id          = local.ab_secrets.client_id
+    client_secret      = local.ab_secrets.client_secret
+    connection_id      = module.airbyte[0].connection_id
+    connection_streams = local.connection_streams
+  }
+
+  airbyte_full_url = "${local.ab_secrets.server_url}/api/public/v1"
+
 #  ab_db_config_sql      = var.airbyte_db_config ? file("workspace-variables/airbyte-db-config.sql") : null
   connection_streams = var.airbyte_enabled ? file("workspace-variables/${var.app_environment}_streams.json") : null
   ab_secrets         = var.airbyte_enabled ? yamldecode(data.azurerm_key_vault_secret.ab_secrets[0].value) : null
   sqlCommand         = var.airbyte_db_config ? templatefile("${path.module}/workspace-variables/airbyte.sql.tmpl", local.template_variable_map) : null
+  curlCommand        = var.airbyte_enabled ? templatefile("${path.module}/workspace-variables/airbyte.curl.tmpl", local.template_variable_map_curl) : null
   secret_hash        = var.airbyte_db_config ? substr(sha1("${local.sqlCommand}"),0,12) : null
 }
