@@ -28,6 +28,11 @@ RSpec.describe Api::Trainees::DeferralService do
         expect(trainee.trainee_start_date).to eq(TraineeStartStatusForm.new(trainee).trainee_start_date)
       end
 
+      it "calls Trainees::Update to trigger TRS/DQT updates" do
+        expect(::Trainees::Update).to receive(:call).with(trainee: trainee)
+        subject.call(params, trainee)
+      end
+
       context "with a defer_reason <= 500 characters" do
         let(:defer_reason) { Faker::Lorem.characters(number: 500) }
 
@@ -113,6 +118,12 @@ RSpec.describe Api::Trainees::DeferralService do
           expect(errors.full_messages).to contain_exactly("Defer reason is too long (maximum is 500 characters)")
           expect(trainee.deferred?).to be(false)
         end
+      end
+
+      it "does not call Trainees::Update when deferral fails" do
+        params = { defer_date: nil }
+        expect(::Trainees::Update).not_to receive(:call)
+        subject.call(params, trainee)
       end
     end
 
