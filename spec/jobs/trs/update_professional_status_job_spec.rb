@@ -21,15 +21,38 @@ module Trs
       end
 
       context "when trainee is recommended for award" do
-        let(:trainee) { create(:trainee, :qts_recommended) }
+        let(:outcome_date) { Time.zone.today }
+        let(:trainee) { create(:trainee, :qts_recommended, outcome_date:) }
 
         before do
           allow(UpdateProfessionalStatus).to receive(:call).with(trainee:)
         end
 
-        it "does not award the trainee" do
-          expect(trainee).not_to receive(:award_qts!)
+        it "awards the trainee with the outcome date" do
+          expect(trainee).to receive(:award_qts!).with(outcome_date)
           described_class.perform_now(trainee)
+        end
+
+        it "updates the trainee without calling DQT again" do
+          allow(Trainees::Update).to receive(:call)
+          expect(Trainees::Update).to receive(:call).with(trainee: trainee, update_dqt: false)
+          described_class.perform_now(trainee)
+        end
+
+        it "transitions the trainee to awarded state" do
+          described_class.perform_now(trainee)
+          expect(trainee.reload.state).to eq("awarded")
+          expect(trainee.awarded_at.to_date).to eq(outcome_date.to_date)
+        end
+
+        context "when trainee has no outcome date" do
+          let(:trainee) { create(:trainee, :qts_recommended, outcome_date: nil) }
+
+          it "does not award the trainee" do
+            expect(trainee).not_to receive(:award_qts!)
+            described_class.perform_now(trainee)
+            expect(trainee.reload.state).to eq("recommended_for_award")
+          end
         end
 
         it "schedules a survey" do

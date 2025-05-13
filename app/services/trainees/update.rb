@@ -42,6 +42,7 @@ module Trainees
       if update_dqt
         if trs_enabled
           Trs::UpdateTraineeJob.perform_later(trainee)
+          Trs::UpdateProfessionalStatusJob.perform_later(trainee)
         elsif dqt_enabled
           Dqt::UpdateTraineeJob.perform_later(trainee)
         end
