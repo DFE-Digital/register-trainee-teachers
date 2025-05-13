@@ -45,5 +45,7 @@ provider "kubernetes" {
 
 provider "airbyte" {
   # Configuration options
-  server_url = var.airbyte_enabled ? local.ab_secrets.server_url : ""
+  server_url = var.airbyte_enabled ? "${local.ab_secrets.server_url}/api/public/v1" : ""
+  client_id = var.airbyte_enabled ? local.ab_secrets.client_id : ""
+  client_secret = var.airbyte_enabled ? local.ab_secrets.client_secret: ""
 }

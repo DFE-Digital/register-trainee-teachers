@@ -152,6 +152,13 @@ variable "sqlCommand" {
   default     = "/airbyte/sqlCommand.sql"
 }
 
+variable "curlCommand" {
+  type        = string
+  description = "Airbyte curl command for connection streams update"
+  sensitive   = true
+  default     = ""
+}
+
 variable "connection_status" {
   type = string
   default = "inactive"
