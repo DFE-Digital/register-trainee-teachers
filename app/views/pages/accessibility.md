@@ -20,7 +20,7 @@ title: Accessibility statement for Register trainee teachers
 <ul class='govuk-list govuk-list--bullet'>
   <li>some of our forms do not provide suggestions on how to rectify information that has been input incorrectly</li>
   <li>unsupported ARIA (Accessible Rich Internet Applications) attributes are used on some form inputs</li>
-  <li>error messages are announced twice to users of JAWS</li>
+  <li>error messages are announced twice to users of JAWS (Job Access With Speech)</li>
   <li>files cannot be uploaded whilst navigating with speech recognition software</li>
 </ul>
 
