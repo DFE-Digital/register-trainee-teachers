@@ -44,7 +44,7 @@ gem "sentry-sidekiq"
 gem "stackprof"
 
 # Logging
-gem "amazing_print", "~> 1.7"
+gem "amazing_print", "~> 1.8"
 
 # There seems to be an issue with 4.17.0 where the workers log the sql
 gem "rails_semantic_logger", github: "kennyevil/rails_semantic_logger", branch: "filter-bind-values"
@@ -58,7 +58,7 @@ gem "govuk_design_system_formbuilder"
 
 # Background job processor
 gem "sidekiq", "~> 6.5"
-gem "sidekiq-cron", "~> 2.2"
+gem "sidekiq-cron", "~> 2.3"
 
 # UK postcode parsing and validation for Ruby
 gem "uk_postcode"
@@ -205,7 +205,7 @@ end
 
 group :test do
   # Headless browser testing kit
-  gem "cuprite", "~> 0.15"
+  gem "cuprite", "~> 0.17"
   gem "selenium-webdriver"
 
   gem "shoulda-matchers", "~> 6.5"
