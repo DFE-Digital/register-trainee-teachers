@@ -1,0 +1,18 @@
+\set role_exists false
+SELECT EXISTS(SELECT 1 FROM pg_roles WHERE rolname = 'airbyte_replication') AS role_exists \gset
+\if :role_exists
+ \echo 'Role "airbyte_replication" already exists.'
+\else
+ CREATE USER airbyte_replication WITH REPLICATION PASSWORD '${repl_password}';
+ GRANT CONNECT ON DATABASE "${database_name}" TO airbyte_replication;
+ GRANT USAGE ON SCHEMA public TO airbyte_replication;
+ GRANT SELECT ON ALL TABLES IN SCHEMA public TO airbyte_replication;
+ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO airbyte_replication;
+\endif
+\set slot_exists false
+SELECT EXISTS(SELECT 1 FROM pg_replication_slots WHERE slot_name = 'airbyte_slot') AS slot_exists \gset
+\if :slot_exists
+ \echo 'Replication slot "airbyte_slot" already exists.'
+\else
+ SELECT * FROM pg_create_logical_replication_slot('airbyte_slot', 'pgoutput');
+\endif
