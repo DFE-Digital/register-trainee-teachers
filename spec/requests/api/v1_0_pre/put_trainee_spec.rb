@@ -8,7 +8,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
       :trainee,
       :in_progress,
       :with_training_route,
-      :with_hesa_trainee_detail,
+      :with_no_funding_hesa_trainee_detail,
       :with_lead_partner,
       :with_employing_school,
       :with_diversity_information,
@@ -17,6 +17,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
   end
   let(:other_trainee) { create(:trainee, :in_progress, first_names: "Bob") }
   let(:provider) { trainee.provider }
+  let!(:academic_cycle) { create(:academic_cycle, :current) }
 
   context "with an invalid authentication token" do
     let(:token) { "not-a-valid-token" }
@@ -444,7 +445,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
               :trainee,
               :in_progress,
               :with_training_route,
-              :with_hesa_trainee_detail,
+              :with_no_funding_hesa_trainee_detail,
               lead_partner_not_applicable: true,
               employing_school_not_applicable: true,
             )
@@ -605,7 +606,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           :with_lead_partner,
           :with_employing_school,
           :with_training_route,
-          :with_hesa_trainee_detail,
+          :with_no_funding_hesa_trainee_detail,
           :with_diversity_information,
           ethnic_group:,
           ethnic_background:,
@@ -690,7 +691,7 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           :with_lead_partner,
           :with_employing_school,
           :with_training_route,
-          :with_hesa_trainee_detail,
+          :with_no_funding_hesa_trainee_detail,
           :with_diversity_information,
           ethnic_group:,
           ethnic_background:,
@@ -1204,7 +1205,10 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
 
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body["errors"]).to contain_exactly("funding_method has invalid reference data values")
+          expect(response.parsed_body["errors"]).to contain_exactly(
+            "funding_method has invalid reference data values",
+            "funding_method is not valid for this trainee",
+          )
         end
       end
 
@@ -1264,6 +1268,9 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     let(:start_academic_cycle) { create(:academic_cycle, :current) }
     let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }
 
+    let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
+
     let(:params_for_create) do
       {
         data: {
@@ -1296,8 +1303,8 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           itt_qualification_aim: "001",
           course_year: "2012",
           course_age_range: "13915",
-          fund_code: "7",
-          funding_method: "4",
+          fund_code: fund_code,
+          funding_method: funding_method,
           hesa_id: "0310261553101",
         },
       }
@@ -1312,9 +1319,9 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
     [CourseSubjects::PHYSICS, CourseSubjects::BIOLOGY].each do |cs|
       context "when creating a new trainee with #{cs} course with valid params" do
         if cs == CourseSubjects::PHYSICS
-          let!(:funding_method) {
-            funding_method = create(:funding_method, :bursary, amount: 9000, training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
-            create(:funding_method_subject, funding_method: funding_method, allocation_subject: course_allocation_subject)
+          let!(:funding_rule) {
+            funding_rule = create(:funding_method, :bursary, amount: 9000, training_route: TRAINING_ROUTE_ENUMS[:provider_led_undergrad])
+            create(:funding_method_subject, funding_method: funding_rule, allocation_subject: course_allocation_subject)
           }
         end
 
@@ -1383,6 +1390,8 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
             {
               data: {
                 training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:opt_in_undergrad]],
+                fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE,
+                funding_method: Hesa::CodeSets::BursaryLevels::NONE,
               },
             }
           end
@@ -1394,10 +1403,11 @@ describe "`PUT /api/v1.0-pre/trainees/:id` endpoint" do
           it "return status code 422 with a meaningful error message" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["message"]).to eq(
-              "Validation failed: 1 error prohibited this trainee from being saved",
+              "Validation failed: 2 errors prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
               "fund_code is ineligible",
+              "funding_method is not valid for this trainee",
             )
           end
         end
