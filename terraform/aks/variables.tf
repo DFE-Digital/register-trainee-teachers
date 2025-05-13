@@ -10,7 +10,9 @@ variable "snapshot_databases_to_deploy" { default = 0 }
 
 # Key Vault variables
 variable "key_vault_name" {}
-
+variable "key_vault_infra_secret_name" {}
+variable "key_vault_app_secret_name" {}
+variable "key_vault_ab_secret_name" { default = "" }
 
 variable "gov_uk_host_names" {
   default = []
@@ -78,6 +80,7 @@ variable "azure_enable_backup_storage" { default = true }
 variable "enable_container_monitoring" { default = false }
 variable "enable_logit" { default = false }
 variable "enable_gcp_wif" { default = true }
+variable "airbyte_enabled" { default = false }
 
 variable "enable_prometheus_monitoring" {
   type    = bool
@@ -94,6 +97,77 @@ variable "send_traffic_to_maintenance_page" {
   description = "During a maintenance operation, keep sending traffic to the maintenance page instead of resetting the ingress"
   type        = bool
   default     = false
+}
+
+variable "use_airbyte" { default = false }
+
+variable "airbyte_db_config" { default = false }
+
+variable "repl_password" {
+  type        = string
+  description = "Password of the replication user"
+  sensitive   = true
+  default     = null
+}
+
+variable "repl_user" {
+  type        = string
+  description = "Name of the replication user"
+  sensitive   = true
+  default     = null
+}
+
+variable "dataset_id" {
+  type        = string
+  description = "GCP dataset id"
+  sensitive   = true
+  default     = null
+}
+
+variable "project_id" {
+  type        = string
+  description = "GCP project id"
+  sensitive   = true
+  default     = null
+}
+
+variable "workspace_id" {
+  type        = string
+  description = "Airbyte workspace id"
+  sensitive   = true
+  default     = null
+}
+
+variable "credentials_json" {
+  type        = string
+  description = "Airbyte credentials json"
+  sensitive   = true
+  default     = null
+}
+
+variable "sqlCommand" {
+  type        = string
+  description = "Airbyte database init sql"
+  sensitive   = true
+  default     = "/airbyte/sqlCommand.sql"
+}
+
+variable "connection_status" {
+  type = string
+  default = "inactive"
+  description = "Connectin status, either active or inactive"
+}
+
+variable "name" {
+  type        = string
+  description = "Name of the instance"
+  default     = null
+}
+
+variable "azure_name_override" {
+  type        = string
+  description = "Replace the generated name with hardcoded name"
+  default     = null
 }
 
 locals {
@@ -128,4 +202,5 @@ locals {
   default_azure_tempdata_storage_account_name = replace("${var.azure_resource_prefix}${var.service_short}${local.app_name_suffix}tmp", "-", "")
   azure_tempdata_storage_account_name         = var.azure_tempdata_storage_account_name != null ? var.azure_tempdata_storage_account_name : local.default_azure_tempdata_storage_account_name
   azure_sanitised_storage_account_name        = "${var.azure_resource_prefix}${var.service_short}dbbkpsan${var.config_short}sa"
+
 }

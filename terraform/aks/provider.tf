@@ -13,6 +13,10 @@ terraform {
       source = "hashicorp/kubernetes"
       version = "2.32.0"
     }
+    airbyte = {
+      source  = "airbytehq/airbyte"
+      version = "0.10.0"
+    }
   }
   backend "azurerm" {
   }
@@ -37,4 +41,9 @@ provider "kubernetes" {
       command     = "kubelogin"
       args        = module.cluster_data.kubelogin_args
   }
+}
+
+provider "airbyte" {
+  # Configuration options
+  server_url = var.airbyte_enabled ? local.ab_secrets.server_url : ""
 }

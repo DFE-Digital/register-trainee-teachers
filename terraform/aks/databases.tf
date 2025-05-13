@@ -45,6 +45,8 @@ module "postgres" {
   config_short          = var.config_short
   service_name          = var.service_name
 
+  use_airbyte      = var.airbyte_enabled
+
   cluster_configuration_map = module.cluster_data.configuration_map
 
   use_azure               = var.deploy_azure_backing_services
