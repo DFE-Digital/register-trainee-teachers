@@ -41,8 +41,8 @@ features:
     iqts: true
   google:
     send_data_to_big_query: true
-  integrate_with_dqt: true
-  integrate_with_trs: false
+  integrate_with_dqt: false
+  integrate_with_trs: true
   hesa_trn_requests: true
   hesa_import:
     sync_collection: true
