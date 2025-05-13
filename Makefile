@@ -127,6 +127,7 @@ install-fetch-config:
 read-tf-config:
 	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval key_vault_app_secret_name=$(shell jq -r '.key_vault_app_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
+	$(eval key_vault_ab_secret_name=$(shell jq -r '.key_vault_ab_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 
 read-cluster-config:
@@ -149,6 +150,13 @@ print-infra-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
 terraform-plan: deploy-plan
+
+edit-ab-secrets: read-tf-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_ab_secret_name} \
+		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_ab_secret_name} -f yaml -c
+
+print-ab-secrets: read-tf-config install-fetch-config set-azure-account
+	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_ab_secret_name} -f yaml
 
 deploy-plan: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) plan -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS}
