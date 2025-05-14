@@ -4,6 +4,7 @@ Provider Trainee ID,Application ID,HESA ID,First Names,Last Name,Previous Last N
 Training Route has invalid reference data values;
 Trainee disabilities attributes contain duplicate values"
 24/25-82,,5205630693043,Abel,Hills,Halvorson,2002-01-07,,10,Abel.Hills@example.com,GB,,,,,,,,,,,202,11,032,100358,,,01,2024-10-01,2025-07-14,13911,2024,,,2024-10-01,2024-08-13,2,6,,,,,,,,,,,,,Validation passed,
-24/25-85,,7982579851416,Richie,Welch,Christiansen,1993-04-19,,99,Richie.Welch@example.com,GB,,,,,,,,,,,202,13,020,100302,,,01,2024-10-01,2023-07-03,13915,2024,,,2024-10-01,2024-08-16,2,6,,,,,,,,,,,,,2 errors found,"Training Route has invalid reference data values;
+24/25-85,,7982579851416,Richie,Welch,Christiansen,1993-04-19,,99,Richie.Welch@example.com,GB,,,,,,,,,,,202,13,,100302,,,01,2024-10-01,2023-07-03,13915,2024,,,2024-10-01,2024-08-16,2,6,,,,,,,,,,,,,3 errors found,"Qualification Aim must be entered if 202 selected for ITT Aim;
+Training Route has invalid reference data values;
 ITT End Date must be after ITT start date"
 24/25-88,,1423427395203,Scott,Hermiston,Beier,1999-03-10,,10,Scott.Hermiston@example.com,GB,,,,,,,,,,,202,11,021,100891,,,64,2024-10-01,2025-07-15,13911,2024,,,2024-10-01,2024-08-28,2,6,,,,,,,,,,,,,Validation passed,

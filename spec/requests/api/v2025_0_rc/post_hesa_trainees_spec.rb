@@ -858,7 +858,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body["errors"]).to contain_exactly("first_names can't be blank", "last_name can't be blank", "date_of_birth can't be blank", "sex can't be blank", "training_route can't be blank", "itt_start_date can't be blank", "itt_end_date can't be blank", "course_subject_one can't be blank", "study_mode can't be blank", "hesa_id can't be blank", "email Enter an email address in the correct format, like name@example.com", "itt_aim can't be blank", "itt_qualification_aim can't be blank", "course_year can't be blank", "course_age_range can't be blank", "fund_code can't be blank", "funding_method can't be blank")
+      expect(response.parsed_body["errors"]).to contain_exactly("first_names can't be blank", "last_name can't be blank", "date_of_birth can't be blank", "sex can't be blank", "training_route can't be blank", "itt_start_date can't be blank", "itt_end_date can't be blank", "course_subject_one can't be blank", "study_mode can't be blank", "hesa_id can't be blank", "email Enter an email address in the correct format, like name@example.com", "itt_aim can't be blank", "itt_qualification_aim must be entered if 202 selected for itt_aim", "course_year can't be blank", "course_age_range can't be blank", "fund_code can't be blank", "funding_method can't be blank")
     end
 
     context "date of birth is in the future" do
