@@ -1390,8 +1390,8 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
             {
               data: {
                 training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:opt_in_undergrad]],
-                fund_code: Hesa::CodeSets::FundCodes::ELIGIBLE,
-                funding_method: Hesa::CodeSets::BursaryLevels::NONE,
+                fund_code: Hesa::CodeSets::FundCodes::NOT_ELIGIBLE,
+                funding_method: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
               },
             }
           end
@@ -1403,10 +1403,9 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
           it "return status code 422 with a meaningful error message" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body["message"]).to eq(
-              "Validation failed: 2 errors prohibited this trainee from being saved",
+              "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "fund_code is ineligible",
               "funding_method is not valid for this trainee",
             )
           end
