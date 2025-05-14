@@ -65,6 +65,7 @@ This may cause issues for users of assistive technology. This fails WCAG 2.2 suc
 We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
 
 ### While navigating with JAWS, parts of error messages are announced multiple times
+
 This fails WCAG 2.2 success criterion 4.1.2 Name. Role, Value.
 
 We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
