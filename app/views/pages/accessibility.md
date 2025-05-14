@@ -59,6 +59,7 @@ This can be seen on date fields, if the user inputs an incorrectly formatted dat
 We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
 
 ### Unsupported ARIA attributes are present on some form inputs
+
 This may cause issues for users of assistive technology. This fails WCAG 2.2 success criterion 4.1.2 Name, Role, Value.
 
 We’re waiting on third parties to assist with remediation so a fix date cannot be provided.
