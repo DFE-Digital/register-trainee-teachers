@@ -19,7 +19,7 @@ module CodeSets
         end
 
         it "returns the correct status for recommended_for_award" do
-          expect(described_class.training_status("recommended_for_award", "teach_first")).to eq("Approved")
+          expect(described_class.training_status("recommended_for_award", "teach_first")).to eq("Awarded")
         end
       end
 

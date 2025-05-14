@@ -19,13 +19,13 @@ feature "pending TRNs" do
       and_i_see_the_trn_request_details
     end
 
-    scenario "can check for TRN" do
+    scenario "can check for TRN", feature_integrate_with_dqt: true do
       then_i_see_the_pending_trns_page
       when_i_click_check_for_trn
       then_i_see_the_pending_trns_page
     end
 
-    scenario "can resubmit for TRN" do
+    scenario "can resubmit for TRN", feature_integrate_with_dqt: true do
       then_i_see_the_pending_trns_page
       when_i_click_resubmit_for_trn
       then_i_see_the_pending_trns_page
@@ -40,7 +40,7 @@ feature "pending TRNs" do
         when_i_click_check_for_trn_without_an_existing_request
       end
 
-      it "creates a trn request" do
+      it "creates a trn request", feature_integrate_with_dqt: true do
         then_i_see_the_pending_trns_page
         and_i_see_the_trainee
         when_i_click_resubmit_for_trn_without_an_existing_request

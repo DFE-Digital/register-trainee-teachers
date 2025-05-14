@@ -10,7 +10,7 @@ module Trs
       return if trainee.trn.present?
 
       trn_request = RegisterForTrn.call(trainee:)
-      RetrieveTrnJob.perform_later(trn_request) if trn_request && !trn_request.failed?
+      RetrieveTrnJob.set(wait: 1.minute).perform_later(trn_request) if trn_request && !trn_request.failed?
 
       trn_request
     end

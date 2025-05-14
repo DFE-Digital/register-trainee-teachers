@@ -78,7 +78,7 @@ module Trs
           let(:trainee) { create(:trainee, :recommended_for_award) }
 
           it "sets the correcrt status" do
-            expect(subject["status"]).to eq("Approved")
+            expect(subject["status"]).to eq("Awarded")
           end
         end
 

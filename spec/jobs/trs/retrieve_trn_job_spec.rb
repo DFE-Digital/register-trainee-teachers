@@ -11,7 +11,7 @@ module Trs
     let(:configured_delay) { 6 }
     let(:configured_poll_timeout_days) { 4 }
     let(:timeout_date) { configured_poll_timeout_days.days.from_now }
-    let(:trn_request) { create(:dqt_trn_request, trainee:) }
+    let(:trn_request) { create(:dqt_trn_request, trainee: trainee, state: :requested) }
 
     before do
       enable_features(:integrate_with_trs)
@@ -90,6 +90,11 @@ module Trs
           described_class.perform_now(trn_request, timeout_date)
           expect(RetrieveTrnJob).not_to have_been_enqueued
         end
+
+        it "doesn't enqueue UpdateProfessionalStatusJob" do
+          described_class.perform_now(trn_request, timeout_date)
+          expect(UpdateProfessionalStatusJob).not_to have_been_enqueued
+        end
       end
 
       context "when trn_request is already in received state" do
@@ -110,6 +115,11 @@ module Trs
           described_class.perform_now(trn_request, timeout_date)
           expect(RetrieveTrnJob).not_to have_been_enqueued
         end
+
+        it "doesn't enqueue UpdateProfessionalStatusJob" do
+          described_class.perform_now(trn_request, timeout_date)
+          expect(UpdateProfessionalStatusJob).not_to have_been_enqueued
+        end
       end
     end
 
@@ -122,7 +132,21 @@ module Trs
         }.to change(trainee, :trn).to(trn)
       end
 
-      it "doesn't queue another job" do
+      it "updates trn_request to received state" do
+        expect {
+          described_class.perform_now(trn_request, timeout_date)
+        }.to change { trn_request.reload.state }.from("requested").to("received")
+      end
+
+      it "enqueues UpdateProfessionalStatusJob after 1 minute" do
+        Timecop.freeze(Time.zone.now) do
+          expect {
+            described_class.perform_now(trn_request, timeout_date)
+          }.to have_enqueued_job(UpdateProfessionalStatusJob).with(trainee).at(1.minute.from_now)
+        end
+      end
+
+      it "doesn't queue another RetrieveTrnJob" do
         described_class.perform_now(trn_request, timeout_date)
         expect(RetrieveTrnJob).not_to have_been_enqueued
       end
@@ -136,6 +160,11 @@ module Trs
             .with(trn_request, timeout_date)
         end
       end
+
+      it "doesn't enqueue UpdateProfessionalStatusJob" do
+        described_class.perform_now(trn_request, timeout_date)
+        expect(UpdateProfessionalStatusJob).not_to have_been_enqueued
+      end
     end
 
     context "timeout_after has passed" do
@@ -143,6 +172,11 @@ module Trs
         expect(SlackNotifierService).to receive(:call)
         described_class.perform_now(trn_request, 1.minute.ago)
         expect(RetrieveTrnJob).not_to have_been_enqueued
+      end
+
+      it "doesn't enqueue UpdateProfessionalStatusJob" do
+        described_class.perform_now(trn_request, 1.minute.ago)
+        expect(UpdateProfessionalStatusJob).not_to have_been_enqueued
       end
     end
 

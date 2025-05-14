@@ -81,16 +81,29 @@ module Trainees
         context "with TRS integration enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
           before do
             allow(Trs::UpdateTraineeJob).to receive(:perform_later)
+            allow(Trs::UpdateProfessionalStatusJob).to receive(:perform_later)
           end
 
           it "queues an update to TRS" do
             described_class.call(trainee:, params:)
             expect(Trs::UpdateTraineeJob).to have_received(:perform_later).with(trainee)
+            expect(Trs::UpdateProfessionalStatusJob).to have_received(:perform_later).with(trainee)
           end
 
           it "does not queue updates when update_dqt is false" do
             described_class.call(trainee: trainee, params: params, update_dqt: false)
             expect(Trs::UpdateTraineeJob).not_to have_received(:perform_later)
+            expect(Trs::UpdateProfessionalStatusJob).not_to have_received(:perform_later)
+          end
+
+          context "with a deferred trainee" do
+            let(:deferred_trainee) { create(:trainee, :deferred, trn: "12345678") }
+
+            it "queues both personal data and professional status updates" do
+              described_class.call(trainee: deferred_trainee, params: params)
+              expect(Trs::UpdateTraineeJob).to have_received(:perform_later).with(deferred_trainee)
+              expect(Trs::UpdateProfessionalStatusJob).to have_received(:perform_later).with(deferred_trainee)
+            end
           end
 
           context "with invalid states" do
@@ -98,18 +111,21 @@ module Trainees
               trainee_without_trn = create(:trainee, trn: nil)
               described_class.call(trainee: trainee_without_trn, params: params)
               expect(Trs::UpdateTraineeJob).not_to have_received(:perform_later)
+              expect(Trs::UpdateProfessionalStatusJob).not_to have_received(:perform_later)
             end
 
             it "does not queue updates for withdrawn trainee" do
               withdrawn_trainee = create(:trainee, :withdrawn, trn: "12345678")
               described_class.call(trainee: withdrawn_trainee, params: params)
               expect(Trs::UpdateTraineeJob).not_to have_received(:perform_later)
+              expect(Trs::UpdateProfessionalStatusJob).not_to have_received(:perform_later)
             end
 
             it "does not queue updates for awarded trainee" do
               awarded_trainee = create(:trainee, :awarded, trn: "12345678")
               described_class.call(trainee: awarded_trainee, params: params)
               expect(Trs::UpdateTraineeJob).not_to have_received(:perform_later)
+              expect(Trs::UpdateProfessionalStatusJob).not_to have_received(:perform_later)
             end
           end
         end
@@ -118,12 +134,14 @@ module Trainees
           before do
             allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
             allow(Trs::UpdateTraineeJob).to receive(:perform_later)
+            allow(Trs::UpdateProfessionalStatusJob).to receive(:perform_later)
           end
 
           it "does not queue updates when both features are disabled" do
             described_class.call(trainee:, params:)
             expect(Dqt::UpdateTraineeJob).not_to have_received(:perform_later)
             expect(Trs::UpdateTraineeJob).not_to have_received(:perform_later)
+            expect(Trs::UpdateProfessionalStatusJob).not_to have_received(:perform_later)
           end
         end
 
