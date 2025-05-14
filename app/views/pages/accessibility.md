@@ -79,7 +79,7 @@ We have determined that there is a disproportionate burden to meet all the requi
 
 The upload file function is unavailable whilst navigating using speech recognition software. This is a known flaw of speech recognition software.
 
-We’ve assessed the cost of fixing the navigation issues and accessing information, as well as the costs associated with interactive tools and transactions. We believe that proceeding with these changes now would place a <a class='govuk-link' href="https://www.legislation.gov.uk/uksi/2018/952/regulation/7/made" rel="noreferrer noopener" target="_blank">disproportionate burden (opens in new tab)</a> within the meaning of the accessibility regulations. We will conduct another assessment when the supplier contract is up for renewal, likely in 2026.
+We’ve assessed the cost of fixing the navigation issues and accessing information, and the costs associated with interactive tools and transactions. We believe that proceeding with these changes now would place a <a class="govuk-link" href="https://www.legislation.gov.uk/uksi/2018/952/regulation/7/made" rel="noreferrer noopener" target="_blank">disproportionate burden (opens in new tab)</a> within the meaning of the accessibility regulations. We will conduct another assessment when the supplier contract is up for renewal, likely in 2026.
 
 ## What we’re doing to improve accessibility
 
