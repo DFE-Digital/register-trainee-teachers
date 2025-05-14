@@ -35,7 +35,7 @@ We’ll consider your request and get back to you in 5 days.
 
 ## Reporting accessibility problems with Register trainee teachers
 
-We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a>. Include ‘Accessibility’ in the subject line of your email.
+We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues">becomingateacher@digital.education.gov.uk</a>. Include ‘Accessibility issues’ in the subject line of your email.
 
 ## Enforcement procedure
 
