@@ -40,7 +40,7 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
 
-      validates(:itt_qualification_aim, presence: true, if: -> { itt_aim == ITT_AIM_REQUIRED_CODE || itt_aim.blank? })
+      validates(:itt_qualification_aim, presence: true, if: -> { itt_aim.to_i == ITT_AIM_REQUIRED_CODE || itt_aim.blank? })
 
       validates(:itt_aim, inclusion: { in: Hesa::CodeSets::IttAims::MAPPING.keys }, allow_blank: true)
       validates(:itt_qualification_aim, inclusion: { in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys }, allow_blank: true)
