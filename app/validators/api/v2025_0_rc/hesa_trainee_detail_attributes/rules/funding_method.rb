@@ -32,7 +32,7 @@ module Api
           def call
             return true if no_funding_method? || training_route.nil?
 
-            return false if (fund_code_not_eligible? && funding_method?)
+            return false if fund_code_not_eligible? && funding_method?
 
             ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: AcademicCycle.current.id,
