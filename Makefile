@@ -154,11 +154,17 @@ print-app-secrets: read-tf-config install-fetch-config set-azure-account
 print-infra-secrets: read-tf-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
+terraform-plan: deploy-plan
+
 deploy-plan: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) plan -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS}
 
+terraform-apply: deploy
+
 deploy: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) apply -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS} $(AUTO_APPROVE)
+
+terraform-destroy: destroy
 
 destroy: terraform-init
 	terraform -chdir=terraform/$(PLATFORM) destroy -var-file=./workspace-variables/$(DEPLOY_ENV).tfvars.json -var-file=./workspace-variables/$(DEPLOY_ENV)_backend.tfvars ${TF_VARS} $(AUTO_APPROVE)
