@@ -38,7 +38,8 @@ We’ll consider your request and get back to you in 5 days.
 We’re always looking to improve the accessibility of this website. If you find any problems not listed on this page or think we’re not meeting accessibility requirements, contact: <a class='govuk-link' href='mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues%20'>becomingateacher@digital.education.gov.uk</a>. Include ‘Accessibility’ in the subject line of your email.
 
 ## Enforcement procedure
-The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, <a href='https://www.equalityadvisoryservice.com/' class='govuk-link' rel='noreferrer noopener' target="_blank">contact the Equality Advisory and Support Service (opens in a new tab)</a>.
+
+The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the ‘accessibility regulations’). If you’re not happy with how we respond to your complaint, <a href="https://www.equalityadvisoryservice.com/" class="govuk-link" rel="noreferrer noopener" target="_blank">contact the Equality Advisory and Support Service (opens in a new tab)</a>.
 
 ## Technical information about this service’s accessibility
 
