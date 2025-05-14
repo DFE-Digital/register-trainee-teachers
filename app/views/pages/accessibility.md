@@ -91,6 +91,6 @@ This statement was prepared on 29 February 2024. It was last reviewed on 7 May 2
 
 This website was last tested on 29 February 2024. The test was carried out by Zoonou.
 
-Zoonou used <a class='govuk-link' href="https://www.w3.org/TR/WCAG-EM" rel='noreferrer noopener' target="_blank">WCAG-EM</a> to define the pages tested and test approach.
+Zoonou used <a class="govuk-link" href="https://www.w3.org/TR/WCAG-EM" rel="noreferrer noopener" target="_blank">WCAG-EM (opens in new tab)</a> to define the pages tested and test approach.
 
 Accessibility statement version: 2.0.0
