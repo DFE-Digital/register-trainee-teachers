@@ -27,11 +27,7 @@ We know some parts of this website are not fully accessible:
 
 ## Feedback and contact information
 
-If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille: 
-
-  - email <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues">becomingateacher@digital.education.gov.uk</a>
-
-We’ll consider your request and get back to you in 5 days.
+If you need information on this website in a different format like accessible PDF, large print, easy read, audio recording or braille, please email <a class="govuk-link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Accessibility%20issues">becomingateacher@digital.education.gov.uk</a>. We’ll consider your request and get back to you in 5 days.
 
 ## Reporting accessibility problems with Register trainee teachers
 
