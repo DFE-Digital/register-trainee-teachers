@@ -43,6 +43,7 @@ module Trainees
 
       Audited.audit_class.as_user(USERNAME) do
         trainee.assign_attributes(mapped_attributes)
+        trainee.disabilities = [] if !trainee.disabled? && trainee.disability_disclosure_changed?
 
         if trainee.save!
           create_degrees!
