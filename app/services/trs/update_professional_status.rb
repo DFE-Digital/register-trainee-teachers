@@ -14,11 +14,11 @@ module Trs
     def call
       return unless FeatureService.enabled?(:integrate_with_trs)
 
-      Rails.logger.info("Updating professional status for trainee #{trainee.id} with TRN #{trainee.trn}\nPayload:\n#{payload.to_json}")
-
       if trainee.trn.blank?
         raise_professional_status_update_missing_trn_message
       end
+
+      Rails.logger.info("Updating professional status for trainee #{trainee.id} with TRN #{trainee.trn}\nPayload:\n#{payload.to_json}")
 
       update_professional_status
     end
