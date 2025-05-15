@@ -485,7 +485,7 @@ GEM
     pry-byebug (3.11.0)
       byebug (~> 12.0)
       pry (>= 0.13, < 0.16)
-    psych (5.2.4)
+    psych (5.2.6)
       date
       stringio
     public_suffix (6.0.2)
@@ -660,14 +660,14 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.16.1)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.23.0)
+    sentry-rails (5.24.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.23.0)
-    sentry-ruby (5.23.0)
+      sentry-ruby (~> 5.24.0)
+    sentry-ruby (5.24.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sentry-sidekiq (5.23.0)
-      sentry-ruby (~> 5.23.0)
+    sentry-sidekiq (5.24.0)
+      sentry-ruby (~> 5.24.0)
       sidekiq (>= 3.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
