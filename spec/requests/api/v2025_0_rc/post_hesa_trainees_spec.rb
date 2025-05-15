@@ -1111,10 +1111,10 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
   end
 
   context "with a fund_code is ineligible for funding" do
-    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
-
     before do
       params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
+      params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
+      params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
 
       post "/api/v2025.0-rc/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
@@ -1122,10 +1122,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body["message"]).to eq(
-        "Validation failed: 2 errors prohibited this trainee from being saved",
+        "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "fund_code is ineligible",
         "funding_method is not valid for this trainee",
       )
     end

@@ -57,6 +57,14 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         end
       end
 
+      context "when funding_method is NONE" do
+        let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
+
+        it "returns true" do
+          expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+        end
+      end
+
       context "when there is a matching funding rule" do
         let(:allocation_subject) { create(:allocation_subject) }
         let!(:subject_specialism) do

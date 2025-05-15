@@ -23,11 +23,18 @@ module Api
         end
 
         new_hesa_trainee_detail_attributes = new_attributes.slice(*HesaTraineeDetailAttributes::ATTRIBUTES)
+
         if new_hesa_trainee_detail_attributes.present?
           self.hesa_trainee_detail_attributes = V20250Rc::HesaTraineeDetailAttributes.new(
             new_hesa_trainee_detail_attributes.merge(trainee_attributes: self),
             record_source:,
           )
+        end
+
+        self.trainee_disabilities_attributes = []
+
+        new_attributes[:disabilities]&.each do |disability|
+          trainee_disabilities_attributes << { disability_id: disability.id }
         end
       end
 
