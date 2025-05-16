@@ -143,6 +143,22 @@ module Trs
           end
         end
 
+        context "when trainee has no itt_end_date" do
+          let(:trainee_start_date) { Time.zone.today - 2.months }
+          let(:itt_start_date) { Time.zone.today - 3.months }
+          let(:trainee) do
+            create(:trainee, :trn_received,
+                   itt_end_date: nil,
+                   trainee_start_date: trainee_start_date,
+                   itt_start_date: itt_start_date)
+          end
+          let(:expected_end_date) { trainee.estimated_end_date }
+
+          it "uses estimated_end_date as fallback for trainingEndDate" do
+            expect(subject["trainingEndDate"]).to eq(expected_end_date.iso8601)
+          end
+        end
+
         context "when trainee course subject is non-HESA" do
           let(:trainee) do
             create(:trainee, :trn_received, :with_secondary_education).tap do |t|
@@ -172,6 +188,14 @@ module Trs
 
             it "sets subject reference to 999003" do
               expect(subject["trainingSubjectReferences"]).to include("999003")
+            end
+          end
+
+          context "english as a second language" do
+            let(:course_subject) { ::CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE }
+
+            it "sets subject reference to 999004" do
+              expect(subject["trainingSubjectReferences"]).to include("999004")
             end
           end
         end
