@@ -9,7 +9,7 @@ module BulkUpdate
       let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").read }
       let(:parsed_csv) { CSV.parse(csv, headers: true) }
       let!(:nationality) { create(:nationality, :british) }
-      let(:academic_cycle) { AcademicCycle.current || create(:academic_cycle, :current) }
+      let(:academic_cycle) { AcademicCycle.for_year(2024) || create(:academic_cycle, cycle_year: 2024) }
       let(:allocation_subject) { create(:allocation_subject) }
       let(:undergrad_funding_rule) do
         create(

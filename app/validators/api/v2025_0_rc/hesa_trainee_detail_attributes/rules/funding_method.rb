@@ -35,7 +35,7 @@ module Api
             return false if fund_code_not_eligible? && funding_method?
 
             ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
-              academic_cycle_id: AcademicCycle.current.id,
+              academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
@@ -62,6 +62,16 @@ module Api
 
           def funding_type
             @funding_type ||= FUNDING_TYPES[funding_method]
+          end
+
+          def academic_cycle
+            @academic_cycle ||= start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.zone.now + ::Trainees::SetAcademicCycles::DEFAULT_CYCLE_OFFSET)
+          end
+
+          def start_date
+            start_date = trainee_attributes.trainee_start_date || trainee_attributes.itt_start_date
+            start_date = Date.parse(start_date) if start_date.present? && start_date.is_a?(String)
+            start_date
           end
         end
       end

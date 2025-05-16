@@ -6,13 +6,18 @@ require "rails_helper"
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod do
   subject { described_class }
 
-  let!(:academic_cycle) { create(:academic_cycle, :current) }
+  let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2025) }
 
   let(:course_subject_one) { "mathematics" }
   let(:training_route) { :provider_led_postgrad }
   let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
+  let(:trainee_start_date) { Date.new(2025, 10, 1).iso8601 }
   let(:trainee_attributes) do
-    Api::V20250Rc::TraineeAttributes.new(training_route:, course_subject_one:)
+    Api::V20250Rc::TraineeAttributes.new(
+      training_route:,
+      course_subject_one:,
+      trainee_start_date:,
+    )
   end
   let(:hesa_trainee_detail_attributes) do
     Api::V20250Rc::HesaTraineeDetailAttributes.new(
