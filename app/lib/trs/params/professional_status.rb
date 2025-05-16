@@ -59,7 +59,7 @@ module Trs
           "status" => status,
           "awardedDate" => trainee.outcome_date&.to_date&.iso8601,
           "trainingStartDate" => trainee.itt_start_date.iso8601,
-          "trainingEndDate" => trainee.itt_end_date&.iso8601,
+          "trainingEndDate" => trainee.itt_end_date&.iso8601 || trainee.estimated_end_date&.iso8601,
           "trainingSubjectReferences" => training_subject_references,
           "trainingAgeSpecialism" => training_age_specialism,
           "trainingCountryReference" => training_country_reference,
@@ -106,6 +106,7 @@ module Trs
         return "999001" if subject_name == ::CourseSubjects::CITIZENSHIP
         return "999002" if subject_name == ::CourseSubjects::PHYSICAL_EDUCATION
         return "999003" if subject_name == ::CourseSubjects::DESIGN_AND_TECHNOLOGY
+        return "999004" if subject_name == ::CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE
 
         Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name]
       end
