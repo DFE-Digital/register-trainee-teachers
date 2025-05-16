@@ -26,6 +26,7 @@ module Trs
 
     def self.put(...)
       response = Request.put(...)
+      Rails.logger.info("TRS PUT response:\nstatus: #{response.code}\nbody: #{response.body}\nheaders: #{response.headers}")
 
       handle_response(response: response, statuses: PUT_SUCCESSES)
     end
