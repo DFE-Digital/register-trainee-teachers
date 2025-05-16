@@ -18,6 +18,8 @@ module Trs
         raise_professional_status_update_missing_trn_message
       end
 
+      Rails.logger.info("Updating professional status for trainee #{trainee.id} with TRN #{trainee.trn}\nPayload:\n#{payload.to_json}")
+
       update_professional_status
     end
 
