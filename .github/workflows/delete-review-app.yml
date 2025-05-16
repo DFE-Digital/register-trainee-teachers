@@ -21,7 +21,7 @@ jobs:
     if: >
       github.event.action == 'closed' && contains(github.event.pull_request.labels.*.name, 'deploy') ||
       (github.event.action == 'unlabeled' && github.event.label.name == 'deploy') || (github.event_name ==
-      'workflow_dispatch')
+      'workflow_dispatch') || contains(github.event.pull_request.labels.*.name, 'dependencies')
 
     environment: review
     permissions:
