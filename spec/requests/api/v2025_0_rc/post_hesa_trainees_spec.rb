@@ -23,6 +23,17 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
   let(:disability1) { "58" }
   let(:disability2) { "57" }
   let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+  let(:degrees_attributes) {
+    [
+      {
+        grade: "02",
+        subject: "100485",
+        institution: "0117",
+        uk_degree: "083",
+        graduation_year: graduation_year,
+      },
+    ]
+  }
 
   let(:endpoint) { "/api/v2025.0-rc/trainees" }
   let!(:academic_cycle) { create(:academic_cycle, :current) }
@@ -43,15 +54,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       disability1: disability1,
       disability2: disability2,
-      degrees_attributes: [
-        {
-          grade: "02",
-          subject: "100485",
-          institution: "0117",
-          uk_degree: "083",
-          graduation_year: graduation_year,
-        },
-      ],
+      degrees_attributes: degrees_attributes,
       placements_attributes: [
         {
           name: "Placement",
@@ -175,6 +178,71 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       expect(degree.grade).to eq("Upper second-class honours (2:1)")
       expect(degree.uk_degree).to eq("Bachelor of Science")
       expect(degree.country).to be_nil
+    end
+
+    context :"with a non UK degree" do
+      context "when valid"  do
+        let(:degrees_attributes) do
+          [
+            {
+              grade: "02",
+              subject: "100485",
+              non_uk_degree: "083",
+              graduation_year: graduation_year,
+              country: "MX",
+            },
+          ]
+        end
+
+        it "creates the degrees if provided in the request body" do
+          post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+          degree_attributes = response.parsed_body[:data][:degrees]&.first
+
+          expect(degree_attributes[:subject]).to eq("100485")
+          expect(degree_attributes[:institution]).to be_nil
+          expect(degree_attributes[:graduation_year]).to eq(2003)
+          expect(degree_attributes[:subject]).to eq("100485")
+          expect(degree_attributes[:grade]).to eq("02")
+          expect(degree_attributes[:non_uk_degree]).to eq("083")
+          expect(degree_attributes[:country]).to eq("MX")
+
+          degree = Degree.last
+
+          expect(degree.locale_code).to eq("non_uk")
+          expect(degree.subject).to eq("Law")
+          expect(degree.institution).to be_nil
+          expect(degree.graduation_year).to eq(2003)
+          expect(degree.grade).to eq("Upper second-class honours (2:1)")
+          expect(degree.non_uk_degree).to eq("Bachelor of Science")
+          expect(degree.country).to eq("Mexico")
+        end
+      end
+
+      context "when invalid" do
+        let(:degrees_attributes) do
+          [
+            {
+              country: "MX",
+            },
+          ]
+        end
+
+        it "returns errors" do
+          expect {
+            post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+          }.not_to change {
+            Degree.count
+          }
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            "non_uk_degree must be entered if specifying a previous non-UK degree",
+            "subject must be entered if specifying a previous UK degree or non-UK degree",
+            "graduation_year must be entered if specifying a previous UK degree or non-UK degree",
+          )
+        end
+      end
     end
 
     context "with lead_partner_and_employing_school_attributes" do
@@ -780,6 +848,15 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
           expect(response).to have_http_status(:created)
           expect(response.parsed_body[:data][:training_route]).to eq(training_route)
         end
+
+        context "when the degrees are missing" do
+          let(:degrees_attributes) { [] }
+
+          it do
+            expect(response).to have_http_status(:created)
+            expect(response.parsed_body[:data][:training_route]).to eq(training_route)
+          end
+        end
       end
 
       context "when not present" do
@@ -814,7 +891,6 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
             ),
           }
         end
-        let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
 
         before do
           Timecop.travel(itt_start_date)
@@ -823,6 +899,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         end
 
         context "when invalid - provider_led_postgrad before 2022" do
+          let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+
           let(:itt_start_date) { "2021-08-01" }
           let(:itt_end_date)   { "2022-01-01" }
           let(:cycle_year) { 2021 }
@@ -834,6 +912,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         end
 
         context "when valid - provider_led_postgrad after 2022" do
+          let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+
           let(:itt_start_date) { "2023-08-01" }
           let(:itt_end_date)   { "2024-01-01" }
           let(:cycle_year) { 2023 }
@@ -841,6 +921,17 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
           it do
             expect(response).to have_http_status(:created)
             expect(response.parsed_body[:errors]).to be_blank
+          end
+        end
+
+        context "when the degrees are missing" do
+          let(:degrees_attributes) { [] }
+
+          it "is invalid" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              "uk_degree or non_uk_degree must be entered if specifying a postgraduate training_route",
+            )
           end
         end
       end
