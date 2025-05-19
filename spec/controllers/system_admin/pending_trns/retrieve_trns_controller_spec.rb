@@ -24,7 +24,7 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
         allow(Trs::RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
         expect(trainee).to receive(:trn_received!).with(trn)
         expect(trn_request).to receive(:received!)
-        
+
         Timecop.freeze do
           expect {
             patch :update, params: { id: trainee.slug }
