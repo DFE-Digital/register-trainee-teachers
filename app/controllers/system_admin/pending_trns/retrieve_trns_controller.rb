@@ -11,6 +11,7 @@ module SystemAdmin
         if trn
           trainee.trn_received!(trn)
           trn_request.received!
+          Trs::UpdateProfessionalStatusJob.set(wait: 30.seconds).perform_later(trainee) if FeatureService.enabled?(:integrate_with_trs)
           redirect_to(pending_trns_path, flash: { success: "TRN successfully retrieved for #{trainee_name(trainee)}" })
         else
           redirect_to(pending_trns_path, flash: { warning: "TRN still not available for #{trainee_name(trainee)}" })
