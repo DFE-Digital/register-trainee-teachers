@@ -24,8 +24,12 @@ RSpec.describe SystemAdmin::PendingTrns::RetrieveTrnsController do
         allow(Trs::RetrieveTrn).to receive(:call).with(trn_request:).and_return(trn)
         expect(trainee).to receive(:trn_received!).with(trn)
         expect(trn_request).to receive(:received!)
-
-        patch :update, params: { id: trainee.slug }
+        
+        Timecop.freeze do
+          expect {
+            patch :update, params: { id: trainee.slug }
+          }.to have_enqueued_job(Trs::UpdateProfessionalStatusJob).with(trainee).at(30.seconds.from_now)
+        end
 
         expect(response).to redirect_to(pending_trns_path)
         expect(flash[:success]).to include("TRN successfully retrieved")
