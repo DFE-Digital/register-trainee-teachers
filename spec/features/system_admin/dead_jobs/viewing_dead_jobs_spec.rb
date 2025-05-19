@@ -106,9 +106,8 @@ feature "Viewing sidekiq dead jobs" do
   end
 
   def and_there_are_no_dead_jobs
-    save_and_open_page
     expect(admin_dead_jobs_page).not_to have_link("View", href: dead_job_path(DeadJobs::DqtUpdateTrainee))
-    expect(admin_dead_jobs_page).to have_text("DQT Update Trainee	0")
+    expect(admin_dead_jobs_page).to have_text("DQT Update Trainee 0")
   end
 
   def when_i_click_view

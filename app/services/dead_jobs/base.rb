@@ -38,7 +38,7 @@ module DeadJobs
     end
 
     def trainees
-      Trainee.includes(:provider, :dqt_teacher, :dqt_teacher_trainings).find(dead_jobs.keys)
+      Trainee.kept.includes(:provider, :dqt_teacher, :dqt_teacher_trainings).find(dead_jobs.keys)
     end
 
     delegate :count, to: :dead_jobs
@@ -108,7 +108,9 @@ module DeadJobs
     end
 
     def dead_jobs
-      @dead_jobs ||=
+      return @dead_jobs if defined?(@dead_jobs)
+
+      all_dead_jobs =
         dead_set
         .select { |job| job.item["wrapped"] == klass }
         .sort_by { |job| job.item["enqueued_at"] }
@@ -124,6 +126,13 @@ module DeadJobs
             },
           ]
         end
+
+      existing_trainee_ids = with_undiscarded_trainees(all_dead_jobs)
+      @dead_jobs = all_dead_jobs.slice(existing_trainee_ids)
+    end
+
+    def with_undiscarded_trainees(dead_jobs)
+      Trainee.kept.where(id: dead_jobs.keys).pluck(:id)
     end
 
     def dead_job_error_message(trainee_id)
