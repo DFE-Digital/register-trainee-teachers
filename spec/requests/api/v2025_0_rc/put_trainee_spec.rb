@@ -1402,6 +1402,48 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
           end
         end
 
+        context "when degrees_attributes are present in the params" do
+          let(:params_for_update) do
+            {
+              data: {
+                degrees_attributes: [
+                  {
+                    grade: "02",
+                    subject: "100485",
+                    non_uk_degree: "097",
+                    country: "MX",
+                    graduation_year: "2003",
+                  },
+                ],
+              },
+            }
+          end
+
+          it "does not update the degrees" do
+            put(
+              "/api/v2025.0-rc/trainees/#{slug}",
+              params: params_for_update.to_json,
+              headers: headers,
+            )
+
+            expect(response).to have_http_status(:ok)
+
+            trainee.reload
+
+            expect(trainee.degrees.count).to be(1)
+
+            degree = trainee.degrees.take
+
+            expect(degree.locale_code).to eq("uk")
+            expect(degree.subject).to eq("Physics")
+            expect(degree.institution).to eq("Durham University")
+            expect(degree.graduation_year).to eq(2003)
+            expect(degree.grade).to eq("Upper second-class honours (2:1)")
+            expect(degree.uk_degree).to eq("Bachelor of Science")
+            expect(degree.country).to be_nil
+          end
+        end
+
         context "when request body is not valid JSON" do
           let(:params_for_update) { "{ \"data\": { \"first_names\": \"Alice\", \"last_name\": \"Roberts\", } }" }
 

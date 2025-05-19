@@ -229,7 +229,15 @@ module Api
           HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
         } || {}
 
-        trainee_attributes = trainee_attributes.merge(hesa_trainee_detail_attributes)
+        degrees_attributes = trainee.degrees.map do |degree|
+          degree.attributes.select { |k, _v| DegreeAttributes::ATTRIBUTES.include?(k.to_sym) }
+        end || []
+
+        trainee_attributes = trainee_attributes.merge(
+          hesa_trainee_detail_attributes,
+          degrees_attributes:,
+        )
+
         trainee_attributes["sex"] = Trainee.sexes[trainee.sex]
 
         new_trainee_attributes = new(trainee_attributes)
