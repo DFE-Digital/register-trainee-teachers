@@ -127,6 +127,8 @@ class Trainee < ApplicationRecord
   include PgSearch::Model
   include Discard::Model
 
+  include TrainingRouteManageable
+
   belongs_to :provider
   belongs_to :apply_application, optional: true
 
@@ -195,19 +197,6 @@ class Trainee < ApplicationRecord
   has_many :potential_duplicate_trainees, dependent: :destroy
 
   attribute :progress, Progress.to_type
-
-  delegate :award_type,
-           :requires_lead_partner?,
-           :requires_placements?,
-           :requires_employing_school?,
-           :early_years_route?,
-           :undergrad_route?,
-           :requires_itt_start_date?,
-           :requires_study_mode?,
-           :requires_degree?,
-           :requires_funding?,
-           :requires_iqts_country?,
-           to: :training_route_manager
 
   delegate :update_training_route!, to: :route_data_manager
 
@@ -439,10 +428,6 @@ class Trainee < ApplicationRecord
       LEFT JOIN subject_specialisms AS specialism ON specialism.name = trainees.course_subject_one OR specialism.name = trainees.course_subject_two OR specialism.name = trainees.course_subject_three
       LEFT JOIN allocation_subjects ON specialism.allocation_subject_id = allocation_subjects.id
     SQL
-  end
-
-  def training_route_manager
-    @training_route_manager ||= TrainingRouteManager.new(self)
   end
 
   def available_courses(training_route = self.training_route)
