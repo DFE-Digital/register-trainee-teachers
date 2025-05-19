@@ -84,7 +84,7 @@ module BulkUpdate
             :graduation_year,
             :non_uk_degree,
             :country,
-          ).compact
+          ).compact,
         ].compact_blank
       end
 
