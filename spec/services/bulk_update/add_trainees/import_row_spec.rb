@@ -70,7 +70,8 @@ module BulkUpdate
 
             expect(result.success).to be(false)
             expect(result.error_type).to eq(:validation)
-            expect(result.errors).to include("UK degree grade can't be blank")
+
+            expect(result.errors).to include("Degree grade must be entered if specifying a previous UK degree or non-UK degree")
             expect(result.errors).to include("ITT Start Date can't be blank")
             expect(result.errors).to include("Date of Birth can't be blank")
             expect(result.errors).to include("ITT Aim has invalid reference data values")
