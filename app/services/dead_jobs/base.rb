@@ -128,7 +128,7 @@ module DeadJobs
         end
 
       existing_trainee_ids = with_undiscarded_trainees(all_dead_jobs)
-      @dead_jobs = all_dead_jobs.slice(existing_trainee_ids)
+      @dead_jobs = all_dead_jobs.slice(*existing_trainee_ids)
     end
 
     def with_undiscarded_trainees(dead_jobs)

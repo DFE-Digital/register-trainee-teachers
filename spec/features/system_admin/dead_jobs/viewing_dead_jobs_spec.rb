@@ -23,22 +23,22 @@ feature "Viewing sidekiq dead jobs" do
           enqueued_at: 73.hours.ago.to_i,
         }.with_indifferent_access,
       ),
-      OpenStruct.new(
-        item: {
-          wrapped: "Dqt::UpdateTraineeJob",
-          args:
-          [
-            {
-              arguments: [
-                { trainee: { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" } },
-              ],
-            },
-          ],
-          error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
-          jid: "1234",
-          enqueued_at: 73.hours.ago.to_i,
-        }.with_indifferent_access,
-      ),
+      # OpenStruct.new(
+      #   item: {
+      #     wrapped: "Dqt::UpdateTraineeJob",
+      #     args:
+      #     [
+      #       {
+      #         arguments: [
+      #           { trainee: { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" } },
+      #         ],
+      #       },
+      #     ],
+      #     error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
+      #     jid: "1234",
+      #     enqueued_at: 73.hours.ago.to_i,
+      #   }.with_indifferent_access,
+      # ),
     ]
   end
 
@@ -65,6 +65,7 @@ feature "Viewing sidekiq dead jobs" do
 
   scenario "doesn't show dead jobs for soft-deleted trainees" do
     when_the_trainee_is_soft_deleted
+    and_i_visit_the_dead_jobs_tab
     then_i_see_the_dead_jobs_page
     and_there_are_no_dead_jobs
   end
@@ -92,6 +93,7 @@ feature "Viewing sidekiq dead jobs" do
   def when_i_visit_the_dead_jobs_tab
     admin_dead_jobs_page.load
   end
+  alias_method :and_i_visit_the_dead_jobs_tab, :when_i_visit_the_dead_jobs_tab
 
   def and_dead_jobs_exist
     allow(Sidekiq::DeadSet).to receive(:new).and_return(dead_jobs_data)
