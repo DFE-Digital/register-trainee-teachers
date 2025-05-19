@@ -187,20 +187,20 @@ locals {
 
   name_suffix = var.name != null ? "-${var.name}" : ""
 
-  template_variable_map = {
+  template_variable_map = var.airbyte_enabled ? {
     repl_password  = local.ab_secrets.repl_password
     database_name  = module.postgres.name
-  }
+  } : {}
 
-  template_variable_map_curl = {
+  template_variable_map_curl = var.airbyte_enabled ? {
     server_url         = local.ab_secrets.server_url
     client_id          = local.ab_secrets.client_id
     client_secret      = local.ab_secrets.client_secret
     connection_id      = module.airbyte[0].connection_id
     connection_streams = local.connection_streams
-  }
+  } : {}
 
-  airbyte_full_url = "${local.ab_secrets.server_url}/api/public/v1"
+  airbyte_full_url = var.airbyte_enabled ? "${local.ab_secrets.server_url}/api/public/v1" : null
 
 #  ab_db_config_sql      = var.airbyte_db_config ? file("workspace-variables/airbyte-db-config.sql") : null
   connection_streams = var.airbyte_enabled ? file("workspace-variables/${var.app_environment}_streams.json") : null
