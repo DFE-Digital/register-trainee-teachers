@@ -63,6 +63,12 @@ feature "Viewing sidekiq dead jobs" do
     then_i_am_redirected_to_the_record_page
   end
 
+  scenario "doesn't show dead jobs for soft-deleted trainees" do
+    when_the_trainee_is_soft_deleted
+    then_i_see_the_dead_jobs_page
+    and_there_are_no_dead_jobs
+  end
+
   scenario "retrying a job" do
     when_i_click_view
     and_dead_jobs_exist
@@ -93,6 +99,16 @@ feature "Viewing sidekiq dead jobs" do
 
   def then_i_see_the_dead_jobs_page
     expect(admin_dead_jobs_page).to have_text("Dead background Jobs")
+  end
+
+  def when_the_trainee_is_soft_deleted
+    trainee.discard
+  end
+
+  def and_there_are_no_dead_jobs
+    save_and_open_page
+    expect(admin_dead_jobs_page).not_to have_link("View", href: dead_job_path(DeadJobs::DqtUpdateTrainee))
+    expect(admin_dead_jobs_page).to have_text("DQT Update Trainee	0")
   end
 
   def when_i_click_view
