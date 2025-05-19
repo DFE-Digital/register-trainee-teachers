@@ -1,0 +1,15 @@
+<div class="app-summary-card__body">
+  <% if trs_data.present? %>
+    <%= govuk_summary_list(rows: general) %>
+
+    <% training_instances&.each_with_index do |training_instance, i| %>
+      <h3 class="govuk-heading-m govuk-!-margin-top-6"><%= "Training instance #{i + 1}" %></h3>
+      <%= govuk_summary_list(rows: training_instance) %>
+    <% end %>
+
+  <% else %>
+    <p class="govuk-body">
+      Data not available
+    </p>
+  <% end %>
+</div> 

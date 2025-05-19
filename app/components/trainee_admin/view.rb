@@ -27,5 +27,13 @@ module TraineeAdmin
     rescue Dqt::Client::HttpError
       false
     end
+
+    def trs_data
+      return unless FeatureService.enabled?(:integrate_with_trs)
+
+      @trs_data ||= Trs::RetrieveTeacher.call(trainee:)
+    rescue Trs::Client::HttpError
+      false
+    end
   end
 end
