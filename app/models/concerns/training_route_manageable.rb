@@ -14,8 +14,6 @@ module TrainingRouteManageable
            :requires_iqts_country?,
            to: :training_route_manager
 
-private
-
   def training_route_manager
     @training_route_manager ||= TrainingRouteManager.new(self)
   end
