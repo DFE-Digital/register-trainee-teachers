@@ -50,7 +50,7 @@ module BulkUpdate
         let(:result) { described_class.call(row:, current_provider:) }
 
         context "when the row is invalid" do
-          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_failed.csv").read }
+          let(:csv) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_failed.csv").read }
           let(:row) { parsed_csv[3] }
 
           it "does not create a trainee record" do
