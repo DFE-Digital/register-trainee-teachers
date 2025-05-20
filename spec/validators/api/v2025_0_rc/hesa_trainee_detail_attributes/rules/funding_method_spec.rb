@@ -6,6 +6,11 @@ require "rails_helper"
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod do
   subject { described_class }
 
+  around do |example|
+    Timecop.freeze(Date.new(2025, 5, 1)) { example.run }
+  end
+
+  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
   let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2025) }
 
   let(:course_subject_one) { "mathematics" }
@@ -97,6 +102,14 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
 
         it "returns true" do
           expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+        end
+
+        context "when the start date is invalid" do
+          let(:trainee_start_date) { "not a date" }
+
+          it "returns false after falling back to current cycle" do
+            expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
+          end
         end
       end
     end
