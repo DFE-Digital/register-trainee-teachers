@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V01::DegreeAttributes do
+RSpec.describe Api::V20250Rc::DegreeAttributes do
   let(:degree) { build(:degree) }
   let(:trainee) { create(:trainee, :with_degree) }
   let(:degree_attributes) { described_class.new(attributes, trainee:) }
@@ -35,7 +35,7 @@ RSpec.describe Api::V01::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:uk_degree]).to contain_exactly("must be entered if specifying a previous UK degree")
           }
         end
 
@@ -45,7 +45,7 @@ RSpec.describe Api::V01::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:uk_degree]).to contain_exactly("must be entered if specifying a previous UK degree")
           }
         end
 
@@ -85,7 +85,7 @@ RSpec.describe Api::V01::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("must be entered if specifying a previous non-UK degree")
           }
         end
 
@@ -95,7 +95,7 @@ RSpec.describe Api::V01::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("must be entered if specifying a previous non-UK degree")
           }
         end
 
