@@ -106,7 +106,6 @@ module Trs
         return "999001" if subject_name == ::CourseSubjects::CITIZENSHIP
         return "999002" if subject_name == ::CourseSubjects::PHYSICAL_EDUCATION
         return "999003" if subject_name == ::CourseSubjects::DESIGN_AND_TECHNOLOGY
-        return "999004" if subject_name == ::CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE
 
         Hesa::CodeSets::CourseSubjects::MAPPING.invert[subject_name]
       end
