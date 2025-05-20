@@ -69,9 +69,15 @@ module Api
           end
 
           def start_date
-            start_date = trainee_attributes.trainee_start_date || trainee_attributes.itt_start_date
-            start_date = Date.parse(start_date) if start_date.present? && start_date.is_a?(String)
-            start_date
+            potential_start_date = trainee_attributes.trainee_start_date || trainee_attributes.itt_start_date
+            potential_start_date = Date.parse(potential_start_date) if valid_date_string?(potential_start_date)
+            potential_start_date
+          end
+
+          def valid_date_string?(value)
+            value.is_a?(String) && Date.parse(potential_start_date)
+          rescue StandardError
+            false
           end
         end
       end
