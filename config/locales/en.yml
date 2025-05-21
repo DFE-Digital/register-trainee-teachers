@@ -2175,8 +2175,6 @@ en:
               invalid: must be completed before qts_standards_met_date
             state:
               invalid: must be selected as trn_received
-            trainee:
-              submission_ready: submission ready is invalid must be true
             qts_standards_met_date:
               itt_start_date: &qts_itt_start_date must be after itt_start_date
         api/trainees/deferral_service:
