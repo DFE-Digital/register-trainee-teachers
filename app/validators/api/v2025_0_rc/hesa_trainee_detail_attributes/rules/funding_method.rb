@@ -5,6 +5,8 @@ module Api
     class HesaTraineeDetailAttributes
       module Rules
         class FundingMethod < Api::Rules::Base
+          include DateValidatable
+
           FUNDING_TYPES = {
             Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES["scholarship"],
             Hesa::CodeSets::BursaryLevels::NONE => nil,
@@ -74,13 +76,6 @@ module Api
               value = valid_date_string?(value) ? Date.iso8601(value) : nil
             end
             value
-          end
-
-          def valid_date_string?(value)
-            Date.parse(value)
-            true
-          rescue StandardError
-            false
           end
         end
       end

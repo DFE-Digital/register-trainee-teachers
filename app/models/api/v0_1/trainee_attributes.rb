@@ -8,6 +8,7 @@ module Api
       include ActiveModel::Validations::Callbacks
 
       include PrimaryCourseSubjects
+      include DateValidatable
 
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
@@ -311,13 +312,6 @@ module Api
         if itt_end_date.present? && !valid_date_string?(itt_end_date)
           errors.add(:itt_end_date, :invalid)
         end
-      end
-
-      def valid_date_string?(date)
-        DateTime.iso8601(date.to_s)
-        true
-      rescue StandardError
-        false
       end
 
       def set_course_allocation_subject_id
