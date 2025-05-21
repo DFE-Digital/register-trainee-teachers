@@ -7,7 +7,10 @@ module Api
       include ActiveModel::Attributes
       include ServicePattern
 
+      include Api::ErrorAttributeAdapter
+
       attribute :qts_standards_met_date
+      attribute :record_source, default: -> { Trainee::API_SOURCE }
 
       attr_reader :trainee
 
@@ -39,10 +42,14 @@ module Api
       end
 
       def trainee_degree_missing?
-        trainee.degrees.blank?
+        degrees.blank?
       end
 
     private
+
+      delegate :state, :degrees, to: :trainee
+
+      alias_method :degree_id, :degrees
 
       def trainee_attributes
         {
