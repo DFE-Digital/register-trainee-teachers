@@ -86,36 +86,85 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
       end
 
       context "with invalid params" do
-        let(:params) do
-          {
-            data:
-              {
+        context "with empty withdraw_date" do
+          let(:params) do
+            super().deep_merge(
+              data: {
                 withdraw_date: nil,
+              }
+            )
+          end
+
+          it "returns status code 422 with a valid JSON response" do
+            post(
+              "/api/v2025.0-rc/trainees/#{trainee_id}/withdraw",
+              headers: { Authorization: "Bearer #{token}", **json_headers },
+              params: params.to_json,
+            )
+
+            expect(response).to have_http_status(:unprocessable_entity)
+
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              { error: "UnprocessableEntity", message: "withdraw_date Choose a withdrawal date" },
+           )
+          end
+
+          it "did not change the trainee" do
+            expect {
+              post "/api/v2025.0-rc/trainees/#{trainee_id}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
+            }.not_to change(trainee, :withdraw_date)
+          end
+        end
+
+        context "with invalid withdraw_date" do
+          let(:params) do
+            super().deep_merge(
+              data: {
+                withdraw_date: trainee.itt_start_date - 1.day,
               },
-          }
+            )
+          end
+
+          it "returns status code 422 with a valid JSON response" do
+            post(
+              "/api/v2025.0-rc/trainees/#{trainee_id}/withdraw",
+              headers: { Authorization: "Bearer #{token}", **json_headers },
+              params: params.to_json,
+            )
+
+            expect(response).to have_http_status(:unprocessable_entity)
+
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              { error: "UnprocessableEntity", message: "withdraw_date must be after itt_start_date" },
+            )
+          end
         end
 
-        it "returns status code 422 with a valid JSON response" do
-          post(
-            "/api/v2025.0-rc/trainees/#{trainee_id}/withdraw",
-            headers: { Authorization: "Bearer #{token}", **json_headers },
-            params: params.to_json,
-          )
+        context "with invalid reasons" do
+          let(:params) do
+            {
+              data: {
+                reasons: ["invalid_reason"],
+              },
+            }
+          end
 
-          expect(response).to have_http_status(:unprocessable_entity)
+          it "returns status code 422 with a valid JSON response" do
+            post(
+              "/api/v2025.0-rc/trainees/#{trainee_id}/withdraw",
+              headers: { Authorization: "Bearer #{token}", **json_headers },
+              params: params.to_json,
+            )
 
-          expect(response.parsed_body[:errors]).to contain_exactly(
-            { error: "UnprocessableEntity", message: "Withdraw date Choose a withdrawal date" },
-            { error: "UnprocessableEntity", message: "Reasons Choose one or more reasons why the trainee withdrew from the course" },
-            { error: "UnprocessableEntity", message: "Future interest is not included in the list" },
-            { error: "UnprocessableEntity", message: "Trigger is not included in the list" },
-          )
-        end
+            expect(response).to have_http_status(:unprocessable_entity)
 
-        it "did not change the trainee" do
-          expect {
-            post "/api/v2025.0-rc/trainees/#{trainee_id}/withdraw", headers: { Authorization: "Bearer bat", **json_headers }
-          }.not_to change(trainee, :withdraw_date)
+            expect(response.parsed_body[:errors]).to contain_exactly(
+              { error: "UnprocessableEntity", message: "withdraw_date Choose a withdrawal date" },
+              { error: "UnprocessableEntity", message: "reasons entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger" },
+              { error: "UnprocessableEntity", message: "future_interest is not included in the list" },
+              { error: "UnprocessableEntity", message: "trigger is not included in the list" },
+            )
+          end
         end
       end
     end

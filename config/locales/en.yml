@@ -2105,6 +2105,12 @@ en:
                 blank: uk_degree or non_uk_degree must be entered if specifying a postgraduate training_route
               csv:
                 blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
+        api/v20250_rc/withdrawal_attributes:
+          attributes:
+            withdraw_date:
+              not_before_itt_start_date: must be after itt_start_date
+            reasons:
+              invalid: entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger
         api/v20250_rc/hesa_trainee_detail_attributes:
           attributes:
             itt_qualification_aim:
