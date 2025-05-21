@@ -2181,8 +2181,8 @@ en:
               itt_start_date: &qts_itt_start_date must be after itt_start_date
         api/trainees/deferral_service:
           attributes:
-            trainee:
-              state: state is invalid must be one of [submitted_for_trn, trn_received]
+            state:
+              invalid: is invalid must be one of [submitted_for_trn, trn_received]
             defer_date:
               itt_start_date: *qts_itt_start_date
   page_headings:
