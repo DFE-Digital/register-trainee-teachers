@@ -7,6 +7,10 @@ module Api
       include ActiveModel::Attributes
       include ServicePattern
 
+      include ErrorAttributeAdapter
+
+      attribute :record_source, default: -> { Trainee::API_SOURCE }
+
       attribute :defer_date
       attribute :defer_reason
 
@@ -39,6 +43,8 @@ module Api
       end
 
     private
+
+      delegate :state, to: :trainee
 
       def trainee_attributes
         {}.tap do |hash|

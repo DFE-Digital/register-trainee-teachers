@@ -66,7 +66,7 @@ RSpec.describe Api::Trainees::DeferralService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Defer date can't be blank")
+          expect(errors.full_messages).to contain_exactly("defer_date can't be blank")
           expect(trainee.deferred?).to be(false)
         end
       end
@@ -82,7 +82,7 @@ RSpec.describe Api::Trainees::DeferralService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Defer date can't be blank")
+          expect(errors.full_messages).to contain_exactly("defer_date can't be blank")
           expect(trainee.deferred?).to be(false)
         end
       end
@@ -98,7 +98,7 @@ RSpec.describe Api::Trainees::DeferralService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Defer date is invalid")
+          expect(errors.full_messages).to contain_exactly("defer_date is invalid")
           expect(trainee.deferred?).to be(false)
         end
       end
@@ -115,7 +115,7 @@ RSpec.describe Api::Trainees::DeferralService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Defer reason is too long (maximum is 500 characters)")
+          expect(errors.full_messages).to contain_exactly("defer_reason is too long (maximum is 500 characters)")
           expect(trainee.deferred?).to be(false)
         end
       end
@@ -139,7 +139,7 @@ RSpec.describe Api::Trainees::DeferralService do
         success, errors = subject.call(params, trainee)
 
         expect(success).to be(false)
-        expect(errors.full_messages).to contain_exactly("Trainee state is invalid must be one of [submitted_for_trn, trn_received]")
+        expect(errors.full_messages).to contain_exactly("state is invalid must be one of [submitted_for_trn, trn_received]")
         expect(trainee.deferred?).to be(false)
       end
     end
