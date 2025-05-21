@@ -91,7 +91,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
             super().deep_merge(
               data: {
                 withdraw_date: nil,
-              }
+              },
             )
           end
 
@@ -106,7 +106,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
             expect(response.parsed_body[:errors]).to contain_exactly(
               { error: "UnprocessableEntity", message: "withdraw_date Choose a withdrawal date" },
-           )
+            )
           end
 
           it "did not change the trainee" do
