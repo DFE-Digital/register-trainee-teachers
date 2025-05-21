@@ -5,6 +5,8 @@ module Api
     class HesaTraineeDetailAttributes
       module Rules
         class FundingMethod < Api::Rules::Base
+          include DateValidatable
+
           FUNDING_TYPES = {
             Hesa::CodeSets::BursaryLevels::SCHOLARSHIP => FUNDING_TYPES["scholarship"],
             Hesa::CodeSets::BursaryLevels::NONE => nil,
@@ -35,7 +37,7 @@ module Api
             return false if fund_code_not_eligible? && funding_method?
 
             ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
-              academic_cycle_id: AcademicCycle.current.id,
+              academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
@@ -62,6 +64,18 @@ module Api
 
           def funding_type
             @funding_type ||= FUNDING_TYPES[funding_method]
+          end
+
+          def academic_cycle
+            @academic_cycle ||= start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.zone.now + ::Trainees::SetAcademicCycles::DEFAULT_CYCLE_OFFSET)
+          end
+
+          def start_date
+            value = trainee_attributes.trainee_start_date || trainee_attributes.itt_start_date
+            if value.is_a?(String)
+              value = valid_date_string?(value) ? Date.iso8601(value) : nil
+            end
+            value
           end
         end
       end

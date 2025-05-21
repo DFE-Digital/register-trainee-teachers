@@ -552,7 +552,7 @@ private
   end
 
   def and_there_is_a_current_academic_cycle
-    @academic_cycle = AcademicCycle.current || create(:academic_cycle, :current)
+    @academic_cycle = AcademicCycle.for_year(2024) || create(:academic_cycle, cycle_year: 2024)
   end
 
   def and_there_is_a_previous_academic_cycle

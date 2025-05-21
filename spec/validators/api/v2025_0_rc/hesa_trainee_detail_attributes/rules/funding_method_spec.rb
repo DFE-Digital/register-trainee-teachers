@@ -6,13 +6,23 @@ require "rails_helper"
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod do
   subject { described_class }
 
-  let!(:academic_cycle) { create(:academic_cycle, :current) }
+  around do |example|
+    Timecop.freeze(Date.new(2025, 5, 1)) { example.run }
+  end
+
+  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
+  let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2025) }
 
   let(:course_subject_one) { "mathematics" }
   let(:training_route) { :provider_led_postgrad }
   let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
+  let(:trainee_start_date) { Date.new(2025, 10, 1).iso8601 }
   let(:trainee_attributes) do
-    Api::V20250Rc::TraineeAttributes.new(training_route:, course_subject_one:)
+    Api::V20250Rc::TraineeAttributes.new(
+      training_route:,
+      course_subject_one:,
+      trainee_start_date:,
+    )
   end
   let(:hesa_trainee_detail_attributes) do
     Api::V20250Rc::HesaTraineeDetailAttributes.new(
@@ -92,6 +102,14 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
 
         it "returns true" do
           expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+        end
+
+        context "when the start date is invalid" do
+          let(:trainee_start_date) { "not a date" }
+
+          it "returns false after falling back to current cycle" do
+            expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
+          end
         end
       end
     end

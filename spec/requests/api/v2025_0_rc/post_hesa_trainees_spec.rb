@@ -852,8 +852,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
     end
 
+    let(:cycle_year) { 2022 }
     let(:params) { { data: { email: "Doe" } } }
-    let!(:academic_cycle) { create(:academic_cycle, :current) }
+    let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
