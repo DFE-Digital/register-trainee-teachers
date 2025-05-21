@@ -23,22 +23,6 @@ feature "Viewing sidekiq dead jobs" do
           enqueued_at: 73.hours.ago.to_i,
         }.with_indifferent_access,
       ),
-      OpenStruct.new(
-        item: {
-          wrapped: "Dqt::UpdateTraineeJob",
-          args:
-          [
-            {
-              arguments: [
-                { trainee: { _aj_globalid: "gid://register-trainee-teachers/Trainee/#{trainee.id}" } },
-              ],
-            },
-          ],
-          error_message: 'status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}, headers: ',
-          jid: "1234",
-          enqueued_at: 73.hours.ago.to_i,
-        }.with_indifferent_access,
-      ),
     ]
   end
 
@@ -61,6 +45,16 @@ feature "Viewing sidekiq dead jobs" do
     and_the_trainee_view_link_is_visibile
     and_when_i_click_view
     then_i_am_redirected_to_the_record_page
+  end
+
+  scenario "doesn't show dead jobs for soft-deleted trainees" do
+    when_the_trainee_is_soft_deleted
+    and_i_visit_the_dead_jobs_tab
+    then_i_see_the_dead_jobs_page
+    and_there_are_no_dead_jobs
+
+    when_i_visit_to_the_withdraw_dead_jobs_page
+    then_i_see_that_there_are_no_withdraw_dead_jobs
   end
 
   scenario "retrying a job" do
@@ -86,6 +80,7 @@ feature "Viewing sidekiq dead jobs" do
   def when_i_visit_the_dead_jobs_tab
     admin_dead_jobs_page.load
   end
+  alias_method :and_i_visit_the_dead_jobs_tab, :when_i_visit_the_dead_jobs_tab
 
   def and_dead_jobs_exist
     allow(Sidekiq::DeadSet).to receive(:new).and_return(dead_jobs_data)
@@ -93,6 +88,15 @@ feature "Viewing sidekiq dead jobs" do
 
   def then_i_see_the_dead_jobs_page
     expect(admin_dead_jobs_page).to have_text("Dead background Jobs")
+  end
+
+  def when_the_trainee_is_soft_deleted
+    trainee.discard
+  end
+
+  def and_there_are_no_dead_jobs
+    expect(admin_dead_jobs_page).not_to have_link("View", href: dead_job_path(DeadJobs::DqtUpdateTrainee))
+    expect(admin_dead_jobs_page).to have_text("DQT Update Trainee 0")
   end
 
   def when_i_click_view
@@ -137,5 +141,13 @@ feature "Viewing sidekiq dead jobs" do
 
   def then_i_am_redirected_to_the_record_page
     expect(record_page).to be_displayed(id: trainee.slug)
+  end
+
+  def when_i_visit_to_the_withdraw_dead_jobs_page
+    visit dead_job_path("DeadJobs::DqtWithdrawTrainee")
+  end
+
+  def then_i_see_that_there_are_no_withdraw_dead_jobs
+    expect(page).to have_content("There are no dead jobs")
   end
 end
