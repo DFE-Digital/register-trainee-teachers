@@ -71,7 +71,7 @@ RSpec.describe "POST /api/v2025.0-rc/trainees/:trainee_id/recommend-for-qts" do
 
         expect(response.parsed_body[:errors]).to contain_exactly(
           "error" => "UnprocessableEntity",
-          "message" => "Trainee degree information must be completed before QTS recommendation",
+          "message" => "degree_id must be completed before qts_standards_met_date",
         )
       end
     end
@@ -87,7 +87,7 @@ RSpec.describe "POST /api/v2025.0-rc/trainees/:trainee_id/recommend-for-qts" do
 
       expect(response.parsed_body[:errors]).to contain_exactly(
         "error" => "UnprocessableEntity",
-        "message" => "QTS standards met date can't be blank",
+        "message" => "qts_standards_met_date can't be blank",
       )
     end
   end
