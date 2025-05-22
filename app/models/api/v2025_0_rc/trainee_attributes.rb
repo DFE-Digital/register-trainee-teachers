@@ -9,6 +9,8 @@ module Api
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
 
+      validates :provider_trainee_id, length: { maximum: 50 }
+
       def build_nested_models(new_attributes)
         new_attributes[:placements_attributes]&.each do |placement_params|
           placements_attributes << PlacementAttributes.new(placement_params, record_source:)
