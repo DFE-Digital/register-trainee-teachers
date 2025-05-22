@@ -1524,6 +1524,8 @@ en:
               blank: Enter the token name
   activemodel:
     attributes:
+      api/v20250_rc/trainee_attributes:
+        application_choice_id: application_id
       course_details_form:
         itt_start_date: &itt_start_date ITT start date
         itt_end_date: &itt_end_date Expected end date

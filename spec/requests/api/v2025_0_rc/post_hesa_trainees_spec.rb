@@ -308,7 +308,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
         it "returns errors" do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("application_choice_id is too long (maximum is 7 characters)")
+          expect(response.parsed_body[:errors]).to contain_exactly("application_id is too long (maximum is 7 characters)")
         end
       end
     end
