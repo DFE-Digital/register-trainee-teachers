@@ -3057,7 +3057,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>provider_trainee_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 20 characters)
+        string (limited to 50 characters)
       </p>
       <p class="govuk-body">
         The unique ID of the trainee in the Provider’s student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider’s own identifier for student field</a>.
@@ -3071,7 +3071,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>application_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        integer
+        integer (limited to 7 digits)
       </p>
       <p class="govuk-body">
         The unique ID of the application choice in the Apply system.
