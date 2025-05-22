@@ -9,7 +9,7 @@ FactoryBot.define do
     ukprn { Faker::Number.number(digits: 8) }
 
     after(:build) do |provider|
-      provider.accreditation_id ||= "#{provider.name.include?('University') ? 1 : 5}#{Faker::Number.unique.number(digits: 4)}"
+      provider.accreditation_id ||= "#{provider.name.include?('University') ? 1 : 5}#{Faker::Number.unique.number(digits: 3)}"
     end
 
     after(:create) do |provider|
