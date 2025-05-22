@@ -37,8 +37,10 @@ module Api
       def human_attribute_name(attr, options = {})
         if options[:base]&.record_source == Trainee::CSV_SOURCE
           attribute_mappings[attr.to_sym] || NESTED_CSV_ATTRIBUTE_NAMES[attr.to_sym]
+        elsif nested_api_attribute_name = NESTED_API_ATTRIBUTE_NAMES[attr.to_sym]
+          nested_api_attribute_name
         else
-          NESTED_API_ATTRIBUTE_NAMES[attr.to_sym] || attr.to_s
+          I18n.t("activemodel.attributes.#{model_name.i18n_key}.#{attr}", default: attr.to_s)
         end || super
       end
     end
