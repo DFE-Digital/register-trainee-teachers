@@ -24,6 +24,9 @@ feature "Deferring a trainee" do
     scenario "choosing today" do
       when_i_choose_today
       and_i_continue
+      then_i_am_redirected_to_defer_reason_page
+      when_i_enter_a_defer_reason
+      and_i_continue
       then_i_am_redirected_to_deferral_confirmation_page
       and_i_see_my_date(Time.zone.today)
       when_i_defer
@@ -241,6 +244,14 @@ feature "Deferring a trainee" do
     expect(deferral_page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date_string.blank"),
     )
+  end
+
+  def then_i_am_redirected_to_defer_reason_page
+    expect(page).to have_title("Why has the trainee deferred?")
+  end
+
+  def when_i_enter_a_defer_reason
+    fill_in "Why has the trainee deferred?", with: "She wants to see the world"
   end
 
   def then_i_am_redirected_to_deferral_confirmation_page
