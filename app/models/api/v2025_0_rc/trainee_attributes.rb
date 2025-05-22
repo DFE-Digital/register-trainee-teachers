@@ -10,6 +10,7 @@ module Api
       validate :itt_end_date_valid
 
       validates :provider_trainee_id, length: { maximum: 50 }
+      validates :application_choice_id, length: { maximum: 7 }
 
       def build_nested_models(new_attributes)
         new_attributes[:placements_attributes]&.each do |placement_params|
