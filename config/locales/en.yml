@@ -152,10 +152,12 @@ en:
   deferral_details:
     view:
       defer_date_label: Date of deferral
+      defer_reason_label: Reason for deferral
       deferred_before_itt_started: Trainee deferred before their ITT started
       itt_started_but_trainee_did_not_start: Deferral date not provided
       summary_title: Deferral details
       start_date_label: *trainee_start_date
+      no_defer_reason: Reason not given
   reinstatement_details:
     view:
       reinstated_before_starting: Trainee returned before their ITT started
@@ -477,6 +479,8 @@ en:
           show: Check withdrawal details
         deferral:
           show: When did the trainee defer?
+        deferral_reason:
+          show: Why has the trainee deferred?
         deferral_details:
           confirm: Check deferral details
         reinstatement:

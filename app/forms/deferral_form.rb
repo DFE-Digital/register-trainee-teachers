@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class DeferralForm < MultiDateForm
+  attr_accessor :defer_reason
+
   validate :date_valid, if: :requires_start_date?
 
   def itt_start_date
@@ -13,9 +15,14 @@ class DeferralForm < MultiDateForm
 
 private
 
+  def additional_fields
+    { defer_reason: trainee.defer_reason }
+  end
+
   def assign_attributes_to_trainee
     trainee.trainee_start_date = itt_start_date if itt_start_date.is_a?(Date)
     trainee.state = :deferred
+    trainee.defer_reason = defer_reason
     trainee[date_field] = date
   end
 
