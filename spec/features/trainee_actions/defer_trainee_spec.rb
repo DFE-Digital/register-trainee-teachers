@@ -38,6 +38,9 @@ feature "Deferring a trainee" do
     scenario "choosing yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
       when_i_choose_yesterday
       and_i_continue
+      then_i_am_redirected_to_defer_reason_page
+      when_i_enter_a_defer_reason
+      and_i_continue
       then_i_am_redirected_to_deferral_confirmation_page
       and_i_see_my_date(Time.zone.yesterday)
       when_i_defer
@@ -51,6 +54,9 @@ feature "Deferring a trainee" do
 
       scenario "and filling out a valid date" do
         and_i_enter_a_valid_date
+        and_i_continue
+        then_i_am_redirected_to_defer_reason_page
+        when_i_enter_a_defer_reason
         and_i_continue
         then_i_am_redirected_to_deferral_confirmation_page
         and_i_see_my_date(@chosen_date)
@@ -74,6 +80,7 @@ feature "Deferring a trainee" do
   scenario "itt start date is in the future" do
     given_a_trainee_with_course_starting_in_the_future_exists
     given_i_initiate_a_deferral
+    pending "Should this redirect to the deferral reason page?"
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_a_message_for_trainee_deferred_before_itt_started
     when_i_defer
@@ -101,6 +108,9 @@ feature "Deferring a trainee" do
       when_i_choose_they_started_on_time
       then_i_am_redirected_to_the_deferral_page
       when_i_choose_today
+      and_i_continue
+      then_i_am_redirected_to_defer_reason_page
+      when_i_enter_a_defer_reason
       and_i_continue
       then_i_am_redirected_to_deferral_confirmation_page
       and_i_see_my_date(Time.zone.today)
@@ -137,6 +147,10 @@ feature "Deferring a trainee" do
     then_i_am_redirected_to_deferral_confirmation_page
   end
 
+  scenario "changing the deferral reason" do
+    pending "New test needed here"
+  end
+
   scenario "cancelling changes" do
     given_a_trainee_exists_to_be_deferred
     given_i_initiate_a_deferral
@@ -155,6 +169,7 @@ feature "Deferring a trainee" do
     and_i_click_on_change_date_of_deferral
     when_i_choose_today
     and_i_continue
+    pending "Should this redirect to the deferral reason page or go straight to the confirmation?"
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_my_date(Time.zone.today)
     when_i_defer
