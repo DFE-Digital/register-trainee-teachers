@@ -32,11 +32,15 @@ module Api
 
       def initialize(trainee:)
         @trainee = trainee
+
         super
       end
 
       def attributes_to_save
-        attributes.symbolize_keys.except(:reasons).merge(withdrawal_reasons:)
+        attributes
+          .symbolize_keys
+          .except(:record_source, :reasons)
+          .merge(withdrawal_reasons:)
       end
 
     private
