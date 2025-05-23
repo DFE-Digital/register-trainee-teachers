@@ -146,13 +146,6 @@ class CourseDetailsForm < TraineeForm
     assign_attributes_and_stash(opts)
   end
 
-  def requires_study_mode?
-    [
-      TRAINING_ROUTE_ENUMS[:assessment_only],
-      TRAINING_ROUTE_ENUMS[:early_years_assessment_only],
-    ].exclude?(training_route)
-  end
-
 private
 
   attr_reader :training_routes_form
