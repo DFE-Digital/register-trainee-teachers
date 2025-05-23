@@ -5,6 +5,7 @@ module Trs
     include ServicePattern
 
     class PersonUpdateMissingTrn < StandardError; end
+    class PersonUpdateError < StandardError; end
 
     def initialize(trainee:)
       @trainee = trainee
@@ -40,6 +41,12 @@ module Trs
 
     def update_personal_data
       Client.put("/v3/persons/#{trainee.trn}", body: payload.to_json)
+    rescue Client::HttpError => e
+      # When error code is 10042, the person has QTS and updates to PII are not permitted
+      # We can consider this a successful completion and just return
+      return if e.message.include?('"errorCode":10042')
+
+      raise(PersonUpdateError, "Error updating personal data: #{e.message}")
     end
   end
 end
