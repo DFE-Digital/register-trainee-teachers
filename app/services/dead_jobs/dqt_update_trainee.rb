@@ -12,7 +12,7 @@ module DeadJobs
       flatten_hash(Dqt::Params::Update.new(trainee:).params.compact)
     end
 
-    # full class name to look for in Sidekiq dead jobs
+    # Full class name to look for in Sidekiq dead jobs
     def klass
       "Dqt::UpdateTraineeJob"
     end
