@@ -15,6 +15,7 @@ module DeferralDetails
     def rows
       rows = [deferral_date_row]
       rows.unshift(trainee_start_date_row) unless @omit_start_date
+      rows << trainee_defer_reason_row
       rows.compact
     end
 
@@ -40,6 +41,16 @@ module DeferralDetails
       }
     end
 
+    def trainee_defer_reason_row
+      {
+        key: t(".defer_reason_label"),
+        value: defer_reason,
+        action_href: trainee_deferral_reason_path(data_model.trainee),
+        action_text: t(:change),
+        action_visually_hidden_text: "deferral reason",
+      }
+    end
+
   private
 
     def defer_date
@@ -48,6 +59,10 @@ module DeferralDetails
       return t(".itt_started_but_trainee_did_not_start").html_safe if itt_not_yet_started?
 
       date_for_summary_view(data_model.date)
+    end
+
+    def defer_reason
+      data_model.defer_reason.presence || t(".no_defer_reason")
     end
 
     def deferred_before_itt_started?
