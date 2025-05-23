@@ -29,8 +29,10 @@ feature "Deferring a trainee" do
       and_i_continue
       then_i_am_redirected_to_deferral_confirmation_page
       and_i_see_my_date(Time.zone.today)
+      and_i_see_my_defer_reason
       when_i_defer
       then_the_defer_date_is_updated
+      and_the_defer_reason_is_updated
     end
 
     scenario "choosing yesterday", skip: skip_test_due_to_first_day_of_current_academic_year? do
@@ -228,6 +230,10 @@ feature "Deferring a trainee" do
     and_i_see_my_date(trainee.itt_start_date)
   end
 
+  def and_i_see_my_defer_reason
+    expect(page).to have_text("She wants to see the world")
+  end
+
   def then_i_see_the_error_message_for_invalid_date
     expect(deferral_page).to have_content(
       I18n.t("activemodel.errors.models.deferral_form.attributes.date.invalid"),
@@ -320,6 +326,10 @@ feature "Deferring a trainee" do
 
   def then_the_defer_date_is_updated
     expect(deferral_confirmation_page).to have_text(date_for_summary_view(trainee.reload.defer_date))
+  end
+
+  def and_the_defer_reason_is_updated
+    expect(deferral_confirmation_page).to have_text("She wants to see the world")
   end
 
   def then_the_trainee_is_deferred
