@@ -6,6 +6,9 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
   subject { described_class.new }
 
   describe "validations" do
+    it { is_expected.to validate_length_of(:provider_trainee_id).is_at_most(50) }
+    it { is_expected.to validate_length_of(:application_choice_id).is_at_most(7) }
+
     describe "sex" do
       context "when empty" do
         subject { described_class.new(sex: "") }
