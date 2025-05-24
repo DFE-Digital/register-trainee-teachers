@@ -459,7 +459,7 @@
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L37
-- field_name: Non UK degree type
+- field_name: Non-UK degree type
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
@@ -475,7 +475,7 @@
   example: 100048 for example is the design degree subject as part of a previous degree
   validation: Conditional - mandatory if specifying a degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L34
-- field_name: UK degree grade
+- field_name: Degree grade
   technical: grade
   hesa_alignment: DEGCLSS
   description: The grade of the degree.

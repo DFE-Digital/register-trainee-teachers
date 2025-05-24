@@ -42,7 +42,7 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
 
       context "when itt_aim is 202" do
         before do
-          subject.itt_aim = 202
+          subject.itt_aim = "202"
         end
 
         it { is_expected.to validate_presence_of(:itt_qualification_aim) }
@@ -50,7 +50,7 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
 
       context "when itt_aim is 201" do
         before do
-          subject.itt_aim = 201
+          subject.itt_aim = "201"
         end
 
         it { is_expected.not_to validate_presence_of(:itt_qualification_aim) }

@@ -75,19 +75,17 @@ module BulkUpdate
       end
 
       def prepare_degree_attributes(attributes)
-        return attributes if attributes[:uk_degree_type].blank? && attributes[:non_uk_degree_type].blank?
-
-        attributes["degrees_attributes"] = [
-          {
-            grade: attributes["degree_grade"],
-            subject: attributes["degree_subject"],
-            institution: attributes["degree_awarding_institution"],
-            uk_degree: attributes["uk_degree_type"],
-            graduation_year: attributes["degree_graduation_year"],
-            non_uk_degree: attributes["non_uk_degree_type"],
-            country: attributes["degree_country"],
-          },
-        ]
+        attributes[:degrees_attributes] = [
+          attributes.slice(
+            :grade,
+            :subject,
+            :institution,
+            :uk_degree,
+            :graduation_year,
+            :non_uk_degree,
+            :country,
+          ).compact,
+        ].compact_blank
       end
 
       def prepare_placement_attributes(attributes)

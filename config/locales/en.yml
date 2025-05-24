@@ -2100,6 +2100,18 @@ en:
               duplicate: &duplicate_course_subjects Course subject fields contain duplicate values
             course_subject_three:
               duplicate: *duplicate_course_subjects
+            degrees_attributes:
+              api:
+                blank: uk_degree or non_uk_degree must be entered if specifying a postgraduate training_route
+              csv:
+                blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
+        api/v20250_rc/hesa_trainee_detail_attributes:
+          attributes:
+            itt_qualification_aim:
+              api:
+                blank: must be entered if 202 selected for itt_aim
+              csv:
+                blank: must be entered if 202 selected for ITT Aim
         api/v01/hesa_trainee_detail_attributes:
           attributes:
             course_age_range:
@@ -2141,6 +2153,14 @@ en:
           attributes:
             uk_degree:
               blank: must be entered if specifying a previous UK degree
+            non_uk_degree:
+              blank: must be entered if specifying a previous non-UK degree
+            subject:
+              blank: must be entered if specifying a previous UK degree or non-UK degree
+            grade:
+              blank: must be entered if specifying a previous UK degree or non-UK degree
+            graduation_year:
+              blank: must be entered if specifying a previous UK degree or non-UK degree
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:
