@@ -27,6 +27,7 @@ Rails/NotNullColumn:
 Rails/Output:
   Exclude:
     - config/initializers/console.rb
+    - spec/**/*
 
 Rails/SkipsModelValidations:
   Enabled: false
@@ -102,3 +103,8 @@ Rails/UnknownEnv:
 Rails/CreateTableWithTimestamps:
   Exclude:
     - "db/migrate/20210108163200_install_audited.rb"
+
+Rails/Exit:
+  Exclude:
+    - spec/**/*
+
