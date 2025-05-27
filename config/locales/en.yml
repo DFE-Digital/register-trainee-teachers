@@ -1532,8 +1532,6 @@ en:
       itt_dates_form:
         itt_start_date: *itt_start_date
         itt_end_date: *itt_end_date
-      api/trainees/award_recommendation_service:
-        qts_standards_met_date: QTS standards met date
     errors:
       messages:
         future: must be in the future
