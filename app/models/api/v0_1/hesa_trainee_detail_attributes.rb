@@ -30,7 +30,7 @@ module Api
         funding_method
       ].freeze
 
-      ITT_AIM_REQUIRED_CODE = 202
+      ITT_AIM_REQUIRED_CODE = "202"
 
       ATTRIBUTES.each do |attr|
         attribute attr
