@@ -7,6 +7,7 @@ module Api
       include ActiveModel::Attributes
       include ActiveModel::Validations::Callbacks
 
+      include TrainingRouteManageable
       include PrimaryCourseSubjects
       include DateValidatable
 
@@ -92,6 +93,8 @@ module Api
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
       validate :validate_date_of_birth
+      validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
+
       validates :sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
       validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
@@ -226,7 +229,15 @@ module Api
           HesaTraineeDetailAttributes::ATTRIBUTES.include?(k.to_sym)
         } || {}
 
-        trainee_attributes = trainee_attributes.merge(hesa_trainee_detail_attributes)
+        degrees_attributes = trainee.degrees.map do |degree|
+          degree.attributes.select { |k, _v| DegreeAttributes::ATTRIBUTES.include?(k.to_sym) }
+        end || []
+
+        trainee_attributes = trainee_attributes.merge(
+          hesa_trainee_detail_attributes,
+          degrees_attributes:,
+        )
+
         trainee_attributes["sex"] = Trainee.sexes[trainee.sex]
 
         new_trainee_attributes = new(trainee_attributes)
@@ -308,6 +319,10 @@ module Api
         if itt_end_date.present? && !valid_date_string?(itt_end_date)
           errors.add(:itt_end_date, :invalid)
         end
+      end
+
+      def validate_degrees_presence
+        errors.add(:degrees_attributes, :blank) if degrees_attributes.empty?
       end
 
       def set_course_allocation_subject_id

@@ -54,7 +54,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("QTS standards met date can't be blank")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -71,7 +71,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("QTS standards met date can't be blank")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date can't be blank")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -88,7 +88,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("QTS standards met date is invalid")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date is invalid")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -105,7 +105,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("QTS standards met date must not be in the future")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date must not be in the future")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -122,7 +122,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("QTS standards met date must not be before the ITT start date")
+          expect(errors.full_messages).to contain_exactly("qts_standards_met_date must be after itt_start_date")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -139,7 +139,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Trainee state is invalid must be [trn_received]")
+          expect(errors.full_messages).to contain_exactly("state must be selected as trn_received")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end
@@ -182,7 +182,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("Trainee degree information must be completed before QTS recommendation")
+          expect(errors.full_messages).to contain_exactly("degree_id must be completed before qts_standards_met_date")
           expect(trainee.recommended_for_award?).to be(false)
         end
       end

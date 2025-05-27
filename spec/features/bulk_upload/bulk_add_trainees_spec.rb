@@ -845,7 +845,7 @@ private
   end
 
   def when_i_attach_a_file_with_invalid_rows
-    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_two_failed.csv").read
+    csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_failed.csv").read
     and_i_attach_a_file(csv)
   end
 
@@ -1161,7 +1161,7 @@ private
   end
 
   def file_with_two_failed_content
-    file_content("bulk_update/trainee_uploads/failed_with_two_failed.csv")
+    file_content("bulk_update/trainee_uploads/failed_with_failed.csv")
   end
 
   def empty_file_with_headers_content

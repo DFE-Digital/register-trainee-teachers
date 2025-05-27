@@ -2100,6 +2100,24 @@ en:
               duplicate: &duplicate_course_subjects Course subject fields contain duplicate values
             course_subject_three:
               duplicate: *duplicate_course_subjects
+            degrees_attributes:
+              api:
+                blank: uk_degree or non_uk_degree must be entered if specifying a postgraduate training_route
+              csv:
+                blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
+        api/v20250_rc/withdrawal_attributes:
+          attributes:
+            withdraw_date:
+              not_before_itt_start_date: must be after itt_start_date
+            reasons:
+              invalid: entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger
+        api/v20250_rc/hesa_trainee_detail_attributes:
+          attributes:
+            itt_qualification_aim:
+              api:
+                blank: must be entered if 202 selected for itt_aim
+              csv:
+                blank: must be entered if 202 selected for ITT Aim
         api/v01/hesa_trainee_detail_attributes:
           attributes:
             course_age_range:
@@ -2141,20 +2159,28 @@ en:
           attributes:
             uk_degree:
               blank: must be entered if specifying a previous UK degree
+            non_uk_degree:
+              blank: must be entered if specifying a previous non-UK degree
+            subject:
+              blank: must be entered if specifying a previous UK degree or non-UK degree
+            grade:
+              blank: must be entered if specifying a previous UK degree or non-UK degree
+            graduation_year:
+              blank: must be entered if specifying a previous UK degree or non-UK degree
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:
           attributes:
-            trainee:
-              state: state is invalid must be [trn_received]
-              submission_ready: submission ready is invalid must be true
-              degrees: degree information must be completed before QTS recommendation
+            degree_id:
+              invalid: must be completed before qts_standards_met_date
+            state:
+              invalid: must be selected as trn_received
             qts_standards_met_date:
-              itt_start_date: &qts_itt_start_date must not be before the ITT start date
+              itt_start_date: &qts_itt_start_date must be after itt_start_date
         api/trainees/deferral_service:
           attributes:
-            trainee:
-              state: state is invalid must be one of [submitted_for_trn, trn_received]
+            state:
+              invalid: is invalid must be one of [submitted_for_trn, trn_received]
             defer_date:
               itt_start_date: *qts_itt_start_date
   page_headings:

@@ -360,6 +360,65 @@ RSpec.describe Api::V01::TraineeAttributes do
         end
       end
     end
+
+    describe "degrees_attributes" do
+      context "when training_route is present" do
+        context "when requires_degree? is true" do
+          before do
+            subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_postgrad]
+          end
+
+          context "with empty degrees_attributes" do
+            before do
+              subject.degrees_attributes = []
+            end
+
+            it do
+              subject.validate
+
+              expect(subject.errors[:degrees_attributes]).to contain_exactly("can't be blank")
+            end
+          end
+
+          context "with present degrees_attributes" do
+            before do
+              subject.degrees_attributes = [Api::V01::DegreeAttributes.new({})]
+            end
+
+            it do
+              subject.validate
+
+              expect(subject.errors[:degrees_attributes]).not_to include("can't be blank")
+            end
+          end
+        end
+
+        context "when requires_degree? is false" do
+          before do
+            subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_undergrad]
+            subject.degrees_attributes = []
+          end
+
+          it do
+            subject.validate
+
+            expect(subject.errors[:degrees_attributes]).to be_blank
+          end
+        end
+      end
+
+      context "when training_route is not present" do
+        before do
+          subject.training_route = nil
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:degrees_attributes]).to be_blank
+        end
+      end
+    end
   end
 
   describe "nested attribute validations" do
