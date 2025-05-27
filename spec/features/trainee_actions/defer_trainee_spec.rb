@@ -80,7 +80,6 @@ feature "Deferring a trainee" do
   scenario "itt start date is in the future" do
     given_a_trainee_with_course_starting_in_the_future_exists
     given_i_initiate_a_deferral
-    pending "Should this redirect to the deferral reason page?"
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_a_message_for_trainee_deferred_before_itt_started
     when_i_defer
@@ -144,17 +143,30 @@ feature "Deferring a trainee" do
     then_i_am_redirected_to_the_deferral_page
     when_i_choose_today
     and_i_continue
-    then_i_am_redirected_to_deferral_confirmation_page
+    then_i_am_redirected_to_defer_reason_page
   end
 
   scenario "changing the deferral reason" do
-    pending "New test needed here"
+    given_a_trainee_exists_with_a_deferral_date_and_reason
+    given_i_am_on_the_deferral_confirmation_page
+    and_i_click_on_the_change_link_for_defer_reason
+    then_i_am_redirected_to_defer_reason_page
+    and_i_can_see_the_current_defer_reason
+    when_i_enter_a_new_defer_reason
+    and_i_continue
+    then_i_am_redirected_to_deferral_confirmation_page
+    and_i_can_see_the_new_defer_reason
+    when_i_defer
+    then_the_defer_reason_is_updated
   end
 
   scenario "cancelling changes" do
     given_a_trainee_exists_to_be_deferred
     given_i_initiate_a_deferral
     when_i_choose_today
+    and_i_continue
+    then_i_am_redirected_to_defer_reason_page
+    when_i_enter_a_defer_reason
     and_i_continue
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_my_date(Time.zone.today)
@@ -169,7 +181,7 @@ feature "Deferring a trainee" do
     and_i_click_on_change_date_of_deferral
     when_i_choose_today
     and_i_continue
-    pending "Should this redirect to the deferral reason page or go straight to the confirmation?"
+    pending "This should redirect straight to the confirmation"
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_my_date(Time.zone.today)
     when_i_defer
@@ -192,6 +204,10 @@ feature "Deferring a trainee" do
 
   def and_i_click_on_the_change_link_for_start_date
     deferral_confirmation_page.start_date_change_link.click
+  end
+
+  def and_i_click_on_the_change_link_for_defer_reason
+    deferral_confirmation_page.defer_reason_change_link.click
   end
 
   def when_i_choose_today
@@ -305,11 +321,24 @@ feature "Deferring a trainee" do
   end
 
   def given_a_trainee_exists_with_a_deferral_date
-    given_a_trainee_exists(:deferred,
-                           trainee_start_date: 1.month.ago,
-                           itt_start_date: 1.year.ago,
-                           itt_end_date: 1.year.from_now,
-                           defer_date: 1.week.ago)
+    given_a_trainee_exists(
+      :deferred,
+      trainee_start_date: 1.month.ago,
+      itt_start_date: 1.year.ago,
+      itt_end_date: 1.year.from_now,
+      defer_date: 1.week.ago,
+    )
+  end
+
+  def given_a_trainee_exists_with_a_deferral_date_and_reason
+    given_a_trainee_exists(
+      :deferred,
+      trainee_start_date: 1.month.ago,
+      itt_start_date: 1.year.ago,
+      itt_end_date: 1.year.from_now,
+      defer_date: 1.week.ago,
+      defer_reason: "She wants to see the world",
+    )
   end
 
   def given_a_trainee_with_course_starting_in_the_future_exists
@@ -365,5 +394,21 @@ feature "Deferring a trainee" do
 
   def and_the_defer_date_i_chose_is_cleared
     expect(trainee.defer_date).to be_nil
+  end
+
+  def and_i_can_see_the_current_defer_reason
+    expect(page).to have_field("Why has the trainee deferred?", with: "She wants to see the world")
+  end
+
+  def when_i_enter_a_new_defer_reason
+    fill_in "Why has the trainee deferred?", with: "She wants to see the moon"
+  end
+
+  def and_i_can_see_the_new_defer_reason
+    expect(page).to have_text("She wants to see the moon")
+  end
+
+  def then_the_defer_reason_is_updated
+    expect(trainee.reload.defer_reason).to eq("She wants to see the moon")
   end
 end
