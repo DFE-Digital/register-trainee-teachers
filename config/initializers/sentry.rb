@@ -14,5 +14,5 @@ Sentry.init do |config|
   config.profiles_sample_rate = 0.05
   config.release = ENV.fetch("COMMIT_SHA", nil)
 
-  config.logger.level = Logger::INFO
+  config.sdk_logger.level = Logger::INFO
 end
