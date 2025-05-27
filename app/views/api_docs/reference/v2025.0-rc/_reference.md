@@ -3833,7 +3833,11 @@ Deletes an existing degree for this trainee.
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.provider_trainee_id.maxLength</th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">50</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.application_id.maximum</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">9999999</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.trn.maxLength</th>
