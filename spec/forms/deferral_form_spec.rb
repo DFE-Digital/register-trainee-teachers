@@ -12,6 +12,7 @@ describe DeferralForm, type: :model do
       month: trainee.itt_start_date.month,
       day: trainee.itt_start_date.day,
       date_string: "other",
+      defer_reason: "just not ready",
     }
   end
 
