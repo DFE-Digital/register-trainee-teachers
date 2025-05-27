@@ -12,4 +12,5 @@ module "domains" {
   null_host_header      = try(each.value.null_host_header, false)
   cached_paths          = try(each.value.cached_paths, [])
   redirect_rules        = try(each.value.redirect_rules, null)
+  rate_limit            = try(var.rate_limit, null)
 }
