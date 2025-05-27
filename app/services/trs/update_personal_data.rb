@@ -7,6 +7,12 @@ module Trs
     class PersonUpdateMissingTrn < StandardError; end
     class PersonUpdateError < StandardError; end
 
+    # Error codes that indicate TRS disallows PII updates to the record.
+    # When these errors occur, we can consider the update a successful completion.
+    # 10041: Updates to PII data is not permitted.
+    # 10042: Updates to PII data is not permitted. Person has QTS.
+    IGNORABLE_ERROR_CODES = [10041, 10042].freeze
+
     def initialize(trainee:)
       @trainee = trainee
       @payload = Params::PersonalData.new(trainee:)
@@ -42,11 +48,14 @@ module Trs
     def update_personal_data
       Client.put("/v3/persons/#{trainee.trn}", body: payload.to_json)
     rescue Client::HttpError => e
-      # When error code is 10042, the person has QTS and updates to PII are not permitted
-      # We can consider this a successful completion and just return
-      return if e.message.include?('"errorCode":10042')
+      return if ignorable_error?(e.message)
 
       raise(PersonUpdateError, "Error updating personal data: #{e.message}")
+    end
+
+    def ignorable_error?(error_message)
+      error_code_pattern = /"errorCode":(#{IGNORABLE_ERROR_CODES.join('|')})/
+      error_message.match?(error_code_pattern)
     end
   end
 end

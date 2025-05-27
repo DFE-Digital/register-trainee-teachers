@@ -95,6 +95,29 @@ module Trs
         end
       end
 
+      context "when TRS returns error code 10041 (PII updates not permitted)" do
+        let(:error_body) do
+          {
+            title: "Updates to PII data is not permitted.",
+            status: 400,
+            detail: "",
+            errorCode: 10041,
+          }.to_json
+        end
+
+        before do
+          allow(Trs::Client).to receive(:put).and_raise(
+            Trs::Client::HttpError.new("status: 400, body: #{error_body}, headers: {}"),
+          )
+        end
+
+        it "completes successfully without raising an error" do
+          expect {
+            described_class.call(trainee:)
+          }.not_to raise_error
+        end
+      end
+
       context "when TRS returns a different error code" do
         let(:error_body) do
           {
