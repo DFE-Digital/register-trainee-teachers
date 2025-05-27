@@ -4,6 +4,8 @@ class AddFundingRulesFor202526 < ActiveRecord::Migration[7.2]
   def change
     academic_cycle = AcademicCycle.for_year(2025)
 
+    return if academic_cycle.nil?
+
     BURSARIES_2025_TO_2026.each do |b|
       bursary = FundingMethod.find_or_create_by!(
         training_route: b.training_route,
