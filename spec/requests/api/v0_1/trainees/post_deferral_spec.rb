@@ -54,11 +54,11 @@ RSpec.describe "POST /trainees/{trainee_id}/defer" do
       expect(response.parsed_body[:errors]).to contain_exactly(
         {
           "error" => "UnprocessableEntity",
-          "message" => "Defer date can't be blank",
+          "message" => "defer_date can't be blank",
         },
         {
           "error" => "UnprocessableEntity",
-          "message" => "Defer reason is too long (maximum is 500 characters)",
+          "message" => "defer_reason is too long (maximum is 500 characters)",
         },
       )
 
