@@ -176,12 +176,11 @@ feature "Deferring a trainee" do
   end
 
   scenario "changing the deferral date" do
-    given_a_trainee_exists_with_a_deferral_date
+    given_a_trainee_exists_with_a_deferral_date_and_reason
     and_i_am_on_the_trainee_record_page
     and_i_click_on_change_date_of_deferral
     when_i_choose_today
     and_i_continue
-    pending "This should redirect straight to the confirmation"
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_my_date(Time.zone.today)
     when_i_defer
