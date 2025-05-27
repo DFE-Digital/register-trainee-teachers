@@ -4,7 +4,7 @@ module DeadJobs
   class DqtWithdrawTrainee < Base
   private
 
-    # full class name to look for in Sidekiq dead jobs
+    # Full class name to look for in Sidekiq dead jobs
     def klass
       "Dqt::WithdrawTraineeJob"
     end

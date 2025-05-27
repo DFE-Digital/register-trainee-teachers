@@ -65,10 +65,79 @@ module Trs
           )
         end
 
-        it "allows the error to propagate" do
+        it "raises a PersonUpdateError" do
           expect {
             described_class.call(trainee:)
-          }.to raise_error(Trs::Client::HttpError)
+          }.to raise_error(described_class::PersonUpdateError)
+        end
+      end
+
+      context "when TRS returns error code 10042 (PII updates not permitted)" do
+        let(:error_body) do
+          {
+            title: "Updates to PII data is not permitted. Person has QTS.",
+            status: 400,
+            detail: "",
+            errorCode: 10042,
+          }.to_json
+        end
+
+        before do
+          allow(Trs::Client).to receive(:put).and_raise(
+            Trs::Client::HttpError.new("status: 400, body: #{error_body}, headers: {}"),
+          )
+        end
+
+        it "completes successfully without raising an error" do
+          expect {
+            described_class.call(trainee:)
+          }.not_to raise_error
+        end
+      end
+
+      context "when TRS returns error code 10041 (PII updates not permitted)" do
+        let(:error_body) do
+          {
+            title: "Updates to PII data is not permitted.",
+            status: 400,
+            detail: "",
+            errorCode: 10041,
+          }.to_json
+        end
+
+        before do
+          allow(Trs::Client).to receive(:put).and_raise(
+            Trs::Client::HttpError.new("status: 400, body: #{error_body}, headers: {}"),
+          )
+        end
+
+        it "completes successfully without raising an error" do
+          expect {
+            described_class.call(trainee:)
+          }.not_to raise_error
+        end
+      end
+
+      context "when TRS returns a different error code" do
+        let(:error_body) do
+          {
+            title: "Bad Request",
+            status: 400,
+            detail: "Invalid data",
+            errorCode: 12345,
+          }.to_json
+        end
+
+        before do
+          allow(Trs::Client).to receive(:put).and_raise(
+            Trs::Client::HttpError.new("status: 400, body: #{error_body}, headers: {}"),
+          )
+        end
+
+        it "raises a PersonUpdateError" do
+          expect {
+            described_class.call(trainee:)
+          }.to raise_error(described_class::PersonUpdateError)
         end
       end
     end
