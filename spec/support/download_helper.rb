@@ -11,6 +11,11 @@ module DownloadHelper
     downloads.first
   end
 
+  def download_filename
+    wait_for_download
+    File.basename(download)
+  end
+
   def download_content
     wait_for_download
     File.read(download)
