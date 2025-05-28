@@ -1166,11 +1166,11 @@ private
   end
 
   def parsed_file_with_two_failed_content
-    CSV.parse(file_with_two_failed_content, headers: true).map(&:to_h)
+    CSV.parse(file_with_two_failed_content, headers: true, nil_value: "").map(&:to_h)
   end
 
   def parsed_download_content
-    CSV.parse(download_content, headers: true).map(&:to_h)
+    CSV.parse(download_content, headers: true, nil_value: "").map(&:to_h)
   end
 
   def file_with_two_failed_content
