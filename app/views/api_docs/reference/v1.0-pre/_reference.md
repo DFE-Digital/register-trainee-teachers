@@ -3836,8 +3836,8 @@ Deletes an existing degree for this trainee.
       <td class="govuk-table__cell govuk-table__cell--numeric">50</td>
     </tr>
     <tr class="govuk-table__row">
-      <th scope="row" class="govuk-table__header">Trainee.properties.application_id.maximum</th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">9999999</td>
+      <th scope="row" class="govuk-table__header">Trainee.properties.application_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">7</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.trn.maxLength</th>
