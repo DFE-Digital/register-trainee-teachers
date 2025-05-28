@@ -14,7 +14,7 @@ data "azurerm_key_vault_secret" "infra_secrets" {
 }
 
 data "azurerm_key_vault_secret" "ab_secrets" {
-  count = var.airbyte_enabled ? 1 : 0
+  count = var.airbyte_db_config ? 1 : 0
 
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = var.key_vault_ab_secret_name
