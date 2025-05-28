@@ -103,6 +103,8 @@ variable "use_airbyte" { default = false }
 
 variable "airbyte_db_config" { default = false }
 
+variable "pg_airbyte_enabled" { default = false }
+
 variable "repl_password" {
   type        = string
   description = "Password of the replication user"

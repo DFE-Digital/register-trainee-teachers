@@ -45,7 +45,7 @@ module "postgres" {
   config_short          = var.config_short
   service_name          = var.service_name
 
-  use_airbyte      = var.airbyte_enabled
+  use_airbyte      = var.pg_airbyte_enabled
 
   cluster_configuration_map = module.cluster_data.configuration_map
 

@@ -187,7 +187,7 @@ locals {
 
   name_suffix = var.name != null ? "-${var.name}" : ""
 
-  template_variable_map = var.airbyte_enabled ? {
+  template_variable_map = var.airbyte_db_config ? {
     repl_password  = local.ab_secrets.repl_password
     database_name  = module.postgres.name
   } : {}
@@ -204,7 +204,7 @@ locals {
 
 #  ab_db_config_sql      = var.airbyte_db_config ? file("workspace-variables/airbyte-db-config.sql") : null
   connection_streams = var.airbyte_enabled ? file("workspace-variables/${var.app_environment}_streams.json") : null
-  ab_secrets         = var.airbyte_enabled ? yamldecode(data.azurerm_key_vault_secret.ab_secrets[0].value) : null
+  ab_secrets         = var.airbyte_db_config ? yamldecode(data.azurerm_key_vault_secret.ab_secrets[0].value) : null
   sqlCommand         = var.airbyte_db_config ? templatefile("${path.module}/workspace-variables/airbyte.sql.tmpl", local.template_variable_map) : null
   curlCommand        = var.airbyte_enabled ? templatefile("${path.module}/workspace-variables/airbyte.curl.tmpl", local.template_variable_map_curl) : null
   secret_hash        = var.airbyte_db_config ? substr(sha1("${local.sqlCommand}"),0,12) : null
