@@ -7,7 +7,7 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
     it "generates a CSV with the correct headers and no rows" do
-      generated_csv = CSV.generate do |csv|
+      generated_csv = CSV.generate(quote_char: '"', force_quotes: true) do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
@@ -22,7 +22,7 @@ describe Reports::BulkTraineeUploadReport do
     let(:original_csv_data) { CSV.parse(trainee_upload.file.download, headers: true) }
 
     it "generates a CSV with 'Validation results' and 'Errors' column" do
-      generated_csv = CSV.generate do |csv|
+      generated_csv = CSV.generate(quote_char: '"', force_quotes: true) do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
@@ -42,7 +42,7 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :failed_with_validation_errors) }
 
     it "generates a CSV with 'Validation results' and 'Errors' column" do
-      generated_csv = CSV.generate do |csv|
+      generated_csv = CSV.generate(quote_char: '"', force_quotes: true) do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
