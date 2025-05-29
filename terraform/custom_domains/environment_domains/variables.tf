@@ -18,3 +18,16 @@ variable "latency_threshold" {
 variable "percent_5xx_threshold" {
   default = 15
 }
+
+variable "rate_limit" {
+  type = list(object({
+    agent        = optional(string)
+    priority     = optional(number)
+    duration     = optional(number)
+    limit        = optional(number)
+    selector     = optional(string)
+    operator     = optional(string)
+    match_values = optional(string)
+  }))
+  default = null
+}
