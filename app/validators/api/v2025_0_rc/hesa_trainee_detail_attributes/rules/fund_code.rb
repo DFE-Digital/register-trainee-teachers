@@ -6,6 +6,7 @@ module Api
       module Rules
         class FundCode < Api::Rules::Base
           include DateValidatable
+          include Api::Rules::AcademicCyclable
 
           FUND_CODE       = "7"
           AGE_RANGE_CODES = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys.freeze
@@ -33,18 +34,6 @@ module Api
             ::FundingMethod.where(
               academic_cycle_id: academic_cycle.id,
             ).pluck(:training_route).uniq
-          end
-
-          def academic_cycle
-            @academic_cycle ||= start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.zone.now + ::Trainees::SetAcademicCycles::DEFAULT_CYCLE_OFFSET)
-          end
-
-          def start_date
-            value = trainee_attributes.trainee_start_date || trainee_attributes.itt_start_date
-            if value.is_a?(String)
-              value = valid_date_string?(value) ? Date.iso8601(value) : nil
-            end
-            value
           end
         end
       end
