@@ -3,7 +3,7 @@
   technical: provider_trainee_id
   hesa_alignment: OWNSTU
   description: Provider’s own internal identifier for the student.
-  format: 20 character max length
+  format: 50 character max length
   example: '"99157234"'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/training_details_form.rb#L7
@@ -13,6 +13,8 @@
   description:
     Unique Application ID, also called Application Number, used by the
     Department for Education’s apply for teacher training online service.
+  format: |-
+    Limited to 7 digit numbers.
   format: integer
   example: "123456"
   validation: Optional - but should be included for all trainees with an application in the Apply service

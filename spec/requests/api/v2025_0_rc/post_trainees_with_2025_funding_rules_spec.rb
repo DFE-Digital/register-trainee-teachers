@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe "`POST /api/v2025.0-rc/trainees` endpoint" do
+describe "`POST /api/v2025.0-rc/trainees` endpoint", time_sensitive: true do
   let(:token) { "trainee_token" }
   let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
 
@@ -66,9 +66,15 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     }
   end
 
-  before do
+  # rubocop:disable RSpec/BeforeAfterAll
+  before(:all) do
     Rails.application.load_seed
   end
+
+  after(:all) do
+    Rake::Task["db:truncate_all"].invoke
+  end
+  # rubocop:enable RSpec/BeforeAfterAll
 
   context "when the request is valid" do
     it "creates a trainee" do

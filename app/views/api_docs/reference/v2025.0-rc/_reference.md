@@ -3057,7 +3057,7 @@ Deletes an existing degree for this trainee.
     <dt class="govuk-summary-list__key"><code>provider_trainee_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 20 characters)
+        string (limited to 50 characters)
       </p>
       <p class="govuk-body">
         The unique ID of the trainee in the Provider’s student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider’s own identifier for student field</a>.
@@ -3833,7 +3833,11 @@ Deletes an existing degree for this trainee.
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.provider_trainee_id.maxLength</th>
-      <td class="govuk-table__cell govuk-table__cell--numeric">20</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">50</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Trainee.properties.application_id.maxLength</th>
+      <td class="govuk-table__cell govuk-table__cell--numeric">7</td>
     </tr>
     <tr class="govuk-table__row">
       <th scope="row" class="govuk-table__header">Trainee.properties.trn.maxLength</th>

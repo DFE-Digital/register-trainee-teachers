@@ -102,7 +102,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     it "sets the correct course_min_age and course_max_age" do
       course_min_age, course_max_age = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range]
 
-      post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response.parsed_body[:data][:course_min_age]).to eq(course_min_age)
       expect(response.parsed_body[:data][:course_max_age]).to eq(course_max_age)
@@ -180,8 +180,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       expect(degree.country).to be_nil
     end
 
-    context :"with a non UK degree" do
-      context "when valid"  do
+    context "with a non UK degree" do
+      context "when valid" do
         let(:degrees_attributes) do
           [
             {
@@ -241,6 +241,74 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
             "subject must be entered if specifying a previous UK degree or non-UK degree",
             "graduation_year must be entered if specifying a previous UK degree or non-UK degree",
           )
+        end
+      end
+    end
+
+    context "with provider_trainee_id" do
+      let(:params) do
+        {
+          data: data.merge(
+            provider_trainee_id:,
+          ),
+        }
+      end
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      context "when valid" do
+        let(:provider_trainee_id) { Faker::Number.number(digits: 50).to_s }
+
+        it "sets the correct provider_trainee_id" do
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body[:data][:provider_trainee_id]).to eq(provider_trainee_id)
+
+          expect(Trainee.last.provider_trainee_id).to eq(provider_trainee_id)
+        end
+      end
+
+      context "when invalid" do
+        let(:provider_trainee_id) { Faker::Number.number(digits: 51).to_s }
+
+        it "returns errors" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("provider_trainee_id is too long (maximum is 50 characters)")
+        end
+      end
+    end
+
+    context "with application_id" do
+      let(:params) do
+        {
+          data: data.merge(
+            application_id:,
+          ),
+        }
+      end
+
+      before do
+        post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+      end
+
+      context "when valid" do
+        let(:application_id) { Faker::Number.number(digits: 7) }
+
+        it "sets the correct application_id" do
+          expect(response).to have_http_status(:created)
+          expect(response.parsed_body[:data][:application_id]).to eq(application_id)
+
+          expect(Trainee.last.application_choice_id).to eq(application_id)
+        end
+      end
+
+      context "when invalid" do
+        let(:application_id) { Faker::Number.number(digits: 8) }
+
+        it "returns errors" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly("application_id is too long (maximum is 7 characters)")
         end
       end
     end
@@ -540,7 +608,6 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       placement_attributes = response.parsed_body[:data][:placements]&.first
-
       expect(placement_attributes[:school_id]).to be_nil
       expect(placement_attributes[:name]).to eq("Establishment does not have a URN")
       expect(placement_attributes[:urn]).to eq("900020")
