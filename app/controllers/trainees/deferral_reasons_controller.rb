@@ -2,8 +2,6 @@
 
 module Trainees
   class DeferralReasonsController < BaseController
-    before_action :redirect_to_confirm_deferral, if: -> { trainee.starts_course_in_the_future? }
-
     def show
       @deferral_form = DeferralForm.new(trainee)
     end

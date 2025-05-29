@@ -80,6 +80,9 @@ feature "Deferring a trainee" do
   scenario "itt start date is in the future" do
     given_a_trainee_with_course_starting_in_the_future_exists
     given_i_initiate_a_deferral
+    then_i_am_redirected_to_defer_reason_page
+    when_i_enter_a_defer_reason
+    and_i_continue
     then_i_am_redirected_to_deferral_confirmation_page
     and_i_see_a_message_for_trainee_deferred_before_itt_started
     when_i_defer
