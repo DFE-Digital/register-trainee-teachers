@@ -18,3 +18,10 @@ SELECT EXISTS(SELECT 1 FROM pg_replication_slots WHERE slot_name = 'airbyte_slot
  SELECT * FROM pg_create_logical_replication_slot('airbyte_slot', 'pgoutput');
  ALTER ROLE CURRENT_USER WITH NOREPLICATION;
 \endif
+\set publication_exists false
+SELECT EXISTS(SELECT 1 FROM pg_publication WHERE pubname = 'airbyte_publication') AS publication_exists \gset
+\if :publication_exists
+ \echo 'Publication "airbyte_publication" already exists.'
+\else
+ CREATE PUBLICATION airbyte_publication FOR ALL TABLES;
+\endif
