@@ -6,13 +6,34 @@ require "rails_helper"
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode do
   subject { described_class }
 
+  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
+  let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2025) }
+  let(:trainee_start_date) { Date.new(2025, 10, 1).iso8601 }
+
   let(:hesa_trainee_detail_attributes) do
     Api::V20250Rc::HesaTraineeDetailAttributes.new(
       { trainee_attributes:, fund_code:, course_age_range: },
       record_source: "api",
     )
   end
-  let(:trainee_attributes) { Api::V20250Rc::TraineeAttributes.new(training_route:) }
+  let(:trainee_attributes) { Api::V20250Rc::TraineeAttributes.new(training_route:, trainee_start_date:) }
+
+  before do
+    %w[
+      provider_led_postgrad
+      provider_led_undergrad
+      school_direct_tuition_fee
+      school_direct_salaried
+      opt_in_undergrad
+    ].each do |training_route|
+      create(
+        :funding_method,
+        training_route: training_route,
+        funding_type: :bursary,
+        academic_cycle: academic_cycle,
+      )
+    end
+  end
 
   describe "::valid?" do
     context "when the fund_code != 7" do
