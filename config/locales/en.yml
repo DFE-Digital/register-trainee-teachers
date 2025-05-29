@@ -1718,6 +1718,8 @@ en:
               blank: Enter a deferral date
               invalid: Enter a valid deferral date
               not_before_itt_start_date: &not_before_itt_start_date The date must not be before the ITT start date
+            defer_reason:
+              too_long: Deferral reason is too long (maximum is %{count} characters)
         degrees_form:
           attributes:
             degree_ids:

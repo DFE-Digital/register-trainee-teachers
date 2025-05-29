@@ -3,7 +3,10 @@
 class DeferralForm < MultiDateForm
   attr_accessor :defer_reason
 
+  MAX_DEFER_REASON_LENGTH = 500
+
   validate :date_valid, if: :requires_start_date?
+  validates :defer_reason, length: { maximum: MAX_DEFER_REASON_LENGTH }
 
   def itt_start_date
     return if itt_not_yet_started?
