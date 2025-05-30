@@ -30,10 +30,6 @@ module Trainees
       redirect_to(trainee_confirm_deferral_path(trainee))
     end
 
-    def redirect_to_deferral_reason
-      redirect_to(trainee_deferral_reason_path(trainee))
-    end
-
     def authorize_trainee
       authorize(trainee, :defer?)
     end
