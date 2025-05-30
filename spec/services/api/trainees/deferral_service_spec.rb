@@ -33,8 +33,8 @@ RSpec.describe Api::Trainees::DeferralService do
         subject.call(params, trainee)
       end
 
-      context "with a defer_reason <= 500 characters" do
-        let(:defer_reason) { Faker::Lorem.characters(number: 500) }
+      context "with a defer_reason <= #{DeferralForm::MAX_DEFER_REASON_LENGTH} characters" do
+        let(:defer_reason) { Faker::Lorem.characters(number: DeferralForm::MAX_DEFER_REASON_LENGTH) }
 
         it "returns true" do
           success, errors = subject.call(params.merge(defer_reason:), trainee)
@@ -103,11 +103,11 @@ RSpec.describe Api::Trainees::DeferralService do
         end
       end
 
-      context "when the defer_reason is > 500 characters" do
+      context "when the defer_reason is > #{DeferralForm::MAX_DEFER_REASON_LENGTH} characters" do
         let(:params) do
           {
             defer_date: Time.zone.today.iso8601,
-            defer_reason: Faker::Lorem.characters(number: 501),
+            defer_reason: Faker::Lorem.characters(number: DeferralForm::MAX_DEFER_REASON_LENGTH + 1),
           }
         end
 
@@ -115,7 +115,7 @@ RSpec.describe Api::Trainees::DeferralService do
           success, errors = subject.call(params, trainee)
 
           expect(success).to be(false)
-          expect(errors.full_messages).to contain_exactly("defer_reason is too long (maximum is 500 characters)")
+          expect(errors.full_messages).to contain_exactly("defer_reason is too long (maximum is #{DeferralForm::MAX_DEFER_REASON_LENGTH} characters)")
           expect(trainee.deferred?).to be(false)
         end
       end

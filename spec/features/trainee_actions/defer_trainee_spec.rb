@@ -25,6 +25,10 @@ feature "Deferring a trainee" do
       when_i_choose_today
       and_i_continue
       then_i_am_redirected_to_defer_reason_page
+      when_i_enter_an_invalid_defer_reason
+      and_i_continue
+      then_i_am_redirected_to_defer_reason_page
+      and_i_see_a_validation_error_for_defer_reason_length
       when_i_enter_a_defer_reason
       and_i_continue
       then_i_am_redirected_to_deferral_confirmation_page
@@ -291,6 +295,14 @@ feature "Deferring a trainee" do
 
   def when_i_enter_a_defer_reason
     fill_in "Why has the trainee deferred?", with: "She wants to see the world"
+  end
+
+  def when_i_enter_an_invalid_defer_reason
+    fill_in "Why has the trainee deferred?", with: Faker::Lorem.characters(number: DeferralForm::MAX_DEFER_REASON_LENGTH + 1)
+  end
+
+  def and_i_see_a_validation_error_for_defer_reason_length
+    expect(page).to have_content("Deferral reason is too long (maximum is #{DeferralForm::MAX_DEFER_REASON_LENGTH} characters)")
   end
 
   def then_i_am_redirected_to_deferral_confirmation_page
