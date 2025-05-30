@@ -6,7 +6,7 @@ module Api
       extend ActiveSupport::Concern
 
       def academic_cycle
-        @academic_cycle ||= start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.zone.now + ::Trainees::SetAcademicCycles::DEFAULT_CYCLE_OFFSET)
+        @academic_cycle ||= start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.current + ::Trainees::SetAcademicCycles::DEFAULT_CYCLE_OFFSET)
       end
 
       def start_date
