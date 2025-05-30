@@ -1,22 +1,164 @@
 ---
-title: GOV.UK Documentation Example
-description: Example of a documentation homepage
-old_paths:
- - /something/old-as-well.html
+title: Register API documentation
 ---
 
-# Hello, World!
+# Register API documentation
 
-## Edit Me!
+This is API documentation for the Department for Education (DfE)’s Register
+trainee teachers (Register) service.
 
-Open `source/documentation/index.md` in your favourite text editor and start editing!
+The Register API is replacing the HESA service for teacher trainees from the
+2025/26 collection cycle. All vendors of student record systems (SRS) and some
+training providers will need to make changes to integrate with Register.
 
-You can write content in [Markdown](https://daringfireball.net/projects/markdown/) using **all** of the _usual_ syntax that you're used to!
+## What this API is for
 
-To change the title of the page or include additional files you'll need to edit `source/index.html.md.erb`.
+The Register API allows providers to import trainee records from their student
+record systems and to keep those records synchronised as they are modified.
 
-If you want slightly more control, you can always use <strong>HTML</strong>.
+Providers can use the API for:
 
-For more detail and troubleshooting, take a look at the `README.md` file in the root of this project.
+- looking up a trainee record in Register and returning details about that trainee.
+- retrieving a list of trainee records in Register for a given academic year.
+- creating new trainee records.
+- updating individual trainee records.
+- withdrawing and deferring a trainee.
 
-<%= warning_text "Look out! A warning!" %>
+## How do I connect to this API?
+
+### Authentication and authorisation
+
+Requests to the API must be accompanied by an authentication token.
+
+Each token is associated with a single provider. It will grant access to
+trainee records registered by that provider. You can get a token by writing to
+[registertraineeteachers@education.gov.uk](mailto:registertraineeteachers@education.gov.uk).
+
+For instructions on how to authenticate see the [API reference](/api-docs/reference#authentication).
+
+## Design principles
+
+### Trainee identifiers
+Trainees are identified in the API by an internally generated unique `id`
+value. The API uses the `id` to specify a particular trainee record. For
+example, the API endpoint that updates a single trainee record requires that
+`id` value as part of its URL.
+
+For example, the following request updates the trainee record identified by `id` value
+`gQGecNYwLCqPMTgzW7N2bURi`.
+
+```
+PUT https://www.register-trainee-teachers.service.gov.uk/api/v1.0-pre/trainees/gQGecNYwLCqPMTgzW7N2bURi
+```
+
+You can obtain `id` values from the following request which returns the list of
+trainees for the current provider:
+
+```
+GET https://www.register-trainee-teachers.service.gov.uk/api/v1.0-pre/trainees
+```
+
+Alternatively an `id` value is given as part of the response to a request to create a new trainee record:
+
+```
+POST https://www.register-trainee-teachers.service.gov.uk/api/v1.0-pre/trainees
+```
+
+## Reference data and data encoding
+Trainee records have a number of attributes that refer to reference data of
+various sorts. For example, we record the nationality of trainees.
+
+This section provides guidance on how those attributes are serialised in the
+requests and responses processed by the API.
+
+### Dates
+All dates and datetimes in the API specification are intended to be [ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html)
+compliant.
+
+### Nationalities
+Nationality is expressed as an [ISO 3166-2](https://www.iso.org/iso-3166-country-codes.html) country code.
+
+### Degrees
+A list of valid values for the subject, degree type, institution and grade
+attributes can be obtained from the reference data endpoint. Details are
+provided in the [API reference](/api-docs/reference).
+
+### Placements
+Placement schools are identified by their URN (unique reference number).
+
+## API versioning strategy
+
+When we provide new features through the API, we sometimes make changes that
+require you to update student record systems.
+
+We give a new number to the new version of the API. The change of version
+number shows whether we’ve made breaking or non-breaking changes to the API.
+
+### Breaking changes
+
+Breaking changes usually involve modifying or deleting parts of the API, such as:
+
+-  removing features
+-  removing fields
+-  changing the behaviour of endpoints, for example requiring a new parameter
+   in order for applications to be synced
+
+You must update student record systems before you move to a new version with
+breaking changes.
+
+### Non-breaking changes
+
+When we make non-breaking changes the API remains ‘backward compatible’. This
+means that the changes do not affect the existing functionality of the API.
+
+Non-breaking changes include adding new:
+
+-  endpoints, for example to allow individual conditions to be marked as met or
+   not met
+-  nested resources and objects, for example details of interviews
+-  fields, for example when candidates are asked a new question
+-  optional query parameters, for example to allow optional pagination when
+   applications are synced
+
+You do not need to update student record systems before moving to a new version
+with non-breaking changes. You only need to make updates if you want to use the
+version’s new features.
+
+### How the API version number reflects the changes we’ve made
+
+We use the format major.minor (for example, `1.2`) to indicate the API version.
+
+The first number indicates a major version. This is incremented each time
+breaking changes are made, for example `1.2` changes to `2.0`.
+
+The number after the decimal point indicates a minor version. This is
+incremented each time non-breaking changes are made, for example `1.2` changes to
+`1.3`.
+
+Changes are documented in our [release notes](/api-docs/release-notes).
+
+### Using the correct version of the API
+
+When an API version is officially released, minor version updates will be made
+available:
+
+- on their own minor version URL, for example `v1.1`
+- on a major version URL which does not indicate a minor version, for example `v1`
+
+This means that if you use the major version URL, you do not need to update student
+record systems every time we make a minor update.
+
+For example, after version 1.1 is released you can use:
+
+- <https://www.register-trainee-teachers.service.gov.uk/api/v1.0> for version `1.0`
+- <https://www.register-trainee-teachers.service.gov.uk/api/v1.1> for version `1.1`
+- <https://www.register-trainee-teachers.service.gov.uk/api/v1> for version `1.1` - but
+if version `1.2` is released then this URL will give you version `1.2` instead
+
+## Testing
+
+To get familiar with our system and perform testing, you can use
+[our sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
+
+You will need an [authentication token](/api-docs/reference#authentication)
+for the sandbox environment. These will be provided by the Register team.
