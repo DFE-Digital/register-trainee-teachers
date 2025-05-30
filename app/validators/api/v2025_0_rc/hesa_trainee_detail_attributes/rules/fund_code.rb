@@ -5,14 +5,11 @@ module Api
     class HesaTraineeDetailAttributes
       module Rules
         class FundCode < Api::Rules::Base
+          include DateValidatable
+          include Api::Rules::AcademicCyclable
+
           FUND_CODE       = "7"
           AGE_RANGE_CODES = DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.keys.freeze
-          TRAINING_ROUTES = %w[
-            provider_led_postgrad
-            provider_led_undergrad
-            school_direct_tuition_fee
-            school_direct_salaried
-          ].freeze
 
           attr_reader :hesa_trainee_detail_attributes
 
@@ -28,7 +25,15 @@ module Api
           def call
             return true if fund_code != FUND_CODE || training_route.nil?
 
-            training_route.in?(TRAINING_ROUTES) && course_age_range.in?(AGE_RANGE_CODES)
+            training_route.in?(funded_training_routes) && course_age_range.in?(AGE_RANGE_CODES)
+          end
+
+        private
+
+          def funded_training_routes
+            ::FundingMethod.where(
+              academic_cycle_id: academic_cycle.id,
+            ).pluck(:training_route).uniq
           end
         end
       end
