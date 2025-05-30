@@ -9,15 +9,6 @@ phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
-  Documentation: /
-  Expired page: /expired-page.html
-  Expired with owner: /expired-page-with-owner.html
-  Not expired page: /not-expired-page.html
-  Single page nav: /single-page-nav.html
-
-footer_links:
-  Accessibility: /hidden-page.html
-  Hidden Page: /hidden-page.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id:
@@ -44,11 +35,6 @@ show_contribution_banner: true
 
 github_repo: alphagov/example-repo
 github_branch: source
-
-redirects:
-  /something/old.html: /index.html
-
-api_path: source/pets.yml
 
 # Optional global settings for the page review process
 owner_slack_workspace: gds
