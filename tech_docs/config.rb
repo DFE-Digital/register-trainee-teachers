@@ -8,5 +8,7 @@ proxy "/a-proxied-page.html", "templates/proxy_template.html", locals: {
   title: "I am a title",
 }
 
-activate :relative_assets
 set :relative_links, true
+
+activate :relative_assets
+activate :directory_indexes
