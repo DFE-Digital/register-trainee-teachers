@@ -1,5 +1,5 @@
 # Host to use for canonical URL generation (without trailing slash)
-host: https://docs.example.com
+host: https://register-pr-5320.test.teacherservices.cloud
 
 # Header-related options
 show_govuk_logo: true
