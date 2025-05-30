@@ -29,6 +29,7 @@
 /node_modules
 /public/assets
 /public/system
+/public/docs
 /tags
 /yarn-error.log
 /vendor/cache
