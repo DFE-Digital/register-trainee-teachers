@@ -5,4 +5,3 @@ GovukTechDocs.configure(self)
 set :relative_links, true
 
 activate :relative_assets
-activate :directory_indexes
