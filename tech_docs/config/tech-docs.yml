@@ -27,7 +27,7 @@ max_toc_heading_level: 6
 # Prevent robots from indexing (e.g. whilst in development)
 prevent_indexing: false
 
-google_site_verification: dstbao8TVS^DRVDS&rv76
+google_site_verification:
 
 enable_search: true
 
