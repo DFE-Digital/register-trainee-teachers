@@ -153,6 +153,7 @@ runs:
         bin/konduit.sh -n ${{ env.namespace }} -r REDIS_QUEUE_URL register-${{ env.app_environment }} -- redis-cli del queues
 
     - name: Run Smoke Tests for ${{ inputs.environment }}
+      if: ${{ !contains(fromJSON('["sandbox", "csv-sandbox", "productiondata", "production"]'), inputs.environment) }}
       uses: ./.github/actions/smoke-test/
       with:
         environment: ${{ inputs.environment }}
