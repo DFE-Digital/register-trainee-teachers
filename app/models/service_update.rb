@@ -5,7 +5,7 @@ class ServiceUpdate
 
   include ActiveModel::Model
 
-  attr_accessor :date, :title, :content, :slug
+  attr_accessor :date, :title, :content, :slug, :summary
 
   def id
     title.parameterize

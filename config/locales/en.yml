@@ -109,6 +109,7 @@ en:
     index:
       heading: News and updates
       related_links: Related links
+      publication_year: Publication year
     show:
       heading: News and updates
       related_links: Related links

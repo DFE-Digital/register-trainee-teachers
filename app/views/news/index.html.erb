@@ -9,12 +9,26 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
+    <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-    <ul class="govuk-list app-list--dash govuk-!-margin-bottom-8 govuk-!-margin-left-3">
-      <% @news_articles.each do |article| %>
-        <li><a class="govuk-link" href="<%= news_path(article.slug) %>"><%= article.title %></a></li>
-      <% end %>
-    </ul>
+    <% @news_articles.each do |article| %>
+      <section id="<%= article.id %>">
+        <h2 class="govuk-heading">
+          <a class="govuk-link" href="<%= news_path(article.slug) %>">
+            <%= article.title %>
+          </a>
+        </h2>
+        <p class="govuk-body"><%= article.summary %></p>
+        <p class="govuk-body"><span class="govuk-caption-m"><%= article.date.to_date.strftime("%e %B %Y") %></span></p>
+        <hr class="govuk-section-break govuk-section-break--visible">
+      </section>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third-from-desktop govuk-!-padding-top-2" style="border-top: 2px solid #1d70b8">
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2"><%= t("news.index.publication_year") %></h2>
+    <p><%= govuk_link_to "2025", news_index_path %></p>
+    <p><%= govuk_link_to "2024", news_index_path %></p>
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-2"><%= t("news.index.related_links") %></h2>
+    <%= govuk_link_to "Get help using Register", guidance_path %>
   </div>
 </div>
