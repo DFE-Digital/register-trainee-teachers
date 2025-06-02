@@ -257,6 +257,7 @@ PLATFORMS
 
 DEPENDENCIES
   govuk_tech_docs
+  middleman-livereload
 
 BUNDLED WITH
    2.5.3
