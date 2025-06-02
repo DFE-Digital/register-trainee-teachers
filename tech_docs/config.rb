@@ -6,3 +6,7 @@ set :relative_links, true
 
 activate :relative_assets
 activate :asset_hash
+
+configure :build do
+  activate :minify_css
+end
