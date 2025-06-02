@@ -101,6 +101,7 @@ GEM
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
     hashie (3.6.0)
+    htmlcompressor (0.2.0)
     http_parser.rb (0.8.0)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -154,6 +155,9 @@ GEM
       em-websocket (~> 0.5.1)
       middleman-core (>= 3.3)
       rack-livereload (~> 0.3.15)
+    middleman-minify-html (3.4.1)
+      htmlcompressor (~> 0.2.0)
+      middleman-core (>= 3.2)
     middleman-search-gds (0.11.2)
       execjs (~> 2.6)
       middleman-core (>= 3.2)
@@ -258,6 +262,7 @@ PLATFORMS
 DEPENDENCIES
   govuk_tech_docs
   middleman-livereload
+  middleman-minify-html
 
 BUNDLED WITH
    2.5.3

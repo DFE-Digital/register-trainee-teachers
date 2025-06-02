@@ -9,4 +9,5 @@ activate :asset_hash
 
 configure :build do
   activate :minify_css
+  activate :minify_html
 end
