@@ -245,6 +245,8 @@ Rails.application.routes.draw do
 
   resources :service_updates, only: %i[index], path: "service-updates"
 
+  resources :news, only: %i[index show], path: "news"
+
   resources :organisations, only: %i[index show], path: "organisations"
 
   resource :organisation_settings, only: :show, path: "organisation-settings"

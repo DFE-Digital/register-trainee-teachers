@@ -105,6 +105,13 @@ en:
       email_line_one: Contact
       email_subject: Funding
       email_line_two: if you think there should be trainees who are eligible.
+  news:
+    index:
+      heading: News and updates
+      related_links: Related links
+    show:
+      heading: News and updates
+      related_links: Related links
   schools:
     view:
       summary_title: Training partners
@@ -382,6 +389,7 @@ en:
           lead_partner_payment_schedule: Upload lead partner funding payments
           provider_trainee_summary: Upload provider funding payments
           provider_payment_schedule: Upload provider funding payments
+      news: News and updates
       pending_trns:
         index: Trainees Pending TRN
       otp:

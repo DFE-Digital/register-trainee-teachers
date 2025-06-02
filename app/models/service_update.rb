@@ -5,7 +5,7 @@ class ServiceUpdate
 
   include ActiveModel::Model
 
-  attr_accessor :date, :title, :content
+  attr_accessor :date, :title, :content, :slug
 
   def id
     title.parameterize
@@ -21,5 +21,10 @@ class ServiceUpdate
     recent_updates = all.select { |service_update| service_update.date > 1.month.ago }
 
     recent_updates[0, 2]
+  end
+
+  def self.find(id)
+    # TODO: Raise ActiveRecord::NotFound if id not found?
+    all.find { |service_update| service_update.id == id }
   end
 end

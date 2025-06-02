@@ -1,5 +1,6 @@
 - date: '2025-04-25'
   title: Funding updates for the 2025 to 2026 academic year
+  slug: funding-updates-2025-2026
   content: |
     Initial teacher training (ITT) funding for the academic year 2025 to 2026
 
@@ -124,6 +125,7 @@
     </table>
 - date: '2025-04-24'
   title: Teacher degree apprenticeship (TDA) training route
+  slug: teacher-degree-apprenticeship-tda-training-route
   content: |
     Some ITT providers have been selected to offer a new teacher degree apprenticeship in the academic year 2025 to 2026.
 
@@ -216,6 +218,7 @@
     For more information go to  <a class='govuk-link' href="https://www.gov.uk/guidance/offer-a-teacher-degree-apprenticeship">https://www.gov.uk/guidance/offer-a-teacher-degree-apprenticeship</a>.
 - date: '2025-03-01'
   title: Changes to trainee data fields for the 2025 to 2026 academic year
+  slug: changes-to-trainee-data-fields-2025-2026
   content: |
     These are changes to the trainee data fields when submitting directly to Register via the ‘Bulk add new trainees’ CSV template or the API, for the upcoming 2025 to 2026 academic year.
 
@@ -230,6 +233,7 @@
       </ul>
 - date: '2024-07-18'
   title: Updating how you recommend trainees for qualified teacher status (QTS) or early years teacher status (EYTS)
+  slug: updating-how-you-recommend-trainees-for-qts-eyts
   content: |
     We’ve updated the way you recommend trainees for QTS or EYTS in Register trainee teachers (Register).
 
@@ -241,6 +245,7 @@
 
 - date: '2023-11-29'
   title: Get ready to submit your school placements data in Register
+  slug: get-ready-to-submit-your-school-placements-data-in-register
   content: |
     You’ll be asked to include school placement data in the next performance profiles sign off in Register.
 
@@ -281,6 +286,7 @@
 
 - date: '2023-10-05'
   title: Access previous funding information
+  slug: access-previous-funding-information
   content: |
     You can now view and download funding information from previous academic years in Register.
 
@@ -304,6 +310,7 @@
 
 - date: '2023-09-11'
   title: Submit ITT trainee data through HESA
+  slug: submit-itt-trainee-data-through-hesa
   content: |
     The 2023/24 HESA data collection system is now open.
 
@@ -315,6 +322,7 @@
 
 - date: '2023-08-04'
   title: Create draft trainee records in Register for the 2023 to 2024 academic year
+  slug: create-draft-trainee-records-in-register-for-2023-2024
   content: |
     SCITTs, and HEIs with trainees that do not go through HESA, can now start creating draft trainee records in Register for the 2023 to 2024 academic year. You can either register your trainees immediately or wait, and register them closer to the start of their course.
 
@@ -322,6 +330,7 @@
 
 - date: '2023-07-17'
   title: Include reasons for withdrawal in Register
+  slug: include-reasons-for-withdrawal-in-register
   content: |
     Training providers can now include further detail on why ITT trainees choose to withdraw from their course.
 
@@ -331,6 +340,7 @@
 
 - date: '2023-06-05'
   title: Bulk recommend trainees for QTS or EYTS
+  slug: bulk-recommend-trainees-for-qts-eyts
   content: |
     You can now recommend multiple trainees at the same time for QTS or EYTS.
 
@@ -338,6 +348,7 @@
 
 - date: '2023-06-02'
   title: This service has replaced the TRA initial teacher training provider portal
+  slug: this-service-has-replaced-the-tra-initial-teacher-training-provider-portal
   content: |
     Higher education institutions (HEIs) must now use this service instead of the provider portal to:
       <ul>
