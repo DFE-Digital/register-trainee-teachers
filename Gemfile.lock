@@ -125,7 +125,7 @@ GEM
     auto_strip_attributes (2.6.0)
       activerecord (>= 4.0)
     awesome_print (1.9.2)
-    azure-blob (0.5.8)
+    azure-blob (0.5.9)
       rexml
     base32 (0.3.4)
     base64 (0.3.0)
