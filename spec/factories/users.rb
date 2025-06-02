@@ -14,6 +14,10 @@ FactoryBot.define do
       providers { [build(:provider, :hei)] }
     end
 
+    trait :scitt do
+      providers { [build(:provider, :scitt)] }
+    end
+
     trait :system_admin do
       providers { [] }
       system_admin { true }

@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "create a new authentication token" do
   background do
-    given_i_am_authenticated
+    given_i_am_authenticated_as_an_hei_provider_user
     and_i_can_generate_an_authentication_token
   end
 
@@ -12,7 +12,7 @@ feature "create a new authentication token" do
   let(:expires_at) { Date.new(Date.current.year + 1, 12, 31) }
 
   scenario "when the feature flag is off I cannot access the create token form", feature_token_management: false do
-    given_i_am_authenticated
+    given_i_am_authenticated_as_an_hei_provider_user
     and_i_can_generate_an_authentication_token
 
     when_i_navigate_to_the_create_authentication_token_page
@@ -38,7 +38,7 @@ feature "create a new authentication token" do
   end
 
   scenario "when the feature flag is on I can create a token", feature_token_management: true do
-    given_i_am_authenticated
+    given_i_am_authenticated_as_an_hei_provider_user
     and_i_can_generate_an_authentication_token
 
     given_i_navigate_to_the_authentication_token_index_page

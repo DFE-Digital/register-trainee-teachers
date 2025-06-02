@@ -4,7 +4,7 @@ require "rails_helper"
 
 feature "revoke an authentication token" do
   scenario "when the feature flag is on I can revoke a token", feature_token_management: true do
-    given_i_am_authenticated
+    given_i_am_authenticated_as_an_hei_provider_user
     and_i_have_generated_a_token
 
     given_i_navigate_to_the_authentication_token_index_page
@@ -18,7 +18,7 @@ feature "revoke an authentication token" do
   end
 
   scenario "when the feature flag is on I cannot revoke a token twice", feature_token_management: true do
-    given_i_am_authenticated
+    given_i_am_authenticated_as_an_hei_provider_user
     and_i_have_generated_a_token
 
     given_i_navigate_to_the_authentication_token_index_page
