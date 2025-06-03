@@ -26,6 +26,19 @@ RSpec.describe Api::V01::TraineeAttributes do
         )
     }
 
+    describe "email" do
+      context "with uppercase TLD" do
+        before do
+          subject.email = "valid@example.COM"
+        end
+
+        it "is valid" do
+          subject.validate
+          expect(subject.errors[:email]).to be_empty
+        end
+      end
+    end
+
     describe "sex" do
       context "when empty" do
         subject { described_class.new(sex: "") }

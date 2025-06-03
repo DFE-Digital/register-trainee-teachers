@@ -17,6 +17,14 @@ describe EmailFormatValidator do
     end
   end
 
+  context "with uppercase TLD" do
+    let(:email) { "valid@example.COM" }
+
+    it "does not add errors" do
+      expect(subject).to be_valid
+    end
+  end
+
   context "with an invalid email" do
     error_test = "error test"
 
