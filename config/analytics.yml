@@ -314,6 +314,16 @@ shared:
     - error_type
     - message
     - error_type
+  :news_articles:
+    - id
+    - created_at
+    - updated_at
+    - title
+    - slug
+    - summary
+    - content
+    - published
+    - published_at
   :placements:
     - id
     - trainee_id
