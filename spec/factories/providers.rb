@@ -6,10 +6,25 @@ FactoryBot.define do
       "Provider #{n}"
     end
     code { Faker::Alphanumeric.alphanumeric(number: 3).upcase }
-    ukprn { Faker::Number.number(digits: 8) }
+    ukprn { Faker::Number.unique.number(digits: 8) }
 
     after(:build) do |provider|
-      provider.accreditation_id ||= "#{provider.name.include?('University') ? 1 : 5}#{Faker::Number.unique.number(digits: 3)}"
+      counter = 0
+
+      loop do
+        raise StandardError, "Retry limit exceeded" if counter == 3
+
+        number           = Faker::Number.number(digits: 3)
+        accreditation_id = "#{provider.name.include?('University') ? 1 : 5}#{number}"
+
+        if Provider.exists?(accreditation_id:)
+          counter += 1
+        else
+          provider.accreditation_id ||= accreditation_id
+
+          break
+        end
+      end
     end
 
     after(:create) do |provider|

@@ -55,6 +55,20 @@
 Find out more on <%= govuk_link_to("Register’s news and updates", service_updates_path) %> about any changes to trainee data fields when submitting trainee data directly to Register via the API or 'Bulk add new trainees' CSV template, for the upcoming 2025 to 2026 academic year.
 </p>
 
+<h2 class="govuk-heading-m">Version</h2>
+
+<p class="govuk-body">
+  <%= BulkUpdate::BulkAddTraineesUploadForm::VERSION %>
+</p>
+
+<h2 class="govuk-heading-m">CSV release notes</h2>
+
+<h3 class="govuk-heading-s">v2025.0 - 3 June 2025</h3>
+
+<p class="govuk-body">
+  This is the 2025.0 version of the CSV bulk add new trainee guidance. This version is not yet live but is available for testing.
+</p>
+
 <h2 class="govuk-heading-m">Contents</h2>
 
 <%= render CsvFields::View.new %>

@@ -2,6 +2,8 @@
 
 module BulkUpdate
   class BulkAddTraineesUploadForm
+    VERSION = "v2025.0"
+
     attr_reader :provider, :file, :upload
 
     include ActiveModel::Model
@@ -60,7 +62,7 @@ module BulkUpdate
     end
 
     def build_upload
-      BulkUpdate::TraineeUpload.new
+      BulkUpdate::TraineeUpload.new(version: VERSION)
     end
   end
 end

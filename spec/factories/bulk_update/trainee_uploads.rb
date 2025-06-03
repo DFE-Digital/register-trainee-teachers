@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :bulk_update_trainee_upload, class: "BulkUpdate::TraineeUpload" do
     provider
+    version { BulkUpdate::BulkAddTraineesUploadForm::VERSION }
 
     after(:build) do |upload|
       file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees.csv").open

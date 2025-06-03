@@ -8,6 +8,7 @@
 #  number_of_trainees :integer          default(0), not null
 #  status             :string           default("uploaded")
 #  submitted_at       :datetime
+#  version            :string           not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  provider_id        :bigint           not null
