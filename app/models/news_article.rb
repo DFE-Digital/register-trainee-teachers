@@ -22,4 +22,8 @@ class NewsArticle < ApplicationRecord
   validates :title, presence: true
   validates :content, presence: true
   validates :summary, presence: true
+
+  def date
+    published_at
+  end
 end
