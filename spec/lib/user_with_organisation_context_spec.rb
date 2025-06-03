@@ -300,4 +300,42 @@ describe UserWithOrganisationContext do
       it { is_expected.to be false }
     end
   end
+
+  describe "#accredited_hei_provider?" do
+    subject { described_class.new(user:, session:).accredited_hei_provider? }
+
+    context "when the organisation is a provider" do
+      context "and the provider is an accredited HEI" do
+        let(:provider) { create(:provider, :hei) }
+
+        it { is_expected.to be true }
+
+        it "is accredited" do
+          expect(provider.accredited).to be true
+        end
+      end
+
+      context "and the provider is an unaccredited HEI" do
+        let(:provider) { create(:provider, :hei, :unaccredited) }
+
+        it { is_expected.to be false }
+
+        it "is accredited" do
+          expect(provider.accredited).to be false
+        end
+      end
+
+      context "and the provider is not a HEI" do
+        let(:provider) { create(:provider, :scitt) }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    context "when the organisation is a lead partner" do
+      let(:user) { create(:user, id: 1, first_name: "Dave", lead_partners: [lead_partner]) }
+
+      it { is_expected.to be false }
+    end
+  end
 end

@@ -71,6 +71,10 @@ class UserWithOrganisationContext < SimpleDelegator
     provider? && organisation.hei?
   end
 
+  def accredited_hei_provider?
+    accredited_provider? && organisation.hei?
+  end
+
 private
 
   attr_reader :session
