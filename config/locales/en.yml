@@ -2122,6 +2122,8 @@ en:
           attributes:
             course_age_range:
               inclusion: *invalid_reference_data
+            fund_code:
+              ineligible: is not valid for this trainee
             funding_method:
               inclusion: *invalid_reference_data
               ineligible: is not valid for this trainee
