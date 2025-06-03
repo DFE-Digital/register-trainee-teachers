@@ -13,6 +13,10 @@ class AuthenticationTokensController < ApplicationController
     authorize(tokens)
   end
 
+  def show
+    authorize(AuthenticationToken.find(params[:id]))
+  end
+
   def new
     authorize(AuthenticationToken)
 

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe AuthenticationToken do
-  let(:user) { create(:user, :with_multiple_organisations) }
+  let(:user) { create(:user, :hei) }
   let(:provider) { user.providers.first }
 
   it do

@@ -3,7 +3,7 @@
 module BulkUpdate
   class TraineeUploadPolicy < TraineeUploads::BasePolicy
     def new?
-      user.hei_provider?
+      user.accredited_hei_provider?
     end
 
     def create?

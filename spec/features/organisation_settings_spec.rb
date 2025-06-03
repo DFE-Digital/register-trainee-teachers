@@ -34,6 +34,17 @@ feature "Organisation details" do
       when_i_click_on_back_link
       then_i_see_the_root_page
     end
+  end
+
+  context "when a User belongs to an HEI Provider organisation" do
+    let(:organisation) { create(:provider, :hei) }
+    let(:user) { create(:user, providers: [organisation]) }
+    let(:provider) { organisation }
+
+    let!(:user_one) { create(:user, providers: [organisation]) }
+    let!(:user_two) { create(:user, providers: [organisation]) }
+    let!(:user_three) { create(:user) }
+    let!(:discarded_user) { create(:user, providers: [organisation], discarded_at: 1.day.ago) }
 
     scenario "a user views the token management page", feature_token_management: true, js: true do
       when_i_click_on_the_organisation_settings_link

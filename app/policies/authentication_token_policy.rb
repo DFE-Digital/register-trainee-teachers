@@ -11,7 +11,7 @@ class AuthenticationTokenPolicy
     end
 
     def resolve
-      return scope.none unless user.provider?
+      return scope.none unless user.accredited_hei_provider?
 
       scope.where(provider_id: user.organisation.id)
     end
@@ -26,22 +26,22 @@ class AuthenticationTokenPolicy
   end
 
   def index?
-    user.provider?
+    user.accredited_hei_provider?
   end
 
   def new?
-    user.provider?
+    user.accredited_hei_provider?
   end
 
   def create?
-    user.provider?
+    user.accredited_hei_provider?
   end
 
   def show?
-    user.provider? && token.can_revoke?
+    user.accredited_hei_provider? && token.can_revoke?
   end
 
   def update?
-    user.provider? && token.can_revoke?
+    user.accredited_hei_provider? && token.can_revoke?
   end
 end

@@ -5,12 +5,21 @@ require "rails_helper"
 RSpec.describe AuthenticationTokenPolicy, type: :policy do
   subject { described_class }
 
-  context "when the User belongs to a Provider" do
-    let(:provider_user) { create(:user) }
+  context "when the User belongs to an HEI Provider" do
+    let(:provider_user) { create(:user, :hei) }
     let(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
     permissions :index?, :create?, :new? do
       it { is_expected.to permit(provider_user_context) }
+    end
+  end
+
+  context "when the User belongs to a SCITT Provider" do
+    let(:provider_user) { create(:user, :scitt) }
+    let(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
+
+    permissions :index?, :create?, :new? do
+      it { is_expected.not_to permit(provider_user_context) }
     end
   end
 
@@ -33,8 +42,8 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
   end
 
   describe described_class::Scope do
-    context "when the User is a Provider" do
-      let!(:provider_user) { create(:user) }
+    context "when the User is an HEI Provider" do
+      let!(:provider_user) { create(:user, :hei) }
       let!(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
       let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: provider_user_context.organisation) }
@@ -47,6 +56,20 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
       end
     end
 
+    context "when the User is a SCITT Provider" do
+      let!(:provider_user) { create(:user, :scitt) }
+      let!(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
+
+      let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: provider_user_context.organisation) }
+      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
+
+      subject { described_class.new(provider_user_context, AuthenticationToken) }
+
+      it "returns empty" do
+        expect(subject.resolve).to be_empty
+      end
+    end
+
     context "when the User is a Lead Partner Provider" do
       let!(:lead_partner) { create(:lead_partner, :hei) }
       let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
@@ -54,8 +77,8 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
         UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
       }
 
-      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
       let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: lead_partner_user_context.organisation.provider) }
+      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
 
       subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
 
@@ -71,8 +94,8 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
         UserWithOrganisationContext.new(user: lead_partner_user, session: { current_organisation: { type: "LeadPartner", id: lead_partner.id } })
       }
 
-      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
       let!(:provider_user_authentication_tokens) { create_list(:authentication_token, 2, provider: lead_partner_user.providers.take) }
+      let!(:other_provider_user_authentication_tokens) { create_list(:authentication_token, 2) }
 
       subject { described_class.new(lead_partner_user_context, AuthenticationToken) }
 
