@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_11_083352) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_03_000433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -771,6 +771,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_11_083352) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_nationalities_on_name", unique: true
+  end
+
+  create_table "news_articles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.string "summary", null: false
+    t.text "content", null: false
+    t.boolean "published", default: false, null: false
+    t.datetime "published_at"
+    t.index ["slug"], name: "index_news_articles_on_slug", unique: true
   end
 
   create_table "placements", force: :cascade do |t|
