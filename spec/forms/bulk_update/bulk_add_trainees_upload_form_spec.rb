@@ -29,7 +29,7 @@ module BulkUpdate
 
     let(:content_type) { "text/csv" }
 
-    it { expect(described_class::VERSION).to eq("2025.0") }
+    it { expect(described_class::VERSION).to eq("v2025.0") }
 
     context "when file is missing" do
       let(:file) { nil }
@@ -83,7 +83,7 @@ module BulkUpdate
         upload = BulkUpdate::TraineeUpload.last
 
         expect(upload).to be_uploaded
-        expect(upload.version).to eq("2025.0")
+        expect(upload.version).to eq("v2025.0")
         expect(upload.provider).to eq(provider)
         expect(upload.file.download).to eq(test_file_contents)
         expect(upload.number_of_trainees).to be(2)
@@ -102,7 +102,7 @@ module BulkUpdate
         upload = BulkUpdate::TraineeUpload.last
 
         expect(upload).to be_uploaded
-        expect(upload.version).to eq("2025.0")
+        expect(upload.version).to eq("v2025.0")
         expect(upload.provider).to eq(provider)
         expect(upload.file.download).to eq(test_file_contents)
         expect(upload.number_of_trainees).to be(2)

@@ -2,7 +2,7 @@
 
 module BulkUpdate
   class BulkAddTraineesUploadForm
-    VERSION = "2025.0"
+    VERSION = "v2025.0"
 
     attr_reader :provider, :file, :upload
 

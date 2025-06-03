@@ -6,7 +6,7 @@ class AddVersionToBulkUpdateTraineeUpload < ActiveRecord::Migration[7.2]
 
     reversible do |dir|
       dir.up do
-        BulkUpdate::TraineeUpload.update_all(version: "2025.0")
+        BulkUpdate::TraineeUpload.update_all(version: "v2025.0")
 
         safety_assured do
           change_column_null :bulk_update_trainee_uploads, :version, false
