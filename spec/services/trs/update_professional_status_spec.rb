@@ -59,13 +59,13 @@ module Trs
             title: "Route to professional status already awarded.",
             status: 400,
             detail: "",
-            errorCode: 10052
+            errorCode: 10052,
           }.to_json
         end
 
         before do
           allow(Client).to receive(:put).and_raise(
-            Client::HttpError.new("status: 400, body: #{error_body}, headers: {}")
+            Client::HttpError.new("status: 400, body: #{error_body}, headers: {}"),
           )
         end
 
@@ -85,13 +85,13 @@ module Trs
             title: "Bad Request",
             status: 400,
             detail: "Some other error",
-            errorCode: 12345
+            errorCode: 12345,
           }.to_json
         end
 
         before do
           allow(Client).to receive(:put).and_raise(
-            Client::HttpError.new("status: 400, body: #{error_body}, headers: {}")
+            Client::HttpError.new("status: 400, body: #{error_body}, headers: {}"),
           )
         end
 
