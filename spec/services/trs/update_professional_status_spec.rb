@@ -52,6 +52,53 @@ module Trs
           subject
         end
       end
+
+      context "when TRS responds with 'already awarded' error" do
+        let(:error_body) do
+          {
+            title: "Route to professional status already awarded.",
+            status: 400,
+            detail: "",
+            errorCode: 10052
+          }.to_json
+        end
+
+        before do
+          allow(Client).to receive(:put).and_raise(
+            Client::HttpError.new("status: 400, body: #{error_body}, headers: {}")
+          )
+        end
+
+        it "ignores the error and returns an empty hash" do
+          expect(subject).to eq({})
+        end
+
+        it "logs the ignored error" do
+          expect(Rails.logger).to receive(:info).with(/Ignoring TRS error for trainee/)
+          subject
+        end
+      end
+
+      context "when TRS responds with a different error" do
+        let(:error_body) do
+          {
+            title: "Bad Request",
+            status: 400,
+            detail: "Some other error",
+            errorCode: 12345
+          }.to_json
+        end
+
+        before do
+          allow(Client).to receive(:put).and_raise(
+            Client::HttpError.new("status: 400, body: #{error_body}, headers: {}")
+          )
+        end
+
+        it "raises a ProfessionalStatusUpdateError" do
+          expect { subject }.to raise_error(UpdateProfessionalStatus::ProfessionalStatusUpdateError)
+        end
+      end
     end
   end
 end
