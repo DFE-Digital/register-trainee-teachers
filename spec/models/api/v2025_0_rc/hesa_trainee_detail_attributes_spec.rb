@@ -21,8 +21,9 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
         let(:course_subject_one) { "mathematics" }
         let(:trainee_attributes) do
           Api::V20250Rc::TraineeAttributes.new(
-            training_route: "provider_led_postgrad",
+            training_route: :provider_led_postgrad,
             course_subject_one: course_subject_one,
+            fund_code: Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode::FUND_CODE,
           )
         end
 
@@ -66,6 +67,25 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
               expect(subject.errors[:funding_method]).to be_present
             end
           end
+        end
+      end
+    end
+
+    describe "fund_code" do
+      let(:trainee_attributes) do
+        Api::V20250Rc::TraineeAttributes.new(
+          training_route: :provider_led_postgrad,
+          course_subject_one: "mathematics",
+          fund_code: Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode::FUND_CODE,
+        )
+      end
+
+      subject { described_class.new({ trainee_attributes: trainee_attributes, funding_method: "D", fund_code: "7" }, record_source: "api") }
+
+      context "for an unfunded training route" do
+        it "fund_code should NOT be valid" do
+          subject.validate
+          expect(subject.errors[:fund_code]).to include("is not valid for this trainee")
         end
       end
     end
