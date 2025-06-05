@@ -88,6 +88,10 @@ describe DeferralForm, type: :model do
 
       it_behaves_like "date is not before itt start date", :deferral_form
     end
+
+    describe "defer_reason" do
+      it { is_expected.to validate_length_of(:defer_reason).is_at_most(500).with_message("Deferral reason is too long (maximum is 500 characters)") }
+    end
   end
 
   describe "#fields" do
