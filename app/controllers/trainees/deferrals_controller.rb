@@ -2,7 +2,7 @@
 
 module Trainees
   class DeferralsController < BaseController
-    before_action :redirect_to_confirm_deferral, if: -> { trainee.starts_course_in_the_future? }
+    before_action :redirect_to_defer_reason, if: -> { trainee.starts_course_in_the_future? }
 
     def show
       @deferral_form = DeferralForm.new(trainee)
@@ -13,7 +13,7 @@ module Trainees
       @deferral_form = DeferralForm.new(trainee, params: trainee_params, user: current_user)
 
       if @deferral_form.stash
-        redirect_to_confirm_deferral
+        redirect_after_update
       else
         render(:show)
       end
@@ -29,8 +29,16 @@ module Trainees
         end
     end
 
+    def redirect_after_update
+      @deferral_form.defer_reason.present? ? redirect_to_confirm_deferral : redirect_to_defer_reason
+    end
+
     def redirect_to_confirm_deferral
       redirect_to(trainee_confirm_deferral_path(trainee))
+    end
+
+    def redirect_to_defer_reason
+      redirect_to(trainee_deferral_reason_path(trainee))
     end
 
     def redirect_to_start_date_selection

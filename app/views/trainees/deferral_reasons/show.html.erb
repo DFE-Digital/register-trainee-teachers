@@ -1,0 +1,33 @@
+<%= render PageTitle::View.new(i18n_key: "trainees.deferral_reason.show", has_errors: @deferral_form.errors.present?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render DynamicBackLink::View.new(@trainee, text: t(:back), consider_confirm_page: false) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(
+      model: @deferral_form,
+      url: trainee_deferral_reason_path(@trainee),
+      local: true,
+    ) do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <span class="govuk-caption-l">
+        <%= trainee_name(@trainee) %>
+      </span>
+
+      <%= f.govuk_text_area(
+        :defer_reason,
+        label: { text: "Why has the trainee deferred?", size: "l" },
+        hint: { text: "Your answer will help us better understand deferral reasons and inform policy with the aim to increase trainee retention." },
+        rows: 6,
+        max_chars: 500,
+      ) %>
+
+      <%= f.govuk_submit %>
+    <% end %>
+  </div>
+</div>
+
+<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(@trainee)) %></p>

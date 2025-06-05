@@ -38,7 +38,7 @@ private
       day: trainee_attribute&.day,
       month: trainee_attribute&.month,
       year: trainee_attribute&.year,
-    }.merge(additional_fields).merge(new_attributes.slice(:day, :month, :year, :date_string))
+    }.merge(additional_fields).merge(new_attributes.slice(:day, :month, :year, :date_string, *additional_fields.keys))
   end
 
   def date_field

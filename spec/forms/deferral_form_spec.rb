@@ -12,6 +12,7 @@ describe DeferralForm, type: :model do
       month: trainee.itt_start_date.month,
       day: trainee.itt_start_date.day,
       date_string: "other",
+      defer_reason: "just not ready",
     }
   end
 
@@ -86,6 +87,10 @@ describe DeferralForm, type: :model do
       end
 
       it_behaves_like "date is not before itt start date", :deferral_form
+    end
+
+    describe "defer_reason" do
+      it { is_expected.to validate_length_of(:defer_reason).is_at_most(500).with_message("Deferral reason is too long (maximum is 500 characters)") }
     end
   end
 
