@@ -2123,10 +2123,10 @@ en:
             course_age_range:
               inclusion: *invalid_reference_data
             fund_code:
-              ineligible: is not valid for this trainee
+              ineligible: &ineligible is not valid for this trainee
             funding_method:
               inclusion: *invalid_reference_data
-              ineligible: is not valid for this trainee
+              ineligible: *ineligible
             itt_aim:
               inclusion: *invalid_reference_data
             itt_qualification_aim:
