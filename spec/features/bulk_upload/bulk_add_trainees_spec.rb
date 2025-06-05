@@ -10,9 +10,14 @@ feature "bulk add trainees" do
   before do
     and_there_is_a_current_academic_cycle
     and_there_is_a_previous_academic_cycle
+    and_we_are_at_least_one_month_into_the_academic_cycle
     and_there_is_a_nationality
     and_there_are_disabilities
     and_there_are_funding_rules
+  end
+
+  def and_we_are_at_least_one_month_into_the_academic_cycle
+    Timecop.travel([AcademicCycle.current.start_date + 1.month, Time.zone.today].max)
   end
 
   def and_there_are_funding_rules
@@ -1188,7 +1193,7 @@ private
     @upload3 = create(:bulk_update_trainee_upload, :succeeded, created_at: 15.days.ago, provider: current_user.organisation)
     @upload4 = create(:bulk_update_trainee_upload, :failed, created_at: 16.days.ago, provider: current_user.organisation)
     @upload2 = create(:bulk_update_trainee_upload, :succeeded, created_at: 5.days.ago, provider: current_user.organisation)
-    @upload5 = create(:bulk_update_trainee_upload, :succeeded, created_at: 5.weeks.ago, provider: current_user.organisation)
+    @upload5 = create(:bulk_update_trainee_upload, :succeeded, created_at: 3.weeks.ago, provider: current_user.organisation)
     @upload1 = create(:bulk_update_trainee_upload, :pending, created_at: 5.minutes.ago, provider: current_user.organisation)
   end
 
