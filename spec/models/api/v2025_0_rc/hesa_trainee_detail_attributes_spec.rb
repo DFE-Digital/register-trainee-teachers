@@ -85,7 +85,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
       context "for an unfunded training route" do
         it "fund_code should NOT be valid" do
           subject.validate
-          expect(subject.errors[:fund_code]).to be_present
+          expect(subject.errors[:fund_code]).to include("is not valid for this trainee")
         end
       end
     end
