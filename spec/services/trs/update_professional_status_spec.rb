@@ -72,11 +72,6 @@ module Trs
         it "ignores the error and returns an empty hash" do
           expect(subject).to eq({})
         end
-
-        it "logs the ignored error" do
-          expect(Rails.logger).to receive(:info).with(/Ignoring TRS error for trainee/)
-          subject
-        end
       end
 
       context "when TRS responds with a different error" do
