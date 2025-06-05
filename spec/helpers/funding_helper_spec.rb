@@ -65,16 +65,17 @@ describe FundingHelper do
       before do
         allow(Settings).to receive(:current_recruitment_cycle_year).and_return(2026)
 
-        # Allow const_defined? to be called with any arguments but return false specifically for 2026-2027
+        # Allow const_defined? to be called with any arguments but return false for all year constants
         allow(Object).to receive(:const_defined?).and_call_original
         allow(Object).to receive(:const_defined?).with("TRAINING_INITIATIVES_2026_TO_2027").and_return(false)
+        allow(Object).to receive(:const_defined?).with("TRAINING_INITIATIVES_2025_TO_2026").and_return(false)
+        allow(Object).to receive(:const_defined?).with("TRAINING_INITIATIVES_2024_TO_2025").and_return(false)
       end
 
-      it "uses the initiatives from the most recent available year" do
-        # The method should return the 2025-2026 initiatives since 2026-2027 doesn't exist
-        result = available_training_initiatives_for_cycle
-
-        expect(result).to eq(TRAINING_INITIATIVES_2025_TO_2026)
+      it "raises an error" do
+        expect {
+          available_training_initiatives_for_cycle
+        }.to raise_error("No training initiatives found for any academic year between 2024 and 2026")
       end
     end
   end
