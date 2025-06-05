@@ -17,7 +17,7 @@ module Api
       attr_reader :trainee
 
       validates :defer_date, presence: true, date: true
-      validates :defer_reason, length: { maximum: 500 }
+      validates :defer_reason, length: { maximum: DeferralForm::MAX_DEFER_REASON_LENGTH }
 
       validates_with DeferralValidator
 
