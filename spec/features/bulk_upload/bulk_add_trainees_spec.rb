@@ -10,9 +10,14 @@ feature "bulk add trainees" do
   before do
     and_there_is_a_current_academic_cycle
     and_there_is_a_previous_academic_cycle
+    and_we_are_at_least_one_month_into_the_academic_cycle
     and_there_is_a_nationality
     and_there_are_disabilities
     and_there_are_funding_rules
+  end
+
+  def and_we_are_at_least_one_month_into_the_academic_cycle
+    Timecop.travel([AcademicCycle.current.start_date + 1.month, Time.zone.today].max)
   end
 
   def and_there_are_funding_rules
@@ -511,6 +516,13 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_errors_page
+      end
+
+      scenario "when I view a list of previous uploads" do
+        when_there_are_multiple_uploads
+        and_i_visit_the_bulk_update_index_page
+        and_i_click_on_view_status_of_uploaded_trainee_files
+        then_i_see_the_uploads_in_descending_historical_order
       end
     end
 
@@ -1175,6 +1187,19 @@ private
 
   def and_i_click_the_cancel_process_link
     click_on "Cancel bulk upload"
+  end
+
+  def when_there_are_multiple_uploads
+    @upload3 = create(:bulk_update_trainee_upload, :succeeded, created_at: 15.days.ago, provider: current_user.organisation)
+    @upload4 = create(:bulk_update_trainee_upload, :failed, created_at: 16.days.ago, provider: current_user.organisation)
+    @upload2 = create(:bulk_update_trainee_upload, :succeeded, created_at: 5.days.ago, provider: current_user.organisation)
+    @upload5 = create(:bulk_update_trainee_upload, :succeeded, created_at: 3.weeks.ago, provider: current_user.organisation)
+    @upload1 = create(:bulk_update_trainee_upload, :pending, created_at: 5.minutes.ago, provider: current_user.organisation)
+  end
+
+  def then_i_see_the_uploads_in_descending_historical_order
+    dates = within(".govuk-table") { find_all("a") }.map(&:text)
+    expect(dates).to eq([@upload1, @upload2, @upload3, @upload4, @upload5].map(&:created_at).map { |date| date.to_fs(:govuk_date_and_time) })
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file

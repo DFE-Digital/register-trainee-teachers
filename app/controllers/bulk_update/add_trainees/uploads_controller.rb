@@ -8,7 +8,10 @@ module BulkUpdate
       def index
         @bulk_update_trainee_uploads = policy_scope(
           BulkUpdate::TraineeUpload,
-        ).current_academic_cycle.not_cancelled_or_uploaded.includes(:file_attachment)
+        ).current_academic_cycle
+          .not_cancelled_or_uploaded
+          .includes(:file_attachment)
+          .order(created_at: :desc)
 
         authorize(@bulk_update_trainee_uploads)
       end
