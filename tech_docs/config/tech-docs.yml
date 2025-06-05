@@ -34,8 +34,8 @@ enable_search: true
 
 show_contribution_banner: true
 
-github_repo: alphagov/example-repo
-github_branch: source
+github_repo: DFE-Digital/register-trainee-teachers
+github_branch: main
 
 # Optional global settings for the page review process
 owner_slack_workspace: gds
