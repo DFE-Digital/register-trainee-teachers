@@ -1,3 +1,20 @@
+FROM ruby:3.4.2-alpine3.20 AS middleman
+RUN apk add --no-cache libxml2
+RUN apk add --update --no-cache npm git build-base
+
+ENV APP_HOME=/tech_docs
+WORKDIR $APP_HOME
+
+COPY tech_docs/Gemfile tech_docs/Gemfile.lock ./
+
+RUN bundle install --jobs=4
+
+COPY tech_docs/ ./
+
+RUN bundle exec middleman build
+
+###
+
 FROM ruby:3.4.2-alpine3.20
 
 ENV APP_HOME=/app
@@ -19,6 +36,9 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     bundle config build.charlock_holmes --with-opt-include=/usr/include/icu && \
     bundle config build.charlock_holmes --with-cxxflags="-std=c++17" && \
     bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
+    bundle install --jobs=4 && \
+    rm -rf /usr/local/bundle/cache && \
+    apk del build-dependencies && \
     bundle install --jobs=4
 
 COPY package.json yarn.lock ./
@@ -26,14 +46,9 @@ RUN yarn install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
-WORKDIR $APP_HOME/tech_docs
+RUN rm -rf /tech_docs
 
-RUN bundle install --jobs=4 && \
-    bundle exec middleman build --build-dir ../public/docs && \
-    rm -rf /usr/local/bundle/cache && \
-    apk del build-dependencies
-
-WORKDIR $APP_HOME
+COPY --from=middleman tech_docs/build/ $APP_HOME/public/docs/
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
