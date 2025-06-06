@@ -34,6 +34,7 @@ web: bin/rails server -p 3000
 js: yarn build --watch
 css: yarn build:css --watch
 worker: bundle exec sidekiq -t 25 -C config/sidekiq.yml
+docs: cd tech_docs && bundle exec middleman serve
 ```
 
 there is a `Procfile.dev.sample` you can rename and modify to do this.
@@ -49,13 +50,14 @@ To run the processes seperately, you can do the following:
 1. Run `bundle exec rails server` to launch the app on http://localhost:5000
 2. Run `yarn build --watch` for js
 3. Run `yarn build:css --watch` for css
+4. Run `cd tech_docs && bundle exec middleman serve` to launch the docs on http://localhost:4567
 
 ## Using Docker
 
 Run this in a shell and leave it running after cloning the repo:
 
 ```
-docker compose up --build --detach
+docker compose --profile dev up --build --detach
 ```
 
 You can then follow the log output with
@@ -72,7 +74,8 @@ docker compose exec web /bin/sh -c "bundle exec rails db:setup"
 
 And make sure to seed the application with whichever data you need.
 
-Then open http://localhost:3001 to see the app.
+* Visit http://localhost:3001 to see the app.
+* Visit http://localhost:4567 to see the middleman docs app.
 
 ## Run The Server in SSL Mode
 
