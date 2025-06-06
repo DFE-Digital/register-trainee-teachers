@@ -5,6 +5,11 @@ module Trs
     include ServicePattern
 
     class ProfessionalStatusUpdateMissingTrn < StandardError; end
+    class ProfessionalStatusUpdateError < StandardError; end
+
+    # Error codes that indicate specific TRS states that we can ignore:
+    # 10052: Route to professional status already awarded
+    IGNORABLE_ERROR_CODES = [10052].freeze
 
     def initialize(trainee:)
       @trainee = trainee
@@ -41,6 +46,19 @@ module Trs
 
     def update_professional_status
       Client.put("/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}", body: payload.to_json)
+    rescue Client::HttpError => e
+      # If the error indicates the status is already awarded, consider this a success
+      if ignorable_error?(e.message)
+        Rails.logger.info("Ignoring TRS error for trainee #{trainee.id}: #{e.message}")
+        return {}
+      end
+
+      raise(ProfessionalStatusUpdateError, "Error updating professional status: #{e.message}")
+    end
+
+    def ignorable_error?(error_message)
+      error_code_pattern = /"errorCode":(#{IGNORABLE_ERROR_CODES.join('|')})/
+      error_message.match?(error_code_pattern)
     end
   end
 end
