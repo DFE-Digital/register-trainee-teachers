@@ -117,7 +117,7 @@ module BulkUpdate
             CSV.parse(trainee_upload.file.download, headers: true).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
                 trainee_upload: trainee_upload,
-                data: row.to_h,
+                data: remove_leading_apostrophes(row.to_h),
                 row_number: index + 1,
               )
             end
@@ -158,6 +158,12 @@ module BulkUpdate
       end
 
     private
+
+      def remove_leading_apostrophes(hash)
+        hash.transform_values do |value|
+          value.is_a?(String) && value.start_with?("'") ? value[1..] : value
+        end
+      end
 
       def current_provider
         @current_provider ||= trainee_upload.provider
