@@ -2,16 +2,7 @@
 
 module FundingHelper
   def training_initiative_options
-    (ROUTE_INITIATIVES_ENUMS.values - %w[
-      no_initiative
-      troops_to_teachers
-      maths_physics_chairs_programme_researchers_in_schools
-      transition_to_teach
-      future_teaching_scholars
-      abridged_itt_course
-      primary_mathematics_specialist
-      additional_itt_place_for_pe_with_a_priority_subject
-    ]).sort
+    available_training_initiatives_for_cycle.sort
   end
 
   def funding_options(trainee)
@@ -37,5 +28,23 @@ private
 
   def can_start_funding_section?(trainee)
     trainee.progress.course_details && trainee.start_academic_cycle.present?
+  end
+
+  def available_training_initiatives_for_cycle
+    @available_training_initiatives_for_cycle ||= begin
+      current_year = Settings.current_recruitment_cycle_year
+      earliest_supported_year = 2024
+
+      found_initiatives = nil
+      (earliest_supported_year..current_year).reverse_each do |year|
+        constant_name = "TRAINING_INITIATIVES_#{year}_TO_#{year + 1}"
+        if Object.const_defined?(constant_name)
+          found_initiatives = Object.const_get(constant_name)
+          break
+        end
+      end
+
+      found_initiatives || raise("No training initiatives found for any academic year between #{earliest_supported_year} and #{current_year}")
+    end
   end
 end
