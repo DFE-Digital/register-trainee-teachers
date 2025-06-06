@@ -83,3 +83,7 @@ Caddyfile
 /app/assets/builds/*
 !/app/assets/builds/.keep
 .rspec-local
+
+# Ignore docs
+/public/docs
+/tech_docs/build
