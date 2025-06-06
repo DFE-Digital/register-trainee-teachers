@@ -42,6 +42,5 @@
 !/app/assets/builds/.keep
 /public/assets
 
-
 # Ignore docs
 /public/docs
