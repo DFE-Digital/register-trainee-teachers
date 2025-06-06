@@ -1,6 +1,6 @@
 require "govuk_tech_docs"
 
-GovukTechDocs.configure(self)
+GovukTechDocs.configure(self, livereload: { host: "0.0.0.0" })
 
 set :relative_links, true
 

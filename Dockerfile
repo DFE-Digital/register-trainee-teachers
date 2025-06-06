@@ -5,11 +5,11 @@ RUN apk add --update --no-cache npm git build-base
 ENV APP_HOME=/tech_docs
 WORKDIR $APP_HOME
 
-COPY tech_docs/Gemfile tech_docs/Gemfile.lock ./
+COPY tech_docs/Gemfile tech_docs/Gemfile.lock $APP_HOME
 
 RUN bundle install --jobs=4
 
-COPY tech_docs/ ./
+COPY tech_docs/ $APP_HOME
 
 RUN bundle exec middleman build
 
@@ -45,8 +45,6 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 
 COPY . .
-
-RUN rm -rf /tech_docs
 
 COPY --from=middleman tech_docs/build/ $APP_HOME/public/docs/
 
