@@ -23,7 +23,7 @@
                                            text: t("views.forms.funding.training_initiatives.#{i18n_key}"),
                                            size: "m"
                                          }) do %>
-        <% training_initiative_options.each_with_index do |training_initiative, index| %>
+        <% training_initiative_options(@trainee).each_with_index do |training_initiative, index| %>
           <%= f.govuk_radio_button(
             :training_initiative,
             training_initiative,

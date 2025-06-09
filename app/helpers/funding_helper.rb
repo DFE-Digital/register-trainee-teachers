@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module FundingHelper
-  def training_initiative_options
-    available_training_initiatives_for_cycle.sort
+  def training_initiative_options(trainee = nil)
+    available_training_initiatives_for_cycle(trainee).sort
   end
 
   def funding_options(trainee)
@@ -30,21 +30,31 @@ private
     trainee.progress.course_details && trainee.start_academic_cycle.present?
   end
 
-  def available_training_initiatives_for_cycle
-    @available_training_initiatives_for_cycle ||= begin
-      current_year = Settings.current_recruitment_cycle_year
-      earliest_supported_year = 2024
+  def available_training_initiatives_for_cycle(trainee = nil)
+    @available_training_initiatives_for_cycle ||= {}
+    
+    academic_year = get_academic_year(trainee)
+    
+    @available_training_initiatives_for_cycle[academic_year] ||= find_initiatives_for_year(academic_year)
+  end
 
-      found_initiatives = nil
-      (earliest_supported_year..current_year).reverse_each do |year|
-        constant_name = "TRAINING_INITIATIVES_#{year}_TO_#{year + 1}"
-        if Object.const_defined?(constant_name)
-          found_initiatives = Object.const_get(constant_name)
-          break
-        end
-      end
-
-      found_initiatives || raise("No training initiatives found for any academic year between #{earliest_supported_year} and #{current_year}")
+  def get_academic_year(trainee)
+    if trainee&.start_academic_cycle.present?
+      trainee.start_academic_cycle.start_year
+    else
+      Settings.current_recruitment_cycle_year
     end
+  end
+
+  def find_initiatives_for_year(year)
+    # Start with the specified year and work backwards
+    earliest_supported_year = 2020
+    (year.downto(earliest_supported_year)).each do |check_year|
+      constant_name = "TRAINING_INITIATIVES_#{check_year}_TO_#{check_year + 1}"
+      return Object.const_get(constant_name) if Object.const_defined?(constant_name)
+    end
+    
+    # If no initiatives found, return an empty array
+    []
   end
 end
