@@ -3,8 +3,7 @@
 namespace :csv do
   desc "convert all CSV fixtures to use apostrophe prefixes where required"
   task prefix_all: :environment do
-    all_files = Dir.glob(File.join(Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/"), "*.csv"))
-
+    all_files = Rails.root.glob("spec/fixtures/files/bulk_update/trainee_uploads/*.csv")
     all_files.each do |file|
       puts "Processing file: #{file}"
 
@@ -13,14 +12,15 @@ namespace :csv do
       CSV.open(file, "r", headers: true).each do |row|
         prefixed_row = {}
         row.to_h.each do |key, value|
-          prefixed_value = if key.in?(BulkUpdate::AddTrainees::ImportRows::PREFIXED_HEADERS) &&
-              value.is_a?(String) &&
-              value.present? &&
-              !value.start_with?("'")
-            "'#{value}"
-          else
-            value
-          end
+          prefixed_value =
+            if key.in?(BulkUpdate::AddTrainees::ImportRows::PREFIXED_HEADERS) &&
+                value.is_a?(String) &&
+                value.present? &&
+                !value.start_with?("'")
+              "'#{value}"
+            else
+              value
+            end
           prefixed_row[key] = prefixed_value
         end
         prefixed_rows << prefixed_row
