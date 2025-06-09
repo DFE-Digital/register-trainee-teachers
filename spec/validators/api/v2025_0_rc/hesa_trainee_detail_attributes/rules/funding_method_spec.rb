@@ -31,13 +31,17 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
     )
   end
 
-  describe "::valid?" do
+  describe ".call" do
     context "when the fund_code is NOT eligible and funding_method is blank" do
       let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
       let(:funding_method) { nil }
 
       it "returns true" do
-        expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+      end
+
+      it "returns no error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
       end
     end
 
@@ -46,7 +50,11 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
       let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
 
       it "returns true" do
-        expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+      end
+
+      it "returns no error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
       end
     end
 
@@ -54,7 +62,18 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
       let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
 
       it "returns false" do
-        expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(false)
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+      end
+
+      it "returns error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to eq(
+          {
+            academic_cycle: "2025 to 2026",
+            fund_code: "2",
+            funding_method: "D",
+            subject: "mathematics",
+          },
+        )
       end
     end
 
@@ -63,7 +82,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
 
       context "when there is no matching funding rule" do
         it "returns false" do
-          expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(false)
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
         end
       end
 
@@ -71,7 +90,11 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
 
         it "returns true" do
-          expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
         end
       end
 
@@ -101,14 +124,18 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         end
 
         it "returns true" do
-          expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
         end
 
         context "when the start date is invalid" do
           let(:trainee_start_date) { "not a date" }
 
           it "returns false after falling back to current cycle" do
-            expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(false)
+            expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
           end
         end
       end

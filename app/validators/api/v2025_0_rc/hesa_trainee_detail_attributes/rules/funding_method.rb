@@ -28,25 +28,27 @@ module Api
           delegate :training_route,
                    :course_subject_one, to: :trainee_attributes
 
+          ValidationResult = Struct.new(:valid?, :error_details)
+
           def initialize(hesa_trainee_detail_attributes)
             @hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
           end
 
           def call
-            return [true, nil] if no_funding_method? || training_route.nil?
+            return ValidationResult.new(true) if no_funding_method? || training_route.nil?
 
-            return [false, error_details] if fund_code_not_eligible? && funding_method?
+            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method?
 
-            [
+            ValidationResult.new(
               funding_method_exists?,
-              funding_method_exists? ? error_details : nil,
-            ]
+              funding_method_exists? ? nil : error_details,
+            )
           end
 
         private
 
           def funding_method_exists?
-            @exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
+            @funding_method_exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
               training_route: training_route,
