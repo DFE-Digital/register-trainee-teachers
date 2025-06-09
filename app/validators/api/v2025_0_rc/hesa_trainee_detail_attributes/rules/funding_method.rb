@@ -33,19 +33,26 @@ module Api
           end
 
           def call
-            return true if no_funding_method? || training_route.nil?
+            return [true, nil] if no_funding_method? || training_route.nil?
 
-            return false if fund_code_not_eligible? && funding_method?
+            return [false, error_details] if fund_code_not_eligible? && funding_method?
 
-            ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
+            [
+              funding_method_exists?,
+              funding_method_exists? ? error_details : nil,
+            ]
+          end
+
+        private
+
+          def funding_method_exists?
+            @exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
             )
           end
-
-        private
 
           def fund_code_not_eligible?
             !fund_code_eligible?
@@ -65,6 +72,15 @@ module Api
 
           def funding_type
             @funding_type ||= FUNDING_TYPES[funding_method]
+          end
+
+          def error_details
+            {
+              academic_cycle: academic_cycle&.label,
+              subject: course_subject_one,
+              fund_code: fund_code,
+              funding_method: funding_method,
+            }
           end
         end
       end

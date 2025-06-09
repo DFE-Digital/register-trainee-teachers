@@ -37,7 +37,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
       let(:funding_method) { nil }
 
       it "returns true" do
-        expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+        expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
       let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
 
       it "returns true" do
-        expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+        expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
       let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
 
       it "returns false" do
-        expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
+        expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(false)
       end
     end
 
@@ -63,7 +63,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
 
       context "when there is no matching funding rule" do
         it "returns false" do
-          expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
+          expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(false)
         end
       end
 
@@ -71,7 +71,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         let(:funding_method) { Hesa::CodeSets::BursaryLevels::NONE }
 
         it "returns true" do
-          expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+          expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
         end
       end
 
@@ -101,14 +101,14 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         end
 
         it "returns true" do
-          expect(subject.valid?(hesa_trainee_detail_attributes)).to be(true)
+          expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(true)
         end
 
         context "when the start date is invalid" do
           let(:trainee_start_date) { "not a date" }
 
           it "returns false after falling back to current cycle" do
-            expect(subject.valid?(hesa_trainee_detail_attributes)).to be(false)
+            expect(subject.valid?(hesa_trainee_detail_attributes).first).to be(false)
           end
         end
       end
