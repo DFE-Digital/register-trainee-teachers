@@ -41,4 +41,14 @@ class BulkUpdate::TraineeUploadRow < ApplicationRecord
   scope :with_duplicate_errors, lambda {
     with_errors.merge(BulkUpdate::RowError.duplicate)
   }
+
+  before_save :remove_leading_apostrophes
+
+private
+
+  def remove_leading_apostrophes
+    data.transform_values! do |value|
+      value.is_a?(String) && value.start_with?("'") ? value[1..] : value
+    end
+  end
 end
