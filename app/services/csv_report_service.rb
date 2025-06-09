@@ -19,14 +19,10 @@ private
   attr_accessor :report_class, :path, :csv, :scope
 
   def write_to_csv
-    CSV.generate(**csv_options) do |csv|
+    CSV.generate do |csv|
       report_generator_class = report_class.new(csv, scope:)
       report_generator_class.generate_report
       @csv = csv
     end
-  end
-
-  def csv_options
-    report_class.try(:csv_options) || {}
   end
 end

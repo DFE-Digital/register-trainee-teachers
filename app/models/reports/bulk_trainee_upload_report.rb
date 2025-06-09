@@ -11,10 +11,6 @@ module Reports
       @scope = scope
     end
 
-    def self.csv_options
-      { force_quotes: true, quote_char: '"' }
-    end
-
     alias trainee_upload scope
 
   private

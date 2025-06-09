@@ -22,7 +22,7 @@ describe Reports::BulkTraineeUploadReport do
     let(:original_csv_data) { CSV.parse(trainee_upload.file.download, headers: true) }
 
     it "generates a CSV with 'Validation results' and 'Errors' column" do
-      generated_csv = CSV.generate(quote_char: '"', force_quotes: true) do |csv|
+      generated_csv = CSV.generate do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
@@ -32,7 +32,7 @@ describe Reports::BulkTraineeUploadReport do
 
       data.each_with_index do |row, index|
         expect(row.fetch("Validation results")).to eq("Validation passed")
-        expect(row.fetch("Errors")).to be_nil
+        expect(row.fetch("Errors")).to be_blank
         expect(row.to_h.except("Validation results", "Errors")).to eq(original_csv_data[index].to_h)
       end
     end
@@ -42,7 +42,7 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload, :failed_with_validation_errors) }
 
     it "generates a CSV with 'Validation results' and 'Errors' column" do
-      generated_csv = CSV.generate(quote_char: '"', force_quotes: true) do |csv|
+      generated_csv = CSV.generate do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
