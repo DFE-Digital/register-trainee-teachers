@@ -7,4 +7,4 @@ TRAINING_INITIATIVES_2022_TO_2023 = %w[
   transition_to_teach
   troops_to_teachers
   veterans_teaching_undergraduate_bursary
-].freeze 
+].freeze

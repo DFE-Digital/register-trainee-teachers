@@ -31,30 +31,20 @@ private
   end
 
   def available_training_initiatives_for_cycle(trainee = nil)
-    @available_training_initiatives_for_cycle ||= {}
-    
-    academic_year = get_academic_year(trainee)
-    
-    @available_training_initiatives_for_cycle[academic_year] ||= find_initiatives_for_year(academic_year)
-  end
+    return [] if trainee&.start_academic_cycle.blank?
 
-  def get_academic_year(trainee)
-    if trainee&.start_academic_cycle.present?
-      trainee.start_academic_cycle.start_year
-    else
-      Settings.current_recruitment_cycle_year
-    end
+    year = trainee.start_academic_cycle.start_year
+    find_initiatives_for_year(year)
   end
 
   def find_initiatives_for_year(year)
     # Start with the specified year and work backwards
     earliest_supported_year = 2020
-    (year.downto(earliest_supported_year)).each do |check_year|
+    year.downto(earliest_supported_year).each do |check_year|
       constant_name = "TRAINING_INITIATIVES_#{check_year}_TO_#{check_year + 1}"
       return Object.const_get(constant_name) if Object.const_defined?(constant_name)
     end
-    
-    # If no initiatives found, return an empty array
+
     []
   end
 end

@@ -6,4 +6,4 @@ TRAINING_INITIATIVES_2023_TO_2024 = %w[
   now_teach
   transition_to_teach
   veterans_teaching_undergraduate_bursary
-].freeze 
+].freeze
