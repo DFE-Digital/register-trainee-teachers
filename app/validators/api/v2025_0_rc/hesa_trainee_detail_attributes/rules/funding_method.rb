@@ -80,8 +80,8 @@ module Api
             {
               academic_cycle: academic_cycle&.label,
               subject: course_subject_one,
-              fund_code: fund_code,
-              funding_method: funding_method,
+              funding_type: ::FUNDING_TYPES.invert[funding_type],
+              training_route: training_route.to_s,
             }
           end
         end
