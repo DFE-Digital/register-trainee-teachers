@@ -69,8 +69,8 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         expect(subject.call(hesa_trainee_detail_attributes).error_details).to eq(
           {
             academic_cycle: "2025 to 2026",
-            fund_code: "2",
-            funding_method: "D",
+            funding_type: "bursary",
+            training_route: "provider_led_postgrad",
             subject: "mathematics",
           },
         )
