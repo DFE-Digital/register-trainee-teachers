@@ -9,7 +9,7 @@ phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
-  API: /
+  API: /api-docs
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id:
