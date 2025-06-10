@@ -9,7 +9,7 @@ Recommend a trainee for a QTS Award.
 
 ## Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/recommend-for-qts`
+`POST /api/v2025.0-rc/trainees/{trainee_id}/recommend-for-qts`
 
 ## Parameters
 
