@@ -1,58 +1,26 @@
 ---
-title: POST /trainees/{trainee_id}/recommend-for-qts
-weight: 11
+title: GET /trainees/{trainee_id}
+weight: 3
 ---
 
-# `POST /trainees/{trainee_id}/recommend-for-qts`
+# `GET /trainees/{trainee_id}`
 
-Recommend a trainee for a QTS Award.
+Get a single trainee.
 
 ## Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/recommend-for-qts`
+`GET /api/v2025.0-rc/trainees/{trainee_id}`
 
 ## Parameters
 
-| **Parameter**	| **In**	| **Type** | **Required** | **Description** |
+| **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
-
-## Request body
-
-Recommendation details
-
-<div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-  <dt class="govuk-summary-list__key"><code>qts_standards_met_date</code></dt>
-  <dd class="govuk-summary-list__value">
-    <p class="govuk-body">
-      string, required
-    </p>
-    <p class="govuk-body">
-      The date when the Trainee met the QTS standards. Dates should be in ISO 8601 format.
-    </p>
-    <p class="govuk-body">
-      Example: <code>2000-01-01</code>
-    </p>
-  </dd>
-</div>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">Example request body</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "data": {
-        "qts_standards_met_date": "2024-06-17"
-      }
-    }
-    </pre>
-  </div>
-</details>
 
 ## Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 202<span> - A trainee</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A trainee</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
@@ -79,11 +47,11 @@ Recommendation details
         "itt_end_date": "2023-10-17",
         "trn": "6440650",
         "submitted_for_trn_at": "2024-01-18T08:02:41.420Z",
-        "state": "recommended_for_award",
+        "state": "deferred",
         "withdraw_date": null,
         "defer_date": "2023-10-17",
         "defer_reason": null,
-        "recommended_for_award_at": "2024-06-17T09:05:48Z",
+        "recommended_for_award_at": null,
         "trainee_start_date": "2023-09-04",
         "reinstate_date": null,
         "course_min_age": 5,
@@ -114,10 +82,7 @@ Recommendation details
         "record_source": "api",
         "iqts_country": null,
         "hesa_editable": true,
-        "withdrawal_future_interest": null,
-        "withdrawal_trigger": null,
-        "withdrawal_reasons": null,
-        "withdrawal_another_reason": null,
+        "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
         "ukprn": "10000571",
         "ethnicity": "120",
@@ -140,6 +105,10 @@ Recommendation details
         "previous_last_name": null,
         "hesa_disabilities": null,
         "additional_training_initiative": null,
+        "withdrawal_future_interest": null,
+        "withdrawal_trigger": null,
+        "withdrawal_reasons": null,
+        "withdrawal_another_reason": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
@@ -196,22 +165,6 @@ Recommendation details
         {
           "error": "NotFound",
           "message": "Trainee(s) not found"
-        }
-      ]
-    }
-    </pre>
-  </div>
-</details>
-
-<details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 422<span> - Unprocessable Entity</span></summary>
-  <div class="govuk-details__text">
-    <pre class="json-code-sample">
-    {
-      "errors": [
-        {
-          "error": "UnprocessableEntity",
-          "message": "Qts standards met date can't be blank"
         }
       ]
     }
