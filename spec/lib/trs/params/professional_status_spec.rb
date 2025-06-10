@@ -16,14 +16,15 @@ module Trs
             create(:trainee, :completed, :trn_received,
                    course_subject_one: "Primary",
                    course_subject_two: "Mathematics",
-                   course_subject_three: nil)
+                   course_subject_three: "English as a second or other language")
           end
 
           it "returns the correct subject references" do
             primary_code = Hesa::CodeSets::CourseSubjects::MAPPING.invert["Primary"]
             maths_code = Hesa::CodeSets::CourseSubjects::MAPPING.invert["Mathematics"]
+            english_as_a_second_language_code = Hesa::CodeSets::CourseSubjects::MAPPING.invert["English as a second or other language"]
 
-            expect(subject["trainingSubjectReferences"]).to contain_exactly(primary_code, maths_code)
+            expect(subject["trainingSubjectReferences"]).to contain_exactly(primary_code, maths_code, english_as_a_second_language_code)
           end
         end
 

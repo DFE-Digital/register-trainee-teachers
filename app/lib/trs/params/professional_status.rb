@@ -102,7 +102,7 @@ module Trs
       end
 
       def subject_reference(subject_name)
-        # these three subjects are not coded by HESA so we've agreed these encodings with the DQT team
+        # These three subjects are not coded by HESA so we've agreed these encodings with the DQT team
         return "999001" if subject_name == ::CourseSubjects::CITIZENSHIP
         return "999002" if subject_name == ::CourseSubjects::PHYSICAL_EDUCATION
         return "999003" if subject_name == ::CourseSubjects::DESIGN_AND_TECHNOLOGY
