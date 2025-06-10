@@ -28,6 +28,7 @@ module Hesa
         "100069" => ::CourseSubjects::DRAMA,
         "100510" => ::CourseSubjects::EARLY_YEARS_TEACHING,
         "100450" => ::CourseSubjects::ECONOMICS,
+        "101109" => ::CourseSubjects::ENGLISH_AS_SECOND_LANGUAGE,
         "100320" => ::CourseSubjects::ENGLISH_STUDIES,
         "100381" => ::CourseSubjects::ENVIRONMENTAL_SCIENCES,
         "101017" => ::CourseSubjects::FOOD_AND_BEVERAGE_STUDIES,
