@@ -8,7 +8,7 @@ module Api
           record.errors.add(:fund_code, :ineligible) unless Rules::FundCode.valid?(record)
 
           validation_result = Rules::FundingMethod.valid?(record)
-          record.errors.add(:funding_method, :ineligible, validation_result.second) unless validation_result.first
+          record.errors.add(:funding_method, :ineligible, **validation_result.error_details) unless validation_result.valid?
         end
       end
     end
