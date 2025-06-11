@@ -47,6 +47,8 @@ class BulkUpdate::TraineeUploadRow < ApplicationRecord
 private
 
   def remove_leading_apostrophes
+    return unless data.is_a?(Hash)
+
     data.transform_values! do |value|
       value.is_a?(String) && value.start_with?("'") ? value[1..] : value
     end
