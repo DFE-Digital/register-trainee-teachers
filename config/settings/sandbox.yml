@@ -36,11 +36,12 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
+  google:
+    send_data_to_big_query: true
   integrate_with_dqt: true
   integrate_with_trs: false
   register_api: true
-  google:
-    send_data_to_big_query: true
+  token_management: true
   bulk_add_trainees: true
 
 environment:
