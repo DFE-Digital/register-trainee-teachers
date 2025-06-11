@@ -65,6 +65,9 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
             it "funding_method should NOT be valid" do
               subject.validate
               expect(subject.errors[:funding_method]).to be_present
+              expect(subject.errors[:funding_method]).to include(
+                "training route ‘provider_led_postgrad’ and subject code ‘mathematics’ are not eligible for ‘bursary’ in academic cycle ‘2024 to 2025’",
+              )
             end
           end
         end
