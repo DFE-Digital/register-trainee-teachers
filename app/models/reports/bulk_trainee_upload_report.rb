@@ -25,24 +25,6 @@ module Reports
       end
     end
 
-    class AddTraineeCsvValueSanitiser < CsvValueSanitiser
-      def initialize(key, value)
-        @key = key
-        super(value)
-      end
-
-      def safe?
-        super &&
-          (!@key.in?(BulkUpdate::AddTrainees::ImportRows::PREFIXED_HEADERS) ||
-          @value.blank? ||
-          @value.start_with?("'"))
-      end
-
-      def wrap_in_double_quotes(value)
-        value
-      end
-    end
-
     def add_row_to_csv(row)
       data = row.data.merge(
         "Validation results" => row.row_errors.present? ? "#{pluralize(row.row_errors.size, 'error')} found" : "Validation passed",
