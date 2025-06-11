@@ -35,7 +35,7 @@ module Api
           end
 
           def call
-            return ValidationResult.new(true) if no_funding_method? || training_route.nil?
+            return ValidationResult.new(true) if no_funding_method? || funding_method_invalid? || training_route.nil?
 
             return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method?
 
@@ -70,6 +70,10 @@ module Api
 
           def no_funding_method?
             funding_method.blank? || funding_method == Hesa::CodeSets::BursaryLevels::NONE
+          end
+
+          def funding_method_invalid?
+            funding_type.blank?
           end
 
           def funding_type
