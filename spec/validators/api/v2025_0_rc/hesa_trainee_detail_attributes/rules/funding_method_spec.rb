@@ -98,6 +98,18 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         end
       end
 
+      context "when funding_method is an invalid value" do
+        let(:funding_method) { "not-a-funding-method" }
+
+        it "returns true" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        end
+      end
+
       context "when there is a matching funding rule" do
         let(:allocation_subject) { create(:allocation_subject) }
         let!(:subject_specialism) do
