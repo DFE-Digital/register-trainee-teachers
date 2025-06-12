@@ -35,7 +35,16 @@ module BulkUpdate
         end
         let(:csv) { CSVSafe.new(file_content, headers: true).read }
 
-        it { expect(record.errors.first.message).to eql "Your file’s column names need to match the CSV template" }
+        it { expect(record.errors.first.message).to eql "Your file’s column names need to match the CSV template. Your file is missing the follow columns: 'First names'" }
+      end
+
+      context "given a CSV with the correct columns and one extra column" do
+        let(:file_content) do
+          "#{[BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS + ['Shoe Size']].keys.join(',')}\nfoo,bar,baz"
+        end
+        let(:csv) { CSVSafe.new(file_content, headers: true).read }
+
+        it { expect(record.errors.first.message).to eql "Your file’s column names need to match the CSV template. Your file has the following extra columns: 'Shoe Size'" }
       end
 
       context "given a CSV with the correct columns with validation results and errors" do
