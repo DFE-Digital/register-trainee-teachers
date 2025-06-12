@@ -1659,7 +1659,7 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
-              invalid_headers: "Your file’s column names need to match the CSV template"
+              invalid_headers: "Your file’s column names need to match the CSV template. %{explanations}"
         bulk_update/bulk_add_trainees_submit_form:
           attributes:
             file:
