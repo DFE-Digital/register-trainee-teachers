@@ -30,9 +30,17 @@ module BulkUpdate
 
         explanations = []
         if missing_columns.any?
-          explanations << "Your file is missing the following columns: #{missing_columns.map { |col| "'#{col}'" }.to_sentence}"
-        elsif extra_columns.any?
-          explanations << "Your file has the following extra columns: #{extra_columns.map { |col| "'#{col}'" }.to_sentence}"
+          explanations << I18n.t(
+            "activemodel.errors.models.bulk_update/bulk_add_trainees_upload_form.attributes.file.missing_headers",
+            missing_columns: missing_columns.map { |col| "'#{col}'" }.to_sentence,
+          )
+        end
+
+        if extra_columns.any?
+          explanations << I18n.t(
+            "activemodel.errors.models.bulk_update/bulk_add_trainees_upload_form.attributes.file.extra_headers",
+            extra_columns: extra_columns.map { |col| "'#{col}'" }.to_sentence,
+          )
         end
 
         explanations.join(". ")
