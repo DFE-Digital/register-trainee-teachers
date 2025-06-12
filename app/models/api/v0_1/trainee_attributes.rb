@@ -173,7 +173,7 @@ module Api
           nationalisations_attributes << NationalityAttributes.new(nationalisation_params)
         end
 
-        self.hesa_trainee_detail_attributes = update_hesa_trainee_detail_attributes(new_attributes)
+        update_hesa_trainee_detail_attributes(new_attributes)
 
         self.trainee_disabilities_attributes = []
 
