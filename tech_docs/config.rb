@@ -1,4 +1,5 @@
 require "govuk_tech_docs"
+require_relative "./lib/govuk_tech_docs/path_helpers"
 
 GovukTechDocs.configure(self, livereload: { host: "0.0.0.0" })
 
