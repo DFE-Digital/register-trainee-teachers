@@ -1,5 +1,3 @@
-# https://github.com/alphagov/tech-docs-gem/blob/main/lib/govuk_tech_docs/contribution_banner.rb
-
 module GovukTechDocs
   # Helper included
   module ContributionBanner
@@ -60,11 +58,21 @@ module GovukTechDocs
 
     # As the last fallback link to the source file in this repository.
     def source_from_file
-      "#{repo_url}/blob/#{repo_branch}/source/#{current_page.file_descriptor[:relative_path]}"
+      # Set the View source link based on the documentation type: [api-docs]
+      #
+      if build_dir == "build"
+        "#{repo_url}/blob/#{repo_branch}/source/#{current_page.file_descriptor[:relative_path]}"
+      else
+        "#{repo_url}/blob/#{repo_branch}/source/#{build_dir.split("/").last}/#{current_page.file_descriptor[:relative_path]}"
+      end
     end
 
     def locals
       current_page.metadata[:locals]
+    end
+
+    def build_dir
+      config[:build_dir]
     end
   end
 end
