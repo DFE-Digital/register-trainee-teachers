@@ -20,7 +20,7 @@ module GovukTechDocs
     def get_path_to_resource(config, resource, current_page)
       if resource.is_a?(Middleman::Sitemap::Resource)
         config[:relative_links] ? get_resource_path_relative_to_current_page(config, current_page.path, resource.path) : resource.url
-      elsif external_url?(resource)
+      elsif external_url?(resource) || config[:tech_docs][:header_links].values.include?(resource)
         resource
       elsif config[:relative_links]
         get_resource_path_relative_to_current_page(config, current_page.path, resource)
