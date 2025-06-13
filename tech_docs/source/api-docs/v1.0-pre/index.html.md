@@ -1,6 +1,6 @@
 ---
 title: v1.0-pre
-weight: 3
+weight: 5
 ---
 
 # v1.0-pre
