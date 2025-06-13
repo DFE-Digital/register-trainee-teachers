@@ -1,7 +1,9 @@
 ---
-page_title: Register API release notes
-title: Register API release notes
+title: Release notes
+weight: 2
 ---
+
+# Release notes
 
 ## v2025.0-rc - 13 May 2025
 
