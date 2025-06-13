@@ -1,10 +1,10 @@
 # Host to use for canonical URL generation (without trailing slash)
-host: register-trainee-teachers.service.gov.uk
+host: https://www.register-trainee-teachers.service.gov.uk
 
 # Header-related options
 show_govuk_logo: true
 service_name: Register trainee teachers
-service_link: /
+service_link: https://www.register-trainee-teachers.service.gov.uk
 phase: Beta
 
 # Links to show on right-hand-side of header
