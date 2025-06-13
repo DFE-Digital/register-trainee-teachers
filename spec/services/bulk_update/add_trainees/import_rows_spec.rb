@@ -7,6 +7,7 @@ module BulkUpdate
     RSpec.describe ImportRows do
       describe "#call" do
         let!(:nationality) { create(:nationality, :british) }
+        let!(:academic_cycle) { create(:academic_cycle, :current) }
 
         context "when the feature flag is off", feature_bulk_add_trainees: false do
           let(:trainee_upload) { create(:bulk_update_trainee_upload) }

@@ -16,7 +16,7 @@ module BulkUpdate
       end
 
       def initialize(row:, current_provider:)
-        self.row = row
+        self.row = remove_leading_apostrophes(row)
         self.current_provider = current_provider
       end
 
@@ -105,6 +105,12 @@ module BulkUpdate
         return attributes if attributes[:record_source].present?
 
         attributes[:record_source] = Trainee::CSV_SOURCE
+      end
+
+      def remove_leading_apostrophes(row)
+        row.to_h.transform_values do |value|
+          value.is_a?(String) && value.start_with?("'") ? value[1..] : value
+        end
       end
     end
   end

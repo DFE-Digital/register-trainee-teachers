@@ -1,7 +1,7 @@
-Provider Trainee ID,Application ID,HESA ID,First Names,Last Name,Previous Last Name,Date of Birth,NI Number,Sex,Email,Nationality,Ethnicity,Disability 1,Disability 2,Disability 3,Disability 4,Disability 5,Disability 6,Disability 7,Disability 8,Disability 9,ITT Aim,Training Route,Qualification Aim,Course Subject One,Course Subject Two,Course Subject Three,Study Mode,ITT Start Date,ITT End Date,Course Age Range,Course Year,Lead Partner URN,Employing School URN,Trainee Start Date,PG Apprenticeship Start Date,Fund Code,Funding Method,Training Initiative,Additional Training Initiative,First Placement URN,UK Degree Type,Non-UK Degree Type,Degree Subject,Degree Grade,Degree Graduation Year,Awarding Institution,Degree Country
-24/25-1,,7572897115906,Spencer,Murphy,Heidenreich,1967-12-06,,11,Spencer.Murphy@example.com,GB,,,,,,,,,,,201,11,004,100409,,,64,2024-10-01,2025-07-06,13919,2024,,,2024-10-01,2024-08-05,2,6,,,,,,,,,,
-
-24/25-7,,2606096051936,Sacha,Bechtelar,Gibson,2002-09-28,,12,Sacha.Bechtelar@example.com,GB,,,,,,,,,,,202,11,021,100381,,,01,2024-10-01,2025-07-06,13913,2024,,,2024-10-01,2024-08-13,2,6,,,,,,,,,,
-
-24/25-13,,7200468200475,Chantelle,Raynor,Rosenbaum,2006-10-22,,99,Chantelle.Raynor@example.com,GB,,,,,,,,,,,201,11,028,101142,,,01,2024-10-01,2026-07-30,13915,2024,,,2024-10-01,2024-08-19,2,6,,,,,,,,,,
-
+Provider Trainee ID,Application ID,HESA ID,First Names,Last Name,Previous Last Name,Date of Birth,NI Number,Sex,Email,Nationality,Ethnicity,Disability 1,Disability 2,Disability 3,Disability 4,Disability 5,Disability 6,Disability 7,Disability 8,Disability 9,ITT Aim,Training Route,Qualification Aim,Course Subject One,Course Subject Two,Course Subject Three,Study Mode,ITT Start Date,ITT End Date,Course Age Range,Course Year,Lead Partner URN,Employing School URN,Trainee Start Date,PG Apprenticeship Start Date,Fund Code,Funding Method,Training Initiative,Additional Training Initiative,Placement 1 URN,Placement 2 URN,Placement 3 URN,UK Degree Type,Non-UK Degree Type,Degree Subject,Degree Grade,Degree Graduation Year,Awarding Institution,Degree Country
+24/25-1,,'7572897115906,Spencer,Murphy,Heidenreich,'1967-12-06,,'11,Spencer.Murphy@example.com,GB,,,,,,,,,,,'201,'11,'004,'100409,,,'64,'2024-10-01,'2025-07-06,'13919,2024,,,'2024-10-01,'2024-08-05,'2,'6,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+24/25-7,,'2606096051936,Sacha,Bechtelar,Gibson,'2002-09-28,,'12,Sacha.Bechtelar@example.com,GB,,,,,,,,,,,'202,'11,'021,'100381,,,'01,'2024-10-01,'2025-07-06,'13913,2024,,,'2024-10-01,'2024-08-13,'2,'6,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+24/25-13,,'7200468200475,Chantelle,Raynor,Rosenbaum,'2006-10-22,,'99,Chantelle.Raynor@example.com,GB,,,,,,,,,,,'201,'11,'028,'101142,,,'01,'2024-10-01,'2026-07-30,'13915,2024,,,'2024-10-01,'2024-08-19,'2,'6,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

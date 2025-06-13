@@ -11,7 +11,7 @@ RSpec.describe BulkUpdate::TraineeUploadRow do
     let!(:rows_without_errors) { create_list(:bulk_update_trainee_upload_row, 2) }
 
     it "returns only the trainee upload rows that don't have errors" do
-      expect(described_class.without_errors).to eq(rows_without_errors)
+      expect(described_class.without_errors).to match_array(rows_without_errors)
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe BulkUpdate::TraineeUploadRow do
     let!(:rows_without_errors) { create_list(:bulk_update_trainee_upload_row, 2) }
 
     it "returns all distinct error rows" do
-      expect(described_class.with_errors).to eq(rows_with_validation_errors + rows_with_duplicate_errors)
+      expect(described_class.with_errors).to match_array(rows_with_validation_errors + rows_with_duplicate_errors)
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe BulkUpdate::TraineeUploadRow do
     let!(:rows_without_errors) { create_list(:bulk_update_trainee_upload_row, 2) }
 
     it "returns only distinct validation error rows" do
-      expect(described_class.with_validation_errors).to eq(rows_with_validation_errors)
+      expect(described_class.with_validation_errors).to match_array(rows_with_validation_errors)
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe BulkUpdate::TraineeUploadRow do
     let!(:rows_without_errors) { create_list(:bulk_update_trainee_upload_row, 2) }
 
     it "returns only distinct duplicate error rows" do
-      expect(described_class.with_duplicate_errors).to eq(rows_with_duplicate_errors)
+      expect(described_class.with_duplicate_errors).to match_array(rows_with_duplicate_errors)
     end
   end
 end
