@@ -28,15 +28,17 @@ module Funding
     end
 
     describe "#save!" do
-      let(:now_teach) { ROUTE_INITIATIVES_ENUMS[:now_teach] }
+      # Test with one representative initiative - we don't need to test every possible value
+      # since that's already covered in funding_helper_spec.rb
+      let(:initiative) { ROUTE_INITIATIVES_ENUMS[:international_relocation_payment] }
 
       before do
-        allow(form_store).to receive(:get).and_return({ "training_initiative" => now_teach })
+        allow(form_store).to receive(:get).and_return({ "training_initiative" => initiative })
         allow(form_store).to receive(:set).with(trainee.id, :training_initiative, nil)
       end
 
       it "takes any data from the form store and saves it to the database" do
-        expect { subject.save! }.to change(trainee, :training_initiative).to(now_teach)
+        expect { subject.save! }.to change(trainee, :training_initiative).to(initiative)
       end
     end
   end
