@@ -2,6 +2,7 @@
 title: Help
 weight: 3
 hide_in_navigation: true
+source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/tech_docs/source/help.html.md
 ---
 
 # Help
