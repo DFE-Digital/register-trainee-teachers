@@ -1,0 +1,79 @@
+{
+  "configurations": {
+    "streams": [
+      {
+        "name": "trainees",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [ "id" ]
+          },
+          {
+            "fieldPath": [ "_ab_cdc_lsn" ]
+          },
+          {
+            "fieldPath": [ "email" ]
+          },
+          {
+            "fieldPath": [ "last_name" ]
+          },
+          {
+            "fieldPath": [ "created_at" ]
+          },
+          {
+            "fieldPath": [ "updated_at" ]
+          },
+          {
+            "fieldPath": [ "first_names" ]
+          },
+          {
+            "fieldPath": [ "discarded_at" ]
+          }
+        ]
+      },
+      {
+        "name": "lead_partners",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [ "id" ]
+          },
+          {
+            "fieldPath": [ "_ab_cdc_lsn" ]
+          },
+          {
+            "fieldPath": [ "urn" ]
+          },
+          {
+            "fieldPath": [ "name" ]
+          },
+          {
+            "fieldPath": [ "created_at" ]
+          },
+          {
+            "fieldPath": [ "updated_at" ]
+          },
+          {
+            "fieldPath": [ "discarded_at" ]
+          }
+        ]
+      }
+    ]
+  }
+}
