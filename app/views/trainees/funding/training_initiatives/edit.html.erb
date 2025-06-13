@@ -17,7 +17,7 @@
       <h1 class="govuk-heading-l"><%= t("components.page_titles.trainees.funding.training_initiatives.edit") %></h1>
 
       <p class="govuk-body"><%= t("views.forms.funding.training_initiatives.description_html") %></p>
-      <% i18n_key = training_initiative_options.count == 2 ? 'title_two' : 'title' %>
+      <% i18n_key = training_initiative_options(@trainee).count == 2 ? 'title_two' : 'title' %>
       <%= f.govuk_radio_buttons_fieldset(:training_initiative,
                                          legend: {
                                            text: t("views.forms.funding.training_initiatives.#{i18n_key}"),
