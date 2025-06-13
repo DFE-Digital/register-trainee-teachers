@@ -35,4 +35,4 @@ enable_search: true
 show_contribution_banner: true
 
 github_repo: DFE-Digital/register-trainee-teachers
-github_branch: main
+github_branch: main/tech_docs
