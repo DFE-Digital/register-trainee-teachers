@@ -1,6 +1,7 @@
 ---
 title: Help
 weight: 3
+hide_in_navigation: true
 ---
 
 # Help
