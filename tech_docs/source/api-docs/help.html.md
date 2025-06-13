@@ -1,9 +1,9 @@
 ---
-title: Register API help
+title: Help
 weight: 3
 ---
 
-# Register API help
+# Help
 
 If you have any questions or suggestions contact us at [registertraineeteachers@education.gov.uk](mailto:registertraineeteachers@education.gov.uk).
 
