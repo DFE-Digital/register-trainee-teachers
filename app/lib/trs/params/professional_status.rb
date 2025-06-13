@@ -58,7 +58,7 @@ module Trs
           "routeTypeId" => route_type_id,
           "status" => status,
           "awardedDate" => trainee.outcome_date&.to_date&.iso8601,
-          "trainingStartDate" => trainee.itt_start_date.iso8601,
+          "trainingStartDate" => trainee.itt_start_date&.iso8601 || trainee.trainee_start_date&.iso8601,
           "trainingEndDate" => trainee.itt_end_date&.iso8601 || trainee.estimated_end_date&.iso8601,
           "trainingSubjectReferences" => training_subject_references,
           "trainingAgeSpecialism" => training_age_specialism,
