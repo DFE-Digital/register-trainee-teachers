@@ -215,6 +215,15 @@ RSpec.describe Api::V01::TraineeAttributes do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
             end
+
+            it "includes full details in the error message" do
+              subject.training_route = "9"
+              subject.validate
+
+              expect(subject.errors[:training_route]).to include(
+                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.values.map{ |v| "'#{v}'" }.join(', ')}.",
+              )
+            end
           end
 
           context "when AcademicCycle::start_date > 2023" do
