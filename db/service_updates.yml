@@ -1,3 +1,13 @@
+- date: '2025-06-13'
+  title: Include a reason for deferral in Register
+  content: |
+    You can now include a reason why teacher trainees choose to defer from their course in Register.
+
+    The aim is to better understand why trainees deferred. This helps us inform policy with the aim to reduce deferrals and increase trainee retention.
+
+    An optional free text ‘reason for deferral’ field has been added to the Register service. If you choose not to provide a reason for deferral, it will be recorded as ‘reason not given’.
+
+    This has also been added to the Register API for those accredited higher education institution (HEI) training providers who’ll be using the API to send data directly to Register in the 2025 to 2026 academic year.
 - date: '2025-04-25'
   title: Funding updates for the 2025 to 2026 academic year
   content: |

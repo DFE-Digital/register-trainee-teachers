@@ -160,6 +160,37 @@ module Trs
           end
         end
 
+        context "when trainee has no itt_start_date or trainee_start_date" do
+          let(:itt_end_date) { Time.zone.today }
+          let(:trainee) do
+            create(:trainee, :trn_received,
+                   itt_end_date: itt_end_date,
+                   trainee_start_date: nil,
+                   itt_start_date: nil)
+          end
+          let(:expected_end_date) { trainee.estimated_end_date }
+
+          it "falls back to `nil` trainingStartDate" do
+            expect(subject["trainingStartDate"]).to be_nil
+          end
+        end
+
+        context "when trainee has no itt_start_date" do
+          let(:itt_end_date) { Date.current }
+          let(:trainee_start_date) { 1.year.ago.to_date }
+          let(:trainee) do
+            create(:trainee, :trn_received,
+                   itt_end_date: itt_end_date,
+                   trainee_start_date: trainee_start_date,
+                   itt_start_date: nil)
+          end
+          let(:expected_end_date) { trainee.estimated_end_date }
+
+          it "falls back to `trainee_start_date` for trainingStartDate" do
+            expect(subject["trainingStartDate"]).to eq(trainee_start_date.iso8601)
+          end
+        end
+
         context "when trainee course subject is non-HESA" do
           let(:trainee) do
             create(:trainee, :trn_received, :with_secondary_education).tap do |t|
