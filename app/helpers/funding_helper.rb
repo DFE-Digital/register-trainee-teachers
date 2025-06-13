@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FundingHelper
-  def training_initiative_options(trainee = nil)
+  def training_initiative_options(trainee)
     available_training_initiatives_for_cycle(trainee).sort
   end
 
@@ -30,20 +30,16 @@ private
     trainee.progress.course_details && trainee.start_academic_cycle.present?
   end
 
-  def available_training_initiatives_for_cycle(trainee = nil)
-    return [] if trainee&.start_academic_cycle.blank?
+  def available_training_initiatives_for_cycle(trainee)
+    return [] if trainee.start_academic_cycle.blank?
 
     year = trainee.start_academic_cycle.start_year
     find_initiatives_for_year(year)
   end
 
   def find_initiatives_for_year(year)
-    # Start with the specified year and work backwards
-    earliest_supported_year = 2020
-    year.downto(earliest_supported_year).each do |check_year|
-      constant_name = "TRAINING_INITIATIVES_#{check_year}_TO_#{check_year + 1}"
-      return Object.const_get(constant_name) if Object.const_defined?(constant_name)
-    end
+    constant_name = "TRAINING_INITIATIVES_#{year}_TO_#{year + 1}"
+    return Object.const_get(constant_name) if Object.const_defined?(constant_name)
 
     []
   end

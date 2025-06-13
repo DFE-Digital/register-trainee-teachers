@@ -20,12 +20,6 @@ describe FundingHelper do
   end
 
   describe "#available_training_initiatives_for_cycle" do
-    context "when no trainee is provided" do
-      it "returns an empty array" do
-        expect(available_training_initiatives_for_cycle).to eq([])
-      end
-    end
-
     context "when trainee without start_academic_cycle is provided" do
       let(:trainee) { create(:trainee, start_academic_cycle: nil) }
 
@@ -90,24 +84,20 @@ describe FundingHelper do
       end
     end
 
-    context "when constant doesn't exist for the year but exists for previous year" do
-      it "returns initiatives from the most recent available year" do
-        expected_initiatives = %w[
-          international_relocation_payment
-          now_teach
-          veterans_teaching_undergraduate_bursary
-          primary_mathematics_specialist
-        ]
+    context "when constant doesn't exist for the year" do
+      before do
+        allow(Object).to receive(:const_defined?).and_call_original
+        allow(Object).to receive(:const_defined?).with("TRAINING_INITIATIVES_2026_TO_2027").and_return(false)
+      end
 
-        # 2026 doesn't exist, should fall back to 2025
-        expect(find_initiatives_for_year(2026)).to eq(expected_initiatives)
+      it "returns an empty array" do
+        expect(find_initiatives_for_year(2026)).to eq([])
       end
     end
 
     context "when no constants exist for any year" do
       before do
-        allow(Object).to receive(:const_defined?).and_call_original
-        allow(Object).to receive(:const_defined?).with(/TRAINING_INITIATIVES_/).and_return(false)
+        allow(Object).to receive(:const_defined?).and_return(false)
       end
 
       it "returns an empty array" do
