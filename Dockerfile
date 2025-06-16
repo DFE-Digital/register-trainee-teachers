@@ -38,7 +38,8 @@ RUN apk add --update --no-cache --virtual build-dependencies \
     bundle config build.charlock_holmes --with-ldflags="-licui18n -licuuc" && \
     bundle install --jobs=4 && \
     rm -rf /usr/local/bundle/cache && \
-    apk del build-dependencies
+    apk del build-dependencies && \
+    bundle install --jobs=4
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
