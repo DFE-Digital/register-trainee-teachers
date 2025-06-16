@@ -97,7 +97,19 @@ module Api
 
       validates :sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
-      validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
+      validates :training_route,
+        inclusion: {
+          in: :valid_training_routes,
+          message: ->(object, _data) do
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.training_route,
+              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map{ |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+        if: :valid_trainee_start_date?
       validates :course_subject_one, :course_subject_two, :course_subject_three,
                 inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
       validates :study_mode,

@@ -2079,6 +2079,7 @@ en:
               blank: Enter a comment
         api/v01/trainee_attributes:
           attributes:
+            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             course_subject_one:
               inclusion: &invalid_reference_data has invalid reference data values
             course_subject_two:
@@ -2086,8 +2087,6 @@ en:
             course_subject_three:
               inclusion: *invalid_reference_data
             ethnicity:
-              inclusion: *invalid_reference_data
-            training_route:
               inclusion: *invalid_reference_data
             sex:
               inclusion: *invalid_reference_data

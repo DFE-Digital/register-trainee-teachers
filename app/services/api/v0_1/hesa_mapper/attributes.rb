@@ -107,10 +107,16 @@ module Api
           mapped_value || params[:sex]
         end
 
+        InvalidValue = Struct.new(:original_value) do
+          def to_s
+            original_value.to_s
+          end
+        end
+
         def training_route
           mapped_value = ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
 
-          return HesaMapperConstants::INVALID if params[:training_route].present? && mapped_value.nil?
+          return InvalidValue.new(params[:training_route]) if params[:training_route].present? && mapped_value.nil?
 
           mapped_value
         end

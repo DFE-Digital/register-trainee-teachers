@@ -205,6 +205,7 @@ RSpec.describe Api::V01::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -214,6 +215,7 @@ RSpec.describe Api::V01::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value/)
             end
 
             it "includes full details in the error message" do
@@ -221,7 +223,7 @@ RSpec.describe Api::V01::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.values.map{ |v| "'#{v}'" }.join(', ')}.",
+                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map{ |v| "'#{v}'" }.join(', ')}.",
               )
             end
           end
@@ -232,6 +234,7 @@ RSpec.describe Api::V01::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -245,6 +248,7 @@ RSpec.describe Api::V01::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -254,6 +258,7 @@ RSpec.describe Api::V01::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
