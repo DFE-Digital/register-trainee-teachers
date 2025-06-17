@@ -1,4 +1,4 @@
-<% if policy(current_user).system_admin? %>
+<% if current_user.system_admin? %>
   <div class="app-card app-card--blue">
     <h2 class="govuk-heading-m">Claims team reports</h2>
     <p class="govuk-body">

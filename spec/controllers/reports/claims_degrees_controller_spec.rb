@@ -7,7 +7,7 @@ module Reports
     let(:provider) { create(:provider) }
 
     context "when user is a system admin" do
-      let(:user) { build_current_user(user: create(:user, :system_admin, providers: [provider])) }
+      let(:user) { build_current_user(user: create(:user, :system_admin)) }
 
       before do
         allow(controller).to receive(:current_user).and_return(user)
@@ -69,7 +69,7 @@ module Reports
     end
 
     context "when user is not a system admin" do
-      let(:user) { build_current_user(user: create(:user, providers: [provider])) }
+      let(:user) { build_current_user(user: create(:user)) }
 
       before do
         allow(controller).to receive(:current_user).and_return(user)
