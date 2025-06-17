@@ -17,6 +17,21 @@
         You need to fix the errors if you want to add them.
       </p>
 
+      <p class="govuk-body">
+        You can use a spreadsheet program to fix the errors in the CSV file.
+        Spreadsheet programs sometimes manipulate the data in an imported CSV
+        file in way that renders the values invalid. For example, dates can be
+        reformatted into dd/mm/yy format.
+      </p>
+      <p class="govuk-body">
+        To prevent this some values in the
+        error CSV file that you download are prefixed with an apostrophe, e.g.
+        `'2025-06-06`. The apostrophe instructs the spreadsheet program not to
+        try to reformat this value. You can safely ignore the leading
+        apostrophes. Leave them in place when you fix the errors in the CSV file.
+        They are automatically removed when you upload the CSV file again.
+      </p>
+
       <ol class="govuk-list govuk-list--number">
         <li>
           <%= govuk_link_to(
