@@ -2134,7 +2134,7 @@ en:
               ineligible: &ineligible is not valid for this trainee
             funding_method:
               inclusion: *invalid_reference_data
-              ineligible: *ineligible
+              ineligible: "training route ‘%{training_route}’ and subject code ‘%{subject}’ are not eligible for ‘%{funding_type}’ in academic cycle ‘%{academic_cycle}’"
             itt_aim:
               inclusion: *invalid_reference_data
             itt_qualification_aim:

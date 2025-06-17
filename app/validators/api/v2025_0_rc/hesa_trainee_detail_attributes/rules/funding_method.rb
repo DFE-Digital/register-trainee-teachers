@@ -28,24 +28,33 @@ module Api
           delegate :training_route,
                    :course_subject_one, to: :trainee_attributes
 
+          ValidationResult = Struct.new(:valid?, :error_details)
+
           def initialize(hesa_trainee_detail_attributes)
             @hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
           end
 
           def call
-            return true if no_funding_method? || training_route.nil?
+            return ValidationResult.new(true) if no_funding_method? || funding_method_invalid? || training_route.nil?
 
-            return false if fund_code_not_eligible? && funding_method?
+            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method?
 
-            ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
+            ValidationResult.new(
+              funding_method_exists?,
+              funding_method_exists? ? nil : error_details,
+            )
+          end
+
+        private
+
+          def funding_method_exists?
+            @funding_method_exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
               training_route: training_route,
               subject_specialisms: { name: course_subject_one },
             )
           end
-
-        private
 
           def fund_code_not_eligible?
             !fund_code_eligible?
@@ -63,8 +72,21 @@ module Api
             funding_method.blank? || funding_method == Hesa::CodeSets::BursaryLevels::NONE
           end
 
+          def funding_method_invalid?
+            funding_type.blank?
+          end
+
           def funding_type
             @funding_type ||= FUNDING_TYPES[funding_method]
+          end
+
+          def error_details
+            {
+              academic_cycle: academic_cycle&.label,
+              subject: course_subject_one,
+              funding_type: ::FUNDING_TYPES.invert[funding_type],
+              training_route: training_route.to_s,
+            }
           end
         end
       end
