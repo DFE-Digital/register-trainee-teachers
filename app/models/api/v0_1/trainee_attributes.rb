@@ -95,7 +95,18 @@ module Api
       validate :validate_date_of_birth
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
 
-      validates :sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true
+      validates :sex,
+        inclusion: {
+          in: Hesa::CodeSets::Sexes::MAPPING.values,
+          message: ->(object, _data) do
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.sex,
+              valid_values: Hesa::CodeSets::Sexes::MAPPING.keys.map{ |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
       validates :training_route,
         inclusion: {
