@@ -186,6 +186,29 @@ RSpec.describe Api::V01::TraineeAttributes do
         .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq).allow_blank
     }
 
+    describe "#sex" do
+      it { is_expected.to validate_presence_of(:training_rout }
+
+      describe "inclusion" do
+        context "when trainee_start_date is present" do
+          let!(:academic_cycle) { create(:academic_cycle, cycle_year:) }
+
+          before do
+            Timecop.travel academic_cycle.start_date
+
+            subject.trainee_start_date = academic_cycle.start_date.iso8601
+          end
+
+          context "when AcademicCycle#start_date < 2023" do
+            let(:cycle_year) { 2022 }
+
+            it do
+              expect(subject).to validate_inclusion_of(:training_route)
+                .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value of '.*'/)
+            end
+          end
+
     describe "training_route" do
       it { is_expected.to validate_presence_of(:training_route) }
 
