@@ -14,7 +14,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
-  let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
+  let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:trainee_start_date) { itt_start_date }
   let(:itt_start_date) { "2023-01-01" }
@@ -1285,7 +1285,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "funding_method training route ‘teacher_degree_apprenticeship’ and subject code ‘biology’ are not eligible for ‘bursary’ in academic cycle ‘’",)
+        "funding_method training route ‘teacher_degree_apprenticeship’ and subject code ‘biology’ are not eligible for ‘bursary’ in academic cycle ‘’",
+      )
     end
   end
 end
