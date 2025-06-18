@@ -88,13 +88,26 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
-      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq, allow_blank: true
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
       validate :validate_date_of_birth
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
 
+      validates(
+        :ethnicity,
+        inclusion: {
+          in: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq,
+          message: lambda do |object, _data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.ethnicity,
+              valid_values: Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+      )
       validates(
         :sex,
         inclusion: {
@@ -169,8 +182,20 @@ module Api
         },
         allow_blank: true,
       )
-      validates :training_initiative,
-                inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
+      validates(
+        :training_initiative,
+        inclusion: {
+          in: ROUTE_INITIATIVES.keys,
+          message: lambda do |object, _data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.training_initiative,
+              valid_values: ROUTE_INITIATIVES.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+      )
       validates :trainee_disabilities_attributes, uniqueness: true
 
       def initialize(new_attributes = {})
