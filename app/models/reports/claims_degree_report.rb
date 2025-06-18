@@ -33,13 +33,7 @@ module Reports
     end
 
     def csv_rows(degree)
-      subjects = resolve_degree_subjects(degree)
-
-      if subjects.empty?
-        [build_fallback_row(degree)]
-      else
-        subjects.map { |subject| build_subject_row(degree, subject) }
-      end
+      resolve_degree_subjects(degree).map { |subject| build_subject_row(degree, subject) }
     end
 
     def resolve_degree_subjects(degree)
@@ -67,16 +61,6 @@ module Reports
       top_level_subject.subject_ids.filter_map do |subject_id|
         DfEReference::DegreesQuery::SUBJECTS.one(subject_id)
       end
-    end
-
-    def build_fallback_row(degree)
-      build_csv_row(
-        degree.trainee.trn,
-        degree.trainee.date_of_birth.iso8601,
-        trainee_nino(degree.trainee),
-        "", # Empty HECOS code
-        degree.subject,
-      )
     end
 
     def build_subject_row(degree, subject)

@@ -62,7 +62,7 @@ describe Reports::ClaimsDegreeReport do
     end
 
     context "with degree with no valid subject_uuid" do
-      it "creates fallback row with empty HECOS code" do
+      it "excludes the degree from the report (no data rows generated)" do
         trainee = create(:trainee, :trn_received, :without_degrees, :with_hesa_trainee_detail,
                          training_route: "provider_led_postgrad")
 
@@ -73,12 +73,9 @@ describe Reports::ClaimsDegreeReport do
 
         csv_string = generate_csv_for_degrees(Degree.where(trainee:))
 
-        expected_csv = <<~CSV
-          trn,date_of_birth,nino,subject_code,description
-          #{trainee.trn},#{trainee.date_of_birth.iso8601},#{trainee.hesa_trainee_detail.ni_number},"",Custom Subject
-        CSV
-
-        expect(csv_string.strip).to eq(expected_csv.strip)
+        lines = csv_string.split("\n")
+        expect(lines.first).to eq("trn,date_of_birth,nino,subject_code,description")
+        expect(lines.count).to eq(1) # Only header, no data rows
       end
     end
   end
