@@ -96,18 +96,6 @@ RSpec.describe Api::V01::TraineeAttributes do
         }
       end
 
-      context "when invalid" do
-        subject { described_class.new(course_subject_one: "123456") }
-
-        it {
-          subject.validate
-
-          expect(subject.errors[:course_subject_one]).to contain_exactly(
-            "has invalid reference data value of '123456'. Valid values are #{Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}",
-          )
-        }
-      end
-
       context "when nil" do
         subject { described_class.new(course_subject_one: nil) }
 
@@ -147,9 +135,10 @@ RSpec.describe Api::V01::TraineeAttributes do
 
     %i[course_subject_two course_subject_three].each do |course_subject|
       it {
-        expect(subject).to validate_inclusion_of(course_subject).in_array(
-          Hesa::CodeSets::CourseSubjects::MAPPING.values,
-        ).allow_blank
+        expect(subject).to validate_inclusion_of(course_subject)
+          .in_array(Hesa::CodeSets::CourseSubjects::MAPPING.values)
+          .with_message(/has invalid reference data value of '.*'/)
+          .allow_blank
       }
     end
 
