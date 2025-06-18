@@ -2088,8 +2088,6 @@ en:
               inclusion: *invalid_reference_data
             ethnicity:
               inclusion: *invalid_reference_data
-            sex:
-              inclusion: *invalid_reference_data
             study_mode:
               inclusion: *invalid_reference_data
             nationality:

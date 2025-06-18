@@ -95,32 +95,36 @@ module Api
       validate :validate_date_of_birth
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
 
-      validates :sex,
+      validates(
+        :sex,
         inclusion: {
           in: Hesa::CodeSets::Sexes::MAPPING.values,
-          message: ->(object, _data) do
+          message: lambda do |object, _data|
             I18n.t(
               "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
               value: object.sex,
-              valid_values: Hesa::CodeSets::Sexes::MAPPING.keys.map{ |v| "'#{v}'" }.join(", "),
-            )
-          end,
-        },
-        allow_blank: true
-      validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
-      validates :training_route,
-        inclusion: {
-          in: :valid_training_routes,
-          message: ->(object, _data) do
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.training_route,
-              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map{ |v| "'#{v}'" }.join(", "),
+              valid_values: Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
             )
           end,
         },
         allow_blank: true,
-        if: :valid_trainee_start_date?
+      )
+      validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
+      validates(
+        :training_route,
+        inclusion: {
+          in: :valid_training_routes,
+          message: lambda do |object, _data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.training_route,
+              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+        if: :valid_trainee_start_date?,
+      )
       validates :course_subject_one, :course_subject_two, :course_subject_three,
                 inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
       validates :study_mode,
