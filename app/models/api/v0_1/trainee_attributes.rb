@@ -129,8 +129,20 @@ module Api
                 inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
       validates :study_mode,
                 inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, allow_blank: true
-      validates :nationality,
-                inclusion: { in: RecruitsApi::CodeSets::Nationalities::MAPPING.values }, allow_blank: true
+      validates(
+        :nationality,
+        inclusion: {
+          in: RecruitsApi::CodeSets::Nationalities::MAPPING.values,
+          message: lambda do |object, _data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.nationality,
+              valid_values: RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+      )
       validates :training_initiative,
                 inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
       validates :trainee_disabilities_attributes, uniqueness: true

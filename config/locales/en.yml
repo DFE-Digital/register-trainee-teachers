@@ -2090,8 +2090,6 @@ en:
               inclusion: *invalid_reference_data
             study_mode:
               inclusion: *invalid_reference_data
-            nationality:
-              inclusion: *invalid_reference_data
             training_initiative:
               inclusion: *invalid_reference_data
         api/v20250_rc/trainee_attributes:
