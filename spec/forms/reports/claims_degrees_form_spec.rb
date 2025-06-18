@@ -5,16 +5,35 @@ require "rails_helper"
 module Reports
   describe ClaimsDegreesForm do
     describe "validations" do
-      context "with valid date components" do
-        let!(:trainee) { create(:trainee, :trn_received, :with_degree) }
+      context "with valid date components within 1 year" do
+        let!(:trainee) { create(:trainee, :trn_received) }
+        let!(:degree) { create(:degree, trainee: trainee, created_at: Date.new(2023, 8, 1)) }
 
-        subject { described_class.new(from_day: "1", from_month: "6", from_year: "2023") }
+        subject { described_class.new(from_day: "1", from_month: "6", from_year: "2023", to_day: "31", to_month: "12", to_year: "2023") }
 
         it { is_expected.to be_valid }
       end
 
+      context "with missing from date" do
+        subject { described_class.new(to_day: "1", to_month: "12", to_year: "2023") }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:from_date]).to include("Enter a from date")
+        end
+      end
+
+      context "with missing to date" do
+        subject { described_class.new(from_day: "1", from_month: "6", from_year: "2023") }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:to_date]).to include("Enter a to date")
+        end
+      end
+
       context "with invalid from date" do
-        subject { described_class.new(from_day: "32", from_month: "13", from_year: "invalid") }
+        subject { described_class.new(from_day: "32", from_month: "13", from_year: "invalid", to_day: "1", to_month: "12", to_year: "2023") }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -23,7 +42,7 @@ module Reports
       end
 
       context "with invalid to date" do
-        subject { described_class.new(to_day: "0", to_month: "0", to_year: "2023") }
+        subject { described_class.new(from_day: "1", from_month: "6", from_year: "2023", to_day: "0", to_month: "0", to_year: "2023") }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -50,6 +69,34 @@ module Reports
         end
       end
 
+      context "when date range exceeds 1 year" do
+        subject do
+          described_class.new(
+            from_day: "1", from_month: "1", from_year: "2023",
+            to_day: "2", to_month: "1", to_year: "2024"
+          )
+        end
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:to_date]).to include("Date range cannot exceed 1 year")
+        end
+      end
+
+      context "when date range is exactly 1 year" do
+        let!(:trainee) { create(:trainee, :trn_received) }
+        let!(:degree) { create(:degree, trainee: trainee, created_at: Date.new(2023, 6, 1)) }
+
+        subject do
+          described_class.new(
+            from_day: "1", from_month: "1", from_year: "2023",
+            to_day: "1", to_month: "1", to_year: "2024"
+          )
+        end
+
+        it { is_expected.to be_valid }
+      end
+
       context "when no data exists for the period" do
         subject do
           described_class.new(
@@ -65,21 +112,12 @@ module Reports
       end
 
       context "when partial date fields are provided" do
-        subject { described_class.new(from_day: "1", from_month: "6") }
+        subject { described_class.new(from_day: "1", from_month: "6", to_day: "1", to_month: "12", to_year: "2023") }
 
         it "is invalid" do
           expect(subject).not_to be_valid
           expect(subject.errors[:from_date]).to include("Enter a valid from date")
         end
-      end
-
-      context "with no date filters" do
-        let!(:trainee) { create(:trainee, :trn_received) }
-        let!(:degree) { create(:degree, trainee:) }
-
-        subject { described_class.new }
-
-        it { is_expected.to be_valid }
       end
     end
 
@@ -101,16 +139,6 @@ module Reports
         expect(subject.degrees_scope).to include(degree_in_range)
         expect(subject.degrees_scope).not_to include(degree_out_of_range)
         expect(subject.degrees_scope).not_to include(degree_no_trn)
-      end
-
-      context "with no date filters" do
-        subject { described_class.new }
-
-        it "returns all degrees for trainees with TRNs" do
-          expect(subject.degrees_scope).to include(degree_in_range)
-          expect(subject.degrees_scope).to include(degree_out_of_range)
-          expect(subject.degrees_scope).not_to include(degree_no_trn)
-        end
       end
     end
   end

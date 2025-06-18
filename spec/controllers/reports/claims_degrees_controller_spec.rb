@@ -76,9 +76,9 @@ module Reports
       end
 
       describe "#index" do
-        it "redirects to root path" do
+        it "returns forbidden status" do
           get :index
-          expect(response).to redirect_to(root_path)
+          expect(response).to have_http_status(:forbidden)
         end
       end
     end

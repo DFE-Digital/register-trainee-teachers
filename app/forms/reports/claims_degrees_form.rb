@@ -8,9 +8,12 @@ module Reports
 
     attr_accessor :from_day, :from_month, :from_year, :to_day, :to_month, :to_year
 
-    validate :from_date_valid, if: -> { from_date_present? }
-    validate :to_date_valid, if: -> { to_date_present? }
+    validate :from_date_required
+    validate :to_date_required
+    validate :from_date_valid
+    validate :to_date_valid
     validate :date_range_logical, if: -> { from_date_parsed.is_a?(Date) && to_date_parsed.is_a?(Date) }
+    validate :date_range_within_one_year, if: -> { from_date_parsed.is_a?(Date) && to_date_parsed.is_a?(Date) }
     validate :data_exists_for_period, if: -> { dates_are_valid? }
 
     def from_date_parsed
@@ -56,11 +59,23 @@ module Reports
     end
 
     def dates_are_valid?
-      return false if from_date_present? && !from_date_parsed.is_a?(Date)
-      return false if to_date_present? && !to_date_parsed.is_a?(Date)
-      return false if from_date_parsed.is_a?(Date) && to_date_parsed.is_a?(Date) && to_date_parsed < from_date_parsed
+      return false unless from_date_parsed.is_a?(Date) && to_date_parsed.is_a?(Date)
+      return false if to_date_parsed < from_date_parsed
+      return false if (to_date_parsed - from_date_parsed).to_i > 365
 
       true
+    end
+
+    def from_date_required
+      unless from_date_present?
+        errors.add(:from_date, "Enter a from date")
+      end
+    end
+
+    def to_date_required
+      unless to_date_present?
+        errors.add(:to_date, "Enter a to date")
+      end
     end
 
     def from_date_valid
@@ -81,18 +96,15 @@ module Reports
       end
     end
 
+    def date_range_within_one_year
+      if (to_date_parsed - from_date_parsed).to_i > 365
+        errors.add(:to_date, "Date range cannot exceed 1 year")
+      end
+    end
+
     def data_exists_for_period
       if degrees_scope.empty?
-        period_description = if from_date_parsed.is_a?(Date) && to_date_parsed.is_a?(Date)
-                               "between #{from_date_parsed.to_fs(:govuk)} and #{to_date_parsed.to_fs(:govuk)}"
-                             elsif from_date_parsed.is_a?(Date)
-                               "from #{from_date_parsed.to_fs(:govuk)}"
-                             elsif to_date_parsed.is_a?(Date)
-                               "up to #{to_date_parsed.to_fs(:govuk)}"
-                             else
-                               "for the selected period"
-                             end
-
+        period_description = "between #{from_date_parsed.to_fs(:govuk)} and #{to_date_parsed.to_fs(:govuk)}"
         errors.add(:base, "No degree data found #{period_description}")
       end
     end

@@ -64,9 +64,9 @@ module Reports
     end
 
     def expand_multi_subjects(top_level_subject)
-      top_level_subject.subject_ids.map do |subject_id|
+      top_level_subject.subject_ids.filter_map do |subject_id|
         DfEReference::DegreesQuery::SUBJECTS.one(subject_id)
-      end.compact
+      end
     end
 
     def build_fallback_row(degree)

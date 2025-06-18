@@ -19,19 +19,19 @@
     
     <p class="govuk-body">
       This report allows you to export degree data for all trainees with a TRN.
-      You can filter by the date the degree record was created in Register.
+      You must specify a date range (maximum 1 year) for when the degree record was created in Register.
     </p>
 
       <div class="govuk-form-group">
         <%= f.govuk_date_field :from_date, 
-          legend: { text: "From date (optional)", size: "s" },
-          hint: { text: "Filter degrees created from this date onwards. For example, 13 1 2022" } %>
+          legend: { text: "From date", size: "s" },
+          hint: { text: "Start date for degrees created. For example, 13 1 2022" } %>
       </div>
 
       <div class="govuk-form-group">
         <%= f.govuk_date_field :to_date, 
-          legend: { text: "To date (optional)", size: "s" },
-          hint: { text: "Filter degrees created up to this date. For example, 13 1 2023" } %>
+          legend: { text: "To date", size: "s" },
+          hint: { text: "End date for degrees created (maximum 1 year from start date). For example, 13 1 2023" } %>
       </div>
 
       <%= f.govuk_submit "Export as CSV" %>

@@ -2,7 +2,7 @@
 
 module Reports
   class ClaimsDegreesController < ApplicationController
-    before_action :authorize_user
+    before_action :authorize_claims_team
 
     DATE_FIELD_MAPPING = {
       "from_date(3i)" => "from_day",
@@ -34,8 +34,8 @@ module Reports
 
   private
 
-    def authorize_user
-      redirect_to(root_path) unless current_user.system_admin?
+    def authorize_claims_team
+      authorize(current_user, :claims_team?)
     end
 
     def form_params
