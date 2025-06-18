@@ -1,21 +1,26 @@
 ---
-title: POST /trainees/{trainee_id}/placements
-weight: 9
+title: PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}
+weight: 15
 ---
 
-# `POST /trainees/{trainee_id}/placements`
+# `PUT|PATCH /trainees/{trainee_id}/placements/{placement_id}`
 
-Create a placement for this trainee.
+Updates an existing placement for this trainee.
 
 ## Request
 
-`POST /api/v1.0-pre/trainees/{trainee_id}/placements`
+`PUT /api/v2025.0-rc/trainees/{trainee_id}/placements/{placement_id}`
+
+or
+
+`PATCH /api/v2025.0-rc/trainees/{trainee_id}/placements/{placement_id}`
 
 ## Parameters
 
 | **Parameter** | **In**  | **Type** | **Required** | **Description** |
 | ------------- | ------- | -------- | ------------ | --------------- |
 | **trainee_id** | path | string | true | The unique ID of the trainee |
+| **placement_id** | path | string | true | The unique ID of the placement |
 
 ## Request body
 
@@ -26,7 +31,7 @@ Placement details
     <dt class="govuk-summary-list__key"><code>data</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        <%= link_to "Placement", "/v1.0-pre/objects/placement.html" %> object
+        <%= link_to "Placement", "/v2025.0-rc/objects/placement.html" %> object
       </p>
     </dd>
   </div>
@@ -38,9 +43,8 @@ Placement details
     <pre class="json-code-sample">
     {
       "data": {
-        "urn": "343452",
-        "name": "Oxford School",
-        "postcode": "OX1 1AA"
+        "urn": "137523",
+        "name": "Wellsway School"
       }
     }
     </pre>
@@ -50,18 +54,18 @@ Placement details
 ## Possible responses
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">HTTP 201<span> - A placement</span></summary>
+  <summary class="govuk-details__summary">HTTP 200<span> - A placement</span></summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
       "data": {
-        "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
-        "school_id": 26214,
-        "urn": "123456",
-        "name": "Meadow Creek School",
-        "postcode": "AB1 2CD",
-        "created_at": "2024-01-18T08:02:42.672Z",
-        "updated_at": "2024-01-18T08:02:42.672Z"
+        "urn": "137523",
+        "name": "Wellsway School",
+        "address": "URN 137523",
+        "postcode": null,
+        "placement_id": 4fjxTZgHxFgzYrwB8L3UNRvM,
+        "created_at": "2024-03-19T22:23:48.619Z",
+        "updated_at": "2024-03-19T22:23:48.619Z"
       }
     }
     </pre>
@@ -87,7 +91,7 @@ Placement details
       "errors": [
         {
           "error": "NotFound",
-          "message": "Trainee(s) not found"
+          "message": "Placement(s) not found"
         }
       ]
     }

@@ -5,7 +5,7 @@ weight: 2
 
 # API versioning strategy
 
-Find out about [how we make updates to the API](/api-docs#api-versioning-strategy), including:
+Find out about [how we make updates to the API](/docs/#api-versioning-strategy), including:
 
 - the difference between breaking and non-breaking changes
 - how the API version number reflects changes
