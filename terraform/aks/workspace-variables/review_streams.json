@@ -2,7 +2,7 @@
   "configurations": {
     "streams": [
       {
-        "name": "trainees",
+        "name": "academic_cycles",
         "syncMode": "incremental_deduped_history",
         "cursorField": [
           "_ab_cdc_lsn"
@@ -14,28 +14,885 @@
         ],
         "selectedFields": [
           {
-            "fieldPath": [ "id" ]
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
           },
           {
-            "fieldPath": [ "_ab_cdc_lsn" ]
+            "fieldPath": [
+              "created_at"
+            ]
           },
           {
-            "fieldPath": [ "email" ]
+            "fieldPath": [
+              "end_date"
+            ]
           },
           {
-            "fieldPath": [ "last_name" ]
+            "fieldPath": [
+              "id"
+            ]
           },
           {
-            "fieldPath": [ "created_at" ]
+            "fieldPath": [
+              "start_date"
+            ]
           },
           {
-            "fieldPath": [ "updated_at" ]
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "activities",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
           },
           {
-            "fieldPath": [ "first_names" ]
+            "fieldPath": [
+              "action_name"
+            ]
           },
           {
-            "fieldPath": [ "discarded_at" ]
+            "fieldPath": [
+              "controller_name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "metadata"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "apply_applications",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "accredited_body_code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "apply_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "recruitment_cycle_year"
+            ]
+          },
+          {
+            "fieldPath": [
+              "state"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "allocation_subjects",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "courses",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "accredited_body_code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_length"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "duration_in_years"
+            ]
+          },
+          {
+            "fieldPath": [
+              "full_time_end_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "full_time_start_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "level"
+            ]
+          },
+          {
+            "fieldPath": [
+              "max_age"
+            ]
+          },
+          {
+            "fieldPath": [
+              "min_age"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "part_time_end_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "part_time_start_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "published_start_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "qualification"
+            ]
+          },
+          {
+            "fieldPath": [
+              "recruitment_cycle_year"
+            ]
+          },
+          {
+            "fieldPath": [
+              "route"
+            ]
+          },
+          {
+            "fieldPath": [
+              "study_mode"
+            ]
+          },
+          {
+            "fieldPath": [
+              "summary"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "uuid"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "course_subjects",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "subject_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "degrees",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "country"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "grade"
+            ]
+          },
+          {
+            "fieldPath": [
+              "grade_uuid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "graduation_year"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "institution"
+            ]
+          },
+          {
+            "fieldPath": [
+              "institution_uuid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "locale_code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "non_uk_degree"
+            ]
+          },
+          {
+            "fieldPath": [
+              "other_grade"
+            ]
+          },
+          {
+            "fieldPath": [
+              "slug"
+            ]
+          },
+          {
+            "fieldPath": [
+              "subject"
+            ]
+          },
+          {
+            "fieldPath": [
+              "subject_uuid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "uk_degree"
+            ]
+          },
+          {
+            "fieldPath": [
+              "uk_degree_uuid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "disabilities",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "dqt_trn_requests",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "request_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "response"
+            ]
+          },
+          {
+            "fieldPath": [
+              "state"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "dttp_providers",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "ukprn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "dttp_schools",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "status_code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "urn"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "funding_methods",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "academic_cycle_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "amount"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "funding_type"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "training_route"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "funding_method_subjects",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "allocation_subject_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "funding_method_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hesa_metadata",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_programme_title"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "fundability"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "itt_aim"
+            ]
+          },
+          {
+            "fieldPath": [
+              "itt_qualification_aim"
+            ]
+          },
+          {
+            "fieldPath": [
+              "pg_apprenticeship_start_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "placement_school_urn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "service_leaver"
+            ]
+          },
+          {
+            "fieldPath": [
+              "study_length"
+            ]
+          },
+          {
+            "fieldPath": [
+              "study_length_unit"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "year_of_course"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hesa_trn_submissions",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "submitted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
           }
         ]
       },
@@ -52,25 +909,1316 @@
         ],
         "selectedFields": [
           {
-            "fieldPath": [ "id" ]
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
           },
           {
-            "fieldPath": [ "_ab_cdc_lsn" ]
+            "fieldPath": [
+              "id"
+            ]
           },
           {
-            "fieldPath": [ "urn" ]
+            "fieldPath": [
+              "urn"
+            ]
           },
           {
-            "fieldPath": [ "name" ]
+            "fieldPath": [
+              "record_type"
+            ]
           },
           {
-            "fieldPath": [ "created_at" ]
+            "fieldPath": [
+              "name"
+            ]
           },
           {
-            "fieldPath": [ "updated_at" ]
+            "fieldPath": [
+              "ukprn"
+            ]
           },
           {
-            "fieldPath": [ "discarded_at" ]
+            "fieldPath": [
+              "school_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "provider_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "discarded_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "lead_partner_users",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "lead_partner_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "user_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "nationalisations",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "nationality_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "nationalities",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "potential_duplicate_trainees",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "group_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "provider_users",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "provider_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "user_id"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "providers",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "accreditation_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "apply_sync_enabled"
+            ]
+          },
+          {
+            "fieldPath": [
+              "code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "ukprn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "accredited"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "discarded_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "schools",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "close_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "open_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "postcode"
+            ]
+          },
+          {
+            "fieldPath": [
+              "town"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "urn"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "sign_offs",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "provider_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "academic_cycle_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "user_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "sign_off_type"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "subject_specialisms",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "allocation_subject_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "hecos_code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "subjects",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "code"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "trainees",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "apply_application_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "applying_for_bursary"
+            ]
+          },
+          {
+            "fieldPath": [
+              "applying_for_grant"
+            ]
+          },
+          {
+            "fieldPath": [
+              "applying_for_scholarship"
+            ]
+          },
+          {
+            "fieldPath": [
+              "awarded_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "bursary_tier"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_start_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "commencement_status"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_allocation_subject_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_education_phase"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_max_age"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_min_age"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_subject_one"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_subject_three"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_subject_two"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_uuid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_from_dttp"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_from_hesa"
+            ]
+          },
+          {
+            "fieldPath": [
+              "date_of_birth"
+            ]
+          },
+          {
+            "fieldPath": [
+              "defer_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "defer_reason"
+            ]
+          },
+          {
+            "fieldPath": [
+              "disability_disclosure"
+            ]
+          },
+          {
+            "fieldPath": [
+              "discarded_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "diversity_disclosure"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dormancy_dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_update_sha"
+            ]
+          },
+          {
+            "fieldPath": [
+              "ebacc"
+            ]
+          },
+          {
+            "fieldPath": [
+              "email"
+            ]
+          },
+          {
+            "fieldPath": [
+              "employing_school_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "employing_school_not_applicable"
+            ]
+          },
+          {
+            "fieldPath": [
+              "end_academic_cycle_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "first_names"
+            ]
+          },
+          {
+            "fieldPath": [
+              "sex"
+            ]
+          },
+          {
+            "fieldPath": [
+              "hesa_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "hesa_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "iqts_country"
+            ]
+          },
+          {
+            "fieldPath": [
+              "itt_end_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "itt_start_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "last_name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "lead_partner_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "placement_detail"
+            ]
+          },
+          {
+            "fieldPath": [
+              "lead_partner_not_applicable"
+            ]
+          },
+          {
+            "fieldPath": [
+              "outcome_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "placement_assignment_dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "progress"
+            ]
+          },
+          {
+            "fieldPath": [
+              "provider_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "recommended_for_award_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "record_source"
+            ]
+          },
+          {
+            "fieldPath": [
+              "region"
+            ]
+          },
+          {
+            "fieldPath": [
+              "reinstate_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "slug"
+            ]
+          },
+          {
+            "fieldPath": [
+              "start_academic_cycle_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "state"
+            ]
+          },
+          {
+            "fieldPath": [
+              "study_mode"
+            ]
+          },
+          {
+            "fieldPath": [
+              "submission_ready"
+            ]
+          },
+          {
+            "fieldPath": [
+              "submitted_for_trn_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "training_initiative"
+            ]
+          },
+          {
+            "fieldPath": [
+              "training_route"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "withdraw_date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "withdraw_reasons_details"
+            ]
+          },
+          {
+            "fieldPath": [
+              "withdraw_reasons_dfe_details"
+            ]
+          },
+          {
+            "fieldPath": [
+              "hesa_trn_submission_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "hesa_editable"
+            ]
+          },
+          {
+            "fieldPath": [
+              "slug_sent_to_dqt_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "application_choice_id"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "users",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dfe_sign_in_uid"
+            ]
+          },
+          {
+            "fieldPath": [
+              "discarded_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "dttp_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "email"
+            ]
+          },
+          {
+            "fieldPath": [
+              "first_name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "last_name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "last_signed_in_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "system_admin"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "welcome_email_sent_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hesa_collection_requests",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "requested_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "state"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "bulk_update_row_errors",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "errored_on_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "errored_on_type"
+            ]
+          },
+          {
+            "fieldPath": [
+              "error_type"
+            ]
+          },
+          {
+            "fieldPath": [
+              "message"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "placements",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "school_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "urn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "address"
+            ]
+          },
+          {
+            "fieldPath": [
+              "postcode"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "slug"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "withdrawal_reasons",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "trainee_withdrawals",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trigger"
+            ]
+          },
+          {
+            "fieldPath": [
+              "another_reason"
+            ]
+          },
+          {
+            "fieldPath": [
+              "future_interest"
+            ]
+          },
+          {
+            "fieldPath": [
+              "discarded_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "trainee_withdrawal_reasons",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "withdrawal_reason_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_withdrawal_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
           }
         ]
       }
