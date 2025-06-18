@@ -125,8 +125,22 @@ module Api
         allow_blank: true,
         if: :valid_trainee_start_date?,
       )
-      validates :course_subject_one, :course_subject_two, :course_subject_three,
-                inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
+      validates(
+        :course_subject_one,
+        :course_subject_two,
+        :course_subject_three,
+        inclusion: {
+          in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values,
+          message: lambda do |_object, data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: data[:value],
+              valid_values: Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+      )
       validates(
         :study_mode,
         inclusion: {
