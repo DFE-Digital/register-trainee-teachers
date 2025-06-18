@@ -166,7 +166,7 @@ RSpec.describe Api::V01::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:study_mode]).to contain_exactly("has invalid reference data values")
+          expect(subject.errors[:study_mode]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::StudyModes::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
         }
       end
 

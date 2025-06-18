@@ -127,8 +127,20 @@ module Api
       )
       validates :course_subject_one, :course_subject_two, :course_subject_three,
                 inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
-      validates :study_mode,
-                inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, allow_blank: true
+      validates(
+        :study_mode,
+        inclusion: {
+          in: TRAINEE_STUDY_MODE_ENUMS.keys,
+          message: lambda do |object, _data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.study_mode,
+              valid_values: Hesa::CodeSets::StudyModes::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+      )
       validates(
         :nationality,
         inclusion: {
