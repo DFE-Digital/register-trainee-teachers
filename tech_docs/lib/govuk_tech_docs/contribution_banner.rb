@@ -1,4 +1,5 @@
-# https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/govuk_tech_docs/contribution_banner.rb
+# Patched from: https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/govuk_tech_docs/contribution_banner.rb
+# Changed lines: L64-66, L68-70, L77-79
 
 module GovukTechDocs
   # Helper included
