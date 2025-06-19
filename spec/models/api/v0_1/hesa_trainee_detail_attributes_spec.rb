@@ -30,7 +30,9 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:itt_aim]).to contain_exactly("has invalid reference data values")
+          expect(subject.errors[:itt_aim]).to contain_exactly(
+            "has invalid reference data value of '300'. Valid values are #{Hesa::CodeSets::IttAims::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
         }
       end
     end
