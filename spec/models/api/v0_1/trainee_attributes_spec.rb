@@ -26,6 +26,7 @@ RSpec.describe Api::V01::TraineeAttributes do
         .in_array(
           Hesa::CodeSets::TrainingInitiatives::MAPPING.values + [ROUTE_INITIATIVES_ENUMS[:no_initiative]],
         )
+        .with_message(/has invalid reference data value of '.*'/)
     }
 
     describe "email" do
@@ -188,7 +189,9 @@ RSpec.describe Api::V01::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
-        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq).allow_blank
+        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq)
+        .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
+        .allow_blank
     }
 
     describe "#sex" do

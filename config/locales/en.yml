@@ -2112,7 +2112,7 @@ en:
         api/v01/hesa_trainee_detail_attributes:
           attributes:
             course_age_range:
-              inclusion: *invalid_reference_data
+              inclusion: &invalid_reference_data has invalid reference data values
             fund_code:
               ineligible: &ineligible is not valid for this trainee
             funding_method:
