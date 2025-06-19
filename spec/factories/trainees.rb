@@ -766,5 +766,10 @@ FactoryBot.define do
       hesa_id { Faker::Number.number(digits: 13) }
       hesa_students { create_list(:hesa_student, 1, hesa_id:) }
     end
+
+    trait :with_hesa_metadatum do
+      hesa_id { Faker::Number.number(digits: 13) }
+      hesa_metadatum
+    end
   end
 end

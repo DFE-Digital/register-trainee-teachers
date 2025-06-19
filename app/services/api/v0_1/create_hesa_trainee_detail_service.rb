@@ -10,6 +10,8 @@ module Api
       end
 
       def call
+        return true unless trainee.hesa_trainee_detail.nil?
+
         hesa_trainee_detail = Hesa::TraineeDetail.build(trainee:)
 
         attributes = {}

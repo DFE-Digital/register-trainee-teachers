@@ -1362,7 +1362,12 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         trainee.reload
         expect(response).to have_http_status(:ok)
         expect(trainee.first_names).to eq("Alice")
+        expect(trainee.hesa_trainee_detail.fund_code).to eq("2")
+        expect(trainee.hesa_trainee_detail.course_year).to eq(2015)
+        expect(trainee.hesa_trainee_detail.funding_method).to eq("6")
+        expect(trainee.hesa_trainee_detail.itt_aim).to eq("202")
 
+        expect(response.parsed_body[:data][:first_names]).to eq("Alice")
         expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
         expect(response.parsed_body[:data][:fund_code]).to eq("2")
         expect(response.parsed_body[:data][:course_year]).to eq(2015)
