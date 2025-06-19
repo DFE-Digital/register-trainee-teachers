@@ -56,7 +56,20 @@ module Api
         },
         allow_blank: true,
       )
-      validates(:itt_qualification_aim, inclusion: { in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys }, allow_blank: true)
+      validates(
+        :itt_qualification_aim,
+        inclusion: {
+          in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys,
+          message: lambda do |object, _data|
+            I18n.t(
+              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
+              value: object.itt_qualification_aim,
+              valid_values: Hesa::CodeSets::IttQualificationAims::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
+            )
+          end,
+        },
+        allow_blank: true,
+      )
       validates(:course_age_range, inclusion: { in: Hesa::CodeSets::AgeRanges::MAPPING.keys }, allow_blank: true)
       validates(:funding_method, inclusion: { in: Hesa::CodeSets::BursaryLevels::MAPPING.keys }, allow_blank: true)
     end
