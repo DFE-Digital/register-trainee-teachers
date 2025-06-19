@@ -102,7 +102,7 @@ Breaking changes usually involve modifying or deleting parts of the API, such as
 -  removing features
 -  removing fields
 -  changing the behaviour of endpoints, for example requiring a new parameter
-   in order for applications to be synced
+   in order for data to be synced
 
 You must update student record systems before you move to a new version with
 breaking changes.
@@ -114,12 +114,11 @@ means that the changes do not affect the existing functionality of the API.
 
 Non-breaking changes include adding new:
 
--  endpoints, for example to allow individual conditions to be marked as met or
-   not met
--  nested resources and objects, for example details of interviews
--  fields, for example when candidates are asked a new question
+-  endpoints, for example to allow a new action to be performed on a trainee record
+-  nested resources and objects, for example details of a trainee’s placements
+-  fields, for example when a reason for a deferral is added
 -  optional query parameters, for example to allow optional pagination when
-   applications are synced
+   data is synced
 
 You do not need to update student record systems before moving to a new version
 with non-breaking changes. You only need to make updates if you want to use the
@@ -127,34 +126,28 @@ version’s new features.
 
 ### How the API version number reflects the changes we’ve made
 
-We use the format major.minor (for example, `1.2`) to indicate the API version.
+We use an academic-year-based Calendar Versioning ([CalVer](https://calver.org/) variant).
 
-The first number indicates a major version. This is incremented each time
-breaking changes are made, for example `1.2` changes to `2.0`.
+The format is `YYYY.MAJOR` (for example, `2025.1`) where `YYYY` is the year that
+the version enters production and `MAJOR` is the major version number.
 
-The number after the decimal point indicates a minor version. This is
-incremented each time non-breaking changes are made, for example `1.2` changes to
-`1.3`.
+`MAJOR` will increment for breaking changes. Non-breaking changes are included within the
+current version.
+
+Pre-release versions are suffixed with `-pre` and release candidate versions
+(no changes expected before go-live) are suffixed with `-rc`.
 
 Changes are documented in our [release notes](/api-docs/release-notes.html).
 
 ### Using the correct version of the API
 
-When an API version is officially released, minor version updates will be made
-available:
+When an API version is released, version updates will be made available on their own
+version URL.
 
-- on their own minor version URL, for example `v1.1`
-- on a major version URL which does not indicate a minor version, for example `v1`
+For example, after version `2025.2` is released you can use:
 
-This means that if you use the major version URL, you do not need to update student
-record systems every time we make a minor update.
-
-For example, after version 1.1 is released you can use:
-
-- <https://www.register-trainee-teachers.service.gov.uk/api/v1.0> for version `1.0`
-- <https://www.register-trainee-teachers.service.gov.uk/api/v1.1> for version `1.1`
-- <https://www.register-trainee-teachers.service.gov.uk/api/v1> for version `1.1` - but
-if version `1.2` is released then this URL will give you version `1.2` instead
+- <https://www.register-trainee-teachers.service.gov.uk/api/v2025.1> for version `2025.1`
+- <https://www.register-trainee-teachers.service.gov.uk/api/v2025.2> for version `2025.2`
 
 ## Testing
 
