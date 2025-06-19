@@ -1,4 +1,5 @@
-# https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/govuk_tech_docs/path_helpers.rb
+# Patched from:https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/govuk_tech_docs/path_helpers.rb
+# Changed lines: L24-25
 
 require "uri"
 
