@@ -18,14 +18,14 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
         context "when there is an existing hesa_student record" do
           let(:student) do
             create(:hesa_student,
-              course_age_range: "13915",
-              itt_aim: "001",
-              itt_qualification_aim: "001",
-              fund_code: "7",
-              ni_number: "AB010203V",
-              bursary_level: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
-              trainee: trainee)
-            end
+                   course_age_range: "13915",
+                   itt_aim: "001",
+                   itt_qualification_aim: "001",
+                   fund_code: "7",
+                   ni_number: "AB010203V",
+                   bursary_level: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
+                   trainee: trainee)
+          end
 
           it "uses attributes from the hesa_student record to fill nil values" do
             trainee.reload
