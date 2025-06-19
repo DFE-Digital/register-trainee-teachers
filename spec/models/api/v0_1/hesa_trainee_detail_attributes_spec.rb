@@ -120,7 +120,9 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:funding_method]).to contain_exactly("has invalid reference data values")
+          expect(subject.errors[:funding_method]).to contain_exactly(
+            "has invalid reference data value of 'AD'. Valid values are #{Hesa::CodeSets::BursaryLevels::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
         }
       end
 
