@@ -10,6 +10,7 @@ module Api
       include TrainingRouteManageable
       include PrimaryCourseSubjects
       include DateValidatable
+      include Api::ErrorMessageHelpers
 
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
@@ -98,13 +99,7 @@ module Api
         :ethnicity,
         inclusion: {
           in: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.ethnicity,
-              valid_values: Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::Ethnicities::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -112,13 +107,7 @@ module Api
         :sex,
         inclusion: {
           in: Hesa::CodeSets::Sexes::MAPPING.values,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.sex,
-              valid_values: Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::Sexes::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -127,13 +116,7 @@ module Api
         :training_route,
         inclusion: {
           in: :valid_training_routes,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.training_route,
-              valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys) },
         },
         allow_blank: true,
         if: :valid_trainee_start_date?,
@@ -144,13 +127,7 @@ module Api
         :course_subject_three,
         inclusion: {
           in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values,
-          message: lambda do |_object, data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: data[:value],
-              valid_values: Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::CourseSubjects::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -158,13 +135,7 @@ module Api
         :study_mode,
         inclusion: {
           in: TRAINEE_STUDY_MODE_ENUMS.keys,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.study_mode,
-              valid_values: Hesa::CodeSets::StudyModes::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::StudyModes::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -172,13 +143,7 @@ module Api
         :nationality,
         inclusion: {
           in: RecruitsApi::CodeSets::Nationalities::MAPPING.values,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.nationality,
-              valid_values: RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: RecruitsApi::CodeSets::Nationalities::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -186,13 +151,7 @@ module Api
         :training_initiative,
         inclusion: {
           in: ROUTE_INITIATIVES.keys,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.training_initiative,
-              valid_values: ROUTE_INITIATIVES.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: ROUTE_INITIATIVES.keys) },
         },
         allow_blank: true,
       )

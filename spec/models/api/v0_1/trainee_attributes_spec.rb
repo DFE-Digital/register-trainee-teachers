@@ -17,7 +17,7 @@ RSpec.describe Api::V01::TraineeAttributes do
     it {
       expect(subject).to validate_inclusion_of(:nationality)
         .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values)
-        .with_message(/has invalid reference data value of '.*'. Valid values are #{RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
+        .with_message(/has invalid reference data value of '.*'. Valid values are #{RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         .allow_blank
     }
 
@@ -69,7 +69,7 @@ RSpec.describe Api::V01::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:sex]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
+          expect(subject.errors[:sex]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         }
       end
 
@@ -114,7 +114,7 @@ RSpec.describe Api::V01::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:course_subject_one]).to contain_exactly(
-            "has invalid reference data value of 'random subject'. Valid values are #{Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}.",
+            "has invalid reference data value of 'random subject'. Valid values are #{Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
           )
         }
       end
@@ -170,7 +170,7 @@ RSpec.describe Api::V01::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:study_mode]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::StudyModes::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
+          expect(subject.errors[:study_mode]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::StudyModes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         }
       end
 
@@ -190,7 +190,7 @@ RSpec.describe Api::V01::TraineeAttributes do
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
         .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq)
-        .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
+        .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         .allow_blank
     }
 
@@ -201,7 +201,7 @@ RSpec.describe Api::V01::TraineeAttributes do
         it do
           expect(subject).to validate_inclusion_of(:sex)
             .in_array(Hesa::CodeSets::Sexes::MAPPING.values)
-            .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(", ")}/)
+            .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         end
       end
     end
@@ -243,7 +243,7 @@ RSpec.describe Api::V01::TraineeAttributes do
               subject.validate
 
               expect(subject.errors[:training_route]).to include(
-                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map{ |v| "'#{v}'" }.join(', ')}.",
+                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
               )
             end
           end

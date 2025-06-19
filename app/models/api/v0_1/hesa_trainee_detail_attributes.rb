@@ -5,6 +5,7 @@ module Api
     class HesaTraineeDetailAttributes
       include ActiveModel::Model
       include ActiveModel::Attributes
+      include Api::ErrorMessageHelpers
 
       ATTRIBUTES = %i[
         course_study_mode
@@ -46,13 +47,7 @@ module Api
         :itt_aim,
         inclusion: {
           in: Hesa::CodeSets::IttAims::MAPPING.keys,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.itt_aim,
-              valid_values: Hesa::CodeSets::IttAims::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::IttAims::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -60,13 +55,7 @@ module Api
         :itt_qualification_aim,
         inclusion: {
           in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.itt_qualification_aim,
-              valid_values: Hesa::CodeSets::IttQualificationAims::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::IttQualificationAims::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -74,13 +63,7 @@ module Api
         :course_age_range,
         inclusion: {
           in: Hesa::CodeSets::AgeRanges::MAPPING.keys,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.course_age_range,
-              valid_values: Hesa::CodeSets::AgeRanges::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::AgeRanges::MAPPING.keys) },
         },
         allow_blank: true,
       )
@@ -88,13 +71,7 @@ module Api
         :funding_method,
         inclusion: {
           in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
-          message: lambda do |object, _data|
-            I18n.t(
-              "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion",
-              value: object.funding_method,
-              valid_values: Hesa::CodeSets::BursaryLevels::MAPPING.keys.map { |v| "'#{v}'" }.join(", "),
-            )
-          end,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::BursaryLevels::MAPPING.keys) },
         },
         allow_blank: true,
       )
