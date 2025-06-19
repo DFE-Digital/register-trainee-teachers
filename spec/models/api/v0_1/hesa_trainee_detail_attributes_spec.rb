@@ -89,6 +89,7 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
       it {
         expect(subject).to validate_inclusion_of(:course_age_range)
           .in_array(Hesa::CodeSets::AgeRanges::MAPPING.keys)
+          .with_message(/has invalid reference data value of '.*'/)
       }
     end
 
