@@ -1,4 +1,4 @@
-<% page_title = "Claims team - Trainee degree data export" %>
+<% page_title = "Trainee degree data export" %>
 <%= render PageTitle::View.new(text: page_title, has_errors: @form.errors.present?) %>
 
 <%= content_for(:breadcrumbs) do %>
@@ -12,7 +12,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <%= register_form_with model: @form, url: reports_claims_degrees_path, method: :get do |f| %>
       <%= f.govuk_error_summary %>
-      
+    <span class="govuk-caption-l">Claims team</span>
     <h1 class="govuk-heading-l">
       <%= page_title %>
     </h1>
