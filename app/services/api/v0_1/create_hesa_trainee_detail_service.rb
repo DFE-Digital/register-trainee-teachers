@@ -39,7 +39,8 @@ module Api
 
         required_attributes = %i[course_age_range itt_aim itt_qualification_aim fund_code pg_apprenticeship_start_date ni_number]
 
-        trainee.hesa_students.last.slice(required_attributes)
+        attributes = trainee.hesa_students.last.slice(required_attributes)
+        attributes.merge!(funding_method: trainee.hesa_students.last.bursary_level)
       end
     end
   end
