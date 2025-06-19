@@ -1320,7 +1320,6 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       let(:course_subject) { CourseSubjects::BIOLOGY }
       let(:slug) { response.parsed_body[:data][:trainee_id] }
       let(:trainee) { Trainee.last.reload }
-      let(:non_nil_values) { %w[id trainee_id itt_aim itt_qualification_aim created_at updated_at fund_code] }
       let(:params_for_update) do
         {
           data:
@@ -1392,11 +1391,9 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
           headers: headers,
         )
 
-        (Hesa::Metadatum.new.attributes.keys.intersection(Hesa::TraineeDetail.new.attributes.keys) - non_nil_values).each do |attribute|
-          expect(trainee.hesa_trainee_detail.send(attribute.to_sym)).to eq(trainee.hesa_metadatum.send(attribute.to_sym))
-        end
+        expect(trainee.hesa_trainee_detail.pg_apprenticeship_start_date).to eq(trainee.hesa_metadatum.pg_apprenticeship_start_date)
 
-        (Hesa::Student.new.attributes.keys.intersection(Hesa::TraineeDetail.new.attributes.keys) - non_nil_values).each do |attribute|
+        %w[course_age_range pg_apprenticeship_start_date ni_number].each do |attribute|
           expect(trainee.hesa_trainee_detail.send(attribute.to_sym)).to eq(trainee.hesa_students.last.send(attribute.to_sym))
         end
       end

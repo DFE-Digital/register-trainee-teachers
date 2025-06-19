@@ -29,17 +29,17 @@ module Api
       def extract_attributes_from_metadatum_record
         return {} if trainee.hesa_metadatum.nil?
 
-        required_attributes = Hesa::Metadatum.new.attributes.keys.intersection(Hesa::TraineeDetail.new.attributes.keys) - %w[id trainee_id created_at updated_at]
+        required_attributes = %i[itt_aim itt_qualification_aim pg_apprenticeship_start_date]
 
-        trainee.hesa_metadatum.slice(required_attributes).compact!
+        trainee.hesa_metadatum.slice(required_attributes)
       end
 
       def extract_attributes_from_student_record
         return {} if trainee.hesa_students.empty?
 
-        required_attributes = Hesa::Student.new.attributes.keys.intersection(Hesa::TraineeDetail.new.attributes.keys) - %w[id trainee_id created_at updated_at]
+        required_attributes = %i[course_age_range itt_aim itt_qualification_aim fund_code pg_apprenticeship_start_date ni_number]
 
-        trainee.hesa_students.last.slice(required_attributes).compact!
+        trainee.hesa_students.last.slice(required_attributes)
       end
     end
   end
