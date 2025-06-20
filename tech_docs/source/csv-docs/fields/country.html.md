@@ -1,5 +1,6 @@
 ---
 title: Degree country
+weight: 50
 ---
 
 <h1 id="degree-country">Degree country</h1>

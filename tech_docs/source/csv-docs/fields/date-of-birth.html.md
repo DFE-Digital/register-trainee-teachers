@@ -1,5 +1,6 @@
 ---
 title: Date of Birth
+weight: 7
 ---
 
 <h1 id="date-of-birth">Date of Birth</h1>

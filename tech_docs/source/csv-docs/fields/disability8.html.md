@@ -1,5 +1,6 @@
 ---
 title: Disability 8
+weight: 20
 ---
 
 <h1 id="disability-8">Disability 8</h1>
