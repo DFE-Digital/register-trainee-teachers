@@ -110,7 +110,6 @@ module BulkUpdate
         "Degree Grade",
         "Degree Graduation Year",
         "Awarding Institution",
-        "Degree Country",
       ].freeze
 
       def call
