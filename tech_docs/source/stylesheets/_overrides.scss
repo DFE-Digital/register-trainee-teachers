@@ -18,3 +18,8 @@ code {
     background: govuk-colour("light-grey");
   }
 }
+
+.technical-documentation > ul, .govuk-list--bullet {
+  list-style-type: none;
+  padding-left: 0;
+}

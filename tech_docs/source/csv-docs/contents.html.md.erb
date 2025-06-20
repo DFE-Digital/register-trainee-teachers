@@ -1,0 +1,10 @@
+---
+title: Contents
+weight: 2
+---
+
+# Contents
+
+<% csv_fields.each do |field| %>
+  - <%= link_to field["field_name"], "/csv-docs/#{field["technical"]}.html" %>
+<% end %>

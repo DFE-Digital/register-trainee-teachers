@@ -18,3 +18,11 @@ configure :build do
   activate :minify_css
   activate :minify_html
 end
+
+helpers do
+  def csv_fields
+    @csv_fields ||= YAML.load_file(
+      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__)
+    )
+  end
+end
