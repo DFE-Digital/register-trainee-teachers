@@ -9,36 +9,36 @@ title: Degree graduation year
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row csv-field-name govuk-summary-list__row--no-actions" id="csv-field-name">
         <dt class="govuk-summary-list__key">CSV field name</dt>
-        <dd class="govuk-summary-list__value">Provider Trainee ID</dd>
+        <dd class="govuk-summary-list__value">Degree graduation year</dd>
       </div>
       <div class="govuk-summary-list__row api-field-name govuk-summary-list__row--no-actions" id="api-field-name">
         <dt class="govuk-summary-list__key">API field name</dt>
-        <dd class="govuk-summary-list__value">provider_trainee_id</dd>
+        <dd class="govuk-summary-list__value">graduation_year</dd>
       </div>
       <div class="govuk-summary-list__row hesa-alignment govuk-summary-list__row--no-actions" id="hesa-alignment">
-        <dt class="govuk-summary-list__key">HESA alignment</dt><dd class="govuk-summary-list__value">OWNSTU</dd>
+        <dt class="govuk-summary-list__key">HESA alignment</dt><dd class="govuk-summary-list__value">DEGENDDT</dd>
       </div>
       <div class="govuk-summary-list__row description govuk-summary-list__row--no-actions" id="description">
         <dt class="govuk-summary-list__key">Description</dt>
         <dd class="govuk-summary-list__value">
-          <p>Provider’s own internal identifier for the student.</p>
+          <p>The year of graduation.</p>
         </dd>
       </div>
       <div class="govuk-summary-list__row format govuk-summary-list__row--no-actions" id="format">
         <dt class="govuk-summary-list__key">Format</dt>
         <dd class="govuk-summary-list__value">
-          <p>50 character max length</p>
+          <p>This can be formatted as just the year, or as an ISO-8601 format date YYYY-MM-DD</p>
         </dd>
       </div>
       <div class="govuk-summary-list__row example govuk-summary-list__row--no-actions" id="example">
         <dt class="govuk-summary-list__key">Example</dt>
         <dd class="govuk-summary-list__value">
-          <p>&ldquo;99157234&rdquo;</p>
+          <p>&ldquo;2012-07-31&rdquo;</p>
         </dd>
       </div>
       <div class="govuk-summary-list__row validation govuk-summary-list__row--no-actions" id="validation">
         <dt class="govuk-summary-list__key">Validation</dt>
-        <dd class="govuk-summary-list__value">Mandatory</dd>
+        <dd class="govuk-summary-list__value">Conditional - mandatory if specifying any degree</dd>
       </div>
     </dl>
   </div>

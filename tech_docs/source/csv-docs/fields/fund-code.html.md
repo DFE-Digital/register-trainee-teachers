@@ -9,31 +9,31 @@ title: Fund Code
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row csv-field-name govuk-summary-list__row--no-actions" id="csv-field-name">
         <dt class="govuk-summary-list__key">CSV field name</dt>
-        <dd class="govuk-summary-list__value">Provider Trainee ID</dd>
+        <dd class="govuk-summary-list__value">Fund Code</dd>
       </div>
       <div class="govuk-summary-list__row api-field-name govuk-summary-list__row--no-actions" id="api-field-name">
         <dt class="govuk-summary-list__key">API field name</dt>
-        <dd class="govuk-summary-list__value">provider_trainee_id</dd>
+        <dd class="govuk-summary-list__value">fund_code</dd>
       </div>
       <div class="govuk-summary-list__row hesa-alignment govuk-summary-list__row--no-actions" id="hesa-alignment">
-        <dt class="govuk-summary-list__key">HESA alignment</dt><dd class="govuk-summary-list__value">OWNSTU</dd>
+        <dt class="govuk-summary-list__key">HESA alignment</dt><dd class="govuk-summary-list__value">FUNDCODE</dd>
       </div>
       <div class="govuk-summary-list__row description govuk-summary-list__row--no-actions" id="description">
         <dt class="govuk-summary-list__key">Description</dt>
         <dd class="govuk-summary-list__value">
-          <p>Provider’s own internal identifier for the student.</p>
+          <p>This field indicates whether the student is counted as &lsquo;fundable&rsquo;, i.e. &lsquo;eligible for funding&rsquo; for the course by the appropriate funding council/body.</p>
         </dd>
       </div>
       <div class="govuk-summary-list__row format govuk-summary-list__row--no-actions" id="format">
         <dt class="govuk-summary-list__key">Format</dt>
         <dd class="govuk-summary-list__value">
-          <p>50 character max length</p>
+          <p>[HESA fund code codes](https://www.hesa.ac.uk/collection/c24053/e/fundcode)</p>
         </dd>
       </div>
       <div class="govuk-summary-list__row example govuk-summary-list__row--no-actions" id="example">
         <dt class="govuk-summary-list__key">Example</dt>
         <dd class="govuk-summary-list__value">
-          <p>&ldquo;99157234&rdquo;</p>
+          <p>&ldquo;2&rdquo;</p>
         </dd>
       </div>
       <div class="govuk-summary-list__row validation govuk-summary-list__row--no-actions" id="validation">
