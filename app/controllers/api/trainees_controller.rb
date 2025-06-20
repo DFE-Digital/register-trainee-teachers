@@ -44,6 +44,11 @@ module Api
 
     def update
       trainee = current_provider&.trainees&.find_by!(slug: params[:slug])
+      if trainee.hesa_trainee_detail.nil?
+        create_hesa_trainee_detail_service_class.call(trainee:)
+        trainee.reload
+      end
+
       attributes = trainee_attributes_service.from_trainee(trainee, hesa_mapped_params_for_update)
 
       succeeded, validation = update_trainee_service_class.call(trainee:, attributes:)
@@ -100,6 +105,10 @@ module Api
 
     def nationality_attributes
       Api::GetVersionedItem.for_attributes(model: :nationality, version: version)::ATTRIBUTES
+    end
+
+    def create_hesa_trainee_detail_service_class
+      Api::GetVersionedItem.for_service(model: :create_hesa_trainee_detail, version: version)
     end
 
     def update_trainee_service_class
