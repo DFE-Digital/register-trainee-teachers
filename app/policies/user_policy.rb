@@ -21,6 +21,10 @@ class UserPolicy < ProviderPolicy
     user.lead_partner?
   end
 
+  def claims_team?
+    user.system_admin?
+  end
+
   alias_method :reports?, :drafts?
   alias_method :bulk_placement?, :bulk_recommend?
 end
