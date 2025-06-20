@@ -2079,24 +2079,7 @@ en:
               blank: Enter a comment
         api/v01/trainee_attributes:
           attributes:
-            course_subject_one:
-              inclusion: &invalid_reference_data has invalid reference data values
-            course_subject_two:
-              inclusion: *invalid_reference_data
-            course_subject_three:
-              inclusion: *invalid_reference_data
-            ethnicity:
-              inclusion: *invalid_reference_data
-            training_route:
-              inclusion: *invalid_reference_data
-            sex:
-              inclusion: *invalid_reference_data
-            study_mode:
-              inclusion: *invalid_reference_data
-            nationality:
-              inclusion: *invalid_reference_data
-            training_initiative:
-              inclusion: *invalid_reference_data
+            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
         api/v20250_rc/trainee_attributes:
           attributes:
             itt_end_date:
@@ -2128,17 +2111,12 @@ en:
                 blank: must be entered if 202 selected for ITT Aim
         api/v01/hesa_trainee_detail_attributes:
           attributes:
-            course_age_range:
-              inclusion: *invalid_reference_data
             fund_code:
               ineligible: &ineligible is not valid for this trainee
             funding_method:
-              inclusion: *invalid_reference_data
               ineligible: "training route ‘%{training_route}’ and subject code ‘%{subject}’ are not eligible for ‘%{funding_type}’ in academic cycle ‘%{academic_cycle}’"
             itt_aim:
-              inclusion: *invalid_reference_data
-            itt_qualification_aim:
-              inclusion: *invalid_reference_data
+              ineligible: *ineligible
         api/v01/withdrawal_attributes:
           attributes:
             reasons:
@@ -2158,7 +2136,7 @@ en:
           duplicate: This is a duplicate degree
           attributes:
             country:
-              inclusion: *invalid_reference_data
+              inclusion: &invalid_reference_data has invalid reference data values
             non_uk_degree:
               inclusion: *invalid_reference_data
             uk_degree:

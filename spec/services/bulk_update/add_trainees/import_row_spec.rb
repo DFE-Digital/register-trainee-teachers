@@ -74,8 +74,8 @@ module BulkUpdate
             expect(result.errors).to include("Degree grade must be entered if specifying a previous UK degree or non-UK degree")
             expect(result.errors).to include("ITT Start Date can't be blank")
             expect(result.errors).to include("Date of Birth can't be blank")
-            expect(result.errors).to include("ITT Aim has invalid reference data values")
-            expect(result.errors).to include("Qualification Aim has invalid reference data values")
+            expect(result.errors).to include(/ITT Aim has invalid reference data value of '.*'/)
+            expect(result.errors).to include(/Qualification Aim has invalid reference data value of '.*'/)
           end
         end
 

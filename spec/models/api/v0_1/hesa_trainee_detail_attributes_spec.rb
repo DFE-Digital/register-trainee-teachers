@@ -30,7 +30,9 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:itt_aim]).to contain_exactly("has invalid reference data values")
+          expect(subject.errors[:itt_aim]).to contain_exactly(
+            "has invalid reference data value of '300'. Valid values are #{Hesa::CodeSets::IttAims::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
         }
       end
     end
@@ -74,7 +76,9 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:itt_qualification_aim]).to contain_exactly("has invalid reference data values")
+          expect(subject.errors[:itt_qualification_aim]).to contain_exactly(
+            "has invalid reference data value of '300'. Valid values are #{Hesa::CodeSets::IttQualificationAims::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
         }
       end
     end
@@ -85,6 +89,7 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
       it {
         expect(subject).to validate_inclusion_of(:course_age_range)
           .in_array(Hesa::CodeSets::AgeRanges::MAPPING.keys)
+          .with_message(/has invalid reference data value of '.*'/)
       }
     end
 
@@ -115,7 +120,9 @@ RSpec.describe Api::V01::HesaTraineeDetailAttributes do
         it {
           subject.validate
 
-          expect(subject.errors[:funding_method]).to contain_exactly("has invalid reference data values")
+          expect(subject.errors[:funding_method]).to contain_exactly(
+            "has invalid reference data value of 'AD'. Valid values are #{Hesa::CodeSets::BursaryLevels::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
         }
       end
 
