@@ -63,7 +63,7 @@ module GovukTechDocs
 
     # As the last fallback link to the source file in this repository.
     def source_from_file
-      # Set the View source link based on the documentation type: [api-docs]
+      # Set the View source link based on the documentation type: [api-docs, csv-docs]
       #
       if build_dir == "build"
         "#{repo_url}/blob/#{repo_branch}/source/#{current_page.file_descriptor[:relative_path]}"

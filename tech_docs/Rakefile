@@ -4,16 +4,33 @@ require "fileutils"
 
 namespace :tech_docs do
   desc "Build docs"
-  task :build do
-    FileUtils.cp_r("source", "temp_source")
+  task :build  do
+    # Build API docs
+    #
+    FileUtils.cp_r "source", "temp_source"
 
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/api-docs/.", "source")
-    FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm "source/index.html.md"
+    FileUtils.cp_r "source/api-docs/.", "source"
+    FileUtils.rm_rf "source/api-docs"
+    FileUtils.rm_rf "source/csv-docs"
 
     system("bundle exec middleman build --build-dir ../public/api-docs --verbose")
 
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    FileUtils.rm_rf "source"
+    FileUtils.mv "temp_source", "source"
+
+    # Build CSV docs
+    #
+    FileUtils.cp_r "source", "temp_source"
+
+    FileUtils.rm "source/index.html.md"
+    FileUtils.cp_r "source/csv-docs/.", "source"
+    FileUtils.rm_rf "source/csv-docs"
+    FileUtils.rm_rf "source/api-docs"
+
+    system("bundle exec middleman build --build-dir ../public/csv-docs --verbose")
+
+    FileUtils.rm_rf "source"
+    FileUtils.mv "temp_source", "source"
   end
 end
