@@ -1,5 +1,6 @@
 ---
 title: Training Route
+weight: 23
 ---
 
 <h1 id="training-route">Training Route</h1>

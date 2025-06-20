@@ -1,5 +1,6 @@
 ---
 title: Course Year
+weight: 32
 ---
 
 <h1 id="course-year">Course Year</h1>

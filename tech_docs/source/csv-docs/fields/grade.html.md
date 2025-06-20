@@ -1,5 +1,6 @@
 ---
 title: Degree grade
+weight: 47
 ---
 
 <h1 id="degree-grade">Degree grade</h1>

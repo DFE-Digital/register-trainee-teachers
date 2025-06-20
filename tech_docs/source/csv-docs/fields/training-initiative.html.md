@@ -1,5 +1,6 @@
 ---
 title: Training Initiative
+weight: 42
 ---
 
 <h1 id="training-initiative">Training Initiative</h1>

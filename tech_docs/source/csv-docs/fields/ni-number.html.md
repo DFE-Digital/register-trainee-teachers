@@ -1,5 +1,6 @@
 ---
 title: NI Number
+weight: 8
 ---
 
 <h1 id="ni-number">NI Number</h1>

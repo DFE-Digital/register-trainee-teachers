@@ -1,5 +1,6 @@
 ---
 title: Course Age Range
+weight: 31
 ---
 
 <h1 id="course-age-range">Course Age Range</h1>

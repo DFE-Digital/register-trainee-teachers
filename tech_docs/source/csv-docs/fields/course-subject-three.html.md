@@ -1,5 +1,6 @@
 ---
 title: Course Subject Three
+weight: 27
 ---
 
 <h1 id="course-subject-three">Course Subject Three</h1>

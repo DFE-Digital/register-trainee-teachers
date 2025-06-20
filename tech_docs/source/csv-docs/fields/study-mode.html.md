@@ -1,5 +1,6 @@
 ---
 title: Study Mode
+weight: 28
 ---
 
 <h1 id="study-mode">Study Mode</h1>

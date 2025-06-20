@@ -1,5 +1,6 @@
 ---
 title: Awarding Institution
+weight: 49
 ---
 
 <h1 id="awarding-institution">Awarding Institution</h1>

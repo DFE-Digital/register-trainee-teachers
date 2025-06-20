@@ -1,5 +1,6 @@
 ---
 title: UK degree type
+weight: 44
 ---
 
 <h1 id="uk-degree-type">UK degree type</h1>

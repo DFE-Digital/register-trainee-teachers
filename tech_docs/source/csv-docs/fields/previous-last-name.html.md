@@ -1,5 +1,6 @@
 ---
 title: Previous Last Name
+weight: 6
 ---
 
 <h1 id="previous-last-name">Previous Last Name</h1>
