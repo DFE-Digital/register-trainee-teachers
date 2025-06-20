@@ -86,4 +86,5 @@ Caddyfile
 
 # Ignore docs
 /public/api-docs
+/public/csv-docs
 /tech_docs/build
