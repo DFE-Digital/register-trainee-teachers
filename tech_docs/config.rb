@@ -1,6 +1,9 @@
 require "govuk_tech_docs"
-require_relative "lib/govuk_tech_docs/path_helpers"
-require_relative "lib/govuk_tech_docs/contribution_banner"
+require "config/environment"
+
+require "lib/govuk_tech_docs/path_helpers"
+require "lib/govuk_tech_docs/contribution_banner"
+require "services/bulk_update/add_trainees/config"
 
 GovukTechDocs.configure(self, livereload: { host: "0.0.0.0" })
 

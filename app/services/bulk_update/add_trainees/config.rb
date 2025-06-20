@@ -12,6 +12,7 @@ module BulkUpdate
       ENCODING = "UTF-8"
       FIRST_CSV_ROW_NUMBER = 2
       CSV_ARGS = { headers: true, strip: true, encoding: ENCODING }.freeze
+      VERSION = "v2025.0"
     end
   end
 end
