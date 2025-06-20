@@ -6,6 +6,8 @@ module Api
       include ActiveModel::Model
       include ActiveModel::Attributes
 
+      include Api::ErrorMessageHelpers
+
       ATTRIBUTES = %i[
         id
         country
@@ -33,19 +35,44 @@ module Api
       validates :graduation_year, presence: true
       validates :subject, presence: true
 
-      validates :country, inclusion: { in: Hesa::CodeSets::Countries::MAPPING.values }, allow_blank: true
+      validates(
+        :country,
+        inclusion: {
+          in: Hesa::CodeSets::Countries::MAPPING.values,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::Countries::MAPPING.keys) },
+        },
+        allow_blank: true,
+      )
 
       with_options if: -> { locale_code == "uk" } do
         validates :institution, presence: true
         validates :uk_degree, presence: true
-        validates :uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_blank: true
         validates :grade, presence: true
       end
       with_options if: -> { locale_code == "non_uk" } do
         validates :country, presence: true
         validates :non_uk_degree, presence: true
-        validates :non_uk_degree, inclusion: { in: DfEReference::DegreesQuery::TYPES.all.map(&:name) }, allow_blank: true
       end
+
+      validates(
+        :uk_degree,
+        inclusion: {
+          in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq) },
+          if: -> { locale_code == "uk" },
+        },
+        allow_blank: true,
+      )
+
+      validates(
+        :non_uk_degree,
+        inclusion: {
+          in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq) },
+          if: -> { locale_code == "non_uk" },
+        },
+        allow_blank: true,
+      )
 
       validate :check_for_duplicates
 
