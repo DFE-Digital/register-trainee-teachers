@@ -1,5 +1,6 @@
 ---
 title: Email
+weight: 10
 ---
 
 <h1 id="email">Email</h1>

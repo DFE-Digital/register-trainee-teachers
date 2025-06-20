@@ -1,5 +1,6 @@
 ---
 title: Funding Method
+weight: 41
 ---
 
 <h1 id="funding-method">Funding Method</h1>

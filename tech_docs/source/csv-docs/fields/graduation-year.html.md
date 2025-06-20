@@ -1,5 +1,6 @@
 ---
 title: Degree graduation year
+weight: 48
 ---
 
 <h1 id="degree-graduation-year">Degree graduation year</h1>

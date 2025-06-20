@@ -1,5 +1,6 @@
 ---
 title: Ethnicity
+weight: 12
 ---
 
 <h1 id="ethnicity">Ethnicity</h1>

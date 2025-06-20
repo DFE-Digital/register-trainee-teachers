@@ -1,5 +1,6 @@
 ---
 title: Non-UK degree type
+weight: 45
 ---
 
 <h1 id="non-uk-degree-type">Non-UK degree type</h1>

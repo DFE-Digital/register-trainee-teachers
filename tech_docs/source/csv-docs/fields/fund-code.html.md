@@ -1,5 +1,6 @@
 ---
 title: Fund Code
+weight: 40
 ---
 
 <h1 id="fund-code">Fund Code</h1>
