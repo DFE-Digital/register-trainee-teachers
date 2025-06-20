@@ -11,7 +11,7 @@ RUN bundle install --jobs=4
 
 COPY tech_docs/ $DOCS_HOME
 
-RUN bundle exec middleman build
+RUN rake tech_docs:build
 
 ###
 
@@ -45,7 +45,7 @@ RUN yarn install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
-COPY --from=middleman tech_docs/build/ $APP_HOME/public/docs/
+COPY --from=middleman public/api-docs/ $APP_HOME/public/api-docs/
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
