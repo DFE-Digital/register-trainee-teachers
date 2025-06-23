@@ -17,6 +17,7 @@ RUN bundle install --jobs=4
 
 COPY tech_docs/ $DOCS_HOME
 
+RUN rake tech_docs:csv:generate
 RUN rake tech_docs:build
 
 ###
