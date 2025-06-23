@@ -105,7 +105,7 @@ module Api
             :uk_degree,
             :non_uk_degree,
             :grade,
-          ).compact,
+          ).reject { |_, value| value.blank? || value.is_a?(Api::V01::HesaMapper::Attributes::InvalidValue) },
         )
       end
 

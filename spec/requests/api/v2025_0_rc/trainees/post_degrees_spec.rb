@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe "`POST /trainees/:trainee_id/degrees` endpoint" do
+  include ErrorMessageHelper
+
   context "with a valid authentication token and the feature flag on" do
     let(:provider) { trainee.provider }
     let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
@@ -197,7 +199,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
-            { "error" => "UnprocessableEntity", "message" => "uk_degree has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "uk_degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
             { "error" => "UnprocessableEntity", "message" => "grade must be entered if specifying a previous UK degree or non-UK degree" },
           )
           expect(trainee.reload.degrees.count).to eq(0)
@@ -218,7 +220,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
             { "error" => "UnprocessableEntity", "message" => "non_uk_degree has invalid reference data values" },
-            { "error" => "UnprocessableEntity", "message" => "country has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "country has invalid reference data value of 'France'. Valid values are #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}." },
           )
           expect(trainee.reload.degrees.count).to eq(0)
         end
