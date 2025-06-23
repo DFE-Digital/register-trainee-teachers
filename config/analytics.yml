@@ -297,7 +297,10 @@ shared:
     - dfe_sign_in_uid
     - discarded_at
     - dttp_id
+    - email
+    - first_name
     - id
+    - last_name
     - last_signed_in_at
     - system_admin
     - updated_at
