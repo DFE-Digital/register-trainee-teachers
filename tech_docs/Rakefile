@@ -66,6 +66,7 @@ namespace :tech_docs do
             ---
             title: #{field["field_name"]}
             weight: #{index + 1}
+            source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/fields.yaml
             ---
 
             METADATA
