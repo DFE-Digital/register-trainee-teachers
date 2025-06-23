@@ -890,7 +890,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to include(
-            /ethnicity has invalid reference data value of/,
+            /ethnicity has invalid reference data value of '1000'/,
           )
         end
       end
@@ -1052,7 +1052,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /course_age_range has invalid reference data value of/,
+          /course_age_range has invalid reference data value of '1234'/,
         )
       end
     end
@@ -1075,7 +1075,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /sex has invalid reference data value of/,
+          /sex has invalid reference data value of '3'/,
         )
       end
     end
@@ -1087,7 +1087,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /ethnicity has invalid reference data value of/,
+          /ethnicity has invalid reference data value of 'Irish'/,
         )
       end
     end
@@ -1101,7 +1101,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /course_subject_one has invalid reference data value of/,
+          /course_subject_one has invalid reference data value of 'chemistry'/,
         )
       end
     end
@@ -1143,7 +1143,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /study_mode has invalid reference data value of/,
+          /study_mode has invalid reference data value of '1'/,
         )
       end
     end
@@ -1157,7 +1157,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /nationality has invalid reference data value of/,
+          /nationality has invalid reference data value of 'british'/,
         )
       end
     end
@@ -1171,7 +1171,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /training_initiative has invalid reference data value of/,
+          /training_initiative has invalid reference data value of 'now_teach'/,
         )
       end
     end
@@ -1185,7 +1185,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /funding_method has invalid reference data value of/,
+          /funding_method has invalid reference data value of '8c629dd7-bfc3-eb11-bacc-000d3addca7a'/,
         )
       end
     end
@@ -1199,7 +1199,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /itt_aim has invalid reference data value of/,
+          /itt_aim has invalid reference data value of '321'/,
         )
       end
     end
@@ -1213,7 +1213,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          /itt_qualification_aim has invalid reference data value of/,
+          /itt_qualification_aim has invalid reference data value of '321'/,
         )
       end
     end

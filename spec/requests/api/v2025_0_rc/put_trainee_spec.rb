@@ -298,7 +298,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly(
-          "sex has invalid reference data value of 'invalid'. Valid values are '10', '11', '12', '96', '99'.",
+          "sex has invalid reference data value of '3'. Valid values are '10', '11', '12', '96', '99'.",
         )
       end
     end
@@ -771,7 +771,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to include(
-            /ethnicity has invalid reference data value of 'invalid'./,
+            /ethnicity has invalid reference data value of 'Irish'./,
           )
         end
       end
@@ -1125,7 +1125,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            /course_subject_one has invalid reference data value of 'invalid'/,
+            /course_subject_one has invalid reference data value of 'chemistry'/,
           )
         end
       end

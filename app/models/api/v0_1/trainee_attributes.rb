@@ -375,6 +375,8 @@ module Api
       end
 
       def set_course_allocation_subject_id
+        return course_subject_one if course_subject_one.is_a?(Api::V01::HesaMapper::Attributes::InvalidValue)
+
         self.course_allocation_subject_id ||=
           SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject&.id
       end
