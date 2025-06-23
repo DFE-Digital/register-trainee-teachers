@@ -1,5 +1,6 @@
-//= require lunr.min
-//= require _vendor/jquery.mark.js
+// Patched from https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/assets/javascripts/_modules/search.js
+// Changed lines: L156
+
 (function ($, Modules) {
   'use strict'
 
@@ -152,7 +153,7 @@
         output += '<li class="search-result">'
         output += '<h3 class="search-result__title">'
         var pagePathWithoutLeadingSlash = result.url.startsWith('/') ? result.url.slice(1) : result.url
-        var url = pathToSiteRoot.startsWith('.') ? pathToSiteRoot + pagePathWithoutLeadingSlash : '/' + pagePathWithoutLeadingSlash
+        var url = '/' + pagePathWithoutLeadingSlash
         output += '<a href="' + url + '">'
         output += result.title
         output += '</a>'
