@@ -262,7 +262,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly(
-          "course_age_range has invalid reference data value of '1234'. Valid values are '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'."
+          "course_age_range has invalid reference data value of '1234'. Valid values are '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'.",
         )
       end
     end
@@ -860,7 +860,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
 
         it do
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'."
+            "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
           )
         end
       end
