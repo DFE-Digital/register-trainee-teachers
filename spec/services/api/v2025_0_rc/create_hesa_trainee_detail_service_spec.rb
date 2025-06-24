@@ -57,6 +57,35 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
             end
           end
         end
+
+        context "when there are existing hesa_metasatum and hesa_student records" do
+          let(:student) do
+            create(:hesa_student,
+                   course_age_range: "13915",
+                   itt_aim: "001",
+                   itt_qualification_aim: "001",
+                   fund_code: "7",
+                   ni_number: "AB010203V",
+                   bursary_level: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
+                   trainee: trainee)
+          end
+
+          let(:metadatum) { create(:hesa_metadatum, itt_aim: "002", itt_qualification_aim: "002", trainee: trainee) }
+
+          it "prioritises the values from the hesa_student record" do
+            trainee.reload
+            student.reload
+            metadatum.reload
+            subject.call(trainee:)
+            trainee.reload
+
+            %i[itt_aim itt_qualification_aim].each do |attribute|
+              expect(trainee.hesa_trainee_detail.send(attribute)).to eq(student.send(attribute))
+            end
+
+            expect(trainee.hesa_trainee_detail.pg_apprenticeship_start_date).to eq(metadatum.pg_apprenticeship_start_date)
+          end
+        end
       end
 
       context "for a trainee with a hesa_trainee_detail record" do
