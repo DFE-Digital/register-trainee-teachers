@@ -14,8 +14,7 @@ module Api
 
         hesa_trainee_detail = Hesa::TraineeDetail.build(trainee:)
 
-        attributes = {}
-        attributes.merge!(extract_attributes_from_student_record)
+        attributes = extract_attributes_from_student_record
         attributes.merge!(extract_attributes_from_metadatum_record)
         hesa_trainee_detail.assign_attributes(attributes)
 
