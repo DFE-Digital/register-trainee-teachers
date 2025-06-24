@@ -768,7 +768,7 @@ FactoryBot.define do
     end
 
     trait :with_hesa_metadatum do
-      hesa_id { Faker::Number.number(digits: 13) }
+      hesa_id { Faker::Number.number(digits: 17) }
       hesa_metadatum
     end
   end
