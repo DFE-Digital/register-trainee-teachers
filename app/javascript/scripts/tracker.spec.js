@@ -23,10 +23,8 @@ describe('tracker', () => {
 
     beforeEach(() => {
       mockedPush = jest.fn()
-      jest.spyOn(global, 'window', 'get')
-        .mockImplementation(() => ({
-          dataLayer: { push: mockedPush }
-        }))
+      global.window = Object.create(window)
+      window.dataLayer = { push: mockedPush }
     })
 
     describe('when no match is selected', () => {
@@ -34,7 +32,7 @@ describe('tracker', () => {
         tracker.searches = ['fl', 'flo', 'flow', 'flowe', 'flower']
         tracker.sendTrackingEvent(undefined, 'flower_search')
 
-        expect(mockedPush).toBeCalledWith({
+        expect(mockedPush).toHaveBeenCalledWith({
           event: 'autocomplete-search',
           fieldName: 'flower_search',
           failedSearches: ['flower'],
@@ -50,7 +48,7 @@ describe('tracker', () => {
         tracker.searches = ['fl', 'flo', 'flow', 'flowe', 'flower', 'ro']
         tracker.sendTrackingEvent('rose', 'flower_search')
 
-        expect(mockedPush).toBeCalledWith({
+        expect(mockedPush).toHaveBeenCalledWith({
           event: 'autocomplete-search',
           fieldName: 'flower_search',
           failedSearches: ['flower'],
@@ -64,7 +62,7 @@ describe('tracker', () => {
       it('does not send an event', () => {
         tracker.searches = ['fl', 'flo', 'flow', 'flowe', 'flower']
         tracker.sendTrackingEvent('flower', 'flower_search')
-        expect(mockedPush).not.toBeCalled()
+        expect(mockedPush).not.toHaveBeenCalled()
       })
     })
 

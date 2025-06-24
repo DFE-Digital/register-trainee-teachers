@@ -104,6 +104,12 @@ module BulkUpdate
         "Funding Method",
         "Training Initiative",
         "Additional Training Initiative",
+        "UK Degree Type",
+        "Non-UK Degree Type",
+        "Degree Subject",
+        "Degree Grade",
+        "Degree Graduation Year",
+        "Awarding Institution",
       ].freeze
 
       def call
