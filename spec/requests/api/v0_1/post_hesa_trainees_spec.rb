@@ -14,7 +14,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
-  let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
+  let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:itt_start_date) { "2023-01-01" }
   let(:itt_end_date) { "2023-10-01" }
