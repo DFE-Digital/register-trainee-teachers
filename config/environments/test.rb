@@ -17,14 +17,14 @@ Rails.application.configure do
       @app.call(env)
     rescue ActionController::RoutingError => e
       if env["PATH_INFO"] =~ %r{^/assets/.*\.(woff2?|ttf|svg|eot|json)$}
-        return [200, { "Content-Type" => "text/plain" }, ["Asset not found (suppressed)"]]
+        [200, { "Content-Type" => "text/plain" }, ["Asset not found (suppressed)"]]
       else
-        raise e
+        raise(e)
       end
     end
   end
 
-  config.middleware.insert_before ActionDispatch::ShowExceptions, SuppressAssetErrors
+  config.middleware.insert_before(ActionDispatch::ShowExceptions, SuppressAssetErrors)
 
   config.after_initialize do
     Bullet.enable = true
