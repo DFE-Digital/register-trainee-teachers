@@ -19,6 +19,14 @@ class ReportsController < BaseTraineeController
         @partial_page = :outside_period
       end
     end
+
+    if @partial_page == :census_period
+      if current_user.organisation.nil? && current_user.system_admin?
+        @partial_page = :system_admin_with_no_associated_provider
+      elsif current_user.organisation.census_signed_off?
+        @partial_page = :outside_period
+      end
+    end
   end
 
   def itt_new_starter_data_sign_off

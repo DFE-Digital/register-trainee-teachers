@@ -38,4 +38,10 @@ class SignOff < ApplicationRecord
 
     joins(:academic_cycle).where(academic_cycles: { id: AcademicCycle.previous.id })
   }
+
+  scope :current_academic_cycle, lambda {
+    return none if AcademicCycle.previous.blank?
+
+    joins(:academic_cycle).where(academic_cycles: { id: AcademicCycle.current.id })
+  }
 end

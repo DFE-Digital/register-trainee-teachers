@@ -124,6 +124,18 @@ class Provider < ApplicationRecord
     !performance_profile_signed_off?
   end
 
+  def census_sign_offs
+    sign_offs.census
+  end
+
+  def census_signed_off?
+    sign_offs.census.current_academic_cycle.exists?
+  end
+
+  def census_awaiting_sign_off?
+    !census_signed_off?
+  end
+
 private
 
   def update_courses

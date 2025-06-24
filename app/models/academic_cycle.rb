@@ -90,10 +90,30 @@ class AcademicCycle < ApplicationRecord
     Date.new(end_year + 1, 2, -1)
   end
 
+  def second_wednesday_of_october
+    Date.new(start_year, 10, 1).next_week(:wednesday)
+  end
+
+  def first_day_of_september
+    Date.new(start_year, 9, 1)
+  end
+
+  def last_day_of_october
+    Date.new(start_year, 10, -1)
+  end
+
   alias_method :end_date_of_performance_profile, :last_day_of_february
+
+  alias_method :itt_census_date, :second_wednesday_of_october
+
+  alias_method :itt_census_end_date, :last_day_of_october
 
   def performance_profile_date_range
     @performance_profile_date_range ||= second_monday_of_january..end_date_of_performance_profile
+  end
+
+  def census_date_range
+    @census_date_range ||= first_day_of_september..last_day_of_october
   end
 
 private

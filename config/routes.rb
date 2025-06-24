@@ -68,6 +68,12 @@ Rails.application.routes.draw do
             get "confirmation", to: "performance_profiles#confirmation"
           end
         end
+
+        resources :censuses, path: "censuses", only: %i[index new create] do
+          collection do
+            get "confirmation", to: "censuses#confirmation"
+          end
+        end
       end
     end
   end
