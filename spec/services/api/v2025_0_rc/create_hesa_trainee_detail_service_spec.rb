@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
   subject { described_class }
 
-  describe "::call" do
+  describe "#call" do
     describe "success" do
       context "for a trainee without a hesa_trainee_detail record" do
         let(:trainee) { create(:trainee) }
