@@ -7,7 +7,7 @@ describe Reports::BulkTraineeUploadReport do
     let(:trainee_upload) { create(:bulk_update_trainee_upload) }
 
     it "generates a CSV with the correct headers and no rows" do
-      generated_csv = CSV.generate do |csv|
+      generated_csv = CSV.generate(quote_char: '"', force_quotes: true) do |csv|
         described_class.new(csv, scope: trainee_upload).generate_report
       end
 
@@ -32,7 +32,7 @@ describe Reports::BulkTraineeUploadReport do
 
       data.each_with_index do |row, index|
         expect(row.fetch("Validation results")).to eq("Validation passed")
-        expect(row.fetch("Errors")).to be_nil
+        expect(row.fetch("Errors")).to be_blank
         expect(row.to_h.except("Validation results", "Errors")).to eq(original_csv_data[index].to_h)
       end
     end

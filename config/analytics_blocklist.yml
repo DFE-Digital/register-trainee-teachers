@@ -421,9 +421,6 @@
   :providers:
   - searchable
   :users:
-  - first_name
-  - last_name
-  - email
   - read_only
   - otp_secret
   :disabilities:

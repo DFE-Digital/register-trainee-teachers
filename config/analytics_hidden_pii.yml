@@ -8,3 +8,6 @@ shared:
     - trn
   users:
     - dfe_sign_in_uid
+    - email
+    - first_name
+    - last_name

@@ -1083,7 +1083,7 @@ private
 
   def then_i_see_the_review_errors_page(upload: BulkUpdate::TraineeUpload.last)
     expect(page).to have_content("Review errors for #{pluralize(upload.total_rows_with_errors, 'trainee')} in the CSV you uploaded")
-    expect(page).to have_content("You cannot add new trainees if there’s an error in their row in the CSV file")
+    expect(page).to have_content("You cannot add new trainees if there is an error in their row in the CSV file")
   end
 
   def when_i_click_on_the_download_link

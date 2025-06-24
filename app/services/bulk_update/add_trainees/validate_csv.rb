@@ -21,7 +21,29 @@ module BulkUpdate
         return if headers.all? { |value| value.is_a?(String) } &&
           headers.sort == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.sort
 
-        record.errors.add(:file, :invalid_headers)
+        record.errors.add(:file, :invalid_headers, explanations: error_explanations)
+      end
+
+      def error_explanations
+        missing_columns = BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys - headers
+        extra_columns = headers - BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
+
+        explanations = []
+        if missing_columns.any?
+          explanations << I18n.t(
+            "activemodel.errors.models.bulk_update/bulk_add_trainees_upload_form.attributes.file.missing_headers",
+            missing_columns: missing_columns.map { |col| "'#{col}'" }.to_sentence,
+          )
+        end
+
+        if extra_columns.any?
+          explanations << I18n.t(
+            "activemodel.errors.models.bulk_update/bulk_add_trainees_upload_form.attributes.file.extra_headers",
+            extra_columns: extra_columns.map { |col| "'#{col}'" }.to_sentence,
+          )
+        end
+
+        explanations.join(". ")
       end
 
       def trainees!

@@ -65,7 +65,7 @@ jobs:
               docker compose exec -T web /bin/sh -c 'bundle exec rake dfe:analytics:check'
           - linter-type: javascript_lint_and_test
             command: |
-              docker compose exec -T web /bin/sh -c "yarn add jest@29.3.1"
+              docker compose exec -T web /bin/sh -c "yarn add jest@30.0.0"
               docker compose exec -T web /bin/sh -c "yarn run standard $(git ls-files '**.js' | tr '\n' ' ')"
               docker compose exec -T web /bin/sh -c 'yarn run test'
 

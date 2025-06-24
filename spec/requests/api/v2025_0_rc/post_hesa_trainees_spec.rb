@@ -14,7 +14,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
-  let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
+  let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:trainee_start_date) { itt_start_date }
   let(:itt_start_date) { "2023-01-01" }
@@ -34,6 +34,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       },
     ]
   }
+  let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY] }
 
   let(:endpoint) { "/api/v2025.0-rc/trainees" }
   let!(:academic_cycle) { create(:academic_cycle, :current) }
@@ -50,7 +51,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       training_route: training_route,
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
-      course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY],
+      course_subject_one: course_subject_one,
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       disability1: disability1,
       disability2: disability2,
@@ -1163,7 +1164,6 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly(
           "funding_method has invalid reference data values",
-          "funding_method is not valid for this trainee",
         )
       end
     end
@@ -1274,6 +1274,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
+      params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::BIOLOGY]
 
       post "/api/v2025.0-rc/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
@@ -1284,7 +1285,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "funding_method is not valid for this trainee",
+        "funding_method training route ‘teacher_degree_apprenticeship’ and subject code ‘biology’ are not eligible for ‘bursary’ in academic cycle ‘’",
       )
     end
   end

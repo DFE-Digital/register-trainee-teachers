@@ -1659,7 +1659,9 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
-              invalid_headers: "Your file’s column names need to match the CSV template"
+              invalid_headers: "Your file’s column names need to match the CSV template. %{explanations}"
+              missing_headers: "Your file is missing the following columns: %{missing_columns}"
+              extra_headers: "Your file has the following extra columns: %{extra_columns}"
         bulk_update/bulk_add_trainees_submit_form:
           attributes:
             file:
@@ -2132,7 +2134,7 @@ en:
               ineligible: &ineligible is not valid for this trainee
             funding_method:
               inclusion: *invalid_reference_data
-              ineligible: *ineligible
+              ineligible: "training route ‘%{training_route}’ and subject code ‘%{subject}’ are not eligible for ‘%{funding_type}’ in academic cycle ‘%{academic_cycle}’"
             itt_aim:
               inclusion: *invalid_reference_data
             itt_qualification_aim:

@@ -30,8 +30,9 @@ module Reports
         "Validation results" => row.row_errors.present? ? "#{pluralize(row.row_errors.size, 'error')} found" : "Validation passed",
         "Errors" => row.row_errors.pluck(:message).join(";\n").presence,
       )
+
       csv << (HEADERS.map do |key|
-        CsvValueSanitiser.new(data[key]).sanitise
+        AddTraineeCsvValueSanitiser.new(key, data[key]).sanitise
       end)
     end
   end

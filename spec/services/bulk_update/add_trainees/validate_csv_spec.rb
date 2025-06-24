@@ -17,7 +17,7 @@ module BulkUpdate
         let(:file_path) { Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_missing_column.csv") }
         let(:csv) { CSVSafe.new(File.open(file_path), headers: true).read }
 
-        it { expect(record.errors.first.message).to eql "Your file’s column names need to match the CSV template" }
+        it { expect(record.errors.first&.message).to eq("Your file’s column names need to match the CSV template. Your file is missing the following columns: 'HESA ID' and 'Sex'") }
       end
 
       context "given a CSV with the correct columns in the 'wrong' order" do
@@ -35,7 +35,16 @@ module BulkUpdate
         end
         let(:csv) { CSVSafe.new(file_content, headers: true).read }
 
-        it { expect(record.errors.first.message).to eql "Your file’s column names need to match the CSV template" }
+        it { expect(record.errors.first.message).to eq("Your file’s column names need to match the CSV template. Your file is missing the following columns: 'First Names'") }
+      end
+
+      context "given a CSV with the correct columns and one extra column" do
+        let(:file_content) do
+          "#{(BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys + ['Shoe Size']).join(',')}\nfoo,bar,baz"
+        end
+        let(:csv) { CSVSafe.new(file_content, headers: true).read }
+
+        it { expect(record.errors.first.message).to eq("Your file’s column names need to match the CSV template. Your file has the following extra columns: 'Shoe Size'") }
       end
 
       context "given a CSV with the correct columns with validation results and errors" do
@@ -55,7 +64,7 @@ module BulkUpdate
           ).read
         end
 
-        it { expect(record.errors.first&.message).to eql "The selected file must contain at least one trainee" }
+        it { expect(record.errors.first&.message).to eq("The selected file must contain at least one trainee") }
       end
 
       context "given a CSV file with no data (just a header and some empty lines)" do
@@ -66,7 +75,7 @@ module BulkUpdate
           ).read
         end
 
-        it { expect(record.errors.first&.message).to eql "The selected file must contain at least one trainee" }
+        it { expect(record.errors.first&.message).to eq("The selected file must contain at least one trainee") }
       end
     end
   end
