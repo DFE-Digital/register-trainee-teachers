@@ -18,4 +18,3 @@ def then_i_see_the_csv_docs
     "How to add trainee information to the bulk add new trainee CSV template",
   )
 end
-
