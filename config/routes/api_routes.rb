@@ -23,10 +23,6 @@ module ApiRoutes
       namespace :api_docs, path: "api-docs" do
         get "/:api_version/openapi" => "openapi#show", constraints: { api_version: /v[.0-9]+(-pre|-rc)?/ }, as: :openapi
       end
-
-      namespace :csv_docs, path: "csv-docs" do
-        get "/" => "pages#show", as: :home
-      end
     end
   end
 end
