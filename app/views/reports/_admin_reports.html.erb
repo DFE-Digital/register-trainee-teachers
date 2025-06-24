@@ -1,4 +1,4 @@
-<% if current_user.system_admin? %>
+<% if policy(current_user).can_access_claims_reports? %>
   <h2 class="govuk-heading-m">Claims team</h2>
   <ul class="govuk-list govuk-list--spaced">
     <li>

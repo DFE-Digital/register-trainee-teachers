@@ -51,13 +51,17 @@ describe UserPolicy do
     end
   end
 
-  context "when claims_team?" do
-    permissions :claims_team? do
-      it { is_expected.to permit(provider_admin_user_context) }
-      it { is_expected.to permit(lead_partner_admin_user_context) }
+  context "when can_access_claims_reports?" do
+    let(:system_admin_user) { create(:user, :system_admin) }
+    let(:system_admin_user_context) { UserWithOrganisationContext.new(user: system_admin_user, session: {}) }
+
+    permissions :can_access_claims_reports? do
+      it { is_expected.to permit(system_admin_user_context) }
 
       it { is_expected.not_to permit(provider_user_context) }
       it { is_expected.not_to permit(lead_partner_user_context) }
+      it { is_expected.not_to permit(provider_admin_user_context) }
+      it { is_expected.not_to permit(lead_partner_admin_user_context) }
     end
   end
 end
