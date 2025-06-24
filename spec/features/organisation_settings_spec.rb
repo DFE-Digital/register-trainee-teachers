@@ -50,6 +50,10 @@ feature "Organisation details" do
       when_i_click_on_the_organisation_settings_link
       and_i_see_api_tokens_details
 
+      and_i_click_on_view_docs_link do |window|
+        then_i_see_the_documentation(window)
+      end
+
       when_i_click_on_manage_your_tokens_link
       then_i_see_the_token_management_page
 
@@ -138,9 +142,6 @@ private
     expect(organisation_settings_page).to have_content(
       "You can view and use the Register API technical documentation (opens in new tab).",
     )
-    expect(organisation_settings_page).to have_link(
-      "view and use the Register API technical documentation (opens in new tab)", href: "/api-docs/"
-    )
     expect(organisation_settings_page).to have_content(
       "How to manage your API token",
     )
@@ -168,9 +169,6 @@ private
     )
     expect(organisation_settings_page).not_to have_content(
       "You can view and use the Register API technical documentation (opens in new tab).",
-    )
-    expect(organisation_settings_page).not_to have_link(
-      "view and use the Register API technical documentation (opens in new tab)", href: "/api-docs/"
     )
     expect(organisation_settings_page).not_to have_content(
       "How to manage your API token",
@@ -266,6 +264,25 @@ private
     end
 
     expect(page).not_to have_css("#token-#{token_five.id}")
+  end
+
+  def and_i_click_on_view_docs_link
+    original_window = page.current_window
+    window = window_opened_by do
+      organisation_settings_page.documentation_link.click
+    end
+
+    yield window
+
+    window.close
+
+    switch_to_window(original_window)
+  end
+
+  def then_i_see_the_documentation(window)
+    within_window(window) do
+      expect(page).to have_content("Register API reference")
+    end
   end
 
   def when_i_click_on_manage_your_tokens_link
