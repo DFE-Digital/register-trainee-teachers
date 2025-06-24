@@ -1,5 +1,7 @@
 // Patched from https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/assets/javascripts/_modules/search.js
-// Changed lines: L156
+// Changed lines: L158
+
+/* eslint-disable */
 
 (function ($, Modules) {
   'use strict'
