@@ -42,19 +42,13 @@ module Reports
 
       if direct_hecos_code?(top_level_subject)
         [top_level_subject]
-      elsif multi_subjects?(top_level_subject)
-        expand_multi_subjects(top_level_subject)
       else
-        []
+        expand_multi_subjects(top_level_subject)
       end
     end
 
     def direct_hecos_code?(subject)
       subject&.hecos_code.present?
-    end
-
-    def multi_subjects?(subject)
-      subject&.subject_ids.present?
     end
 
     def expand_multi_subjects(top_level_subject)
