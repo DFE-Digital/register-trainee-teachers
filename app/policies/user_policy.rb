@@ -21,6 +21,10 @@ class UserPolicy < ProviderPolicy
     user.lead_partner?
   end
 
+  def can_access_claims_reports?
+    user.system_admin? && user.providers.empty? && user.lead_partners.empty?
+  end
+
   alias_method :reports?, :drafts?
   alias_method :bulk_placement?, :bulk_recommend?
 end

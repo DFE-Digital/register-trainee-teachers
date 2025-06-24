@@ -1,3 +1,4 @@
 web: bundle exec rails s -p 5001
 js: yarn build --watch
 css: yarn build:css --watch
+docs: cd tech_docs && bundle exec middleman serve

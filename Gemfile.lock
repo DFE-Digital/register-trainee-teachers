@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 392090cc0448bf5f6555c0b180ff924bf2c6c5a0
-  tag: v3.7.1
+  revision: a70da2883fe0b9828d96853da8ff9d6690642dfa
+  tag: v3.8.0
   specs:
-    dfe-reference-data (3.7.1)
+    dfe-reference-data (3.8.0)
       activesupport
       tzinfo
 
@@ -211,12 +211,12 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.4.1)
-    debug (1.10.0)
+    debug (1.11.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
     declarative (0.0.20)
     deep_merge (1.2.2)
-    diff-lcs (1.6.1)
+    diff-lcs (1.6.2)
     discard (1.4.0)
       activerecord (>= 4.2, < 9.0)
     docile (1.4.0)
@@ -499,7 +499,7 @@ GEM
     rack (2.2.17)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
-    rack-mini-profiler (3.3.1)
+    rack-mini-profiler (4.0.0)
       rack (>= 1.2.0)
     rack-oauth2 (2.2.1)
       activesupport
@@ -561,7 +561,7 @@ GEM
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rdoc (6.14.0)
+    rdoc (6.14.1)
       erb
       psych (>= 4.0.0)
     redcarpet (3.6.1)
@@ -589,19 +589,19 @@ GEM
       benchmark-perf (~> 0.6)
       benchmark-trend (~> 0.4)
       rspec (>= 3.0)
-    rspec-core (3.13.3)
+    rspec-core (3.13.4)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.4)
+    rspec-expectations (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.4)
+    rspec-mocks (3.13.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-openapi (0.19.0)
       actionpack (>= 5.2.0)
       rails-dom-testing
       rspec-core
-    rspec-rails (8.0.0)
+    rspec-rails (8.0.1)
       actionpack (>= 7.2)
       activesupport (>= 7.2)
       railties (>= 7.2)
@@ -611,7 +611,7 @@ GEM
       rspec-support (~> 3.13)
     rspec-retry (0.6.2)
       rspec-core (> 3.3)
-    rspec-support (3.13.3)
+    rspec-support (3.13.4)
     rubocop (1.75.6)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
@@ -723,8 +723,8 @@ GEM
     store_model (4.2.2)
       activerecord (>= 7.0)
     stringio (3.1.7)
-    strong_migrations (2.3.0)
-      activerecord (>= 7)
+    strong_migrations (2.4.0)
+      activerecord (>= 7.1)
     swd (2.0.3)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -864,7 +864,7 @@ DEPENDENCIES
   rotp
   rspec-benchmark
   rspec-openapi
-  rspec-rails (~> 8.0.0)
+  rspec-rails (~> 8.0.1)
   rspec-retry
   rubocop-capybara
   rubocop-factory_bot

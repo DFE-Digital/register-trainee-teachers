@@ -74,6 +74,8 @@ Rails.application.routes.draw do
             get "confirmation", to: "censuses#confirmation"
           end
         end
+
+        resources :claims_degrees, path: "claims-degrees", only: %i[index]
       end
     end
   end

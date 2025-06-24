@@ -1,4 +1,3 @@
-version: '3.4'
 volumes:
   dbdata:
 services:
@@ -32,6 +31,19 @@ services:
       - DB_PASSWORD=developmentpassword
       - REDIS_CACHE_URL=redis://redis:6379
       - SENTRY_DSN=${SENTRY_DSN}
+  docs:
+    build:
+      context: .
+      target: middleman
+      cache_from:
+        - ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
+    image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
+    profiles: ["dev"]
+    volumes:
+      - ./tech_docs:/tech_docs
+    command: bundle exec middleman serve
+    ports:
+      - 4567:4567
 
   bg-jobs:
     image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}

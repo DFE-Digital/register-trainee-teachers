@@ -7,32 +7,44 @@ feature "edit training initiative" do
 
   let(:course_subject) { CourseSubjects::LAW }
 
-  scenario "edit with valid parameters with bursary" do
-    given_a_provider_led_postgrad_trainee_exists
-    and_a_bursary_exists_for_their_subject
-    when_i_visit_the_training_initiative_page
-    and_i_update_the_training_initiative
-    and_i_submit_the_form
-    then_i_am_redirected_to_the_bursary_page
+  context "with valid parameters" do
+    scenario "with bursary redirects to bursary page" do
+      given_a_provider_led_postgrad_trainee_exists
+      and_a_bursary_exists_for_their_subject
+      when_i_visit_the_training_initiative_page
+      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_submit_the_form
+      then_i_am_redirected_to_the_bursary_page
+    end
+
+    scenario "without bursary redirects to funding confirmation page" do
+      given_a_trainee_exists(:assessment_only)
+      when_i_visit_the_training_initiative_page
+      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_submit_the_form
+      then_i_am_redirected_to_the_funding_confirmation_page
+    end
+
+    scenario "on the early_years_postgrad route redirects to bursary page" do
+      given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
+      when_i_visit_the_training_initiative_page
+      and_i_update_the_training_initiative("international_relocation_payment")
+      and_i_submit_the_form
+      then_i_am_redirected_to_the_bursary_page
+    end
   end
 
-  scenario "edit with valid parameters without bursary" do
-    given_a_trainee_exists(:assessment_only)
+  # Single test to verify initiative selection in the UI
+  # (We don't need to test every initiative - that's covered in funding_helper_spec.rb)
+  scenario "can select an initiative and save it to the trainee record" do
+    given_a_trainee_exists(:provider_led_postgrad)
     when_i_visit_the_training_initiative_page
-    and_i_update_the_training_initiative
+    and_i_update_the_training_initiative("international_relocation_payment")
     and_i_submit_the_form
-    then_i_am_redirected_to_the_funding_confirmation_page
+    then_the_trainee_has_the_correct_initiative("international_relocation_payment")
   end
 
-  scenario "edit with valid parameters on the early_years_postgrad route" do
-    given_a_trainee_exists(:early_years_postgrad, :with_valid_itt_start_date)
-    when_i_visit_the_training_initiative_page
-    and_i_update_the_training_initiative
-    and_i_submit_the_form
-    then_i_am_redirected_to_the_bursary_page
-  end
-
-  scenario "submitting with invalid parameters" do
+  scenario "submitting with invalid parameters shows error messages" do
     given_a_trainee_exists
     when_i_visit_the_training_initiative_page
     and_i_submit_the_form
@@ -53,8 +65,9 @@ private
     training_initiative_page.load(id: trainee.slug)
   end
 
-  def and_i_update_the_training_initiative
-    training_initiative_page.now_teach.click
+  def and_i_update_the_training_initiative(initiative = "international_relocation_payment")
+    radio_button = training_initiative_page.find("input[value='#{initiative}']", visible: :all)
+    radio_button.click if radio_button.present?
   end
 
   def and_i_submit_the_form
@@ -80,5 +93,10 @@ private
 
   def then_i_am_redirected_to_the_funding_confirmation_page
     expect(confirm_funding_page).to be_displayed(id: trainee.slug)
+  end
+
+  def then_the_trainee_has_the_correct_initiative(initiative)
+    trainee.reload
+    expect(trainee.training_initiative).to eq(initiative)
   end
 end

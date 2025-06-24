@@ -74,6 +74,44 @@ module BulkUpdate
 
       ALL_HEADERS = TRAINEE_HEADERS.merge(PLACEMENT_HEADERS).merge(DEGREE_HEADERS)
 
+      PREFIXED_HEADERS = [
+        "HESA ID",
+        "Date of Birth",
+        "Sex",
+        "Ethnicity",
+        "Disability 1",
+        "Disability 2",
+        "Disability 3",
+        "Disability 4",
+        "Disability 5",
+        "Disability 6",
+        "Disability 7",
+        "Disability 8",
+        "Disability 9",
+        "ITT Aim",
+        "Training Route",
+        "Qualification Aim",
+        "Course Subject One",
+        "Course Subject Two",
+        "Course Subject Three",
+        "Study Mode",
+        "ITT Start Date",
+        "ITT End Date",
+        "Course Age Range",
+        "Trainee Start Date",
+        "PG Apprenticeship Start Date",
+        "Fund Code",
+        "Funding Method",
+        "Training Initiative",
+        "Additional Training Initiative",
+        "UK Degree Type",
+        "Non-UK Degree Type",
+        "Degree Subject",
+        "Degree Grade",
+        "Degree Graduation Year",
+        "Awarding Institution",
+      ].freeze
+
       def call
         return unless FeatureService.enabled?(:bulk_add_trainees)
 
