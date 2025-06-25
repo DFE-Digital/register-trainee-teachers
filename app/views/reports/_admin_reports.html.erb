@@ -1,0 +1,10 @@
+<% if policy(current_user).can_access_claims_reports? %>
+  <h2 class="govuk-heading-m">Claims team</h2>
+  <ul class="govuk-list govuk-list--spaced">
+    <li>
+      <p>
+        <%= govuk_link_to "Export degree data for all trainees with a TRN", reports_claims_degrees_path, class: "govuk-link--no-visited-state" %>
+      </p>
+    </li>
+  </ul>
+<% end %> 
