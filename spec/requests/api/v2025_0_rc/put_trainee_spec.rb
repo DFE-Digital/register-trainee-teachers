@@ -1398,11 +1398,11 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
             }.from("John").to("Alice").and(
               change {
                 trainee.study_mode
-              }.from("full_time").to("part_time")
+              }.from("full_time").to("part_time"),
             ).and(
               change {
                 trainee.hesa_trainee_detail.course_study_mode
-              }.from("63").to("64")
+              }.from("63").to("64"),
             )
 
             expect(response).to have_http_status(:ok)
