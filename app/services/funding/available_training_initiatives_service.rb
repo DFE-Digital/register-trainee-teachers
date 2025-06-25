@@ -4,14 +4,14 @@ module Funding
   class AvailableTrainingInitiativesService
     include ServicePattern
 
-    attr_accessor :trainee
+    attr_accessor :academic_cycle
 
-    def initialize(trainee:)
-      self.trainee = trainee
+    def initialize(academic_cycle:)
+      self.academic_cycle = academic_cycle
     end
 
     def call
-      return [] if trainee.start_academic_cycle.blank?
+      return [] if academic_cycle.blank?
 
       constant_name = "TRAINING_INITIATIVES_#{year}_TO_#{year + 1}"
       return Object.const_get(constant_name) if Object.const_defined?(constant_name)
@@ -22,7 +22,7 @@ module Funding
   private
 
     def year
-      trainee.start_academic_cycle.start_year
+      academic_cycle&.start_year
     end
   end
 end

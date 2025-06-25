@@ -2,7 +2,7 @@
 
 module FundingHelper
   def training_initiative_options(trainee)
-    Funding::AvailableTrainingInitiativesService.call(trainee:).sort
+    Funding::AvailableTrainingInitiativesService.call(academic_cycle: trainee.start_academic_cycle).sort
   end
 
   def funding_options(trainee)

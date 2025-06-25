@@ -28,8 +28,6 @@ module Api
           delegate :training_route,
                    :course_subject_one, to: :trainee_attributes
 
-          ValidationResult = Struct.new(:valid?, :error_details)
-
           def initialize(hesa_trainee_detail_attributes)
             @hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
           end
