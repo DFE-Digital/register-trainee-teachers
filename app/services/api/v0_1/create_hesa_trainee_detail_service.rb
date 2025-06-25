@@ -10,7 +10,7 @@ module Api
       end
 
       def call
-        return true unless trainee.hesa_trainee_detail.nil?
+        return false unless trainee.hesa_trainee_detail.nil?
 
         hesa_trainee_detail = Hesa::TraineeDetail.build(trainee:)
 
@@ -28,10 +28,12 @@ module Api
       def extract_attributes_from_metadatum_record(existing_attributes)
         return {} if trainee.hesa_metadatum.nil?
 
+        attributes = {}
+        attributes = { fund_code: trainee.hesa_metadatum.fundability } if existing_attributes[:fund_code].nil?
         attributes_for_extraction = %i[itt_aim itt_qualification_aim pg_apprenticeship_start_date]
         attributes_for_extraction = attributes_for_extraction.map! { |attribute| attribute if existing_attributes[attribute].nil? }.compact
 
-        trainee.hesa_metadatum.slice(attributes_for_extraction)
+        attributes.merge!(trainee.hesa_metadatum.slice(attributes_for_extraction))
       end
 
       def extract_attributes_from_student_record
@@ -40,7 +42,10 @@ module Api
         attributes_for_extraction = %i[course_age_range itt_aim itt_qualification_aim fund_code pg_apprenticeship_start_date ni_number]
 
         attributes = trainee.hesa_students.latest.slice(attributes_for_extraction)
-        attributes.merge!(funding_method: trainee.hesa_students.last.bursary_level)
+        attributes.merge!(
+          funding_method: trainee.hesa_students.last.bursary_level,
+          previous_last_name: trainee.hesa_students.last.previous_surname,
+        )
       end
     end
   end

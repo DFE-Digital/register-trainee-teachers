@@ -23,6 +23,7 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
                    itt_qualification_aim: "001",
                    fund_code: "7",
                    ni_number: "AB010203V",
+                   previous_surname: "Jones",
                    bursary_level: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
                    trainee: trainee)
           end
@@ -40,6 +41,7 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
             end
 
             expect(trainee.hesa_trainee_detail.funding_method).to eq(student.bursary_level)
+            expect(trainee.hesa_trainee_detail.previous_last_name).to eq(student.previous_surname)
           end
         end
 
@@ -55,6 +57,8 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
             %i[itt_aim itt_qualification_aim pg_apprenticeship_start_date].each do |attribute|
               expect(trainee.hesa_trainee_detail.send(attribute)).to eq(metadatum.send(attribute))
             end
+
+            expect(trainee.hesa_trainee_detail.fund_code).to eq(metadatum.fundability)
           end
         end
 
@@ -70,7 +74,7 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
                    trainee: trainee)
           end
 
-          let(:metadatum) { create(:hesa_metadatum, itt_aim: "002", itt_qualification_aim: "002", trainee: trainee) }
+          let(:metadatum) { create(:hesa_metadatum, itt_aim: "002", itt_qualification_aim: "002", fundability: "3", trainee: trainee) }
 
           it "prioritises the values from the hesa_student record" do
             trainee.reload
@@ -79,7 +83,7 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
             subject.call(trainee:)
             trainee.reload
 
-            %i[itt_aim itt_qualification_aim].each do |attribute|
+            %i[itt_aim itt_qualification_aim fund_code].each do |attribute|
               expect(trainee.hesa_trainee_detail.send(attribute)).to eq(student.send(attribute))
             end
 
