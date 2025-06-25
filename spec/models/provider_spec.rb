@@ -300,20 +300,20 @@ describe Provider do
     end
   end
 
-  describe "#performance_profile_sign_offs" do
+  describe "#census_sign_offs" do
     context "when there are no sign offs" do
       let(:provider) { create(:provider) }
 
       it "returns an empty collection" do
-        expect(provider.performance_profile_sign_offs).to be_empty
+        expect(provider.census_sign_offs).to be_empty
       end
     end
 
-    context "when there are only census sign offs" do
-      let(:provider) { create(:provider, :census_sign_off) }
+    context "when there are only performance profile sign offs" do
+      let(:provider) { create(:provider, :performance_profile_sign_off) }
 
       it "returns an empty collection" do
-        expect(provider.performance_profile_sign_offs).to be_empty
+        expect(provider.census_sign_offs).to be_empty
       end
     end
 
@@ -323,7 +323,7 @@ describe Provider do
       let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
 
       it "returns only the performance sign offs" do
-        expect(provider.performance_profile_sign_offs).to contain_exactly(performance_profile_sign_off)
+        expect(provider.census_sign_offs).to contain_exactly(census_sign_off)
       end
     end
   end

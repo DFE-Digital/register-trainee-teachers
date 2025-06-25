@@ -8,11 +8,11 @@ FactoryBot.define do
     performance_profile
 
     trait :previous_academic_cycle do
-      academic_cycle { create(:academic_cycle, :previous) }
+      academic_cycle { association :academic_cycle, :previous }
     end
 
     trait :current_academic_cycle do
-      academic_cycle { create(:academic_cycle, :current) }
+      academic_cycle { association :academic_cycle, :current }
     end
   end
 end
