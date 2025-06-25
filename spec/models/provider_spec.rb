@@ -299,4 +299,76 @@ describe Provider do
       end
     end
   end
+
+  describe "#performance_profile_sign_offs" do
+    context "when there are no sign offs" do
+      let(:provider) { create(:provider) }
+
+      it "returns an empty collection" do
+        expect(provider.performance_profile_sign_offs).to be_empty
+      end
+    end
+
+    context "when there are only census sign offs" do
+      let(:provider) { create(:provider, :census_sign_off) }
+
+      it "returns an empty collection" do
+        expect(provider.performance_profile_sign_offs).to be_empty
+      end
+    end
+
+    context "when there are census and performance sign offs" do
+      let(:census_sign_off) { build(:sign_off, :census) }
+      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile) }
+      let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
+
+      it "returns only the performance sign offs" do
+        expect(provider.performance_profile_sign_offs).to contain_exactly(performance_profile_sign_off)
+      end
+    end
+  end
+
+  describe "#census_signed_off?" do
+    context "when there are no sign offs" do
+      let(:provider) { create(:provider) }
+
+      it "returns false" do
+        expect(provider.census_signed_off?).to be false
+      end
+    end
+
+    context "when there are only performance profile sign offs" do
+      let(:provider) { create(:provider, :performance_profile_sign_off) }
+
+      it "returns false" do
+        expect(provider.census_signed_off?).to be false
+      end
+    end
+
+    context "when there are census sign offs from the current academic cycle" do
+      let(:provider) { create(:provider, :census_sign_off) }
+
+      it "returns true" do
+        expect(provider.census_signed_off?).to be true
+      end
+    end
+
+    context "when there are census sign offs from the previous academic cycle" do
+      let(:provider) { create(:provider, :previous_cycle_census_sign_off) }
+
+      it "returns false" do
+        expect(provider.census_signed_off?).to be false
+      end
+    end
+
+    context "when there are census and performance sign offs" do
+      let(:census_sign_off) { build(:sign_off, :census) }
+      let(:performance_profile_sign_off) { build(:sign_off, :performance_profile) }
+      let(:provider) { create(:provider, sign_offs: [performance_profile_sign_off, census_sign_off]) }
+
+      it "returns only the performance sign offs" do
+        expect(provider.census_sign_offs).to contain_exactly(census_sign_off)
+      end
+    end
+  end
 end

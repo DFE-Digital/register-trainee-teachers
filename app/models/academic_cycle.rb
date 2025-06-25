@@ -102,6 +102,10 @@ class AcademicCycle < ApplicationRecord
     Date.new(start_year, 10, -1)
   end
 
+  def in_census_range?(date)
+    census_date_range.cover?(date)
+  end
+
   alias_method :end_date_of_performance_profile, :last_day_of_february
 
   alias_method :itt_census_date, :second_wednesday_of_october

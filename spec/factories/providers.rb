@@ -77,7 +77,11 @@ FactoryBot.define do
     end
 
     trait :census_sign_off do
-      sign_offs { [build(:sign_off, :census)] }
+      sign_offs { [build(:sign_off, :census, :current_academic_cycle)] }
+    end
+
+    trait :previous_cycle_census_sign_off do
+      sign_offs { [build(:sign_off, :census, :previous_academic_cycle)] }
     end
   end
 end
