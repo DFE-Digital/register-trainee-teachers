@@ -1381,23 +1381,34 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
               data:
               {
                 first_names: "Alice",
-                study_mode: "63",
+                study_mode: "64",
               },
             }
           end
 
           it "updates the trainee" do
-            put(
-              "/api/v2025.0-rc/trainees/#{slug}",
-              params: params_for_update.to_json,
-              headers: headers,
+            expect {
+              put(
+                "/api/v2025.0-rc/trainees/#{slug}",
+                params: params_for_update.to_json,
+                headers: headers,
+              )
+            }.to change {
+              trainee.reload.first_names
+            }.from("John").to("Alice").and(
+              change {
+                trainee.study_mode
+              }.from("full_time").to("part_time")
+            ).and(
+              change {
+                trainee.hesa_trainee_detail.course_study_mode
+              }.from("63").to("64")
             )
 
             expect(response).to have_http_status(:ok)
-            expect(trainee.first_names).to eq("Alice")
-
             expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
-            expect(response.parsed_body[:data][:study_mode]).to eq("63")
+            expect(response.parsed_body[:data][:first_names]).to eq("Alice")
+            expect(response.parsed_body[:data][:study_mode]).to eq("64")
           end
         end
 
