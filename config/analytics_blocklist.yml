@@ -189,7 +189,6 @@
   - provider_trainee_id
   - lead_partner_urn
   :hesa_collection_requests:
-  - id
   - collection_reference
   - requested_at
   - response_body
