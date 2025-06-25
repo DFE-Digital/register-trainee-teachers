@@ -1631,6 +1631,11 @@ en:
             sign_off:
               inclusion: Confirm sign off
               blank: Confirm sign off
+        census_sign_off_form:
+          attributes:
+            sign_off:
+              inclusion: Confirm sign off
+              blank: Confirm sign off
         language_specialisms_form:
           attributes:
             course_subject_one:
