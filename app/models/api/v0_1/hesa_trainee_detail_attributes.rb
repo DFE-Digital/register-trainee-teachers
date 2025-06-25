@@ -43,38 +43,21 @@ module Api
 
       validates(:itt_qualification_aim, presence: true, if: -> { itt_aim == ITT_AIM_REQUIRED_CODE || itt_aim.blank? })
 
-      validates(
-        :itt_aim,
-        inclusion: {
-          in: Hesa::CodeSets::IttAims::MAPPING.keys,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::IttAims::MAPPING.keys) },
-        },
-        allow_blank: true,
-      )
-      validates(
-        :itt_qualification_aim,
-        inclusion: {
-          in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::IttQualificationAims::MAPPING.keys) },
-        },
-        allow_blank: true,
-      )
-      validates(
-        :course_age_range,
-        inclusion: {
-          in: Hesa::CodeSets::AgeRanges::MAPPING.keys,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::AgeRanges::MAPPING.keys) },
-        },
-        allow_blank: true,
-      )
-      validates(
-        :funding_method,
-        inclusion: {
-          in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::BursaryLevels::MAPPING.keys) },
-        },
-        allow_blank: true,
-      )
+      validates :itt_aim, api_inclusion: {
+        in: Hesa::CodeSets::IttAims::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :itt_qualification_aim, api_inclusion: {
+        in: Hesa::CodeSets::IttQualificationAims::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :course_age_range, api_inclusion: {
+        in: Hesa::CodeSets::AgeRanges::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :funding_method, api_inclusion: {
+        in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
+      }, allow_blank: true
     end
   end
 end
