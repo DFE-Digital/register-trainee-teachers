@@ -49,6 +49,7 @@ module Api
           course_study_mode: student_record.mode,
           course_year: student_record.year_of_course,
           hesa_disabilities: disabilities(student_record),
+          additional_training_initiative: student_record.training_initiative,
         )
       end
 
