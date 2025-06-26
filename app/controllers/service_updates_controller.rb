@@ -6,4 +6,9 @@ class ServiceUpdatesController < ApplicationController
   def index
     @service_updates = ServiceUpdate.all
   end
+
+  def show
+    @service_update = ServiceUpdate.find_by_id(params[:id])
+    raise(ActionController::RoutingError, "Not Found") if @service_update.nil?
+  end
 end
