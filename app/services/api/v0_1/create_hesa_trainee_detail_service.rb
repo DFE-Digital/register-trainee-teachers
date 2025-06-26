@@ -41,11 +41,19 @@ module Api
 
         attributes_for_extraction = %i[course_age_range itt_aim itt_qualification_aim fund_code pg_apprenticeship_start_date ni_number]
 
-        attributes = trainee.hesa_students.latest.slice(attributes_for_extraction)
+        student_record = trainee.hesa_students.latest
+        attributes = student_record.slice(attributes_for_extraction)
         attributes.merge!(
-          funding_method: trainee.hesa_students.last.bursary_level,
-          previous_last_name: trainee.hesa_students.last.previous_surname,
+          funding_method: student_record.bursary_level,
+          previous_last_name: student_record.previous_surname,
+          course_study_mode: student_record.mode,
+          course_year: student_record.year_of_course,
+          hesa_disabilities: disabilities(student_record),
         )
+      end
+
+      def disabilities(student_record)
+        (1..9).map { |integer| student_record.send("disability#{integer}") }.compact!
       end
     end
   end

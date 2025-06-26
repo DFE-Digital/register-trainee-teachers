@@ -25,6 +25,11 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
                    ni_number: "AB010203V",
                    previous_surname: "Jones",
                    bursary_level: Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY,
+                   mode: "part_time",
+                   year_of_course: 2026,
+                   disability1: Hesa::CodeSets::Disabilities::MAPPING.keys.sample,
+                   disability2: Hesa::CodeSets::Disabilities::MAPPING.keys.sample,
+                   disability3: Hesa::CodeSets::Disabilities::MAPPING.keys.sample,
                    trainee: trainee)
           end
 
@@ -42,6 +47,9 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
 
             expect(trainee.hesa_trainee_detail.funding_method).to eq(student.bursary_level)
             expect(trainee.hesa_trainee_detail.previous_last_name).to eq(student.previous_surname)
+            expect(trainee.hesa_trainee_detail.course_study_mode).to eq(student.mode)
+            expect(trainee.hesa_trainee_detail.course_year).to eq(student.year_of_course.to_i)
+            expect(trainee.hesa_trainee_detail.hesa_disabilities).to match([student.disability1, student.disability2, student.disability3])
           end
         end
 
