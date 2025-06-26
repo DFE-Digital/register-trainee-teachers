@@ -2097,7 +2097,7 @@ en:
               csv:
                 blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
             training_initiative:
-              ineligible: "training initiative ‘%{training_initiative}’ is not available in academic cycle ‘%{academic_cycle}’"
+              ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
         api/v20250_rc/withdrawal_attributes:
           attributes:
             withdraw_date:
