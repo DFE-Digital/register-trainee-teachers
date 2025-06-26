@@ -10,6 +10,7 @@ module Api
       include TrainingRouteManageable
       include PrimaryCourseSubjects
       include DateValidatable
+      include Api::ErrorMessageHelpers
 
       before_validation :set_course_allocation_subject_id
       after_validation :set_progress
@@ -88,24 +89,50 @@ module Api
 
       validates(*REQUIRED_ATTRIBUTES, presence: true)
       validates :email, presence: true, length: { maximum: 255 }
-      validates :ethnicity, inclusion: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq, allow_blank: true
       validate { |record| EmailFormatValidator.new(record).validate }
       validate :validate_itt_start_and_end_dates
       validate :validate_trainee_start_date
       validate :validate_date_of_birth
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
 
-      validates :sex, inclusion: Hesa::CodeSets::Sexes::MAPPING.values, allow_blank: true
+      validates :ethnicity, api_inclusion: {
+        in: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq,
+        valid_values: Hesa::CodeSets::Ethnicities::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :sex, api_inclusion: {
+        in: Hesa::CodeSets::Sexes::MAPPING.values,
+        valid_values: Hesa::CodeSets::Sexes::MAPPING.keys,
+      }, allow_blank: true
+
       validates :placements_attributes, :degrees_attributes, :nationalisations_attributes, :hesa_trainee_detail_attributes, nested_attributes: true
-      validates :training_route, inclusion: { in: :valid_training_routes }, allow_blank: true, if: :valid_trainee_start_date?
-      validates :course_subject_one, :course_subject_two, :course_subject_three,
-                inclusion: { in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values }, allow_blank: true
-      validates :study_mode,
-                inclusion: { in: TRAINEE_STUDY_MODE_ENUMS.keys }, allow_blank: true
-      validates :nationality,
-                inclusion: { in: RecruitsApi::CodeSets::Nationalities::MAPPING.values }, allow_blank: true
-      validates :training_initiative,
-                inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
+      validates(
+        :training_route,
+        inclusion: {
+          in: :valid_training_routes,
+          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::TrainingRoutes::MAPPING.keys) },
+        },
+        allow_blank: true,
+        if: :valid_trainee_start_date?,
+      )
+
+      validates :course_subject_one, :course_subject_two, :course_subject_three, api_inclusion: {
+        in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values,
+        valid_values: Hesa::CodeSets::CourseSubjects::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :study_mode, api_inclusion: {
+        in: TRAINEE_STUDY_MODE_ENUMS.keys,
+        valid_values: Hesa::CodeSets::StudyModes::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :nationality, api_inclusion: {
+        in: RecruitsApi::CodeSets::Nationalities::MAPPING.values,
+        valid_values: RecruitsApi::CodeSets::Nationalities::MAPPING.keys,
+      }, allow_blank: true
+
+      validates :training_initiative, api_inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
+
       validates :trainee_disabilities_attributes, uniqueness: true
 
       def initialize(new_attributes = {})
@@ -326,6 +353,8 @@ module Api
       end
 
       def set_course_allocation_subject_id
+        return course_subject_one if course_subject_one.is_a?(Api::V01::HesaMapper::Attributes::InvalidValue)
+
         self.course_allocation_subject_id ||=
           SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject&.id
       end

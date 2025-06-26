@@ -36,7 +36,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("sex has invalid reference data values")
+          expect(subject.errors[:sex]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         }
       end
 
@@ -80,7 +80,9 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("course_subject_one has invalid reference data values")
+          expect(subject.errors[:course_subject_one]).to contain_exactly(
+            "has invalid reference data value of 'random subject'. Valid values are #{Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
         }
       end
 
@@ -101,9 +103,10 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
     %i[course_subject_two course_subject_three].each do |course_subject|
       it {
-        expect(subject).to validate_inclusion_of(course_subject).in_array(
-          Hesa::CodeSets::CourseSubjects::MAPPING.values,
-        ).allow_blank
+        expect(subject).to validate_inclusion_of(course_subject)
+          .in_array(Hesa::CodeSets::CourseSubjects::MAPPING.values)
+          .with_message(/has invalid reference data value of '.*'/)
+          .allow_blank
       }
     end
 
@@ -134,7 +137,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("study_mode has invalid reference data values")
+          expect(subject.errors[:study_mode]&.first).to match(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::StudyModes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
         }
       end
 
@@ -153,7 +156,9 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
-        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq).allow_blank
+        .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq)
+        .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
+        .allow_blank
     }
 
     describe "training_route" do
@@ -175,6 +180,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -184,6 +190,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -193,6 +200,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value/)
             end
           end
 
@@ -206,6 +214,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
+                .with_message(/has invalid reference data value/)
             end
           end
 
@@ -215,6 +224,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values.excluding(TRAINING_ROUTE_ENUMS[:provider_led_postgrad]))
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 

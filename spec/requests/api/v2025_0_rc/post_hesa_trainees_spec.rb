@@ -17,8 +17,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
   let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:trainee_start_date) { itt_start_date }
-  let(:itt_start_date) { "2023-01-01" }
-  let(:itt_end_date) { "2023-10-01" }
+  let(:itt_start_date) { academic_cycle.start_date.iso8601 }
+  let(:itt_end_date) { (academic_cycle.start_date + 1.year).iso8601 }
   let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
   let(:disability1) { "58" }
   let(:disability2) { "57" }
@@ -889,7 +889,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("ethnicity has invalid reference data values")
+          expect(response.parsed_body[:errors]).to include(
+            /ethnicity has invalid reference data value of '1000'/,
+          )
         end
       end
     end
@@ -975,7 +977,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body[:errors]).to contain_exactly("training_route has invalid reference data values")
+            expect(response.parsed_body[:errors]).to include(
+              /training_route has invalid reference data value of/,
+            )
           end
         end
 
@@ -1047,7 +1051,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("course_age_range has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /course_age_range has invalid reference data value of '1234'/,
+        )
       end
     end
 
@@ -1068,7 +1074,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("sex has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /sex has invalid reference data value of '3'/,
+        )
       end
     end
 
@@ -1078,7 +1086,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("ethnicity has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /ethnicity has invalid reference data value of 'Irish'/,
+        )
       end
     end
 
@@ -1090,7 +1100,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("course_subject_one has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /course_subject_one has invalid reference data value of 'chemistry'/,
+        )
       end
     end
 
@@ -1102,7 +1114,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("course_subject_two has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /course_subject_two has invalid reference data value of/,
+        )
       end
     end
 
@@ -1114,7 +1128,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("course_subject_three has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /course_subject_three has invalid reference data value of/,
+        )
       end
     end
 
@@ -1126,7 +1142,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("study_mode has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /study_mode has invalid reference data value of '1'/,
+        )
       end
     end
 
@@ -1138,7 +1156,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("nationality has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /nationality has invalid reference data value of 'british'/,
+        )
       end
     end
 
@@ -1150,7 +1170,9 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("training_initiative has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /training_initiative has invalid reference data value of 'now_teach'/,
+        )
       end
     end
 
@@ -1162,8 +1184,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly(
-          "funding_method has invalid reference data values",
+        expect(response.parsed_body["errors"]).to include(
+          /funding_method has invalid reference data value of '8c629dd7-bfc3-eb11-bacc-000d3addca7a'/,
         )
       end
     end
@@ -1176,8 +1198,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly(
-          "itt_aim has invalid reference data values",
+        expect(response.parsed_body["errors"]).to include(
+          /itt_aim has invalid reference data value of '321'/,
         )
       end
     end
@@ -1190,8 +1212,8 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly(
-          "itt_qualification_aim has invalid reference data values",
+        expect(response.parsed_body["errors"]).to include(
+          /itt_qualification_aim has invalid reference data value of '321'/,
         )
       end
     end
@@ -1285,7 +1307,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "funding_method training route ‘teacher_degree_apprenticeship’ and subject code ‘biology’ are not eligible for ‘bursary’ in academic cycle ‘’",
+        "funding_method training route ‘teacher_degree_apprenticeship’ and subject code ‘biology’ are not eligible for ‘bursary’ in academic cycle ‘#{academic_cycle.label}’",
       )
     end
   end

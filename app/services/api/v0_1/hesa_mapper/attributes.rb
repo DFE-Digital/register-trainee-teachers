@@ -21,6 +21,10 @@ module Api
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
         DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
 
+        InvalidValue = Struct.new(:original_value) do
+          delegate :to_s, to: :original_value
+        end
+
         def self.disability_attributes(params)
           params[:data].keys.select { |key| key.to_s.match(DISABILITY_PARAM_REGEX) }
         end
@@ -86,7 +90,7 @@ module Api
         def ethnicity
           mapped_value = ::Hesa::CodeSets::Ethnicities::MAPPING[params[:ethnicity]]
 
-          return HesaMapperConstants::INVALID if params[:ethnicity].present? && mapped_value.nil?
+          return InvalidValue.new(params[:ethnicity]) if params[:ethnicity].present? && mapped_value.nil?
 
           mapped_value
         end
@@ -102,7 +106,7 @@ module Api
         def sex
           mapped_value = ::Hesa::CodeSets::Sexes::MAPPING[params[:sex]]
 
-          return HesaMapperConstants::INVALID if params[:sex].present? && mapped_value.nil?
+          return InvalidValue.new(params[:sex]) if params[:sex].present? && mapped_value.nil?
 
           mapped_value || params[:sex]
         end
@@ -110,7 +114,7 @@ module Api
         def training_route
           mapped_value = ::Hesa::CodeSets::TrainingRoutes::MAPPING[params[:training_route]]
 
-          return HesaMapperConstants::INVALID if params[:training_route].present? && mapped_value.nil?
+          return InvalidValue.new(params[:training_route]) if params[:training_route].present? && mapped_value.nil?
 
           mapped_value
         end
@@ -128,7 +132,7 @@ module Api
         def nationality
           mapped_value = RecruitsApi::CodeSets::Nationalities::MAPPING[params[:nationality]]
 
-          return HesaMapperConstants::INVALID if params[:nationality].present? && mapped_value.nil?
+          return InvalidValue.new(params[:nationality]) if params[:nationality].present? && mapped_value.nil?
 
           mapped_value
         end
@@ -165,10 +169,10 @@ module Api
           params[:trainee_start_date].presence || itt_start_date
         end
 
-        def course_subject_name(course_subject)
-          mapped_value = ::Hesa::CodeSets::CourseSubjects::MAPPING[params[course_subject]]
+        def course_subject_name(attr)
+          mapped_value = ::Hesa::CodeSets::CourseSubjects::MAPPING[params[attr]]
 
-          return HesaMapperConstants::INVALID if params[course_subject].present? && mapped_value.nil?
+          return InvalidValue.new(params[attr]) if params[attr].present? && mapped_value.nil?
 
           mapped_value
         end
@@ -194,7 +198,7 @@ module Api
         def study_mode
           mapped_value = ::Hesa::CodeSets::StudyModes::MAPPING[params[:study_mode]]
 
-          return HesaMapperConstants::INVALID if params[:study_mode].present? && mapped_value.nil?
+          return InvalidValue.new(params[:study_mode]) if params[:study_mode].present? && mapped_value.nil?
 
           TRAINEE_STUDY_MODE_ENUMS.invert[mapped_value]
         end
@@ -278,7 +282,7 @@ module Api
 
           mapped_value = ::Hesa::CodeSets::TrainingInitiatives::MAPPING[params[:training_initiative]]
 
-          return HesaMapperConstants::INVALID if params[:training_initiative].present? && mapped_value.nil?
+          return InvalidValue.new(params[:training_initiative]) if params[:training_initiative].present? && mapped_value.nil?
 
           mapped_value
         end
