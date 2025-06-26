@@ -281,7 +281,7 @@ private
 
   def then_i_see_the_documentation(window)
     within_window(window) do
-      expect(page).to have_content("Register API reference")
+      expect(page).to have_content("Register API documentation")
     end
   end
 

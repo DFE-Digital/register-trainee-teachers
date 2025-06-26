@@ -7,7 +7,25 @@ require "active_support/core_ext/integer/time"
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
 
+class SuppressAssetErrors
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    @app.call(env)
+  rescue ActionController::RoutingError => e
+    if env["PATH_INFO"] =~ %r{^/assets/.*\.(woff2?|ttf|svg|eot|json)$}
+      [200, { "Content-Type" => "text/plain" }, ["Asset not found (suppressed)"]]
+    else
+      raise(e)
+    end
+  end
+end
+
 Rails.application.configure do
+  config.middleware.insert_before(ActionDispatch::ShowExceptions, SuppressAssetErrors)
+
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
