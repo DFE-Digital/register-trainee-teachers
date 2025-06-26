@@ -4,12 +4,13 @@ host: https://www.register-trainee-teachers.service.gov.uk
 # Header-related options
 show_govuk_logo: true
 service_name: Register trainee teachers
-service_link: /
+service_link: https://www.register-trainee-teachers.service.gov.uk
 phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
-  API: /
+  API: /api-docs/
+  Help: /help.html
 
 # Tracking ID from Google Analytics (e.g. UA-XXXX-Y)
 ga_tracking_id:

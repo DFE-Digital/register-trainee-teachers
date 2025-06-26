@@ -85,5 +85,5 @@ Caddyfile
 .rspec-local
 
 # Ignore docs
-/public/docs
+/public/api-docs
 /tech_docs/build

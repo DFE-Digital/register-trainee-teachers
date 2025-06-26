@@ -3,33 +3,23 @@
 require "rails_helper"
 
 feature "Home page for Register API documentation" do
-  scenario "navigate to the documentation when feature flag is deactivated", feature_register_api: false do
-    when_i_visit_the_documentation_page
-    then_i_should_see_the_default_not_found_page
-  end
-
-  scenario "navigate to the documentation when feature flag is active" do
+  scenario "navigate to the documentation" do
     when_i_visit_the_documentation_page
     then_i_should_see_the_api_docs_home_page
 
     when_i_navigate_to_the_release_notes
     then_i_should_see_the_release_notes_for_the_current_and_earlier_versions
 
-    when_i_navigate_back
+    when_i_click_on_the_logo
     then_i_should_see_the_register_home_page
   end
 
   def when_i_visit_the_documentation_page
-    visit "/api-docs"
+    visit "/api-docs/"
   end
 
   def then_i_should_see_the_api_docs_home_page
     expect(page).to have_content("Register API documentation")
-  end
-
-  def then_i_should_see_the_default_not_found_page
-    expect(page).not_to have_content("Register API documentation")
-    expect(page).to have_content("Page not found")
   end
 
   def when_i_navigate_to_the_release_notes
@@ -37,11 +27,11 @@ feature "Home page for Register API documentation" do
   end
 
   def then_i_should_see_the_release_notes_for_the_current_and_earlier_versions
-    expect(page).to have_content("Register API release notes")
+    expect(page).to have_content("Release notes")
   end
 
-  def when_i_navigate_back
-    click_on "Back"
+  def when_i_click_on_the_logo
+    find(".govuk-header__link--homepage", text: "Register trainee teachers").click
   end
 
   def then_i_should_see_the_register_home_page

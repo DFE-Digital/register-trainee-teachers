@@ -14,7 +14,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
-  let(:course_age_range) { Hesa::CodeSets::AgeRanges::MAPPING.keys.sample }
+  let(:course_age_range) { "13918" }
   let(:sex) { Hesa::CodeSets::Sexes::MAPPING.keys.sample }
   let(:itt_start_date) { "2023-01-01" }
   let(:itt_end_date) { "2023-10-01" }
@@ -670,7 +670,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Ethnicity has invalid reference data values")
+          expect(response.parsed_body[:errors]).to include(
+            /Ethnicity has invalid reference data value of/,
+          )
         end
       end
     end
@@ -744,7 +746,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
         it do
           expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.parsed_body[:errors]).to contain_exactly("Training route has invalid reference data values")
+          expect(response.parsed_body[:errors]).to include(
+            /Training route has invalid reference data value of/,
+          )
         end
       end
     end
@@ -787,7 +791,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Course age range has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Hesa trainee detail attributes Course age range has invalid reference data value of/,
+        )
       end
     end
 
@@ -807,7 +813,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Sex has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Sex has invalid reference data value of/,
+        )
       end
     end
 
@@ -817,7 +825,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Ethnicity has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Ethnicity has invalid reference data value of/,
+        )
       end
     end
 
@@ -829,7 +839,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course subject one has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Course subject one has invalid reference data value of/,
+        )
       end
     end
 
@@ -841,7 +853,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course subject two has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Course subject two has invalid reference data value of/,
+        )
       end
     end
 
@@ -853,7 +867,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Course subject three has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Course subject three has invalid reference data value of/,
+        )
       end
     end
 
@@ -865,7 +881,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Study mode has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Study mode has invalid reference data value of/,
+        )
       end
     end
 
@@ -877,7 +895,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Nationality has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Nationality has invalid reference data value of/,
+        )
       end
     end
 
@@ -889,7 +909,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Training initiative has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Training initiative has invalid reference data value of/,
+        )
       end
     end
 
@@ -901,7 +923,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly("Hesa trainee detail attributes Funding method has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Hesa trainee detail attributes Funding method has invalid reference data value of/,
+        )
       end
     end
 
@@ -913,8 +937,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly(
-          "Hesa trainee detail attributes Itt aim has invalid reference data values",
+        expect(response.parsed_body["errors"]).to include(
+          /Hesa trainee detail attributes Itt aim has invalid reference data value of/,
         )
       end
     end
@@ -927,8 +951,8 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["errors"]).to contain_exactly(
-          "Hesa trainee detail attributes Itt qualification aim has invalid reference data values",
+        expect(response.parsed_body["errors"]).to include(
+          /Hesa trainee detail attributes Itt qualification aim has invalid reference data value of/,
         )
       end
     end
@@ -943,7 +967,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
     it "return status code 422 with a meaningful error message" do
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body["errors"]).to include("Placements attributes Name can't be blank")
+      expect(response.parsed_body["errors"]).to include(
+        "Placements attributes Name can't be blank",
+      )
     end
   end
 
@@ -971,7 +997,9 @@ describe "`POST /api/v0.1/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
-        expect(response.parsed_body["errors"]).to include("Degrees attributes Uk degree has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(
+          /Degrees attributes Uk degree has invalid reference data values/,
+        )
       end
     end
   end

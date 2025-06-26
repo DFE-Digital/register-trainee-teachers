@@ -1,0 +1,17 @@
+require "fileutils"
+
+namespace :tech_docs do
+  desc "Build docs"
+  task :build  do
+    FileUtils.cp_r "source", "temp_source"
+
+    FileUtils.rm "source/index.html.md"
+    FileUtils.cp_r "source/api-docs/.", "source"
+    FileUtils.rm_rf "source/api-docs"
+
+    system("bundle exec middleman build --build-dir ../public/api-docs --verbose")
+
+    FileUtils.rm_rf "source"
+    FileUtils.mv "temp_source", "source"
+  end
+end
