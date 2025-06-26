@@ -33,7 +33,7 @@ module Api
           end
 
           def training_initiative_eligible?
-            available_initiatives = AvailableTrainingInitiativesService.call(academic_cycle:)
+            available_initiatives = Funding::AvailableTrainingInitiativesService.call(academic_cycle:)
 
             available_initiatives.include?(training_initiative)
           end

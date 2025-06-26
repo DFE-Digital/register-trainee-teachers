@@ -6,16 +6,15 @@ require "rails_helper"
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitiative do
   subject { described_class }
 
-  around do |example|
-    Timecop.freeze(Date.new(2025, 5, 1)) { example.run }
-  end
+  let!(:current_acadcemic_cycle) { create(:academic_cycle, cycle_year: year) }
+  let!(:academic_cycle) { create(:academic_cycle, cycle_year: year + 1) }
 
-  let!(:current_academic_cycle) { create(:academic_cycle, cycle_year: 2024) }
-  let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2025) }
+  let(:year) { 2024 }
 
   let(:trainee_attributes) do
     Api::V20250Rc::TraineeAttributes.new(
-      training_initiative:,
+      training_initiative: training_initiative,
+      trainee_start_date: Date.new(year, 12, 1).iso8601,
     )
   end
   let(:hesa_trainee_detail_attributes) do
@@ -23,6 +22,10 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitia
       { trainee_attributes: },
       record_source: "api",
     )
+  end
+
+  around do |example|
+    Timecop.freeze(Date.new(year, 5, 1)) { example.run }
   end
 
   describe ".call" do
@@ -51,7 +54,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitia
     end
 
     context "when the `training_initiative` is a valid HESA code and available in the given year" do
-      let(:training_initiative) { "" }
+      let(:training_initiative) { "international_relocation_payment" }
 
       it "returns true" do
         expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
@@ -63,14 +66,16 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitia
     end
 
     context "when the `training_initiative` is a valid HESA code but not available in the given year" do
-      let(:training_initiative) { "" }
+      let(:training_initiative) { "future_teaching_scholars" }
 
       it "returns false" do
         expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
       end
 
       it "returns error details including the given value and allowed values" do
-        expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to eq(
+          { academic_cycle: "2024 to 2025", training_initiative: "future_teaching_scholars" },
+        )
       end
     end
   end
