@@ -53,6 +53,18 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitia
       end
     end
 
+    context "when the `training_initiative` is `:no_initiative`" do
+      let(:training_initiative) { :no_initiative }
+
+      it "returns true" do
+        expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+      end
+
+      it "returns no error details" do
+        expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+      end
+    end
+
     context "when the `training_initiative` is a valid HESA code and available in the given year" do
       let(:training_initiative) { "international_relocation_payment" }
 

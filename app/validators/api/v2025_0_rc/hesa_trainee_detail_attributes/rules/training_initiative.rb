@@ -39,7 +39,9 @@ module Api
           end
 
           def no_training_initiative?
-            training_initiative.blank?
+            training_initiative.blank? ||
+              training_initiative.to_s == "no_initiative" ||
+              training_initiative == ROUTE_INITIATIVES_ENUMS[:no_initiative]
           end
 
           def error_details
