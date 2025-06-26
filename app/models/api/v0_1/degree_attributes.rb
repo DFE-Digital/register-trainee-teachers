@@ -6,8 +6,6 @@ module Api
       include ActiveModel::Model
       include ActiveModel::Attributes
 
-      include Api::ErrorMessageHelpers
-
       ATTRIBUTES = %i[
         id
         country
@@ -35,14 +33,10 @@ module Api
       validates :graduation_year, presence: true
       validates :subject, presence: true
 
-      validates(
-        :country,
-        inclusion: {
-          in: Hesa::CodeSets::Countries::MAPPING.values,
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: Hesa::CodeSets::Countries::MAPPING.keys) },
-        },
-        allow_blank: true,
-      )
+      validates :country, api_inclusion: {
+        in: Hesa::CodeSets::Countries::MAPPING.values,
+        valid_values: Hesa::CodeSets::Countries::MAPPING.keys,
+      }, allow_blank: true
 
       with_options if: -> { locale_code == "uk" } do
         validates :institution, presence: true
@@ -54,25 +48,15 @@ module Api
         validates :non_uk_degree, presence: true
       end
 
-      validates(
-        :uk_degree,
-        inclusion: {
-          in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq) },
-          if: -> { locale_code == "uk" },
-        },
-        allow_blank: true,
-      )
+      validates :uk_degree, api_inclusion: {
+        in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq,
+      }, allow_blank: true, if: -> { locale_code == "uk" }
 
-      validates(
-        :non_uk_degree,
-        inclusion: {
-          in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
-          message: ->(_, data) { hesa_code_inclusion_message(value: data[:value], valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq) },
-          if: -> { locale_code == "non_uk" },
-        },
-        allow_blank: true,
-      )
+      validates :non_uk_degree, api_inclusion: {
+        in: DfEReference::DegreesQuery::TYPES.all.map(&:name),
+        valid_values: DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq,
+      }, allow_blank: true, if: -> { locale_code == "non_uk" }
 
       validate :check_for_duplicates
 

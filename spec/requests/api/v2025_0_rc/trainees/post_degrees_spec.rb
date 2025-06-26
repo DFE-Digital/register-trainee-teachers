@@ -219,7 +219,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
-            { "error" => "UnprocessableEntity", "message" => "non_uk_degree has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "non_uk_degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
             { "error" => "UnprocessableEntity", "message" => "country has invalid reference data value of 'France'. Valid values are #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}." },
           )
           expect(trainee.reload.degrees.count).to eq(0)
