@@ -5,7 +5,6 @@ require "rails_helper"
 feature "References documentation page for Register API" do
   scenario "navigate to the documentation when feature flag is active" do
     when_i_visit_the_documentation_page
-    and_i_navigate_to_the_api_reference
     then_i_should_see_the_api_reference_for_the_current_version
     and_i_should_see_links_to_other_versions
 
@@ -14,20 +13,16 @@ feature "References documentation page for Register API" do
   end
 
   def when_i_visit_the_documentation_page
-    visit "/api-docs"
-  end
-
-  def and_i_navigate_to_the_api_reference
-    click_on("API reference", class: "moj-primary-navigation__link")
+    visit "/api-docs/"
   end
 
   def then_i_should_see_the_api_reference_for_the_current_version
-    expect(page).to have_content("Register API reference")
+    expect(page).to have_content("Register API documentation")
   end
 
   def and_i_should_see_links_to_other_versions
     Settings.api.allowed_versions.each do |version|
-      expect(page).to have_link(version, href: api_docs_versioned_reference_path(api_version: version))
+      expect(page).to have_link(version, href: "./#{version}/index.html")
     end
   end
 
@@ -36,7 +31,6 @@ feature "References documentation page for Register API" do
   end
 
   def then_i_should_see_the_api_reference_for_the_other_version
-    expect(page).to have_content("Register API reference")
-    expect(page).to have_current_path(api_docs_versioned_reference_path(api_version: "v2025.0-rc"))
+    expect(page).to have_css("h1", text: "v2025.0-rc")
   end
 end
