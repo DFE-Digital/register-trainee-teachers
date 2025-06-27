@@ -19,29 +19,12 @@ class ReportsController < BaseTraineeController
         @partial_page = :outside_period
       end
     end
-  end
 
-  def itt_new_starter_data_sign_off
-    authorize(current_user, :reports?)
-
-    respond_to do |format|
-      format.html do
-        @sign_off_url = Settings.sign_off_trainee_data_url
-        @census_date = census_date(@current_academic_cycle.start_year).strftime("%d %B %Y")
-      end
-
-      format.csv do
-        authorize(:trainee, :export?)
-        headers["X-Accel-Buffering"] = "no"
-        headers["Cache-Control"] = "no-cache"
-        headers["Content-Type"] = "text/csv; charset=utf-8"
-        headers["Content-Disposition"] =
-          %(attachment; filename="#{itt_new_starter_filename}")
-        headers["Last-Modified"] = Time.zone.now.ctime.to_s
-
-        response.status = 200
-
-        self.response_body = Exports::ReportCsvEnumeratorService.call(itt_new_starter_trainees)
+    if @partial_page == :census_period
+      if current_user.organisation.nil? && current_user.system_admin?
+        @partial_page = :system_admin_with_no_associated_provider
+      elsif current_user.organisation.census_signed_off?
+        @partial_page = :outside_period
       end
     end
   end
@@ -68,20 +51,12 @@ class ReportsController < BaseTraineeController
 
 private
 
-  def itt_new_starter_trainees
-    @itt_new_starter_trainees ||= policy_scope(FindNewStarterTrainees.new(census_date(@current_academic_cycle.start_year)).call)
-  end
-
   def bulk_recommend_trainees
     policy_scope(FindBulkRecommendTrainees.call).order(last_name: :asc)
   end
 
   def time_now
     Time.now.in_time_zone("London").strftime("%F_%H-%M-%S")
-  end
-
-  def itt_new_starter_filename
-    "#{time_now}_New-trainees-#{@current_academic_cycle.label('-')}-sign-off-Register-trainee-teachers_exported_records.csv"
   end
 
   def bulk_recommend_export_filename

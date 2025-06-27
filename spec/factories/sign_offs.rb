@@ -10,5 +10,9 @@ FactoryBot.define do
     trait :previous_academic_cycle do
       academic_cycle { association :academic_cycle, :previous }
     end
+
+    trait :current_academic_cycle do
+      academic_cycle { association :academic_cycle, :current }
+    end
   end
 end

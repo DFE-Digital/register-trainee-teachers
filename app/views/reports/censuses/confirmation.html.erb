@@ -1,0 +1,29 @@
+<% page_title = "Census sign off submitted" %>
+<%= render PageTitle::View.new(text: page_title) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Reports",
+    href: reports_path,
+  ) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= govuk_panel(title_text: page_title, classes: "trn-submission-success-panel govuk-!-margin-bottom-6") %>
+
+    <h1 class="govuk-body">
+      Census sign off completed.
+    </h1>
+
+    <p class="govuk-body">
+      We have sent you and the other Register account users a confirmation email.
+    </p>
+
+    <h2 class="govuk-heading-m">What happens next</h2>
+
+    <p class="govuk-body">
+      If you have any questions email <%= support_email %>
+    </p>
+  </div>
+</div>

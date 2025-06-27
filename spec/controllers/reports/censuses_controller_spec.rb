@@ -2,13 +2,13 @@
 
 require "rails_helper"
 
-describe ReportsController do
+describe Reports::CensusesController do
   let(:user) { build_current_user }
 
   before do
-    create(:academic_cycle, previous_cycle: true)
-    create(:academic_cycle, :current)
+    create(:academic_cycle, previous_cycle: false)
     allow(controller).to receive(:current_user).and_return(user)
+    allow(DetermineSignOffPeriod).to receive(:call).and_return(:census_period)
   end
 
   describe "#index" do
@@ -21,12 +21,10 @@ describe ReportsController do
       get :index
       expect(response).to render_template("application")
     end
-  end
 
-  describe "#bulk_recommend_export" do
     it "renders a csv" do
-      get :bulk_recommend_export, params: { format: :csv }
-      expect(response.content_type).to eq("text/csv")
+      get :index, params: { format: :csv }
+      expect(response.content_type).to eq("text/csv; charset=utf-8")
     end
   end
 end

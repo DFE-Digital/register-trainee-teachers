@@ -4,13 +4,8 @@
 <ul class="govuk-list govuk-list--spaced">
   <li>
     <p>
-      <%= govuk_link_to "New trainees for the #{@current_academic_cycle_label} academic year", itt_new_starter_data_sign_off_reports_path, class: "new-trainee-data" %>
+      <%= govuk_link_to "Trainees with their academic start year in #{@current_academic_cycle_label} report", reports_censuses_path, class: "new-trainee-data" %>
       - for census sign off.
-    </p>
-  </li>
-  <li>
-    <p>
-       Trainees who studied in the <%= @previous_academic_cycle_label %> academic year - will be available for performance profiles sign off.
     </p>
   </li>
 </ul>
