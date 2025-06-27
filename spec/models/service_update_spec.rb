@@ -80,6 +80,35 @@ describe ServiceUpdate do
     end
   end
 
+  describe "#summary_html" do
+    it "converts markdown summary to HTML with govuk-link classes" do
+      update_data = {
+        summary: "This is a [test link](https://example.com) in **bold** text",
+        content: "Some content",
+      }
+      service_update = ServiceUpdate.new(update_data)
+
+      html_output = service_update.summary_html
+
+      expect(html_output).to include('href="https://example.com" class="govuk-link"')
+      expect(html_output).to include("test link")
+      expect(html_output).to include("<strong>bold</strong>")
+      expect(html_output).to be_html_safe
+    end
+
+    it "falls back to content when no summary is present" do
+      update_data = { content: "This is **markdown** content with a [link](https://example.com)" }
+      service_update = ServiceUpdate.new(update_data)
+
+      html_output = service_update.summary_html
+
+      expect(html_output).to include("<strong>markdown</strong>")
+      expect(html_output).to include('href="https://example.com" class="govuk-link"')
+      expect(html_output).to include(">link<")
+      expect(html_output).to be_html_safe
+    end
+  end
+
   describe ".recent_updates" do
     around do |example|
       Timecop.freeze(2021, 10, 4) do
