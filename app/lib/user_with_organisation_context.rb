@@ -75,6 +75,12 @@ class UserWithOrganisationContext < SimpleDelegator
     accredited_provider? && organisation.hei?
   end
 
+  # HEI Lead Partners are all previously-accredited Providers. They should be signed in as
+  # their previously-accredited Provider in order to use bulk update trainee uploads.
+  def accredited_hei_provider_or_hei_lead_partner?
+    accredited_hei_provider? || LeadPartner.hei.find_by(provider: organisation).present?
+  end
+
 private
 
   attr_reader :session
