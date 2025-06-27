@@ -62,6 +62,55 @@ RSpec.describe BulkUpdate::TraineeUploadPolicy, type: :policy do
     end
   end
 
+  context "when the User's organisation is a previously accredited HEI lead partner" do
+    let(:lead_partner) { create(:lead_partner, :hei) }
+    let(:user) { UserWithOrganisationContext.new(user: create(:user, providers: [lead_partner.provider]), session: {}) }
+    let(:trainee_upload) { build(:bulk_update_trainee_upload, provider: user.providers.first) }
+
+    context "and the environment is 'csv-sandbox'" do
+      %i[uploaded pending validated in_progress succeeded failed].each do |status|
+        context "when the upload is #{status}" do
+          let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+          permissions :index?, :show?, :new?, :create?, :destroy? do
+            it "permits the user" do
+              allow(Rails.env).to receive(:in?).with(%w[csv-sandbox]).and_return(true)
+              expect(subject).to permit(user, trainee_upload)
+            end
+          end
+        end
+      end
+
+      %i[cancelled].each do |status|
+        context "when the upload is #{status}" do
+          let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+          permissions :show?, :create?, :destroy? do
+            it "does not permit the user" do
+              allow(Rails.env).to receive(:in?).with(%w[csv-sandbox]).and_return(true)
+              expect(subject).not_to permit(user, trainee_upload)
+            end
+          end
+        end
+      end
+    end
+
+    context "and the environment is not 'csv-sandbox'" do
+      %i[uploaded pending validated in_progress succeeded failed cancelled].each do |status|
+        context "and the upload is #{status}" do
+          let(:trainee_upload) { build(:bulk_update_trainee_upload, status) }
+
+          permissions :index?, :show?, :new?, :create?, :destroy? do
+            it "does not permit the user" do
+              allow(Rails.env).to receive(:in?).with(%w[csv-sandbox]).and_return(false)
+              expect(subject).not_to permit(user, trainee_upload)
+            end
+          end
+        end
+      end
+    end
+  end
+
   describe described_class::Scope do
     subject do
       described_class.new(user, BulkUpdate::TraineeUpload).resolve
