@@ -2134,13 +2134,6 @@ en:
               blank: Enter another reason
         api/v01/degree_attributes:
           duplicate: This is a duplicate degree
-          attributes:
-            country:
-              inclusion: &invalid_reference_data has invalid reference data values
-            non_uk_degree:
-              inclusion: *invalid_reference_data
-            uk_degree:
-              inclusion: *invalid_reference_data
         api/v20250_rc/degree_attributes:
           attributes:
             uk_degree:

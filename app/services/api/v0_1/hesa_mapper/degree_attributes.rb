@@ -89,7 +89,7 @@ module Api
         end
 
         def uk_degree
-          return HesaMapperConstants::INVALID if @params[:uk_degree].present? && uk_degree_type.blank?
+          return Api::V01::HesaMapper::Attributes::InvalidValue.new(@params[:uk_degree]) if @params[:uk_degree].present? && uk_degree_type.blank?
 
           uk_degree_type&.name
         end
@@ -101,7 +101,7 @@ module Api
         end
 
         def non_uk_degree
-          return HesaMapperConstants::INVALID if @params[:non_uk_degree].present? && non_uk_degree_type.blank?
+          return Api::V01::HesaMapper::Attributes::InvalidValue.new(@params[:non_uk_degree]) if @params[:non_uk_degree].present? && non_uk_degree_type.blank?
 
           non_uk_degree_type&.name
         end
@@ -151,7 +151,7 @@ module Api
             mapped_value = Hesa::CodeSets::Countries::MAPPING[@params[:country]]
 
             if @params[:country].present? && mapped_value.nil?
-              HesaMapperConstants::INVALID
+              Api::V01::HesaMapper::Attributes::InvalidValue.new(@params[:country])
             else
               mapped_value
             end
