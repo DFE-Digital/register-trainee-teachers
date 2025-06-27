@@ -2,7 +2,7 @@
 
 module FundingHelper
   def training_initiative_options(trainee)
-    available_training_initiatives_for_cycle(trainee).sort
+    Funding::AvailableTrainingInitiativesService.call(academic_cycle: trainee.start_academic_cycle).sort
   end
 
   def funding_options(trainee)
@@ -28,19 +28,5 @@ private
 
   def can_start_funding_section?(trainee)
     trainee.progress.course_details && trainee.start_academic_cycle.present?
-  end
-
-  def available_training_initiatives_for_cycle(trainee)
-    return [] if trainee.start_academic_cycle.blank?
-
-    year = trainee.start_academic_cycle.start_year
-    find_initiatives_for_year(year)
-  end
-
-  def find_initiatives_for_year(year)
-    constant_name = "TRAINING_INITIATIVES_#{year}_TO_#{year + 1}"
-    return Object.const_get(constant_name) if Object.const_defined?(constant_name)
-
-    []
   end
 end

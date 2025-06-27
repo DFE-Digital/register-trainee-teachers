@@ -1208,6 +1208,28 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         end
       end
 
+      context "when training_initiative is unavailable (025/transition_to_teach) in the given academic year" do
+        let(:training_initiative) { "025" }
+        let(:params) do
+          { data: { training_initiative: } }
+        end
+
+        before do
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        it "return status code 422 with a meaningful error message" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body["errors"]).to contain_exactly(
+            "training_initiative 'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'",
+          )
+        end
+      end
+
       context "when funding_method has invalid reference data values" do
         let(:funding_method) { "8c629dd7-bfc3-eb11-bacc-000d3addca7a" }
         let(:params) do
