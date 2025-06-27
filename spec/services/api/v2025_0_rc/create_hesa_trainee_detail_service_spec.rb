@@ -50,7 +50,7 @@ RSpec.describe Api::V20250Rc::CreateHesaTraineeDetailService do
             expect(trainee.hesa_trainee_detail.previous_last_name).to eq(student.previous_surname)
             expect(trainee.hesa_trainee_detail.course_study_mode).to eq(student.mode)
             expect(trainee.hesa_trainee_detail.course_year).to eq(student.year_of_course.to_i)
-            expect(trainee.hesa_trainee_detail.hesa_disabilities).to match([student.disability1, student.disability2, student.disability3])
+            expect(trainee.hesa_trainee_detail.hesa_disabilities).to match({ "disability1" => student.disability1, "disability2" => student.disability2, "disability3" => student.disability3 })
             expect(trainee.hesa_trainee_detail.additional_training_initiative).to eq(student.training_initiative)
           end
         end

@@ -54,7 +54,7 @@ module Api
       end
 
       def disabilities(student_record)
-        (1..9).map { |integer| student_record.send("disability#{integer}") }.compact!
+        (1..9).to_h { |integer| ["disability#{integer}", student_record.send("disability#{integer}")] }.compact!
       end
     end
   end
