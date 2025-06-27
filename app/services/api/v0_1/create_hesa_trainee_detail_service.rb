@@ -18,7 +18,7 @@ module Api
         attributes.merge!(extract_attributes_from_metadatum_record(attributes))
         hesa_trainee_detail.assign_attributes(attributes)
 
-        hesa_trainee_detail.save
+        hesa_trainee_detail.save!
       end
 
     private
