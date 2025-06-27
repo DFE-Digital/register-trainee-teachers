@@ -1549,7 +1549,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "funding_method training route ‘opt_in_undergrad’ and subject code ‘primary teaching’ are not eligible for ‘bursary’ in academic cycle ‘#{academic_cycle.label}’",
+              "funding_method training route 'opt_in_undergrad' and subject code 'primary teaching' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
             )
           end
         end
