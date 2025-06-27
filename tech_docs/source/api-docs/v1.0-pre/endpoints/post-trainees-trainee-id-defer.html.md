@@ -51,7 +51,7 @@ Deferral details
 </div>
 
 <details class="govuk-details">
-  <summary class="govuk-details__summary">Example request body</span></summary>
+  <summary class="govuk-details__summary">Example request body</summary>
   <div class="govuk-details__text">
     <pre class="json-code-sample">
     {
