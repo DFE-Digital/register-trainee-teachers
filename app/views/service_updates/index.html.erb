@@ -17,7 +17,7 @@
           <%= link_to service_update.title, service_update_path(service_update.id), class: "govuk-link" %>
         </h2>
         <div class="govuk-body govuk-!-margin-bottom-2"><%= service_update.summary_html %></div>
-        <p class="govuk-hint govuk-!-margin-bottom-0"><%= service_update.date.to_date.strftime("%e %B %Y") %></p>
+        <p class="govuk-hint govuk-!-margin-bottom-0"><%= service_update.date.to_date.to_fs(:govuk) %></p>
       </div>
       <% unless service_update == @service_updates.last %>
         <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">

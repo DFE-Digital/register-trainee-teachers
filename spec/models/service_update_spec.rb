@@ -7,17 +7,17 @@ describe ServiceUpdate do
     allow(YAML).to receive(:load_file).and_return(
       [
         {
-          date: "2021-09-21",
+          date: "2025-01-21",
           title: "Most recent item",
           content: "This is also another **Markdown** content.",
         },
         {
-          date: "2021-09-17",
+          date: "2025-01-17",
           title: "Second most recent item",
           content: "This is another **Markdown** content.",
         },
         {
-          date: "2021-09-01",
+          date: "2025-01-01",
           title: "Lead and employing schools",
           content: "This is **Markdown** content.",
         },
@@ -31,7 +31,7 @@ describe ServiceUpdate do
 
       expect(updates.count).to be(3)
       expect(updates[0].title).to eql("Most recent item")
-      expect(updates[0].date).to eql("2021-09-21")
+      expect(updates[0].date).to eql("2025-01-21")
       expect(updates[1].title).to eql("Second most recent item")
       expect(updates[2].title).to eql("Lead and employing schools")
     end
@@ -111,7 +111,7 @@ describe ServiceUpdate do
 
   describe ".recent_updates" do
     around do |example|
-      Timecop.freeze(2021, 10, 4) do
+      Timecop.freeze(2025, 2, 4) do
         example.run
       end
     end
