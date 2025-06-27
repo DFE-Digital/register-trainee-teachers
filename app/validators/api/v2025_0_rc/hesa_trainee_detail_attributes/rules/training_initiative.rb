@@ -11,7 +11,7 @@ module Api
           attr_reader :hesa_trainee_detail_attributes
 
           delegate :additional_training_initiative,
-            :trainee_attributes, to: :hesa_trainee_detail_attributes
+                   :trainee_attributes, to: :hesa_trainee_detail_attributes
           delegate :training_initiative, to: :trainee_attributes
 
           def initialize(hesa_trainee_detail_attributes)

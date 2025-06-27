@@ -71,7 +71,7 @@ describe FundingHelper do
       let(:year) { 1999 }
 
       it "returns an empty array" do
-        expect(training_initiative_options(trainee)).to match_array([])
+        expect(training_initiative_options(trainee)).to be_empty
       end
     end
   end
