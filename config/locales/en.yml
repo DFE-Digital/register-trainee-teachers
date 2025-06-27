@@ -2142,11 +2142,14 @@ en:
             uk_degree:
               inclusion: *invalid_reference_data
         api/v20250_rc/degree_attributes:
+          duplicate: This is a duplicate degree
           attributes:
             uk_degree:
               blank: must be entered if specifying a previous UK degree
+              inclusion: &invalid_reference_data has invalid reference data values
             non_uk_degree:
               blank: must be entered if specifying a previous non-UK degree
+              inclusion: *invalid_reference_data
             subject:
               blank: must be entered if specifying a previous UK degree or non-UK degree
             grade:

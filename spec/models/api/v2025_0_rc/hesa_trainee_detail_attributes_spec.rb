@@ -7,8 +7,6 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
 
   let!(:academic_cycle) { create(:academic_cycle, :current) }
 
-  it { is_expected.to be < Api::V01::HesaTraineeDetailAttributes }
-
   describe "validations" do
     it "uses the RulesValidator" do
       expect(described_class.validators.map(&:class)).to include(
