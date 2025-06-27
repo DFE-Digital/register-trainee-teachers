@@ -160,38 +160,6 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       end
     end
 
-    context "when updating a trainee without `hesa_trainee_details` with valid params" do
-      let(:data) { { first_names: "Alice", provider_trainee_id: "99157234/2/01", itt_start_date: 1.month.ago.iso8601 } }
-      let(:trainee) do
-        create(
-          :trainee,
-          :in_progress,
-          :with_training_route,
-          :with_lead_partner,
-          :with_employing_school,
-          :with_diversity_information,
-          first_names: "Bob",
-          hesa_id: "1234567890",
-        )
-      end
-
-      before do
-        put(
-          endpoint,
-          headers: { Authorization: "Bearer #{token}", **json_headers },
-          params: params.to_json,
-        )
-      end
-
-      it "returns status code 200 with a valid JSON response" do
-        expect(response).to have_http_status(:ok)
-
-        expect(trainee.reload.first_names).to eq("Alice")
-        expect(trainee.provider_trainee_id).to eq("99157234/2/01")
-        expect(response.parsed_body[:data]["trainee_id"]).to eq(trainee.slug)
-      end
-    end
-
     context "when updating with valid nationality" do
       let(:data) { { nationality: "IE" } }
 
@@ -1366,6 +1334,89 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       subject_specialism.allocation_subject
     end
 
+    context "when the trainee doesn't have an existing hesa_trainee_detail record" do
+      let(:course_subject) { CourseSubjects::BIOLOGY }
+      let(:slug) { response.parsed_body[:data][:trainee_id] }
+      let(:trainee) { Trainee.last.reload }
+      let(:params_for_update) do
+        {
+          data:
+          {
+            first_names: "Alice",
+            fund_code: "2",
+            course_year: "2015",
+            funding_method: "6",
+            itt_aim: "202",
+            itt_qualification_aim: "001",
+          },
+        }
+      end
+
+      before do
+        allow(Api::V01::HesaMapper::Attributes).to receive(:call).and_call_original
+        allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
+
+        post "/api/v2025.0-rc/trainees", params: params_for_create.to_json, headers: headers
+
+        trainee.hesa_trainee_detail.destroy
+        create(
+          :hesa_student,
+          hesa_id: trainee.hesa_id,
+          course_age_range: "13915",
+          fund_code: "7",
+        )
+
+        create(:hesa_metadatum, trainee:)
+      end
+
+      it "updates the trainee" do
+        put(
+          "/api/v2025.0-rc/trainees/#{slug}",
+          params: params_for_update.to_json,
+          headers: headers,
+        )
+
+        trainee.reload
+        expect(response).to have_http_status(:ok)
+        expect(trainee.first_names).to eq("Alice")
+        expect(trainee.hesa_trainee_detail.fund_code).to eq("2")
+        expect(trainee.hesa_trainee_detail.course_year).to eq(2015)
+        expect(trainee.hesa_trainee_detail.funding_method).to eq("6")
+        expect(trainee.hesa_trainee_detail.itt_aim).to eq("202")
+
+        expect(response.parsed_body[:data][:first_names]).to eq("Alice")
+        expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
+        expect(response.parsed_body[:data][:fund_code]).to eq("2")
+        expect(response.parsed_body[:data][:course_year]).to eq(2015)
+        expect(response.parsed_body[:data][:funding_method]).to eq("6")
+        expect(response.parsed_body[:data][:itt_aim]).to eq("202")
+      end
+
+      it "creates a hesa_trainee_detail record for the trainee" do
+        expect {
+          put(
+            "/api/v2025.0-rc/trainees/#{slug}",
+            params: params_for_update.to_json,
+            headers: headers,
+          )
+        }.to change { Hesa::TraineeDetail.count } .by(1)
+      end
+
+      it "adds attributes from the student and metadatum records to the hesa_trainee_detail_record" do
+        put(
+          "/api/v2025.0-rc/trainees/#{slug}",
+          params: params_for_update.to_json,
+          headers: headers,
+        )
+
+        expect(trainee.hesa_trainee_detail.pg_apprenticeship_start_date).to eq(trainee.hesa_metadatum.pg_apprenticeship_start_date)
+
+        %w[course_age_range pg_apprenticeship_start_date ni_number].each do |attribute|
+          expect(trainee.hesa_trainee_detail.send(attribute.to_sym)).to eq(trainee.hesa_students.last.send(attribute.to_sym))
+        end
+      end
+    end
+
     [CourseSubjects::PHYSICS, CourseSubjects::BIOLOGY].each do |cs|
       context "when creating a new trainee with #{cs} course with valid params" do
         if cs == CourseSubjects::PHYSICS
@@ -1498,7 +1549,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "funding_method training route ‘opt_in_undergrad’ and subject code ‘primary teaching’ are not eligible for ‘bursary’ in academic cycle ‘#{academic_cycle.label}’",
+              "funding_method training route 'opt_in_undergrad' and subject code 'primary teaching' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
             )
           end
         end

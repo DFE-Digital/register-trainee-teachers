@@ -1332,6 +1332,87 @@ describe "`PUT /api/v0.1/trainees/:id` endpoint" do
       subject_specialism.allocation_subject
     end
 
+    context "when the trainee doesn't have an existing hesa_trainee_detail record" do
+      let(:course_subject) { CourseSubjects::BIOLOGY }
+      let(:slug) { response.parsed_body[:data][:trainee_id] }
+      let(:trainee) { Trainee.last.reload }
+      let(:non_nil_values) { %w[id trainee_id itt_aim itt_qualification_aim created_at updated_at] }
+      let(:params_for_update) do
+        {
+          data:
+          {
+            first_names: "Alice",
+            fund_code: "2",
+            course_year: "2015",
+            funding_method: "4",
+            itt_aim: "202",
+            itt_qualification_aim: "001",
+          },
+        }
+      end
+
+      before do
+        allow(Api::V01::HesaMapper::Attributes).to receive(:call).and_call_original
+        allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
+
+        post "/api/v0.1/trainees", params: params_for_create.to_json, headers: headers
+
+        trainee.hesa_trainee_detail.destroy
+        create(
+          :hesa_student,
+          hesa_id: trainee.hesa_id,
+          course_age_range: "13915",
+          fund_code: "7",
+        )
+
+        create(:hesa_metadatum, trainee:)
+      end
+
+      it "updates the trainee" do
+        put(
+          "/api/v0.1/trainees/#{slug}",
+          params: params_for_update.to_json,
+          headers: headers,
+        )
+
+        trainee.reload
+        expect(response).to have_http_status(:ok)
+        expect(trainee.first_names).to eq("Alice")
+
+        expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
+        expect(response.parsed_body[:data][:fund_code]).to eq("2")
+        expect(response.parsed_body[:data][:course_year]).to eq(2015)
+        expect(response.parsed_body[:data][:funding_method]).to eq("4")
+        expect(response.parsed_body[:data][:itt_aim]).to eq("202")
+      end
+
+      it "creates a hesa_trainee_detail record for the trainee" do
+        expect {
+          put(
+            "/api/v0.1/trainees/#{slug}",
+            params: params_for_update.to_json,
+            headers: headers,
+          )
+        }.to change { Hesa::TraineeDetail.count } .by(1)
+      end
+
+      it "adds attributes from the student and metadatum records to the hesa_trainee_detail_record" do
+        put(
+          "/api/v0.1/trainees/#{slug}",
+          params: params_for_update.to_json,
+          headers: headers,
+        )
+
+        (Hesa::Metadatum.new.attributes.keys.intersection(Hesa::TraineeDetail.new.attributes.keys) - non_nil_values).each do |attribute|
+          expect(trainee.hesa_trainee_detail.send(attribute.to_sym)).to eq(trainee.hesa_metadatum.send(attribute.to_sym))
+        end
+
+        (Hesa::Student.new.attributes.keys.intersection(Hesa::TraineeDetail.new.attributes.keys) - non_nil_values).each do |attribute|
+          expect(trainee.hesa_trainee_detail.send(attribute.to_sym)).to eq(trainee.hesa_students.last.send(attribute.to_sym))
+        end
+      end
+    end
+
     [CourseSubjects::PHYSICS, CourseSubjects::BIOLOGY].each do |cs|
       context "when creating a new trainee with #{cs} course with valid params" do
         if cs == CourseSubjects::PHYSICS
