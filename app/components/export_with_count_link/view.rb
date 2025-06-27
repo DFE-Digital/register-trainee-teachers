@@ -11,6 +11,10 @@ module ExportWithCountLink
       @href = href
     end
 
+    def link_label
+      "#{link_text} (#{count} #{count_label.pluralize(count)})"
+    end
+
   private
 
     attr_reader :link_text, :count, :count_label, :href
