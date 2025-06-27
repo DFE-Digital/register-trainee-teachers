@@ -1,13 +1,23 @@
-<%= tag.h1(
-  "How to add trainee information to the bulk add new trainee CSV template",
-  class: "govuk-heading-l",
-) %>
+---
+title: How to add trainee information to the bulk add new trainee CSV template
+weight: 1
+---
+
+# How to add trainee information to the bulk add new trainee CSV template
 
 <p class="govuk-body">
-  <%= render(NotificationBanner::View.new(
-    text: "This draft guidance is for review and testing purposes only. Send your feedback or questions to <a href=\"mailto:registertraineeteachers@education.gov.uk\" class=\"govuk-notification-banner__link\">registertraineeteachers@education.gov.uk</a>.".html_safe,
-    type: :important,
-  )) %>
+	<div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner" data-govuk-notification-banner-init="">
+	  <div class="govuk-notification-banner__header">
+	    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+	      Important
+	    </h2>
+	  </div>
+	  <div class="govuk-notification-banner__content">
+	    <p class="govuk-notification-banner__heading">
+	      This draft guidance is for review and testing purposes only. Send your feedback or questions to <a href="mailto:registertraineeteachers@education.gov.uk" class="govuk-notification-banner__link">registertraineeteachers@education.gov.uk</a>.
+	    </p>
+	  </div>
+	</div>
 </p>
 
 <p class="govuk-body">
@@ -18,7 +28,7 @@
   CSV bulk add new trainees will be available in Register trainee teachers (Register) before the start of the 2025 to 2026 academic year.
 </p>
 
-<h2 class="govuk-heading-m">Download an empty CSV file template</h2>
+## Download an empty CSV file template
 
 <p class="govuk-body">
   You must only use this CSV file template to register new trainees in Register trainee teachers (Register).
@@ -33,13 +43,12 @@
 </p>
 
 <p class="govuk-body">
-  <%= govuk_link_to(
-    "Download empty bulk add new trainees CSV template",
-    bulk_update_add_trainees_empty_template_path(format: :csv),
+  <%= link_to(
+    "Download empty bulk add new trainees CSV template", "/bulk-update/add-trainees/empty-template.csv"
   ) %>
 </p>
 
-<h2 class="govuk-heading-m">Use this guidance to complete the CSV file template</h2>
+## Use this guidance to complete the CSV file template
 
 <p class="govuk-body">
   Use the guidance to check how new trainee data maps between your student record system and Register, using the CSV upload found in the ‘Bulk updates section’ in Register.
@@ -49,7 +58,7 @@
   If mandatory fields are not filled in correctly, the CSV upload will come back as an error.
 </p>
 
-<h3 class="govuk-heading-s">1. Download the CSV file template</h3>
+### 1. Download the CSV file template
 
 <p class="govuk-body">
   You can adapt this CSV file template to add trainee data directly from your student record system.
@@ -59,7 +68,7 @@
   If you’re adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.
 </p>
 
-<h3 class="govuk-heading-s">2. Add new trainee details</h3>
+### 2. Add new trainee details
 
 <p class="govuk-body">
   Open as a CSV file to add trainee details in bulk. There are 36 data fields. You will need to include trainee information such as:
@@ -75,7 +84,7 @@
   You can leave non mandatory rows or cells empty if you do not want to upload those fields.
 </p>
 
-<h3 class="govuk-heading-s">3. Upload your trainee records</h3>
+### 3. Upload your trainee records
 
 <p class="govuk-body">
   Your trainee data is checked for the following, after you upload the file:
@@ -102,26 +111,14 @@
   You can also go back and check the status of new trainee files in Register.
 </p>
 
-<h2 class="govuk-heading-m">Notification of changes</h2>
+## Notification of changes
 
 <p class="govuk-body">
-Find out more on <%= govuk_link_to("Register’s news and updates", service_updates_path) %> about any changes to trainee data fields when submitting trainee data directly to Register via the API or ‘Bulk add new trainees’ CSV template, for the upcoming 2025 to 2026 academic year.
+Find out more on <%= link_to("Register’s news and updates", "/service-updates") %> about any changes to trainee data fields when submitting trainee data directly to Register via the API or ‘Bulk add new trainees’ CSV template, for the upcoming 2025 to 2026 academic year.
 </p>
 
-<h2 class="govuk-heading-m">Version</h2>
+## Version
 
 <p class="govuk-body">
-  <%= BulkUpdate::BulkAddTraineesUploadForm::VERSION %>
+  <%= BulkUpdate::AddTrainees::Config::VERSION %>
 </p>
-
-<h2 class="govuk-heading-m">CSV release notes</h2>
-
-<h3 class="govuk-heading-s">v2025.0 - 3 June 2025</h3>
-
-<p class="govuk-body">
-  This is the 2025.0 version of the CSV bulk add new trainee guidance. This version is not yet live but is available for testing.
-</p>
-
-<h2 class="govuk-heading-m">Contents</h2>
-
-<%= render CsvFields::View.new %>
