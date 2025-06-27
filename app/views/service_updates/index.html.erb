@@ -11,18 +11,17 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-xl"><%= t(".heading") %></h1>
 
-    <h2 class="govuk-heading-m"><%= t(".contents") %></h2>
-    <ul class="govuk-list app-list--dash govuk-!-margin-bottom-8 govuk-!-margin-left-3">
-      <% @service_updates.each do |service_update| %>
-        <li><a class="govuk-link" href="#<%= service_update.id %>"><%= service_update.title %></a></li>
-      <% end %>
-    </ul>
-
-
     <% @service_updates.each do |service_update| %>
-      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-      <%= render ServiceUpdate::View.new(service_update: service_update) %>
+      <div class="govuk-!-margin-bottom-8">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">
+          <%= link_to service_update.title, service_update_path(service_update.id), class: "govuk-link" %>
+        </h2>
+        <div class="govuk-body govuk-!-margin-bottom-2"><%= service_update.summary_html %></div>
+        <p class="govuk-hint govuk-!-margin-bottom-0"><%= service_update.date.to_date.to_fs(:govuk) %></p>
+      </div>
+      <% unless service_update == @service_updates.last %>
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <% end %>
     <% end %>
-
   </div>
 </div>

@@ -9,12 +9,12 @@ describe ServiceUpdatesController do
         {
           date: "2021-09-17",
           title: "Most recent item",
-          content: "Ths is another **Markdown** content.",
+          content: "This is another **Markdown** content.",
         },
         {
           date: "2021-09-01",
           title: "Lead and employing schools",
-          content: "Ths is **Markdown** content.",
+          content: "This is **Markdown** content.",
         },
       ],
     )
@@ -26,6 +26,22 @@ describe ServiceUpdatesController do
 
       expect(response).to have_http_status(:ok)
       expect(assigns(:service_updates).count).to eq(2)
+    end
+  end
+
+  describe "GET #show" do
+    it "renders individual service update" do
+      get :show, params: { id: "most-recent-item" }
+
+      expect(response).to have_http_status(:ok)
+      expect(assigns(:service_update)).to be_present
+      expect(assigns(:service_update).title).to eql("Most recent item")
+    end
+
+    it "raises 404 for non-existent service update" do
+      expect {
+        get :show, params: { id: "non-existent" }
+      }.to raise_error(ActionController::RoutingError)
     end
   end
 end
