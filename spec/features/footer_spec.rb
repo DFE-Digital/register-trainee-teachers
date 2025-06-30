@@ -8,7 +8,7 @@ feature "Footer" do
   end
 
   context "when the API and CSV features are disabled" do
-    scenario "A User can see the footer links", feature_register_api: false, feature_bulk_add_trainees: false do
+    scenario "A User can see the footer links", feature_bulk_add_trainees: false, feature_register_api: false do
       within(".govuk-footer") do
         i_see_the_news_and_updates_link
         and_i_see_the_how_to_use_this_service_link
@@ -24,7 +24,7 @@ feature "Footer" do
   end
 
   context "when the API feature is enabled" do
-    scenario "A User can see the api-docs link", feature_register_api: true, feature_bulk_add_trainees: false do
+    scenario "A User can see the api-docs link", feature_bulk_add_trainees: false, feature_register_api: true do
       within(".govuk-footer") do
         i_see_the_news_and_updates_link
         and_i_see_the_how_to_use_this_service_link
@@ -40,7 +40,7 @@ feature "Footer" do
   end
 
   context "when the CSV feature is enabled" do
-    scenario "A User can see the csv-docs link", feature_register_api: false, feature_bulk_add_trainees: true do
+    scenario "A User can see the csv-docs link", feature_bulk_add_trainees: true, feature_register_api: false do
       within(".govuk-footer") do
         i_see_the_news_and_updates_link
         and_i_see_the_how_to_use_this_service_link
@@ -55,7 +55,7 @@ feature "Footer" do
     end
   end
 
-  context "when the API and CSV features are enabled", feature_register_api: true, feature_bulk_add_trainees: true do
+  context "when the API and CSV features are enabled", feature_bulk_add_trainees: true, feature_register_api: true do
     scenario "A User can see the api-docs and csv-docs links" do
       within(".govuk-footer") do
         i_see_the_news_and_updates_link
@@ -71,7 +71,7 @@ feature "Footer" do
     end
   end
 
-  private
+private
 
   def i_see_the_news_and_updates_link
     expect(page).to have_link(
@@ -130,7 +130,7 @@ feature "Footer" do
   def and_i_see_the_give_feedback_link
     expect(page).to have_link(
       "Give feedback to help us improve Register trainee teachers",
-      href: "https://forms.office.com/e/Q6LVwtEKje"
+      href: "https://forms.office.com/e/Q6LVwtEKje",
     )
   end
 
@@ -138,10 +138,10 @@ feature "Footer" do
     expect(page).to have_content("Email: becomingateacher@digital.education.gov.uk")
     expect(page).to have_link(
       "becomingateacher@digital.education.gov.uk",
-      href: "mailto:becomingateacher@digital.education.gov.uk"
+      href: "mailto:becomingateacher@digital.education.gov.uk",
     )
     expect(page).to have_content(
-      "We aim to respond within 5 working days, or one working day for more urgent queries"
+      "We aim to respond within 5 working days, or one working day for more urgent queries",
     )
   end
 end
