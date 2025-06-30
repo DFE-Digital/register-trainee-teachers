@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Patched from: https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/govuk_tech_docs/contribution_banner.rb
 # Changed lines: L64-66, L68-70, L77-79
 
@@ -66,7 +68,7 @@ module GovukTechDocs
       if build_dir == "build"
         "#{repo_url}/blob/#{repo_branch}/source/#{current_page.file_descriptor[:relative_path]}"
       else
-        "#{repo_url}/blob/#{repo_branch}/source/#{build_dir.split("/").last}/#{current_page.file_descriptor[:relative_path]}"
+        "#{repo_url}/blob/#{repo_branch}/source/#{build_dir.split('/').last}/#{current_page.file_descriptor[:relative_path]}"
       end
     end
 

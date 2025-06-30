@@ -16,16 +16,16 @@ RSpec.describe SpecVersionGenerator do
 
         require "rails_helper"
 
-        describe "`GET /api/v0.1/trainees/:id` endpoint" do
+        describe "`GET /api/v2025.0-rc/trainees/:id` endpoint" do
           # ... code
           context "when the trainee exists" do
-            before { get("/api/v0.1/trainees/\#{trainee.slug}", headers: { Authorization: "Bearer \#{token}" }) }
+            before { get("/api/v2025.0-rc/trainees/\#{trainee.slug}", headers: { Authorization: "Bearer \#{token}" }) }
             it "returns the trainee" do
-              parsed_trainee = JSON.parse(Api::GetVersionedItem.for_serializer(model: :trainee, version: "v0.1").new(trainee).as_hash.to_json)
+              parsed_trainee = JSON.parse(Api::GetVersionedItem.for_serializer(model: :trainee, version: "v2025.0-rc").new(trainee).as_hash.to_json)
               expect(response.parsed_body).to eq(parsed_trainee)
             end
 
-            describe Api::V01::TraneeService do
+            describe Api::V20250Rc::TraineeService do
               # ... code
             end
           end

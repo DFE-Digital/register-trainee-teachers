@@ -109,8 +109,9 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(degree.uk_degree).to be_nil
           expect(degree.uk_degree_uuid).to be_nil
 
+          # Second update to switch from non_uk to uk degree
           put(
-            "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            "/api/v2025.0-rc/trainees/#{trainee.slug}/degrees/#{degree.slug}",
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: {
               data: { uk_degree: },
@@ -119,7 +120,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response).to have_http_status(:ok)
 
-          degree_attributes = response.parsed_body["data"]
+          degree_attributes = response.parsed_body[:data]
 
           expect(degree_attributes[:grade]).to eq("05")
           expect(degree_attributes[:subject]).to eq("100104")

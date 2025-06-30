@@ -63,7 +63,7 @@ module Api
         in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
       }, allow_blank: true
 
-      def initialize(params, record_source:)
+      def initialize(params, record_source: nil)
         super(params)
         self.record_source = record_source
       end

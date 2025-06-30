@@ -2099,9 +2099,18 @@ en:
         api/v20250_rc/withdrawal_attributes:
           attributes:
             withdraw_date:
+              blank: Choose a withdrawal date
+              invalid: Choose a valid withdrawal date
               not_before_itt_start_date: must be after itt_start_date
             reasons:
+              inclusion: Choose one or more reasons why the trainee withdrew from the course
               invalid: entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger
+            trigger:
+              blank: Please select an option for the trigger. Valid options are provider or trainee.
+            future_interest:
+              blank: Please select an option. Valid options are yes, no and unknown.
+            another_reason:
+              blank: Enter another reason
         api/v20250_rc/hesa_trainee_detail_attributes:
           attributes:
             itt_qualification_aim:

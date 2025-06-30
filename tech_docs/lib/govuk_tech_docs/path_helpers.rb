@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Patched from:https://github.com/alphagov/tech-docs-gem/blob/v4.4.0/lib/govuk_tech_docs/path_helpers.rb
 # Changed lines: L24-25
 
@@ -22,12 +24,10 @@ module GovukTechDocs
       if resource.is_a?(Middleman::Sitemap::Resource)
         config[:relative_links] ? get_resource_path_relative_to_current_page(config, current_page.path, resource.path) : resource.url
       # Add top level documentation to the Array
-      elsif external_url?(resource) || ["/api-docs/"].include?(resource)
+      elsif external_url?(resource) || ["/api-docs/"].include?(resource) || !config[:relative_links]
         resource
-      elsif config[:relative_links]
-        get_resource_path_relative_to_current_page(config, current_page.path, resource)
       else
-        resource
+        get_resource_path_relative_to_current_page(config, current_page.path, resource)
       end
     end
 
@@ -53,7 +53,7 @@ module GovukTechDocs
       path_segments = resource_path_from_site_root.split("/").reject(&:empty?)[0..-2]
       path_file_name = resource_path_from_site_root.split("/")[-1]
 
-      path_to_site_root = path_to_site_root config, current_page
+      path_to_site_root = path_to_site_root(config, current_page)
       path_to_site_root + path_segments.push(path_file_name).join("/")
     end
 
