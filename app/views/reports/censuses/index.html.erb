@@ -38,7 +38,7 @@
     <p class="govuk-body">If a trainee does not have a trainee start date, they will also be included in this export.</p>
     <p class="govuk-body">This export will not include trainees on the Assessment Only (AO) route or trainees who started training but then withdrew before the ITT census date.</p>
 
-    <%= render ExportWithCountLink::View.new(link_text: "Export new trainee data", count: itt_new_starter_trainees_count, count_label: "trainee", href: itt_new_starter_data_sign_off_reports_path(:csv)) do |component| %>
+    <%= render ExportWithCountLink::View.new(link_text: "Export new trainee data", count: itt_new_starter_trainees_count, count_label: "trainee", href: reports_censuses_path(:csv)) do |component| %>
       <% component.no_record_text do %>
         <p>You have no trainees available to export. Check you have registered new trainees for the <%= @current_academic_cycle_label %> academic year.</p>
       <% end %>
