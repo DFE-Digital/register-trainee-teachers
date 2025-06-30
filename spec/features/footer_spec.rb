@@ -3,19 +3,71 @@
 require "rails_helper"
 
 feature "Footer" do
-  scenario "A User can see the footer links" do
+  before do
     visit root_path
+  end
 
-    within(".govuk-footer") do
-      i_see_the_news_and_updates_link
-      i_see_the_how_to_use_this_service_link
-      i_see_the_api_docs_link
-      i_see_the_csv_docs_link
-      i_see_the_accessibility_link
-      i_see_the_cookies_link
-      i_see_privacy_link
-      i_see_the_give_feedback_link
-      and_i_see_the_email_link
+  context "when the API and CSV features are disabled" do
+    scenario "A User can see the footer links", feature_register_api: false, feature_bulk_add_trainees: false do
+      within(".govuk-footer") do
+        i_see_the_news_and_updates_link
+        and_i_see_the_how_to_use_this_service_link
+        and_i_dont_see_the_api_docs_link
+        and_i_dont_see_the_csv_docs_link
+        and_i_see_the_accessibility_link
+        and_i_see_the_cookies_link
+        and_i_see_privacy_link
+        and_i_see_the_give_feedback_link
+        and_i_see_the_email_link
+      end
+    end
+  end
+
+  context "when the API feature is enabled" do
+    scenario "A User can see the api-docs link", feature_register_api: true, feature_bulk_add_trainees: false do
+      within(".govuk-footer") do
+        i_see_the_news_and_updates_link
+        and_i_see_the_how_to_use_this_service_link
+        and_i_see_the_api_docs_link
+        and_i_dont_see_the_csv_docs_link
+        and_i_see_the_accessibility_link
+        and_i_see_the_cookies_link
+        and_i_see_privacy_link
+        and_i_see_the_give_feedback_link
+        and_i_see_the_email_link
+      end
+    end
+  end
+
+  context "when the CSV feature is enabled" do
+    scenario "A User can see the csv-docs link", feature_register_api: false, feature_bulk_add_trainees: true do
+      within(".govuk-footer") do
+        i_see_the_news_and_updates_link
+        and_i_see_the_how_to_use_this_service_link
+        and_i_dont_see_the_api_docs_link
+        and_i_see_the_csv_docs_link
+        and_i_see_the_accessibility_link
+        and_i_see_the_cookies_link
+        and_i_see_privacy_link
+        and_i_see_the_give_feedback_link
+        and_i_see_the_email_link
+      end
+    end
+  end
+
+  context "when the API and CSV features are enabled", feature_register_api: true, feature_bulk_add_trainees: true do
+    scenario "A User can see the api-docs and csv-docs links" do
+      within(".govuk-footer") do
+        i_see_the_news_and_updates_link
+        and_i_see_the_how_to_use_this_service_link
+        and_i_see_the_api_docs_link
+        and_i_see_the_csv_docs_link
+        and_i_see_the_accessibility_link
+        and_i_see_the_cookies_link
+        and_i_see_privacy_link
+        and_i_see_the_give_feedback_link
+        and_i_see_the_email_link
+      end
     end
   end
 
@@ -27,43 +79,55 @@ feature "Footer" do
     )
   end
 
-  def i_see_the_how_to_use_this_service_link
+  def and_i_see_the_how_to_use_this_service_link
     expect(page).to have_link(
       "How to use this service", href: "/guidance"
     )
   end
 
-  def i_see_the_api_docs_link
+  def and_i_see_the_api_docs_link
     expect(page).to have_link(
       "API documentation", href: "/api-docs/"
     )
   end
 
-  def i_see_the_csv_docs_link
+  def and_i_dont_see_the_api_docs_link
+    expect(page).not_to have_link(
+      "API documentation", href: "/api-docs/"
+    )
+  end
+
+  def and_i_see_the_csv_docs_link
     expect(page).to have_link(
       "CSV documentation", href: "/csv-docs/"
     )
   end
 
-  def i_see_the_accessibility_link
+  def and_i_dont_see_the_csv_docs_link
+    expect(page).not_to have_link(
+      "CSV documentation", href: "/csv-docs/"
+    )
+  end
+
+  def and_i_see_the_accessibility_link
     expect(page).to have_link(
       "Accessibility", href: "/accessibility-statement"
     )
   end
 
-  def i_see_the_cookies_link
+  def and_i_see_the_cookies_link
     expect(page).to have_link(
       "Cookies", href: "/cookies"
     )
   end
 
-  def i_see_privacy_link
+  def and_i_see_privacy_link
     expect(page).to have_link(
       "Privacy", href: "/privacy-notice"
     )
   end
 
-  def i_see_the_give_feedback_link
+  def and_i_see_the_give_feedback_link
     expect(page).to have_link(
       "Give feedback to help us improve Register trainee teachers",
       href: "https://forms.office.com/e/Q6LVwtEKje"

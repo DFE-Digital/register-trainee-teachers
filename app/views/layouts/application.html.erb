@@ -137,12 +137,16 @@
               <li class="govuk-footer__list-item">
                 <%= govuk_link_to "How to use this service", guidance_path, class: "govuk-footer__link" %>
               </li>
-              <li class="govuk-footer__list-item">
-                <%= govuk_link_to "API documentation", "/api-docs/", class: "govuk-footer__link" %>
-              </li>
-              <li class="govuk-footer__list-item">
-                <%= govuk_link_to "CSV documentation", "/csv-docs/", class: "govuk-footer__link" %>
-              </li>
+              <% if FeatureService.enabled?(:register_api) %>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "API documentation", "/api-docs/", class: "govuk-footer__link" %>
+                </li>
+              <% end %>
+              <% if FeatureService.enabled?(:bulk_add_trainees) %>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "CSV documentation", "/csv-docs/", class: "govuk-footer__link" %>
+                </li>
+              <% end %>
               <li class="govuk-footer__list-item">
                 <%= govuk_link_to "Accessibility", "/accessibility-statement", class: "govuk-footer__link" %>
               </li>
