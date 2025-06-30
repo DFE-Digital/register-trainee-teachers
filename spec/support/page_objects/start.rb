@@ -14,6 +14,10 @@ module PageObjects
     element :phase_banner, ".govuk-phase-banner"
 
     section :footer, "footer" do
+      element :news_and_updates_link, ".govuk-footer__link", text: "News and updates"
+      element :how_to_use_this_service_link, ".govuk-footer__link", text: "How to use this service"
+      element :api_docs_link, ".govuk-footer__link", text: "API documentation"
+      element :csv_docs_link, ".govuk-footer__link", text: "CSV documentation"
       element :accessibility_link, ".govuk-footer__link", text: "Accessibility"
       element :cookies_link, ".govuk-footer__link", text: "Cookies"
       element :privacy_link, ".govuk-footer__link", text: "Privacy"
