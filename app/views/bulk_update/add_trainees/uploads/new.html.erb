@@ -15,50 +15,15 @@
       </h1>
 
       <p class="govuk-body">
-        Training providers can register their trainees in bulk by creating trainee records and adding the required data.
-      </p>
-
-      <%= render GovukComponent::InsetTextComponent.new(classes: "") do %>
-        <p class="govuk-body">
-          You must only use this CSV file template to register new trainees.
-          Using it to update already existing trainees will result in an error.
-        </p>
-      <% end %>
-
-      <h2 class="govuk-heading-m">
-        1. Download this CSV file template
-      </h2>
-
-      <p class="govuk-body">
-        <%= govuk_link_to(
-          "Download empty CSV file to add new trainees",
+        You can register new trainees in bulk with a CSV file. <%= govuk_link_to(
+          "This is the template CSV file to add new trainees.",
           bulk_update_add_trainees_empty_template_path(format: :csv),
         ) %>
       </p>
 
-      <p class="govuk-body">You can adapt this CSV file template to add trainee data directly from your student record system.</p>
-
-      <p class="govuk-body">If you’re adapting the CSV file template for a direct extract from your student record system, you can go directly to step 3.</p>
-
-      <h2 class="govuk-heading-m">
-        2. Add new trainee details
-      </h2>
-
-      <p class="govuk-body">Open as a CSV file to add trainee details in bulk. There are 36 data fields. You will need to include trainee information such as:</p>
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>personal information</li>
-        <li>course details</li>
-        <li>funding (if applicable)</li>
-      </ul>
-
-      <p class="govuk-body">You can leave non mandatory rows or cells empty if you do not want to upload those fields.</p>
-
-      <%= govuk_details(summary_text: "Help with copying data from Excel to CSV") do %>
-        If you’re copying trainee data from Excel to CSV, be aware that Excel removes the ‘leading zeros’ from any data that begins with a zero, such as, trainee IDs.
-        <br><br>
-        To prevent this, you can first apply the Text format to the cells before you type or paste the numbers in Excel.
-      <% end %>
+      <p class="govuk-body">
+        You can also add trainee data directly from your student record system.
+      </p>
 
       <p class="govuk-body">Check
         <%= govuk_link_to(
@@ -69,7 +34,23 @@
       </p>
 
       <h2 class="govuk-heading-m">
-        3. Upload your trainee records
+        Checking your trainee records before adding to Register
+      </h2>
+
+      <p class="govuk-body">
+        Uploaded CSVs are checked for errors before the final submission stage.
+      </p>
+
+      <p class="govuk-inset-text">
+        These tests can also be used as a tool to check your file is valid without having to submit it.
+      </p>
+
+      <p class="govuk-body">
+        We will send you an email to tell you if the file is valid and ready for final submission. At this point trainees can be added to the database.
+      </p>
+
+      <h2 class="govuk-heading-m">
+        Upload your trainee records
       </h2>
 
       <label class="govuk-label" for="file-upload-1">

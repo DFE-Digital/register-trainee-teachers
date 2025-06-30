@@ -718,10 +718,9 @@ private
   end
 
   def then_i_see_that_the_upload_is_processing
-    expect(page).to have_content("Your file is being processed")
-    expect(page).to have_content("We are processing your trainee records to check if they are correct")
+    expect(page).to have_content("Your CSV is being checked")
     expect(page).to have_content("This may take several minutes")
-    expect(page).to have_content("You’ll receive an email to tell you if the upload has been successful or if you need to fix any mistakes")
+    expect(page).to have_content("You will receive an email telling you if errors have been found, or if you can complete the register process.")
     expect(page).to have_content("You can also check the status of new trainee files.")
     expect(page).not_to have_content("File uploaded")
     expect(page).to have_link("Back to bulk updates page")
@@ -729,10 +728,9 @@ private
 
   def and_i_dont_see_that_the_upload_is_processing
     expect(page).not_to have_content("File uploaded")
-    expect(page).not_to have_content("Your file is being processed")
-    expect(page).not_to have_content("We are processing your trainee records to check if they are correct")
+    expect(page).not_to have_content("Your CSV is being checked")
     expect(page).not_to have_content("This may take several minutes")
-    expect(page).not_to have_content("You’ll receive an email to tell you if the upload has been successful or if you need to fix any mistakes")
+    expect(page).not_to have_content("You will receive an email telling you if errors have been found, or if you can complete the register process.")
     expect(page).not_to have_content("You can also check the status of new trainee files.")
     expect(page).not_to have_link("Back to bulk updates page")
   end
@@ -784,11 +782,11 @@ private
   end
 
   def and_i_see_the_empty_csv_link
-    expect(page).to have_link("Download empty CSV file to add new trainees")
+    expect(page).to have_link("This is the template CSV file to add new trainees.")
   end
 
   def when_i_click_the_empty_csv_link
-    click_on "Download empty CSV file to add new trainees"
+    click_on "This is the template CSV file to add new trainees."
   end
 
   def then_i_receive_the_empty_csv_file
@@ -1182,7 +1180,7 @@ private
   end
 
   def and_i_click_on_continue_button
-    click_on "Process bulk upload"
+    click_on "Continue to check trainee details"
   end
 
   def and_i_click_the_cancel_process_link
