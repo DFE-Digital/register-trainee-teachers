@@ -125,50 +125,70 @@
       </div>
     </main>
 
-    <footer class="govuk-footer govuk-footer--app" role="contentinfo">
-      <div class="govuk-width-container ">
-
-        <div class="govuk-footer__meta">
-          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            <h2 class="govuk-visually-hidden">Support links</h2>
-            <div class="govuk-footer__meta-custom">
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-half">
-                  <h2 class="govuk-heading-s">
-                    Get support
-                  </h2>
-                  <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
-                    <li>Email: <%= support_email(subject: "Register trainee teachers support", classes: "govuk-footer__link") %></li>
-                    <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
-                  </ul>
-                </div>
-                <div class="govuk-grid-column-one-half">
-                  <h2 class="govuk-heading-s">
-                    Give feedback
-                  </h2>
-                  <p><%= govuk_link_to "Give feedback to help us improve Register trainee teachers", Settings.feedback_link_url, class: "govuk-footer__link" %></p>
-                </div>
-              </div>
-            </div>
-
-            <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
-              <li class="govuk-footer__inline-list-item">
+    <footer class="govuk-footer">
+      <div class="govuk-width-container">
+        <div class="govuk-footer__navigation">
+          <div class="govuk-footer__section govuk-grid-column-two-thirds">
+            <h2 class="govuk-footer__heading govuk-heading-m">How to use this service</h2>
+            <ul class="govuk-footer__list govuk-footer__list--columns-2">
+              <li class="govuk-footer__list-item">
+                <%= govuk_link_to "News and updates", service_updates_path, class: "govuk-footer__link" %>
+              </li>
+              <li class="govuk-footer__list-item">
                 <%= govuk_link_to "How to use this service", guidance_path, class: "govuk-footer__link" %>
               </li>
-              <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>
+              <li class="govuk-footer__list-item">
+                <%= govuk_link_to "API documentation", "/api-docs/", class: "govuk-footer__link" %>
               </li>
-              <li class="govuk-footer__inline-list-item">
+              <li class="govuk-footer__list-item">
+                <%= govuk_link_to "CSV documentation", "/csv-docs/", class: "govuk-footer__link" %>
+              </li>
+              <li class="govuk-footer__list-item">
+                <%= govuk_link_to "Accessibility", "/accessibility-statement", class: "govuk-footer__link" %>
+              </li>
+              <li class="govuk-footer__list-item">
                 <%= govuk_link_to "Cookies", cookie_preferences_path, class: "govuk-footer__link" %>
               </li>
-              <li class="govuk-footer__inline-list-item">
+              <li class="govuk-footer__list-item">
                 <%= govuk_link_to "Privacy", privacy_notice_path, class: "govuk-footer__link" %>
               </li>
+              <li class="govuk-footer__list-item">
+                <%= govuk_link_to(
+                  "Give feedback to help us improve Register trainee teachers",
+                  "https://forms.office.com/e/Q6LVwtEKje",
+                  class: "govuk-footer__link"
+                ) %>
+              </li>
             </ul>
-
+          </div>
+          <div class="govuk-footer__section govuk-grid-column-one-third">
+            <h2 class="govuk-footer__heading govuk-heading-m">Get help</h2>
+            <p class="govuk-body govuk-!-font-size-16">
+              Email:
+              <%= link_to(
+                  "becomingateacher@digital.education.gov.uk",
+                  "mailto:becomingateacher@digital.education.gov.uk",
+                  class:"govuk-footer__link"
+                )%>
+            </p>
+            <p class="govuk-body govuk-!-font-size-16">We aim to respond within 5 working days, or one working day for more urgent queries'</p>
+          </div>
+        </div>
+        <hr class="govuk-footer__section-break">
+        <div class="govuk-footer__meta">
+          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+            <svg aria-hidden="true" focusable="false" class="govuk-footer__licence-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.2 195.7" height="17" width="41">
+              <path fill="currentColor" d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"></path>
+            </svg>
+            <span class="govuk-footer__licence-description">
+              All content is available under the
+              <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+            </span>
           </div>
           <div class="govuk-footer__meta-item">
-            <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+            <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">
+              © Crown copyright
+            </a>
           </div>
         </div>
       </div>
