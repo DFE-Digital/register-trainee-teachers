@@ -111,7 +111,7 @@ private
 
   def and_i_see_the_accessibility_link
     expect(page).to have_link(
-      "Accessibility", href: "/accessibility-statement"
+      "Accessibility", href: "/accessibility"
     )
   end
 
