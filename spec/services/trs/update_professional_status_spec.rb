@@ -16,7 +16,7 @@ module Trs
       subject { described_class.call(trainee:) }
 
       it "submits the correct data to TRS" do
-        path = "/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}"
+        path = "/v3/persons/#{trainee.trn}/routes-to-professional-statuses/#{trainee.slug}"
         body = instance_of(String)
 
         expect(Client).to receive(:put).with(path, body:)
@@ -31,7 +31,7 @@ module Trs
         let(:trainee) { create(:trainee, :withdrawn) }
 
         it "makes a request to TRS" do
-          path = "/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}"
+          path = "/v3/persons/#{trainee.trn}/routes-to-professional-statuses/#{trainee.slug}"
           body = instance_of(String)
           expect(Client).to receive(:put).with(path, body:)
           subject
