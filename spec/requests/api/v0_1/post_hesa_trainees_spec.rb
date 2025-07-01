@@ -839,6 +839,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
+
         expect(response.parsed_body["errors"]).to include(
           /Course subject one has invalid reference data value of/,
         )
@@ -998,7 +999,7 @@ describe "`POST /api/v0.1/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          /Degrees attributes Uk degree has invalid reference data values/,
+          /Degrees attributes Uk degree has invalid reference data value of/,
         )
       end
     end
