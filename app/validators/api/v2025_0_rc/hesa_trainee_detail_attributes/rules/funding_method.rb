@@ -46,7 +46,7 @@ module Api
         private
 
           def funding_method_exists?
-            return false if academic_cycle.nil?
+            return false if academic_cycle.nil? || funding_type.blank? || training_route.blank? || course_subject_one.blank?
 
             @funding_method_exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
