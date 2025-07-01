@@ -57,7 +57,7 @@ module Trs
         @params ||= {
           "routeToProfessionalStatusTypeId" => route_to_professional_status_type_id,
           "status" => status,
-          "awardedDate" => trainee.outcome_date&.to_date&.iso8601,
+          "holdsFrom" => trainee.outcome_date&.to_date&.iso8601,
           "trainingStartDate" => trainee.itt_start_date&.iso8601 || trainee.trainee_start_date&.iso8601,
           "trainingEndDate" => trainee.itt_end_date&.iso8601 || trainee.estimated_end_date&.iso8601,
           "trainingSubjectReferences" => training_subject_references,
