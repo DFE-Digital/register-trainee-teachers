@@ -62,7 +62,7 @@ module Trs
         context "trainee is deferred" do
           let(:trainee) { create(:trainee, :deferred) }
 
-          it "sets the correcrt status" do
+          it "sets the correct status" do
             expect(subject["status"]).to eq("Deferred")
           end
         end
@@ -78,13 +78,17 @@ module Trs
         context "trainee is recommended for award" do
           let(:trainee) { create(:trainee, :recommended_for_award) }
 
-          it "sets the correcrt status" do
-            expect(subject["status"]).to eq("Awarded")
+          it "sets the correct status" do
+            expect(subject["status"]).to eq("Holds")
           end
         end
 
         context "trainee is awarded" do
           let(:trainee) { create(:trainee, :awarded) }
+
+          it "sets the correct status" do
+            expect(subject["status"]).to eq("Holds")
+          end
 
           it "includes awarded date" do
             expect(subject["awardedDate"]).to eq(trainee.awarded_at.to_date.iso8601)
