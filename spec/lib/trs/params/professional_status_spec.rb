@@ -95,7 +95,7 @@ module Trs
           let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
 
           it "sets appropriate route type ID" do
-            expect(subject["routeTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["provider_led_postgrad"])
+            expect(subject["routeToProfessionalStatusTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["provider_led_postgrad"])
           end
         end
 
@@ -106,8 +106,8 @@ module Trs
           it "uses a different route type ID than provider led postgrad" do
             provider_led_params = described_class.new(trainee: provider_led_trainee).params
 
-            expect(subject["routeTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["school_direct_tuition_fee"])
-            expect(subject["routeTypeId"]).not_to eq(provider_led_params["routeTypeId"])
+            expect(subject["routeToProfessionalStatusTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["school_direct_tuition_fee"])
+            expect(subject["routeToProfessionalStatusTypeId"]).not_to eq(provider_led_params["routeToProfessionalStatusTypeId"])
           end
         end
 
