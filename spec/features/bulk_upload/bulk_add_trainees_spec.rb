@@ -870,7 +870,7 @@ private
   end
 
   def and_i_click_the_upload_button
-    click_on "Upload records"
+    click_on "Upload CSV"
   end
 
   def then_i_see_the_upload_page_with_errors(empty:)

@@ -22,6 +22,10 @@
       </p>
 
       <p class="govuk-body">
+        You can leave non mandatory fields empty if you do not want to upload those fields.
+      </p>
+
+      <p class="govuk-body">
         You can also add trainee data directly from your student record system.
       </p>
 
@@ -64,7 +68,7 @@
 
       <%= render(BulkUpdate::TraineeUploads::HelpWithCsv::View.new) %>
 
-      <%= f.govuk_submit("Upload records") %>
+      <%= f.govuk_submit("Upload CSV") %>
     <% end %>
   </div>
 </div>
