@@ -91,7 +91,7 @@ module Trs
           end
 
           it "includes awarded date" do
-            expect(subject["awardedDate"]).to eq(trainee.awarded_at.to_date.iso8601)
+            expect(subject["holdsFrom"]).to eq(trainee.awarded_at.to_date.iso8601)
           end
         end
 
