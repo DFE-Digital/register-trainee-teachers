@@ -25,6 +25,12 @@ feature "apply registrations" do
   describe "with a missing course code against the trainee" do
     let(:subjects) { ["History"] }
 
+    around do |example|
+      Timecop.freeze(Settings.current_recruitment_cycle_year, 6, 1) do
+        example.run
+      end
+    end
+
     scenario "reviewing course", feature_show_draft_trainee_course_year_choice: false, skip: skip_test_due_to_first_day_of_current_academic_year? do
       given_the_trainee_does_not_have_a_course_uuid
       when_i_enter_the_course_details_page
@@ -34,6 +40,12 @@ feature "apply registrations" do
 
   describe "with a course that doesn't require selecting a specialism" do
     let(:subjects) { ["History"] }
+
+    around do |example|
+      Timecop.freeze(Settings.current_recruitment_cycle_year, 6, 1) do
+        example.run
+      end
+    end
 
     scenario "reviewing course" do
       when_i_enter_the_course_details_page
