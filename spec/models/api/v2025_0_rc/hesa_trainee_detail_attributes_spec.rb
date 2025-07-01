@@ -24,6 +24,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
             training_route: :provider_led_postgrad,
             course_subject_one: course_subject_one,
             fund_code: Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode::FUND_CODE,
+            trainee_start_date: (academic_cycle.start_date + 1.month).iso8601,
           )
         end
 
