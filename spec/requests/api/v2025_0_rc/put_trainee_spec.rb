@@ -1294,7 +1294,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "itt_qualification_aim has invalid reference data value of '321'. Valid values are '001', '002', '003', '004', '007', '008', '020', '021', '028', '031', '032'.",
+            "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
           )
         end
       end

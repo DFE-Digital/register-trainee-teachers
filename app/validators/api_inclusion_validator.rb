@@ -33,7 +33,7 @@ private
       )
     else
       I18n.t(
-        "activemodel.errors.models.api/v01/trainee_attributes.attributes.inclusion_with_truncated_list",
+        "activemodel.errors.models.api/v20250_rc/trainee_attributes.attributes.inclusion_with_truncated_list",
         value: value,
         valid_values: valid_values.first(MAX_VALID_VALUES_DISPLAYED).map { |v| "'#{v}'" }.join(", "),
       )

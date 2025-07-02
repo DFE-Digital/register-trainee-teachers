@@ -282,7 +282,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
-            { "error" => "UnprocessableEntity", "message" => "uk_degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
+            { "error" => "UnprocessableEntity", "message" => "uk_degree has invalid reference data value of 'Bachelor of Arts'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}..." },
             { "error" => "UnprocessableEntity", "message" => "grade must be entered if specifying a previous UK degree or non-UK degree" },
           )
         end
@@ -301,8 +301,8 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
-            { "error" => "UnprocessableEntity", "message" => "non_uk_degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
-            { "error" => "UnprocessableEntity", "message" => "country has invalid reference data value of 'France'. Valid values are #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}." },
+            { "error" => "UnprocessableEntity", "message" => "non_uk_degree has invalid reference data value of 'Bachelor of Arts'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}..." },
+            { "error" => "UnprocessableEntity", "message" => "country has invalid reference data value of 'France'. Example values include #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}..." },
           )
         end
       end
