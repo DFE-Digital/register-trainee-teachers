@@ -105,11 +105,27 @@ module TeacherTrainingApi
       }
     end
 
+    def for_2025_routes(funding_type)
+      if funding_type == "salaried"
+        {
+          postgraduate_fee_funded: :provider_led_postgrad,
+          postgraduate_salaried: :school_direct_salaried,
+        }
+      else
+        {
+          postgraduate_fee_funded: :provider_led_postgrad,
+          postgraduate_salaried: :pg_teaching_apprenticeship,
+        }
+      end
+    end
+
     def routes
       if Settings.current_recruitment_cycle_year < 2024
         before_2024_routes
-      else
+      elsif Settings.current_recruitment_cycle_year == 2024
         for_2024_routes
+      else
+        for_2025_routes(funding_type)
       end
     end
 
@@ -124,6 +140,10 @@ module TeacherTrainingApi
     def find_accredited_body_code
       provider = provider_data&.find { |p| p[:id] == course_data[:relationships][:provider][:data][:id] }
       provider[:attributes][:code] if provider
+    end
+
+    def funding_type
+      course_attributes[:funding_type]
     end
 
     def course
