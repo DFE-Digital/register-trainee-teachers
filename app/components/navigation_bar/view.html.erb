@@ -1,8 +1,12 @@
-<div class="moj-primary-navigation">
-  <div class="moj-primary-navigation__container">
-    <div class="moj-primary-navigation__nav">
-      <nav class="moj-primary-navigation" aria-label="Primary navigation">
-        <ul class="moj-primary-navigation__list">
+<div class="govuk-service-navigation" data-module="govuk-service-navigation">
+  <div class="govuk-width-container">
+    <div class="govuk-service-navigation__container">
+
+      <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+        <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+          Menu
+        </button>
+        <ul class="govuk-service-navigation__list" id="navigation">
           <% items.each do |item| %>
             <li class="<%= list_item_classes(item) %>">
               <%= item_link(item) %>
