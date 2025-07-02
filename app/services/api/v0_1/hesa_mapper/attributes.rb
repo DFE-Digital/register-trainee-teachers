@@ -23,10 +23,6 @@ module Api
 
         InvalidValue = Struct.new(:original_value) do
           delegate :to_s, to: :original_value
-
-          def blank?
-            true
-          end
         end
 
         def self.disability_attributes(params)
