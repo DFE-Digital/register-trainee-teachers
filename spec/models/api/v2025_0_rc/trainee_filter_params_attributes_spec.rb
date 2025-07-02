@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::V01::TraineeFilterParamsAttributes do
+RSpec.describe Api::V20250Rc::TraineeFilterParamsAttributes do
   it { is_expected.to validate_inclusion_of(:has_trn).in_array([true, false]) }
 
   describe "since validation" do
