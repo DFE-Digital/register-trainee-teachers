@@ -6,11 +6,11 @@ class ServiceUpdate::View < ViewComponent::Base
   delegate :title, :content, :date, to: :service_update
 
   TITLE_TAGS = %w[h1 h2 h3 h4 h5 h6].freeze
-  TITLE_CLASS = "govuk-heading-m govuk-!-margin-bottom-2"
 
-  def initialize(service_update:, title_tag: "h2")
+  def initialize(service_update:, title_tag: "h2", title_size: "l")
     @service_update = service_update
     @title_tag = title_tag
+    @title_size = title_size
   end
 
   def render?
@@ -18,9 +18,9 @@ class ServiceUpdate::View < ViewComponent::Base
   end
 
   def title_element
-    return tag.public_send(title_tag, title, class: TITLE_CLASS) if TITLE_TAGS.include?(title_tag)
+    return tag.public_send(title_tag, title, class: title_class) if TITLE_TAGS.include?(title_tag)
 
-    tag.h2(title, class: TITLE_CLASS)
+    tag.h2(title, class: title_class)
   end
 
   def date_pretty
@@ -34,5 +34,9 @@ class ServiceUpdate::View < ViewComponent::Base
 
 private
 
-  attr_reader :title_tag
+  attr_reader :title_tag, :title_size
+
+  def title_class
+    "govuk-heading-#{title_size} govuk-!-margin-bottom-2"
+  end
 end
