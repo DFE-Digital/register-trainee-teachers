@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V01::TraineeSerializer do
+RSpec.describe Api::V20250Rc::TraineeSerializer do
   let(:trainee) { create(:trainee, :with_lead_partner_scitt, :with_hesa_trainee_detail, :with_diversity_information, :in_progress, :with_placements, :with_french_nationality) }
   let(:json) { described_class.new(trainee).as_hash }
 
@@ -94,31 +94,31 @@ RSpec.describe Api::V01::TraineeSerializer do
 
     describe "placements" do
       let(:placements) do
-        trainee.placements.map { |placement| Api::V01::PlacementSerializer.new(placement).as_hash.with_indifferent_access }
+        trainee.placements.map { |placement| Api::V20250Rc::PlacementSerializer.new(placement).as_hash.with_indifferent_access }
       end
 
-      it "serializes with Api::V01::PlacementSerializer" do
+      it "serializes with Api::V20250Rc::PlacementSerializer" do
         expect(json[:placements]).to eq(placements)
       end
     end
 
     describe "degrees" do
       let(:degrees) do
-        trainee.degrees.map { |degree| Api::V01::DegreeSerializer.new(degree).as_hash.with_indifferent_access }
+        trainee.degrees.map { |degree| Api::V20250Rc::DegreeSerializer.new(degree).as_hash.with_indifferent_access }
       end
 
-      it "serializes with Api::V01::DegreeSerializer" do
+      it "serializes with Api::V20250Rc::DegreeSerializer" do
         expect(json[:degrees]).to eq(degrees)
       end
     end
 
     describe "HESA trainee details" do
       let(:hesa_trainee_detail) do
-        Api::V01::HesaTraineeDetailSerializer.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
+        Api::V20250Rc::HesaTraineeDetailSerializer.new(trainee.hesa_trainee_detail).as_hash.with_indifferent_access
       end
 
-      it "serializes with Api::V01::HesaTraineeDetailSerializer" do
-        expect(trainee.hesa_trainee_detail.attributes.except(*Api::V01::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
+      it "serializes with Api::V20250Rc::HesaTraineeDetailSerializer" do
+        expect(trainee.hesa_trainee_detail.attributes.except(*Api::V20250Rc::HesaTraineeDetailSerializer::EXCLUDED_ATTRIBUTES)).to eq(hesa_trainee_detail)
       end
     end
 
