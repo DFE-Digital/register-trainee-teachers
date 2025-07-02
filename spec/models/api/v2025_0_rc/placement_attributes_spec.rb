@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V01::PlacementAttributes do
+RSpec.describe Api::V20250Rc::PlacementAttributes do
   subject { described_class.new(params) }
 
   describe "validations" do
