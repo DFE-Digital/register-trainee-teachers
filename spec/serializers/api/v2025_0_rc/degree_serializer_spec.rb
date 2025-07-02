@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V01::DegreeSerializer do
+RSpec.describe Api::V20250Rc::DegreeSerializer do
   let(:degree) { create(:degree) }
   let(:json) { described_class.new(degree).as_hash }
 
