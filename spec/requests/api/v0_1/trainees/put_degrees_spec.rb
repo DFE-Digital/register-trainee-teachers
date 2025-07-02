@@ -3,6 +3,8 @@
 require "rails_helper"
 
 describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
+  include ErrorMessageHelper
+
   context "with a valid authentication token and the feature flag on" do
     let(:accountancy_subject_uuid) { "917f70f0-5dce-e911-a985-000d3ab79618" }
     let(:accounting_subject_uuid) { "937f70f0-5dce-e911-a985-000d3ab79618" }
@@ -280,7 +282,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
-            { "error" => "UnprocessableEntity", "message" => "Uk degree has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "Uk degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
             { "error" => "UnprocessableEntity", "message" => "Grade can't be blank" },
           )
         end
@@ -299,8 +301,8 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
-            { "error" => "UnprocessableEntity", "message" => "Non uk degree has invalid reference data values" },
-            { "error" => "UnprocessableEntity", "message" => "Country has invalid reference data values" },
+            { "error" => "UnprocessableEntity", "message" => "Non uk degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
+            { "error" => "UnprocessableEntity", "message" => "Country has invalid reference data value of 'France'. Valid values are #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}." },
           )
         end
       end

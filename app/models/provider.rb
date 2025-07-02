@@ -109,7 +109,7 @@ class Provider < ApplicationRecord
   end
 
   def hei?
-    accreditation_id.starts_with?("1")
+    accreditation_id&.starts_with?("1")
   end
 
   def performance_profile_sign_offs

@@ -115,7 +115,6 @@ module Api
         allow_blank: true,
         if: :valid_trainee_start_date?,
       )
-
       validates :course_subject_one, :course_subject_two, :course_subject_three, api_inclusion: {
         in: ::Hesa::CodeSets::CourseSubjects::MAPPING.values,
         valid_values: Hesa::CodeSets::CourseSubjects::MAPPING.keys,

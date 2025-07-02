@@ -1,19 +1,90 @@
 # frozen_string_literal: true
 
 require "fileutils"
+require "yaml"
+require 'middleman-core'
 
 namespace :tech_docs do
   desc "Build docs"
-  task :build do
-    FileUtils.cp_r("source", "temp_source")
+  task :build  do
+    # Build API docs
+    #
+    FileUtils.cp_r "source", "temp_source"
 
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/api-docs/.", "source")
-    FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm "source/index.html.md"
+    FileUtils.cp_r "source/api-docs/.", "source"
+    FileUtils.rm_rf "source/api-docs"
+    FileUtils.rm_rf "source/csv-docs"
 
     system("bundle exec middleman build --build-dir ../public/api-docs --verbose")
 
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    FileUtils.rm_rf "source"
+    FileUtils.mv "temp_source", "source"
+
+    # Build CSV docs
+    #
+    FileUtils.cp_r "source", "temp_source"
+
+    FileUtils.rm "source/index.html.md"
+    FileUtils.cp_r "source/csv-docs/.", "source"
+    FileUtils.rm_rf "source/csv-docs"
+    FileUtils.rm_rf "source/api-docs"
+
+    system("bundle exec middleman build --build-dir ../public/csv-docs --verbose")
+
+    FileUtils.rm_rf "source"
+    FileUtils.mv "temp_source", "source"
+
+    # Generate search.json
+    #
+    system("bundle exec middleman build --verbose")
+
+    FileUtils.cp "build/search.json", "../public/api-docs"
+    FileUtils.cp "build/search.json", "../public/csv-docs"
+  end
+
+  namespace :csv do
+    desc "Generate CSV fields docs based on fields.yaml"
+    task :generate do
+      app     = Middleman::Application.new
+      context = Middleman::TemplateContext.new(app, {})
+
+      FileUtils.mkdir "source/csv-docs/temp_fields" unless Dir.exist?("source/csv-docs/temp_fields")
+
+      fields = YAML.load_file(
+        File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__)
+      )
+
+      fields.each_with_index do |field, index|
+        html = context.partial(
+          "partials/csv_docs/field", locals: {
+            csv_field_name: field["field_name"],
+            api_field_name: field["technical"],
+            hesa_alignment: field["hesa_alignment"],
+            description: field["description"],
+            format: field["format"],
+            example: field["example"],
+            validation: field["validation"],
+          })
+
+        File.open("source/csv-docs/temp_fields/#{field["technical"].gsub("_","-")}.html.md", "w") do |f|
+          f.write(
+            <<~METADATA
+            ---
+            title: #{field["field_name"]}
+            weight: #{index + 1}
+            source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/fields.yaml
+            ---
+
+            METADATA
+          )
+          f.write(html)
+        end
+      end
+
+      FileUtils.cp "source/csv-docs/fields/index.html.md", "source/csv-docs/temp_fields"
+      FileUtils.rm_rf "source/csv-docs/fields"
+      FileUtils.mv "source/csv-docs/temp_fields", "source/csv-docs/fields"
+    end
   end
 end

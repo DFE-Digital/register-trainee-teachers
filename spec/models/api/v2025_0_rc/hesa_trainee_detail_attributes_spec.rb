@@ -24,6 +24,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
             training_route: :provider_led_postgrad,
             course_subject_one: course_subject_one,
             fund_code: Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode::FUND_CODE,
+            trainee_start_date: (academic_cycle.start_date + 1.month).iso8601,
           )
         end
 
@@ -66,7 +67,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
               subject.validate
               expect(subject.errors[:funding_method]).to be_present
               expect(subject.errors[:funding_method]).to include(
-                "training route ‘provider_led_postgrad’ and subject code ‘mathematics’ are not eligible for ‘bursary’ in academic cycle ‘#{academic_cycle.label}’",
+                "training route 'provider_led_postgrad' and subject code 'mathematics' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
               )
             end
           end

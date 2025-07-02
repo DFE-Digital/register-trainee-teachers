@@ -1272,7 +1272,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
-        expect(response.parsed_body["errors"]).to include("uk_degree has invalid reference data values")
+        expect(response.parsed_body["errors"]).to include(/uk_degree has invalid reference data value of/)
       end
     end
   end
@@ -1307,7 +1307,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "funding_method training route ‘teacher_degree_apprenticeship’ and subject code ‘biology’ are not eligible for ‘bursary’ in academic cycle ‘#{academic_cycle.label}’",
+        "funding_method training route 'teacher_degree_apprenticeship' and subject code 'biology' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
       )
     end
   end

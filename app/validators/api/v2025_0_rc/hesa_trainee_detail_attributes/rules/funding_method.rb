@@ -28,8 +28,6 @@ module Api
           delegate :training_route,
                    :course_subject_one, to: :trainee_attributes
 
-          ValidationResult = Struct.new(:valid?, :error_details)
-
           def initialize(hesa_trainee_detail_attributes)
             @hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
           end
@@ -48,6 +46,8 @@ module Api
         private
 
           def funding_method_exists?
+            return false if academic_cycle.nil?
+
             @funding_method_exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
