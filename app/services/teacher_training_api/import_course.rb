@@ -105,7 +105,7 @@ module TeacherTrainingApi
       }
     end
 
-    def for_2025_routes(funding_type)
+    def for_2025_routes
       return { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :school_direct_salaried } if funding_type == "salaried"
 
       return { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :pg_teaching_apprenticeship } if funding_type == "apprenticeship"
@@ -119,7 +119,7 @@ module TeacherTrainingApi
       elsif Settings.current_recruitment_cycle_year == 2024
         for_2024_routes
       else
-        for_2025_routes(funding_type)
+        for_2025_routes
       end
     end
 
