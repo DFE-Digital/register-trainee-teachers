@@ -86,4 +86,7 @@ Caddyfile
 
 # Ignore docs
 /public/api-docs
+/public/csv-docs
 /tech_docs/build
+/tech_docs/source/csv-docs/fields
+!/tech_docs/source/csv-docs/fields/index.html.md.erb
