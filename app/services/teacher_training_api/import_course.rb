@@ -106,10 +106,11 @@ module TeacherTrainingApi
     end
 
     def for_2025_routes(funding_type)
-      return { postgraduate_fee_funded: :provider_led_postgrad } if funding_type == "fee"
       return { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :school_direct_salaried } if funding_type == "salaried"
 
-      { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :pg_teaching_apprenticeship }
+      return { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :pg_teaching_apprenticeship } if funding_type == "apprenticeship"
+
+      { postgraduate_fee_funded: :provider_led_postgrad }
     end
 
     def routes
