@@ -121,7 +121,9 @@ module TeacherTrainingApi
     end
 
     def route
-      routes[course_attributes[:program_type].to_sym]
+      return routes[course_attributes[:program_type].to_sym] if Settings.current_recruitment_cycle_year < 2025
+
+      routes[course_attributes[:training_route]&.to_sym]
     end
 
     def accredited_body_code

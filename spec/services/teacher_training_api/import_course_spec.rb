@@ -86,15 +86,15 @@ module TeacherTrainingApi
             end
           end
 
-          shared_examples training_route_and_funding_type_mapping do |recruitment_cycle_year, funding_types, training_route, program_types|
+          shared_examples training_route_and_funding_type_mapping do |recruitment_cycle_year, funding_types, training_route, course_training_routes|
             before do
               allow(Settings).to receive(:current_recruitment_cycle_year).and_return(recruitment_cycle_year)
             end
 
-            program_types.each do |program_type|
+            course_training_routes.each do |course_training_route|
               funding_types.each do |funding_type|
-                context "program_type type #{program_type} with funding type #{funding_type} is mapped to route #{training_route} for current recruitment cycle year #{recruitment_cycle_year}" do
-                  let(:course_attributes) { { funding_type:, program_type: } }
+                context "course training route #{course_training_route} with funding type #{funding_type} is mapped to route #{training_route} for current recruitment cycle year #{recruitment_cycle_year}" do
+                  let(:course_attributes) { { funding_type: funding_type, training_route: course_training_route } }
 
                   it "stores training route" do
                     subject
