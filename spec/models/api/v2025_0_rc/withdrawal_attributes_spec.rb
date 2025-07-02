@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::V01::WithdrawalAttributes do
+RSpec.describe Api::V20250Rc::WithdrawalAttributes do
   let(:trainee) { create(:trainee, :trn_received) }
   let(:withdrawal_attributes) { described_class.new(trainee:) }
   let(:trainee_reason) { (WithdrawalReasons::TRAINEE_REASONS - WithdrawalReasons::PROVIDER_REASONS).first }
