@@ -2,7 +2,13 @@ FROM ruby:3.4.2-alpine3.20 AS middleman
 RUN apk add --no-cache libxml2
 RUN apk add --update --no-cache npm git build-base
 
+ENV APP_HOME=/app
 ENV DOCS_HOME=/tech_docs
+
+WORKDIR $APP_HOME
+
+COPY app/ $APP_HOME
+
 WORKDIR $DOCS_HOME
 
 COPY tech_docs/Gemfile tech_docs/Gemfile.lock $DOCS_HOME
@@ -11,6 +17,7 @@ RUN bundle install --jobs=4
 
 COPY tech_docs/ $DOCS_HOME
 
+RUN rake tech_docs:csv:generate
 RUN rake tech_docs:build
 
 ###
@@ -46,6 +53,7 @@ RUN yarn install --frozen-lockfile --ignore-scripts
 COPY . .
 
 COPY --from=middleman public/api-docs/ $APP_HOME/public/api-docs/
+COPY --from=middleman public/csv-docs/ $APP_HOME/public/csv-docs/
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/

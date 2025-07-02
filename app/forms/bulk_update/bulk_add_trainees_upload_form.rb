@@ -2,8 +2,6 @@
 
 module BulkUpdate
   class BulkAddTraineesUploadForm
-    VERSION = "v2025.0"
-
     attr_reader :provider, :file, :upload
 
     include ActiveModel::Model

@@ -805,7 +805,7 @@ private
 
   def then_i_see_the_bulk_add_trainees_guidance_page
     within_window(@guidance_window) do
-      expect(page).to have_current_path(csv_docs_home_path)
+      expect(page).to have_current_path("/csv-docs/")
       expect(page).to have_content("How to add trainee information to the bulk add new trainee CSV template")
 
       when_i_click_the_documentation_empty_csv_link
@@ -816,7 +816,7 @@ private
   end
 
   def when_i_visit_the_csv_docs_home_path
-    visit csv_docs_home_path
+    visit "/csv-docs/"
   end
 
   def when_i_click_the_documentation_empty_csv_link

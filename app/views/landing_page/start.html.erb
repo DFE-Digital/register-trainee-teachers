@@ -10,7 +10,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h2 class="govuk-heading-l"><%= t(".service_updates_title") %></h2>
     <% ServiceUpdate.recent_updates.each do |service_update| %>
-      <%= render ServiceUpdate::View.new(service_update: service_update, title_tag: "h3") %>
+      <%= render ServiceUpdate::View.new(service_update: service_update, title_tag: "h3", title_size: "m") %>
     <% end %>
 
     <%= govuk_link_to(t(".service_updates_link"), service_updates_path, class: "govuk-body" ) %>
