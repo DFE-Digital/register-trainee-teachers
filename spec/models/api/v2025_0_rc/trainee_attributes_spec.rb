@@ -6,8 +6,41 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
   subject { described_class.new }
 
   describe "validations" do
-    it { is_expected.to validate_length_of(:provider_trainee_id).is_at_most(50) }
-    it { is_expected.to validate_length_of(:application_choice_id).is_at_most(7) }
+    it { is_expected.to validate_presence_of(:first_names) }
+    it { is_expected.to validate_presence_of(:last_name) }
+    it { is_expected.to validate_presence_of(:diversity_disclosure) }
+    it { is_expected.to validate_presence_of(:study_mode) }
+    it { is_expected.to validate_presence_of(:hesa_id) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_length_of(:email).is_at_most(255) }
+
+    it {
+      expect(subject).to validate_inclusion_of(:nationality)
+        .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values)
+        .with_message(/has invalid reference data value of '.*'. Valid values are #{RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
+        .allow_blank
+    }
+
+    it {
+      expect(subject).to validate_inclusion_of(:training_initiative)
+        .in_array(
+          Hesa::CodeSets::TrainingInitiatives::MAPPING.values + [ROUTE_INITIATIVES_ENUMS[:no_initiative]],
+        )
+        .with_message(/has invalid reference data value of '.*'/)
+    }
+
+    describe "email" do
+      context "with uppercase TLD" do
+        before do
+          subject.email = "valid@example.COM"
+        end
+
+        it "is valid" do
+          subject.validate
+          expect(subject.errors[:email]).to be_empty
+        end
+      end
+    end
 
     describe "sex" do
       context "when empty" do
@@ -16,7 +49,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("sex can't be blank")
+          expect(subject.errors[:sex]).to contain_exactly("can't be blank")
         }
       end
 
@@ -26,7 +59,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("sex can't be blank")
+          expect(subject.errors[:sex]).to contain_exactly("can't be blank")
         }
       end
 
@@ -60,7 +93,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("course_subject_one can't be blank")
+          expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
         }
       end
 
@@ -70,7 +103,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("course_subject_one can't be blank")
+          expect(subject.errors[:course_subject_one]).to contain_exactly("can't be blank")
         }
       end
 
@@ -117,7 +150,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("study_mode can't be blank")
+          expect(subject.errors[:study_mode]).to contain_exactly("can't be blank")
         }
       end
 
@@ -127,7 +160,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it {
           subject.validate
 
-          expect(subject.errors.full_messages).to include("study_mode can't be blank")
+          expect(subject.errors[:study_mode]).to contain_exactly("can't be blank")
         }
       end
 
@@ -161,6 +194,18 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         .allow_blank
     }
 
+    describe "#sex" do
+      it { is_expected.to validate_presence_of(:sex) }
+
+      describe "inclusion" do
+        it do
+          expect(subject).to validate_inclusion_of(:sex)
+            .in_array(Hesa::CodeSets::Sexes::MAPPING.values)
+            .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Sexes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
+        end
+      end
+    end
+
     describe "training_route" do
       it { is_expected.to validate_presence_of(:training_route) }
 
@@ -190,7 +235,16 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
-                .with_message(/has invalid reference data value of '.*'/)
+                .with_message(/has invalid reference data value/)
+            end
+
+            it "includes full details in the error message" do
+              subject.training_route = "9"
+              subject.validate
+
+              expect(subject.errors[:training_route]).to include(
+                "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::TrainingRoutes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+              )
             end
           end
 
@@ -200,7 +254,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
-                .with_message(/has invalid reference data value/)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -214,7 +268,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               expect(subject).to validate_inclusion_of(:training_route)
                 .in_array(Hesa::CodeSets::TrainingRoutes::MAPPING.values)
-                .with_message(/has invalid reference data value/)
+                .with_message(/has invalid reference data value of '.*'/)
             end
           end
 
@@ -268,7 +322,6 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:date_of_birth]).to contain_exactly("is invalid")
-          expect(subject.errors.full_messages).to include("date_of_birth is invalid")
         end
       end
     end
@@ -297,7 +350,6 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:itt_start_date]).to contain_exactly("is invalid")
-          expect(subject.errors.full_messages).to include("itt_start_date is invalid")
         end
       end
 
@@ -351,7 +403,6 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:itt_end_date]).to contain_exactly("is invalid")
-          expect(subject.errors.full_messages).to include("itt_end_date is invalid")
         end
       end
     end
@@ -378,7 +429,65 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:trainee_start_date]).to contain_exactly("is invalid")
-          expect(subject.errors.full_messages).to include("trainee_start_date is invalid")
+        end
+      end
+    end
+
+    describe "degrees_attributes" do
+      context "when training_route is present" do
+        context "when requires_degree? is true" do
+          before do
+            subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_postgrad]
+          end
+
+          context "with empty degrees_attributes" do
+            before do
+              subject.degrees_attributes = []
+            end
+
+            it do
+              subject.validate
+
+              expect(subject.errors[:degrees_attributes]).to contain_exactly("can't be blank")
+            end
+          end
+
+          context "with present degrees_attributes" do
+            before do
+              subject.degrees_attributes = [Api::V01::DegreeAttributes.new({})]
+            end
+
+            it do
+              subject.validate
+
+              expect(subject.errors[:degrees_attributes]).not_to include("can't be blank")
+            end
+          end
+        end
+
+        context "when requires_degree? is false" do
+          before do
+            subject.training_route = TRAINING_ROUTE_ENUMS[:provider_led_undergrad]
+            subject.degrees_attributes = []
+          end
+
+          it do
+            subject.validate
+
+            expect(subject.errors[:degrees_attributes]).to be_blank
+          end
+        end
+      end
+
+      context "when training_route is not present" do
+        before do
+          subject.training_route = nil
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:degrees_attributes]).to be_blank
         end
       end
 
