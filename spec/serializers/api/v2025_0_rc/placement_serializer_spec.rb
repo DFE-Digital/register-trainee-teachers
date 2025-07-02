@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Api::V01::PlacementSerializer do
+RSpec.describe Api::V20250Rc::PlacementSerializer do
   shared_examples_for "a placement serialiser" do
     let(:fields) do
       %w[
