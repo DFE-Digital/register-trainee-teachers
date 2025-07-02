@@ -17,9 +17,9 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
     it { is_expected.to validate_presence_of(:subject) }
 
     it {
-      expect(subject).to validate_inclusion_of(:country).in_array(
-        Hesa::CodeSets::Countries::MAPPING.values,
-      ).with_message(/has invalid reference data value of '.*'/)
+      expect(subject).to validate_inclusion_of(:country)
+        .in_array(Hesa::CodeSets::Countries::MAPPING.values)
+        .with_message(/has invalid reference data value of '.*'/)
     }
 
     context 'when locale_code is "uk"' do
@@ -35,7 +35,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to contain_exactly("must be entered if specifying a previous UK degree")
+            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
           }
         end
 
@@ -45,7 +45,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to contain_exactly("must be entered if specifying a previous UK degree")
+            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
           }
         end
 
@@ -55,7 +55,9 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to include(/has invalid reference data value of/)
+            expect(subject.errors[:uk_degree]).to contain_exactly(
+              "has invalid reference data value of 'Random subject'. Valid values are #{DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq.map { |v| "'#{v}'" }.join(', ')}.",
+            )
           }
         end
 
@@ -85,7 +87,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("must be entered if specifying a previous non-UK degree")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
           }
         end
 
@@ -95,7 +97,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("must be entered if specifying a previous non-UK degree")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
           }
         end
 
@@ -105,7 +107,9 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to include(/has invalid reference data value of/)
+            expect(subject.errors[:non_uk_degree]).to contain_exactly(
+              "has invalid reference data value of 'Random subject'. Valid values are #{DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq.map { |v| "'#{v}'" }.join(', ')}.",
+            )
           }
         end
 
