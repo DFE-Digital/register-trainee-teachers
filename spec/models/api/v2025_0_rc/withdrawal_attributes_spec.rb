@@ -70,7 +70,7 @@ RSpec.describe Api::V20250Rc::WithdrawalAttributes do
             it "is invalid" do
               subject.validate
               expect(subject.errors[:reasons]).to contain_exactly(
-                "Reason(s) selected are not valid for this trigger",
+                "entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger",
               )
             end
           end
@@ -100,7 +100,7 @@ RSpec.describe Api::V20250Rc::WithdrawalAttributes do
             it "is invalid" do
               subject.validate
               expect(subject.errors[:reasons]).to contain_exactly(
-                "Reason(s) selected are not valid for this trigger",
+                "entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger",
               )
             end
           end

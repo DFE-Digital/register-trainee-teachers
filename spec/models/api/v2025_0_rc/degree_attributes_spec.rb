@@ -35,7 +35,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:uk_degree]).to contain_exactly("must be entered if specifying a previous UK degree")
           }
         end
 
@@ -45,7 +45,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:uk_degree]).to contain_exactly("must be entered if specifying a previous UK degree")
           }
         end
 
@@ -87,17 +87,17 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("must be entered if specifying a previous non-UK degree")
           }
         end
 
         context "when nil" do
-          before { subject.uk_degree = nil }
+          before { subject.non_uk_degree = nil }
 
           it {
             subject.validate
 
-            expect(subject.errors[:non_uk_degree]).to contain_exactly("can't be blank")
+            expect(subject.errors[:non_uk_degree]).to contain_exactly("must be entered if specifying a previous non-UK degree")
           }
         end
 
