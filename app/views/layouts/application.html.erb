@@ -125,53 +125,62 @@
       </div>
     </main>
 
-    <footer class="govuk-footer govuk-footer--app" role="contentinfo">
-      <div class="govuk-width-container ">
-
-        <div class="govuk-footer__meta">
-          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            <h2 class="govuk-visually-hidden">Support links</h2>
-            <div class="govuk-footer__meta-custom">
-              <div class="govuk-grid-row">
-                <div class="govuk-grid-column-one-half">
-                  <h2 class="govuk-heading-s">
-                    Get support
-                  </h2>
-                  <ul class="govuk-footer__meta-custom govuk-list govuk-!-font-size-16">
-                    <li>Email: <%= support_email(subject: "Register trainee teachers support", classes: "govuk-footer__link") %></li>
-                    <li>We aim to respond within 5 working days, or one working day for more urgent queries</li>
-                  </ul>
-                </div>
-                <div class="govuk-grid-column-one-half">
-                  <h2 class="govuk-heading-s">
-                    Give feedback
-                  </h2>
-                  <p><%= govuk_link_to "Give feedback to help us improve Register trainee teachers", Settings.feedback_link_url, class: "govuk-footer__link" %></p>
-                </div>
-              </div>
+    <%= govuk_footer do |footer|
+      footer.with_navigation do %>
+        <div class="govuk-width-container">
+          <div class="govuk-footer__navigation">
+            <div class="govuk-footer__section govuk-grid-column-two-thirds">
+              <h2 class="govuk-footer__heading govuk-heading-m">How to use this service</h2>
+              <ul class="govuk-footer__list govuk-footer__list--columns-2">
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "News and updates", service_updates_path, class: "govuk-footer__link" %>
+                </li>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "How to use this service", guidance_path, class: "govuk-footer__link" %>
+                </li>
+                <% if FeatureService.enabled?(:register_api) %>
+                  <li class="govuk-footer__list-item">
+                    <%= govuk_link_to "API documentation", "/api-docs/", class: "govuk-footer__link" %>
+                  </li>
+                <% end %>
+                <% if FeatureService.enabled?(:bulk_add_trainees) %>
+                  <li class="govuk-footer__list-item">
+                    <%= govuk_link_to "CSV documentation", "/csv-docs/", class: "govuk-footer__link" %>
+                  </li>
+                <% end %>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "Accessibility", "/accessibility", class: "govuk-footer__link" %>
+                </li>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "Cookies", cookie_preferences_path, class: "govuk-footer__link" %>
+                </li>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to "Privacy", privacy_notice_path, class: "govuk-footer__link" %>
+                </li>
+                <li class="govuk-footer__list-item">
+                  <%= govuk_link_to(
+                    "Give feedback to help us improve Register trainee teachers",
+                    "https://forms.office.com/e/Q6LVwtEKje",
+                    class: "govuk-footer__link"
+                  ) %>
+                </li>
+              </ul>
             </div>
-
-            <ul class="govuk-footer__inline-list govuk-!-margin-bottom-0">
-              <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "How to use this service", guidance_path, class: "govuk-footer__link" %>
-              </li>
-              <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "Accessibility", accessibility_path, class: "govuk-footer__link" %>
-              </li>
-              <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "Cookies", cookie_preferences_path, class: "govuk-footer__link" %>
-              </li>
-              <li class="govuk-footer__inline-list-item">
-                <%= govuk_link_to "Privacy", privacy_notice_path, class: "govuk-footer__link" %>
-              </li>
-            </ul>
-
-          </div>
-          <div class="govuk-footer__meta-item">
-            <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+            <div class="govuk-footer__section govuk-grid-column-one-third">
+              <h2 class="govuk-footer__heading govuk-heading-m">Get help</h2>
+              <p class="govuk-body govuk-!-font-size-16">
+                Email:
+                <%= link_to(
+                    "becomingateacher@digital.education.gov.uk",
+                    "mailto:becomingateacher@digital.education.gov.uk",
+                    class:"govuk-footer__link"
+                  )%>
+              </p>
+              <p class="govuk-body govuk-!-font-size-16">We aim to respond within 5 working days, or one working day for more urgent queries'</p>
+            </div>
           </div>
         </div>
-      </div>
-    </footer>
+      <% end %>
+    <% end %>
   </body>
 </html>

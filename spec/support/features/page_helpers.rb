@@ -386,6 +386,26 @@ module Features
       @privacy_notice_page ||= PageObjects::PrivacyNotice.new
     end
 
+    def api_docs_page
+      @api_docs_page ||= PageObjects::ApiDocs.new
+    end
+
+    def csv_docs_page
+      @csv_docs_page ||= PageObjects::CsvDocs.new
+    end
+
+    def service_updates_page
+      @service_updates_page ||= PageObjects::ServiceUpdates.new
+    end
+
+    def guidance_page
+      @guidance_page ||= PageObjects::Guidance.new
+    end
+
+    def cookies_page
+      @cookies_page ||= PageObjects::Cookies.new
+    end
+
     def start_date_verification_page
       @start_date_verification_page ||= PageObjects::Trainees::StartDateVerification.new
     end
