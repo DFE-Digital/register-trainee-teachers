@@ -448,13 +448,13 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
             it do
               subject.validate
 
-              expect(subject.errors[:degrees_attributes]).to contain_exactly("can't be blank")
+              expect(subject.errors[:degrees_attributes]).to contain_exactly("uk_degree or non_uk_degree must be entered if specifying a postgraduate training_route")
             end
           end
 
           context "with present degrees_attributes" do
             before do
-              subject.degrees_attributes = [Api::V01::DegreeAttributes.new({})]
+              subject.degrees_attributes = [Api::V20250Rc::DegreeAttributes.new({})]
             end
 
             it do

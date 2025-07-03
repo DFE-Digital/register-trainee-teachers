@@ -63,8 +63,11 @@ module Api
         in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
       }, allow_blank: true
 
-      def initialize(*args, record_source: nil, **kwargs)
-        super(*args, **kwargs)
+      def initialize(attributes = {}, record_source: nil, **kwargs)
+        # Handle both calling patterns:
+        # new(hash, record_source: value) and new(keyword: value)
+        merged_attributes = attributes.present? ? attributes.merge(kwargs) : kwargs
+        super(merged_attributes)
         self.record_source = record_source
       end
     end

@@ -9,7 +9,7 @@ module Api
     module ClassMethods
       def hesa_code_inclusion_message(value:, valid_values:)
         I18n.t(
-          "api/v20250_rc/trainee_attributes.attributes.inclusion",
+          "activemodel.errors.models.api/v20250_rc/trainee_attributes.attributes.inclusion",
           value: value,
           valid_values: valid_values.map { |v| "'#{v}'" }.join(", "),
         )
