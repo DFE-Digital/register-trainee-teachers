@@ -4,12 +4,12 @@ require "rails_helper"
 
 RSpec.describe SpecVersionGenerator do
   let(:old_version) { "v2025.0-rc" }
-  let(:new_version) { "v1.0" }
+  let(:new_version) { "v2026.0-rc" }
   let(:service) { described_class.call(old_version:, new_version:) }
 
   describe "#call" do
     let(:request_file) { "spec/requests/api/v2025_0_rc/get_trainee_spec.rb" }
-    let(:new_request_file) { "spec/requests/api/v1_0/get_trainee_spec.rb" }
+    let(:new_request_file) { "spec/requests/api/v2026_0_rc/get_trainee_spec.rb" }
     let(:request_file_content) do
       <<~RUBY
         # frozen_string_literal: true
@@ -41,7 +41,7 @@ RSpec.describe SpecVersionGenerator do
     end
 
     it "creates the new directory for requests" do
-      expect(FileUtils).to receive(:mkdir_p).with("spec/requests/api/v1_0")
+      expect(FileUtils).to receive(:mkdir_p).with("spec/requests/api/v2026_0_rc")
       service
     end
 
@@ -51,16 +51,16 @@ RSpec.describe SpecVersionGenerator do
 
         require "rails_helper"
 
-        describe "`GET /api/v1.0/trainees/:id` endpoint" do
+        describe "`GET /api/v2026.0-rc/trainees/:id` endpoint" do
           # ... code
           context "when the trainee exists" do
-            before { get("/api/v1.0/trainees/\#{trainee.slug}", headers: { Authorization: "Bearer \#{token}" }) }
+            before { get("/api/v2026.0-rc/trainees/\#{trainee.slug}", headers: { Authorization: "Bearer \#{token}" }) }
             it "returns the trainee" do
-              parsed_trainee = JSON.parse(Api::GetVersionedItem.for_serializer(model: :trainee, version: "v1.0").new(trainee).as_hash.to_json)
+              parsed_trainee = JSON.parse(Api::GetVersionedItem.for_serializer(model: :trainee, version: "v2026.0-rc").new(trainee).as_hash.to_json)
               expect(response.parsed_body).to eq(parsed_trainee)
             end
 
-            describe Api::V10::TraneeService do
+            describe Api::V20260Rc::TraneeService do
               # ... code
             end
           end
