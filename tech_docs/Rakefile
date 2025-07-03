@@ -2,45 +2,45 @@
 
 require "fileutils"
 require "yaml"
-require 'middleman-core'
+require "middleman-core"
 
 namespace :tech_docs do
   desc "Build docs"
-  task :build  do
+  task :build do
     # Build API docs
     #
-    FileUtils.cp_r "source", "temp_source"
+    FileUtils.cp_r("source", "temp_source")
 
-    FileUtils.rm "source/index.html.md"
-    FileUtils.cp_r "source/api-docs/.", "source"
-    FileUtils.rm_rf "source/api-docs"
-    FileUtils.rm_rf "source/csv-docs"
+    FileUtils.rm("source/index.html.md")
+    FileUtils.cp_r("source/api-docs/.", "source")
+    FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm_rf("source/csv-docs")
 
     system("bundle exec middleman build --build-dir ../public/api-docs --verbose")
 
-    FileUtils.rm_rf "source"
-    FileUtils.mv "temp_source", "source"
+    FileUtils.rm_rf("source")
+    FileUtils.mv("temp_source", "source")
 
     # Build CSV docs
     #
-    FileUtils.cp_r "source", "temp_source"
+    FileUtils.cp_r("source", "temp_source")
 
-    FileUtils.rm "source/index.html.md"
-    FileUtils.cp_r "source/csv-docs/.", "source"
-    FileUtils.rm_rf "source/csv-docs"
-    FileUtils.rm_rf "source/api-docs"
+    FileUtils.rm("source/index.html.md")
+    FileUtils.cp_r("source/csv-docs/.", "source")
+    FileUtils.rm_rf("source/csv-docs")
+    FileUtils.rm_rf("source/api-docs")
 
     system("bundle exec middleman build --build-dir ../public/csv-docs --verbose")
 
-    FileUtils.rm_rf "source"
-    FileUtils.mv "temp_source", "source"
+    FileUtils.rm_rf("source")
+    FileUtils.mv("temp_source", "source")
 
     # Generate search.json
     #
     system("bundle exec middleman build --verbose")
 
-    FileUtils.cp "build/search.json", "../public/api-docs"
-    FileUtils.cp "build/search.json", "../public/csv-docs"
+    FileUtils.cp("build/search.json", "../public/api-docs")
+    FileUtils.cp("build/search.json", "../public/csv-docs")
   end
 
   namespace :csv do
@@ -49,10 +49,10 @@ namespace :tech_docs do
       app     = Middleman::Application.new
       context = Middleman::TemplateContext.new(app, {})
 
-      FileUtils.mkdir "source/csv-docs/temp_fields" unless Dir.exist?("source/csv-docs/temp_fields")
+      FileUtils.mkdir_p("source/csv-docs/temp_fields")
 
       fields = YAML.load_file(
-        File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__)
+        File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
       )
 
       fields.each_with_index do |field, index|
@@ -65,16 +65,17 @@ namespace :tech_docs do
             format: field["format"],
             example: field["example"],
             validation: field["validation"],
-          })
+          }
+        )
 
-        File.open("source/csv-docs/temp_fields/#{field["technical"].gsub("_","-")}.html.md", "w") do |f|
+        File.open("source/csv-docs/temp_fields/#{field['technical'].gsub('_', '-')}.html.md", "w") do |f|
           f.write(
-            <<~METADATA
-            ---
-            title: #{field["field_name"]}
-            weight: #{index + 1}
-            source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/fields.yaml
-            ---
+            <<~METADATA,
+              ---
+              title: #{field['field_name']}
+              weight: #{index + 1}
+              source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/fields.yaml
+              ---
 
             METADATA
           )
@@ -82,9 +83,9 @@ namespace :tech_docs do
         end
       end
 
-      FileUtils.cp "source/csv-docs/fields/index.html.md", "source/csv-docs/temp_fields"
-      FileUtils.rm_rf "source/csv-docs/fields"
-      FileUtils.mv "source/csv-docs/temp_fields", "source/csv-docs/fields"
+      FileUtils.cp("source/csv-docs/fields/index.html.md", "source/csv-docs/temp_fields")
+      FileUtils.rm_rf("source/csv-docs/fields")
+      FileUtils.mv("source/csv-docs/temp_fields", "source/csv-docs/fields")
     end
   end
 end
