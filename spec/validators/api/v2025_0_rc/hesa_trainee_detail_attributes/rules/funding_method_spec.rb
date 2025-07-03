@@ -86,8 +86,8 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
         end
       end
 
-      context "when training_route is an InvalidValue" do
-        let(:training_route) { Api::V01::HesaMapper::Attributes::InvalidValue.new("invalid_route") }
+          context "when training_route is an InvalidValue" do
+      let(:training_route) { Api::V20250Rc::HesaMapper::Attributes::InvalidValue.new("invalid_route") }
 
         it "returns false" do
           expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
