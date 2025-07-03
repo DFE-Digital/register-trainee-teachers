@@ -508,9 +508,9 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
   describe "nested attribute validations" do
     let(:placement_attributes) { [Api::V20250Rc::PlacementAttributes.new({})] }
-          let(:degrees_attributes) { [Api::V20250Rc::DegreeAttributes.new({})] }
-          let(:nationalisations_attributes) { [Api::V20250Rc::NationalityAttributes.new({})] }
-          let(:hesa_trainee_detail_attributes) { Api::V20250Rc::HesaTraineeDetailAttributes.new({}) }
+    let(:degrees_attributes) { [Api::V20250Rc::DegreeAttributes.new({})] }
+    let(:nationalisations_attributes) { [Api::V20250Rc::NationalityAttributes.new({})] }
+    let(:hesa_trainee_detail_attributes) { Api::V20250Rc::HesaTraineeDetailAttributes.new({}) }
 
     before do
       subject.placements_attributes = placement_attributes
