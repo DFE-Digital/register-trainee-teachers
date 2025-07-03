@@ -51,7 +51,7 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:status]).to be(:unprocessable_entity)
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to contain_exactly(
-          { error: "UnprocessableEntity", message: "Name can't be blank" },
+          { error: "UnprocessableEntity", message: "name can't be blank" },
         )
       end
     end
@@ -96,7 +96,7 @@ describe Api::Trainees::SavePlacementResponse do
         expect(subject[:status]).to be(:unprocessable_entity)
         expect(subject[:json][:data]).to be_blank
         expect(subject[:json][:errors]).to contain_exactly(
-          { error: "UnprocessableEntity", message: "Name can't be blank" },
+          { error: "UnprocessableEntity", message: "name can't be blank" },
         )
       end
     end

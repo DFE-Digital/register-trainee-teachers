@@ -15,7 +15,7 @@ class ApiInclusionValidator < ActiveModel::EachValidator
     unless @in.include?(value)
       record.errors.add(
         attribute,
-        self.class.hesa_code_inclusion_message(value: value, valid_values: valid_values),
+        self.class.hesa_code_inclusion_message(value:, valid_values:),
       )
     end
   end

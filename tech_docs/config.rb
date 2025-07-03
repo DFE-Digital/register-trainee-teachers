@@ -23,11 +23,11 @@ end
 helpers do
   def csv_fields
     @csv_fields ||= YAML.load_file(
-      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__)
+      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
     )
   end
 
   def csv_field_path(name)
-    "/csv-docs/fields/#{name.gsub("_", "-")}.html"
+    "/csv-docs/fields/#{name.gsub('_', '-')}.html"
   end
 end
