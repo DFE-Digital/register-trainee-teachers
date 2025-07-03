@@ -42,7 +42,7 @@ describe Api::Trainees::WithdrawResponse do
     end
 
     it "uses the trainee serializer" do
-      expect(Api::V01::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
+      expect(Api::V20250Rc::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
       subject
     end
@@ -87,7 +87,7 @@ describe Api::Trainees::WithdrawResponse do
 
     it "returns status unprocessable entity with error response" do
       expect(subject[:status]).to be(:unprocessable_entity)
-      expect(subject[:json][:errors]).to contain_exactly({ error: "StateTransitionError", message: "It’s not possible to perform this action while the trainee is in its current state" })
+      expect(subject[:json][:errors]).to contain_exactly({ error: "StateTransitionError", message: "It's not possible to perform this action while the trainee is in its current state" })
     end
 
     it "did not change the trainee" do

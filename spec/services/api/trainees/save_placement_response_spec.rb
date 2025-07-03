@@ -8,7 +8,7 @@ describe Api::Trainees::SavePlacementResponse do
     {}
   end
   let(:trainee) { create(:trainee, :with_placements) }
-  let(:version) { "v0.1" }
+  let(:version) { "v2025.0-rc" }
 
   subject { placement_response }
 
@@ -16,11 +16,11 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.new }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
+      let(:placement_attribute_keys) { Api::V20250Rc::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
       let(:attributes) do
         attrs = create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
-        Api::V01::PlacementAttributes.new(attrs)
+        Api::V20250Rc::PlacementAttributes.new(attrs)
       end
 
       it "returns status created with data" do
@@ -38,14 +38,14 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the serializer" do
-        expect(Api::V01::PlacementSerializer).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
+        expect(Api::V20250Rc::PlacementSerializer).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
 
         subject
       end
     end
 
     context "with invalid params" do
-      let(:attributes) { Api::V01::PlacementAttributes.new({}) }
+      let(:attributes) { Api::V20250Rc::PlacementAttributes.new({}) }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
@@ -61,11 +61,11 @@ describe Api::Trainees::SavePlacementResponse do
     let(:placement) { trainee.placements.first }
 
     context "with valid params" do
-      let(:placement_attribute_keys) { Api::V01::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
+      let(:placement_attribute_keys) { Api::V20250Rc::PlacementAttributes::ATTRIBUTES.map(&:to_s).push("address") }
 
       let(:attributes) do
         attrs = create(:placement).attributes.slice(*placement_attribute_keys).with_indifferent_access
-        Api::V01::PlacementAttributes.new(attrs)
+        Api::V20250Rc::PlacementAttributes.new(attrs)
       end
 
       it "returns status ok with data" do
@@ -83,16 +83,14 @@ describe Api::Trainees::SavePlacementResponse do
       end
 
       it "uses the serializer" do
-        expect(Api::V01::PlacementSerializer).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
+        expect(Api::V20250Rc::PlacementSerializer).to receive(:new).with(placement).and_return(double(as_hash: placement.attributes)).at_least(:once)
 
         subject
       end
     end
 
     context "with invalid params" do
-      let(:attributes) do
-        Api::V01::PlacementAttributes.new({})
-      end
+      let(:attributes) { Api::V20250Rc::PlacementAttributes.new({}) }
 
       it "returns status unprocessable entity with error response" do
         expect(subject[:status]).to be(:unprocessable_entity)
