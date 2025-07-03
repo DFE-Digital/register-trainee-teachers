@@ -226,7 +226,7 @@ module Api
         return if new_hesa_attributes.blank?
 
         updated_hesa_attributes = hesa_trainee_detail_attributes ||
-          V20250Rc::HesaTraineeDetailAttributes.new(trainee_attributes: self)
+          V20250Rc::HesaTraineeDetailAttributes.new({ trainee_attributes: self })
 
         updated_hesa_attributes.assign_attributes(new_hesa_attributes)
 

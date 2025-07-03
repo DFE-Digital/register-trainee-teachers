@@ -50,8 +50,8 @@ module Api
         )
       end
 
-      def initialize(*args, record_source: nil, **kwargs)
-        super(*args, **kwargs)
+      def initialize(attributes = {}, record_source: nil)
+        super(attributes)
         self.record_source = record_source
       end
     end
