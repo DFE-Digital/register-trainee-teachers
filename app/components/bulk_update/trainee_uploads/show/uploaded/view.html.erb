@@ -4,6 +4,10 @@
 </h1>
 
 <p class="govuk-body">
+  Your CSV headers have been checked.
+</p>
+
+<p class="govuk-body">
   You uploaded a CSV file with details of:
 </p>
 
@@ -21,7 +25,7 @@
     method: :post,
     url: bulk_update_add_trainees_imports_path(upload),
   ) do |f| %>
-    <%= f.govuk_submit "Process bulk upload" %>
+    <%= f.govuk_submit "Continue to check trainee details" %>
   <% end %>
 </p>
 

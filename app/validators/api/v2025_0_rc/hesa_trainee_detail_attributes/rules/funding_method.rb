@@ -51,8 +51,8 @@ module Api
             @funding_method_exists ||= ::FundingMethod.joins(allocation_subjects: :subject_specialisms).exists?(
               academic_cycle_id: academic_cycle.id,
               funding_type: funding_type,
-              training_route: training_route,
-              subject_specialisms: { name: course_subject_one },
+              training_route: training_route.is_a?(Api::V01::HesaMapper::Attributes::InvalidValue) ? nil : training_route,
+              subject_specialisms: { name: course_subject_one.is_a?(Api::V01::HesaMapper::Attributes::InvalidValue) ? nil : course_subject_one },
             )
           end
 

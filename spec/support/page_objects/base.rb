@@ -28,4 +28,34 @@ module PageObjects
 
     element :page_heading, ".govuk-heading-l"
   end
+
+  class ApiDocs < PageObjects::Base
+    set_url "/api-docs/"
+
+    element :page_heading, "h1"
+  end
+
+  class CsvDocs < PageObjects::Base
+    set_url "/csv-docs/"
+
+    element :page_heading, "h1"
+  end
+
+  class ServiceUpdates < PageObjects::Base
+    set_url "/service-updates"
+
+    element :page_heading, ".govuk-heading-xl"
+  end
+
+  class Guidance < PageObjects::Base
+    set_url "/guidance"
+
+    element :page_heading, ".govuk-heading-l"
+  end
+
+  class Cookies < PageObjects::Base
+    set_url "/cookies"
+
+    element :page_heading, ".govuk-heading-xl"
+  end
 end
