@@ -514,7 +514,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       let(:disability2) { "58" }
 
       it "does not create a trainee record and returns a 422 status with meaningful error message" do
-        post "/api/v0.1/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+        post "/api/v2025.0-rc/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
 
         expect(response).to have_http_status(:unprocessable_entity)
 

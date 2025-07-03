@@ -28,7 +28,7 @@
     Previously assigned 13 character HUSID are accepted.
   example: '"1210007145123456"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L72
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
 - field_name: First Names
   technical: first_names
   hesa_alignment: FNAMES
@@ -36,7 +36,7 @@
   format: 60 character maxlength
   example: '"Jane"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L62
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L62
 - field_name: Last Name
   technical: last_name
   hesa_alignment: SURNAME
@@ -44,7 +44,7 @@
   format: 60 character length
   example: '"Smith"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L63
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L63
 - field_name: Previous Last Name
   technical: previous_last_name
   hesa_alignment: PSURNAME
@@ -61,7 +61,7 @@
   format: YYYY-MM-DD
   example: '"1985-02-13"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L64
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L64
 - field_name: NI Number
   technical: ni_number
   hesa_alignment: NIN
@@ -85,7 +85,7 @@
 
     HESA code 99 ‘Not available’ imports into Register as ‘Gender not provided’
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L65
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L65
 - field_name: Email
   technical: email
   hesa_alignment: NQTEMAIL
@@ -96,7 +96,7 @@
   format: 80 character length
   example: '"jane.smith@example.com"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L87
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L87
 - field_name: Nationality
   technical: nationality
   hesa_alignment: NATION
@@ -204,7 +204,7 @@
   format: "[HESA ITT aim codes](https://www.hesa.ac.uk/collection/c24053/e/ittaim)"
   example: '"201" for example is the code to use if it is Professional status only'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L26
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L26
 - field_name: Training Route
   technical: training_route
   hesa_alignment: ENTRYRTE
@@ -231,7 +231,7 @@
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
   example: '"007" for example is the code used for a BA qualification'
   validation: Conditional - mandatory if ITT Aim is 202
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L41
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
   technical: course_subject_one
   hesa_alignment: SBJCA
@@ -282,7 +282,7 @@
   format: YYYY-MM-DD
   example: '"2024-09-01"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L67
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L67
 - field_name: ITT End Date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
@@ -290,7 +290,7 @@
   format: YYYY-MM-DD
   example: '"2025-03-11"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/trainee_attributes.rb#L68
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L68
 - field_name: Course Age Range
   technical: course_age_range
   hesa_alignment: ITTPHSC
@@ -308,7 +308,7 @@
     for Education (DfE) for the purpose of delivering initial teacher training programmes
     to achieve Qualified Teacher Status (QTS): Ages 7-14'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L29
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L29
 - field_name: Course Year
   technical: course_year
   hesa_alignment: YEARPRG
@@ -316,7 +316,7 @@
   format: "[HESA course year codes](https://www.hesa.ac.uk/collection/c24053/e/yearprg)"
   example: '"1" as an example of using the code for First year.'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L28
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
 - field_name: Lead Partner URN
   technical: lead_partner_urn
   hesa_alignment: SDLEAD
@@ -402,7 +402,7 @@
   format: "[HESA fund code codes](https://www.hesa.ac.uk/collection/c24053/e/fundcode)"
   example: '"2"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L30
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L30
 - field_name: Funding Method
   technical: funding_method
   hesa_alignment: BURSLEV
@@ -414,7 +414,7 @@
   format: "[HESA funding method codes](https://www.hesa.ac.uk/collection/c24053/e/burslev)"
   example: '"E"'
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/hesa_trainee_detail_attributes.rb#L31
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L31
 - field_name: Training Initiative
   technical: training_initiative
   hesa_alignment: INITIATIVES
@@ -460,7 +460,7 @@
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a UK degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L37
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L37
 - field_name: Non-UK degree type
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
@@ -468,7 +468,7 @@
   format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype) for degree type list of unique 3 digit numbers."
   example: '"051" for example is Bachelor of Arts (BA)'
   validation: Conditional - mandatory if specifying a non-UK degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L42
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
 - field_name: Degree subject
   technical: subject
   hesa_alignment: DEGSBJ
@@ -476,7 +476,7 @@
   format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
   example: 100048 for example is the design degree subject as part of a previous degree
   validation: Conditional - mandatory if specifying a degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L34
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L34
 - field_name: Degree grade
   technical: grade
   hesa_alignment: DEGCLSS
@@ -484,7 +484,7 @@
   format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
   example: '"01" for example is First class honours'
   validation: Conditional - mandatory if specifying a UK degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L38
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L38
 - field_name: Degree graduation year
   technical: graduation_year
   hesa_alignment: DEGENDDT
@@ -492,7 +492,7 @@
   format: This can be formatted as just the year, or as an ISO-8601 format date YYYY-MM-DD
   example: '"2012-07-31"'
   validation: Conditional - mandatory if specifying any degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L33
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L33
 - field_name: Awarding Institution
   technical: institution
   hesa_alignment: DEGEST
@@ -502,7 +502,7 @@
   format: "[HESA codes for degree establishment if a UK provider](https://www.hesa.ac.uk/collection/c24053/e/degest)"
   example: '"1101" for example is Hull College'
   validation: Conditional - mandatory if specifying a UK degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L36
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L36
 - field_name: Degree country
   technical: country
   hesa_alignment: DEGCTRY
@@ -514,4 +514,4 @@
     '"AU" is an example of using the previous qualification country code for
     Australia'
   validation: Conditional - mandatory if specifying a non-UK degree
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v0_1/degree_attributes.rb#L41
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L41
