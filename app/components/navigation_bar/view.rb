@@ -15,16 +15,16 @@ class NavigationBar::View < ViewComponent::Base
   end
 
   def item_link(item)
-    link_params = { class: "moj-primary-navigation__link" }
-    link_params.merge!(aria: { current: "page" }) if show_current_link?(item)
+    link_params = { class: "govuk-service-navigation__link" }
+    link_params.merge!(aria: { current: "true" }) if show_current_link?(item)
 
     govuk_link_to(item[:name], item[:url], **link_params)
   end
 
   def list_item_classes(item)
     [
-      "moj-primary-navigation__item",
-      ("moj-primary-navigation__align_right" if item[:align_right]),
+      "govuk-service-navigation__item #{show_current_link?(item) ? ' govuk-service-navigation__item--active' : nil}",
+      # ("moj-primary-navigation__align_right" if item[:align_right]),
     ].compact.join(" ")
   end
 
