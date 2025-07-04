@@ -62,7 +62,7 @@ module Trs
         context "trainee is deferred" do
           let(:trainee) { create(:trainee, :deferred) }
 
-          it "sets the correcrt status" do
+          it "sets the correct status" do
             expect(subject["status"]).to eq("Deferred")
           end
         end
@@ -78,16 +78,20 @@ module Trs
         context "trainee is recommended for award" do
           let(:trainee) { create(:trainee, :recommended_for_award) }
 
-          it "sets the correcrt status" do
-            expect(subject["status"]).to eq("Awarded")
+          it "sets the correct status" do
+            expect(subject["status"]).to eq("Holds")
           end
         end
 
         context "trainee is awarded" do
           let(:trainee) { create(:trainee, :awarded) }
 
+          it "sets the correct status" do
+            expect(subject["status"]).to eq("Holds")
+          end
+
           it "includes awarded date" do
-            expect(subject["awardedDate"]).to eq(trainee.awarded_at.to_date.iso8601)
+            expect(subject["holdsFrom"]).to eq(trainee.awarded_at.to_date.iso8601)
           end
         end
 
@@ -95,7 +99,7 @@ module Trs
           let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
 
           it "sets appropriate route type ID" do
-            expect(subject["routeTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["provider_led_postgrad"])
+            expect(subject["routeToProfessionalStatusTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["provider_led_postgrad"])
           end
         end
 
@@ -106,8 +110,8 @@ module Trs
           it "uses a different route type ID than provider led postgrad" do
             provider_led_params = described_class.new(trainee: provider_led_trainee).params
 
-            expect(subject["routeTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["school_direct_tuition_fee"])
-            expect(subject["routeTypeId"]).not_to eq(provider_led_params["routeTypeId"])
+            expect(subject["routeToProfessionalStatusTypeId"]).to eq(CodeSets::Trs::ROUTE_TYPES["school_direct_tuition_fee"])
+            expect(subject["routeToProfessionalStatusTypeId"]).not_to eq(provider_led_params["routeToProfessionalStatusTypeId"])
           end
         end
 

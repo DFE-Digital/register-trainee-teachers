@@ -45,7 +45,7 @@ module Trs
     end
 
     def update_professional_status
-      Client.put("/v3/persons/#{trainee.trn}/professional-statuses/#{trainee.slug}", body: payload.to_json)
+      Client.put("/v3/persons/#{trainee.trn}/routes-to-professional-statuses/#{trainee.slug}", body: payload.to_json)
     rescue Client::HttpError => e
       # If the error indicates the status is already awarded, consider this a success
       if ignorable_error?(e.message)
