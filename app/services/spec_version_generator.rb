@@ -3,7 +3,7 @@
 class SpecVersionGenerator
   include ServicePattern
 
-  VERSION_FORMAT = /^v\d+\.\d+$/
+  VERSION_FORMAT = /^v\d+\.\d+(-\w+)?$/
 
   def initialize(old_version:, new_version:)
     validate_version_format(old_version)
@@ -46,13 +46,16 @@ private
   def generate_new_spec_content(content)
     new_content = content.dup
 
+    # Create version formats for different use cases
+    old_version_for_class = old_version.tr(".", "").gsub(/-(\w)/) { ::Regexp.last_match(1).upcase }.tr("v", "V") # v2025.0-rc -> V20250Rc
+    new_version_for_class = new_version.tr(".", "").gsub(/-(\w)/) { ::Regexp.last_match(1).upcase }.tr("v", "V") # v2026.0-rc -> V20260Rc
+
     replacements = {
-      old_version => new_version,                                                     # vx.x -> vy.y
-      old_version.tr("v", "V") => new_version.tr("v", "V"),                           # Vx.x -> Vy.y
-      old_version.tr(".", "_") => new_version.tr(".", "_"),                           # vx_x -> vy_y
-      old_version.tr(".", "_").tr("v", "V") => new_version.tr(".", "_").tr("v", "V"), # Vx_x -> Vy_y
-      old_version.tr(".", "") => new_version.tr(".", ""),                             # vxx -> vyy
-      old_version.tr(".", "").upcase => new_version.tr(".", "").upcase, # Vxx -> Vyy
+      old_version => new_version,                                                              # v2025.0-rc -> v2026.0-rc
+      old_version.tr("v", "V") => new_version.tr("v", "V"),                                    # V2025.0-rc -> V2026.0-rc
+      convert_version_to_dir(old_version) => convert_version_to_dir(new_version),              # v2025_0_rc -> v2026_0_rc
+      convert_version_to_dir(old_version).tr("v", "V") => convert_version_to_dir(new_version).tr("v", "V"), # V2025_0_rc -> V2026_0_rc
+      old_version_for_class => new_version_for_class, # V20250Rc -> V20260Rc
     }
 
     replacements.each do |old, new|
@@ -63,6 +66,6 @@ private
   end
 
   def convert_version_to_dir(version)
-    version.tr(".", "_")
+    version.tr(".-", "_")
   end
 end

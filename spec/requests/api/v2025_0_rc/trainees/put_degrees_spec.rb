@@ -112,7 +112,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(degree.uk_degree_uuid).to be_nil
 
           put(
-            "/api/v0.1/trainees/#{trainee.slug}/degrees/#{degree.slug}",
+            "/api/v2025.0-rc/trainees/#{trainee.slug}/degrees/#{degree.slug}",
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: {
               data: { uk_degree: },

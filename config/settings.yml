@@ -201,7 +201,7 @@ api:
   blacklist:
     ua: []
     ip: []
-  allowed_versions: [v0.1, v1.0-pre, v2025.0-rc]
+  allowed_versions: [v2025.0-rc]
   current_version: v2025.0-rc
 
 qualtrics:

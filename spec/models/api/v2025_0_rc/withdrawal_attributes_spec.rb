@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::V01::WithdrawalAttributes do
+RSpec.describe Api::V20250Rc::WithdrawalAttributes do
   let(:trainee) { create(:trainee, :trn_received) }
   let(:withdrawal_attributes) { described_class.new(trainee:) }
   let(:trainee_reason) { (WithdrawalReasons::TRAINEE_REASONS - WithdrawalReasons::PROVIDER_REASONS).first }
@@ -70,7 +70,7 @@ describe Api::V01::WithdrawalAttributes do
             it "is invalid" do
               subject.validate
               expect(subject.errors[:reasons]).to contain_exactly(
-                "Reason(s) selected are not valid for this trigger",
+                "entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger",
               )
             end
           end
@@ -100,7 +100,7 @@ describe Api::V01::WithdrawalAttributes do
             it "is invalid" do
               subject.validate
               expect(subject.errors[:reasons]).to contain_exactly(
-                "Reason(s) selected are not valid for this trigger",
+                "entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger",
               )
             end
           end
