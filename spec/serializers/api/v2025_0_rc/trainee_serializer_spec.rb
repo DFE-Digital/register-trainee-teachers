@@ -80,6 +80,8 @@ RSpec.describe Api::V20250Rc::TraineeSerializer do
         funding_method
         itt_qualification_aim
         state
+        new_name
+        new_time
       ]
     end
 

@@ -1831,6 +1831,11 @@
             "fieldPath": [
               "application_choice_id"
             ]
+          },
+          {
+            "fieldPath": [
+              "new_name"
+            ]
           }
         ]
       },
