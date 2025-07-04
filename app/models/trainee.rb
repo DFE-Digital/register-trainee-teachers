@@ -43,6 +43,8 @@
 #  last_name                       :text
 #  lead_partner_not_applicable     :boolean          default(FALSE)
 #  middle_names                    :text
+#  new_name                        :string
+#  new_time                        :datetime
 #  outcome_date                    :date
 #  placement_detail                :integer
 #  progress                        :jsonb
