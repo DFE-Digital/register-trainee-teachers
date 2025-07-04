@@ -2085,6 +2085,7 @@ en:
         api/v01/trainee_attributes:
           attributes:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
+            inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
         api/v20250_rc/trainee_attributes:
           attributes:
             itt_end_date:

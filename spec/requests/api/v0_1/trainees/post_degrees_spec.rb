@@ -202,7 +202,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
-            { "error" => "UnprocessableEntity", "message" => "Uk degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
+            { "error" => "UnprocessableEntity", "message" => "Uk degree has invalid reference data value of 'Bachelor of Arts'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}..." },
             { "error" => "UnprocessableEntity", "message" => "Grade can't be blank" },
           )
           expect(trainee.reload.degrees.count).to eq(0)
@@ -222,8 +222,8 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
 
           expect(response.parsed_body[:errors]).to contain_exactly(
             { "error" => "UnprocessableEntity", "message" => "Subject can't be blank" },
-            { "error" => "UnprocessableEntity", "message" => "Non uk degree has invalid reference data value of 'Bachelor of Arts'. Valid values are #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}." },
-            { "error" => "UnprocessableEntity", "message" => "Country has invalid reference data value of 'France'. Valid values are #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}." },
+            { "error" => "UnprocessableEntity", "message" => "Non uk degree has invalid reference data value of 'Bachelor of Arts'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}..." },
+            { "error" => "UnprocessableEntity", "message" => "Country has invalid reference data value of 'France'. Example values include #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}..." },
           )
           expect(trainee.reload.degrees.count).to eq(0)
         end
