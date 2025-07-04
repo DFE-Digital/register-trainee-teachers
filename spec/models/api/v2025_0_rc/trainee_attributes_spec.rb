@@ -356,6 +356,32 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           expect(subject.errors.full_messages).to include("trainee_start_date is invalid")
         end
       end
+
+      context "when in the future" do
+        before do
+          subject.trainee_start_date = 1.month.from_now.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("Trainee start date must be in the past")
+          expect(subject.errors.full_messages).to include("trainee_start_date Trainee start date must be in the past")
+        end
+      end
+
+      context "when too old" do
+        before do
+          subject.trainee_start_date = 11.years.ago.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("is too old")
+          expect(subject.errors.full_messages).to include("trainee_start_date is too old")
+        end
+      end
     end
   end
 
