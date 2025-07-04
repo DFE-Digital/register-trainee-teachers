@@ -69,6 +69,12 @@ Rails.application.routes.draw do
           end
         end
 
+        resources :censuses, path: "censuses", only: %i[index new create] do
+          collection do
+            get "confirmation", to: "censuses#confirmation"
+          end
+        end
+
         resources :claims_degrees, path: "claims-degrees", only: %i[index]
       end
     end

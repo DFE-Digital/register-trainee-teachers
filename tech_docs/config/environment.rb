@@ -1,4 +1,6 @@
+# frozen_string_literal: true
+
 lib = File.expand_path("../lib")
 app = File.expand_path("../../app", __dir__)
 
-$:.unshift lib, app
+$LOAD_PATH.unshift(lib, app)
