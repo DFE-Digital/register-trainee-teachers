@@ -67,6 +67,7 @@ module TeacherTrainingApi
 
         describe "store training route" do
           training_route_and_course_program_type_mapping = "training_route and course program type mapping"
+          training_route_and_funding_type_mapping = "training_route_and funding type mapping"
 
           shared_examples training_route_and_course_program_type_mapping do |recruitment_cycle_year, training_route, program_types|
             before do
@@ -85,6 +86,28 @@ module TeacherTrainingApi
             end
           end
 
+          shared_examples training_route_and_funding_type_mapping do |recruitment_cycle_year, funding_types, training_route, course_training_routes|
+            before do
+              allow(Settings).to receive(:current_recruitment_cycle_year).and_return(recruitment_cycle_year)
+            end
+
+            course_training_routes.each do |course_training_route|
+              funding_types.each do |funding_type|
+                context "course training route #{course_training_route} with funding type #{funding_type} is mapped to route #{training_route} for current recruitment cycle year #{recruitment_cycle_year}" do
+                  let(:course_attributes) { { funding_type: funding_type, training_route: course_training_route } }
+
+                  it "stores training route" do
+                    subject
+                    expect(course.route).to eq(training_route)
+                  end
+                end
+              end
+            end
+          end
+
+          it_behaves_like training_route_and_funding_type_mapping, 2025, ["salaried"], "school_direct_salaried", ["postgraduate_salaried"]
+          it_behaves_like training_route_and_funding_type_mapping, 2025, %w[fee apprenticeship salaried], "provider_led_postgrad", ["postgraduate_fee_funded"]
+          it_behaves_like training_route_and_funding_type_mapping, 2025, ["apprenticeship"], "pg_teaching_apprenticeship", ["postgraduate_salaried"]
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "school_direct_salaried", %w[scitt_salaried_programme scitt_salaried_programme higher_education_salaried_programme]
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "provider_led_postgrad", %w[scitt_programme scitt_programme higher_education_programme]
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "pg_teaching_apprenticeship", ["pg_teaching_apprenticeship"]
