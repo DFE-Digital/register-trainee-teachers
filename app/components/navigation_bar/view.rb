@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class NavigationBar::View < ViewComponent::Base
-  attr_reader :items, :current_path, :current_user
+  attr_reader :service_name, :items, :current_path, :current_user
 
   def initialize(items:, current_path:, current_user: {}, render_without_current_user: false)
+    @service_name = I18n.t("service_name")
     @items = items.compact
     @current_path = current_path
     @current_user = current_user
