@@ -164,3 +164,9 @@ body:not(.js-enabled) .app-js-only {
 .app--register-interim-rebranded .govuk-header__logo {
   width: 60%;
 }
+
+.app-service-navigation__align_right {
+  @include govuk-media-query($from: tablet) {
+    float: right;
+  }
+}
