@@ -1033,6 +1033,15 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       end
     end
 
+    context "itt_start_date is in the future" do
+      let(:params) { { data: data.merge({ itt_start_date: 1.month.from_now.iso8601, itt_end_date: 2.months.from_now.iso8601 }) } }
+
+      it "return status code 422 with a meaningful error message" do
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.parsed_body["errors"]).to include("itt_start_date ITT start date must be in the past")
+      end
+    end
+
     context "when course_age_range is empty" do
       let(:params) { { data: } }
 

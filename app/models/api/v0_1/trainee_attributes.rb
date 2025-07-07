@@ -340,6 +340,13 @@ module Api
       def validate_itt_start_and_end_dates
         if itt_start_date.present? && !valid_date_string?(itt_start_date)
           errors.add(:itt_start_date, :invalid)
+        elsif itt_start_date.present?
+          start_date = itt_start_date.is_a?(String) ? Date.parse(itt_start_date) : itt_start_date
+          if start_date < 10.years.ago
+            errors.add(:itt_start_date, :too_old)
+          elsif start_date.future?
+            errors.add(:itt_start_date, :future)
+          end
         end
 
         if itt_end_date.present? && !valid_date_string?(itt_end_date)
