@@ -24,7 +24,6 @@ class NavigationBar::View < ViewComponent::Base
   def list_item_classes(item)
     [
       "govuk-service-navigation__item #{show_current_link?(item) ? ' govuk-service-navigation__item--active' : nil}",
-      # ("moj-primary-navigation__align_right" if item[:align_right]),
     ].compact.join(" ")
   end
 
