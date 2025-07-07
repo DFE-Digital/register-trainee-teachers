@@ -330,9 +330,7 @@ module Api
         end
 
         start_date = trainee_start_date.is_a?(String) ? Date.parse(trainee_start_date) : trainee_start_date
-        if start_date < 10.years.ago
-          errors.add(:trainee_start_date, :too_old)
-        elsif start_date.future?
+        if start_date.future?
           errors.add(:trainee_start_date, :future)
         end
       end
@@ -342,9 +340,7 @@ module Api
           errors.add(:itt_start_date, :invalid)
         elsif itt_start_date.present?
           start_date = itt_start_date.is_a?(String) ? Date.parse(itt_start_date) : itt_start_date
-          if start_date < 10.years.ago
-            errors.add(:itt_start_date, :too_old)
-          elsif start_date.future?
+          if start_date.future?
             errors.add(:itt_start_date, :future)
           end
         end

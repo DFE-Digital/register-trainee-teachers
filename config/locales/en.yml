@@ -2091,7 +2091,6 @@ en:
               future: Trainee start date must be in the past
             itt_start_date:
               future: ITT start date must be in the past
-              too_old: Cannot be more than 10 years in the past
             itt_end_date:
               api:
                 before_or_same_as_start_date: must be after itt_start_date
