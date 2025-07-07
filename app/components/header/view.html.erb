@@ -27,22 +27,5 @@
         </svg>
       </a>
     </div>
-
-    <% if items.present? %>
-      <div class="<%= header_class %>">
-        <nav class="govuk-header__navigation" aria-label="Account menu">
-          <button type="button" class="govuk-header__menu-button govuk-js-header-toggle app-js-only" aria-controls="navigation" aria-label="Show or hide navigation menu" data-module="govuk-button">
-            Menu
-          </button>
-          <ul id="navigation" class="govuk-header__navigation-list govuk-header__navigation--end">
-            <% items.each do |item| %>
-              <li class="govuk-header__navigation-item">
-                <%= govuk_link_to(item[:name], item[:url], class: "govuk-header__link") %>
-              </li>
-            <% end %>
-          </ul>
-        </nav>
-      </div>
-    <% end %>
   </div>
 </header>
