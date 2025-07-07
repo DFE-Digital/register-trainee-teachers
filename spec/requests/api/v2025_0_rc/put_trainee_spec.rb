@@ -378,7 +378,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(response.parsed_body).to have_key("errors")
-      expect(response.parsed_body["errors"]).to include("Trainee start date must be in the past")
+      expect(response.parsed_body["errors"]).to include("trainee_start_date Trainee start date must be in the past")
     end
 
     context "with lead_partner_and_employing_school_attributes" do
