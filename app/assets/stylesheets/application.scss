@@ -165,8 +165,12 @@ body:not(.js-enabled) .app-js-only {
   width: 60%;
 }
 
+.app-service-navigation__wrapper {
+  width: 100%;
+}
+
 .app-service-navigation__align_right {
   @include govuk-media-query($from: tablet) {
-    float: right;
+    margin-left: auto;
   }
 }
