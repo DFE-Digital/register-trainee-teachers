@@ -39,7 +39,7 @@ en:
   header:
     items:
       sign_out: Sign out
-      system_admin: Support for Register
+      system_admin: Support
       organisation_settings: Organisation settings
   contact_details:
     view:
