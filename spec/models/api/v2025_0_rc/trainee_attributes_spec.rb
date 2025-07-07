@@ -322,8 +322,8 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it do
           subject.validate
 
-          expect(subject.errors[:itt_start_date]).to contain_exactly("is too old")
-          expect(subject.errors.full_messages).to include("itt_start_date is too old")
+          expect(subject.errors[:itt_start_date]).to contain_exactly("Cannot be more than 10 years in the past")
+          expect(subject.errors.full_messages).to include("itt_start_date Cannot be more than 10 years in the past")
         end
       end
     end
@@ -404,8 +404,8 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it do
           subject.validate
 
-          expect(subject.errors[:trainee_start_date]).to contain_exactly("is too old")
-          expect(subject.errors.full_messages).to include("trainee_start_date is too old")
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("Cannot be more than 10 years in the past")
+          expect(subject.errors.full_messages).to include("trainee_start_date Cannot be more than 10 years in the past")
         end
       end
     end
