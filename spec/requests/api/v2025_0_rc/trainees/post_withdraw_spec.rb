@@ -191,7 +191,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           params: params.to_json,
         )
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body[:errors]).to contain_exactly({ "error" => "StateTransitionError", "message" => "It's not possible to perform this action while the trainee is in its current state" })
+        expect(response.parsed_body[:errors]).to contain_exactly({ "error" => "StateTransitionError", "message" => "It’s not possible to perform this action while the trainee is in its current state" })
       end
 
       it "did not change the trainee" do
