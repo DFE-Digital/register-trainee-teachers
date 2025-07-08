@@ -1,0 +1,38 @@
+<% page_title = "Census sign off your organisation’s new trainee data for the #{@current_academic_cycle_label} academic year" %>
+<%= render PageTitle::View.new(text: page_title, has_errors: @census_sign_off_form.errors.any?) %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render GovukComponent::BackLinkComponent.new(
+    text: "Reports",
+    href: reports_path,
+    ) %>
+<% end %>
+
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <%= register_form_with(model: @census_sign_off_form, url: reports_censuses_path) do |f| %>
+      <%= f.govuk_error_summary %>
+      <h1 class="govuk-heading-l">
+        <%= page_title %>
+      </h1>
+      <p class="govuk-body">
+        Once you’ve checked your data is correct, you can sign off on behalf of your organisation.
+      </p>
+
+      <%= govuk_summary_card(title: "Census sign off information") do |card|
+            card.with_summary_list(rows: [
+            { key: { text: "Provider name" }, value: { text: current_user.organisation.name } },
+            { key: { text: "UKPRN" }, value: { text: @current_user.organisation.ukprn } },
+            { key: { text: "Approver name" }, value: { text: @current_user.name } },
+          ],)
+          end %>
+
+      <%= f.govuk_check_boxes_fieldset(:sign_off, multiple: false, legend: { text: "Confirm your organisation’s new trainee data is in Register, you’ve checked it’s correct and you’re signing it off", size: "s" }) do %>
+        <%= f.govuk_check_box(:sign_off, "confirmed", "not_confirmed", multiple: false, link_errors: true, label: { text: "Yes, the trainee data is correct to the best of my knowledge" }) %>
+      <% end %>
+
+      <%= f.govuk_submit("Sign off census") %>
+    <%- end -%>
+  </div>
+</div>

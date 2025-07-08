@@ -24,6 +24,8 @@ class HesaCodeChecker
       puts("| #{hesa_code.code} | #{hesa_code.label} | #{register_value || 'NOT FOUND'} |")
     end
 
+    puts("\n")
+
     if @missing.any?
       puts("### Missing mappings 🚨")
 
@@ -34,7 +36,6 @@ class HesaCodeChecker
         puts("| #{hesa_code.code} | #{hesa_code.label} |")
       end
     else
-      puts("\n")
       puts("*All HESA codes are mapped!* 🎉")
     end
     puts("\n\n")
@@ -46,7 +47,7 @@ namespace :reference_data do
   task all: %i[
     ethnicities
     sexes
-    countries
+    nationalities
     disabilities
     itt_aims
     itt_qualification_aims
@@ -78,10 +79,10 @@ namespace :reference_data do
     end
   end
 
-  desc "HESA countries reference data checks"
-  task countries: :environment do
-    HesaCodeChecker.new.call("countries") do |hesa_code|
-      Hesa::CodeSets::Countries::MAPPING[hesa_code.code]
+  desc "HESA nationalities reference data checks"
+  task nationalities: :environment do
+    HesaCodeChecker.new.call("nationalities") do |hesa_code|
+      RecruitsApi::CodeSets::Nationalities::MAPPING[hesa_code.code]
     end
   end
 

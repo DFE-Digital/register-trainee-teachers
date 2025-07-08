@@ -1,0 +1,10 @@
+
+<% if count.zero? %>
+  <%= govuk_inset_text do %>
+    <%= no_record_text %>
+  <% end %>
+<% end %>
+
+<p class="govuk-body">
+  <%= govuk_link_to(link_label, href) %>
+</p>

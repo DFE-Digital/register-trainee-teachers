@@ -168,6 +168,7 @@ govuk_notify:
     succeeded_template_id: 8ff06d35-8960-462e-aa6e-9942a7fd713d
     failed_template_id: 3344fd46-7f33-4762-a350-d02a88f863b0
   performance_profile_submitted_email_template_id: 21879652-3975-4a0a-b0b4-9fe6a5353090
+  census_submitted_email_template_id: 5a610b43-a36e-4e4c-8ab0-e7e9d158f440
 
 google_tag_manager:
   tracking_id: GTM-PD8MFNL

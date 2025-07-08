@@ -1,0 +1,5 @@
+<%= govuk_notification_banner(title_text: "Important") do |banner| %>
+  <% banner.with_heading(text: banner_heading_text) %>
+
+  <%= govuk_link_to("Sign off your census trainee data", reports_censuses_path) %> by the <%= deadline_date %> deadline.
+<% end %>
