@@ -242,17 +242,17 @@ weight: 1
       </p>
       <p class="govuk-body">
         The qualification aim of the trainee’s course. 
-        `007`	BA
-        `008`	BA (Hons)
-        `001`	BEd
-        `002`	BEd (Hons)
-        `003`	BSc
-        `004`	BSc (Hons)
-        `020`	Postgraduate Certificate in Education
-        `021`	Postgraduate Diploma in Education
-        `028`	Undergraduate Master of Teaching
-        `031`	Professional Graduate Certificate in Education
-        `032`	Masters, not by research.
+        <li><code>007</code> - BA </li>
+        <li><code>008</code> - BA (Hons) </li>
+        <li><code>001</code> - BEd </li>
+        <li><code>002</code> - BEd (Hons) </li>
+        <li><code>003</code> - BSc </li>
+        <li><code>004</code> - BSc (Hons) </li>
+        <li><code>020</code> - Postgraduate Certificate in Education </li>
+        <li><code>021</code> - Postgraduate Diploma in Educatio </li>
+        <li><code>028</code> - Undergraduate Master of Teaching </li>
+        <li><code>031</code> - Professional Graduate Certificate in Education </li>
+        <li><code>032</code> - Masters, not by research </li>
       </p>
       <p class="govuk-body">
         Example: <code>004</code>
