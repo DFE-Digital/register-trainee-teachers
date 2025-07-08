@@ -87,6 +87,8 @@ ROUTE_INITIATIVES = {
 
 TRAINING_ROUTES_FOR_COURSE = TRAINING_ROUTES.select { |training_route|
   TRAINING_ROUTE_ENUMS.values_at(:provider_led_postgrad,
+                                 :provider_led_undergrad,
+                                 :teacher_degree_apprenticeship,
                                  :school_direct_tuition_fee,
                                  :school_direct_salaried,
                                  :pg_teaching_apprenticeship).include?(training_route)

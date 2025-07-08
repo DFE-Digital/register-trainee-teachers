@@ -106,11 +106,12 @@ module TeacherTrainingApi
     end
 
     def for_2025_routes
-      return { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :school_direct_salaried } if funding_type == "salaried"
-
-      return { postgraduate_fee_funded: :provider_led_postgrad, postgraduate_salaried: :pg_teaching_apprenticeship } if funding_type == "apprenticeship"
-
-      { postgraduate_fee_funded: :provider_led_postgrad }
+      {
+        fee_funded_initial_teacher_training: "provider_led_#{degree_type}".to_sym,
+        school_direct_salaried: :school_direct_salaried,
+        postgraduate_teacher_apprenticeship: :pg_teaching_apprenticeship,
+        teacher_degree_apprenticeship: :teacher_degree_apprenticeship,
+      }
     end
 
     def routes
@@ -123,7 +124,7 @@ module TeacherTrainingApi
     def route
       return routes[course_attributes[:program_type].to_sym] if Settings.current_recruitment_cycle_year < 2025
 
-      routes[course_attributes[:training_route]&.to_sym]
+      routes[course_attributes[:training_route].to_sym]
     end
 
     def accredited_body_code
@@ -135,8 +136,8 @@ module TeacherTrainingApi
       provider[:attributes][:code] if provider
     end
 
-    def funding_type
-      course_attributes[:funding_type]
+    def degree_type
+      course_attributes[:degree_type].chomp("uate")
     end
 
     def course
