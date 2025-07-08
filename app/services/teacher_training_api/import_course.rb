@@ -107,7 +107,7 @@ module TeacherTrainingApi
 
     def for_2025_routes
       {
-        fee_funded_initial_teacher_training: "provider_led_#{degree_type}".to_sym,
+        fee_funded_initial_teacher_training: :"provider_led_#{degree_type}",
         school_direct_salaried: :school_direct_salaried,
         postgraduate_teacher_apprenticeship: :pg_teaching_apprenticeship,
         teacher_degree_apprenticeship: :teacher_degree_apprenticeship,
