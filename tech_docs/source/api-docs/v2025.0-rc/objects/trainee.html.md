@@ -440,7 +440,8 @@ weight: 1
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/fundcode">HESA fundability code field</a>
+        `2` = not eligible for student finance
+    `7` = eligible for student finance
       </p>
       <p class="govuk-body">
         Example: <code>7</code>
