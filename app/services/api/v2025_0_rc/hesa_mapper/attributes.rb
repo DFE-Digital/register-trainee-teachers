@@ -159,12 +159,6 @@ module Api
           params[:itt_end_date]
         end
 
-        # Is this been used?
-        #
-        def fundability
-          ::Hesa::CodeSets::FundCodes::MAPPING[params[:fund_code]]
-        end
-
         def trainee_start_date
           params[:trainee_start_date].presence || itt_start_date
         end

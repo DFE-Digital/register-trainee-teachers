@@ -50,6 +50,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:sex]).to contain_exactly("can't be blank")
+          expect(subject.all_errors).to eq(subject.errors)
         }
       end
 
