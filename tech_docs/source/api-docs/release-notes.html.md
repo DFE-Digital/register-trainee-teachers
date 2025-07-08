@@ -5,6 +5,25 @@ weight: 2
 
 # Release notes
 
+## v2025.0-rc — TBC July 2025
+
+**API Consolidation:** This release consolidates the Register API to a single supported version. 
+
+### Breaking Changes
+
+* **Removed support for all previous API versions** - v0.1 and v1.0-pre are no longer supported
+* The API now only supports v2025.0-rc
+* All legacy API endpoints and inheritance structures have been removed
+
+If you are currently using v0.1 or v1.0-pre, you must migrate to v2025.0-rc to continue using the API. Previous versions will return errors and are no longer accessible.
+
+### Other Changes
+
+* Consolidated API codebase by flattening inheritance structure
+* Removed legacy API documentation and OpenAPI specifications
+
+---
+
 ## v2025.0-rc — 13 May 2025
 
 Release candidate of the 2025.0 version of the Register API. This version is not
