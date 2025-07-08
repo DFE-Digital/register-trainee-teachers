@@ -397,8 +397,8 @@
   technical: fund_code
   hesa_alignment: FUNDCODE
   description:
-    This field indicates whether the student is counted as 'fundable',
-    i.e. 'eligible for funding' for the course by the appropriate funding council/body.
+    `2` = not eligible for student finance
+    `7` = eligible for student finance
   format: "[HESA fund code codes](https://www.hesa.ac.uk/collection/c24053/e/fundcode)"
   example: `2`
   validation: Mandatory
