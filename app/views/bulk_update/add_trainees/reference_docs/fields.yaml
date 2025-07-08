@@ -77,13 +77,15 @@
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
-  format: "[HESA sex codes](https://www.hesa.ac.uk/collection/c24053/e/sexid)"
+   '10'	Female
+   '11'	Male
+   '12'	Other
+   '96'	Information refused
+   '99'	Not available
+  format: 2 character length
   example: |-
     `10`
 
-    HESA code 96 ‘Information refused’ imports into Register as ‘Prefer not to say’
-
-    HESA code 99 ‘Not available’ imports into Register as ‘Gender not provided’
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L65
 - field_name: Email
@@ -202,7 +204,8 @@
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
   format: "[HESA ITT aim codes](https://www.hesa.ac.uk/collection/c24053/e/ittaim)"
-  example: `201` for example is the code to use if it is Professional status only'
+  example: `201`	Professional status only
+`202`	Both professional status and academic award
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L26
 - field_name: Training Route
@@ -229,7 +232,17 @@
     Training course and is intended to record the qualification that will be attained
     as a result of successful completion of studies.
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
-  example: `007` for example is the code used for a BA qualification'
+  example: `007`	BA
+`008`	BA (Hons)
+`001`	BEd
+`002`	BEd (Hons)
+`003`	BSc
+`004`	BSc (Hons)
+`020`	Postgraduate Certificate in Education
+`021`	Postgraduate Diploma in Education
+`028`	Undergraduate Master of Teaching
+`031`	Professional Graduate Certificate in Education
+`032`	Masters, not by research
   validation: Conditional - mandatory if ITT Aim is 202
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
