@@ -26,7 +26,7 @@
     Limited to 17 digit numbers.
 
     Previously assigned 13 character HUSID are accepted.
-  example: '"1210007145123456"'
+  example: 1210007145123456
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
 - field_name: First Names
@@ -34,7 +34,7 @@
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
   format: 60 character maxlength
-  example: '"Jane"'
+  example: Jane
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L62
 - field_name: Last Name
@@ -42,7 +42,7 @@
   hesa_alignment: SURNAME
   description: This field is the student’s family name.
   format: 60 character length
-  example: '"Smith"'
+  example: Smith
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L63
 - field_name: Previous Last Name
