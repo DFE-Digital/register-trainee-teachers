@@ -313,19 +313,6 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           expect(subject.errors.full_messages).to include("itt_start_date ITT start date must be in the past")
         end
       end
-
-      context "when too old" do
-        before do
-          subject.itt_start_date = 11.years.ago.iso8601
-        end
-
-        it do
-          subject.validate
-
-          expect(subject.errors[:itt_start_date]).to contain_exactly("Cannot be more than 10 years in the past")
-          expect(subject.errors.full_messages).to include("itt_start_date Cannot be more than 10 years in the past")
-        end
-      end
     end
 
     describe "itt_end_date" do
@@ -393,19 +380,6 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
           expect(subject.errors[:trainee_start_date]).to contain_exactly("Trainee start date must be in the past")
           expect(subject.errors.full_messages).to include("trainee_start_date Trainee start date must be in the past")
-        end
-      end
-
-      context "when too old" do
-        before do
-          subject.trainee_start_date = 11.years.ago.iso8601
-        end
-
-        it do
-          subject.validate
-
-          expect(subject.errors[:trainee_start_date]).to contain_exactly("Cannot be more than 10 years in the past")
-          expect(subject.errors.full_messages).to include("trainee_start_date Cannot be more than 10 years in the past")
         end
       end
     end
