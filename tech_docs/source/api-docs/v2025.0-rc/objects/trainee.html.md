@@ -111,7 +111,7 @@ weight: 1
         string, required
       </p>
       <p class="govuk-body">
-        The date of birth of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/birthdte">HESA date of birth field</a>
+        This field records the date of birth of the student.
       </p>
       <p class="govuk-body">
         Example: <code>2000-01-01</code>
@@ -125,7 +125,12 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The sex of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sexid">HESA sex identifier field</a>
+        The sex of the trainee. 
+        '10'	Female
+        '11'	Male
+        '12'	Other
+        '96'	Information refused
+        '99'	Not available
       </p>
       <p class="govuk-body">
         Example: <code>10</code>
@@ -195,7 +200,8 @@ weight: 1
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ittaim">HESA ITT qualification aim field</a>
+        The general qualification aim of the course in terms of qualifications and professional statuses. '201'	Professional status only
+'202'	Both professional status and academic award>
       </p>
       <p class="govuk-body">
         Example: <code>201</code>
@@ -235,7 +241,18 @@ weight: 1
         string (limited to 3 characters), required if <code>itt_aim</code> is <code>202</code>
       </p>
       <p class="govuk-body">
-        The qualification aim of the trainee’s course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/qlaim">HESA qualification aim field</a>.
+        The qualification aim of the trainee’s course. 
+        `007`	BA
+        `008`	BA (Hons)
+        `001`	BEd
+        `002`	BEd (Hons)
+        `003`	BSc
+        `004`	BSc (Hons)
+        `020`	Postgraduate Certificate in Education
+        `021`	Postgraduate Diploma in Education
+        `028`	Undergraduate Master of Teaching
+        `031`	Professional Graduate Certificate in Education
+        `032`	Masters, not by research.
       </p>
       <p class="govuk-body">
         Example: <code>004</code>
