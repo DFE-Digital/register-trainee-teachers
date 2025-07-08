@@ -280,7 +280,12 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        This indicates whether the trainee’s course is full-time or part-time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/mode">HESA mode of study field</a>.
+        This indicates whether the trainee’s course is full-time or part-time.  
+        <li><code>01</code> - Full-time according to funding council definitions</li>
+        <li><code>02</code> - Other full-time</li>
+        <li><code>31</code> - Part-time</li>
+        <li><code>63</code> - Dormant - previously full-time</li>
+        <li><code>64</code> - Dormant - previously part-time</li>.
       </p>
       <p class="govuk-body">
         Example: <code>01</code>
@@ -294,7 +299,7 @@ weight: 1
         string, required (must not be more than one year in the future)
       </p>
       <p class="govuk-body">
-        The start date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
+        The start date of the Initial Teacher Training part of their course.
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -308,7 +313,7 @@ weight: 1
         string, required
       </p>
       <p class="govuk-body">
-        The end date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
+        The end date of the Initial Teacher Training part of their course.
       </p>
       <p class="govuk-body">
         Example: <code>2025-03-11</code>
@@ -322,7 +327,11 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The year number of the course that the trainee is currently studying. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/yearprg">HESA year of course field</a>
+        The year number of the course that the trainee is currently studying.  
+        <li><code>0</code> - Foundation year</li>
+        <li><code>1</code> - First year</li>
+        <li><code>2</code> - Second year</li>
+        <li><code>3</code> - Third year</li>>
       </p>
       <p class="govuk-body">
         Example: <code>2</code>
@@ -386,6 +395,9 @@ weight: 1
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the lead partner for the trainee.
+        <li><code>900000</code> - Establishment outside England and Wales</li>
+        <li><code>900020</code> - Other establishment without a URN</li>
+        <li><code>900030</code> - Not available</li>
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
