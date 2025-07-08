@@ -233,16 +233,16 @@
     as a result of successful completion of studies.
   format: "[HESA qualification aim reference codes](https://www.hesa.ac.uk/collection/c24053/e/qlaim)"
   example: `007`	BA
-`008`	BA (Hons)
-`001`	BEd
-`002`	BEd (Hons)
-`003`	BSc
-`004`	BSc (Hons)
-`020`	Postgraduate Certificate in Education
-`021`	Postgraduate Diploma in Education
-`028`	Undergraduate Master of Teaching
-`031`	Professional Graduate Certificate in Education
-`032`	Masters, not by research
+  - `008` - BA (Hons)
+  - `001` - BEd
+  - `002` - BEd (Hons)
+  - `003` - BSc
+  - `004` - BSc (Hons)
+  - `020` - Postgraduate Certificate in Education
+  - `021` - Postgraduate Diploma in Education
+  - `028` - Undergraduate Master of Teaching
+  - `031` - Professional Graduate Certificate in Education
+  - `032` - Masters, not by research
   validation: Conditional - mandatory if ITT Aim is 202
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
@@ -282,7 +282,12 @@
   description:
     This field indicates the method by which a student is being taught
     their course.
-  format: "[HESA study mode codes](https://www.hesa.ac.uk/collection/c24053/e/mode)"
+  format:  
+  - `01` - Full-time according to funding council definitions
+  - `02` - Other full-time
+  - `31` - Part-time
+  - `63` - Dormant - previously full-time
+  - `64` - Dormant - previously part-time
   example: `01`
   validation: Conditional - mandatory when the training route is not `assessment_only` or `early_years_assessment_only`
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
@@ -326,7 +331,11 @@
   technical: course_year
   hesa_alignment: YEARPRG
   description: The year number of the course that the trainee is currently studying.
-  format: "[HESA course year codes](https://www.hesa.ac.uk/collection/c24053/e/yearprg)"
+  format: 
+  - `0` - Foundation year
+  - `1` - First year
+  - `2` - Second year
+  - `3` - Third year
   example: `1` as an example of using the code for First year.'
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L28
@@ -338,7 +347,9 @@
   example: |-
     `115795`
 
-    Use code `900020` if the lead partner does not have a URN
+  - `900000` - Establishment outside England and Wales
+- `900020` - Other establishment without a URN
+- `900030` - Not available
   validation: Optional
 - field_name: Employing School URN
   technical: employing_school_urn
