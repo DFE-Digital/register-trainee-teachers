@@ -301,9 +301,21 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         end
       end
 
-      context "when in the future" do
+      context "when in the future but within next year" do
         before do
           subject.itt_start_date = 1.month.from_now.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_start_date]).to be_blank
+        end
+      end
+
+      context "when in the future beyond next year" do
+        before do
+          subject.itt_start_date = (Date.current.year + 2).beginning_of_year.iso8601
         end
 
         it do
