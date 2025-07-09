@@ -2087,6 +2087,10 @@ en:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
         api/v20250_rc/trainee_attributes:
           attributes:
+            trainee_start_date:
+              future: must be in the past
+            itt_start_date:
+              future: must not be more than one year in the future
             itt_end_date:
               api:
                 before_or_same_as_start_date: must be after itt_start_date
