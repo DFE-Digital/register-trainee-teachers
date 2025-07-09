@@ -111,7 +111,7 @@ weight: 3
         string, required
       </p>
       <p class="govuk-body">
-        The year of graduation. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/degenddt">HESA degree end date field</a>
+        The year of graduation. 
       </p>
       <p class="govuk-body">
         Example: <code>2012-07-31</code>
