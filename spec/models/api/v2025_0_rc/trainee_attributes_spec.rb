@@ -321,8 +321,8 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         it do
           subject.validate
 
-          expect(subject.errors[:itt_start_date]).to contain_exactly("must be in the past")
-          expect(subject.errors.full_messages).to include("itt_start_date must be in the past")
+          expect(subject.errors[:itt_start_date]).to contain_exactly("must not be more than one year in the future")
+          expect(subject.errors.full_messages).to include("itt_start_date must not be more than one year in the future")
         end
       end
     end
