@@ -317,7 +317,7 @@
   format: |-
     "[HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)"
 
-    The following HESA values are invalid for this field:
+    The following values are invalid for this field:
 
       - `99801` - Teacher training qualification: Further education/Higher education
       - `99803` - Teacher training qualification: Other
@@ -361,7 +361,9 @@
   example: |-
     "115795"
 
-    Use code `900020` if the school does not have a URN
+    - `900000` - Establishment outside England and Wales
+- `900020` - Other establishment without a URN
+- `900030` - Not available
   validation: Optional
 - field_name: Trainee Start Date
   technical: trainee_start_date
@@ -393,9 +395,11 @@
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
   example: |-
-    '"115795"'
+    `115795`
 
-    Use `900020` if the organisation does not have a URN.
+    - `900000` - Establishment outside England and Wales
+- `900020` - Other establishment without a URN
+- `900030` - Not available
   validation: Optional
 - field_name: Placement 2 URN
   technical: placement_urn2
@@ -405,7 +409,9 @@
   example: |-
     `115795`
 
-    Use `900020` if the organisation does not have a URN.
+    - `900000` - Establishment outside England and Wales
+- `900020` - Other establishment without a URN
+- `900030` - Not available
   validation: Optional
 - field_name: Placement 3 URN
   technical: placement_urn3
@@ -415,15 +421,17 @@
   example: |-
     `115795`
 
-    Use `900020` if the organisation does not have a URN.
+    - `900000` - Establishment outside England and Wales
+- `900020` - Other establishment without a URN
+- `900030` - Not available
   validation: Optional
 - field_name: Fund Code
   technical: fund_code
   hesa_alignment: FUNDCODE
-  description:
-    `2` = not eligible for student finance
+  description: This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body.
+   
+  format:  `2` = not eligible for student finance
     `7` = eligible for student finance
-  format: "[HESA fund code codes](https://www.hesa.ac.uk/collection/c24053/e/fundcode)"
   example: `2`
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L30
@@ -435,7 +443,13 @@
     levels will vary according to the level of study of the student, their degree
     classification if applicable and the subject specialism in which they wish to
     train to teach.
-  format: "[HESA funding method codes](https://www.hesa.ac.uk/collection/c24053/e/burslev)"
+    
+  format: - `4` - Scholarship
+- `6` - No bursary, scholarship or grant awarded
+- `B` - Undergraduate bursary
+- `C` - Veteran Teaching undergraduate bursary
+- `D` - Postgraduate bursary
+- `E` - Grant
   example: `E`
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L31
@@ -446,15 +460,19 @@
     This field identifies students who are part of a specific scheme that
     is to be monitored independently. Valid entries will change from year to year
     to reflect current schemes.
-  format: "[HESA training initiative codes](https://www.hesa.ac.uk/collection/c24053/e/initiatives)"
+  format:  - `001` - Abridged ITT course
+- `009` - Maths and Physics Chairs Programme
+- `011` - Primary mathematics specialist
+- `019` - Additional ITT place for PE with a priority subject
+- `025` - Transition to Teach
+- `026` - Now Teach
+- `036` - International relocation payment
+
+    The following codes are not mapped to Register:
+ `001``011``019`
   example: |-
-    `026` is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
+`026`
 
-    The following HESA codes are not mapped to Register:
-
-      - `001` - Abridged ITT course
-      - `011` - Primary with mathematics specialist
-      - `019` - Additional ITT place for PE with a priority subject
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
 - field_name: Additional Training Initiative
@@ -462,15 +480,19 @@
   hesa_alignment: INITIATIVES
   description: The secondary training initiative that the trainee is on.
   format: |-
-    [HESA training initiative codes](https://www.hesa.ac.uk/collection/c24053/e/initiatives)
+     - `001` - Abridged ITT course
+- `009` - Maths and Physics Chairs Programme
+- `011` - Primary mathematics specialist
+- `019` - Additional ITT place for PE with a priority subject
+- `025` - Transition to Teach
+- `026` - Now Teach
+- `036` - International relocation payment
+
+    The following codes are not mapped to Register:
+ `001``011``019`
   example: |-
-    `026` is an example of using the code for Now Teach HESA allows you to add 2 initiatives, but Register will only import the first one
-
-    The following HESA codes are not mapped to Register:
-
-      - `001` - Abridged ITT course
-      - `011` - Primary with mathematics specialist
-      - `019` - Additional ITT place for PE with a priority subject
+    `026`
+   
   validation: Optional
 - field_name: UK degree type
   technical: uk_degree
@@ -513,7 +535,7 @@
   technical: graduation_year
   hesa_alignment: DEGENDDT
   description: The year of graduation.
-  format: This can be formatted as just the year, or as an ISO-8601 format date YYYY-MM-DD
+  format: YYYY-MM-DD
   example: `2012-07-31`
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L33
