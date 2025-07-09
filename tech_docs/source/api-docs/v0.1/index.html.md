@@ -1,6 +1,6 @@
 ---
 title: v0.1 (Removed)
-weight: 1
+weight: 6
 ---
 
 # v0.1 - API Version Removed
@@ -9,7 +9,7 @@ This API version has been **permanently removed** and is no longer supported.
 
 ## What happened?
 
-API version v0.1 was discontinued and all its documentation has been removed. This version is no longer available for use.
+API version v0.1 was discontinued on **10th June 2025** and all its documentation has been removed. This version is no longer available for use.
 
 ## What should I do?
 
