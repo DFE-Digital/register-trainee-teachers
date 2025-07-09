@@ -8,7 +8,6 @@ module Api
       validate :course_subject_two_valid, if: :require_subject?
       validate :course_subject_three_valid, if: :require_subject?
       validate :itt_end_date_valid
-      validate :validate_itt_start_and_end_dates
 
       validates :provider_trainee_id, length: { maximum: 50 }
       validates :application_choice_id, length: { maximum: 7 }
@@ -74,7 +73,7 @@ module Api
           errors.add(:itt_start_date, :invalid)
         elsif itt_start_date.present?
           start_date = itt_start_date.is_a?(String) ? Date.parse(itt_start_date) : itt_start_date
-          if start_date.year > Time.zone.now.year.next
+          if start_date.year > next_year
             errors.add(:itt_start_date, :future)
           end
         end
@@ -82,6 +81,10 @@ module Api
         if itt_end_date.present? && !valid_date_string?(itt_end_date)
           errors.add(:itt_end_date, :invalid)
         end
+      end
+
+      def next_year
+        Time.zone.now.year.next
       end
     end
   end

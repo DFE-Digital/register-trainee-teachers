@@ -315,7 +315,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
       context "when in the future beyond next year" do
         before do
-          subject.itt_start_date = (Date.current.year + 2).beginning_of_year.iso8601
+          subject.itt_start_date = 2.years.from_now.beginning_of_year.iso8601
         end
 
         it do

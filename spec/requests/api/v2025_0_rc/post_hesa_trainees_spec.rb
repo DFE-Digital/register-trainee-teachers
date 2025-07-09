@@ -1034,7 +1034,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     end
 
     context "itt_start_date is in the future but within next year" do
-      let(:params) { { data: data.merge({ itt_start_date: 1.month.from_now.iso8601, itt_end_date: 2.months.from_now.iso8601 }) } }
+      let(:params) { { data: data.merge({ itt_start_date: 1.month.from_now.iso8601, itt_end_date: 2.months.from_now.iso8601, trainee_start_date: Date.current.iso8601 }) } }
 
       it "creates a successful response" do
         expect(response).to have_http_status(:created)
@@ -1042,7 +1042,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     end
 
     context "itt_start_date is beyond next year" do
-      let(:params) { { data: data.merge({ itt_start_date: (Date.current.year + 2).beginning_of_year.iso8601, itt_end_date: (Date.current.year + 2).beginning_of_year.advance(months: 6).iso8601 }) } }
+      let(:params) { { data: data.merge({ itt_start_date: 2.years.from_now.beginning_of_year.iso8601, itt_end_date: 2.years.from_now.beginning_of_year.advance(months: 6).iso8601, trainee_start_date: Date.current.iso8601 }) } }
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
