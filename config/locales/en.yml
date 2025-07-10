@@ -2084,15 +2084,14 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/v01/trainee_attributes:
-          attributes:
-            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
+
         api/v20250_rc/trainee_attributes:
           attributes:
             trainee_start_date:
               future: must be in the past
             itt_start_date:
               future: must not be more than one year in the future
+            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             itt_end_date:
               api:
                 before_or_same_as_start_date: must be after itt_start_date
@@ -2111,18 +2110,20 @@ en:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
         api/v20250_rc/withdrawal_attributes:
           attributes:
-            withdraw_date:
-              not_before_itt_start_date: must be after itt_start_date
             reasons:
+              inclusion: Choose one or more reasons why the trainee withdrew from the course
               invalid: entered not valid for selected trigger eg unacceptable_behaviour for a trainee trigger
+            withdraw_date:
+              blank: Choose a withdrawal date
+              invalid: Choose a valid withdrawal date
+              not_before_itt_start_date: must be after itt_start_date
+            trigger:
+              blank: Please select an option for the trigger. Valid options are provider or trainee.
+            future_interest:
+              blank: Please select an option. Valid options are yes, no and unknown.
+            another_reason:
+              blank: Enter another reason
         api/v20250_rc/hesa_trainee_detail_attributes:
-          attributes:
-            itt_qualification_aim:
-              api:
-                blank: must be entered if 202 selected for itt_aim
-              csv:
-                blank: must be entered if 202 selected for ITT Aim
-        api/v01/hesa_trainee_detail_attributes:
           attributes:
             fund_code:
               ineligible: &ineligible is not valid for this trainee
@@ -2130,24 +2131,16 @@ en:
               ineligible: "training route '%{training_route}' and subject code '%{subject}' are not eligible for '%{funding_type}' in academic cycle '%{academic_cycle}'"
             itt_aim:
               ineligible: *ineligible
-        api/v01/withdrawal_attributes:
-          attributes:
-            reasons:
-              inclusion: Choose one or more reasons why the trainee withdrew from the course
-              invalid: Reason(s) selected are not valid for this trigger
-            withdraw_date:
-              blank: Choose a withdrawal date
-              invalid: Choose a valid withdrawal date
-              not_before_itt_start_date: *not_before_itt_start_date
-            trigger:
-              blank: Please select an option for the trigger. Valid options are provider or trainee.
-            future_interest:
-              blank: Please select an option. Valid options are yes, no and unknown.
-            another_reason:
-              blank: Enter another reason
-        api/v01/degree_attributes:
-          duplicate: This is a duplicate degree
+            itt_qualification_aim:
+              api:
+                blank: must be entered if 202 selected for itt_aim
+              csv:
+                blank: must be entered if 202 selected for ITT Aim
+
+
+
         api/v20250_rc/degree_attributes:
+          duplicate: This is a duplicate degree
           attributes:
             uk_degree:
               blank: must be entered if specifying a previous UK degree

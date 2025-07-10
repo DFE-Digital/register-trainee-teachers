@@ -22,10 +22,10 @@ RSpec.describe "Rack::Attack settings" do
       it "limits the amount of requests" do
         within_same_period do
           (limit + 1).times do
-            get "/api/v0.1/info", headers: {
-                                    authorization: "Bearer #{token}",
-                                  },
-                                  env: { REMOTE_ADDR: ip }
+            get "/api/v2025.0-rc/info", headers: {
+                                          authorization: "Bearer #{token}",
+                                        },
+                                        env: { REMOTE_ADDR: ip }
           end
 
           expect(response).to have_http_status(:too_many_requests)
@@ -38,10 +38,10 @@ RSpec.describe "Rack::Attack settings" do
       it "does not limit the amount of requests" do
         within_same_period do
           limit.times do
-            get "/api/v0.1/info", headers: {
-                                    authorization: "Bearer #{token}",
-                                  },
-                                  env: { REMOTE_ADDR: ip }
+            get "/api/v2025.0-rc/info", headers: {
+                                          authorization: "Bearer #{token}",
+                                        },
+                                        env: { REMOTE_ADDR: ip }
           end
 
           expect(response).to have_http_status(:ok)
