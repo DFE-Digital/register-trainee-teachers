@@ -3,93 +3,138 @@
 require "rails_helper"
 
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
-  subject { described_class }
-
-  let!(:academic_cycle) { create(:academic_cycle, :current) }
-
-  it { is_expected.to be < Api::V01::HesaTraineeDetailAttributes }
+  subject { described_class.new }
 
   describe "validations" do
-    it "uses the RulesValidator" do
-      expect(described_class.validators.map(&:class)).to include(
-        Api::V20250Rc::HesaTraineeDetailAttributes::RulesValidator,
-      )
+    it { is_expected.to validate_presence_of(:course_year) }
+    it { is_expected.to validate_presence_of(:fund_code) }
+
+    describe "itt_aim" do
+      it { is_expected.to validate_presence_of(:itt_aim) }
+
+      context "when included in the list of HESA itt aim codes" do
+        Hesa::CodeSets::IttAims::MAPPING.each_key do |itt_aim|
+          subject { described_class.new(itt_aim:) }
+
+          it {
+            subject.validate
+
+            expect(subject.errors[:itt_aim]).to be_blank
+          }
+        end
+      end
+
+      context "when not included in the list of HESA itt aim codes" do
+        subject { described_class.new(itt_aim: "300") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:itt_aim]).to contain_exactly(
+            "has invalid reference data value of '300'. Valid values are #{Hesa::CodeSets::IttAims::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
+        }
+      end
+    end
+
+    describe "itt_qualification_aim" do
+      context "when itt_aim is nil" do
+        it { is_expected.to validate_presence_of(:itt_qualification_aim) }
+      end
+
+      context "when itt_aim is 202" do
+        before do
+          subject.itt_aim = "202"
+        end
+
+        it { is_expected.to validate_presence_of(:itt_qualification_aim) }
+      end
+
+      context "when itt_aim is 201" do
+        before do
+          subject.itt_aim = "201"
+        end
+
+        it { is_expected.not_to validate_presence_of(:itt_qualification_aim) }
+      end
+
+      context "when included in the list of HESA itt qualification aim codes" do
+        Hesa::CodeSets::IttQualificationAims::MAPPING.each_key do |itt_qualification_aim|
+          subject { described_class.new(itt_qualification_aim:) }
+
+          it {
+            subject.validate
+
+            expect(subject.errors[:itt_qualification_aim]).to be_blank
+          }
+        end
+      end
+
+      context "when not included in the list of HESA itt qualification aim codes" do
+        subject { described_class.new(itt_qualification_aim: "300") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:itt_qualification_aim]).to contain_exactly(
+            "has invalid reference data value of '300'. Valid values are #{Hesa::CodeSets::IttQualificationAims::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
+        }
+      end
+    end
+
+    describe "course_age_range" do
+      it { is_expected.to validate_presence_of(:course_age_range) }
+
+      it {
+        expect(subject).to validate_inclusion_of(:course_age_range)
+          .in_array(Hesa::CodeSets::AgeRanges::MAPPING.keys)
+          .with_message(/has invalid reference data value of '.*'/)
+      }
     end
 
     describe "funding_method" do
-      describe "Postgraduate bursaries require a certain degree and course type (QR.C24053.Student.BURSLEV.20)" do
-        let(:course_subject_one) { "mathematics" }
-        let(:trainee_attributes) do
-          Api::V20250Rc::TraineeAttributes.new(
-            training_route: :provider_led_postgrad,
-            course_subject_one: course_subject_one,
-            fund_code: Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode::FUND_CODE,
-            trainee_start_date: (academic_cycle.start_date + 1.month).iso8601,
-          )
-        end
+      context "when empty" do
+        subject { described_class.new(funding_method: "") }
 
-        subject { described_class.new({ trainee_attributes: trainee_attributes, funding_method: "D", fund_code: "7" }, record_source: "api") }
-
-        context "when funding_method is 'D' (postgraduate bursary)" do
-          context "when course subject is declared by a `FundingMethod` record" do
-            let(:allocation_subject) { create(:allocation_subject) }
-            let!(:subject_specialism) do
-              create(
-                :subject_specialism,
-                allocation_subject: allocation_subject,
-                name: course_subject_one,
-              )
-            end
-            let(:funding_rule) do
-              create(
-                :funding_method,
-                training_route: :provider_led_postgrad,
-                funding_type: :bursary,
-                academic_cycle: academic_cycle,
-              )
-            end
-            let!(:funding_method_subject) do
-              create(
-                :funding_method_subject,
-                funding_method: funding_rule,
-                allocation_subject: allocation_subject,
-              )
-            end
-
-            it "funding_method should be valid" do
-              subject.validate
-              expect(subject.errors[:funding_method]).to be_blank
-            end
-          end
-
-          context "when course subject is NOT declared by a `FundingMethod` record" do
-            it "funding_method should NOT be valid" do
-              subject.validate
-              expect(subject.errors[:funding_method]).to be_present
-              expect(subject.errors[:funding_method]).to include(
-                "training route 'provider_led_postgrad' and subject code 'mathematics' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
-              )
-            end
-          end
-        end
-      end
-    end
-
-    describe "fund_code" do
-      let(:trainee_attributes) do
-        Api::V20250Rc::TraineeAttributes.new(
-          training_route: :provider_led_postgrad,
-          course_subject_one: "mathematics",
-          fund_code: Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundCode::FUND_CODE,
-        )
-      end
-
-      subject { described_class.new({ trainee_attributes: trainee_attributes, funding_method: "D", fund_code: "7" }, record_source: "api") }
-
-      context "for an unfunded training route" do
-        it "fund_code should NOT be valid" do
+        it {
           subject.validate
-          expect(subject.errors[:fund_code]).to include("is not valid for this trainee")
+
+          expect(subject.errors[:funding_method]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when nil" do
+        subject { described_class.new(funding_method: nil) }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:funding_method]).to contain_exactly("can't be blank")
+        }
+      end
+
+      context "when not included in the list of HESA bursary levels" do
+        subject { described_class.new(funding_method: "AD") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:funding_method]).to contain_exactly(
+            "has invalid reference data value of 'AD'. Valid values are #{Hesa::CodeSets::BursaryLevels::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
+        }
+      end
+
+      context "when included in the list of HESA bursary levels" do
+        Hesa::CodeSets::BursaryLevels::MAPPING.each_key do |funding_method|
+          subject { described_class.new(funding_method:) }
+
+          it "is expected to allow #{funding_method}" do
+            subject.validate
+
+            expect(subject.errors[:funding_method]).to be_blank
+          end
         end
       end
     end
