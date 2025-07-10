@@ -395,7 +395,7 @@ weight: 1
     <dt class="govuk-summary-list__key"><code>trainee_start_date</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, optional (must be in the past and not more than 10 years ago)
+        string (must be in the past and not more than 10 years ago)
       </p>
       <p class="govuk-body">
         The start date of the trainee on their ITT course. Dates should be in ISO 8601 format.
