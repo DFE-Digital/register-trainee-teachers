@@ -421,6 +421,26 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         end
       end
 
+      context "when blank" do
+        before do
+          subject.trainee_start_date = nil
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to be_blank
+        end
+      end
+
+      context "when not provided" do
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to be_blank
+        end
+      end
+
       context "when invalid" do
         before do
           subject.trainee_start_date = "14/11/23"
@@ -502,6 +522,19 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
           expect(subject.errors[:trainee_start_date]).to contain_exactly("must be in the past")
           expect(subject.errors.full_messages).to include("trainee_start_date must be in the past")
+        end
+      end
+
+      context "when more than 10 years in the past" do
+        before do
+          subject.trainee_start_date = 11.years.ago.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("Cannot be more than 10 years in the past")
+          expect(subject.errors.full_messages).to include("trainee_start_date Cannot be more than 10 years in the past")
         end
       end
     end

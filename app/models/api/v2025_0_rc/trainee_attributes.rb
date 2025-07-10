@@ -411,6 +411,23 @@ module Api
         end
       end
 
+      def validate_trainee_start_date
+        return if trainee_start_date.blank?
+
+        if !valid_date_string?(trainee_start_date)
+          errors.add(:trainee_start_date, :invalid)
+          return
+        end
+
+        start_date = trainee_start_date.is_a?(String) ? Date.parse(trainee_start_date) : trainee_start_date
+
+        if start_date < 10.years.ago
+          errors.add(:trainee_start_date, :too_old)
+        elsif start_date.future?
+          errors.add(:trainee_start_date, :future)
+        end
+      end
+
       def next_year
         Time.zone.now.year.next
       end
