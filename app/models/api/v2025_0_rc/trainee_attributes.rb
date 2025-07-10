@@ -344,16 +344,6 @@ module Api
         end
       end
 
-      def validate_itt_start_and_end_dates
-        if itt_start_date.present? && !valid_date_string?(itt_start_date)
-          errors.add(:itt_start_date, :invalid)
-        end
-
-        if itt_end_date.present? && !valid_date_string?(itt_end_date)
-          errors.add(:itt_end_date, :invalid)
-        end
-      end
-
       def validate_degrees_presence
         errors.add(:degrees_attributes, :blank) if degrees_attributes.empty?
       end
