@@ -204,7 +204,7 @@
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
   format: "[HESA ITT aim codes](https://www.hesa.ac.uk/collection/c24053/e/ittaim)"
-  example: `201`	Professional status only
+  example: `201` Professional status only
 `202`	Both professional status and academic award
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L26
