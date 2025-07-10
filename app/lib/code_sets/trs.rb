@@ -51,8 +51,8 @@ module CodeSets
     ROUTE_STATUSES = {
       "withdrawn" => "Withdrawn",
       "deferred" => "Deferred",
-      "awarded" => "Awarded",
-      "recommended_for_award" => "Awarded",
+      "awarded" => "Holds",
+      "recommended_for_award" => "Holds",
     }.freeze
 
     # Special case statuses based on state and route

@@ -274,7 +274,7 @@ weight: 1
     <dt class="govuk-summary-list__key"><code>itt_start_date</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string, required
+        string, required (must not be more than one year in the future)
       </p>
       <p class="govuk-body">
         The start date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
@@ -395,7 +395,7 @@ weight: 1
     <dt class="govuk-summary-list__key"><code>trainee_start_date</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string
+        string (must be in the past and not more than 10 years ago)
       </p>
       <p class="govuk-body">
         The start date of the trainee on their ITT course. Dates should be in ISO 8601 format.

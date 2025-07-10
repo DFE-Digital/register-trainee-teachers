@@ -55,9 +55,9 @@ module Trs
 
       def params
         @params ||= {
-          "routeTypeId" => route_type_id,
+          "routeToProfessionalStatusTypeId" => route_to_professional_status_type_id,
           "status" => status,
-          "awardedDate" => trainee.outcome_date&.to_date&.iso8601,
+          "holdsFrom" => trainee.outcome_date&.to_date&.iso8601,
           "trainingStartDate" => trainee.itt_start_date&.iso8601 || trainee.trainee_start_date&.iso8601,
           "trainingEndDate" => trainee.itt_end_date&.iso8601 || trainee.estimated_end_date&.iso8601,
           "trainingSubjectReferences" => training_subject_references,
@@ -77,7 +77,7 @@ module Trs
         trainee.hesa_metadatum&.itt_qualification_aim || trainee.hesa_trainee_detail&.itt_qualification_aim
       end
 
-      def route_type_id
+      def route_to_professional_status_type_id
         ::CodeSets::Trs::ROUTE_TYPES[trainee.training_route]
       end
 

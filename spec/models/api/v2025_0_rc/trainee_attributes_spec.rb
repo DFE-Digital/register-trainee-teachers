@@ -300,6 +300,31 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           expect(subject.errors.full_messages).to include("itt_start_date is invalid")
         end
       end
+
+      context "when in the future but within next year" do
+        before do
+          subject.itt_start_date = 1.month.from_now.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_start_date]).to be_blank
+        end
+      end
+
+      context "when in the future beyond next year" do
+        before do
+          subject.itt_start_date = 2.years.from_now.beginning_of_year.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:itt_start_date]).to contain_exactly("must not be more than one year in the future")
+          expect(subject.errors.full_messages).to include("itt_start_date must not be more than one year in the future")
+        end
+      end
     end
 
     describe "itt_end_date" do
@@ -354,6 +379,19 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
 
           expect(subject.errors[:trainee_start_date]).to contain_exactly("is invalid")
           expect(subject.errors.full_messages).to include("trainee_start_date is invalid")
+        end
+      end
+
+      context "when in the future" do
+        before do
+          subject.trainee_start_date = 1.month.from_now.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("must be in the past")
+          expect(subject.errors.full_messages).to include("trainee_start_date must be in the past")
         end
       end
     end
