@@ -1,7 +1,7 @@
 FROM ruby:3.4.2-alpine3.20 AS rails-builder
 
 ENV BUNDLE_PATH=/usr/local/bundle
-ENV APP_HOME = /app
+ENV APP_HOME=app/
 
 WORKDIR $APP_HOME
 
