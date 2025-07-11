@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Api::V20250Rc::DegreeAttributes do
+  include ErrorMessageHelper
+
   let(:degree) { build(:degree) }
   let(:trainee) { create(:trainee, :with_degree) }
   let(:degree_attributes) { described_class.new(attributes, trainee:) }
@@ -56,7 +58,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
             subject.validate
 
             expect(subject.errors[:uk_degree]).to contain_exactly(
-              "has invalid reference data value of 'Random subject'. Valid values are #{DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq.map { |v| "'#{v}'" }.join(', ')}.",
+              "has invalid reference data value of 'Random subject'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}...",
             )
           }
         end
@@ -108,7 +110,7 @@ RSpec.describe Api::V20250Rc::DegreeAttributes do
             subject.validate
 
             expect(subject.errors[:non_uk_degree]).to contain_exactly(
-              "has invalid reference data value of 'Random subject'. Valid values are #{DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq.map { |v| "'#{v}'" }.join(', ')}.",
+              "has invalid reference data value of 'Random subject'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}...",
             )
           }
         end
