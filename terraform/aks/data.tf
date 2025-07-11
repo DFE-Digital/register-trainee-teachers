@@ -3,12 +3,7 @@ data "azurerm_key_vault" "key_vault" {
   resource_group_name = local.app_resource_group_name
 }
 
-data "azurerm_key_vault_secret" "app_secrets" {
+data "azurerm_key_vault_secret" "statuscake_password" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
-  name         = var.key_vault_app_secret_name
-}
-
-data "azurerm_key_vault_secret" "infra_secrets" {
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-  name         = var.key_vault_infra_secret_name
+  name         = "STATUSCAKE-PASSWORD"
 }
