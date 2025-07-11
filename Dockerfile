@@ -83,7 +83,7 @@ RUN apk add --update --no-cache tzdata && \
 RUN apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib
 
 COPY --from=rails-builder /usr/local/bundle /usr/local/bundle
-COPY --from=rails-builder . $APP_HOME
+COPY --from=rails-builder app/ .
 
 COPY --from=middleman-builder public/api-docs/ $APP_HOME/public/api-docs/
 COPY --from=middleman-builder public/csv-docs/ $APP_HOME/public/csv-docs/
