@@ -3,14 +3,12 @@
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 module Hesa
   module ReferenceData
-    class V20250Rc
-      include ServicePattern
-
+    class V20250Rc < Base
       DEFAULT_CASE_ATTRIBUTES = %i[
         subject
       ].freeze
 
-      def call
+      def self.all
         {
           funding_method: CodeSets::BursaryLevels::VALUES,
           institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
@@ -45,9 +43,12 @@ module Hesa
           transformed_mapping = if attribute.in?(DEFAULT_CASE_ATTRIBUTES)
                                   mapping.sort
                                 else
-                                  mapping.transform_values { |value| value[0].upcase + value[1..] }.sort
+                                  mapping.transform_values { |label| label[0].upcase + label[1..] }.sort
                                 end
-          [attribute, transformed_mapping.to_h]
+
+          translated_mapping  = transformed_mapping.map { |code, label| [code, I18n.t("#{attribute}.#{code}", default: label)] }
+
+          [attribute, translated_mapping.to_h]
         end.freeze
       end
     end
