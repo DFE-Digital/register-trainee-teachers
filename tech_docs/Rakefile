@@ -3,6 +3,7 @@
 require "fileutils"
 require "yaml"
 require "middleman-core"
+require "open3"
 
 namespace :tech_docs do
   desc "Build docs"
@@ -15,8 +16,9 @@ namespace :tech_docs do
     FileUtils.cp_r("source/api-docs/.", "source")
     FileUtils.rm_rf("source/api-docs")
     FileUtils.rm_rf("source/csv-docs")
+    FileUtils.rm_rf("source/reference-data")
 
-    system("bundle exec middleman build --build-dir ../public/api-docs --verbose")
+    system("bundle exec middleman build --build-dir ../public/api-docs")
 
     FileUtils.rm_rf("source")
     FileUtils.mv("temp_source", "source")
@@ -29,18 +31,35 @@ namespace :tech_docs do
     FileUtils.cp_r("source/csv-docs/.", "source")
     FileUtils.rm_rf("source/csv-docs")
     FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm_rf("source/reference-data")
 
-    system("bundle exec middleman build --build-dir ../public/csv-docs --verbose")
+    system("bundle exec middleman build --build-dir ../public/csv-docs")
+
+    FileUtils.rm_rf("source")
+    FileUtils.mv("temp_source", "source")
+
+    # Build Reference Data docs
+    #
+    FileUtils.cp_r("source", "temp_source")
+
+    FileUtils.rm("source/index.html.md")
+    FileUtils.cp_r("source/reference-data/.", "source")
+    FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm_rf("source/csv-docs")
+    FileUtils.rm_rf("source/reference-data")
+
+    system("bundle exec middleman build --build-dir ../public/reference-data")
 
     FileUtils.rm_rf("source")
     FileUtils.mv("temp_source", "source")
 
     # Generate search.json
     #
-    system("bundle exec middleman build --verbose")
+    system("bundle exec middleman build")
 
     FileUtils.cp("build/search.json", "../public/api-docs")
     FileUtils.cp("build/search.json", "../public/csv-docs")
+    FileUtils.cp("build/search.json", "../public/reference-data")
   end
 
   namespace :csv do
@@ -51,11 +70,7 @@ namespace :tech_docs do
 
       FileUtils.mkdir_p("source/csv-docs/temp_fields")
 
-      fields = YAML.load_file(
-        File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
-      )
-
-      fields.each_with_index do |field, index|
+      TechDocsHelpers.fields.each_with_index do |field, index|
         html = context.partial(
           "partials/csv_docs/field", locals: {
             csv_field_name: field["field_name"],
@@ -87,5 +102,76 @@ namespace :tech_docs do
       FileUtils.rm_rf("source/csv-docs/fields")
       FileUtils.mv("source/csv-docs/temp_fields", "source/csv-docs/fields")
     end
+  end
+
+  namespace :reference_data do
+    desc "Generate reference data docs from the API"
+    task :generate do
+      rails_dir     = File.expand_path("../", __dir__)
+      rails_gemfile = File.join(rails_dir, 'Gemfile')
+
+      runner_code   = "print Hesa::ReferenceData::V20250Rc.call.to_json"
+
+      command = <<~CMD
+        cd #{rails_dir} && BUNDLE_GEMFILE=#{rails_gemfile} bundle exec rails runner '#{runner_code}'
+      CMD
+
+      stdout, stderr, status = Open3.capture3(command)
+
+      if status.success?
+        data = JSON.parse(stdout)
+      else
+        raise StandardError, stderr.present? ? stderr : "Something went wrong"
+      end
+
+      FileUtils.mkdir_p("source/reference-data/temp_v2025.0-rc")
+
+      app     = Middleman::Application.new
+      context = Middleman::TemplateContext.new(app, {})
+
+      data_sorted = data.sort_by do |attribute, values|
+        TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"]
+      end.to_h
+
+      data_sorted.each_with_index do |(attribute, values), index|
+        field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
+        formatted_attribute = attribute.gsub("_", "-")
+
+        File.open("source/reference-data/temp_v2025.0-rc/#{formatted_attribute}.html.md", "w") do |f|
+          html = context.partial(
+            "partials/reference_data/attribute", locals: {
+              attribute: formatted_attribute,
+              field: field,
+              values: values,
+            }
+          )
+
+          f.write(
+            <<~METADATA,
+              ---
+              title: #{field["field_name"]}
+              weight: #{index + 1}
+              ---
+
+            METADATA
+          )
+
+
+          f.write(html)
+        end
+      end
+
+      FileUtils.cp("source/reference-data/v2025.0-rc/index.html.md.erb", "source/reference-data/temp_v2025.0-rc")
+      FileUtils.rm_rf("source/reference-data/v2025.0-rc")
+      FileUtils.mv("source/reference-data/temp_v2025.0-rc", "source/reference-data/v2025.0-rc")
+    end
+  end
+end
+
+module TechDocsHelpers
+  def self.fields
+    @fields ||= YAML.load_file(
+      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
+    )
   end
 end
