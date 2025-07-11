@@ -45,3 +45,4 @@
 # Ignore docs
 /public/api-docs
 /public/csv-docs
+/public/reference-data
