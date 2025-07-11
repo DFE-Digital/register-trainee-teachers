@@ -1,3 +1,4 @@
+
 !.keep
 *.DS_Store
 *.swo
@@ -87,6 +88,9 @@ Caddyfile
 # Ignore docs
 /public/api-docs
 /public/csv-docs
+/public/reference-data
 /tech_docs/build
 /tech_docs/source/csv-docs/fields
 !/tech_docs/source/csv-docs/fields/index.html.md.erb
+/tech_docs/source/reference-data/v2025.0-rc
+!/tech_docs/source/reference-data/v2025.0-rc/index.html.md.erb
