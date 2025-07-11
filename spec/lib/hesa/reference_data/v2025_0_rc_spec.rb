@@ -1,0 +1,40 @@
+# frozen_string_literal: true
+
+require "rails_helper"
+
+RSpec.describe Hesa::ReferenceData::V20250Rc do
+  describe "::call" do
+    it "returns the mapped hesa code sets" do
+      expect(described_class.call).to eq(
+        funding_method: Hesa::CodeSets::BursaryLevels::VALUES,
+        institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
+        grade: DfEReference::DegreesQuery::GRADES.all.pluck(:hesa_code, :name).to_h.reject { |k, _v| k.nil? },
+        uk_degree: DfEReference::DegreesQuery::TYPES.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
+        non_uk_degree: DfEReference::DegreesQuery::TYPES.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
+        disability1: Hesa::CodeSets::Disabilities::MAPPING,
+        disability2: Hesa::CodeSets::Disabilities::MAPPING,
+        disability3: Hesa::CodeSets::Disabilities::MAPPING,
+        disability4: Hesa::CodeSets::Disabilities::MAPPING,
+        disability5: Hesa::CodeSets::Disabilities::MAPPING,
+        disability6: Hesa::CodeSets::Disabilities::MAPPING,
+        disability7: Hesa::CodeSets::Disabilities::MAPPING,
+        disability8: Hesa::CodeSets::Disabilities::MAPPING,
+        disability9: Hesa::CodeSets::Disabilities::MAPPING,
+        country: Hesa::CodeSets::Countries::MAPPING,
+        training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.map { |code, value| [code, value.humanize] }.to_h,
+        subject: DfEReference::DegreesQuery::SUBJECTS.all.pluck(:hecos_code, :name).to_h.reject { |k, _v| k.nil? },
+        ethnicity: Hesa::CodeSets::Ethnicities::MAPPING,
+        fund_code: Hesa::CodeSets::FundCodes::MAPPING,
+        training_initiative: Hesa::CodeSets::TrainingInitiatives::MAPPING.map { |code, value| [code, value.humanize] }.to_h,
+        itt_aim: Hesa::CodeSets::IttAims::MAPPING,
+        course_age_range: DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.map { |code, value| [code, "Ages #{value.join("-")}"] }.to_h,
+        study_mode: Hesa::CodeSets::StudyModes::MAPPING.map { |code, value| [code, Trainee.study_modes.invert[value].humanize] }.to_h,
+        itt_qualification_aim: Hesa::CodeSets::IttQualificationAims::MAPPING,
+        sex: Hesa::CodeSets::Sexes::MAPPING.map { |code, value| [code, Trainee.sexes.invert[value].humanize] }.to_h,
+        course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING,
+        course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING,
+        course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING,
+      )
+    end
+  end
+end
