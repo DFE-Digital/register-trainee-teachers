@@ -19,7 +19,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
     it {
       expect(subject).to validate_inclusion_of(:nationality)
         .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values)
-        .with_message(/has invalid reference data value of '.*'. Valid values are #{RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(RecruitsApi::CodeSets::Nationalities::MAPPING.keys)}\.\.\./)
         .allow_blank
     }
 
