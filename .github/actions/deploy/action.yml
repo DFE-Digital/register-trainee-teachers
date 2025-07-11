@@ -48,9 +48,6 @@ runs:
         echo "app_environment=$(jq -r '.app_environment' ${tf_vars_file})" >> $GITHUB_ENV
         echo "TERRAFORM_VERSION=$terraform_version" >> $GITHUB_ENV
         echo "namespace=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "key_vault_name=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "key_vault_app_secret_name=$(jq -r '.key_vault_app_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
-        echo "key_vault_infra_secret_name=$(jq -r '.key_vault_infra_secret_name' ${tf_vars_file})" >> $GITHUB_ENV
         if [ -n "${{ inputs.pr-number }}" ]; then
           APP_NAME=pr-${{ inputs.pr-number }}
           echo "APP_NAME=${APP_NAME}" >> $GITHUB_ENV
@@ -88,14 +85,6 @@ runs:
         tenant-id: ${{ inputs.azure-tenant-id }}
         subscription-id: ${{ inputs.azure-subscription-id }}
         client-id: ${{ inputs.azure-client-id }}
-
-    - name: Validate Azure Key Vault secrets
-      uses: DFE-Digital/github-actions/validate-key-vault-secrets@master
-      with:
-        KEY_VAULT: ${{ env.key_vault_name }}
-        SECRETS: |
-          ${{ env.key_vault_app_secret_name }}
-          ${{ env.key_vault_infra_secret_name }}
 
     - name: Terraform init, plan & apply
       shell: bash
