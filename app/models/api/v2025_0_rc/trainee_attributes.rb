@@ -138,7 +138,10 @@ module Api
         valid_values: RecruitsApi::CodeSets::Nationalities::MAPPING.keys,
       }, allow_blank: true
 
-      validates :training_initiative, api_inclusion: { in: ROUTE_INITIATIVES.keys }, allow_blank: true
+      validates :training_initiative, api_inclusion: {
+        in: ROUTE_INITIATIVES.keys,
+        valid_values: Hesa::CodeSets::TrainingInitiatives::MAPPING.keys,
+      }, allow_blank: true
 
       validates :trainee_disabilities_attributes, uniqueness: true
 
