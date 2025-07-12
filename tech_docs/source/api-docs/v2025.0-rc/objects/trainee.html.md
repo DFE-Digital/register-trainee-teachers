@@ -111,7 +111,7 @@ weight: 1
         string, required
       </p>
       <p class="govuk-body">
-        The date of birth of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/birthdte">HESA date of birth field</a>
+        This field records the date of birth of the student.
       </p>
       <p class="govuk-body">
         Example: <code>2000-01-01</code>
@@ -125,7 +125,15 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The sex of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sexid">HESA sex identifier field</a>
+        The sex of the trainee. 
+        Possible values:
+      </p>
+      <ul>
+        '10'	Female
+        '11'	Male
+        '12'	Other
+        '96'	Information refused
+        '99'	Not available
       </p>
       <p class="govuk-body">
         Example: <code>10</code>
@@ -195,7 +203,8 @@ weight: 1
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ittaim">HESA ITT qualification aim field</a>
+        The general qualification aim of the course in terms of qualifications and professional statuses. '201'	Professional status only
+'202'	Both professional status and academic award>
       </p>
       <p class="govuk-body">
         Example: <code>201</code>
@@ -235,7 +244,21 @@ weight: 1
         string (limited to 3 characters), required if <code>itt_aim</code> is <code>202</code>
       </p>
       <p class="govuk-body">
-        The qualification aim of the trainee’s course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/qlaim">HESA qualification aim field</a>.
+        The qualification aim of the trainee’s course. 
+        Possible values:
+      </p>
+      <ul>
+        <li><code>007</code> - BA </li>
+        <li><code>008</code> - BA (Hons) </li>
+        <li><code>001</code> - BEd </li>
+        <li><code>002</code> - BEd (Hons) </li>
+        <li><code>003</code> - BSc </li>
+        <li><code>004</code> - BSc (Hons) </li>
+        <li><code>020</code> - Postgraduate Certificate in Education </li>
+        <li><code>021</code> - Postgraduate Diploma in Educatio </li>
+        <li><code>028</code> - Undergraduate Master of Teaching </li>
+        <li><code>031</code> - Professional Graduate Certificate in Education </li>
+        <li><code>032</code> - Masters, not by research </li>
       </p>
       <p class="govuk-body">
         Example: <code>004</code>
@@ -263,7 +286,15 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        This indicates whether the trainee’s course is full-time or part-time. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/mode">HESA mode of study field</a>.
+        This indicates whether the trainee’s course is full-time or part-time.
+        Possible values:
+      </p>
+      <ul>
+        <li><code>01</code> - Full-time according to funding council definitions</li>
+        <li><code>02</code> - Other full-time</li>
+        <li><code>31</code> - Part-time</li>
+        <li><code>63</code> - Dormant - previously full-time</li>
+        <li><code>64</code> - Dormant - previously part-time</li>.
       </p>
       <p class="govuk-body">
         Example: <code>01</code>
@@ -277,7 +308,7 @@ weight: 1
         string, required (must not be more than one year in the future)
       </p>
       <p class="govuk-body">
-        The start date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
+        The start date of the Initial Teacher Training part of their course.
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -291,7 +322,7 @@ weight: 1
         string, required
       </p>
       <p class="govuk-body">
-        The end date of the Initial Teacher Training part of their course. Dates should be in ISO 8601 format.
+        The end date of the Initial Teacher Training part of their course.
       </p>
       <p class="govuk-body">
         Example: <code>2025-03-11</code>
@@ -305,7 +336,14 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The year number of the course that the trainee is currently studying. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/yearprg">HESA year of course field</a>
+        The year number of the course that the trainee is currently studying. 
+        Possible values:
+      </p>
+      <ul>
+        <li><code>0</code> - Foundation year</li>
+        <li><code>1</code> - First year</li>
+        <li><code>2</code> - Second year</li>
+        <li><code>3</code> - Third year</li>>
       </p>
       <p class="govuk-body">
         Example: <code>2</code>
@@ -369,6 +407,12 @@ weight: 1
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the lead partner for the trainee.
+        Other possible values:
+      </p>
+      <ul>
+        <li><code>900000</code> - Establishment outside England and Wales</li>
+        <li><code>900020</code> - Other establishment without a URN</li>
+        <li><code>900030</code> - Not available</li>
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
@@ -398,7 +442,7 @@ weight: 1
         string (must be in the past and not more than 10 years ago)
       </p>
       <p class="govuk-body">
-        The start date of the trainee on their ITT course. Dates should be in ISO 8601 format.
+        The start date of the trainee on their ITT course. 
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -412,7 +456,7 @@ weight: 1
         string
       </p>
       <p class="govuk-body">
-        The start date of a trainee’s postgraduate teaching apprenticeship. Dates should be in ISO 8601 format.
+        The start date of a trainee’s postgraduate teaching apprenticeship. 
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -440,7 +484,12 @@ weight: 1
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The funding eligibility of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/fundcode">HESA fundability code field</a>
+        Possible values:
+      </p>
+      <ul>
+        `2` = not eligible for student finance
+    `7` = eligible for student finance
+        Note: Use `7` if the trainee chooses not to recieve the finance they are eligible for.
       </p>
       <p class="govuk-body">
         Example: <code>7</code>
@@ -454,7 +503,16 @@ weight: 1
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The bursary level awarded to the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/burslev">HESA bursary level award field</a>
+        The bursary level awarded to the trainee. 
+        Possible values:
+      </p>
+      <ul>
+         <li><code>4</code> - Scholarship</li>
+         <li><code>6</code> - No bursary, scholarship or grant awarded</li>
+         <li><code>B</code> - Undergraduate bursary</li>
+         <li><code>C</code> - Veteran Teaching undergraduate bursary</li>
+         <li><code>D</code> - Postgraduate bursary</li>
+         <li><code>E</code> - Grant</li>
       </p>
       <p class="govuk-body">
         Example: <code>4</code>
@@ -468,10 +526,22 @@ weight: 1
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The main training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/initiatives">HESA initiatives field</a>
+       This field identifies students who are part of a specific scheme that
+    is to be monitored independently. Valid entries will change from year to year
+    to reflect current schemes.
+        Possible values:
+      </p>
+      <ul>
+          <li><code>001</code> - Abridged ITT course</li>
+          <li><code>009</code> - Maths and Physics Chairs Programme</li>
+          <li><code>011</code> - Primary mathematics specialist</li>
+          <li><code>019</code> - Additional ITT place for PE with a priority subject</li>
+          <li><code>025</code> - Transition to Teach</li>
+          <li><code>026</code> - Now Teach</li>
+          <li><code>036</code> - International relocation payment</li>
       </p>
       <p class="govuk-body">
-        Example: <code>009</code>
+        Example: <code>026</code>
       </p>
     </dd>
   </div>
@@ -496,7 +566,7 @@ weight: 1
         string (limited to 17 characters), required
       </p>
       <p class="govuk-body">
-        The HESA unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/husid">HESA unique student identifier field</a>
+        The unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/husid">HESA unique student identifier field</a>
       </p>
       <p class="govuk-body">
         Example: <code>1210007145123456</code>
