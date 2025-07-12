@@ -1019,6 +1019,8 @@ en:
           school_direct_salaried: school direct salaried
           school_direct_tuition_fee: school direct tuition fee
           pg_teaching_apprenticeship: teaching apprenticeship postgrad
+          provider_led_undergrad: primary and secondary undergrad
+          teacher_degree_apprenticeship: teaching apprenticeship
       funding:
         training_initiatives:
           title: Is the trainee on any of these training initiatives?
