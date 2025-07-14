@@ -5,6 +5,8 @@ class ApiInclusionValidator < ActiveModel::EachValidator
 
   attr_reader :in, :valid_values
 
+  MAX_VALID_VALUES_DISPLAYED = 10
+
   def initialize(options)
     super
     @in = options[:in]

@@ -2,6 +2,6 @@
 
 module ErrorMessageHelper
   def format_reference_data_list(values)
-    values.map { |v| "'#{v}'" }.join(", ")
+    values.first(10).map { |v| "'#{v}'" }.join(", ")
   end
 end

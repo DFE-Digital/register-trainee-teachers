@@ -230,7 +230,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to contain_exactly(
-          "course_age_range has invalid reference data value of '1234'. Valid values are '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'.",
+          "course_age_range has invalid reference data value of '1234'. Example values include '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'...",
         )
       end
     end
@@ -806,9 +806,10 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         let(:params) do
           {
             data: {
-              itt_start_date:,
-              itt_end_date:,
-              training_route:,
+              itt_start_date: itt_start_date,
+              itt_end_date: itt_end_date,
+              training_route: training_route,
+              trainee_start_date: itt_start_date,
             },
           }
         end
@@ -828,6 +829,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         end
 
         it do
+          expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
             "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
           )
@@ -1292,7 +1294,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "itt_qualification_aim has invalid reference data value of '321'. Valid values are '001', '002', '003', '004', '007', '008', '020', '021', '028', '031', '032'.",
+            "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
           )
         end
       end

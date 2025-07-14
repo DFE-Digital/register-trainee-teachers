@@ -160,7 +160,7 @@ module Api
         end
 
         def trainee_start_date
-          params[:trainee_start_date].presence || itt_start_date
+          params[:trainee_start_date]
         end
 
         def course_subject_name(attr)
