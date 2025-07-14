@@ -4,7 +4,9 @@ require "rails_helper"
 
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 RSpec.describe Hesa::ReferenceData::V20250Rc do
-  describe "::call" do
+  include FileHelper
+
+  describe "::all" do
     let(:code_sets) do
       {
         funding_method: Hesa::CodeSets::BursaryLevels::VALUES,
@@ -40,16 +42,38 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
         transformed_mapping = if attribute.in? %i[subject]
                                 mapping.sort
                               else
-                                mapping.transform_values { |value| value[0].upcase + value[1..] }.sort
+                                mapping.transform_values { |label| label[0].upcase + label[1..] }.sort
                               end
-        [attribute, transformed_mapping.to_h]
+        translated_mapping  = transformed_mapping.map { |code, label| [code, I18n.t("#{attribute}.#{code}", default: label)] }
+
+        [attribute, translated_mapping.to_h]
       end
     end
 
     it "returns the mapped hesa code sets" do
       code_sets.each do |attribute, mapping|
-        expect(described_class.call[attribute].to_a).to eq(mapping.to_a)
+        expect(described_class.all[attribute].to_a).to eq(mapping.to_a)
       end
+    end
+  end
+
+  describe "::find" do
+    let(:attribute) { "funding_method" }
+
+    it "returns an attribute's hesa code sets" do
+      expect(described_class.find(attribute).values).to eq(
+        Hesa::CodeSets::BursaryLevels::VALUES,
+      )
+    end
+  end
+
+  describe "as_csv" do
+    it "converts data to csv" do
+      expect(
+        CSV.parse(described_class.find(:course_age_range).as_csv),
+      ).to eq(
+        CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv")),
+      )
     end
   end
 end
