@@ -17,7 +17,7 @@ class NavigationBar::View < ViewComponent::Base
 
   def item_link(item)
     link_params = { class: "govuk-service-navigation__link" }
-    link_params.merge!(aria: { current: "true" }) if show_current_link?(item)
+    link_params.merge!(aria: { current: "page" }) if show_current_link?(item)
 
     govuk_link_to(item[:name], item[:url], **link_params)
   end
