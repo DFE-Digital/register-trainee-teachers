@@ -21,6 +21,7 @@ FileUtils.chdir APP_ROOT do
   system!(
     "cd tech_docs && (bundle check || bundle install) &&
       bundle exec rake tech_docs:csv:generate &&
+      bundle exec rake tech_docs:reference_data:generate &&
       bundle exec rake tech_docs:build"
   )
 
