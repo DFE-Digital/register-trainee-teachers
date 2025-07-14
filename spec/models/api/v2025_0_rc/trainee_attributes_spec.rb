@@ -28,7 +28,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         .in_array(
           Hesa::CodeSets::TrainingInitiatives::MAPPING.values + [ROUTE_INITIATIVES_ENUMS[:no_initiative]],
         )
-        .with_message(/has invalid reference data value of '.*'/)
+        .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::TrainingInitiatives::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
     }
 
     describe "email" do
