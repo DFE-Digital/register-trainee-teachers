@@ -40,8 +40,8 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 FROM ruby:3.4.2-alpine3.20 AS middleman-build
 
 ENV BUNDLE_PATH=/usr/local/bundle
-ENV APP_HOME=/
-ENV DOCS_HOME=/tech_docs
+ENV APP_HOME=/app
+ENV DOCS_HOME=$APP_HOME/tech_docs
 
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
@@ -50,11 +50,7 @@ RUN apk add --update --no-cache tzdata && \
 RUN apk add --no-cache libxml2
 RUN apk add --update --no-cache npm git build-base postgresql-dev
 
-
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
-
-COPY Gemfile Gemfile.lock .tool-versions $APP_HOME
-COPY . .
 
 WORKDIR $DOCS_HOME
 
@@ -62,7 +58,11 @@ COPY tech_docs/Gemfile tech_docs/Gemfile.lock $DOCS_HOME
 
 RUN bundle install --jobs=4
 
-COPY tech_docs/ $DOCS_HOME
+WORKDIR $APP_HOME
+
+COPY . .
+
+WORKDIR $DOCS_HOME
 
 RUN bundle exec rake tech_docs:csv:generate
 RUN bundle exec rake tech_docs:reference_data:generate
@@ -83,11 +83,11 @@ RUN apk add --update --no-cache tzdata && \
 RUN apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
-COPY --from=rails-build app/ .
+COPY --from=rails-build /app/ .
 
-COPY --from=middleman-build public/api-docs/ $APP_HOME/public/api-docs/
-COPY --from=middleman-build public/csv-docs/ $APP_HOME/public/csv-docs/
-COPY --from=middleman-build public/reference-data/ $APP_HOME/public/reference-data/
+COPY --from=middleman-build /app/public/api-docs/ $APP_HOME/public/api-docs/
+COPY --from=middleman-build /app/public/csv-docs/ $APP_HOME/public/csv-docs/
+COPY --from=middleman-build /app/public/reference-data/ $APP_HOME/public/reference-data/
 
 RUN echo export PATH=/usr/local/bin:\$PATH > /root/.ashrc
 ENV ENV="/root/.ashrc"
