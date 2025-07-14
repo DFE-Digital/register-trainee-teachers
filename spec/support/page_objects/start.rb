@@ -18,6 +18,7 @@ module PageObjects
       element :how_to_use_this_service_link, ".govuk-footer__link", text: "How to use this service"
       element :api_docs_link, ".govuk-footer__link", text: "API documentation"
       element :csv_docs_link, ".govuk-footer__link", text: "CSV documentation"
+      element :reference_data_link, ".govuk-footer__link", text: "Reference data"
       element :accessibility_link, ".govuk-footer__link", text: "Accessibility"
       element :cookies_link, ".govuk-footer__link", text: "Cookies"
       element :privacy_link, ".govuk-footer__link", text: "Privacy"

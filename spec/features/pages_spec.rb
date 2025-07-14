@@ -27,6 +27,12 @@ feature "pages" do
     then_i_should_see_csv_docs_page
   end
 
+  scenario "navigate to Reference data" do
+    given_i_am_on_the_start_page
+    and_i_click_on_the_reference_data_link_in_the_footer
+    then_i_should_see_reference_data_page
+  end
+
   scenario "navigate to accessibility statement" do
     given_i_am_on_the_start_page
     and_i_click_on_the_accessibility_link_in_the_footer
@@ -61,6 +67,10 @@ private
 
   def and_i_click_on_the_csv_docs_link_in_the_footer
     start_page.footer.csv_docs_link.click
+  end
+
+  def and_i_click_on_the_reference_data_link_in_the_footer
+    start_page.footer.reference_data_link.click
   end
 
   def and_i_click_on_the_api_docs_link_in_the_footer
