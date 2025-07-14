@@ -45,7 +45,7 @@ private
   end
 
   def and_i_click_on_support_for_register
-    click_on("Support for Register")
+    click_on("Support")
   end
 
   def then_i_am_on_the_funding_uploads_page
