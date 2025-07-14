@@ -109,49 +109,55 @@ namespace :tech_docs do
   namespace :reference_data do
     desc "Generate reference data docs from the API"
     task :generate do
-      runner_code   = "print Hesa::ReferenceData::V20250Rc.call.to_json"
+      version_runner_code  = "print Hesa::ReferenceData.constants"
 
-      FileUtils.mkdir_p("source/reference-data/temp_v2025.0-rc")
+      TechDocsHelpers.runner(version_runner_code).each do |version|
+        data_runner_code  = "print Hesa::ReferenceData::#{version}.call"
+        version_dir       = TechDocsHelpers.format_version(version)
+        temp_version_dir  = "temp_#{version_dir}"
 
-      app     = Middleman::Application.new
-      context = Middleman::TemplateContext.new(app, {})
+        FileUtils.mkdir_p("source/reference-data/#{temp_version_dir}")
 
-      data_sorted = TechDocsHelpers.runner(runner_code).sort_by do |attribute, values|
-        TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"]
-      end.to_h
+        app     = Middleman::Application.new
+        context = Middleman::TemplateContext.new(app, {})
 
-      data_sorted.each_with_index do |(attribute, values), index|
-        field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
-        formatted_attribute = attribute.gsub("_", "-")
+        data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, values|
+          TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"]
+        end.to_h
 
-        File.open("source/reference-data/temp_v2025.0-rc/#{formatted_attribute}.html.md", "w") do |f|
-          html = context.partial(
-            "partials/reference_data/attribute", locals: {
-              attribute: formatted_attribute,
-              field: field,
-              values: values,
-            }
-          )
+        data.each_with_index do |(attribute, values), index|
+          field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
+          formatted_attribute = attribute.gsub("_", "-")
 
-          f.write(
-            <<~METADATA,
-              ---
-              title: #{field["field_name"]}
-              weight: #{index + 1}
-              source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0_rc.rb
-              ---
+          File.open("source/reference-data/#{temp_version_dir}/#{formatted_attribute}.html.md", "w") do |f|
+            html = context.partial(
+              "partials/reference_data/attribute", locals: {
+                attribute: formatted_attribute,
+                field: field,
+                values: values,
+              }
+            )
 
-            METADATA
-          )
+            f.write(
+              <<~METADATA,
+                ---
+                title: #{field["field_name"]}
+                weight: #{index + 1}
+                source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, "_")}.rb
+                ---
+
+              METADATA
+            )
 
 
-          f.write(html)
+            f.write(html)
+          end
         end
-      end
 
-      FileUtils.cp("source/reference-data/v2025.0-rc/index.html.md.erb", "source/reference-data/temp_v2025.0-rc")
-      FileUtils.rm_rf("source/reference-data/v2025.0-rc")
-      FileUtils.mv("source/reference-data/temp_v2025.0-rc", "source/reference-data/v2025.0-rc")
+        FileUtils.cp("source/reference-data/#{version_dir}/index.html.md.erb", "source/reference-data/#{temp_version_dir}")
+        FileUtils.rm_rf("source/reference-data/#{version_dir}")
+        FileUtils.mv("source/reference-data/#{temp_version_dir}", "source/reference-data/#{version_dir}")
+      end
     end
   end
 end
@@ -162,7 +168,7 @@ module TechDocsHelpers
 
   def self.runner(runner_code)
     command = <<~CMD
-      cd #{RAILS_DIR} && BUNDLE_GEMFILE=#{RAILS_GEMFILE} bundle exec rails runner '#{runner_code}'
+      cd #{RAILS_DIR} && BUNDLE_GEMFILE=#{RAILS_GEMFILE} bundle exec rails runner '#{runner_code}.to_json'
     CMD
 
     stdout, stderr, status = Open3.capture3(command)
@@ -178,5 +184,18 @@ module TechDocsHelpers
     @fields ||= YAML.load_file(
       File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
     )
+  end
+
+  def self.format_version(version)
+    if version   =~ /^V(\d{4})(\d)([a-zA-Z]+)?$/
+      major      = $1
+      minor      = $2
+      suffix     = $3
+      formatted  = "v#{major}.#{minor}"
+      formatted += "-#{suffix}" if suffix
+      formatted.downcase
+    else
+      raise "Invalid version format"
+    end
   end
 end
