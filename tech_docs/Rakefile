@@ -109,29 +109,14 @@ namespace :tech_docs do
   namespace :reference_data do
     desc "Generate reference data docs from the API"
     task :generate do
-      rails_dir     = File.expand_path("../", __dir__)
-      rails_gemfile = File.join(rails_dir, 'Gemfile')
-
       runner_code   = "print Hesa::ReferenceData::V20250Rc.call.to_json"
-
-      command = <<~CMD
-        cd #{rails_dir} && BUNDLE_GEMFILE=#{rails_gemfile} bundle exec rails runner '#{runner_code}'
-      CMD
-
-      stdout, stderr, status = Open3.capture3(command)
-
-      if status.success?
-        data = JSON.parse(stdout)
-      else
-        raise StandardError, stderr.present? ? stderr : "Something went wrong"
-      end
 
       FileUtils.mkdir_p("source/reference-data/temp_v2025.0-rc")
 
       app     = Middleman::Application.new
       context = Middleman::TemplateContext.new(app, {})
 
-      data_sorted = data.sort_by do |attribute, values|
+      data_sorted = TechDocsHelpers.runner(runner_code).sort_by do |attribute, values|
         TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"]
       end.to_h
 
@@ -172,6 +157,23 @@ namespace :tech_docs do
 end
 
 module TechDocsHelpers
+  RAILS_DIR     = File.expand_path("../", __dir__)
+  RAILS_GEMFILE = File.join(RAILS_DIR, 'Gemfile')
+
+  def self.runner(runner_code)
+    command = <<~CMD
+      cd #{RAILS_DIR} && BUNDLE_GEMFILE=#{RAILS_GEMFILE} bundle exec rails runner '#{runner_code}'
+    CMD
+
+    stdout, stderr, status = Open3.capture3(command)
+
+    if status.success?
+      JSON.parse(stdout)
+    else
+      raise StandardError, stderr.present? ? stderr : "Something went wrong"
+    end
+  end
+
   def self.fields
     @fields ||= YAML.load_file(
       File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
