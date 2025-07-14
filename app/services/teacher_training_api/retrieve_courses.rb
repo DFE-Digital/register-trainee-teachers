@@ -4,7 +4,7 @@ module TeacherTrainingApi
   class RetrieveCourses
     include ServicePattern
 
-    DEFAULT_PATH = "/recruitment_cycles/2025/courses?include=accredited_body,provider&sort=name,provider.provider_name"
+    DEFAULT_PATH = "/recruitment_cycles/#{Settings.current_recruitment_cycle_year}/courses?include=accredited_body,provider&sort=name,provider.provider_name".freeze
 
     def initialize(request_uri: nil)
       @request_uri = request_uri.presence || DEFAULT_PATH
