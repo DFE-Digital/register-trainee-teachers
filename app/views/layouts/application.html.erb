@@ -45,10 +45,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= render Header::View.new(
-      service_name: I18n.t("service_name"),
-      items: header_items(@current_user),
-    ) %>
+    <%= render Header::View.new %>
 
     <%= render OrganisationSwitcher::View.new(current_user: @current_user) %>
 
