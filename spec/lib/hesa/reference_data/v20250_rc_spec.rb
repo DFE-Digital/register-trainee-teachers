@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable  Rails/RedundantActiveRecordAllMethod
 RSpec.describe Hesa::ReferenceData::V20250Rc do
   describe "::call" do
     it "returns the mapped hesa code sets" do
@@ -21,16 +22,16 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
         disability8: Hesa::CodeSets::Disabilities::MAPPING,
         disability9: Hesa::CodeSets::Disabilities::MAPPING,
         country: Hesa::CodeSets::Countries::MAPPING,
-        training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.map { |code, value| [code, value.humanize] }.to_h,
+        training_route: Hesa::CodeSets::TrainingRoutes::MAPPING.transform_values(&:humanize),
         subject: DfEReference::DegreesQuery::SUBJECTS.all.pluck(:hecos_code, :name).to_h.reject { |k, _v| k.nil? },
         ethnicity: Hesa::CodeSets::Ethnicities::MAPPING,
         fund_code: Hesa::CodeSets::FundCodes::MAPPING,
-        training_initiative: Hesa::CodeSets::TrainingInitiatives::MAPPING.map { |code, value| [code, value.humanize] }.to_h,
+        training_initiative: Hesa::CodeSets::TrainingInitiatives::MAPPING.transform_values(&:humanize),
         itt_aim: Hesa::CodeSets::IttAims::MAPPING,
-        course_age_range: DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.map { |code, value| [code, "Ages #{value.join("-")}"] }.to_h,
-        study_mode: Hesa::CodeSets::StudyModes::MAPPING.map { |code, value| [code, Trainee.study_modes.invert[value].humanize] }.to_h,
+        course_age_range: DfE::ReferenceData::AgeRanges::HESA_CODE_SETS.transform_values { |value| "Ages #{value.join('-')}" },
+        study_mode: Hesa::CodeSets::StudyModes::MAPPING.transform_values { |value| Trainee.study_modes.invert[value].humanize },
         itt_qualification_aim: Hesa::CodeSets::IttQualificationAims::MAPPING,
-        sex: Hesa::CodeSets::Sexes::MAPPING.map { |code, value| [code, Trainee.sexes.invert[value].humanize] }.to_h,
+        sex: Hesa::CodeSets::Sexes::MAPPING.transform_values { |value| Trainee.sexes.invert[value].humanize },
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING,
         course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING,
         course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING,
@@ -38,3 +39,4 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
     end
   end
 end
+# rubocop:enable  Rails/RedundantActiveRecordAllMethod
