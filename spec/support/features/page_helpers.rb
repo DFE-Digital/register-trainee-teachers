@@ -394,6 +394,10 @@ module Features
       @csv_docs_page ||= PageObjects::CsvDocs.new
     end
 
+    def reference_data_page
+      @reference_data_page ||= PageObjects::ReferenceDataPage.new
+    end
+
     def service_updates_page
       @service_updates_page ||= PageObjects::ServiceUpdates.new
     end
