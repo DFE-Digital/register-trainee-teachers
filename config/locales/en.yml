@@ -2082,9 +2082,10 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-
         api/v20250_rc/trainee_attributes:
           attributes:
+            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
+            inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
             trainee_start_date:
               future: must be in the past
             itt_start_date:

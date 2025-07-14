@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Api::V20250Rc::TraineeAttributes do
+  include ErrorMessageHelper
+
   subject { described_class.new }
 
   describe "validations" do
@@ -17,7 +19,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
     it {
       expect(subject).to validate_inclusion_of(:nationality)
         .in_array(RecruitsApi::CodeSets::Nationalities::MAPPING.values)
-        .with_message(/has invalid reference data value of '.*'. Valid values are #{RecruitsApi::CodeSets::Nationalities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(RecruitsApi::CodeSets::Nationalities::MAPPING.keys)}\.\.\./)
         .allow_blank
     }
 
@@ -115,7 +117,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:course_subject_one]).to contain_exactly(
-            "has invalid reference data value of 'random subject'. Valid values are #{Hesa::CodeSets::CourseSubjects::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+            "has invalid reference data value of 'random subject'. Example values include #{format_reference_data_list(Hesa::CodeSets::CourseSubjects::MAPPING.keys)}...",
           )
         }
       end
@@ -191,7 +193,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
     it {
       expect(subject).to validate_inclusion_of(:ethnicity)
         .in_array(Hesa::CodeSets::Ethnicities::MAPPING.values.uniq)
-        .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::Ethnicities::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
+        .with_message(/has invalid reference data value of '.*'. Example values include #{format_reference_data_list(Hesa::CodeSets::Ethnicities::MAPPING.keys)}\.\.\./)
         .allow_blank
     }
 

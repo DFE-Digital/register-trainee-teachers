@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
+  include ErrorMessageHelper
+
   subject { described_class.new }
 
   describe "validations" do
@@ -77,7 +79,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
           subject.validate
 
           expect(subject.errors[:itt_qualification_aim]).to contain_exactly(
-            "has invalid reference data value of '300'. Valid values are #{Hesa::CodeSets::IttQualificationAims::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+            "has invalid reference data value of '300'. Example values include #{format_reference_data_list(Hesa::CodeSets::IttQualificationAims::MAPPING.keys)}...",
           )
         }
       end
