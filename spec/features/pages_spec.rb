@@ -99,6 +99,11 @@ private
     expect(csv_docs_page.page_heading).to have_text("How to add trainee information to the bulk add new trainee CSV template")
   end
 
+  def then_i_should_see_reference_data_page
+    expect(reference_data_page).to be_displayed
+    expect(reference_data_page.page_heading).to have_text("Reference data")
+  end
+
   def then_i_should_see_service_updates_page
     expect(service_updates_page).to be_displayed
     expect(service_updates_page.page_heading).to have_text("News and updates")
