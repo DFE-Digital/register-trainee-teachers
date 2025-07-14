@@ -23,7 +23,7 @@ module PageObjects
       element :privacy_link, ".govuk-footer__link", text: "Privacy"
     end
 
-    section :primary_navigation, "nav.moj-primary-navigation" do
+    section :primary_navigation, "nav.govuk-service-navigation__wrapper" do
       element :drafts_link, ".govuk-link", text: "Draft trainees"
     end
   end
