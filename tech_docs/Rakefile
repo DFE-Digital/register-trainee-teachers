@@ -74,8 +74,8 @@ namespace :tech_docs do
     task :generate do
       version_runner_code  = "print Hesa::ReferenceData.constants"
 
-      TechDocsHelpers.runner(version_runner_code).each do |version|
-        data_runner_code  = "print Hesa::ReferenceData::#{version}.call"
+      TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.each do |version|
+        data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
         version_dir       = TechDocsHelpers.format_version(version)
         temp_version_dir  = "temp_#{version_dir}"
 
@@ -98,6 +98,7 @@ namespace :tech_docs do
             html = context.partial(
               "partials/reference_data/attribute", locals: {
                 attribute: formatted_attribute,
+                version: version_dir,
                 field: field,
                 values: values,
               }
