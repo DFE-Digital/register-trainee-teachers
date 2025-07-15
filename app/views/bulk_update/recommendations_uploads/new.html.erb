@@ -1,5 +1,5 @@
 <%= render PageTitle::View.new(
-  text: "Bulk recommend trainees for QTS or EYTS",
+  text: "Bulk select trainees that now hold QTS or EYTS",
   has_errors: @recommendations_upload_form.errors.present?,
   ) %>
 
@@ -15,14 +15,14 @@
 
       <h1 class="govuk-heading-l">
         <span class="govuk-caption-xl"><%= organisation_name %></span>
-        Bulk recommend trainees for QTS or EYTS
+        Bulk select trainees that now hold QTS or EYTS
       </h1>
 
-      <p class="govuk-body"> You have <%= pluralize(bulk_recommend_count, "trainee")  %> that you can recommend for QTS or EYTS.</p>
+      <p class="govuk-body"> You have <%= pluralize(bulk_recommend_count, "trainee")  %> that can be selected to hold QTS or EYTS.</p>
 
-      <p class="govuk-body">After you recommend trainees for QTS or EYTS, the DfE will award QTS or EYTS (where appropriate) within <span class="app-nowrap">3 working days</span>.</p>
+      <p class="govuk-body">After the trainees are selected, we will update our records to show they hold QTS or EYTS (where appropriate) within <span class="app-nowrap">3 working days</span>.</p>
 
-      <h2 class="govuk-heading-l">How to recommend trainees</h2>
+      <h2 class="govuk-heading-l">How to select trainees that now hold QTS or EYTS</h2>
 
       <h3 class="govuk-heading-m">
         1. Choose a file to download
@@ -35,15 +35,15 @@
       <h4 class="govuk-heading-m">Prepopulated file</h4>
 
       <p class="govuk-body">
-        This file contains all <%= pluralize(bulk_recommend_count, "trainee")  %> that can be recommended for QTS or EYTS.
+        This file contains all <%= pluralize(bulk_recommend_count, "trainee")  %> hat now hold QTS or EYTS.
       </p>
 
       <p class="govuk-body">
-        Delete any trainees you do not want to recommend.
+        Delete any trainees that do not hold QTS or EYTS.
       </p>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download a prepopulated file to recommend trainees for QTS or EYTS", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
+        <%= govuk_link_to("Download a prepopulated file to select trainees that now hold QTS or EYTS", bulk_recommend_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
       </p>
 
       <p class="govuk-body">
@@ -57,11 +57,11 @@
       </p>
 
       <p class="govuk-body">
-        Add the trainees you want to recommend for QTS or EYTS.
+        Add the trainees you want to select to hold QTS or EYTS.
       </p>
 
       <p class="govuk-body">
-        <%= govuk_link_to("Download an empty template file to recommend trainees for QTS or EYTS", bulk_recommend_empty_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
+        <%= govuk_link_to("Download an empty template file to select trainees for QTS or EYTS", bulk_recommend_empty_export_reports_path(:csv), class: "govuk-link--no-visited-state") %>
       </p>
 
       <p class="govuk-body">
@@ -93,7 +93,7 @@
 
       <%= f.govuk_file_field(:file, label: {  text: "Upload a file" }, hint: { text: "File type must be ‘csv’"}, accept: ".csv") %>
 
-      <%= f.govuk_submit("Upload file and check who you’ll recommend") %>
+      <%= f.govuk_submit("Upload file and check who you've selected") %>
 
     <% end %>
   </div>

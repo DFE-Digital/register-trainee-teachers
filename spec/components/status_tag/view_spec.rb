@@ -27,7 +27,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("QTS recommended")
+      expect(rendered_content).to have_text("Selected for QTS")
     end
   end
 
@@ -43,7 +43,7 @@ describe StatusTag::View do
     let(:trainee) { build(:trainee, :recommended_for_award) }
 
     it "renders the correct status" do
-      expect(rendered_content).to have_text("QTS recommended")
+      expect(rendered_content).to have_text("Selected for QTS")
     end
   end
 

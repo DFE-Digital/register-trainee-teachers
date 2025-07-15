@@ -14,16 +14,15 @@
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">
-        <span class="govuk-caption-xl">Bulk recommend</span>
+        <span class="govuk-caption-xl">Bulk select</span>
         Review errors for <%= pluralize(error_rows_count, "trainee") %> in the
         CSV file you uploaded
       </h1>
 
       <p class="govuk-body">
-        You cannot recommend a trainee for
+        You cannot select a trainee that now holds
         <%= qts_or_eyts(recommendations_upload.error_rows) %> if there’s an
-        error in their row in the CSV file. You need to fix the errors if you
-        want to recommend them.
+        error in their row in the CSV file. You need to fix the errors if you want to select them.
       </p>
 
       <ol class="govuk-list govuk-list--number">
@@ -35,8 +34,7 @@
             ) %>.
         </li>
         <li>
-          Fix the errors. If you cannot fix an error, you can delete the row and
-          the trainee will not be recommended.
+          Fix the errors. If you cannot fix an error, you can delete the row and the trainee will not be selected as holding QTS or EYTS.
         </li>
         <li>
           Upload the CSV file.
@@ -44,20 +42,20 @@
         </li>
       </ol>
 
-      <%= f.govuk_submit "Upload file and check who you’ll recommend" %>
+      <%= f.govuk_submit "Upload file and check who you've selected" %>
     <% end %>
 
     <% if awardable_rows_count.positive? %>
       <p class="govuk-body">
         <%= govuk_link_to(
-          "Skip trainees with errors and check who you’ll recommend",
+          "Skip trainees with errors and check who you'll select",
           bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload)
           ) %>
       </p>
     <% end %>
 
     <p class="govuk-body">
-      <%= govuk_link_to("Cancel bulk recommending trainees", cancel_bulk_update_recommendations_upload_path(recommendations_upload))%>
+      <%= govuk_link_to("Cancel bulk selecting trainees that now hold QTS or EYTS ", cancel_bulk_update_recommendations_upload_path(recommendations_upload))%>
     </p>
   </div>
 </div>

@@ -6,11 +6,11 @@
       "Both trainees"
     else
       "All #{awardable_rows_count} trainees"
-    end %> will be recommended for <%= qts_or_eyts(recommendations_upload.awardable_rows) %>.
+    end %> who hold <%= qts_or_eyts(recommendations_upload.awardable_rows) %> selected.
 </p>
 
 <%= govuk_link_to(
-  "Check who you’ll recommend",
+  "Check who you've selected",
   bulk_update_recommendations_upload_recommendations_checks_path(recommendations_upload),
   class: "govuk-button"
   ) %>

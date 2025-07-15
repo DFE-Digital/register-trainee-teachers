@@ -698,7 +698,7 @@ en:
           trn_received: TRN received
           withdrawn: Withdrawn
           deferred: Deferred
-          QTS_recommended_for_award: QTS recommended
+          QTS_recommended_for_award: Selected for QTS
           EYTS_recommended_for_award: EYTS recommended
           QTS_awarded: QTS awarded
           EYTS_awarded: EYTS awarded
@@ -1420,7 +1420,7 @@ en:
           withdrawn: Withdrawn
           deferred: Deferred
           awarded: Qualification awarded
-          qts_recommended: QTS recommended
+          qts_recommended: Selected for QTS
           qts_awarded: QTS awarded
           eyts_recommended: EYTS recommended
           eyts_awarded: EYTS awarded

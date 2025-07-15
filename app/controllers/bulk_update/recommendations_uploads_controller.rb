@@ -43,11 +43,11 @@ module BulkUpdate
     end
 
     def organisation_filename_prepopulated
-      "#{provider.name.parameterize}-trainees-to-recommend-prepopulated.csv"
+      "#{provider.name.parameterize}-trainees-to-select-prepopulated.csv"
     end
 
     def organisation_filename_empty
-      "#{provider.name.parameterize}-trainees-to-recommend-empty.csv"
+      "#{provider.name.parameterize}-trainees-to-select-empty.csv"
     end
 
     # for now, if anything goes wrong during creation of trainees

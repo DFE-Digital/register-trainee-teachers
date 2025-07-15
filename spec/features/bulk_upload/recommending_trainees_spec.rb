@@ -147,7 +147,7 @@ private
   end
 
   def then_i_see_the_option_to_download_the_empty_template
-    expect(recommendations_upload_page).to have_link("Download an empty template file to recommend trainees for QTS or EYTS")
+    expect(recommendations_upload_page).to have_link("Download an empty template file to select trainees for QTS or EYTS")
   end
 
   def and_i_upload_a_csv(csv_path)
@@ -180,12 +180,12 @@ private
   end
 
   def then_i_see_count_complete
-    expect(recommendations_upload_show_page).to have_text("Both trainees will be recommended")
+    expect(recommendations_upload_show_page).to have_text("Both trainees who hold QTS selected")
   end
 
   def then_i_see_count_missing_dates
-    expect(recommendations_upload_show_page).to have_text("1 trainee who will be recommended")
-    expect(recommendations_upload_show_page).to have_text("1 trainee who will not be recommended")
+    expect(recommendations_upload_show_page).to have_text("1 trainee with QTS who will be selected")
+    expect(recommendations_upload_show_page).to have_text("1 trainee who will not be selected")
   end
 
   def then_i_see_the_form_to_change_upload
@@ -218,7 +218,7 @@ private
   end
 
   def and_i_remain_on_the_change_upload_page
-    expect(recommendations_checks_show_page).to have_text("Change who you’ll recommend for QTS or EYTS")
+    expect(recommendations_checks_show_page).to have_text("Change who you’ve selected for QTS or EYTS")
   end
 
   def and_i_see_a_list_of_trainees_to_check
@@ -236,6 +236,6 @@ private
   end
 
   def then_i_see_the_confirmation
-    expect(recommendations_upload_confirmation_page).to have_content("2 trainees recommended for QTS")
+    expect(recommendations_upload_confirmation_page).to have_content("2 trainees selected")
   end
 end
