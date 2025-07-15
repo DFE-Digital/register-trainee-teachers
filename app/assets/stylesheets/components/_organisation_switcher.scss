@@ -7,14 +7,16 @@
 .app-organisation-switcher__title {
   @include govuk-font($size: 19, $weight: "bold");
   @include govuk-media-query($from: tablet) {
-    width: 50%;
+    width: 40%;
     float: left;
   }
 }
 
 .app-organisation-switcher__navigation-list {
   padding: 5px 0;
-  text-align: right;
+  @include govuk-media-query($from: tablet) {
+    text-align: right;
+  }
 }
 
 .app-organisation-switcher__navigation-item {
