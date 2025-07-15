@@ -66,8 +66,8 @@ RSpec.describe SchoolData::CsvScraper do
         agent = service_instance.send(:create_mechanize_agent)
 
         expect(agent).to be_a(Mechanize)
-        expect(agent.user_agent).to include("Mozilla")
-        expect(agent.read_timeout).to eq(60)
+        expect(agent.user_agent).to eq(Settings.school_data.scraper.user_agent)
+        expect(agent.read_timeout).to eq(Settings.school_data.scraper.request_timeout)
       end
     end
 
@@ -79,8 +79,8 @@ RSpec.describe SchoolData::CsvScraper do
         expect(described_class::ACADEMIES_CHECKBOX_ID).to eq("academies-and-free-school--elds-csv-checkbox")
       end
 
-      it "has correct form action constants" do
-        expect(described_class::GIAS_DOWNLOADS_URL).to eq("https://get-information-schools.service.gov.uk/Downloads")
+      it "constructs correct GIAS downloads URL from settings" do
+        expect(service_instance.send(:gias_downloads_url)).to eq("https://get-information-schools.service.gov.uk/Downloads")
       end
     end
 
@@ -88,7 +88,7 @@ RSpec.describe SchoolData::CsvScraper do
       let(:no_form_html) { "<html><body><p>No form here</p></body></html>" }
 
       before do
-        stub_request(:get, described_class::GIAS_DOWNLOADS_URL)
+        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
           .to_return(status: 200, body: no_form_html, headers: { "Content-Type" => "text/html" })
       end
 
@@ -140,7 +140,7 @@ RSpec.describe SchoolData::CsvScraper do
 
     context "when receiving a 403 Forbidden response" do
       before do
-        stub_request(:get, described_class::GIAS_DOWNLOADS_URL)
+        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
           .to_return(status: 403, body: "Forbidden")
       end
 
@@ -154,7 +154,7 @@ RSpec.describe SchoolData::CsvScraper do
 
     context "when receiving a 404 Not Found response" do
       before do
-        stub_request(:get, described_class::GIAS_DOWNLOADS_URL)
+        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
           .to_return(status: 404, body: "Not Found")
       end
 
@@ -168,7 +168,7 @@ RSpec.describe SchoolData::CsvScraper do
 
     context "when receiving a server error response" do
       before do
-        stub_request(:get, described_class::GIAS_DOWNLOADS_URL)
+        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
           .to_return(status: 503, body: "Service Unavailable")
       end
 
