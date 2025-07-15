@@ -73,7 +73,7 @@ module BulkUpdate
             end
 
             describe "#messages" do
-              it { expect(service.messages).to eql ["The trainee has Selected for QTS status - you can only recommend trainees with TRN received status"] }
+              it { expect(service.messages).to eql ["The trainee has QTS recommended status - you can only recommend trainees with TRN received status"] }
             end
 
             describe "#trainee" do
