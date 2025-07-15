@@ -25,7 +25,7 @@ You can change other trainee or course details in an individual trainee’s reco
 
 ### 1. Sign into Register
 
-Once you have signed into Register, you can [access the bulk recommendation feature](/bulk-update/recommend/choose-who-to-recommend).
+Once you have signed into Register, you can [access the bulk recommendation feature](/bulk-update/select/choose-who-to-select).
 
 ### 2. Download a CSV file listing trainees you can select that now hold QTS or EYTS
 
