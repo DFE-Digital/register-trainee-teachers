@@ -7,9 +7,6 @@ module SchoolData
   class CsvScraper
     include ServicePattern
 
-    # GIAS download page URL
-    GIAS_DOWNLOADS_URL = "https://get-information-schools.service.gov.uk/Downloads"
-
     # Form field IDs from the GIAS website
     STATE_FUNDED_CHECKBOX_ID = "state-funded-school--elds-csv-checkbox"
     ACADEMIES_CHECKBOX_ID = "academies-and-free-school--elds-csv-checkbox"
@@ -61,7 +58,7 @@ module SchoolData
 
       # Step 1: Submit form with school data checkboxes
       Rails.logger.info("Accessing GIAS downloads page...")
-      page = agent.get(GIAS_DOWNLOADS_URL)
+      page = agent.get(gias_downloads_url)
       form = find_and_validate_form(page)
 
       # Check and select the required checkboxes
@@ -190,8 +187,7 @@ module SchoolData
     def create_mechanize_agent
       agent = Mechanize.new
 
-      # Use a more standard browser user agent to avoid bot detection
-      agent.user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+      agent.user_agent = Settings.school_data.scraper.user_agent
 
       # Set headers that match a real browser
       agent.request_headers = {
@@ -207,7 +203,7 @@ module SchoolData
         "Sec-Fetch-User" => "?1",
       }
 
-      agent.read_timeout = 60 # 60 seconds for downloads
+      agent.read_timeout = Settings.school_data.scraper.request_timeout
       agent.follow_meta_refresh = true
       agent.redirect_ok = true
 
@@ -231,7 +227,7 @@ module SchoolData
     end
 
     def wait_for_download_button(agent, results_page)
-      max_wait_time = 60 # Maximum 60 seconds to wait
+      max_wait_time = Settings.school_data.scraper.download_timeout
       check_interval = 3 # Check every 3 seconds
       elapsed_time = 0
 
@@ -268,12 +264,16 @@ module SchoolData
                   "Try again later or contact the GIAS team if the issue persists."
         raise(AccessDeniedError, message)
       when "404"
-        raise(DownloadError, "GIAS downloads page not found (404) - URL may have changed: #{GIAS_DOWNLOADS_URL}")
+        raise(DownloadError, "GIAS downloads page not found (404) - URL may have changed: #{gias_downloads_url}")
       when "500", "502", "503", "504"
         raise(DownloadError, "GIAS server error (#{error.response_code}) - their service may be temporarily unavailable")
       else
         raise(DownloadError, "HTTP error #{error.response_code}: #{error.message}")
       end
+    end
+
+    def gias_downloads_url
+      "#{Settings.school_data.scraper.base_url}/Downloads"
     end
   end
 end
