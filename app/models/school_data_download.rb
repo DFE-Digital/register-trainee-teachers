@@ -32,13 +32,4 @@ class SchoolDataDownload < ApplicationRecord
 
   validates :started_at, presence: true
   validates :file_count, presence: true, if: :completed?
-
-  scope :recent, -> { where(started_at: 1.month.ago..) }
-  scope :successful, -> { where(status: :completed) }
-
-  def duration
-    return nil unless completed_at && started_at
-
-    completed_at - started_at
-  end
 end
