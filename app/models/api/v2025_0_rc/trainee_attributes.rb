@@ -335,6 +335,8 @@ module Api
       end
 
       def validate_trainee_start_date
+        self.trainee_start_date = itt_start_date if trainee_start_date.blank?
+
         return if trainee_start_date.blank?
 
         if !valid_date_string?(trainee_start_date)

@@ -443,6 +443,19 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         end
       end
 
+      context "when not provided but itt_start_date is provided" do
+        before do
+          subject.itt_start_date = Time.zone.today.iso8601
+        end
+
+        it "copies the itt_start_date and is valid" do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to be_blank
+          expect(subject.trainee_start_date).to eq(subject.itt_start_date)
+        end
+      end
+
       context "when invalid" do
         before do
           subject.trainee_start_date = "14/11/23"
