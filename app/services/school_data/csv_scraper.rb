@@ -18,20 +18,34 @@ module SchoolData
     class ExtractionError < StandardError; end
     class AccessDeniedError < StandardError; end
 
-    attr_reader :extracted_files, :extract_path
+    attr_reader :extracted_files, :extract_path, :download_record, :error_message
 
     def initialize(extract_path: Dir.mktmpdir("school_data_"))
       @extract_path = extract_path
       @extracted_files = []
+      @download_record = SchoolDataDownload.create!(started_at: Time.current, status: :pending)
+      @error_message = nil
     end
 
     def call
+      @download_record.update!(status: :downloading)
       download_and_extract_zip
+      @download_record.update!(status: :extracting)
       validate_extraction
       self
     rescue StandardError => e
+      @error_message = e.message
+      @download_record.update!(
+        status: :failed,
+        completed_at: Time.current,
+        error_message: e.message,
+      )
       Rails.logger.error("CSV scraping failed: #{e.message}")
-      raise
+      self
+    end
+
+    def success?
+      error_message.nil?
     end
 
     def cleanup!
