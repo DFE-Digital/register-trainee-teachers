@@ -16,7 +16,7 @@
       <% if awardable_rows.count <= @table_row_limit %>
         <%= render partial: "table", locals: {
           rows: awardable_rows,
-          caption: "Trainees you’ll selected that hold #{qts_or_eyts(recommendations_upload.awardable_rows)}"
+          caption: "Trainees you’ll select that hold #{qts_or_eyts(recommendations_upload.awardable_rows)}"
         } %>
       <% else %>
         <%= govuk_accordion(html_attributes: {
