@@ -47,8 +47,6 @@ module SchoolData
       # Step 1: Submit form with school data checkboxes
       page = agent.get(gias_downloads_url)
       form = find_and_validate_form(page)
-
-      # Check and select the required checkboxes
       select_school_data_checkboxes(form)
 
       # Submit the form
@@ -89,14 +87,13 @@ module SchoolData
     end
 
     def download_zip_file(agent, results_page)
-      # Wait for the Results.zip download button to appear (it's loaded via JavaScript)
+      # Wait for the Results.zip download button to appear (it's loaded via JS)
       download_form = wait_for_download_button(agent, results_page)
 
       unless download_form
         raise(DownloadError, "Results.zip download button did not appear within timeout period")
       end
 
-      # Submit the download form to get the ZIP file
       zip_response = agent.submit(download_form, download_form.button_with(id: RESULTS_DOWNLOAD_BUTTON_ID))
 
       if zip_response.respond_to?(:content_type)
