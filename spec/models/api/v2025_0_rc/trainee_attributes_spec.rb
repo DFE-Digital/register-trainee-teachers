@@ -456,7 +456,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         end
       end
 
-      context "when invalid" do
+      context "when badly formatted" do
         before do
           subject.trainee_start_date = "14/11/23"
         end
@@ -465,6 +465,31 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           subject.validate
 
           expect(subject.errors[:trainee_start_date]).to contain_exactly("is invalid")
+        end
+      end
+
+      context "when in future" do
+        before do
+          subject.trainee_start_date = 1.month.from_now.iso8601
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to contain_exactly("must be in the past")
+        end
+      end
+
+      context "when in future but matches itt_start_date" do
+        before do
+          subject.itt_start_date = 1.month.from_now.iso8601
+          subject.trainee_start_date = subject.itt_start_date
+        end
+
+        it do
+          subject.validate
+
+          expect(subject.errors[:trainee_start_date]).to be_empty
         end
       end
     end
