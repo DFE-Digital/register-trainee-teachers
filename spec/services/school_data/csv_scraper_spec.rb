@@ -92,11 +92,12 @@ RSpec.describe SchoolData::CsvScraper do
           .to_return(status: 200, body: no_form_html, headers: { "Content-Type" => "text/html" })
       end
 
-      it "raises FormStructureChangedError" do
-        expect { described_class.call(extract_path:) }.to raise_error(
-          SchoolData::CsvScraper::FormStructureChangedError,
-          "No form found on GIAS downloads page",
-        )
+      it "returns failed result with FormStructureChangedError message" do
+        result = described_class.call(extract_path:)
+
+        expect(result.success?).to be false
+        expect(result.error_message).to eq("No form found on GIAS downloads page")
+        expect(result.download_record.status).to eq("failed")
       end
     end
 
@@ -144,11 +145,12 @@ RSpec.describe SchoolData::CsvScraper do
           .to_return(status: 403, body: "Forbidden")
       end
 
-      it "raises AccessDeniedError with helpful message" do
-        expect { described_class.call(extract_path:) }.to raise_error(
-          SchoolData::CsvScraper::AccessDeniedError,
-          /Access denied \(403\) - GIAS website may have anti-bot protection/,
-        )
+      it "returns failed result with AccessDeniedError message" do
+        result = described_class.call(extract_path:)
+
+        expect(result.success?).to be false
+        expect(result.error_message).to match(/Access denied \(403\) - GIAS website may have anti-bot protection/)
+        expect(result.download_record.status).to eq("failed")
       end
     end
 
@@ -158,11 +160,12 @@ RSpec.describe SchoolData::CsvScraper do
           .to_return(status: 404, body: "Not Found")
       end
 
-      it "raises DownloadError with URL change suggestion" do
-        expect { described_class.call(extract_path:) }.to raise_error(
-          SchoolData::CsvScraper::DownloadError,
-          /GIAS downloads page not found \(404\) - URL may have changed/,
-        )
+      it "returns failed result with DownloadError message" do
+        result = described_class.call(extract_path:)
+
+        expect(result.success?).to be false
+        expect(result.error_message).to match(/GIAS downloads page not found \(404\) - URL may have changed/)
+        expect(result.download_record.status).to eq("failed")
       end
     end
 
@@ -172,11 +175,12 @@ RSpec.describe SchoolData::CsvScraper do
           .to_return(status: 503, body: "Service Unavailable")
       end
 
-      it "raises DownloadError with server error message" do
-        expect { described_class.call(extract_path:) }.to raise_error(
-          SchoolData::CsvScraper::DownloadError,
-          /GIAS server error \(503\) - their service may be temporarily unavailable/,
-        )
+      it "returns failed result with server error message" do
+        result = described_class.call(extract_path:)
+
+        expect(result.success?).to be false
+        expect(result.error_message).to match(/GIAS server error \(503\) - their service may be temporarily unavailable/)
+        expect(result.download_record.status).to eq("failed")
       end
     end
 
@@ -187,10 +191,14 @@ RSpec.describe SchoolData::CsvScraper do
         allow(service_instance).to receive(:download_and_extract_zip).and_raise(StandardError, "Unexpected error")
       end
 
-      it "logs the error and re-raises it" do
+      it "logs the error and returns failed result" do
         expect(Rails.logger).to receive(:error).with("CSV scraping failed: Unexpected error")
 
-        expect { described_class.call(extract_path:) }.to raise_error(StandardError, "Unexpected error")
+        result = described_class.call(extract_path:)
+
+        expect(result.success?).to be false
+        expect(result.error_message).to eq("Unexpected error")
+        expect(result.download_record.status).to eq("failed")
       end
     end
   end

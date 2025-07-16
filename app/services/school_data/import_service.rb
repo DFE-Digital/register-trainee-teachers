@@ -109,12 +109,12 @@ module SchoolData
       school = School.find_or_initialize_by(urn:)
       attributes = extract_school_attributes(row)
 
+      school.assign_attributes(attributes)
       if school.new_record?
-        school.assign_attributes(attributes)
         school.save!
         @stats[:created] += 1
-      else
-        school.update!(attributes)
+      elsif school.changed?
+        school.save!
         @stats[:updated] += 1
       end
     rescue StandardError => e
@@ -164,7 +164,7 @@ module SchoolData
     def update_final_stats
       download_record.update!(
         status: :completed,
-        completed_at: Time.zone.current,
+        completed_at: Time.current,
         file_count: csv_files.size,
         schools_created: stats[:created],
         schools_updated: stats[:updated],

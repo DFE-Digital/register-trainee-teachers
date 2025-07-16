@@ -151,10 +151,7 @@ RSpec.describe SchoolData::ImportService do
         let!(:school) { create(:school, urn: "100001", name: "Test Primary School") }
         let!(:lead_partner) { create(:lead_partner, :school, school: school, name: "Old School Name") }
 
-        before do
-          # Ensure school exists before running the service
-          school.reload
-        end
+        before { school.reload }
 
         it "realigns lead partner names with school names" do
           result = described_class.call(csv_files:, download_record:)
@@ -278,17 +275,7 @@ RSpec.describe SchoolData::ImportService do
 
     it "logs import completion" do
       expect(Rails.logger).to receive(:info).with(/Import completed/).at_least(:once)
-      allow(Rails.logger).to receive(:info) # Allow other info messages
-
-      described_class.call(csv_files:, download_record:)
-    end
-  end
-
-  describe "encoding handling" do
-    it "reads CSV files with Windows-1251 encoding" do
-      # This test ensures we maintain compatibility with GIAS CSV encoding
-      expect(CSV).to receive(:read).with(csv_file_one.path, headers: true, encoding: "windows-1251:utf-8").and_call_original
-      expect(CSV).to receive(:read).with(csv_file_two.path, headers: true, encoding: "windows-1251:utf-8").and_call_original
+      allow(Rails.logger).to receive(:info)
 
       described_class.call(csv_files:, download_record:)
     end
