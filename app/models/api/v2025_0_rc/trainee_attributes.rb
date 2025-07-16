@@ -318,7 +318,10 @@ module Api
       end
 
       def start_year
-        AcademicCycle.for_date(trainee_start_date)&.start_year
+        start_date = trainee_start_date.presence || itt_start_date.presence
+        return nil if start_date.blank?
+
+        AcademicCycle.for_date(start_date)&.start_year
       end
 
       def valid_trainee_start_date?

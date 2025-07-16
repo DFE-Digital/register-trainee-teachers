@@ -93,7 +93,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
       expect(response.parsed_body[:data][:first_names]).to eq("John")
       expect(response.parsed_body[:data][:last_name]).to eq("Doe")
-      expect(response.parsed_body[:data][:trainee_start_date]).to eq(itt_start_date)
+      expect(response.parsed_body[:data][:trainee_start_date]).to be_blank
     end
   end
 
