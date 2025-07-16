@@ -412,3 +412,10 @@ trainee = Trainee.new(provider: lead_partner.provider, state: :draft)
 Create a `draft` trainee for `lead_partner.provider` and ask the support agent to liaise with the provider to ensure that the details are correct, and the dates are correct.
 
 May need overseeing from `draft` to `awarded`.
+
+## Maintenance mode
+
+If we need to put the system into maintenance mode, we can do so by running the
+`Set maintenance mode` Github action. This can be run on `production`,
+`staging` or `qa`. Maintenance mode consists of a simple static page, the
+source for which can be found in the main repository under `maintenance/html`.
