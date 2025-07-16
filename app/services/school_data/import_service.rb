@@ -47,8 +47,6 @@ module SchoolData
     end
 
     def generate_combined_csv
-      Rails.logger.info("Generating combined CSV from #{csv_files.size} source files")
-
       items = csv_files.flat_map do |csv_path|
         extract_school_data_from_csv(csv_path)
       end
@@ -56,8 +54,6 @@ module SchoolData
       # Remove duplicates by URN and sort
       items = items.uniq { |item| item[:urn] }
       items = items.sort { |a, b| a[:urn] <=> b[:urn] }
-
-      Rails.logger.info("Schools total after deduplication: #{items.count}")
 
       # Write to temporary combined CSV
       combined_csv_path = Rails.root.join("tmp", "schools_gias_combined_#{Time.current.to_i}.csv")
@@ -74,8 +70,6 @@ module SchoolData
     end
 
     def extract_school_data_from_csv(csv_path)
-      Rails.logger.info("Processing CSV: #{csv_path}")
-
       # Use the same encoding handling as the rake task
       schools = CSV.read(csv_path, headers: true, encoding: "windows-1251:utf-8")
 
@@ -99,8 +93,6 @@ module SchoolData
     end
 
     def import_schools(csv_path)
-      Rails.logger.info("Importing schools from combined CSV: #{csv_path}")
-
       School.transaction do
         CSV.foreach(csv_path, headers: true, encoding: "utf-8") do |row|
           import_single_school(row)
@@ -121,11 +113,9 @@ module SchoolData
         school.assign_attributes(attributes)
         school.save!
         @stats[:created] += 1
-        Rails.logger.debug { "Created school: #{school.name} (URN: #{school.urn})" }
       else
         school.update!(attributes)
         @stats[:updated] += 1
-        Rails.logger.debug { "Updated school: #{school.name} (URN: #{school.urn})" }
       end
     rescue StandardError => e
       error_info = { urn: urn, error: e.message }
@@ -135,10 +125,10 @@ module SchoolData
 
     def extract_school_attributes(row)
       {
-        name: row["name"],
+        name: row["name"]&.strip,
         open_date: parse_date(row["open_date"]),
-        town: row["town"],
-        postcode: row["postcode"],
+        town: row["town"]&.strip,
+        postcode: row["postcode"]&.strip,
       }
     end
 
@@ -152,34 +142,29 @@ module SchoolData
     end
 
     def realign_lead_partners
-      Rails.logger.info("Realigning lead partner names with school names")
-
       success_count = 0
       lead_partners = LeadPartner.school.joins(:school).includes(:school)
                                  .where("lead_partners.name != schools.name")
 
       lead_partners.find_each do |lead_partner|
-        old_name = lead_partner.name
+        lead_partner.name
         new_name = lead_partner.school.name
 
         lead_partner.name = new_name
 
         if lead_partner.save
           success_count += 1
-          Rails.logger.debug { "Updated lead partner: '#{old_name}' to '#{new_name}'" }
         else
           Rails.logger.error("Failed to update lead partner #{lead_partner.id}: #{lead_partner.errors.full_messages.join(', ')}")
         end
       end
-
-      Rails.logger.info("Lead partner realignment completed: #{success_count} updated")
       @stats[:lead_partners_updated] = success_count
     end
 
     def update_final_stats
       download_record.update!(
         status: :completed,
-        completed_at: Time.current,
+        completed_at: Time.zone.current,
         file_count: csv_files.size,
         schools_created: stats[:created],
         schools_updated: stats[:updated],
@@ -188,10 +173,7 @@ module SchoolData
 
     def cleanup_files
       temporary_files.each do |file_path|
-        if File.exist?(file_path)
-          File.delete(file_path)
-          Rails.logger.debug { "Cleaned up temporary file: #{file_path}" }
-        end
+        FileUtils.rm_f(file_path)
       end
     end
 

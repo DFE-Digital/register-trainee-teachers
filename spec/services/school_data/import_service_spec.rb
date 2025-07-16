@@ -276,13 +276,8 @@ RSpec.describe SchoolData::ImportService do
       expect(temp_files_after.size).to eq(temp_files_before.size)
     end
 
-    it "logs progress information" do
-      expect(Rails.logger).to receive(:info).with(/Generating combined CSV/).at_least(:once)
-      expect(Rails.logger).to receive(:info).with(/Schools total after deduplication/).at_least(:once)
-      expect(Rails.logger).to receive(:info).with(/Importing schools from combined CSV/).at_least(:once)
+    it "logs import completion" do
       expect(Rails.logger).to receive(:info).with(/Import completed/).at_least(:once)
-      expect(Rails.logger).to receive(:info).with(/Realigning lead partner names/).at_least(:once)
-      expect(Rails.logger).to receive(:info).with(/Lead partner realignment completed/).at_least(:once)
       allow(Rails.logger).to receive(:info) # Allow other info messages
 
       described_class.call(csv_files:, download_record:)

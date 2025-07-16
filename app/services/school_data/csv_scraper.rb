@@ -13,11 +13,6 @@ module SchoolData
     DOWNLOAD_BUTTON_ID = "download-selected-files-button"
     RESULTS_DOWNLOAD_BUTTON_ID = "download-button"
 
-    # Where to extract CSV files - creates a unique temp directory
-    def self.default_extract_path
-      Dir.mktmpdir("school_data_")
-    end
-
     class FormStructureChangedError < StandardError; end
     class DownloadError < StandardError; end
     class ExtractionError < StandardError; end
@@ -25,18 +20,14 @@ module SchoolData
 
     attr_reader :extracted_files, :extract_path
 
-    def initialize(extract_path: nil)
-      @extract_path = extract_path || self.class.default_extract_path
+    def initialize(extract_path: Dir.mktmpdir("school_data_"))
+      @extract_path = extract_path
       @extracted_files = []
     end
 
     def call
-      Rails.logger.info("Starting GIAS school data CSV scraping...")
-
       download_and_extract_zip
       validate_extraction
-
-      Rails.logger.info("Successfully extracted #{extracted_files.size} CSV files to #{extract_path}")
       self
     rescue StandardError => e
       Rails.logger.error("CSV scraping failed: #{e.message}")
@@ -46,7 +37,6 @@ module SchoolData
     def cleanup!
       return unless Dir.exist?(extract_path)
 
-      Rails.logger.info("Cleaning up temporary CSV files from #{extract_path}")
       FileUtils.rm_rf(extract_path)
       @extracted_files = []
     end
@@ -54,10 +44,7 @@ module SchoolData
   private
 
     def download_and_extract_zip
-      agent = create_mechanize_agent
-
       # Step 1: Submit form with school data checkboxes
-      Rails.logger.info("Accessing GIAS downloads page...")
       page = agent.get(gias_downloads_url)
       form = find_and_validate_form(page)
 
@@ -65,17 +52,14 @@ module SchoolData
       select_school_data_checkboxes(form)
 
       # Submit the form
-      Rails.logger.info("Submitting form to generate download...")
       sleep(2) # Small delay to be respectful to the server
       results_page = agent.submit(form, form.button_with(id: DOWNLOAD_BUTTON_ID))
 
       # Step 2: Download ZIP from results page
-      Rails.logger.info("Downloading ZIP file from results page...")
       sleep(1) # Small delay before downloading
       zip_data = download_zip_file(agent, results_page)
 
       # Step 3: Extract CSV files
-      Rails.logger.info("Extracting CSV files...")
       extract_csv_files(zip_data)
     rescue Mechanize::ResponseCodeError => e
       handle_http_error(e)
@@ -84,31 +68,17 @@ module SchoolData
     end
 
     def find_and_validate_form(page)
-      # Look for the Downloads/Collate form specifically
       form = page.forms.find { |f| f.action&.include?("Downloads/Collate") } ||
              page.forms.find { |f| f.method&.downcase == "post" } ||
              page.forms.first
 
       raise(FormStructureChangedError, "No form found on GIAS downloads page") unless form
 
-      Rails.logger.info("Found form with action: #{form.action}, method: #{form.method}")
-      Rails.logger.info("Form has #{form.checkboxes.size} checkboxes total")
-
       # Validate that the expected checkboxes exist
       state_funded_checkbox = form.checkbox_with(id: STATE_FUNDED_CHECKBOX_ID)
       academies_checkbox = form.checkbox_with(id: ACADEMIES_CHECKBOX_ID)
 
-      unless state_funded_checkbox && academies_checkbox
-        # Use Nokogiri methods to access attributes since Mechanize is built on Nokogiri
-        available_checkboxes = form.checkboxes.map { |cb| cb["id"] || cb.name }.compact
-        all_inputs = form.fields.map { |f| "#{f.class.name}: #{f.name} (id: #{f['id'] || 'N/A'})" }
-
-        Rails.logger.error("Expected checkboxes not found. Available checkboxes: #{available_checkboxes}")
-        Rails.logger.error("All form inputs: #{all_inputs}")
-        notify_form_structure_changed(available_checkboxes)
-
-        raise(FormStructureChangedError, "Required form checkboxes not found - GIAS site structure changed")
-      end
+      notify_form_structure_changed(form) unless state_funded_checkbox && academies_checkbox
 
       form
     end
@@ -116,8 +86,6 @@ module SchoolData
     def select_school_data_checkboxes(form)
       form.checkbox_with(id: STATE_FUNDED_CHECKBOX_ID).check
       form.checkbox_with(id: ACADEMIES_CHECKBOX_ID).check
-
-      Rails.logger.info("Selected state-funded and academies checkboxes")
     end
 
     def download_zip_file(agent, results_page)
@@ -131,17 +99,13 @@ module SchoolData
       # Submit the download form to get the ZIP file
       zip_response = agent.submit(download_form, download_form.button_with(id: RESULTS_DOWNLOAD_BUTTON_ID))
 
-      # Handle both Mechanize::File (direct download) and response objects
       if zip_response.respond_to?(:content_type)
-        # It's a response object
         unless zip_response.content_type&.include?("zip") || zip_response.content_type&.include?("application/octet-stream")
           raise(DownloadError, "Expected ZIP file but got content type: #{zip_response.content_type}")
         end
 
         zip_response.body
       elsif zip_response.respond_to?(:content)
-        # It's a Mechanize::File object (direct download)
-        Rails.logger.info("Downloaded file as Mechanize::File object")
         zip_response.content
       else
         raise(DownloadError, "Unexpected response type: #{zip_response.class}")
@@ -151,14 +115,12 @@ module SchoolData
     def extract_csv_files(zip_data)
       FileUtils.mkdir_p(extract_path)
 
-      # Use rubyzip to extract CSV files from the ZIP data
       Zip::File.open_buffer(zip_data) do |zip_file|
         zip_file.each do |entry|
           next unless entry.name.end_with?(".csv")
 
           output_path = File.join(extract_path, File.basename(entry.name))
 
-          Rails.logger.info("Extracting #{entry.name} to #{output_path}")
           entry.extract(output_path) { true } # Overwrite if exists
 
           @extracted_files << output_path
@@ -184,68 +146,60 @@ module SchoolData
       end
     end
 
-    def create_mechanize_agent
-      agent = Mechanize.new
+    def agent
+      @agent ||= begin
+        agent = Mechanize.new
 
-      agent.user_agent = Settings.school_data.scraper.user_agent
+        agent.user_agent = Settings.school_data.scraper.user_agent
 
-      # Set headers that match a real browser
-      agent.request_headers = {
-        "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-        "Accept-Language" => "en-GB,en;q=0.9,en-US;q=0.8",
-        "Accept-Encoding" => "gzip, deflate, br",
-        "DNT" => "1",
-        "Connection" => "keep-alive",
-        "Upgrade-Insecure-Requests" => "1",
-        "Sec-Fetch-Dest" => "document",
-        "Sec-Fetch-Mode" => "navigate",
-        "Sec-Fetch-Site" => "none",
-        "Sec-Fetch-User" => "?1",
-      }
+        # Set headers that match a real browser
+        agent.request_headers = {
+          "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+          "Accept-Language" => "en-GB,en;q=0.9,en-US;q=0.8",
+          "Accept-Encoding" => "gzip, deflate, br",
+          "DNT" => "1",
+          "Connection" => "keep-alive",
+          "Upgrade-Insecure-Requests" => "1",
+          "Sec-Fetch-Dest" => "document",
+          "Sec-Fetch-Mode" => "navigate",
+          "Sec-Fetch-Site" => "none",
+          "Sec-Fetch-User" => "?1",
+        }
 
-      agent.read_timeout = Settings.school_data.scraper.request_timeout
-      agent.follow_meta_refresh = true
-      agent.redirect_ok = true
+        agent.read_timeout = Settings.school_data.scraper.request_timeout
+        agent.follow_meta_refresh = true
+        agent.redirect_ok = true
 
-      agent
+        agent
+      end
     end
 
-    def notify_form_structure_changed(available_checkboxes)
-      message = ":warning: GIAS form structure changed!\nExpected checkboxes not found.\nAvailable checkboxes: #{available_checkboxes.join(', ')}\nForm fields may need updating"
+    def notify_form_structure_changed(form)
+      available_checkboxes = form.checkboxes.map { |cb| cb["id"] || cb.name }.compact
+      all_inputs = form.fields.map { |f| "#{f.class.name}: #{f.name} (id: #{f['id'] || 'N/A'})" }
 
-      if Rails.env.development?
-        Rails.logger.warn("GIAS Form Structure Changed: #{message}")
-      elsif defined?(SlackNotifierService)
-        SlackNotifierService.call(
-          message: message,
-          username: "School Data Import Bot",
-          icon_emoji: ":construction:",
-        )
-      end
-    rescue StandardError => e
-      Rails.logger.error("Failed to send Slack notification: #{e.message}")
+      Rails.logger.error("Expected checkboxes not found. Available checkboxes: #{available_checkboxes}")
+      Rails.logger.error("All form inputs: #{all_inputs}")
+      Rails.logger.error("GIAS form structure changed! Expected checkboxes not found. Available checkboxes: #{available_checkboxes.join(', ')}. Form fields may need updating")
+      raise(FormStructureChangedError, "Required form checkboxes not found - GIAS site structure changed")
     end
 
     def wait_for_download_button(agent, results_page)
       max_wait_time = Settings.school_data.scraper.download_timeout
-      check_interval = 3 # Check every 3 seconds
+      check_interval = Settings.school_data.scraper.check_interval
       elapsed_time = 0
 
-      Rails.logger.info("Waiting for Results.zip button to appear...")
-
       while elapsed_time < max_wait_time
-        # Refresh the page to get the latest content
+        # Get fresh page content to check if download button is ready
         current_page = agent.get(results_page.uri.to_s)
 
         # Look for the download form with our button
         download_form = current_page.forms.find { |f| f.button_with(id: RESULTS_DOWNLOAD_BUTTON_ID) }
 
         if download_form
-          Rails.logger.info("Results.zip button appeared after #{elapsed_time} seconds")
           return download_form
         end
 
-        Rails.logger.info("Button not yet available, waiting #{check_interval} more seconds... (#{elapsed_time}/#{max_wait_time}s)")
         sleep(check_interval)
         elapsed_time += check_interval
       end

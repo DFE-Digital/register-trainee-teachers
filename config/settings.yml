@@ -225,5 +225,6 @@ school_data:
   scraper:
     base_url: "https://get-information-schools.service.gov.uk"
     request_timeout: 30
-    download_timeout: 600
+    download_timeout: 300
+    check_interval: 8
     user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"

@@ -63,7 +63,7 @@ RSpec.describe SchoolData::CsvScraper do
       end
 
       it "creates a proper mechanize agent" do
-        agent = service_instance.send(:create_mechanize_agent)
+        agent = service_instance.send(:agent)
 
         expect(agent).to be_a(Mechanize)
         expect(agent.user_agent).to eq(Settings.school_data.scraper.user_agent)
@@ -199,65 +199,20 @@ RSpec.describe SchoolData::CsvScraper do
     # Create a service instance for testing private methods
     let(:service_instance) { described_class.allocate.tap { |s| s.send(:initialize, extract_path:) } }
 
-    context "in development environment" do
-      before do
-        allow(Rails.env).to receive(:development?).and_return(true)
-      end
+    it "logs an error when form structure changes" do
+      # Create a mock form object
+      mock_checkbox1 = double("checkbox", "[]" => "checkbox1", name: "checkbox1")
+      mock_checkbox2 = double("checkbox", "[]" => "checkbox2", name: "checkbox2")
+      mock_field = double("field", class: double(name: "MockField"), name: "field1", "[]" => "field1")
+      mock_form = double("form", checkboxes: [mock_checkbox1, mock_checkbox2], fields: [mock_field])
 
-      it "logs a warning instead of sending Slack notification" do
-        expect(Rails.logger).to receive(:warn).with(match(/GIAS Form Structure Changed/))
+      expect(Rails.logger).to receive(:error).with(match(/Expected checkboxes not found/)).ordered
+      expect(Rails.logger).to receive(:error).with(match(/All form inputs/)).ordered
+      expect(Rails.logger).to receive(:error).with(match(/GIAS form structure changed/)).ordered
 
-        service_instance.send(:notify_form_structure_changed, %w[checkbox1 checkbox2])
-      end
-
-      it "does not attempt to send Slack notification" do
-        stub_const("SlackNotifierService", double("SlackNotifierService"))
-        expect(SlackNotifierService).not_to receive(:call)
-
-        service_instance.send(:notify_form_structure_changed, %w[checkbox1 checkbox2])
-      end
-    end
-
-    context "in non-development environment" do
-      before do
-        allow(Rails.env).to receive(:development?).and_return(false)
-      end
-
-      context "when SlackNotifierService is available" do
-        before do
-          stub_const("SlackNotifierService", double("SlackNotifierService"))
-        end
-
-        it "sends a Slack notification" do
-          expect(SlackNotifierService).to receive(:call).with(
-            message: match(/GIAS form structure changed/),
-            username: "School Data Import Bot",
-            icon_emoji: ":construction:",
-          )
-
-          service_instance.send(:notify_form_structure_changed, %w[checkbox1 checkbox2])
-        end
-      end
-
-      context "when SlackNotifierService is not available" do
-        it "does not attempt to send notification" do
-          # Should not raise an error
-          expect { service_instance.send(:notify_form_structure_changed, []) }.not_to raise_error
-        end
-      end
-
-      context "when Slack notification fails" do
-        before do
-          stub_const("SlackNotifierService", double("SlackNotifierService"))
-          allow(SlackNotifierService).to receive(:call).and_raise(StandardError, "Slack error")
-        end
-
-        it "logs the error without re-raising" do
-          expect(Rails.logger).to receive(:error).with("Failed to send Slack notification: Slack error")
-
-          expect { service_instance.send(:notify_form_structure_changed, []) }.not_to raise_error
-        end
-      end
+      expect { service_instance.send(:notify_form_structure_changed, mock_form) }.to raise_error(
+        SchoolData::CsvScraper::FormStructureChangedError,
+      )
     end
   end
 
