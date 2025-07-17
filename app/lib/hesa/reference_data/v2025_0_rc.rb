@@ -3,16 +3,10 @@
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 module Hesa
   module ReferenceData
-    class V20250Rc
+    class V20250Rc < Base
       DEFAULT_CASE_ATTRIBUTES = %i[
         subject
       ].freeze
-
-      def self.find(attribute)
-        new(
-          all.fetch(attribute.to_sym)
-        )
-      end
 
       def self.all
         {
@@ -53,22 +47,6 @@ module Hesa
                                 end
           [attribute, transformed_mapping.to_h]
         end.freeze
-      end
-
-      attr_reader :values
-
-      def initialize(values)
-        @values = values
-      end
-
-      def as_csv
-        CSV.generate do |f|
-          f << %w[Code Label]
-
-          values.each do |code, label|
-            f << [code, label]
-          end
-        end
       end
     end
   end
