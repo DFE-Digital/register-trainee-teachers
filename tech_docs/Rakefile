@@ -72,7 +72,8 @@ namespace :tech_docs do
     task :generate do
       version_runner_code  = "print Hesa::ReferenceData::Base.descendants"
 
-      TechDocsHelpers.runner(version_runner_code).each do |version|
+      TechDocsHelpers.runner(version_runner_code).each do |klass|
+        version           = klass.demodulize
         data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
         version_dir       = TechDocsHelpers.format_version(version)
         temp_version_dir  = "temp_#{version_dir}"
