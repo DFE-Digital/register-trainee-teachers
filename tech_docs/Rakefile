@@ -72,7 +72,7 @@ namespace :tech_docs do
   namespace :reference_data do
     desc "Generate reference data docs from the API"
     task :generate do
-      version_runner_code  = "print Hesa::ReferenceData::Base.descendants"
+      version_runner_code  = "print Hesa::ReferenceData.constants"
 
       TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.each do |version|
         data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
