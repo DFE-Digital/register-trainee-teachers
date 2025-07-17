@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable  Rails/RedundantActiveRecordAllMethod
 module Hesa
   module ReferenceData
     class Base
@@ -10,7 +9,7 @@ module Hesa
 
       def self.find(attribute)
         new(
-          all.fetch(attribute.to_sym)
+          all.fetch(attribute.to_sym),
         )
       end
 
@@ -32,4 +31,3 @@ module Hesa
     end
   end
 end
-# rubocop:enable  Rails/RedundantActiveRecordAllMethod
