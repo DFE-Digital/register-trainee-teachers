@@ -43,10 +43,13 @@ module RegisterTraineeTeachers
     # - key: Sets the name of the session cookie.
     # - httponly: Prevents client-side scripts from accessing the cookie.
     # - secure: Ensures the cookie is only sent over HTTPS in non-development and non-test environments.
-    config.session_store(:active_record_store,
-                         key: "_register_trainee_teachers_session",
-                         httponly: true,
-                         secure: !Rails.env.local?)
+    config.session_store(
+      :active_record_store,
+      key: "_register_trainee_teachers_session",
+      httponly: true,
+      secure: !Rails.env.local?,
+      same_site: :strict,
+    )
 
     config.i18n.load_path += Rails.root.glob("config/locales/**/*.yml")
 
