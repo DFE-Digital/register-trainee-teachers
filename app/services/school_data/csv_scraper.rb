@@ -238,7 +238,7 @@ module SchoolData
     end
 
     def gias_downloads_url
-      "#{Settings.school_data.scraper.base_url}/Downloads"
+      Settings.school_data.scraper.url
     end
   end
 end
