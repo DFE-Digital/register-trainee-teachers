@@ -10,52 +10,15 @@ namespace :tech_docs do
   desc "Build docs"
   task :build do
     # Build API docs
-    #
-    FileUtils.cp_r("source", "temp_source")
-
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/api-docs/.", "source")
-    FileUtils.rm_rf("source/api-docs")
-    FileUtils.rm_rf("source/csv-docs")
-    FileUtils.rm_rf("source/reference-data")
-
-    system("bundle exec middleman build --build-dir ../public/api-docs")
-
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    TechDocsHelpers.build("api-docs")
 
     # Build CSV docs
-    #
-    FileUtils.cp_r("source", "temp_source")
-
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/csv-docs/.", "source")
-    FileUtils.rm_rf("source/csv-docs")
-    FileUtils.rm_rf("source/api-docs")
-    FileUtils.rm_rf("source/reference-data")
-
-    system("bundle exec middleman build --build-dir ../public/csv-docs")
-
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    TechDocsHelpers.build("csv-docs")
 
     # Build Reference Data docs
-    #
-    FileUtils.cp_r("source", "temp_source")
-
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/reference-data/.", "source")
-    FileUtils.rm_rf("source/api-docs")
-    FileUtils.rm_rf("source/csv-docs")
-    FileUtils.rm_rf("source/reference-data")
-
-    system("bundle exec middleman build --build-dir ../public/reference-data")
-
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    TechDocsHelpers.build("reference-data")
 
     # Generate search.json
-    #
     system("bundle exec middleman build")
 
     FileUtils.cp("build/search.json", "../public/api-docs")
@@ -197,5 +160,20 @@ module TechDocsHelpers
     else
       raise "Invalid version format"
     end
+  end
+
+  def self.build(source)
+    FileUtils.cp_r("source", "temp_source")
+
+    FileUtils.rm("source/index.html.md")
+    FileUtils.cp_r("source/#{source}/.", "source")
+    FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm_rf("source/csv-docs")
+    FileUtils.rm_rf("source/reference-data")
+
+    system("bundle exec middleman build --build-dir ../public/#{source}")
+
+    FileUtils.rm_rf("source")
+    FileUtils.mv("temp_source", "source")
   end
 end
