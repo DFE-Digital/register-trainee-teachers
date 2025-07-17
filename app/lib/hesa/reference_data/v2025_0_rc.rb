@@ -36,6 +36,7 @@ module Hesa
           course_subject_one: CodeSets::CourseSubjects::MAPPING,
           course_subject_two: CodeSets::CourseSubjects::MAPPING,
           course_subject_three: CodeSets::CourseSubjects::MAPPING,
+          nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
         }.freeze
       end
     end

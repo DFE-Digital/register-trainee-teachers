@@ -35,6 +35,7 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
         course_subject_one: Hesa::CodeSets::CourseSubjects::MAPPING,
         course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING,
         course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING,
+        nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
       )
     end
   end
