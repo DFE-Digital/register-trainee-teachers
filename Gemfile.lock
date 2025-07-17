@@ -751,6 +751,8 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
+    vcr (6.3.1)
+      base64
     view_component (3.23.2)
       activesupport (>= 5.2.0, < 8.1)
       concurrent-ruby (~> 1)
@@ -897,6 +899,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   uk_postcode
+  vcr
   webmock
   yabeda-prometheus
   yabeda-rails

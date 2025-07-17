@@ -138,6 +138,7 @@ gem "cssbundling-rails"
 gem "jsbundling-rails"
 gem "rack-attack"
 gem "strong_migrations"
+gem "vcr"
 
 group :qa, :review, :staging, :production do
   # Pull list of CloudFront proxies so request.remote_ip returns the correct IP.

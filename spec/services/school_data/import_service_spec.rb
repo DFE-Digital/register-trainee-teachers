@@ -159,6 +159,17 @@ RSpec.describe SchoolData::ImportService do
           expect(result[:lead_partners_updated]).to eq(1)
           expect(lead_partner.reload.name).to eq("Test Primary School")
         end
+
+        it "logs errors when lead partner update fails due to validation" do
+          # Remove the URN from lead partner to trigger validation failure
+          lead_partner.update_column(:urn, nil) # Use update_column to bypass validations
+
+          expect(Rails.logger).to receive(:error).with(/Failed to update lead partner #{lead_partner.id}:/)
+
+          result = described_class.call(csv_files:, download_record:)
+
+          expect(result[:lead_partners_updated]).to eq(0)
+        end
       end
     end
 

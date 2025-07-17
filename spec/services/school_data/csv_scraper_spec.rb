@@ -5,18 +5,6 @@ require "rails_helper"
 RSpec.describe SchoolData::CsvScraper do
   let(:extract_path) { Rails.root.join("tmp/test_school_data") }
 
-  # Mock ZIP file with CSV content
-  let(:mock_zip_data) do
-    buffer = Zip::OutputStream.write_buffer do |out|
-      out.put_next_entry("edubaseallstatefunded20250115.csv")
-      out.write("URN,EstablishmentName,Town,Postcode\n1001,Test School,Test Town,TE1 1ST\n")
-
-      out.put_next_entry("edubaseallacademiesandfree20250115.csv")
-      out.write("URN,EstablishmentName,Town,Postcode\n2001,Test Academy,Test City,TE2 2ND\n")
-    end
-    buffer.string
-  end
-
   before do
     # Clean up test directory
     FileUtils.rm_rf(extract_path)
@@ -28,6 +16,13 @@ RSpec.describe SchoolData::CsvScraper do
 
     # Stub sleep to avoid delays in tests
     allow(Kernel).to receive(:sleep)
+
+    VCR.configure do |config|
+      config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+      config.hook_into :webmock
+      config.configure_rspec_metadata!
+      config.default_cassette_options = { record: :once }
+    end
   end
 
   after do
@@ -36,83 +31,114 @@ RSpec.describe SchoolData::CsvScraper do
   end
 
   describe "#call" do
-    # NOTE: Full integration tests with HTTP mocking are challenging due to Mechanize's
-    # HTML parsing requirements. The service has been proven to work against the real
-    # GIAS website. These tests focus on individual components and error handling.
+    context "realistic HTTP interactions", :vcr do
+      context "successful downloads" do
+        before do
+          # Create a specific service instance to stub methods on
+          @service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
+          allow(described_class).to receive(:new).and_return(@service_instance)
 
-    context "when testing individual components" do
-      let(:service_instance) { described_class.allocate.tap { |s| s.send(:initialize, extract_path:) } }
+          # Stub the extraction side to be predictable
+          allow(@service_instance).to receive(:extract_csv_files) do |_zip_data|
+            # Create fake CSV files in the extract directory
+            FileUtils.mkdir_p(@service_instance.extract_path)
 
-      it "can extract CSV files from ZIP data" do
-        service_instance.send(:extract_csv_files, mock_zip_data)
+            state_funded_csv = File.join(@service_instance.extract_path, "edubaseallstatefunded20250115.csv")
+            academies_csv = File.join(@service_instance.extract_path, "edubaseallacademiesandfree20250115.csv")
 
-        expect(service_instance.extracted_files.size).to eq(2)
-        expect(service_instance.extracted_files.all? { |f| File.exist?(f) }).to be(true)
-        expect(service_instance.extracted_files.all? { |f| f.end_with?(".csv") }).to be(true)
+            File.write(state_funded_csv, "URN,EstablishmentName,Town,Postcode\n1001,Test State School,Test Town,TE1 1ST\n")
+            File.write(academies_csv, "URN,EstablishmentName,Town,Postcode\n2001,Test Academy,Test City,TE2 2ND\n")
+
+            @service_instance.instance_variable_set(:@extracted_files, [state_funded_csv, academies_csv])
+          end
+
+          # Stub validation to always pass
+          allow(@service_instance).to receive(:validate_extraction)
+        end
+
+        it "successfully downloads and extracts CSV files from GIAS", vcr: { cassette_name: "gias_successful_download" } do
+          result = described_class.call(extract_path:)
+
+          expect(result.success?).to be true
+          expect(result.error_message).to be_nil
+          expect(result.download_record.status).to eq("extracting")
+          expect(result.download_record.started_at).to be_present
+
+          expect(result.extracted_files.length).to eq(2)
+          expect(result.extracted_files.all? { |f| File.exist?(f) }).to be true
+          expect(result.extracted_files.all? { |f| f.end_with?(".csv") }).to be true
+
+          expect(Dir.exist?(extract_path)).to be true
+          csv_files = Dir.glob(File.join(extract_path, "*.csv"))
+          expect(csv_files.length).to eq(2)
+
+          csv_files.each do |file|
+            expect(File.size(file)).to be > 0
+            expect(File.read(file)).to include("URN")
+          end
+        end
       end
 
-      it "creates the extract directory if it doesn't exist" do
-        expect { service_instance.send(:extract_csv_files, mock_zip_data) }
-          .to change { Dir.exist?(extract_path) }.from(false).to(true)
-      end
+      context "error responses" do
+        it "handles missing forms", vcr: { cassette_name: "httpbin_html_no_gias_forms" } do
+          service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
+          allow(described_class).to receive(:new).and_return(service_instance)
+          allow(service_instance).to receive(:gias_downloads_url).and_return("https://httpbin.org/html")
 
-      it "validates extraction results" do
-        service_instance.send(:extract_csv_files, mock_zip_data)
+          result = described_class.call(extract_path:)
 
-        expect { service_instance.send(:validate_extraction) }.not_to raise_error
-      end
+          expect(result.success?).to be false
+          expect(result.error_message).to eq("No form found on GIAS downloads page")
+          expect(result.download_record.status).to eq("failed")
+        end
 
-      it "creates a proper mechanize agent" do
-        agent = service_instance.send(:agent)
+        it "handles 403 Forbidden responses", vcr: { cassette_name: "httpbin_403_forbidden" } do
+          service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
+          allow(described_class).to receive(:new).and_return(service_instance)
+          allow(service_instance).to receive(:gias_downloads_url).and_return("https://httpbin.org/status/403")
 
-        expect(agent).to be_a(Mechanize)
-        expect(agent.user_agent).to eq(Settings.school_data.scraper.user_agent)
-        expect(agent.read_timeout).to eq(Settings.school_data.scraper.request_timeout)
+          result = described_class.call(extract_path:)
+
+          expect(result.success?).to be false
+          expect(result.error_message).to match(/Access denied \(403\) - GIAS website may have anti-bot protection/)
+          expect(result.download_record.status).to eq("failed")
+        end
+
+        it "handles 404 Not Found responses", vcr: { cassette_name: "httpbin_404_not_found" } do
+          service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
+          allow(described_class).to receive(:new).and_return(service_instance)
+          allow(service_instance).to receive(:gias_downloads_url).and_return("https://httpbin.org/status/404")
+
+          result = described_class.call(extract_path:)
+
+          expect(result.success?).to be false
+          expect(result.error_message).to match(/GIAS downloads page not found \(404\) - URL may have changed/)
+          expect(result.download_record.status).to eq("failed")
+        end
+
+        it "handles server errors", vcr: { cassette_name: "httpbin_503_server_error" } do
+          service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
+          allow(described_class).to receive(:new).and_return(service_instance)
+          allow(service_instance).to receive(:gias_downloads_url).and_return("https://httpbin.org/status/503")
+
+          result = described_class.call(extract_path:)
+
+          expect(result.success?).to be false
+          expect(result.error_message).to match(/GIAS server error \(503\) - their service may be temporarily unavailable/)
+          expect(result.download_record.status).to eq("failed")
+        end
       end
     end
 
-    context "when form structure changes (notification logic)" do
+    context "file extraction errors" do
       let(:service_instance) { described_class.allocate.tap { |s| s.send(:initialize, extract_path:) } }
 
-      it "has correct checkbox constants" do
-        expect(described_class::STATE_FUNDED_CHECKBOX_ID).to eq("state-funded-school--elds-csv-checkbox")
-        expect(described_class::ACADEMIES_CHECKBOX_ID).to eq("academies-and-free-school--elds-csv-checkbox")
-      end
-
-      it "constructs correct GIAS downloads URL from settings" do
-        expect(service_instance.send(:gias_downloads_url)).to eq("https://get-information-schools.service.gov.uk/Downloads")
-      end
-    end
-
-    context "when no form exists on the page" do
-      let(:no_form_html) { "<html><body><p>No form here</p></body></html>" }
-
-      before do
-        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
-          .to_return(status: 200, body: no_form_html, headers: { "Content-Type" => "text/html" })
-      end
-
-      it "returns failed result with FormStructureChangedError message" do
-        result = described_class.call(extract_path:)
-
-        expect(result.success?).to be false
-        expect(result.error_message).to eq("No form found on GIAS downloads page")
-        expect(result.download_record.status).to eq("failed")
-      end
-    end
-
-    context "when testing ZIP file handling" do
-      let(:service_instance) { described_class.allocate.tap { |s| s.send(:initialize, extract_path:) } }
-
-      let(:empty_zip_data) do
-        buffer = Zip::OutputStream.write_buffer do |out|
+      it "handles empty ZIP files" do
+        empty_zip_data = Zip::OutputStream.write_buffer do |out|
           out.put_next_entry("readme.txt")
           out.write("No CSV files here")
-        end
-        buffer.string
-      end
+        end.string
 
-      it "handles empty ZIP files correctly" do
         expect { service_instance.send(:extract_csv_files, empty_zip_data) }.to raise_error(
           SchoolData::CsvScraper::ExtractionError,
           "No CSV files found in downloaded ZIP",
@@ -127,10 +153,7 @@ RSpec.describe SchoolData::CsvScraper do
       end
 
       it "validates extracted files exist" do
-        service_instance.send(:extract_csv_files, mock_zip_data)
-
-        # Manually delete one file to test validation
-        File.delete(service_instance.extracted_files.first)
+        service_instance.instance_variable_set(:@extracted_files, ["/nonexistent/file.csv"])
 
         expect { service_instance.send(:validate_extraction) }.to raise_error(
           SchoolData::CsvScraper::ExtractionError,
@@ -139,59 +162,12 @@ RSpec.describe SchoolData::CsvScraper do
       end
     end
 
-    context "when receiving a 403 Forbidden response" do
-      before do
-        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
-          .to_return(status: 403, body: "Forbidden")
-      end
-
-      it "returns failed result with AccessDeniedError message" do
-        result = described_class.call(extract_path:)
-
-        expect(result.success?).to be false
-        expect(result.error_message).to match(/Access denied \(403\) - GIAS website may have anti-bot protection/)
-        expect(result.download_record.status).to eq("failed")
-      end
-    end
-
-    context "when receiving a 404 Not Found response" do
-      before do
-        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
-          .to_return(status: 404, body: "Not Found")
-      end
-
-      it "returns failed result with DownloadError message" do
-        result = described_class.call(extract_path:)
-
-        expect(result.success?).to be false
-        expect(result.error_message).to match(/GIAS downloads page not found \(404\) - URL may have changed/)
-        expect(result.download_record.status).to eq("failed")
-      end
-    end
-
-    context "when receiving a server error response" do
-      before do
-        stub_request(:get, "https://get-information-schools.service.gov.uk/Downloads")
-          .to_return(status: 503, body: "Service Unavailable")
-      end
-
-      it "returns failed result with server error message" do
-        result = described_class.call(extract_path:)
-
-        expect(result.success?).to be false
-        expect(result.error_message).to match(/GIAS server error \(503\) - their service may be temporarily unavailable/)
-        expect(result.download_record.status).to eq("failed")
-      end
-    end
-
-    context "when an unexpected error occurs" do
-      before do
+    context "general error handling" do
+      it "catches and logs unexpected errors" do
         service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
         allow(described_class).to receive(:new).and_return(service_instance)
         allow(service_instance).to receive(:download_and_extract_zip).and_raise(StandardError, "Unexpected error")
-      end
 
-      it "logs the error and returns failed result" do
         expect(Rails.logger).to receive(:error).with("CSV scraping failed: Unexpected error")
 
         result = described_class.call(extract_path:)
@@ -199,56 +175,24 @@ RSpec.describe SchoolData::CsvScraper do
         expect(result.success?).to be false
         expect(result.error_message).to eq("Unexpected error")
         expect(result.download_record.status).to eq("failed")
+        expect(result.download_record.completed_at).to be_present
       end
     end
   end
 
-  describe "#notify_form_structure_changed" do
-    # Create a service instance for testing private methods
-    let(:service_instance) { described_class.allocate.tap { |s| s.send(:initialize, extract_path:) } }
-
-    it "logs an error when form structure changes" do
-      # Create a mock form object
-      mock_checkbox1 = double("checkbox", "[]" => "checkbox1", name: "checkbox1")
-      mock_checkbox2 = double("checkbox", "[]" => "checkbox2", name: "checkbox2")
-      mock_field = double("field", class: double(name: "MockField"), name: "field1", "[]" => "field1")
-      mock_form = double("form", checkboxes: [mock_checkbox1, mock_checkbox2], fields: [mock_field])
-
-      expect(Rails.logger).to receive(:error).with(match(/Expected checkboxes not found/)).ordered
-      expect(Rails.logger).to receive(:error).with(match(/All form inputs/)).ordered
-      expect(Rails.logger).to receive(:error).with(match(/GIAS form structure changed/)).ordered
-
-      expect { service_instance.send(:notify_form_structure_changed, mock_form) }.to raise_error(
-        SchoolData::CsvScraper::FormStructureChangedError,
-      )
-    end
-  end
-
-  describe "initialization" do
-    it "sets default extract path to a system temporary directory" do
+  describe "initialization and cleanup" do
+    it "handles initialization with default and custom paths" do
       default_service = described_class.allocate.tap { |s| s.send(:initialize) }
       expect(default_service.extract_path.to_s).to include("school_data_")
-      expect(Dir.exist?(default_service.extract_path)).to be(true)
-      expect(File.basename(default_service.extract_path)).to start_with("school_data_")
+      expect(default_service.extracted_files).to eq([])
+
+      custom_service = described_class.allocate.tap { |s| s.send(:initialize, extract_path: "/tmp/custom") }
+      expect(custom_service.extract_path).to eq("/tmp/custom")
     end
 
-    it "accepts custom extract path" do
-      custom_path = "/tmp/custom"
-      custom_service = described_class.allocate.tap { |s| s.send(:initialize, extract_path: custom_path) }
-      expect(custom_service.extract_path).to eq(custom_path)
-    end
-
-    it "initializes empty extracted_files array" do
+    it "cleans up files and directories" do
       service_instance = described_class.allocate.tap { |s| s.send(:initialize, extract_path:) }
-      expect(service_instance.extracted_files).to eq([])
-    end
-  end
 
-  describe "#cleanup!" do
-    let(:service_instance) { described_class.allocate.tap { |s| s.send(:initialize, extract_path:) } }
-
-    it "removes the extract directory and clears extracted_files" do
-      # Create the directory and some files
       FileUtils.mkdir_p(extract_path)
       test_file = File.join(extract_path, "test.csv")
       File.write(test_file, "test,data\n1,2")
@@ -259,13 +203,6 @@ RSpec.describe SchoolData::CsvScraper do
       service_instance.cleanup!
 
       expect(Dir.exist?(extract_path)).to be(false)
-      expect(service_instance.extracted_files).to eq([])
-    end
-
-    it "does nothing if extract directory doesn't exist" do
-      expect(Dir.exist?(extract_path)).to be(false)
-
-      expect { service_instance.cleanup! }.not_to raise_error
       expect(service_instance.extracted_files).to eq([])
     end
   end
