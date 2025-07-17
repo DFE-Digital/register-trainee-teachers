@@ -4,13 +4,15 @@
 module Hesa
   module ReferenceData
     class V20250Rc
-      include ServicePattern
-
       DEFAULT_CASE_ATTRIBUTES = %i[
         subject
       ].freeze
 
-      def call
+      def self.find(attribute)
+        call.fetch(attribute.to_sym)
+      end
+
+      def self.all
         {
           funding_method: CodeSets::BursaryLevels::VALUES,
           institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
