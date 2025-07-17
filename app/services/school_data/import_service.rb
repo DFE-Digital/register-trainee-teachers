@@ -70,14 +70,12 @@ module SchoolData
     end
 
     def extract_school_data_from_csv(csv_path)
-      # Use the same encoding handling as the rake task
       schools = CSV.read(csv_path, headers: true, encoding: "windows-1251:utf-8")
 
       schools.map do |school|
         urn = school["URN"]&.strip
         next if urn.blank?
 
-        # Handle missing town data with fallback logic from rake task
         town = school["Town"].presence || [school["Address3"], school["Locality"]].detect(&:present?).tap do |backup|
           Rails.logger.warn("Town missing for school: '#{school['EstablishmentName']}', estimating as #{backup}")
         end

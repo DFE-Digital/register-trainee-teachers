@@ -109,18 +109,7 @@ module SchoolData
       end
 
       zip_response = agent.submit(download_form, download_form.button_with(id: RESULTS_DOWNLOAD_BUTTON_ID))
-
-      if zip_response.respond_to?(:content_type)
-        unless zip_response.content_type&.include?("zip") || zip_response.content_type&.include?("application/octet-stream")
-          raise(DownloadError, "Expected ZIP file but got content type: #{zip_response.content_type}")
-        end
-
-        zip_response.body
-      elsif zip_response.respond_to?(:content)
-        zip_response.content
-      else
-        raise(DownloadError, "Unexpected response type: #{zip_response.class}")
-      end
+      zip_response.body
     end
 
     def extract_csv_files(zip_data)
@@ -187,11 +176,7 @@ module SchoolData
 
     def notify_form_structure_changed(form)
       available_checkboxes = form.checkboxes.map { |cb| cb["id"] || cb.name }.compact
-      all_inputs = form.fields.map { |f| "#{f.class.name}: #{f.name} (id: #{f['id'] || 'N/A'})" }
-
-      Rails.logger.error("Expected checkboxes not found. Available checkboxes: #{available_checkboxes}")
-      Rails.logger.error("All form inputs: #{all_inputs}")
-      Rails.logger.error("GIAS form structure changed! Expected checkboxes not found. Available checkboxes: #{available_checkboxes.join(', ')}. Form fields may need updating")
+      Rails.logger.error("GIAS form structure changed! Expected checkboxes not found. Available: #{available_checkboxes.join(', ')}")
       raise(FormStructureChangedError, "Required form checkboxes not found - GIAS site structure changed")
     end
 
