@@ -3,13 +3,7 @@
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 module Hesa
   module ReferenceData
-    class V20250Rc
-      def self.find(attribute)
-        new(
-          all.fetch(attribute.to_sym)
-        )
-      end
-
+    class V20250Rc < Base
       def self.all
         {
           funding_method: CodeSets::BursaryLevels::VALUES,
@@ -42,22 +36,6 @@ module Hesa
           course_subject_three: CodeSets::CourseSubjects::MAPPING,
           nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
         }.freeze
-      end
-
-      attr_reader :values
-
-      def initialize(values)
-        @values = values
-      end
-
-      def as_csv
-        CSV.generate do |f|
-          f << %w[Code Label]
-
-          values.each do |code, label|
-            f << [code, label]
-          end
-        end
       end
     end
   end
