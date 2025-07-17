@@ -47,7 +47,7 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
 
     it "returns an attribute's hesa code sets" do
       expect(described_class.find(attribute).values).to eq(
-        Hesa::CodeSets::BursaryLevels::VALUES
+        Hesa::CodeSets::BursaryLevels::VALUES,
       )
     end
   end
@@ -55,9 +55,9 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
   describe "as_csv" do
     it "converts data to csv" do
       expect(
-        CSV.parse(described_class.find(:course_age_range).as_csv)
+        CSV.parse(described_class.find(:course_age_range).as_csv),
       ).to eq(
-        CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv"))
+        CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv")),
       )
     end
   end
