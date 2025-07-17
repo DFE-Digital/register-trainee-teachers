@@ -4,6 +4,8 @@ require "rails_helper"
 
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 RSpec.describe Hesa::ReferenceData::V20250Rc do
+  include FileHelper
+
   describe "::all" do
     it "returns the mapped hesa code sets" do
       expect(described_class.all).to eq(
@@ -41,11 +43,21 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
   end
 
   describe "::find" do
-    let(:attribute) { :funding_method }
+    let(:attribute) { "funding_method" }
 
     it "returns an attribute's hesa code sets" do
-      expect(described_class.find(attribute)).to eq(
+      expect(described_class.find(attribute).values).to eq(
         Hesa::CodeSets::BursaryLevels::VALUES
+      )
+    end
+  end
+
+  describe "as_csv" do
+    it "converts data to csv" do
+      expect(
+        CSV.parse(described_class.find(:course_age_range).as_csv)
+      ).to eq(
+        CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv"))
       )
     end
   end
