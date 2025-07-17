@@ -45,6 +45,12 @@ module PageObjects
     set_url "/reference-data/"
 
     element :page_heading, "h1"
+
+    element :v20250Rc_link, "a", text: "v2025.0-r"
+
+    element :course_age_range_link, "a", text: "Course Age Range"
+    element :course_age_range_heading, "h1", text: "Course Age Range"
+    element :course_age_range_download_link, "a", text: "Download valid entries as a CSV file"
   end
 
   class ServiceUpdates < PageObjects::Base
