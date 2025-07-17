@@ -5,8 +5,8 @@ require "rails_helper"
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 RSpec.describe Hesa::ReferenceData::V20250Rc do
   describe "::call" do
-    it "returns the mapped hesa code sets" do
-      expect(described_class.call).to eq(
+    let(:code_sets) do
+      {
         funding_method: Hesa::CodeSets::BursaryLevels::VALUES,
         institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
         grade: DfEReference::DegreesQuery::GRADES.all.pluck(:hesa_code, :name).to_h.reject { |k, _v| k.nil? },
@@ -50,7 +50,6 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
       code_sets.each do |attribute, mapping|
         expect(described_class.call[attribute].to_a).to eq(mapping.to_a)
       end
-      )
     end
   end
 end
