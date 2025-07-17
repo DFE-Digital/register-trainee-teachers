@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 require "rails_helper"
@@ -11,20 +10,20 @@ feature "Reference data download", js: true do
   end
 
   scenario "navigate to Reference data" do
-    when_i_click_on_the_v20250Rc_link
+    when_i_click_on_the_v2025_0_rc_link
     and_i_click_on_the_course_age_range_link
     and_i_see_the_course_age_range_data
     and_i_click_on_the_download_entries_link
     then_i_receive_the_data_entries_as_a_file
   end
 
-  private
+private
 
   def given_i_am_on_the_reference_data_page
     reference_data_page.load
   end
 
-  def when_i_click_on_the_v20250Rc_link
+  def when_i_click_on_the_v2025_0_rc_link
     reference_data_page.v20250Rc_link.click
   end
 

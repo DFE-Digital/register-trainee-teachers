@@ -54,14 +54,12 @@ Rails.application.routes.draw do
     resource :confirm_details, as: :confirm, only: %i[show update], path: "/confirm", controller: "/trainees/confirm_details"
   end
 
-
   resources :reference_data,
-    only: [],
-    param: :attribute,
-    path: "reference-data/:reference_data_version",
-    reference_data_version: /v[.0-9]+(-pre|-rc)?/,
-    module: :reference_data do
-
+            only: [],
+            param: :attribute,
+            path: "reference-data/:reference_data_version",
+            reference_data_version: /v[.0-9]+(-pre|-rc)?/,
+            module: :reference_data do
     resource :download, only: :show
   end
 

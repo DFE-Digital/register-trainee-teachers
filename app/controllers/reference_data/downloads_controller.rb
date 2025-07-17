@@ -9,15 +9,15 @@ module ReferenceData
         data.as_csv,
         filename: filename,
         format: :csv,
-        disposition: :attachment
+        disposition: :attachment,
       )
     end
 
-    private
+  private
 
     def data
       @data ||= data_klass.find(
-        params[:reference_datum_attribute]
+        params[:reference_datum_attribute],
       )
     end
 
