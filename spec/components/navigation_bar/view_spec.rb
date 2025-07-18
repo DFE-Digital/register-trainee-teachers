@@ -14,6 +14,14 @@ module NavigationBar
       render_inline(described_class.new(items:, current_path:, current_user:))
     end
 
+    context "service name" do
+      let(:items) { [] }
+
+      it "renders the service name" do
+        expect(component).to have_text(I18n.t("service_name"))
+      end
+    end
+
     context "multiple links" do
       let(:items) do
         [
@@ -40,8 +48,7 @@ module NavigationBar
       it "shows right aligned links" do
         expect(component).to have_link("Home")
         expect(component).to have_link("Trainee records")
-
-        expect(component.find(".moj-primary-navigation__item.moj-primary-navigation__align_right")).to have_text("Right aligned")
+        expect(component.find(".govuk-service-navigation__item.app-service-navigation__align_right")).to have_text("Right aligned")
       end
     end
 
@@ -51,7 +58,7 @@ module NavigationBar
       let(:items) { [current_item] }
 
       it "renders the link with aria-current" do
-        rendered_link = component.find(".moj-primary-navigation__link", text: current_item[:name])
+        rendered_link = component.find(".govuk-service-navigation__link", text: current_item[:name])
         expect(rendered_link["aria-current"]).to eq("page")
       end
     end
@@ -64,14 +71,14 @@ module NavigationBar
         let(:current_path) { "http://www.google.com" }
 
         it "renders the link without aria-current" do
-          rendered_link = component.find(".moj-primary-navigation__link", text: non_current_item[:name])
+          rendered_link = component.find(".govuk-service-navigation__link", text: non_current_item[:name])
           expect(rendered_link["aria-current"]).to be_nil
         end
       end
 
       context "when on the current url" do
         it "renders the link with aria-current" do
-          rendered_link = component.find(".moj-primary-navigation__link", text: non_current_item[:name])
+          rendered_link = component.find(".govuk-service-navigation__link", text: non_current_item[:name])
           expect(rendered_link["aria-current"]).to eq("page")
         end
       end
@@ -85,14 +92,14 @@ module NavigationBar
         let(:current_path) { "http://www.google.com" }
 
         it "renders the link without aria-current" do
-          rendered_link = component.find(".moj-primary-navigation__link", text: no_current_item[:name])
+          rendered_link = component.find(".govuk-service-navigation__link", text: no_current_item[:name])
           expect(rendered_link["aria-current"]).to be_nil
         end
       end
 
       context "when on the current url" do
         it "renders the link with aria-current" do
-          rendered_link = component.find(".moj-primary-navigation__link", text: no_current_item[:name])
+          rendered_link = component.find(".govuk-service-navigation__link", text: no_current_item[:name])
           expect(rendered_link["aria-current"]).to eq("page")
         end
       end

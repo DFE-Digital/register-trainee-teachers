@@ -48,7 +48,11 @@ module OrganisationSwitcher
       end
 
       it "does not render the _Change organisation_ link" do
-        expect(component).not_to have_css(".app-organisation-switcher__link")
+        expect(component).not_to have_css(".app-organisation-switcher__link", text: "Change organisation")
+      end
+
+      it "renders the _Organisation settings_ link" do
+        expect(component).to have_css(".app-organisation-switcher__link", text: "Organisation settings")
       end
     end
 
@@ -66,7 +70,11 @@ module OrganisationSwitcher
       end
 
       it "renders the _Change organisation_ link" do
-        expect(component).to have_css(".app-organisation-switcher__link")
+        expect(component).to have_css(".app-organisation-switcher__link", text: "Change organisation")
+      end
+
+      it "renders the _Organisation settings_ link" do
+        expect(component).to have_css(".app-organisation-switcher__link", text: "Organisation settings")
       end
     end
   end

@@ -11,7 +11,7 @@ $govuk-suppressed-warnings: (govuk-typography-scale-14);
 
 @import "@ministryofjustice/frontend/moj/all";
 
-$moj-images-path: "@ministryofjustice/frontend/moj/assets/images/";
+$moj-images-path: "@ministryofjustice/frontend/moj/assets/images";
 $mobile-small-start: 400px;
 $mobile-small-end: 401px;
 $mobile-big-start: 500px;
@@ -155,4 +155,14 @@ body:not(.js-enabled) .app-js-only {
 .govuk-checkboxes.nationality .app-\!-autocomplete--max-width-two-thirds {
   @include govuk-font(19);
   max-width: 44ex;
+}
+
+.app-service-navigation__wrapper {
+  width: 100%;
+}
+
+.app-service-navigation__align_right {
+  @include govuk-media-query($from: tablet) {
+    margin-left: auto;
+  }
 }

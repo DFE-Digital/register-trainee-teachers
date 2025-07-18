@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="govuk-template ">
+<html lang="en" class="govuk-template--rebranded">
   <head>
     <title><%= yield :page_title %></title>
     <%= csrf_meta_tags %>
@@ -7,14 +7,14 @@
     <%= canonical_tag %>
 
     <%= tag.meta(name: "viewport", content: "width=device-width, initial-scale=1") %>
-    <%= tag.meta(property: "og:image", content: image_path("govuk-opengraph-image.png")) %>
+    <%= tag.meta(property: "og:image", content: image_path("govuk-frontend/dist/govuk/assets/rebrand/images/govuk-opengraph-image.png")) %>
     <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
     <%= tag.meta(name: "format-detection", content: "telephone=no") %>
 
-    <%= favicon_link_tag image_path("favicon.ico"), type: nil, sizes: "48x48" %>
-    <%= favicon_link_tag image_path("favicon.svg"), type: "image/svg+xml", sizes: "any" %>
-    <%= favicon_link_tag image_path("govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
-    <%= favicon_link_tag image_path("govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
+    <%= favicon_link_tag image_path("govuk-frontend/dist/govuk/assets/rebrand/images/favicon.ico"), type: nil, sizes: "48x48" %>
+    <%= favicon_link_tag image_path("govuk-frontend/dist/govuk/assets/rebrand/images/favicon.svg"), type: "image/svg+xml", sizes: "any" %>
+    <%= favicon_link_tag image_path("govuk-frontend/dist/govuk/assets/rebrand/images/govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
+    <%= favicon_link_tag image_path("govuk-frontend/dist/govuk/assets/rebrand/images/govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
 
     <%= stylesheet_link_tag "accessible-autocomplete/dist/accessible-autocomplete.min" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -45,10 +45,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= render Header::View.new(
-      service_name: I18n.t("service_name"),
-      items: header_items(@current_user),
-    ) %>
+    <%= render Header::View.new %>
 
     <%= render OrganisationSwitcher::View.new(current_user: @current_user) %>
 
@@ -73,6 +70,8 @@
             ({ name: "Bulk updates", url: bulk_update_path, current: active_link_for("bulk") } if can_bulk_update?),
             ({ name: "Reports", url: reports_path, current: active_link_for("reports") } if can_view_reports?),
             ({ name: "Funding", url: funding_payment_schedule_path, current: active_link_for("funding") } if can_view_funding?),
+            ({ name: t("header.items.system_admin"), url: users_path, align_right: true } if defined?(current_user) && current_user&.system_admin?),
+            ({ name: t("header.items.sign_out"), url: sign_out_path, align_right: !current_user&.system_admin? } if defined?(current_user) && current_user.present?),
           ],
           current_path: request.path,
           current_user: @current_user,
