@@ -3,10 +3,8 @@
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 module Hesa
   module ReferenceData
-    class V20250Rc
-      include ServicePattern
-
-      def call
+    class V20250Rc < Base
+      def self.all
         {
           funding_method: CodeSets::BursaryLevels::VALUES,
           institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },

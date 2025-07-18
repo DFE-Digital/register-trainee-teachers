@@ -4,9 +4,11 @@ require "rails_helper"
 
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 RSpec.describe Hesa::ReferenceData::V20250Rc do
-  describe "::call" do
+  include FileHelper
+
+  describe "::all" do
     it "returns the mapped hesa code sets" do
-      expect(described_class.call).to eq(
+      expect(described_class.all).to eq(
         funding_method: Hesa::CodeSets::BursaryLevels::VALUES,
         institution: DfEReference::DegreesQuery::INSTITUTIONS.all.pluck(:hesa_itt_code, :name).to_h.reject { |k, _v| k.nil? },
         grade: DfEReference::DegreesQuery::GRADES.all.pluck(:hesa_code, :name).to_h.reject { |k, _v| k.nil? },
@@ -36,6 +38,26 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
         course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING,
         course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING,
         nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
+      )
+    end
+  end
+
+  describe "::find" do
+    let(:attribute) { "funding_method" }
+
+    it "returns an attribute's hesa code sets" do
+      expect(described_class.find(attribute).values).to eq(
+        Hesa::CodeSets::BursaryLevels::VALUES,
+      )
+    end
+  end
+
+  describe "as_csv" do
+    it "converts data to csv" do
+      expect(
+        CSV.parse(described_class.find(:course_age_range).as_csv),
+      ).to eq(
+        CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv")),
       )
     end
   end

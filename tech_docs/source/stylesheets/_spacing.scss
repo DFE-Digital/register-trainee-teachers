@@ -1,0 +1,13 @@
+.govuk-\!-margin {
+  &-top {
+    &--40 {
+      margin-top: -40px !important;
+    }
+  }
+
+  &-bottom {
+    &-50 {
+      margin-bottom: 50px !important;
+    }
+  }
+}
