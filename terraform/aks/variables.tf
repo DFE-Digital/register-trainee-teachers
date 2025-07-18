@@ -10,8 +10,7 @@ variable "snapshot_databases_to_deploy" { default = 0 }
 
 # Key Vault variables
 variable "key_vault_name" {}
-variable "key_vault_infra_secret_name" {}
-variable "key_vault_app_secret_name" {}
+
 
 variable "gov_uk_host_names" {
   default = []
@@ -100,8 +99,6 @@ variable "send_traffic_to_maintenance_page" {
 locals {
   app_name_suffix   = var.app_name == null ? var.app_environment : var.app_name
 
-  kv_app_secrets    = yamldecode(data.azurerm_key_vault_secret.app_secrets.value)
-  infra_secrets     = yamldecode(data.azurerm_key_vault_secret.infra_secrets.value)
   app_config        = yamldecode(file(var.app_config_file))[var.env_config]
   base_url_env_var  = var.app_environment == "review" ? { SETTINGS__BASE_URL = "https://register-${local.app_name_suffix}.${module.cluster_data.configuration_map.dns_zone_prefix}.teacherservices.cloud" } : {}
 
@@ -119,7 +116,6 @@ locals {
   # added for app module
 
   app_secrets = merge(
-    local.kv_app_secrets,
     {
       DATABASE_URL                                   = module.postgres.url
       SETTINGS__BLAZER_DATABASE_URL                  = module.postgres.url
