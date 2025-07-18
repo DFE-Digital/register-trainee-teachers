@@ -53,6 +53,7 @@ class Course < ApplicationRecord
     pgde_with_qts: 2,
     pgce: 3,
     pgde: 4,
+    qts_with_undergraduate_degree: 5,
   }
 
   enum :route, TRAINING_ROUTES_FOR_COURSE
