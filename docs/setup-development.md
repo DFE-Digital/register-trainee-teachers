@@ -145,52 +145,6 @@ SANITISED_DATA_USERS_IDS_PERSONA = [
 ]
 ```
 
-## Schools data
-[Get Information about Schools](https://get-information-schools.service.gov.uk) holds the most complete information for schools.
-[Teacher Training Courses API](https://api.publish-teacher-training-courses.service.gov.uk) holds the most complete information for lead schools.
-
-In order to create and update the schools and the lead schools follow the below steps
-1. [Download Get Information about Schools data](#download-get-information-about-schools-data)
-2. [Generate data/schools_gias.csv from GIAS data](#generate-dataschools_giascsv-from-gias-data)
-3. [Import schools from csv data/schools_gias.csv](#import-schools-from-csv-dataschools_giascsv)
-4. [Realign lead partner with school name](#realign-lead-partner-with-school-name)
-
-### Download Get Information about Schools data
-1. Go to [Get Information about Schools Download page](https://get-information-schools.service.gov.uk/Downloads)
-2. From `Open academies and free schools data` select `Academies and free school fields CSV`
-3. From `Open state-funded schools data` select `State-funded school fields CSV`
-4. Click on `Download selected files`
-5. Extract content to `./data` directory
-
-### Generate data/schools_gias.csv from GIAS data
-To generate the data/schools_gias.csv from GIAS data, use the following rake task:
-
-```bash
-
-# gias_csv_1_path: path to the GIAS file
-# gias_csv_2_path: path to the GIAS file
-# output_path: optional, path to the output file, default to `data/schools_gias.csv`
-bundle exec rake schools_data:generate_csv_from_gias\[gias_csv_1_path,gias_csv_2_path,output_path\]
-
-# as an example
-  bundle exec rake schools_data:generate_csv_from_gias\[./data/edubaseallacademiesandfree20250115.csv,./data/edubaseallstatefunded20250115.csv\]
-
-```
-
-### Import schools from csv data/schools_gias.csv
-To import schools from csv data/schools_gias.csv, use the following rake task:
-
-```bash
-bundle exec rake schools_data:import_gias
-```
-
-### Realign lead partner with school name
-To realign lead partner with school name, use the following rake task:
-
-```bash
-bundle exec rake schools_data:realign_lead_partner_with_school_name
-```
-
 ## Running Apply application import against example data
 
 Add the following to your `development.local.yml`:
