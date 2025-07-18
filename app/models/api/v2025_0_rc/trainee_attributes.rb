@@ -318,7 +318,10 @@ module Api
       end
 
       def start_year
-        AcademicCycle.for_date(trainee_start_date)&.start_year
+        start_date = trainee_start_date.presence || itt_start_date.presence
+        return nil if start_date.blank?
+
+        AcademicCycle.for_date(start_date)&.start_year
       end
 
       def valid_trainee_start_date?
@@ -332,6 +335,8 @@ module Api
       end
 
       def validate_trainee_start_date
+        self.trainee_start_date = itt_start_date if trainee_start_date.blank?
+
         return if trainee_start_date.blank?
 
         if !valid_date_string?(trainee_start_date)
@@ -342,9 +347,18 @@ module Api
         start_date = trainee_start_date.is_a?(String) ? Date.parse(trainee_start_date) : trainee_start_date
         if start_date < 10.years.ago
           errors.add(:trainee_start_date, :too_old)
-        elsif start_date.future?
+        elsif start_date.future? && !trainee_and_itt_start_dates_match?
           errors.add(:trainee_start_date, :future)
         end
+      end
+
+      def trainee_and_itt_start_dates_match?
+        parsed_trainee_start_date = trainee_start_date.is_a?(String) ? Date.parse(trainee_start_date) : trainee_start_date
+        parsed_itt_start_date = itt_start_date.is_a?(String) ? Date.parse(itt_start_date) : itt_start_date
+
+        parsed_trainee_start_date.present? &&
+          parsed_itt_start_date.present? &&
+          parsed_trainee_start_date == parsed_itt_start_date
       end
 
       def validate_degrees_presence
