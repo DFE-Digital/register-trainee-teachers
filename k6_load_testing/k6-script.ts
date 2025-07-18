@@ -1,6 +1,6 @@
 import { RegisterAPIClient } from "./registerAPI.ts";
 
-const baseUrl = "<BASE_URL>";
+const baseUrl           = "https://staging.register-trainee-teachers.service.gov.uk";
 const registerAPIClient = new RegisterAPIClient({ baseUrl });
 
 export default function () {
