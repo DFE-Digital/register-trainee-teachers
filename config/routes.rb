@@ -87,11 +87,11 @@ Rails.application.routes.draw do
       resource :confirmation, only: %i[show]
     end
 
-    resources :recommendations_uploads, only: %i[new create edit update], path: "recommend", path_names: { new: "choose-who-to-recommend", edit: "change-who-youll-recommend" } do
+    resources :recommendations_uploads, only: %i[new create edit update], path: "select", path_names: { new: "choose-who-to-select", edit: "change-who-youll-select" } do
       get "confirmation"
       get "upload-summary", to: "recommendations_uploads#show", as: "summary"
       resource :recommendations, only: :create
-      resource :recommendations_checks, only: :show, path: "check-who-youll-recommend"
+      resource :recommendations_checks, only: :show, path: "check-who-youll-select"
       resource :recommendations_errors, only: %i[show create], path: "review-errors"
       member { get :cancel, path: "cancel" }
     end
@@ -271,8 +271,8 @@ Rails.application.routes.draw do
     get "/hesa-register-data-mapping/:tab", to: "guidance#hesa_register_data_mapping", as: "hesa_register_data_mapping"
     get "/census-sign-off", to: "guidance#census_sign_off"
     get "/performance-profiles", to: "guidance#performance_profiles"
-    get "/bulk-recommend-trainees", to: "guidance#bulk_recommend_trainees"
-    get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
+    get "/bulk-select-trainees", to: "guidance#bulk_select_trainees"
+    get "/withdraw-defer-reinstate-or-select-a-trainee", to: "guidance#withdraw_defer_reinstate_or_select_a_trainee"
     get "/manage-placements", to: "guidance#manage_placements"
     get "/bulk-upload-placement-data", to: "guidance#bulk_upload_placement_data"
   end

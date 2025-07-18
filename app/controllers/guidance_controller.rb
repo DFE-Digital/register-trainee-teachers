@@ -11,7 +11,7 @@ class GuidanceController < ApplicationController
   def about_register_trainee_teachers; end
   def registering_trainees_through_hesa; end
   def check_data; end
-  def bulk_recommend_trainees; end
+  def bulk_select_trainees; end
   def manually_registering_trainees; end
 
   def manage_placements

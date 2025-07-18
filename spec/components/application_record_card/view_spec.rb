@@ -91,7 +91,7 @@ module ApplicationRecordCard
         { state: :draft, colour: "grey", text: "Draft" },
         { state: :submitted_for_trn, colour: "turquoise", text: "Pending TRN" },
         { state: :trn_received, colour: "blue", text: "TRN received" },
-        { state: :recommended_for_award, colour: "purple", text: "QTS recommended" },
+        { state: :recommended_for_award, colour: "purple", text: "Selected for QTS" },
         { state: :awarded, colour: "", text: "QTS awarded" },
         { state: :deferred, colour: "yellow", text: "Deferred" },
         { state: :withdrawn, colour: "red", text: "Withdrawn" },
