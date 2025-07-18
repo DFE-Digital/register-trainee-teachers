@@ -34,7 +34,7 @@ services:
   docs:
     build:
       context: .
-      target: middleman
+      target: middleman-build
       cache_from:
         - ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
     image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}

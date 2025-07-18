@@ -24,7 +24,7 @@ module GovukTechDocs
       if resource.is_a?(Middleman::Sitemap::Resource)
         config[:relative_links] ? get_resource_path_relative_to_current_page(config, current_page.path, resource.path) : resource.url
       # Add top level documentation to the Array
-      elsif config[:relative_links] && !external_url?(resource) && !["/api-docs/", "/csv-docs/"].include?(resource)
+      elsif config[:relative_links] && !external_url?(resource) && !["/api-docs/", "/csv-docs/", "/reference-data/"].include?(resource)
         get_resource_path_relative_to_current_page(config, current_page.path, resource)
       else
         resource
