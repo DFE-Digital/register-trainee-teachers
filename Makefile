@@ -24,6 +24,7 @@ help:
 	@echo ""
 	@echo "        make review APP_NAME=pr-PR_NUMBER deploy-plan IMAGE_TAG=GIT_REF"
 
+# test
 .PHONY: install-konduit
 install-konduit: ## Install the konduit script, for accessing backend services
 	[ ! -f bin/konduit.sh ] \
