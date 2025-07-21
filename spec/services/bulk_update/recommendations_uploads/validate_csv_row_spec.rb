@@ -24,7 +24,7 @@ module BulkUpdate
               "trn" => "1234567",
               "hesa id" => "12345678912345678",
               "provider trainee id" => "1234567",
-              "date qts or eyts standards met" => Date.yesterday.strftime("%d/%m/%Y"),
+              "date qts or eyts requirement met" => Date.yesterday.strftime("%d/%m/%Y"),
             })
           end
 
@@ -43,7 +43,7 @@ module BulkUpdate
               "trn" => "1234567",
               "hesa id" => "12345678912345678",
               "provider trainee id" => "1234567",
-              "date qts or eyts standards met" => "21/85/2022",
+              "date qts or eyts requirement met" => "21/85/2022",
             })
           end
 
@@ -52,7 +52,7 @@ module BulkUpdate
           end
 
           describe "messages" do
-            it { expect(service.messages).to eql ["Date QTS or EYTS standards met must be a valid date"] }
+            it { expect(service.messages).to eql ["Date QTS or EYTS requirement met must be a valid date"] }
           end
         end
 
@@ -62,7 +62,7 @@ module BulkUpdate
               "trn" => "123567", # invalid
               "hesa id" => "1234568912345678", # invalid
               "provider trainee id" => "1234",
-              "date qts or eyts standards met" => "not-a-date", # invalid
+              "date qts or eyts requirement met" => "not-a-date", # invalid
             })
           end
 
@@ -76,7 +76,7 @@ module BulkUpdate
                 [
                   "TRN must be 7 numbers",
                   "HESA ID must be 13 or 17 numbers",
-                  "Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023",
+                  "Date QTS or EYTS requirement met must be written as dd/mm/yyyy, for example 27/02/2023",
                 ],
               )
             end
@@ -105,7 +105,7 @@ module BulkUpdate
               "trn" => "",
               "hesa id" => "",
               "provider trainee id" => "",
-              "date qts or eyts standards met" => "",
+              "date qts or eyts requirement met" => "",
             })
           end
 
@@ -160,7 +160,7 @@ module BulkUpdate
                 [
                   "TRN must be 7 numbers",
                   "HESA ID must be 13 or 17 numbers",
-                  "Date QTS or EYTS standards met must be written as dd/mm/yyyy, for example 27/02/2023",
+                  "Date QTS or EYTS requirement met must be written as dd/mm/yyyy, for example 27/02/2023",
                   "TRN must match trainee record", "HESA ID must match trainee record",
                   "Provider trainee ID must match trainee record",
                   "First name must match trainee record",

@@ -28,7 +28,7 @@ describe Exports::BulkRecommendExport, type: :model do
         "Phase",
         "Age range",
         "Subject",
-        "Date QTS or EYTS standards met",
+        "Date QTS or EYTS requirement met",
       ]
     end
 
@@ -51,7 +51,7 @@ describe Exports::BulkRecommendExport, type: :model do
             "Phase",
             "Age range",
             "Subject",
-            "Date QTS or EYTS standards met",
+            "Date QTS or EYTS requirement met",
           ]
         end
 

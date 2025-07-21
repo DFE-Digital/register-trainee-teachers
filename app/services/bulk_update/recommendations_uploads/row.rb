@@ -12,7 +12,7 @@ module BulkUpdate
   module RecommendationsUploads
     class Row < RowBase
       def standards_met_at
-        send("date_qts_or_eyts_standards_met")
+        send("date_qts_or_eyts_requirement_met")
       end
 
       def sanitised_hesa_id

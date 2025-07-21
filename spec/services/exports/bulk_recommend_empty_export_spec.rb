@@ -12,7 +12,7 @@ describe Exports::BulkRecommendEmptyExport, type: :model do
       [
         "TRN",
         "Provider trainee ID",
-        "Date QTS or EYTS standards met",
+        "Date QTS or EYTS requirement met",
       ]
     end
 

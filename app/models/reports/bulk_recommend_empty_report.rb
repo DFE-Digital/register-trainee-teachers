@@ -7,7 +7,7 @@ module Reports
     PROVIDER_TRAINEE_ID = "Provider trainee ID"
 
     IDENTIFIERS = [TRN, PROVIDER_TRAINEE_ID].freeze
-    DATE = "Date QTS or EYTS standards met"
+    DATE = "Date QTS or EYTS requirement met"
 
     DEFAULT_HEADERS = [
       *IDENTIFIERS,
