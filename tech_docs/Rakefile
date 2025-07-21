@@ -3,6 +3,7 @@
 require "fileutils"
 require "yaml"
 require "middleman-core"
+require "kramdown"
 
 namespace :tech_docs do
   desc "Build docs"
@@ -61,10 +62,10 @@ namespace :tech_docs do
             csv_field_name: field["field_name"],
             api_field_name: field["technical"],
             hesa_alignment: field["hesa_alignment"],
-            description: field["description"],
-            format: field["format"],
-            example: field["example"],
-            validation: field["validation"],
+            description: Kramdown::Document.new(field["description"]).to_html,
+            format: Kramdown::Document.new(field["format"]).to_html,
+            example: Kramdown::Document.new(field["example"]).to_html,
+            validation: Kramdown::Document.new(field["validation"]).to_html,
           }
         )
 
