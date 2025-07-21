@@ -40,7 +40,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <%= register_form_with url: bulk_update_recommendations_upload_recommendations_path, method: :post, local: true do |f| %>
-      <%= f.govuk_submit("Select #{pluralize(awardable_rows_count, "trainee")} that hold #{qts_or_eyts(recommendations_upload.awardable_rows)}", id: "recommend") %>
+      <%= f.govuk_submit("Select #{pluralize(awardable_rows_count, "trainee")} that hold#{"s" if awardable_rows_count == 1} #{qts_or_eyts(recommendations_upload.awardable_rows)}", id: "recommend") %>
     <% end %>
     <div class="govuk-body">
       <%= govuk_link_to("Change who you'll select", edit_bulk_update_recommendations_upload_path(recommendations_upload)) %>

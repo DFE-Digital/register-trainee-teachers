@@ -1651,8 +1651,8 @@ en:
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_id_header: The selected file must contain a column for TRN, trainee provider ID or HESA ID
-              no_date_header: The selected file must contain a column for date QTS or EYTS standards met
-              no_dates_given: The selected file must contain date QTS or EYTS standards met for at least one trainee
+              no_date_header: The selected file must contain a column for date QTS or EYTS requirement met
+              no_dates_given: The selected file must contain date QTS or EYTS requirement met for at least one trainee
               no_trainees: The selected file must contain at least one trainee
         bulk_update/bulk_add_trainees_upload_form:
           attributes:

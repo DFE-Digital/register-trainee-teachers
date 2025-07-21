@@ -4,7 +4,7 @@
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <div class="govuk-panel govuk-panel--confirmation qts-submission-success-panel govuk-!-margin-bottom-6">
       <h1 class="govuk-panel__title">
-        <%= pluralize(awardable_rows_count, "trainee") %> selected that now hold
+        <%= pluralize(awardable_rows_count, "trainee") %> selected that now hold<%= "s" if awardable_rows_count == 1 %>
         <%= qts_or_eyts(recommendations_upload.awardable_rows) %>
       </h1>
     </div>

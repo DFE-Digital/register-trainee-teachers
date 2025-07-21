@@ -32,13 +32,13 @@ module BulkUpdate
       context "given a CSV with no date header" do
         let(:columns_to_delete) { [Reports::BulkRecommendReport::DATE.downcase] }
 
-        it { expect(record.errors.first.message).to eql "The selected file must contain a column for date QTS or EYTS standards met" }
+        it { expect(record.errors.first.message).to eql "The selected file must contain a column for date QTS or EYTS requirement met" }
       end
 
       context "given a CSV with no dates" do
         let(:csv) { create_recommendations_upload_csv! }
 
-        it { expect(record.errors.first.message).to eql "The selected file must contain date QTS or EYTS standards met for at least one trainee" }
+        it { expect(record.errors.first.message).to eql "The selected file must contain date QTS or EYTS requirement met for at least one trainee" }
       end
 
       context "given a CSV with only headers, no trainees" do

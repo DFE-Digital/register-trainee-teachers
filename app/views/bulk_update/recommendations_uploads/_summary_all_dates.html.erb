@@ -1,12 +1,12 @@
 <p class="govuk-body">
   <%= case awardable_rows_count
     when 1
-      "The trainee"
+      "The trainee who holds"
     when 2
-      "Both trainees"
+      "Both trainees who hold"
     else
-      "All #{awardable_rows_count} trainees"
-    end %> who hold <%= qts_or_eyts(recommendations_upload.awardable_rows) %> selected.
+      "All #{awardable_rows_count} trainees who hold"
+    end %> <%= qts_or_eyts(recommendations_upload.awardable_rows) %> selected.
 </p>
 
 <%= govuk_link_to(
