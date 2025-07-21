@@ -220,11 +220,3 @@ qualtrics:
     survey_id: SV_please_change_me
     mailing_list_id: CG_please_change_me
     message_id: MS_please_change_me
-
-school_data:
-  scraper:
-    url: "https://get-information-schools.service.gov.uk/Downloads"
-    request_timeout: 30
-    download_timeout: 300
-    check_interval: 8
-    user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
