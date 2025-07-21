@@ -419,13 +419,9 @@
   :school_data_downloads:
   - id
   - completed_at
-  - error_message
   - lead_partners_updated
-  - rows_filtered
-  - rows_processed
   - schools_created
   - schools_updated
-  - source
   - started_at
   - status
   - created_at

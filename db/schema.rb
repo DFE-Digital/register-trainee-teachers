@@ -829,18 +829,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_21_121140) do
   end
 
   create_table "school_data_downloads", force: :cascade do |t|
-    t.string("status")
-    t.datetime("started_at")
+    t.string("status", null: false)
+    t.datetime("started_at", null: false)
     t.datetime("completed_at")
-    t.string("source")
-    t.text("error_message")
-    t.integer("rows_processed")
-    t.integer("rows_filtered")
     t.integer("schools_created")
     t.integer("schools_updated")
     t.integer("lead_partners_updated")
     t.datetime("created_at", null: false)
     t.datetime("updated_at", null: false)
+    t.index(["started_at"], name: "index_school_data_downloads_on_started_at")
+    t.index(["status"], name: "index_school_data_downloads_on_status")
   end
 
   create_table "schools", force: :cascade do |t|

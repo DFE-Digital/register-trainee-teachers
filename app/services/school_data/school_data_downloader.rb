@@ -15,11 +15,7 @@ module SchoolData
     def call
       Rails.logger.info("Starting school data download and filtering")
 
-      @download_record.update!(status: :downloading)
       @filtered_csv_path = download_and_filter_csv
-      @download_record.update!(status: :filtering_complete)
-
-      Rails.logger.info("School data download completed: #{@download_record.rows_processed} total rows, #{@download_record.rows_filtered} filtered")
       self
     rescue StandardError => e
       handle_error(e)
@@ -60,11 +56,7 @@ module SchoolData
           end
         end
 
-        # Update statistics
-        @download_record.update!(
-          rows_processed: total_rows,
-          rows_filtered: filtered_rows,
-        )
+        Rails.logger.info("Processed #{total_rows} rows, filtered #{filtered_rows} rows")
 
         filtered_file.close
         filtered_file.path

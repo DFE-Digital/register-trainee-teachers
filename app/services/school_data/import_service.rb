@@ -7,35 +7,19 @@ module SchoolData
     def initialize(filtered_csv_path:, download_record:)
       @filtered_csv_path = filtered_csv_path
       @download_record = download_record
-      @stats = { created: 0, updated: 0, errors: [], lead_partners_updated: 0 }
+      @stats = { created: 0, updated: 0, lead_partners_updated: 0 }
     end
 
     def call
-      @download_record.update!(status: :processing)
-
-      validate_csv_file
       import_schools
       realign_lead_partners
       update_final_stats
       cleanup_files
 
       @stats
-    rescue StandardError => e
-      handle_error(e)
-      raise
     end
 
   private
-
-    def validate_csv_file
-      unless File.exist?(@filtered_csv_path)
-        raise("Filtered CSV file not found: #{@filtered_csv_path}")
-      end
-
-      unless File.readable?(@filtered_csv_path)
-        raise("Filtered CSV file not readable: #{@filtered_csv_path}")
-      end
-    end
 
     def import_schools
       School.transaction do
@@ -43,8 +27,6 @@ module SchoolData
           import_single_school(row)
         end
       end
-
-      Rails.logger.info("Import completed: #{@stats[:created]} created, #{@stats[:updated]} updated, #{@stats[:errors].size} errors")
     end
 
     def import_single_school(row)
@@ -62,10 +44,6 @@ module SchoolData
         school.save!
         @stats[:updated] += 1
       end
-    rescue StandardError => e
-      error_info = { urn: urn, error: e.message }
-      @stats[:errors] << error_info
-      Rails.logger.error("Failed to import school URN #{urn}: #{e.message}")
     end
 
     def extract_school_attributes(row)
@@ -100,22 +78,13 @@ module SchoolData
     end
 
     def realign_lead_partners
-      success_count = 0
       lead_partners = LeadPartner.school.joins(:school).includes(:school)
                                  .where("lead_partners.name != schools.name")
 
       lead_partners.find_each do |lead_partner|
-        new_name = lead_partner.school.name
-        lead_partner.name = new_name
-
-        if lead_partner.save
-          success_count += 1
-        else
-          Rails.logger.error("Failed to update lead partner #{lead_partner.id}: #{lead_partner.errors.full_messages.join(', ')}")
-        end
+        lead_partner.update!(name: lead_partner.school.name)
+        @stats[:lead_partners_updated] += 1
       end
-
-      @stats[:lead_partners_updated] = success_count
     end
 
     def update_final_stats
@@ -130,19 +99,6 @@ module SchoolData
 
     def cleanup_files
       FileUtils.rm_f(@filtered_csv_path) if File.exist?(@filtered_csv_path)
-    end
-
-    def handle_error(error)
-      Rails.logger.error("School data import failed: #{error.message}")
-      Rails.logger.error(error.backtrace.join("\n"))
-
-      @download_record.update!(
-        status: :failed,
-        completed_at: Time.current,
-        error_message: error.message,
-      )
-
-      cleanup_files
     end
   end
 end

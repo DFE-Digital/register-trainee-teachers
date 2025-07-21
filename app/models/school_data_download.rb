@@ -6,31 +6,28 @@
 #
 #  id                    :bigint           not null, primary key
 #  completed_at          :datetime
-#  error_message         :text
 #  lead_partners_updated :integer
-#  rows_filtered         :integer
-#  rows_processed        :integer
 #  schools_created       :integer
 #  schools_updated       :integer
-#  source                :string
-#  started_at            :datetime
-#  status                :string
+#  started_at            :datetime         not null
+#  status                :string           not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #
+# Indexes
+#
+#  index_school_data_downloads_on_started_at  (started_at)
+#  index_school_data_downloads_on_status      (status)
+#
 class SchoolDataDownload < ApplicationRecord
   enum :status, {
-    pending: "pending",
-    downloading: "downloading",
-    filtering_complete: "filtering_complete",
-    processing: "processing",
+    running: "running",
     completed: "completed",
     failed: "failed",
   }, prefix: true
 
   validates :status, presence: true
   validates :started_at, presence: true
-  validates :source, presence: true
 
   scope :recent, -> { order(created_at: :desc) }
   scope :successful, -> { where(status: :completed) }
@@ -47,6 +44,6 @@ class SchoolDataDownload < ApplicationRecord
   end
 
   def in_progress?
-    %w[pending downloading filtering_complete processing].include?(status)
+    status == "running"
   end
 end
