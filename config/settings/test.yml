@@ -2,6 +2,12 @@ dttp:
   api_base_url: "https://test-api-base-uri.com"
   portal_host: traineeteacherportal-test.education.gov.uk
 
+school_data:
+  downloader:
+    base_url: 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata%s.csv'
+    timeout: 300
+    chunk_size: 8192
+
 slack:
   default_channel: "test-channel"
   webhook_url: "https://test-slack-webhook-url.com"
