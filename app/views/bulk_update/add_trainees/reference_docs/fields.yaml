@@ -32,7 +32,7 @@
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
   format: 60 character maxlength
-  example: Jane
+  example: "`Jane`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L62
 - field_name: Last Name
@@ -40,7 +40,7 @@
   hesa_alignment: SURNAME
   description: This field is the student’s family name.
   format: 60 character length
-  example: Smith
+  example: "`Smith`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L63
 - field_name: Previous Last Name
@@ -75,12 +75,12 @@
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
-   '10'	Female
-   '11'	Male
-   '12'	Other
-   '96'	Information refused
-   '99'	Not available
-  format: 2 character length
+  format: |-
+    - `10` - Female
+    - `11` - Male
+    - `12` - Other
+    - `96` - Information refused
+    - `99` - Not available
   example: |-
     `10`
   validation: Mandatory
@@ -201,8 +201,8 @@
     the teacher training.
   format: "[HESA ITT aim codes](https://www.hesa.ac.uk/collection/c24053/e/ittaim)"
   example: |-
-    `201` Professional status only
-    `202` Both professional status and academic award
+    - `201` - Professional status only
+    - `202` - Both professional status and academic award
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L26
 - field_name: Training Route
@@ -241,7 +241,7 @@
     - `028` - Undergraduate Master of Teaching
     - `031` - Professional Graduate Certificate in Education
     - `032` - Masters, not by research
-  validation: Conditional - mandatory if ITT Aim is 202
+  validation: "Conditional - mandatory if ITT Aim is `202`"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
   technical: course_subject_one
@@ -287,7 +287,7 @@
     - `63` - Dormant - previously full-time
     - `64` - Dormant - previously part-time
   example: "`01`"
-  validation: Conditional - mandatory when the training route is not "`assessment_only` or `early_years_assessment_only`"
+  validation: "Conditional - mandatory when the training route is not Assessment only or Early years assessment_onl"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
 - field_name: ITT Start Date
   technical: itt_start_date
@@ -343,7 +343,7 @@
   description: This field collects the lead school for School Direct trainees
   format: Must be a 6-digit number
   example: |-
-    - `115795`
+    - `115795` - Cheltenham College
     - `900000` - Establishment outside England and Wales
     - `900020` - Other establishment without a URN
     - `900030` - Not available
@@ -356,7 +356,7 @@
     trainees.
   format: Must be a 6-digit number
   example: |-
-    - `115795`
+    - `115795` - Cheltenham College
     - `900000` - Establishment outside England and Wales
     - `900020` - Other establishment without a URN
     - `900030` - Not available
@@ -391,7 +391,7 @@
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
   example: |-
-    - `115795`
+    - `115795` - Cheltenham College
     - `900000` - Establishment outside England and Wales
     - `900020` - Other establishment without a URN
     - `900030` - Not available
@@ -402,7 +402,7 @@
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
   example: |-
-    - `115795`
+    - `115795` - Cheltenham College
     - `900000` - Establishment outside England and Wales
     - `900020` - Other establishment without a URN
     - `900030` - Not available
@@ -413,7 +413,7 @@
   description: This field describes a school where a trainee is undertaking a placement.
   format: MUST be a 6 digit number
   example: |-
-    - `115795`
+    - `115795` - Cheltenham College
     - `900000` - Establishment outside England and Wales
     - `900020` - Other establishment without a URN
     - `900030` - Not available
@@ -423,8 +423,8 @@
   hesa_alignment: FUNDCODE
   description: This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body.
   format: |-
-    - `2` = not eligible for student finance
-    - `7` = eligible for student finance
+    - `2` - not eligible for student finance
+    - `7` - eligible for student finance
   example: "`2`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L30
@@ -465,8 +465,7 @@
 
     The following codes are not mapped to Register:
       `001`, `011`, `019`
-  example: |-
-    "`026`"
+  example: "`026`"
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
 - field_name: Additional Training Initiative
@@ -484,8 +483,7 @@
 
     The following codes are not mapped to Register:
       `001`, `011`, `019`
-  example: |-
-    "`026`"
+  example: "`026`"
   validation: Optional
 - field_name: UK degree type
   technical: uk_degree
