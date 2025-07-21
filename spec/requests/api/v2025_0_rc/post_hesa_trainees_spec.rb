@@ -51,6 +51,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       training_route: training_route,
       itt_start_date: itt_start_date,
       itt_end_date: itt_end_date,
+      trainee_start_date: trainee_start_date,
       course_subject_one: course_subject_one,
       study_mode: Hesa::CodeSets::StudyModes::MAPPING.invert[TRAINEE_STUDY_MODE_ENUMS["full_time"]],
       disability1: disability1,
@@ -77,6 +78,23 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
   before do
     create(:disability, :blind)
     create(:disability, :deaf)
+  end
+
+  context "when the trainee_start_date is blank" do
+    let(:trainee_start_date) { "" }
+
+    before do
+      allow(Api::V20250Rc::HesaMapper::Attributes).to receive(:call).and_call_original
+      allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
+    end
+
+    it "creates a trainee" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response.parsed_body[:data][:first_names]).to eq("John")
+      expect(response.parsed_body[:data][:last_name]).to eq("Doe")
+      expect(response.parsed_body[:data][:trainee_start_date]).to eq(itt_start_date)
+    end
   end
 
   context "when the request is valid" do

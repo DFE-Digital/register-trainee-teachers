@@ -5,6 +5,8 @@ weight: 1
 
 # Register API documentation
 
+<%= partial "partials/hei_only_warning" %>
+
 This is API documentation for the Department for Education (DfE)’s Register
 trainee teachers (Register) service.
 
@@ -19,11 +21,13 @@ record systems and to keep those records synchronised as they are modified.
 
 Providers can use the API for:
 
-- looking up a trainee record in Register and returning details about that trainee.
-- retrieving a list of trainee records in Register for a given academic year.
-- creating new trainee records.
-- updating individual trainee records.
-- withdrawing and deferring a trainee.
+<ul class="govuk-list govuk-list--bullet">
+  <li>looking up a trainee record in Register and returning details about that trainee.</li>
+  <li>retrieving a list of trainee records in Register for a given academic year.</li>
+  <li>creating new trainee records.</li>
+  <li>updating individual trainee records.</li>
+  <li>withdrawing and deferring a trainee.</li>
+</ul>
 
 ## How do I connect to this API?
 
@@ -99,10 +103,12 @@ number shows whether we’ve made breaking or non-breaking changes to the API.
 
 Breaking changes usually involve modifying or deleting parts of the API, such as:
 
--  removing features
--  removing fields
--  changing the behaviour of endpoints, for example requiring a new parameter
-   in order for data to be synced
+<ul class="govuk-list govuk-list--bullet">
+  <li>removing features</li>
+  <li>removing fields</li>
+  <li>changing the behaviour of endpoints, for example requiring a new parameter</li>
+  <li>in order for data to be synced</li>
+</ul>
 
 You must update student record systems before you move to a new version with
 breaking changes.
@@ -114,11 +120,12 @@ means that the changes do not affect the existing functionality of the API.
 
 Non-breaking changes include adding new:
 
--  endpoints, for example to allow a new action to be performed on a trainee record
--  nested resources and objects, for example details of a trainee’s placements
--  fields, for example when a reason for a deferral is added
--  optional query parameters, for example to allow optional pagination when
-   data is synced
+<ul class="govuk-list govuk-list--bullet">
+  <li>endpoints, for example to allow a new action to be performed on a trainee record</li>
+  <li>nested resources and objects, for example details of a trainee’s placements</li>
+  <li>fields, for example when a reason for a deferral is added</li>
+  <li>optional query parameters, for example to allow optional pagination when data is synced</li>
+</ul>
 
 You do not need to update student record systems before moving to a new version
 with non-breaking changes. You only need to make updates if you want to use the
@@ -146,8 +153,10 @@ version URL.
 
 For example, after version `2025.2` is released you can use:
 
-- <https://www.register-trainee-teachers.service.gov.uk/api/v2025.1> for version `2025.1`
-- <https://www.register-trainee-teachers.service.gov.uk/api/v2025.2> for version `2025.2`
+<ul class="govuk-list govuk-list--bullet">
+  <li><https://www.register-trainee-teachers.service.gov.uk/api/v2025.1> for version `2025.1`</li>
+  <li><https://www.register-trainee-teachers.service.gov.uk/api/v2025.2> for version `2025.2`</li>
+</ul>
 
 ## Testing
 
