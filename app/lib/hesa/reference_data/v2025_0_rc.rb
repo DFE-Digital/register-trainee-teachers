@@ -37,7 +37,7 @@ module Hesa
           course_subject_two: CodeSets::CourseSubjects::MAPPING,
           course_subject_three: CodeSets::CourseSubjects::MAPPING,
           nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
-        }.freeze
+        }.transform_values { |mapping| mapping.sort.to_h }.freeze
       end
     end
   end
