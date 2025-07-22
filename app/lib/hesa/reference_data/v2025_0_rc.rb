@@ -6,6 +6,10 @@ module Hesa
     class V20250Rc
       include ServicePattern
 
+      DEFAULT_CASE_ATTRIBUTES = %i[
+        degree_subject
+      ].freeze
+
       def call
         {
           funding_method: CodeSets::BursaryLevels::VALUES,
@@ -37,7 +41,14 @@ module Hesa
           course_subject_two: CodeSets::CourseSubjects::MAPPING,
           course_subject_three: CodeSets::CourseSubjects::MAPPING,
           nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
-        }.transform_values { |mapping| mapping.sort.to_h }.freeze
+        }.to_h do |attribute, mapping|
+          transformed_mapping = if attribute.in?(DEFAULT_CASE_ATTRIBUTES)
+                                  mapping.sort
+                                else
+                                  mapping.transform_values { |value| value[0].upcase + value[1..] }.sort
+                                end
+          [attribute, transformed_mapping.to_h]
+        end.freeze
       end
     end
   end
