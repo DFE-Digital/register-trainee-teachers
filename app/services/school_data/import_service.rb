@@ -22,8 +22,10 @@ module SchoolData
   private
 
     def import_schools
+      Rails.logger.info("Reading filtered CSV: #{@filtered_csv_path} (#{File.size(@filtered_csv_path)} bytes)")
+
       School.transaction do
-        CSV.foreach(@filtered_csv_path, headers: true, encoding: "utf-8") do |row|
+        CSV.foreach(@filtered_csv_path, headers: true) do |row|
           import_single_school(row)
         end
       end

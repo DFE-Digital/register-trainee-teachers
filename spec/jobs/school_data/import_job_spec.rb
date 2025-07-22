@@ -6,7 +6,7 @@ RSpec.describe SchoolData::ImportJob, type: :job do
   subject(:job) { described_class.new }
 
   let(:mock_downloader_result) { double("downloader_result", filtered_csv_path: "/tmp/filtered_data.csv") }
-  let(:mock_import_result) { { created: 10, updated: 5, errors: [], lead_partners_updated: 2 } }
+  let(:mock_import_result) { { created: 10, updated: 5, lead_partners_updated: 2 } }
 
   describe "#perform" do
     context "when feature flag is disabled", feature_school_data_auto_import: false do

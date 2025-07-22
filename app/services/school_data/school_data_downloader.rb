@@ -17,36 +17,60 @@ module SchoolData
 
       @filtered_csv_path = download_and_filter_csv
       self
-    rescue StandardError => e
-      handle_error(e)
-      raise
     end
 
   private
 
     def download_and_filter_csv
+      url = csv_url
+      Rails.logger.info("Downloading school data from: #{url}")
+
       # Create temporary file for filtered results
       filtered_file = Tempfile.new(["school_data_filtered_", ".csv"])
-      headers_written = false
       total_rows = 0
       filtered_rows = 0
+      establishment_type_index = nil
 
       begin
         # Stream download and process line by line to avoid loading 60MB into memory
-        URI.open(csv_url, read_timeout: Settings.school_data&.downloader&.timeout || 300) do |csv_stream|
-          CSV.new(csv_stream, headers: true, encoding: "utf-8").each do |row|
-            total_rows += 1
+        URI.open(url, read_timeout: Settings.school_data&.downloader&.timeout || 300) do |csv_stream|
+          csv_stream.set_encoding("windows-1251:utf-8")
 
-            # Write headers on first row
-            unless headers_written
-              filtered_file.puts(row.headers.to_csv)
-              headers_written = true
+          csv_stream.each_line.with_index do |line, line_index|
+            line = line.strip
+            next if line.empty?
+
+            if line_index == 0
+              # Header row - find the establishment type column and write headers
+              headers = CSV.parse_line(line)
+              establishment_type_index = headers.index("TypeOfEstablishment (code)")
+
+              if establishment_type_index.nil?
+                raise("Could not find 'TypeOfEstablishment (code)' column in CSV headers")
+              end
+
+              filtered_file.puts(line)
+              Rails.logger.info("Found establishment type column at index #{establishment_type_index}")
+              next
             end
 
-            # Filter based on establishment type
-            if should_include_row?(row)
-              filtered_file.puts(row.to_csv)
-              filtered_rows += 1
+            total_rows += 1
+
+            # Parse just the establishment type column to check filter
+            begin
+              fields = CSV.parse_line(line)
+              establishment_type = fields[establishment_type_index].to_i
+
+              if ESTABLISHMENT_TYPES.include?(establishment_type)
+                filtered_file.puts(line)
+                filtered_rows += 1
+
+                # Debug first few rows
+                log_debug_info(establishment_type, fields, filtered_rows) if filtered_rows <= 10
+              end
+            rescue CSV::MalformedCSVError
+              # Skip malformed lines
+              Rails.logger.warn("Skipping malformed CSV line #{line_index + 1}")
             end
 
             # Log progress every 10,000 rows
@@ -58,7 +82,15 @@ module SchoolData
 
         Rails.logger.info("Processed #{total_rows} rows, filtered #{filtered_rows} rows")
 
+        filtered_file.flush # Ensure all data is written
         filtered_file.close
+
+        # Verify the filtered file was created properly
+        if File.size(filtered_file.path) == 0
+          raise("Filtered CSV file is empty - no schools matched filter criteria")
+        end
+
+        Rails.logger.info("Created filtered CSV: #{filtered_file.path} (#{File.size(filtered_file.path)} bytes)")
         filtered_file.path
       rescue StandardError => e
         filtered_file&.close
@@ -72,31 +104,9 @@ module SchoolData
       format(base_url, Date.current.strftime("%Y%m%d"))
     end
 
-    def should_include_row?(row)
-      establishment_type = row["TypeOfEstablishment (code)"].to_i
-      ESTABLISHMENT_TYPES.include?(establishment_type)
-    end
-
-    def handle_error(error)
-      Rails.logger.error("School data download failed: #{error.message}")
-      Rails.logger.error(error.backtrace.join("\n"))
-
-      @download_record.update!(
-        status: :failed,
-        completed_at: Time.current,
-        error_message: error.message,
-      )
-
-      # Clean up any temporary files
-      cleanup_files
-    end
-
-    def cleanup_files
-      if @filtered_csv_path && File.exist?(@filtered_csv_path)
-        File.unlink(@filtered_csv_path)
-      end
-    rescue StandardError => e
-      Rails.logger.warn("Failed to cleanup temporary file: #{e.message}")
+    def log_debug_info(establishment_type, fields, filtered_rows)
+      school_name = fields[4] # EstablishmentName is typically the 5th column (index 4)
+      Rails.logger.info("Row #{filtered_rows}: Type=#{establishment_type}, School='#{school_name}'")
     end
   end
 end

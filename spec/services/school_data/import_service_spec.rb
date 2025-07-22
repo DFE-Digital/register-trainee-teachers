@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SchoolData::ImportService do
   include ActiveSupport::Testing::TimeHelpers
 
-  let(:download_record) { create(:school_data_download, :filtering_complete) }
+  let(:download_record) { create(:school_data_download, :running) }
   let(:filtered_csv_path) { Rails.root.join("tmp/test_filtered_schools.csv") }
   let(:sample_csv_content) do
     [
@@ -35,9 +35,9 @@ RSpec.describe SchoolData::ImportService do
         end
       end
 
-      it "updates download record status to processing then completed" do
+      it "updates download record status to completed" do
         expect { subject }.to change { download_record.reload.status }
-          .from("filtering_complete").to("completed")
+          .from("running").to("completed")
       end
 
       it "imports new schools correctly" do
@@ -78,7 +78,7 @@ RSpec.describe SchoolData::ImportService do
 
         expect(result[:created]).to eq(3)     # 3 new schools
         expect(result[:updated]).to eq(1)     # 1 updated school
-        expect(result[:errors]).to be_empty
+        expect(result[:lead_partners_updated]).to eq(0)
       end
 
       it "updates download record with final statistics" do
@@ -98,12 +98,6 @@ RSpec.describe SchoolData::ImportService do
         subject
 
         expect(File.exist?(filtered_csv_path)).to be false
-      end
-
-      it "logs successful import information" do
-        expect(Rails.logger).to receive(:info).with(match(/Import completed: \d+ created, \d+ updated, \d+ errors/))
-
-        subject
       end
     end
 
@@ -132,14 +126,11 @@ RSpec.describe SchoolData::ImportService do
         expect(download_record.lead_partners_updated).to eq(1)
       end
 
-      it "logs errors when lead partner updates fail" do
-        allow(lead_partner).to receive(:save).and_return(false)
-        allow(lead_partner).to receive(:errors).and_return(double(full_messages: ["Name can't be blank"]))
+      it "fails immediately when lead partner updates fail" do
+        allow(lead_partner).to receive(:update!).and_raise(ActiveRecord::RecordInvalid)
         allow(LeadPartner).to receive_message_chain(:school, :joins, :includes, :where, :find_each).and_yield(lead_partner)
 
-        expect(Rails.logger).to receive(:error).with(match(/Failed to update lead partner/))
-
-        subject
+        expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       context "when lead partner already has correct name" do
@@ -153,130 +144,34 @@ RSpec.describe SchoolData::ImportService do
       end
     end
 
-    context "error handling" do
+    context "fail fast behavior" do
       context "when CSV file does not exist" do
         let(:filtered_csv_path) { "/nonexistent/path/file.csv" }
 
-        # Override the before block for this context to not create the CSV file
-
-        it "raises an error with descriptive message" do
-          expect { subject }.to raise_error(RuntimeError, /Filtered CSV file not found/)
-        end
-
-        it "updates download record to failed status" do
-          expect { subject }.to raise_error(RuntimeError)
-
-          download_record.reload
-          expect(download_record.status).to eq("failed")
-          expect(download_record.error_message).to include("Filtered CSV file not found")
-          expect(download_record.completed_at).to be_present
-        end
-      end
-
-      context "when CSV file is not readable" do
-        before do
-          # Create the file first, then mock it as not readable
-          CSV.open(filtered_csv_path, "w") do |csv|
-            sample_csv_content.each { |row| csv << row }
-          end
-          allow(File).to receive(:exist?).and_call_original
-          allow(File).to receive(:readable?).and_call_original
-          allow(File).to receive(:exist?).with(filtered_csv_path).and_return(true)
-          allow(File).to receive(:readable?).with(filtered_csv_path).and_return(false)
-        end
-
-        it "raises an error about readability" do
-          expect { subject }.to raise_error(RuntimeError, /Filtered CSV file not readable/)
+        it "fails immediately" do
+          expect { subject }.to raise_error(Errno::ENOENT)
         end
       end
 
       context "when individual school import fails" do
-        let(:invalid_csv_content) do
-          [
-            ["URN", "EstablishmentName", "TypeOfEstablishment (code)", "Postcode"],
-            ["123456", "Valid School", "1", "AB1 2CD"],
-            ["", "School with blank URN", "1", "EF3 4GH"], # This will be skipped
-            ["789012", "School That Will Fail", "1", "IJ5 6KL"],
-          ]
-        end
-
         before do
-          # Recreate CSV with invalid data
-          FileUtils.rm_f(filtered_csv_path)
-          CSV.open(filtered_csv_path, "w") do |csv|
-            invalid_csv_content.each { |row| csv << row }
-          end
-        end
-
-        it "continues processing other schools and tracks errors" do
-          # Mock the service to simulate a failure for one school
-          original_method = SchoolData::ImportService.instance_method(:import_single_school)
-          allow_any_instance_of(SchoolData::ImportService).to receive(:import_single_school) do |service, row|
-            if row["URN"] == "789012"
-              # Simulate error by calling the error tracking directly
-              service.instance_variable_get(:@stats)[:errors] << { urn: "789012", error: "Validation failed" }
-              Rails.logger.error("Failed to import school URN 789012: Validation failed")
-            else
-              original_method.bind(service).call(row)
-            end
-          end
-
-          result = subject
-
-          expect(result[:created]).to eq(1) # Only valid school created
-          expect(result[:errors].size).to eq(1)
-          expect(result[:errors].first[:urn]).to eq("789012")
-        end
-
-        it "logs individual school import failures" do
-          # Mock the service to simulate a failure for one school
-          original_method = SchoolData::ImportService.instance_method(:import_single_school)
-          allow_any_instance_of(SchoolData::ImportService).to receive(:import_single_school) do |service, row|
-            if row["URN"] == "789012"
-              # Simulate error by calling the error tracking directly
-              service.instance_variable_get(:@stats)[:errors] << { urn: "789012", error: "Validation failed" }
-              Rails.logger.error("Failed to import school URN 789012: Validation failed")
-            else
-              original_method.bind(service).call(row)
-            end
-          end
-
-          expect(Rails.logger).to receive(:error).with(match(/Failed to import school URN 789012/))
-
-          subject
-        end
-      end
-
-      context "when database transaction fails" do
-        before do
-          # Create the filtered CSV file
           CSV.open(filtered_csv_path, "w") do |csv|
             sample_csv_content.each { |row| csv << row }
           end
-          allow(School).to receive(:transaction).and_raise(ActiveRecord::StatementInvalid.new("Database error"))
+
+          # Mock a single school failing validation
+          allow_any_instance_of(School).to receive(:save!).and_call_original
+          allow_any_instance_of(School).to receive(:save!) do |school|
+            if school.urn == "234567"
+              raise ActiveRecord::RecordInvalid.new(school)
+            else
+              school.save(validate: false)
+            end
+          end
         end
 
-        it "handles the error and updates download record" do
-          expect { subject }.to raise_error(ActiveRecord::StatementInvalid)
-
-          download_record.reload
-          expect(download_record.status).to eq("failed")
-          expect(download_record.error_message).to eq("Database error")
-        end
-
-        it "cleans up files on error" do
-          expect(File.exist?(filtered_csv_path)).to be true
-
-          expect { subject }.to raise_error(ActiveRecord::StatementInvalid)
-
-          expect(File.exist?(filtered_csv_path)).to be false
-        end
-
-        it "logs error information" do
-          expect(Rails.logger).to receive(:error).with("School data import failed: Database error")
-          expect(Rails.logger).to receive(:error).with(kind_of(String)) # backtrace
-
-          expect { subject }.to raise_error(ActiveRecord::StatementInvalid)
+        it "fails the entire import immediately" do
+          expect { subject }.to raise_error(ActiveRecord::RecordInvalid)
         end
       end
     end
@@ -361,10 +256,9 @@ RSpec.describe SchoolData::ImportService do
         result = subject
 
         expect(result).to be_a(Hash)
-        expect(result.keys).to contain_exactly(:created, :updated, :errors, :lead_partners_updated)
+        expect(result.keys).to contain_exactly(:created, :updated, :lead_partners_updated)
         expect(result[:created]).to be_a(Integer)
         expect(result[:updated]).to be_a(Integer)
-        expect(result[:errors]).to be_an(Array)
         expect(result[:lead_partners_updated]).to be_a(Integer)
       end
     end

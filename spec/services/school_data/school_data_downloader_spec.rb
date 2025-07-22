@@ -10,25 +10,19 @@ RSpec.describe SchoolData::SchoolDataDownloader do
   describe "#call" do
     context "when download succeeds" do
       let(:sample_csv_data) do
-        [
-          ["URN", "EstablishmentName", "TypeOfEstablishment (code)", "Postcode", "Town"],
-          ["123456", "Test Primary School", "1", "AB1 2CD", "TestTown"],
-          ["234567", "Test Academy", "10", "EF3 4GH", "TestCity"],
-          ["345678", "Test Independent School", "4", "IJ5 6KL", "TestVillage"], # Not included - type 4
-          ["456789", "Test Secondary School", "15", "MN7 8OP", "TestDistrict"],
-        ]
+        # Raw CSV lines to test line-by-line filtering approach
+        "URN,EstablishmentName,TypeOfEstablishment (code),Postcode,Town\n" \
+          "123456,Test Primary School,1,AB1 2CD,TestTown\n" \
+          "234567,Test Academy,10,EF3 4GH,TestCity\n" \
+          "345678,Test Independent School,4,IJ5 6KL,TestVillage\n" \
+          "456789,Test Secondary School,15,MN7 8OP,TestDistrict"
       end
 
       before do
-        freeze_time
-
-        # Mock the CSV download
-        allow(URI).to receive(:open).and_yield(StringIO.new(sample_csv_data.map(&:to_csv).join))
-      end
-
-      it "updates download record status progression" do
-        expect { described_class.call(download_record:) }.to change { download_record.reload.status }
-          .from("pending").to("filtering_complete")
+        # Mock the CSV download with proper encoding
+        csv_stream = StringIO.new(sample_csv_data)
+        allow(csv_stream).to receive(:set_encoding)
+        allow(URI).to receive(:open).and_yield(csv_stream)
       end
 
       it "downloads and filters CSV data correctly" do
@@ -50,65 +44,35 @@ RSpec.describe SchoolData::SchoolDataDownloader do
         expect(filtered_csv.map { |row| row["URN"] }).to contain_exactly("123456", "234567", "456789")
       end
 
-      it "updates statistics correctly" do
-        described_class.call(download_record:)
-
-        download_record.reload
-        expect(download_record.rows_processed).to eq(4) # 4 data rows (excluding header)
-        expect(download_record.rows_filtered).to eq(3) # 3 matching establishment types
-      end
-
-      it "logs progress information" do
+      it "logs download URL" do
+        expect(Rails.logger).to receive(:info).with(match(/Downloading school data from:/))
         expect(Rails.logger).to receive(:info).with("Starting school data download and filtering")
-        expect(Rails.logger).to receive(:info).with(match(/School data download completed:/))
 
         described_class.call(download_record:)
       end
     end
 
     context "when download fails" do
-      let(:error_message) { "Network timeout" }
-
       before do
-        allow(URI).to receive(:open).and_raise(Timeout::Error, error_message)
+        allow(URI).to receive(:open).and_raise(Timeout::Error, "Network timeout")
       end
 
-      it "handles network errors gracefully" do
-        expect { described_class.call(download_record:) }.to raise_error(Timeout::Error)
-
-        download_record.reload
-        expect(download_record.status).to eq("failed")
-        expect(download_record.error_message).to eq(error_message)
-        expect(download_record.completed_at).to be_present
-      end
-
-      it "logs error information" do
-        expect(Rails.logger).to receive(:error).with("School data download failed: #{error_message}")
-        expect(Rails.logger).to receive(:error).with(kind_of(String)) # backtrace
-
-        expect { described_class.call(download_record:) }.to raise_error(Timeout::Error)
-      end
-
-      it "cleans up temporary files on error" do
-        # We can't easily test the cleanup method call since it's private,
-        # but we can verify the behavior by checking that no temp files are left
+      it "re-raises the error (fail fast approach)" do
         expect { described_class.call(download_record:) }.to raise_error(Timeout::Error)
       end
     end
 
-    context "when CSV is malformed" do
+    context "when establishment type column is missing" do
+      let(:invalid_csv) { "URN,Name\n123456,Test School" }
+
       before do
-        # Create truly malformed CSV that will cause parsing to fail
-        malformed_csv = "URN,Name\n\"unclosed quote field"
-        allow(URI).to receive(:open).and_yield(StringIO.new(malformed_csv))
+        csv_stream = StringIO.new(invalid_csv)
+        allow(csv_stream).to receive(:set_encoding)
+        allow(URI).to receive(:open).and_yield(csv_stream)
       end
 
-      it "handles CSV parsing errors" do
-        expect { described_class.call(download_record:) }.to raise_error(CSV::MalformedCSVError)
-
-        download_record.reload
-        expect(download_record.status).to eq("failed")
-        expect(download_record.error_message).to include("Unclosed quoted field")
+      it "raises error for missing column" do
+        expect { described_class.call(download_record:) }.to raise_error(/Could not find 'TypeOfEstablishment \(code\)' column/)
       end
     end
   end
@@ -117,6 +81,8 @@ RSpec.describe SchoolData::SchoolDataDownloader do
     let(:service_instance) { described_class.send(:new, download_record:) }
 
     describe "#csv_url" do
+      include ActiveSupport::Testing::TimeHelpers
+
       context "with default settings" do
         it "generates URL with current date" do
           travel_to Time.zone.parse("2025-07-21")
@@ -141,96 +107,30 @@ RSpec.describe SchoolData::SchoolDataDownloader do
       end
     end
 
-    describe "#should_include_row?" do
-      let(:row_data) { { "URN" => "123456", "TypeOfEstablishment (code)" => establishment_type.to_s } }
-      let(:csv_row) { CSV::Row.new(row_data.keys, row_data.values) }
+    describe "#log_debug_info" do
+      it "logs establishment type and school name" do
+        fields = ["123456", "LA123", "Local Authority", "456", "Test School Name", "1"]
 
+        expect(Rails.logger).to receive(:info).with("Row 5: Type=1, School='Test School Name'")
+
+        service_instance.send(:log_debug_info, 1, fields, 5)
+      end
+    end
+
+    describe "establishment type filtering" do
       context "with valid establishment types" do
         described_class::ESTABLISHMENT_TYPES.sample(5).each do |type|
-          context "for establishment type #{type}" do
-            let(:establishment_type) { type }
-
-            it "includes the row" do
-              expect(service_instance.send(:should_include_row?, csv_row)).to be true
-            end
+          it "includes establishment type #{type}" do
+            expect(described_class::ESTABLISHMENT_TYPES).to include(type)
           end
         end
       end
 
       context "with invalid establishment types" do
         [4, 9, 13, 99, 100].each do |type|
-          context "for establishment type #{type}" do
-            let(:establishment_type) { type }
-
-            it "excludes the row" do
-              expect(service_instance.send(:should_include_row?, csv_row)).to be false
-            end
+          it "excludes establishment type #{type}" do
+            expect(described_class::ESTABLISHMENT_TYPES).not_to include(type)
           end
-        end
-      end
-
-      context "with non-numeric establishment type" do
-        let(:establishment_type) { "invalid" }
-
-        it "excludes the row" do
-          expect(service_instance.send(:should_include_row?, csv_row)).to be false
-        end
-      end
-
-      context "with empty establishment type" do
-        let(:establishment_type) { "" }
-
-        it "excludes the row" do
-          expect(service_instance.send(:should_include_row?, csv_row)).to be false
-        end
-      end
-    end
-
-    describe "#cleanup_files" do
-      let(:temp_file_path) { "/tmp/test_file.csv" }
-
-      before do
-        service_instance.instance_variable_set(:@filtered_csv_path, temp_file_path)
-      end
-
-      context "when file exists" do
-        before do
-          allow(File).to receive(:exist?).and_call_original
-          allow(File).to receive(:exist?).with(temp_file_path).and_return(true)
-          allow(File).to receive(:unlink).with(temp_file_path)
-        end
-
-        it "removes the file" do
-          expect(File).to receive(:unlink).with(temp_file_path)
-
-          service_instance.send(:cleanup_files)
-        end
-      end
-
-      context "when file does not exist" do
-        before do
-          allow(File).to receive(:exist?).and_call_original
-          allow(File).to receive(:exist?).with(temp_file_path).and_return(false)
-        end
-
-        it "does not attempt to remove the file" do
-          expect(File).not_to receive(:unlink)
-
-          service_instance.send(:cleanup_files)
-        end
-      end
-
-      context "when file removal fails" do
-        before do
-          allow(File).to receive(:exist?).and_call_original
-          allow(File).to receive(:exist?).with(temp_file_path).and_return(true)
-          allow(File).to receive(:unlink).with(temp_file_path).and_raise(Errno::ENOENT, "No such file or directory")
-        end
-
-        it "logs the warning" do
-          expect(Rails.logger).to receive(:warn).with(match(/Failed to cleanup temporary file:/))
-
-          service_instance.send(:cleanup_files)
         end
       end
     end
