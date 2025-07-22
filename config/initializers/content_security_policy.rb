@@ -39,7 +39,7 @@ Rails.application.config.content_security_policy do |policy|
                     "https://az416426.vo.msecnd.net") # needed for App Insights
   policy.style_src(:self, "'sha256-WAyOw4V+FqDc35lQPyRADLBWbuNK8ahvYEaQIYF1+Ps='") # Turbo progress bar stylesheet https://github.com/hotwired/turbo/issues/809
   policy.font_src(:self, :data)
-  policy.upgrade_insecure_requests(true)
+  policy.upgrade_insecure_requests(!Rails.env.local?)
 end
 
 Rails.application.config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
