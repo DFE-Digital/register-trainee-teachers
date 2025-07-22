@@ -2,10 +2,12 @@
 
 require "rails_helper"
 
-RSpec.describe SchoolData::ImportJob, type: :job do
+RSpec.describe SchoolData::ImportJob do
+  include ActiveSupport::Testing::TimeHelpers
+
   subject(:job) { described_class.new }
 
-  let(:mock_downloader_result) { double("downloader_result", filtered_csv_path: "/tmp/filtered_data.csv") }
+  let(:filtered_csv_path) { "/tmp/filtered_data.csv" }
   let(:mock_import_result) { { created: 10, updated: 5, lead_partners_updated: 2 } }
 
   describe "#perform" do
@@ -28,7 +30,7 @@ RSpec.describe SchoolData::ImportJob, type: :job do
 
       before do
         allow(SchoolDataDownload).to receive(:create!).and_return(download_record)
-        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(mock_downloader_result)
+        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(filtered_csv_path)
         allow(SchoolData::ImportService).to receive(:call).and_return(mock_import_result)
       end
 
@@ -39,21 +41,21 @@ RSpec.describe SchoolData::ImportJob, type: :job do
             started_at: Time.current,
           }
 
-          expect(SchoolDataDownload).to receive(:create!).with(expected_attributes).and_return(download_record)
+          expect(SchoolDataDownload).to receive(:create!).with(expected_attributes)
 
           job.perform
         end
       end
 
-      it "calls the downloader service with the download record" do
-        expect(SchoolData::SchoolDataDownloader).to receive(:call).with(download_record:)
+      it "calls the downloader service" do
+        expect(SchoolData::SchoolDataDownloader).to receive(:call)
         job.perform
       end
 
       it "calls the import service with the filtered CSV path and download record" do
         expect(SchoolData::ImportService).to receive(:call).with(
-          filtered_csv_path: "/tmp/filtered_data.csv",
-          download_record: download_record,
+          filtered_csv_path:,
+          download_record:,
         )
         job.perform
       end
@@ -84,7 +86,7 @@ RSpec.describe SchoolData::ImportJob, type: :job do
 
       before do
         allow(SchoolDataDownload).to receive(:create!).and_return(download_record)
-        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(mock_downloader_result)
+        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(filtered_csv_path)
         allow(SchoolData::ImportService).to receive(:call).and_raise(error)
       end
 

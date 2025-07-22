@@ -63,10 +63,6 @@ module SchoolData
              row["Address3"].presence ||
              row["Locality"].presence
 
-      if town.blank?
-        Rails.logger.warn("Town missing for school: '#{row['EstablishmentName']}' URN: #{row['URN']}")
-      end
-
       town&.strip
     end
 
@@ -100,7 +96,7 @@ module SchoolData
     end
 
     def cleanup_files
-      FileUtils.rm_f(@filtered_csv_path) if File.exist?(@filtered_csv_path)
+      FileUtils.rm_f(@filtered_csv_path)
     end
   end
 end

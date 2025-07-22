@@ -12,11 +12,11 @@ module SchoolData
         started_at: Time.current,
       )
 
-      downloader_result = SchoolData::SchoolDataDownloader.call(download_record:)
+      filtered_csv_path = SchoolData::SchoolDataDownloader.call
 
       SchoolData::ImportService.call(
-        filtered_csv_path: downloader_result.filtered_csv_path,
-        download_record: download_record,
+        filtered_csv_path:,
+        download_record:,
       )
 
       download_record

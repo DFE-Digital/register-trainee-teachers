@@ -5,12 +5,9 @@ require "rails_helper"
 RSpec.describe SchoolData::SchoolDataDownloader do
   include ActiveSupport::Testing::TimeHelpers
 
-  let(:download_record) { create(:school_data_download) }
-
   describe "#call" do
     context "when download succeeds" do
       let(:sample_csv_data) do
-        # Raw CSV lines to test line-by-line filtering approach
         "URN,EstablishmentName,TypeOfEstablishment (code),Postcode,Town\n" \
           "123456,Test Primary School,1,AB1 2CD,TestTown\n" \
           "234567,Test Academy,10,EF3 4GH,TestCity\n" \
@@ -19,24 +16,23 @@ RSpec.describe SchoolData::SchoolDataDownloader do
       end
 
       before do
-        # Mock the CSV download with proper encoding
-        csv_stream = StringIO.new(sample_csv_data)
-        allow(csv_stream).to receive(:set_encoding)
-        allow(URI).to receive(:open).and_yield(csv_stream)
+        response_double = double("Net::HTTPResponse")
+        allow(Net::HTTP).to receive(:get_response).and_return(response_double)
+        allow(response_double).to receive(:value) # Don't raise for successful response
+        allow(response_double).to receive(:body).and_return(sample_csv_data)
       end
 
-      it "downloads and filters CSV data correctly" do
-        result = described_class.call(download_record:)
+      it "returns the filtered CSV file path" do
+        result = described_class.call
 
-        expect(result).to be_a(described_class)
-        expect(result.filtered_csv_path).to be_present
-        expect(File.exist?(result.filtered_csv_path)).to be true
+        expect(result).to be_a(String)
+        expect(File.exist?(result)).to be true
       end
 
       it "filters rows based on establishment types" do
-        service = described_class.call(download_record:)
+        filtered_csv_path = described_class.call
 
-        filtered_content = File.read(service.filtered_csv_path)
+        filtered_content = File.read(filtered_csv_path)
         filtered_csv = CSV.parse(filtered_content, headers: true)
 
         # Should include schools with types 1, 10, and 15 but not 4
@@ -44,21 +40,20 @@ RSpec.describe SchoolData::SchoolDataDownloader do
         expect(filtered_csv.map { |row| row["URN"] }).to contain_exactly("123456", "234567", "456789")
       end
 
-      it "logs download URL" do
-        expect(Rails.logger).to receive(:info).with(match(/Downloading school data from:/))
-        expect(Rails.logger).to receive(:info).with("Starting school data download and filtering")
+      it "logs filtering results" do
+        expect(Rails.logger).to receive(:info).with("Filtered 3 schools from 4 rows")
 
-        described_class.call(download_record:)
+        described_class.call
       end
     end
 
     context "when download fails" do
       before do
-        allow(URI).to receive(:open).and_raise(Timeout::Error, "Network timeout")
+        allow(Net::HTTP).to receive(:get_response).and_raise(Timeout::Error, "Network timeout")
       end
 
       it "re-raises the error (fail fast approach)" do
-        expect { described_class.call(download_record:) }.to raise_error(Timeout::Error)
+        expect { described_class.call }.to raise_error(Timeout::Error)
       end
     end
 
@@ -66,72 +61,44 @@ RSpec.describe SchoolData::SchoolDataDownloader do
       let(:invalid_csv) { "URN,Name\n123456,Test School" }
 
       before do
-        csv_stream = StringIO.new(invalid_csv)
-        allow(csv_stream).to receive(:set_encoding)
-        allow(URI).to receive(:open).and_yield(csv_stream)
+        response_double = double("Net::HTTPResponse")
+        allow(Net::HTTP).to receive(:get_response).and_return(response_double)
+        allow(response_double).to receive(:value)
+        allow(response_double).to receive(:body).and_return(invalid_csv)
       end
 
       it "raises error for missing column" do
-        expect { described_class.call(download_record:) }.to raise_error(/Could not find 'TypeOfEstablishment \(code\)' column/)
-      end
-    end
-  end
-
-  describe "private methods" do
-    let(:service_instance) { described_class.send(:new, download_record:) }
-
-    describe "#csv_url" do
-      include ActiveSupport::Testing::TimeHelpers
-
-      context "with default settings" do
-        it "generates URL with current date" do
-          travel_to Time.zone.parse("2025-07-21")
-
-          expected_url = "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata20250721.csv"
-          expect(service_instance.send(:csv_url)).to eq(expected_url)
-        end
-      end
-
-      context "with custom base URL in settings" do
-        before do
-          allow(Settings.school_data.downloader).to receive(:base_url)
-            .and_return("https://custom.domain.com/data%s.csv")
-        end
-
-        it "uses custom base URL" do
-          travel_to Time.zone.parse("2025-07-21")
-
-          expected_url = "https://custom.domain.com/data20250721.csv"
-          expect(service_instance.send(:csv_url)).to eq(expected_url)
-        end
+        expect { described_class.call }.to raise_error(/Could not find 'TypeOfEstablishment \(code\)' column/)
       end
     end
 
-    describe "#log_debug_info" do
-      it "logs establishment type and school name" do
-        fields = ["123456", "LA123", "Local Authority", "456", "Test School Name", "1"]
-
-        expect(Rails.logger).to receive(:info).with("Row 5: Type=1, School='Test School Name'")
-
-        service_instance.send(:log_debug_info, 1, fields, 5)
-      end
-    end
-
-    describe "establishment type filtering" do
-      context "with valid establishment types" do
-        described_class::ESTABLISHMENT_TYPES.sample(5).each do |type|
-          it "includes establishment type #{type}" do
-            expect(described_class::ESTABLISHMENT_TYPES).to include(type)
-          end
-        end
+    context "when no schools match filter criteria" do
+      let(:no_matching_csv) do
+        "URN,EstablishmentName,TypeOfEstablishment (code),Postcode,Town\n" \
+          "123456,Test School,99,AB1 2CD,TestTown"
       end
 
-      context "with invalid establishment types" do
-        [4, 9, 13, 99, 100].each do |type|
-          it "excludes establishment type #{type}" do
-            expect(described_class::ESTABLISHMENT_TYPES).not_to include(type)
-          end
-        end
+      before do
+        response_double = double("Net::HTTPResponse")
+        allow(Net::HTTP).to receive(:get_response).and_return(response_double)
+        allow(response_double).to receive(:value)
+        allow(response_double).to receive(:body).and_return(no_matching_csv)
+      end
+
+      it "creates filtered file with only headers" do
+        filtered_csv_path = described_class.call
+
+        filtered_content = File.read(filtered_csv_path)
+        filtered_csv = CSV.parse(filtered_content, headers: true)
+
+        expect(filtered_csv.count).to eq(0)
+        expect(filtered_content).to include("URN,EstablishmentName")
+      end
+
+      it "logs zero filtered schools" do
+        expect(Rails.logger).to receive(:info).with("Filtered 0 schools from 1 rows")
+
+        described_class.call
       end
     end
   end
