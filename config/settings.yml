@@ -102,6 +102,7 @@ features:
   bulk_add_trainees: false
   token_management: false
   show_csv_sandbox_banner: false
+  publish_provider_checker: false
 
 dfe_sign_in:
   # Our service name
