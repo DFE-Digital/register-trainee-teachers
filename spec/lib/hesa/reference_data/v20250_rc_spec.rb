@@ -36,7 +36,14 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
         course_subject_two: Hesa::CodeSets::CourseSubjects::MAPPING,
         course_subject_three: Hesa::CodeSets::CourseSubjects::MAPPING,
         nationality: RecruitsApi::CodeSets::Nationalities::MAPPING,
-      }.transform_values { |mapping| mapping.sort.to_h }
+      }.to_h do |attribute, mapping|
+        transformed_mapping = if attribute.in? %i[degree_subject]
+                                mapping.sort
+                              else
+                                mapping.transform_values { |value| value[0].upcase + value[1..] }.sort
+                              end
+        [attribute, transformed_mapping.to_h]
+      end
     end
 
     it "returns the mapped hesa code sets" do
