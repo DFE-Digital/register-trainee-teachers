@@ -1,121 +1,114 @@
+import secrets from "k6/secrets";
+import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+
 import { RegisterAPIClient } from "./registerAPI.ts";
 
 const baseUrl           = "https://staging.register-trainee-teachers.service.gov.uk";
 const registerAPIClient = new RegisterAPIClient({ baseUrl });
 
-export default function () {
-  let apiVersion,
-    postApiApiVersionTraineesBody,
-    traineeId,
-    putApiApiVersionTraineesTraineeIdBody,
-    postApiApiVersionTraineesTraineeIdDeferBody,
-    postApiApiVersionTraineesTraineeIdDegreesBody,
-    degreeId,
-    putApiApiVersionTraineesTraineeIdDegreesDegreeIdBody,
-    postApiApiVersionTraineesTraineeIdPlacementsBody,
-    placementId,
-    putApiApiVersionTraineesTraineeIdPlacementsPlacementIdBody,
-    postApiApiVersionTraineesTraineeIdRecommendForQtsBody,
-    postApiApiVersionTraineesTraineeIdWithdrawBody;
+// export const options = {
+//   vus: 10,
+//   duration: '30s',
+// };
+
+export default async () => {
+  const apiVersion = "v2025.0-rc"
+  const apiKey     = __ENV.AUTH_TOKEN || await secrets.get("apiKey");
+
+  let postApiApiVersionTraineesBody,
+  traineeId,
+  putApiApiVersionTraineesTraineeIdBody,
+  postApiApiVersionTraineesTraineeIdDeferBody,
+  postApiApiVersionTraineesTraineeIdDegreesBody,
+  degreeId,
+  putApiApiVersionTraineesTraineeIdDegreesDegreeIdBody,
+  postApiApiVersionTraineesTraineeIdPlacementsBody,
+  placementId,
+  putApiApiVersionTraineesTraineeIdPlacementsPlacementIdBody,
+  postApiApiVersionTraineesTraineeIdRecommendForQtsBody,
+  postApiApiVersionTraineesTraineeIdWithdrawBody;
 
   /**
    * show
    */
-  apiVersion = "underneath";
-
   const getApiApiVersionInfoResponseData =
-    registerAPIClient.getApiApiVersionInfo(apiVersion);
+    registerAPIClient.getApiApiVersionInfo(apiVersion, { headers: { "Authorization": `Bearer ${apiKey}` }});
 
   /**
    * index
    */
-  apiVersion = "questioningly";
-
   const getApiApiVersionTraineesResponseData =
-    registerAPIClient.getApiApiVersionTrainees(apiVersion);
+    registerAPIClient.getApiApiVersionTrainees(
+      apiVersion,
+      undefined,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
+    );
 
   /**
    * create
    */
-  apiVersion = "forenenst";
   postApiApiVersionTraineesBody = {
     data: {
-      first_names: "decongestant",
-      middle_names: "searchingly",
-      last_name: "yowza",
-      date_of_birth: "chapel",
-      sex: "crossly",
-      email: "what",
-      trn: "qua",
-      training_route: "daily",
-      itt_start_date: "piglet",
-      itt_end_date: "who",
-      diversity_disclosure: "completion",
-      course_subject_one: "but",
-      study_mode: "put",
-      nationality: "scar",
-      itt_aim: "encode",
-      itt_qualification_aim: "male",
-      course_year: "impeccable",
-      course_age_range: "attribute",
-      fund_code: "closely",
-      funding_method: "physically",
-      hesa_id: "boldly",
-      previous_last_name: "aftermath",
-      disability1: "um",
-      disability2: "advancement",
-      degrees_attributes: [],
-      placements_attributes: [],
-      provider_trainee_id: "whistle",
-      pg_apprenticeship_start_date: "whose",
-      lead_partner_ukprn: "object",
-      employing_school_urn: "gah",
-      lead_partner_urn: "outnumber",
-      course_subject_two: "broadly",
-      course_subject_three: "paltry",
-      ethnicity: "decongestant",
-      trainee_start_date: "loyally",
-      application_id: 967141776437295,
-    },
+      first_names: "John",
+      last_name: randomString(8),
+      previous_last_name: "Smith",
+      date_of_birth: "1990-01-01",
+      sex: "10",
+      email: "john.doe@example.com",
+      nationality: "GB",
+      training_route: "11",
+      itt_start_date: "2024-08-01",
+      itt_end_date: "2025-08-01",
+      trainee_start_date: "2024-08-01",
+      course_subject_one: "100346",
+      study_mode: "63",
+      disability1: "58",
+      disability2: "57",
+      degrees_attributes: [{grade: "02", subject: "100485", institution: "0117", uk_degree: "083", graduation_year: "2003"}],
+      placements_attributes: [{name: "Placement", urn: "900020"}],
+      itt_aim: "202",
+      itt_qualification_aim: "001",
+      course_year: "2012",
+      course_age_range: "13918",
+      fund_code: "2",
+      funding_method: "6",
+      hesa_id: "0310261553101",
+      provider_trainee_id: "99157234/2/01",
+      pg_apprenticeship_start_date: "2024-03-11"
+    }
   };
 
   const postApiApiVersionTraineesResponseData =
     registerAPIClient.postApiApiVersionTrainees(
       apiVersion,
       postApiApiVersionTraineesBody,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * show
    */
-  apiVersion = "supposing";
-  traineeId = "penalise";
+  traineeId = postApiApiVersionTraineesResponseData.response.json().data.trainee_id
 
   const getApiApiVersionTraineesTraineeIdResponseData =
-    registerAPIClient.getApiApiVersionTraineesTraineeId(apiVersion, traineeId);
+    registerAPIClient.getApiApiVersionTraineesTraineeId(
+      apiVersion,
+      traineeId,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
+    );
 
   /**
    * update
    */
-  apiVersion = "debit";
-  traineeId = "lovely";
   putApiApiVersionTraineesTraineeIdBody = {
     data: {
-      first_names: "badly",
-      provider_trainee_id: "underneath",
-      itt_start_date: "afore",
-      nationality: "deform",
-      course_age_range: "gosh",
-      lead_partner_urn: "feather",
-      employing_school_urn: "manipulate",
-      ethnicity: "store",
-      training_route: "triumphantly",
-      disability1: "pish",
-      disability2: "uh-huh",
-      course_subject_one: "flood",
-      course_subject_two: "if",
-      course_subject_three: "ah",
-      study_mode: "meh",
+      first_names: "Alice",
     },
   };
 
@@ -124,16 +117,17 @@ export default function () {
       apiVersion,
       traineeId,
       putApiApiVersionTraineesTraineeIdBody,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * create
    */
-  apiVersion = "through";
-  traineeId = "stigmatize";
   postApiApiVersionTraineesTraineeIdDeferBody = {
     data: {
-      defer_date: "except",
+      defer_date: "2025-07-21",
     },
   };
 
@@ -142,168 +136,147 @@ export default function () {
       apiVersion,
       traineeId,
       postApiApiVersionTraineesTraineeIdDeferBody,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * index
    */
-  apiVersion = "modulo";
-  traineeId = "frightfully";
-
   const getApiApiVersionTraineesTraineeIdDegreesResponseData =
     registerAPIClient.getApiApiVersionTraineesTraineeIdDegrees(
       apiVersion,
       traineeId,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * create
    */
-  apiVersion = "shrill";
-  traineeId = "buttery";
   postApiApiVersionTraineesTraineeIdDegreesBody = {
     data: {
-      grade: "fast",
-      subject: "slowly",
-      institution: "yet",
-      uk_degree: "insistent",
-      graduation_year: "partially",
-      country: "webbed",
-      non_uk_degree: "qua",
+      grade: "02", subject: "100485", institution: "0117", uk_degree: "065", graduation_year: "2003"
     },
   };
 
-  const postApiApiVersionTraineesTraineeIdDegreesResponseData =
+  const postApiApiVersionTraineesTraineeIdDegreesResponse =
     registerAPIClient.postApiApiVersionTraineesTraineeIdDegrees(
       apiVersion,
       traineeId,
       postApiApiVersionTraineesTraineeIdDegreesBody,
-    );
-
-  /**
-   * destroy
-   */
-  apiVersion = "violin";
-  traineeId = "needily";
-  degreeId = "scoff";
-
-  const deleteApiApiVersionTraineesTraineeIdDegreesDegreeIdResponseData =
-    registerAPIClient.deleteApiApiVersionTraineesTraineeIdDegreesDegreeId(
-      apiVersion,
-      traineeId,
-      degreeId,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * show
    */
-  apiVersion = "orange";
-  traineeId = "zowie";
-  degreeId = "antique";
+  degreeId = postApiApiVersionTraineesTraineeIdDegreesResponse.response.json().data.degree_id;
 
   const getApiApiVersionTraineesTraineeIdDegreesDegreeIdResponseData =
     registerAPIClient.getApiApiVersionTraineesTraineeIdDegreesDegreeId(
       apiVersion,
       traineeId,
       degreeId,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * update
    */
-  apiVersion = "before";
-  traineeId = "annex";
-  degreeId = "hmph";
   putApiApiVersionTraineesTraineeIdDegreesDegreeIdBody = {
     data: {
-      subject: "hm",
-      uk_degree: "only",
-      grade: "thoroughly",
-      institution: "blah",
-      graduation_year: "whoa",
-      country: "well",
+      grade: "02",
+      subject: "100425",
+      institution: "0117",
+      uk_degree: "002",
+      graduation_year: "2015-01-01",
+      country: "XF",
     },
   };
 
   const putApiApiVersionTraineesTraineeIdDegreesDegreeIdResponseData =
-    registerAPIClient.putApiApiVersionTraineesTraineeIdDegreesDegreeId(
-      apiVersion,
-      traineeId,
-      degreeId,
-      putApiApiVersionTraineesTraineeIdDegreesDegreeIdBody,
-    );
+  registerAPIClient.putApiApiVersionTraineesTraineeIdDegreesDegreeId(
+    apiVersion,
+    traineeId,
+    degreeId,
+    putApiApiVersionTraineesTraineeIdDegreesDegreeIdBody,
+    {
+      headers: { "Authorization": `Bearer ${apiKey}`}
+    }
+  );
+
+  /**
+   * destroy
+   */
+  const deleteApiApiVersionTraineesTraineeIdDegreesDegreeIdResponseData =
+  registerAPIClient.deleteApiApiVersionTraineesTraineeIdDegreesDegreeId(
+    apiVersion,
+    traineeId,
+    degreeId,
+    {
+      headers: { "Authorization": `Bearer ${apiKey}`}
+    }
+  );
 
   /**
    * index
    */
-  apiVersion = "wisely";
-  traineeId = "messy";
-
   const getApiApiVersionTraineesTraineeIdPlacementsResponseData =
     registerAPIClient.getApiApiVersionTraineesTraineeIdPlacements(
       apiVersion,
       traineeId,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * create
    */
-  apiVersion = "foretell";
-  traineeId = "accompanist";
   postApiApiVersionTraineesTraineeIdPlacementsBody = {
     data: {
-      urn: "fiercely",
-      name: "underneath",
-      postcode: "unto",
+      urn: "151631",
     },
   };
-
+  //
   const postApiApiVersionTraineesTraineeIdPlacementsResponseData =
     registerAPIClient.postApiApiVersionTraineesTraineeIdPlacements(
       apiVersion,
       traineeId,
       postApiApiVersionTraineesTraineeIdPlacementsBody,
-    );
-
-  /**
-   * destroy
-   */
-  apiVersion = "whereas";
-  traineeId = "oof";
-  placementId = "construe";
-
-  const deleteApiApiVersionTraineesTraineeIdPlacementsPlacementIdResponseData =
-    registerAPIClient.deleteApiApiVersionTraineesTraineeIdPlacementsPlacementId(
-      apiVersion,
-      traineeId,
-      placementId,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 
   /**
    * show
    */
-  apiVersion = "though";
-  traineeId = "pointless";
-  placementId = "phooey";
+  placementId = postApiApiVersionTraineesTraineeIdPlacementsResponseData.response.json().data.placement_id;
 
   const getApiApiVersionTraineesTraineeIdPlacementsPlacementIdResponseData =
-    registerAPIClient.getApiApiVersionTraineesTraineeIdPlacementsPlacementId(
-      apiVersion,
-      traineeId,
-      placementId,
-    );
+  registerAPIClient.getApiApiVersionTraineesTraineeIdPlacementsPlacementId(
+    apiVersion,
+    traineeId,
+    placementId,
+    {
+      headers: { "Authorization": `Bearer ${apiKey}`}
+    }
+  );
 
   /**
    * update
    */
-  apiVersion = "glider";
-  traineeId = "going";
-  placementId = "corral";
   putApiApiVersionTraineesTraineeIdPlacementsPlacementIdBody = {
     data: {
-      urn: "who",
-      name: "what",
-      postcode: "hmph",
+      urn: "100000",
     },
   };
 
@@ -313,38 +286,35 @@ export default function () {
       traineeId,
       placementId,
       putApiApiVersionTraineesTraineeIdPlacementsPlacementIdBody,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
+
+  /**
+   * destroy
+   */
+  const deleteApiApiVersionTraineesTraineeIdPlacementsPlacementIdResponseData =
+  registerAPIClient.deleteApiApiVersionTraineesTraineeIdPlacementsPlacementId(
+    apiVersion,
+    traineeId,
+    placementId,
+    {
+      headers: { "Authorization": `Bearer ${apiKey}`}
+    }
+  );
+
 
   /**
    * create
    */
-  apiVersion = "nor";
-  traineeId = "valiantly";
-  postApiApiVersionTraineesTraineeIdRecommendForQtsBody = {
-    data: {
-      qts_standards_met_date: "scheme",
-    },
-  };
-
-  const postApiApiVersionTraineesTraineeIdRecommendForQtsResponseData =
-    registerAPIClient.postApiApiVersionTraineesTraineeIdRecommendForQts(
-      apiVersion,
-      traineeId,
-      postApiApiVersionTraineesTraineeIdRecommendForQtsBody,
-    );
-
-  /**
-   * create
-   */
-  apiVersion = "gah";
-  traineeId = "cloudy";
   postApiApiVersionTraineesTraineeIdWithdrawBody = {
     data: {
-      reasons: [],
-      withdraw_date: "pro",
-      trigger: "stump",
-      future_interest: "scuttle",
-    },
+      reasons: ["record_added_in_error"],
+      withdraw_date: "2025-07-23",
+      trigger: "provider",
+      future_interest: "no"
+    }
   };
 
   const postApiApiVersionTraineesTraineeIdWithdrawResponseData =
@@ -352,5 +322,8 @@ export default function () {
       apiVersion,
       traineeId,
       postApiApiVersionTraineesTraineeIdWithdrawBody,
+      {
+        headers: { "Authorization": `Bearer ${apiKey}`}
+      }
     );
 }
