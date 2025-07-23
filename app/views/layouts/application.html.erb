@@ -77,6 +77,14 @@
           current_user: @current_user,
         ) %>
       <% end %>
+    <% else %>
+      <%= render NavigationBar::View.new(
+        items: [
+          { name: t("header.items.sign_out"), url: sign_out_path, align_right: true }
+        ],
+        current_path: request.path,
+        current_user: @current_user,
+      ) %>
     <% end %>
 
     <div class="app-phase-banner app-phase-banner__env--<%= Settings.environment.name %>">
