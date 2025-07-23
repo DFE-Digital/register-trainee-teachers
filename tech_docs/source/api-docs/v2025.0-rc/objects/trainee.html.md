@@ -13,7 +13,8 @@ weight: 1
         string (limited to 24 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Register system. Used to identify the trainee when using <a href="/api-docs/reference#contents">endpoints</a> which require a <code>trainee_id</code>.
+        The unique ID of the trainee in the Register system. Used to identify the trainee when using <a
+          href="/api-docs/reference#contents">endpoints</a> which require a <code>trainee_id</code>.
       </p>
       <p class="govuk-body">
         Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
@@ -27,7 +28,8 @@ weight: 1
         string (limited to 50 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Provider’s student record system (SRS). Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider’s own identifier for student field</a>.
+        The unique ID of the trainee in the Provider’s student record system (SRS). Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider’s own identifier for student field</a>.
       </p>
       <p class="govuk-body">
         Example: <code>99157234</code>
@@ -125,16 +127,16 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The sex of the trainee. 
+        The sex of the trainee.
         Possible values:
       </p>
       <ul>
-        '10'	Female
-        '11'	Male
-        '12'	Other
-        '96'	Information refused
-        '99'	Not available
-      </p>
+        <li><code>10</code> - Female</li>
+        <li><code>11</code> - Male</li>
+        <li><code>12</code> - Other</li>
+        <li><code>96</code> - Information refused</li>
+        <li><code>99</code> - Not available</li>
+      </ul>
       <p class="govuk-body">
         Example: <code>10</code>
       </p>
@@ -147,7 +149,8 @@ weight: 1
         string (limited to 2 characters)
       </p>
       <p class="govuk-body">
-        The nationality of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/nation">HESA nationality field</a>
+        The nationality of the trainee. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/nation">HESA nationality field</a>
       </p>
       <p class="govuk-body">
         Example: <code>GB</code>
@@ -161,7 +164,8 @@ weight: 1
         string (limited to 80 characters), required
       </p>
       <p class="govuk-body">
-        The email address of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/nqtemail">HESA email addresses field</a>
+        The email address of the trainee. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/nqtemail">HESA email addresses field</a>
       </p>
       <p class="govuk-body">
         Example: <code>trainee123@example.com</code>
@@ -175,7 +179,10 @@ weight: 1
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The ethnicity of the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">HESA ethnicity field</a>. The values for <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code> value.
+        The ethnicity of the trainee. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">HESA ethnicity field</a>. The values for
+        <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code>
+        value.
       </p>
       <p class="govuk-body">
         Example: <code>120</code>
@@ -189,7 +196,8 @@ weight: 1
         string (limited to 2 characters)
       </p>
       <p class="govuk-body">
-        The type of disabilities that the trainee has. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/disable">HESA disability field</a>
+        The type of disabilities that the trainee has. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/disable">HESA disability field</a>
       </p>
       <p class="govuk-body">
         Example: <code>58</code>
@@ -203,9 +211,13 @@ weight: 1
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The general qualification aim of the course in terms of qualifications and professional statuses. '201'	Professional status only
-'202'	Both professional status and academic award>
+        The general qualification aim of the course in terms of qualifications and professional statuses. Possible
+        values:
       </p>
+      <ul>
+        <li><code>201</code> - Professional status only</li>
+        <li><code>202</code> - Both professional status and academic award</li>
+      </ul>
       <p class="govuk-body">
         Example: <code>201</code>
       </p>
@@ -231,7 +243,7 @@ weight: 1
         <li><code>11</code> - Primary and Secondary Undergraduate Fee Funded</li>
         <li><code>12</code> - Primary and Secondary Postgraduate Fee Funded</li>
         <li><code>14</code> - Teacher Degree Apprenticeship</li>
-        </ul>
+      </ul>
       <p class="govuk-body">
         Example: <code>11</code>
       </p>
@@ -244,7 +256,7 @@ weight: 1
         string (limited to 3 characters), required if <code>itt_aim</code> is <code>202</code>
       </p>
       <p class="govuk-body">
-        The qualification aim of the trainee’s course. 
+        The qualification aim of the trainee’s course.
         Possible values:
       </p>
       <ul>
@@ -259,20 +271,24 @@ weight: 1
         <li><code>028</code> - Undergraduate Master of Teaching </li>
         <li><code>031</code> - Professional Graduate Certificate in Education </li>
         <li><code>032</code> - Masters, not by research </li>
-      </p>
+      </ul>
       <p class="govuk-body">
         Example: <code>004</code>
       </p>
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
-    <dt class="govuk-summary-list__key"><code>course_subject_one</code>, <code>course_subject_two</code>, <code>course_subject_three</code></dt>
+    <dt class="govuk-summary-list__key"><code>course_subject_one</code>, <code>course_subject_two</code>,
+      <code>course_subject_three</code>
+    </dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
         string (limited to 6 characters), <code>course_subject_one</code> is required
       </p>
       <p class="govuk-body">
-        The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or scholarship available if applicable. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>.
+        The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or
+        scholarship available if applicable. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>.
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -294,8 +310,8 @@ weight: 1
         <li><code>02</code> - Other full-time</li>
         <li><code>31</code> - Part-time</li>
         <li><code>63</code> - Dormant - previously full-time</li>
-        <li><code>64</code> - Dormant - previously part-time</li>.
-      </p>
+        <li><code>64</code> - Dormant - previously part-time</li>
+      </ul>
       <p class="govuk-body">
         Example: <code>01</code>
       </p>
@@ -336,15 +352,15 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The year number of the course that the trainee is currently studying. 
+        The year number of the course that the trainee is currently studying.
         Possible values:
       </p>
       <ul>
         <li><code>0</code> - Foundation year</li>
         <li><code>1</code> - First year</li>
         <li><code>2</code> - Second year</li>
-        <li><code>3</code> - Third year</li>>
-      </p>
+        <li><code>3</code> - Third year</li>
+      </ul>
       <p class="govuk-body">
         Example: <code>2</code>
       </p>
@@ -385,17 +401,18 @@ weight: 1
         string (limited to 5 characters), required
       </p>
       <p class="govuk-body">
-        The age range of children taught on the course. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/ittphsc">HESA ITT phase/scope field</a>
+        The age range of children taught on the course. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/ittphsc">HESA ITT phase/scope field</a>
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
       </p>
       <p class="govuk-body">
         The following HESA values are invalid for this field:
-        <ul class='govuk-list govuk-list--bullet'>
-          <li><code>99801</code> - Teacher training qualification: Further education/Higher education</li>
-          <li><code>99803</code> - Teacher training qualification: Other</li>
-        </ul>
+      <ul class='govuk-list govuk-list--bullet'>
+        <li><code>99801</code> - Teacher training qualification: Further education/Higher education</li>
+        <li><code>99803</code> - Teacher training qualification: Other</li>
+      </ul>
       </p>
     </dd>
   </div>
@@ -413,7 +430,7 @@ weight: 1
         <li><code>900000</code> - Establishment outside England and Wales</li>
         <li><code>900020</code> - Other establishment without a URN</li>
         <li><code>900030</code> - Not available</li>
-      </p>
+      </ul>
       <p class="govuk-body">
         Example: <code>123456</code>
       </p>
@@ -442,7 +459,7 @@ weight: 1
         string (must be in the past and not more than 10 years ago)
       </p>
       <p class="govuk-body">
-        The start date of the trainee on their ITT course. 
+        The start date of the trainee on their ITT course.
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -456,7 +473,7 @@ weight: 1
         string
       </p>
       <p class="govuk-body">
-        The start date of a trainee’s postgraduate teaching apprenticeship. 
+        The start date of a trainee’s postgraduate teaching apprenticeship.
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
@@ -487,9 +504,11 @@ weight: 1
         Possible values:
       </p>
       <ul>
-        `2` = not eligible for student finance
-    `7` = eligible for student finance
-        Note: Use `7` if the trainee chooses not to recieve the finance they are eligible for.
+        <li><code>2</code> - not eligible for student finance</li>
+        <li><code>7</code> - eligible for student finance</li>
+      </ul>
+      <p class="govuk-body">
+        Note: Use <code>7</code> if the trainee chooses not to receive the finance they are eligible for.
       </p>
       <p class="govuk-body">
         Example: <code>7</code>
@@ -503,17 +522,17 @@ weight: 1
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The bursary level awarded to the trainee. 
+        The bursary level awarded to the trainee.
         Possible values:
       </p>
       <ul>
-         <li><code>4</code> - Scholarship</li>
-         <li><code>6</code> - No bursary, scholarship or grant awarded</li>
-         <li><code>B</code> - Undergraduate bursary</li>
-         <li><code>C</code> - Veteran Teaching undergraduate bursary</li>
-         <li><code>D</code> - Postgraduate bursary</li>
-         <li><code>E</code> - Grant</li>
-      </p>
+        <li><code>4</code> - Scholarship</li>
+        <li><code>6</code> - No bursary, scholarship or grant awarded</li>
+        <li><code>B</code> - Undergraduate bursary</li>
+        <li><code>C</code> - Veteran Teaching undergraduate bursary</li>
+        <li><code>D</code> - Postgraduate bursary</li>
+        <li><code>E</code> - Grant</li>
+      </ul>
       <p class="govuk-body">
         Example: <code>4</code>
       </p>
@@ -526,20 +545,20 @@ weight: 1
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-       This field identifies students who are part of a specific scheme that
-    is to be monitored independently. Valid entries will change from year to year
-    to reflect current schemes.
+        This field identifies students who are part of a specific scheme that
+        is to be monitored independently. Valid entries will change from year to year
+        to reflect current schemes.
         Possible values:
       </p>
       <ul>
-          <li><code>001</code> - Abridged ITT course</li>
-          <li><code>009</code> - Maths and Physics Chairs Programme</li>
-          <li><code>011</code> - Primary mathematics specialist</li>
-          <li><code>019</code> - Additional ITT place for PE with a priority subject</li>
-          <li><code>025</code> - Transition to Teach</li>
-          <li><code>026</code> - Now Teach</li>
-          <li><code>036</code> - International relocation payment</li>
-      </p>
+        <li><code>001</code> - Abridged ITT course</li>
+        <li><code>009</code> - Maths and Physics Chairs Programme</li>
+        <li><code>011</code> - Primary mathematics specialist</li>
+        <li><code>019</code> - Additional ITT place for PE with a priority subject</li>
+        <li><code>025</code> - Transition to Teach</li>
+        <li><code>026</code> - Now Teach</li>
+        <li><code>036</code> - International relocation payment</li>
+      </ul>
       <p class="govuk-body">
         Example: <code>026</code>
       </p>
@@ -552,7 +571,8 @@ weight: 1
         string (limited to 3 characters)
       </p>
       <p class="govuk-body">
-        The secondary training initiative that the trainee is on. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/initiatives">HESA initiatives field</a>
+        The secondary training initiative that the trainee is on. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/initiatives">HESA initiatives field</a>
       </p>
       <p class="govuk-body">
         Example: <code>025</code>
@@ -566,7 +586,8 @@ weight: 1
         string (limited to 17 characters), required
       </p>
       <p class="govuk-body">
-        The unique student identifier for the trainee. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/husid">HESA unique student identifier field</a>
+        The unique student identifier for the trainee. Coded according to the <a
+          href="https://www.hesa.ac.uk/collection/c24053/e/husid">HESA unique student identifier field</a>
       </p>
       <p class="govuk-body">
         Example: <code>1210007145123456</code>
