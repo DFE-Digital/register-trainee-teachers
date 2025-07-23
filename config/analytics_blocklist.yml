@@ -191,9 +191,11 @@
   :hesa_collection_requests:
   - id
   - collection_reference
+  - requested_at
   - response_body
   - created_at
   - updated_at
+  - state
   :funding_trainee_summary_row_amounts:
   - id
   - funding_trainee_summary_row_id
