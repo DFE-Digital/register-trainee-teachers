@@ -6,7 +6,9 @@ module SchoolData
   class SchoolDataDownloader
     include ServicePattern
 
-    ESTABLISHMENT_TYPES = [1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 14, 15, 18, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 49, 56, 57].freeze
+    ESTABLISHMENT_TYPES = [
+      1, 2, 3, 5, 7, 12, 14, 15, 28, 33, 34, 35, 36, 38, 39, 40, 41, 42, 43, 44, 45, 46
+    ].freeze
 
     def call
       download_and_filter_csv
@@ -17,7 +19,7 @@ module SchoolData
     def download_and_filter_csv
       filtered_file = Tempfile.new(["school_data_filtered_", ".csv"])
       total_rows = 0
-      filtered_rows = 0
+      kept_rows = 0
       establishment_type_index = nil
 
       begin
@@ -46,23 +48,19 @@ module SchoolData
 
           total_rows += 1
 
-          begin
-            fields = CSV.parse_line(line)
-            establishment_type = fields[establishment_type_index].to_i
+          fields = CSV.parse_line(line)
+          establishment_type = fields[establishment_type_index].to_i
 
-            if ESTABLISHMENT_TYPES.include?(establishment_type)
-              filtered_file.puts(line)
-              filtered_rows += 1
-            end
-          rescue CSV::MalformedCSVError
-            next
+          if ESTABLISHMENT_TYPES.include?(establishment_type)
+            filtered_file.puts(line)
+            kept_rows += 1
           end
         end
 
         filtered_file.flush
         filtered_file.close
 
-        Rails.logger.info("Filtered #{filtered_rows} schools from #{total_rows} rows")
+        Rails.logger.info("Processed #{total_rows}. Kept #{kept_rows}. Filtered out: #{total_rows - kept_rows}")
         filtered_file.path
       rescue StandardError => e
         filtered_file&.close

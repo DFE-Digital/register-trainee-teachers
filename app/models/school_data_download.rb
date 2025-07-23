@@ -28,22 +28,4 @@ class SchoolDataDownload < ApplicationRecord
 
   validates :status, presence: true
   validates :started_at, presence: true
-
-  scope :recent, -> { order(created_at: :desc) }
-  scope :successful, -> { where(status: :completed) }
-  scope :failed, -> { where(status: :failed) }
-
-  def duration
-    return nil unless started_at && completed_at
-
-    completed_at - started_at
-  end
-
-  def success?
-    status == "completed"
-  end
-
-  def in_progress?
-    status == "running"
-  end
 end

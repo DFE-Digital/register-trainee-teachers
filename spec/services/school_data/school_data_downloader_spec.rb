@@ -35,13 +35,13 @@ RSpec.describe SchoolData::SchoolDataDownloader do
         filtered_content = File.read(filtered_csv_path)
         filtered_csv = CSV.parse(filtered_content, headers: true)
 
-        # Should include schools with types 1, 10, and 15 but not 4
-        expect(filtered_csv.count).to eq(3)
-        expect(filtered_csv.map { |row| row["URN"] }).to contain_exactly("123456", "234567", "456789")
+        # Should include schools with types 1 and 15 but not 4 or 10
+        expect(filtered_csv.count).to eq(2)
+        expect(filtered_csv.map { |row| row["URN"] }).to contain_exactly("123456", "456789")
       end
 
       it "logs filtering results" do
-        expect(Rails.logger).to receive(:info).with("Filtered 3 schools from 4 rows")
+        expect(Rails.logger).to receive(:info).with("Processed 4. Kept 2. Filtered out: 2")
 
         described_class.call
       end
@@ -96,7 +96,7 @@ RSpec.describe SchoolData::SchoolDataDownloader do
       end
 
       it "logs zero filtered schools" do
-        expect(Rails.logger).to receive(:info).with("Filtered 0 schools from 1 rows")
+        expect(Rails.logger).to receive(:info).with("Processed 1. Kept 0. Filtered out: 1")
 
         described_class.call
       end
