@@ -90,15 +90,15 @@ private
   end
 
   def and_i_should_see_the_link_to_the_support_interface
-    expect(page).to have_content("Support for Register")
+    expect(page).to have_content("Support")
   end
 
   def and_i_should_not_see_the_link_to_the_support_interface
-    expect(page).not_to have_content("Support for Register")
+    expect(page).not_to have_content("Support")
   end
 
   def and_i_can_access_the_support_interface
-    click_on("Support for Register")
+    click_on("Support")
   end
 
   def then_i_am_redirected_to_the_otp_form
