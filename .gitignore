@@ -90,3 +90,7 @@ Caddyfile
 /tech_docs/build
 /tech_docs/source/csv-docs/fields
 !/tech_docs/source/csv-docs/fields/index.html.md.erb
+
+
+# Ignore load testing local secrets
+/k6_load_testing/file.secret
