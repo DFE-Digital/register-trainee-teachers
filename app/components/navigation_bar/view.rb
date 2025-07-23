@@ -34,4 +34,8 @@ private
   def show_current_link?(item)
     item.fetch(:current, false) || current_path == item.fetch(:url)
   end
+
+  def navigation_wrapper_classes
+    @items.count > 1 ? "app-service-navigation__wrapper" : ""
+  end
 end
