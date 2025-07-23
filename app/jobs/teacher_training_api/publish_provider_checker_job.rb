@@ -17,6 +17,9 @@ module TeacherTrainingApi
       message << "Matching lead partners: #{checker.lead_partner_matches.count}\n"
       message << "Matching providers: #{checker.provider_matches.count}\n"
       message << "Missing providers: #{checker.missing.count}\n"
+      checker.missing.first(10).each do |provider|
+      message << "  -  \n"
+      end
       message << "Total: #{checker.total_count}\n"
 
       SlackNotifierService.call(
