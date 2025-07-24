@@ -60,7 +60,9 @@ class LanguageSpecialismsForm < TraineeForm
   end
 
   def non_language_subject
-    @non_language_subject ||= ((@trainee.published_course&.subjects&.map(&:name) || []) - PUBLISH_MODERN_LANGUAGES).first
+    return nil unless @trainee.published_course&.subjects&.any?
+
+    @non_language_subject ||= (@trainee.published_course.subjects.map(&:name) - PUBLISH_MODERN_LANGUAGES).first
   end
 
 private
