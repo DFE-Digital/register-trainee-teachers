@@ -81,18 +81,6 @@ module TeacherTrainingApi
       course_attributes[:course_length] == "TwoYears" ? 2 : 1
     end
 
-    def before_2024_routes
-      {
-        higher_education_programme: :provider_led_postgrad,
-        school_direct_training_programme: :school_direct_tuition_fee,
-        scitt_programme: :provider_led_postgrad,
-        higher_education_salaried_programme: :provider_led_postgrad,
-        school_direct_salaried_training_programme: :school_direct_salaried,
-        scitt_salaried_programme: :provider_led_postgrad,
-        pg_teaching_apprenticeship: :pg_teaching_apprenticeship,
-      }
-    end
-
     def for_2024_routes
       {
         higher_education_programme: :provider_led_postgrad,
@@ -115,8 +103,7 @@ module TeacherTrainingApi
     end
 
     def routes
-      return before_2024_routes if Settings.current_recruitment_cycle_year < 2024
-      return for_2024_routes if Settings.current_recruitment_cycle_year == 2024
+      return for_2024_routes if Settings.current_recruitment_cycle_year < 2025
 
       for_2025_routes
     end

@@ -111,10 +111,6 @@ module TeacherTrainingApi
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "school_direct_salaried", %w[scitt_salaried_programme scitt_salaried_programme higher_education_salaried_programme]
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "provider_led_postgrad", %w[scitt_programme scitt_programme higher_education_programme]
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "pg_teaching_apprenticeship", ["pg_teaching_apprenticeship"]
-          it_behaves_like training_route_and_course_program_type_mapping, 2023, "provider_led_postgrad", %w[higher_education_programme scitt_programme scitt_salaried_programme higher_education_salaried_programme]
-          it_behaves_like training_route_and_course_program_type_mapping, 2023, "school_direct_salaried", ["school_direct_salaried_training_programme"]
-          it_behaves_like training_route_and_course_program_type_mapping, 2023, "school_direct_tuition_fee", ["school_direct_training_programme"]
-          it_behaves_like training_route_and_course_program_type_mapping, 2023, "pg_teaching_apprenticeship", ["pg_teaching_apprenticeship"]
 
           context "program type is unmapped" do
             let(:course_attributes) { { program_type: "you_wat_now" } }
