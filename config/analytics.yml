@@ -305,9 +305,6 @@ shared:
     - system_admin
     - updated_at
     - welcome_email_sent_at
-  hesa_collection_requests:
-    - requested_at
-    - state
   :bulk_update_row_errors:
     - id
     - created_at
