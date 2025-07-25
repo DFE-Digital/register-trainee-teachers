@@ -1,15 +1,14 @@
-import secrets from "k6/secrets";
 import { client } from "../client.ts";
+import { setup as loadSetup, SetupData } from "../setup.ts"
+
+export async function setup(): Promise<SetupData> {
+  return await loadSetup();
+}
 
 /**
  * show
  */
-export default async (traineeId?: string) => {
-  const apiVersion = "v2025.0-rc"
-  const apiKey     = __ENV.AUTH_TOKEN || await secrets.get("apiKey");
-
-  traineeId ||= await secrets.get("traineeId");
-
+export default async ({apiVersion, apiKey, traineeId}:SetupData) => {
   return client.getApiApiVersionTraineesTraineeId(
     apiVersion,
     traineeId,

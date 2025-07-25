@@ -1,15 +1,16 @@
-
-import secrets from "k6/secrets";
 import { client } from "../client.ts";
+import { setup as loadSetup, SetupData } from "../setup.ts";
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+
+
+export async function setup(): Promise<SetupData> {
+  return await loadSetup();
+}
 
 /**
  * create
  */
-export default async (): Promise<string> => {
-  const apiVersion = "v2025.0-rc"
-  const apiKey     = __ENV.AUTH_TOKEN || await secrets.get("apiKey");
-
+export default ({apiVersion, apiKey}: SetupData) => {
   const postApiApiVersionTraineesBody = {
     data: {
       first_names: "John",
@@ -60,5 +61,5 @@ export default async (): Promise<string> => {
     {
       headers: { "Authorization": `Bearer ${apiKey}`}
     }
-  ).response.json().data.trainee_id;
+  );
 }
