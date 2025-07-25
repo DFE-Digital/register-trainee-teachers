@@ -15,32 +15,43 @@ import putTraineePlacement from "./endpoints/put-trainee-placement.ts";
 import deleteTraineePlacement from "./endpoints/delete-trainee-placement.ts";
 import postTraineeWithdraw from "./endpoints/post-trainee-withdraw.ts";
 
-// export const options = {
-//   vus: 10,
-//   duration: '30s',
-// };
+import { setup as loadSecrets, SetupData } from "./setup.ts";
 
-export default () => {
-  getTrainees().then(() => {
-    postTrainees().then(async (traineeId) => {
-      await getTrainee(traineeId);
-      await putTrainee(traineeId);
-      await postTraineeDefer(traineeId);
-      await getTraineeDegrees(traineeId);
 
-      postTraineeDegrees(traineeId).then(async (degreeId) => {
-        await getTraineeDegree(traineeId, degreeId);
-        await putTraineeDegree(traineeId, degreeId);
-        await deleteTraineeDegree(traineeId, degreeId);
+export async function setup() {
+  return await loadSecrets();
+}
 
-        postTraineePlacements(traineeId).then(async (placementId) => {
-          await getTraineePlacement(traineeId, placementId)
-          await getTraineePlacements(traineeId)
-          await putTraineePlacement(traineeId, placementId);
-          await deleteTraineePlacement(traineeId, placementId);
-          await postTraineeWithdraw(traineeId);
-        });
-      });
-    });
-  });
+export default (data: SetupData) => {
+  getTrainees(data);
+
+  data.traineeId = postTrainees(data).response.json().data.trainee_id;
+
+  getTrainee(data);
+
+  putTrainee(data);
+
+  postTraineeDefer(data);
+
+  getTraineeDegrees(data);
+
+  data.degreeId = postTraineeDegrees(data).response.json().data.degree_id;
+
+  getTraineeDegree(data);
+
+  putTraineeDegree(data);
+
+  deleteTraineeDegree(data);
+
+  data.placementId = postTraineePlacements(data).response.json().data.placement_id;
+
+  getTraineePlacement(data)
+
+  getTraineePlacements(data)
+
+  putTraineePlacement(data);
+
+  deleteTraineePlacement(data);
+
+  postTraineeWithdraw(data);
 }

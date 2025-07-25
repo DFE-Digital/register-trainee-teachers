@@ -1,16 +1,14 @@
-import secrets from "k6/secrets";
 import { client } from "../client.ts";
+import { setup as loadSetup, SetupData } from "../setup.ts";
+
+export async function setup(): Promise<SetupData> {
+  return await loadSetup();
+}
 
 /**
  * update
  */
-export default async (traineeId?: string, degreeId?: string) => {
-  const apiVersion = "v2025.0-rc"
-  const apiKey     = __ENV.AUTH_TOKEN || await secrets.get("apiKey");
-
-  traineeId ||= await secrets.get("traineeId");
-  degreeId  ||= await secrets.get("degreeId");
-
+export default ({apiVersion, apiKey, traineeId, degreeId}: SetupData) => {
   const putApiApiVersionTraineesTraineeIdDegreesDegreeIdBody = {
     data: {
       grade: "02",
