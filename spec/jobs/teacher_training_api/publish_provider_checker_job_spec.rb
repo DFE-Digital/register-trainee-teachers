@@ -61,7 +61,7 @@ module TeacherTrainingApi
           expect(SlackNotifierService).to have_received(:call).with(
             hash_including(
               message: include(
-                "Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
+                "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
                 "Matching lead schools: 3",
                 "Matching lead schools: 3",
                 "Matching lead partners: 2",
