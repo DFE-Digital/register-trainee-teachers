@@ -2,7 +2,9 @@
 
 module BulkUpdate
   module AddTrainees
-    class EmptyTemplatesController < CsvDocs::BaseController
+    class EmptyTemplatesController < ApplicationController
+      skip_before_action :authenticate
+
       FILE = "bulk_create_trainee.csv"
 
       def show
