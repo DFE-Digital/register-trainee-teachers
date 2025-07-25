@@ -7,7 +7,7 @@ module Hesa
       include ServicePattern
 
       DEFAULT_CASE_ATTRIBUTES = %i[
-        degree_subject
+        subject
       ].freeze
 
       def call
