@@ -51,7 +51,7 @@ features:
     sync_teachers: true
   register_api: false
   duplicate_checking: true
-
+  school_data_auto_import: true
 environment:
   name: beta
   display_name: Beta
