@@ -54,16 +54,26 @@ feature "bulk add trainees" do
   end
 
   context "when the feature flag is off", feature_bulk_add_trainees: false do
-    let(:user) { create(:user, :hei) }
+    context "when the User is signed in as an HEI Provider" do
+      let(:user) { create(:user, :hei) }
 
-    before do
-      given_i_am_authenticated
+      before do
+        given_i_am_authenticated
+      end
+
+      scenario "the bulk add trainees page is not-visible when feature flag is off" do
+        when_i_visit_the_bulk_update_index_page
+        then_i_cannot_see_the_bulk_add_trainees_link
+        and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
+      end
     end
 
-    scenario "the bulk add trainees page is not-visible when feature flag is off" do
-      when_i_visit_the_bulk_update_index_page
-      then_i_cannot_see_the_bulk_add_trainees_link
-      and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
+    context "when the User is not signed in", js: true do
+      scenario "they can download the empty CSV template from the documentation page" do
+        when_i_visit_the_csv_docs_home_path
+        when_i_click_the_documentation_empty_csv_link
+        then_i_receive_the_empty_csv_file
+      end
     end
   end
 
