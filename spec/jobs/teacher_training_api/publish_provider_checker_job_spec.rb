@@ -75,7 +75,7 @@ module TeacherTrainingApi
         end
       end
 
-      context "when there are no missing providers" do
+      context "when there is one missing provider" do
         before do
           allow(result).to receive_messages(
             school_matches: [1, 2, 3],
