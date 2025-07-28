@@ -48,7 +48,7 @@ module RegisterTraineeTeachers
       key: "_register_trainee_teachers_session",
       httponly: true,
       secure: !Rails.env.local?,
-      same_site: :strict,
+      same_site: :lax,
     )
 
     config.i18n.load_path += Rails.root.glob("config/locales/**/*.yml")
