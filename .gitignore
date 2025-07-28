@@ -93,5 +93,5 @@ Caddyfile
 
 
 # Ignore load testing local secrets
-/k6_load_testing/*.secret
-!/k6_load_testing/.example.secret
+/k6_load_testing/.secrets.json
+!/k6_load_testing/.example.secrets.json
