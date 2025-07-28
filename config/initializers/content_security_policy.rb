@@ -41,5 +41,3 @@ Rails.application.config.content_security_policy do |policy|
   policy.font_src(:self, :data)
   policy.upgrade_insecure_requests(!Rails.env.local?)
 end
-
-Rails.application.config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
