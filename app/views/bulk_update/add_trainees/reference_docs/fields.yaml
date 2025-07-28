@@ -31,7 +31,7 @@
   technical: first_names
   hesa_alignment: FNAMES
   description: This field records the forenames of the student
-  format: 60 character maxlength
+  format: 60 character max length
   example: "`Jane`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L62
@@ -287,7 +287,7 @@
     - `63` - Dormant - previously full-time
     - `64` - Dormant - previously part-time
   example: "`01`"
-  validation: "Conditional - mandatory when the training route is not Assessment only or Early years assessment_onl"
+  validation: "Conditional - mandatory when the training route is not Assessment only or Early years assessment only"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
 - field_name: ITT Start Date
   technical: itt_start_date
