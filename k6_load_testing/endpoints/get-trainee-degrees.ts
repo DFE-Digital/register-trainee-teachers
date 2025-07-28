@@ -1,4 +1,4 @@
-import { client } from "../client.ts";
+import client from "../client.ts";
 import { setup as loadSetup, SetupData } from "../setup.ts";
 
 export function setup(): SetupData {

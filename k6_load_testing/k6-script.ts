@@ -18,8 +18,8 @@ import postTraineeWithdraw from "./endpoints/post-trainee-withdraw.ts";
 import { setup as loadSecrets, SetupData } from "./setup.ts";
 
 
-export async function setup() {
-  return await loadSecrets();
+export function setup(): SetupData {
+  return loadSecrets();
 }
 
 export default (data: SetupData) => {

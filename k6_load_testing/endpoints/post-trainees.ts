@@ -1,4 +1,4 @@
-import { client } from "../client.ts";
+import client from "../client.ts";
 import { setup as loadSetup, SetupData } from "../setup.ts";
 import { randomString } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 

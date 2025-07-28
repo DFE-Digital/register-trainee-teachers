@@ -1,6 +1,6 @@
-import secrets from "k6/secrets";
 import { RegisterAPIClient } from "./registerAPI.ts";
 
-const baseUrl           = "https://staging.register-trainee-teachers.service.gov.uk";
+const baseUrl = "https://staging.register-trainee-teachers.service.gov.uk";
+const client  = new RegisterAPIClient({baseUrl: baseUrl})
 
-export const client = new RegisterAPIClient({baseUrl: baseUrl})
+export default client;
