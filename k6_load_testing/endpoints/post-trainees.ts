@@ -8,7 +8,7 @@ export async function setup(): Promise<SetupData> {
 }
 
 /**
- * create
+ * POST /api/{apiVersion}/trainees
  */
 export default ({apiVersion, apiKey}: SetupData) => {
   const postApiApiVersionTraineesBody = {

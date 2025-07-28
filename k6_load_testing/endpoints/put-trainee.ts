@@ -6,7 +6,7 @@ export async function setup(): Promise<SetupData> {
 }
 
 /**
- * update
+ * PUT /api/{apiVersion}/trainees/{traineeId}
  */
 export default ({apiVersion, apiKey, traineeId}: SetupData) => {
   const putApiApiVersionTraineesTraineeIdBody = {

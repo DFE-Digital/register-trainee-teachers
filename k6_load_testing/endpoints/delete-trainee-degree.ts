@@ -6,7 +6,7 @@ export async function setup(): Promise<SetupData> {
 }
 
 /**
- * destroy
+ * DELETE /api/{apiVersion}/trainees/{traineeId}/degrees/{degreeId}
  */
 export default ({apiVersion, apiKey, traineeId, degreeId}: SetupData) => {
   return client.deleteApiApiVersionTraineesTraineeIdDegreesDegreeId(

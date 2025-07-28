@@ -6,7 +6,7 @@ export async function setup(): Promise<SetupData> {
 }
 
 /**
- * show
+ * GET /api/{apiVersion}/trainees/{traineeId}
  */
 export default async ({apiVersion, apiKey, traineeId}:SetupData) => {
   return client.getApiApiVersionTraineesTraineeId(

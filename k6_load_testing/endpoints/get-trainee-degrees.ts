@@ -6,7 +6,7 @@ export async function setup(): Promise<SetupData> {
 }
 
 /**
- * index
+ * GET /api/{apiVersion}/trainees/{traineeId}/degrees
  */
 export default ({apiVersion, apiKey, traineeId}: SetupData) => {
   return client.getApiApiVersionTraineesTraineeIdDegrees(
