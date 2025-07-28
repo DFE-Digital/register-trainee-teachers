@@ -223,5 +223,5 @@ qualtrics:
 
 school_data:
   downloader:
-    base_url: 'https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata%s.csv'
+    base_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata%s.csv"
     timeout: 300

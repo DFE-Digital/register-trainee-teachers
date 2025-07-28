@@ -22,28 +22,19 @@ RSpec.describe SchoolData::SchoolDataDownloader do
         allow(response_double).to receive(:body).and_return(sample_csv_data)
       end
 
-      it "returns the filtered CSV file path" do
+      it "returns the CSV content as a string" do
         result = described_class.call
 
         expect(result).to be_a(String)
-        expect(File.exist?(result)).to be true
+        expect(result).to eq(sample_csv_data)
       end
 
-      it "filters rows based on establishment types" do
-        filtered_csv_path = described_class.call
+      it "includes all schools without filtering" do
+        result = described_class.call
+        csv = CSV.parse(result, headers: true)
 
-        filtered_content = File.read(filtered_csv_path)
-        filtered_csv = CSV.parse(filtered_content, headers: true)
-
-        # Should include schools with types 1 and 15 but not 4 or 10
-        expect(filtered_csv.count).to eq(2)
-        expect(filtered_csv.map { |row| row["URN"] }).to contain_exactly("123456", "456789")
-      end
-
-      it "logs filtering results" do
-        expect(Rails.logger).to receive(:info).with("Processed 4. Kept 2. Filtered out: 2")
-
-        described_class.call
+        expect(csv.count).to eq(4)
+        expect(csv.map { |row| row["URN"] }).to contain_exactly("123456", "234567", "345678", "456789")
       end
     end
 
@@ -57,48 +48,15 @@ RSpec.describe SchoolData::SchoolDataDownloader do
       end
     end
 
-    context "when establishment type column is missing" do
-      let(:invalid_csv) { "URN,Name\n123456,Test School" }
-
+    context "when response has HTTP error status" do
       before do
         response_double = double("Net::HTTPResponse")
         allow(Net::HTTP).to receive(:get_response).and_return(response_double)
-        allow(response_double).to receive(:value)
-        allow(response_double).to receive(:body).and_return(invalid_csv)
+        allow(response_double).to receive(:value).and_raise(Net::HTTPError.new("404 Not Found", nil))
       end
 
-      it "raises error for missing column" do
-        expect { described_class.call }.to raise_error(/Could not find 'TypeOfEstablishment \(code\)' column/)
-      end
-    end
-
-    context "when no schools match filter criteria" do
-      let(:no_matching_csv) do
-        "URN,EstablishmentName,TypeOfEstablishment (code),Postcode,Town\n" \
-          "123456,Test School,99,AB1 2CD,TestTown"
-      end
-
-      before do
-        response_double = double("Net::HTTPResponse")
-        allow(Net::HTTP).to receive(:get_response).and_return(response_double)
-        allow(response_double).to receive(:value)
-        allow(response_double).to receive(:body).and_return(no_matching_csv)
-      end
-
-      it "creates filtered file with only headers" do
-        filtered_csv_path = described_class.call
-
-        filtered_content = File.read(filtered_csv_path)
-        filtered_csv = CSV.parse(filtered_content, headers: true)
-
-        expect(filtered_csv.count).to eq(0)
-        expect(filtered_content).to include("URN,EstablishmentName")
-      end
-
-      it "logs zero filtered schools" do
-        expect(Rails.logger).to receive(:info).with("Processed 1. Kept 0. Filtered out: 1")
-
-        described_class.call
+      it "re-raises the HTTP error" do
+        expect { described_class.call }.to raise_error(Net::HTTPError)
       end
     end
   end

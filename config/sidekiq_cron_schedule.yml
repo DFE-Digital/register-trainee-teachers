@@ -71,6 +71,6 @@ sync_dqt_teachers:
   queue: default
 
 import_school_data:
-  cron: "0 3 * * 0" # Every Sunday at 03:00.
+  cron: "30 2 * * 0" # Every Sunday at 02:30.
   class: "SchoolData::ImportJob"
   queue: default

@@ -7,7 +7,7 @@ RSpec.describe SchoolData::ImportJob do
 
   subject(:job) { described_class.new }
 
-  let(:filtered_csv_path) { "/tmp/filtered_data.csv" }
+  let(:csv_content) { "URN,EstablishmentName\n123456,Test School" }
   let(:mock_import_result) { { created: 10, updated: 5, lead_partners_updated: 2 } }
 
   describe "#perform" do
@@ -30,7 +30,7 @@ RSpec.describe SchoolData::ImportJob do
 
       before do
         allow(SchoolDataDownload).to receive(:create!).and_return(download_record)
-        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(filtered_csv_path)
+        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(csv_content)
         allow(SchoolData::ImportService).to receive(:call).and_return(mock_import_result)
       end
 
@@ -52,9 +52,9 @@ RSpec.describe SchoolData::ImportJob do
         job.perform
       end
 
-      it "calls the import service with the filtered CSV path and download record" do
+      it "calls the import service with the CSV content and download record" do
         expect(SchoolData::ImportService).to receive(:call).with(
-          filtered_csv_path:,
+          csv_content:,
           download_record:,
         )
         job.perform
@@ -64,44 +64,35 @@ RSpec.describe SchoolData::ImportJob do
         result = job.perform
         expect(result).to eq(download_record)
       end
-    end
 
-    context "when an error occurs during download phase", feature_school_data_auto_import: true do
-      let(:download_record) { create(:school_data_download, status: :running) }
-      let(:error) { StandardError.new("Download failed") }
+      context "when an error occurs" do
+        let(:error) { StandardError.new("Something went wrong") }
 
-      before do
-        allow(SchoolDataDownload).to receive(:create!).and_return(download_record)
-        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_raise(error)
-      end
+        before do
+          allow(SchoolData::SchoolDataDownloader).to receive(:call).and_raise(error)
+        end
 
-      it "re-raises the error for job retry mechanisms" do
-        expect { job.perform }.to raise_error("Download failed")
-      end
-    end
+        it "updates download record status to failed" do
+          expect { job.perform }.to raise_error(error)
 
-    context "when an error occurs during import phase", feature_school_data_auto_import: true do
-      let(:download_record) { create(:school_data_download, status: :running) }
-      let(:error) { StandardError.new("Import failed") }
+          download_record.reload
+          expect(download_record.status).to eq("failed")
+          expect(download_record.completed_at).to be_present
+        end
 
-      before do
-        allow(SchoolDataDownload).to receive(:create!).and_return(download_record)
-        allow(SchoolData::SchoolDataDownloader).to receive(:call).and_return(filtered_csv_path)
-        allow(SchoolData::ImportService).to receive(:call).and_raise(error)
-      end
+        it "re-raises the error" do
+          expect { job.perform }.to raise_error(error)
+        end
 
-      it "re-raises the error" do
-        expect { job.perform }.to raise_error("Import failed")
-      end
-    end
+        context "when download record is nil" do
+          before do
+            allow(SchoolDataDownload).to receive(:create!).and_return(nil)
+          end
 
-    context "when download record creation fails", feature_school_data_auto_import: true do
-      before do
-        allow(SchoolDataDownload).to receive(:create!).and_raise(ActiveRecord::RecordInvalid)
-      end
-
-      it "re-raises the error" do
-        expect { job.perform }.to raise_error(ActiveRecord::RecordInvalid)
+          it "does not crash when trying to update nil download record" do
+            expect { job.perform }.to raise_error(error)
+          end
+        end
       end
     end
   end

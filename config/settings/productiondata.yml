@@ -55,6 +55,7 @@ features:
     test_mode: true
     sync_trn_data: false
   register_api: false
+  school_data_auto_import: true
 
 environment:
   name: productiondata

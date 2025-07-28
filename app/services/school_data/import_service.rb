@@ -4,17 +4,21 @@ module SchoolData
   class ImportService
     include ServicePattern
 
-    def initialize(filtered_csv_path:, download_record:)
-      @filtered_csv_path = filtered_csv_path
+    ESTABLISHMENT_TYPES = [
+      1, 2, 3, 5, 7, 12, 14, 15, 28, 33, 34, 35, 36, 38, 39, 40, 41, 42, 43, 44, 45, 46
+    ].freeze
+
+    def initialize(csv_content:, download_record:)
+      @csv_content = csv_content
       @download_record = download_record
-      @stats = { created: 0, updated: 0, lead_partners_updated: 0 }
+      @stats = { created: 0, updated: 0, lead_partners_updated: 0, total_rows: 0, filtered_rows: 0 }
     end
 
     def call
       import_schools
-      realign_lead_partners
+      realign_lead_partner_names
       update_final_stats
-      cleanup_files
+      log_final_stats
 
       @stats
     end
@@ -22,16 +26,21 @@ module SchoolData
   private
 
     def import_schools
-      Rails.logger.info("Reading filtered CSV: #{@filtered_csv_path} (#{File.size(@filtered_csv_path)} bytes)")
-
       School.transaction do
-        CSV.foreach(@filtered_csv_path, headers: true) do |row|
+        CSV.parse(@csv_content, headers: true) do |row|
+          @stats[:total_rows] += 1
           import_single_school(row)
         end
       end
     end
 
     def import_single_school(row)
+      establishment_type = row["TypeOfEstablishment (code)"]&.to_i
+      unless ESTABLISHMENT_TYPES.include?(establishment_type)
+        @stats[:filtered_rows] += 1
+        return
+      end
+
       urn = row["URN"]&.strip
       return if urn.blank?
 
@@ -75,7 +84,7 @@ module SchoolData
       nil
     end
 
-    def realign_lead_partners
+    def realign_lead_partner_names
       lead_partners = LeadPartner.school.joins(:school).includes(:school)
                                  .where("lead_partners.name != schools.name")
 
@@ -95,8 +104,9 @@ module SchoolData
       )
     end
 
-    def cleanup_files
-      FileUtils.rm_f(@filtered_csv_path)
+    def log_final_stats
+      kept_rows = @stats[:total_rows] - @stats[:filtered_rows]
+      Rails.logger.info("Processed #{@stats[:total_rows]}. Kept #{kept_rows}. Filtered out: #{@stats[:filtered_rows]}")
     end
   end
 end
