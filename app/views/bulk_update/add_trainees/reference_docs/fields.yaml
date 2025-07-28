@@ -421,7 +421,7 @@
 - field_name: Fund Code
   technical: fund_code
   hesa_alignment: FUNDCODE
-  description: This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body.
+  description: This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body. NOTE: Use `7` if the trainee chooses not to receive finance they are eligible for.
   format: |-
     - `2` - not eligible for student finance
     - `7` - eligible for student finance
