@@ -39,6 +39,3 @@ environment:
   display_name: Review
 
 sign_off_period: census_period
-
-current_recruitment_cycle_year: 2025
-current_default_course_year: 2025
