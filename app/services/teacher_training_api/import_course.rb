@@ -81,20 +81,9 @@ module TeacherTrainingApi
       course_attributes[:course_length] == "TwoYears" ? 2 : 1
     end
 
-    def before_2024_routes
+    def routes
       {
-        higher_education_programme: :provider_led_postgrad,
-        school_direct_training_programme: :school_direct_tuition_fee,
-        scitt_programme: :provider_led_postgrad,
-        higher_education_salaried_programme: :provider_led_postgrad,
-        school_direct_salaried_training_programme: :school_direct_salaried,
-        scitt_salaried_programme: :provider_led_postgrad,
-        pg_teaching_apprenticeship: :pg_teaching_apprenticeship,
-      }
-    end
-
-    def for_2024_routes
-      {
+        # 2024 routes
         higher_education_programme: :provider_led_postgrad,
         school_direct_training_programme: :provider_led_postgrad,
         scitt_programme: :provider_led_postgrad,
@@ -102,19 +91,18 @@ module TeacherTrainingApi
         school_direct_salaried_training_programme: :school_direct_salaried,
         scitt_salaried_programme: :school_direct_salaried,
         pg_teaching_apprenticeship: :pg_teaching_apprenticeship,
+        # 2025 routes
+        fee_funded_initial_teacher_training: :"provider_led_#{degree_type}",
+        school_direct_salaried: :school_direct_salaried,
+        postgraduate_teacher_apprenticeship: :pg_teaching_apprenticeship,
+        teacher_degree_apprenticeship: :teacher_degree_apprenticeship,
       }
     end
 
-    def routes
-      if Settings.current_recruitment_cycle_year < 2024
-        before_2024_routes
-      else
-        for_2024_routes
-      end
-    end
-
     def route
-      routes[course_attributes[:program_type].to_sym]
+      return routes[course_attributes[:program_type].to_sym] if Settings.current_recruitment_cycle_year < 2025
+
+      routes[course_attributes[:training_route].to_sym]
     end
 
     def accredited_body_code
@@ -124,6 +112,10 @@ module TeacherTrainingApi
     def find_accredited_body_code
       provider = provider_data&.find { |p| p[:id] == course_data[:relationships][:provider][:data][:id] }
       provider[:attributes][:code] if provider
+    end
+
+    def degree_type
+      course_attributes[:degree_type]&.chomp("uate")
     end
 
     def course

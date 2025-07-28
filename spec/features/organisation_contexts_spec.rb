@@ -10,6 +10,7 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       given_i_visit_the_organisations_page
       then_i_am_redirected_to_the_organisations_page
       then_i_can_see_a_list_of_my_providers
+      and_i_should_see_the_link_to_sign_out
     end
 
     scenario "setting a provider context" do
@@ -105,5 +106,9 @@ private
 
   def no_organisation_user
     @_no_organisation_user ||= create(:user, :with_no_organisation_in_db)
+  end
+
+  def and_i_should_see_the_link_to_sign_out
+    expect(page).to have_link("Sign out")
   end
 end
