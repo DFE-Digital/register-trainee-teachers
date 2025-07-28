@@ -1,4 +1,6 @@
-import secrets from "k6/secrets";
+import secrets from "./secrets.ts"
+
+const apiVersion  = "v2025.0-rc"
 
 export interface SetupData {
   apiVersion: string,
@@ -8,18 +10,12 @@ export interface SetupData {
   placementId?: string
 }
 
-export async function setup(): Promise<SetupData> {
-  const apiVersion  = "v2025.0-rc"
-  const apiKey      = __ENV.auth_token || await secrets.get("apiKey");
-  const traineeId   = await secrets.get("traineeId");
-  const degreeId    = await secrets.get("degreeId");
-  const placementId = await secrets.get("placementId");
+export function setup() {
+  let loadSecrets: SetupData = { apiVersion: apiVersion, apiKey: __ENV.AUTH_TOKEN };
 
-  return {
-    apiVersion,
-    apiKey,
-    traineeId,
-    degreeId,
-    placementId
+  if ( !loadSecrets.apiKey ) {
+    loadSecrets = { ...loadSecrets, ...secrets };
   }
+
+  return loadSecrets;
 }
