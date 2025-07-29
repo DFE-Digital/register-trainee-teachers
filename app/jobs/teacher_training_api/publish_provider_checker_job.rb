@@ -15,16 +15,14 @@ module TeacherTrainingApi
       )
 
       message = "[#{Rails.env}] Publish Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{checker.recruitment_cycle_year}:\n"
-      message << "Matching lead schools: #{checker.school_matches.count}\n"
       message << "Matching lead partners: #{checker.lead_partner_matches.count}\n"
       message << "Matching providers: #{checker.provider_matches.count}\n"
-      message << "Missing providers: #{checker.missing.count}\n"
-      checker.missing.first(MAX_MISSING_PROVIDERS_TO_DISPLAY).each do |provider|
-        message << "  - #{format_provider_details(provider)}\n"
-      end
-      if checker.missing.count > MAX_MISSING_PROVIDERS_TO_DISPLAY
-        message << "  - ...\n"
-      end
+      message << "Missing accredited providers: #{checker.missing_accredited.count}\n"
+      output_missing_list(message, checker.missing_accredited)
+
+      message << "Missing unaccredited providers: #{checker.missing_unaccredited.count}\n"
+      output_missing_list(message, checker.missing_unaccredited)
+
       message << "Total: #{checker.total_count}\n"
 
       SlackNotifierService.call(
@@ -35,6 +33,15 @@ module TeacherTrainingApi
     end
 
   private
+
+    def output_missing_list(message, missing_list)
+      missing_list.first(MAX_MISSING_PROVIDERS_TO_DISPLAY).each do |provider|
+        message << "  - #{format_provider_details(provider)}\n"
+      end
+      if missing_list.count > MAX_MISSING_PROVIDERS_TO_DISPLAY
+        message << "  - ...\n"
+      end
+    end
 
     def format_provider_details(provider)
       "#{provider['name']} (#{provider['code']}), UKPRN #{provider['ukprn']}\n"
