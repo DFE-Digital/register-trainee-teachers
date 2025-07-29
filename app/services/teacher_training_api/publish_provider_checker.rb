@@ -19,14 +19,10 @@ module TeacherTrainingApi
       while next_link.present?
         response = TeacherTrainingApi::Client::Request.get(next_link).parsed_response
         response["data"].map { |p| p["attributes"] }.each do |provider|
-          if lead_partner_matches?(provider)
-            lead_partner_matches << provider
-          elsif provider_matches?(provider)
-            provider_matches << provider
-          elsif provider["accredited_body"]
-            missing_accredited << provider
+          if provider["accredited_body"] == true
+            match_accredited_provider(provider)
           else
-            missing_unaccredited << provider
+            match_unaccredited_provider(provider)
           end
         end
         next_link = response["links"]["next"]
@@ -47,6 +43,24 @@ module TeacherTrainingApi
     end
 
   private
+
+    def match_accredited_provider(provider)
+      if provider_matches?(provider)
+        provider_matches << provider
+      else
+        missing_accredited << provider
+      end
+    end
+
+    def match_unaccredited_provider(provider)
+      if lead_partner_matches?(provider)
+        lead_partner_matches << provider
+      elsif provider_matches?(provider)
+        provider_matches << provider
+      else
+        missing_unaccredited << provider
+      end
+    end
 
     def publish_provider_endpoint
       "/recruitment_cycles/#{recruitment_cycle_year}/providers"
