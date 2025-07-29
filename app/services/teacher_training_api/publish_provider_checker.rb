@@ -4,13 +4,14 @@ module TeacherTrainingApi
   class PublishProviderChecker
     include ServicePattern
 
-    attr_reader :recruitment_cycle_year, :provider_matches, :lead_partner_matches, :missing
+    attr_reader :recruitment_cycle_year, :provider_matches, :lead_partner_matches, :missing_accredited, :missing_unaccredited
 
     def initialize(recruitment_cycle_year:)
       @recruitment_cycle_year = recruitment_cycle_year
       @provider_matches = []
       @lead_partner_matches = []
-      @missing = []
+      @missing_accredited = []
+      @missing_unaccredited = []
     end
 
     def call
@@ -22,8 +23,10 @@ module TeacherTrainingApi
             lead_partner_matches << provider
           elsif provider_matches?(provider)
             provider_matches << provider
+          elsif provider["accredited_body"]
+            missing_accredited << provider
           else
-            missing << provider
+            missing_unaccredited << provider
           end
         end
         next_link = response["links"]["next"]
@@ -33,7 +36,14 @@ module TeacherTrainingApi
     end
 
     def total_count
-      lead_partner_matches.count + provider_matches.count + missing.count
+      lead_partner_matches.count +
+        provider_matches.count +
+        missing_accredited.count +
+        missing_unaccredited.count
+    end
+
+    def missing
+      missing_accredited + missing_unaccredited
     end
 
   private
