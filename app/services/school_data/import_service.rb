@@ -4,9 +4,7 @@ module SchoolData
   class ImportService
     include ServicePattern
 
-    ESTABLISHMENT_TYPES = [
-      1, 2, 3, 5, 7, 12, 14, 15, 28, 33, 34, 35, 36, 38, 39, 40, 41, 42, 43, 44, 45, 46
-    ].freeze
+    EXCLUDED_ESTABLISHMENT_TYPES = [29].freeze
 
     def initialize(csv_content:, download_record:)
       @csv_content = csv_content
@@ -36,7 +34,7 @@ module SchoolData
 
     def import_single_school(row)
       establishment_type = row["TypeOfEstablishment (code)"]&.to_i
-      unless ESTABLISHMENT_TYPES.include?(establishment_type)
+      if EXCLUDED_ESTABLISHMENT_TYPES.include?(establishment_type)
         @stats[:filtered_rows] += 1
         return
       end
