@@ -4,12 +4,11 @@ module TeacherTrainingApi
   class PublishProviderChecker
     include ServicePattern
 
-    attr_reader :recruitment_cycle_year, :provider_matches, :school_matches, :lead_partner_matches, :missing
+    attr_reader :recruitment_cycle_year, :provider_matches, :lead_partner_matches, :missing
 
     def initialize(recruitment_cycle_year:)
       @recruitment_cycle_year = recruitment_cycle_year
       @provider_matches = []
-      @school_matches = []
       @lead_partner_matches = []
       @missing = []
     end
@@ -19,9 +18,7 @@ module TeacherTrainingApi
       while next_link.present?
         response = TeacherTrainingApi::Client::Request.get(next_link).parsed_response
         response["data"].map { |p| p["attributes"] }.each do |provider|
-          if school_matches?(provider)
-            school_matches << provider
-          elsif lead_partner_matches?(provider)
+          if lead_partner_matches?(provider)
             lead_partner_matches << provider
           elsif provider_matches?(provider)
             provider_matches << provider
@@ -36,7 +33,7 @@ module TeacherTrainingApi
     end
 
     def total_count
-      school_matches.count + lead_partner_matches.count + provider_matches.count + missing.count
+      lead_partner_matches.count + provider_matches.count + missing.count
     end
 
   private
@@ -47,10 +44,6 @@ module TeacherTrainingApi
 
     def provider_matches?(provider)
       Provider.find_by(code: provider["code"]).present? || Provider.find_by(ukprn: provider["ukprn"]).present?
-    end
-
-    def school_matches?(provider)
-      School.find_by(urn: provider["urn"]).present?
     end
 
     def lead_partner_matches?(provider)

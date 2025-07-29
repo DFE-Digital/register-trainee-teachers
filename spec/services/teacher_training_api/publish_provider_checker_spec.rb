@@ -42,16 +42,15 @@ module TeacherTrainingApi
           expect(subject.provider_matches).to contain_exactly(provider1_attributes, provider2_attributes)
         end
 
-        it "returns the correct value for school_matches" do
-          expect(subject.school_matches).to contain_exactly(school_attributes)
-        end
-
         it "returns the correct value for lead_partner_matches" do
           expect(subject.lead_partner_matches).to contain_exactly(lead_partner_attributes)
         end
 
         it "returns the correct value for missing" do
-          expect(subject.missing).to contain_exactly(missing_attributes)
+          expect(subject.missing).to contain_exactly(
+            school_attributes,
+            missing_attributes,
+          )
         end
 
         it "returns the correct value for total_count" do
