@@ -61,7 +61,7 @@ feature "bulk add trainees" do
         given_i_am_authenticated
       end
 
-      scenario "the bulk add trainees page is not-visible when feature flag is off" do
+      scenario "the bulk add trainees page is not-visible" do
         when_i_visit_the_bulk_update_index_page
         then_i_cannot_see_the_bulk_add_trainees_link
         and_i_cannot_navigate_directly_to_the_bulk_add_trainees_page
