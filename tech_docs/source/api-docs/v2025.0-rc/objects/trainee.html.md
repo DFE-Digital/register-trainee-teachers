@@ -164,8 +164,7 @@ weight: 1
         string (limited to 80 characters), required
       </p>
       <p class="govuk-body">
-        The email address of the trainee. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/nqtemail">HESA email addresses field</a>
+        This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left their training course, for example, regarding their QTS.</a>
       </p>
       <p class="govuk-body">
         Example: <code>trainee123@example.com</code>
