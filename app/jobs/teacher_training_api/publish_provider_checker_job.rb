@@ -8,8 +8,6 @@ module TeacherTrainingApi
     MAX_MISSING_PROVIDERS_TO_DISPLAY = 50
 
     def perform
-      return unless FeatureService.enabled?("publish_provider_checker")
-
       checker = TeacherTrainingApi::PublishProviderChecker.call(
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
       )

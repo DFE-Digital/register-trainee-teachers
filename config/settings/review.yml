@@ -30,7 +30,6 @@ features:
   token_management: true
   bulk_add_trainees: true
   show_csv_sandbox_banner: true
-  publish_provider_checker: true
 
 pagination:
   records_per_page: 30
