@@ -43,6 +43,9 @@ module Trs
         "Jarvis Island" => "US",
         "Kingman Reef" => "US",
         "Palmyra Atoll" => "US",
+
+        # Taiwan - map to China
+        "Taiwan" => "CH",
       }.freeze
 
       def initialize(trainee:)
