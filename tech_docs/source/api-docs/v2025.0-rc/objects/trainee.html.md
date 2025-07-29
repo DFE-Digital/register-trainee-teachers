@@ -491,6 +491,9 @@ weight: 1
       </p>
       <p class="govuk-body">
         Example: <code>123456</code>
+          <li><code>900000</code> - Establishment outside England and Wales</li>
+        <li><code>900020</code> - Other establishment without a URN</li>
+        <li><code>900030</code> - Not available</li>
       </p>
     </dd>
   </div>
