@@ -143,8 +143,8 @@ module Trs
         context "trainee is iQTS in Taiwan" do
           let(:trainee) { create(:trainee, :iqts, :trn_received, iqts_country: "Taiwan") }
 
-          it "maps Taiwan to CH for country code" do
-            expect(subject["trainingCountryReference"]).to eq("CH")
+          it "maps Taiwan to CN for country code" do
+            expect(subject["trainingCountryReference"]).to eq("CN")
           end
         end
 

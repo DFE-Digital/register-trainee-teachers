@@ -45,7 +45,7 @@ module Trs
         "Palmyra Atoll" => "US",
 
         # Taiwan - map to China
-        "Taiwan" => "CH",
+        "Taiwan" => "CN",
       }.freeze
 
       def initialize(trainee:)
