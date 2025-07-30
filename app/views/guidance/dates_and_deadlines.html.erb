@@ -9,27 +9,30 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Dates and deadlines for training providers</h1>
-    <h2 class="govuk-heading-l govuk-!-margin-bottom-5">Deadlines for all training providers</h2>
-    <h2 class="govuk-heading-m govuk-!-margin-top-9 govuk-!-margin-bottom-5">2025 to 2026 academic year</h2>
+    <h1 class="govuk-heading-l">Dates and deadlines for training providers for 2025 to 2026 academic year</h1>
 
     <p class="govuk-body">
       All providers can add and update trainee data at any time.
     </p>
 
     <p class="govuk-body">
-      You’ll check and sign-off trainee data twice a year for:
-
-      <ul class="govuk-list govuk-list--bullet">
-        <li>ITT census publication</li>
-        <li>ITT performance profiles publication</li>
-      </ul>
+      Guidance for the sign-off processes for each stage can be found below:
     </p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a class="govuk-link" href="/guidance/census-sign-off">Census sign off process</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/guidance/performance-profiles">Performance profile sign off process</a>
+      </li>
+    </ul>
 
     <%= govuk_table do |table| %>
       <% table.with_head do |head|%>
         <% head.with_row do |row| %>
-          <% row.with_cell(header: true, text: "Date", width: "one-third") %>
+          <% row.with_cell(header: true, text: "Date") %>
+          <% row.with_cell(header: true, text: "Event name") %>
           <% row.with_cell(header: true, text: "What happens") %>
         <% end %>
       <% end %>
@@ -38,19 +41,22 @@
           <% row.with_cell do %>
               <span class="no-wrap">8 October 2025</span>
           <% end %>
-          <% row.with_cell(text: "The second Wednesday of October every academic year is called the ‘census date’. If a new trainee starts their course after this date, they will not be included in the ITT census publication. This is why it’s important to add your new trainees as they start their training.")%>
+          <% row.with_cell(text: "Census date")%>
+          <% row.with_cell(text: "This is the second Wednesday of October every academic year. If a new trainee starts their course after this date, they will not be included in the ITT census publication.")%>
         <% end %>
         <% body.with_row do |row| %>
             <% row.with_cell do %>
               <span class="no-wrap">31 October 2025</span>
             <% end %>
-          <% row.with_cell(text: "This data will be used for the ITT census publication.")%>
+          <% row.with_cell(text: "ITT census deadline")%>
+          <% row.with_cell(text: "You need to submit and sign off ITT trainee data before this date. This data will be used for the ITT census publication.")%>
         <% end %>
         <% body.with_row do |row| %>
             <% row.with_cell do %>
               <span class="no-wrap">27 February 2026</span>
             <% end %>
-          <% row.with_cell(text: "Some of this data will be used for the ITT performance profiles publication.")%>
+          <% row.with_cell(text: "ITT performance profiles deadline")%>
+          <% row.with_cell(text: "You need to check and sign off all the details for your trainees who had outcomes in the previous academic year (2024 to 2025). This data will be used for the ITT performance profiles publication.")%>
         <% end %>
       <% end %>
     <% end %>
