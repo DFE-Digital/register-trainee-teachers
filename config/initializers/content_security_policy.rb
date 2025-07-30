@@ -26,18 +26,22 @@
 #   # config.content_security_policy_report_only = true
 # end
 
-Rails.application.config.content_security_policy do |policy|
-  policy.default_src(:self)
-  policy.connect_src(:self,
-                     "https://www.google-analytics.com")
-  policy.img_src(:self,
-                 "https://www.google-analytics.com")
-  policy.object_src(:none)
-  policy.script_src(:self,
-                    "https://www.googletagmanager.com",
-                    "https://www.google-analytics.com",
-                    "https://az416426.vo.msecnd.net") # needed for App Insights
-  policy.style_src(:self, "'sha256-WAyOw4V+FqDc35lQPyRADLBWbuNK8ahvYEaQIYF1+Ps='") # Turbo progress bar stylesheet https://github.com/hotwired/turbo/issues/809
-  policy.font_src(:self, :data)
-  policy.upgrade_insecure_requests(!Rails.env.local?)
+Rails.application.configure do
+  config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }
+
+  config.content_security_policy do |policy|
+    policy.default_src(:self)
+    policy.connect_src(:self,
+                       "https://www.google-analytics.com")
+    policy.img_src(:self,
+                   "https://www.google-analytics.com")
+    policy.object_src(:none)
+    policy.script_src(:self,
+                      "https://www.googletagmanager.com",
+                      "https://www.google-analytics.com",
+                      "https://az416426.vo.msecnd.net") # needed for App Insights
+    policy.style_src(:self, "'sha256-WAyOw4V+FqDc35lQPyRADLBWbuNK8ahvYEaQIYF1+Ps='") # Turbo progress bar stylesheet https://github.com/hotwired/turbo/issues/809
+    policy.font_src(:self, :data)
+    policy.upgrade_insecure_requests(!Rails.env.local?)
+  end
 end
