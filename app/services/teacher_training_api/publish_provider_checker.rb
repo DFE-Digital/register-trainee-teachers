@@ -4,14 +4,14 @@ module TeacherTrainingApi
   class PublishProviderChecker
     include ServicePattern
 
-    attr_reader :recruitment_cycle_year, :provider_matches, :school_matches, :lead_partner_matches, :missing
+    attr_reader :recruitment_cycle_year, :provider_matches, :lead_partner_matches, :missing_accredited, :missing_unaccredited
 
     def initialize(recruitment_cycle_year:)
       @recruitment_cycle_year = recruitment_cycle_year
       @provider_matches = []
-      @school_matches = []
       @lead_partner_matches = []
-      @missing = []
+      @missing_accredited = []
+      @missing_unaccredited = []
     end
 
     def call
@@ -19,14 +19,10 @@ module TeacherTrainingApi
       while next_link.present?
         response = TeacherTrainingApi::Client::Request.get(next_link).parsed_response
         response["data"].map { |p| p["attributes"] }.each do |provider|
-          if school_matches?(provider)
-            school_matches << provider
-          elsif lead_partner_matches?(provider)
-            lead_partner_matches << provider
-          elsif provider_matches?(provider)
-            provider_matches << provider
+          if provider["accredited_body"] == true
+            match_accredited_provider(provider)
           else
-            missing << provider
+            match_unaccredited_provider(provider)
           end
         end
         next_link = response["links"]["next"]
@@ -36,10 +32,35 @@ module TeacherTrainingApi
     end
 
     def total_count
-      school_matches.count + lead_partner_matches.count + provider_matches.count + missing.count
+      lead_partner_matches.count +
+        provider_matches.count +
+        missing_accredited.count +
+        missing_unaccredited.count
+    end
+
+    def missing
+      missing_accredited + missing_unaccredited
     end
 
   private
+
+    def match_accredited_provider(provider)
+      if provider_matches?(provider)
+        provider_matches << provider
+      else
+        missing_accredited << provider
+      end
+    end
+
+    def match_unaccredited_provider(provider)
+      if lead_partner_matches?(provider)
+        lead_partner_matches << provider
+      elsif provider_matches?(provider)
+        provider_matches << provider
+      else
+        missing_unaccredited << provider
+      end
+    end
 
     def publish_provider_endpoint
       "/recruitment_cycles/#{recruitment_cycle_year}/providers"
@@ -47,10 +68,6 @@ module TeacherTrainingApi
 
     def provider_matches?(provider)
       Provider.find_by(code: provider["code"]).present? || Provider.find_by(ukprn: provider["ukprn"]).present?
-    end
-
-    def school_matches?(provider)
-      School.find_by(urn: provider["urn"]).present?
     end
 
     def lead_partner_matches?(provider)
