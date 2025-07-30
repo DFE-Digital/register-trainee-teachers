@@ -48,6 +48,7 @@ azure:
 features:
   home_text: false
   use_ssl: true
+  school_data_auto_import: false
   sign_in_method: dfe-sign-in
   enable_feedback_link: true
   basic_auth: true
@@ -219,3 +220,8 @@ qualtrics:
     survey_id: SV_please_change_me
     mailing_list_id: CG_please_change_me
     message_id: MS_please_change_me
+
+school_data:
+  downloader:
+    base_url: "https://ea-edubase-api-prod.azurewebsites.net/edubase/downloads/public/edubasealldata%s.csv"
+    timeout: 300
