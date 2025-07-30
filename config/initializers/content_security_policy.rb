@@ -34,6 +34,7 @@ Rails.application.config.content_security_policy do |policy|
                  "https://www.google-analytics.com")
   policy.object_src(:none)
   policy.script_src(:self,
+                    "'unsafe-inline'",
                     "https://www.googletagmanager.com",
                     "https://www.google-analytics.com",
                     "https://az416426.vo.msecnd.net") # needed for App Insights
