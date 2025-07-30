@@ -27,15 +27,13 @@ weight: 2
         string (limited to 6 characters)
       </p>
       <p class="govuk-body">
-        The URN of the school. The Unique Reference Number (URN) of the school. 
-             Other possible values:
+        The URN of the school. The Unique Reference Number (URN) of the school. Other possible values:
       </p>
       <ul>
         <li><code>900000</code> - Establishment outside England and Wales</li>
         <li><code>900020</code> - Other establishment without a URN</li>
         <li><code>900030</code> - Not available</li>
-</a>
-      </p>
+      </ul>
       <p class="govuk-body">
         Example: <code>123456</code>
       </p>

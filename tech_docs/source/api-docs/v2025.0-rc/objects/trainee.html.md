@@ -408,11 +408,11 @@ weight: 1
       </p>
       <p class="govuk-body">
         The following values are invalid for this field:
-      <ul class='govuk-list govuk-list--bullet'>
+      </p>
+      <ul>
         <li><code>99801</code> - Teacher training qualification: Further education/Higher education</li>
         <li><code>99803</code> - Teacher training qualification: Other</li>
       </ul>
-      </p>
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
@@ -489,11 +489,14 @@ weight: 1
         The Unique Reference Number (URN) of the employing school for School Direct salaried trainees.
       </p>
       <p class="govuk-body">
-        Example: <code>123456</code>
-          <li><code>900000</code> - Establishment outside England and Wales</li>
+        Example:
+      </p>
+      <ul>
+        <li><code>123456</code></li>
+        <li><code>900000</code> - Establishment outside England and Wales</li>
         <li><code>900020</code> - Other establishment without a URN</li>
         <li><code>900030</code> - Not available</li>
-      </p>
+      </ul>
     </dd>
   </div>
   <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">

@@ -199,7 +199,8 @@
     This field is a three characters field completed for students on courses
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
-  format:  - `201` - Professional status only
+  format: |-
+    - `201` - Professional status only
     - `202` - Both professional status and academic award
   example: |-
     - `201`
@@ -228,7 +229,8 @@
   description: This field describes the qualification aim of the Initial Teacher
     Training course and is intended to record the qualification that will be attained
     as a result of successful completion of studies.
-  format:   - `007` - BA
+  format: |-
+    - `007` - BA
     - `008` - BA (Hons)
     - `001` - BEd
     - `002` - BEd (Hons)
@@ -240,7 +242,7 @@
     - `031` - Professional Graduate Certificate in Education
     - `032` - Masters, not by research
   example: |-
-    - `007`
+    `007`
   validation: "Conditional - mandatory if ITT Aim is `202`"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L41
 - field_name: Course Subject One
@@ -421,7 +423,7 @@
 - field_name: Fund Code
   technical: fund_code
   hesa_alignment: FUNDCODE
-  description: This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body. NOTE: Use `7` if the trainee chooses not to receive finance they are eligible for.
+  description: "This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body. NOTE: Use `7` if the trainee chooses not to receive finance they are eligible for."
   format: |-
     - `2` - not eligible for student finance
     - `7` - eligible for student finance
