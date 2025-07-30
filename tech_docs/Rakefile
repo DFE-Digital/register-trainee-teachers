@@ -85,7 +85,9 @@ namespace :tech_docs do
         context = Middleman::TemplateContext.new(app, {})
 
         data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, values|
-          TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"]
+          field_name = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
+          words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
+          field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
         end.to_h
 
         data.each_with_index do |(attribute, values), index|
@@ -128,6 +130,18 @@ end
 module TechDocsHelpers
   RAILS_DIR     = File.expand_path("../", __dir__)
   RAILS_GEMFILE = File.join(RAILS_DIR, 'Gemfile')
+  WORDS_TO_NUMBERS = {
+    "one"   => 1,
+    "two"   => 2,
+    "three" => 3,
+    "four"  => 4,
+    "five"  => 5,
+    "six"   => 6,
+    "seven" => 7,
+    "eight" => 8,
+    "nine"  => 9,
+    "ten"   => 10,
+  }.freeze
 
   def self.runner(runner_code)
     command = <<~CMD
