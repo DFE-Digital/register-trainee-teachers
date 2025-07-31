@@ -61,7 +61,7 @@ private
   def remove_application_details
     return unless hash[:message].include?("RecruitsApi::ImportApplicationJob") && hash.dig(:payload, :arguments).present?
 
-    cleaned_arguments = JSON.parse(hash[:payload][:arguments]).first&.slice("id", "type")
-    hash[:payload][:arguments] = cleaned_arguments.to_json
+    cleaned_arguments = JSON.parse(hash[:payload][:arguments]).first.slice("id", "type")
+    hash[:payload][:arguments] = [cleaned_arguments].to_json
   end
 end
