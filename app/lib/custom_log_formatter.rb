@@ -9,6 +9,7 @@ class CustomLogFormatter < SemanticLogger::Formatters::Json
     format_json_message_context
     format_backtrace
     remove_post_params
+    remove_application_details
 
     hash.to_json
   end
@@ -55,5 +56,12 @@ private
 
   def method_is_post_or_put_or_patch?
     hash.dig(:payload, :method).in?(%w[PUT POST PATCH])
+  end
+
+  def remove_application_details
+    return unless hash[:message].include?("RecruitsApi::ImportApplicationJob") && hash.dig(:payload, :arguments).present?
+
+    cleaned_arguments = JSON.parse(hash[:payload][:arguments]).first&.slice("id", "type")
+    hash[:payload][:arguments] = cleaned_arguments.to_json
   end
 end
