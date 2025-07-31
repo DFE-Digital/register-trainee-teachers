@@ -590,8 +590,7 @@ weight: 1
         string (limited to 17 characters), required
       </p>
       <p class="govuk-body">
-        The unique student identifier for the trainee. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/husid">HESA unique student identifier field</a>
+        The unique student identifier for the trainee.
       </p>
       <p class="govuk-body">
         Example: <code>1210007145123456</code>
