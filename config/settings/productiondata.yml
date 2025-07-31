@@ -17,16 +17,6 @@ dfe_sign_in:
   # URL of the users profile
   profile: https://profile.signin.education.gov.uk
 
-current_recruitment_cycle_year: 2025
-current_default_course_year: 2025
-
-apply_applications:
-  import:
-    recruitment_cycle_years:
-      - 2025
-  create:
-    recruitment_cycle_year: 2025
-
 features:
   basic_auth: true
   sign_in_method: dfe-sign-in
@@ -47,6 +37,7 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
+    teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: false
   integrate_with_dqt: false
