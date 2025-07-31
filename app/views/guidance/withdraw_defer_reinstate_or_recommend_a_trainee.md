@@ -30,7 +30,9 @@ You cannot withdraw multiple trainees at the same time. You must withdraw them i
 
 When you sign into Register, you can defer or reinstate a trainee from within their trainee record.
 
-You cannot defer or reinstate multiple trainees at the same time in Register. You can do so using the HESA service.
+You can give more detail about why the trainee deferred, helping the Department for Education (DfE) to understand the reasons for deferral.
+
+You cannot defer or reinstate multiple trainees at the same time in Register. You can do so using the Register API if you’re an accredited HEI provider.
 
 ## Recommend a trainee for QTS or EYTS
 
