@@ -81,7 +81,7 @@ class BulkUpdate::TraineeUpload < ApplicationRecord
   delegate :filename, :download, :attach, to: :file
 
   scope :current_academic_cycle, lambda {
-    where(created_at: AcademicCycle.current.start_date..AcademicCycle.current.end_date)
+    where(created_at: AcademicCycle.current.start_date.beginning_of_day..AcademicCycle.current.end_date.end_of_day)
   }
   scope :not_cancelled_or_uploaded, -> { where.not(status: %i[uploaded cancelled]) }
 
