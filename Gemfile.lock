@@ -206,9 +206,9 @@ GEM
     data_migrate (11.3.0)
       activerecord (>= 6.1)
       railties (>= 6.1)
-    database_cleaner-active_record (2.2.2)
+    database_cleaner-active_record (2.2.1)
       activerecord (>= 5.a)
-      database_cleaner-core (~> 2.0)
+      database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.4.1)
     debug (1.11.0)
@@ -819,7 +819,7 @@ DEPENDENCIES
   csv-safe
   cuprite (~> 0.17)
   data_migrate (= 11.3.0)
-  database_cleaner-active_record
+  database_cleaner-active_record (= 2.2.1)
   debug
   dfe-analytics!
   dfe-reference-data!
