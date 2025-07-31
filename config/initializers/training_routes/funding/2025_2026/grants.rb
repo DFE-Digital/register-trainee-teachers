@@ -17,7 +17,7 @@ GRANTS_2025_TO_2026 = [
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-    amount: 28_000,
+    amount: 29_000,
     allocation_subjects: [
       AllocationSubjects::CHEMISTRY,
       AllocationSubjects::COMPUTING,
@@ -27,7 +27,7 @@ GRANTS_2025_TO_2026 = [
   ),
   OpenStruct.new(
     training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
-    amount: 25_000,
+    amount: 26_000,
     allocation_subjects: [
       AllocationSubjects::ANCIENT_LANGUAGES,
       AllocationSubjects::BIOLOGY,
@@ -44,9 +44,15 @@ GRANTS_2025_TO_2026 = [
     amount: 10_000,
     allocation_subjects: [
       AllocationSubjects::ART_AND_DESIGN,
-      AllocationSubjects::ENGLISH,
       AllocationSubjects::MUSIC,
       AllocationSubjects::RELIGIOUS_EDUCATION,
+    ],
+  ),
+  OpenStruct.new(
+    training_route: TRAINING_ROUTE_ENUMS[:school_direct_salaried],
+    amount: 5_000,
+    allocation_subjects: [
+      AllocationSubjects::ENGLISH,
     ],
   ),
   OpenStruct.new(
