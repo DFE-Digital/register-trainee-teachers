@@ -28,8 +28,7 @@ weight: 1
         string (limited to 50 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Provider’s student record system (SRS). Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/ownstu">HESA provider’s own identifier for student field</a>.
+        The unique ID of the trainee in the Provider’s student record system (SRS).
       </p>
       <p class="govuk-body">
         Example: <code>99157234</code>
