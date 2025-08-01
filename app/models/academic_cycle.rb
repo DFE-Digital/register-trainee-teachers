@@ -82,16 +82,28 @@ class AcademicCycle < ApplicationRecord
     performance_profile_date_range.cover?(date)
   end
 
+  def first_day_of_year
+    Date.new(end_year + 1, 1, 1)
+  end
+
   def second_monday_of_january
-    Date.new(end_year + 1, 1, 1).next_week(:monday) + 7
+    return first_day_of_year.next_week(:monday) + 7 if first_day_of_year.wday > 1
+
+    first_day_of_year.next_week(:monday)
   end
 
   def last_day_of_february
     Date.new(end_year + 1, 2, -1)
   end
 
+  def first_day_of_october
+    Date.new(start_year, 10, 1)
+  end
+
   def second_wednesday_of_october
-    Date.new(start_year, 10, 1).next_week(:wednesday)
+    return first_day_of_october.next_week(:wednesday) + 7 if first_day_of_october.wday > 3
+
+    first_day_of_october.next_week(:wednesday)
   end
 
   def first_day_of_september
