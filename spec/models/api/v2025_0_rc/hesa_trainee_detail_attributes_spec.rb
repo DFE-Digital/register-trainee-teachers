@@ -140,5 +140,31 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes do
         end
       end
     end
+
+    describe "fund_code" do
+      context "when not included in the list of HESA fund codes" do
+        subject { described_class.new(fund_code: "9") }
+
+        it {
+          subject.validate
+
+          expect(subject.errors[:fund_code]).to contain_exactly(
+            "has invalid reference data value of '9'. Valid values are #{Hesa::CodeSets::FundCodes::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}.",
+          )
+        }
+      end
+
+      context "when included in the list of HESA fund codes" do
+        Hesa::CodeSets::FundCodes::MAPPING.each_key do |fund_code|
+          subject { described_class.new(fund_code:) }
+
+          it "is expected to allow #{fund_code}" do
+            subject.validate
+
+            expect(subject.errors[:fund_code]).to be_blank
+          end
+        end
+      end
+    end
   end
 end
