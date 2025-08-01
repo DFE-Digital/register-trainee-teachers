@@ -35,7 +35,7 @@ module BulkUpdate
         end
         let(:csv) { CSVSafe.new(file_content, headers: true).read }
 
-        it { expect(record.errors.first.message).to eq("Your file’s column names need to match the CSV template. Your file is missing the following columns: 'First Names'") }
+        it { expect(record.errors.first.message).to eq("The selected CSV file has structural issues. Check columns for empty headers, an incorrect number of columns, or additional commas.") }
       end
 
       context "given a CSV with the correct columns and one extra column" do
@@ -76,6 +76,26 @@ module BulkUpdate
         end
 
         it { expect(record.errors.first&.message).to eq("The selected file must contain at least one trainee") }
+      end
+
+      context "with structural CSV issues" do
+        context "given a CSV with empty string headers" do
+          let(:file_content) do
+            ",First Names,Last Name\nfoo,bar,baz"
+          end
+          let(:csv) { CSVSafe.new(file_content, headers: true).read }
+
+          it { expect(record.errors.first&.message).to eq("The selected CSV file has structural issues. Check columns for empty headers, an incorrect number of columns, or additional commas.") }
+        end
+
+        context "given a CSV with whitespace-only headers" do
+          let(:file_content) do
+            "   ,First Names,Last Name\nfoo,bar,baz"
+          end
+          let(:csv) { CSVSafe.new(file_content, headers: true).read }
+
+          it { expect(record.errors.first&.message).to eq("The selected CSV file has structural issues. Check columns for empty headers, an incorrect number of columns, or additional commas.") }
+        end
       end
     end
   end
