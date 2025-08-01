@@ -90,7 +90,13 @@ class AcademicCycle < ApplicationRecord
     Date.new(end_year + 1, 2, -1)
   end
 
+  def first_day_of_october
+    Date.new(start_year, 10, 1)
+  end
+
   def second_wednesday_of_october
+    return Date.new(start_year, 10, 1).next_week(:wednesday) + 7 if first_day_of_october.wday > 3
+
     Date.new(start_year, 10, 1).next_week(:wednesday)
   end
 
