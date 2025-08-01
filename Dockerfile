@@ -67,11 +67,11 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
+#RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
-RUN chown appuser:appgroup /app/tmp
+#RUN chown appuser:appgroup /app/tmp
 
 # Switch to non-root user
-USER 10001
+#USER 10001
 
 CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"]
