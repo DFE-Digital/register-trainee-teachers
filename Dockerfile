@@ -67,7 +67,7 @@ RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
 
-#RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
+RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
 #RUN chown appuser:appgroup /app/tmp
 
