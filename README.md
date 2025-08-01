@@ -29,6 +29,7 @@ A service for training providers in England to register trainees with the Depart
 - [Machine Setup](/docs/machine-setup.md)
 - [Setting up the application in development](/docs/setup-development.md)
 - [Testing & Linting](/docs/testing.md)
+- [Load Testing](/docs/load_testing.md)
 - [Authentication](/docs/authentication.md)
 - [Alerting & Monitoring](/docs/alerting_and_monitoring.md)
 - [Transactional Emails](/docs/emails.md)
