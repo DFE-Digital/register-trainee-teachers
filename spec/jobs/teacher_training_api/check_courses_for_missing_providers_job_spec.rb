@@ -24,7 +24,7 @@ module TeacherTrainingApi
           icon_emoji: ":alert:",
           message: "There are 2 courses with missing providers for recruitment cycle year #{recruitment_cycle_year}. The missing provider codes are A002, A003.",
           username: "Register Trainee Teachers: Job Failure",
-        }
+        },
       )
     end
   end

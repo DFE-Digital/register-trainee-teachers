@@ -7,8 +7,8 @@ module TeacherTrainingApi
     describe "#call" do
       let(:provider)  { create(:provider, code: "A001") }
       let(:course1)   { create(:course, recruitment_cycle_year:, provider:) }
-      let(:course2)   { create(:course, recruitment_cycle_year:, accredited_body_code: "A002") }
-      let(:course3)   { create(:course, recruitment_cycle_year:, accredited_body_code: "A003") }
+      let(:course2)   { create(:course, recruitment_cycle_year: recruitment_cycle_year, accredited_body_code: "A002") }
+      let(:course3)   { create(:course, recruitment_cycle_year: recruitment_cycle_year, accredited_body_code: "A003") }
       let(:recruitment_cycle_year) { Settings.current_recruitment_cycle_year }
 
       subject { described_class.call }

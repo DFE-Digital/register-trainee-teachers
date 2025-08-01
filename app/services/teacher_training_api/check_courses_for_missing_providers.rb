@@ -41,7 +41,7 @@ module TeacherTrainingApi
 
       return message + " The missing provider code is #{provider_codes.first}." if provider_codes.count == 1
 
-      message + " The missing provider codes are #{provider_codes.join(", ")}."
+      message + " The missing provider codes are #{provider_codes.join(', ')}."
     end
   end
 end
