@@ -87,7 +87,7 @@ class AcademicCycle < ApplicationRecord
   end
 
   def second_monday_of_january
-    return Date.new(end_year + 1, 1, 1).next_week(:monday) + 7 if first_day_of_year > 1
+    return Date.new(end_year + 1, 1, 1).next_week(:monday) + 7 if first_day_of_year.wday > 1
 
     Date.new(end_year + 1, 1, 1).next_week(:monday)
   end
