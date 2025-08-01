@@ -163,7 +163,7 @@ weight: 1
         string (limited to 80 characters), required
       </p>
       <p class="govuk-body">
-        This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left their training course, for example, regarding their QTS.</a>
+        This must be a trainee’s personal email address. DfE uses this to communicate to trainees after they have left their training course, for example, regarding their QTS.
       </p>
       <p class="govuk-body">
         Example: <code>trainee123@example.com</code>
