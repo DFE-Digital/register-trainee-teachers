@@ -97,6 +97,12 @@ variable "send_traffic_to_maintenance_page" {
   default     = false
 }
 
+variable "run_as_non_root" {
+  type        = bool
+  default     = true
+  description = "Whether to enforce that containers must run as non-root user"
+}
+
 locals {
   app_name_suffix   = var.app_name == null ? var.app_environment : var.app_name
 

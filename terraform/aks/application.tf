@@ -26,6 +26,7 @@ module "web_application" {
   azure_enable_monitoring = var.enable_container_monitoring
   kubernetes_cluster_id   = module.cluster_data.kubernetes_id
   enable_logit            = var.enable_logit
+  run_as_non_root         = var.run_as_non_root
 
   enable_prometheus_monitoring     = var.enable_prometheus_monitoring
   send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
@@ -48,13 +49,14 @@ module "worker_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
-  docker_image   = var.app_docker_image
-  command        = each.value.startup_command
-  max_memory     = each.value.memory_max
-  replicas       = each.value.replicas
-  probe_command  = each.value.probe_command
-  enable_logit   = var.enable_logit
-  enable_gcp_wif = var.enable_gcp_wif
+  docker_image    = var.app_docker_image
+  command         = each.value.startup_command
+  max_memory      = each.value.memory_max
+  replicas        = each.value.replicas
+  probe_command   = each.value.probe_command
+  enable_logit    = var.enable_logit
+  run_as_non_root = var.run_as_non_root
+  enable_gcp_wif  = var.enable_gcp_wif
 }
 
 module "application_configuration" {
