@@ -18,6 +18,11 @@ module BulkUpdate
       attr_reader :csv, :record
 
       def header_row!
+        if structural_issues?
+          record.errors.add(:file, :structural_issues)
+          return
+        end
+
         return if headers.all? { |value| value.is_a?(String) } &&
           headers.sort == BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.sort
 
@@ -58,6 +63,13 @@ module BulkUpdate
 
       def rows
         @rows ||= csv.entries.reject { |entry| entry.to_h.values.all?(&:blank?) }
+      end
+
+      def structural_issues?
+        return true if csv.headers.any?(&:nil?)
+        return true if csv.headers.any? { |h| h&.strip&.empty? }
+
+        false
       end
     end
   end
