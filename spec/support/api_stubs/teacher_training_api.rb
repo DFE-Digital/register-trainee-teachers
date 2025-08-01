@@ -41,6 +41,8 @@ module ApiStubs
           level: "secondary",
           name: "Physical Education",
           program_type: "scitt_programme",
+          training_route: "fee_funded_initial_teacher_training",
+          degree_type: "postgraduate",
           qualifications: %w[qts pgce],
           scholarship_amount: nil,
           study_mode: "full_time",

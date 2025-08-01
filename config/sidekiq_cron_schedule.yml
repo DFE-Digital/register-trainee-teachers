@@ -55,6 +55,10 @@ sync_hesa_students:
   cron: "0 5 * * *" # Every day at 05:00.
   class: "Hesa::SyncStudentsJob"
   queue: hesa
+check_publish_providers:
+  cron: "0 6 * * *" # Every day at 06:00.
+  class: "TeacherTrainingApi::PublishProviderCheckerJob"
+  queue: default
 upload_trn_file_to_hesa:
   cron: "10 10 * * *" # Every day at 10:10.
   class: "Hesa::UploadTrnFileJob"
@@ -68,4 +72,9 @@ send_entity_table_checks_to_bigquery:
 sync_dqt_teachers:
   cron: "0 2 * * 1" # Every Monday at 02:00.
   class: "Dqt::SyncTeachersJob"
+  queue: default
+
+import_school_data:
+  cron: "30 2 * * 0" # Every Sunday at 02:30.
+  class: "SchoolData::ImportJob"
   queue: default

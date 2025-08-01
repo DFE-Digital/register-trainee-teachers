@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: a70da2883fe0b9828d96853da8ff9d6690642dfa
-  tag: v3.8.0
+  revision: 6f9707808a0542542216d7a1b6eb7ea72867bc76
+  tag: v3.8.2
   specs:
-    dfe-reference-data (3.8.0)
+    dfe-reference-data (3.8.2)
       activesupport
       tzinfo
 
@@ -206,9 +206,9 @@ GEM
     data_migrate (11.3.0)
       activerecord (>= 6.1)
       railties (>= 6.1)
-    database_cleaner-active_record (2.2.1)
+    database_cleaner-active_record (2.2.2)
       activerecord (>= 5.a)
-      database_cleaner-core (~> 2.0.0)
+      database_cleaner-core (~> 2.0)
     database_cleaner-core (2.0.1)
     date (3.4.1)
     debug (1.11.0)
@@ -247,7 +247,7 @@ GEM
       railties (>= 5.0.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
-    faraday (2.13.3)
+    faraday (2.13.4)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -265,7 +265,8 @@ GEM
     ffi (1.17.1-x86_64-linux-gnu)
     ffi (1.17.1-x86_64-linux-musl)
     flamegraph (0.9.5)
-    foreman (0.88.1)
+    foreman (0.90.0)
+      thor (~> 1.4)
     front_matter_parser (1.0.1)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
@@ -343,7 +344,7 @@ GEM
       reline (>= 0.4.2)
     jsbundling-rails (1.3.1)
       railties (>= 6.0.0)
-    json (2.13.0)
+    json (2.13.1)
     json-jwt (1.16.6)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -462,7 +463,7 @@ GEM
     ostruct (0.6.2)
     pagy (9.3.4)
     parallel (1.27.0)
-    parallel_tests (5.3.0)
+    parallel_tests (5.3.1)
       parallel
     parser (3.3.8.0)
       ast (~> 2.4.1)
@@ -490,7 +491,7 @@ GEM
       date
       stringio
     public_suffix (6.0.2)
-    puma (6.6.0)
+    puma (6.6.1)
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
@@ -499,7 +500,7 @@ GEM
     rack (2.2.17)
     rack-attack (6.7.0)
       rack (>= 1.0, < 4)
-    rack-mini-profiler (4.0.0)
+    rack-mini-profiler (4.0.1)
       rack (>= 1.2.0)
     rack-oauth2 (2.2.1)
       activesupport
@@ -720,10 +721,10 @@ GEM
       sprockets (>= 3.0.0)
     stackprof (0.2.27)
     stateful_enum (0.7.0)
-    store_model (4.2.2)
+    store_model (4.3.0)
       activerecord (>= 7.0)
     stringio (3.1.7)
-    strong_migrations (2.4.0)
+    strong_migrations (2.5.0)
       activerecord (>= 7.1)
     swd (2.0.3)
       activesupport (>= 3)
@@ -891,7 +892,7 @@ DEPENDENCIES
   sprockets-rails
   stackprof
   stateful_enum
-  store_model (~> 4.2)
+  store_model (~> 4.3)
   strong_migrations
   timecop (~> 0.9.10)
   turbo-rails

@@ -37,7 +37,9 @@
       </noscript>
     <% end %>
 
-    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+    <%= javascript_tag nonce: true do -%>
+      document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    <% end %>
 
     <% unless hide_cookie_banner? %>
       <%= render("layouts/cookie_banner") %>

@@ -418,6 +418,16 @@
   - created_at
   - updated_at
   - additional_disability
+  :school_data_downloads:
+  - id
+  - completed_at
+  - lead_partners_updated
+  - schools_created
+  - schools_updated
+  - started_at
+  - status
+  - created_at
+  - updated_at
   :schools:
   - searchable
   :providers:

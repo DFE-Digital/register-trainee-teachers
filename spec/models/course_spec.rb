@@ -22,6 +22,7 @@ describe Course do
           pgde_with_qts: 2,
           pgce: 3,
           pgde: 4,
+          qts_with_undergraduate_degree: 5,
         })
     end
 
@@ -32,6 +33,8 @@ describe Course do
           TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee] => 3,
           TRAINING_ROUTE_ENUMS[:school_direct_salaried] => 4,
           TRAINING_ROUTE_ENUMS[:pg_teaching_apprenticeship] => 5,
+          TRAINING_ROUTE_ENUMS[:provider_led_undergrad] => 9,
+          TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship] => 14,
         })
     end
 

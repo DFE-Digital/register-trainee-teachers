@@ -29,9 +29,9 @@ module TeacherTrainingApi
 
         let(:provider1_attributes) { { "code" => provider1.code, "ukprn" => nil, "urn" => nil } }
         let(:provider2_attributes) { { "code" => nil, "ukprn" => provider2.ukprn, "urn" => nil } }
-        let(:school_attributes) { { "code" => nil, "ukprn" => nil, "urn" => school.urn } }
+        let(:school_attributes) { { "code" => nil, "ukprn" => nil, "urn" => school.urn, "accredited_body" => false } }
         let(:lead_partner_attributes) { { "code" => nil, "ukprn" => nil, "urn" => lead_partner.urn } }
-        let(:missing_attributes) { { "code" => "M0M", "ukprn" => "12344321", "urn" => "54321" } }
+        let(:missing_attributes) { { "code" => "M0M", "ukprn" => "12344321", "urn" => "54321", "accredited_body" => true } }
 
         let(:provider1) { create(:provider) }
         let(:provider2) { create(:provider) }
@@ -42,16 +42,23 @@ module TeacherTrainingApi
           expect(subject.provider_matches).to contain_exactly(provider1_attributes, provider2_attributes)
         end
 
-        it "returns the correct value for school_matches" do
-          expect(subject.school_matches).to contain_exactly(school_attributes)
-        end
-
         it "returns the correct value for lead_partner_matches" do
           expect(subject.lead_partner_matches).to contain_exactly(lead_partner_attributes)
         end
 
         it "returns the correct value for missing" do
-          expect(subject.missing).to contain_exactly(missing_attributes)
+          expect(subject.missing).to contain_exactly(
+            school_attributes,
+            missing_attributes,
+          )
+        end
+
+        it "returns the correct value for missing_accredited" do
+          expect(subject.missing_accredited).to contain_exactly(missing_attributes)
+        end
+
+        it "returns the correct value for missing_unaccredited" do
+          expect(subject.missing_unaccredited).to contain_exactly(school_attributes)
         end
 
         it "returns the correct value for total_count" do

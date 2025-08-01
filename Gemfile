@@ -68,7 +68,7 @@ gem "config", "~> 5.6"
 gem "httparty", "~> 0.23"
 
 # Wrap jsonb columns with activemodel-like classes
-gem "store_model", "~> 4.2"
+gem "store_model", "~> 4.3"
 
 gem "pundit"
 
@@ -121,7 +121,7 @@ gem "govuk_markdown"
 
 gem "mechanize" # interact with HESA
 
-gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.8.0"
+gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.8.2"
 
 # for sending analytics data to the analytics platform
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.15.7"
