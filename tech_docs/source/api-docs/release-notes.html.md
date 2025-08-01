@@ -25,7 +25,6 @@ yet live but is available for testing.
 * Improved error messages to include exact field names in error response
 * Updated reference documentation
 
-
 ## v1.0-pre — 12 August 2024
 
 Pre-release of the first major version of the Register API. This version is not
