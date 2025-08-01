@@ -41,6 +41,12 @@ module PageObjects
     element :page_heading, "h1"
   end
 
+  class ReferenceDataPage < PageObjects::Base
+    set_url "/reference-data/"
+
+    element :page_heading, "h1"
+  end
+
   class ServiceUpdates < PageObjects::Base
     set_url "/service-updates"
 
