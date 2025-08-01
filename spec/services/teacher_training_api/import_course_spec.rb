@@ -112,8 +112,8 @@ module TeacherTrainingApi
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "provider_led_postgrad", %w[scitt_programme scitt_programme higher_education_programme]
           it_behaves_like training_route_and_course_program_type_mapping, 2024, "pg_teaching_apprenticeship", ["pg_teaching_apprenticeship"]
 
-          context "program type is unmapped" do
-            let(:course_attributes) { { program_type: "you_wat_now" } }
+          context "training_route is unmapped" do
+            let(:course_attributes) { { training_route: "you_wat_now" } }
 
             it "raises validation error" do
               expect { subject }.to raise_error(ActiveRecord::RecordInvalid)

@@ -76,7 +76,11 @@ describe AuthenticationTokenForm, type: :model do
     end
 
     context "with an expiry date" do
-      let(:params) { { name: "New token", year: "2025", month: "12", day: "25" } }
+      let(:name) { "New token" }
+      let(:year) { 1.year.from_now.year }
+      let(:month) { 6 }
+      let(:day) { 25 }
+      let(:params) { { name: name, year: year.to_s, month: month.to_s, day: day.to_s } }
 
       it "generates a new token" do
         expect {
@@ -89,8 +93,8 @@ describe AuthenticationTokenForm, type: :model do
 
         expect(token.provider).to eq(user.organisation)
         expect(token.created_by).to eq(user)
-        expect(token.name).to eq("New token")
-        expect(token.expires_at).to eq(Date.new(2025, 12, 25))
+        expect(token.name).to eq(name)
+        expect(token.expires_at).to eq(Date.new(year, month, day))
       end
     end
   end
