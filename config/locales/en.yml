@@ -2111,7 +2111,7 @@ en:
             training_initiative:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
             hesa_id:
-              length: must be either 13 or 17 characters
+              length: must be 13 or 17 numbers
         api/v20250_rc/withdrawal_attributes:
           attributes:
             reasons:
