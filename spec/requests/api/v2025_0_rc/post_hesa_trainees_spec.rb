@@ -1346,4 +1346,22 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
       )
     end
   end
+
+  context "when the hesa_id has an invalid length" do
+    before do
+      params[:data][:hesa_id] = SecureRandom.random_number(10*12).to_s
+
+      post "/api/v2025.0-rc/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "returns status 422 with a meaningful error message" do
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body["message"]).to eq(
+        "Validation failed: 1 error prohibited this trainee from being saved"
+      )
+      expect(response.parsed_body["errors"]).to contain_exactly(
+        "hesa_id must be either 13 or 17 characters",
+      )
+    end
+  end
 end
