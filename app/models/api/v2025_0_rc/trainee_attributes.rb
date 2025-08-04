@@ -238,7 +238,7 @@ module Api
       end
 
       def self.params_with_updated_disabilities(new_trainee_attributes, params_for_update)
-        update_hesa_disabilities = update_hesa_disabilities(
+        updated_hesa_disabilities = update_hesa_disabilities(
           new_trainee_attributes.hesa_trainee_detail_attributes&.hesa_disabilities || {},
           params_for_update,
         )
