@@ -134,7 +134,7 @@ module TrsDataSummary
 
     def format_row(key, value)
       {
-        key: { text: key, classes: "no-wrap govuk-!-width-one-third" },
+        key: { text: key, classes: "govuk-!-width-one-third" },
         value: { text: format_value(value) },
       }
     end
