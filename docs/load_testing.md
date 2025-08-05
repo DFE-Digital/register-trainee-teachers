@@ -7,6 +7,14 @@ Load testing with k6 can be performed either locally or on the [Grafana Cloud k6
 The URI defaults to Staging environment
 
 ### Linux
+
+#### asdf
+
+```
+asdf plugin add k6
+asdf install
+```
+
 #### Debian/Ubuntu
 
 ```
