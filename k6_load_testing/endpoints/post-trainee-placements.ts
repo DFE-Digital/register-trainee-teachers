@@ -11,7 +11,7 @@ export function setup(): Promise<SetupData> {
 export default ({apiVersion, apiKey, traineeId}: SetupData) => {
   const postApiApiVersionTraineesTraineeIdPlacementsBody = {
     data: {
-      urn: "151631",
+      urn: "149845",
     },
   };
 
