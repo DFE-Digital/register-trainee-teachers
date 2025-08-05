@@ -11,7 +11,7 @@ export function setup(): SetupData {
 export default ({apiVersion, apiKey, traineeId, placementId}: SetupData) => {
   const putApiApiVersionTraineesTraineeIdPlacementsPlacementIdBody = {
     data: {
-      urn: "100000",
+      urn: "139974",
     },
   };
 
