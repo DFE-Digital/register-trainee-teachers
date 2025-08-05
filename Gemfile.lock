@@ -11,10 +11,10 @@ GIT
 
 GIT
   remote: https://github.com/DFE-Digital/dfe-reference-data.git
-  revision: 6f9707808a0542542216d7a1b6eb7ea72867bc76
-  tag: v3.8.2
+  revision: 30de554655f37807d38ecdf6f5af4a0e3463cce6
+  tag: v3.8.3
   specs:
-    dfe-reference-data (3.8.2)
+    dfe-reference-data (3.8.3)
       activesupport
       tzinfo
 
