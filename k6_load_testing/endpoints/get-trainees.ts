@@ -8,10 +8,12 @@ export function setup(): SetupData {
 /**
  * GET /api/{apiVersion}/trainees
  */
-export default ({apiVersion, apiKey}: SetupData) => {
+export default ({apiVersion, apiKey, academicCycle}: SetupData) => {
   return client.getApiApiVersionTrainees(
     apiVersion,
-    undefined,
+    {
+      academic_cycle: academicCycle,
+    },
     {
       headers: { "Authorization": `Bearer ${apiKey}`}
     }

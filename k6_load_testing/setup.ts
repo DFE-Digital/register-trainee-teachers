@@ -7,15 +7,10 @@ export interface SetupData {
   apiKey: string,
   traineeId?: string,
   degreeId?: string,
-  placementId?: string
+  placementId?: string,
+  academicCycle?: string,
 }
 
-export function setup() {
-  let loadSecrets: SetupData = { apiVersion: apiVersion, apiKey: __ENV.AUTH_TOKEN };
-
-  if ( !loadSecrets.apiKey ) {
-    loadSecrets = { ...loadSecrets, ...secrets };
-  }
-
-  return loadSecrets;
+export function setup(): SetupData {
+  return { apiVersion, ...secrets };
 }

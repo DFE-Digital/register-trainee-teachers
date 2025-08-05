@@ -40,15 +40,9 @@ brew install k6
 
 `cd k6_load_testing`
 
-
-### Local
-
 1. `cp .example.secrets.json .secrets.json`
 2. Edit `.secrets.json`, as a minimum it requires the `apiKey` to be set to the `Provider's` authentication token.
 
-### Cloud
-
-1. Set the `AUTH_TOKEN` env var at the Grafana Cloud dashboard to the `Provider's` authentication token.
 
 ```
 k6 cloud login --token K6_CLOUD_API_TOKEN
