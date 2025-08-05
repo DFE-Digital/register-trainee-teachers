@@ -429,7 +429,7 @@
     - `7` - eligible for student finance
   example: "`2`"
   validation: Mandatory
-  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L30
+  validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L66
 - field_name: Funding Method
   technical: funding_method
   hesa_alignment: BURSLEV
