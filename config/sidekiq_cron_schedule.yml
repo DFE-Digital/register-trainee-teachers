@@ -56,7 +56,7 @@ sync_hesa_students:
   class: "Hesa::SyncStudentsJob"
   queue: hesa
 check_publish_providers:
-  cron: "0 6 * * *" # Every day at 06:00.
+  cron: <%= '"0 6 * * *" # Every day at 06:00.' if ENV.fetch("RAILS_ENV") == "production" %>
   class: "TeacherTrainingApi::PublishProviderCheckerJob"
   queue: default
 upload_trn_file_to_hesa:
