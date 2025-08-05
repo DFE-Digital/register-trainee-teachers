@@ -11,8 +11,16 @@ module TrsDataSummary
         "lastName" => "Doe",
         "dateOfBirth" => "1990-01-01",
         "qts" => {
-          "awarded" => "2020-01-01",
-          "statusDescription" => "Qualified teacher (trained)",
+          "holdsFrom" => "2020-01-01",
+          "routes" => [
+            {
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "6bd6332b-f799-4234-a67d-84643dbfd6cc",
+                "name" => "Assessment Only",
+                "professionalStatusType" => "QualifiedTeacherStatus",
+              },
+            },
+          ],
         },
         "initialTeacherTraining" => [
           {
@@ -72,8 +80,10 @@ module TrsDataSummary
 
       it "displays nested data" do
         {
-          "qts.awarded" => "2020-01-01",
-          "qts.statusDescription" => "Qualified teacher (trained)",
+          "qts.holdsFrom" => "2020-01-01",
+          "qts.route1.routeToProfessionalStatusTypeId" => "6bd6332b-f799-4234-a67d-84643dbfd6cc",
+          "qts.route1.name" => "Assessment Only",
+          "qts.route1.professionalStatusType" => "QualifiedTeacherStatus",
         }.each do |field, value|
           expect(rendered_content).to include(field)
           expect(rendered_content).to include(value)

@@ -24,6 +24,7 @@ module TrsDataSummary
     # Special case handlers for specific array types
     ARRAY_HANDLERS = {
       "subjects" => :process_subjects_array,
+      "routes" => :process_routes_array,
       # Add other special array handlers here as needed
     }.freeze
 
@@ -95,6 +96,16 @@ module TrsDataSummary
       end.flatten
     end
 
+    def process_routes_array(routes_array)
+      routes_array.each_with_index.map do |route, index|
+        route.map do |_attribute_name, attribute_value|
+          attribute_value.map do |name, value|
+            format_row("qts.route#{index + 1}.#{name}", value)
+          end
+        end
+      end.flatten
+    end
+
     def process_generic_array(array, key, _prefix)
       array.each_with_index.map do |item, index|
         item_key = "#{key}[#{index}]"
@@ -123,7 +134,7 @@ module TrsDataSummary
 
     def format_row(key, value)
       {
-        key: { text: key, classes: "no-wrap govuk-!-width-one-third" },
+        key: { text: key, classes: "govuk-!-width-one-third" },
         value: { text: format_value(value) },
       }
     end
