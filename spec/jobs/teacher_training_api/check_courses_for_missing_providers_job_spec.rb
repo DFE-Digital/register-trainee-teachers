@@ -8,10 +8,11 @@ module TeacherTrainingApi
 
     let(:recruitment_cycle_year) { Settings.current_recruitment_cycle_year }
     let(:provider) { create(:provider) }
+    let(:discarded_provider) { create(:provider, discarded_at: 1.day.ago, code: "A002") }
 
     before do
       create(:course, recruitment_cycle_year:, provider:)
-      create(:course, recruitment_cycle_year: recruitment_cycle_year, accredited_body_code: "A002")
+      create(:course, recruitment_cycle_year: recruitment_cycle_year, provider: discarded_provider)
       create(:course, recruitment_cycle_year: recruitment_cycle_year, accredited_body_code: "A003")
 
       allow(SlackNotifierService).to receive(:call).and_return(true)

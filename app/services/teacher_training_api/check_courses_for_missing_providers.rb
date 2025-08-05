@@ -21,9 +21,12 @@ module TeacherTrainingApi
   private
 
     def courses_with_missing_providers
-      provider_codes = Provider.kept.pluck(:code)
-
-      Course.where(recruitment_cycle_year:).where.not(accredited_body_code: provider_codes)
+      Course.where(
+        recruitment_cycle_year:,
+      ).where(
+        "NOT EXISTS (:accredited_provider)",
+        accredited_provider: Provider.kept.where("code = courses.accredited_body_code"),
+      )
     end
 
     def message
