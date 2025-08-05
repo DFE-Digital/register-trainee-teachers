@@ -14,7 +14,11 @@ module TeacherTrainingApi
         TeacherTrainingApi::ImportCourse.call(course_data: course_data, provider_data: payload[:included])
       end
 
-      ImportCoursesJob.perform_later(request_uri: payload[:links][:next]) if payload[:links][:next]
+      if payload[:links][:next]
+        ImportCoursesJob.perform_later(request_uri: payload[:links][:next])
+      else
+        CheckCoursesForMissingProvidersJob.perform_later
+      end
     end
   end
 end
