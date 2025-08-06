@@ -66,7 +66,7 @@ ENV ENV="/root/.ashrc"
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
-RUN chown -R appuser:appgroup /app/tmp /app/log /usr/local/bundle/config
+RUN chown -R appuser:appgroup /app/tmp /app/log /usr/local/bundle/config /tech_docs
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
