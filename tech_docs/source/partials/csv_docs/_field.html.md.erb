@@ -12,29 +12,32 @@
         <dd class="govuk-summary-list__value"><%= api_field_name %></dd>
       </div>
       <div class="govuk-summary-list__row hesa-alignment govuk-summary-list__row--no-actions" id="hesa-alignment">
-        <dt class="govuk-summary-list__key">HESA alignment</dt><dd class="govuk-summary-list__value"><%= hesa_alignment %></dd>
+        <dt class="govuk-summary-list__key">HESA alignment</dt>
+        <dd class="govuk-summary-list__value"><%= hesa_alignment %></dd>
       </div>
       <div class="govuk-summary-list__row description govuk-summary-list__row--no-actions" id="description">
         <dt class="govuk-summary-list__key">Description</dt>
         <dd class="govuk-summary-list__value">
-          <p><%= description %></p>
+          <%= description %>
         </dd>
       </div>
       <div class="govuk-summary-list__row format govuk-summary-list__row--no-actions" id="format">
         <dt class="govuk-summary-list__key">Format</dt>
         <dd class="govuk-summary-list__value">
-          <p markdown="1"><%= format %></p>
+          <%= format %>
         </dd>
       </div>
       <div class="govuk-summary-list__row example govuk-summary-list__row--no-actions" id="example">
         <dt class="govuk-summary-list__key">Example</dt>
         <dd class="govuk-summary-list__value">
-          <p><%= example %></p>
+          <%= example %>
         </dd>
       </div>
       <div class="govuk-summary-list__row validation govuk-summary-list__row--no-actions" id="validation">
         <dt class="govuk-summary-list__key">Validation</dt>
-        <dd class="govuk-summary-list__value"><%= validation %></dd>
+        <dd class="govuk-summary-list__value">
+          <%= validation %>
+        </dd>
       </div>
     </dl>
   </div>

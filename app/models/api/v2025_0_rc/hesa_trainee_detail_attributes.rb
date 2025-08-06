@@ -63,6 +63,10 @@ module Api
         in: Hesa::CodeSets::BursaryLevels::MAPPING.keys,
       }, allow_blank: true
 
+      validates :fund_code, api_inclusion: {
+        in: Hesa::CodeSets::FundCodes::MAPPING.keys,
+      }, allow_blank: true
+
       def initialize(attributes = {}, record_source: nil, **kwargs)
         # Handle both calling patterns:
         # new(hash, record_source: value) and new(keyword: value)
