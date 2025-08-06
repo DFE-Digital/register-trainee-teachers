@@ -9,15 +9,15 @@ feature "recommending trainees" do
     given_i_am_authenticated
   end
 
-  context "given multiple trainees exist to recommend" do
-    let(:write_to_disk) { true }
-    let(:overwrite) do # one valid date for each trainee created in `given_two_trainees_exist_to_recommend`
-      [
-        { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
-        { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
-      ]
-    end
+  let(:write_to_disk) { true }
+  let(:overwrite) do # one valid date for each trainee created in `given_two_trainees_exist_to_recommend`
+    [
+      { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
+      { Reports::BulkRecommendReport::DATE => Time.zone.today.strftime("%d/%m/%Y") },
+    ]
+  end
 
+  context "given multiple trainees exist to recommend" do
     before do
       given_two_trainees_exist_to_recommend
       given_i_am_on_the_recommendations_upload_page
@@ -39,7 +39,7 @@ feature "recommending trainees" do
       context "and I upload a complete CSV" do
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_complete
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_see_a_list_of_trainees_to_check
           and_i_click_recommend
           then_i_see_the_confirmation
@@ -47,17 +47,18 @@ feature "recommending trainees" do
       end
     end
 
-    context "when I use the pre-popuated template" do
+    context "when I use the pre-populated template" do
       before do
         then_i_see_how_many_trainees_i_can_recommend
-        and_i_upload_a_csv(create_recommendations_upload_csv!(write_to_disk:, overwrite:))
+        file_name = create_recommendations_upload_csv!(write_to_disk:, overwrite:)
+        and_i_upload_a_csv(file_name)
         and_i_can_see_that_i_have_two_trainees_to_recommend
       end
 
       context "and I upload a complete CSV" do
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_complete
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_see_a_list_of_trainees_to_check
           and_i_click_recommend
           then_i_see_the_confirmation
@@ -79,19 +80,19 @@ feature "recommending trainees" do
 
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_missing_dates
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
         end
       end
 
       context "I can change who I want to recommend" do
         scenario "I see the form to change upload" do
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_click_change_link
           then_i_see_the_form_to_change_upload
         end
 
         scenario "I get redirected to the correct page when no CSV is uploaded" do
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_click_change_link
           then_i_see_the_form_to_change_upload
           and_i_submit_form_with_no_file
@@ -129,6 +130,38 @@ feature "recommending trainees" do
     end
   end
 
+  context "given multiple trainees exist to recommend with a discarded duplicate" do
+    before do
+      given_two_trainees_exist_to_recommend
+      and_a_discarded_duplicate_trainee_exists
+      given_i_am_on_the_recommendations_upload_page
+    end
+
+    context "when I use the empty template" do
+      before do
+        then_i_see_the_option_to_download_the_empty_template
+        and_i_upload_a_csv(
+          create_simplified_recommendations_upload_csv!(
+            trainees: @trainees,
+            write_to_disk: true,
+            recommended_for_award_date: Time.zone.today,
+          ),
+        )
+        and_i_can_see_that_i_have_two_trainees_to_recommend
+      end
+
+      context "and I upload a complete CSV" do
+        scenario "I can upload trainees for recommendation" do
+          then_i_see_count_complete
+          and_i_check_who_i_will_recommend
+          and_i_see_a_list_of_trainees_to_check
+          and_i_click_recommend
+          then_i_see_the_confirmation
+        end
+      end
+    end
+  end
+
 private
 
   def given_i_am_on_the_recommendations_upload_page
@@ -140,6 +173,10 @@ private
       create(:trainee, :trn_received, trn: "2413295", itt_end_date: Time.zone.today, provider: current_user.organisation),
       create(:trainee, :trn_received, trn: "4814731", itt_end_date: Time.zone.today + 1.month, provider: current_user.organisation),
     ]
+  end
+
+  def and_a_discarded_duplicate_trainee_exists
+    @duplicate_trainee = create(:trainee, :trn_received, trn: "2413295", discarded_at: 1.day.ago, itt_end_date: Time.zone.today, provider: current_user.organisation)
   end
 
   def then_i_see_how_many_trainees_i_can_recommend
@@ -159,7 +196,7 @@ private
     expect(BulkUpdate::RecommendationsUploadRow.count).to be 2
   end
 
-  def and_i_check_who_ill_recommend
+  def and_i_check_who_i_will_recommend
     recommendations_upload_show_page.check_button.click
   end
 

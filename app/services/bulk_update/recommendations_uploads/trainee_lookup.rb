@@ -9,6 +9,7 @@ module BulkUpdate
         @rows = rows
         @scope = provider
           .trainees
+          .kept
           .where.not(state: :draft)
           .includes(
             :lead_partner,
