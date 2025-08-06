@@ -69,7 +69,7 @@
     <% values.each do |code, label| %>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell"><%= code %></td>
-        <td class="govuk-table__cell"><%= label %></td>
+        <td class="govuk-table__cell"><%= I18n.t code, locale: "en.#{field.fetch("technical")}", default: label %></td>
       </tr>
     <% end %>
   </tbody>
