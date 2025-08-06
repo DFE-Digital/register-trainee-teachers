@@ -24,7 +24,7 @@ module TeacherTrainingApi
         expect(SlackNotifierService).to have_received(:call).with(
           {
             icon_emoji: ":alert:",
-            message: "[#{Rails.env}] [#{Time.zone.now.to_fs(:govuk_date_and_time)}] CheckCoursesForMissingProviders - There are 2 courses with missing providers for recruitment cycle year #{recruitment_cycle_year}. The missing provider codes are A002, A003.",
+            message: "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\n2 courses with a missing provider for recruitment cycle year.\nMissing provider codes: A002, A003.",
             username: "Register Trainee Teachers: Job Failure",
           },
         )

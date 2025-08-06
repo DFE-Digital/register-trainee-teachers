@@ -25,7 +25,7 @@ module TeacherTrainingApi
 
           expect(subject[:recruitment_cycle_year]).to eq(recruitment_cycle_year)
           expect(subject[:courses_with_missing_provider_count]).to eq(1)
-          expect(subject[:message]).to eq("[#{Rails.env}] [#{Time.zone.now.to_fs(:govuk_date_and_time)}] CheckCoursesForMissingProviders - There is 1 course with a missing provider for recruitment cycle year #{recruitment_cycle_year}. The missing provider code is A002.")
+          expect(subject[:message]).to eq("[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\n1 course with a missing provider for recruitment cycle year.\nMissing provider code: A002.")
         end
       end
 
@@ -38,7 +38,7 @@ module TeacherTrainingApi
 
           expect(subject[:recruitment_cycle_year]).to eq(recruitment_cycle_year)
           expect(subject[:courses_with_missing_provider_count]).to eq(2)
-          expect(subject[:message]).to eq("[#{Rails.env}] [#{Time.zone.now.to_fs(:govuk_date_and_time)}] CheckCoursesForMissingProviders - There are 2 courses with missing providers for recruitment cycle year #{recruitment_cycle_year}. The missing provider codes are A002, A003.")
+          expect(subject[:message]).to eq("[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\n2 courses with a missing provider for recruitment cycle year.\nMissing provider codes: A002, A003.")
         end
       end
 
@@ -49,7 +49,7 @@ module TeacherTrainingApi
 
           expect(subject[:recruitment_cycle_year]).to eq(recruitment_cycle_year)
           expect(subject[:courses_with_missing_provider_count]).to eq(0)
-          expect(subject[:message]).to eq("[#{Rails.env}] [#{Time.zone.now.to_fs(:govuk_date_and_time)}] CheckCoursesForMissingProviders - There are no courses with missing providers for recruitment cycle year #{recruitment_cycle_year}.")
+          expect(subject[:message]).to eq("[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\nNo courses with missing providers for recruitment cycle year.")
         end
       end
     end

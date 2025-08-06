@@ -30,11 +30,9 @@ module TeacherTrainingApi
     end
 
     def message
-      return "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\nThere are no courses with missing providers for recruitment cycle year." unless courses_with_missing_providers.count.positive?
+      return "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\nNo courses with missing providers for recruitment cycle year." unless courses_with_missing_providers.count.positive?
 
-      return "[#{Rails.env}] [#{Time.zone.now.to_fs(:govuk_date_and_time)}] CheckCoursesForMissingProviders - There is 1 course with a missing provider for recruitment cycle year #{recruitment_cycle_year}." if courses_with_missing_providers.count == 1
-
-      "[#{Rails.env}] [#{Time.zone.now.to_fs(:govuk_date_and_time)}] CheckCoursesForMissingProviders - There are #{courses_with_missing_providers.count} courses with missing providers for recruitment cycle year #{recruitment_cycle_year}."
+      "[#{Rails.env}] Course Provider Checker Results #{Time.zone.now.to_fs(:govuk_date_and_time)} for #{recruitment_cycle_year}:\n#{courses_with_missing_providers.count} #{'course'.pluralize(courses_with_missing_providers.count)} with a missing provider for recruitment cycle year."
     end
 
     def message_with_missing_provider_codes
@@ -42,9 +40,7 @@ module TeacherTrainingApi
 
       provider_codes = courses_with_missing_providers.pluck(:accredited_body_code).uniq
 
-      return message + " The missing provider code is #{provider_codes.first}." if provider_codes.count == 1
-
-      message + " The missing provider codes are #{provider_codes.join(', ')}."
+      message + "\nMissing provider #{'code'.pluralize(provider_codes.count)}: #{provider_codes.join(', ')}."
     end
   end
 end
