@@ -26,6 +26,7 @@ FROM ruby:3.4.2-alpine3.20
 
 ENV APP_HOME=/app
 RUN mkdir $APP_HOME
+RUN mkdir /tech_docs
 WORKDIR $APP_HOME
 
 RUN apk add --update --no-cache tzdata && \
