@@ -66,10 +66,7 @@ module BulkUpdate
       end
 
       def structural_issues?
-        return true if csv.headers.any?(&:nil?)
-        return true if csv.headers.any? { |h| h&.strip&.empty? }
-
-        false
+        csv.headers.any?(&:blank?)
       end
     end
   end
