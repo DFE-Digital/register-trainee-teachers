@@ -39,7 +39,7 @@ feature "recommending trainees" do
       context "and I upload a complete CSV" do
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_complete
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_see_a_list_of_trainees_to_check
           and_i_click_recommend
           then_i_see_the_confirmation
@@ -58,7 +58,7 @@ feature "recommending trainees" do
       context "and I upload a complete CSV" do
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_complete
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_see_a_list_of_trainees_to_check
           and_i_click_recommend
           then_i_see_the_confirmation
@@ -80,19 +80,19 @@ feature "recommending trainees" do
 
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_missing_dates
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
         end
       end
 
       context "I can change who I want to recommend" do
         scenario "I see the form to change upload" do
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_click_change_link
           then_i_see_the_form_to_change_upload
         end
 
         scenario "I get redirected to the correct page when no CSV is uploaded" do
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_click_change_link
           then_i_see_the_form_to_change_upload
           and_i_submit_form_with_no_file
@@ -130,10 +130,10 @@ feature "recommending trainees" do
     end
   end
 
-  context "given multiple trainees exist to recommend with duplicates" do
+  context "given multiple trainees exist to recommend with a discarded duplicate" do
     before do
       given_two_trainees_exist_to_recommend
-      and_a_duplicate_trainee_exists
+      and_a_discarded_duplicate_trainee_exists
       given_i_am_on_the_recommendations_upload_page
     end
 
@@ -153,7 +153,7 @@ feature "recommending trainees" do
       context "and I upload a complete CSV" do
         scenario "I can upload trainees for recommendation" do
           then_i_see_count_complete
-          and_i_check_who_ill_recommend
+          and_i_check_who_i_will_recommend
           and_i_see_a_list_of_trainees_to_check
           and_i_click_recommend
           then_i_see_the_confirmation
@@ -175,7 +175,7 @@ private
     ]
   end
 
-  def and_a_duplicate_trainee_exists
+  def and_a_discarded_duplicate_trainee_exists
     @duplicate_trainee = create(:trainee, :trn_received, trn: "2413295", discarded_at: 1.day.ago, itt_end_date: Time.zone.today, provider: current_user.organisation)
   end
 
@@ -196,7 +196,7 @@ private
     expect(BulkUpdate::RecommendationsUploadRow.count).to be 2
   end
 
-  def and_i_check_who_ill_recommend
+  def and_i_check_who_i_will_recommend
     recommendations_upload_show_page.check_button.click
   end
 
