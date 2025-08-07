@@ -16,7 +16,7 @@ module Trainees
           "First names" => "Bob",
           "Middle name" => "B",
           "Last name" => "Robertson",
-          "Date of birth" => "03/03/1996 00:00:00",
+          "Date of birth" => "1996-03-03",
           "Sex" => "Male",
           "Nationality" => "british",
           "Email" => "bob@example.com",
