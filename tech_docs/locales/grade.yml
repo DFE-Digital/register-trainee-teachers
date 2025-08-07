@@ -1,0 +1,18 @@
+en:
+  grade:
+    "01": First Class Honours
+    "02": Upper Second Class Honours
+    "03": Lower Second Class Honours
+    "04": Undivided Second Class Honours
+    "05": Third Class Honours
+    "06": Fourth Class Honours
+    "07": Unclassified Honours
+    "08": Aegrotat (Whether To Honours Or Pass)
+    "09": Pass - Degree Awarded Without Honours Following An Honours Course
+    "10": Ordinary (Including Divisions Of Ordinary, If Any) Degree Awarded After Following A Non-Honours Course
+    "11": General Degree - Degree Awarded After Following A Non-Honours Course/Degree That Was Not Available To Be Classified
+    "12": Distinction
+    "13": Merit
+    "14": Pass
+    "98": Not Applicable
+    "99": Not Known
