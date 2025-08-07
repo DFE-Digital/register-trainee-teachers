@@ -15,6 +15,7 @@ services:
   web:
     build:
       context: .
+      user: root
       cache_from:
         - ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
     image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
