@@ -5,8 +5,8 @@ namespace :create_trainees_from_csv do
   task :process, %i[upload_id type] => [:environment] do |_, args|
     upload = Upload.find(args.upload_id)
 
-    unless %w[teach_first ambition].include?(args.type)
-      puts "Invalid type. Please specify 'teach_first' or 'ambition'."
+    unless args.type == "teach_first"
+      puts "Invalid type. Please specify 'teach_first'."
       exit
     end
 
