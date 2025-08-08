@@ -111,10 +111,13 @@ weight: 3
         string, required
       </p>
       <p class="govuk-body">
-        The year of graduation. 
+         This can be formatted as an ISO-8601 format date <code>YYYY-MM-DD</code> or just the year <code>YYYY</code>
       </p>
       <p class="govuk-body">
-        Example: <code>2012-07-31</code>
+         Where only the month and year are known, code these parts of the date format and code 01 for the day.
+      </p>
+      <p class="govuk-body">
+        Example: <code>2012-07-31</code> or <code>2012</code>
       </p>
     </dd>
   </div>
