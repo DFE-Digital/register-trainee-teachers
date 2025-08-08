@@ -21,10 +21,10 @@
   hesa_alignment: HUSID
   description: The HESA unique student identifier for the trainee.
   format: |-
-    Limited to 17 digit numbers.
+    Limited to 17 characters.
 
-    Previously assigned 13 character HUSID are accepted.
-  example: "`1210007145123456`"
+    Previously assigned 13 character HUSID are also accepted.
+  example: "`12100071451234560`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
 - field_name: First Names
