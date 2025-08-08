@@ -21,9 +21,9 @@
   hesa_alignment: HUSID
   description: The HESA unique student identifier for the trainee.
   format: |-
-    Limited to 17 characters.
+    Limited to 13 or 17 characters.
 
-    Previously assigned 13 character HUSID are also accepted.
+    Previously assigned 13 character HUSID are accepted.
   example: "`12100071451234560`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
@@ -530,8 +530,12 @@
   hesa_alignment: DEGENDDT
   description: The year of graduation.
   format: |-
-    This can be formatted as just the year, or as an ISO-8601 format date YYYY-MM-DD or YYYY
-    Where only the month and year are known, code these parts of the date format and code 01 for the day.
+    This can be formatted as just the year, or as an ISO-8601 format date:
+
+      - YYYY
+      - YYYY-MM-DD
+
+    Where only the month and year are known, just use the year.
   example: "`2012-07-31`"
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L33

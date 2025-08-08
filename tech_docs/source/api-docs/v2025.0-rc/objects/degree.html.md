@@ -114,7 +114,7 @@ weight: 3
          This can be formatted as an ISO-8601 format date <code>YYYY-MM-DD</code> or just the year <code>YYYY</code>
       </p>
       <p class="govuk-body">
-         Where only the month and year are known, code these parts of the date format and code 01 for the day.
+         Where only the month and year are known, just use the year.
       </p>
       <p class="govuk-body">
         Example: <code>2012-07-31</code> or <code>2012</code>
