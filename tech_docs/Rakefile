@@ -60,6 +60,7 @@ namespace :tech_docs do
         html = context.partial(
           "partials/csv_docs/field", locals: {
             csv_field_name: field["field_name"],
+            column_number_in_csv_file: index + 1,
             api_field_name: field["technical"],
             hesa_alignment: field["hesa_alignment"],
             description: Kramdown::Document.new(field["description"]).to_html,
