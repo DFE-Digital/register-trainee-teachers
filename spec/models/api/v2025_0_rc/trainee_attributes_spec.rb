@@ -59,7 +59,7 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
           it "is invalid" do
             subject.validate
 
-            expect(subject.errors[:hesa_id]).to contain_exactly("must be 13 or 17 numbers")
+            expect(subject.errors[:hesa_id]).to contain_exactly("must be 13 or 17 characters")
           end
         end
       end
