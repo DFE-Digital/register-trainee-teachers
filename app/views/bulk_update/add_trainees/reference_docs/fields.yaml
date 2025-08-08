@@ -304,7 +304,8 @@
 - field_name: ITT End Date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
-  description: The end date of the Initial Teacher Training part of their course.
+  description: The end date of the Initial Teacher Training part of their course. Includes planned assessment periods, or planned
+    writing-up periods. Update this field if there’s a change, for example, resits, agreed breaks or transferring between courses.
   format: YYYY-MM-DD
   example: "`2025-03-11`"
   validation: Mandatory

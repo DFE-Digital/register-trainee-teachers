@@ -337,6 +337,9 @@ weight: 1
       </p>
       <p class="govuk-body">
         The end date of the Initial Teacher Training part of their course.
+        Includes planned assessment periods, or planned writing-up periods.
+        Update this field if there’s a change, for example, resits, agreed
+        breaks or transferring between courses.
       </p>
       <p class="govuk-body">
         Example: <code>2025-03-11</code>
