@@ -508,7 +508,7 @@
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
-- field_name: Degree subject
+- field_name: Degree Subject
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
