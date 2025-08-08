@@ -1360,7 +1360,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "hesa_id must be 13 or 17 numbers",
+        "hesa_id must be 13 or 17 characters",
       )
     end
   end
