@@ -102,6 +102,7 @@ module Api
       validate :validate_trainee_start_date
       validate :validate_date_of_birth
       validate :validate_degrees_presence, if: -> { training_route.present? && requires_degree? }
+      validate :validate_hesa_id_length, if: -> { hesa_id.present? }
 
       validates :ethnicity, api_inclusion: {
         in: Hesa::CodeSets::Ethnicities::MAPPING.values.uniq,
@@ -426,6 +427,10 @@ module Api
         if itt_end_date.present? && !valid_date_string?(itt_end_date)
           errors.add(:itt_end_date, :invalid)
         end
+      end
+
+      def validate_hesa_id_length
+        errors.add(:hesa_id, :length) unless hesa_id.length.in?([13, 17])
       end
 
       def next_year
