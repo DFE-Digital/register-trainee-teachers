@@ -18,3 +18,9 @@ All requests must be accompanied by an `Authorization` request header (not as pa
 Unauthenticated requests will receive an `UnauthorizedResponse` with a `401` status code.
 
 Authentication tokens will be provided by the Register team.
+
+## Rate Limiting
+
+API requests are rate limited to prevent abuse and ensure fair usage across all users.
+
+**Current rate limit:** 100 requests per 60 seconds per IP address
