@@ -26,11 +26,14 @@ FROM ruby:3.4.2-alpine3.20
 
 ENV APP_HOME=/app
 RUN mkdir $APP_HOME
+RUN mkdir /tech_docs
 WORKDIR $APP_HOME
 
 RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
+
+RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
 
 COPY .tool-versions Gemfile Gemfile.lock ./
 
@@ -64,7 +67,12 @@ ENV ENV="/root/.ashrc"
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE=DUMMY ./bin/rails assets:precompile
 
+RUN chown -R appuser:appgroup /app /usr/local/bundle/config /tech_docs
+
 ARG COMMIT_SHA
 ENV COMMIT_SHA=$COMMIT_SHA
+
+# Use non-root user
+USER 10001
 
 CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec rails server -b 0.0.0.0"]
