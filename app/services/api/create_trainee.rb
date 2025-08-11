@@ -8,12 +8,13 @@ module Api
 
     include ActiveModel::Model
 
-    attr_accessor :current_provider, :trainee_attributes, :version
+    attr_accessor :current_provider, :trainee_attributes, :version, :enhanced_errors
 
-    def initialize(current_provider:, trainee_attributes:, version:)
+    def initialize(current_provider:, trainee_attributes:, version:, enhanced_errors: false)
       @current_provider = current_provider
       @trainee_attributes = trainee_attributes
       @version = version
+      @enhanced_errors = enhanced_errors
     end
 
     def call
@@ -52,6 +53,12 @@ module Api
       validation_error_response(validation_errors)
     end
 
+    def save_enhanced_errors_response(trn_validator, trainee)
+      validation_errors = trn_validator.all_errors.presence || trainee.errors
+
+      validation_error_response(validation_errors)
+    end
+
     def success_response(trainee)
       { json: { data: serializer_klass.new(trainee).as_hash }, status: :created }
     end
@@ -69,7 +76,17 @@ module Api
     def trainee_attributes_errors
       @trainee_attributes_errors ||= begin
         trainee_attributes.validate
-        (trainee_attributes || []).errors.full_messages.compact.flatten.map(&:strip)
+
+        if enhanced_errors
+          trainee_attributes.errors.map do |error|
+            [error.attribute, error.message]
+          end.reduce({}) do |hash, (attribute, message)|
+            hash[attribute] = (hash[attribute] || []).push(message)
+            hash
+          end
+        else
+          (trainee_attributes || []).errors.full_messages.compact.flatten.map(&:strip)
+        end
       end
     end
 

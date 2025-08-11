@@ -249,7 +249,11 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
         it "returns errors" do
           expect {
-            post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+            post(
+              endpoint,
+              params: params.to_json,
+              headers: { Authorization: token, **json_headers },
+            )
           }.not_to change {
             Degree.count
           }
@@ -260,6 +264,29 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
             "subject must be entered if specifying a previous UK degree or non-UK degree",
             "graduation_year must be entered if specifying a previous UK degree or non-UK degree",
           )
+        end
+
+        context "when enhanced errors are requested" do
+          let(:enhanced_errors) { true }
+
+          it "returns enhanced errors" do
+            expect {
+              post(
+                endpoint,
+                params: params.to_json,
+                headers: { Authorization: token, **json_headers },
+              )
+            }.not_to change {
+              Degree.count
+            }
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body[:errors][:degrees_attributes]).to contain_exactly(
+              "non_uk_degree must be entered if specifying a previous non-UK degree",
+              "subject must be entered if specifying a previous UK degree or non-UK degree",
+              "graduation_year must be entered if specifying a previous UK degree or non-UK degree",
+            )
+          end
         end
       end
     end
@@ -294,6 +321,16 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
         it "returns errors" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly("provider_trainee_id is too long (maximum is 50 characters)")
+        end
+      end
+
+      context "when invalid and enhanced errors are specified" do
+        let(:enhanced_errors) { true }
+        let(:provider_trainee_id) { Faker::Number.number(digits: 51).to_s }
+
+        it "returns errors" do
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors][:provider_trainee_id]).to contain_exactly("is too long (maximum is 50 characters)")
         end
       end
     end

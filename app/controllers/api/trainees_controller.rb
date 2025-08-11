@@ -38,7 +38,7 @@ module Api
       trainee_attributes = trainee_attributes_service.new(hesa_mapped_params)
 
       render(
-        CreateTrainee.call(current_provider:, trainee_attributes:, version:),
+        CreateTrainee.call(current_provider:, trainee_attributes:, version:, enhanced_errors:),
       )
     end
 
