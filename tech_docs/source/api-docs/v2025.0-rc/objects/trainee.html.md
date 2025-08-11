@@ -183,6 +183,10 @@ weight: 1
         value.
       </p>
       <p class="govuk-body">
+       Note: If no ethnicity value is provided (blank or null), the system will automatically 
+        set this field to <code>997</code> (Not provided).
+      </p>
+      <p class="govuk-body">
         Example: <code>120</code>
       </p>
     </dd>
@@ -287,6 +291,12 @@ weight: 1
         The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or
         scholarship available if applicable. Coded according to the <a
           href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>.
+      </p>
+      <p class="govuk-body">
+       Note: For primary education courses (when the course maximum age is 11 or below), 
+        <code>course_subject_one</code> is automatically set to "Primary Teaching" (HESA code <code>100511</code>). 
+        Any subjects provided in the request will be preserved and shifted to <code>course_subject_two</code> 
+        and <code>course_subject_three</code> as needed.
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -433,6 +443,11 @@ weight: 1
         <li><code>900030</code> - Not available</li>
       </ul>
       <p class="govuk-body">
+       Note: The system validates the provided URN against the Register database. 
+        If the URN is not found in Register, the request will not return an error but the 
+        lead partner association may not be established correctly.
+      </p>
+      <p class="govuk-body">
         Example: <code>123456</code>
       </p>
     </dd>
@@ -461,6 +476,11 @@ weight: 1
       </p>
       <p class="govuk-body">
         The start date of the trainee on their ITT course.
+      </p>
+      <p class="govuk-body">
+       Note: If <code>trainee_start_date</code> is not provided, it will be automatically 
+        set to the value of <code>itt_start_date</code>. The <code>trainee_start_date</code> is validated to ensure it is not 
+        more than 10 years in the past, and cannot be in the future unless it matches <code>itt_start_date</code>.
       </p>
       <p class="govuk-body">
         Example: <code>2024-03-11</code>
