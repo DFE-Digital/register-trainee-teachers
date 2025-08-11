@@ -5,13 +5,11 @@ weight: 2
 
 # Release notes
 
-## Academic year: 25/26
-
-### Version: 2025.1
+## v2025.0 — 23 July 2025
 
 Date published: 23 July 2025
 
-#### Overview
+### Overview
 
 This release note sets out changes to reference data used in the Register service for the 2025 to 2026 academic year.
 
@@ -27,11 +25,11 @@ It includes:
 
 These changes must be reflected in provider submissions.
 
-#### New values
+### New values
 
 The following new value has been added:
 
-##### Training Route
+#### Training Route
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -48,11 +46,11 @@ The following new value has been added:
   </tbody>
 </table>
 
-#### Removed values
+### Removed values
 
 The following value has been removed and must no longer be used:
 
-##### Training Route
+#### Training Route
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -70,11 +68,11 @@ The following value has been removed and must no longer be used:
 </table>
 
 
-#### Updated values
+### Updated values
 
 The following existing values have had their labels updated to improve clarity or reflect current policy. The codes have not changed.
 
-##### Fund Code
+#### Fund Code
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -95,11 +93,11 @@ The following existing values have had their labels updated to improve clarity o
   </tbody>
 </table>
 
-#### Unsupported values
+### Unsupported values
 
 The following values are not currently supported by the Register service and must not be used. These have either never been accepted or are now explicitly excluded.
 
-##### Nationality
+#### Nationality
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -160,7 +158,7 @@ The following values are not currently supported by the Register service and mus
   </tbody>
 </table>
 
-##### Age Range
+#### Age Range
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -181,7 +179,7 @@ The following values are not currently supported by the Register service and mus
   </tbody>
 </table>
 
-#### No changes
+### No changes
 
 The following reference data items have not changed. All existing values under these categories remain valid and supported:
 
@@ -203,26 +201,5 @@ The following reference data items have not changed. All existing values under t
 - Study Mode
 - Training Initiative
 - Training Route (excluding changes listed above)
-
-### Why this matters
-
-Keeping reference data up to date ensures accuracy and consistency with HESA standards and Department for Education policy. Reference data underpins:
-
-
-<ul class='govuk-list govuk-list--bullet'>
-  <li>data validation</li>
-  <li>funding calculations</li>
-  <li>data submissions</li>
-  <li>reports and integrations</li>
-</ul>
-
-### What you need to do
-
-<ul class='govuk-list govuk-list--bullet'>
-  <li>Do not use any values listed as removed or unsupported</li>
-  <li>Begin using the new training route value where applicable</li>
-  <li>Apply the updated fund code labels</li>
-  <li>Review and update validation rules, user-facing content, internal documentation, and data flows accordingly</li>
-</ul>
 
 If you have questions, contact the Register team.
