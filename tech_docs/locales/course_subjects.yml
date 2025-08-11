@@ -1,5 +1,5 @@
 en:
-  course_subject_two:
+  course_subject_one: &course_subjects
     "100048": Design
     "100050": Product Design
     "100061": Graphic Design
@@ -71,3 +71,5 @@ en:
     "101373": Hair And Beauty Sciences
     "101410": Historical Linguistics
     "101420": Latin Language
+  course_subject_two: *course_subjects
+  course_subject_three: *course_subjects
