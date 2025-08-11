@@ -183,7 +183,7 @@ weight: 1
         value.
       </p>
       <p class="govuk-body">
-        <strong>Note:</strong> If no ethnicity value is provided (blank or null), the system will automatically 
+       Note: If no ethnicity value is provided (blank or null), the system will automatically 
         set this field to <code>997</code> (Not provided).
       </p>
       <p class="govuk-body">
@@ -293,7 +293,7 @@ weight: 1
           href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>.
       </p>
       <p class="govuk-body">
-        <strong>Note:</strong> For primary education courses (when the course maximum age is 11 or below), 
+       Note: For primary education courses (when the course maximum age is 11 or below), 
         <code>course_subject_one</code> is automatically set to "Primary Teaching" (HESA code <code>100511</code>). 
         Any subjects provided in the request will be preserved and shifted to <code>course_subject_two</code> 
         and <code>course_subject_three</code> as needed.
@@ -440,7 +440,7 @@ weight: 1
         <li><code>900030</code> - Not available</li>
       </ul>
       <p class="govuk-body">
-        <strong>Note:</strong> The system validates the provided URN against the Register database. 
+       Note: The system validates the provided URN against the Register database. 
         If the URN is not found in Register, the request will not return an error but the 
         lead partner association may not be established correctly.
       </p>
@@ -475,7 +475,7 @@ weight: 1
         The start date of the trainee on their ITT course.
       </p>
       <p class="govuk-body">
-        <strong>Note:</strong> If <code>trainee_start_date</code> is not provided, it will be automatically 
+       Note: If <code>trainee_start_date</code> is not provided, it will be automatically 
         set to the value of <code>itt_start_date</code>. The <code>trainee_start_date</code> is validated to ensure it is not 
         more than 10 years in the past, and cannot be in the future unless it matches <code>itt_start_date</code>.
       </p>
