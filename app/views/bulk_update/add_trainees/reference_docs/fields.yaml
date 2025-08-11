@@ -21,10 +21,10 @@
   hesa_alignment: HUSID
   description: The HESA unique student identifier for the trainee.
   format: |-
-    Limited to 17 digit numbers.
+    Limited to 13 or 17 characters.
 
     Previously assigned 13 character HUSID are accepted.
-  example: "`1210007145123456`"
+  example: "`12100071451234560`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/trainee_attributes.rb#L72
 - field_name: First Names
@@ -304,7 +304,8 @@
 - field_name: ITT End Date
   technical: itt_end_date
   hesa_alignment: EXPECTEDENDDATE
-  description: The end date of the Initial Teacher Training part of their course.
+  description: The end date of the Initial Teacher Training part of their course. Includes planned assessment periods, or planned
+    writing-up periods. Update this field if there’s a change, for example, resits, agreed breaks or transferring between courses.
   format: YYYY-MM-DD
   example: "`2025-03-11`"
   validation: Mandatory
@@ -508,7 +509,7 @@
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
-- field_name: Degree subject
+- field_name: Degree Subject
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
@@ -528,7 +529,13 @@
   technical: graduation_year
   hesa_alignment: DEGENDDT
   description: The year of graduation.
-  format: YYYY-MM-DD
+  format: |-
+    This can be formatted as just the year, or as an ISO-8601 format date:
+
+      - YYYY
+      - YYYY-MM-DD
+
+    Where only the month and year are known, just use the year.
   example: "`2012-07-31`"
   validation: Conditional - mandatory if specifying any degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L33

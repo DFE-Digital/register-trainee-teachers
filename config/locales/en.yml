@@ -2110,6 +2110,8 @@ en:
                 blank: UK degree type or Non-UK degree type must be entered if specifying a postgraduate Training Route
             training_initiative:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
+            hesa_id:
+              length: must be 13 or 17 characters
         api/v20250_rc/withdrawal_attributes:
           attributes:
             reasons:

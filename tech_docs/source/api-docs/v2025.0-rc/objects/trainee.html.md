@@ -347,6 +347,9 @@ weight: 1
       </p>
       <p class="govuk-body">
         The end date of the Initial Teacher Training part of their course.
+        Includes planned assessment periods, or planned writing-up periods.
+        Update this field if there’s a change, for example, resits, agreed
+        breaks or transferring between courses.
       </p>
       <p class="govuk-body">
         Example: <code>2025-03-11</code>
@@ -607,13 +610,13 @@ weight: 1
     <dt class="govuk-summary-list__key"><code>hesa_id</code></dt>
     <dd class="govuk-summary-list__value">
       <p class="govuk-body">
-        string (limited to 17 characters), required
+        string (must be 13 or 17 characters), required
       </p>
       <p class="govuk-body">
-        The unique student identifier for the trainee.
+        The HESA unique student identifier for the trainee.
       </p>
       <p class="govuk-body">
-        Example: <code>1210007145123456</code>
+        Example: <code>12100071451234560</code>
       </p>
     </dd>
   </div>

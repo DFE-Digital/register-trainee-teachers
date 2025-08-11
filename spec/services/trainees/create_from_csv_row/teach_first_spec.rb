@@ -14,15 +14,14 @@ module Trainees
           "Provider trainee ID" => "12345",
           "Region" => "South West",
           "First names" => "Bob",
-          "Middle names" => "B",
-          "Last names" => "Robertson",
-          "Date of birth" => "03/03/1996 00:00:00",
+          "Middle name" => "B",
+          "Last name" => "Robertson",
+          "Date of birth" => "1996-03-03",
           "Sex" => "Male",
           "Nationality" => "british",
-          "Email"	=> "bob@example.com",
-          "Ethnicity"	=> "Not provided",
+          "Email" => "bob@example.com",
+          "Ethnicity" => "Not provided",
           "Disabilities" => "Not provided",
-          # Not sure why we're asking for this?
           "Course level" => "Postgraduate",
           "Course education phase" => "Secondary",
           "Course age range" => "11 to 16",
@@ -37,7 +36,7 @@ module Trainees
           "Degree: country" => "United Kingdom",
           "Degree: subjects" => "History",
           "Degree: UK degree types" => "Bachelor of Arts",
-          "Degree: UK awarding institution"	=> "University of Birmingham",
+          "Degree: UK awarding institution" => "University of Birmingham",
           "Degree: UK grade" => "Upper second-class honours (2:1)",
           "Degree: Non-UK degree types" => "",
           "Degree: graduation year" => "2021",
@@ -74,8 +73,8 @@ module Trainees
 
           it "updates the trainee's personal details" do
             expect(trainee.first_names).to eq(csv_row["First names"])
-            expect(trainee.middle_names).to eq(csv_row["Middle names"])
-            expect(trainee.last_name).to eq(csv_row["Last names"])
+            expect(trainee.middle_names).to eq(csv_row["Middle name"])
+            expect(trainee.last_name).to eq(csv_row["Last name"])
             expect(trainee.sex).to eq("male")
             expect(trainee.date_of_birth).to eq(Date.parse(csv_row["Date of birth"]))
             expect(trainee.nationalities.pluck(:name)).to include("british")

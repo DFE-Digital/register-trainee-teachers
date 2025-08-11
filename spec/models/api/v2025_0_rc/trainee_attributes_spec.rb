@@ -31,6 +31,40 @@ RSpec.describe Api::V20250Rc::TraineeAttributes do
         .with_message(/has invalid reference data value of '.*'. Valid values are #{Hesa::CodeSets::TrainingInitiatives::MAPPING.keys.map { |v| "'#{v}'" }.join(', ')}/)
     }
 
+    describe "hesa_id" do
+      describe "length" do
+        context "with 13 chars" do
+          subject { described_class.new(hesa_id: SecureRandom.random_number(10**13).to_s) }
+
+          it "is valid" do
+            subject.validate
+
+            expect(subject.errors[:hesa_id]).to be_empty
+          end
+        end
+
+        context "with 17 chars" do
+          subject { described_class.new(hesa_id: SecureRandom.random_number(10**17).to_s) }
+
+          it "is valid" do
+            subject.validate
+
+            expect(subject.errors[:hesa_id]).to be_empty
+          end
+        end
+
+        context "with anything else" do
+          subject { described_class.new(hesa_id: SecureRandom.random_number(10**12).to_s) }
+
+          it "is invalid" do
+            subject.validate
+
+            expect(subject.errors[:hesa_id]).to contain_exactly("must be 13 or 17 characters")
+          end
+        end
+      end
+    end
+
     describe "email" do
       context "with uppercase TLD" do
         before do

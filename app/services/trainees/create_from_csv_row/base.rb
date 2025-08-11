@@ -207,11 +207,11 @@ module Trainees
       end
 
       def training_route
-        hpitt_trainee? ? TRAINING_ROUTE_ENUMS[:hpitt_postgrad] : TRAINING_ROUTES[lookup("Training route")]
+        TRAINING_ROUTE_ENUMS[:hpitt_postgrad]
       end
 
       def training_initiative
-        hpitt_trainee? ? ROUTE_INITIATIVES_ENUMS[:no_initiative] : INITIATIVES[lookup("Funding: Training Initiatives")]
+        ROUTE_INITIATIVES_ENUMS[:no_initiative]
       end
 
       def funding_attributes

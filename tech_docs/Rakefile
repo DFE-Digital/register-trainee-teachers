@@ -56,10 +56,11 @@ namespace :tech_docs do
         File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
       )
 
-      fields.each_with_index do |field, index|
+      fields.each.with_index(1) do |field, index|
         html = context.partial(
           "partials/csv_docs/field", locals: {
             csv_field_name: field["field_name"],
+            column_number_in_csv_file: index,
             api_field_name: field["technical"],
             hesa_alignment: field["hesa_alignment"],
             description: Kramdown::Document.new(field["description"]).to_html,
@@ -74,7 +75,7 @@ namespace :tech_docs do
             <<~METADATA,
               ---
               title: #{field['field_name']}
-              weight: #{index + 1}
+              weight: #{index}
               source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/views/bulk_update/add_trainees/reference_docs/fields.yaml
               ---
 
