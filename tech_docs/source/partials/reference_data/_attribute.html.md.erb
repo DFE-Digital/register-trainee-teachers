@@ -31,31 +31,6 @@
 
 ## Reference data
 
-<section class="app-summary-card govuk-!-margin-bottom-6">
-  <header class="app-summary-card__header">
-    <span class="app-summary-card__title govuk-!-font-weight-bold">
-      Overview
-    </span>
-  </header>
-
-  <div class="app-summary-card__body">
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row <%= attribute %>" id="<%= attribute %>">
-        <dt class="govuk-summary-list__key">CSV field name</dt>
-        <dd class="govuk-summary-list__value"><%= field.fetch("field_name") %></dd>
-      </div>
-      <div class="govuk-summary-list__row <%= attribute %>" id="<%= attribute %>">
-        <dt class="govuk-summary-list__key">API field name</dt>
-        <dd class="govuk-summary-list__value"><%= field.fetch("technical") %></dd>
-      </div>
-      <div class="govuk-summary-list__row <%= attribute %>" id="<%= attribute %>">
-        <dt class="govuk-summary-list__key">HESA alignment</dt>
-        <dd class="govuk-summary-list__value"><%= field.fetch("hesa_alignment") %></dd>
-      </div>
-    </dl>
-  </div>
-</section>
-
 <table class="govuk-table">
   <thead class="govuk-table__head">
     <tr class="govuk-table__row">
