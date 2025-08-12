@@ -159,7 +159,7 @@ feature "bulk add trainees" do
         then_i_see_the_upload_page_with_errors(empty: true)
 
         when_i_click_the_upload_button
-        then_i_see_the_upload_page_with_errors(empty: false)
+        then_i_see_the_upload_page_with_errors
 
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
@@ -248,7 +248,7 @@ feature "bulk add trainees" do
 
         when_i_click_the_upload_button
         then_i_see_the_review_errors_page
-        and_i_see_there_is_a_problem_errors(empty: false)
+        and_i_see_there_is_a_problem_errors
 
         when_the_unexpected_duplicate_error_is_been_reverted
         and_i_attach_a_valid_file
@@ -513,6 +513,16 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_errors_page
+      end
+
+      scenario "when the uploaded file has an unsupported encoding" do
+        when_there_is_already_one_trainee_in_register
+        and_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+
+        when_i_attach_a_file_with_an_unsupported_encoding
+        and_i_click_the_upload_button
+        and_i_see_there_is_a_problem_errors(encoding: true)
       end
 
       scenario "when I try to upload a file that throws an exception in the API layer" do
@@ -835,6 +845,12 @@ private
     and_i_attach_a_file("")
   end
 
+  def when_i_attach_a_file_with_an_unsupported_encoding
+    filename = "v2025_0_bulk_create_trainee-encoding-test.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
   def when_i_attach_a_valid_file
     filename = "five_trainees.csv"
 
@@ -883,14 +899,23 @@ private
     click_on "Upload CSV"
   end
 
-  def then_i_see_the_upload_page_with_errors(empty:)
+  def then_i_see_the_upload_page_with_errors(empty: false, encoding: false)
     expect(page).to have_current_path(bulk_update_add_trainees_uploads_path)
-    and_i_see_there_is_a_problem_errors(empty:)
+    and_i_see_there_is_a_problem_errors(empty:, encoding:)
   end
 
-  def and_i_see_there_is_a_problem_errors(empty:)
+
+  def and_i_see_there_is_a_problem_errors(empty: false, encoding: false)
+    content = if empty
+                "The selected file is empty"
+              elsif encoding
+                "The uploaded file is in an unsupported file encoding (windows-1252). Please upload a file with UTF-8 or ISO-8859-1 encoding."
+              else
+                "Select a CSV file"
+              end
+
     expect(page).to have_content("There is a problem")
-    expect(page).to have_content(empty ? "The selected file is empty" : "Select a CSV file")
+    expect(page).to have_content(content)
   end
 
   def and_i_see_file_validation_passed
@@ -1047,6 +1072,7 @@ private
     expect(page).to have_content("social or communication impairment")
     expect(page).to have_content("other")
   end
+
 
   def when_the_upload_has_failed_with_validation_errors
     @failed_upload = create(
