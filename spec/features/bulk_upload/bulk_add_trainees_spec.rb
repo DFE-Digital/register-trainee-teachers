@@ -525,6 +525,41 @@ feature "bulk add trainees" do
         and_i_see_there_is_a_problem_errors(encoding: true)
       end
 
+      scenario "when the uploaded file has mixed encoding" do
+        when_there_is_already_one_trainee_in_register
+        and_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_attach_a_file_with_a_mixed_encoding
+        and_i_click_the_upload_button
+        and_i_click_on_continue_button
+
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        and_i_see_file_validation_passed
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees
+      end
+
       scenario "when I try to upload a file that throws an exception in the API layer" do
         when_there_is_already_one_trainee_in_register
         and_i_visit_the_bulk_update_index_page
@@ -847,6 +882,12 @@ private
 
   def when_i_attach_a_file_with_an_unsupported_encoding
     filename = "v2025_0_bulk_create_trainee-encoding-test.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
+  def and_i_attach_a_file_with_a_mixed_encoding
+    filename = "mixed_encoding.csv"
 
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
