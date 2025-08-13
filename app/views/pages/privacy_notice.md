@@ -3,6 +3,8 @@ page_title: Register trainee teachers (Register) privacy notice
 title: Register trainee teachers (Register) privacy notice 
 ---
 
+<p class="govuk-body">Last updated 13 August 2025</p>
+
 <p class='govuk-body'>
   Read the <a class="govuk-link" target="_blank" href="https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers/privacy-information-education-providers-workforce-including-teachers#using-your-data-so-we-can-support-your-teaching-career">Privacy information: education providers’ workforce, including teachers (opens in new tab)</a>.
 </p>
