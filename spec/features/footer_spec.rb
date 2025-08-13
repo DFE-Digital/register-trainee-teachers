@@ -14,6 +14,7 @@ feature "Footer" do
         and_i_see_the_how_to_use_this_service_link
         and_i_dont_see_the_api_docs_link
         and_i_dont_see_the_csv_docs_link
+        and_i_see_the_reference_data_link
         and_i_see_the_accessibility_link
         and_i_see_the_cookies_link
         and_i_see_privacy_link
@@ -30,6 +31,7 @@ feature "Footer" do
         and_i_see_the_how_to_use_this_service_link
         and_i_see_the_api_docs_link
         and_i_dont_see_the_csv_docs_link
+        and_i_see_the_reference_data_link
         and_i_see_the_accessibility_link
         and_i_see_the_cookies_link
         and_i_see_privacy_link
@@ -44,8 +46,10 @@ feature "Footer" do
       within(".govuk-footer") do
         i_see_the_news_and_updates_link
         and_i_see_the_how_to_use_this_service_link
+        and_i_see_the_reference_data_link
         and_i_dont_see_the_api_docs_link
         and_i_see_the_csv_docs_link
+        and_i_see_the_reference_data_link
         and_i_see_the_accessibility_link
         and_i_see_the_cookies_link
         and_i_see_privacy_link
@@ -60,8 +64,10 @@ feature "Footer" do
       within(".govuk-footer") do
         i_see_the_news_and_updates_link
         and_i_see_the_how_to_use_this_service_link
+        and_i_see_the_reference_data_link
         and_i_see_the_api_docs_link
         and_i_see_the_csv_docs_link
+        and_i_see_the_reference_data_link
         and_i_see_the_accessibility_link
         and_i_see_the_cookies_link
         and_i_see_privacy_link
@@ -106,6 +112,12 @@ private
   def and_i_dont_see_the_csv_docs_link
     expect(page).not_to have_link(
       "CSV documentation", href: "/csv-docs/"
+    )
+  end
+
+  def and_i_see_the_reference_data_link
+    expect(page).to have_link(
+      "Reference data", href: "/reference-data/"
     )
   end
 

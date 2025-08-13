@@ -4,44 +4,26 @@ require "fileutils"
 require "yaml"
 require "middleman-core"
 require "kramdown"
+require "open3"
 
 namespace :tech_docs do
   desc "Build docs"
   task :build do
     # Build API docs
-    #
-    FileUtils.cp_r("source", "temp_source")
-
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/api-docs/.", "source")
-    FileUtils.rm_rf("source/api-docs")
-    FileUtils.rm_rf("source/csv-docs")
-
-    system("bundle exec middleman build --build-dir ../public/api-docs --verbose")
-
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    TechDocsHelpers.build("api-docs")
 
     # Build CSV docs
-    #
-    FileUtils.cp_r("source", "temp_source")
+    TechDocsHelpers.build("csv-docs")
 
-    FileUtils.rm("source/index.html.md")
-    FileUtils.cp_r("source/csv-docs/.", "source")
-    FileUtils.rm_rf("source/csv-docs")
-    FileUtils.rm_rf("source/api-docs")
-
-    system("bundle exec middleman build --build-dir ../public/csv-docs --verbose")
-
-    FileUtils.rm_rf("source")
-    FileUtils.mv("temp_source", "source")
+    # Build Reference Data docs
+    TechDocsHelpers.build("reference-data")
 
     # Generate search.json
-    #
-    system("bundle exec middleman build --verbose")
+    system("bundle exec middleman build")
 
     FileUtils.cp("build/search.json", "../public/api-docs")
     FileUtils.cp("build/search.json", "../public/csv-docs")
+    FileUtils.cp("build/search.json", "../public/reference-data")
   end
 
   namespace :csv do
@@ -52,11 +34,7 @@ namespace :tech_docs do
 
       FileUtils.mkdir_p("source/csv-docs/temp_fields")
 
-      fields = YAML.load_file(
-        File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
-      )
-
-      fields.each.with_index(1) do |field, index|
+      TechDocsHelpers.fields.each_with_index do |field, index|
         html = context.partial(
           "partials/csv_docs/field", locals: {
             csv_field_name: field["field_name"],
@@ -89,5 +67,127 @@ namespace :tech_docs do
       FileUtils.rm_rf("source/csv-docs/fields")
       FileUtils.mv("source/csv-docs/temp_fields", "source/csv-docs/fields")
     end
+  end
+
+  namespace :reference_data do
+    desc "Generate reference data docs from the API"
+    task :generate do
+      version_runner_code  = "print Hesa::ReferenceData.constants"
+
+      TechDocsHelpers.runner(version_runner_code).each do |version|
+        data_runner_code  = "print Hesa::ReferenceData::#{version}.call"
+        version_dir       = TechDocsHelpers.format_version(version)
+        temp_version_dir  = "temp_#{version_dir}"
+
+        FileUtils.mkdir_p("source/reference-data/#{temp_version_dir}")
+
+        app     = Middleman::Application.new
+        context = Middleman::TemplateContext.new(app, {})
+
+        data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, values|
+          field_name = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
+          words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
+          field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
+        end.to_h
+
+        data.each_with_index do |(attribute, values), index|
+          field               = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }
+          formatted_attribute = attribute.gsub("_", "-")
+
+          File.open("source/reference-data/#{temp_version_dir}/#{formatted_attribute}.html.md", "w") do |f|
+            html = context.partial(
+              "partials/reference_data/attribute", locals: {
+                attribute: formatted_attribute,
+                field: field,
+                values: values,
+              }
+            )
+
+            f.write(
+              <<~METADATA,
+                ---
+                title: #{field["field_name"]}
+                weight: #{index + 1}
+                source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, "_")}.rb
+                ---
+
+              METADATA
+            )
+
+
+            f.write(html)
+          end
+        end
+
+        FileUtils.cp("source/reference-data/#{version_dir}/index.html.md.erb", "source/reference-data/#{temp_version_dir}")
+        FileUtils.rm_rf("source/reference-data/#{version_dir}")
+        FileUtils.mv("source/reference-data/#{temp_version_dir}", "source/reference-data/#{version_dir}")
+      end
+    end
+  end
+end
+
+module TechDocsHelpers
+  RAILS_DIR     = File.expand_path("../", __dir__)
+  RAILS_GEMFILE = File.join(RAILS_DIR, 'Gemfile')
+  WORDS_TO_NUMBERS = {
+    "one"   => 1,
+    "two"   => 2,
+    "three" => 3,
+    "four"  => 4,
+    "five"  => 5,
+    "six"   => 6,
+    "seven" => 7,
+    "eight" => 8,
+    "nine"  => 9,
+    "ten"   => 10,
+  }.freeze
+
+  def self.runner(runner_code)
+    command = <<~CMD
+      cd #{RAILS_DIR} && BUNDLE_GEMFILE=#{RAILS_GEMFILE} bundle exec rails runner '#{runner_code}.to_json'
+    CMD
+
+    stdout, stderr, status = Open3.capture3(command)
+
+    if status.success?
+      JSON.parse(stdout)
+    else
+      raise StandardError, stderr.present? ? stderr : "Something went wrong"
+    end
+  end
+
+  def self.fields
+    @fields ||= YAML.load_file(
+      File.expand_path("../app/views/bulk_update/add_trainees/reference_docs/fields.yaml", __dir__),
+    )
+  end
+
+  def self.format_version(version)
+    if version   =~ /^V(\d{4})(\d)([a-zA-Z]+)?$/
+      major      = $1
+      minor      = $2
+      suffix     = $3
+      formatted  = "v#{major}.#{minor}"
+      formatted += "-#{suffix}" if suffix
+      formatted.downcase
+    else
+      raise "Invalid version format"
+    end
+  end
+
+  def self.build(source)
+    FileUtils.cp_r("source", "temp_source")
+
+    FileUtils.rm("source/index.html.md")
+    FileUtils.cp_r("source/#{source}/.", "source")
+    FileUtils.rm_rf("source/api-docs")
+    FileUtils.rm_rf("source/csv-docs")
+    FileUtils.rm_rf("source/reference-data")
+
+    system("bundle exec middleman build --build-dir ../public/#{source}")
+
+    FileUtils.rm_rf("source")
+    FileUtils.mv("temp_source", "source")
   end
 end
