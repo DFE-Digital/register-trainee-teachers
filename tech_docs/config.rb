@@ -14,6 +14,7 @@ set :relative_links, true
 set :markdown_engine, :kramdown
 
 activate :relative_assets
+activate :i18n
 
 configure :build do
   activate :asset_hash

@@ -1,0 +1,1096 @@
+en:
+  subject:
+    "100003": Ceramics
+    "100005": Clinical Engineering
+    "100033": Metallurgy
+    "100035": Musical Theatre
+    "100036": Optometry
+    "100037": Orthoptics
+    "100038": Pathobiology
+    "100046": Creative Writing
+    "100048": Design
+    "100050": Product Design
+    "100051": Textile Design
+    "100052": Ergonomics
+    "100054": Fashion
+    "100055": Fashion Design
+    "100057": Animation
+    "100058": Film Studies
+    "100059": Fine Art
+    "100060": Graphic Arts
+    "100061": Graphic Design
+    "100062": Illustration
+    "100063": Photography
+    "100065": Liberal Arts
+    "100067": Acting
+    "100068": Dance
+    "100069": Drama
+    "100070": Music
+    "100071": Performing Arts
+    "100074": Advertising
+    "100075": Marketing
+    "100076": Public Relations
+    "100078": Business And Management
+    "100079": Business Studies
+    "100080": International Business
+    "100083": Event Management
+    "100084": Hospitality Management
+    "100085": Human Resource Management
+    "100087": International Hospitality Management
+    "100088": Leadership
+    "100089": Management Studies
+    "100090": Public Administration
+    "100091": Public Services
+    "100092": Retail Management
+    "100093": Logistics
+    "100095": Sports Coaching
+    "100096": Sports Development
+    "100097": Sports Management
+    "100098": Sports Studies
+    "100100": Tourism Management
+    "100101": Travel And Tourism
+    "100102": Travel Management
+    "100104": Accountancy
+    "100105": Accounting
+    "100106": Actuarial Science
+    "100107": Finance
+    "100109": Clothing Production
+    "100110": Footwear Production
+    "100114": Aeronautical Engineering
+    "100115": Aerospace Engineering
+    "100116": Space Technology
+    "100117": Avionics
+    "100118": Satellite Engineering
+    "100120": Architectural Engineering
+    "100121": Architectural Technology
+    "100122": Architecture
+    "100124": Landscape Architecture And Design
+    "100126": Biomechanics
+    "100127": Biomedical Engineering
+    "100128": Dental Technology
+    "100129": Diagnostic Imaging
+    "100130": Prosthetics And Orthotics
+    "100131": Radiology
+    "100132": Therapeutic Imaging
+    "100134": Biotechnology
+    "100135": Bioprocessing
+    "100136": Environmental Biotechnology
+    "100137": Industrial Biotechnology
+    "100138": Medical Biotechnology
+    "100139": Plant Biotechnology
+    "100141": Biochemical Engineering
+    "100143": Chemical Engineering
+    "100144": Pharmaceutical Engineering
+    "100145": Polymer Science And Technology
+    "100147": Building Services Engineering
+    "100148": Civil Engineering
+    "100149": Construction
+    "100150": Construction And The Built Environment
+    "100151": Construction Management
+    "100152": Offshore Engineering
+    "100153": Structural Engineering
+    "100154": Transport Engineering
+    "100155": Minerals Technology
+    "100156": Highways Engineering
+    "100157": Railway Engineering
+    "100159": Telecommunications Engineering
+    "100160": Computer Aided Engineering
+    "100162": Computer Systems Engineering
+    "100163": Electrical And Electronic Engineering
+    "100164": Electrical Engineering
+    "100165": Electronic Engineering
+    "100166": Control Systems
+    "100168": Microelectronic Engineering
+    "100169": Optoelectronic Engineering
+    "100170": Mechatronics And Robotics
+    "100172": Nuclear Engineering
+    "100175": Energy Engineering
+    "100176": Gas Engineering
+    "100177": Microwave Engineering
+    "100178": Petroleum Engineering
+    "100180": Environmental Engineering
+    "100182": Engineering Design
+    "100183": Fire Safety Engineering
+    "100184": General Or Integrated Engineering
+    "100185": Safety Engineering
+    "100186": Emergency And Disaster Technologies
+    "100188": Systems Engineering
+    "100190": Mechanical Engineering
+    "100192": Electromechanical Engineering
+    "100193": Maintenance Engineering
+    "100194": Marine Technology
+    "100196": Housing
+    "100197": Planning
+    "100198": Transport Planning
+    "100199": Urban And Regional Planning
+    "100201": Automotive Engineering
+    "100202": Manufacturing Engineering
+    "100203": Materials Engineering
+    "100204": Mining Engineering
+    "100205": Motorcycle Engineering
+    "100206": Motorsport Engineering
+    "100207": Naval Architecture
+    "100209": Production And Manufacturing Engineering
+    "100210": Leather Technology
+    "100211": Fabrication
+    "100212": Minerals Processing
+    "100213": Quality Management
+    "100214": Textiles Technology
+    "100216": Building Surveying
+    "100217": Quantity Surveying
+    "100218": Real Estate
+    "100219": Surveying
+    "100221": Music Technology
+    "100222": Audio Technology
+    "100223": Music Production
+    "100225": Materials Science
+    "100229": Aviation Studies
+    "100230": Navigation
+    "100233": Acupuncture
+    "100234": Alternative Medicines And Therapies
+    "100235": Aromatherapy
+    "100236": Chinese Medical Techniques
+    "100237": Herbal Medicine
+    "100239": Reflexology
+    "100241": Chiropractic
+    "100242": Complementary Medicines And Therapies
+    "100243": Osteopathy
+    "100246": Health Sciences
+    "100247": Nutrition
+    "100248": Occupational Health
+    "100249": Occupational Therapy
+    "100250": Pharmacology
+    "100251": Pharmacy
+    "100252": Physiotherapy
+    "100253": Podiatry
+    "100254": Psychotherapy
+    "100255": Speech And Language Therapy
+    "100257": Audiology
+    "100258": Clinical Physiology
+    "100259": Genetics
+    "100260": Healthcare Science
+    "100261": Ophthalmology
+    "100262": Physiology
+    "100264": Anatomy
+    "100265": Biomedical Sciences
+    "100266": Clinical Dentistry
+    "100267": Clinical Medicine
+    "100268": Dentistry
+    "100270": Medical Sciences
+    "100271": Medicine
+    "100272": Neuroscience
+    "100273": Operating Department Practice
+    "100274": Pathology
+    "100275": Pre-Clinical Dentistry
+    "100276": Pre-Clinical Medicine
+    "100277": Toxicology
+    "100279": Adult Nursing
+    "100280": Children'S Nursing
+    "100281": Community Nursing
+    "100282": Critical Care Nursing
+    "100283": Dental Nursing
+    "100284": Emergency Nursing
+    "100285": General Practice Nursing
+    "100286": Learning Disabilities Nursing
+    "100287": Mental Health Nursing
+    "100288": Midwifery
+    "100289": Neonatal Nursing
+    "100290": Nursing
+    "100291": Older People Nursing
+    "100292": Palliative Care Nursing
+    "100293": School Nursing
+    "100294": Theatre Nursing
+    "100295": Health Visiting
+    "100298": Ancient History
+    "100299": Archaeology
+    "100300": Classical Studies
+    "100301": Economic History
+    "100302": History
+    "100306": History Of Art
+    "100307": History Of Science
+    "100308": Local History
+    "100309": Medieval History
+    "100310": Modern History
+    "100311": Scottish History
+    "100312": Social History
+    "100314": Humanities
+    "100316": American Studies
+    "100317": British Sign Language Studies
+    "100318": English Language
+    "100319": English Literature
+    "100320": English Studies
+    "100321": French Language
+    "100322": French Studies
+    "100323": German Language
+    "100324": German Studies
+    "100325": Spanish Studies
+    "100326": Italian Language
+    "100327": Italian Studies
+    "100328": Linguistics
+    "100329": Modern Languages
+    "100330": Russian Languages
+    "100331": Russian And East European Studies
+    "100332": Spanish Language
+    "100333": Welsh Language
+    "100335": Welsh Studies
+    "100337": Philosophy
+    "100338": Philosophy Of Science
+    "100339": Religious Studies
+    "100340": Theology
+    "100343": Applied Biology
+    "100344": Biochemistry
+    "100345": Biological Sciences
+    "100346": Biology
+    "100347": Ecology
+    "100348": Environmental Biology
+    "100350": Human Biology
+    "100351": Marine Biology
+    "100352": Medical Biochemistry
+    "100353": Microbiology
+    "100354": Molecular Biology
+    "100355": Plant Sciences
+    "100356": Zoology
+    "100358": Applied Computing
+    "100359": Artificial Intelligence
+    "100360": Business Computing
+    "100361": Business Information Systems
+    "100362": Business Information Technology
+    "100363": Computer Animation And Visual Effects
+    "100365": Computer Networks
+    "100366": Computer Science
+    "100367": Computing And Information Technology
+    "100368": Creative Computing
+    "100369": Geographical Information Systems
+    "100370": Information Management
+    "100371": Information Systems
+    "100372": Information Technology
+    "100373": Internet Technologies
+    "100374": Software Engineering
+    "100375": Web And Multimedia Design
+    "100376": Computer And Information Security
+    "100379": Climate Science
+    "100380": Environmental Geoscience
+    "100381": Environmental Sciences
+    "100382": Meteorology
+    "100384": Archaeological Sciences
+    "100385": Computer Forensics
+    "100386": Forensic Biology
+    "100387": Forensic Psychology
+    "100388": Forensic Science
+    "100390": General Science
+    "100391": Natural Sciences
+    "100392": Applied Science
+    "100394": Earth Sciences
+    "100395": Geology
+    "100396": Geophysics
+    "100398": Palaeontology
+    "100400": Applied Mathematics
+    "100401": Financial Mathematics
+    "100402": Mathematical Modelling
+    "100403": Mathematics
+    "100404": Operational Research
+    "100405": Pure Mathematics
+    "100406": Statistics
+    "100408": Environmental Geography
+    "100409": Geography
+    "100410": Physical Geography
+    "100413": Analytical Chemistry
+    "100414": Astronomy
+    "100415": Astrophysics
+    "100416": Chemical Physics
+    "100417": Chemistry
+    "100418": Marine Sciences
+    "100419": Medical Physics
+    "100420": Medicinal Chemistry
+    "100421": Ocean Sciences
+    "100422": Organic Chemistry
+    "100423": Pharmaceutical Chemistry
+    "100424": Physical Sciences
+    "100425": Physics
+    "100426": Theoretical Physics
+    "100427": Acoustics
+    "100428": Aerodynamics
+    "100429": Dynamics
+    "100430": Mechanics
+    "100431": Thermodynamics
+    "100433": Sport And Exercise Sciences
+    "100436": Anthropology
+    "100437": Social Anthropology
+    "100439": Broadcast Journalism
+    "100440": Digital Media
+    "100441": Film Production
+    "100442": Journalism
+    "100443": Media Production
+    "100444": Media And Communication Studies
+    "100445": Multimedia Journalism
+    "100449": Business Economics
+    "100450": Economics
+    "100451": Financial Economics
+    "100452": International Economics
+    "100454": Adult Education
+    "100455": Childhood And Youth Studies
+    "100456": Childhood Studies
+    "100457": Early Childhood Studies
+    "100459": Education Studies
+    "100460": Further Education
+    "100461": Higher Education
+    "100462": Learning Support
+    "100463": Early Years Education
+    "100464": Primary Education
+    "100465": Secondary Education
+    "100466": Youth And Community Work
+    "100468": Countryside Management
+    "100469": Environmental Management
+    "100471": Social Sciences
+    "100473": Health Studies
+    "100475": Sports Therapy
+    "100476": Health And Social Care
+    "100478": Human Geography
+    "100482": Business Law
+    "100483": Criminal Justice
+    "100484": Criminology
+    "100485": Law
+    "100486": Policing
+    "100488": International Development
+    "100489": International Politics
+    "100490": International Relations
+    "100491": Politics
+    "100493": Applied Psychology
+    "100494": Clinical Psychology
+    "100495": Counselling
+    "100496": Educational Psychology
+    "100497": Psychology
+    "100498": Social Psychology
+    "100499": Sport And Exercise Psychology
+    "100501": Social Care
+    "100502": Social Policy
+    "100503": Social Work
+    "100505": Sociology
+    "100507": Adult Education Teaching
+    "100508": Post Compulsory Education And Training
+    "100509": Higher Education Teaching
+    "100510": Early Years Teaching
+    "100511": Primary Teaching
+    "100512": Secondary Teaching
+    "100513": Teaching English As A Foreign Language
+    "100516": Agricultural Sciences
+    "100517": Agriculture
+    "100518": Animal Management
+    "100519": Equine Studies
+    "100520": Forestry And Arboriculture
+    "100522": Animal Behaviour
+    "100523": Animal Science
+    "100526": Food And Beverage Production
+    "100527": Food Science
+    "100529": Horticulture
+    "100531": Veterinary Medicine
+    "100532": Veterinary Nursing
+    "100539": Broadcast Engineering
+    "100540": Cellular Pathology
+    "100544": Marine Engineering
+    "100545": Corrosion Technology
+    "100546": Digital Circuit Engineering
+    "100548": Engineering Surveying
+    "100549": Environmental Impact Assessment
+    "100550": Gemmology
+    "100551": Geotechnical Engineering
+    "100553": Integrated Circuit Design
+    "100560": Musical Instrument Manufacture
+    "100564": Aerospace Propulsion Systems
+    "100565": Public Health Engineering
+    "100566": Quarrying
+    "100568": Ship Design
+    "100572": Tissue Engineering And Regenerative Medicine
+    "100573": Water Quality Control
+    "100577": Fluid Mechanics
+    "100579": Structural Mechanics
+    "100580": Acoustics And Vibration
+    "100581": Electrical Power
+    "100583": Architectural Design
+    "100584": Building Technology
+    "100585": Conservation Of Buildings
+    "100586": Property Development
+    "100587": Drawing
+    "100588": Landscape Studies
+    "100589": Painting
+    "100590": Garden Design
+    "100592": Sculpture
+    "100593": Rural Planning
+    "100594": Urban Studies
+    "100595": Printmaking
+    "100597": Applied Economics
+    "100599": Fine Art Conservation
+    "100600": Agricultural Economics
+    "100601": Economic Policy
+    "100604": Econometrics
+    "100606": Economic Systems
+    "100609": Democracy
+    "100610": Uk Government/Parliamentary Studies
+    "100612": European Union Politics
+    "100616": Strategic Studies
+    "100617": War And Peace Studies
+    "100618": Comparative Politics
+    "100619": Applied Sociology
+    "100621": Gender Studies
+    "100622": Women'S Studies
+    "100623": Men'S Studies
+    "100624": Ethnicity
+    "100625": Disability Studies
+    "100626": Religion In Society
+    "100627": Socio-Economics
+    "100628": Social Theory
+    "100629": Political Sociology
+    "100630": Typography
+    "100631": Sociology Of Science And Technology
+    "100632": Visual Communication
+    "100633": Furniture Design And Making
+    "100636": Interactive And Electronic Design
+    "100637": Musicianship And Performance Studies
+    "100639": Instrumental Or Vocal Performance
+    "100642": Music Education And Teaching
+    "100643": Music And Arts Management
+    "100644": Music Marketing
+    "100645": International Social Policy
+    "100647": Public Policy
+    "100648": Health Policy
+    "100649": Welfare Policy
+    "100650": Conducting
+    "100651": Education Policy
+    "100652": Security Policy
+    "100653": Health And Welfare
+    "100654": Child Care
+    "100655": Community Work
+    "100656": Jazz Performance
+    "100657": Popular Music Performance
+    "100658": Careers Guidance
+    "100659": Community Justice
+    "100661": Historical Performance Practice
+    "100662": Probation/After-Care
+    "100663": Physical And Biological Anthropology
+    "100664": History Of Music
+    "100665": Economic Geography
+    "100666": Urban Geography
+    "100667": Musicology
+    "100668": Political Geography
+    "100669": Transport Geography
+    "100670": Environmental History
+    "100671": Cultural Geography
+    "100674": Ethnomusicology And World Music
+    "100676": English Law
+    "100677": Northern Irish Law
+    "100678": Scots Law
+    "100680": European Union Law
+    "100681": Public International Law
+    "100683": Comparative Law
+    "100684": Public Law
+    "100685": Criminal Law
+    "100686": Private Law
+    "100689": Property Law
+    "100690": Torts
+    "100691": Jurisprudence
+    "100692": Legal Practice
+    "100693": Medical Law
+    "100695": Music Composition
+    "100697": Directing For Theatre
+    "100698": Theatre Studies
+    "100700": Theatre Production
+    "100702": Technical Theatre Studies
+    "100703": Stage Management
+    "100704": Technical Stage Management
+    "100705": Theatrical Wardrobe Design
+    "100706": Hair And Make-Up
+    "100707": Circus Arts
+    "100708": Stage Design
+    "100710": Community Theatre
+    "100711": Choreography
+    "100712": Dance Performance
+    "100714": History Of Photography
+    "100716": Cinematography
+    "100717": Visual And Audio Effects
+    "100721": Metal Work
+    "100724": Glass Crafts
+    "100725": Silversmithing And Goldsmithing
+    "100726": Clock And Watchmaking
+    "100728": Surface Decoration
+    "100729": Scriptwriting
+    "100730": Poetry Writing
+    "100731": Professional Writing
+    "100734": Computer Architectures
+    "100735": Operating Systems
+    "100736": Human-Computer Interaction
+    "100737": Multimedia Computing Science
+    "100738": E-Business
+    "100739": Beauty Therapy
+    "100741": High Performance Computing
+    "100743": Systems Thinking
+    "100744": Dietetics
+    "100746": Clinical Practice Nursing
+    "100747": Medical Nursing
+    "100748": Cardiology
+    "100749": Paramedic Science
+    "100750": Physician Associate Studies
+    "100751": Information Modelling
+    "100753": Systems Analysis And Design
+    "100754": Databases
+    "100755": Data Management
+    "100756": Systems Auditing
+    "100757": Intelligent Systems
+    "100758": British History
+    "100759": Irish History
+    "100760": Welsh History
+    "100761": English History
+    "100762": European History
+    "100763": German History
+    "100764": Italian History
+    "100765": Iberian Studies
+    "100766": Russian History
+    "100767": American History
+    "100768": Usa History
+    "100769": Latin American History
+    "100771": Chinese History
+    "100772": South Asian History
+    "100773": South East Asian History
+    "100774": Byzantine Studies
+    "100777": World History
+    "100778": International History
+    "100779": Family History
+    "100780": History Of Religions
+    "100781": Intellectual History
+    "100782": History Of Architecture
+    "100783": History Of Design
+    "100784": History Of Mathematics
+    "100785": History Of Medicine
+    "100786": Military History
+    "100787": Egyptology
+    "100791": Mental Philosophy
+    "100792": Social Philosophy
+    "100793": Ethics
+    "100794": Theology And Religious Studies
+    "100795": Christian Studies
+    "100796": Islamic Studies
+    "100797": Judaism
+    "100798": Buddhism
+    "100799": Divinity
+    "100800": Religious Writings
+    "100801": Biblical Studies
+    "100802": Pastoral Studies
+    "100803": Comparative Religious Studies
+    "100805": Heritage Studies
+    "100807": Heritage Management
+    "100808": European Business Studies
+    "100810": Strategic Management
+    "100811": Creative Management
+    "100812": Project Management
+    "100813": Change Management
+    "100814": Organisational Development
+    "100815": Institutional Management
+    "100817": Management And Organisation Of Education
+    "100819": Land Management
+    "100820": Property Management
+    "100821": Requirements Engineering
+    "100822": Cell Biology
+    "100823": Emergency And Disaster Management
+    "100825": Property Valuation And Auctioneering
+    "100826": Parasitology
+    "100827": Banking
+    "100828": Investment
+    "100829": Behavioural Biology
+    "100830": Insurance
+    "100831": Taxation
+    "100832": Financial Management
+    "100834": Developmental Biology
+    "100835": Financial Risk
+    "100836": Management Accountancy
+    "100837": Public Accountancy
+    "100838": Book-Keeping
+    "100840": Audit Management
+    "100841": Popular Music
+    "100842": Film Music And Screen Music
+    "100843": Jazz
+    "100844": Sacred Music
+    "100845": Financial Reporting
+    "100846": Market Research
+    "100847": Reproductive Biology
+    "100848": Aquatic Biology
+    "100849": Freshwater Biology
+    "100850": Population Biology
+    "100851": Sales Management
+    "100853": International Marketing
+    "100854": Community Music
+    "100855": Promotion And Advertising
+    "100856": Corporate Image
+    "100858": Evolution
+    "100861": Staff Development
+    "100862": Sonic Arts
+    "100864": Ecosystem Ecology And Land Use
+    "100865": Biometry
+    "100866": Health And Safety Management
+    "100867": Electronic Music
+    "100868": Office Administration
+    "100869": Bioinformatics
+    "100870": Jazz Composition
+    "100872": Mycology
+    "100873": Plant Cell Science
+    "100874": Plant Pathology
+    "100875": Tourism
+    "100880": Applied Zoology
+    "100881": Cell Zoology
+    "100882": Entomology
+    "100883": Marine Zoology
+    "100884": Pest Management
+    "100885": Ballet
+    "100886": Contemporary Dance
+    "100887": Moving Image Techniques
+    "100888": Film Directing
+    "100890": Film And Sound Recording
+    "100891": Hospitality
+    "100893": Recreation And Leisure Studies
+    "100894": Spa Management
+    "100895": Crafts
+    "100896": Salon Management
+    "100898": Human Genetics
+    "100899": Medical Genetics
+    "100900": Molecular Genetics
+    "100901": Genomics
+    "100902": Population Genetics
+    "100906": Applied Microbiology
+    "100907": Medical Microbiology
+    "100908": Veterinary Microbiology
+    "100909": Bacteriology
+    "100910": Virology
+    "100911": Immunology
+    "100912": Blood Sciences
+    "100913": Librarianship
+    "100914": Curatorial Studies
+    "100915": Archives And Records Management
+    "100916": Information Services
+    "100918": Museum Studies
+    "100919": Publicity Studies
+    "100920": Television Studies
+    "100921": Radio Studies
+    "100922": Paper-Based Media Studies
+    "100923": Television Production
+    "100924": Radio Production
+    "100925": Publishing
+    "100926": Electronic Publishing
+    "100927": Online Publishing
+    "100932": Plant Biochemistry
+    "100936": Animal Health
+    "100937": Animal Physiology
+    "100938": Veterinary Pathology
+    "100939": Veterinary Pharmacology
+    "100940": Animal Nutrition
+    "100941": Veterinary Pharmacy
+    "100942": Veterinary Public Health
+    "100945": Crop Protection
+    "100946": Crop Nutrition
+    "100947": Crop Production
+    "100948": Biomolecular Science
+    "100949": Biophysical Science
+    "100950": Occupational Psychology
+    "100952": Developmental Psychology
+    "100953": Child Psychology
+    "100954": Business Psychology
+    "100956": Programming
+    "100958": Psychology Of Ageing
+    "100959": Research Methods In Psychology
+    "100960": Object-Oriented Programming
+    "100961": Natural Language Processing
+    "100962": Research Skills
+    "100963": Knowledge And Information Systems
+    "100966": Neural Computing
+    "100968": Computer Vision
+    "100970": Applied Linguistics
+    "100971": Phonetics And Phonology
+    "100972": Phonetics
+    "100973": Phonology
+    "100974": Livestock
+    "100976": Aquaculture
+    "100977": Rural Estate Management
+    "100978": Farm Management
+    "100979": Game Keeping Management
+    "100985": Health Psychology
+    "100986": Water Resource Management
+    "100989": Cognitive Modelling
+    "100990": Land Management For Recreation
+    "100992": Machine Learning
+    "100993": Cognitive Psychology
+    "100994": Health Informatics
+    "100998": Sustainable Agriculture And Landscape Development
+    "101001": International Agriculture
+    "101003": Psychology Of Religion
+    "101004": Organic Farming
+    "101006": Agricultural Technology
+    "101010": Agricultural Machinery
+    "101013": Timber Engineering
+    "101014": Community Forestry
+    "101016": Sociolinguistics
+    "101017": Food And Beverage Studies
+    "101018": Food Safety
+    "101019": Computer Games Graphics
+    "101020": Computer Games Programming
+    "101021": Baking Technology Management
+    "101022": Brewing
+    "101024": Agricultural Chemistry
+    "101025": Agricultural Botany
+    "101027": Numerical Analysis
+    "101028": Engineering And Industrial Mathematics
+    "101029": Computational Mathematics
+    "101030": Applied Statistics
+    "101031": Medical Statistics
+    "101032": Probability
+    "101033": Stochastic Processes
+    "101034": Statistical Modelling
+    "101035": Psycholinguistics
+    "101037": Comparative Literary Studies
+    "101038": Applied Chemistry
+    "101040": Risk Management
+    "101041": Industrial Chemistry
+    "101042": Colour Chemistry
+    "101043": Inorganic Chemistry
+    "101044": Crystallography
+    "101045": Environmental Chemistry
+    "101046": Marine Chemistry
+    "101048": Environmental Risk
+    "101049": Health Risk
+    "101050": Physical Chemistry
+    "101053": Polymer Chemistry
+    "101054": Oil And Gas Chemistry
+    "101056": Remote Sensing
+    "101058": Mapping Science
+    "101060": Applied Physics
+    "101061": Engineering Physics
+    "101064": Geomorphology
+    "101065": Maritime Geography
+    "101067": Soil Science
+    "101068": Atmospheric Physics
+    "101070": Climate Change
+    "101071": Computational Physics
+    "101072": Pollution Control
+    "101073": Hydrography
+    "101074": Radiation Physics
+    "101075": Photonics And Optical Physics
+    "101076": Laser Physics
+    "101077": Nuclear And Particle Physics
+    "101078": Applied Environmental Sciences
+    "101079": Hydrology
+    "101081": Volcanology
+    "101082": Geological Hazards
+    "101083": Geochemistry
+    "101084": Exploration Geophysics
+    "101085": Specialist Teaching
+    "101086": Geological Oceanography
+    "101087": Special Needs Teaching
+    "101088": Research And Study Skills In Education
+    "101089": Hydrogeology
+    "101090": Study Skills
+    "101091": Quaternary Studies
+    "101093": Exploration Geology
+    "101094": English Literature 1200 - 1700
+    "101095": English Literature 1700 - 1900
+    "101102": Space Science
+    "101103": Planetary Science
+    "101104": Applied Geology
+    "101105": Petroleum Geology
+    "101106": Engineering Geology
+    "101107": Shakespeare Studies
+    "101108": Colonial And Post-Colonial Literature
+    "101109": English As A Second Language
+    "101111": Scottish Literature
+    "101112": Ancient Middle Eastern Languages
+    "101113": Ancient Egyptian Studies
+    "101114": Classical Arabic
+    "101115": Sanskrit Studies
+    "101117": Ancient Hebrew Language
+    "101118": Celtic Studies
+    "101120": Gaelic Language
+    "101121": Irish Language
+    "101124": Latin Studies
+    "101125": Latin Literature
+    "101126": Classical Greek Studies
+    "101129": Classical Reception
+    "101130": Translation Studies
+    "101132": French Literature
+    "101133": French Society And Culture
+    "101134": German Literature
+    "101135": German Society And Culture
+    "101136": Italian Society And Culture
+    "101137": Italian Literature
+    "101138": Spanish Society And Culture
+    "101139": Spanish Literature
+    "101141": Portuguese Studies
+    "101142": Portuguese Language
+    "101143": Brazilian Studies
+    "101144": Portuguese Society And Culture
+    "101145": Scandinavian Studies
+    "101148": Swedish Language
+    "101149": Norwegian Language
+    "101150": Finnish Language
+    "101151": Russian Studies
+    "101152": Polish Studies
+    "101153": Polish Language
+    "101155": Czech Language
+    "101157": Russian Literature
+    "101158": Russian And East European Society And Culture
+    "101159": European Studies
+    "101161": Dutch Studies
+    "101163": Welsh Literature
+    "101164": Chinese Studies
+    "101165": Chinese Languages
+    "101166": Chinese Literature
+    "101167": Chinese Society And Culture Studies
+    "101168": Japanese Studies
+    "101169": Japanese Languages
+    "101170": Japanese Literature
+    "101171": Japanese Society And Culture Studies
+    "101172": South Asian Studies
+    "101174": Hindi Language
+    "101175": Urdu Language
+    "101177": Bengali Language
+    "101179": Indian Society And Culture Studies
+    "101180": Asian Studies
+    "101184": African Studies
+    "101185": African Languages
+    "101188": African Literature
+    "101189": African Society And Culture Studies
+    "101190": Modern Middle Eastern Studies
+    "101191": Modern Middle Eastern Languages
+    "101192": Arabic Languages
+    "101193": Persian Languages
+    "101194": Israeli Studies
+    "101195": Turkish Studies
+    "101196": Modern Middle Eastern Literature
+    "101197": Modern Middle Eastern Society And Culture Studies
+    "101198": Arab Society And Culture Studies
+    "101199": Latin American Studies
+    "101201": Latin American Literature
+    "101202": Latin American Society And Culture Studies
+    "101203": North American Literature Studies
+    "101204": North American Society And Culture Studies
+    "101205": Canadian Studies
+    "101206": Australasian Studies
+    "101207": Caribbean Studies
+    "101210": Biomaterials
+    "101212": Korean Studies
+    "101214": Cinematics
+    "101215": Food Marketing
+    "101216": Bioelectronics
+    "101217": Composite Materials
+    "101218": Forensic Anthropology
+    "101219": Forensic Archaeology
+    "101220": Veterinary Epidemiology
+    "101221": Enterprise And Entrepreneurship
+    "101222": Crime Scene Investigation
+    "101223": Condensed Matter Physics
+    "101233": Cultural Studies
+    "101234": Nanotechnology
+    "101241": Music Therapy
+    "101243": Bioengineering
+    "101246": Professional Practice In Education
+    "101248": French History
+    "101258": Thai Language
+    "101261": Maritime Archaeology
+    "101267": Computer Games
+    "101268": Computer Games Design
+    "101269": Modern Hebrew Language
+    "101271": East Asian Studies
+    "101273": Combined Studies
+    "101274": General Studies
+    "101275": Negotiated Studies
+    "101276": Work Placement Experience (Personal Learning)
+    "101277": Work-Based Learning
+    "101278": Employability Skills (Personal Learning)
+    "101279": Advice And Guidance (Personal Learning)
+    "101288": International Studies
+    "101289": Rehabilitation Studies
+    "101290": Neurological Rehabilitation
+    "101291": Cardiovascular Rehabilitation
+    "101294": Coaching Psychology
+    "101300": Quantum Theory And Applications
+    "101307": Applied Social Science
+    "101308": Facilities Management
+    "101309": Obstetrics And Gynaecology
+    "101311": Hungarian Studies
+    "101312": Czech Studies
+    "101315": Irish Studies
+    "101316": Interior Design And Architecture
+    "101317": Environmental And Public Health
+    "101318": Biodiversity Conservation
+    "101319": Exercise For Health
+    "101320": Art Psychotherapy
+    "101322": Mentorship
+    "101323": Dispute Resolution
+    "101324": Orthopaedics
+    "101325": Paediatrics
+    "101326": Gerontology
+    "101327": Oncology
+    "101329": Dementia Studies
+    "101330": Ultrasound
+    "101331": Gastroenterology
+    "101332": Drug And Alcohol Studies
+    "101333": Epilepsy Care
+    "101334": Allergy
+    "101335": Epidemiology
+    "101336": Anaesthesia
+    "101337": Endocrinology
+    "101338": Diabetes
+    "101339": Dermatology
+    "101340": Hypnotherapy
+    "101341": Psychology Of Communication
+    "101342": Psychology Of Memory And Learning
+    "101343": Transpersonal Psychology
+    "101344": Psychobiology
+    "101345": Evolutionary Psychology
+    "101347": Veterinary Dentistry
+    "101348": Exotic Plants And Crops
+    "101351": Atmosphere-Ocean Interactions
+    "101352": Biogeography
+    "101353": Electrical Power Generation
+    "101354": Electrical Power Distribution
+    "101355": Cybernetics
+    "101356": Paper Technology
+    "101357": Nationalism
+    "101358": Development In Africa
+    "101359": Development In The Americas
+    "101360": African History
+    "101361": Creative Arts And Design
+    "101362": Calligraphy
+    "101363": Psychology Of Music
+    "101366": Swahili And Other Bantu Languages
+    "101367": Hausa Language
+    "101368": Indonesian Language
+    "101369": Vietnamese Language
+    "101371": Nepali Language
+    "101372": South East Asian Studies
+    "101373": Hair And Beauty Sciences
+    "101374": Hair Services
+    "101375": Spa And Water-Based Therapies
+    "101376": Applied Botany
+    "101377": Transcriptomics
+    "101378": Genetic Engineering
+    "101379": Sport Technology
+    "101380": Metabolic Biochemistry
+    "101381": Cognitive Neuroscience
+    "101382": Affective Neuroscience
+    "101383": Psychometrics
+    "101384": Pre-Clinical Veterinary Medicine
+    "101385": Agricultural Irrigation And Drainage
+    "101387": Meat Science
+    "101388": Cereal Science
+    "101389": Organometallic Chemistry
+    "101390": Marine Physics
+    "101391": Electromagnetism
+    "101394": Glaciology And Cryospheric Systems
+    "101396": Solid Mechanics
+    "101397": Turbine Technology
+    "101398": Rail Vehicle Engineering
+    "101399": Analogue Circuit Engineering
+    "101400": Parallel Computing
+    "101401": Microeconomics
+    "101402": Macroeconomics
+    "101403": Feminism
+    "101404": Anarchism
+    "101405": Victimology
+    "101406": Transport Policy
+    "101407": Agricultural Geography
+    "101408": Human Demography
+    "101409": Shorthand And Shorthand Transcription
+    "101410": Historical Linguistics
+    "101412": Scots Language
+    "101413": Irish Language Literature
+    "101414": Coptic Language
+    "101415": Akkadian Language
+    "101416": Sumerian Language
+    "101417": Aramaic Language
+    "101419": Breton Language
+    "101420": Latin Language
+    "101421": Medieval Latin Language
+    "101422": Classical Church Greek
+    "101423": Classical Greek Literature
+    "101424": Danish Language
+    "101425": Scandinavian Literature
+    "101426": Estonian Language
+    "101427": Hungarian Language
+    "101428": South Slavonic Languages
+    "101429": Ukranian Language
+    "101430": Indian Literature Studies
+    "101431": Turkish Languages
+    "101432": Arabic Literature
+    "101433": Persian Literature Studies
+    "101434": Turkish Literature
+    "101435": Oral History
+    "101436": Crime History
+    "101437": Stone Age
+    "101438": Bronze Age
+    "101439": Iron Age
+    "101440": Classical Art And Archaeology
+    "101441": Metaphysics
+    "101442": Epistemology
+    "101443": Scholastic Philosophy
+    "101444": Hinduism
+    "101445": The Qur'An And Islamic Texts
+    "101446": The Torah And Judaic Texts
+    "101447": Folk Music
+    "101448": Opera
+    "101449": Music Theory And Analysis
+    "101450": Applied Music And Musicianship
+    "101451": Popular Music Composition
+    "101452": Body Awareness
+    "101453": Dance And Culture
+    "101454": Community Dance
+    "101455": Stone Crafts
+    "101457": Community Ecology
+    "101458": Population Ecology
+    "101459": Ecotoxicology
+    "101460": Plant Physiology
+    "101461": Veterinary Biochemistry
+    "101462": Quantitative Psychology
+    "101463": Qualitative Psychology
+    "101464": Psychopharmacology
+    "101465": Sociology Of Law
+    "101467": Ruskin Studies
+    "101468": John Donne Studies
+    "101469": T.S. Eliot Studies
+    "101470": Thomas Hardy Studies
+    "101471": Oscar Wilde Studies
+    "101472": Chaucer Studies
+    "101473": Brontës Studies
+    "101474": Thomas Pynchon Studies
+    "101475": Philip Larkin Studies
+    "101476": D.H. Lawrence Studies
+    "101477": Charles Dickens Studies
+    "101478": Jane Austen Studies
+    "101479": James Joyce Studies
+    "101480": Margaret Atwood Studies
+    "101481": Samuel Beckett Studies
+    "101482": Wilkie Collins Studies
+    "101483": Byron Studies
+    "101484": Shelley Studies
+    "101485": Milton Studies
+    "101486": J. M. Coetzee Studies
+    "101487": Christopher Marlowe Studies
+    "101488": Walter Scott Studies
+    "101489": Robert Louis Stevenson Studies
+    "101490": Robert Burns Studies
+    "101491": Virginia Woolf Studies
+    "101492": Bob Dylan Studies
+    "101493": Dylan Thomas Studies
+    "101494": W. B. Yeats Studies
+    "101495": Joseph Conrad Studies
+    "101496": Salman Rushdie Studies
+    "101497": Gaelic Literature
+    "101498": Scandinavian History
+    "101499": Russian Society And Culture
+    "101500": Polish Society And Culture
+    "101501": Czech Society And Culture
+    "101503": Persian Society And Culture Studies
+    "101504": Turkish Society And Culture Studies
+    "101505": Carpentry And Joinery
+    "101506": Liberalism
+    "101507": Conservatism
+    "101508": Socialism
+    "101509": Fascism
+    "101510": Environmentalism
+    "101511": Ophthalmic Dispensing
+    "999998": Not Applicable
+    "999999": Not Known
