@@ -1662,7 +1662,6 @@ en:
               missing: Select a CSV file
               empty: The selected file is empty
               too_large: The selected file must be smaller than 1MB
-              encoding_not_accepted: "The uploaded file is in an unsupported file encoding (%{encoding}). Please upload a file with UTF-8 or ISO-8859-1 encoding."
               is_not_csv: The selected file must be a CSV
               no_header_detected: No header was detected
               no_trainees: The selected file must contain at least one trainee
