@@ -12,7 +12,7 @@ module BulkUpdate
 
     def initialize(provider: nil, file: nil)
       @provider = provider
-      @file     = file
+      @file     = enforce_utf8(file) if file
       @upload   = build_upload
     end
 
@@ -20,10 +20,30 @@ module BulkUpdate
       return false unless valid?
 
       upload.attributes = upload_attributes
+
       upload.save!
     end
 
   private
+
+    def enforce_utf8(file)
+      tempfile = file.tempfile
+      contents = tempfile.read.force_encoding("ASCII-8BIT")
+
+      if contents.present?
+        detection     = CharlockHolmes::EncodingDetector.detect(contents)
+        utf8_contents = CharlockHolmes::Converter.convert(contents, detection.fetch(:encoding, ENCODING), ENCODING)
+        utf8_csv_data = CSVSafe.new(utf8_contents, **CSV_ARGS).read
+
+        tempfile.rewind
+        tempfile.truncate(0)
+        tempfile.write(utf8_csv_data)
+      end
+
+      tempfile.rewind
+
+      file
+    end
 
     def upload_attributes
       {
@@ -38,11 +58,7 @@ module BulkUpdate
 
       file.tempfile.rewind
 
-      @csv ||= CSVSafe.new(file.tempfile, **CSV_ARGS).read
-    end
-
-    def tempfile
-      @tempfile ||= file&.tempfile
+      @csv ||= CSV.read(file.tempfile, encoding: ENCODING, headers: true)
     end
 
     def validate_file!

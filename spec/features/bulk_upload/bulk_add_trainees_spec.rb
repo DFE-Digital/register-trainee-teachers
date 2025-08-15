@@ -526,16 +526,21 @@ feature "bulk add trainees" do
       end
 
       scenario "when the uploaded file has mixed encoding" do
-        when_there_is_already_one_trainee_in_register
-        and_i_visit_the_bulk_update_index_page
+        when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
 
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-        and_i_attach_a_file_with_a_mixed_encoding
+        and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
         and_i_click_the_upload_button
-        and_i_click_on_continue_button
 
+        then_i_see_the_upload_page_with_errors(headers_encoding: true)
+
+        when_i_attach_a_file_with_a_mixed_encoding_in_the_rows
+        and_i_click_the_upload_button
+        then_i_see_the_new_bulk_update_import_page
+
+        and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
 
@@ -886,8 +891,14 @@ private
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
-  def and_i_attach_a_file_with_a_mixed_encoding
-    filename = "mixed_encoding.csv"
+  def and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
+    filename = "mixed_headers_encoding.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
+  def when_i_attach_a_file_with_a_mixed_encoding_in_the_rows
+    filename = "mixed_rows_encoding.csv"
 
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
@@ -940,17 +951,19 @@ private
     click_on "Upload CSV"
   end
 
-  def then_i_see_the_upload_page_with_errors(empty: false, encoding: false)
+  def then_i_see_the_upload_page_with_errors(empty: false, headers_encoding: false)
     expect(page).to have_current_path(bulk_update_add_trainees_uploads_path)
-    and_i_see_there_is_a_problem_errors(empty:, encoding:)
+    and_i_see_there_is_a_problem_errors(empty:, headers_encoding:)
   end
 
 
-  def and_i_see_there_is_a_problem_errors(empty: false, encoding: false)
+  def and_i_see_there_is_a_problem_errors(empty: false, headers_encoding: false)
     content = if empty
                 "The selected file is empty"
-              elsif encoding
-                "The uploaded file is in an unsupported file encoding (windows-1252). Please upload a file with UTF-8 or ISO-8859-1 encoding."
+              elsif headers_encoding
+                "Your file’s column names need to match the CSV template. " \
+                "Your file is missing the following columns: 'Application ID'. " \
+                "Your file has the following extra columns: 'Ápplication ID'"
               else
                 "Select a CSV file"
               end
@@ -1032,7 +1045,7 @@ private
 
   def then_i_can_see_the_new_trainees
     expect(page).to have_content("Spencer Murphy")
-    expect(page).to have_content("Adrianne Koelpin")
+    expect(page).to have_content(/Adrianne Ko(e|é)lpin/)
     expect(page).to have_content("Sacha Bechtelar")
     expect(page).to have_content("Rico Corkery")
     expect(page).to have_content("Chantelle Raynor")
