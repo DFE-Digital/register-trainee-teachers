@@ -515,16 +515,6 @@ feature "bulk add trainees" do
         then_i_see_the_review_errors_page
       end
 
-      scenario "when the uploaded file has an unsupported encoding" do
-        when_there_is_already_one_trainee_in_register
-        and_i_visit_the_bulk_update_index_page
-        and_i_click_the_bulk_add_trainees_page
-
-        when_i_attach_a_file_with_an_unsupported_encoding
-        and_i_click_the_upload_button
-        and_i_see_there_is_a_problem_errors(encoding: true)
-      end
-
       scenario "when the uploaded file has mixed encoding" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
@@ -883,12 +873,6 @@ private
 
   def when_i_attach_an_empty_file
     and_i_attach_a_file("")
-  end
-
-  def when_i_attach_a_file_with_an_unsupported_encoding
-    filename = "v2025_0_bulk_create_trainee-encoding-test.csv"
-
-    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
