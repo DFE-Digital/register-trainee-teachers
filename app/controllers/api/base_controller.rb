@@ -71,6 +71,11 @@ module Api
       auth_token.update_last_used_at!
     end
 
+    def enhanced_errors?
+      request.headers["ENHANCED_ERRORS"] == "true"
+    end
+    alias_method :enhanced_errors, :enhanced_errors?
+
   private
 
     alias_method :version, :current_version
