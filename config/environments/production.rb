@@ -88,4 +88,7 @@ Rails.application.configure do
   )
 
   config.active_record.logger = nil # Don't log SQL in production
+
+  # To stop missing precompiled assets causing 500 errors in production
+  config.assets.check_precompiled_asset = false
 end
