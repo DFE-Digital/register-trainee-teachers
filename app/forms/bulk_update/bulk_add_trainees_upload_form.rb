@@ -37,13 +37,11 @@ module BulkUpdate
 
       if contents.present?
         detection     = CharlockHolmes::EncodingDetector.detect(contents)
-
         utf8_contents = CharlockHolmes::Converter.convert(contents, detection.fetch(:encoding, ENCODING), ENCODING)
-        utf8_csv_data = CSVSafe.new(utf8_contents, **CSV_ARGS).read
 
         tempfile.rewind
         tempfile.truncate(0)
-        tempfile.write(utf8_csv_data)
+        tempfile.write(utf8_contents)
       end
 
       tempfile.rewind
