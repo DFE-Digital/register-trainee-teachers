@@ -81,16 +81,16 @@ describe GuidanceController do
     end
   end
 
-  describe "#registering_trainees_through_hesa" do
+  describe "#registering_trainees_through_api_or_csv" do
     it "returns a 200 status code" do
-      get :registering_trainees_through_hesa
+      get :registering_trainees_through_api_or_csv
       expect(response).to have_http_status(:ok)
     end
 
     it "renders the correct template and page" do
-      get :registering_trainees_through_hesa
+      get :registering_trainees_through_api_or_csv
       expect(response).to render_template("guidance")
-      expect(response).to render_template("registering_trainees_through_hesa")
+      expect(response).to render_template("registering_trainees_through_api_or_csv")
     end
   end
 
