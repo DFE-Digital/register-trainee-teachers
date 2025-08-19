@@ -7,7 +7,20 @@ module BulkUpdate
     describe ValidateCsv do
       subject(:service) { described_class.new(csv:, record:) }
 
-      let(:record) { ::BulkUpdate::BulkAddTraineesUploadForm.new }
+      let(:tempfile) do
+        f = Tempfile.new(["test-validate-csv", ".csv"])
+        f.write(csv)
+        f.rewind
+        f
+      end
+      let(:file) do
+        Rack::Test::UploadedFile.new(
+          tempfile.path,
+          "text/csv"
+        )
+      end
+
+      let(:record) { ::BulkUpdate::BulkAddTraineesUploadForm.new(file:) }
 
       before do
         service.validate!
