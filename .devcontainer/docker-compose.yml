@@ -8,23 +8,30 @@ services:
       - "5000:5000"
     depends_on:
       - db
+      - redis
     environment:
       - DB_HOSTNAME=db
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
+      - REDIS_HOST=redis
+      - REDIS_URL=redis://redis:6379
+      - REDIS_CACHE_URL=redis://redis:6379/1
+      - REDIS_QUEUE_URL=redis://redis:6379/0
+
   db:
     image: postgres:13
     environment:
       - POSTGRES_PASSWORD=developmentpassword
+
   redis:
-    image: redis
+    image: redis:7
+
   sidekiq:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     command: bundle exec sidekiq -c 5 -C config/sidekiq.yml
     depends_on:
-      - web
       - db
       - redis
     environment:
@@ -32,4 +39,7 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=developmentpassword
       - SETTINGS__APPLICATION=register-trainee-teachers-bg-jobs
-      - REDIS_QUEUE_URL=redis://redis:6379
+      - REDIS_HOST=redis
+      - REDIS_URL=redis://redis:6379
+      - REDIS_QUEUE_URL=redis://redis:6379/0
+      - REDIS_CACHE_URL=redis://redis:6379/1

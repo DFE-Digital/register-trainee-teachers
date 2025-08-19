@@ -1,5 +1,6 @@
 volumes:
   dbdata:
+  redis-data:
 services:
   db:
     image: postgres:13-alpine
@@ -8,10 +9,11 @@ services:
       - dbdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=developmentpassword
-
   redis:
-    image: redis
-
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
   web:
     build:
       context: .
