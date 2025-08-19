@@ -77,8 +77,8 @@ module BulkUpdate
 
       let(:expected_download_contents) do
         "#{valid_columns}\n" \
-        "0123456789,Bob,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
-        "9876543210,Alice,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n"
+          "0123456789,Bob,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
+          "9876543210,Alice,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n"
       end
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
@@ -101,10 +101,10 @@ module BulkUpdate
       let(:test_file_contents) { "#{valid_columns}\n\n0123456789,Bob,Roberts\n\n9876543210,Alice,Roberts\n" }
       let(:expected_download_contents) do
         "#{valid_columns}\n" \
-        ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
-        "0123456789,Bob,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
-        ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
-        "9876543210,Alice,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n"
+          ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
+          "0123456789,Bob,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
+          ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n" \
+          "9876543210,Alice,Roberts,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n"
       end
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do

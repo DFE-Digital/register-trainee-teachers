@@ -16,7 +16,7 @@ module BulkUpdate
       let(:file) do
         Rack::Test::UploadedFile.new(
           tempfile.path,
-          "text/csv"
+          "text/csv",
         )
       end
 
