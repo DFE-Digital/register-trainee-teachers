@@ -33,7 +33,7 @@ module BulkUpdate
 
       tempfile.rewind
 
-      contents = tempfile.read.force_encoding("ASCII-8BIT")
+      contents = tempfile.read.force_encoding(Encoding::ASCII_8BIT)
 
       if contents.present?
         detection     = CharlockHolmes::EncodingDetector.detect(contents)

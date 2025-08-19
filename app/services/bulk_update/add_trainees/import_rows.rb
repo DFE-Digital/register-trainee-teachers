@@ -120,7 +120,7 @@ module BulkUpdate
 
         ActiveRecord::Base.transaction do
           if dry_run
-            file_content = trainee_upload.download.force_encoding("UTF-8")
+            file_content = trainee_upload.download.force_encoding(BulkUpdate::AddTrainees::Config::ENCODING)
 
             CSV.parse(file_content, headers: true).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
