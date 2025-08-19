@@ -9,7 +9,7 @@ class GuidanceController < ApplicationController
   end
 
   def about_register_trainee_teachers; end
-  def registering_trainees_through_hesa; end
+  def registering_trainees_through_api_or_csv; end
   def check_data; end
   def bulk_recommend_trainees; end
   def manually_registering_trainees; end
