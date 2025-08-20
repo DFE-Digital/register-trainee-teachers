@@ -12,10 +12,8 @@ module BulkUpdate
 
     def initialize(provider: nil, file: nil)
       @provider = provider
-      @file     = file
+      @file     = enforce_utf8(file)
       @upload   = build_upload
-
-      enforce_utf8 if file
     end
 
     def save
@@ -28,7 +26,9 @@ module BulkUpdate
 
   private
 
-    def enforce_utf8
+    def enforce_utf8(file)
+      return if file.nil?
+
       tempfile = file.tempfile
 
       tempfile.rewind
