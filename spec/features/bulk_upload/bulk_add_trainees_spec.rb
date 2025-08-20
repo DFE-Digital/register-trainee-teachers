@@ -518,9 +518,7 @@ feature "bulk add trainees" do
       scenario "when the uploaded file has mixed encoding" do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
-
-        when_i_visit_the_bulk_update_index_page
-        and_i_click_the_bulk_add_trainees_page
+        and_i_see_instructions_on_how_to_bulk_add_trainees
         and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
         and_i_click_the_upload_button
 
@@ -829,6 +827,7 @@ private
   def then_i_see_instructions_on_how_to_bulk_add_trainees
     expect(page).to have_current_path(new_bulk_update_add_trainees_upload_path)
     expect(page).to have_content("Bulk add new trainees")
+    expect(page).not_to have_content("There is a problem")
   end
 
   def and_i_see_the_empty_csv_link

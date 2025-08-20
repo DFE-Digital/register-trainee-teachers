@@ -15,7 +15,7 @@ module BulkUpdate
       @file     = file
       @upload   = build_upload
 
-      enforce_utf8 if validate_file!
+      enforce_utf8 if file
     end
 
     def save
