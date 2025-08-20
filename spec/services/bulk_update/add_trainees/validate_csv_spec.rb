@@ -10,7 +10,6 @@ module BulkUpdate
       let(:tempfile) do
         f = Tempfile.new(["test-validate-csv", ".csv"])
         f.write(csv)
-        f.rewind
         f
       end
       let(:file) do
