@@ -36,12 +36,13 @@ module BulkUpdate
       contents = tempfile.read.force_encoding(Encoding::ASCII_8BIT)
 
       if contents.present?
-        detection     = CharlockHolmes::EncodingDetector.detect(contents)
-        utf8_contents = CharlockHolmes::Converter.convert(contents, detection.fetch(:encoding, ENCODING), ENCODING)
+        detection           = CharlockHolmes::EncodingDetector.detect(contents)
+        utf8_contents       = CharlockHolmes::Converter.convert(contents, detection.fetch(:encoding, ENCODING), ENCODING)
+        normalised_contents = utf8_contents.gsub(/\r\n?/, "\n")
 
         tempfile.rewind
         tempfile.truncate(0)
-        tempfile.write(utf8_contents)
+        tempfile.write(normalised_contents)
       end
 
       tempfile.rewind
