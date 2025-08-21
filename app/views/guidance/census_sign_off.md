@@ -30,14 +30,7 @@ You can check your trainee data is correct by exporting your trainee records as 
 
 ## Signing off your trainee data
 
-You will need to complete <a href="https://forms.office.com/e/TB5dcbCJuF" class="govuk-link" rel="noreferrer noopener" target="_blank">this form to sign off the data on behalf of your organisation (opens in new window).</a>
-
-## Before you start
-
-You should:
-
-* allocate time to check the accuracy of your trainee data
-* confirm availability of your senior officer to sign off &mdash; do not leave this to the last week in October
+This now takes place within the service. You will be prompted to check the accuracy of all information before completing sign-off.
 
 ## How your trainee data will be used
 
