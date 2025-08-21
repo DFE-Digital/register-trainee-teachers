@@ -299,4 +299,95 @@ namespace :example_data do
       end
     end
   end
+
+  desc "Create a smaller set of personas, providers and trainees (approx 10% of full size)"
+  task generate_light: :environment do
+    raise "THIS TASK CANNOT BE RUN IN PRODUCTION" if Rails.env.production?
+
+    Trainee.reset_column_information
+    Faker::Config.locale = "en-GB"
+
+    enabled_routes = TRAINING_ROUTE_FEATURE_FLAGS.select { |flag| FeatureService.enabled?("routes.#{flag}") }
+      .compact
+      .push(:assessment_only)
+    enabled_course_routes = enabled_routes & TRAINING_ROUTES_FOR_COURSE.keys.map(&:to_sym)
+
+    lead_partners = FactoryBot.create_list(:lead_partner, 5, :school)
+
+    REAL_PUBLISH_COURSES_WITH_SUBJECTS.values.flatten.uniq.map { |name| FactoryBot.create(:subject, name:) }
+
+    PERSONAS.take(2).each do |persona_attributes| # only 2 personas instead of all
+      persona = Persona.create_with(dttp_id: SecureRandom.uuid).find_or_create_by!(
+        first_name: persona_attributes[:first_name],
+        last_name: persona_attributes[:last_name],
+        email: persona_attributes[:email],
+        system_admin: persona_attributes[:system_admin],
+      )
+
+      next unless persona_attributes[:provider]
+
+      provider = FactoryBot.create(
+        :provider,
+        :with_dttp_id,
+        name: persona_attributes[:provider],
+        code: persona_attributes[:provider_code].presence || Faker::Alphanumeric.alphanumeric(number: 3).upcase,
+      )
+
+      ProviderUser.find_or_create_by!(user: persona, provider: provider)
+      FactoryBot.create(:payment_schedule, :for_full_year, payable: provider)
+      FactoryBot.create(:trainee_summary, :with_bursary_and_scholarship_and_multiple_amounts, payable: provider)
+
+      FactoryBot.create(:authentication_token, provider:)
+
+      if persona_attributes[:lead_partner]
+        lead_partner = lead_partners.sample
+        LeadPartnerUser.create!(user: persona, lead_partner: lead_partner)
+      end
+
+      enabled_course_routes.each do |route|
+        REAL_PUBLISH_COURSES_WITH_SUBJECTS.first(5).each do |course_name, subject_names|
+          FactoryBot.build(
+            :course,
+            accredited_body_code: provider.code,
+            published_start_date: Date.new(Settings.current_recruitment_cycle_year, 9, 1),
+            route: route,
+            name: course_name,
+            level: course_name.include?("Primary") ? :primary : :secondary,
+            study_mode: COURSE_STUDY_MODE_ENUMS.keys.sample,
+            recruitment_cycle_year: Settings.current_recruitment_cycle_year,
+          ) { |course|
+            course.subjects = Subject.where(name: subject_names)
+          }.save!
+        end
+      end
+
+      nationalities = Nationality.all
+
+      enabled_routes.each do |route|
+        %i[draft submitted_for_trn awarded].each do |state|
+          sample_size = rand(1..2)
+
+          sample_size.times do
+            attrs = {
+              nationalities: [nationalities.sample],
+              degrees: [FactoryBot.build(:degree, :uk_degree_with_details)],
+              provider: provider,
+            }
+
+            course = provider.courses.where(route:).sample
+            if course
+              attrs.merge!(
+                course_uuid: course.uuid,
+                itt_start_date: course.published_start_date,
+                itt_end_date: course.published_start_date + 9.months,
+              )
+            end
+
+            trainee = FactoryBot.create(:trainee, route, state, attrs)
+            FormStore.clear_all(trainee.id)
+          end
+        end
+      end
+    end
+  end
 end
