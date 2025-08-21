@@ -8,8 +8,6 @@ You must use Register trainee teachers (Register) to:
 - withdraw a trainee from teacher training
 - recommend a trainee for qualified teacher status (QTS) or early years teacher status (EYTS)
 
-If you registered a trainee using the Higher Education Statistics Agency (HESA) service, you can use it to defer the trainee or reinstate them when they return to training. Otherwise you must use Register.
-
 ## Withdraw a trainee from teacher training
 
 You must withdraw a trainee if they’re no longer training for QTS or EYTS. This includes trainees who have:
