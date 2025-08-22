@@ -74,6 +74,8 @@ FROM ruby:3.4.2-alpine3.20
 ENV BUNDLE_PATH=/usr/local/bundle
 ENV APP_HOME=/app
 
+RUN apk add --no-cache icu-libs icu-data-full libpq shared-mime-info yaml zlib
+
 WORKDIR $APP_HOME
 
 RUN apk add --update --no-cache tzdata && \
