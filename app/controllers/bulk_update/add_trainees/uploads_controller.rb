@@ -48,12 +48,16 @@ module BulkUpdate
         authorize(@bulk_add_trainee_upload_form.upload)
 
         if @bulk_add_trainee_upload_form.save
+          SendCsvSubmittedForProcessingFirstStageEmailService.call(upload: @bulk_add_trainee_upload_form.upload)
+
           redirect_to(
             bulk_update_add_trainees_upload_path(@bulk_add_trainee_upload_form.upload),
             flash: { success: t(".success") },
           )
         elsif bulk_update_trainee_upload_id
           authorize(bulk_update_trainee_upload)
+
+          SendCsvSubmittedForProcessingFirstStageEmailService.call(upload: bulk_update_trainee_upload)
 
           render(:show)
         else
