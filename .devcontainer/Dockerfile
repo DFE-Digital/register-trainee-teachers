@@ -36,9 +36,6 @@ RUN apk add --no-cache --virtual .build-deps \
 COPY ../package.json ../yarn.lock ./
 RUN yarn install --frozen-lockfile --ignore-scripts
 
-# Copy app source
-COPY . .
-
 # Ensure PATH is set properly in shell
 RUN echo 'export PATH=/usr/local/bin:$PATH' > /root/.ashrc
 ENV ENV="/root/.ashrc"
