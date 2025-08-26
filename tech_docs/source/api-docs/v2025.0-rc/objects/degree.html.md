@@ -27,7 +27,9 @@ weight: 3
         string (limited to 2 characters), required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
-        The country where the degree was awarded. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/degctry">HESA degree country field</a>
+        The country where the degree was awarded.
+        Coded according to the
+        <a href="/reference-data/v2025.0-rc/country.html">degree country reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>US</code>
@@ -41,7 +43,8 @@ weight: 3
         string (limited to 2 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The grade of the degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degclss">HESA degree class field</a>
+        The grade of the degree. Coded according to
+        <a href="/reference-data/v2025.0-rc/grade.html">degree class reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>02</code>
@@ -55,7 +58,8 @@ weight: 3
         string (limited to 3 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The type of UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degtype">HESA degree type field</a>
+        The type of UK degree. Coded according to
+        <a href="/reference-data/v2025.0-rc/uk-degree.html">degree type reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>083</code>
@@ -69,7 +73,8 @@ weight: 3
         string (limited to 3 characters), required if degree is <strong>not</strong> from the UK
       </p>
       <p class="govuk-body">
-        The type of non-UK degree. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degtype">HESA degree type field</a>
+        The type of non-UK degree. Coded according to
+        <a href="/reference-data/v2025.0-rc/non-uk-degree.html">non-UK degree type reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>051</code>
@@ -83,7 +88,8 @@ weight: 3
         string (limited to 6 characters), required
       </p>
       <p class="govuk-body">
-        The degree subject. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1. Coded according to <a href="https://www.hesa.ac.uk/collection/c24053/e/degsbj">HESA degree subject field</a>
+        The degree subject. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1. Coded according to
+        <a href="/reference-data/v2025.0-rc/subject.html">degree subject reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -97,7 +103,8 @@ weight: 3
         string (limited to 4 characters), required if degree is from the UK
       </p>
       <p class="govuk-body">
-        The awarding institution. Coded according to the <a href="https://www.hesa.ac.uk/collection/c24053/e/degest">HESA degree establishment field</a>
+        The awarding institution. Coded according to the
+        <a href="/reference-data/v2025.0-rc/institution.html">awarding institution reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>0116</code>
