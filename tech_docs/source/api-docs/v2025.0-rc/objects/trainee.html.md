@@ -149,7 +149,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The nationality of the trainee. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/nation">HESA nationality field</a>
+          href="/reference-data/v2025.0-rc/nationality.html">nationality reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>GB</code>
@@ -178,7 +178,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The ethnicity of the trainee. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">HESA ethnicity field</a>. The values for
+          href="/reference-data/v2025.0-rc/ethnicity.html">ethnicity reference data specification</a>. The values for
         <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code>
         value.
       </p>
