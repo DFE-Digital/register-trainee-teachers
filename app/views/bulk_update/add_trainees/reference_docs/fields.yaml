@@ -100,14 +100,14 @@
   technical: nationality
   hesa_alignment: NATION
   description: This field defines the country of legal nationality.
-  format: "[HESA nationality codes](https://www.hesa.ac.uk/collection/c24053/e/nation)"
+  format: "[nationality codes](/reference-data/v2025.0-rc/nationality.html)"
   example: "`GB`"
   validation: Optional
 - field_name: Ethnicity
   technical: ethnicity
   hesa_alignment: ETHNIC
   description: This field records a student’s ethnicity.
-  format: "[HESA ethnicity reference codes](https://www.hesa.ac.uk/collection/c24053/e/ethnic)"
+  format: "[ethnicity reference codes](/reference-data/v2025.0-rc/ethnicity.html)"
   example:
     "`103` for example is the code to use if the ethnicity is Asian - Indian or Indian British."
   validation: Optional
@@ -117,7 +117,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability1.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 2
@@ -126,7 +126,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability2.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 3
@@ -135,7 +135,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability3.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 4
@@ -144,7 +144,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability4.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 5
@@ -153,7 +153,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability5.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 6
@@ -162,7 +162,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability6.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 7
@@ -171,7 +171,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability7.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 8
@@ -180,7 +180,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability8.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: Disability 9
@@ -189,7 +189,7 @@
   description:
     This field records the type of disability that a student has, on the
     basis of the student’s own self-assessment.
-  format: "[HESA disability reference codes](https://www.hesa.ac.uk/collection/c24053/e/disable)"
+  format: "[disability reference codes](/reference-data/v2025.0-rc/disability9.html)"
   example: "`51` for example is the code to use for learning difference such as dyslexia, dyspraxia or ADHD"
   validation: Optional
 - field_name: ITT Aim
@@ -252,7 +252,7 @@
     First subject of the ITT course
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
+  format: "[subject codes](/reference-data/v2025.0-rc/course-subject-one.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/validate_publish_course_form.rb#L13
@@ -263,7 +263,7 @@
     Second subject of the ITT course.
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
+  format: "[subject codes](/reference-data/v2025.0-rc/course-subject-two.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
 - field_name: Course Subject Three
@@ -273,7 +273,7 @@
     Third subject of the ITT course.
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: "[HESA subject codes](https://www.hesa.ac.uk/collection/c24053/e/sbjca)"
+  format: "[subject codes](/reference-data/v2025.0-rc/course-subject-three.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
 - field_name: Study Mode
@@ -316,7 +316,7 @@
   description: This field describes in more detail the student’s initial teacher
     training aim
   format: |-
-    [HESA course phase reference codes](https://www.hesa.ac.uk/collection/c24053/e/ittphsc)
+    [course phase reference codes](/reference-data/v2025.0-rc/course-age-range.html)
 
     The following values are invalid for this field:
 
@@ -497,7 +497,7 @@
     The type of UK degree if the trainee holds any previous UK degrees.
 
     Only the highest previous degree qualification should be submitted.
-  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype)"
+  format: "[codes for UK degree type](/reference-data/v2025.0-rc/uk-degree.html)"
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L37
@@ -505,7 +505,7 @@
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
-  format: "[HESA codes for degree type](https://www.hesa.ac.uk/collection/c24053/e/degtype) for degree type list of unique 3 digit numbers."
+  format: "[codes for non-UK degree type](/reference-data/v2025.0-rc/non-uk-degree.html) for degree type list of unique 3 digit numbers."
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
@@ -513,7 +513,7 @@
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
-  format: "[HESA codes for degree subjects](https://www.hesa.ac.uk/collection/c24053/e/degsbj)"
+  format: "[codes for degree subjects](/reference-data/v2025.0-rc/subject.html)"
   example: "`100048` for example is the design degree subject as part of a previous degree"
   validation: Conditional - mandatory if specifying a degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L34
@@ -521,7 +521,7 @@
   technical: grade
   hesa_alignment: DEGCLSS
   description: The grade of the degree.
-  format: "[HESA codes for the qualification class of a degree](https://www.hesa.ac.uk/collection/c24053/e/degclss)"
+  format: "[codes for the qualification class of a degree](/reference-data/v2025.0-rc/grade.html)"
   example: "`01` for example is First class honours"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L38
@@ -545,7 +545,7 @@
   description:
     This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
-  format: "[HESA codes for degree establishment if a UK provider](https://www.hesa.ac.uk/collection/c24053/e/degest)"
+  format: "[codes for degree establishment if a UK provider](/reference-data/v2025.0-rc/institution.html)"
   example: "`1101` for example is Hull College"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L36
@@ -555,7 +555,7 @@
   description:
     This records the country where the student’s previous qualification
     was awarded
-  format: "[HESA degree country codes](https://www.hesa.ac.uk/collection/c24053/e/degctry)"
+  format: "[degree country codes](/reference-data/v2025.0-rc/country.html)"
   example:
     "`AU` is an example of using the previous qualification country code for Australia"
   validation: Conditional - mandatory if specifying a non-UK degree
