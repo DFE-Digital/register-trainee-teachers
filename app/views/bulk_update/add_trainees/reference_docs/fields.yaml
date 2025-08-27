@@ -100,7 +100,7 @@
   technical: nationality
   hesa_alignment: NATION
   description: This field defines the country of legal nationality.
-  format: "[nationality codes](/reference-data/v2025.0-rc/nationality.html)"
+  format: "[nationality reference codes](/reference-data/v2025.0-rc/nationality.html)"
   example: "`GB`"
   validation: Optional
 - field_name: Ethnicity
@@ -252,7 +252,7 @@
     First subject of the ITT course
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: "[subject codes](/reference-data/v2025.0-rc/course-subject-one.html)"
+  format: "[course subject reference codes](/reference-data/v2025.0-rc/course-subject-one.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/validate_publish_course_form.rb#L13
@@ -263,7 +263,7 @@
     Second subject of the ITT course.
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: "[subject codes](/reference-data/v2025.0-rc/course-subject-two.html)"
+  format: "[course subject reference codes](/reference-data/v2025.0-rc/course-subject-two.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
 - field_name: Course Subject Three
@@ -273,7 +273,7 @@
     Third subject of the ITT course.
 
     Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
-  format: "[subject codes](/reference-data/v2025.0-rc/course-subject-three.html)"
+  format: "[course subject reference codes](/reference-data/v2025.0-rc/course-subject-three.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
 - field_name: Study Mode
@@ -497,7 +497,7 @@
     The type of UK degree if the trainee holds any previous UK degrees.
 
     Only the highest previous degree qualification should be submitted.
-  format: "[codes for UK degree type](/reference-data/v2025.0-rc/uk-degree.html)"
+  format: "[UK degree type reference codes](/reference-data/v2025.0-rc/uk-degree.html)"
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L37
@@ -505,7 +505,7 @@
   technical: non_uk_degree
   hesa_alignment: DEGTYPE
   description: The type of non-UK degree.
-  format: "[codes for non-UK degree type](/reference-data/v2025.0-rc/non-uk-degree.html) for degree type list of unique 3 digit numbers."
+  format: "[non-UK degree type reference codes](/reference-data/v2025.0-rc/non-uk-degree.html) for degree type list of unique 3 digit numbers."
   example: "`051` for example is Bachelor of Arts (BA)"
   validation: Conditional - mandatory if specifying a non-UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L42
@@ -513,7 +513,7 @@
   technical: subject
   hesa_alignment: DEGSBJ
   description: This field holds the subject(s) of the student’s previous degree. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1.
-  format: "[codes for degree subjects](/reference-data/v2025.0-rc/subject.html)"
+  format: "[degree subject reference codes](/reference-data/v2025.0-rc/subject.html)"
   example: "`100048` for example is the design degree subject as part of a previous degree"
   validation: Conditional - mandatory if specifying a degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L34
@@ -521,7 +521,7 @@
   technical: grade
   hesa_alignment: DEGCLSS
   description: The grade of the degree.
-  format: "[codes for the degree grade](/reference-data/v2025.0-rc/grade.html)"
+  format: "[degree grade reference codes](/reference-data/v2025.0-rc/grade.html)"
   example: "`01` for example is First class honours"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L38
@@ -545,7 +545,7 @@
   description:
     This records the provider where the student’s previous qualification
     was awarded, if a UK provider.
-  format: "[codes for degree establishment if a UK provider](/reference-data/v2025.0-rc/institution.html)"
+  format: "[awarding institution reference codes if a UK provider](/reference-data/v2025.0-rc/institution.html)"
   example: "`1101` for example is Hull College"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L36
@@ -555,7 +555,7 @@
   description:
     This records the country where the student’s previous qualification
     was awarded
-  format: "[degree country codes](/reference-data/v2025.0-rc/country.html)"
+  format: "[degree country reference codes](/reference-data/v2025.0-rc/country.html)"
   example:
     "`AU` is an example of using the previous qualification country code for Australia"
   validation: Conditional - mandatory if specifying a non-UK degree
