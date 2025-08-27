@@ -29,4 +29,4 @@ The API works directly with your SRS system. To use this, you need to talk to yo
 
 The API works by using a unique authentication token to link your data with Register trainee teachers. You can create your own token by navigating to the ‘organisation’ section of the Register service. 
 
-For full guidance see the [Register API documentation](/api-docs/#register-api-documentation).
+For full guidance see the [Register API documentation](/api-docs/).
