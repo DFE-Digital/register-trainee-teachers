@@ -275,7 +275,7 @@ Rails.application.routes.draw do
     get "/about-register-trainee-teachers", to: "guidance#about_register_trainee_teachers"
     get "/dates-and-deadlines", to: "guidance#dates_and_deadlines"
     get "/manually-registering-trainees", to: "guidance#manually_registering_trainees"
-    get "/registering-trainees-through-hesa", to: "guidance#registering_trainees_through_hesa"
+    get "/registering-trainees-through-api-or-csv", to: "guidance#registering_trainees_through_api_or_csv"
     get "/check-data", to: "guidance#check_data"
     get "/census-sign-off", to: "guidance#census_sign_off"
     get "/performance-profiles", to: "guidance#performance_profiles"
