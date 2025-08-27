@@ -74,8 +74,6 @@ namespace :load_test do
         end
       end
 
-      file_path = Rails.root.join("tmp/load_test.csv")
-
       tempfile = Tempfile.new(["load_test", "csv"])
       tempfile.write(content)
       tempfile.rewind
