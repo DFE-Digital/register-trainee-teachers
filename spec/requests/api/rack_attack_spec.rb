@@ -23,9 +23,9 @@ RSpec.describe "Rack::Attack settings" do
         within_same_period do
           (limit + 1).times do
             get "/api/v2025.0/info", headers: {
-                                          authorization: "Bearer #{token}",
-                                        },
-                                        env: { REMOTE_ADDR: ip }
+                                       authorization: "Bearer #{token}",
+                                     },
+                                     env: { REMOTE_ADDR: ip }
           end
 
           expect(response).to have_http_status(:too_many_requests)
@@ -39,9 +39,9 @@ RSpec.describe "Rack::Attack settings" do
         within_same_period do
           limit.times do
             get "/api/v2025.0/info", headers: {
-                                          authorization: "Bearer #{token}",
-                                        },
-                                        env: { REMOTE_ADDR: ip }
+                                       authorization: "Bearer #{token}",
+                                     },
+                                     env: { REMOTE_ADDR: ip }
           end
 
           expect(response).to have_http_status(:ok)
