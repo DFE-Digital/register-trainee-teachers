@@ -72,7 +72,7 @@ namespace :tech_docs do
   namespace :reference_data do
     desc "Generate reference data docs from the API"
     task :generate do
-      version_runner_code  = "print Hesa::ReferenceData.constants"
+      version_runner_code = "print Hesa::ReferenceData.constants"
 
       TechDocsHelpers.runner(version_runner_code).reject { |klass| %w[Base].include?(klass) }.each do |version|
         data_runner_code  = "print Hesa::ReferenceData::#{version}.all"
@@ -84,7 +84,7 @@ namespace :tech_docs do
         app     = Middleman::Application.new
         context = Middleman::TemplateContext.new(app, {})
 
-        data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, values|
+        data = TechDocsHelpers.runner(data_runner_code).sort_by do |attribute, _values|
           field_name = TechDocsHelpers.fields.detect { |field| field["technical"] == attribute }["field_name"].downcase
           words      = Regexp.union(TechDocsHelpers::WORDS_TO_NUMBERS.keys)
           field_name.gsub(words, TechDocsHelpers::WORDS_TO_NUMBERS)
@@ -107,14 +107,13 @@ namespace :tech_docs do
             f.write(
               <<~METADATA,
                 ---
-                title: #{field["field_name"]}
+                title: #{field['field_name']}
                 weight: #{index + 1}
-                source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, "_")}.rb
+                source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
                 ---
 
               METADATA
             )
-
 
             f.write(html)
           end
@@ -130,18 +129,18 @@ end
 
 module TechDocsHelpers
   RAILS_DIR     = File.expand_path("../", __dir__)
-  RAILS_GEMFILE = File.join(RAILS_DIR, 'Gemfile')
+  RAILS_GEMFILE = File.join(RAILS_DIR, "Gemfile")
   WORDS_TO_NUMBERS = {
-    "one"   => 1,
-    "two"   => 2,
+    "one" => 1,
+    "two" => 2,
     "three" => 3,
-    "four"  => 4,
-    "five"  => 5,
-    "six"   => 6,
+    "four" => 4,
+    "five" => 5,
+    "six" => 6,
     "seven" => 7,
     "eight" => 8,
-    "nine"  => 9,
-    "ten"   => 10,
+    "nine" => 9,
+    "ten" => 10,
   }.freeze
 
   def self.runner(runner_code)
@@ -154,7 +153,7 @@ module TechDocsHelpers
     if status.success?
       JSON.parse(stdout)
     else
-      raise StandardError, stderr.present? ? stderr : "Something went wrong"
+      raise(StandardError, stderr.presence || "Something went wrong")
     end
   end
 
@@ -165,15 +164,15 @@ module TechDocsHelpers
   end
 
   def self.format_version(version)
-    if version   =~ /^V(\d{4})(\d)([a-zA-Z]+)?$/
-      major      = $1
-      minor      = $2
-      suffix     = $3
+    if version =~ /^V(\d{4})(\d)([a-zA-Z]+)?$/
+      major      = ::Regexp.last_match(1)
+      minor      = ::Regexp.last_match(2)
+      suffix     = ::Regexp.last_match(3)
       formatted  = "v#{major}.#{minor}"
       formatted += "-#{suffix}" if suffix
       formatted.downcase
     else
-      raise "Invalid version format"
+      raise("Invalid version format")
     end
   end
 

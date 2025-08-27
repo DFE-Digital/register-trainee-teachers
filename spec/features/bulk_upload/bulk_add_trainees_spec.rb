@@ -138,6 +138,7 @@ feature "bulk add trainees" do
         given_i_am_authenticated(user:)
 
         allow(SendCsvSubmittedForProcessingEmailService).to receive(:call)
+        allow(SendCsvSubmittedForProcessingFirstStageEmailService).to receive(:call)
       end
 
       scenario "the bulk add trainees page is visible", js: true do
@@ -165,6 +166,7 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         then_i_see_the_new_bulk_update_import_page
 
         when_i_click_on_back_link
@@ -172,6 +174,7 @@ feature "bulk add trainees" do
 
         when_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         then_i_see_the_new_bulk_update_import_page
 
         and_i_click_the_cancel_process_link
@@ -181,6 +184,7 @@ feature "bulk add trainees" do
         and_i_see_instructions_on_how_to_bulk_add_trainees
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_see_the_new_bulk_update_import_page
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
@@ -228,6 +232,7 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_see_the_new_bulk_update_import_page
         and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
@@ -255,6 +260,7 @@ feature "bulk add trainees" do
         Timecop.travel 1.hour.from_now do
           and_i_click_the_upload_button
         end
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
         then_a_job_is_queued_to_process_the_upload
@@ -298,6 +304,7 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file_with_placements
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
@@ -329,6 +336,7 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file_with_a_degree
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
@@ -359,6 +367,7 @@ feature "bulk add trainees" do
         and_i_click_the_bulk_add_trainees_page
         and_i_attach_a_valid_file_with_a_disability
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         then_a_job_is_queued_to_process_the_upload
         then_i_see_that_the_upload_is_processing
@@ -436,6 +445,7 @@ feature "bulk add trainees" do
 
         when_i_attach_a_file_with_invalid_rows
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
@@ -509,6 +519,7 @@ feature "bulk add trainees" do
 
         when_i_attach_a_valid_file
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
@@ -560,6 +571,7 @@ feature "bulk add trainees" do
 
         when_i_attach_a_file_with_an_unparseable_date
         and_i_click_the_upload_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
         and_i_click_on_continue_button
         when_the_background_job_is_run
         and_i_refresh_the_page
@@ -1016,6 +1028,13 @@ private
 
   def and_the_send_csv_processing_email_has_been_sent
     expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call)
+      .with(
+        upload: BulkUpdate::TraineeUpload.last,
+      )
+  end
+
+  def and_the_send_csv_processing_first_stage_email_has_been_sent
+    expect(SendCsvSubmittedForProcessingFirstStageEmailService).to have_received(:call)
       .with(
         upload: BulkUpdate::TraineeUpload.last,
       )
