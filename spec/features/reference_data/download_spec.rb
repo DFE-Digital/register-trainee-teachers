@@ -40,7 +40,7 @@ private
   end
 
   def then_i_receive_the_data_entries_as_a_file
-    expect(download_filename).to eq("course-age-range-v2025.0-rc.csv")
+    expect(download_filename).to eq("course-age-range-v2025.0.csv")
     expect(parsed_download_content).to eq(parsed_course_age_range_file)
   end
 

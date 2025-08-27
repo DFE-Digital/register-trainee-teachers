@@ -15,6 +15,6 @@ API version v0.1 was discontinued on **10th July 2025** and all its documentatio
 
 Please migrate to the current API version:
 
-* **[v2025.0-rc](/api-docs/v2025.0-rc/)** - The current supported API version
+* **[v2025.0](/api-docs/v2025.0/)** - The current supported API version
 
-If you need assistance migrating from v0.1 to the current version, please refer to the [API versioning strategy](/api-docs/v2025.0-rc/api-versioning-strategy.html) documentation. 
+If you need assistance migrating from v0.1 to the current version, please refer to the [API versioning strategy](/api-docs/v2025.0/api-versioning-strategy.html) documentation. 

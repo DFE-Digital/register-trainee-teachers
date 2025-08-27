@@ -37,7 +37,7 @@ Each token is associated with a single provider. It will grant access to
 trainee records registered by that provider. You can get a token by writing to
 [registertraineeteachers@education.gov.uk](mailto:registertraineeteachers@education.gov.uk).
 
-For instructions on how to authenticate see the [API reference](/api-docs/v2025.0-rc/developing-on-the-api.html#authentication).
+For instructions on how to authenticate see the [API reference](/api-docs/v2025.0/developing-on-the-api.html#authentication).
 
 ## Design principles
 
@@ -51,20 +51,20 @@ For example, the following request updates the trainee record identified by `id`
 `gQGecNYwLCqPMTgzW7N2bURi`.
 
 ```
-PUT https://www.register-trainee-teachers.service.gov.uk/api/v2025.0-rc/trainees/gQGecNYwLCqPMTgzW7N2bURi
+PUT https://www.register-trainee-teachers.service.gov.uk/api/v2025.0/trainees/gQGecNYwLCqPMTgzW7N2bURi
 ```
 
 You can obtain `id` values from the following request which returns the list of
 trainees for the current provider:
 
 ```
-GET https://www.register-trainee-teachers.service.gov.uk/api/v2025.0-rc/trainees
+GET https://www.register-trainee-teachers.service.gov.uk/api/v2025.0/trainees
 ```
 
 Alternatively an `id` value is given as part of the response to a request to create a new trainee record:
 
 ```
-POST https://www.register-trainee-teachers.service.gov.uk/api/v2025.0-rc/trainees
+POST https://www.register-trainee-teachers.service.gov.uk/api/v2025.0/trainees
 ```
 
 ## Reference data and data encoding
@@ -84,7 +84,7 @@ Nationality is expressed as an [ISO 3166-2](https://www.iso.org/iso-3166-country
 ### Degrees
 A list of valid values for the subject, degree type, institution and grade
 attributes can be obtained from the reference data endpoint. Details are
-provided in the [API reference](/api-docs/v2025.0-rc/contents.html).
+provided in the [API reference](/api-docs/v2025.0/contents.html).
 
 ### Placements
 Placement schools are identified by their URN (unique reference number).
@@ -155,5 +155,5 @@ For example, after version `2025.2` is released you can use:
 To get familiar with our system and perform testing, you can use
 [our sandbox environment](https://sandbox.register-trainee-teachers.service.gov.uk/).
 
-You will need an [authentication token](/api-docs/v2025.0-rc/developing-on-the-api.html#authentication)
+You will need an [authentication token](/api-docs/v2025.0/developing-on-the-api.html#authentication)
 for the sandbox environment. These will be provided by the Register team.

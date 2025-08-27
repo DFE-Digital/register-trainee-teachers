@@ -5,6 +5,10 @@ weight: 2
 
 # Release notes
 
+## v2025.0 — 1 September 2025
+
+First release of the 2025.0 version of the Register API.
+
 ## v2025.0-rc — 13 May 2025
 
 Release candidate of the 2025.0 version of the Register API. This version is not
