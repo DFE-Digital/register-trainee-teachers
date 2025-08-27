@@ -22,7 +22,7 @@ module SchoolData
     end
 
     def csv_url
-      format(Settings.school_data.downloader.base_url, Date.current.strftime("%Y%m%d"))
+      format(Settings.school_data.downloader.base_url, 1.day.ago.strftime("%Y%m%d"))
     end
   end
 end
