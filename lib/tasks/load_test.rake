@@ -74,12 +74,13 @@ namespace :load_test do
         end
       end
 
-      tempfile = Tempfile.new(["load_test", "csv"])
+      filename = "load_test.csv"
+      tempfile = Tempfile.new(filename.split("."))
       tempfile.write(content)
       tempfile.rewind
 
       uploaded_file = ActionDispatch::Http::UploadedFile.new(
-        filename: "load_test.csv",
+        filename: filename,
         tempfile: tempfile,
         type: "text/csv",
       )
