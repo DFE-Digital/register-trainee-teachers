@@ -316,7 +316,7 @@
   description: This field describes in more detail the student’s initial teacher
     training aim
   format: |-
-    [course phase reference codes](/reference-data/v2025.0-rc/course-age-range.html)
+    [course age range reference codes](/reference-data/v2025.0-rc/course-age-range.html)
 
     The following values are invalid for this field:
 
