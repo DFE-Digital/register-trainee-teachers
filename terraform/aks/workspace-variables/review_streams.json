@@ -1914,40 +1914,6 @@
         ]
       },
       {
-        "name": "hesa_collection_requests",
-        "syncMode": "incremental_deduped_history",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "requested_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "state"
-            ]
-          }
-        ]
-      },
-      {
         "name": "bulk_update_row_errors",
         "syncMode": "incremental_deduped_history",
         "cursorField": [
@@ -2208,6 +2174,70 @@
           {
             "fieldPath": [
               "trainee_withdrawal_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "school_data_downloads",
+        "syncMode": "incremental_deduped_history",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "status"
+            ]
+          },
+          {
+            "fieldPath": [
+              "started_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "completed_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "schools_created"
+            ]
+          },
+          {
+            "fieldPath": [
+              "schools_updated"
+            ]
+          },
+          {
+            "fieldPath": [
+              "lead_partners_updated"
             ]
           },
           {

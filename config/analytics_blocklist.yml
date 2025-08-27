@@ -182,13 +182,14 @@
   - surname16
   - ttcid
   - hesa_committed_at
-  - previous_hesa_id
   - application_choice_id
   - itt_start_date
   - trainee_start_date
+  - previous_hesa_id
   - provider_trainee_id
   - lead_partner_urn
   :hesa_collection_requests:
+  - id
   - collection_reference
   - requested_at
   - response_body
@@ -417,16 +418,6 @@
   - created_at
   - updated_at
   - additional_disability
-  :school_data_downloads:
-  - id
-  - completed_at
-  - lead_partners_updated
-  - schools_created
-  - schools_updated
-  - started_at
-  - status
-  - created_at
-  - updated_at
   :schools:
   - searchable
   :providers:
@@ -441,17 +432,16 @@
   :authentication_tokens:
   - id
   - hashed_token
-  - enabled
   - provider_id
   - expires_at
   - created_at
   - updated_at
   - name
-  - status
   - revoked_at
   - last_used_at
   - created_by_id
   - revoked_by_id
+  - status
   :apply_application_sync_requests:
   - id
   - response_code
@@ -472,3 +462,5 @@
   - additional_ethnic_background
   - additional_dttp_data
   - provider_trainee_id
+  - new_name
+  - new_time
