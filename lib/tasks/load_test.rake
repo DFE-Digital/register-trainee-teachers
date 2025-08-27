@@ -8,7 +8,7 @@ namespace :load_test do
 
     upload_ids = []
 
-    data = -> do
+    data = lambda do
       {
         "Provider Trainee ID" => "99157234/2/01",
         "Application ID" => nil,
@@ -59,7 +59,7 @@ namespace :load_test do
         "Degree Grade" => "02",
         "Degree Graduation Year" => "2012",
         "Awarding Institution" => "0117",
-        "Degree Country" => nil
+        "Degree Country" => nil,
       }
     end
 
@@ -106,9 +106,9 @@ namespace :load_test do
     puts "***Uploads validating***"
 
     while uploads.reload.exists?(status: :pending)
-      print "."
+      print(".")
 
-      sleep 2
+      sleep(2)
     end
 
     puts ""
@@ -122,7 +122,7 @@ namespace :load_test do
 
     uploads.each do |upload|
       bulk_add_trainee_submit_form = BulkUpdate::BulkAddTraineesSubmitForm.new(
-        upload: upload,
+        upload:,
       )
 
       if bulk_add_trainee_submit_form.save
@@ -133,9 +133,9 @@ namespace :load_test do
     end
 
     while uploads.reload.exists?(status: :in_progress)
-      print "."
+      print(".")
 
-      sleep 2
+      sleep(2)
     end
 
     puts ""
