@@ -3,8 +3,12 @@
 namespace :load_test do
   desc "Create multiple bulk update trainee uploads in the background"
   task csv_trainee_upload: :environment do
-    number_of_uploads = ENV["UPLOADS"].to_i || 2
-    rows              = ENV["ROWS"].to_i || 100
+    number_of_uploads = ENV.fetch("UPLOADS", 2).to_i
+    rows              = ENV.fetch("ROWS", 100).to_i
+
+    if number_of_uploads.zero? || rows.zero?
+      raise "Arguments must be Integers"
+    end
 
     upload_ids = []
 
