@@ -1,8 +1,8 @@
 {
   "name": "Dev Container",
   "dockerComposeFile": "./docker-compose.yml",
-  "service": "web",
-  "workspaceFolder": "/app",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "postCreateCommand": ".devcontainer/boot.sh",
   "customizations": {
     "vscode": {
