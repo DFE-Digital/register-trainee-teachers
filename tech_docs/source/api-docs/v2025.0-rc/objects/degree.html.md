@@ -44,7 +44,7 @@ weight: 3
       </p>
       <p class="govuk-body">
         The grade of the degree. Coded according to
-        <a href="/reference-data/v2025.0-rc/grade.html">degree class reference data specification</a>.
+        <a href="/reference-data/v2025.0-rc/grade.html">degree grade reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>02</code>
