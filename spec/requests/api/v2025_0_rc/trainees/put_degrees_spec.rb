@@ -202,7 +202,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
       let(:degrees_attributes) do
         non_uk_degree.attributes.symbolize_keys.slice(
           :country, :grade, :grade_uuid, :subject, :subject_uuid, :institution, :institution_uuid, :uk_degree, :uk_degree_uuid, :graduation_year, :non_uk_degree
-        ).merge(Api::V20250Rc::DegreeSerializer.new(non_uk_degree).as_hash.symbolize_keys)
+        ).merge(Api::V20250::DegreeSerializer.new(non_uk_degree).as_hash.symbolize_keys)
       end
 
       before do
@@ -224,7 +224,7 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
             message: "This is a duplicate degree" },
         )
         expect(response.parsed_body["data"]).to contain_exactly(
-          JSON.parse(Api::V20250Rc::DegreeSerializer.new(trainee.degrees.non_uk.first).as_hash.to_json),
+          JSON.parse(Api::V20250::DegreeSerializer.new(trainee.degrees.non_uk.first).as_hash.to_json),
         )
         expect {
           uk_degree.reload

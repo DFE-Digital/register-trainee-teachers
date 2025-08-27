@@ -84,7 +84,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
     let(:trainee_start_date) { "" }
 
     before do
-      allow(Api::V20250Rc::HesaMapper::Attributes).to receive(:call).and_call_original
+      allow(Api::V20250::HesaMapper::Attributes).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
     end
 
@@ -99,7 +99,7 @@ describe "`POST /api/v2025.0-rc/trainees` endpoint" do
 
   context "when the request is valid" do
     before do
-      allow(Api::V20250Rc::HesaMapper::Attributes).to receive(:call).and_call_original
+      allow(Api::V20250::HesaMapper::Attributes).to receive(:call).and_call_original
       allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
     end
 

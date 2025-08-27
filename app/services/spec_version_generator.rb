@@ -47,15 +47,15 @@ private
     new_content = content.dup
 
     # Create version formats for different use cases
-    old_version_for_class = old_version.tr(".", "").gsub(/-(\w)/) { ::Regexp.last_match(1).upcase }.tr("v", "V") # v2025.0-rc -> V20250Rc
+    old_version_for_class = old_version.tr(".", "").gsub(/-(\w)/) { ::Regexp.last_match(1).upcase }.tr("v", "V") # v2025.0 -> V20250
     new_version_for_class = new_version.tr(".", "").gsub(/-(\w)/) { ::Regexp.last_match(1).upcase }.tr("v", "V") # v2026.0-rc -> V20260Rc
 
     replacements = {
-      old_version => new_version,                                                              # v2025.0-rc -> v2026.0-rc
-      old_version.tr("v", "V") => new_version.tr("v", "V"),                                    # V2025.0-rc -> V2026.0-rc
+      old_version => new_version,                                                              # v2025.0 -> v2026.0-rc
+      old_version.tr("v", "V") => new_version.tr("v", "V"),                                    # v2025.0 -> V2026.0-rc
       convert_version_to_dir(old_version) => convert_version_to_dir(new_version),              # v2025_0_rc -> v2026_0_rc
       convert_version_to_dir(old_version).tr("v", "V") => convert_version_to_dir(new_version).tr("v", "V"), # V2025_0_rc -> V2026_0_rc
-      old_version_for_class => new_version_for_class, # V20250Rc -> V20260Rc
+      old_version_for_class => new_version_for_class, # V20250 -> V20260Rc
     }
 
     replacements.each do |old, new|

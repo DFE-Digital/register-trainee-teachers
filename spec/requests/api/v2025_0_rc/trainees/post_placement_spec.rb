@@ -8,7 +8,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
     let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:trainee_slug) { trainee.slug }
     let(:trainee) { create(:trainee) }
-    let(:placement_attribute_keys) { Api::V20250Rc::PlacementAttributes::ATTRIBUTES }
+    let(:placement_attribute_keys) { Api::V20250::PlacementAttributes::ATTRIBUTES }
 
     context "with a valid trainee and placement" do
       context "create placement with a school" do
@@ -61,7 +61,7 @@ describe "`POST /trainees/:trainee_slug/placements/` endpoint" do
 
         context "with an invalid placement attributes" do
           let(:params) do
-            { data: Api::V20250Rc::PlacementAttributes::ATTRIBUTES.index_with { |_| nil } }
+            { data: Api::V20250::PlacementAttributes::ATTRIBUTES.index_with { |_| nil } }
           end
 
           it "does not create a new placements and returns a 422 status (unprocessable_entity) status" do

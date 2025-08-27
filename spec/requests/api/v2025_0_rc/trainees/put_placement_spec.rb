@@ -9,7 +9,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
     let(:trainee) { create(:trainee) }
     let(:trainee_slug) { trainee.slug }
     let(:slug) { placement.slug }
-    let(:placement_attribute_keys) { Api::V20250Rc::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
+    let(:placement_attribute_keys) { Api::V20250::PlacementAttributes::ATTRIBUTES.map(&:to_s) }
 
     context "with a valid trainee and placement" do
       describe "update placement with a school" do
@@ -153,7 +153,7 @@ describe "`PUT /trainees/:trainee_slug/placements/:slug` endpoint" do
     context "with an invalid placement attributes" do
       let!(:placement) { create(:placement, trainee:) }
       let(:params) do
-        { data: Api::V20250Rc::PlacementAttributes::ATTRIBUTES.index_with { |_| nil } }
+        { data: Api::V20250::PlacementAttributes::ATTRIBUTES.index_with { |_| nil } }
       end
 
       it "does not create a new placements and returns a 422 status (unprocessable_entity) status" do

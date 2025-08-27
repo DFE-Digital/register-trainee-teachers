@@ -1378,7 +1378,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
       end
 
       before do
-        allow(Api::V20250Rc::HesaMapper::Attributes).to receive(:call).and_call_original
+        allow(Api::V20250::HesaMapper::Attributes).to receive(:call).and_call_original
         allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
         post "/api/v2025.0-rc/trainees", params: params_for_create.to_json, headers: headers
@@ -1456,7 +1456,7 @@ describe "`PUT /api/v2025.0-rc/trainees/:id` endpoint" do
         let(:trainee) { Trainee.last.reload }
 
         before do
-          allow(Api::V20250Rc::HesaMapper::Attributes).to receive(:call).and_call_original
+          allow(Api::V20250::HesaMapper::Attributes).to receive(:call).and_call_original
           allow(Trainees::MapFundingFromDttpEntityId).to receive(:call).and_call_original
 
           post "/api/v2025.0-rc/trainees", params: params_for_create.to_json, headers: headers

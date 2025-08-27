@@ -22,7 +22,7 @@ RSpec.describe "Rack::Attack settings" do
       it "limits the amount of requests" do
         within_same_period do
           (limit + 1).times do
-            get "/api/v2025.0-rc/info", headers: {
+            get "/api/v2025.0/info", headers: {
                                           authorization: "Bearer #{token}",
                                         },
                                         env: { REMOTE_ADDR: ip }
@@ -38,7 +38,7 @@ RSpec.describe "Rack::Attack settings" do
       it "does not limit the amount of requests" do
         within_same_period do
           limit.times do
-            get "/api/v2025.0-rc/info", headers: {
+            get "/api/v2025.0/info", headers: {
                                           authorization: "Bearer #{token}",
                                         },
                                         env: { REMOTE_ADDR: ip }

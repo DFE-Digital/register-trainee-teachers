@@ -3,7 +3,7 @@
 require "rails_helper"
 
 describe Api::Trainees::WithdrawResponse do
-  let(:version) { "v2025.0-rc" }
+  let(:version) { "v2025.0" }
   let(:withdraw_response) { described_class.call(trainee:, params:, version:) }
   let(:params) do
     {
@@ -42,7 +42,7 @@ describe Api::Trainees::WithdrawResponse do
     end
 
     it "uses the trainee serializer" do
-      expect(Api::V20250Rc::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
+      expect(Api::V20250::TraineeSerializer).to receive(:new).with(trainee).and_return(double(as_hash: trainee.attributes)).at_least(:once)
 
       subject
     end

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ApiVersionGenerator do
-  let(:old_version) { "v2025.0-rc" }
+  let(:old_version) { "v2025.0" }
   let(:new_version) { "v2025.0" }
   let(:service) { described_class.call(old_version:, new_version:) }
 
@@ -15,7 +15,7 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V20250Rc
+          module V20250
             class TraineeFilterParamsAttributes
               # ... code
             end
@@ -31,7 +31,7 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V20250Rc
+          module V20250
             module HesaMapper
               class DegreeAttributes
                 # ... code
@@ -62,7 +62,7 @@ RSpec.describe ApiVersionGenerator do
 
         module Api
           module V20250
-            class TraineeFilterParamsAttributes < Api::V20250Rc::TraineeFilterParamsAttributes
+            class TraineeFilterParamsAttributes < Api::V20250::TraineeFilterParamsAttributes
             end
           end
         end
@@ -79,7 +79,7 @@ RSpec.describe ApiVersionGenerator do
         module Api
           module V20250
             module HesaMapper
-              class DegreeAttributes < Api::V20250Rc::HesaMapper::DegreeAttributes
+              class DegreeAttributes < Api::V20250::HesaMapper::DegreeAttributes
               end
             end
           end
