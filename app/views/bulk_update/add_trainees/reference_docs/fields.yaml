@@ -521,7 +521,7 @@
   technical: grade
   hesa_alignment: DEGCLSS
   description: The grade of the degree.
-  format: "[codes for the qualification class of a degree](/reference-data/v2025.0-rc/grade.html)"
+  format: "[codes for the degree grade](/reference-data/v2025.0-rc/grade.html)"
   example: "`01` for example is First class honours"
   validation: Conditional - mandatory if specifying a UK degree
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/degree_attributes.rb#L38
