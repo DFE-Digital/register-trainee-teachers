@@ -159,7 +159,7 @@ feature "bulk add trainees" do
         then_i_see_the_upload_page_with_errors(empty: true)
 
         when_i_click_the_upload_button
-        then_i_see_the_upload_page_with_errors(empty: false)
+        then_i_see_the_upload_page_with_errors
 
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
@@ -248,7 +248,7 @@ feature "bulk add trainees" do
 
         when_i_click_the_upload_button
         then_i_see_the_review_errors_page
-        and_i_see_there_is_a_problem_errors(empty: false)
+        and_i_see_there_is_a_problem_errors
 
         when_the_unexpected_duplicate_error_is_been_reverted
         and_i_attach_a_valid_file
@@ -513,6 +513,44 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_errors_page
+      end
+
+      scenario "when the uploaded file has mixed encoding" do
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_see_instructions_on_how_to_bulk_add_trainees
+        and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
+        and_i_click_the_upload_button
+
+        then_i_see_the_upload_page_with_errors(headers_encoding: true)
+
+        when_i_attach_a_file_with_a_mixed_encoding_in_the_rows
+        and_i_click_the_upload_button
+        then_i_see_the_new_bulk_update_import_page
+
+        and_i_click_on_continue_button
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        and_i_see_file_validation_passed
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees
       end
 
       scenario "when I try to upload a file that throws an exception in the API layer" do
@@ -789,6 +827,7 @@ private
   def then_i_see_instructions_on_how_to_bulk_add_trainees
     expect(page).to have_current_path(new_bulk_update_add_trainees_upload_path)
     expect(page).to have_content("Bulk add new trainees")
+    expect(page).not_to have_content("There is a problem")
   end
 
   def and_i_see_the_empty_csv_link
@@ -833,6 +872,18 @@ private
 
   def when_i_attach_an_empty_file
     and_i_attach_a_file("")
+  end
+
+  def and_i_attach_a_file_with_a_mixed_encoding_in_the_headers
+    filename = "mixed_headers_encoding.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
+  def when_i_attach_a_file_with_a_mixed_encoding_in_the_rows
+    filename = "mixed_rows_encoding.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
   def when_i_attach_a_valid_file
@@ -883,14 +934,24 @@ private
     click_on "Upload CSV"
   end
 
-  def then_i_see_the_upload_page_with_errors(empty:)
+  def then_i_see_the_upload_page_with_errors(empty: false, headers_encoding: false)
     expect(page).to have_current_path(bulk_update_add_trainees_uploads_path)
-    and_i_see_there_is_a_problem_errors(empty:)
+    and_i_see_there_is_a_problem_errors(empty:, headers_encoding:)
   end
 
-  def and_i_see_there_is_a_problem_errors(empty:)
+  def and_i_see_there_is_a_problem_errors(empty: false, headers_encoding: false)
+    content = if empty
+                "The selected file is empty"
+              elsif headers_encoding
+                "Your file’s column names need to match the CSV template. " \
+                  "Your file is missing the following columns: 'Application ID'. " \
+                  "Your file has the following extra columns: 'Ápplication ID'"
+              else
+                "Select a CSV file"
+              end
+
     expect(page).to have_content("There is a problem")
-    expect(page).to have_content(empty ? "The selected file is empty" : "Select a CSV file")
+    expect(page).to have_content(content)
   end
 
   def and_i_see_file_validation_passed
@@ -966,7 +1027,7 @@ private
 
   def then_i_can_see_the_new_trainees
     expect(page).to have_content("Spencer Murphy")
-    expect(page).to have_content("Adrianne Koelpin")
+    expect(page).to have_content(/Adrianne Ko(e|é)lpin/)
     expect(page).to have_content("Sacha Bechtelar")
     expect(page).to have_content("Rico Corkery")
     expect(page).to have_content("Chantelle Raynor")

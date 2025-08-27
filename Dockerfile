@@ -80,7 +80,7 @@ RUN apk add --update --no-cache tzdata && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime && \
     echo "Europe/London" > /etc/timezone
 
-RUN apk add --update --no-cache icu-libs libpq shared-mime-info yaml yarn zlib
+RUN apk add --update --no-cache icu-data-full icu-libs libpq shared-mime-info yaml yarn zlib
 
 COPY --from=rails-build /usr/local/bundle /usr/local/bundle
 COPY --from=rails-build /app/ .

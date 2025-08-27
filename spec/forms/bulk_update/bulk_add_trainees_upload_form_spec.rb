@@ -73,7 +73,7 @@ module BulkUpdate
 
     context "when passed a valid file" do
       let(:valid_columns) { BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys.join(",") }
-      let(:test_file_contents) { "#{valid_columns}\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts" }
+      let(:test_file_contents) { "#{valid_columns}\n0123456789,Bob,Roberts\n9876543210,Alice,Roberts,,,,,,,,,," }
 
       it "returns no validation errors and creates a BulkUpdate::TraineeUpload record" do
         expect { form.save }.to change {
@@ -85,7 +85,7 @@ module BulkUpdate
         expect(upload).to be_uploaded
         expect(upload.version).to eq("v2025.0")
         expect(upload.provider).to eq(provider)
-        expect(upload.file.download).to eq(test_file_contents)
+        expect(upload.download).to eq(test_file_contents)
         expect(upload.number_of_trainees).to be(2)
       end
     end
@@ -104,7 +104,7 @@ module BulkUpdate
         expect(upload).to be_uploaded
         expect(upload.version).to eq("v2025.0")
         expect(upload.provider).to eq(provider)
-        expect(upload.file.download).to eq(test_file_contents)
+        expect(upload.download).to eq(test_file_contents)
         expect(upload.number_of_trainees).to be(2)
       end
     end
