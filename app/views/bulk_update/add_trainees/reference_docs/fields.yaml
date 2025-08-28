@@ -75,12 +75,7 @@
   technical: sex
   hesa_alignment: SEXID
   description: This field records the gender of the student.
-  format: |-
-    - `10` - Female
-    - `11` - Male
-    - `12` - Other
-    - `96` - Information refused
-    - `99` - Not available
+  format: "[sex reference codes](/reference-data/v2025.0/sex.html)"
   example: |-
     `10`
   validation: Mandatory
@@ -199,9 +194,7 @@
     This field is a three characters field completed for students on courses
     that lead to teacher qualifications. The selection will determine the type of
     the teacher training.
-  format: |-
-    - `201` - Professional status only
-    - `202` - Both professional status and academic award
+  format: "[ITT aim reference codes](/reference-data/v2025.0/itt-aim.html)"
   example: |-
     - `201`
   validation: Mandatory
@@ -212,14 +205,7 @@
   description:
     This field describes the route by which the student has accessed Initial
     Teacher Training provision.
-  format: |-
-    - `02` - School Direct tuition fee
-    - `03` - School Direct salaried
-    - `09` - Undergraduate Opt-in
-    - `10` - Postgraduate teaching apprenticeship
-    - `11` - Primary and Secondary Undergraduate Fee Funded
-    - `12` - Primary and Secondary Postgraduate Fee Funded
-    - `14` - Teacher Degree Apprenticeship
+  format: "[training route reference codes](/reference-data/v2025.0/training-route.html)"
   example: "`03` for example is code to use if it is School Direct salaried"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/6c20409c393ca3e753eda0b674e1435948c27e24/app/models/trainee.rb#L213-L215
@@ -229,18 +215,7 @@
   description: This field describes the qualification aim of the Initial Teacher
     Training course and is intended to record the qualification that will be attained
     as a result of successful completion of studies.
-  format: |-
-    - `007` - BA
-    - `008` - BA (Hons)
-    - `001` - BEd
-    - `002` - BEd (Hons)
-    - `003` - BSc
-    - `004` - BSc (Hons)
-    - `020` - Postgraduate Certificate in Education
-    - `021` - Postgraduate Diploma in Education
-    - `028` - Undergraduate Master of Teaching
-    - `031` - Professional Graduate Certificate in Education
-    - `032` - Masters, not by research
+  format: "[qualification aim reference codes](/reference-data/v2025.0/itt-qualification-aim.html)"
   example: |-
     `007`
   validation: "Conditional - mandatory if ITT Aim is `202`"
@@ -282,12 +257,7 @@
   description:
     This field indicates the method by which a student is being taught
     their course.
-  format: |-
-    - `01` - Full-time according to funding council definitions
-    - `02` - Other full-time
-    - `31` - Part-time
-    - `63` - Dormant - previously full-time
-    - `64` - Dormant - previously part-time
+  format: "[study mode reference codes](/reference-data/v2025.0/study-mode.html)"
   example: "`01`"
   validation: "Conditional - mandatory when the training route is not Assessment only or Early years assessment only"
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/training_route_manager.rb#L42-L47
@@ -425,9 +395,7 @@
   technical: fund_code
   hesa_alignment: FUNDCODE
   description: "This field indicates whether the student is counted as 'fundable', i.e. 'eligible for funding' for the course by the appropriate funding council/body. NOTE: Use `7` if the trainee chooses not to receive finance they are eligible for."
-  format: |-
-    - `2` - not eligible for student finance
-    - `7` - eligible for student finance
+  format: "[fund code reference codes](/reference-data/v2025.0/fund-code.html)"
   example: "`2`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L66
@@ -440,13 +408,7 @@
     classification if applicable and the subject specialism in which they wish to
     train to teach.
 
-  format: |-
-    - `4` - Scholarship
-    - `6` - No bursary, scholarship or grant awarded
-    - `B` - Undergraduate bursary
-    - `C` - Veteran Teaching undergraduate bursary
-    - `D` - Postgraduate bursary
-    - `E` - Grant
+  format: "[funding method reference codes](/reference-data/v2025.0/funding-method.html)"
   example: "`E`"
   validation: Mandatory
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/models/api/v2025_0_rc/hesa_trainee_detail_attributes.rb#L31
@@ -458,13 +420,7 @@
     is to be monitored independently. Valid entries will change from year to year
     to reflect current schemes.
   format: |-
-    - `001` - Abridged ITT course
-    - `009` - Maths and Physics Chairs Programme
-    - `011` - Primary mathematics specialist
-    - `019` - Additional ITT place for PE with a priority subject
-    - `025` - Transition to Teach
-    - `026` - Now Teach
-    - `036` - International relocation payment
+    [training initiative reference codes](/reference-data/v2025.0/training-initiative.html)
 
     The following codes are not mapped to Register:
       `001`, `011`, `019`
@@ -476,13 +432,7 @@
   hesa_alignment: INITIATIVES
   description: The secondary training initiative that the trainee is on.
   format: |-
-    - `001` - Abridged ITT course
-    - `009` - Maths and Physics Chairs Programme
-    - `011` - Primary mathematics specialist
-    - `019` - Additional ITT place for PE with a priority subject
-    - `025` - Transition to Teach
-    - `026` - Now Teach
-    - `036` - International relocation payment
+    [training initiative reference codes](/reference-data/v2025.0/training-initiative.html)
 
     The following codes are not mapped to Register:
       `001`, `011`, `019`
