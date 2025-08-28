@@ -3,7 +3,7 @@
 require "rails_helper"
 
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
-RSpec.describe Hesa::ReferenceData::V20250 do
+RSpec.describe Hesa::ReferenceData::V20250Rc do
   include FileHelper
 
   describe "::all" do
