@@ -7,8 +7,8 @@ unless Rails.env.production?
       number_of_uploads = ENV.fetch("UPLOADS", 1).to_i
       rows              = ENV.fetch("ROWS", 100).to_i
 
-      if number_of_uploads.zero? || rows.zero?
-        raise "Arguments must be Integers"
+      unless number_of_uploads.positive? && rows.postive?
+        raise "Arguments must be positive integers"
       end
 
       upload_ids = []
