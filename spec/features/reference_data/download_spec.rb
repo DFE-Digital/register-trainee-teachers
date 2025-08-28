@@ -24,7 +24,7 @@ private
   end
 
   def when_i_click_on_the_v2025_0_link
-    reference_data_page.V20250_link.click
+    reference_data_page.v20250_link.click
   end
 
   def and_i_click_on_the_course_age_range_link
@@ -40,7 +40,7 @@ private
   end
 
   def then_i_receive_the_data_entries_as_a_file
-    expect(download_filename).to eq("course-age-range-v2025.0.csv")
+    expect(download_filename).to eq("course-age-range-v2025.0-rc.csv")
     expect(parsed_download_content).to eq(parsed_course_age_range_file)
   end
 
