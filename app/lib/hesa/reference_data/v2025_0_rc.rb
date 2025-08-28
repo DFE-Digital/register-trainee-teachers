@@ -3,7 +3,7 @@
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
 module Hesa
   module ReferenceData
-    class V20250 < Base
+    class V20250Rc < Base
       DEFAULT_CASE_ATTRIBUTES = %i[
         subject
       ].freeze
