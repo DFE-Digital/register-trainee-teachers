@@ -8,7 +8,7 @@ RSpec.describe SpecVersionGenerator do
   let(:service) { described_class.call(old_version:, new_version:) }
 
   describe "#call" do
-    let(:request_file) { "spec/requests/api/v2025_0_rc/get_trainee_spec.rb" }
+    let(:request_file) { "spec/requests/api/v2025_0/get_trainee_spec.rb" }
     let(:new_request_file) { "spec/requests/api/v2026_0_rc/get_trainee_spec.rb" }
     let(:request_file_content) do
       <<~RUBY
