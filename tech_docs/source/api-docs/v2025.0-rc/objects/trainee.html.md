@@ -149,7 +149,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The nationality of the trainee. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/nation">HESA nationality field</a>
+          href="/reference-data/v2025.0-rc/nationality.html">nationality reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>GB</code>
@@ -178,7 +178,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The ethnicity of the trainee. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/ethnic">HESA ethnicity field</a>. The values for
+          href="/reference-data/v2025.0-rc/ethnicity.html">ethnicity reference data specification</a>. The values for
         <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code>
         value.
       </p>
@@ -199,7 +199,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The type of disabilities that the trainee has. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/disable">HESA disability field</a>
+          href="/reference-data/v2025.0-rc/disability1.html">disability reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>58</code>
@@ -290,11 +290,11 @@ weight: 1
       <p class="govuk-body">
         The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or
         scholarship available if applicable. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/sbjca">HESA subject of ITT course field</a>.
+          href="/reference-data/v2025.0-rc/course-subject-one.html">course subject reference data specification</a>.
       </p>
       <p class="govuk-body">
        Note: For primary education courses (when the course maximum age is 11 or below), 
-        <code>course_subject_one</code> is automatically set to "Primary Teaching" (HESA code <code>100511</code>). 
+        <code>course_subject_one</code> is automatically set to "Primary Teaching" (code <code>100511</code>). 
         Any subjects provided in the request will be preserved and shifted to <code>course_subject_two</code> 
         and <code>course_subject_three</code> as needed.
       </p>
@@ -413,7 +413,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The age range of children taught on the course. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/ittphsc">HESA ITT phase/scope field</a>
+          href="/reference-data/v2025.0-rc/course-age-range.html">course age range reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
@@ -599,7 +599,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The secondary training initiative that the trainee is on. Coded according to the <a
-          href="https://www.hesa.ac.uk/collection/c24053/e/initiatives">HESA initiatives field</a>
+          href="/reference-data/v2025.0-rc/training-initiative.html">training initiative reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>025</code>
