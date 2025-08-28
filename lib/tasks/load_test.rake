@@ -7,7 +7,7 @@ unless Rails.env.production?
       number_of_uploads = ENV.fetch("UPLOADS", 1).to_i
       rows              = ENV.fetch("ROWS", 100).to_i
 
-      unless number_of_uploads.positive? && rows.postive?
+      unless number_of_uploads.positive? && rows.positive?
         raise "Arguments must be positive integers"
       end
 
