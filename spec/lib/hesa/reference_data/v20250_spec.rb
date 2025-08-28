@@ -3,7 +3,7 @@
 require "rails_helper"
 
 # rubocop:disable  Rails/RedundantActiveRecordAllMethod
-RSpec.describe Hesa::ReferenceData::V20250Rc do
+RSpec.describe Hesa::ReferenceData::V20250 do
   include FileHelper
 
   describe "::all" do
@@ -72,7 +72,7 @@ RSpec.describe Hesa::ReferenceData::V20250Rc do
       expect(
         CSV.parse(described_class.find(:course_age_range).as_csv),
       ).to eq(
-        CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv")),
+        CSV.parse(file_content("reference_data/v2025_0/course_age_range.csv")),
       )
     end
   end
