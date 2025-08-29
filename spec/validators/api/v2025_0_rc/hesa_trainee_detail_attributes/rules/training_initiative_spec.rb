@@ -3,7 +3,7 @@
 require "rails_helper"
 
 # rubocop:disable RSpec/SpecFilePathFormat
-RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitiative do
+RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::TrainingInitiative do
   subject { described_class }
 
   let!(:current_acadcemic_cycle) { create(:academic_cycle, cycle_year: year) }
@@ -12,13 +12,13 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::TrainingInitia
   let(:year) { 2024 }
 
   let(:trainee_attributes) do
-    Api::V20250Rc::TraineeAttributes.new(
+    Api::V20250::TraineeAttributes.new(
       training_initiative: training_initiative,
       trainee_start_date: Date.new(year, 12, 1).iso8601,
     )
   end
   let(:hesa_trainee_detail_attributes) do
-    Api::V20250Rc::HesaTraineeDetailAttributes.new(
+    Api::V20250::HesaTraineeDetailAttributes.new(
       { trainee_attributes: },
       record_source: "api",
     )

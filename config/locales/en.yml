@@ -1530,7 +1530,7 @@ en:
               blank: Enter the token name
   activemodel:
     attributes:
-      api/v20250_rc/trainee_attributes:
+      api/v20250/trainee_attributes:
         application_choice_id: application_id
       course_details_form:
         itt_start_date: &itt_start_date ITT start date
@@ -2084,7 +2084,7 @@ en:
           attributes:
             comment:
               blank: Enter a comment
-        api/v20250_rc/trainee_attributes:
+        api/v20250/trainee_attributes:
           attributes:
             inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             inclusion_with_truncated_list: "has invalid reference data value of '%{value}'. Example values include %{valid_values}..."
@@ -2111,7 +2111,7 @@ en:
               ineligible: "'%{training_initiative}' is not available in academic cycle '%{academic_cycle}'"
             hesa_id:
               length: must be 13 or 17 characters
-        api/v20250_rc/withdrawal_attributes:
+        api/v20250/withdrawal_attributes:
           attributes:
             reasons:
               inclusion: Choose one or more reasons why the trainee withdrew from the course
@@ -2126,7 +2126,7 @@ en:
               blank: Please select an option. Valid options are yes, no and unknown.
             another_reason:
               blank: Enter another reason
-        api/v20250_rc/hesa_trainee_detail_attributes:
+        api/v20250/hesa_trainee_detail_attributes:
           attributes:
             fund_code:
               ineligible: &ineligible is not valid for this trainee
@@ -2142,7 +2142,7 @@ en:
 
 
 
-        api/v20250_rc/degree_attributes:
+        api/v20250/degree_attributes:
           duplicate: This is a duplicate degree
           attributes:
             uk_degree:

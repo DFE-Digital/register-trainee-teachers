@@ -206,8 +206,8 @@ api:
   blacklist:
     ua: []
     ip: []
-  allowed_versions: [v2025.0-rc]
-  current_version: v2025.0-rc
+  allowed_versions: [v2025.0-rc, v2025.0]
+  current_version: v2025.0
 
 qualtrics:
   api_token: please_change_me
