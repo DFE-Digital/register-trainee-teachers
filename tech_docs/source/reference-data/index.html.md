@@ -30,10 +30,9 @@ Use reference data lists to:
 
 Use reference data whenever you need allowed values for trainees, courses, funding, people, or degrees. 
 
-## Current version 
+## Current version
 
 * Version: v2025.0
-* Release notes: Reference data release notes 
 
 ## How to view or download reference data 
 
@@ -42,11 +41,3 @@ You can view or download reference data lists and values using the navigation on
 1. Choose the dataset you need. 
 2. Open the list to view or select the link to download the CSV file. 
 3. Use the Code or Label column, as prescribed in the CSV or API guidance. 
-
-## Get help 
-
-If something looks wrong or is missing, contact the Register team via your usual support channel. Include: 
-
-* the dataset name (for example, training_route) 
-* the affected value(s) or code(s) 
-* a short example (for example, a CSV row) showing the problem 
