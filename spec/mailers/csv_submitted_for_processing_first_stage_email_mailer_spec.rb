@@ -21,7 +21,7 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
       }
     end
 
-    %i[in_progress validated failed].each do |status|
+    %i[pending validated failed].each do |status|
       context "when the upload status is #{status}" do
         let(:upload) { create(:bulk_update_trainee_upload, status) }
 
