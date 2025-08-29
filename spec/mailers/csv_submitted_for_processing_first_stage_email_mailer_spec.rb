@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe CsvSubmittedForProcessingFirstStageEmailMailer do
   context "sending an email to a user" do
-    let(:upload) { create(:bulk_update_trainee_upload, :in_progress) }
+    let(:upload) { create(:bulk_update_trainee_upload, :pending) }
     let(:user) { upload.provider.users.first }
     let(:mail) do
       described_class.generate(
