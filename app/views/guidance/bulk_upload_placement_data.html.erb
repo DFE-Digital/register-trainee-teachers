@@ -20,10 +20,6 @@
     <p class="govuk-body-m">You can change placement details  <%= govuk_link_to("manually in an individual trainee’s record", manually_registering_trainees_guidance_path) %>.
     </p>
 
-    <p class="govuk-body-m">
-      You can also use the Higher Education Statistics Agency (HESA) service to update trainees in-year, if you have access to it.
-    </p>
-
     <h2 class="govuk-heading-m">How to bulk upload placement data</h2>
 
     <ol class="govuk-list govuk-list--number">
@@ -39,10 +35,10 @@
 
     <h2 class="govuk-heading-m">2. Download a CSV file listing trainees with missing placement data</h2>
 
-    <p class="govuk-body-m">For the purposes of the performance profile sign off deadline in January 2024, the CSV file will only include data for all trainees who:</p>
+    <p class="govuk-body-m">For the purposes of the performance profile sign off deadline in the February of each academic year, the CSV file will only include data for all trainees who:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>were QTS or EYTS awarded in the <%= @previous_academic_cycle.label %> academic year</li>
+      <li>were QTS or EYTS awarded in the most recent academic year</li>
       <li>are on all training routes apart from assessment only</li>
       <li>do not have a minimum of 2 placements recorded</li>
     </ul>
@@ -50,7 +46,7 @@
     <p class="govuk-body-m">The CSV will not include:</p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>iQTS trainees who qualified in <%= @previous_academic_cycle.label %> academic year as their placement data are not being mandated for the performance profile sign off</li>
+      <li>iQTS trainees who qualified in the most recent academic year; as their placement data is not being mandated for the performance profile sign off</li>
       <li>trainees who have deferred or withdrawn</li>
     </ul>
 
