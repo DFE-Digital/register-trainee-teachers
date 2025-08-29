@@ -13,7 +13,7 @@ weight: 2
         string (limited to 24 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the placement in the Register system. Used to identify the placement when <a href="/api-docs/reference#code-put-patch-trainees-trainee_id-placements-placement_id-code">updating</a> or <a href="/api-docs/reference#code-delete-trainees-trainee_id-placements-placement_id-code">deleting</a>.
+        The unique ID of the placement in the Register system. Used to identify the placement when <a href="/api-docs/v2025.0/endpoints/put-patch-trainees-trainee-id-placements-placement-id.html">updating</a> or <a href="/api-docs/v2025.0/endpoints/delete-trainees-trainee-id-placements-placement-id.html">deleting</a>.
       </p>
       <p class="govuk-body">
         Example: <code>4QWdpfb2UJM1gdhKnsyKiVkj</code>

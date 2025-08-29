@@ -13,7 +13,7 @@ weight: 3
         string (limited to 24 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the degree in the Register system. Used to identify the degree when <a href="/api-docs/reference#code-put-patch-trainees-trainee_id-degrees-degree_id-code">updating</a> or <a href="/api-docs/reference#code-delete-trainees-trainee_id-degrees-degree_id-code">deleting</a>.
+        The unique ID of the degree in the Register system. Used to identify the degree when <a href="/api-docs/v2025.0/endpoints/put-patch-trainees-trainee-id-degrees-degree-id.html">updating</a> or <a href="/api-docs/v2025.0/endpoints/delete-trainees-trainee-id-degrees-degree-id.html">deleting</a>.
       </p>
       <p class="govuk-body">
         Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
