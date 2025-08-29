@@ -34,7 +34,6 @@ features:
     teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: true
-  bulk_add_trainees: true
 
 pagination:
   records_per_page: 30

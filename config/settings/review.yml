@@ -27,8 +27,6 @@ features:
   funding: true
   google:
     send_data_to_big_query: true
-  token_management: true
-  bulk_add_trainees: true
   show_csv_sandbox_banner: true
 
 pagination:

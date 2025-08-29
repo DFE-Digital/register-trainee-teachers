@@ -50,7 +50,6 @@ features:
     sync_trn_data: false
   dqt_import:
     sync_teachers: true
-  register_api: false
   duplicate_checking: true
   school_data_auto_import: true
 environment:

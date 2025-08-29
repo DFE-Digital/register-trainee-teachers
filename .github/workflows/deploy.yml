@@ -13,7 +13,6 @@ on:
         - qa
         - staging
         - sandbox
-        - csv-sandbox
         - productiondata
         - production
         - pen
