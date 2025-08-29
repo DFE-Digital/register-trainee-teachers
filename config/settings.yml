@@ -169,8 +169,8 @@ govuk_notify:
     succeeded_template_id: 8ff06d35-8960-462e-aa6e-9942a7fd713d
     failed_template_id: 3344fd46-7f33-4762-a350-d02a88f863b0
   csv_submitted_for_processing_first_stage:
-    in_progress_template_id: 8d856c2c-1e5f-4bd9-bbba-c8633422bcec
-    succeeded_template_id: 7cae2078-784c-445d-b251-7bc3a901ef73
+    pending_template_id: 8d856c2c-1e5f-4bd9-bbba-c8633422bcec
+    validated_template_id: 7cae2078-784c-445d-b251-7bc3a901ef73
     failed_template_id: 716e14d1-7157-41b2-bdac-9ab94adc7934
   performance_profile_submitted_email_template_id: 21879652-3975-4a0a-b0b4-9fe6a5353090
   census_submitted_email_template_id: 5a610b43-a36e-4e4c-8ab0-e7e9d158f440

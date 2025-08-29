@@ -4,7 +4,7 @@ require "rails_helper"
 
 describe CsvSubmittedForProcessingFirstStageEmailMailer do
   context "sending an email to a user" do
-    let(:upload) { create(:bulk_update_trainee_upload, :in_progress) }
+    let(:upload) { create(:bulk_update_trainee_upload, :pending) }
     let(:user) { upload.provider.users.first }
     let(:mail) do
       described_class.generate(
@@ -15,13 +15,13 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
 
     let(:template_ids) do
       {
-        in_progress: "in-progress-uuid",
-        succeeded: "succeeded-uuid",
+        pending: "pending-uuid",
+        validated: "validated-uuid",
         failed: "failed-uuid",
       }
     end
 
-    %i[in_progress succeeded failed].each do |status|
+    %i[pending validated failed].each do |status|
       context "when the upload status is #{status}" do
         let(:upload) { create(:bulk_update_trainee_upload, status) }
 
