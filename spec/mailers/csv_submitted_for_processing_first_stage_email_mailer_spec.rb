@@ -16,12 +16,12 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
     let(:template_ids) do
       {
         in_progress: "in-progress-uuid",
-        succeeded: "succeeded-uuid",
+        validated: "validated-uuid",
         failed: "failed-uuid",
       }
     end
 
-    %i[in_progress succeeded failed].each do |status|
+    %i[in_progress validated failed].each do |status|
       context "when the upload status is #{status}" do
         let(:upload) { create(:bulk_update_trainee_upload, status) }
 

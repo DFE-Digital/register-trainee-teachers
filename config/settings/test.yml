@@ -31,6 +31,6 @@ govuk_notify:
     succeeded_template_id: succeeded-uuid
     failed_template_id: failed-uuid
   csv_submitted_for_processing_first_stage:
-    in_progress_template_id: in-progress-uuid
-    succeeded_template_id: succeeded-uuid
+    pending_template_id: pending-uuid
+    validated_template_id: validated-uuid
     failed_template_id: failed-uuid
