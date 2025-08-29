@@ -126,7 +126,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The sex of the trainee. Coded according to the <a
-          href="/reference-data/v2025.0/sex.html">sex reference data specification</a>.
+          href="/reference-data/v2025.0/sex.html">Sex reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>10</code>
@@ -141,7 +141,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The nationality of the trainee. Coded according to the <a
-          href="/reference-data/v2025.0/nationality.html">nationality reference data specification</a>.
+          href="/reference-data/v2025.0/nationality.html">Nationality reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>GB</code>
@@ -170,7 +170,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The ethnicity of the trainee. Coded according to the <a
-          href="/reference-data/v2025.0/ethnicity.html">ethnicity reference data specification</a>. The values for
+          href="/reference-data/v2025.0/ethnicity.html">Ethnicity reference data specification</a>. The values for
         <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code>
         value.
       </p>
@@ -191,7 +191,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The type of disabilities that the trainee has. Coded according to the <a
-          href="/reference-data/v2025.0/disability1.html">disability reference data specification</a>
+          href="/reference-data/v2025.0/disability1.html">Disability reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>58</code>
@@ -206,7 +206,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a
-          href="/reference-data/v2025.0/itt-aim.html">ITT aim reference data specification</a>
+          href="/reference-data/v2025.0/itt-aim.html">ITT Aim reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>201</code>
@@ -224,7 +224,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The training route that the trainee is on. Coded according to the <a
-          href="/reference-data/v2025.0/training-route.html">training route reference data specification</a>
+          href="/reference-data/v2025.0/training-route.html">Training Route reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>11</code>
@@ -239,7 +239,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The qualification aim of the trainee’s course. Coded according to the <a
-          href="/reference-data/v2025.0/itt-qualification-aim.html">qualification aim reference data specification</a>
+          href="/reference-data/v2025.0/itt-qualification-aim.html">Qualification Aim reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>004</code>
@@ -257,7 +257,7 @@ weight: 1
       <p class="govuk-body">
         The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or
         scholarship available if applicable. Coded according to the <a
-          href="/reference-data/v2025.0/course-subject-one.html">course subject reference data specification</a>.
+          href="/reference-data/v2025.0/course-subject-one.html">Course Subject reference data specification</a>.
       </p>
       <p class="govuk-body">
        Note: For primary education courses (when the course maximum age is 11 or below), 
@@ -278,7 +278,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         This indicates whether the trainee’s course is full-time or part-time. Coded according to the <a
-          href="/reference-data/v2025.0/study-mode.html">study mode reference data specification</a>
+          href="/reference-data/v2025.0/study-mode.html">Study Mode reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>01</code>
@@ -373,7 +373,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The age range of children taught on the course. Coded according to the <a
-          href="/reference-data/v2025.0/course-age-range.html">course age range reference data specification</a>
+          href="/reference-data/v2025.0/course-age-range.html">Course Age Range reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
@@ -510,7 +510,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The bursary level awarded to the trainee. Coded according to the <a
-          href="/reference-data/v2025.0/funding-method.html">funding method reference data specification</a>
+          href="/reference-data/v2025.0/funding-method.html">Funding Method reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>4</code>
@@ -527,7 +527,7 @@ weight: 1
         This field identifies students who are part of a specific scheme that
         is to be monitored independently. Valid entries will change from year to year
         to reflect current schemes. Coded according to the <a
-          href="/reference-data/v2025.0/training-initiative.html">training initiative reference data specification</a>
+          href="/reference-data/v2025.0/training-initiative.html">Training Initiative reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>026</code>
@@ -542,7 +542,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The secondary training initiative that the trainee is on. Coded according to the <a
-          href="/reference-data/v2025.0/training-initiative.html">training initiative reference data specification</a>.
+          href="/reference-data/v2025.0/training-initiative.html">Training Initiative reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>025</code>
