@@ -100,8 +100,8 @@ features:
   register_api: true
   itt_reform: true
   duplicate_checking: true
-  bulk_add_trainees: false
-  token_management: false
+  bulk_add_trainees: true
+  token_management: true
   show_csv_sandbox_banner: false
 
 dfe_sign_in:
