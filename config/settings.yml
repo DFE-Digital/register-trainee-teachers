@@ -166,7 +166,7 @@ govuk_notify:
   otp_email_template_id: 4b4bda40-2b2f-4041-ac0e-cc5de3d683ef
   csv_submitted_for_processing:
     in_progress_template_id: 66682854-a9f1-43b3-85e9-0e168fc42b0c
-    succeeded_template_id: 8ff06d35-8960-462e-aa6e-9942a7fd713d
+    validated_template_id: 8ff06d35-8960-462e-aa6e-9942a7fd713d
     failed_template_id: 3344fd46-7f33-4762-a350-d02a88f863b0
   csv_submitted_for_processing_first_stage:
     in_progress_template_id: 8d856c2c-1e5f-4bd9-bbba-c8633422bcec

@@ -4,23 +4,24 @@ require "rails_helper"
 
 describe CsvSubmittedForProcessingFirstStageEmailMailer do
   context "sending an email to a user" do
-    let(:submitted_at) { 1.day.from_now }
-    let(:upload) { create(:bulk_update_trainee_upload, :in_progress, submitted_at:) }
+    let(:upload) { create(:bulk_update_trainee_upload, :in_progress) }
+    let(:user) { upload.provider.users.first }
     let(:mail) do
       described_class.generate(
         upload:,
+        user:,
       )
     end
 
     let(:template_ids) do
       {
         in_progress: "in-progress-uuid",
-        succeeded: "succeeded-uuid",
+        validated: "validated-uuid",
         failed: "failed-uuid",
       }
     end
 
-    %i[in_progress succeeded failed].each do |status|
+    %i[in_progress validated failed].each do |status|
       context "when the upload status is #{status}" do
         let(:upload) { create(:bulk_update_trainee_upload, status) }
 
@@ -31,12 +32,12 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
     end
 
     it "sends an email to the correct email address" do
-      expect(mail.to).to eq([upload.submitted_by.email])
+      expect(mail.to).to eq([user.email])
     end
 
     it "includes the first name in the personalisation" do
       expect(mail.govuk_notify_personalisation[:first_name]).to eq(
-        upload.submitted_by.first_name,
+        user.first_name,
       )
     end
 
@@ -54,7 +55,7 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
 
     it "includes the submission time in the personalisation" do
       expect(mail.govuk_notify_personalisation[:submitted_at]).to eq(
-        upload.submitted_at.to_fs(:govuk_date_and_time),
+        upload.created_at.to_fs(:govuk_date_and_time),
       )
     end
   end

@@ -13,6 +13,8 @@ module BulkUpdate
           ),
         ).save
 
+        SendCsvSubmittedForProcessingFirstStageEmailService.call(upload: bulk_update_trainee_upload)
+
         redirect_to(
           bulk_update_add_trainees_upload_path(bulk_update_trainee_upload),
         )
