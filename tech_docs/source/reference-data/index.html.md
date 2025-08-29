@@ -32,7 +32,7 @@ Use reference data whenever you need allowed values for trainees, courses, fundi
 
 ## Current version 
 
-* Version: v2025.0-rc 
+* Version: v2025.0
 * Release notes: Reference data release notes 
 
 ## How to view or download reference data 
