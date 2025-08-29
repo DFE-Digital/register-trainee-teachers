@@ -13,8 +13,7 @@ weight: 1
         string (limited to 24 characters)
       </p>
       <p class="govuk-body">
-        The unique ID of the trainee in the Register system. Used to identify the trainee when using <a
-          href="/api-docs/v2025.0/endpoints/index.html">endpoints</a> which require a <code>trainee_id</code>.
+        The unique ID of the trainee in the Register system. Used to identify the trainee when using endpoints which require a <code>trainee_id</code>.
       </p>
       <p class="govuk-body">
         Example: <code>37T2Vm9aipqSVokbhWUMjedu</code>
