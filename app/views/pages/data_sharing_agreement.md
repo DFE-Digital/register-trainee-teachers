@@ -3,7 +3,7 @@ page_title: Register trainee teachers data sharing agreement
 title: Register trainee teachers data sharing agreement
 ---
 <p class='govuk-body'>
-  This agreement was last updated on 22 June 2022.
+  This agreement was last updated on 1 September 2025.
 </p>
 <h2 class='govuk-heading-m' id='#data-sharing-details'>
   Data sharing details
@@ -272,8 +272,10 @@ title: Register trainee teachers data sharing agreement
   </p>
   <ul class='govuk-list govuk-list--bullet'>
     <li>
-      providers entering new records directly into Register using
-      information from their own systems to populate Register
+      Providers send data over the Register API using data collected from their own systems to populate Register.
+    </li>
+    <li>
+      Providers bulk upload data using CSV bulk add new trainee using data collected from their own systems to populate Register.
     </li>
     <li>
       Register using an API to pull data where providers have managed
@@ -307,6 +309,9 @@ title: Register trainee teachers data sharing agreement
     <li>
       lead partners connect to Register to view their funding
       information and trainees’ information
+    </li>
+    <li>
+      When the Register API is used, personal data may be transferred from the system where the provider stores it to the DfE Register. The provider confirms that they are the independent controller of that data. They also confirm that they have the right to allow the transfer of the data. This includes transfers from any third-party system used to store the data, through the Register API, to the DfE Register. 
     </li>
   </ul>
   <p class='govuk-body'>
