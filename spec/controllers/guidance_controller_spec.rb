@@ -94,6 +94,19 @@ describe GuidanceController do
     end
   end
 
+  describe "#how_to_extract_trns_from_the_register_service" do
+    it "returns a 200 status code" do
+      get :how_to_extract_trns_from_the_register_service
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "renders the correct template and page" do
+      get :how_to_extract_trns_from_the_register_service
+      expect(response).to render_template("guidance")
+      expect(response).to render_template("how_to_extract_trns_from_the_register_service")
+    end
+  end
+
   describe "#check_data" do
     it "returns a 200 status code" do
       get :check_data

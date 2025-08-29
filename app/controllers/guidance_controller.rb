@@ -13,6 +13,7 @@ class GuidanceController < ApplicationController
   def check_data; end
   def bulk_recommend_trainees; end
   def manually_registering_trainees; end
+  def how_to_extract_trns_from_the_register_service; end
 
   def manage_placements
     render(layout: "application")
