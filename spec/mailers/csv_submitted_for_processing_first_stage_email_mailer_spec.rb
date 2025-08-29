@@ -15,7 +15,7 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
 
     let(:template_ids) do
       {
-        in_progress: "in-progress-uuid",
+        pending: "pending-uuid",
         validated: "validated-uuid",
         failed: "failed-uuid",
       }
