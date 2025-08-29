@@ -7,6 +7,6 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/t
 
 # Help
 
-If you have any questions or suggestions contact us at [registertraineeteachers@education.gov.uk](mailto:registertraineeteachers@education.gov.uk).
+If you have any questions or suggestions contact us at [becomingateacher@digital.education.gov.uk](mailto:becomingateacher@digital.education.gov.uk).
 
 We will try to get back to you within 5 working days.
