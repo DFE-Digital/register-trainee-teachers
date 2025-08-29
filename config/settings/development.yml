@@ -24,8 +24,6 @@ features:
     iqts: true
     teacher_degree_apprenticeship: true
   funding: true
-  token_management: true
-  bulk_add_trainees: true
   show_csv_sandbox_banner: true
 
 pagination:

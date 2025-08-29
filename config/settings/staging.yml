@@ -51,8 +51,6 @@ features:
   google:
     send_data_to_big_query: true
   register_api: false
-  token_management: true
-  bulk_add_trainees: true
 
 environment:
   name: staging
