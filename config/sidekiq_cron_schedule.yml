@@ -5,14 +5,6 @@ delete_cancelled_and_failed_bulk_update_trainee_uploads:
   queue: default
 
 # Jobs that run multiple times a day, sorted by frequency
-import_collection_from_hesa:
-  cron: "0 8-23/2 * * *" # every 2 hours, starting at 08:00 and ending at 23:59
-  class: "Hesa::RetrieveCollectionJob"
-  queue: hesa
-import_trn_data_from_hesa:
-  cron: "30 8-23/2 * * *" # 30 minutes past every 2nd hour from 8 through 23
-  class: "Hesa::RetrieveTrnDataJob"
-  queue: hesa
 malware_scan_uploads:
   cron: "*/20 * * * *" # Every 20 minutes of every day.
   class: "MalwareScanningJob"
@@ -51,18 +43,10 @@ create_trainees_from_apply:
   cron: <%= '"0 4 * * *" # Every day at 04:00.' unless ENV.fetch("RAILS_ENV") == "sandbox" %>
   class: "Trainees::CreateFromApplyJob"
   queue: default
-sync_hesa_students:
-  cron: "0 5 * * *" # Every day at 05:00.
-  class: "Hesa::SyncStudentsJob"
-  queue: hesa
 check_publish_providers:
   cron: <%= '"0 6 * * *" # Every day at 06:00.' if ENV.fetch("RAILS_ENV") == "production" %>
   class: "TeacherTrainingApi::PublishProviderCheckerJob"
   queue: default
-upload_trn_file_to_hesa:
-  cron: "10 10 * * *" # Every day at 10:10.
-  class: "Hesa::UploadTrnFileJob"
-  queue: hesa
 send_entity_table_checks_to_bigquery:
   cron: "30 0 * * *" # Every day at 00:30.
   class: "DfE::Analytics::EntityTableCheckJob"
