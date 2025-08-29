@@ -284,6 +284,7 @@ Rails.application.routes.draw do
     get "/withdraw-defer-reinstate-or-recommend-a-trainee", to: "guidance#withdraw_defer_reinstate_or_recommend_a_trainee"
     get "/manage-placements", to: "guidance#manage_placements"
     get "/bulk-upload-placement-data", to: "guidance#bulk_upload_placement_data"
+    get "/how_to_extract_trns_from_the_register_service", to: "guidance#how_to_extract_trns_from_the_register_service"
   end
 
   if FeatureService.enabled?("funding")
