@@ -10,13 +10,13 @@ describe ".update_last_used_at_on_token!" do
     let(:status) { "active" }
 
     it "calls update_last_used_at! on the auth_token" do
-      get "/api/v2025.0-rc/info", headers: { Authorization: token } do
+      get "/api/v2025.0/info", headers: { Authorization: token } do
         expect(auth_token).to receive(:update_last_used_at!)
       end
     end
 
     it "causes the token to update last_used_at attribute" do
-      get "/api/v2025.0-rc/info", headers: { Authorization: token }
+      get "/api/v2025.0/info", headers: { Authorization: token }
 
       auth_token.reload
 
@@ -28,13 +28,13 @@ describe ".update_last_used_at_on_token!" do
     let(:status) { "revoked" }
 
     it "doesn't call update_last_used_at! on the auth_token" do
-      get "/api/v2025.0-rc/info", headers: { Authorization: token } do
+      get "/api/v2025.0/info", headers: { Authorization: token } do
         expect(auth_token).not_to receive(:update_last_used_at!)
       end
     end
 
     it "doesn't cause the token to update last_used_at attribute" do
-      get "/api/v2025.0-rc/info", headers: { Authorization: token }
+      get "/api/v2025.0/info", headers: { Authorization: token }
 
       auth_token.reload
 

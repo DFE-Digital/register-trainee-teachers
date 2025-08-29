@@ -3,7 +3,7 @@
 require "rails_helper"
 
 # rubocop:disable RSpec/SpecFilePathFormat
-RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod do
+RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundingMethod do
   subject { described_class }
 
   around do |example|
@@ -18,14 +18,14 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
   let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
   let(:trainee_start_date) { Date.new(2025, 10, 1).iso8601 }
   let(:trainee_attributes) do
-    Api::V20250Rc::TraineeAttributes.new(
+    Api::V20250::TraineeAttributes.new(
       training_route:,
       course_subject_one:,
       trainee_start_date:,
     )
   end
   let(:hesa_trainee_detail_attributes) do
-    Api::V20250Rc::HesaTraineeDetailAttributes.new(
+    Api::V20250::HesaTraineeDetailAttributes.new(
       { trainee_attributes:, fund_code:, funding_method: },
       record_source: "api",
     )
@@ -87,7 +87,7 @@ RSpec.describe Api::V20250Rc::HesaTraineeDetailAttributes::Rules::FundingMethod 
       end
 
       context "when training_route is an InvalidValue" do
-        let(:training_route) { Api::V20250Rc::HesaMapper::Attributes::InvalidValue.new("invalid_route") }
+        let(:training_route) { Api::V20250::HesaMapper::Attributes::InvalidValue.new("invalid_route") }
 
         it "returns false" do
           expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)

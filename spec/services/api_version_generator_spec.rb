@@ -15,7 +15,7 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V20250Rc
+          module V20250
             class TraineeFilterParamsAttributes
               # ... code
             end
@@ -31,7 +31,7 @@ RSpec.describe ApiVersionGenerator do
         # frozen_string_literal: true
 
         module Api
-          module V20250Rc
+          module V20250
             module HesaMapper
               class DegreeAttributes
                 # ... code

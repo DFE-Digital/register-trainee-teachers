@@ -12,7 +12,7 @@ We namespace at the module level and indicate the major and minor version in the
 # app/models/api/v2025_0_rc/trainee_attributes.rb
 
 module Api
-  module V20250Rc
+  module V20250
     class TraineeAttributes
       # code ...
     end
@@ -34,7 +34,7 @@ This will copy all API services, models, and serializers into a new namespace, p
 # app/models/api/v2025_0_rc/trainee_attributes.rb
 
 module Api
-  module V20250Rc
+  module V20250
     class TraineeAttributes
       # code ...
     end
@@ -49,7 +49,7 @@ Will be copied to:
 
 module Api
   module V20260Rc
-    class TraineeAttributes < Api::V20250Rc::TraineeAttributes
+    class TraineeAttributes < Api::V20250::TraineeAttributes
     end
   end
 end
