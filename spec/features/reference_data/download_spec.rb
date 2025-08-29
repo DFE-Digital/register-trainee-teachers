@@ -40,7 +40,7 @@ private
   end
 
   def then_i_receive_the_data_entries_as_a_file
-    expect(download_filename).to eq("course-age-range-v2025.0-rc.csv")
+    expect(download_filename).to eq("course-age-range-v2025.0.csv")
     expect(parsed_download_content).to eq(parsed_course_age_range_file)
   end
 
@@ -49,6 +49,6 @@ private
   end
 
   def parsed_course_age_range_file
-    CSV.parse(file_content("reference_data/v2025_0_rc/course_age_range.csv"), headers: true).map(&:to_h)
+    CSV.parse(file_content("reference_data/v2025_0/course_age_range.csv"), headers: true).map(&:to_h)
   end
 end

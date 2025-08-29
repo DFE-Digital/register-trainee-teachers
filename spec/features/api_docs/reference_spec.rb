@@ -21,16 +21,16 @@ feature "References documentation page for Register API" do
   end
 
   def and_i_should_see_links_to_other_versions
-    ["v2025.0-rc"].each do |version|
+    ["v2025.0"].each do |version|
       expect(page).to have_link(version, href: "./#{version}/index.html")
     end
   end
 
   def when_i_click_on_a_link_to_another_version
-    click_on "v2025.0-rc"
+    click_on "v2025.0"
   end
 
   def then_i_should_see_the_api_reference_for_the_other_version
-    expect(page).to have_css("h1", text: "v2025.0-rc")
+    expect(page).to have_css("h1", text: "v2025.0")
   end
 end
