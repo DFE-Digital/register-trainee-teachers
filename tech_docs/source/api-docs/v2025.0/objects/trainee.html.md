@@ -125,16 +125,9 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        The sex of the trainee.
-        Possible values:
+        The sex of the trainee. Coded according to the <a
+          href="/reference-data/v2025.0/sex.html">Sex reference data specification</a>.
       </p>
-      <ul>
-        <li><code>10</code> - Female</li>
-        <li><code>11</code> - Male</li>
-        <li><code>12</code> - Other</li>
-        <li><code>96</code> - Information refused</li>
-        <li><code>99</code> - Not available</li>
-      </ul>
       <p class="govuk-body">
         Example: <code>10</code>
       </p>
@@ -148,7 +141,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The nationality of the trainee. Coded according to the <a
-          href="/reference-data/v2025.0/nationality.html">nationality reference data specification</a>.
+          href="/reference-data/v2025.0/nationality.html">Nationality reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>GB</code>
@@ -177,7 +170,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The ethnicity of the trainee. Coded according to the <a
-          href="/reference-data/v2025.0/ethnicity.html">ethnicity reference data specification</a>. The values for
+          href="/reference-data/v2025.0/ethnicity.html">Ethnicity reference data specification</a>. The values for
         <code>ethnic_background</code> and <code>ethnic_group</code> will be set based on the <code>ethnicity</code>
         value.
       </p>
@@ -198,7 +191,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The type of disabilities that the trainee has. Coded according to the <a
-          href="/reference-data/v2025.0/disability1.html">disability reference data specification</a>
+          href="/reference-data/v2025.0/disability1.html">Disability reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>58</code>
@@ -212,13 +205,9 @@ weight: 1
         string (limited to 3 characters), required
       </p>
       <p class="govuk-body">
-        The general qualification aim of the course in terms of qualifications and professional statuses. Possible
-        values:
+        The general qualification aim of the course in terms of qualifications and professional statuses. Coded according to the <a
+          href="/reference-data/v2025.0/itt-aim.html">ITT Aim reference data specification</a>
       </p>
-      <ul>
-        <li><code>201</code> - Professional status only</li>
-        <li><code>202</code> - Both professional status and academic award</li>
-      </ul>
       <p class="govuk-body">
         Example: <code>201</code>
       </p>
@@ -234,17 +223,9 @@ weight: 1
         The training route that the trainee is on.
       </p>
       <p class="govuk-body">
-        Possible values:
+        The training route that the trainee is on. Coded according to the <a
+          href="/reference-data/v2025.0/training-route.html">Training Route reference data specification</a>
       </p>
-      <ul>
-        <li><code>02</code> - School Direct tuition fee</li>
-        <li><code>03</code> - School Direct salaried</li>
-        <li><code>09</code> - Undergraduate Opt-in</li>
-        <li><code>10</code> - Postgraduate teaching apprenticeship</li>
-        <li><code>11</code> - Primary and Secondary Undergraduate Fee Funded</li>
-        <li><code>12</code> - Primary and Secondary Postgraduate Fee Funded</li>
-        <li><code>14</code> - Teacher Degree Apprenticeship</li>
-      </ul>
       <p class="govuk-body">
         Example: <code>11</code>
       </p>
@@ -257,22 +238,9 @@ weight: 1
         string (limited to 3 characters), required if <code>itt_aim</code> is <code>202</code>
       </p>
       <p class="govuk-body">
-        The qualification aim of the trainee’s course.
-        Possible values:
+        The qualification aim of the trainee’s course. Coded according to the <a
+          href="/reference-data/v2025.0/itt-qualification-aim.html">Qualification Aim reference data specification</a>
       </p>
-      <ul>
-        <li><code>007</code> - BA </li>
-        <li><code>008</code> - BA (Hons) </li>
-        <li><code>001</code> - BEd </li>
-        <li><code>002</code> - BEd (Hons) </li>
-        <li><code>003</code> - BSc </li>
-        <li><code>004</code> - BSc (Hons) </li>
-        <li><code>020</code> - Postgraduate Certificate in Education </li>
-        <li><code>021</code> - Postgraduate Diploma in Educatio </li>
-        <li><code>028</code> - Undergraduate Master of Teaching </li>
-        <li><code>031</code> - Professional Graduate Certificate in Education </li>
-        <li><code>032</code> - Masters, not by research </li>
-      </ul>
       <p class="govuk-body">
         Example: <code>004</code>
       </p>
@@ -289,7 +257,7 @@ weight: 1
       <p class="govuk-body">
         The subjects included in the trainee’s course. The first subject is the main one. It represents the bursary or
         scholarship available if applicable. Coded according to the <a
-          href="/reference-data/v2025.0/course-subject-one.html">course subject reference data specification</a>.
+          href="/reference-data/v2025.0/course-subject-one.html">Course Subject reference data specification</a>.
       </p>
       <p class="govuk-body">
        Note: For primary education courses (when the course maximum age is 11 or below), 
@@ -309,16 +277,9 @@ weight: 1
         string (limited to 2 characters), required
       </p>
       <p class="govuk-body">
-        This indicates whether the trainee’s course is full-time or part-time.
-        Possible values:
+        This indicates whether the trainee’s course is full-time or part-time. Coded according to the <a
+          href="/reference-data/v2025.0/study-mode.html">Study Mode reference data specification</a>
       </p>
-      <ul>
-        <li><code>01</code> - Full-time according to funding council definitions</li>
-        <li><code>02</code> - Other full-time</li>
-        <li><code>31</code> - Part-time</li>
-        <li><code>63</code> - Dormant - previously full-time</li>
-        <li><code>64</code> - Dormant - previously part-time</li>
-      </ul>
       <p class="govuk-body">
         Example: <code>01</code>
       </p>
@@ -412,7 +373,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The age range of children taught on the course. Coded according to the <a
-          href="/reference-data/v2025.0/course-age-range.html">course age range reference data specification</a>
+          href="/reference-data/v2025.0/course-age-range.html">Course Age Range reference data specification</a>
       </p>
       <p class="govuk-body">
         Example: <code>13918</code>
@@ -548,17 +509,9 @@ weight: 1
         string (limited to 1 characters), required
       </p>
       <p class="govuk-body">
-        The bursary level awarded to the trainee.
-        Possible values:
+        The bursary level awarded to the trainee. Coded according to the <a
+          href="/reference-data/v2025.0/funding-method.html">Funding Method reference data specification</a>
       </p>
-      <ul>
-        <li><code>4</code> - Scholarship</li>
-        <li><code>6</code> - No bursary, scholarship or grant awarded</li>
-        <li><code>B</code> - Undergraduate bursary</li>
-        <li><code>C</code> - Veteran Teaching undergraduate bursary</li>
-        <li><code>D</code> - Postgraduate bursary</li>
-        <li><code>E</code> - Grant</li>
-      </ul>
       <p class="govuk-body">
         Example: <code>4</code>
       </p>
@@ -573,18 +526,9 @@ weight: 1
       <p class="govuk-body">
         This field identifies students who are part of a specific scheme that
         is to be monitored independently. Valid entries will change from year to year
-        to reflect current schemes.
-        Possible values:
+        to reflect current schemes. Coded according to the <a
+          href="/reference-data/v2025.0/training-initiative.html">Training Initiative reference data specification</a>
       </p>
-      <ul>
-        <li><code>001</code> - Abridged ITT course</li>
-        <li><code>009</code> - Maths and Physics Chairs Programme</li>
-        <li><code>011</code> - Primary mathematics specialist</li>
-        <li><code>019</code> - Additional ITT place for PE with a priority subject</li>
-        <li><code>025</code> - Transition to Teach</li>
-        <li><code>026</code> - Now Teach</li>
-        <li><code>036</code> - International relocation payment</li>
-      </ul>
       <p class="govuk-body">
         Example: <code>026</code>
       </p>
@@ -598,7 +542,7 @@ weight: 1
       </p>
       <p class="govuk-body">
         The secondary training initiative that the trainee is on. Coded according to the <a
-          href="/reference-data/v2025.0/training-initiative.html">training initiative reference data specification</a>.
+          href="/reference-data/v2025.0/training-initiative.html">Training Initiative reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>025</code>

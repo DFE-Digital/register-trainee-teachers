@@ -29,7 +29,7 @@ weight: 3
       <p class="govuk-body">
         The country where the degree was awarded.
         Coded according to the
-        <a href="/reference-data/v2025.0/country.html">degree country reference data specification</a>.
+        <a href="/reference-data/v2025.0/country.html">Degree Country reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>US</code>
@@ -44,7 +44,7 @@ weight: 3
       </p>
       <p class="govuk-body">
         The grade of the degree. Coded according to
-        <a href="/reference-data/v2025.0/grade.html">degree grade reference data specification</a>.
+        <a href="/reference-data/v2025.0/grade.html">Degree Grade reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>02</code>
@@ -59,7 +59,7 @@ weight: 3
       </p>
       <p class="govuk-body">
         The type of UK degree. Coded according to
-        <a href="/reference-data/v2025.0/uk-degree.html">degree type reference data specification</a>.
+        <a href="/reference-data/v2025.0/uk-degree.html">UK Degree Type reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>083</code>
@@ -74,7 +74,7 @@ weight: 3
       </p>
       <p class="govuk-body">
         The type of non-UK degree. Coded according to
-        <a href="/reference-data/v2025.0/non-uk-degree.html">non-UK degree type reference data specification</a>.
+        <a href="/reference-data/v2025.0/non-uk-degree.html">Non-UK Degree Type reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>051</code>
@@ -89,7 +89,7 @@ weight: 3
       </p>
       <p class="govuk-body">
         The degree subject. For those with complex previous degrees, return the major subject that you would have previously returned as degree subject 1. Coded according to
-        <a href="/reference-data/v2025.0/subject.html">degree subject reference data specification</a>.
+        <a href="/reference-data/v2025.0/subject.html">Degree Subject reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>100425</code>
@@ -104,7 +104,7 @@ weight: 3
       </p>
       <p class="govuk-body">
         The awarding institution. Coded according to the
-        <a href="/reference-data/v2025.0/institution.html">awarding institution reference data specification</a>.
+        <a href="/reference-data/v2025.0/institution.html">Awarding Institution reference data specification</a>.
       </p>
       <p class="govuk-body">
         Example: <code>0116</code>
