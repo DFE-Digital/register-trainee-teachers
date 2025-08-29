@@ -9,9 +9,12 @@ class SendCsvSubmittedForProcessingFirstStageEmailService
   end
 
   def call
-    CsvSubmittedForProcessingFirstStageEmailMailer.generate(
-      upload:,
-    ).deliver_later(wait: 30.seconds)
+    upload.provider.users.each do |user|
+      CsvSubmittedForProcessingFirstStageEmailMailer.generate(
+        upload:,
+        user:,
+      ).deliver_later(wait: 30.seconds)
+    end
   end
 
 private
