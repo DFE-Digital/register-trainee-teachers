@@ -17,7 +17,7 @@ All requests must be accompanied by an `Authorization` request header (not as pa
 
 Unauthenticated requests will receive an `UnauthorizedResponse` with a `401` status code.
 
-Authentication tokens will be provided by the Register team.
+Providers can create tokens in the Organisation settings link once logged into the service.
 
 ## Rate Limiting
 
