@@ -44,10 +44,10 @@ features:
     send_data_to_big_query: true
   integrate_with_dqt: false
   integrate_with_trs: true
-  hesa_trn_requests: true
+  hesa_trn_requests: false
   hesa_import:
-    sync_collection: true
-    sync_trn_data: true
+    sync_collection: false
+    sync_trn_data: false
   dqt_import:
     sync_teachers: true
   register_api: false
