@@ -21,7 +21,7 @@ feature "References documentation page for Register API" do
   end
 
   def and_i_should_see_links_to_other_versions
-    ["v2025.0"].each do |version|
+    Settings.api.allowed_versions.each do |version|
       expect(page).to have_link(version, href: "./#{version}/index.html")
     end
   end
