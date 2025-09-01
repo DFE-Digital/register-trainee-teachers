@@ -11,6 +11,10 @@
     <%= tag.meta(name: "theme-color", content: "#0b0c0c") %>
     <%= tag.meta(name: "format-detection", content: "telephone=no") %>
 
+    <% unless Rails.env.production? %>
+      <%= tag.meta(name: "robots", content: "noindex, nofollow") %>
+    <% end %>
+
     <%= favicon_link_tag image_path("favicon.ico"), type: nil, sizes: "48x48" %>
     <%= favicon_link_tag image_path("favicon.svg"), type: "image/svg+xml", sizes: "any" %>
     <%= favicon_link_tag image_path("govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
