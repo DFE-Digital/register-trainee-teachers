@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
-RSpec.describe "Search engine indexing", type: :request do
+RSpec.describe "Search engine indexing" do
   %w[production].each do |env|
     context "when the ENV is #{env}" do
       before do
         allow(Rails).to receive(:env).and_return(
-          ActiveSupport::StringInquirer.new(env)
+          ActiveSupport::StringInquirer.new(env),
         )
 
         get root_path
@@ -13,7 +15,7 @@ RSpec.describe "Search engine indexing", type: :request do
 
       it "does not render the no index, nofollow meta tag" do
         expect(response.body).not_to include(
-          '<meta name="robots" content="noindex, nofollow">'
+          '<meta name="robots" content="noindex, nofollow">',
         )
       end
     end
@@ -23,7 +25,7 @@ RSpec.describe "Search engine indexing", type: :request do
     context "when the ENV is #{env}" do
       before do
         allow(Rails).to receive(:env).and_return(
-          ActiveSupport::StringInquirer.new(env)
+          ActiveSupport::StringInquirer.new(env),
         )
 
         get root_path
@@ -31,7 +33,7 @@ RSpec.describe "Search engine indexing", type: :request do
 
       it "renders the no index, nofollow meta tag" do
         expect(response.body).to include(
-          '<meta name="robots" content="noindex, nofollow">'
+          '<meta name="robots" content="noindex, nofollow">',
         )
       end
     end
