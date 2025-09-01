@@ -63,7 +63,16 @@ module BulkUpdate
 
       file.tempfile.rewind
 
-      @csv ||= CSV.read(file.tempfile, **CSV_ARGS)
+      @csv ||= CSV.read(
+        file.tempfile,
+        **(CSV_ARGS).merge(header_converters: lambda { |h| convert_to_case_sensitive(h) }),
+      )
+    end
+
+    def convert_to_case_sensitive(header)
+      return header if BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.key?(header)
+
+      BulkUpdate::AddTrainees::ImportRows::CASE_INSENSITIVE_ALL_HEADERS[header.downcase] || header
     end
 
     def validate_file!
