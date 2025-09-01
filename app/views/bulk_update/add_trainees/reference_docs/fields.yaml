@@ -226,7 +226,7 @@
   description: |-
     First subject of the ITT course
 
-    Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
+    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, we expect Course Subject One to be “Primary Teaching”. We will automatically apply HESA code 100511 if you have not already done so. Any subjects provided in the trainee details will be shifted to course_subject_two and course_subject_three.  Where trainees study a primary specialism, a valid HECoS code should be used in this field.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-one.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Mandatory
@@ -237,7 +237,7 @@
   description: |-
     Second subject of the ITT course.
 
-    Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
+    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, we expect Course Subject One to be “Primary Teaching”. We will automatically apply HESA code 100511 if you have not already done so. Any subjects provided in the trainee details will be shifted to course_subject_two and course_subject_three.  Where trainees study a primary specialism, a valid HECoS code should be used in this field.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-two.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
@@ -247,7 +247,7 @@
   description: |-
     Third subject of the ITT course.
 
-    Notes\: Where trainees continue to study a primary specialism, a valid HECoS code should be used in this field
+    Notes\: Where the course maximum age is 11 or less as stated in Course Age Range, we expect Course Subject One to be “Primary Teaching”. We will automatically apply HESA code 100511 if you have not already done so. Any subjects provided in the trainee details will be shifted to course_subject_two and course_subject_three.  Where trainees study a primary specialism, a valid HECoS code should be used in this field.
   format: "[Course Subject reference codes](/reference-data/v2025.0/course-subject-three.html)"
   example: "`100048` for example is the code used for design as a subject"
   validation: Optional
