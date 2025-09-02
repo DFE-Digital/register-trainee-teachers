@@ -59,4 +59,8 @@ DfE::Analytics.configure do |config|
 
   # Path of airbyte stream config file relative to the App root (Rails.root)
   config.airbyte_stream_config_path = "terraform/aks/workspace-variables/review_streams.json"
+
+  # Set bigquery airbyte vars
+  config.bigquery_airbyte_dataset = "register_airbyte_tf"
+  config.bigquery_hidden_policy_tag = "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766"
 end
