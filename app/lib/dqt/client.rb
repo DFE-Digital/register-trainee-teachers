@@ -4,6 +4,7 @@ module Dqt
   class Client
     class Request
       include HTTParty
+
       base_uri Settings.dqt.base_url
       headers "Accept" => "application/json",
               "Content-Type" => "application/json;odata.metadata=minimal",

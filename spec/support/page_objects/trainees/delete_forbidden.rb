@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class DeleteForbidden < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{id}/delete-forbidden"
 
       element :defer_option, "#trainee-forbidden-delete-form-alternative-option-defer-field"

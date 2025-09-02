@@ -53,13 +53,13 @@ module ApplicationRecordCard
     end
 
     def provider_name
-      return unless show_provider
+      return unless show_provider?
 
       tag.p(record.provider.name_and_code.to_s, class: "govuk-caption-m govuk-!-font-size-16 application-record-card__provider_name govuk-!-margin-bottom-0 govuk-!-margin-top-2")
     end
 
     def record_source
-      return unless show_record_source
+      return unless show_record_source?
 
       title = I18n.t("components.application_record_card.record_source.title")
       record_source_text = I18n.t("components.application_record_card.record_source.#{record.derived_record_source}")
@@ -86,15 +86,15 @@ module ApplicationRecordCard
       tag.p("End year: #{academic_cycle.label}", class: "govuk-caption-m govuk-!-font-size-16 application-record-card__end_year govuk-!-margin-top-1 govuk-!-margin-bottom-1")
     end
 
-    def show_provider
+    def show_provider?
       current_user.system_admin? || current_user.lead_partner?
     end
 
-    def show_record_source
+    def show_record_source?
       current_user.system_admin?
     end
 
-    def hide_progress_tag
+    def hide_progress_tag?
       TraineePolicy.new(current_user, record).hide_progress_tag?
     end
 

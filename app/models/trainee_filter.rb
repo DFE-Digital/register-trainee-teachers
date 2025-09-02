@@ -154,7 +154,9 @@ private
   end
 
   def provider_option
-    @provider_option ||= Provider.find_by(id: params[:provider])
+    return @provider_option if defined?(@provider_option)
+
+    @provider_option = Provider.find_by(id: params[:provider])
   end
 
   def record_completions

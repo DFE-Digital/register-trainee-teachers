@@ -26,7 +26,9 @@ private
   end
 
   def user
-    @user ||= User.find_by(email: otp_form.email)
+    return @user if defined?(@user)
+
+    @user = User.find_by(email: otp_form.email)
   end
 
   def otp

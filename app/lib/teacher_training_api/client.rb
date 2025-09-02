@@ -4,6 +4,7 @@ module TeacherTrainingApi
   class Client
     class Request
       include HTTParty
+
       base_uri Settings.teacher_training_api.base_url
       headers "User-Agent" => "Register for teacher training"
     end

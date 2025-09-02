@@ -2,6 +2,7 @@
 
 module Sluggable
   extend ActiveSupport::Concern
+
   SLUG_LENGTH = 24
 
   included do

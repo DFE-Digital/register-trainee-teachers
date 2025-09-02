@@ -34,7 +34,9 @@ module Reports
     end
 
     def course
-      @course ||= Course.includes(:provider).find_by(uuid: trainee.course_uuid)
+      return @course if defined?(@course)
+
+      @course = Course.includes(:provider).find_by(uuid: trainee.course_uuid)
     end
 
     def funding_manager

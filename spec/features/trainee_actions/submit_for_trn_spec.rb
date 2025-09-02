@@ -4,6 +4,7 @@ require "rails_helper"
 
 feature "submit for TRN" do
   include TraineeHelper
+
   background { given_i_am_authenticated }
 
   describe "submission" do
