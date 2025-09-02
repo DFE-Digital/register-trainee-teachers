@@ -65,7 +65,7 @@ module BulkUpdate
 
       @csv ||= CSV.read(
         file.tempfile,
-        **(CSV_ARGS).merge(header_converters: lambda { |h| convert_to_case_sensitive(h) }),
+        **CSV_ARGS, header_converters: ->(h) { convert_to_case_sensitive(h) },
       )
     end
 
