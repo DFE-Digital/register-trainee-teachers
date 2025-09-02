@@ -18,6 +18,14 @@ import postTraineeWithdraw from "./endpoints/post-trainee-withdraw.ts";
 import { setup as loadSecrets, SetupData } from "./setup.ts";
 
 
+export const options = {
+  cloud: {
+    distribution: {
+      distributionLabel1: { loadZone: 'amazon:gb:london', percent: 100 }
+    }
+  }
+};
+
 export function setup(): SetupData {
   return loadSecrets();
 }
