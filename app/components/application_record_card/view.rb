@@ -17,7 +17,7 @@ module ApplicationRecordCard
     end
 
     def trainee_name
-      return I18n.t("components.application_record_card.trainee_name.blank") if has_no_name?
+      return I18n.t("components.application_record_card.trainee_name.blank") if no_name?
 
       params[:sort_by] == "last_name" ? last_name_first : first_names_first
     end
@@ -100,7 +100,7 @@ module ApplicationRecordCard
 
   private
 
-    def has_no_name?
+    def no_name?
       record.blank? || record.first_names.blank? || record.last_name.blank?
     end
 

@@ -100,7 +100,7 @@ class CourseDetailsForm < TraineeForm
     end
   end
 
-  def has_additional_subjects?
+  def additional_subjects?
     course_subject_two.present? || course_subject_three.present?
   end
 
