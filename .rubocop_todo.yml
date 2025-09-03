@@ -13,20 +13,6 @@ Naming/AccessorMethodName:
     - 'app/forms/degrees_form.rb'
     - 'app/lib/filtered_back_link/tracker.rb'
 
-# Offense count: 6
-# Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros.
-# NamePrefix: is_, has_, have_
-# ForbiddenPrefixes: is_, has_, have_
-# AllowedMethods: is_a?
-# MethodDefinitionMacros: define_method, define_singleton_method
-Naming/PredicatePrefix:
-  Exclude:
-    - 'app/components/application_record_card/view.rb'
-    - 'app/forms/course_details_form.rb'
-    - 'app/jobs/dttp/sync_providers_job.rb'
-    - 'app/jobs/dttp/sync_schools_job.rb'
-    - 'app/services/progress_service.rb'
-
 # Offense count: 5
 # Configuration parameters: EnforcedStyle, CheckMethodNames, CheckSymbols, AllowedIdentifiers, AllowedPatterns.
 # SupportedStyles: snake_case, normalcase, non_integer
