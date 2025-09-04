@@ -260,7 +260,7 @@ weight: 1
           href="/reference-data/v2025.0/course-subject-one.html">Course Subject reference data specification</a>.
       </p>
       <p class="govuk-body">
-        Notes: <br>
+        Notes:
         Where the course maximum age is 11 or less as stated in <code>course_age_range</code>, 
         we expect <code>course_subject_one</code> to be “Primary Teaching”. We will automatically apply HESA code <code>100511</code> if you have not already done so.
         Any subjects provided in the trainee details will be shifted to <code>course_subject_two</code> and <code>course_subject_three</code>. 
