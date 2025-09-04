@@ -36,6 +36,7 @@ features:
     school_direct_salaried: true
     school_direct_tuition_fee: true
     iqts: true
+    teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: true
   integrate_with_dqt: true
