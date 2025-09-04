@@ -70,9 +70,7 @@ module BulkUpdate
     end
 
     def convert_to_case_sensitive(header)
-      return header if BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.key?(header)
-
-      BulkUpdate::AddTrainees::ImportRows::CASE_INSENSITIVE_ALL_HEADERS[header.downcase] || header
+ BulkUpdate::AddTrainees::ImportRows::CASE_INSENSITIVE_ALL_HEADERS[header.downcase]
     end
 
     def validate_file!
