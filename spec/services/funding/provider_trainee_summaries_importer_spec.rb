@@ -18,6 +18,7 @@ module Funding
             },
             "Undergraduate opt-in" => "opt_in_undergrad",
             "School Direct tuition fee" => "school_direct_tuition_fee",
+            "Teacher degree apprenticeship" => "teacher_degree_apprenticeship",
           )
         end
       end
@@ -96,7 +97,7 @@ module Funding
               "Provider name" => "Provider 3",
               "Academic Year" => "2021/22",
               "Subject" => "Modern Languages",
-              "Route" => "School Direct tuition fee",
+              "Route" => "Teacher degree apprenticeship",
               "Lead School" => "Lead School 2",
               "Lead School ID" => "0002",
               "Cohort Level" => "UG",
@@ -169,8 +170,8 @@ module Funding
         let(:provider_three_expected_attibutes) {
           {
             "subject" => "Modern Languages",
-            "route" => "School Direct tuition fee",
-            "training_route" => "school_direct_tuition_fee",
+            "route" => "Teacher degree apprenticeship",
+            "training_route" => "teacher_degree_apprenticeship",
             "lead_school_name" => "Lead School 2",
             "lead_school_urn" => "0002",
             "cohort_level" => "UG",
