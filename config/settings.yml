@@ -61,20 +61,20 @@ features:
   import_trainees_from_dttp: false
   qualtrics_survey: false
   routes:
-    assessment_only: false
-    early_years_assessment_only: false
-    early_years_salaried: false
-    early_years_postgrad: false
-    early_years_undergrad: false
-    provider_led_postgrad: false
-    school_direct_salaried: false
-    school_direct_tuition_fee: false
-    provider_led_undergrad: false
-    opt_in_undergrad: false
+    assessment_only: true
+    early_years_assessment_only: true
+    early_years_postgrad: true
+    early_years_salaried: true
+    early_years_undergrad: true
+    opt_in_undergrad: true
+    pg_teaching_apprenticeship: true
+    provider_led_postgrad: true
+    provider_led_undergrad: true
+    school_direct_salaried: true
+    school_direct_tuition_fee: true
+    iqts: true
+    teacher_degree_apprenticeship: true
     hpitt_postgrad: false
-    pg_teaching_apprenticeship: false
-    iqts: false
-    teacher_degree_apprenticeship: false
   google:
     send_data_to_big_query: false
   filters:
