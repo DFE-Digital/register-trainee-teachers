@@ -14,7 +14,7 @@ gem "turbo-rails"
 gem "pg", ">= 0.18", "< 2.0"
 
 # Use Puma as the app server
-gem "puma", "~> 6.6"
+gem "puma", "~> 7.0"
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
