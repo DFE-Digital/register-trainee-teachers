@@ -74,6 +74,8 @@ module BulkUpdate
 
       ALL_HEADERS = TRAINEE_HEADERS.merge(PLACEMENT_HEADERS).merge(DEGREE_HEADERS)
 
+      CASE_INSENSITIVE_ALL_HEADERS = ALL_HEADERS.to_h { |key, _| [key.downcase, key] }.freeze
+
       PREFIXED_HEADERS = [
         "HESA ID",
         "Date of Birth",
