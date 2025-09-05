@@ -15,7 +15,14 @@ features:
     school_direct_tuition_fee: true
     pg_teaching_apprenticeship: true
     teacher_degree_apprenticeship: true
-
+    early_years_assessment_only: false
+    early_years_postgrad: false
+    early_years_salaried: false
+    early_years_undergrad: false
+    opt_in_undergrad: false
+    provider_led_undergrad: false
+    iqts: false
+    hpitt_postgrad: false
 environment:
   name: test
   display_name: Beta
