@@ -4,6 +4,7 @@ module QualtricsApi
   class Client
     class Request
       include HTTParty
+
       base_uri Settings.qualtrics.base_url
       headers "X-API-TOKEN" => Settings.qualtrics.api_token,
               "Content-Type" => "application/json"

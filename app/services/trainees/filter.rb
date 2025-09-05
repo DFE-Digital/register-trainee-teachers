@@ -3,6 +3,7 @@
 module Trainees
   class Filter
     include ServicePattern
+
     ALL_SCIENCES_FILTER = "Sciences - biology, chemistry, physics"
 
     def initialize(trainees:, filters:)
@@ -157,7 +158,7 @@ module Trainees
     def study_mode(trainees, study_mode)
       return trainees if study_mode.blank? || (study_mode.count == 2)
 
-      if study_mode.count == 1
+      if study_mode.one?
         trainees.where(study_mode:).where.not(training_route: "assessment_only").where.not(training_route: "early_years_assessment_only")
       end
     end

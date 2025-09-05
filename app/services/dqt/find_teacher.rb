@@ -15,7 +15,7 @@ module Dqt
         raise(Error, "No teachers found in DQT for trainee #{trainee.id}")
       end
 
-      if teachers.count > 1
+      if teachers.many?
         raise(Error, "Multiple teachers found in DQT for trainee #{trainee.id}")
       end
 

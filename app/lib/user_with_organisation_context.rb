@@ -42,7 +42,7 @@ class UserWithOrganisationContext < SimpleDelegator
   def multiple_organisations?
     return false unless FeatureService.enabled?(:user_can_have_multiple_organisations)
 
-    (user.lead_partners + user.providers).count > 1
+    (user.lead_partners + user.providers).many?
   end
 
   def organisation?

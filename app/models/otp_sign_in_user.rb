@@ -34,10 +34,14 @@ class OtpSignInUser
   def user
     return if email.blank?
 
-    @user ||= User.kept.find_by(
-      "LOWER(email) = ?",
-      email&.downcase,
-    )
+    if defined?(@user)
+      @user
+    else
+      @user = User.kept.find_by(
+        "LOWER(email) = ?",
+        email&.downcase,
+      )
+    end
   end
 
   def system_admin?

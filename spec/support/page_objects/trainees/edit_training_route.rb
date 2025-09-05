@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class EditTrainingRoute < PageObjects::Base
       include PageObjects::Helpers
+
       class TrainingRouteOptions < SitePrism::Section
         element :input, "input"
         element :label, "label"

@@ -5,6 +5,7 @@ require "rails_helper"
 module Trainees
   describe CreateFromApplyJob do
     include ActiveJob::TestHelper
+
     let(:state) { :importable }
     let(:provider_code) { create(:provider, apply_sync_enabled:) }
     let(:apply_application) { create(:apply_application, accredited_body_code: provider_code.code, state: state) }

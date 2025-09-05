@@ -6,6 +6,7 @@ module Trainees
   module CreateFromCsvRow
     describe TeachFirst do
       include SeedHelper
+
       let!(:academic_cycle) { create(:academic_cycle, :current) }
       let(:employing_school_urn) { "0123456" }
 

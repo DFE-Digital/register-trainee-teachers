@@ -13,11 +13,9 @@ module PageObjects
 
         elements :lead_partner_radio_buttons, 'input[type="radio"][name="school[lead_partner]"]'
 
-        # rubocop:disable Naming/PredicateName
         def has_lead_partner_radio_button_checked?(value)
           radio_button(value).checked?
         end
-        # rubocop:enable Naming/PredicateName
 
         def select_radio_button(value)
           radio_button(value).click

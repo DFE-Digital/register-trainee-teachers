@@ -14,7 +14,9 @@ module BulkUpdate
       end
 
       def school
-        @school ||= School.find_by(urn:)
+        return @school if defined?(@school)
+
+        @school = School.find_by(urn:)
       end
 
       attr_reader :error_messages

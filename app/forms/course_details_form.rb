@@ -64,7 +64,7 @@ class CourseDetailsForm < TraineeForm
 
   def initialize(...)
     super
-    @primary_course_subjects ||= set_primary_phase_subjects if is_primary_phase?
+    @primary_course_subjects ||= set_primary_phase_subjects if primary_phase?
     @training_routes_form = TrainingRoutesForm.new(trainee)
     @course_allocation_subject ||= set_early_years_attributes if early_years_route?
   end
@@ -100,7 +100,7 @@ class CourseDetailsForm < TraineeForm
     end
   end
 
-  def has_additional_subjects?
+  def additional_subjects?
     course_subject_two.present? || course_subject_three.present?
   end
 
@@ -122,7 +122,7 @@ class CourseDetailsForm < TraineeForm
     @course_allocation_subject ||= SubjectSpecialism.find_by(name: course_subject_one)&.allocation_subject
   end
 
-  def is_primary_phase?
+  def primary_phase?
     course_education_phase == COURSE_EDUCATION_PHASE_ENUMS[:primary]
   end
 
@@ -151,11 +151,11 @@ private
   attr_reader :training_routes_form
 
   def requires_secondary_subjects?
-    !is_primary_phase? && require_subject?
+    !primary_phase? && require_subject?
   end
 
   def requires_primary_subjects?
-    is_primary_phase? && require_subject?
+    primary_phase? && require_subject?
   end
 
   def compute_fields
@@ -199,7 +199,7 @@ private
       course_education_phase:,
     }
 
-    set_course_subject_from_primary_phase if is_primary_phase?
+    set_course_subject_from_primary_phase if primary_phase?
 
     attributes.merge!(course_uuid: nil) if course_allocation_subject_changed?
 

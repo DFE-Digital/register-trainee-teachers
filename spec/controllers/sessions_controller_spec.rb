@@ -4,6 +4,7 @@ require "rails_helper"
 
 describe SessionsController do
   include DfESignInUserHelper
+
   let(:user) { create(:user) }
   let(:request_callback) do
     request.env["omniauth.auth"] = user_exists_in_dfe_sign_in(user:)

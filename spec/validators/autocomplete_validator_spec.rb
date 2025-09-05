@@ -4,6 +4,7 @@ require "rails_helper"
 
 class Validatable
   include ActiveModel::Validations
+
   attr_accessor :search, :search_raw
 
   validates :search, autocomplete: true

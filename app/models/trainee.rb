@@ -530,7 +530,7 @@ class Trainee < ApplicationRecord
   end
 
   def duplicate?
-    Trainee.where(first_names:, last_name:, date_of_birth:, email:).count > 1
+    Trainee.where(first_names:, last_name:, date_of_birth:, email:).many?
   end
 
   def derived_record_source

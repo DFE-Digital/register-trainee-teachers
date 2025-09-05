@@ -3,7 +3,7 @@
 class RemoveTraineeDuplicateDegrees < ActiveRecord::Migration[6.1]
   def up
     Trainee.find_each do |trainee|
-      next unless trainee.degrees.count > 1
+      next unless trainee.degrees.many?
 
       duplicate_ids = find_duplicate_ids(trainee.degrees)
       if duplicate_ids.any?

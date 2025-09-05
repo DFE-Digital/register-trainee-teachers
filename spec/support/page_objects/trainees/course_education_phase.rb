@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class CourseEducationPhase < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{id}/course-education-phase/edit"
 
       element :primary_phase, "#course-education-phase-form-course-education-phase-primary-field"

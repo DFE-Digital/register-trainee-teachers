@@ -3,6 +3,7 @@
 module Personas
   class View < ViewComponent::Base
     include ApplicationHelper
+
     with_collection_parameter :persona
     attr_reader :persona
 

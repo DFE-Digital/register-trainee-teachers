@@ -90,7 +90,9 @@ module ApplyApplications
     end
 
     def course
-      @course ||= trainee.available_courses(training_route).find_by(uuid:)
+      return @course if defined?(@course)
+
+      @course = trainee.available_courses(training_route).find_by(uuid:)
     end
 
     def trainee_confirmed?

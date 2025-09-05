@@ -102,7 +102,7 @@ describe MappableFieldRow do
         <<~HTML
           <div class="govuk-inset-text app-inset-text--narrow-border app-inset-text--important app-inset-text--no_padding">
             <p class="app-inset-text__title govuk-!-margin-bottom-2">#{field_label} is missing</p>
-            #{''}
+          #{'  '}
             <div>
               <a class="govuk-link govuk-link--no-visited-state app-summary-list__link--invalid" name="#{field_label.downcase}" href="#{action_url}">
                 Review the trainee’s answer<span class="govuk-visually-hidden"> for #{field_label.downcase}</span>

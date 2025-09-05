@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   if FeatureService.performance_testing?
     prepend ApplicationControllerDev
+
     content_security_policy false
   end
 

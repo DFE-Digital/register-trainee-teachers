@@ -25,7 +25,7 @@ module TeacherTrainingApi
 
       SlackNotifierService.call(
         message: message,
-        icon_emoji: checker.missing.count.zero? ? ":inky-the-octopus:" : ":alert:",
+        icon_emoji: checker.missing.none? ? ":inky-the-octopus:" : ":alert:",
         username: "Register Trainee Teachers: Job Failure",
       )
     end

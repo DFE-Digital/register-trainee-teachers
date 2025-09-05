@@ -59,7 +59,9 @@ private
   end
 
   def learning_difficulty
-    @learning_difficulty ||= Disability.find_by(name: ::Diversities::LEARNING_DIFFICULTY)
+    return @learning_difficulty if defined?(@learning_difficulty)
+
+    @learning_difficulty = Disability.find_by(name: ::Diversities::LEARNING_DIFFICULTY)
   end
 
   def other_disability_dttp_ids
@@ -72,7 +74,9 @@ private
   end
 
   def other_disability
-    @other_disability ||= Disability.find_by(name: ::Diversities::OTHER)
+    return @other_disability if defined?(@other_disability)
+
+    @other_disability = Disability.find_by(name: ::Diversities::OTHER)
   end
 
   def csv

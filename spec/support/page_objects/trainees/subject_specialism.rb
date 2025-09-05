@@ -9,6 +9,7 @@ module PageObjects
 
     class SubjectSpecialism < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{trainee_id}/subject-specialism/{position}/edit"
 
       sections :specialism_options, SpecialismOptions, ".govuk-radios__item"

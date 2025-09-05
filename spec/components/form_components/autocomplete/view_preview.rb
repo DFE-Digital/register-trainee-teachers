@@ -27,6 +27,7 @@ module FormComponents
 
       class ExampleModel
         include ActiveModel::Model
+
         attr_accessor :id, :country, :country_raw
       end
 

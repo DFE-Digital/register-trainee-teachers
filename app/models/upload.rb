@@ -24,6 +24,7 @@ class Upload < ApplicationRecord
   MAX_FILE_SIZE = 50.megabytes
 
   include PgSearch::Model
+
   pg_search_scope :search_by_name, against: :name, using: %i[tsearch trigram]
 
   belongs_to :user

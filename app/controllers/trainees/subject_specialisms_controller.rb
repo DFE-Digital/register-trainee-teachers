@@ -9,7 +9,7 @@ module Trainees
     def edit
       @specialisms = subject_specialisms_for_position(position)
 
-      if @specialisms.count == 1
+      if @specialisms.one?
         SubjectSpecialismForm.new(trainee, position, params: {
           course_subject_attribute_name => @specialisms.first,
         }).stash_or_save!

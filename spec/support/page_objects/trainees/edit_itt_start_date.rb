@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class EditIttDates < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{trainee_id}/course-details/itt-dates/edit"
 
       element :start_date_day, "#itt_dates_form_start_date_3i"

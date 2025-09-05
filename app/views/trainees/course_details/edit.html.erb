@@ -14,7 +14,7 @@
       <%= render TraineeName::View.new(@trainee) %>
       <h1 class="govuk-heading-l"><%= t(".heading") %></h1>
 
-      <% if f.object.is_primary_phase? %>
+      <% if f.object.primary_phase? %>
         <%= render "primary_phase", f: f %>
       <% else %>
         <%= render "secondary_phase", f: f %>
