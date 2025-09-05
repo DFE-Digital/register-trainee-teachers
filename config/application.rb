@@ -17,6 +17,10 @@ require "sprockets/railtie"
 require "rails/test_unit/railtie"
 require "govuk/components"
 
+Dir[File.expand_path("../app/middleware/**/*.rb", __dir__)].each do |file|
+  require file
+end
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -37,6 +41,8 @@ module RegisterTraineeTeachers
     config.view_component.show_previews = !Rails.env.production?
 
     config.middleware.use(Rack::Deflater)
+    config.middleware.insert_before(ActionDispatch::Static, TechDocs::TrailingSlashRedirect)
+
     config.active_job.queue_adapter = :sidekiq
 
     # Configure session store to use ActiveRecord.
