@@ -123,7 +123,7 @@ gem "mechanize" # interact with HESA
 gem "dfe-reference-data", require: "dfe/reference_data", github: "DFE-Digital/dfe-reference-data", tag: "v3.8.3"
 
 # for sending analytics data to the analytics platform
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", ref: "247fd286b3d8a4d82135a909d44c125f2d813236"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", ref: "95ce7839511a1ee654db11b89600ef455aff8fab"
 
 gem "ruby-progressbar" # useful for tracking long running rake tasks
 
