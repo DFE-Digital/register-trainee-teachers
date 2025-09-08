@@ -1,4 +1,6 @@
 web: bundle exec rails s -p 5001
+worker1: bundle exec sidekiq -t 25 -C config/sidekiq.yml
+worker2: bundle exec sidekiq -t 25 -C config/sidekiq-trainee-upload.yml
 js: yarn build --watch
 css: yarn build:css --watch
 docs: cd tech_docs && bundle exec middleman serve
