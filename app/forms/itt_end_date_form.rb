@@ -2,6 +2,7 @@
 
 class IttEndDateForm < TraineeForm
   include DatesHelper
+
   MAX_END_YEARS = 4
 
   attr_accessor :day, :month, :year

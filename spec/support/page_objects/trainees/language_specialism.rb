@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class LanguageSpecialism < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{trainee_id}/language-specialisms/edit"
 
       element :language_select_one, "select#language-specialisms-form-course-subject-one-field"

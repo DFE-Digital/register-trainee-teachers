@@ -27,7 +27,7 @@ FactoryBot.define do
       grade { grade_uuid && DfEReference::DegreesQuery::SUPPORTED_GRADES_WITH_OTHER.one(grade_uuid).name }
       institution { institution_uuid && DfE::ReferenceData::Degrees::INSTITUTIONS.one(institution_uuid).name }
 
-      graduation_year { rand(Time.zone.now.year.next - Degree::MAX_GRAD_YEARS..Time.zone.now.year.next) }
+      graduation_year { rand((Time.zone.now.year.next - Degree::MAX_GRAD_YEARS)..Time.zone.now.year.next) }
     end
 
     trait :non_uk_degree_type do
@@ -42,7 +42,7 @@ FactoryBot.define do
       subject { DfEReference::DegreesQuery::SUBJECTS.all.sample.name }
       grade { DfEReference::DegreesQuery::SUPPORTED_GRADES_WITH_OTHER.all.sample.name }
       country { CodeSets::Countries::MAPPING.keys.sample }
-      graduation_year { rand(Time.zone.now.year.next - Degree::MAX_GRAD_YEARS..Time.zone.now.year.next) }
+      graduation_year { rand((Time.zone.now.year.next - Degree::MAX_GRAD_YEARS)..Time.zone.now.year.next) }
     end
 
     trait :uk_foundation do

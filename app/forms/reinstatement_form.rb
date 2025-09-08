@@ -2,6 +2,7 @@
 
 class ReinstatementForm < MultiDateForm
   include CourseFormHelpers
+
   validate :date_valid
 
 private

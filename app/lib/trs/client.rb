@@ -4,6 +4,7 @@ module Trs
   class Client
     class Request
       include HTTParty
+
       base_uri Settings.trs.base_url
       headers "Accept" => "application/json",
               "Content-Type" => "application/json;odata.metadata=minimal",

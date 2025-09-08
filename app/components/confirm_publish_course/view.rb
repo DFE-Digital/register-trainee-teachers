@@ -79,7 +79,7 @@ module ConfirmPublishCourse
   private
 
     def subject_key
-      course.subjects.count > 1 ? t(".multiple_subjects") : t(".subject")
+      course.subjects.many? ? t(".multiple_subjects") : t(".subject")
     end
 
     delegate :requires_study_mode?, to: :trainee

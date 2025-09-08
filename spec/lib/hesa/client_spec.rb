@@ -17,7 +17,9 @@ module Hesa
 
     describe ".login" do
       before do
+        # rubocop:disable Naming/MethodName
         login_form = Struct.new(:Username, :Password, :button_with).new
+        # rubocop:enable Naming/MethodName
         allow(login_form).to receive(:Username=).with(Settings.hesa.username)
         allow(login_form).to receive(:Password=).with(Settings.hesa.password)
         allow(login_form).to receive(:button_with).with(any_args)

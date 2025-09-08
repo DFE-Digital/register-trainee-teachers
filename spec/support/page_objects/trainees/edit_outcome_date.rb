@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class EditOutcomeDate < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{trainee_id}/outcome-details/outcome-date/edit"
 
       element :outcome_date_radios, ".govuk-radios.outcome-date"
