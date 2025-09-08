@@ -656,14 +656,14 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.16.1)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.26.0)
+    sentry-rails (5.27.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.26.0)
-    sentry-ruby (5.26.0)
+      sentry-ruby (~> 5.27.0)
+    sentry-ruby (5.27.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    sentry-sidekiq (5.26.0)
-      sentry-ruby (~> 5.26.0)
+    sentry-sidekiq (5.27.0)
+      sentry-ruby (~> 5.27.0)
       sidekiq (>= 3.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
@@ -1137,9 +1137,9 @@ CHECKSUMS
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.35.0) sha256=6fc920cec4b9e6263afeb4941289d8deb0853acbc49e0d6f7de91c86986d359b
   semantic_logger (4.16.1) sha256=10c3aadd84932b01280039c078bfb6f33b9aeb724c93a5e3795ca779a77dba69
-  sentry-rails (5.26.0) sha256=ae4d196dec9f722a40840c98dc8daec33ab4c98bc6c8e5f1a37a58df6449618c
-  sentry-ruby (5.26.0) sha256=37b82d4849683f7172cbdb0867ee6697e0d8ad8fe9c242b5df0edf690894554b
-  sentry-sidekiq (5.26.0) sha256=4cb0551e8964703dd97e39659a75251efcb5272a86423ff5bc2d9d3d9db38335
+  sentry-rails (5.27.0) sha256=e7553d9ce6ad12b50a6b58ab7de0822411732405d798859f1ca65ce3033c209b
+  sentry-ruby (5.27.0) sha256=82e4006d65ee8936dbfed765bd507e87f53873136a573784a41253f683014ea7
+  sentry-sidekiq (5.27.0) sha256=11e6ca1537b8bbe13bb4306c09eab7d784ac26d21d6c5d44a8346b013de96ee3
   shoulda-matchers (6.5.0) sha256=ef6b572b2bed1ac4aba6ab2c5ff345a24b6d055a93a3d1c3bfc86d9d499e3f44
   sidekiq (6.5.12) sha256=b4f93b2204c42220d0b526a7b8e0c49b5f9da82c1ce1a05d2baf1e8f744c197f
   sidekiq-cron (2.3.1) sha256=96ab3da372289a30dc744c1daa2ae2e85960b2444a6f6ed68df1ff7882c44aac
