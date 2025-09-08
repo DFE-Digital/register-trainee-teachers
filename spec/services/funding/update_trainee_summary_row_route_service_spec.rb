@@ -17,6 +17,7 @@ RSpec.describe Funding::UpdateTraineeSummaryRowRouteService do
       },
       "Undergraduate opt-in" => "opt_in_undergrad",
       "School Direct tuition fee" => "school_direct_tuition_fee",
+      "Teacher degree apprenticeship" => "teacher_degree_apprenticeship",
     }
   end
 
