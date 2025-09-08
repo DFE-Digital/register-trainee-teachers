@@ -4,6 +4,7 @@ module BulkUpdate
   module AddTrainees
     class ImportRows
       include ServicePattern
+      include ParseAddTraineeCsv
 
       attr_accessor :trainee_upload
 
@@ -172,10 +173,6 @@ module BulkUpdate
       end
 
     private
-
-      def convert_to_case_sensitive(header)
-        CASE_INSENSITIVE_ALL_HEADERS[header.downcase] || header
-      end
 
       def current_provider
         @current_provider ||= trainee_upload.provider
