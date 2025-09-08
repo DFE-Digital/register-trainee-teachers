@@ -645,7 +645,7 @@ GEM
     ruby-progressbar (1.13.0)
     rubyntlm (0.6.5)
       base64
-    rubyzip (3.0.2)
+    rubyzip (3.1.0)
     safely_block (0.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.35.0)
@@ -1132,7 +1132,7 @@ CHECKSUMS
   ruby-next-core (1.1.1) sha256=37886d41cf91072a0f14fa53b3e7e650adce1fe3b1227842bae32034dcce1d5f
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   rubyntlm (0.6.5) sha256=47013402b99ae29ee93f930af51edaec8c6008556f4be25705a422b4430314f5
-  rubyzip (3.0.2) sha256=30f75c0b631e23c0891453acbcc019bc1496cd44f4a3ade4ff76bc09a595cfa6
+  rubyzip (3.1.0) sha256=e5af14749e2e7d2ecfc43526888b2165bf4d464002964c4e281e9480fb26f415
   safely_block (0.4.1) sha256=690b11926ceba66f7e6f2158571f0c856e76a4f38bd31cbed3577e24b96c2311
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   selenium-webdriver (4.35.0) sha256=6fc920cec4b9e6263afeb4941289d8deb0853acbc49e0d6f7de91c86986d359b
