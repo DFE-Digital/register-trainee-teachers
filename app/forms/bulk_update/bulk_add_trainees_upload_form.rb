@@ -6,6 +6,7 @@ module BulkUpdate
 
     include ActiveModel::Model
     include BulkUpdate::AddTrainees::Config
+    include ParseAddTraineeCsv
 
     validate :validate_file!
     validate :validate_csv!
@@ -67,10 +68,6 @@ module BulkUpdate
         file.tempfile,
         **CSV_ARGS, header_converters: ->(h) { convert_to_case_sensitive(h) },
       )
-    end
-
-    def convert_to_case_sensitive(header)
-      BulkUpdate::AddTrainees::ImportRows::CASE_INSENSITIVE_ALL_HEADERS[header.downcase] || header
     end
 
     def validate_file!

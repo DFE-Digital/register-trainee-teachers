@@ -4,6 +4,7 @@ module BulkUpdate
   module AddTrainees
     class ImportRows
       include ServicePattern
+      include ParseAddTraineeCsv
 
       attr_accessor :trainee_upload
 
@@ -124,7 +125,11 @@ module BulkUpdate
           if dry_run
             file_content = trainee_upload.download.force_encoding(BulkUpdate::AddTrainees::Config::ENCODING)
 
-            CSV.parse(file_content, headers: true).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
+            CSV.parse(
+              file_content,
+              headers: true,
+              header_converters: ->(h) { convert_to_case_sensitive(h) },
+            ).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
                 trainee_upload: trainee_upload,
                 data: row.to_h,
