@@ -849,7 +849,7 @@ private
   end
 
   def then_i_receive_the_empty_csv_file
-    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(page.response_headers["content-type"]).to eq("text/csv")
     expect(download_filename).to eq("v2025_0_bulk_create_trainee.csv")
     expect(download_content).to eq(empty_file_with_headers_content)
   end
@@ -1177,8 +1177,8 @@ private
   end
 
   def then_i_receive_the_file
-    expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
+    expect(page.response_headers["content-type"]).to eq("text/csv")
+    expect(page.response_headers["content-disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
 
     expect(parsed_download_content).to eq(parsed_file_with_two_failed_content)
   end
