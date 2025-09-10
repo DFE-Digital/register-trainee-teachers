@@ -34,7 +34,7 @@ module Funding
               "Provider name" => "Provider 1",
               "Academic Year" => "2021/22",
               "Subject" => "Business studies",
-              "Route" => "Teacher degree apprenticeship",
+              "Route" => "Teacher Degree Apprenticeship",
               "Lead School" => nil,
               "Lead School ID" => nil,
               "Cohort Level" => "PG",
