@@ -38,7 +38,7 @@ feature "Create trainee journey" do
     then_i_should_see_a_validation_error
   end
 
-  scenario "setting up a teacher degree apprenticeship record" do
+  scenario "setting up a Teacher Degree Apprenticeship record" do
     and_i_select_teacher_degree_apprenticeship_route
     and_i_save_the_form
     then_i_should_see_the_new_trainee_overview

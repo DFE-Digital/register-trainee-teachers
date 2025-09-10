@@ -12,7 +12,7 @@ module Funding
         },
         "Undergraduate opt-in" => TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
         "School Direct tuition fee" => TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
-        "Teacher degree apprenticeship" => TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
+        "Teacher Degree Apprenticeship" => TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
       }.freeze
 
       def to_h
