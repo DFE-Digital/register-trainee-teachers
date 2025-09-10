@@ -8,6 +8,8 @@ feature "Undo trainee withdrawal" do
   include SummaryHelper
 
   before do
+    allow(Trs::UpdateProfessionalStatusJob).to receive(:perform_later)
+
     ActiveJob::Base.queue_adapter.enqueued_jobs.clear
     when_i_am_on_the_undo_withdrawal_page
   end
@@ -33,6 +35,7 @@ feature "Undo trainee withdrawal" do
 
       then_i_expect_the_timeline_to_show_the_comment_and_ticket
       then_i_expect_the_trainee_to_have_been_updated
+      and_trs_is_notified_about_the_change
     end
   end
 
@@ -99,5 +102,9 @@ feature "Undo trainee withdrawal" do
     record_page.undo_withdrawal.click
     show_undo_withdrawal_page.continue.click
     expect(page).not_to have_content("this is the comment")
+  end
+
+  def and_trs_is_notified_about_the_change
+    expect(Trs::UpdateProfessionalStatusJob).to have_received(:perform_later).with(trainee)
   end
 end
