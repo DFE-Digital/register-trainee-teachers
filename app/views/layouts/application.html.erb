@@ -116,7 +116,6 @@
               end %>
         <% else %>
           <%= render(YearChangeBanner::View.new) %>
-          <%= render(CsvSandboxBanner::View.new) if @current_user&.present? && request.path == root_path %>
           <%= render(PerformanceProfileBanner::View.new(previous_academic_cycle: AcademicCycle.previous, sign_off_period: DetermineSignOffPeriod.call, provider: @current_user.organisation)) if @current_user&.provider? && request.path == root_path %>
           <%= render(CensusBanner::View.new(current_academic_cycle: AcademicCycle.current, sign_off_period: DetermineSignOffPeriod.call, provider: @current_user.organisation)) if @current_user&.provider? && request.path == root_path %>
         <% end %>
