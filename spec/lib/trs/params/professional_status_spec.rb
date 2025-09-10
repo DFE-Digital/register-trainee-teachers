@@ -95,6 +95,18 @@ module Trs
           end
         end
 
+        context "trainee is recommended_for_award" do
+          let(:trainee) { create(:trainee, :recommended_for_award) }
+
+          it "sets the correct status" do
+            expect(subject["status"]).to eq("Holds")
+          end
+
+          it "includes awarded date" do
+            expect(subject["holdsFrom"]).to eq(trainee.recommended_for_award_at.to_date.iso8601)
+          end
+        end
+
         context "trainee is provider led postgrad" do
           let(:trainee) { create(:trainee, :provider_led_postgrad, :trn_received) }
 
