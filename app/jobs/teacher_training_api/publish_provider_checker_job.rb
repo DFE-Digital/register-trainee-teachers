@@ -5,9 +5,11 @@ module TeacherTrainingApi
     queue_as :default
     retry_on TeacherTrainingApi::Client::HttpError
 
-    MAX_MISSING_PROVIDERS_TO_DISPLAY = 50
+    MAX_MISSING_PROVIDERS_TO_DISPLAY = 10
 
     def perform
+      return false unless Rails.env.production? || Rails.env.test?
+
       checker = TeacherTrainingApi::PublishProviderChecker.call(
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
       )

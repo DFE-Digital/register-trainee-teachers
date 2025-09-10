@@ -44,7 +44,7 @@ create_trainees_from_apply:
   class: "Trainees::CreateFromApplyJob"
   queue: default
 check_publish_providers:
-  cron: <%= '"0 6 * * *" # Every day at 06:00.' if ENV.fetch("RAILS_ENV") == "production" %>
+  cron: <%= '"0 6 * * 2" # Every Tuesday at 06:00.' if ENV.fetch("RAILS_ENV") == "production" %>
   class: "TeacherTrainingApi::PublishProviderCheckerJob"
   queue: default
 send_entity_table_checks_to_bigquery:
