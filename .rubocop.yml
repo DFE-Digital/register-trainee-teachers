@@ -51,10 +51,6 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - "spec/**/*"
 
-Naming/FileName:
-  Exclude:
-    - "config/environments/csv-sandbox.rb"
-
 Naming/PredicateMethod:
   Exclude:
     - "app/controllers/trainees/check_details_controller.rb"
