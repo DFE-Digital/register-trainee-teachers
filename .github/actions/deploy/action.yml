@@ -126,7 +126,7 @@ runs:
 
     - name: Run data migrations
       shell: bash
-      if: ${{ contains(fromJSON('["staging", "sandbox", "csv-sandbox", "productiondata", "production", "pen"]'), inputs.environment) }}
+      if: ${{ contains(fromJSON('["staging", "sandbox", "productiondata", "production", "pen"]'), inputs.environment) }}
       run: kubectl -n ${{ env.namespace }} exec deployment/register-${{ env.app_environment }} -- /bin/sh -c "cd /app && bundle exec rails data:migrate"
 
     - name: Generate example data
@@ -142,7 +142,7 @@ runs:
         bin/konduit.sh -n ${{ env.namespace }} -r REDIS_QUEUE_URL register-${{ env.app_environment }} -- redis-cli del queues
 
     - name: Run Smoke Tests for ${{ inputs.environment }}
-      if: ${{ !contains(fromJSON('["sandbox", "csv-sandbox", "productiondata", "production"]'), inputs.environment) }}
+      if: ${{ !contains(fromJSON('["sandbox", "productiondata", "production"]'), inputs.environment) }}
       uses: ./.github/actions/smoke-test/
       with:
         environment: ${{ inputs.environment }}
