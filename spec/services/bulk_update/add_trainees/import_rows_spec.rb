@@ -126,6 +126,42 @@ module BulkUpdate
             end
           end
 
+          context "when rows are valid but some headers have incorrect casing" do
+            context "when the upload status is pending" do
+              let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_mixed_case_headers, :pending) }
+
+              before do
+                allow(ImportRow).to receive(:call).and_return(
+                  BulkUpdate::AddTrainees::ImportRow::Result.new(true, []),
+                )
+              end
+
+              it "does not create any trainee records" do
+                expect(ImportRow).to receive(:call).exactly(5).times.and_call_original
+                expect(described_class.call(trainee_upload)).to be(true)
+              end
+
+              it "creates bulk_update_trainee_upload_rows records" do
+                expect {
+                  described_class.call(trainee_upload)
+                }.to change { BulkUpdate::TraineeUploadRow.count }.by(5)
+              end
+
+              it "converts rows to standard case" do
+                described_class.call(trainee_upload)
+                first_row = BulkUpdate::TraineeUploadRow.first
+                expect(first_row.data["First Names"]).to eq("Spencer")
+                expect(first_row.data["Last Name"]).to eq("Murphy")
+                expect(first_row.data["Email"]).to eq("Spencer.Murphy@example.com")
+              end
+
+              it "sets the status to `validated`" do
+                described_class.call(trainee_upload)
+                expect(trainee_upload.reload).to be_validated
+              end
+            end
+          end
+
           context "when some rows are valid and can be imported whilst others are not" do
             let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_errors) }
 

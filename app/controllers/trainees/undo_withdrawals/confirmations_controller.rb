@@ -10,7 +10,7 @@ module Trainees
 
       def update
         if undo_withdrawal_form.save
-          Dqt::UpdateTraineeJob.perform_later(trainee)
+          Trs::UpdateProfessionalStatusJob.perform_later(trainee)
           redirect_to(trainee_path(trainee), flash: { success: "Withdrawal undone" })
         else
           redirect_failed
