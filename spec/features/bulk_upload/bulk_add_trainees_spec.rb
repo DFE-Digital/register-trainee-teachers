@@ -436,6 +436,10 @@ feature "bulk add trainees" do
         and_i_dont_see_the_submit_button
       end
 
+      before do
+        allow(Trainees::SubmitForTrn).to receive(:call).and_return(nil)
+      end
+
       scenario "when I try to upload a file with errors then upload a corrected file", js: true do
         when_i_visit_the_bulk_update_index_page
         and_i_click_the_bulk_add_trainees_page
@@ -452,6 +456,7 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_errors_page
+        and_the_request_trn_job_has_not_been_queued
 
         when_i_click_on_the_download_link
         then_i_receive_the_file
@@ -461,6 +466,7 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
+        and_the_request_trn_job_has_been_queued
       end
 
       scenario "view the upload status page" do
@@ -1024,6 +1030,9 @@ private
     perform_enqueued_jobs
   end
 
+  def and_the_request_trn_job_has_not_been_queued
+  end
+
   def and_the_send_csv_processing_email_has_been_sent
     expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call)
       .with(
@@ -1286,6 +1295,14 @@ private
   def then_i_see_the_uploads_in_descending_historical_order
     dates = within(".govuk-table") { find_all("a") }.map(&:text)
     expect(dates).to eq([@upload1, @upload2, @upload3, @upload4, @upload5].map(&:created_at).map { |date| date.to_fs(:govuk_date_and_time) })
+  end
+
+  def and_the_request_trn_job_has_not_been_queued
+    expect(Trainees::SubmitForTrn).not_to have_received(:call)
+  end
+
+  def and_the_request_trn_jobs_have_been_queued
+    expect(Trainees::SubmitForTrn).to have_received(:call).twice
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
