@@ -4,7 +4,7 @@ module BulkUpdate
   module TraineeUploads
     module Show
       module Base
-        class View < ViewComponent::Base
+        class View < ApplicationComponent
           include Rails.application.routes.url_helpers
           include OrganisationHelper
           include ApplicationHelper

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ConfirmUndoWithdrawalDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     State = Struct.new(:state, :award_type)
 
     include SanitizeHelper

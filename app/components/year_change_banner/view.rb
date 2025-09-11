@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module YearChangeBanner
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     DEFAULT_ACADEMIC_CYCLE_START_DATE = "1 August"
 
     def initialize

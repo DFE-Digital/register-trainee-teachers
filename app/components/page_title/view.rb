@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PageTitle::View < ViewComponent::Base
+class PageTitle::View < ApplicationComponent
   def initialize(i18n_key: nil, text: nil, has_errors: false)
     @text = text
     @i18n_key = i18n_key

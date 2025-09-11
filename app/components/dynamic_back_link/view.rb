@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DynamicBackLink
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :trainee, :text, :last_origin_page, :consider_confirm_page
 
     def initialize(trainee, text: nil, last_origin_page: false, consider_confirm_page: true)

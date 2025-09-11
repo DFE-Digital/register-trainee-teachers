@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CsvFields
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SummaryHelper
 
     FIELD_DEFINITION_PATH = Rails.root.join("app/views/bulk_update/add_trainees/reference_docs/fields.yaml")

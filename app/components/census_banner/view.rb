@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CensusBanner
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def initialize(current_academic_cycle: AcademicCycle.current, sign_off_period: DetermineSignOffPeriod.call, provider:)
       @current_academic_cycle = current_academic_cycle
       @provider = provider
