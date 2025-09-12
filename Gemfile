@@ -11,7 +11,7 @@ gem "sprockets-rails"
 gem "turbo-rails"
 
 # Use postgresql as the database for Active Record
-gem "pg", ">= 0.18", "< 2.0"
+gem "pg", "~> 1.6"
 
 # Use Puma as the app server
 gem "puma", "~> 7.0"
