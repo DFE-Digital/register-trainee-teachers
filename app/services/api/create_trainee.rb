@@ -8,12 +8,13 @@ module Api
 
     include ActiveModel::Model
 
-    attr_accessor :current_provider, :trainee_attributes, :version
+    attr_accessor :current_provider, :trainee_attributes, :version, :dry_run
 
-    def initialize(current_provider:, trainee_attributes:, version:)
+    def initialize(current_provider:, trainee_attributes:, version:, dry_run: false)
       @current_provider = current_provider
       @trainee_attributes = trainee_attributes
       @version = version
+      @dry_run = dry_run
     end
 
     def call
@@ -29,7 +30,7 @@ module Api
       validator = Submissions::ApiTrnValidator.new(trainee:)
 
       if validator.all_errors.empty? && trainee.save
-        ::Trainees::SubmitForTrn.call(trainee:)
+        ::Trainees::SubmitForTrn.call(trainee:) unless dry_run?
         success_response(trainee)
       else
         save_errors_response(validator, trainee)
@@ -74,5 +75,7 @@ module Api
     end
 
     def model = :trainee
+
+    alias_method :dry_run?, :dry_run
   end
 end
