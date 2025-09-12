@@ -60,7 +60,7 @@ module Trs
         @params ||= {
           "routeToProfessionalStatusTypeId" => route_to_professional_status_type_id,
           "status" => status,
-          "holdsFrom" => trainee.outcome_date&.to_date&.iso8601 || trainee.recommended_for_award_at&.to_date&.iso8601,
+          "holdsFrom" => holds_from,
           "trainingStartDate" => trainee.itt_start_date&.iso8601 || trainee.trainee_start_date&.iso8601,
           "trainingEndDate" => trainee.itt_end_date&.iso8601 || trainee.estimated_end_date&.iso8601,
           "trainingSubjectReferences" => training_subject_references,
@@ -160,6 +160,12 @@ module Trs
 
         # Use the same mappings as DQT
         COUNTRY_CODE_EXCEPTIONS.key?(country_code) ? COUNTRY_CODE_EXCEPTIONS[country_code] : country_code
+      end
+
+      def holds_from
+        if trainee.recommended_for_award? || trainee.awarded?
+          trainee.outcome_date&.to_date&.iso8601
+        end
       end
     end
   end
