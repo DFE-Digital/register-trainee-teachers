@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DqtDataSummary
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def initialize(dqt_data:)
       @dqt_data = dqt_data
     end

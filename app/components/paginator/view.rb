@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Paginator
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :scope
 
     # This constant limits the number of links to pages rendered by #paginate.

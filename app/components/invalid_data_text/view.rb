@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InvalidDataText::View < ViewComponent::Base
+class InvalidDataText::View < ApplicationComponent
   include TraineeHelper
 
   def initialize(form_section:, hint: "", degree_form:)

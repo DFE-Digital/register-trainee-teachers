@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineeStartDate
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def initialize(data_model:, editable: false)
       @data_model = data_model
       @editable = editable

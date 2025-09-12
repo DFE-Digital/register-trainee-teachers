@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CollapsedSection::View < ViewComponent::Base
+class CollapsedSection::View < ApplicationComponent
   attr_accessor :title, :url, :link_text, :hint_text, :has_errors, :name
 
   def initialize(title:, link_text: nil, url: nil, hint_text: nil, has_errors: false, name: nil)

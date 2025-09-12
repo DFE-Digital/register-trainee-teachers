@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class StartPageBanner::View < ViewComponent::Base
+class StartPageBanner::View < ApplicationComponent
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RecordActions
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include ApplicationHelper
     include SummaryHelper
 

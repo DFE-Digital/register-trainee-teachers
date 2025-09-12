@@ -3,7 +3,7 @@
 module BulkUpdate
   module TraineeUploads
     module Row
-      class View < ViewComponent::Base
+      class View < ApplicationComponent
         include Rails.application.routes.url_helpers
 
         COLOURS = {

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SelectPlacementSchool
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include ApplicationHelper
     include SchoolHelper
 

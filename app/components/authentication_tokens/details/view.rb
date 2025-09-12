@@ -2,7 +2,7 @@
 
 module AuthenticationTokens
   module Details
-    class View < ViewComponent::Base
+    class View < ApplicationComponent
       include Pundit::Authorization
 
       attr_reader :token, :current_user

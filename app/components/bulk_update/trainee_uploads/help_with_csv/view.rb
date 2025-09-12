@@ -3,7 +3,7 @@
 module BulkUpdate
   module TraineeUploads
     module HelpWithCsv
-      class View < ViewComponent::Base
+      class View < ApplicationComponent
         def headers
           BulkUpdate::AddTrainees::ImportRows::ALL_HEADERS.keys
         end

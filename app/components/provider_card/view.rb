@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ProviderCard
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SanitizeHelper
 
     with_collection_parameter :provider

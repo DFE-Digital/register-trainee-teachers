@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationRecordCard
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SanitizeHelper
     include TraineeHelper
     include CourseDetailsHelper

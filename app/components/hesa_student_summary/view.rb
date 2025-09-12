@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HesaStudentSummary
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def initialize(trainee:, collection:)
       @trainee = trainee
       @collection = collection

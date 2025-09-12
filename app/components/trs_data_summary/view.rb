@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TrsDataSummary
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     HASH_PATTERNS = [
       {
         # Value pattern - used for startDate, endDate, programmeType, result, etc.

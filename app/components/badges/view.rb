@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Badges
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :badges
 
     def initialize(badges:)

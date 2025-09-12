@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ReinstatementDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SummaryHelper
 
     attr_reader :reinstatement_form, :itt_end_date_form

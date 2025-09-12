@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Withdrawal
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SanitizeHelper
 
     def initialize(data_model:, editable: false, undo_withdrawal: false)

@@ -2,7 +2,7 @@
 
 module ReviewDraft
   module ApplyDraft
-    class View < ViewComponent::Base
+    class View < ApplicationComponent
       include TraineeHelper
       include TaskListHelper
       include FundingHelper

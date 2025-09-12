@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class Header::View < ViewComponent::Base
+class Header::View < ApplicationComponent
   include ActiveModel
 end

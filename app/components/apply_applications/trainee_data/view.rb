@@ -2,7 +2,7 @@
 
 module ApplyApplications
   module TraineeData
-    class View < ViewComponent::Base
+    class View < ApplicationComponent
       include ApplicationHelper
       include TraineeHelper
 

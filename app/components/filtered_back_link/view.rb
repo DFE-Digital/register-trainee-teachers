@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module FilteredBackLink
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :link_text, :href
 
     def initialize(href:, text: nil)

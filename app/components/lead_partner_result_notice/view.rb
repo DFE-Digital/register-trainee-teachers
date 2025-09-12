@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module LeadPartnerResultNotice
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :search_query
 
     def initialize(search_query:, search_limit:, search_count:)

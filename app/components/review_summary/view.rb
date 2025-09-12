@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ReviewSummary
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     renders_one :header
 
     def initialize(form:, invalid_data_view:)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineeAbout
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include Pundit::Authorization
 
     attr_reader :trainee, :current_user, :has_missing_fields

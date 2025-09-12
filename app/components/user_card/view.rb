@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module UserCard
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     with_collection_parameter :user
 
     attr_reader :user

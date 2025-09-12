@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SchoolDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SchoolHelper
     include LeadPartnerHelper
 

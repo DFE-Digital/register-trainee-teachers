@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Timeline
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include TimelineHelper
 
     attr_reader :events

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module HesaWarningInset
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def initialize(trainee:, current_user:)
       @trainee = trainee
       @current_user = current_user

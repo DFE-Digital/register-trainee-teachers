@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StatusTag::View < ViewComponent::Base
+class StatusTag::View < ApplicationComponent
   def initialize(trainee:, hide_progress_tag: false)
     @trainee = trainee
     @hide_progress_tag = hide_progress_tag
