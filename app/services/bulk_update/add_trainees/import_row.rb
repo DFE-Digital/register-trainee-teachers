@@ -7,7 +7,7 @@ module BulkUpdate
 
       CURRENT_API_VERSION = "v2025.0"
 
-      attr_accessor :row, :current_provider
+      attr_accessor :row, :current_provider, :dry_run
 
       Result = Struct.new(:success, :errors, :error_type) do
         def initialize(success, errors, error_type = :validation)
@@ -15,9 +15,10 @@ module BulkUpdate
         end
       end
 
-      def initialize(row:, current_provider:)
+      def initialize(row:, current_provider:, dry_run: false)
         self.row = remove_leading_apostrophes(row)
         self.current_provider = current_provider
+        self.dry_run = dry_run
       end
 
       def call
@@ -41,6 +42,7 @@ module BulkUpdate
           current_provider:,
           trainee_attributes:,
           version:,
+          dry_run:,
         )
 
         json_result_to_result(json_result)

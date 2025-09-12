@@ -248,6 +248,7 @@ feature "bulk add trainees" do
         and_i_refresh_the_summary_page
         then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
+        and_the_request_trn_jobs_have_been_queued
 
         when_i_click_the_upload_button
         then_i_see_the_review_errors_page
@@ -466,7 +467,9 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
-        and_the_request_trn_job_has_been_queued
+
+        when_the_background_job_is_run
+        then_the_request_trn_job_has_not_been_queued
       end
 
       scenario "view the upload status page" do
@@ -1030,9 +1033,6 @@ private
     perform_enqueued_jobs
   end
 
-  def and_the_request_trn_job_has_not_been_queued
-  end
-
   def and_the_send_csv_processing_email_has_been_sent
     expect(SendCsvSubmittedForProcessingEmailService).to have_received(:call)
       .with(
@@ -1223,6 +1223,7 @@ private
     BulkUpdate::AddTrainees::ImportRow.call(
       row: row,
       current_provider: BulkUpdate::TraineeUpload.last.provider,
+      dry_run: false,
     )
   end
 
@@ -1302,7 +1303,7 @@ private
   end
 
   def and_the_request_trn_jobs_have_been_queued
-    expect(Trainees::SubmitForTrn).to have_received(:call).twice
+    expect(Trainees::SubmitForTrn).to have_received(:call).at_least(5).times
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
@@ -1327,4 +1328,5 @@ private
   alias_method :when_i_visit_the_summary_page, :and_i_visit_the_summary_page
   alias_method :and_i_click_the_cancel_bulk_updates_link, :when_i_click_the_cancel_bulk_updates_link
   alias_method :then_i_see_file_validation_passed, :and_i_see_file_validation_passed
+  alias_method :then_the_request_trn_job_has_not_been_queued, :and_the_request_trn_job_has_not_been_queued
 end
