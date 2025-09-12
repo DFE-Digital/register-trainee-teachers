@@ -88,9 +88,7 @@
               <%= Settings.environment.display_name %>
             </strong>
             <span class="govuk-phase-banner__text" role="status">
-                This is a new service - <% if FeatureService.enabled?("show_csv_sandbox_banner") %>
-                  <%= govuk_link_to "send us your feedback or questions", "https://forms.office.com.mcas.ms/e/ABKrAmQQ6s", class: "govuk-link--no-visited-state" %>
-                <% elsif FeatureService.enabled?("enable_feedback_link") %>
+                This is a new service - <% if FeatureService.enabled?("enable_feedback_link") %>
                   your <%= govuk_link_to "feedback", Settings.feedback_link_url, class: "govuk-link--no-visited-state" %> will help us improve it
                 <% else %>
                   <%= support_email(name: "report a problem", subject: "Register trainee teachers support", classes: "govuk-link--no-visited-state") %>
@@ -116,7 +114,6 @@
               end %>
         <% else %>
           <%= render(YearChangeBanner::View.new) %>
-          <%= render(CsvSandboxBanner::View.new) if @current_user&.present? && request.path == root_path %>
           <%= render(PerformanceProfileBanner::View.new(previous_academic_cycle: AcademicCycle.previous, sign_off_period: DetermineSignOffPeriod.call, provider: @current_user.organisation)) if @current_user&.provider? && request.path == root_path %>
           <%= render(CensusBanner::View.new(current_academic_cycle: AcademicCycle.current, sign_off_period: DetermineSignOffPeriod.call, provider: @current_user.organisation)) if @current_user&.provider? && request.path == root_path %>
         <% end %>
