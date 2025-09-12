@@ -68,10 +68,14 @@ module Trs
         end
 
         context "trainee is withdrawn" do
-          let(:trainee) { create(:trainee, :withdrawn) }
+          let(:trainee) { create(:trainee, :withdrawn, outcome_date: 1.month.ago) }
 
           it "sets the correcrt status" do
             expect(subject["status"]).to eq("Withdrawn")
+          end
+
+          it "does not include a holdsFrom date" do
+            expect(subject["holdsFrom"]).to be_blank
           end
         end
 
@@ -90,8 +94,20 @@ module Trs
             expect(subject["status"]).to eq("Holds")
           end
 
-          it "includes awarded date" do
+          it "includes a holdsFrom date" do
             expect(subject["holdsFrom"]).to eq(trainee.awarded_at.to_date.iso8601)
+          end
+        end
+
+        context "trainee is recommended_for_award" do
+          let(:trainee) { create(:trainee, :recommended_for_award) }
+
+          it "sets the correct status" do
+            expect(subject["status"]).to eq("Holds")
+          end
+
+          it "includes a holdsFrom date" do
+            expect(subject["holdsFrom"]).to eq(trainee.outcome_date.to_date.iso8601)
           end
         end
 
