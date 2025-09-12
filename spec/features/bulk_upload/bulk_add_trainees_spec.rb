@@ -8,16 +8,14 @@ feature "bulk add trainees" do
   include FileHelper
 
   before do
+    allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
+
     and_there_is_a_current_academic_cycle
     and_there_is_a_previous_academic_cycle
     and_we_are_at_least_one_month_into_the_academic_cycle
     and_there_is_a_nationality
     and_there_are_disabilities
     and_there_are_funding_rules
-  end
-
-  before do
-    allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
   end
 
   def and_we_are_at_least_one_month_into_the_academic_cycle
