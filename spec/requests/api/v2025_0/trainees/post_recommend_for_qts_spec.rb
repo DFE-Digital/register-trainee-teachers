@@ -30,6 +30,7 @@ RSpec.describe "POST /api/v2025.0/trainees/:trainee_id/recommend-for-qts" do
 
       expect(response).to have_http_status(:accepted)
       expect(response.parsed_body[:data][:recommended_for_award_at]).to eq(current_time.iso8601)
+      expect(response.parsed_body[:data][:outcome_date]).to eq(current_time.to_date.iso8601)
       expect(response.parsed_body).not_to have_key(:errors)
     end
   end
