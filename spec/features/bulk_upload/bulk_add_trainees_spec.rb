@@ -16,6 +16,10 @@ feature "bulk add trainees" do
     and_there_are_funding_rules
   end
 
+  before do
+    allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
+  end
+
   def and_we_are_at_least_one_month_into_the_academic_cycle
     Timecop.travel([AcademicCycle.current.start_date + 1.month, Time.zone.today].max)
   end
@@ -435,10 +439,6 @@ feature "bulk add trainees" do
         and_i_visit_the_summary_page(upload: @failed_upload)
         then_i_see_the_review_errors_page(upload: @failed_upload)
         and_i_dont_see_the_submit_button
-      end
-
-      before do
-        allow(Trainees::SubmitForTrn).to receive(:call).and_return(nil)
       end
 
       scenario "when I try to upload a file with errors then upload a corrected file", js: true do
