@@ -154,7 +154,7 @@ feature "Editing a School" do
     expect(show_school_page).to have_text("Postcode #{school.postcode}")
     expect(show_school_page).to have_text("Open date #{school.open_date&.strftime('%d %B %Y')}")
     expect(show_school_page).to have_text("Close date #{school.close_date&.strftime('%d %B %Y')}")
-    expect(show_school_page).to have_text("Is a lead partner? #{lead_partner} Change")
+    expect(show_school_page).to have_text("Is a training partner? #{lead_partner} Change")
   end
 
   def when_i_click_on_cancel
@@ -190,7 +190,7 @@ feature "Editing a School" do
     expect(confirm_school_details_page).to have_text("Postcode #{school.postcode}")
     expect(confirm_school_details_page).to have_text("Open date #{school.open_date&.strftime('%d %B %Y')}")
     expect(confirm_school_details_page).to have_text("Close date #{school.close_date&.strftime('%d %B %Y')}")
-    expect(confirm_school_details_page).to have_text("Is a lead partner? #{lead_partner} Change")
+    expect(confirm_school_details_page).to have_text("Is a training partner? #{lead_partner} Change")
   end
 
   def when_i_click_on_confirm

@@ -55,7 +55,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
 
       it "does not set the FormStore with the form attributes" do
         expect(school_form.stash).to be(false)
-        expect(school_form.errors).to contain_exactly("Lead partner is not included in the list")
+        expect(school_form.errors).to contain_exactly("Training partner is not included in the list")
       end
     end
   end
@@ -69,8 +69,8 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
           }
         end
 
-        context "when School is not a Lead Partner" do
-          it "does not create Lead Partner" do
+        context "when School is not a Training Partner" do
+          it "does not create Training Partner" do
             expect(school_form.save).to be(true)
             expect(school_form.errors).to be_blank
 
@@ -80,7 +80,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
           end
         end
 
-        context "when School is a discarded Lead Partner" do
+        context "when School is a discarded Training Partner" do
           before do
             create(:lead_partner, :school, school:).discard!
           end
@@ -95,12 +95,12 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
           end
         end
 
-        context "when School is an undiscarded Lead Partner" do
+        context "when School is an undiscarded Training Partner" do
           before do
             create(:lead_partner, :school, school:)
           end
 
-          it "discards the Lead Partner" do
+          it "discards the Training Partner" do
             expect(school_form.save).to be(true)
             expect(school_form.errors).to be_blank
 
@@ -118,7 +118,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
           }
         end
 
-        context "when School has an undiscarded Lead Partner" do
+        context "when School has an undiscarded Training Partner" do
           let!(:lead_partner) { create(:lead_partner, :school, school:) }
 
           it "returns true" do
@@ -134,7 +134,7 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
         context "when School has a discarded Lead Partner" do
           let!(:lead_partner) { create(:lead_partner, :school, school: school, discarded_at: Time.zone.now) }
 
-          it "undiscards the Lead Partner" do
+          it "undiscards the Training Partner" do
             expect(school_form.save).to be(true)
 
             school.reload
@@ -144,8 +144,8 @@ RSpec.describe SystemAdmin::SchoolForm, type: :model do
           end
         end
 
-        context "when School is not a Lead Partner" do
-          it "creates a Lead Partner" do
+        context "when School is not a Training Partner" do
+          it "creates a Training Partner" do
             expect(school_form.save).to be(true)
 
             school.reload

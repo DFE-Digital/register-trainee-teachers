@@ -33,7 +33,7 @@ module Partners
       end
     end
 
-    context "with no lead partner chosen and no query provided" do
+    context "with no training partner chosen and no query provided" do
       let(:params) { { "results_search_again_query" => "", "lead_partner_id" => "", "search_results_found" => "true" } }
 
       it "returns an error" do

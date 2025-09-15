@@ -36,7 +36,7 @@ module ApplicationRecordCard
       end
     end
 
-    context "when lead partner user" do
+    context "when training partner user" do
       let(:current_user) do
         double(UserWithOrganisationContext, system_admin?: false, lead_partner?: true)
       end

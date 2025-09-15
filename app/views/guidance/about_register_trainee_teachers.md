@@ -24,23 +24,23 @@ Accredited providers can use Register to perform tasks for their trainees, such 
 
 Accredited providers can view funding information for the current academic year for eligible trainees. From the main navigation bar under ‘Funding’, you will see monthly payments paid and predicted to be paid for scholarships and bursaries.
 
-Previously accredited providers who become lead partners will continue to perform tasks for their trainees in the 2024 to 2025 academic year.
+Previously accredited providers who become training partners will continue to perform tasks for their trainees in the 2024 to 2025 academic year.
 
-### Access for lead partners
+### Access for training partners
 
-Lead partners include:
+Training partners include:
 
 * schools (previously called lead schools)
 * higher education institutions (HEIs)
 * trusts or hubs
 * commercial organisations
 
-Lead partners in partnership with accredited providers can use Register to:
+Training partners in partnership with accredited providers can use Register to:
 
 * view trainee records
 * view funding information for the current academic year onwards for eligible trainees
 
-Lead partners access to Register is **view only**. For trainees starting training in the 2024/25 academic year onwards, you can not do the following as a lead partner:
+Training partners access to Register is **view only**. For trainees starting training in the 2024/25 academic year onwards, you can not do the following as a training partner:
 
 * add a trainee record
 * change trainee records

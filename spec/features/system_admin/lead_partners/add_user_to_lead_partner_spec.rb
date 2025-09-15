@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Add user to lead partners" do
+feature "Add user to training partners" do
   let(:admin_user) { create(:user, system_admin: true) }
   let(:user) { create(:user, system_admin: true) }
 
@@ -16,7 +16,7 @@ feature "Add user to lead partners" do
       given_i_am_authenticated(user:)
     end
 
-    scenario "list lead partners page" do
+    scenario "list training partners page" do
       when_i_visit_the_user_page
       and_i_click_the_lead_partner_link
       then_i_see_the_add_to_lead_partner_page
@@ -50,7 +50,7 @@ feature "Add user to lead partners" do
       given_i_am_authenticated(user:)
     end
 
-    scenario "list lead partners page" do
+    scenario "list training partners page" do
       when_i_visit_the_user_page
       and_i_click_the_lead_partner_link
       then_i_see_the_add_to_lead_partner_page
@@ -71,12 +71,12 @@ feature "Add user to lead partners" do
   end
 
   def and_i_click_the_lead_partner_link
-    click_on("Add user to a lead partner")
+    click_on("Add user to a training partner")
   end
 
   def then_i_see_the_add_to_lead_partner_page
     expect(page).to have_current_path(new_user_lead_partner_path(user))
-    expect(page).to have_content("Add a lead partner for #{user.name}")
+    expect(page).to have_content("Add a training partner for #{user.name}")
   end
 
   def when_i_search_for_a_discarded_lead_partner
@@ -97,7 +97,7 @@ feature "Add user to lead partners" do
   end
 
   def then_i_see_the_user_added_to_the_lead_partner
-    expect(page).to have_content("Lead partner added")
+    expect(page).to have_content("Training partner added")
     expect(page).to have_link("Garibaldi School", href: lead_partner_path(school_lead_partner))
   end
 
@@ -158,7 +158,7 @@ feature "Add user to lead partners" do
   end
 
   def then_i_see_the_user_added_to_the_hei_lead_partner
-    expect(page).to have_content("Lead partner added")
+    expect(page).to have_content("Training partner added")
     expect(page).to have_link("Digestive University", href: lead_partner_path(hei_lead_partner2))
   end
 

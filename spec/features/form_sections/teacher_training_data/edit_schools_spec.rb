@@ -12,7 +12,7 @@ feature "edit schools spec" do
       and_i_visit_the_trainee_record_page
     end
 
-    scenario "changing the lead partner", js: true do
+    scenario "changing the training partner", js: true do
       when_i_see_the_lead_partner
       and_i_click_on_change_lead_partner(:lead_partner)
       and_i_see_the_edit_lead_partner_details_page
@@ -25,7 +25,7 @@ feature "edit schools spec" do
       and_i_see_the_updated_lead_partner
     end
 
-    scenario "choosing not applicable for lead partner" do
+    scenario "choosing not applicable for training partner" do
       when_i_see_the_lead_partner
       and_i_click_on_change_lead_partner(:lead_partner)
       and_i_see_the_edit_lead_partner_details_page
@@ -70,7 +70,7 @@ feature "edit schools spec" do
       and_i_visit_the_trainee_record_page
     end
 
-    scenario "changing the lead partner", js: true do
+    scenario "changing the training partner", js: true do
       when_i_see_the_lead_partner
       and_i_click_on_change_lead_partner(:lead_partner)
       and_i_see_the_edit_lead_partner_details_page
@@ -211,10 +211,10 @@ private
   def and_i_see_the_edit_lead_partner_details_page
     expect(edit_trainee_lead_partner_details_page).to be_displayed
     expect(edit_trainee_lead_partner_details_page).to have_content(
-      "Is there a lead partner?",
+      "Is there a training partner?",
     )
     expect(edit_trainee_lead_partner_details_page).to have_content(
-      "You do not need to provide a lead partner if the trainee is funded or employed privately.",
+      "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
 

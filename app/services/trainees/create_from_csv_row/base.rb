@@ -302,7 +302,7 @@ module Trainees
 
       def lead_partner_id
         LeadPartner.find_by_ukprn_or_urn(
-          lookup("Lead Partner URN", "Lead Partner URN or UKPRN")&.strip,
+          lookup("Training Partner URN", "Training Partner URN or UKPRN")&.strip,
         )&.id
       end
 

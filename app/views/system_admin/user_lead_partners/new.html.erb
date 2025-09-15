@@ -12,8 +12,8 @@
 
         <%= f.govuk_text_field(
           :query,
-          label: { text: "Add a lead partner for #{@user.name}", size: "l", tag: "h1" },
-          hint: { text: "Search for a lead partner by name, school postcode, school URN or training provider UKPRN" },
+          label: { text: "Add a training partner for #{@user.name}", size: "l", tag: "h1" },
+          hint: { text: "Search for a training partner by name, school postcode, school URN or training provider UKPRN" },
           value: params[:query],
           "data-field" => "lead-partners-autocomplete",
           width: "three-quarters",

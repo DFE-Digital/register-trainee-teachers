@@ -22,7 +22,7 @@ feature "setting a provider organisation context", feature_user_can_have_multipl
       then_i_can_see_trainees_belonging_to_that_provider
     end
 
-    scenario "settings lead partner context" do
+    scenario "settings training partner context" do
       when_i_click_on_a_lead_partner_link
       then_i_am_redirected_to_the_start_page
     end

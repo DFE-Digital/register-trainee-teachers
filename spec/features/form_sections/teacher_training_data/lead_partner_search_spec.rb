@@ -10,27 +10,27 @@ feature "LeadPartnerSearch" do
     and_i_visit_the_trainee_edit_lead_partner_page
   end
 
-  scenario "choosing a lead partner", js: true do
+  scenario "choosing a training partner", js: true do
     and_i_fill_in_my_lead_partner
     and_i_click_the_first_item_in_the_list
     and_i_continue
     then_i_am_redirected_to_the_confirm_lead_partner_page
   end
 
-  scenario "searching for a lead partner by postcode", js: true do
+  scenario "searching for a training partner by postcode", js: true do
     and_i_fill_in_my_lead_partner_postcode
     and_i_click_the_first_item_in_the_list
     and_i_continue
     then_i_am_redirected_to_the_confirm_lead_partner_page
   end
 
-  scenario "choosing a lead partner without javascript" do
+  scenario "choosing a training partner without javascript" do
     and_i_fill_in_my_lead_partner_without_js
     and_i_continue
     then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query
   end
 
-  scenario "when a lead partner is not selected", js: true do
+  scenario "when a training partner is not selected", js: true do
     and_i_fill_in_my_lead_partner
     and_i_continue
     then_i_am_redirected_to_the_lead_partners_page_filtered_by_my_query

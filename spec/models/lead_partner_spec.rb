@@ -6,7 +6,7 @@ describe LeadPartner do
   context "lead school" do
     subject(:lead_partner) { create(:lead_partner, :school) }
 
-    it "creates a lead school - lead partner" do
+    it "creates a lead school - training partner" do
       expect(lead_partner).to be_school
     end
   end
@@ -14,7 +14,7 @@ describe LeadPartner do
   context "HEI" do
     subject(:lead_partner) { create(:lead_partner, :hei) }
 
-    it "creates a HEI - lead partner" do
+    it "creates a HEI - training partner" do
       expect(lead_partner).to be_hei
     end
   end
@@ -22,7 +22,7 @@ describe LeadPartner do
   context "SCITT" do
     subject(:lead_partner) { create(:lead_partner, :scitt) }
 
-    it "creates a SCITT - lead partner" do
+    it "creates a SCITT - training partner" do
       expect(lead_partner).to be_scitt
     end
   end
@@ -124,7 +124,7 @@ describe LeadPartner do
     context "when schools exists" do
       subject(:lead_partner) { create(:lead_partner, :hei) }
 
-      it "returns the name of the lead partner" do
+      it "returns the name of the training partner" do
         expect(lead_partner.name_and_code).to eq(lead_partner.name)
       end
     end

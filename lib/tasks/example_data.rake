@@ -75,7 +75,7 @@ namespace :example_data do
     # Create some schools
     employing_schools = FactoryBot.create_list(:school, 50)
 
-    # Create some lead partners
+    # Create some training partners
     lead_partners = FactoryBot.create_list(:lead_partner, 50, :school)
 
     # Create some subjects

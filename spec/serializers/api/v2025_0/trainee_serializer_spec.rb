@@ -128,7 +128,7 @@ RSpec.describe Api::V20250::TraineeSerializer do
       end
     end
 
-    describe "lead partner attributes" do
+    describe "training partner attributes" do
       it "serializes the urn correctly" do
         expect(json[:lead_partner_urn]).not_to be_nil
         expect(json[:lead_partner_urn]).to eq(trainee.lead_partner.urn)

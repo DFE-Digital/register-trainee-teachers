@@ -114,16 +114,16 @@ RSpec.describe SchoolData::ImportService do
       end
     end
 
-    context "lead partner realignment" do
-      let!(:school_with_lead_partner) { create(:school, urn: "999888", name: "School With Lead Partner") }
-      let!(:lead_partner) { create(:lead_partner, :school, school: school_with_lead_partner, name: "Old Lead Partner Name") }
+    context "training partner realignment" do
+      let!(:school_with_lead_partner) { create(:school, urn: "999888", name: "School With Training Partner") }
+      let!(:lead_partner) { create(:lead_partner, :school, school: school_with_lead_partner, name: "Old Training Partner Name") }
 
-      it "updates lead partner names to match school names" do
+      it "updates training partner names to match school names" do
         expect { subject }.to change { lead_partner.reload.name }
-          .from("Old Lead Partner Name").to("School With Lead Partner")
+          .from("Old Training Partner Name").to("School With Training Partner")
       end
 
-      it "tracks lead partner updates in statistics" do
+      it "tracks training partner updates in statistics" do
         result = subject
 
         expect(result[:lead_partners_updated]).to eq(1)
@@ -132,8 +132,8 @@ RSpec.describe SchoolData::ImportService do
         expect(download_record.lead_partners_updated).to eq(1)
       end
 
-      context "when lead partner already has correct name" do
-        let!(:lead_partner) { create(:lead_partner, :school, school: school_with_lead_partner, name: "School With Lead Partner") }
+      context "when training partner already has correct name" do
+        let!(:lead_partner) { create(:lead_partner, :school, school: school_with_lead_partner, name: "School With Training Partner") }
 
         it "does not count already-correct names as updates" do
           result = subject

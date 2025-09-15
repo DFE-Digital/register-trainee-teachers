@@ -9,12 +9,12 @@ describe LeadSchoolMigratable do
 
   context "when lead_partner_urn is changed" do
     before do
-      row.lead_partner_urn = "Lead Partner"
+      row.lead_partner_urn = "Training Partner"
       row.save
     end
 
     it "sets lead_school to the value of lead_partner" do
-      expect(row.lead_school_urn).to eq("Lead Partner")
+      expect(row.lead_school_urn).to eq("Training Partner")
     end
   end
 
@@ -31,7 +31,7 @@ describe LeadSchoolMigratable do
 
   context "when both lead_partner and lead_school are changed" do
     before do
-      row.lead_partner_urn = "Lead Partner"
+      row.lead_partner_urn = "Training Partner"
       row.lead_school_urn = "Lead School"
       row.save
     end

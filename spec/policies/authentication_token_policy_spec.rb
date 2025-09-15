@@ -70,7 +70,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
       end
     end
 
-    context "when the User is a Lead Partner Provider" do
+    context "when the User is a Training Partner Provider" do
       let!(:lead_partner) { create(:lead_partner, :hei) }
       let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
       let!(:lead_partner_user_context) {
@@ -87,7 +87,7 @@ RSpec.describe AuthenticationTokenPolicy, type: :policy do
       end
     end
 
-    context "when the User is a Lead Partner School" do
+    context "when the User is a Training Partner School" do
       let!(:lead_partner) { create(:lead_partner, :school) }
       let!(:lead_partner_user) { create(:user, lead_partners: [lead_partner]) }
       let!(:lead_partner_user_context) {

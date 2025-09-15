@@ -2,14 +2,14 @@
 
 require "rails_helper"
 
-feature "add lead partner and employing school" do
+feature "add training partner and employing school" do
   include TraineeHelper
 
   background do
     given_i_am_authenticated
   end
 
-  scenario "add a lead partner and employing school", "feature_routes.school_direct_salaried": true do
+  scenario "add a training partner and employing school", "feature_routes.school_direct_salaried": true do
     given_lead_partner_and_employing_school_exist_in_the_system
     given_a_trainee_exists(:school_direct_salaried)
     and_i_am_on_the_trainee_record_page
@@ -45,7 +45,7 @@ feature "add lead partner and employing school" do
     then_the_lead_and_employing_schools_section_is_marked_completed
   end
 
-  scenario "add a lead partner", "feature_routes.school_direct_salaried": true do
+  scenario "add a training partner", "feature_routes.school_direct_salaried": true do
     given_lead_partner_and_employing_school_exist_in_the_system
     given_a_trainee_exists(:school_direct_salaried)
     and_i_am_on_the_trainee_record_page
@@ -110,10 +110,10 @@ feature "add lead partner and employing school" do
   def and_i_see_the_edit_lead_partner_details_page
     expect(edit_trainee_lead_partner_details_page).to be_displayed
     expect(edit_trainee_lead_partner_details_page).to have_content(
-      "Is there a lead partner?",
+      "Is there a training partner?",
     )
     expect(edit_trainee_lead_partner_details_page).to have_content(
-      "You do not need to provide a lead partner if the trainee is funded or employed privately.",
+      "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
 
@@ -132,24 +132,24 @@ feature "add lead partner and employing school" do
   def then_i_see_the_lead_partner_edit_page
     expect(edit_lead_partner_page).to be_displayed
     expect(edit_lead_partner_page).to have_content(
-      "The lead partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
+      "The training partner is the main organisation and point of contact for training providers, placements and partner schools in the School Direct partnership.",
     )
     expect(edit_lead_partner_page).to have_content(
-      "The lead partner you select will be able to view trainee’s record.",
+      "The training partner you select will be able to view trainee’s record.",
     )
     expect(edit_lead_partner_page).to have_content(
-      "Search for a lead partner by name, postcode, school URN or training provider UKPRN",
+      "Search for a training partner by name, postcode, school URN or training provider UKPRN",
     )
     expect(edit_lead_partner_page).to have_content(
-      "If the lead partner is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
+      "If the training partner is missing from the list, try searching for its unique reference number (URN) on Get information about schools (opens in a new tab).",
     )
     expect(edit_employing_school_page).to have_link(text: "Get information about schools", href: "https://get-information-schools.service.gov.uk/")
     expect(edit_lead_partner_page).to have_content(
-      "If you still cannot find the lead partner, contact becomingateacher@digital.education.gov.uk",
+      "If you still cannot find the training partner, contact becomingateacher@digital.education.gov.uk",
     )
     expect(edit_employing_school_page).to have_link("becomingateacher@digital.education.gov.uk")
     expect(edit_lead_partner_page).to have_content(
-      "You do not need to provide a lead partner if the trainee is funded or employed privately.",
+      "You do not need to provide a training partner if the trainee is funded or employed privately.",
     )
   end
 

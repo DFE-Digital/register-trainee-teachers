@@ -6,7 +6,7 @@ describe UsersHelper do
   include UsersHelper
 
   describe "#lead_partner_user?" do
-    describe "lead partner user" do
+    describe "training partner user" do
       let(:current_user) { double(UserWithOrganisationContext, lead_partner?: true) }
 
       it "returns true" do

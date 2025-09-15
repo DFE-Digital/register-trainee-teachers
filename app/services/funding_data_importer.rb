@@ -35,7 +35,7 @@ private
   def import_lead_partner_payment_schedules
     attributes = Funding::Parsers::LeadPartnerPaymentSchedules.to_attributes(funding_upload: @funding_upload)
     missing_urns = Funding::LeadPartnerPaymentSchedulesImporter.call(attributes: attributes, first_predicted_month_index: @funding_upload.month)
-    raise("Lead partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
+    raise("Training partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
   end
 
   def import_provider_trainee_summaries
@@ -47,6 +47,6 @@ private
   def import_lead_partner_trainee_summaries
     attributes = Funding::Parsers::LeadPartnerTraineeSummaries.to_attributes(funding_upload: @funding_upload)
     missing_urns = Funding::LeadPartnerTraineeSummariesImporter.call(attributes:)
-    raise("Lead partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
+    raise("Training partner URNs: #{missing_urns.join(', ')} not found") if missing_urns.present?
   end
 end

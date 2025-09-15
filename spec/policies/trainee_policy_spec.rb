@@ -259,7 +259,7 @@ describe TraineePolicy do
       it { is_expected.to permit(provider_user) }
     end
 
-    context "when the user is a lead partner user" do
+    context "when the user is a training partner user" do
       it { is_expected.not_to permit(lead_partner_user) }
     end
   end
@@ -316,7 +316,7 @@ describe TraineePolicy do
       let(:lead_partner) { create(:lead_partner, :hei, school:) }
       let(:organisation) { lead_partner }
 
-      context "where the trainee is associated with the lead partner" do
+      context "where the trainee is associated with the training partner" do
         let(:trainee) { create(:trainee, lead_partner:) }
 
         it { is_expected.to contain_exactly(trainee) }

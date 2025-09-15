@@ -62,7 +62,7 @@ feature "Organisation details" do
     end
   end
 
-  context "when a User belongs to a Lead Partner organisation" do
+  context "when a User belongs to a Training Partner organisation" do
     let(:accreditation_id) { nil }
     let(:organisation) { create(:lead_partner, :hei) }
     let(:user) { create(:user, lead_partners: [organisation]) }
@@ -293,7 +293,7 @@ private
     expect(organisation_settings_page).to have_content(organisation.name)
     expect(organisation_settings_page).to have_content("About your organisation")
     expect(organisation_settings_page).to have_content(
-      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Lead partner'}",
+      "Organisation type#{organisation.is_a?(Provider) ? 'Accredited provider' : 'Training partner'}",
     )
     expect(organisation_settings_page).to have_content("Accreditation ID#{accreditation_id}")
   end

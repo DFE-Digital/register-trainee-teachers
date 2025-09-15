@@ -91,7 +91,7 @@ module Submissions
         end
       end
 
-      context "Trainee with a missing lead partner" do
+      context "Trainee with a missing training partner" do
         let(:trainee) { create(:trainee, :submitted_with_start_date, :school_direct_salaried, :with_placements, :with_employing_school) }
 
         it "doesn't cause validation errors" do

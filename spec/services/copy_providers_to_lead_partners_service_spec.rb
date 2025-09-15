@@ -21,7 +21,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
 
       let(:record_type) { :hei }
 
-      it "creates a lead partner for each of the given `provider_ids`" do
+      it "creates a training partner for each of the given `provider_ids`" do
         expect {
           described_class.call(provider_ids: [provider_one.id, provider_two.id], record_type: record_type)
         }.to change { LeadPartner.count }.by(1)
@@ -42,7 +42,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
 
       let(:record_type) { :scitt }
 
-      it "creates a lead partner for each of the given `provider_ids`" do
+      it "creates a training partner for each of the given `provider_ids`" do
         expect {
           described_class.call(provider_ids: [provider_one.id, provider_two.id], record_type: record_type)
         }.to change { LeadPartner.count }.by(1)
@@ -59,7 +59,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
     context "when record_type is not supported" do
       let(:record_type) { :random }
 
-      it "does not create a lead partner for each of the given `provider_ids`" do
+      it "does not create a training partner for each of the given `provider_ids`" do
         expect {
           described_class.call(provider_ids: [provider_one.id, provider_two.id], record_type: record_type)
         }.to raise_error(RuntimeError, "'#{record_type}' is not a valid record_type, should be one of [\"hei\", \"scitt\"]")
@@ -70,7 +70,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
       end
     end
 
-    it "does not create duplicate lead partners for providers" do
+    it "does not create duplicate training partners for providers" do
       described_class.call(provider_ids: [provider_one.id], record_type: :hei)
       expect(LeadPartner.where(provider_id: provider_one.id).count).to eq(1)
 
@@ -81,7 +81,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
       expect(provider_one.reload.accredited).to be false
     end
 
-    it "creates lead partner users for each user associated with the provider" do
+    it "creates training partner users for each user associated with the provider" do
       expect {
         described_class.call(provider_ids: [provider_two.id], record_type: :hei)
       }.to change { LeadPartnerUser.count }.by(1)
@@ -89,7 +89,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
       expect(provider_two.reload.accredited).to be false
     end
 
-    it "does not create duplicate lead partner users" do
+    it "does not create duplicate training partner users" do
       described_class.call(provider_ids: [provider_two.id], record_type: :hei)
 
       lead_partner = LeadPartner.find_by(provider_id: provider_two.id)
@@ -101,7 +101,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
       expect(provider_two.reload.accredited).to be false
     end
 
-    it "updates lead partner users if the users change" do
+    it "updates training partner users if the users change" do
       described_class.call(provider_ids: [provider_two.id], record_type: :hei)
       provider_two.users << user_two
 
@@ -115,7 +115,7 @@ RSpec.describe CopyProvidersToLeadPartnersService do
       expect(provider_two.reload.accredited).to be false
     end
 
-    it "removes lead partner users if the users are removed from the provider" do
+    it "removes training partner users if the users are removed from the provider" do
       provider_two.users << user_two
       described_class.call(provider_ids: [provider_two.id], record_type: :hei)
       provider_two.users.destroy(user_one)

@@ -43,7 +43,7 @@ feature "Search users" do
       then_i_see_the_detail_page_for_the_second_user
     end
 
-    scenario "search users by lead partner name" do
+    scenario "search users by training partner name" do
       when_i_visit_the_user_index_page
       when_i_enter_the_first_users_lead_partner_name_into_the_autocomplete
       and_click_on_the_first_user_in_the_autocomplete

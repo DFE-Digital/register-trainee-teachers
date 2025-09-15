@@ -68,7 +68,7 @@ module TeacherTrainingApi
           hash_including(
             message: include(
               "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
-              "Matching lead partners: 2",
+              "Matching training partners: 2",
               "Matching providers: 1",
               "Missing accredited providers: 0",
               "Missing unaccredited providers: 0",
@@ -97,7 +97,7 @@ module TeacherTrainingApi
           hash_including(
             message: include(
               "[test] Publish Provider Checker Results #{current_time.to_fs(:govuk_date_and_time)} for #{Settings.current_recruitment_cycle_year}",
-              "Matching lead partners: 2",
+              "Matching training partners: 2",
               "Matching providers: 1",
               "Missing accredited providers: 1",
               "  - University of BAT (A01), UKPRN 12345678",

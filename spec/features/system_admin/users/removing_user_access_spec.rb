@@ -17,7 +17,7 @@ feature "Removing user access" do
     then_the_provider_is_no_longer_listed_on_the_user_page
   end
 
-  scenario "lead partner" do
+  scenario "training partner" do
     given_i_am_on_a_user_page
     and_the_lead_partner_access_table_is_shown
     and_i_choose_a_user_to_remove_access_under_lead_partners

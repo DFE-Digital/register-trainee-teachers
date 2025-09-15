@@ -23,7 +23,7 @@ module SchoolDetails
       end
     end
 
-    context "with lead partner" do
+    context "with training partner" do
       let(:trainee) { create(:trainee, :school_direct_salaried, :with_lead_partner) }
       let(:school) { trainee.lead_partner.school }
       let(:urn) { trainee.lead_partner.urn }
@@ -32,7 +32,7 @@ module SchoolDetails
         render_inline(View.new(trainee: trainee, editable: true))
       end
 
-      it_behaves_like("school row", "lead partner")
+      it_behaves_like("school row", "training partner")
     end
 
     context "with employing school" do

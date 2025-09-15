@@ -164,7 +164,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       expect(parsed_body[:applying_for_grant]).to be_nil
     end
 
-    it "sets the correct lead partner and employing school attributes" do
+    it "sets the correct training partner and employing school attributes" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       trainee = Trainee.last

@@ -17,7 +17,7 @@ describe "trainees/_record_completion_filter", "feature_routes.provider_led_post
   end
 
   context "placements enabled", feature_placements: true do
-    context "with a lead partner user" do
+    context "with a training partner user" do
       let(:lead_school_user?) { false }
       let(:lead_partner_user?) { true }
 
@@ -26,7 +26,7 @@ describe "trainees/_record_completion_filter", "feature_routes.provider_led_post
       end
     end
 
-    context "with a non lead school and non lead partner user" do
+    context "with a non lead school and non training partner user" do
       let(:lead_school_user?) { false }
       let(:lead_partner_user?) { false }
 

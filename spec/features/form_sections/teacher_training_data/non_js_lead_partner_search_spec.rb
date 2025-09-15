@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-feature "Non-JS lead partner search" do
+feature "Non-JS training partner search" do
   let!(:discarded_lead_partner) { create(:lead_partner, :school, :discarded) }
 
   before do
@@ -12,7 +12,7 @@ feature "Non-JS lead partner search" do
     and_i_am_on_the_lead_partners_page_filtered_by_my_query
   end
 
-  scenario "choosing a lead partner" do
+  scenario "choosing a training partner" do
     and_i_choose_my_lead_partner
     and_i_continue
     then_i_am_redirected_to_the_confirm_lead_partner_page
