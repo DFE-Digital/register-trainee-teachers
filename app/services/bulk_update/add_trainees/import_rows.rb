@@ -142,7 +142,11 @@ module BulkUpdate
 
           ActiveRecord::Base.transaction(requires_new: true) do
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
-              BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
+              BulkUpdate::AddTrainees::ImportRow.call(
+                row: upload_row.data,
+                current_provider: current_provider,
+                dry_run: dry_run,
+              )
             rescue StandardError => e
               capture_exception(e)
             end

@@ -8,6 +8,8 @@ feature "bulk add trainees" do
   include FileHelper
 
   before do
+    allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
+
     and_there_is_a_current_academic_cycle
     and_there_is_a_previous_academic_cycle
     and_we_are_at_least_one_month_into_the_academic_cycle
@@ -248,6 +250,7 @@ feature "bulk add trainees" do
         and_i_refresh_the_summary_page
         then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
+        and_the_request_trn_jobs_have_been_queued
 
         when_i_click_the_upload_button
         then_i_see_the_review_errors_page
@@ -452,6 +455,7 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_errors_page
+        and_the_request_trn_job_has_not_been_queued
 
         when_i_click_on_the_download_link
         then_i_receive_the_file
@@ -461,6 +465,9 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        then_the_request_trn_job_has_not_been_queued
       end
 
       scenario "view the upload status page" do
@@ -1214,6 +1221,7 @@ private
     BulkUpdate::AddTrainees::ImportRow.call(
       row: row,
       current_provider: BulkUpdate::TraineeUpload.last.provider,
+      dry_run: false,
     )
   end
 
@@ -1288,6 +1296,14 @@ private
     expect(dates).to eq([@upload1, @upload2, @upload3, @upload4, @upload5].map(&:created_at).map { |date| date.to_fs(:govuk_date_and_time) })
   end
 
+  def and_the_request_trn_job_has_not_been_queued
+    expect(Trainees::SubmitForTrn).not_to have_received(:call)
+  end
+
+  def and_the_request_trn_jobs_have_been_queued
+    expect(Trainees::SubmitForTrn).to have_received(:call).at_least(5).times
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
@@ -1310,4 +1326,5 @@ private
   alias_method :when_i_visit_the_summary_page, :and_i_visit_the_summary_page
   alias_method :and_i_click_the_cancel_bulk_updates_link, :when_i_click_the_cancel_bulk_updates_link
   alias_method :then_i_see_file_validation_passed, :and_i_see_file_validation_passed
+  alias_method :then_the_request_trn_job_has_not_been_queued, :and_the_request_trn_job_has_not_been_queued
 end
