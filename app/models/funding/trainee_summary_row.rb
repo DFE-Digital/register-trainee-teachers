@@ -51,6 +51,7 @@ module Funding
       provider_led_undergrad: TRAINING_ROUTE_ENUMS[:provider_led_undergrad],
       opt_in_undergrad: TRAINING_ROUTE_ENUMS[:opt_in_undergrad],
       school_direct_tuition_fee: TRAINING_ROUTE_ENUMS[:school_direct_tuition_fee],
+      teacher_degree_apprenticeship: TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship],
     }
 
     def route
