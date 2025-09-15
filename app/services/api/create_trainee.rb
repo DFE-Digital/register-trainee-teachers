@@ -30,7 +30,10 @@ module Api
       validator = Submissions::ApiTrnValidator.new(trainee:)
 
       if validator.all_errors.empty? && trainee.save
-        ::Trainees::SubmitForTrn.call(trainee:) unless dry_run?
+        # ::Trainees::SubmitForTrn.call(trainee:) unless dry_run?
+
+        trainee.submit_for_trn!
+
         success_response(trainee)
       else
         save_errors_response(validator, trainee)
