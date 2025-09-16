@@ -6,7 +6,7 @@ module TeacherTrainingApi
     retry_on TeacherTrainingApi::Client::HttpError
 
     def perform(recruitment_cycle_year: Settings.current_recruitment_cycle_year)
-      return false unless Rails.env.production? || Rails.env.test?
+      return false unless Rails.env.production?
 
       checker = TeacherTrainingApi::CheckCoursesForMissingProviders.call(
         recruitment_cycle_year:,

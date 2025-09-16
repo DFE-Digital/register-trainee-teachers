@@ -8,7 +8,7 @@ module TeacherTrainingApi
     MAX_MISSING_PROVIDERS_TO_DISPLAY = 10
 
     def perform
-      return false unless Rails.env.production? || Rails.env.test?
+      return false unless Rails.env.production?
 
       checker = TeacherTrainingApi::PublishProviderChecker.call(
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
