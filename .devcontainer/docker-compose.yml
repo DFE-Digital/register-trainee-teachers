@@ -19,7 +19,7 @@ services:
       - REDIS_QUEUE_URL=redis://redis:6379/0
 
   db:
-    image: postgres:13
+    image: postgres:16
     environment:
       - POSTGRES_PASSWORD=developmentpassword
 
