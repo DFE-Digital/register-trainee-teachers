@@ -250,7 +250,7 @@ feature "bulk add trainees" do
         and_i_refresh_the_summary_page
         then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
-        and_the_request_trn_jobs_have_been_queued
+        and_the_request_trn_job_has_not_been_queued
 
         when_i_click_the_upload_button
         then_i_see_the_review_errors_page
@@ -1221,7 +1221,6 @@ private
     BulkUpdate::AddTrainees::ImportRow.call(
       row: row,
       current_provider: BulkUpdate::TraineeUpload.last.provider,
-      dry_run: false,
     )
   end
 
@@ -1301,7 +1300,7 @@ private
   end
 
   def and_the_request_trn_jobs_have_been_queued
-    expect(Trainees::SubmitForTrn).to have_received(:call).at_least(5).times
+    expect(Trainees::SubmitForTrn).to have_received(:call).exactly(5).times
   end
 
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
