@@ -155,7 +155,6 @@ module BulkUpdate
             context "when the upload status is pending" do
               let(:trainee_upload) { create(:bulk_update_trainee_upload, :with_mixed_case_headers, :pending) }
 
-
               it "does not create any trainee records" do
                 allow(ImportRow).to receive(:call).and_call_original
 
