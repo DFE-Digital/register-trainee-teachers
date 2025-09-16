@@ -221,6 +221,7 @@ module BulkUpdate
           },
         )
         BulkUpdate::AddTrainees::ImportRow::Result.new(
+          nil,
           false,
           ["runtime failure: #{exception.message}"],
         )
