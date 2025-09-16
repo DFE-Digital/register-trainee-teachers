@@ -5,7 +5,7 @@ module Trainees
     queue_as :apply
 
     def perform
-      return unless FeatureService.enabled?("import_applications_from_apply")
+      return unless FeatureService.enabled?("import_applications_from_apply") || Rails.env.sandbox?
 
       ApplyApplication.joins(:provider).where(
         providers: { apply_sync_enabled: true },
