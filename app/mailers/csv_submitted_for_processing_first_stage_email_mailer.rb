@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class CsvSubmittedForProcessingFirstStageEmailMailer < GovukNotifyRails::Mailer
+  ALLOWED_STATUSES = ["pending", "validated", "failed"]
+
   def generate(upload:, user:)
+    return unless ALLOWED_STATUSES.include?(upload.status)
+
     set_template(
       Settings.govuk_notify.csv_submitted_for_processing_first_stage
       .public_send(

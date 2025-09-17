@@ -31,6 +31,18 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
       end
     end
 
+    %i[in_progress succeeded].each do |status|
+      context "when the upload status is #{status}" do
+        let(:upload) { create(:bulk_update_trainee_upload, status) }
+
+        it "does not send an email" do
+          %i[govuk_notify_template first_name email file_name created_at].each do |attribute|
+            expect(mail.send(attribute)).to eq(nil)
+          end
+        end
+      end
+    end
+
     it "sends an email to the correct email address" do
       expect(mail.to).to eq([user.email])
     end
