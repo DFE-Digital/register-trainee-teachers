@@ -8,12 +8,13 @@ module Api
 
     include ActiveModel::Model
 
-    attr_accessor :current_provider, :trainee_attributes, :version
+    attr_accessor :current_provider, :trainee_attributes, :version, :submit_for_trn
 
-    def initialize(current_provider:, trainee_attributes:, version:)
+    def initialize(current_provider:, trainee_attributes:, version:, submit_for_trn: true)
       @current_provider = current_provider
       @trainee_attributes = trainee_attributes
       @version = version
+      @submit_for_trn = submit_for_trn
     end
 
     def call
@@ -29,7 +30,8 @@ module Api
       validator = Submissions::ApiTrnValidator.new(trainee:)
 
       if validator.all_errors.empty? && trainee.save
-        ::Trainees::SubmitForTrn.call(trainee:)
+        ::Trainees::SubmitForTrn.call(trainee:) if submit_for_trn
+
         success_response(trainee)
       else
         save_errors_response(validator, trainee)

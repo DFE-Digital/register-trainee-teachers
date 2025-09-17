@@ -9,8 +9,8 @@ module BulkUpdate
 
       attr_accessor :row, :current_provider
 
-      Result = Struct.new(:success, :errors, :error_type) do
-        def initialize(success, errors, error_type = :validation)
+      Result = Struct.new(:slug, :success, :errors, :error_type) do
+        def initialize(slug, success, errors, error_type = :validation)
           super
         end
       end
@@ -38,9 +38,10 @@ module BulkUpdate
 
         # Save the record
         json_result = Api::CreateTrainee.call(
-          current_provider:,
-          trainee_attributes:,
-          version:,
+          current_provider: current_provider,
+          trainee_attributes: trainee_attributes,
+          version: version,
+          submit_for_trn: false,
         )
 
         json_result_to_result(json_result)
@@ -58,11 +59,11 @@ module BulkUpdate
 
       def json_result_to_result(json_result)
         if json_result[:status] == :created
-          Result.new(true, [], nil)
+          Result.new(json_result.dig(:json, :data, :trainee_id), true, [], nil)
         elsif json_result[:status] == :conflict
-          Result.new(false, ["This trainee is already in Register"], :duplicate)
+          Result.new(nil, false, ["This trainee is already in Register"], :duplicate)
         else
-          Result.new(false, json_result.dig(:json, :errors), :validation)
+          Result.new(nil, false, json_result.dig(:json, :errors), :validation)
         end
       end
 

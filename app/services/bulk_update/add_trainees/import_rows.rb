@@ -120,6 +120,7 @@ module BulkUpdate
 
         dry_run = !trainee_upload.in_progress?
         success = true
+        results = []
 
         ActiveRecord::Base.transaction do
           if dry_run
@@ -138,11 +139,12 @@ module BulkUpdate
             end
           end
 
-          results = []
-
           ActiveRecord::Base.transaction(requires_new: true) do
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
-              BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
+              BulkUpdate::AddTrainees::ImportRow.call(
+                row: upload_row.data,
+                current_provider: current_provider,
+              )
             rescue StandardError => e
               capture_exception(e)
             end
@@ -162,6 +164,12 @@ module BulkUpdate
             create_row_errors(results)
           elsif dry_run
             trainee_upload.process!
+          end
+        end
+
+        if !dry_run && success
+          Trainee.where(slug: results.pluck(:slug)).find_each do |trainee|
+            Trainees::SubmitForTrn.call(trainee:)
           end
         end
 
@@ -213,6 +221,7 @@ module BulkUpdate
           },
         )
         BulkUpdate::AddTrainees::ImportRow::Result.new(
+          nil,
           false,
           ["runtime failure: #{exception.message}"],
         )
