@@ -31,7 +31,7 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
       end
     end
 
-    %i[in_progress succeeded].each do |status|
+    %i[uploaded in_progress succeeded cancelled].each do |status|
       context "when the upload status is #{status}" do
         let(:upload) { create(:bulk_update_trainee_upload, status) }
 
