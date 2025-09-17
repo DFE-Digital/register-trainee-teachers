@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CsvSubmittedForProcessingFirstStageEmailMailer < GovukNotifyRails::Mailer
-  ALLOWED_STATUSES = ["pending", "validated", "failed"]
+  ALLOWED_STATUSES = %w[pending validated failed].freeze
 
   def generate(upload:, user:)
     return unless ALLOWED_STATUSES.include?(upload.status)

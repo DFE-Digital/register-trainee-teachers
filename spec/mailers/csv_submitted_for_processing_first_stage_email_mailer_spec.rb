@@ -37,7 +37,7 @@ describe CsvSubmittedForProcessingFirstStageEmailMailer do
 
         it "does not send an email" do
           %i[govuk_notify_template first_name email file_name created_at].each do |attribute|
-            expect(mail.send(attribute)).to eq(nil)
+            expect(mail.send(attribute)).to be_nil
           end
         end
       end
