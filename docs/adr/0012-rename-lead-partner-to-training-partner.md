@@ -22,7 +22,7 @@ The term _Lead Partner_ appears in many places in the user interface. Most of th
 - Locale files (e.g. `config/locales/en.yml`)
 - Components (e.g. `app/components/lead_partner_component.rb`)
 
-The minimum required changes are to update these files to replace _Lead Partner_ with _Training Partner_. This can be done semi-automatically using search-and-replace tools, but will require careful review to ensure that variable and class names in code aren't changed (at least initially). A first pass has been implemented in 
+The minimum required changes are to update these files to replace _Lead Partner_ with _Training Partner_. This can be done semi-automatically using search-and-replace tools, but will require careful review to ensure that variable and class names in code aren't changed (at least initially). A first pass has been implemented in https://github.com/DFE-Digital/register-trainee-teachers/pull/5619 .
 
 ## Non-essential changes
 
