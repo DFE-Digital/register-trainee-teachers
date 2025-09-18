@@ -153,7 +153,7 @@ private
       href: "mailto:becomingateacher@digital.education.gov.uk",
     )
     expect(page).to have_content(
-      "We aim to respond within 5 working days, or one working day for more urgent queries",
+      "We aim to respond within 5 working days, or 1 working day for more urgent queries.",
     )
   end
 end
