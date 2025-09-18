@@ -648,15 +648,7 @@ private
     expect(page).to have_content("Your new trainees have been registered")
     expect(page).to have_content(/Submitted by\s*#{current_user.name}/)
     expect(page).to have_content(/Number of registered trainees\s*5/)
-    expect(page).to have_content("You can also check the status of new trainee files.")
-    expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
-    expect(page).to have_content("You can check your trainee data in Register. At any time you can:")
-    expect(page).to have_content(
-      "view ‘Choose trainee status export’ from the ‘Registered trainees’ section, using the ‘academic year’ or ‘start year’ filter to select the current academic year",
-    )
-    expect(page).to have_content(
-      "check your trainees directly in the service one by one",
-    )
+    expect(page).to have_content("See the status of all your uploaded files")
   end
 
   def and_i_click_on_back_link
