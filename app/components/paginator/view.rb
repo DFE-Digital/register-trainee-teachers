@@ -9,6 +9,8 @@ module Paginator
     # so it renders 1 2 3 4 5 ... 9 instead.
     KAMINARI_LINKS_LIMIT = 5
 
+    delegate :paginate, to: :helpers
+
     def initialize(scope:)
       @scope = scope
     end
@@ -35,10 +37,6 @@ module Paginator
         left: numbers_left,
         right: numbers_right,
       }
-    end
-
-    def paginate
-      helpers.paginate scope, **paginate_configuration
     end
 
   private
