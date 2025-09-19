@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module CourseDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SummaryHelper
     include CourseDetailsHelper
     include TraineeHelper

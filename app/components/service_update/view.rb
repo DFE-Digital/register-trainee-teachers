@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ServiceUpdate::View < ViewComponent::Base
+class ServiceUpdate::View < ApplicationComponent
   attr_reader :service_update
 
   delegate :title, :content, :date, to: :service_update

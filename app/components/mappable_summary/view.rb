@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module MappableSummary
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     renders_one :header_actions
 
     def initialize(trainee:, title:, rows:, editable:, has_errors:, id_suffix: nil, header_level: 3)

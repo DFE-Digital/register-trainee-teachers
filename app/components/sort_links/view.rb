@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SortLinks
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def sort_by_date_link
       default_sort_link(t("components.page_titles.trainees.sort_links.date_updated"), :date_updated)
     end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OrganisationSwitcher::View < ViewComponent::Base
+class OrganisationSwitcher::View < ApplicationComponent
   include OrganisationHelper
 
   attr_reader :current_user

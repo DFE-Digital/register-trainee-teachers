@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ReviewDraft
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     def initialize(trainee:)
       @trainee = trainee
     end
