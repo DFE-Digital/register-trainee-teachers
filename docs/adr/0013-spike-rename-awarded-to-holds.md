@@ -1,4 +1,3 @@
-
 # 13. Rename 'awarded' to 'holds'
 
 Date: 2025-09-17
@@ -37,4 +36,12 @@ These are the variations on 'award' that we need to consider:
 - waiting for award
 - awarded this year
 
-The term 'holds' can replace 'awarded' but doesn't make much sense in other contexts so we need to come up with a clear terminology.
+The term 'holds' (or 'held') can replace the word 'awarded' but doesn't make much sense in other contexts where a noun is needed e.g. 'award'. So we need to come up with a clear terminology.
+
+## Essential changes
+
+Once we have worked out what the correct terminiology is we can start working on the implementation.
+
+### Front-end changes
+
+
