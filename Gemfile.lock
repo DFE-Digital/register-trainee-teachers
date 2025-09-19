@@ -572,7 +572,7 @@ GEM
     request_store_rails (2.0.0)
       concurrent-ruby (~> 1.0)
     retriable (3.1.2)
-    rexml (3.4.1)
+    rexml (3.4.2)
     rotp (6.3.0)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -1109,7 +1109,7 @@ CHECKSUMS
   request_store (1.7.0) sha256=e1b75d5346a315f452242a68c937ef8e48b215b9453a77a6c0acdca2934c88cb
   request_store_rails (2.0.0) sha256=2dbae9fb29de6bd8bf3cbd44fbef4ee49b71c849f8ccf235cba3e8b491701d2f
   retriable (3.1.2) sha256=0a5a5d0ca4ba61a76fb31a17ab8f7f80281beb040c329d34dfc137a1398688e0
-  rexml (3.4.1) sha256=c74527a9a0a04b4ec31dbe0dc4ed6004b960af943d8db42e539edde3a871abca
+  rexml (3.4.2) sha256=1384268554a37af5da5279431ca3f2f37d46f09ffdd6c95e17cc84c83ea7c417
   rotp (6.3.0) sha256=75d40087e65ed0d8022c33055a6306c1c400d1c12261932533b5d6cbcd868854
   rspec (3.13.0) sha256=d490914ac1d5a5a64a0e1400c1d54ddd2a501324d703b8cfe83f458337bab993
   rspec-benchmark (0.6.0) sha256=1014adb57ec2599a2455c63884229f367a2fff6a63a77fd68ce5d804c83dd6cf
