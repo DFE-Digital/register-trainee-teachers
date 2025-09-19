@@ -3,7 +3,6 @@
 module Paginator
   class View < ApplicationComponent
     attr_reader :scope
-
     # This constant limits the number of links to pages rendered by #paginate.
     # In some cases, the number of links will be KAMINARI_LINKS_LIMIT + 1 because
     # kaminari refuses to leave a gap of just one number e.g. 1 ... 345 ... 9
@@ -36,6 +35,10 @@ module Paginator
         left: numbers_left,
         right: numbers_right,
       }
+    end
+
+    def paginate
+      helpers.paginate scope, **paginate_configuration
     end
 
   private

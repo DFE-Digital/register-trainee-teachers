@@ -20,6 +20,7 @@ module Paginator
       )
 
       component = described_class.new(scope:)
+      allow(component).to receive(:paginate).and_return("paginator")
       render_inline(component)
     end
 
