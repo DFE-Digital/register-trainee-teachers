@@ -16,6 +16,7 @@ module TeacherTrainingApi
       create(:course, recruitment_cycle_year: recruitment_cycle_year, accredited_body_code: "A003")
 
       allow(SlackNotifierService).to receive(:call).and_return(true)
+      allow(Rails.env).to receive(:production?).and_return(true)
     end
 
     it "runs a job to check imported courses for missing providers" do
