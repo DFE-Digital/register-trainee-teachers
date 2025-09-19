@@ -14,7 +14,7 @@ module Trainees
         if @trainee_forbidden_deletes_form.defer?
           redirect_to(trainee_deferral_path(trainee))
         elsif @trainee_forbidden_deletes_form.withdraw?
-          redirect_to(trainee_withdrawal_path(trainee))
+          redirect_to(trainee_withdrawal_start_path(trainee))
         else
           redirect_to(trainee_path(trainee))
         end
