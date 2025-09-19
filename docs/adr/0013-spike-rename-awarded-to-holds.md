@@ -44,4 +44,31 @@ Once we have worked out what the correct terminiology is we can start working on
 
 ### Front-end changes
 
+Updates to:
+
+- view templates
+- component templates
+- localisable strings
+
+
+## Non-essential changes
+
+### Backend code
+
+#### Trainee states
+
+There are two trainee states that contain the word `award`. From a consistency point of view renaming these is important, however it's quite a far reaching change. Apart from the various method names that are derived from the states, this would also impact the API and CSV upload features, and anything else that uses the state names such as ad-hoc SQL queries and analytics dashboards. This would be a breaking change for API consumers.
+
+### API and CSV upload
+
+The term 'award' only appears in state values (reference data). This would be a breaking change so it would have to be handled carefully and probably deferred until the next major version in September 2026.
+
+### Database schema
+
+There are only two columns in the schema that contain the word _award_ (and no tables).
+
+- `trainees.recommended_for_award_at`
+- `trainees.awarded_at`
+
+
 
