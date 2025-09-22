@@ -9,7 +9,7 @@ feature "Viewing sidekiq dead jobs" do
     [
       OpenStruct.new(
         item: {
-          wrapped: "Dqt::UpdateTraineeJob",
+          wrapped: "Trs::UpdateTraineeJob",
           args:
           [
             {
@@ -40,7 +40,7 @@ feature "Viewing sidekiq dead jobs" do
   scenario "shows dead_jobs page" do
     then_i_see_the_dead_jobs_page
     when_i_click_view
-    then_i_am_taken_to_the_dqt_update_page
+    then_i_am_taken_to_the_trs_update_page
     then_i_see_the_trainee
     and_the_trainee_view_link_is_visibile
     and_when_i_click_view
@@ -52,9 +52,6 @@ feature "Viewing sidekiq dead jobs" do
     and_i_visit_the_dead_jobs_tab
     then_i_see_the_dead_jobs_page
     and_there_are_no_dead_jobs
-
-    when_i_visit_to_the_withdraw_dead_jobs_page
-    then_i_see_that_there_are_no_withdraw_dead_jobs
   end
 
   scenario "retrying a job" do
@@ -73,7 +70,7 @@ feature "Viewing sidekiq dead jobs" do
 
   scenario "view job details", skip: skip_test_due_to_first_day_of_current_academic_year? do
     when_i_click_view
-    then_i_am_taken_to_the_dqt_update_page
+    then_i_am_taken_to_the_trs_update_page
     and_i_can_see_the_data_associated_with_the_job
   end
 
@@ -95,16 +92,16 @@ feature "Viewing sidekiq dead jobs" do
   end
 
   def and_there_are_no_dead_jobs
-    expect(admin_dead_jobs_page).not_to have_link("View", href: dead_job_path(DeadJobs::DqtUpdateTrainee))
-    expect(admin_dead_jobs_page).to have_text("DQT Update Trainee 0")
+    expect(admin_dead_jobs_page).not_to have_link("View", href: dead_job_path(DeadJobs::TrsUpdateTrainee))
+    expect(admin_dead_jobs_page).to have_text("TRS Update Trainee 0")
   end
 
   def when_i_click_view
-    admin_dead_jobs_page.dqt_update_trainee_dead_jobs_view_button.click
+    admin_dead_jobs_page.trs_update_trainee_dead_jobs_view_button.click
   end
 
-  def then_i_am_taken_to_the_dqt_update_page
-    expect(admin_dead_jobs_dqt_update_trainee).to be_displayed
+  def then_i_am_taken_to_the_trs_update_page
+    expect(admin_dead_jobs_trs_update_trainee).to be_displayed
   end
 
   def and_i_can_see_the_data_associated_with_the_job
@@ -112,42 +109,34 @@ feature "Viewing sidekiq dead jobs" do
   end
 
   def then_i_see_the_trainee
-    expect(admin_dead_jobs_dqt_update_trainee).to have_text("James Blint")
+    expect(admin_dead_jobs_trs_update_trainee).to have_text("James Blint")
   end
 
   def and_the_trainee_view_link_is_visibile
-    expect(admin_dead_jobs_dqt_update_trainee).to have_text("View")
+    expect(admin_dead_jobs_trs_update_trainee).to have_text("View")
   end
 
   def and_when_i_click_view
-    admin_dead_jobs_dqt_update_trainee.view_trainee_button.click
+    admin_dead_jobs_trs_update_trainee.view_trainee_button.click
   end
 
   def and_when_i_click_retry
-    admin_dead_jobs_dqt_update_trainee.retry_trainee_button.click
+    admin_dead_jobs_trs_update_trainee.retry_trainee_button.click
   end
 
   def and_when_i_click_delete
-    admin_dead_jobs_dqt_update_trainee.delete_trainee_button.click
+    admin_dead_jobs_trs_update_trainee.delete_trainee_button.click
   end
 
   def then_the_job_is_retried
-    expect(admin_dead_jobs_dqt_update_trainee).to have_text("Job will be retried imminently")
+    expect(admin_dead_jobs_trs_update_trainee).to have_text("Job will be retried imminently")
   end
 
   def then_the_job_is_deleted
-    expect(admin_dead_jobs_dqt_update_trainee).to have_text("Job successfully deleted")
+    expect(admin_dead_jobs_trs_update_trainee).to have_text("Job successfully deleted")
   end
 
   def then_i_am_redirected_to_the_record_page
     expect(record_page).to be_displayed(id: trainee.slug)
-  end
-
-  def when_i_visit_to_the_withdraw_dead_jobs_page
-    visit dead_job_path("DeadJobs::DqtWithdrawTrainee")
-  end
-
-  def then_i_see_that_there_are_no_withdraw_dead_jobs
-    expect(page).to have_content("There are no dead jobs")
   end
 end
