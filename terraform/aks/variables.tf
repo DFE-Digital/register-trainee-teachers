@@ -130,19 +130,12 @@ variable "project_id" {
   type        = string
   description = "GCP project id"
   sensitive   = true
-  default     = null
+  default     = "rugged-abacus-218110"
 }
 
 variable "workspace_id" {
   type        = string
   description = "Airbyte workspace id"
-  sensitive   = true
-  default     = null
-}
-
-variable "credentials_json" {
-  type        = string
-  description = "Airbyte credentials json"
   sensitive   = true
   default     = null
 }

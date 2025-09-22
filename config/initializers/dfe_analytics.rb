@@ -58,7 +58,7 @@ DfE::Analytics.configure do |config|
   config.airbyte_enabled = true
 
   # Path of airbyte stream config file relative to the App root (Rails.root)
-  config.airbyte_stream_config_path = "terraform/aks/workspace-variables/review_streams.json"
+  config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
 
   # Set bigquery airbyte vars
   config.bigquery_airbyte_dataset = "register_airbyte_qa"
