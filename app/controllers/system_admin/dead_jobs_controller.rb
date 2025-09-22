@@ -69,7 +69,7 @@ module SystemAdmin
     end
 
     def dead_job_services
-      # returns Array of DeadJob classes instances, e.g. [::DeadJobs::DqtUpdateTrainee, ...]
+      # returns Array of DeadJob classes instances, e.g. [::DeadJobs::TrsUpdateTrainee, ...]
       @dead_job_services ||=
         DeadJobs
           .constants
