@@ -8,8 +8,8 @@ module Sidekiq
     let(:args) { [{ "arguments" => [{ "_aj_globalid" => "gid://register-trainee-teachers/Trainee/12345" }] }] }
     let(:args2) { [{ "arguments" => [{ "trainee" => { "_aj_globalid" => "gid://register-trainee-teachers/Trainee/12345" } }] }] }
     let(:item) { { "error_message" => "status 404" } }
-    let(:job1) { double(args: args, item: item, display_class: "Dqt::UpdateTraineeJob") }
-    let(:job2) { double(args: args2, item: item, display_class: "Dqt::UpdateTraineeJob") }
+    let(:job1) { double(args: args, item: item, display_class: "Trs::UpdateTraineeJob") }
+    let(:job2) { double(args: args2, item: item, display_class: "Trs::UpdateTraineeJob") }
     let(:job3) { double(args: args, item: { "error_message" => "status 429" }, display_class: "Dqt::WithdrawTraineeJob") }
     let(:dead_set_jobs) { [job1, job2, job3] }
 

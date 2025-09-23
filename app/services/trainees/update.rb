@@ -39,13 +39,9 @@ module Trainees
     def enqueue_jobs
       return unless valid_for_update?
 
-      if update_dqt
-        if trs_enabled
-          Trs::UpdateTraineeJob.perform_later(trainee)
-          Trs::UpdateProfessionalStatusJob.perform_later(trainee)
-        elsif dqt_enabled
-          Dqt::UpdateTraineeJob.perform_later(trainee)
-        end
+      if update_dqt && trs_enabled
+        Trs::UpdateTraineeJob.perform_later(trainee)
+        Trs::UpdateProfessionalStatusJob.perform_later(trainee)
       end
     end
 

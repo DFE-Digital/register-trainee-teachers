@@ -107,7 +107,6 @@ describe OutcomeDateForm, type: :model do
       expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
 
       expect(outcome_date_form).to be_valid
-      expect { outcome_date_form.save! }.to have_enqueued_job(Dqt::UpdateTraineeJob)
     end
 
     context "when we opt-out of DQT API call" do
@@ -122,8 +121,6 @@ describe OutcomeDateForm, type: :model do
 
       it "skips update trainee on DQT API" do
         expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
-
-        expect { subject.save! }.not_to have_enqueued_job(Dqt::UpdateTraineeJob)
       end
     end
   end

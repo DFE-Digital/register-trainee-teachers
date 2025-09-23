@@ -21,7 +21,6 @@ module Trainees
       elsif dqt_enabled
         Dqt::RecommendForAwardJob.perform_later(trainee) if trainee.recommended_for_award?
         Dqt::WithdrawTraineeJob.perform_later(trainee) if trainee.withdrawn?
-        Dqt::UpdateTraineeJob.perform_later(trainee) if trainee_updatable?
       end
     end
 
