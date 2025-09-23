@@ -10,5 +10,10 @@ cp Procfile.dev.sample Procfile.dev
 
 echo "Running Foreman to start the application"
 foreman start -f Procfile.dev web &
+
+echo "Running Foreman to start the docs"
+foreman start -f Procfile.dev docs &
+cd ..
+
 echo "Done!"
 wait %1
