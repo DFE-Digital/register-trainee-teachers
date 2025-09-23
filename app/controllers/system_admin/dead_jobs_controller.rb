@@ -49,7 +49,7 @@ module SystemAdmin
     end
 
     def dead_job_service
-      @dead_job_service ||= params[:id]&.constantize&.new(include_dqt_status: include_dqt_status?)
+      @dead_job_service ||= params[:id]&.constantize&.new
     end
 
     def sorted_rows
@@ -62,10 +62,6 @@ module SystemAdmin
 
     def rows
       @rows ||= Kaminari.paginate_array(sorted_rows).page(params[:page] || 1)
-    end
-
-    def include_dqt_status?
-      params[:include_dqt_status].present?
     end
 
     def dead_job_services

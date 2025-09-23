@@ -67,7 +67,7 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
     end
 
     context "with dqt status" do
-      subject { described_class.new(dead_set: dead_set, include_dqt_status: true) }
+      subject { described_class.new(dead_set:) }
 
       context "without dqt teacher" do
         let(:dqt_teacher) { nil }
