@@ -12,7 +12,9 @@ echo "Running Foreman to start the application"
 foreman start -f Procfile.dev web &
 
 echo "Running Foreman to start the docs"
-foreman start -f Procfile.dev docs &
+cd tech_docs
+bundle install
+bundle exec middleman serve
 cd ..
 
 echo "Done!"
