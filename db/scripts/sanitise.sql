@@ -19,57 +19,71 @@ DELETE FROM "uploads";
 DELETE FROM "validation_errors";
 
 -- Apply sync
-UPDATE "apply_applications"
+UPDATE
+  "apply_applications"
 SET
   application = NULL;
 
 -- Dttp Users
-UPDATE "dttp_users"
+UPDATE
+  "dttp_users"
 SET
   email = concat('test_dttp_user', id, '@example.org'),
   first_name = 'Dttp',
   last_name = concat('DttpUser', id)
-WHERE email NOT LIKE '%@digital.education.gov.uk'
-      AND email NOT LIKE '%@education.gov.uk';
+WHERE
+  email NOT LIKE '%@digital.education.gov.uk'
+  AND email NOT LIKE '%@education.gov.uk';
 
 -- DTTP sync
-UPDATE "dttp_dormant_periods"
+UPDATE
+  "dttp_dormant_periods"
 SET
   response = NULL;
 
-UPDATE "dttp_degree_qualifications"
+UPDATE
+  "dttp_degree_qualifications"
 SET
   response = NULL;
 
-UPDATE "dttp_placement_assignments"
+UPDATE
+  "dttp_placement_assignments"
 SET
   response = NULL;
 
-UPDATE "dttp_trainees"
+UPDATE
+  "dttp_trainees"
 SET
   response = NULL;
 
 -- Trainees
-UPDATE "trainees"
+UPDATE
+  "trainees"
 SET
   date_of_birth = '2000-01-01',
   first_names = 'Trainee',
-  middle_names = null,
+  middle_names = NULL,
   last_name = concat('TraineeUser', id),
   email = concat('trainee_', id, '@example.com'),
   provider_trainee_id = concat('trainee-', id),
-  trn = CASE WHEN trn IS NULL THEN NULL ELSE rpad(id::text, 7, '0') END,
+  trn = CASE
+    WHEN trn IS NULL THEN NULL
+    ELSE rpad(id :: text, 7, '0')
+  END,
   additional_dttp_data = NULL;
 
 -- Users
-UPDATE "users"
+UPDATE
+  "users"
 SET
   first_name = 'User',
   last_name = concat('RegisterUser', id),
   email = concat('register_test_user_', id, '@example.com')
-WHERE email NOT LIKE '%@digital.education.gov.uk'
-      AND email NOT LIKE '%@education.gov.uk';
+WHERE
+  email NOT LIKE '%@digital.education.gov.uk'
+  AND email NOT LIKE '%@education.gov.uk';
 
-UPDATE "users"
+UPDATE
+  "users"
 SET
   otp_secret = NULL;
