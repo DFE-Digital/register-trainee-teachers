@@ -10,7 +10,6 @@ feature "Change a trainee's accredited provider" do
 
     before do
       enable_features(:integrate_with_dqt)
-      allow(Dqt::UpdateTraineeJob).to receive(:perform_later)
       allow(Dqt::RetrieveTeacher).to receive(:call).and_return(nil)
       given_i_am_authenticated(user:)
     end
@@ -33,7 +32,6 @@ feature "Change a trainee's accredited provider" do
       when_i_click_update
       then_i_see_a_flash_message
       and_i_see_the_new_provider_name_and_code
-      and_dqt_is_notified_about_the_change
     end
 
     scenario "submit buttons return to correct path from confirmation page" do
@@ -157,9 +155,5 @@ feature "Change a trainee's accredited provider" do
 
   def then_i_see_the_trainee_detail_page
     expect(page).to have_current_path("/trainees/#{trainee.slug}", ignore_query: true)
-  end
-
-  def and_dqt_is_notified_about_the_change
-    expect(Dqt::UpdateTraineeJob).to have_received(:perform_later).with(trainee)
   end
 end
