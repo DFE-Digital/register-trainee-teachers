@@ -16,7 +16,16 @@ services:
       - REDIS_HOST=redis
       - REDIS_URL=redis://redis:6379
       - REDIS_CACHE_URL=redis://redis:6379/1
-      - REDIS_QUEUE_URL=redis://redis:6379/0
+
+  docs:
+    build:
+      context: .
+      target: middleman-build
+    volumes:
+      - ./tech_docs:/tech_docs
+    command: bundle exec middleman serve
+    ports:
+      - 4567:4567
 
   db:
     image: postgres:13

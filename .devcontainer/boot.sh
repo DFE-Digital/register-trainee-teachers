@@ -9,13 +9,7 @@ echo "Creating Procfile"
 cp Procfile.dev.sample Procfile.dev
 
 echo "Running Foreman to start the application"
-foreman start -f Procfile.dev web &
-
-echo "Running Foreman to start the docs"
-cd tech_docs
-bundle install
-bundle exec middleman serve
-cd ..
+foreman start -f Procfile.dev web docs &
 
 echo "Done!"
 wait %1
