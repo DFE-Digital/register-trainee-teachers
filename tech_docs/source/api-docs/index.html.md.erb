@@ -7,10 +7,10 @@ weight: 1
 
 <%= partial "partials/hei_only_warning" %>
 
-This is API documentation for the Department for Education (DfE)’s Register
+This is Application Programming Interface (API) documentation for the Department for Education (DfE)’s Register
 trainee teachers (Register) service.
 
-The Register API is replacing the HESA service for teacher trainees from the
+The Register API has replaced the Higher Education Statistics Agency (HESA) service for teacher trainees from the
 2025/26 collection cycle. All vendors of student record systems (SRS) and some
 training providers will need to make changes to integrate with Register.
 
@@ -21,11 +21,11 @@ record systems and to keep those records synchronised as they are modified.
 
 Providers can use the API for:
 
-* looking up a trainee record in Register and returning details about that trainee.
-* retrieving a list of trainee records in Register for a given academic year.
-* creating new trainee records.
-* updating individual trainee records.
-* withdrawing and deferring a trainee.
+* looking up a trainee record in Register and returning details about that trainee
+* retrieving a list of trainee records in Register for a given academic year
+* creating new trainee records
+* updating individual trainee records
+* withdrawing and deferring a trainee
 
 ## How do I connect to this API?
 
@@ -36,10 +36,10 @@ Requests to the API must be accompanied by an authentication token.
 Each token is associated with a single provider. It will grant access to trainee records registered by that provider.
 
 You can get a token by following these steps:
-- log into your account at https://www.register-trainee-teachers.service.gov.uk/
-- navigate to Organisation settings in the top right of your screen
-- find Manage your tokens
-- generate or revoke tokens from this page
+1. Log into your account at https://www.register-trainee-teachers.service.gov.uk/
+2. Navigate to Organisation settings in the top right of your screen.
+3. Find Manage your tokens.
+4. Generate or revoke tokens from this page.
 
 For instructions on how to authenticate, see the [API reference](/api-docs/v2025.0/developing-on-the-api.html#authentication).
 
