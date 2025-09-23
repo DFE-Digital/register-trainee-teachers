@@ -4,9 +4,8 @@ module DeadJobs
   class Base
     include Hashable
 
-    def initialize(dead_set: Sidekiq::DeadSet.new, include_dqt_status: false, sort_by: :register)
+    def initialize(dead_set: Sidekiq::DeadSet.new, sort_by: :register)
       @dead_set = dead_set
-      @include_dqt_status = false
       @sort_by = sort_by
     end
 
@@ -45,7 +44,7 @@ module DeadJobs
 
   private
 
-    attr_reader :dead_set, :include_dqt_status, :sort_by
+    attr_reader :dead_set, :sort_by
 
     def csv_headers
       build_csv_row(trainees.first).keys
@@ -72,7 +71,7 @@ module DeadJobs
         course_subject_two: trainee.course_subject_two,
         course_subject_three: trainee.course_subject_three,
         error_message: dead_job_error_message(trainee.id),
-        dqt: dqt(trainee),
+        dqt: nil,
       }
     end
 
@@ -92,10 +91,6 @@ module DeadJobs
       return nil unless enqueued_at
 
       (Time.zone.today - Time.zone.at(enqueued_at).to_date).to_i
-    end
-
-    def dqt(trainee)
-      nil
     end
 
     def dead_jobs
