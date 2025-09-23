@@ -22,6 +22,7 @@ data "azurerm_key_vault_secret" "airbyte_workspace_id" {
   name         = "AIRBYTE-WORKSPACE-ID"
 }
 
+# change this to a random password?
 data "azurerm_key_vault_secret" "airbyte_replication_password" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = "AIRBYTE-REPLICATION-PASSWORD"
@@ -58,154 +59,18 @@ module "airbyte" {
   gcp_keyring           = "bat-key-ring"
   gcp_key               = "bat-key"
 
-}
-
-module "streams_init_job" {
-  source = "./vendor/modules/aks//aks/job_configuration"
-
-  count = var.airbyte_enabled ? 1 : 0
-
-  depends_on = [ module.airbyte ]
-
-  namespace              = var.namespace
-  environment            = local.app_name_suffix
-  service_name           = var.service_name
-  docker_image           = "ghcr.io/dfe-digital/teacher-services-cloud:curl-3.21.3"
-  commands               = ["/bin/sh"]
-  arguments              = ["-c", "${local.curlCommand}" ]
-  job_name               = "airbyte-streams-init"
-  enable_logit           = var.enable_logit
-
   config_map_ref = module.application_configuration.kubernetes_config_map_name
   secret_ref     = module.application_configuration.kubernetes_secret_name
   cpu            = module.cluster_data.configuration_map.cpu_min
 
-}
+  curlCommand  = local.curlCommand
+  docker_image = var.app_docker_image
+  airbyte_db_config = var.airbyte_db_config
 
-module "streams_update_job" {
-  source = "./vendor/modules/aks//aks/job_configuration"
+  sqlCommand = local.sqlCommand
+  postgres_version = var.postgres_version
+  postgres_url = module.postgres.url
 
-  count = var.airbyte_enabled ? 1 : 0
-
-  depends_on = [ module.streams_init_job ]
-
-  namespace              = var.namespace
-  environment            = local.app_name_suffix
-  service_name           = var.service_name
-  docker_image           = var.app_docker_image
-  commands               = ["/bin/sh"]
-  arguments              = ["-c", "rake dfe:analytics:airbyte_connection_refresh" ]
-  job_name               = "airbyte-streams-update"
-  enable_logit           = var.enable_logit
-
-  config_map_ref = module.application_configuration.kubernetes_config_map_name
-  secret_ref     = module.application_configuration.kubernetes_secret_name
-  cpu            = module.cluster_data.configuration_map.cpu_min
-
-}
-
-resource "kubernetes_secret" "airbyte-sql" {
-  count = var.airbyte_db_config ? 1 : 0
-
-  metadata {
-    name      = "${var.service_short}${local.app_name_suffix}absql${local.sql_secret_hash}"
-    namespace = var.namespace
-  }
-  data = {
-    "sqlCommand.sql" = local.sqlCommand
-  }
-}
-
-resource "kubernetes_job" "airbyte-database-setup" {
-
-  count = var.airbyte_db_config ? 1 : 0
-
-  depends_on = [ module.airbyte ]
-
-  metadata {
-    name      = "${var.service_name}-${local.app_name_suffix}-airbyte-db-config-${kubernetes_secret.airbyte-sql[0].metadata[0].name}"
-    namespace = var.namespace
-  }
-
-  spec {
-    template {
-      metadata {
-        labels = { app = "${var.service_name}-${local.app_name_suffix}-ab-db-setup" }
-        annotations = {
-          "logit.io/send"        = "true"
-          "fluentbit.io/exclude" = "true"
-        }
-      }
-
-      spec {
-        container {
-          name    = "airbyte-db-config"
-          image   = "postgres:${var.postgres_version}-alpine"
-          command = ["psql"]
-          args    = ["-d", "${module.postgres.url}", "-f", "${var.sqlCommand}" ]
-
-          volume_mount {
-            name = "airbyte-sql"
-            mount_path = "/airbyte"
-          }
-
-          env_from {
-            config_map_ref {
-              name = module.application_configuration.kubernetes_config_map_name
-            }
-          }
-
-          env_from {
-            secret_ref {
-              name = module.application_configuration.kubernetes_secret_name
-            }
-          }
-
-          resources {
-            requests = {
-              cpu    = module.cluster_data.configuration_map.cpu_min
-              memory = "1Gi"
-            }
-            limits = {
-              cpu    = 1
-              memory = "1Gi"
-            }
-          }
-
-         security_context {
-            allow_privilege_escalation = false
-
-            seccomp_profile {
-              type = "RuntimeDefault"
-            }
-
-            capabilities {
-              drop = ["ALL"]
-              add  = ["NET_BIND_SERVICE"]
-            }
-          }
-        }
-
-        volume {
-          name = "airbyte-sql"
-          secret {
-            secret_name = kubernetes_secret.airbyte-sql[0].metadata[0].name
-          }
-        }
-
-        restart_policy = "Never"
-      }
-    }
-
-    backoff_limit = 1
-  }
-
-  wait_for_completion = true
-
-  timeouts {
-    create = "11m"
-    update = "11m"
-  }
 }
 
 locals {
