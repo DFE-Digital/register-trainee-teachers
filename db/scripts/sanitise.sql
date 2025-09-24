@@ -91,7 +91,13 @@ SET
     WHEN trn IS NULL THEN NULL
     ELSE rpad(id :: text, 7, '0')
   END,
-  additional_dttp_data = NULL;
+  additional_dttp_data = NULL,
+  withdraw_reasons_details = NULL,
+  defer_reason = NULL,
+  hesa_id = CASE
+    WHEN hesa_id IS NULL THEN NULL
+    ELSE rpad(id :: text, 17, '0')
+  END;
 
 -- Users
 UPDATE
