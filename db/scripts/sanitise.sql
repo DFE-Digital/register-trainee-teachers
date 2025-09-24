@@ -105,10 +105,10 @@ UPDATE
 SET
   first_name = 'User',
   last_name = concat('RegisterUser', id),
-  email = concat('register_test_user_', id, '@example.com')
+  email = concat('register_test_user_', id, '@example.com'),
+  dfe_sign_in_uid = NULL
 WHERE
-  email NOT LIKE '%@digital.education.gov.uk'
-  AND email NOT LIKE '%@education.gov.uk';
+  email !~ '@(digital.)?education.gov.uk$';
 
 UPDATE
   "users"
