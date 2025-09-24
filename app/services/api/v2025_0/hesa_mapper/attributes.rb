@@ -66,7 +66,7 @@ module Api
           .merge(lead_partner_attributes)
           .merge(employing_school_attributes)
           .compact
-          .merge(allowed_nil_values)
+          .merge(params_with_allowed_nil_values)
 
           if update && !disabilities?
             mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure, :disabilities)
@@ -295,8 +295,11 @@ module Api
           params[:application_id]
         end
 
-        def allowed_nil_values
-          (ALLOWED_NIL_PARAMS & params.compact_blank.keys).index_with { |_key| nil }
+        def params_with_allowed_nil_values
+          # rubocop:disable Rails/IndexWith
+          # disabled this cop as it's suggesting a replacement method that does not do what's needed here
+          (ALLOWED_NIL_PARAMS & params.select { |_k, v| v.blank? }.keys).to_h { |key| [key, nil] }
+          # rubocop:enable Rails/IndexWith
         end
       end
     end
