@@ -18,8 +18,6 @@ module Trainees
 
       if trs_enabled
         Trs::RegisterForTrnJob.perform_later(trainee)
-      elsif dqt_enabled
-        Dqt::RegisterForTrnJob.perform_later(trainee)
       end
     end
 

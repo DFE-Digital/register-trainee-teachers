@@ -19,13 +19,13 @@ feature "pending TRNs" do
       and_i_see_the_trn_request_details
     end
 
-    scenario "can check for TRN", feature_integrate_with_dqt: true do
+    scenario "can check for TRN", feature_integrate_with_trs: true do
       then_i_see_the_pending_trns_page
       when_i_click_check_for_trn
       then_i_see_the_pending_trns_page
     end
 
-    scenario "can resubmit for TRN", feature_integrate_with_dqt: true do
+    scenario "can resubmit for TRN", feature_integrate_with_trs: true do
       then_i_see_the_pending_trns_page
       when_i_click_resubmit_for_trn
       then_i_see_the_pending_trns_page
@@ -40,7 +40,7 @@ feature "pending TRNs" do
         when_i_click_check_for_trn_without_an_existing_request
       end
 
-      it "creates a trn request", feature_integrate_with_dqt: true do
+      it "creates a trn request", feature_integrate_with_trs: true do
         then_i_see_the_pending_trns_page
         and_i_see_the_trainee
         when_i_click_resubmit_for_trn_without_an_existing_request
@@ -60,7 +60,7 @@ feature "pending TRNs" do
   end
 
   def and_i_have_a_trainee_with_a_pending_trn
-    allow(Dqt::RegisterForTrnJob).to receive(:perform_now).and_return(
+    allow(Trs::RegisterForTrnJob).to receive(:perform_now).and_return(
       OpenStruct.new(
         failed?: false,
       ),
@@ -86,12 +86,12 @@ feature "pending TRNs" do
   end
 
   def when_i_click_check_for_trn
-    expect(Dqt::RetrieveTrn).to receive(:call).with(trn_request:)
+    expect(Trs::RetrieveTrn).to receive(:call).with(trn_request:)
     admin_pending_trns_page.check_for_trn_button.click
   end
 
   def when_i_click_resubmit_for_trn
-    expect(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee)
+    expect(Trs::RegisterForTrnJob).to receive(:perform_now).with(trainee)
     admin_pending_trns_page.resumbit_for_trn_button.click
   end
 
@@ -101,7 +101,7 @@ feature "pending TRNs" do
   end
 
   def when_i_click_resubmit_for_trn_without_an_existing_request
-    expect(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee)
+    expect(Trs::RegisterForTrnJob).to receive(:perform_now).with(trainee)
     admin_pending_trns_page.resumbit_for_trn_button.click
   end
 end

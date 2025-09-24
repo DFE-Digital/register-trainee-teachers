@@ -18,9 +18,6 @@ module Trainees
 
       if trs_enabled
         Trs::UpdateProfessionalStatusJob.perform_later(trainee)
-      elsif dqt_enabled
-        Dqt::RecommendForAwardJob.perform_later(trainee) if trainee.recommended_for_award?
-        Dqt::WithdrawTraineeJob.perform_later(trainee) if trainee.withdrawn?
       end
     end
 
