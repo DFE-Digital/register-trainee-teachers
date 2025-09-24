@@ -1047,6 +1047,68 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         end
       end
 
+      context "when course_subject_two or course_subject_three are being unset" do
+        before do
+          trainee.update(course_subject_one: "biology",
+                         course_subject_two: "historical linguistics",
+                         course_subject_three: "computer science")
+
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        context "via null values" do
+          let(:params) do
+            {
+              data: {
+                course_subject_one: "100511",
+                course_subject_two: nil,
+                course_subject_three: nil,
+              },
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to be_nil
+            expect(trainee.course_subject_three).to be_nil
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+          end
+        end
+
+        context "via blank values" do
+          let(:params) do
+            {
+              data: {
+                course_subject_one: "100511",
+                course_subject_two: "",
+                course_subject_three: "",
+              },
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to be_nil
+            expect(trainee.course_subject_three).to be_nil
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+          end
+        end
+      end
+
       context "when HasCourseAttributes#primary_education_phase? is false" do
         let(:params) do
           {

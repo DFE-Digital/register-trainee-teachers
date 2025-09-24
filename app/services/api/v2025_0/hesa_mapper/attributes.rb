@@ -17,6 +17,11 @@ module Api
           application_id
         ].freeze
 
+        ALLOWED_NIL_PARAMS = %w[
+          course_subject_two
+          course_subject_three
+        ].freeze
+
         NOT_APPLICABLE_SCHOOL_URNS = %w[900000 900010 900020 900030].freeze
         VETERAN_TEACHING_UNDERGRADUATE_BURSARY_LEVEL = "C"
         DISABILITY_PARAM_REGEX = /\Adisability\d+\z/
@@ -61,6 +66,7 @@ module Api
           .merge(lead_partner_attributes)
           .merge(employing_school_attributes)
           .compact
+          .merge(allowed_nil_values)
 
           if update && !disabilities?
             mapped_params = mapped_params.except(:hesa_disabilities, :disability_disclosure, :disabilities)
@@ -287,6 +293,10 @@ module Api
 
         def application_choice_id
           params[:application_id]
+        end
+
+        def allowed_nil_values
+          (ALLOWED_NIL_PARAMS & params.compact_blank.keys).index_with { |_key| nil }
         end
       end
     end
