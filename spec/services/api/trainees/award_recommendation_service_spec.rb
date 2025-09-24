@@ -28,19 +28,7 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         expect(trainee.recommended_for_award?).to be(true)
       end
 
-      it "returns true", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
-        allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
-
-        success, errors = subject.call(params, trainee)
-
-        expect(success).to be(true)
-        expect(errors).to be_blank
-
-        expect(Dqt::RecommendForAwardJob).to have_received(:perform_later).with(trainee)
-        expect(trainee.recommended_for_award?).to be(true)
-      end
-
-      it "sets the outcome_date", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
+      it "sets the outcome_date", feature_integrate_with_trs: false do
         expect(trainee.outcome_date).to be_nil
 
         success, errors = subject.call(params, trainee)
@@ -163,10 +151,6 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           }
         end
 
-        before do
-          allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
-        end
-
         it "returns true" do
           trainee.degrees.destroy_all
           success, _errors = subject.call(params, trainee)
@@ -182,10 +166,6 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           {
             qts_standards_met_date: Time.zone.today.iso8601,
           }
-        end
-
-        before do
-          allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
         end
 
         it "returns false" do
@@ -204,10 +184,6 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
           {
             qts_standards_met_date: Time.zone.today.iso8601,
           }
-        end
-
-        before do
-          allow(Dqt::RecommendForAwardJob).to receive(:perform_later).and_call_original
         end
 
         it "returns true" do

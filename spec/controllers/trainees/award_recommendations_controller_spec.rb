@@ -30,12 +30,12 @@ describe Trainees::AwardRecommendationsController do
     end
   end
 
-  context "when the DQT feature flag is enabled", feature_integrate_with_dqt: true do
+  context "when the TRS feature flag is enabled", feature_integrate_with_trs: true do
     describe "#create" do
-      it "sends the ITT outcome to DQT" do
+      it "sends the ITT outcome to TRS" do
         expect {
           post :create, params: { trainee_id: trainee }
-        }.to have_enqueued_job(Dqt::RecommendForAwardJob).with(trainee)
+        }.to have_enqueued_job(Trs::UpdateProfessionalStatusJob).with(trainee)
       end
     end
   end
