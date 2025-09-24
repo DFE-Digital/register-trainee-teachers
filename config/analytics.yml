@@ -347,3 +347,13 @@ shared:
     - trainee_withdrawal_id
     - created_at
     - updated_at
+  :school_data_downloads:
+    - id
+    - status
+    - started_at
+    - completed_at
+    - schools_created
+    - schools_updated
+    - lead_partners_updated
+    - created_at
+    - updated_at
