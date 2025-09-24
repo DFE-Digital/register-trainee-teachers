@@ -1,3 +1,4 @@
+-- Delete all records from specific tables
 DELETE FROM "active_storage_attachments";
 DELETE FROM "active_storage_blobs";
 DELETE FROM "active_storage_variant_records";
@@ -24,7 +25,6 @@ DELETE FROM "funding_trainee_summary_rows";
 DELETE FROM "funding_trainee_summary_row_amounts";
 DELETE FROM "funding_uploads";
 DELETE FROM "hesa_collection_requests";
-DELETE FROM "hesa_collection_requests";
 DELETE FROM "hesa_students";
 DELETE FROM "hesa_trainee_details";
 DELETE FROM "hesa_trn_requests";
@@ -33,31 +33,21 @@ DELETE FROM "sessions";
 DELETE FROM "uploads";
 DELETE FROM "validation_errors";
 
--- Apply sync
+-- Apply applications
 UPDATE
   "apply_applications"
 SET
-  application = NULL;
-
--- Dttp Users
-UPDATE
-  "dttp_users"
-SET
-  email = concat('test_dttp_user', id, '@example.org'),
-  first_name = 'Dttp',
-  last_name = concat('DttpUser', id)
-WHERE
-  email NOT LIKE '%@digital.education.gov.uk'
-  AND email NOT LIKE '%@education.gov.uk';
+  application = NULL,
+  invalid_data = NULL;
 
 -- DTTP sync
 UPDATE
-  "dttp_dormant_periods"
+  "dttp_degree_qualifications"
 SET
   response = NULL;
 
 UPDATE
-  "dttp_degree_qualifications"
+  "dttp_dormant_periods"
 SET
   response = NULL;
 
@@ -67,9 +57,25 @@ SET
   response = NULL;
 
 UPDATE
+  "dttp_providers"
+SET
+  response = NULL;
+
+UPDATE
   "dttp_trainees"
 SET
   response = NULL;
+
+-- DTTP users
+UPDATE
+  "dttp_users"
+SET
+  email = concat('test_dttp_user', id, '@example.org'),
+  first_name = 'Dttp',
+  last_name = concat('DttpUser', id)
+WHERE
+  email IS NULL
+  OR email !~ '@(digital.)?education.gov.uk$';
 
 -- Trainees
 UPDATE
