@@ -1,5 +1,5 @@
 ---
-title: Study Mode
+title: Study mode
 weight: 26
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---
