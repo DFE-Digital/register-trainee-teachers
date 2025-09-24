@@ -26,7 +26,6 @@ DELETE FROM "funding_trainee_summary_row_amounts";
 DELETE FROM "funding_uploads";
 DELETE FROM "hesa_collection_requests";
 DELETE FROM "hesa_students";
-DELETE FROM "hesa_trainee_details";
 DELETE FROM "hesa_trn_requests";
 DELETE FROM "hesa_trn_submissions";
 DELETE FROM "sessions";
@@ -98,6 +97,12 @@ SET
     WHEN hesa_id IS NULL THEN NULL
     ELSE rpad(id :: text, 17, '0')
   END;
+
+UPDATE
+  "hesa_trainee_details"
+SET
+  previous_last_name = NULL,
+  ni_number = NULL
 
 -- Users
 UPDATE
