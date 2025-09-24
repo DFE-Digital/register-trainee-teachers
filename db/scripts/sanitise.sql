@@ -7,13 +7,13 @@ DELETE FROM "apply_application_sync_requests";
 DELETE FROM "audits";
 DELETE FROM "authentication_tokens";
 DELETE FROM "blazer_audits";
-DELETE FROM "bulk_update_placements";
 DELETE FROM "bulk_update_placement_rows";
-DELETE FROM "bulk_update_recommendations_uploads";
+DELETE FROM "bulk_update_placements";
 DELETE FROM "bulk_update_recommendations_upload_rows";
+DELETE FROM "bulk_update_recommendations_uploads";
 DELETE FROM "bulk_update_row_errors";
-DELETE FROM "bulk_update_trainee_uploads";
 DELETE FROM "bulk_update_trainee_upload_rows";
+DELETE FROM "bulk_update_trainee_uploads";
 DELETE FROM "dqt_teachers";
 DELETE FROM "dqt_teacher_trainings";
 DELETE FROM "dqt_trn_requests";
@@ -27,7 +27,6 @@ DELETE FROM "funding_uploads";
 DELETE FROM "hesa_collection_requests";
 DELETE FROM "hesa_students";
 DELETE FROM "hesa_trn_requests";
-DELETE FROM "hesa_trn_submissions";
 DELETE FROM "sessions";
 DELETE FROM "uploads";
 DELETE FROM "validation_errors";
@@ -76,6 +75,12 @@ WHERE
   email IS NULL
   OR email !~ '@(digital.)?education.gov.uk$';
 
+-- HESA TRN submissions
+UPDATE
+  "hesa_trn_submissions"
+SET
+  payload = NULL;
+
 -- Trainees
 UPDATE
   "trainees"
@@ -102,7 +107,7 @@ UPDATE
   "hesa_trainee_details"
 SET
   previous_last_name = NULL,
-  ni_number = NULL
+  ni_number = NULL;
 
 -- Users
 UPDATE
@@ -111,11 +116,7 @@ SET
   first_name = 'User',
   last_name = concat('RegisterUser', id),
   email = concat('register_test_user_', id, '@example.com'),
-  dfe_sign_in_uid = NULL
+  dfe_sign_in_uid = NULL,
+  otp_secret = NULL
 WHERE
   email !~ '@(digital.)?education.gov.uk$';
-
-UPDATE
-  "users"
-SET
-  otp_secret = NULL;
