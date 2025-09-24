@@ -1,5 +1,5 @@
 ---
-title: Awarding Institution
+title: Awarding institution
 weight: 1
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---

@@ -1,5 +1,5 @@
 ---
-title: Training Route
+title: Training route
 weight: 28
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---

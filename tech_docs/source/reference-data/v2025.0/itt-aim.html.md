@@ -1,5 +1,5 @@
 ---
-title: ITT Aim
+title: ITT aim
 weight: 21
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---
