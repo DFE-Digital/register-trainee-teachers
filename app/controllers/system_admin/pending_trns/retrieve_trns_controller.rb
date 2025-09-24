@@ -25,8 +25,6 @@ module SystemAdmin
       def retrieve_trn
         if FeatureService.enabled?(:integrate_with_trs)
           Trs::RetrieveTrn.call(trn_request:)
-        elsif FeatureService.enabled?(:integrate_with_dqt)
-          Dqt::RetrieveTrn.call(trn_request:)
         else
           raise(StandardError, "No integration is enabled")
         end
