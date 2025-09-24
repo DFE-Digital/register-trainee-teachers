@@ -20,14 +20,6 @@ module TraineeAdmin
                                       .reverse
     end
 
-    def dqt_data
-      return unless FeatureService.enabled?(:integrate_with_dqt)
-
-      @dqt_data ||= Dqt::RetrieveTeacher.call(trainee:)
-    rescue Dqt::Client::HttpError
-      false
-    end
-
     def trs_data
       return unless FeatureService.enabled?(:integrate_with_trs)
 
