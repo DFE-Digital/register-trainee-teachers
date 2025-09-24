@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dqt
+module Trs
   class BaseJob < ApplicationJob
     sidekiq_options retry: 10
   end
