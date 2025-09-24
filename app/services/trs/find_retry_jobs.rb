@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dqt
+module Trs
   class FindRetryJobs < BaseFindJobs
     def sidekiq_class
       Sidekiq::RetrySet

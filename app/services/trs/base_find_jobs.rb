@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Dqt
+module Trs
   class BaseFindJobs
     include ServicePattern
 
