@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Trs
-  class RetrieveTrnJob < Dqt::BaseJob
+  class RetrieveTrnJob < Trs::BaseJob
     queue_as :dqt
     retry_on Client::HttpError
     include NotifyOnTimeout
