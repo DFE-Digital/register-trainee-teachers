@@ -13,7 +13,7 @@ namespace :trainees do
       trainee_group.each do |trainee|
         next unless Submissions::TrnValidator.new(trainee:).valid?
 
-        Dqt::RegisterForTrnJob.set(wait: current_interval.seconds).perform_later(trainee)
+        Trs::RegisterForTrnJob.set(wait: current_interval.seconds).perform_later(trainee)
       end
       current_interval += interval_increment
     end

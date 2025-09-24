@@ -12,7 +12,6 @@ module Trainees
     let(:days_delayed) { 7 }
 
     before do
-      allow(Dqt::WithdrawTraineeJob).to receive(:perform_later)
       allow(Trs::UpdateProfessionalStatusJob).to receive(:perform_later)
       allow(Survey::SendJob).to receive(:set).and_return(delayed_job)
       allow(trainee).to receive(:current_withdrawal).and_return(withdrawal)
@@ -21,34 +20,16 @@ module Trainees
     end
 
     describe "#call" do
-      context "when DQT integration is enabled and TRS is disabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
-        it "queues a withdrawal to DQT" do
-          expect(Dqt::WithdrawTraineeJob).to receive(:perform_later).with(trainee)
-          expect(Trs::UpdateProfessionalStatusJob).not_to receive(:perform_later)
-          described_class.call(trainee:)
-        end
-      end
-
-      context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
+      context "when TRS integration is enabled", feature_integrate_with_trs: true do
         it "queues an update to TRS" do
           expect(Trs::UpdateProfessionalStatusJob).to receive(:perform_later).with(trainee)
-          expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later)
           described_class.call(trainee:)
         end
       end
 
-      context "when both TRS and DQT integrations are enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: true do
-        it "raises a ConflictingIntegrationsError" do
-          expect {
-            described_class.call(trainee:)
-          }.to raise_error(HandlesIntegrationConflicts::ConflictingIntegrationsError)
-        end
-      end
-
-      context "when neither integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
+      context "when TRS integration is NOT enabled", feature_integrate_with_trs: false do
         it "does not queue any integration jobs" do
           expect(Trs::UpdateProfessionalStatusJob).not_to receive(:perform_later)
-          expect(Dqt::WithdrawTraineeJob).not_to receive(:perform_later)
           described_class.call(trainee:)
         end
       end

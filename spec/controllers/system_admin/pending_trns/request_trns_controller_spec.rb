@@ -14,7 +14,7 @@ RSpec.describe SystemAdmin::PendingTrns::RequestTrnsController do
   end
 
   describe "#update" do
-    context "when TRS integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: true do
+    context "when TRS integration is enabled", feature_integrate_with_trs: true do
       let(:trs_response) {
         {
           "requestId" => request_id,
@@ -62,55 +62,7 @@ RSpec.describe SystemAdmin::PendingTrns::RequestTrnsController do
       end
     end
 
-    context "when DQT integration is enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: false do
-      let(:dqt_response) {
-        {
-          "requestId" => request_id,
-          "status" => "Completed",
-          "trn" => "1234567",
-        }
-      }
-
-      before do
-        allow(trn_request).to receive(:destroy!)
-        allow(trainee).to receive_messages(dqt_trn_request: trn_request, reload: trainee)
-      end
-
-      it "uses Dqt::RegisterForTrnJob" do
-        allow(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee).and_return(
-          OpenStruct.new(failed?: false),
-        )
-
-        patch :update, params: { id: trainee.slug }
-
-        expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:success]).to include("TRN requested successfully")
-      end
-
-      it "handles failure" do
-        allow(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee).and_return(
-          OpenStruct.new(failed?: true),
-        )
-
-        patch :update, params: { id: trainee.slug }
-
-        expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:warning]).to include("TRN request failed")
-      end
-
-      it "handles API errors" do
-        allow(Dqt::RegisterForTrnJob).to receive(:perform_now).with(trainee).and_raise(
-          Dqt::Client::HttpError.new("API error"),
-        )
-
-        patch :update, params: { id: trainee.slug }
-
-        expect(response).to redirect_to(pending_trns_path)
-        expect(flash[:dqt_error]).to include("API error")
-      end
-    end
-
-    context "when neither integration is enabled", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
+    context "when TRS integration is NOT enabled", feature_integrate_with_trs: false do
       before do
         allow(trn_request).to receive(:destroy!)
         allow(trainee).to receive_messages(dqt_trn_request: trn_request, reload: trainee)

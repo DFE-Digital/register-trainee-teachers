@@ -115,7 +115,7 @@ feature "Withdrawing a trainee" do
       end
     end
 
-    scenario "when DQT integration feature is active", feature_integrate_with_dqt: true do
+    scenario "when TRS integration feature is active", feature_integrate_with_trs: true do
       ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
       when_i_choose_today
       and_i_continue(:date)
@@ -499,6 +499,6 @@ feature "Withdrawing a trainee" do
   end
 
   def and_a_withdrawal_job_has_been_queued
-    expect(Dqt::WithdrawTraineeJob).to have_been_enqueued
+    expect(Trs::UpdateProfessionalStatusJob).to have_been_enqueued
   end
 end

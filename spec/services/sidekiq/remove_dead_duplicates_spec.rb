@@ -10,7 +10,7 @@ module Sidekiq
     let(:item) { { "error_message" => "status 404" } }
     let(:job1) { double(args: args, item: item, display_class: "Trs::UpdateTraineeJob") }
     let(:job2) { double(args: args2, item: item, display_class: "Trs::UpdateTraineeJob") }
-    let(:job3) { double(args: args, item: { "error_message" => "status 429" }, display_class: "Dqt::WithdrawTraineeJob") }
+    let(:job3) { double(args: args, item: { "error_message" => "status 429" }, display_class: "Trs::UpdateProfessionalStatusJob") }
     let(:dead_set_jobs) { [job1, job2, job3] }
 
     before do
