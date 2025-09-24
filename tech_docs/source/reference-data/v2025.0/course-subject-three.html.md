@@ -1,5 +1,5 @@
 ---
-title: Course Subject Three
+title: Course subject three
 weight: 5
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---

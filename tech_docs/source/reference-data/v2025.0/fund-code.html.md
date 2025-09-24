@@ -1,5 +1,5 @@
 ---
-title: Fund Code
+title: Fund code
 weight: 19
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---
