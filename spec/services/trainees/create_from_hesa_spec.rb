@@ -34,8 +34,6 @@ module Trainees
     subject(:trainee) { Trainee.first }
 
     before do
-      allow(Dqt::RegisterForTrnJob).to receive(:perform_later)
-      allow(Dqt::WithdrawTraineeJob).to receive(:perform_later)
       allow(Trainees::Update).to receive(:call).with(trainee: instance_of(Trainee))
       allow(Sentry).to receive(:capture_message)
       allow(Trainees::FindDuplicatesOfHesaTrainee).to receive(:call).and_return(duplicate_trainees)
@@ -234,56 +232,6 @@ module Trainees
 
         it "does not update the trainee record source" do
           expect(trainee.hesa_collection_record?).to be(true)
-        end
-      end
-    end
-
-    context(
-      "when the `duplicate_checking` feature flag is on",
-      feature_duplicate_checking: true,
-      feature_integrate_with_dqt: true,
-    ) do
-      before do
-        described_class.call(
-          hesa_trainee: student_attributes,
-          record_source: record_source,
-        )
-      end
-
-      context "when there is a potential duplicate" do
-        let(:duplicate_trainee) { create(:trainee) }
-        let(:duplicate_trainees) { [duplicate_trainee] }
-
-        it "does not call the DQT API" do
-          expect(Dqt::RegisterForTrnJob).not_to have_received(:perform_later)
-        end
-      end
-
-      context "when there is not a potential duplicate" do
-        it "calls the DQT API" do
-          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later)
-        end
-      end
-    end
-
-    context(
-      "when the `duplicate_checking` feature flag is off",
-      feature_duplicate_checking: false,
-      feature_integrate_with_dqt: true,
-    ) do
-      before do
-        described_class.call(
-          hesa_trainee: student_attributes,
-          record_source: record_source,
-        )
-      end
-
-      context "when there is a potential duplicate" do
-        let(:duplicate_trainee) { create(:trainee) }
-        let(:duplicate_trainees) { [duplicate_trainee] }
-
-        it "ignores the duplicate and calls the DQT API" do
-          expect(Dqt::RegisterForTrnJob).to have_received(:perform_later)
         end
       end
     end

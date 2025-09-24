@@ -18,8 +18,6 @@ module Trainees
       # Don't call TRS if the trainee's TRN has not been received yet
       if trs_enabled && trainee.trn.present?
         Trs::UpdateProfessionalStatusJob.perform_later(trainee)
-      elsif dqt_enabled
-        Dqt::WithdrawTraineeJob.perform_later(trainee)
       end
 
       Survey::SendJob.set(wait: Settings.qualtrics.days_delayed.days).perform_later(trainee: trainee, event_type: :withdraw) if trainee_withdrawal_valid_for_survey?
