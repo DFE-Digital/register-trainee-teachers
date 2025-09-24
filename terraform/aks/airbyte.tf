@@ -1,5 +1,5 @@
 provider "google" {
-  project = var.project_id
+  project = "rugged-abacus-218110"
 }
 
 data "azurerm_key_vault_secret" "airbyte_client_id" {
@@ -36,44 +36,46 @@ module "airbyte" {
   environment           = local.app_name_suffix
   azure_resource_prefix = var.azure_resource_prefix
   service_short         = var.service_short
-  config_short          = var.config_short
   service_name          = var.service_name
-
-  cluster_configuration_map = module.cluster_data.configuration_map
+  docker_image          = var.app_docker_image
+  postgres_version      = var.postgres_version
+  postgres_url          = module.postgres.url
 
   host_name          = module.postgres.host
   database_name      = module.postgres.name
   workspace_id       = data.azurerm_key_vault_secret.airbyte_workspace_id.value
   client_id          = data.azurerm_key_vault_secret.airbyte_client_id.value
   client_secret      = data.azurerm_key_vault_secret.airbyte_client_secret.value
+  repl_password      = data.azurerm_key_vault_secret.airbyte_replication_password.value
+  server_url         = data.azurerm_key_vault_secret.airbyte_server_url.value
+  connection_status  = var.connection_status
+  connection_streams = local.connection_streams
 
-  use_airbyte      = var.airbyte_enabled
-  repl_password    = data.azurerm_key_vault_secret.airbyte_replication_password.value
-  project_id       = var.project_id
-
-  connection_status = var.connection_status
-  server_url        = data.azurerm_key_vault_secret.airbyte_server_url.value
-
-  cluster               = var.cluster
-  namespace             = var.namespace
-  gcp_taxonomy_id       = "69524444121704657"
-  gcp_policy_tag_id     = "6523652585511281766"
-  gcp_keyring           = "bat-key-ring"
-  gcp_key               = "bat-key"
+  cluster           = var.cluster
+  namespace         = var.namespace
+  gcp_taxonomy_id   = "69524444121704657"
+  gcp_policy_tag_id = "6523652585511281766"
+  gcp_keyring       = "bat-key-ring"
+  gcp_key           = "bat-key"
 
   config_map_ref = module.application_configuration.kubernetes_config_map_name
   secret_ref     = module.application_configuration.kubernetes_secret_name
   cpu            = module.cluster_data.configuration_map.cpu_min
+}
 
-  docker_image       = var.app_docker_image
-  airbyte_db_config  = var.airbyte_db_config
-  postgres_version   = var.postgres_version
-  postgres_url       = module.postgres.url
-  connection_streams = local.connection_streams
+## Airbyte module variables
+
+variable "airbyte_enabled" { default = false }
+
+# pg_airbyte_enabled used in the postgres module
+variable "pg_airbyte_enabled" { default = false }
+
+variable "connection_status" {
+  type = string
+  default = "inactive"
+  description = "Connectin status, either active or inactive"
 }
 
 locals {
-  database_name      = "${var.service_short}_${local.app_name_suffix}"
-  name_suffix        = var.name != null ? "-${var.name}" : ""
   connection_streams = var.airbyte_enabled ? file("workspace-variables/airbyte_stream_config.json") : null
 }
