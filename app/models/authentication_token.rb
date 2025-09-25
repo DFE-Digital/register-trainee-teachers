@@ -27,7 +27,7 @@
 #  index_authentication_tokens_on_revoked_by_id            (revoked_by_id)
 #  index_authentication_tokens_on_status                   (status)
 #  index_authentication_tokens_on_status_and_last_used_at  (status,last_used_at)
-#  index_authentication_tokens_on_token_hash               (token_hash)
+#  index_authentication_tokens_on_token_hash               (token_hash) UNIQUE
 #
 # Foreign Keys
 #
