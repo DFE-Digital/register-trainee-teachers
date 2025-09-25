@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :authentication_token do
-    hashed_token { Digest::SHA256.hexdigest(SecureRandom.hex(10)) }
+    token { "#{Rails.env}_" + SecureRandom.hex(32) }
+    token_hash { AuthenticationToken.hash_token(token) }
     provider
     created_by { provider.users.first }
     name { "test token" }
