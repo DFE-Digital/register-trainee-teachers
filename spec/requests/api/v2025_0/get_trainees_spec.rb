@@ -3,13 +3,13 @@
 require "rails_helper"
 
 describe "`GET /trainees` endpoint" do
-  let(:token) { "trainee_token" }
-  let(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+  let(:auth_token) { create(:authentication_token) }
+  let(:token) { auth_token.token }
 
   let!(:start_academic_cycle) { create(:academic_cycle) }
   let!(:trainees) { create_list(:trainee, 10, :with_hesa_trainee_detail, :trn_received, provider: auth_token.provider, start_academic_cycle: start_academic_cycle) }
 
-  it_behaves_like "a register API endpoint", "/api/v2025.0/trainees", "trainee_token"
+  it_behaves_like "a register API endpoint", "/api/v2025.0/trainees"
 
   context "filtering out draft trainees" do
     let!(:draft_trainee) { create(:trainee, :draft, :with_hesa_trainee_detail) }

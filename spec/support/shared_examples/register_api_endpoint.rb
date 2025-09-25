@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "a register API endpoint", openapi: false do |url, api_token, openapi: false|
+RSpec.shared_examples "a register API endpoint", openapi: false do |url, openapi: false|
   context "with a valid authentication token" do
     let(:token) do
-      if api_token.blank?
-        create(:authentication_token, hashed_token: AuthenticationToken.hash_token("valid_token"))
-      end
-      api_token || "valid_token"
+      super() || create(:authentication_token).token
     end
 
     before do

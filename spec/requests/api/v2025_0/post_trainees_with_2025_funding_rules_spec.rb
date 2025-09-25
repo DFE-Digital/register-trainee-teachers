@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
-  let(:token) { "trainee_token" }
-  let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+  let!(:auth_token) { create(:authentication_token) }
+  let(:token) { auth_token.token }
 
   let(:params) { { data: } }
 

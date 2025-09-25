@@ -5,7 +5,7 @@ require "rails_helper"
 describe "`GET /trainees/:trainee_slug/degrees/:slug` endpoint" do
   context "with a valid authentication token" do
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+    let(:token) { create(:authentication_token, provider:).token }
     let(:trainee_slug) { trainee.slug }
     let(:slug) { trainee.degrees.last.slug }
     let(:trainee) { create(:trainee, :with_degree) }
