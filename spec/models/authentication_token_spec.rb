@@ -131,13 +131,13 @@ RSpec.describe AuthenticationToken do
         described_class.create_with_random_token(
           name: "hmac_token",
           provider: provider,
-          created_by: user
+          created_by: user,
         )
       end
 
       it "returns the token" do
         expect(
-          described_class.authenticate(authentication_token.token)
+          described_class.authenticate(authentication_token.token),
         ).to eq(authentication_token)
       end
     end
@@ -150,7 +150,7 @@ RSpec.describe AuthenticationToken do
       let(:token_hash) { OpenSSL::HMAC.hexdigest("SHA256", secret_key, token) }
 
       let!(:authentication_token) do
-        create(:authentication_token, hashed_token: hashed_token)
+        create(:authentication_token, hashed_token:)
       end
 
       it "returns the token converted to an HMAC token" do

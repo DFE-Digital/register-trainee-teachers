@@ -8,7 +8,7 @@ describe "`GET /trainees/:trainee_id/degrees` endpoint" do
     let(:auth_token) do
       create(
         :authentication_token,
-        provider:
+        provider:,
       )
     end
     let(:token) { auth_token.token }

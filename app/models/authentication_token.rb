@@ -84,7 +84,7 @@ class AuthenticationToken < ApplicationRecord
   )
     begin
       token = "#{Rails.env}_" + SecureRandom.hex(32)
-      token_hash     = hash_token(token)
+      token_hash = hash_token(token)
     end while exists?(token_hash:)
 
     create!(name:, provider:, created_by:, expires_at:, token_hash:, token:)
