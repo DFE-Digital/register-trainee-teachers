@@ -16,11 +16,13 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundingMethod do
   let(:course_subject_one) { "mathematics" }
   let(:training_route) { :provider_led_postgrad }
   let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
+  let(:course_allocation_subject_id) { nil }
   let(:trainee_start_date) { Date.new(2025, 10, 1).iso8601 }
   let(:trainee_attributes) do
     Api::V20250::TraineeAttributes.new(
       training_route:,
       course_subject_one:,
+      course_allocation_subject_id:,
       trainee_start_date:,
     )
   end
@@ -155,6 +157,35 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundingMethod do
           let(:trainee_start_date) { "not a date" }
 
           it "returns false after falling back to current cycle" do
+            expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+          end
+        end
+      end
+
+      context "when there is NO matching funding rule but this is a special case subject" do
+        let(:course_subject_one) { "Physics" }
+        let(:allocation_subject) { create(:allocation_subject, name: course_subject_one) }
+        let(:course_allocation_subject_id) { allocation_subject.id }
+        let!(:subject_specialism) do
+          create(
+            :subject_specialism,
+            allocation_subject: allocation_subject,
+            name: course_subject_one,
+          )
+        end
+
+        it "returns true" do
+          expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(true)
+        end
+
+        it "returns no error details" do
+          expect(subject.call(hesa_trainee_detail_attributes).error_details).to be_nil
+        end
+
+        context "when the course academic year is not 2025-26" do
+          let(:trainee_start_date) { Date.new(2024, 10, 1).iso8601 }
+
+          it "returns false" do
             expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
           end
         end
