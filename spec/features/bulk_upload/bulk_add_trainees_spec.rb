@@ -8,6 +8,8 @@ feature "bulk add trainees" do
   include FileHelper
 
   before do
+    allow(Trainees::SubmitForTrn).to receive(:call).and_call_original
+
     and_there_is_a_current_academic_cycle
     and_there_is_a_previous_academic_cycle
     and_we_are_at_least_one_month_into_the_academic_cycle
@@ -248,6 +250,7 @@ feature "bulk add trainees" do
         and_i_refresh_the_summary_page
         then_i_see_the_review_errors_page
         and_i_dont_see_the_submit_button
+        and_the_request_trn_job_has_not_been_queued
 
         when_i_click_the_upload_button
         then_i_see_the_review_errors_page
@@ -452,6 +455,7 @@ feature "bulk add trainees" do
         when_the_background_job_is_run
         and_i_refresh_the_page
         then_i_see_the_review_errors_page
+        and_the_request_trn_job_has_not_been_queued
 
         when_i_click_on_the_download_link
         then_i_receive_the_file
@@ -461,6 +465,9 @@ feature "bulk add trainees" do
         and_i_click_the_upload_button
         and_i_click_on_continue_button
         then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        then_the_request_trn_job_has_not_been_queued
       end
 
       scenario "view the upload status page" do
@@ -641,15 +648,7 @@ private
     expect(page).to have_content("Your new trainees have been registered")
     expect(page).to have_content(/Submitted by\s*#{current_user.name}/)
     expect(page).to have_content(/Number of registered trainees\s*5/)
-    expect(page).to have_content("You can also check the status of new trainee files.")
-    expect(page).to have_content("Check data submitted into Register from CSV bulk add new trainees")
-    expect(page).to have_content("You can check your trainee data in Register. At any time you can:")
-    expect(page).to have_content(
-      "view ‘Choose trainee status export’ from the ‘Registered trainees’ section, using the ‘academic year’ or ‘start year’ filter to select the current academic year",
-    )
-    expect(page).to have_content(
-      "check your trainees directly in the service one by one",
-    )
+    expect(page).to have_content("See the status of all your uploaded files")
   end
 
   def and_i_click_on_back_link
@@ -849,7 +848,7 @@ private
   end
 
   def then_i_receive_the_empty_csv_file
-    expect(page.response_headers["Content-Type"]).to eq("text/csv")
+    expect(page.response_headers["content-type"]).to eq("text/csv")
     expect(download_filename).to eq("v2025_0_bulk_create_trainee.csv")
     expect(download_content).to eq(empty_file_with_headers_content)
   end
@@ -1177,8 +1176,8 @@ private
   end
 
   def then_i_receive_the_file
-    expect(page.response_headers["Content-Type"]).to eq("text/csv")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
+    expect(page.response_headers["content-type"]).to eq("text/csv")
+    expect(page.response_headers["content-disposition"]).to include("attachment; filename=\"trainee-upload-errors-#{BulkUpdate::TraineeUpload.last.id}.csv\"")
 
     expect(parsed_download_content).to eq(parsed_file_with_two_failed_content)
   end
@@ -1288,6 +1287,14 @@ private
     expect(dates).to eq([@upload1, @upload2, @upload3, @upload4, @upload5].map(&:created_at).map { |date| date.to_fs(:govuk_date_and_time) })
   end
 
+  def and_the_request_trn_job_has_not_been_queued
+    expect(Trainees::SubmitForTrn).not_to have_received(:call)
+  end
+
+  def and_the_request_trn_jobs_have_been_queued
+    expect(Trainees::SubmitForTrn).to have_received(:call).exactly(5).times
+  end
+
   alias_method :and_i_attach_a_valid_file, :when_i_attach_a_valid_file
   alias_method :and_i_click_the_submit_button, :when_i_click_the_submit_button
   alias_method :when_i_click_the_upload_button, :and_i_click_the_upload_button
@@ -1310,4 +1317,5 @@ private
   alias_method :when_i_visit_the_summary_page, :and_i_visit_the_summary_page
   alias_method :and_i_click_the_cancel_bulk_updates_link, :when_i_click_the_cancel_bulk_updates_link
   alias_method :then_i_see_file_validation_passed, :and_i_see_file_validation_passed
+  alias_method :then_the_request_trn_job_has_not_been_queued, :and_the_request_trn_job_has_not_been_queued
 end

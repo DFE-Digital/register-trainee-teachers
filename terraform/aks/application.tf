@@ -36,7 +36,7 @@ module "worker_application" {
 
   source = "./vendor/modules/aks//aks/application"
 
-  name   = "worker"
+  name   = each.key
   is_web = false
 
   namespace    = var.namespace

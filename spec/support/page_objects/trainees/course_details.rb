@@ -4,6 +4,7 @@ module PageObjects
   module Trainees
     class CourseDetails < PageObjects::Base
       include PageObjects::Helpers
+
       set_url "/trainees/{id}/course-details/edit"
 
       element :subject, "#course-details-form-course-subject-one-field"

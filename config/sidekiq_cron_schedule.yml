@@ -40,12 +40,8 @@ import_courses_from_ttapi:
   class: "TeacherTrainingApi::ImportCoursesJob"
   queue: default
 create_trainees_from_apply:
-  cron: <%= '"0 4 * * *" # Every day at 04:00.' unless ENV.fetch("RAILS_ENV") == "sandbox" %>
+  cron: "0 4 * * *" # Every day at 04:00.
   class: "Trainees::CreateFromApplyJob"
-  queue: default
-check_publish_providers:
-  cron: <%= '"0 6 * * *" # Every day at 06:00.' if ENV.fetch("RAILS_ENV") == "production" %>
-  class: "TeacherTrainingApi::PublishProviderCheckerJob"
   queue: default
 send_entity_table_checks_to_bigquery:
   cron: "30 0 * * *" # Every day at 00:30.
@@ -57,8 +53,11 @@ sync_dqt_teachers:
   cron: "0 2 * * 1" # Every Monday at 02:00.
   class: "Dqt::SyncTeachersJob"
   queue: default
-
 import_school_data:
   cron: "30 2 * * 0" # Every Sunday at 02:30.
   class: "SchoolData::ImportJob"
+  queue: default
+check_publish_providers:
+  cron: "0 6 * * 2" # Every Tuesday at 06:00.
+  class: "TeacherTrainingApi::PublishProviderCheckerJob"
   queue: default

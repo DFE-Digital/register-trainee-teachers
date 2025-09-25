@@ -33,8 +33,8 @@ module Api
       def call
         return false, errors unless valid?
 
-        trainee.recommend_for_award!
         trainee.attributes = trainee_attributes
+        trainee.recommend_for_award!
 
         ::Trainees::UpdateIttDataInTra.call(trainee:)
 

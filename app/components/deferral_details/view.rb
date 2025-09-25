@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DeferralDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SummaryHelper
 
     attr_reader :data_model, :editable

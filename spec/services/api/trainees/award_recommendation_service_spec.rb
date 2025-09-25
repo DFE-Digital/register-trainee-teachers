@@ -39,6 +39,17 @@ RSpec.describe Api::Trainees::AwardRecommendationService do
         expect(Dqt::RecommendForAwardJob).to have_received(:perform_later).with(trainee)
         expect(trainee.recommended_for_award?).to be(true)
       end
+
+      it "sets the outcome_date", feature_integrate_with_dqt: false, feature_integrate_with_trs: false do
+        expect(trainee.outcome_date).to be_nil
+
+        success, errors = subject.call(params, trainee)
+
+        expect(success).to be(true)
+        expect(errors).to be_blank
+
+        expect(trainee.reload.outcome_date).to be_present
+      end
     end
 
     describe "failure" do

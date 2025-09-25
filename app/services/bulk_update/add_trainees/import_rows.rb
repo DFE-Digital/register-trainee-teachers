@@ -4,6 +4,7 @@ module BulkUpdate
   module AddTrainees
     class ImportRows
       include ServicePattern
+      include ParseAddTraineeCsv
 
       attr_accessor :trainee_upload
 
@@ -74,6 +75,8 @@ module BulkUpdate
 
       ALL_HEADERS = TRAINEE_HEADERS.merge(PLACEMENT_HEADERS).merge(DEGREE_HEADERS)
 
+      CASE_INSENSITIVE_ALL_HEADERS = ALL_HEADERS.to_h { |key, _| [key.downcase, key] }.freeze
+
       PREFIXED_HEADERS = [
         "HESA ID",
         "Date of Birth",
@@ -117,12 +120,17 @@ module BulkUpdate
 
         dry_run = !trainee_upload.in_progress?
         success = true
+        results = []
 
         ActiveRecord::Base.transaction do
           if dry_run
             file_content = trainee_upload.download.force_encoding(BulkUpdate::AddTrainees::Config::ENCODING)
 
-            CSV.parse(file_content, headers: true).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
+            CSV.parse(
+              file_content,
+              headers: true,
+              header_converters: ->(h) { convert_to_case_sensitive(h) },
+            ).reject { |entry| entry.to_h.values.all?(&:blank?) }.each_with_index do |row, index|
               BulkUpdate::TraineeUploadRow.create!(
                 trainee_upload: trainee_upload,
                 data: row.to_h,
@@ -131,11 +139,12 @@ module BulkUpdate
             end
           end
 
-          results = []
-
           ActiveRecord::Base.transaction(requires_new: true) do
             results = trainee_upload.trainee_upload_rows.map do |upload_row|
-              BulkUpdate::AddTrainees::ImportRow.call(row: upload_row.data, current_provider: current_provider)
+              BulkUpdate::AddTrainees::ImportRow.call(
+                row: upload_row.data,
+                current_provider: current_provider,
+              )
             rescue StandardError => e
               capture_exception(e)
             end
@@ -155,6 +164,12 @@ module BulkUpdate
             create_row_errors(results)
           elsif dry_run
             trainee_upload.process!
+          end
+        end
+
+        if !dry_run && success
+          Trainee.where(slug: results.pluck(:slug)).find_each do |trainee|
+            Trainees::SubmitForTrn.call(trainee:)
           end
         end
 
@@ -206,6 +221,7 @@ module BulkUpdate
           },
         )
         BulkUpdate::AddTrainees::ImportRow::Result.new(
+          nil,
           false,
           ["runtime failure: #{exception.message}"],
         )

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module GovukButtonLinkTo
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :body, :url, :class_option, :html
 
     def initialize(body:, url:, class_option: "", **html)

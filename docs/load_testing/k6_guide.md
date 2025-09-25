@@ -1,10 +1,10 @@
-# Load Testing
+# k6 guide
 
 Load testing with k6 can be performed either locally or on the [Grafana Cloud k6](https://grafana.com/products/cloud/k6/)
 
 ## Setup
 
-The URI defaults to Staging environment
+The URI defaults to staging environment
 
 ### Linux
 

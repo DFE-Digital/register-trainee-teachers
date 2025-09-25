@@ -41,6 +41,17 @@ FactoryBot.define do
       end
     end
 
+    trait(:with_mixed_case_headers) do
+      after(:build) do |upload|
+        file = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_mixed_case_headers.csv").open
+
+        upload.file.attach(
+          io: file,
+          filename: File.basename(file.path),
+        )
+      end
+    end
+
     trait :with_rows do
       validated
 

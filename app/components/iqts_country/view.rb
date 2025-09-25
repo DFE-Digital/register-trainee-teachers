@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module IqtsCountry
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SummaryHelper
 
     def initialize(data_model:, has_errors: false, editable: false, header_level: 2)

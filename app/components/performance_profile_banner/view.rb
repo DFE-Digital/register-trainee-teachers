@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PerformanceProfileBanner
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     DEFAULT_ACADEMIC_CYCLE_START_DATE = "1 August"
 
     def initialize(previous_academic_cycle: AcademicCycle.previous, sign_off_period: DetermineSignOffPeriod.call, provider:)

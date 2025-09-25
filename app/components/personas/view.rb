@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Personas
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include ApplicationHelper
+
     with_collection_parameter :persona
     attr_reader :persona
 

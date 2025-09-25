@@ -6,11 +6,13 @@ module FormComponents
   module Autocomplete
     class ExampleModel
       include ActiveModel::Model
+
       attr_accessor :id, :country, :country_raw
     end
 
     describe View do
       include ActionView::Helpers::FormHelper
+
       alias_method :component, :page
 
       it "supports custom classes on the parent container" do

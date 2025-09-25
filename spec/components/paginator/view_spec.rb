@@ -18,6 +18,7 @@ module Paginator
         current_page: current_page,
         total_pages: (total_count.to_f / page_size).ceil,
       )
+
       component = described_class.new(scope:)
       allow(component).to receive(:paginate).and_return("paginator")
       render_inline(component)

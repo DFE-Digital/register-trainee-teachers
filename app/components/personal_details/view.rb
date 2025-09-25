@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PersonalDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SanitizeHelper
 
     def initialize(data_model:, has_errors: false, editable: false, minimal: false, header_level: 2)

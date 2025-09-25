@@ -5,7 +5,7 @@
   description: Provider’s own internal identifier for the student.
   format: 50 character max length
   example: "`99157234`"
-  validation: Mandatory
+  validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/training_details_form.rb#L7
 - field_name: Application ID
   technical: application_id

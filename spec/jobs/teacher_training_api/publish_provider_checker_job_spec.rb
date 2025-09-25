@@ -44,6 +44,7 @@ module TeacherTrainingApi
     before do
       allow(TeacherTrainingApi::PublishProviderChecker).to receive(:call).and_return(result)
       allow(SlackNotifierService).to receive(:call).and_return(true)
+      allow(Rails.env).to receive(:production?).and_return(true)
     end
 
     it "generates the correct message and sends it to Slack" do

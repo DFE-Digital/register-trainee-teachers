@@ -49,7 +49,7 @@ services:
 
   bg-jobs:
     image: ghcr.io/dfe-digital/register-trainee-teachers:${IMAGE_TAG:-main}
-    command: bundle exec sidekiq -c 5 -C config/sidekiq.yml
+    command: bundle exec sidekiq -c 5 -C config/sidekiq.all.yml
     depends_on:
       - web
       - db

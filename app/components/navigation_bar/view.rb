@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NavigationBar::View < ViewComponent::Base
+class NavigationBar::View < ApplicationComponent
   attr_reader :service_name, :items, :current_path, :current_user
 
   def initialize(items:, current_path:, current_user: {}, render_without_current_user: false)
@@ -24,7 +24,7 @@ class NavigationBar::View < ViewComponent::Base
 
   def list_item_classes(item)
     [
-      "govuk-service-navigation__item #{show_current_link?(item) ? ' govuk-service-navigation__item--active' : nil}",
+      "govuk-service-navigation__item #{' govuk-service-navigation__item--active' if show_current_link?(item)}",
       ("app-service-navigation__align_right" if item[:align_right]),
     ].compact.join(" ")
   end
@@ -36,6 +36,6 @@ private
   end
 
   def navigation_wrapper_classes
-    @items.count > 1 ? "app-service-navigation__wrapper" : ""
+    @items.many? ? "app-service-navigation__wrapper" : ""
   end
 end

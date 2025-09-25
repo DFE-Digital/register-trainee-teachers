@@ -1,0 +1,15 @@
+---
+:concurrency: 5
+:queues:
+  - high_priority
+  - default
+  - dqt
+  - trs
+  - apply
+  - hesa
+  - dttp
+  - mailers
+  - dqt_sync
+  - dfe_analytics
+  - others
+  - bulk_update

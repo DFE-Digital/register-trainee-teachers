@@ -36,11 +36,6 @@ productiondata:
   RAILS_ENV: productiondata
   RACK_ENV: productiondata
 
-csv-sandbox:
-  <<: *default
-  RAILS_ENV: csv-sandbox
-  RACK_ENV: csv-sandbox
-
 pen:
   <<: *default
   RAILS_ENV: pen

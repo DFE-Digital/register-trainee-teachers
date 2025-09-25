@@ -51,10 +51,24 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - "spec/**/*"
 
-Naming/FileName:
+Naming/PredicateMethod:
   Exclude:
-    - "config/environments/csv-sandbox.rb"
-
+    - "app/controllers/trainees/check_details_controller.rb"
+    - "app/controllers/trainees/hesa/enable_edits_controller.rb"
+    - "app/controllers/trainees/placement_school_searches_controller.rb"
+    - "app/controllers/trainees/placements/confirm_details_controller.rb"
+    - "app/controllers/trainees/placements_controller.rb"
+    - "app/forms/bulk_update/bulk_add_trainees_import_rows_form.rb"
+    - "app/forms/bulk_update/placements_form.rb"
+    - "app/forms/degree_form.rb"
+    - "app/forms/diversities/disability_detail_form.rb"
+    - "app/forms/placement_form.rb"
+    - "app/models/reports/trainee_report.rb"
+    - "app/services/api/trainees/withdraw_response.rb"
+    - "app/services/bulk_update/add_trainees/validate_file.rb"
+    - "app/services/concerns/cacheable.rb"
+    - "app/validators/date_relative_to_time_validator.rb"
+    - "spec/support/current_academic_cycle.rb"
 
 # These can't be moved into their own config files. erb_lint won't find them unless the require is
 # in the same file with them. If we do that the path becomes ../../lib etc. Rubocop can resolve this fine

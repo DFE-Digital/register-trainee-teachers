@@ -4,6 +4,7 @@ module RecruitsApi
   class Client
     class Request
       include HTTParty
+
       base_uri Settings.recruits_api.base_url
       headers "Accept" => "application/json",
               "Content-Type" => "application/json",

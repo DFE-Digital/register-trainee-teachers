@@ -12,7 +12,7 @@ if generate_openapi
 
     version_regex = %r{spec/requests/api/v(?<major>\d+)_(?<minor>\d+)(?<label>_rc|_pre)?}
     match = ARGV.first.match(version_regex)
-    version = "v#{match[:major]}.#{match[:minor]}#{match[:label] ? '-rc' : ''}"
+    version = "v#{match[:major]}.#{match[:minor]}#{'-rc' if match[:label]}"
 
     RSpec::OpenAPI.title = "Register API"
     RSpec::OpenAPI.application_version = version

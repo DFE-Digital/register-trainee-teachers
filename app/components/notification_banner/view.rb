@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module NotificationBanner
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :text, :title_id, :classes
 
     SUCCESS_TITLE = "Success"

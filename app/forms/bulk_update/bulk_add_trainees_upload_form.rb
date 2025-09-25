@@ -6,6 +6,7 @@ module BulkUpdate
 
     include ActiveModel::Model
     include BulkUpdate::AddTrainees::Config
+    include ParseAddTraineeCsv
 
     validate :validate_file!
     validate :validate_csv!
@@ -63,7 +64,10 @@ module BulkUpdate
 
       file.tempfile.rewind
 
-      @csv ||= CSV.read(file.tempfile, **CSV_ARGS)
+      @csv ||= CSV.read(
+        file.tempfile,
+        **CSV_ARGS, header_converters: ->(h) { convert_to_case_sensitive(h) },
+      )
     end
 
     def validate_file!

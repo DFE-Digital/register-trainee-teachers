@@ -12,7 +12,7 @@ namespace :vendor do
                       PWC
                       Unit-e
                       TechnologyOne] + [*1..10].map { |a| "Test vendor #{a}" }
-    provider_ids = Trainee.group(:provider_id).order("count_all DESC").count.take(vendor_names.count).shuffle
+    provider_ids = Trainee.group(:provider_id).order(count_all: :desc).count.take(vendor_names.count).shuffle
       .map { |provider_id, _count_all| provider_id }
 
     vendor_names.each_with_index do |vendor_name, index|

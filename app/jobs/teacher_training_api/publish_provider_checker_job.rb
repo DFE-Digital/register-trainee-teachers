@@ -5,9 +5,11 @@ module TeacherTrainingApi
     queue_as :default
     retry_on TeacherTrainingApi::Client::HttpError
 
-    MAX_MISSING_PROVIDERS_TO_DISPLAY = 50
+    MAX_MISSING_PROVIDERS_TO_DISPLAY = 10
 
     def perform
+      return false unless Rails.env.production?
+
       checker = TeacherTrainingApi::PublishProviderChecker.call(
         recruitment_cycle_year: Settings.current_recruitment_cycle_year,
       )
@@ -25,7 +27,7 @@ module TeacherTrainingApi
 
       SlackNotifierService.call(
         message: message,
-        icon_emoji: checker.missing.count.zero? ? ":inky-the-octopus:" : ":alert:",
+        icon_emoji: checker.missing.none? ? ":inky-the-octopus:" : ":alert:",
         username: "Register Trainee Teachers: Job Failure",
       )
     end

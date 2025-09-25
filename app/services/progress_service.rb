@@ -38,7 +38,7 @@ class ProgressService
   end
 
   def review?
-    (in_progress_valid? || in_progress_invalid? || not_started?) && is_apply_application?
+    (in_progress_valid? || in_progress_invalid? || not_started?) && apply_application?
   end
 
   def completed?
@@ -59,7 +59,7 @@ private
 
   attr_reader :validator, :marked_as_completed
 
-  def is_apply_application?
+  def apply_application?
     validator.respond_to?(:apply_application?) && validator.apply_application?
   end
 end
