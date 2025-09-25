@@ -1353,7 +1353,6 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         "funding_method training route 'teacher_degree_apprenticeship' and subject code 'biology' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
       )
     end
-
   end
 
   context "with a fund_code that is eligible for funding because it has a special case course subject" do
