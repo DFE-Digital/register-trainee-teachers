@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineeName
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :trainee
 
     def initialize(trainee)

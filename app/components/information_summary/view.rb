@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InformationSummary::View < ViewComponent::Base
+class InformationSummary::View < ApplicationComponent
   renders_one :header
 
   def initialize(renderable: false)

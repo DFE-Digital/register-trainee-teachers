@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module TraineePersonalDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include Pundit::Authorization
     include UsersHelper
 

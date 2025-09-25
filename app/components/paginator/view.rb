@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 module Paginator
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :scope
-
     # This constant limits the number of links to pages rendered by #paginate.
     # In some cases, the number of links will be KAMINARI_LINKS_LIMIT + 1 because
     # kaminari refuses to leave a gap of just one number e.g. 1 ... 345 ... 9
     # so it renders 1 2 3 4 5 ... 9 instead.
     KAMINARI_LINKS_LIMIT = 5
+
+    delegate :paginate, to: :helpers
 
     def initialize(scope:)
       @scope = scope

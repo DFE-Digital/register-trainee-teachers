@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PlacementDetails
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     include SummaryHelper
 
     attr_accessor :data_model, :editable, :has_errors, :header_level

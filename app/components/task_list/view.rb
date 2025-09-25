@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TaskList::View < ViewComponent::Base
+class TaskList::View < ApplicationComponent
   renders_many :rows, "Row"
 
   def any_row_has_status?

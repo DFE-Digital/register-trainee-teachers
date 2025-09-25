@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ErrorSummary::View < ViewComponent::Base
+class ErrorSummary::View < ApplicationComponent
   renders_one :header
 
   def initialize(renderable: false)

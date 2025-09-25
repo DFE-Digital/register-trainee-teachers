@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class SummaryCard::View < ViewComponent::Base
+class SummaryCard::View < ApplicationComponent
   renders_one :header_actions
 
   def initialize(title:, heading_level: 2, rows:, id_suffix: nil, editable: true, id: nil)

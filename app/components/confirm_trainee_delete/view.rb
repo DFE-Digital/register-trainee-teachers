@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ConfirmTraineeDelete
-  class View < ViewComponent::Base
+  class View < ApplicationComponent
     attr_reader :trainee, :delete_reason, :ticket
 
     def initialize(trainee:, delete_reason: nil, ticket: nil)
