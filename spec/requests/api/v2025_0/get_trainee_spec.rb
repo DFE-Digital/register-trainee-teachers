@@ -3,11 +3,11 @@
 require "rails_helper"
 
 describe "`GET /api/v2025.0/trainees/:id` endpoint" do
-  let(:token) { "trainee_token" }
-  let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+  let!(:auth_token) { create(:authentication_token) }
+  let!(:token) { auth_token.token }
   let!(:trainee) { create(:trainee, :with_hesa_trainee_detail, slug: "12345", provider: auth_token.provider) }
 
-  it_behaves_like "a register API endpoint", "/api/v2025.0/trainees/12345", "trainee_token"
+  it_behaves_like "a register API endpoint", "/api/v2025.0/trainees/12345"
 
   context "when the trainee exists" do
     before do
