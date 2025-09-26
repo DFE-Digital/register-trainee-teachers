@@ -210,8 +210,6 @@ module Trainees
 
       if trainee.trn.present?
         Trainees::Update.call(trainee:)
-      else
-        Dqt::RegisterForTrnJob.perform_later(trainee)
       end
     end
 

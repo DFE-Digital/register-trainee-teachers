@@ -22,8 +22,6 @@ module SystemAdmin
       def request_trn
         if FeatureService.enabled?(:integrate_with_trs)
           Trs::RegisterForTrnJob.perform_now(trainee.reload)
-        elsif FeatureService.enabled?(:integrate_with_dqt)
-          Dqt::RegisterForTrnJob.perform_now(trainee.reload)
         else
           raise(StandardError, "No integration is enabled")
         end

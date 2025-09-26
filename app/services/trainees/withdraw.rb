@@ -17,8 +17,6 @@ module Trainees
       # Check which integration is enabled and enqueue the appropriate job
       if trs_enabled
         Trs::UpdateProfessionalStatusJob.perform_later(trainee)
-      elsif dqt_enabled
-        Dqt::WithdrawTraineeJob.perform_later(trainee)
       end
 
       Survey::SendJob.set(wait: Settings.qualtrics.days_delayed.days).perform_later(trainee: trainee, event_type: :withdraw) if trainee_withdrawal_valid_for_survey?
