@@ -34,7 +34,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   end
 
   context "with an valid authentication token and the feature flag off", feature_register_api: false do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+    let(:token) { create(:authentication_token, provider:).token }
 
     it "returns status code 404 not found" do
       put(
@@ -48,7 +48,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   end
 
   context "with a valid authentication token" do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+    let(:token) { create(:authentication_token, provider:).token }
     let(:slug) { trainee.slug }
     let(:endpoint) { "/api/v2025.0/trainees/#{slug}" }
     let(:data) { { first_names: "Alice" } }
@@ -984,7 +984,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
     end
 
     context "with course subjects" do
-      let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+      let(:token) { create(:authentication_token, provider:).token }
 
       context "when HasCourseAttributes#primary_education_phase? is true" do
         before do
@@ -1364,11 +1364,11 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   end
 
   context "Updating a newly created trainee" do
-    let(:token) { "trainee_token" }
-    let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+    let!(:auth_token) { create(:authentication_token) }
+    let!(:token) { create(:authentication_token).token }
     let!(:nationality) { create(:nationality, :british) }
 
-    let(:headers) { { Authorization: token, **json_headers } }
+    let(:headers) { { Authorization: "Bearer #{token}", **json_headers } }
 
     let(:start_academic_cycle) { create(:academic_cycle, :current) }
     let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }

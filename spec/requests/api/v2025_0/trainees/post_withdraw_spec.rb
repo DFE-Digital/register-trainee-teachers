@@ -4,8 +4,8 @@ require "rails_helper"
 
 describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
   context "with a valid authentication token" do
-    let(:token) { "trainee_token" }
-    let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+    let!(:auth_token) { create(:authentication_token) }
+    let!(:token) { auth_token.token }
     let!(:provider) { auth_token.provider }
 
     context "non existant trainee" do

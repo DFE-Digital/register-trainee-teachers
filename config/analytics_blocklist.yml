@@ -442,6 +442,7 @@
   :authentication_tokens:
   - id
   - hashed_token
+  - token_hash
   - enabled
   - provider_id
   - expires_at
