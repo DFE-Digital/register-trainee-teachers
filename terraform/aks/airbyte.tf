@@ -12,11 +12,6 @@ data "azurerm_key_vault_secret" "airbyte_client_secret" {
   name         = "AIRBYTE-CLIENT-SECRET"
 }
 
-data "azurerm_key_vault_secret" "airbyte_server_url" {
-  key_vault_id = data.azurerm_key_vault.key_vault.id
-  name         = "AIRBYTE-SERVER-URL"
-}
-
 data "azurerm_key_vault_secret" "airbyte_workspace_id" {
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = "AIRBYTE-WORKSPACE-ID"
@@ -47,7 +42,7 @@ module "airbyte" {
   client_id          = data.azurerm_key_vault_secret.airbyte_client_id.value
   client_secret      = data.azurerm_key_vault_secret.airbyte_client_secret.value
   repl_password      = data.azurerm_key_vault_secret.airbyte_replication_password.value
-  server_url         = data.azurerm_key_vault_secret.airbyte_server_url.value
+  server_url         = "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}"
   connection_status  = var.connection_status
   connection_streams = local.connection_streams
 
@@ -61,6 +56,8 @@ module "airbyte" {
   config_map_ref = module.application_configuration.kubernetes_config_map_name
   secret_ref     = module.application_configuration.kubernetes_secret_name
   cpu            = module.cluster_data.configuration_map.cpu_min
+
+  use_azure = var.deploy_azure_backing_services
 }
 
 ## Airbyte module variables
