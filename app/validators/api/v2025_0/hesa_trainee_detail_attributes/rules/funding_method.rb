@@ -47,9 +47,7 @@ module Api
           def call
             return ValidationResult.new(true) if no_funding_method? || funding_method_invalid? || training_route.nil?
 
-            return ValidationResult.new(true) if automatic_funding_by_subject?
-
-            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method?
+            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method? && !automatic_funding_by_subject?
 
             ValidationResult.new(
               funding_method_exists?,

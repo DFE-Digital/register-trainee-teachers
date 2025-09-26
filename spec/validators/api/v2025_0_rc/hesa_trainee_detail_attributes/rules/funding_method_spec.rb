@@ -162,7 +162,8 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundingMethod do
         end
       end
 
-      context "when there is NO matching funding rule but this is a special case subject" do
+      context "when there is a matching funding rule and fund_code is inelibible but this is a special case subject" do
+        let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
         let(:course_subject_one) { "Physics" }
         let(:allocation_subject) { create(:allocation_subject, name: course_subject_one) }
         let(:course_allocation_subject_id) { allocation_subject.id }
@@ -171,6 +172,21 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundingMethod do
             :subject_specialism,
             allocation_subject: allocation_subject,
             name: course_subject_one,
+          )
+        end
+        let(:funding_rule) do
+          create(
+            :funding_method,
+            training_route: :provider_led_postgrad,
+            funding_type: :bursary,
+            academic_cycle: academic_cycle,
+          )
+        end
+        let!(:funding_method_subject) do
+          create(
+            :funding_method_subject,
+            funding_method: funding_rule,
+            allocation_subject: allocation_subject,
           )
         end
 
@@ -184,6 +200,14 @@ RSpec.describe Api::V20250::HesaTraineeDetailAttributes::Rules::FundingMethod do
 
         context "when the course academic year is not 2025-26" do
           let(:trainee_start_date) { Date.new(2024, 10, 1).iso8601 }
+
+          it "returns false" do
+            expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
+          end
+        end
+
+        context "when the course is not one of the special cases" do
+          let(:course_subject_one) { "Chemistry" }
 
           it "returns false" do
             expect(subject.call(hesa_trainee_detail_attributes).valid?).to be(false)
