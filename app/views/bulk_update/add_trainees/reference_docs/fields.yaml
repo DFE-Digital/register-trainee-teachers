@@ -421,9 +421,6 @@
     to reflect current schemes.
   format: |-
     [Training Initiative reference codes](/reference-data/v2025.0/training-initiative.html)
-
-    The following codes are not mapped to Register:
-      `001`, `011`, `019`
   example: "`026`"
   validation: Optional
   validation_notes: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/forms/funding/training_initiatives_form.rb#L11-L14
@@ -433,9 +430,6 @@
   description: The secondary training initiative that the trainee is on.
   format: |-
     [Training Initiative reference codes](/reference-data/v2025.0/training-initiative.html)
-
-    The following codes are not mapped to Register:
-      `001`, `011`, `019`
   example: "`026`"
   validation: Optional
 - field_name: UK degree type
