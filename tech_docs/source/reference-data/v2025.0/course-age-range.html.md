@@ -1,5 +1,5 @@
 ---
-title: Course Age Range
+title: Course age range
 weight: 2
 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/v2025_0.rb
 ---
