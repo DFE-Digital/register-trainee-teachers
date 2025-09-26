@@ -1356,11 +1356,30 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
   end
 
   context "with a fund_code that is eligible for funding because it has a special case course subject" do
+    let!(:academic_cycle) do
+      create(
+        :academic_cycle,
+        start_date: Date.new(2025, 8, 1),
+        end_date: Date.new(2026, 7, 31),
+      )
+    end
+
     before do
-      params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
+      params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]]
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
       params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
       params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::FRENCH_LANGUAGE]
+      funding_rule = create(
+        :funding_method,
+        training_route: :provider_led_postgrad,
+        funding_type: :bursary,
+        academic_cycle: academic_cycle,
+      )
+      create(
+        :funding_method_subject,
+        funding_method: funding_rule,
+        allocation_subject: french_allocation_subject,
+      )
 
       post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
     end
