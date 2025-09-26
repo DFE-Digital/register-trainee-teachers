@@ -61,6 +61,8 @@ module "airbyte" {
   config_map_ref = module.application_configuration.kubernetes_config_map_name
   secret_ref     = module.application_configuration.kubernetes_secret_name
   cpu            = module.cluster_data.configuration_map.cpu_min
+
+  use_azure = var.deploy_azure_backing_services
 }
 
 ## Airbyte module variables
