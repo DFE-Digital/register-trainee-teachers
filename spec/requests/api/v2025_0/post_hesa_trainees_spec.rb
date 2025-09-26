@@ -11,6 +11,14 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     create(:subject_specialism, name: CourseSubjects::BIOLOGY).allocation_subject
   end
 
+  let!(:french_allocation_subject) do
+    create(
+      :subject_specialism,
+      name: CourseSubjects::FRENCH_LANGUAGE,
+      allocation_subject: create(:allocation_subject, name: CourseSubjects::FRENCH_LANGUAGE),
+    ).allocation_subject
+  end
+
   let(:params) { { data: } }
 
   let(:graduation_year) { "2003" }
@@ -1326,7 +1334,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
     end
   end
 
-  context "with a fund_code is ineligible for funding" do
+  context "with a fund_code that is ineligible for funding" do
     before do
       params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:teacher_degree_apprenticeship]]
       params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
@@ -1344,6 +1352,41 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       expect(response.parsed_body["errors"]).to contain_exactly(
         "funding_method training route 'teacher_degree_apprenticeship' and subject code 'biology' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
       )
+    end
+  end
+
+  context "with a fund_code that is eligible for funding because it has a special case course subject" do
+    let!(:academic_cycle) do
+      create(
+        :academic_cycle,
+        start_date: Date.new(2025, 8, 1),
+        end_date: Date.new(2026, 7, 31),
+      )
+    end
+
+    before do
+      params[:data][:training_route] = Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]]
+      params[:data][:fund_code] = Hesa::CodeSets::FundCodes::NOT_ELIGIBLE
+      params[:data][:funding_method] = Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY
+      params[:data][:course_subject_one] = Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::FRENCH_LANGUAGE]
+      funding_rule = create(
+        :funding_method,
+        training_route: :provider_led_postgrad,
+        funding_type: :bursary,
+        academic_cycle: academic_cycle,
+      )
+      create(
+        :funding_method_subject,
+        funding_method: funding_rule,
+        allocation_subject: french_allocation_subject,
+      )
+
+      post "/api/v2025.0/trainees", params: params.to_json, headers: { Authorization: token, **json_headers }
+    end
+
+    it "returns success status code with no errors" do
+      expect(response).to have_http_status(:created)
+      expect(response.parsed_body["message"]).to be_blank
     end
   end
 
