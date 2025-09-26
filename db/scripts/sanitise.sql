@@ -73,7 +73,7 @@ SET
   last_name = concat('DttpUser', id)
 WHERE
   email IS NULL
-  OR email !~ '@(digital.)?education.gov.uk$';
+  OR email !~ '@(digital\.)?education\.gov\.uk$';
 
 -- HESA TRN submissions
 UPDATE
@@ -119,4 +119,4 @@ SET
   dfe_sign_in_uid = NULL,
   otp_secret = NULL
 WHERE
-  email !~ '@(digital.)?education.gov.uk$';
+  email !~ '@(digital\.)?education\.gov\.uk$';
