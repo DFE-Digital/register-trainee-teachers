@@ -21,8 +21,7 @@ GET /api/v2025.0/info
     <pre class="json-code-sample">
     {
       "status": "ok"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -32,7 +31,6 @@ GET /api/v2025.0/info
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

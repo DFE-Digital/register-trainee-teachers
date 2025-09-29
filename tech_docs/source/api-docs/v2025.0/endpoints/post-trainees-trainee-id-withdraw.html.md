@@ -110,8 +110,7 @@ Withdraw details
         ],
         "another_reason": "Bespoke reason"
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -236,8 +235,7 @@ Withdraw details
           }
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -247,8 +245,7 @@ Withdraw details
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -263,8 +260,7 @@ Withdraw details
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -279,7 +275,6 @@ Withdraw details
           "message": "Withdraw date Choose a withdrawal date"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

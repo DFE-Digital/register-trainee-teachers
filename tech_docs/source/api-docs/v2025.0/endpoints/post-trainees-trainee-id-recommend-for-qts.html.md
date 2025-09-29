@@ -46,8 +46,7 @@ Recommendation details
       "data": {
         "qts_standards_met_date": "2024-06-17"
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -173,8 +172,7 @@ Recommendation details
           }
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -184,8 +182,7 @@ Recommendation details
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -200,8 +197,7 @@ Recommendation details
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -216,7 +212,6 @@ Recommendation details
           "message": "Qts standards met date can't be blank"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

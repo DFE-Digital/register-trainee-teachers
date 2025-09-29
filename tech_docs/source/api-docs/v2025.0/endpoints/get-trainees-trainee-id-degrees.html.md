@@ -45,8 +45,7 @@ GET /api/v2025.0/trainees/{trainee_id}/degrees
           "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -56,8 +55,7 @@ GET /api/v2025.0/trainees/{trainee_id}/degrees
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -72,7 +70,6 @@ GET /api/v2025.0/trainees/{trainee_id}/degrees
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

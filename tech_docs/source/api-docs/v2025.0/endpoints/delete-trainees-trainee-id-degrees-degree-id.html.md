@@ -125,8 +125,7 @@ DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
         ],
         "degrees": []
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -136,8 +135,7 @@ DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -152,7 +150,6 @@ DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

@@ -3,8 +3,6 @@ title: GET /trainees/{trainee_id}
 weight: 3
 ---
 
-# `GET /trainees/{trainee_id}`
-
 Get a single trainee.
 
 ## Request
@@ -142,8 +140,7 @@ GET /api/v2025.0/trainees/{trainee_id}
           }
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -153,8 +150,7 @@ GET /api/v2025.0/trainees/{trainee_id}
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 

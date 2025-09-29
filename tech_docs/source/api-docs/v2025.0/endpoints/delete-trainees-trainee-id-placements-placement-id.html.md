@@ -143,8 +143,7 @@ DELETE /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
           }
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -154,8 +153,7 @@ DELETE /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -170,7 +168,6 @@ DELETE /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
           "message": "Placement(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

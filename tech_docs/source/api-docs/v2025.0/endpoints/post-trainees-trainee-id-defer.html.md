@@ -61,8 +61,7 @@ Deferral details
         "defer_date": "2024-06-17",
         "defer_reason": "The trainee's circumstances changed so they want to defer"
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -188,8 +187,7 @@ Deferral details
           }
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -199,8 +197,7 @@ Deferral details
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -215,8 +212,7 @@ Deferral details
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -231,7 +227,6 @@ Deferral details
           "message": "Defer date can't be blank"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

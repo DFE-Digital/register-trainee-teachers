@@ -36,8 +36,7 @@ GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
         "created_at": "2024-01-18T08:02:42.672Z",
         "updated_at": "2024-01-18T08:02:42.672Z"
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -47,8 +46,7 @@ GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -63,7 +61,6 @@ GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
           "message": "Placement(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

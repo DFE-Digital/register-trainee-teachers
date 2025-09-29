@@ -124,8 +124,7 @@ GET /api/v2025.0/trainees
           "withdrawal_another_reason": null,
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -135,8 +134,7 @@ GET /api/v2025.0/trainees
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -151,8 +149,7 @@ GET /api/v2025.0/trainees
           "message": "No trainees found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -167,7 +164,6 @@ GET /api/v2025.0/trainees
           "busy is not a valid status"
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
