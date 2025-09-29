@@ -479,11 +479,11 @@ FactoryBot.define do
       after(:create) do |trainee|
         create(
           :trainee_withdrawal,
-          trainee:,
+          trainee: trainee,
           date: Faker::Date.between(
             from: trainee.itt_start_date + 1.day,
-            to: trainee.itt_start_date + 1.year
-          )
+            to: trainee.itt_start_date + 1.year,
+          ),
         )
       end
     end
