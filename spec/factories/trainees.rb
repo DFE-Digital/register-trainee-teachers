@@ -477,7 +477,14 @@ FactoryBot.define do
       state { "withdrawn" }
 
       after(:create) do |trainee|
-        create(:trainee_withdrawal, trainee:)
+        create(
+          :trainee_withdrawal,
+          trainee:,
+          date: Faker::Date.between(
+            from: trainee.itt_start_date + 1.day,
+            to: trainee.itt_start_date + 1.year
+          )
+        )
       end
     end
 
