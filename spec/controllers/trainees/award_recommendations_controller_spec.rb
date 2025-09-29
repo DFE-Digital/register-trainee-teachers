@@ -10,7 +10,7 @@ describe Trainees::AwardRecommendationsController do
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
-    allow(OutcomeDateForm).to receive(:new).with(trainee, update_dqt: false).and_return(double(save!: true))
+    allow(OutcomeDateForm).to receive(:new).with(trainee, update_trs: false).and_return(double(save!: true))
   end
 
   describe "#create" do

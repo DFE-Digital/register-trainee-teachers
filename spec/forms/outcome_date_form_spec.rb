@@ -116,7 +116,7 @@ describe OutcomeDateForm, type: :model do
           trainee,
           params: params.stringify_keys,
           store: form_store,
-          update_dqt: false,
+          update_trs: false,
         )
       end
 
