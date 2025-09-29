@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_24_114053) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_26_143021) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gist"
   enable_extension "citext"
@@ -960,8 +960,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_114053) do
     t.string("trn")
     t.datetime("submitted_for_trn_at", precision: nil)
     t.integer("state", default: 0)
-    t.datetime("withdraw_date", precision: nil)
-    t.string("withdraw_reasons_details")
     t.date("defer_date")
     t.citext("slug", null: false)
     t.datetime("recommended_for_award_at", precision: nil)
@@ -1003,7 +1001,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_24_114053) do
     t.bigint("hesa_trn_submission_id")
     t.string("iqts_country")
     t.boolean("hesa_editable", default: false)
-    t.string("withdraw_reasons_dfe_details")
     t.datetime("slug_sent_to_dqt_at")
     t.integer("placement_detail")
     t.integer("application_choice_id")

@@ -21,13 +21,11 @@ class UndoWithdrawalForm
 
     trainee.current_withdrawal.discard!
 
-    trainee.update(
+    trainee.update!(
       state: previous_state,
-      withdraw_reasons_details: nil,
-      withdraw_reasons_dfe_details: nil,
-      withdraw_date: nil,
       audit_comment: audit_comment,
     )
+
     delete!
   end
 

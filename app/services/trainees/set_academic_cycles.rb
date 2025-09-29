@@ -22,9 +22,9 @@ module Trainees
 
     delegate :trainee_start_date,
              :itt_start_date,
+             :itt_end_date,
              :awarded_at,
-             :withdraw_date,
-             :itt_end_date, to: :trainee
+             :withdraw_date, to: :trainee
 
     def start_academic_cycle
       start_date.present? ? AcademicCycle.for_date(start_date) : AcademicCycle.for_date(Time.zone.now + DEFAULT_CYCLE_OFFSET)
