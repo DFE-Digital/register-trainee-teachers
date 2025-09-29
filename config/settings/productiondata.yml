@@ -40,7 +40,6 @@ features:
     teacher_degree_apprenticeship: true
   google:
     send_data_to_big_query: false
-  integrate_with_dqt: false
   integrate_with_trs: false
   hesa_import:
     test_mode: true
