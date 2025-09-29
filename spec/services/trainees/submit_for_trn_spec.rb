@@ -25,13 +25,5 @@ module Trainees
         }.from("draft").to("submitted_for_trn")
       end
     end
-
-    context "when both integrations are enabled", feature_integrate_with_dqt: true, feature_integrate_with_trs: true do
-      it "raises a ConflictingIntegrationsError" do
-        expect {
-          subject
-        }.to raise_error(HandlesIntegrationConflicts::ConflictingIntegrationsError)
-      end
-    end
   end
 end

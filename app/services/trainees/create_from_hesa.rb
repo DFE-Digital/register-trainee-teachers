@@ -50,7 +50,6 @@ module Trainees
           create_placements!
           store_hesa_metadata!
           check_for_potential_duplicate_trainees!
-          enqueue_background_jobs!
           check_for_missing_hesa_mappings!
         end
       end

@@ -515,10 +515,6 @@ feature "Withdrawing a trainee" do
     trainee_start_status_edit_page.set_date_fields("trainee_start_date", date.strftime("%d/%m/%Y"))
   end
 
-  def and_integrate_with_dqt_feature_is_active
-    enable_features(:integrate_with_dqt)
-  end
-
   def and_a_withdrawal_job_has_been_queued
     expect(Trs::UpdateProfessionalStatusJob).to have_been_enqueued
   end

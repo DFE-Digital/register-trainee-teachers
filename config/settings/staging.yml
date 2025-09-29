@@ -25,7 +25,6 @@ features:
   import_courses_from_ttapi: true
   import_applications_from_apply: false
   publish_course_details: true
-  integrate_with_dqt: false
   integrate_with_trs: false
   hesa_trn_requests: false
   hesa_import:

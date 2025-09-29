@@ -80,7 +80,6 @@ features:
   filters:
     show_start_year_filter: false
   user_can_have_multiple_organisations: true
-  integrate_with_dqt: false
   integrate_with_trs: false
   funding: true
   hesa_trn_requests: false
