@@ -3,11 +3,9 @@
 module Trainees
   class Withdraw
     include ServicePattern
-    include HandlesIntegrationConflicts
 
     def initialize(trainee:)
       @trainee = trainee
-      @dqt_enabled = FeatureService.enabled?(:integrate_with_dqt)
       @trs_enabled = FeatureService.enabled?(:integrate_with_trs)
     end
 
@@ -24,7 +22,7 @@ module Trainees
 
   private
 
-    attr_reader :trainee, :dqt_enabled, :trs_enabled
+    attr_reader :trainee, :trs_enabled
 
     def trainee_withdrawal_valid_for_survey?
       reason_names = trainee&.current_withdrawal&.withdrawal_reasons&.pluck(:name)

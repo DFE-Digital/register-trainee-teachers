@@ -3,13 +3,11 @@
 module Trainees
   class Update
     include ServicePattern
-    include HandlesIntegrationConflicts
 
     def initialize(trainee:, params: {}, update_trs: true)
       @trainee = trainee
       @params = params
       @update_trs = update_trs
-      @dqt_enabled = FeatureService.enabled?(:integrate_with_dqt)
       @trs_enabled = FeatureService.enabled?(:integrate_with_trs)
     end
 
@@ -26,7 +24,7 @@ module Trainees
 
   private
 
-    attr_reader :trainee, :params, :update_trs, :dqt_enabled, :trs_enabled
+    attr_reader :trainee, :params, :update_trs, :trs_enabled
 
     def save_trainee
       if params.present?

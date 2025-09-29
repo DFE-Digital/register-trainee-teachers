@@ -3,11 +3,9 @@
 module Trainees
   class UpdateIttDataInTra
     include ServicePattern
-    include HandlesIntegrationConflicts
 
     def initialize(trainee:)
       @trainee = trainee
-      @dqt_enabled = FeatureService.enabled?(:integrate_with_dqt)
       @trs_enabled = FeatureService.enabled?(:integrate_with_trs)
     end
 
@@ -23,7 +21,7 @@ module Trainees
 
   private
 
-    attr_reader :trainee, :dqt_enabled, :trs_enabled
+    attr_reader :trainee, :trs_enabled
 
     def trainee_updatable?
       %w[submitted_for_trn trn_received deferred].include?(trainee.state)
