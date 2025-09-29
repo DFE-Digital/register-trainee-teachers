@@ -89,7 +89,7 @@ shared:
     - created_at
     - id
     - updated_at
-  :dqt_trn_requests:
+  dqt_trn_requests:
     - id
     - trainee_id
     - request_id
@@ -315,7 +315,7 @@ shared:
     - system_admin
     - updated_at
     - welcome_email_sent_at
-  :bulk_update_row_errors:
+  bulk_update_row_errors:
     - id
     - created_at
     - updated_at
@@ -324,7 +324,7 @@ shared:
     - error_type
     - message
     - error_type
-  :placements:
+  placements:
     - id
     - trainee_id
     - school_id
@@ -335,12 +335,12 @@ shared:
     - created_at
     - updated_at
     - slug
-  :withdrawal_reasons:
+  withdrawal_reasons:
     - id
     - created_at
     - updated_at
     - name
-  :trainee_withdrawals:
+  trainee_withdrawals:
     - id
     - trainee_id
     - date
@@ -350,7 +350,7 @@ shared:
     - discarded_at
     - created_at
     - updated_at
-  :trainee_withdrawal_reasons:
+  trainee_withdrawal_reasons:
     - id
     - trainee_id
     - withdrawal_reason_id
