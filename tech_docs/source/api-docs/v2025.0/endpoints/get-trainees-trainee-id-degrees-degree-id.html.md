@@ -9,7 +9,9 @@ Get a single degree for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}`
+```
+GET /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
+```
 
 ## Parameters
 

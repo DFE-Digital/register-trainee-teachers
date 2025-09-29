@@ -13,7 +13,9 @@ current academic cycle.
 
 ## Request
 
-`GET /api/v2025.0/trainees`
+```
+GET /api/v2025.0/trainees
+```
 
 ## Parameters
 

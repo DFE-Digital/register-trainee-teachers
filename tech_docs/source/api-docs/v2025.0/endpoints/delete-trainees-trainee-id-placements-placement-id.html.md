@@ -9,7 +9,9 @@ Deletes an existing placement for this trainee.
 
 ## Request
 
-`DELETE /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}`
+```
+DELETE /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
+```
 
 ## Parameters
 

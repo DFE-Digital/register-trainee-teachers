@@ -9,7 +9,9 @@ Get a single trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}`
+```
+GET /api/v2025.0/trainees/{trainee_id}
+```
 
 ## Parameters
 

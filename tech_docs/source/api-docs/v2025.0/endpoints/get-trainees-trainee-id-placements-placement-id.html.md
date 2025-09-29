@@ -9,7 +9,9 @@ Get a single placement for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}`
+```
+GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
+```
 
 ## Parameters
 

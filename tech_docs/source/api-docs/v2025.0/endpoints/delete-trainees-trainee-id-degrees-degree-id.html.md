@@ -9,7 +9,9 @@ Deletes an existing degree for this trainee.
 
 ## Request
 
-`DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}`
+```
+DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
+```
 
 ## Parameters
 

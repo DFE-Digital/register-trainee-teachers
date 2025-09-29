@@ -9,7 +9,9 @@ Get many placements for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/placements`
+```
+GET /api/v2025.0/trainees/{trainee_id}/placements
+```
 
 ## Parameters
 
