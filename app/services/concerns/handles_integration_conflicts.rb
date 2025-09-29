@@ -11,7 +11,7 @@ module HandlesIntegrationConflicts
 
   # Checks if both DQT and TRS integrations are enabled
   # Can be conditionally checked by passing a block
-  # Example: check_for_conflicting_integrations { update_dqt }
+  # Example: check_for_conflicting_integrations { update_trs }
   def check_for_conflicting_integrations
     # If a block is given, only check for conflicts if the block returns true
     should_check = block_given? ? yield : true
