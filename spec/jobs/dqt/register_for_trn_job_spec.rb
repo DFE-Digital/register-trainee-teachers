@@ -26,7 +26,7 @@ module Dqt
 
         it "registers TRN request with DQT" do
           described_class.perform_now(trainee)
-          trn_request = TrnRequest.last
+          trn_request = Trs::TrnRequest.last
           expect(trn_request.trainee).to eql(trainee)
           expect(trn_request.request_id).to eql(request_id)
           expect(trn_request.state).to eql("requested")
@@ -40,7 +40,7 @@ module Dqt
 
         it "does not register a TRN request with DQT" do
           described_class.perform_now(trainee)
-          expect(TrnRequest.count).to eq(0)
+          expect(Trs::TrnRequest.count).to eq(0)
         end
       end
 
