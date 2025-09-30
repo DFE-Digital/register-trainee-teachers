@@ -2,9 +2,9 @@
 
 require "rails_helper"
 
-module Dqt
+module Trs
   describe TrnRequest do
-    subject { build(:dqt_trn_request) }
+    subject { build(:trs_trn_request) }
 
     it { is_expected.to be_valid }
 
@@ -15,7 +15,7 @@ module Dqt
     end
 
     describe "#days_waiting" do
-      let(:trn_request) { create(:dqt_trn_request, created_at: 2.days.ago) }
+      let(:trn_request) { create(:trs_trn_request, created_at: 2.days.ago) }
 
       it "returns the number of days since the request was created" do
         expect(trn_request.days_waiting).to eq(2)
