@@ -57,7 +57,7 @@ For the `recommended_for_award` state we display a label that depends on the typ
 - _Recommended for EYTS_
 - _Recommended for QTS_
 
-These already hide the word 'award' so they don't need to change.
+These already hide the word 'award' so they may not need to change.
 
 The awarded state label also depends on the type of qualification:
 
