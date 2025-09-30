@@ -12,8 +12,7 @@ module Trainees
     end
 
     def call
-      # Pass update_trs as a condition to the conflict check
-      check_for_conflicting_integrations { update_trs }
+      update_trs
 
       save_trainee
 

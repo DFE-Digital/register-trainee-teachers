@@ -10,8 +10,6 @@ module Trainees
     end
 
     def call
-      check_for_conflicting_integrations
-
       # Check which integration is enabled and enqueue the appropriate job
       # Don't call TRS if the trainee's TRN has not been received yet
       if trs_enabled && trainee.trn.present?
