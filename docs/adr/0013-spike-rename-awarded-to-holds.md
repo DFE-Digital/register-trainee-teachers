@@ -8,7 +8,7 @@ Pending
 
 ## Context
 
-Register uses the term 'awarded' to describe the end state for trainees that have attained there teaching qualification. This term permeates many parts of the system. For example, trainee records have `recommended_for_award_at` and `awarded_at` attributes to record the milestones for the trainee gaining their award.
+Register uses the term 'awarded' to describe the end state for trainees that have attained their teaching qualification. This term permeates many parts of the system. For example, trainee records have `recommended_for_award_at` and `awarded_at` attributes to record the milestones for the trainee gaining their award.
 
 Other services within DfE use the term 'holds' to describe a person having a teaching qualification. For example, the TRS API for updating a trainee's professional status includes a `holdsFrom` attribute for the date on which the trainee became a qualified teacher.
 
