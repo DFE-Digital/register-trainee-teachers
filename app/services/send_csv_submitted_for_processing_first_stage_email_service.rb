@@ -9,7 +9,7 @@ class SendCsvSubmittedForProcessingFirstStageEmailService
   end
 
   def call
-    upload.provider.users.each do |user|
+    upload.provider.users.kept.each do |user|
       CsvSubmittedForProcessingFirstStageEmailMailer.generate(
         upload:,
         user:,
