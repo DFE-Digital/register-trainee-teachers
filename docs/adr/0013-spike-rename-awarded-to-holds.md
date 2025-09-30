@@ -57,7 +57,7 @@ For the `recommended_for_award` state we display a label that depends on the typ
 - _Recommended for EYTS_
 - _Recommended for QTS_
 
-These already hide the word 'award' so they may not need to change.
+These already hide the word 'award' so they may not need to change, however we may need to come up with an alternative for the word 'recommended'.
 
 The awarded state label also depends on the type of qualification:
 
@@ -103,6 +103,3 @@ There are only two columns in the schema that contain the word _award_ (and no t
 
 - `trainees.recommended_for_award_at`
 - `trainees.awarded_at`
-
-
-
