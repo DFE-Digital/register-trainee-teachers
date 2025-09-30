@@ -12,8 +12,6 @@ module Trainees
     def call
       return if trainee.trn.blank?
 
-      check_for_conflicting_integrations
-
       if trs_enabled
         Trs::UpdateProfessionalStatusJob.perform_later(trainee)
       end
