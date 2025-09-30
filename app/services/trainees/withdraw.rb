@@ -10,9 +10,7 @@ module Trainees
     end
 
     def call
-      check_for_conflicting_integrations
-
-      # Check which integration is enabled and enqueue the appropriate job
+      # Check whether the integration is enabled and enqueue the appropriate job
       if trs_enabled
         Trs::UpdateProfessionalStatusJob.perform_later(trainee)
       end
