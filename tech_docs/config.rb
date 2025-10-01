@@ -12,7 +12,6 @@ GovukTechDocs.configure(self, livereload: { host: "0.0.0.0" })
 
 set :relative_links, true
 set :markdown_engine, :kramdown
-set :markdown, fenced_code_blocks: true, tables: true
 
 activate :relative_assets
 
