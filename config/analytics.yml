@@ -13,6 +13,11 @@ shared:
     - metadata
     - updated_at
     - user_id
+  allocation_subjects:
+    - created_at
+    - id
+    - name
+    - updated_at
   apply_applications:
     - accredited_body_code
     - apply_id
@@ -21,10 +26,30 @@ shared:
     - recruitment_cycle_year
     - state
     - updated_at
-  allocation_subjects:
-    - created_at
+  bulk_update_row_errors:
     - id
-    - name
+    - created_at
+    - updated_at
+    - errored_on_id
+    - errored_on_type
+    - error_type
+    - message
+    - error_type
+  bulk_update_trainee_uploads:
+    - id
+    - provider_id
+    - status
+    - created_at
+    - updated_at
+    - submitted_at
+    - submitted_by_id
+    - number_of_trainees
+    - version
+  course_subjects:
+    - id
+    - course_id
+    - subject_id
+    - created_at
     - updated_at
   courses:
     - accredited_body_code
@@ -49,12 +74,6 @@ shared:
     - summary
     - updated_at
     - uuid
-  course_subjects:
-    - id
-    - course_id
-    - subject_id
-    - created_at
-    - updated_at
   degrees:
     - country
     - created_at
@@ -79,7 +98,7 @@ shared:
     - created_at
     - id
     - updated_at
-  :dqt_trn_requests:
+  dqt_trn_requests:
     - id
     - trainee_id
     - request_id
@@ -102,6 +121,12 @@ shared:
     - status_code
     - updated_at
     - urn
+  funding_method_subjects:
+    - allocation_subject_id
+    - created_at
+    - funding_method_id
+    - id
+    - updated_at
   funding_methods:
     - academic_cycle_id
     - amount
@@ -111,12 +136,6 @@ shared:
     - id
     - training_route
     - updated_at
-    - updated_at
-  funding_method_subjects:
-    - allocation_subject_id
-    - created_at
-    - funding_method_id
-    - id
     - updated_at
   hesa_metadata:
     - course_programme_title
@@ -138,6 +157,12 @@ shared:
     - created_at
     - submitted_at
     - updated_at
+  lead_partner_users:
+    - id
+    - lead_partner_id
+    - user_id
+    - created_at
+    - updated_at
   lead_partners:
     - id
     - urn
@@ -149,11 +174,10 @@ shared:
     - created_at
     - updated_at
     - discarded_at
-  lead_partner_users:
-    - id
-    - lead_partner_id
-    - user_id
+  nationalities:
     - created_at
+    - id
+    - name
     - updated_at
   nationalisations:
     - created_at
@@ -161,11 +185,17 @@ shared:
     - nationality_id
     - trainee_id
     - updated_at
-  nationalities:
-    - created_at
+  placements:
     - id
+    - trainee_id
+    - school_id
+    - urn
     - name
+    - address
+    - postcode
+    - created_at
     - updated_at
+    - slug
   potential_duplicate_trainees:
     - id
     - group_id
@@ -220,6 +250,23 @@ shared:
     - created_at
     - id
     - name
+    - updated_at
+  trainee_withdrawal_reasons:
+    - id
+    - trainee_id
+    - withdrawal_reason_id
+    - trainee_withdrawal_id
+    - created_at
+    - updated_at
+  trainee_withdrawals:
+    - id
+    - trainee_id
+    - date
+    - trigger
+    - another_reason
+    - future_interest
+    - discarded_at
+    - created_at
     - updated_at
   trainees:
     - apply_application_id
@@ -305,45 +352,8 @@ shared:
     - system_admin
     - updated_at
     - welcome_email_sent_at
-  :bulk_update_row_errors:
-    - id
-    - created_at
-    - updated_at
-    - errored_on_id
-    - errored_on_type
-    - error_type
-    - message
-    - error_type
-  :placements:
-    - id
-    - trainee_id
-    - school_id
-    - urn
-    - name
-    - address
-    - postcode
-    - created_at
-    - updated_at
-    - slug
-  :withdrawal_reasons:
+  withdrawal_reasons:
     - id
     - created_at
     - updated_at
     - name
-  :trainee_withdrawals:
-    - id
-    - trainee_id
-    - date
-    - trigger
-    - another_reason
-    - future_interest
-    - discarded_at
-    - created_at
-    - updated_at
-  :trainee_withdrawal_reasons:
-    - id
-    - trainee_id
-    - withdrawal_reason_id
-    - trainee_withdrawal_id
-    - created_at
-    - updated_at
