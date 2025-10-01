@@ -21,7 +21,7 @@ module Dqt
   private
 
     def trn_request
-      @trn_request ||= TrnRequest.create_with(request_id: SecureRandom.uuid)
+      @trn_request ||= Trs::TrnRequest.create_with(request_id: SecureRandom.uuid)
                                  .find_or_create_by!(trainee:)
     end
 
