@@ -139,7 +139,7 @@ If there is no issue, we can kick off another polling job with a timeout in the
 future:
 
 ```ruby
-Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+Dqt::RetrieveTrnJob.perform_later(t.trs_trn_request, Date.today + 4.days)
 ```
 
 ### Dqt::TraineeUpdate::TraineeUpdateMissingTrn
@@ -168,7 +168,7 @@ Two issues are possible:
     when assigned:
 
     ```ruby
-    Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+    Dqt::RetrieveTrnJob.perform_later(t.trs_trn_request, Date.today + 4.days)
     ```
 
     You will need to set the second argument (timeout) to some point in the
@@ -181,7 +181,7 @@ Two issues are possible:
     the TRN:
 
     ```ruby
-    Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+    Dqt::RetrieveTrnJob.perform_later(t.trs_trn_request, Date.today + 4.days)
     ```
 
 ## Incorrectly awarded trainee
