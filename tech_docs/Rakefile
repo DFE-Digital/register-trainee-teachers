@@ -107,7 +107,7 @@ namespace :tech_docs do
             f.write(
               <<~METADATA,
                 ---
-                title: #{field['field_name']}
+                title: #{field['page_title'] || field['field_name']}
                 weight: #{index + 1}
                 source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/app/lib/hesa/reference_data/#{version_dir.gsub(/(\.|-)/, '_')}.rb
                 ---
