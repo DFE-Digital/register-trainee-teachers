@@ -1,4 +1,4 @@
-# <%= field.fetch("field_name") %>
+# <%= field["page_title"] || field["field_name"] %>
 
 <%= link_to "Download entries as a CSV file", "/reference-data/#{version}/#{field.fetch("technical")}/download" %>
 
