@@ -9,9 +9,7 @@ Withdraw a trainee.
 
 ## Request
 
-```
-POST /api/v2025.0/trainees/{trainee_id}/withdraw
-```
+    POST /api/v2025.0/trainees/{trainee_id}/withdraw
 
 ## Parameters
 

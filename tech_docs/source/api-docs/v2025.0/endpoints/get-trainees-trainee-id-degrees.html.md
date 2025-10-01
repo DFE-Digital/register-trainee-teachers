@@ -9,9 +9,7 @@ Get many degrees for a trainee.
 
 ## Request
 
-```
-GET /api/v2025.0/trainees/{trainee_id}/degrees
-```
+    GET /api/v2025.0/trainees/{trainee_id}/degrees
 
 ## Parameters
 

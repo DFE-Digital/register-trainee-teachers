@@ -9,9 +9,7 @@ Defer a trainee.
 
 ## Request
 
-```
-POST /api/v2025.0/trainees/{trainee_id}/defer
-```
+    POST /api/v2025.0/trainees/{trainee_id}/defer
 
 ## Parameters
 

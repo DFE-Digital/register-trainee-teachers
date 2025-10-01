@@ -9,9 +9,7 @@ Provides general information about the API.
 
 ## Request
 
-```
-GET /api/v2025.0/info
-```
+    GET /api/v2025.0/info
 
 ## Possible responses
 
