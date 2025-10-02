@@ -120,6 +120,55 @@
         ]
       },
       {
+        "name": "allocation_subjects",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "name"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
         "name": "apply_applications",
         "syncMode": "incremental",
         "cursorField": [
@@ -184,7 +233,7 @@
         ]
       },
       {
-        "name": "allocation_subjects",
+        "name": "bulk_update_row_errors",
         "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
@@ -212,7 +261,66 @@
           },
           {
             "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
               "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "errored_on_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "errored_on_type"
+            ]
+          },
+          {
+            "fieldPath": [
+              "error_type"
+            ]
+          },
+          {
+            "fieldPath": [
+              "message"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "bulk_update_trainee_uploads",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -222,7 +330,91 @@
           },
           {
             "fieldPath": [
-              "name"
+              "provider_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "status"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "submitted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "submitted_by_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "number_of_trainees"
+            ]
+          },
+          {
+            "fieldPath": [
+              "version"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "course_subjects",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "course_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "subject_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
             ]
           },
           {
@@ -367,60 +559,6 @@
           {
             "fieldPath": [
               "uuid"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "course_subjects",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "course_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "subject_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
             ]
           }
         ]
@@ -781,6 +919,60 @@
         ]
       },
       {
+        "name": "funding_method_subjects",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "allocation_subject_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "funding_method_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
         "name": "funding_methods",
         "syncMode": "incremental",
         "cursorField": [
@@ -835,60 +1027,6 @@
           {
             "fieldPath": [
               "training_route"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "funding_method_subjects",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "allocation_subject_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "funding_method_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
             ]
           },
           {
@@ -1047,6 +1185,60 @@
         ]
       },
       {
+        "name": "lead_partner_users",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "lead_partner_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "user_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
         "name": "lead_partners",
         "syncMode": "incremental",
         "cursorField": [
@@ -1126,7 +1318,7 @@
         ]
       },
       {
-        "name": "lead_partner_users",
+        "name": "nationalities",
         "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
@@ -1154,22 +1346,17 @@
           },
           {
             "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
               "id"
             ]
           },
           {
             "fieldPath": [
-              "lead_partner_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "user_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
+              "name"
             ]
           },
           {
@@ -1234,7 +1421,7 @@
         ]
       },
       {
-        "name": "nationalities",
+        "name": "placements",
         "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
@@ -1262,12 +1449,22 @@
           },
           {
             "fieldPath": [
-              "created_at"
+              "id"
             ]
           },
           {
             "fieldPath": [
-              "id"
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "school_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "urn"
             ]
           },
           {
@@ -1277,7 +1474,27 @@
           },
           {
             "fieldPath": [
+              "address"
+            ]
+          },
+          {
+            "fieldPath": [
+              "postcode"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
               "updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "slug"
             ]
           }
         ]
@@ -1726,6 +1943,139 @@
         ]
       },
       {
+        "name": "trainee_withdrawal_reasons",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "withdrawal_reason_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_withdrawal_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "trainee_withdrawals",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trainee_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "date"
+            ]
+          },
+          {
+            "fieldPath": [
+              "trigger"
+            ]
+          },
+          {
+            "fieldPath": [
+              "another_reason"
+            ]
+          },
+          {
+            "fieldPath": [
+              "future_interest"
+            ]
+          },
+          {
+            "fieldPath": [
+              "discarded_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
         "name": "trainees",
         "syncMode": "incremental",
         "cursorField": [
@@ -2069,21 +2419,6 @@
           },
           {
             "fieldPath": [
-              "withdraw_date"
-            ]
-          },
-          {
-            "fieldPath": [
-              "withdraw_reasons_details"
-            ]
-          },
-          {
-            "fieldPath": [
-              "withdraw_reasons_dfe_details"
-            ]
-          },
-          {
-            "fieldPath": [
               "hesa_trn_submission_id"
             ]
           },
@@ -2194,149 +2529,6 @@
         ]
       },
       {
-        "name": "bulk_update_row_errors",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "errored_on_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "errored_on_type"
-            ]
-          },
-          {
-            "fieldPath": [
-              "error_type"
-            ]
-          },
-          {
-            "fieldPath": [
-              "message"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "placements",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "trainee_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "school_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "urn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "name"
-            ]
-          },
-          {
-            "fieldPath": [
-              "address"
-            ]
-          },
-          {
-            "fieldPath": [
-              "postcode"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "slug"
-            ]
-          }
-        ]
-      },
-      {
         "name": "withdrawal_reasons",
         "syncMode": "incremental",
         "cursorField": [
@@ -2381,213 +2573,6 @@
           {
             "fieldPath": [
               "name"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "trainee_withdrawals",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "trainee_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "date"
-            ]
-          },
-          {
-            "fieldPath": [
-              "trigger"
-            ]
-          },
-          {
-            "fieldPath": [
-              "another_reason"
-            ]
-          },
-          {
-            "fieldPath": [
-              "future_interest"
-            ]
-          },
-          {
-            "fieldPath": [
-              "discarded_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "trainee_withdrawal_reasons",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "trainee_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "withdrawal_reason_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "trainee_withdrawal_id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
-            ]
-          }
-        ]
-      },
-      {
-        "name": "school_data_downloads",
-        "syncMode": "incremental",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_deleted_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "_ab_cdc_updated_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "status"
-            ]
-          },
-          {
-            "fieldPath": [
-              "started_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "completed_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "schools_created"
-            ]
-          },
-          {
-            "fieldPath": [
-              "schools_updated"
-            ]
-          },
-          {
-            "fieldPath": [
-              "lead_partners_updated"
-            ]
-          },
-          {
-            "fieldPath": [
-              "created_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "updated_at"
             ]
           }
         ]
