@@ -50,7 +50,6 @@ module Trainees
           create_placements!
           store_hesa_metadata!
           check_for_potential_duplicate_trainees!
-          enqueue_background_jobs!
           check_for_missing_hesa_mappings!
         end
       end
@@ -202,15 +201,6 @@ module Trainees
       (1..9).map do |n|
         ::Hesa::CodeSets::Disabilities::MAPPING[hesa_trainee[:"disability#{n}"]]
       end.compact
-    end
-
-    def enqueue_background_jobs!
-      return if skip_background_jobs || (potential_duplicate? && trainee.trn.blank?)
-      return unless FeatureService.enabled?(:integrate_with_dqt)
-
-      if trainee.trn.present?
-        Trainees::Update.call(trainee:)
-      end
     end
 
     def check_for_potential_duplicate_trainees!

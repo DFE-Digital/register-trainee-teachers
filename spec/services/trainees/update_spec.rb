@@ -22,8 +22,8 @@ module Trainees
             expect(Trs::UpdateProfessionalStatusJob).to have_received(:perform_later).with(trainee)
           end
 
-          it "does not queue updates when update_dqt is false" do
-            described_class.call(trainee: trainee, params: params, update_dqt: false)
+          it "does not queue updates when update_trs is false" do
+            described_class.call(trainee: trainee, params: params, update_trs: false)
             expect(Trs::UpdateTraineeJob).not_to have_received(:perform_later)
             expect(Trs::UpdateProfessionalStatusJob).not_to have_received(:perform_later)
           end

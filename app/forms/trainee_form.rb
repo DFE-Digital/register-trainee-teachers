@@ -5,19 +5,19 @@ class TraineeForm
   include ActiveModel::AttributeAssignment
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :trainee, :user, :params, :store, :fields, :update_dqt
+  attr_accessor :trainee, :user, :params, :store, :fields, :update_trs
 
   delegate :id, :persisted?, to: :trainee
 
   after_validation :track_validation_error, if: -> { user.present? && errors.any? }
 
-  def initialize(trainee, params: {}, user: nil, store: FormStore, update_dqt: true)
+  def initialize(trainee, params: {}, user: nil, store: FormStore, update_trs: true)
     @user = user
     @trainee = trainee
     @params = params
     @store = store
     @fields = compute_fields
-    @update_dqt = update_dqt
+    @update_trs = update_trs
     assign_attributes(fields)
   end
 
@@ -32,7 +32,7 @@ class TraineeForm
   def save!
     if valid?
       assign_attributes_to_trainee
-      Trainees::Update.call(trainee:, update_dqt:)
+      Trainees::Update.call(trainee:, update_trs:)
       clear_stash
     else
       false

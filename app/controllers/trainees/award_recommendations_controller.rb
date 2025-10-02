@@ -3,7 +3,7 @@
 module Trainees
   class AwardRecommendationsController < BaseController
     def create
-      if OutcomeDateForm.new(trainee, update_dqt: false).save! && trainee.submission_ready?
+      if OutcomeDateForm.new(trainee, update_trs: false).save! && trainee.submission_ready?
         trainee.recommend_for_award!
 
         Trainees::UpdateIttDataInTra.call(trainee:)
