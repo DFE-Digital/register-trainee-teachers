@@ -63,5 +63,4 @@ DfE::Analytics.configure do |config|
   # Set bigquery airbyte vars
   config.bigquery_airbyte_dataset = "register_airbyte_qa"
   config.bigquery_hidden_policy_tag = "projects/rugged-abacus-218110/locations/europe-west2/taxonomies/69524444121704657/policyTags/6523652585511281766"
-
 end
