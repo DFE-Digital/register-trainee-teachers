@@ -16,7 +16,7 @@ module SystemAdmin
         else
           redirect_to(pending_trns_path, flash: { warning: "TRN still not available for #{trainee_name(trainee)}" })
         end
-      rescue Dqt::Client::HttpError, Trs::Client::HttpError => e
+      rescue Trs::Client::HttpError => e
         redirect_to(pending_trns_path, dqt_error: "API error: #{e.inspect}")
       end
 
