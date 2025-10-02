@@ -61,9 +61,6 @@
 #  training_initiative             :integer
 #  training_route                  :integer
 #  trn                             :string
-#  withdraw_date                   :datetime
-#  withdraw_reasons_details        :string
-#  withdraw_reasons_dfe_details    :string
 #  created_at                      :datetime         not null
 #  updated_at                      :datetime         not null
 #  application_choice_id           :integer
@@ -199,6 +196,7 @@ class Trainee < ApplicationRecord
   attribute :progress, Progress.to_type
 
   delegate :update_training_route!, to: :route_data_manager
+  delegate :date, to: :current_withdrawal, prefix: :withdraw, allow_nil: true
 
   validates :training_route, presence: {
     message: I18n.t("activerecord.errors.models.trainee.attributes.training_route"),
@@ -363,8 +361,6 @@ class Trainee < ApplicationRecord
     :ethnic_background,
     :additional_ethnic_background,
     :trn,
-    :withdraw_reasons_details,
-    :withdraw_reasons_dfe_details,
     :region,
     :hesa_id,
     :course_subject_one,

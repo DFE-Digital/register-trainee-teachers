@@ -282,10 +282,6 @@ module Features
       @withdrawal_future_interest_page ||= PageObjects::Trainees::Withdrawal::FutureInterest.new
     end
 
-    def withdrawal_extra_information_page
-      @withdrawal_extra_information_page ||= PageObjects::Trainees::Withdrawal::ExtraInformation.new
-    end
-
     def withdrawal_confirm_detail_page
       @withdrawal_confirm_detail_page ||= PageObjects::Trainees::Withdrawal::ConfirmDetail.new
     end

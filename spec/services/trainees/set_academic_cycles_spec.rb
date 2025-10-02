@@ -80,9 +80,9 @@ module Trainees
 
       context "when a trainee has a withdraw_date" do
         let(:trainee) do
-          build(
+          create(
             :trainee,
-            withdraw_date: current_academic_cycle.end_date,
+            trainee_withdrawals: [create(:trainee_withdrawal, date: current_academic_cycle.end_date)],
             itt_end_date: next_academic_cycle.end_date,
           )
         end

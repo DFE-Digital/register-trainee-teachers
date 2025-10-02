@@ -332,9 +332,6 @@ shared:
     - training_route
     - trn
     - updated_at
-    - withdraw_date
-    - withdraw_reasons_details
-    - withdraw_reasons_dfe_details
     - hesa_trn_submission_id
     - hesa_editable
     - slug_sent_to_dqt_at
