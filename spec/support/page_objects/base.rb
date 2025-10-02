@@ -48,8 +48,8 @@ module PageObjects
 
     element :v20250_link, "a", text: "v2025.0"
 
-    element :course_age_range_link, "a", text: "Course Age Range"
-    element :course_age_range_heading, "h1", text: "Course Age Range"
+    element :course_age_range_link, "a", text: "Course age range"
+    element :course_age_range_heading, "h1", text: "Course age range"
     element :course_age_range_download_link, "a", text: "Download entries as a CSV file"
   end
 
