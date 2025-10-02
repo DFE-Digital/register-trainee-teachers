@@ -5,13 +5,13 @@ require "rails_helper"
 describe "`GET /trainees/:trainee_id/degrees` endpoint" do
   context "with a valid authentication token and the feature flag on" do
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
     let(:auth_token) do
       create(
         :authentication_token,
-        hashed_token: AuthenticationToken.hash_token(token),
+        provider:,
       )
     end
+    let(:token) { auth_token.token }
 
     context "with a valid trainee that has a degree" do
       let(:trainee) { create(:trainee, :with_degree) }

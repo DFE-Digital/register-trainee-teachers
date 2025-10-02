@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe ".update_last_used_at_on_token!" do
-  let(:token) { "auth_token" }
-  let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token), last_used_at: 1.week.ago, status: status) }
+  let!(:auth_token) { create(:authentication_token, last_used_at: 1.week.ago, status: status) }
+  let(:token) { auth_token.token }
 
   context "for an active token" do
     let(:status) { "active" }

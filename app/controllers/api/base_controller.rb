@@ -86,7 +86,7 @@ module Api
     end
 
     def bearer_token
-      @bearer_token ||= request.headers["Authorization"]
+      request.authorization&.delete_prefix("Bearer ")&.strip
     end
   end
 end
