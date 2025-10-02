@@ -3,7 +3,7 @@
     "streams": [
       {
         "name": "academic_cycles",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -16,6 +16,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -47,7 +57,7 @@
       },
       {
         "name": "activities",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -60,6 +70,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -101,7 +121,7 @@
       },
       {
         "name": "apply_applications",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -114,6 +134,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -155,7 +185,7 @@
       },
       {
         "name": "allocation_subjects",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -168,6 +198,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -194,7 +234,7 @@
       },
       {
         "name": "courses",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -207,6 +247,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -323,7 +373,7 @@
       },
       {
         "name": "course_subjects",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -336,6 +386,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -367,7 +427,7 @@
       },
       {
         "name": "degrees",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -380,6 +440,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -481,7 +551,7 @@
       },
       {
         "name": "disabilities",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -494,6 +564,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -515,7 +595,7 @@
       },
       {
         "name": "dqt_trn_requests",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -528,6 +608,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -569,7 +659,7 @@
       },
       {
         "name": "dttp_providers",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -582,6 +672,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -618,7 +718,7 @@
       },
       {
         "name": "dttp_schools",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -631,6 +731,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -672,7 +782,7 @@
       },
       {
         "name": "funding_methods",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -685,6 +795,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -726,7 +846,7 @@
       },
       {
         "name": "funding_method_subjects",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -739,6 +859,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -770,7 +900,7 @@
       },
       {
         "name": "hesa_metadata",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -783,6 +913,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -859,7 +999,7 @@
       },
       {
         "name": "hesa_trn_submissions",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -872,6 +1012,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -898,7 +1048,7 @@
       },
       {
         "name": "lead_partners",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -911,6 +1061,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -967,7 +1127,7 @@
       },
       {
         "name": "lead_partner_users",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -980,6 +1140,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1011,7 +1181,7 @@
       },
       {
         "name": "nationalisations",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1024,6 +1194,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1055,7 +1235,7 @@
       },
       {
         "name": "nationalities",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1068,6 +1248,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1094,7 +1284,7 @@
       },
       {
         "name": "potential_duplicate_trainees",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1107,6 +1297,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1138,7 +1338,7 @@
       },
       {
         "name": "provider_users",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1151,6 +1351,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1182,7 +1392,7 @@
       },
       {
         "name": "providers",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1195,6 +1405,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1256,7 +1476,7 @@
       },
       {
         "name": "schools",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1269,6 +1489,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1320,7 +1550,7 @@
       },
       {
         "name": "sign_offs",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1333,6 +1563,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1374,7 +1614,7 @@
       },
       {
         "name": "subject_specialisms",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1387,6 +1627,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1423,7 +1673,7 @@
       },
       {
         "name": "subjects",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1436,6 +1686,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1467,7 +1727,7 @@
       },
       {
         "name": "trainees",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1480,6 +1740,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1836,7 +2106,7 @@
       },
       {
         "name": "users",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1849,6 +2119,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -1914,42 +2194,8 @@
         ]
       },
       {
-        "name": "hesa_collection_requests",
-        "syncMode": "incremental_deduped_history",
-        "cursorField": [
-          "_ab_cdc_lsn"
-        ],
-        "primaryKey": [
-          [
-            "id"
-          ]
-        ],
-        "selectedFields": [
-          {
-            "fieldPath": [
-              "_ab_cdc_lsn"
-            ]
-          },
-          {
-            "fieldPath": [
-              "id"
-            ]
-          },
-          {
-            "fieldPath": [
-              "requested_at"
-            ]
-          },
-          {
-            "fieldPath": [
-              "state"
-            ]
-          }
-        ]
-      },
-      {
         "name": "bulk_update_row_errors",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -1962,6 +2208,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -2003,7 +2259,7 @@
       },
       {
         "name": "placements",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2016,6 +2272,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -2072,7 +2338,7 @@
       },
       {
         "name": "withdrawal_reasons",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2085,6 +2351,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -2111,7 +2387,7 @@
       },
       {
         "name": "trainee_withdrawals",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2124,6 +2400,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -2175,7 +2461,7 @@
       },
       {
         "name": "trainee_withdrawal_reasons",
-        "syncMode": "incremental_deduped_history",
+        "syncMode": "incremental",
         "cursorField": [
           "_ab_cdc_lsn"
         ],
@@ -2188,6 +2474,16 @@
           {
             "fieldPath": [
               "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
             ]
           },
           {
@@ -2208,6 +2504,80 @@
           {
             "fieldPath": [
               "trainee_withdrawal_id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "created_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "school_data_downloads",
+        "syncMode": "incremental",
+        "cursorField": [
+          "_ab_cdc_lsn"
+        ],
+        "primaryKey": [
+          [
+            "id"
+          ]
+        ],
+        "selectedFields": [
+          {
+            "fieldPath": [
+              "_ab_cdc_lsn"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_deleted_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "_ab_cdc_updated_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "id"
+            ]
+          },
+          {
+            "fieldPath": [
+              "status"
+            ]
+          },
+          {
+            "fieldPath": [
+              "started_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "completed_at"
+            ]
+          },
+          {
+            "fieldPath": [
+              "schools_created"
+            ]
+          },
+          {
+            "fieldPath": [
+              "schools_updated"
+            ]
+          },
+          {
+            "fieldPath": [
+              "lead_partners_updated"
             ]
           },
           {
