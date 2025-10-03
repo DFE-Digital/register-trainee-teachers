@@ -47,3 +47,5 @@ jobs:
           tf-state-file: pr-${{ github.event.pull_request.number || github.event.inputs.pr_number }}.tfstate
           terraform-base: terraform/aks
           tf-file: provider.tf
+          gcp-project-id: rugged-abacus-218110
+          gcp-wip: projects/712009772377/locations/global/workloadIdentityPools/register-trainee-teachers/providers/register-trainee-teachers
