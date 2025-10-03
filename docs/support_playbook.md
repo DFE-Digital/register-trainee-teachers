@@ -5,7 +5,7 @@
 If you’re making a data change, you must include an `audit_comment` so that we can see why we did this. For example:
 
 ```ruby
-trainee.update(date_of_birth: <whatevs>, audit_comment: 'Update from the trainee via DQT')
+trainee.update(date_of_birth: <whatevs>, audit_comment: 'Update from the trainee via TRS')
 ```
 
 ## Changing training route
@@ -22,12 +22,9 @@ A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask suppor
 
 `update_training_route!` no longer kicks off an update to DQT so that will need to be done manually if needed.
 
-
-
 ## Changing the withdrawal date for a withdrawn trainee
 
 Sometimes support will ask a dev to change the withdrawal date for a trainee.
-
 
 ```ruby
 trainee = Trainee.find_by(slug: "XXX")
@@ -38,9 +35,9 @@ trainee.current_withdrawal.update!(date: Date.new(2024, 3, 3), audit_comment: "R
 
 Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. When logged in as a system admin the trainee's withdrawal can be reverted by clicking on `Undo withdrawal` at the `Withdrawal details` section in the trainee show page `/trainees/:slug`
 
-## Error codes on DQT trainee jobs
+## Error codes on TRS trainee jobs
 
-Sometimes the different jobs that send trainee info to DQT (such as `Dqt::UpdateTraineeJob`,`Dqt::WithdrawTraineeJob` and `Dqt::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
+Sometimes the different jobs that send trainee info to TRS (such as `Trs::UpdateTraineeJob`,`Dqt::WithdrawTraineeJob` and `Dqt::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
 
 Sometimes a trainee will have both a failed update job, and a failed award job. In this case, make sure to re-run the update job first. If you run the award job first and then try to run the update job, the update will fail as the trainee will already have QTS (and therefore can no longer be updated on DQT’s end).
 
@@ -246,8 +243,8 @@ Sometimes we need to toggle/change features and settings. This can be done using
 # set the ENV, the pods will automatically restart once the process has gone through
 kubectl -n bat-production set env deployment/production SETTINGS__FEATURES__SIGN_IN_METHOD=otp
 ```
-This process can take a short while, follow [Verifying settings has been changed](#verifying-settings-has-been-changed)
 
+This process can take a short while, follow [Verifying settings has been changed](#verifying-settings-has-been-changed)
 
 The format of the ENV you set is important. Double underscores `__` are the equivalent of subsections in `settings.yml` so the above is equivalent to:
 
@@ -259,6 +256,7 @@ features:
 ```
 
 ### Verifying settings has been changed
+
 To check how the process is going. Use `kubectl get pods`. For example:
 
 ```sh
@@ -297,6 +295,7 @@ kubectl -n bat-production set env deployment/production SETTINGS__FEATURES__GOOG
 ```
 
 ### Removing Duplicate Trainees
+
 The `trainee:remove_duplicates` task is used to remove duplicate trainees from the database based on email address. The task requires a CSV file with trainee IDs as input.
 
 Here’s how to use it:
@@ -309,7 +308,7 @@ rake trainee:remove_duplicates <path_to_csv_file>
 
 **Parameters:**
 
-- `path_to_csv_file`: This should be replaced with the path to the CSV file that contains the trainee IDs. The CSV file should contain a header row with an “trainee_id” and an “email” field. See below:
+* `path_to_csv_file`: This should be replaced with the path to the CSV file that contains the trainee IDs. The CSV file should contain a header row with an “trainee_id” and an “email” field. See below:
 
 ```csv
 trainee_id,email
@@ -328,6 +327,7 @@ bundle exec rake trainee:remove_duplicates\[trainees.csv\]
 ```
 
 This command will:
+
 1. Open the `trainees.csv` file.
 2. Run through each row, using the “id” field to find the corresponding trainee in the database.
 3. If found, it will find and discard any other trainee that has the same email address.
@@ -337,11 +337,11 @@ This command will:
 ## Resolving Incorrect `provider_type` on Publish: Ensuring Trainees are Created on Register
 
 **Steps to Take:**
-1. **Correct the `provider_type` on Publish**
-    - Once the provider type is corrected, the Apply applications will be imported, and new trainees will be created.
-2. **Identify the `apply_id` on Register**
-    - Retrieve the `apply_id` from the `ApplyApplication` table using the following query:
 
+1. **Correct the `provider_type` on Publish**
+    * Once the provider type is corrected, the Apply applications will be imported, and new trainees will be created.
+2. **Identify the `apply_id` on Register**
+    * Retrieve the `apply_id` from the `ApplyApplication` table using the following query:
 
       ```ruby
       application_choice_ids = ApplyApplication.where(accredited_body_code: "2N2", recruitment_cycle_year: 2024, state: :non_importable_hei).pluck(:apply_id)
@@ -349,7 +349,7 @@ This command will:
 
 3. **Touch All Relevant `ApplicationChoice` Entries on Apply**
 
-    - Touch the relevant `ApplicationChoice` records so that when Register calls the API endpoint with the `changed_since` parameter it will return the applications again:
+    * Touch the relevant `ApplicationChoice` records so that when Register calls the API endpoint with the `changed_since` parameter it will return the applications again:
 
       ```ruby
       ApplicationChoice.where(id: application_choice_ids).touch_all
@@ -357,26 +357,27 @@ This command will:
 
 4. **Delete Related `ApplyApplication` Entries on Register**
 
-    - Remove the associated `ApplyApplication` records from the Register:
+    * Remove the associated `ApplyApplication` records from the Register:
 
       ```ruby
       ApplyApplication.where(apply_id: application_choice_ids).delete_all
       ```
 
 5. **Initiate Sidekiq Jobs on Register**
-    - Trigger the following Sidekiq jobs to complete the process:
-      - `import_applications_from_apply`
-      - `create_trainees_from_apply`
+    * Trigger the following Sidekiq jobs to complete the process:
+      * `import_applications_from_apply`
+      * `create_trainees_from_apply`
 
 Note: This process will import a fresh copy of the applicants’ details and use them to create new records. This ensures that the system realigns with its normal mode of operation, correcting any issues caused by previously imported, potentially stale data.
 
 ## Lead partners
+
 ### Converting a provider into lead partner
 
 If a provider loses accreditation and needs to be converted into a lead partner, do the following
 
-- Find the ids of all providers that need to be converted
-- run the following task including the apostrophes
+* Find the ids of all providers that need to be converted
+* run the following task including the apostrophes
 
 ```
 bundle exec rails 'copy_providers_to_lead_partners:copy[<provider ids separated by spaces>, <provider type, eg hei or scitt>]'
@@ -384,22 +385,21 @@ bundle exec rails 'copy_providers_to_lead_partners:copy[<provider ids separated 
 
 This task should create the new lead partner and associate the providers’ users with the new lead partner record.
 
-
 ### Creating a lead partner from a school
+
 Ensure that the schools data are up to date see docs/setup-development.md
 
 There is UI that the support agent that can use, so no need for a dev.
 
-
-1. Find the school in question, https://www.register-trainee-teachers.service.gov.uk/system-admin/schools
-2. Change `Is a lead partner? ` from `No` to `Yes`
+1. Find the school in question, <https://www.register-trainee-teachers.service.gov.uk/system-admin/schools>
+2. Change `Is a lead partner?` from `No` to `Yes`
 3. Confirm it
-4. Verify it, https://www.register-trainee-teachers.service.gov.uk/system-admin/lead-partners
+4. Verify it, <https://www.register-trainee-teachers.service.gov.uk/system-admin/lead-partners>
 
 ### Adding a previous trainee for a former accredited provider
 
-
 Given a lead partner and the former accredited provider is the same.
+
 ```ruby
 
 lead_partner = LeadPartner.find(1363)
