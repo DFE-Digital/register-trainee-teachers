@@ -14,14 +14,14 @@ describe SidekiqJobsHelper do
   describe "#last_run_or_scheduled_at" do
     context "when there is a dead job" do
       before do
-        allow(Dqt::FindDeadJobs).to receive(:call).and_return(
+        allow(Trs::FindDeadJobs).to receive(:call).and_return(
           trainee.id => {
             job_id: "dead_job_id",
             error_message: "dead_job_error_message",
             scheduled_at: last_run_at,
           },
         )
-        allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
+        allow(Trs::FindRetryJobs).to receive(:call).and_return({})
       end
 
       it "returns the last time the dead job ran" do
@@ -31,8 +31,8 @@ describe SidekiqJobsHelper do
 
     context "when there is a retry job" do
       before do
-        allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
-        allow(Dqt::FindRetryJobs).to receive(:call).and_return(
+        allow(Trs::FindDeadJobs).to receive(:call).and_return({})
+        allow(Trs::FindRetryJobs).to receive(:call).and_return(
           trainee.id => {
             job_id: "retry_job_id",
             error_message: "retry_job_error_message",
@@ -48,8 +48,8 @@ describe SidekiqJobsHelper do
 
     context "when there is no job in Sidekiq" do
       before do
-        allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
-        allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
+        allow(Trs::FindDeadJobs).to receive(:call).and_return({})
+        allow(Trs::FindRetryJobs).to receive(:call).and_return({})
       end
 
       it "returns nil" do
@@ -61,14 +61,14 @@ describe SidekiqJobsHelper do
   describe "#job_status" do
     context "when there is a dead job" do
       before do
-        allow(Dqt::FindDeadJobs).to receive(:call).and_return(
+        allow(Trs::FindDeadJobs).to receive(:call).and_return(
           trainee.id => {
             job_id: "dead_job_id",
             error_message: "dead_job_error_message",
             scheduled_at: last_run_at,
           },
         )
-        allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
+        allow(Trs::FindRetryJobs).to receive(:call).and_return({})
       end
 
       it "the status is `dead`" do
@@ -78,8 +78,8 @@ describe SidekiqJobsHelper do
 
     context "when there is a retry job" do
       before do
-        allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
-        allow(Dqt::FindRetryJobs).to receive(:call).and_return(
+        allow(Trs::FindDeadJobs).to receive(:call).and_return({})
+        allow(Trs::FindRetryJobs).to receive(:call).and_return(
           trainee.id => {
             job_id: "retry_job_id",
             error_message: "retry_job_error_message",
@@ -95,8 +95,8 @@ describe SidekiqJobsHelper do
 
     context "when there is no job in Sidekiq" do
       before do
-        allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
-        allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
+        allow(Trs::FindDeadJobs).to receive(:call).and_return({})
+        allow(Trs::FindRetryJobs).to receive(:call).and_return({})
       end
 
       it "the status is `unknown`" do

@@ -22,10 +22,10 @@ module SidekiqJobsHelper
 private
 
   def dead_jobs
-    @dead_jobs ||= Dqt::FindDeadJobs.call
+    @dead_jobs ||= Trs::FindDeadJobs.call
   end
 
   def retry_jobs
-    @retry_jobs ||= Dqt::FindRetryJobs.call
+    @retry_jobs ||= Trs::FindRetryJobs.call
   end
 end
