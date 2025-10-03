@@ -23,7 +23,7 @@ describe StatusTag::View do
     end
   end
 
-  context "with a trainee teacher degree apprenticeship recommended for QTS" do
+  context "with a trainee Teacher Degree Apprenticeship recommended for QTS" do
     let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :recommended_for_award) }
 
     it "renders the correct status" do
@@ -31,7 +31,7 @@ describe StatusTag::View do
     end
   end
 
-  context "with a trainee teacher degree apprenticeship awarded QTS" do
+  context "with a trainee Teacher Degree Apprenticeship awarded QTS" do
     let(:trainee) { build(:trainee, :teacher_degree_apprenticeship, :awarded) }
 
     it "renders the correct status" do
