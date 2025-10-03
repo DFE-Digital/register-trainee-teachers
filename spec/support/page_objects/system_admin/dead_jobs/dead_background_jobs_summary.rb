@@ -6,7 +6,7 @@ module PageObjects
       class DeadBackgroundJobs < PageObjects::Base
         set_url "/system-admin/dead_jobs"
 
-        element :dqt_update_trainee_dead_jobs_view_button, "a", id: "view_DqtUpdateTrainee", text: "View"
+        element :trs_update_trainee_dead_jobs_view_button, "a", id: "view_TrsUpdateTrainee", text: "View"
       end
     end
   end

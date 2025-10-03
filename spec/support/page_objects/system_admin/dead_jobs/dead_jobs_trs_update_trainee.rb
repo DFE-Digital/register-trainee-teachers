@@ -3,8 +3,8 @@
 module PageObjects
   module SystemAdmin
     module DeadJobs
-      class DqtUpdateTrainee < PageObjects::Base
-        set_url "/system-admin/dead_jobs/DeadJobs::DqtUpdateTrainee"
+      class TrsUpdateTrainee < PageObjects::Base
+        set_url "/system-admin/dead_jobs/DeadJobs::TrsUpdateTrainee"
 
         element :view_trainee_button, "button", text: "View"
         element :retry_trainee_button, "button", text: "Retry"
