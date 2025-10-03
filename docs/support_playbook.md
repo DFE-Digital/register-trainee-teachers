@@ -20,7 +20,7 @@ manager.update_training_route!("school_direct_salaried")
 
 A bunch of fields will be set to `nil`, see `RouteDataManager` class. Ask support to communicate with the user to update the Trainee record for the missing information.
 
-`update_training_route!` no longer kicks off an update to DQT so that will need to be done manually if needed.
+`update_training_route!` no longer kicks off an update to TRS so that will need to be done manually if needed.
 
 ## Changing the withdrawal date for a withdrawn trainee
 
@@ -37,44 +37,36 @@ Sometimes support will ask a dev to unwithdraw a trainee which has been withdraw
 
 ## Error codes on TRS trainee jobs
 
-Sometimes the different jobs that send trainee info to TRS (such as `Trs::UpdateTraineeJob`,`Dqt::WithdrawTraineeJob` and `Dqt::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
+Sometimes the different jobs that send trainee info to TRS (such as `Trs::UpdateTraineeJob`,`Trs::UpdateProfessionalStatus` and `Trs::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
 
-Sometimes a trainee will have both a failed update job, and a failed award job. In this case, make sure to re-run the update job first. If you run the award job first and then try to run the update job, the update will fail as the trainee will already have QTS (and therefore can no longer be updated on DQT’s end).
+Sometimes a trainee will have both a failed update job, and a failed award job. In this case, make sure to re-run the update job first. If you run the award job first and then try to run the update job, the update will fail as the trainee will already have QTS (and therefore can no longer be updated on TRS’s end).
 
 We have a couple of services you can call which retrieve data about the trainee
-in DQT.
+in TRS.
 
 If the trainee has a TRN already, call this (where `t` is the trainee):
 
 ```ruby
-Dqt::RetrieveTeacher.call(trainee: t)
-```
-
-If the trainee does not have a TRN yet, call this instead:
-
-```ruby
-Dqt::FindTeacher.call(trainee: t)
+Trs::RetrieveTeacher.call(trainee: t)
 ```
 
 This list is not exhaustive, but here are some common errors types that we see:
 
 ### 500 error
 
-This is a cloud server error. You can usually just rerun these jobs and they’ll succeed. If not, speak with DQT about the trainee.
+This is a cloud server error. You can usually just rerun these jobs and they’ll succeed. If not, speak with the TRS team about the trainee.
 
 ### 404 error
 
-This is triggered when DQT cannot find the trainee on their side.
+This is triggered when TRS cannot find the trainee on their side.
 
 ```json
-status: 404, body: {"title":"Teacher with specified TRN not found","status":404,"errorCode":10001}
+status: 404, body: {"title":"Person not found.","status":404,"detail":"TRN: '1234567890'","errorCode":10001}
 ```
 
-* This can happen when there is a mismatch between the date of birth that Register holds for the trainee vs what DQT holds (we send both TRN and DOB to DQT to match trainees)
+* You may also see this error come up when the trainee’s TRN is inactive on the TRS side
 
-* I’ve also seen this error come up when the trainee’s TRN is inactive on the DQT side
-
-Speak with the DQT team to work out if it’s one of the above issues. Align the date of birth on both services and re-run the job.
+Speak with the TRS team to work out if it’s one of the above issues. Align the date of birth on both services and re-run the job.
 
 ### 400 error
 
@@ -84,8 +76,8 @@ This error means there is an unprocessable entry. This normally means there is s
 status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode":10006}
 ```
 
-* There might be a trainee state mismatch here between DQT and Register
-* We’ve seen this error when a trainee has been withdrawn on DQT and awarded on Register
+* There might be a trainee state mismatch here between TRS and Register
+* We’ve seen this error when a trainee has been withdrawn on TRS and awarded on Register
 * We have some known examples of trainees like this so it’s worth checking with our support team to see if there are existing comms about the trainee
 * In this case you might need to check with the provider what the state of the record should be
 
@@ -94,18 +86,18 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 ```
 
 * If this error came from the award job, then the trainee might be stuck in recommended for award state
-* If everything matches on DQT’s side (trainee details, the provider) then you may be able to just award the trainee on Register’s side
+* If everything matches on TRS’s side (trainee details, the provider) then you may be able to just award the trainee on Register’s side
 * If any doubt then check with the provider
-* We’ve also seen this error on the withdraw job - cross-reference with DQT and check with provider if necessary to see what state the trainee should be in
+* We’ve also seen this error on the withdraw job - cross-reference with TRS and check with provider if necessary to see what state the trainee should be in
 
 ```json
 "qualification.providerUkprn":["Organisation not found"]
 ```
 
-* We send the UKPRN of the trainee’s degree institution to DQT
-* This error happens when DQT do not have a matching UKPRN on their end for the trainee’s degree organisation
+* We send the UKPRN of the trainee’s degree institution to TRS
+* This error happens when TRS do not have a matching UKPRN on their end for the trainee’s degree organisation
 * Locate the institution_uuid for the failing trainee and look up the UKPRN in the DfE Reference Data gem repo
-* Send the UKPRN and degree institution details over to DQT so they can add on their side and re-run the job
+* Send the UKPRN and degree institution details over to TRS so they can add on their side and re-run the job
 
 ```json
 {"initialTeacherTraining.programmeType":["Teacher already has QTS/EYTS date"]}
@@ -114,91 +106,48 @@ status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,
 * We’ve noticed there is likely a race condition sometimes causing this error
 * When we run an award job, an update job is also kicked off
 * We think that sometimes the award job succeeds before the update job, which causes this error on the update job
-* Cross reference the trainee details on Register with the trainee details on DQT, you can use the DQT API for this - checking the trainee timeline on Register can also be helful
+* Cross reference the trainee details on Register with the trainee details on TRS, you can use the TRS API for this - checking the trainee timeline on Register can also be helpful
 
   ```ruby
-  Dqt::RetrieveTeacher.call(trainee:)
+  Trs::RetrieveTeacher.call(trainee:)
   ```
 
 * If there are no differences, it is likely a race condition and you can delete the failed update job
-* If there are differences, speak to DQT and maybe contact provider to see what needs updating
+* If there are differences, speak to TRS and maybe contact provider to see what needs updating
 
-### Dqt::RetrieveTrnJob for Trainee id: xxx has timed out after 4 days
+### Trs::RetrieveTrnJob for Trainee id: xxx has timed out after 4 days
 
 We see this error on slack when our polling job times out before we receive a
-TRN from DQT. The default timeout is four days from the trainee’s
+TRN from TRS. The default timeout is four days from the trainee’s
 `submitted_for_trn_at` date.
 
-We need to understand from DQT why the TRN is taking a while to assign. Is there
+We need to understand from TRS why the TRN is taking a while to assign. Is there
 a problem we need to address?
 
 If there is no issue, we can kick off another polling job with a timeout in the
 future:
 
 ```ruby
-Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+Trs::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
 ```
-
-### Dqt::TraineeUpdate::TraineeUpdateMissingTrn
-
-This error will be accompanied by the message:
-
-`Cannot update trainee on DQT without a trn (id: 142508)`
-
-This means that we have tried to update a trainee on DQT before we’ve received a
-TRN back.
-
-Two issues are possible:
-
-1. The trainee is not present on DQT for some reason (it may have failed
-  previously with one of the above errors).
-
-    In this case, we need to re-register them:
-
-    ```ruby
-    Dqt::RegisterForTrnJob.perform_later(t)
-    ```
-
-    making sure that it succeeds.
-
-    We also need to kick off another polling job, so that we receive the TRN
-    when assigned:
-
-    ```ruby
-    Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
-    ```
-
-    You will need to set the second argument (timeout) to some point in the
-    future if the trainee was submitted for TRN more than 4 days ago.
-
-2. The trainee is present on DQT but we never received the TRN (our polling
-  job may have timed out).
-
-    In this case, we need to kick off another polling job, so that we receive
-    the TRN:
-
-    ```ruby
-    Dqt::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
-    ```
 
 ## Incorrectly awarded trainee
 
-If a trainee has incorrectly been recommended for award in register this will also impact DQT.
+If a trainee has incorrectly been recommended for award in register this will also impact TRS.
 
-In this scenario we must also contact DQT to fix the trainee award status and update the trainee status in register.
+In this scenario we must also contact TRS to fix the trainee award status and update the trainee status in register.
 
 ```ruby
 trainee = Trainee.find_by(slug: "limax")
 
 trainee.update(state: :trn_received, recommended_for_award_at: nil, awarded_at: nil, outcome_date: nil, audit_comment: 'fill in the blanks')
-
 ```
 
-All record changes should be sent to DQT unless otherwise specified or impossible (for example, we cannot send a DOB update). If DQT already has that info (for example, they’re awarded on DQT, and we’re just awarding on Register) we should not send any information.
+All record changes should be sent to TRS unless otherwise specified or impossible (for example, we cannot send a DOB update). If TRS already has that info (for example, they’re awarded on TRS, and we’re just awarding on Register) we should not send any information.
 
 Register support may need to communicate with the trainee and provider to ensure that they understand the error and the resolution.
 
-## Managing the sidekiq queue
+## Managing the Sidekiq queue
 
 ### via the UI
 
@@ -209,15 +158,15 @@ Register support may need to communicate with the trainee and provider to ensure
 #### Inspect jobs in a queue
 
 ```ruby
-dqt_queue = Sidekiq::Queue.new("dqt")
-dqt_queue.select { _1.value.include? "122803" } # select jobs containing user id value 122803
+trs_queue = Sidekiq::Queue.new("dqt")
+trs_queue.select { 1.value.include? "122803" } # select jobs containing user id value 122803
 ```
 
 #### Tally by job type
 
 ```ruby
 default_queue = Sidekiq::Queue.new("default")
-default_queue.map { _1["wrapped"] }.tally
+default_queue.map { 1["wrapped"] }.tally
 ```
 
 #### Dead jobs
