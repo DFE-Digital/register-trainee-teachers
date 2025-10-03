@@ -9,7 +9,7 @@ Get a single placement for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}`
+    GET /api/v2025.0/trainees/{trainee_id}/placements/{placement_id}
 
 ## Parameters
 
@@ -34,8 +34,7 @@ Get a single placement for a trainee.
         "created_at": "2024-01-18T08:02:42.672Z",
         "updated_at": "2024-01-18T08:02:42.672Z"
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -45,8 +44,7 @@ Get a single placement for a trainee.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -61,7 +59,6 @@ Get a single placement for a trainee.
           "message": "Placement(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

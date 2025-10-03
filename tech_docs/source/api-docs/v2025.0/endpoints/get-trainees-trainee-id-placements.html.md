@@ -9,7 +9,7 @@ Get many placements for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/placements`
+    GET /api/v2025.0/trainees/{trainee_id}/placements
 
 ## Parameters
 
@@ -35,8 +35,7 @@ Get many placements for a trainee.
           "updated_at": "2024-01-18T08:02:42.672Z"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -46,8 +45,7 @@ Get many placements for a trainee.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -62,7 +60,6 @@ Get many placements for a trainee.
           "message": "Trainee(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

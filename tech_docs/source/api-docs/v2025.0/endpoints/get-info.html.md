@@ -9,7 +9,7 @@ Provides general information about the API.
 
 ## Request
 
-`GET /api/v2025.0/info`
+    GET /api/v2025.0/info
 
 ## Possible responses
 
@@ -19,8 +19,7 @@ Provides general information about the API.
     <pre class="json-code-sample">
     {
       "status": "ok"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -30,7 +29,6 @@ Provides general information about the API.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

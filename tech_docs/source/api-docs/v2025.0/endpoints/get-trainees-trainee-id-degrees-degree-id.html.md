@@ -9,7 +9,7 @@ Get a single degree for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}`
+    GET /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
 
 ## Parameters
 
@@ -42,8 +42,7 @@ Get a single degree for a trainee.
         "subject_uuid": "bf8170f0-5dce-e911-a985-000d3ab79618",
         "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -53,8 +52,7 @@ Get a single degree for a trainee.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -69,7 +67,6 @@ Get a single degree for a trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

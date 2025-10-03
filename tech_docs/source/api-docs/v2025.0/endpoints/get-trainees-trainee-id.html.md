@@ -9,7 +9,7 @@ Get a single trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}`
+    GET /api/v2025.0/trainees/{trainee_id}
 
 ## Parameters
 
@@ -139,8 +139,7 @@ Get a single trainee.
           }
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -150,8 +149,7 @@ Get a single trainee.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
