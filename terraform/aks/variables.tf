@@ -11,7 +11,6 @@ variable "snapshot_databases_to_deploy" { default = 0 }
 # Key Vault variables
 variable "key_vault_name" {}
 
-
 variable "gov_uk_host_names" {
   default = []
   type    = list(any)
