@@ -3,22 +3,30 @@ provider "google" {
 }
 
 data "azurerm_key_vault_secret" "airbyte_client_id" {
+  count = var.airbyte_enabled ? 1 : 0
+
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = "AIRBYTE-CLIENT-ID"
 }
 
 data "azurerm_key_vault_secret" "airbyte_client_secret" {
+  count = var.airbyte_enabled ? 1 : 0
+
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = "AIRBYTE-CLIENT-SECRET"
 }
 
 data "azurerm_key_vault_secret" "airbyte_workspace_id" {
+  count = var.airbyte_enabled ? 1 : 0
+
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = "AIRBYTE-WORKSPACE-ID"
 }
 
 # change this to a random password?
 data "azurerm_key_vault_secret" "airbyte_replication_password" {
+  count = var.airbyte_enabled ? 1 : 0
+
   key_vault_id = data.azurerm_key_vault.key_vault.id
   name         = "AIRBYTE-REPLICATION-PASSWORD"
 }
@@ -38,10 +46,10 @@ module "airbyte" {
 
   host_name          = module.postgres.host
   database_name      = module.postgres.name
-  workspace_id       = data.azurerm_key_vault_secret.airbyte_workspace_id.value
-  client_id          = data.azurerm_key_vault_secret.airbyte_client_id.value
-  client_secret      = data.azurerm_key_vault_secret.airbyte_client_secret.value
-  repl_password      = data.azurerm_key_vault_secret.airbyte_replication_password.value
+  workspace_id       = data.azurerm_key_vault_secret.airbyte_workspace_id[0].value
+  client_id          = data.azurerm_key_vault_secret.airbyte_client_id[0].value
+  client_secret      = data.azurerm_key_vault_secret.airbyte_client_secret[0].value
+  repl_password      = data.azurerm_key_vault_secret.airbyte_replication_password[0].value
   server_url         = "https://airbyte-${var.namespace}.${module.cluster_data.ingress_domain}"
   connection_status  = var.connection_status
   connection_streams = local.connection_streams
