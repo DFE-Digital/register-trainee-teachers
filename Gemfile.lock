@@ -843,7 +843,7 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   omniauth_openid_connect
   parallel_tests
-  pg (>= 0.18, < 2.0)
+  pg (~> 1.6)
   pg_search (~> 2.3)
   progress_bar
   prometheus-client
