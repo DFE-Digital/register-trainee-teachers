@@ -6,11 +6,12 @@
 #
 #  id            :bigint           not null, primary key
 #  expires_at    :date
-#  hashed_token  :string           not null
+#  hashed_token  :string
 #  last_used_at  :datetime
 #  name          :string           not null
 #  revoked_at    :datetime
 #  status        :string           default("active")
+#  token_hash    :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  created_by_id :bigint
@@ -26,6 +27,7 @@
 #  index_authentication_tokens_on_revoked_by_id            (revoked_by_id)
 #  index_authentication_tokens_on_status                   (status)
 #  index_authentication_tokens_on_status_and_last_used_at  (status,last_used_at)
+#  index_authentication_tokens_on_token_hash               (token_hash) UNIQUE
 #
 # Foreign Keys
 #
@@ -35,6 +37,8 @@
 #
 
 class AuthenticationToken < ApplicationRecord
+  SECRET_KEY = Rails.application.key_generator.generate_key("api-token:v1", 32)
+
   enum :status, {
     active: "active",
     expired: "expired",
@@ -79,20 +83,31 @@ class AuthenticationToken < ApplicationRecord
     created_by:
   )
     begin
-      token = "#{Rails.env}_" + SecureRandom.hex(10)
-      hashed_token = hash_token(token)
-    end while exists?(hashed_token:)
+      token = "#{Rails.env}_" + SecureRandom.hex(32)
+      token_hash = hash_token(token)
+    end while exists?(token_hash:)
 
-    create!(name:, provider:, created_by:, expires_at:, hashed_token:, token:)
+    create!(name:, provider:, created_by:, expires_at:, token_hash:, token:)
   end
 
-  def self.hash_token(token)
-    Digest::SHA256.hexdigest(token)
+  def self.legacy_hash_token(unhashed_token)
+    Digest::SHA256.hexdigest(unhashed_token)
+  end
+
+  def self.hash_token(unhashed_token)
+    OpenSSL::HMAC.hexdigest("SHA256", SECRET_KEY, unhashed_token)
   end
 
   def self.authenticate(unhashed_token)
-    token_without_prefix = unhashed_token.split.last
-    find_by(hashed_token: Digest::SHA256.hexdigest(token_without_prefix))
+    hmac_token = find_by(token_hash: hash_token(unhashed_token))
+
+    return hmac_token if hmac_token.present?
+
+    # Temp logic to convert existing tokens
+    #
+    token = find_by(hashed_token: legacy_hash_token(unhashed_token))
+    token.update!(token_hash: hash_token(unhashed_token)) if token.present?
+    token
   end
 
   def update_last_used_at!

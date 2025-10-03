@@ -41,6 +41,8 @@ $mobile-big-end: 501px;
 
   .govuk-panel__body {
     @include govuk-font(24);
+
+    word-break: break-word;
   }
 }
 

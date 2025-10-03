@@ -87,21 +87,6 @@ describe UndoWithdrawalForm, type: :model do
         expect(trainee.reload.state).to eq("trn_received")
       end
 
-      it "clears withdrawal-related fields" do
-        trainee.update(
-          withdraw_reasons_details: "Some details",
-          withdraw_reasons_dfe_details: "DfE details",
-          withdraw_date: Date.current,
-        )
-
-        subject.save
-        trainee.reload
-
-        expect(trainee.withdraw_reasons_details).to be_nil
-        expect(trainee.withdraw_reasons_dfe_details).to be_nil
-        expect(trainee.withdraw_date).to be_nil
-      end
-
       it "sets an audit comment with the comment and ticket" do
         subject.save
         expect(trainee.reload.audits.last.comment).to eq("#{comment}\n#{ticket}")

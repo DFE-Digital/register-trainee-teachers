@@ -120,11 +120,7 @@ module Withdrawal
     end
 
     def details_dfe_label
-      if data_model.withdraw_reasons_dfe_details.blank?
-        "Could the Department for Education have done anything to avoid the candidate withdrawing?"
-      else
-        "What the Department for Education could have done"
-      end
+      "What the Department for Education could have done"
     end
 
     def mappable_field(field_value, field_label, action_url)

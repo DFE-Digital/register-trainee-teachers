@@ -3,8 +3,8 @@
 require "rails_helper"
 
 describe "API Monitoring" do
-  let(:token) { "trainee_token" }
-  let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+  let!(:auth_token) { create(:authentication_token) }
+  let!(:token) { auth_token.token }
   let!(:trainee) { create(:trainee, :with_hesa_trainee_detail, slug: "12345", provider: auth_token.provider) }
   let(:metrics) { Yabeda::CollectorsRegistry.all }
   let(:response) do

@@ -1,4 +1,4 @@
 Provider,Provider name,Academic Year,Subject,Route,Lead School,Lead School ID,Cohort Level,Bursary Amount,Bursary Trainees,Scholarship Amount,Scholarship Trainees,Tier 1 Amount,Tier 1 Trainees,Tier 2 Amount,Tier 2 Trainees,Tier 3 Amount,Tier 3 Trainees
 1111,Provider 1,2021/22,Physics,Provider-led,,,PG,24000,2,0,0,0,0,0,0,0,0
 2222,Provider 2,2021/22,Computing,School Direct tuition fee,Lead school 2,0002,PG,0,0,0,0,3000,3,2000,2,1000,1
-1111,Provider 1,2021/22,Business studies,Provider-led,,,PG,0,0,18000,5,0,0,0,0,0,0
+1111,Provider 1,2021/22,Business studies,Teacher Degree Apprenticeship,,,PG,0,0,18000,5,0,0,0,0,0,0

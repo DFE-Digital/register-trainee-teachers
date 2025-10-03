@@ -92,10 +92,10 @@ module Trainees
       end
 
       context "when a trainee has been withdrawn" do
-        let(:trainee) { create(:trainee, :trn_received) }
+        let!(:trainee_withdrawal) { create(:trainee_withdrawal, trainee: trainee, date: "2021-09-21") }
 
         before do
-          trainee.withdraw_date = "2021-09-21"
+          trainee.submit_for_trn!
           trainee.withdraw!
         end
 

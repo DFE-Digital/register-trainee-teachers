@@ -429,8 +429,6 @@ feature "Withdrawing a trainee" do
     trainee.reload
     expect(trainee.withdraw_date).to be_nil
     expect(trainee.withdrawal_reasons).to be_empty
-    expect(trainee.withdraw_reasons_details).to be_nil
-    expect(trainee.withdraw_reasons_dfe_details).to be_nil
   end
 
   def then_the_deferral_text_should_be_shown

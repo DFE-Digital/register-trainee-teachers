@@ -41,8 +41,6 @@ module Api
         applying_for_grant
         applying_for_scholarship
         bursary_tier
-        withdraw_reasons_details
-        withdraw_reasons_dfe_details
       ].freeze
 
       def initialize(trainee)

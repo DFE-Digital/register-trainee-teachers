@@ -78,7 +78,7 @@ describe Trainees::StartStatusesController do
       end
 
       context "withdrawal form has started and the trainee start date is before the withdrawal date" do
-        let(:trainee) { create(:trainee, :submitted_for_trn, :with_withdrawal_date) }
+        let!(:trainee) { create(:trainee, :submitted_for_trn, :withdrawn) }
         let(:page_context) { :withdraw }
 
         it "redirects to the withdrawal confirmation page" do

@@ -34,7 +34,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   end
 
   context "with an valid authentication token and the feature flag off", feature_register_api: false do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+    let(:token) { create(:authentication_token, provider:).token }
 
     it "returns status code 404 not found" do
       put(
@@ -48,7 +48,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   end
 
   context "with a valid authentication token" do
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+    let(:token) { create(:authentication_token, provider:).token }
     let(:slug) { trainee.slug }
     let(:endpoint) { "/api/v2025.0/trainees/#{slug}" }
     let(:data) { { first_names: "Alice" } }
@@ -984,7 +984,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
     end
 
     context "with course subjects" do
-      let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
+      let(:token) { create(:authentication_token, provider:).token }
 
       context "when HasCourseAttributes#primary_education_phase? is true" do
         before do
@@ -1043,6 +1043,68 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
             expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
             expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          end
+        end
+      end
+
+      context "when course_subject_two or course_subject_three are being unset" do
+        before do
+          trainee.update(course_subject_one: "biology",
+                         course_subject_two: "historical linguistics",
+                         course_subject_three: "computer science")
+
+          put(
+            endpoint,
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+        end
+
+        context "via null values" do
+          let(:params) do
+            {
+              data: {
+                course_subject_one: "100511",
+                course_subject_two: nil,
+                course_subject_three: nil,
+              },
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to be_nil
+            expect(trainee.course_subject_three).to be_nil
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+          end
+        end
+
+        context "via blank values" do
+          let(:params) do
+            {
+              data: {
+                course_subject_one: "100511",
+                course_subject_two: "",
+                course_subject_three: "",
+              },
+            }
+          end
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("primary teaching")
+            expect(trainee.course_subject_two).to be_nil
+            expect(trainee.course_subject_three).to be_nil
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+            expect(response.parsed_body[:data][:course_subject_two]).to be_nil
+            expect(response.parsed_body[:data][:course_subject_three]).to be_nil
           end
         end
       end
@@ -1302,11 +1364,11 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   end
 
   context "Updating a newly created trainee" do
-    let(:token) { "trainee_token" }
-    let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+    let!(:auth_token) { create(:authentication_token) }
+    let!(:token) { create(:authentication_token).token }
     let!(:nationality) { create(:nationality, :british) }
 
-    let(:headers) { { Authorization: token, **json_headers } }
+    let(:headers) { { Authorization: "Bearer #{token}", **json_headers } }
 
     let(:start_academic_cycle) { create(:academic_cycle, :current) }
     let(:end_academic_cycle) { create(:academic_cycle, next_cycle: true) }

@@ -20,13 +20,25 @@ module Api
             Hesa::CodeSets::BursaryLevels::GRANT => FUNDING_TYPES["grant"],
           }.freeze
 
+          FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS = [
+            AllocationSubjects::ANCIENT_LANGUAGES,
+            AllocationSubjects::MODERN_LANGUAGES,
+            AllocationSubjects::FRENCH_LANGUAGE,
+            AllocationSubjects::GERMAN_LANGUAGE,
+            AllocationSubjects::SPANISH_LANGUAGE,
+            AllocationSubjects::PHYSICS,
+          ].freeze
+
+          FUND_CODE_EXCEPTIONS_START_YEAR = 2025
+
           attr_reader :hesa_trainee_detail_attributes
 
           delegate :fund_code,
                    :funding_method,
                    :trainee_attributes, to: :hesa_trainee_detail_attributes
           delegate :training_route,
-                   :course_subject_one, to: :trainee_attributes
+                   :course_subject_one,
+                   :course_allocation_subject_id, to: :trainee_attributes
 
           def initialize(hesa_trainee_detail_attributes)
             @hesa_trainee_detail_attributes = hesa_trainee_detail_attributes
@@ -35,7 +47,7 @@ module Api
           def call
             return ValidationResult.new(true) if no_funding_method? || funding_method_invalid? || training_route.nil?
 
-            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method?
+            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method? && !fund_code_exception?
 
             ValidationResult.new(
               funding_method_exists?,
@@ -44,6 +56,16 @@ module Api
           end
 
         private
+
+          def fund_code_exception_allocation_subject_ids
+            @fund_code_exception_allocation_subject_ids ||=
+              AllocationSubject.where(name: FUND_CODE_EXCEPTION_ALLOCATION_SUBJECTS).pluck(:id)
+          end
+
+          def fund_code_exception?
+            academic_cycle.start_year == FUND_CODE_EXCEPTIONS_START_YEAR &&
+              fund_code_exception_allocation_subject_ids.include?(course_allocation_subject_id)
+          end
 
           def funding_method_exists?
             return false if academic_cycle.nil?

@@ -82,7 +82,6 @@ Get a single trainee.
         "record_source": "api",
         "iqts_country": null,
         "hesa_editable": true,
-        "withdraw_reasons_dfe_details": null,
         "placement_detail": null,
         "ukprn": "10000571",
         "ethnicity": "120",

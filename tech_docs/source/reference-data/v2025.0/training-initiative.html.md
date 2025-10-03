@@ -48,20 +48,8 @@ source_url: https://github.com/DFE-Digital/register-trainee-teachers/blob/main/a
   </thead>
   <tbody class="govuk-table__body">
       <tr class="govuk-table__row">
-        <td class="govuk-table__cell">001</td>
-        <td class="govuk-table__cell">Abridged ITT course</td>
-      </tr>
-      <tr class="govuk-table__row">
         <td class="govuk-table__cell">009</td>
         <td class="govuk-table__cell">Maths and Physics Chairs Programme</td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">011</td>
-        <td class="govuk-table__cell">Primary mathematics specialist</td>
-      </tr>
-      <tr class="govuk-table__row">
-        <td class="govuk-table__cell">019</td>
-        <td class="govuk-table__cell">Additional ITT place for PE with a priority subject</td>
       </tr>
       <tr class="govuk-table__row">
         <td class="govuk-table__cell">025</td>

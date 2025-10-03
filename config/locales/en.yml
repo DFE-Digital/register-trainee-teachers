@@ -1793,12 +1793,6 @@ en:
             date:
               blank: &withdrawal_date_blank The withdrawal date must have a day, month and year
               invalid: *withdrawal_date_blank
-        withdrawal/extra_information_form:
-          attributes:
-            withdraw_reasons_details:
-              too_long: Details about why the trainee withdrew must be 1000 characters or less
-            withdraw_reasons_dfe_details:
-              too_long: What the Department for Education could have done must be 1000 characters or less
         funding/training_initiatives_form:
           attributes:
             training_initiative:

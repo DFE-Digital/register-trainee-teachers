@@ -91,9 +91,6 @@ feature "Undo trainee withdrawal" do
   def then_i_expect_the_trainee_to_have_been_updated
     expect(trainee.reload.state).not_to eql "withdrawn"
     expect(withdrawal.withdrawal_reasons).not_to be_empty
-    expect(trainee.withdraw_date).to be_nil
-    expect(trainee.withdraw_reasons_details).to be_nil
-    expect(trainee.withdraw_reasons_dfe_details).to be_nil
     expect(withdrawal.discarded_at).not_to be_nil
     expect(trainee.audits.last.comment).to have_text("https://google.com")
   end

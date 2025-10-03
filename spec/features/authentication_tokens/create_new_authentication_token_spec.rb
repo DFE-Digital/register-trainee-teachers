@@ -71,8 +71,8 @@ private
   end
 
   def and_i_can_generate_an_authentication_token
-    @token_string = "1a2b3c4d5e"
-    allow(SecureRandom).to receive(:hex).with(10).and_return(@token_string)
+    @token_string = SecureRandom.hex(32)
+    allow(SecureRandom).to receive(:hex).with(32).and_return(@token_string)
   end
 
   def given_i_navigate_to_the_authentication_token_index_page

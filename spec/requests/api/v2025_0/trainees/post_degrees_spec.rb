@@ -7,13 +7,7 @@ describe "`POST /trainees/:trainee_id/degrees` endpoint" do
 
   context "with a valid authentication token and the feature flag on" do
     let(:provider) { trainee.provider }
-    let(:token) { AuthenticationToken.create_with_random_token(provider: provider, name: "test token", created_by: provider.users.first).token }
-    let(:auth_token) do
-      create(
-        :authentication_token,
-        hashed_token: AuthenticationToken.hash_token(token),
-      )
-    end
+    let(:token) { create(:authentication_token, provider:).token }
     let(:trainee) { create(:trainee) }
     let(:degrees_attributes) do
       {

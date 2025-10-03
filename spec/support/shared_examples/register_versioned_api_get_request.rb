@@ -6,8 +6,8 @@ RSpec.shared_examples "register versioned api GET request" do |version, path, co
   url = path.gsub(":api_version", version)
 
   describe "`GET #{url}` endpoint" do
-    let(:token) { "info_token" }
-    let!(:auth_token) { create(:authentication_token, hashed_token: AuthenticationToken.hash_token(token)) }
+    let(:auth_token) { create(:authentication_token) }
+    let(:token) { auth_token.token }
 
     let(:trainee_with_slug_placements_and_degrees) do
       create(:trainee,

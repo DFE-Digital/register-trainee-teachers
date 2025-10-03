@@ -471,18 +471,20 @@ FactoryBot.define do
       state { "recommended_for_award" }
     end
 
-    trait :with_withdrawal_date do
-      withdraw_date { Faker::Date.between(from: itt_start_date + 1.day, to: itt_start_date + 1.year) }
-    end
-
     trait :withdrawn do
       trn_received
-      with_withdrawal_date
 
       state { "withdrawn" }
 
       after(:create) do |trainee|
-        create(:trainee_withdrawal, trainee:)
+        create(
+          :trainee_withdrawal,
+          trainee: trainee,
+          date: Faker::Date.between(
+            from: trainee.itt_start_date + 1.day,
+            to: trainee.itt_start_date + 1.year,
+          ),
+        )
       end
     end
 
@@ -540,8 +542,6 @@ FactoryBot.define do
 
     trait :withdrawn_for_another_reason do
       withdrawn
-      withdraw_reasons_details { "withdraw details" }
-      withdraw_reasons_dfe_details { "withdraw dfe details" }
 
       after(:create) do |trainee|
         withdrawal_reason = create(:withdrawal_reason, name: WithdrawalReasons::ANOTHER_REASON)
