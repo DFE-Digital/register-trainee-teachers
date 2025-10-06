@@ -18,10 +18,10 @@ describe FindNewStarterTrainees do
     end
   end
 
-  let(:valid_trainee) { create(:trainee, state: 1, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current) }
-  let(:valid_trainee_with_no_trainee_start_date) { create(:trainee, state: 1, trainee_start_date: nil, start_academic_cycle: AcademicCycle.current) }
-  let(:valid_draft_trainee) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current) }
-  let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle_id: 10) }
+  let(:valid_trainee) { create(:trainee, state: 1, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
+  let(:valid_trainee_with_no_trainee_start_date) { create(:trainee, state: 1, trainee_start_date: nil, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
+  let(:valid_draft_trainee) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
+  let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle_id: 10, training_route: :provider_led_postgrad) }
 
   it "to contain non draft current academic cycle trainees starting before the census date" do
     expect(subject).to include(valid_trainee)
@@ -47,9 +47,42 @@ describe FindNewStarterTrainees do
         itt_start_date: 2.months.ago,
         start_academic_cycle: AcademicCycle.current,
         record_source: Trainee::HESA_TRN_DATA_SOURCE,
+        training_route: :provider_led_postgrad,
       )
     end
 
     it { is_expected.to include(trainee) }
+  end
+
+  context "when trainee is on assessment only route" do
+    let(:assessment_only_trainee) do
+      create(
+        :trainee,
+        state: 1,
+        itt_start_date: 2.months.ago,
+        start_academic_cycle: AcademicCycle.current,
+        training_route: :assessment_only,
+      )
+    end
+
+    it "does not include assessment only trainees" do
+      expect(subject).not_to include(assessment_only_trainee)
+    end
+  end
+
+  context "when trainee is on early years assessment only route" do
+    let(:early_years_assessment_only_trainee) do
+      create(
+        :trainee,
+        state: 1,
+        itt_start_date: 2.months.ago,
+        start_academic_cycle: AcademicCycle.current,
+        training_route: :early_years_assessment_only,
+      )
+    end
+
+    it "does not include early years assessment only trainees" do
+      expect(subject).not_to include(early_years_assessment_only_trainee)
+    end
   end
 end
