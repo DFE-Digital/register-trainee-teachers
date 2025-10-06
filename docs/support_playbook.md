@@ -33,13 +33,22 @@ trainee.current_withdrawal.update!(date: Date.new(2024, 3, 3), audit_comment: "R
 
 ## Unwithdrawing a withdrawn trainee
 
-Sometimes support will ask a dev to unwithdraw a trainee which has been withdrawn in error. When logged in as a system admin the trainee's withdrawal can be reverted by clicking on `Undo withdrawal` at the `Withdrawal details` section in the trainee show page `/trainees/:slug`
+Sometimes support will ask a dev to unwithdraw a trainee which has been
+withdrawn in error. When logged in as a system admin the trainee's withdrawal
+can be reverted by clicking on `Undo withdrawal` at the `Withdrawal details`
+section in the trainee show page `/trainees/:slug`
 
 ## Error codes on TRS trainee jobs
 
-Sometimes the different jobs that send trainee info to TRS (such as `Trs::UpdateTraineeJob`,`Trs::UpdateProfessionalStatus` and `Trs::RecommendForAwardJob` ) will produce an error. You can view these failed jobs in the Sidekiq UI.
+Sometimes the different jobs that send trainee info to TRS (such as
+`Trs::UpdateTraineeJob` and `Trs::UpdateProfessionalStatus`) will produce an
+error. You can view these failed jobs in the Sidekiq UI.
 
-Sometimes a trainee will have both a failed update job, and a failed award job. In this case, make sure to re-run the update job first. If you run the award job first and then try to run the update job, the update will fail as the trainee will already have QTS (and therefore can no longer be updated on TRS’s end).
+Sometimes a trainee will have both a failed update job, and a failed update
+professional status job. In this case, make sure to re-run the update job
+first. If you run the professional status job first and then try to run the
+update job, the update will fail as the trainee will already have QTS (and
+therefore can no longer be updated on TRS’s end).
 
 We have a couple of services you can call which retrieve data about the trainee
 in TRS.
@@ -54,7 +63,8 @@ This list is not exhaustive, but here are some common errors types that we see:
 
 ### 500 error
 
-This is a cloud server error. You can usually just rerun these jobs and they’ll succeed. If not, speak with the TRS team about the trainee.
+This is a cloud server error. You can usually just rerun these jobs and they’ll
+succeed. If not, speak with the TRS team about the trainee.
 
 ### 404 error
 
@@ -70,7 +80,9 @@ Speak with the TRS team to work out if it’s one of the above issues. Align the
 
 ### 400 error
 
-This error means there is an unprocessable entry. This normally means there is some kind of validation error in the payload which will need to be investigated.
+This error means there is an unprocessable entry. This normally means there is
+some kind of validation error in the payload which will need to be
+investigated.
 
 ```json
 status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode":10006}
