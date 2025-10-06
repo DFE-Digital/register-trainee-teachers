@@ -29,7 +29,7 @@ These changes must be reflected in provider submissions.
 
 The following new value has been added:
 
-#### Training Route
+#### Training route
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -50,7 +50,7 @@ The following new value has been added:
 
 The following value has been removed and must no longer be used:
 
-#### Training Route
+#### Training route
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -72,7 +72,7 @@ The following value has been removed and must no longer be used:
 
 The following existing values have had their labels updated to improve clarity or reflect current policy. The codes have not changed.
 
-#### Fund Code
+#### Fund code
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -158,7 +158,7 @@ The following values are not currently supported by the Register service and mus
   </tbody>
 </table>
 
-#### Age Range
+#### Age range
 
 <table class="govuk-table">
   <thead class="govuk-table__head">
@@ -183,23 +183,23 @@ The following values are not currently supported by the Register service and mus
 
 The following reference data items have not changed. All existing values under these categories remain valid and supported:
 
-- Age Ranges (excluding unsupported codes listed above)
-- Awarding Institution
-- Course Subjects
-- Degree Country
-- Degree Grade
-- Degree Subject
-- Degree Types
+- Age ranges (excluding unsupported codes listed above)
+- Awarding institution
+- Course subjects
+- Degree country
+- Degree grade
+- Degree subject
+- Degree types
 - Disabilities
 - Ethnicity
-- Fund Code (excluding updated labels above)
-- Funding Method
-- ITT Aim
+- Fund code (excluding updated labels above)
+- Funding method
+- ITT aim
 - Nationality (excluding unsupported codes listed above)
-- Qualification Aim
+- Qualification aim
 - Sex
-- Study Mode
-- Training Initiative
-- Training Route (excluding changes listed above)
+- Study mode
+- Training initiative
+- Training route (excluding changes listed above)
 
 If you have questions, contact the Register team.
