@@ -12,6 +12,7 @@ feature "Withdrawing a trainee" do
 
   let!(:withdrawal_reason_provider) { create(:withdrawal_reason, :provider) }
   let!(:withdrawal_reason_trainee) { create(:withdrawal_reason, :trainee) }
+  let!(:withdrawal_reason_safeguarding) { create(:withdrawal_reason, :safeguarding) }
   let!(:withdrawal_reason_unknown) { create(:withdrawal_reason, :unknown) }
   let!(:withdrawal_reason_another_reason) { create(:withdrawal_reason, :another_reason) }
 
@@ -112,6 +113,27 @@ feature "Withdrawing a trainee" do
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
         and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+      end
+    end
+
+    context "with safeguarding concerns" do
+      let(:withdrawal_date) { nil }
+
+      scenario "successfully" do
+        when_i_choose_another_day
+        withdrawal_date = and_i_enter_a_valid_date
+        and_i_continue(:date)
+        when_i_choose_trainee_chose_to_withdraw
+        and_i_continue(:trigger)
+        when_i_check_the_safeguarding_reason
+        and_i_continue(:reason)
+        when_i_choose_future_interest
+        and_i_continue(:future_interest)
+        then_i_am_redirected_to_withdrawal_confirmation_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason: withdrawal_reason_safeguarding.name)
+        and_i_continue(:confirm_detail)
+        then_i_am_redirected_to_the_record_page
+        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason: withdrawal_reason_safeguarding.name)
       end
     end
 
@@ -290,6 +312,11 @@ feature "Withdrawing a trainee" do
     else
       when_i_check(:reason, I18n.t("components.withdrawal_details.reasons.#{reason}"))
     end
+  end
+
+  def when_i_check_the_safeguarding_reason
+    save_and_open_page
+    when_i_check(:reason, I18n.t("components.withdrawal_details.reasons.safeguarding_concerns"))
   end
 
   def when_i_choose(page, option)
