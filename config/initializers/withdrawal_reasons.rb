@@ -42,6 +42,7 @@ module WithdrawalReasons
   TRAINEE_CHOSE_TO_WITHDRAW_ANOTHER_REASON = "trainee_chose_to_withdraw_another_reason"
   MOVED_TO_DIFFERENT_ITT_COURSE = "moved_to_different_itt_course"
   TRAINEE_WORKLOAD_ISSUES = "trainee_workload_issues"
+  SAFEGUARDING_CONCERNS = "safeguarding_concerns"
 
   LEGACY_REASONS = [
     DEATH,
@@ -114,6 +115,7 @@ module WithdrawalReasons
     NEVER_INTENDED_TO_OBTAIN_QTS,
     MOVED_TO_DIFFERENT_ITT_COURSE,
     TRAINEE_CHOSE_TO_WITHDRAW_ANOTHER_REASON,
+    SAFEGUARDING_CONCERNS,
   ].freeze
 
   SEED = (LEGACY_REASONS + LEGACY_2023_REASONS + REASONS).map { |name| { name: } }.freeze
