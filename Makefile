@@ -256,3 +256,55 @@ enable-maintenance: maintenance-image-push maintenance-fail-over
 disable-maintenance: get-cluster-credentials
 	$(eval export CONFIG)
 	./maintenance_page/scripts/failback.sh
+
+composed-variables:
+	$(eval RESOURCE_GROUP_NAME=${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
+
+set-pgserver:
+	$(eval SERVERNAME=${RESOURCE_NAME_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-pg)
+
+list-pglogs: composed-variables set-pgserver set-azure-account
+	az postgres flexible-server server-logs list --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} | grep name
+
+download-pglogs: composed-variables set-pgserver set-azure-account
+	$(if $(LOG_NAME), , $(error Please specify a LOG_NAME for download))
+	az postgres flexible-server server-logs download --name ${LOG_NAME} --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME}
+	ls -l $(LOG_NAME)*
+
+enable-pglogs: composed-variables set-pgserver set-azure-account
+	echo "Enabling server logs for PostgreSQL server ${SERVERNAME}"
+	echo "Current Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+	echo "Setting Value"
+	az postgres flexible-server parameter set --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --value on
+	echo "New Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+
+disable-pglogs: composed-variables set-pgserver set-azure-account
+	echo "Current Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+	echo "Setting Value"
+	az postgres flexible-server parameter set --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --value off
+	echo "New Value"
+	az postgres flexible-server parameter show --resource-group ${RESOURCE_GROUP_NAME} --server-name ${SERVERNAME} --name logfiles.download_enable --query value
+
+show-service: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export DSUFFIX="-${APP_NAME}"), $(eval export DSUFFIX="-${CONFIG}") )
+	$(eval NAMESPACE=$(shell jq -r '.namespace' terraform/aks/workspace-variables/$(CONFIG).tfvars.json))
+	echo "Show service deployments"
+	kubectl -n ${NAMESPACE} get deployment/${SERVICE_NAME}${DSUFFIX}
+	kubectl -n ${NAMESPACE} get deployment/${SERVICE_NAME}${DSUFFIX}-worker
+
+scale-app: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export DSUFFIX="-${APP_NAME}"), $(eval export DSUFFIX="-${CONFIG}") )
+	$(if $(REPLICAS),,$(error Missing REPLICAS))
+	$(eval NAMESPACE=$(shell jq -r '.namespace' terraform/aks/workspace-variables/$(CONFIG).tfvars.json))
+	echo "Scaling app to ${REPLICAS}"
+	kubectl -n ${NAMESPACE} scale deployment/${SERVICE_NAME}${DSUFFIX} --replicas ${REPLICAS}
+
+scale-worker: get-cluster-credentials
+	$(if $(APP_NAME), $(eval export DSUFFIX="-${APP_NAME}"), $(eval export DSUFFIX="-${CONFIG}") )
+	$(if $(REPLICAS),,$(error Missing REPLICAS))
+	$(eval NAMESPACE=$(shell jq -r '.namespace' terraform/aks/workspace-variables/$(CONFIG).tfvars.json))
+	echo "Scaling worker to ${REPLICAS}"
+	kubectl -n ${NAMESPACE} scale deployment/${SERVICE_NAME}${DSUFFIX}-worker --replicas ${REPLICAS}
