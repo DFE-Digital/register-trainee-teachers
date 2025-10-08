@@ -210,6 +210,8 @@ module Trainees
 
       if trainee.trn.present?
         Trainees::Update.call(trainee:)
+      else
+        Trs::RegisterForTrnJob.perform_later(trainee)
       end
     end
 
