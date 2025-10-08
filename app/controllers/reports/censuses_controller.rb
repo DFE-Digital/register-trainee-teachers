@@ -97,7 +97,7 @@ module Reports
     end
 
     def itt_new_starter_trainees
-      @itt_new_starter_trainees ||= policy_scope(FindNewStarterTrainees.new(@current_academic_cycle.first_day_of_september).call)
+      @itt_new_starter_trainees ||= policy_scope(FindNewStarterTrainees.new(@current_academic_cycle.second_wednesday_of_october).call)
     end
 
     def itt_new_starter_filename
