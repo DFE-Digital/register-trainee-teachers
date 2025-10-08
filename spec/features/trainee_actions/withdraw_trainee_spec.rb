@@ -126,6 +126,7 @@ feature "Withdrawing a trainee" do
         when_i_choose_trainee_chose_to_withdraw
         and_i_continue(:trigger)
         when_i_check_the_safeguarding_reason
+        and_i_feel_in_details_for_safeguarding_reason
         and_i_continue(:reason)
         when_i_choose_future_interest
         and_i_continue(:future_interest)
@@ -315,8 +316,11 @@ feature "Withdrawing a trainee" do
   end
 
   def when_i_check_the_safeguarding_reason
-    save_and_open_page
     when_i_check(:reason, I18n.t("components.withdrawal_details.reasons.safeguarding_concerns"))
+  end
+
+  def and_i_feel_in_details_for_safeguarding_reason
+    fill_in "Enter the concerns", with: "Some details about safeguarding concerns"
   end
 
   def when_i_choose(page, option)
