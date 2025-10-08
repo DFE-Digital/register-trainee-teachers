@@ -1782,6 +1782,8 @@ en:
                 blank: Choose a reason for removing the trainee
             another_reason:
               blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
         withdrawal/trigger_form:
           attributes:
             trigger:
@@ -2124,6 +2126,8 @@ en:
               blank: Please select an option. Valid options are yes, no and unknown.
             another_reason:
               blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
         api/v20250/hesa_trainee_detail_attributes:
           attributes:
             fund_code:
