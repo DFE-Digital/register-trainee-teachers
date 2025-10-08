@@ -81,9 +81,16 @@ module Withdrawal
       return unless withdrawal_reasons
 
       withdrawal_reasons.map do |reason|
-        return another_reason if reason.name.match?("another_reason")
-
-        t("components.withdrawal_details.reasons.#{reason.name}", default: "-")
+        if reason.name.match?("another_reason")
+          another_reason
+        elsif reason.name == "safeguarding_concerns"
+          [
+            t("components.withdrawal_details.reasons.#{reason.name}"),
+            sanitize(safeguarding_concern_reasons),
+          ].compact_blank.join("<br>")
+        else
+          t("components.withdrawal_details.reasons.#{reason.name}", default: "-")
+        end
       end.join("<br>").html_safe
     end
 
@@ -116,6 +123,14 @@ module Withdrawal
         data_model.trainee_withdrawals&.last&.another_reason
       else
         data_model.another_reason
+      end
+    end
+
+    def safeguarding_concern_reasons
+      if data_model.is_a?(Trainee)
+        data_model.trainee_withdrawals&.last&.safeguarding_concern_reasons
+      else
+        data_model.safeguarding_concern_reasons
       end
     end
 
