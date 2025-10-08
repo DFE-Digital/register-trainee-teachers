@@ -126,7 +126,9 @@ feature "Withdrawing a trainee" do
         when_i_choose_trainee_chose_to_withdraw
         and_i_continue(:trigger)
         when_i_check_the_safeguarding_reason
-        and_i_feel_in_details_for_safeguarding_reason
+        and_i_continue(:reason)
+        then_i_see_validation_error_for_safeguarding_concern_reasons
+        and_i_fill_in_details_for_safeguarding_concern_reasons
         and_i_continue(:reason)
         when_i_choose_future_interest
         and_i_continue(:future_interest)
@@ -320,7 +322,11 @@ feature "Withdrawing a trainee" do
     when_i_check(:reason, I18n.t("components.withdrawal_details.reasons.safeguarding_concerns"))
   end
 
-  def and_i_feel_in_details_for_safeguarding_reason
+  def then_i_see_validation_error_for_safeguarding_concern_reasons
+    expect(page).to have_css(".govuk-error-message", text: /Enter the concerns/)
+  end
+
+  def and_i_fill_in_details_for_safeguarding_concern_reasons
     fill_in "Enter the concerns", with: "Some details about safeguarding concerns"
   end
 
