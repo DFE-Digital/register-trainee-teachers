@@ -7,7 +7,7 @@ module Withdrawal
 
     delegate :trigger, to: :trigger_form
 
-    FIELDS = %i[reason_ids another_reason].freeze
+    FIELDS = %i[reason_ids another_reason safeguarding_concern_reasons].freeze
 
     attr_accessor(*FIELDS)
 
