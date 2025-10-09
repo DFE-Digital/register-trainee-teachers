@@ -17,7 +17,6 @@ module Withdrawal
 
     def rows
       @rows ||= [
-        start_date,
         withdraw_date_from_course,
         withdrawal_trigger,
         reasons,
@@ -28,14 +27,6 @@ module Withdrawal
   private
 
     attr_accessor :data_model, :editable, :undo_withdrawal, :deferred
-
-    def start_date
-      mappable_field(
-        data_model.trainee_start_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
-        "Trainee start date",
-        (trainee_start_date_verification_path(trainee, context: :withdraw) unless deferred),
-      )
-    end
 
     def withdraw_date_from_course
       mappable_field(
