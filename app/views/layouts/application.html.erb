@@ -108,9 +108,9 @@
       <div class="govuk-width-container">
         <% if FeatureService.enabled?(:maintenance_banner) %>
           <%= govuk_notification_banner(title_text: "Important") do |banner|
-                banner.heading(text: "Register will be unavailable on Wednesday 19 July from 5pm")
+                banner.with_heading(text: "Service disruption today Thursday 9 October")
 
-                content_tag(:p, "You will be able to use the service from 9am on Thursday 20 July 2023.", class: "govuk-body")
+                content_tag(:p, "All Department for Education services are experiencing intermittent issues. Your experience may be interrupted.", class: "govuk-body")
               end %>
         <% else %>
           <%= render(YearChangeBanner::View.new) %>

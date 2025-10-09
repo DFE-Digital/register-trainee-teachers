@@ -94,7 +94,7 @@ features:
   # which year the user wants courses listed for. This feature
   # makes sure the correct year is selected before listing courses.
   show_draft_trainee_course_year_choice: true
-  maintenance_banner: false
+  maintenance_banner: true
   change_accredited_provider: true
   funding_uploads: true
   register_api: true
