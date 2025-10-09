@@ -18,12 +18,12 @@ hesa:
   password: dev password
 ```
 
-## DQT
+## TRS
 
-To work with DQT locally, you will need to set the following information in your `development.local.yml`:
+To work with TRS locally, you will need to set the following information in your `development.local.yml`:
 
 ```yml
-dqt:
-  base_url: https://qualified-teachers-api-dev.london.cloudapps.digital
+trs:
+  base_url: https://dev.teacher-qualifications-api.education.gov.uk/
   api_key: dev password
 ```
