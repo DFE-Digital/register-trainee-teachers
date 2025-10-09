@@ -1339,9 +1339,12 @@ en:
       reasons:
         edit:
           heading:
-            trainee: Why did the trainee choose to withdraw?
-            provider: Why did you have to withdraw the trainee?
+            trainee: Why did the trainee withdraw?
+            provider: Why did you withdraw the trainee?
           hint: Select all reasons that apply
+      trigger:
+        edit:
+          heading: Who chose to withdraw the trainee?
       extra_informations:
         edit:
           heading: More details of why the trainee withdrew from the course
