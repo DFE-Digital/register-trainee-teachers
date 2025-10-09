@@ -3,6 +3,10 @@
 require "rails_helper"
 
 feature "performance profile banner" do
+  before do
+    disable_features(:maintenance_banner)
+  end
+
   context "within the performance profile date range" do
     background do
       allow(DetermineSignOffPeriod).to receive(:call).and_return(:performance_period)

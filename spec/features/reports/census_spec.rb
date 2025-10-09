@@ -3,6 +3,10 @@
 require "rails_helper"
 
 feature "census sign off" do
+  before do
+    disable_features(:maintenance_banner)
+  end
+
   context "outside period" do
     background do
       allow(DetermineSignOffPeriod).to receive(:call).and_return(:outside_period)
