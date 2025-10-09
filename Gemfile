@@ -44,7 +44,7 @@ gem "sentry-sidekiq"
 gem "stackprof"
 
 # Logging
-gem "amazing_print", "~> 1.8"
+gem "amazing_print", "~> 2.0"
 
 gem "rails_semantic_logger", "~> 4.18.0"
 
