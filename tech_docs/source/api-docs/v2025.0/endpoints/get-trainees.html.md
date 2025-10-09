@@ -13,7 +13,7 @@ current academic cycle.
 
 ## Request
 
-`GET /api/v2025.0/trainees`
+    GET /api/v2025.0/trainees
 
 ## Parameters
 
@@ -121,8 +121,7 @@ current academic cycle.
           "withdrawal_another_reason": null,
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -132,8 +131,7 @@ current academic cycle.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -148,8 +146,7 @@ current academic cycle.
           "message": "No trainees found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -164,7 +161,6 @@ current academic cycle.
           "busy is not a valid status"
         ]
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

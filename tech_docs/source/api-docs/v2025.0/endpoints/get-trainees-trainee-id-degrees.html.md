@@ -9,7 +9,7 @@ Get many degrees for a trainee.
 
 ## Request
 
-`GET /api/v2025.0/trainees/{trainee_id}/degrees`
+    GET /api/v2025.0/trainees/{trainee_id}/degrees
 
 ## Parameters
 
@@ -43,8 +43,7 @@ Get many degrees for a trainee.
           "grade_uuid": "e2fe18d4-8655-47cf-ab1a-8c3e0b0f078f"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -54,8 +53,7 @@ Get many degrees for a trainee.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -70,7 +68,6 @@ Get many degrees for a trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>

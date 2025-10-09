@@ -9,7 +9,7 @@ Deletes an existing degree for this trainee.
 
 ## Request
 
-`DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}`
+    DELETE /api/v2025.0/trainees/{trainee_id}/degrees/{degree_id}
 
 ## Parameters
 
@@ -122,8 +122,7 @@ Deletes an existing degree for this trainee.
         ],
         "degrees": []
       }
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -133,8 +132,7 @@ Deletes an existing degree for this trainee.
     <pre class="json-code-sample">
     {
       "error": "Unauthorized"
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
 
@@ -149,7 +147,6 @@ Deletes an existing degree for this trainee.
           "message": "Degree(s) not found"
         }
       ]
-    }
-    </pre>
+    }</pre>
   </div>
 </details>
