@@ -31,7 +31,7 @@ module Withdrawal
     def withdraw_date_from_course
       mappable_field(
         withdraw_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
-        "Date the trainee withdrew",
+        t("trainees.withdrawals.dates.edit.heading"),
         edit_trainee_withdrawal_date_path(trainee),
       )
     end
@@ -47,7 +47,7 @@ module Withdrawal
     def withdrawal_trigger
       mappable_field(
         t("views.forms.withdrawal_trigger.#{trigger}.label", default: "-"),
-        "How the trainee withdrew",
+        t("trainees.withdrawals.trigger.edit.heading"),
         edit_trainee_withdrawal_trigger_path(trainee),
       )
     end
@@ -63,7 +63,7 @@ module Withdrawal
     def reasons
       mappable_field(
         reasons_html_safe,
-        "Why the trainee withdrew",
+        t("trainees.withdrawals.reasons.edit.heading.#{trigger}"),
         edit_trainee_withdrawal_reason_path(trainee),
       )
     end
@@ -98,7 +98,7 @@ module Withdrawal
     def future_interest_in_teaching
       mappable_field(
         t("views.forms.withdrawal_future_interest.#{future_interest}.label", default: "-"),
-        "Future interest in teaching",
+        t("trainees.withdrawals.future_interests.edit.heading"),
         edit_trainee_withdrawal_future_interest_path(trainee),
       )
     end
