@@ -35,6 +35,12 @@
     padding: 0;
   }
 
+  // adjust the padding for inline `ul`s so that they align correctly
+  // with plain text values.
+  .app-summary-card__values-list {
+    padding-left: govuk-spacing(4);
+  }
+
   .app-summary-card__actions-list-item {
     display: block;
     white-space: nowrap;
