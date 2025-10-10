@@ -67,7 +67,7 @@ module Api
         new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) }, trainee:)
       end
 
-      def initialize(params, trainee: nil, record_source: nil)
+      def initialize(params, trainee: nil, record_source: Trainee::API_SOURCE)
         super(params)
 
         self.record_source = record_source
