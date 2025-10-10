@@ -24,6 +24,28 @@ RSpec.describe Api::V20250::DegreeAttributes do
         .with_message(/has invalid reference data value of '.*'/)
     }
 
+    describe "graduation_year" do
+      context "when graduation_year is beyond the max limit" do
+        before { subject.graduation_year = (Time.zone.yesterday.year - Degree::MAX_GRAD_YEARS).to_s }
+
+        it "validates" do
+          subject.validate
+
+          expect(subject.errors.messages[:graduation_year]).to contain_exactly("is invalid")
+        end
+      end
+
+      context "when graduation_year is more than 1 year in the future" do
+        before { subject.graduation_year = (Time.zone.now.year.next + 1).to_s }
+
+        it "validates" do
+          subject.validate
+
+          expect(subject.errors.messages[:graduation_year]).to contain_exactly("is invalid", "must be in the past, for example 2014")
+        end
+      end
+    end
+
     context 'when locale_code is "uk"' do
       before { degree_attributes.locale_code = "uk" }
 
