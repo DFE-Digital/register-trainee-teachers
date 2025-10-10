@@ -81,7 +81,7 @@ module Withdrawal
     def reasons
       mappable_field(
         reasons_html_safe,
-        t("trainees.withdrawals.reasons.edit.heading.#{trigger}"),
+        t("trainees.withdrawals.reasons.edit.heading.#{trigger || 'provider'}"),
         edit_trainee_withdrawal_reason_path(trainee),
       )
     end

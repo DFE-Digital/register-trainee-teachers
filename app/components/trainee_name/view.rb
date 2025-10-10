@@ -4,8 +4,9 @@ module TraineeName
   class View < ApplicationComponent
     attr_reader :trainee
 
-    def initialize(trainee)
+    def initialize(trainee, prefix: nil)
       @trainee = trainee
+      @prefix = prefix
     end
 
     def render?
@@ -13,7 +14,7 @@ module TraineeName
     end
 
     def display_text
-      trainee.short_name || draft_text
+      [@prefix, trainee.short_name || draft_text].compact.join(" ")
     end
 
     def draft_text
