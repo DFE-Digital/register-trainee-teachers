@@ -9,6 +9,7 @@ describe Withdrawal::View do
   let(:trainee_withdrawal) { trainee.current_withdrawal }
   let(:withdraw_date) { trainee.withdraw_date }
   let(:withdrawal_reasons) { trainee.withdrawal_reasons }
+  let(:show_date_prefix) { true }
 
   let(:data_model) do
     OpenStruct.new(
@@ -22,7 +23,7 @@ describe Withdrawal::View do
   end
 
   before do
-    render_inline(described_class.new(data_model:))
+    render_inline(described_class.new(data_model:, show_date_prefix:))
   end
 
   context "when showing a withdrawal" do
@@ -55,7 +56,7 @@ describe Withdrawal::View do
     context "with withdrawal date today" do
       let(:withdraw_date) { Time.zone.now }
 
-      it "renders no date of withdrawal" do
+      it "renders a prefixed date of withdrawal" do
         expect(rendered_content).to have_css(
           "#when-did-the-trainee-withdraw",
           text: "Today - #{date_for_summary_view(withdraw_date)}"
@@ -63,13 +64,36 @@ describe Withdrawal::View do
       end
     end
 
+    context "with withdrawal date today but prefixes switched off" do
+      let(:show_date_prefix) { false }
+      let(:withdraw_date) { Time.zone.now }
+
+      it "renders a prefixed date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: "#{date_for_summary_view(withdraw_date)}"
+        )
+      end
+    end
+
     context "with withdrawal date yesterday" do
       let(:withdraw_date) { 1.day.ago }
 
-      it "renders no date of withdrawal" do
+      it "renders a prefixed date of withdrawal" do
         expect(rendered_content).to have_css(
           "#when-did-the-trainee-withdraw",
           text: "Yesterday - #{date_for_summary_view(withdraw_date)}",
+        )
+      end
+    end
+
+    context "with withdrawal date 3 days ago" do
+      let(:withdraw_date) { 3.days.ago }
+
+      it "renders an unprefixed date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: "#{date_for_summary_view(withdraw_date)}",
         )
       end
     end
