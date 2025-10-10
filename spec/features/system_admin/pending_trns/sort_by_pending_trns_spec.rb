@@ -3,8 +3,8 @@
 require "rails_helper"
 
 feature "sort by pending TRNs" do
-  let!(:trainee_two) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request) }
-  let!(:trainee_one) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request) }
+  let!(:trainee_two) { create(:trainee, :submitted_for_trn, :with_trs_trn_request) }
+  let!(:trainee_one) { create(:trainee, :submitted_for_trn, :with_trs_trn_request) }
 
   before do
     given_i_am_authenticated_as_system_admin
@@ -12,8 +12,8 @@ feature "sort by pending TRNs" do
 
   context "with multiple jobs ordered by days waiting" do
     before do
-      trainee_one.dqt_trn_request.update(created_at: 2.days.ago)
-      trainee_two.dqt_trn_request.update(created_at: 1.day.ago)
+      trainee_one.trs_trn_request.update(created_at: 2.days.ago)
+      trainee_two.trs_trn_request.update(created_at: 1.day.ago)
       and_i_visit_the_pending_awards_page
     end
 
@@ -27,8 +27,8 @@ feature "sort by pending TRNs" do
   end
 
   context "with multiple jobs ordered by register id" do
-    let!(:trainee_two) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request, id: 20000) }
-    let!(:trainee_one) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request, id: 10000) }
+    let!(:trainee_two) { create(:trainee, :submitted_for_trn, :with_trs_trn_request, id: 20000) }
+    let!(:trainee_one) { create(:trainee, :submitted_for_trn, :with_trs_trn_request, id: 10000) }
 
     before do
       and_i_visit_the_pending_awards_page
