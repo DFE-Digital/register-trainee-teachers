@@ -9,7 +9,7 @@
     ) %>
 <% end %>
 
-<%= render TraineeName::View.new(trainee) %>
+<%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 <h1 class="govuk-heading-l"> <%= heading %> </h1>
 
 <%= render Withdrawal::View.new(data_model: form, editable: true) %>
