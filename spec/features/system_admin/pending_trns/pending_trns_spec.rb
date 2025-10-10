@@ -3,8 +3,8 @@
 require "rails_helper"
 
 feature "pending TRNs" do
-  let(:trainee) { create(:trainee, :submitted_for_trn, :with_trs_trn_request, first_names: "James Blint") }
-  let(:trn_request) { trainee.trs_trn_request }
+  let(:trainee) { create(:trainee, :submitted_for_trn, :with_dqt_trn_request, first_names: "James Blint") }
+  let(:trn_request) { trainee.dqt_trn_request }
 
   context "when I am authenticated as a system admin" do
     before do

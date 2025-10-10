@@ -4,10 +4,10 @@ namespace :trn do
   desc "Resubmit for TRN trainees with submitted for TRN status"
   task resubmit: :environment do
     trainees = Trainee
-      .includes(:trs_trn_request)
+      .includes(:dqt_trn_request)
       .submitted_for_trn
       .undiscarded
-      .where(trs_trn_request: { id: nil })
+      .where(dqt_trn_request: { id: nil })
 
     trainees.find_each do |trainee|
       if FeatureService.enabled?(:integrate_with_trs)

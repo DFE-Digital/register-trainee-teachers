@@ -14,7 +14,7 @@ module Trs
         "trn" => trn,
       }
     }
-    let(:trn_request) { create(:trs_trn_request, trainee: trainee, request_id: request_id, response: trs_response) }
+    let(:trn_request) { create(:dqt_trn_request, trainee: trainee, request_id: request_id, response: trs_response) }
 
     describe "#call" do
       before do

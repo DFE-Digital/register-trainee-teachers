@@ -32,7 +32,7 @@ module Trs
 
     def trn_request
       @trn_request ||=
-        ::Trs::TrnRequest.create_with(request_id:)
+        ::Dqt::TrnRequest.create_with(request_id:)
                          .find_or_create_by!(trainee:)
     end
 

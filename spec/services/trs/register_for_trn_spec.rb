@@ -28,7 +28,7 @@ module Trs
         end
 
         it "registers TRN request with TRS" do
-          trn_request = ::Trs::TrnRequest.last
+          trn_request = ::Dqt::TrnRequest.last
           expect(trn_request.trainee).to eql(trainee)
           expect(trn_request.request_id).to eql(request_id)
           expect(trn_request.state).to eql("requested")
@@ -47,7 +47,7 @@ module Trs
         end
 
         it "saves a failed TRN request" do
-          trn_request = ::Trs::TrnRequest.last
+          trn_request = ::Dqt::TrnRequest.last
           expect(trn_request.trainee).to eql(trainee)
           expect(trn_request.request_id).to eql(request_id)
           expect(trn_request.state).to eql("failed")

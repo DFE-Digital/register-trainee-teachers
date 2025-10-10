@@ -452,9 +452,9 @@ FactoryBot.define do
       submission_ready
     end
 
-    trait :with_trs_trn_request do
+    trait :with_dqt_trn_request do
       after(:create) do |trainee|
-        create(:trs_trn_request, trainee:)
+        create(:dqt_trn_request, trainee:)
       end
     end
 

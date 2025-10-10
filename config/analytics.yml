@@ -98,6 +98,14 @@ shared:
     - created_at
     - id
     - updated_at
+  dqt_trn_requests:
+    - id
+    - trainee_id
+    - request_id
+    - response
+    - state
+    - created_at
+    - updated_at
   dttp_providers:
     - created_at
     - dttp_id
@@ -329,14 +337,6 @@ shared:
     - hesa_editable
     - slug_sent_to_dqt_at
     - application_choice_id
-  trs_trn_requests:
-    - id
-    - trainee_id
-    - request_id
-    - response
-    - state
-    - created_at
-    - updated_at
   users:
     - created_at
     - dfe_sign_in_uid

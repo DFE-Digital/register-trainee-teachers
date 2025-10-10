@@ -11,7 +11,7 @@ module Dqt
     let(:configured_delay) { 6 }
     let(:configured_poll_timeout_days) { 4 }
     let(:timeout_date) { configured_poll_timeout_days.days.from_now }
-    let(:trn_request) { create(:trs_trn_request, trainee:) }
+    let(:trn_request) { create(:dqt_trn_request, trainee:) }
 
     before do
       enable_features(:integrate_with_dqt)
@@ -26,11 +26,11 @@ module Dqt
       it "destroys the trn_request" do
         expect {
           described_class.perform_now(trn_request, timeout_date)
-        }.to change { Trs::TrnRequest.count }.by(-1)
+        }.to change { Dqt::TrnRequest.count }.by(-1)
       end
 
       it "doesn't call RetrieveTrn" do
-        expect(Trs::RetrieveTrn).not_to receive(:call)
+        expect(RetrieveTrn).not_to receive(:call)
         described_class.perform_now(trn_request, timeout_date)
       end
 
@@ -73,7 +73,7 @@ module Dqt
       let(:trainee) { create(:trainee, trn: existing_trn) }
 
       context "when trn_request is not in received state" do
-        let(:trn_request) { create(:trs_trn_request, trainee: trainee, state: :requested) }
+        let(:trn_request) { create(:dqt_trn_request, trainee: trainee, state: :requested) }
 
         it "updates the trn_request to received state" do
           expect {
@@ -93,7 +93,7 @@ module Dqt
       end
 
       context "when trn_request is already in received state" do
-        let(:trn_request) { create(:trs_trn_request, trainee: trainee, state: :received) }
+        let(:trn_request) { create(:dqt_trn_request, trainee: trainee, state: :received) }
 
         it "doesn't change the trn_request state" do
           expect {

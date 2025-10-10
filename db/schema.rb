@@ -391,6 +391,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
     t.index ["allowed_pii_updates"], name: "index_dqt_teachers_on_allowed_pii_updates"
   end
 
+  create_table "dqt_trn_requests", force: :cascade do |t|
+    t.bigint "trainee_id", null: false
+    t.uuid "request_id", null: false
+    t.jsonb "response"
+    t.integer "state", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_dqt_trn_requests_on_request_id", unique: true
+    t.index ["trainee_id"], name: "index_dqt_trn_requests_on_trainee_id"
+  end
+
   create_table "dttp_accounts", force: :cascade do |t|
     t.uuid "dttp_id"
     t.string "ukprn"
@@ -679,10 +690,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
     t.string "surname16"
     t.string "ttcid"
     t.string "hesa_committed_at"
+    t.string "previous_hesa_id"
     t.string "application_choice_id"
     t.string "itt_start_date"
     t.string "trainee_start_date"
-    t.string "previous_hesa_id"
     t.string "provider_trainee_id"
     t.string "lead_partner_urn"
     t.index ["hesa_id", "rec_id"], name: "index_hesa_students_on_hesa_id_and_rec_id", unique: true
@@ -1021,17 +1032,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
     t.index ["trn"], name: "index_trainees_on_trn"
   end
 
-  create_table "trs_trn_requests", force: :cascade do |t|
-    t.bigint "trainee_id", null: false
-    t.uuid "request_id", null: false
-    t.jsonb "response"
-    t.integer "state", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["request_id"], name: "index_trs_trn_requests_on_request_id", unique: true
-    t.index ["trainee_id"], name: "index_trs_trn_requests_on_trainee_id"
-  end
-
   create_table "uploads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -1095,6 +1095,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
   add_foreign_key "course_subjects", "courses"
   add_foreign_key "course_subjects", "subjects"
   add_foreign_key "degrees", "trainees"
+  add_foreign_key "dqt_trn_requests", "trainees"
   add_foreign_key "funding_methods", "academic_cycles"
   add_foreign_key "hesa_trainee_details", "trainees"
   add_foreign_key "lead_partner_users", "lead_partners"
@@ -1124,6 +1125,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_07_154220) do
   add_foreign_key "trainees", "lead_partners"
   add_foreign_key "trainees", "providers"
   add_foreign_key "trainees", "schools", column: "employing_school_id"
-  add_foreign_key "trs_trn_requests", "trainees"
   add_foreign_key "uploads", "users"
 end
