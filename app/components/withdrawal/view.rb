@@ -4,11 +4,12 @@ module Withdrawal
   class View < ApplicationComponent
     include SanitizeHelper
 
-    def initialize(data_model:, editable: false, undo_withdrawal: false)
+    def initialize(data_model:, editable: false, undo_withdrawal: false, show_date_prefix: true)
       @data_model = data_model
       @undo_withdrawal = undo_withdrawal
       @editable = editable
       @deferred = trainee.deferred?
+      @show_date_prefix = show_date_prefix
     end
 
     def trainee
@@ -39,13 +40,18 @@ module Withdrawal
     def formatted_withdraw_date
       return if withdraw_date.nil?
 
-      prefix = case withdraw_date&.to_date
-        when Time.zone.today
-          "Today - "
-        when 1.day.ago.to_date
-          "Yesterday - "
-        end
-      [prefix, withdraw_date&.strftime(Date::DATE_FORMATS[:govuk])].compact.join
+      [withdraw_date_prefix, withdraw_date&.strftime(Date::DATE_FORMATS[:govuk])].compact.join
+    end
+
+    def withdraw_date_prefix
+      return unless @show_date_prefix
+
+      case withdraw_date&.to_date
+      when Time.zone.today
+        "Today - "
+      when 1.day.ago.to_date
+        "Yesterday - "
+      end
     end
 
     def withdraw_date
