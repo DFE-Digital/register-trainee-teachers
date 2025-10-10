@@ -6,7 +6,7 @@ RSpec.describe SystemAdmin::PendingTrns::RequestTrnsController do
   let(:user) { build_current_user(user: create(:user, :system_admin)) }
   let(:trainee) { create(:trainee, :submitted_for_trn) }
   let(:request_id) { SecureRandom.uuid }
-  let(:trn_request) { create(:dqt_trn_request, trainee:, request_id:) }
+  let(:trn_request) { create(:trs_trn_request, trainee:, request_id:) }
 
   before do
     allow(Trainee).to receive(:from_param).and_return(trainee)
@@ -25,7 +25,7 @@ RSpec.describe SystemAdmin::PendingTrns::RequestTrnsController do
 
       before do
         allow(trn_request).to receive(:destroy!)
-        allow(trainee).to receive_messages(dqt_trn_request: trn_request, reload: trainee)
+        allow(trainee).to receive_messages(trs_trn_request: trn_request, reload: trainee)
       end
 
       it "uses Trs::RegisterForTrnJob" do
@@ -65,7 +65,7 @@ RSpec.describe SystemAdmin::PendingTrns::RequestTrnsController do
     context "when TRS integration is NOT enabled", feature_integrate_with_trs: false do
       before do
         allow(trn_request).to receive(:destroy!)
-        allow(trainee).to receive_messages(dqt_trn_request: trn_request, reload: trainee)
+        allow(trainee).to receive_messages(trs_trn_request: trn_request, reload: trainee)
       end
 
       it "raises an error" do

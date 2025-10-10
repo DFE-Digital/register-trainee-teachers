@@ -2,7 +2,7 @@
 
 # == Schema Information
 #
-# Table name: dqt_trn_requests
+# Table name: trs_trn_requests
 #
 #  id         :bigint           not null, primary key
 #  response   :jsonb
@@ -14,16 +14,16 @@
 #
 # Indexes
 #
-#  index_dqt_trn_requests_on_request_id  (request_id) UNIQUE
-#  index_dqt_trn_requests_on_trainee_id  (trainee_id)
+#  index_trs_trn_requests_on_request_id  (request_id) UNIQUE
+#  index_trs_trn_requests_on_trainee_id  (trainee_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (trainee_id => trainees.id)
 #
-module Dqt
+module Trs
   class TrnRequest < ApplicationRecord
-    self.table_name = "dqt_trn_requests"
+    self.table_name = "trs_trn_requests"
 
     belongs_to :trainee
 

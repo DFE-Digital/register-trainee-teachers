@@ -6,7 +6,7 @@ module Trs
   describe RegisterForTrnJob do
     describe "#perform_now" do
       let(:trainee) { create(:trainee, :draft) }
-      let(:trn_request) { create(:dqt_trn_request, trainee:) }
+      let(:trn_request) { create(:trs_trn_request, trainee:) }
 
       before do
         enable_features(:integrate_with_trs)
