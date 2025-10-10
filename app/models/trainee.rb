@@ -157,7 +157,7 @@ class Trainee < ApplicationRecord
 
   has_one :hesa_trainee_detail, class_name: "Hesa::TraineeDetail"
   has_one :hesa_metadatum, class_name: "Hesa::Metadatum"
-  has_one :dqt_trn_request, class_name: "Dqt::TrnRequest", dependent: :destroy
+  has_one :trs_trn_request, class_name: "Trs::TrnRequest", dependent: :destroy
   has_one :dqt_teacher,
           class_name: "Dqt::Teacher",
           foreign_key: :trn,
