@@ -1,0 +1,68 @@
+name: Monitor Database wal lag
+# concurrency: build_and_deploy_main
+
+on:
+  push:
+   branches:
+    - airbyte-module-testing
+
+permissions:
+  id-token: write
+
+env:
+  SERVICE_NAME: register
+  SERVICE_SHORT: rtt
+
+jobs:
+  monitor:
+    name: Monitor Wal
+    runs-on: ubuntu-latest
+    environment:
+      name: review
+
+    steps:
+    - uses: actions/checkout@v5
+      name: Checkout
+
+    - name: Set environment variables
+      run: |
+        source global_config/review.sh
+
+    - uses: azure/login@v2
+      with:
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: Install kubectl
+      uses: DFE-Digital/github-actions/set-kubectl@master
+
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
+    - name: K8 setup
+      shell: bash
+      run: |
+        make ci review get-cluster-credentials APP_NAME=pr-5286
+        make install-konduit
+
+    - name: Setup postgres client
+      uses: DFE-Digital/github-actions/install-postgres-client@master
+
+    - name: Check wal log size
+      shell: bash
+      run: |
+        WAL_THRESHOLD=50000000
+        perl -p -e "s/#WAL_THRESHOLD#/${WAL_THRESHOLD}/" bin/monitor-wal.sql.tmpl > bin/monitor-wal.sql
+        bin/konduit.sh -n bat-qa -t 300 -x -i bin/monitor-wal.sql register-pr-5286 -- psql
+
+    # - name: Check for Failure
+    #   uses: ./.github/actions/send-slack-notification/
+    #   if: ${{ failure() }}
+    #   with:
+    #     slack-title: Backup Failure
+    #     slack-message: ':alert: Backup failure :sadparrot:'
+    #     slack-webhook: ${{ secrets.SLACK_WEBHOOK }}

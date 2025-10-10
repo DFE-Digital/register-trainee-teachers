@@ -86,6 +86,11 @@ runs:
         subscription-id: ${{ inputs.azure-subscription-id }}
         client-id: ${{ inputs.azure-client-id }}
 
+    - uses: google-github-actions/auth@v2
+      with:
+        project_id: rugged-abacus-218110
+        workload_identity_provider: projects/712009772377/locations/global/workloadIdentityPools/register-trainee-teachers/providers/register-trainee-teachers
+
     - name: Terraform init, plan & apply
       shell: bash
       run: make ${{ inputs.environment }} ci deploy

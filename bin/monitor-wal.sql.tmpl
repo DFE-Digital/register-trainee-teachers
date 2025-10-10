@@ -1,0 +1,7 @@
+\set wal_high false
+SELECT EXISTS(SELECT pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn) from pg_replication_slots where pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn) > #WAL_THRESHOLD#) AS wal_high \gset
+\if :wal_high
+ \echo 'Retained Wal is high.'
+\else
+ \echo 'Retained Wal is low.'
+\endif
