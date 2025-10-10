@@ -1,0 +1,50 @@
+name: Monitor Database wal lag
+# concurrency: build_and_deploy_main
+
+on:
+  push:
+   branches:
+    - airbyte-module-testing
+
+permissions:
+  id-token: write
+
+env:
+  SERVICE_NAME: register
+  SERVICE_SHORT: rtt
+  TF_VARS_PATH: terraform/aks/workspace-variables
+
+jobs:
+  monitor-wal-usage:
+    name: Parallel postgres monitor
+    environment:
+      name: ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [review]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v5
+
+    - name: Monitor ${{ matrix.environment }}
+      id: monitor_pg
+      uses: ./.github/actions/monitor/
+      with:
+        azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        environment: ${{ matrix.environment }}
+        slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
+        #app-name: ${{ env.SERVICE_NAME }}-${{ matrix.environment }}
+        app-name: register-pr-5286
+        tf-vars-path: ${{ env.TF_VARS_PATH }}
+
+    # - name: Check for Failure
+    #   uses: ./.github/actions/send-slack-notification/
+    #   if: ${{ failure() }}
+    #   with:
+    #     slack-title: Backup Failure
+    #     slack-message: ':alert: Backup failure :sadparrot:'
+    #     slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
