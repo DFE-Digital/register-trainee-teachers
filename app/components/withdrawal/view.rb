@@ -30,10 +30,22 @@ module Withdrawal
 
     def withdraw_date_from_course
       mappable_field(
-        withdraw_date&.strftime(Date::DATE_FORMATS[:govuk]) || "-",
+        formatted_withdraw_date || "-",
         t("trainees.withdrawals.dates.edit.heading"),
         edit_trainee_withdrawal_date_path(trainee),
       )
+    end
+
+    def formatted_withdraw_date
+      return if withdraw_date.nil?
+
+      prefix = case withdraw_date&.to_date
+        when Time.zone.today
+          "Today - "
+        when 1.day.ago.to_date
+          "Yesterday - "
+        end
+      [prefix, withdraw_date&.strftime(Date::DATE_FORMATS[:govuk])].compact.join
     end
 
     def withdraw_date

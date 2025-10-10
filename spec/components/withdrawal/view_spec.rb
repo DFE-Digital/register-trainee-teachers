@@ -27,11 +27,7 @@ describe Withdrawal::View do
 
   context "when showing a withdrawal" do
     it "renders trainee start date" do
-      expect(rendered_content).to have_text(date_for_summary_view(trainee.trainee_start_date))
-    end
-
-    it "renders the date of withdrawal" do
-      expect(rendered_content).to have_text(date_for_summary_view(withdraw_date))
+      expect(rendered_content).not_to have_text(date_for_summary_view(trainee.trainee_start_date))
     end
 
     it "renders the reasons for withdrawal" do
@@ -52,7 +48,29 @@ describe Withdrawal::View do
       let(:withdraw_date) { nil }
 
       it "renders no date of withdrawal" do
-        expect(rendered_content).to have_css("#date-the-trainee-withdrew", text: "-")
+        expect(rendered_content).to have_css("#when-did-the-trainee-withdraw", text: "-")
+      end
+    end
+
+    context "with withdrawal date today" do
+      let(:withdraw_date) { Time.zone.now }
+
+      it "renders no date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: "Today - #{date_for_summary_view(withdraw_date)}"
+        )
+      end
+    end
+
+    context "with withdrawal date yesterday" do
+      let(:withdraw_date) { 1.day.ago }
+
+      it "renders no date of withdrawal" do
+        expect(rendered_content).to have_css(
+          "#when-did-the-trainee-withdraw",
+          text: "Yesterday - #{date_for_summary_view(withdraw_date)}",
+        )
       end
     end
   end
