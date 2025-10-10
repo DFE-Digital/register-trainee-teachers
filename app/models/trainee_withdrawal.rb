@@ -4,15 +4,16 @@
 #
 # Table name: trainee_withdrawals
 #
-#  id              :bigint           not null, primary key
-#  another_reason  :string
-#  date            :date
-#  discarded_at    :datetime
-#  future_interest :enum
-#  trigger         :enum
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  trainee_id      :bigint           not null
+#  id                           :bigint           not null, primary key
+#  another_reason               :string
+#  date                         :date
+#  discarded_at                 :datetime
+#  future_interest              :enum
+#  safeguarding_concern_reasons :string
+#  trigger                      :enum
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  trainee_id                   :bigint           not null
 #
 # Indexes
 #

@@ -205,6 +205,9 @@ en:
       another_reason_label:
         title: Enter the reason
         hint: We may contact you to discuss this further
+      safeguarding_concern_reasons_label:
+        title: Enter the concerns
+        hint: We may contact you to discuss this further
       hints:
         unacceptable_behaviour: For example, fitness to practise
         mandatory_reasons: For example, lack of right to work, DBS issues
@@ -235,6 +238,7 @@ en:
         moved_to_different_itt_course: They moved to a different ITT course
         had_to_withdraw_trainee_another_reason: Another reason
         trainee_chose_to_withdraw_another_reason: Another reason
+        safeguarding_concerns: Safeguarding concerns
     award_details:
         waiting_for_award: Waiting for award - met standards on %{recommended_for_award_at}
     confirmation:
@@ -981,7 +985,7 @@ en:
         title: Why are you withdrawing the trainee?
         hint: Choose an option
         provider:
-          label: We had to withdraw the trainee
+          label: We chose to withdraw the trainee
         trainee:
           label: The trainee chose to withdraw
       withdrawal_future_interest:
@@ -1337,9 +1341,12 @@ en:
       reasons:
         edit:
           heading:
-            trainee: Why did the trainee choose to withdraw?
-            provider: Why did you have to withdraw the trainee?
+            trainee: Why did the trainee withdraw?
+            provider: Why did you withdraw the trainee?
           hint: Select all reasons that apply
+      trigger:
+        edit:
+          heading: Who chose to withdraw the trainee?
       extra_informations:
         edit:
           heading: More details of why the trainee withdrew from the course
@@ -1778,6 +1785,8 @@ en:
                 blank: Choose a reason for removing the trainee
             another_reason:
               blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
         withdrawal/trigger_form:
           attributes:
             trigger:
@@ -2120,6 +2129,8 @@ en:
               blank: Please select an option. Valid options are yes, no and unknown.
             another_reason:
               blank: Enter another reason
+            safeguarding_concern_reasons:
+              blank: Enter the concerns
         api/v20250/hesa_trainee_detail_attributes:
           attributes:
             fund_code:
