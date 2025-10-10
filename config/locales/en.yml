@@ -983,7 +983,7 @@ en:
         title: Why are you withdrawing the trainee?
         hint: Choose an option
         provider:
-          label: We had to withdraw the trainee
+          label: We chose to withdraw the trainee
         trainee:
           label: The trainee chose to withdraw
       withdrawal_future_interest:
