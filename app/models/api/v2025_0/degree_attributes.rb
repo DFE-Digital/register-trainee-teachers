@@ -33,7 +33,7 @@ module Api
       attr_reader :existing_degrees
 
       validates :locale_code, presence: true
-      validates :graduation_year, presence: true
+      validates :graduation_year, presence: true, "degrees/graduation_year": true
       validates :subject, presence: true
 
       validates :country, api_inclusion: {

@@ -2149,6 +2149,11 @@ en:
               blank: must be entered if specifying a previous UK degree or non-UK degree
             graduation_year:
               blank: must be entered if specifying a previous UK degree or non-UK degree
+              api:
+                future: must be in the past, for example 2014
+              csv:
+                future: Enter a year that is in the past, for example 2014
+                invalid: Enter a valid graduation year
         api/create_trainee:
           duplicate: This trainee is already in Register
         api/trainees/award_recommendation_service:

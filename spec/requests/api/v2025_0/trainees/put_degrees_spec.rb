@@ -275,6 +275,8 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
+            { "error" => "UnprocessableEntity", "message" => "graduation_year must be in the past, for example 2014" },
+            { "error" => "UnprocessableEntity", "message" => "graduation_year is invalid" },
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
             { "error" => "UnprocessableEntity", "message" => "uk_degree has invalid reference data value of 'Bachelor of Arts'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}..." },
             { "error" => "UnprocessableEntity", "message" => "grade must be entered if specifying a previous UK degree or non-UK degree" },
@@ -294,6 +296,8 @@ describe "`PUT /trainees/:trainee_slug/degrees/:slug` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
+            { "error" => "UnprocessableEntity", "message" => "graduation_year must be in the past, for example 2014" },
+            { "error" => "UnprocessableEntity", "message" => "graduation_year is invalid" },
             { "error" => "UnprocessableEntity", "message" => "subject must be entered if specifying a previous UK degree or non-UK degree" },
             { "error" => "UnprocessableEntity", "message" => "non_uk_degree has invalid reference data value of 'Bachelor of Arts'. Example values include #{format_reference_data_list(DfEReference::DegreesQuery::TYPES.all.map(&:hesa_itt_code).compact.uniq)}..." },
             { "error" => "UnprocessableEntity", "message" => "country has invalid reference data value of 'France'. Example values include #{format_reference_data_list(Hesa::CodeSets::Countries::MAPPING.keys)}..." },
