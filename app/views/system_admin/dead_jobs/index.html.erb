@@ -43,7 +43,7 @@
               <%= render GovukButtonLinkTo::View.new(
 
                 body: "Download (.csv) with DQT status",
-                url: dead_job_path(service.class, format: :csv, include_dqt_status: true),
+                url: dead_job_path(service.class, format: :csv),
                 class_option: "govuk-!-margin-bottom-0 govuk-button--warning",
                 ) %>
               <% end %>

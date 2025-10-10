@@ -94,7 +94,7 @@ describe OutcomeDateForm, type: :model do
   end
 
   describe "#save!" do
-    before { enable_features(:integrate_with_dqt) }
+    before { enable_features(:integrate_with_trs) }
 
     it "takes any data from the form store and saves it to the database and clears the store data" do
       expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
@@ -103,27 +103,26 @@ describe OutcomeDateForm, type: :model do
       expect { subject.save! }.to change(trainee.reload, :outcome_date).to(Date.new(*date_params))
     end
 
-    it "calls update trainee on DQT API" do
+    it "calls update trainee on TRS API" do
       expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
 
       expect(outcome_date_form).to be_valid
-      expect { outcome_date_form.save! }.to have_enqueued_job(Dqt::UpdateTraineeJob)
+      expect { outcome_date_form.save! }.to have_enqueued_job(Trs::UpdateTraineeJob)
     end
 
-    context "when we opt-out of DQT API call" do
+    context "when we opt-out of TRS API call" do
       subject do
         described_class.new(
           trainee,
           params: params.stringify_keys,
           store: form_store,
-          update_dqt: false,
+          update_trs: false,
         )
       end
 
       it "skips update trainee on DQT API" do
         expect(form_store).to receive(:set).with(trainee.id, :outcome_date, nil)
-
-        expect { subject.save! }.not_to have_enqueued_job(Dqt::UpdateTraineeJob)
+        expect { subject.save! }.not_to have_enqueued_job(Trs::UpdateTraineeJob)
       end
     end
   end

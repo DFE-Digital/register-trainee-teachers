@@ -16,7 +16,7 @@ module SystemAdmin
         else
           redirect_to(pending_trns_path, flash: { warning: "TRN still not available for #{trainee_name(trainee)}" })
         end
-      rescue Dqt::Client::HttpError, Trs::Client::HttpError => e
+      rescue Trs::Client::HttpError => e
         redirect_to(pending_trns_path, dqt_error: "API error: #{e.inspect}")
       end
 
@@ -25,8 +25,6 @@ module SystemAdmin
       def retrieve_trn
         if FeatureService.enabled?(:integrate_with_trs)
           Trs::RetrieveTrn.call(trn_request:)
-        elsif FeatureService.enabled?(:integrate_with_dqt)
-          Dqt::RetrieveTrn.call(trn_request:)
         else
           raise(StandardError, "No integration is enabled")
         end

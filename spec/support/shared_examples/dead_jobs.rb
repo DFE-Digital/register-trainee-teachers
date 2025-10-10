@@ -5,8 +5,6 @@ require "rails_helper"
 RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
   let(:job_id) { SecureRandom.hex }
   let(:trainee) { create(:trainee, :completed, :trn_received, sex: "female", hesa_id: 1) }
-  let!(:dqt_teacher) { create(:dqt_teacher, :with_teacher_training, trn: trainee.trn) }
-  let(:dqt_teacher_training) { dqt_teacher.dqt_trainings.first }
   let(:csv) { CSV.parse(subject.to_csv, headers: true) }
 
   let(:dead_set) do
@@ -69,7 +67,7 @@ RSpec.shared_examples "Dead jobs" do |dead_jobs_klass, name|
     end
 
     context "with dqt status" do
-      subject { described_class.new(dead_set: dead_set, include_dqt_status: true) }
+      subject { described_class.new(dead_set:) }
 
       context "without dqt teacher" do
         let(:dqt_teacher) { nil }
