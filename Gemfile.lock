@@ -132,7 +132,7 @@ GEM
       erubi (~> 1.4)
       parser (>= 2.4)
       smart_properties
-    bigdecimal (3.2.3)
+    bigdecimal (3.3.1)
     bindata (2.5.0)
     blazer (3.3.0)
       activerecord (>= 7.1)
@@ -394,7 +394,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2025.0107)
     mini_mime (1.1.5)
-    minitest (5.25.5)
+    minitest (5.26.0)
     msgpack (1.8.0)
     multi_json (1.17.0)
     multi_xml (0.6.0)
@@ -720,7 +720,7 @@ GEM
     store_model (4.3.0)
       activerecord (>= 7.0)
     stringio (3.1.7)
-    strong_migrations (2.5.0)
+    strong_migrations (2.5.1)
       activerecord (>= 7.1)
     swd (2.0.3)
       activesupport (>= 3)
@@ -929,7 +929,7 @@ CHECKSUMS
   benchmark-perf (0.6.0) sha256=fe2b01959f3de0f9dd34820d54ef881eb4f3589fccb7d17b63068ac92d7f9621
   benchmark-trend (0.4.0) sha256=de5a02a9f443babefbbd97784759820decee8554a0c273d859c02a0990845d81
   better_html (2.1.1) sha256=046c3551d1488a3f2939a7cac6fabf2bde08c32e135c91fcd683380118e5af55
-  bigdecimal (3.2.3) sha256=ffd11d1ac67a0d3b2f44aec0a6487210b3f813f363dd11f1fcccf5ba00da4e1b
+  bigdecimal (3.3.1) sha256=eaa01e228be54c4f9f53bf3cc34fe3d5e845c31963e7fcc5bedb05a4e7d52218
   bindata (2.5.0) sha256=29dccb8ba1cc9de148f24bb88930840c62db56715f0f80eccadd624d9f3d2623
   blazer (3.3.0) sha256=01e151091ce1e7d27c156243916b2f13109ef2ef1a16cfa62bef67f4c5fd169f
   bootsnap (1.18.6) sha256=0ae2393c1e911e38be0f24e9173e7be570c3650128251bf06240046f84a07d00
@@ -1039,7 +1039,7 @@ CHECKSUMS
   mime-types (3.6.0) sha256=6f71db957840ceae44211531eff3e2f7e0dd4645fefb5f535dbaeb6307ab6464
   mime-types-data (3.2025.0107) sha256=232a497cc68cfca58982685d47fb26f10ef2eb009c4d1c53a7e159d572743dca
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
-  minitest (5.25.5) sha256=391b6c6cb43a4802bfb7c93af1ebe2ac66a210293f4a3fb7db36f2fc7dc2c756
+  minitest (5.26.0) sha256=f5817ad09f863a4f7eac917707c1ca5c09cdc4a35e17d91171760178324d2c30
   msgpack (1.8.0) sha256=e64ce0212000d016809f5048b48eb3a65ffb169db22238fb4b72472fecb2d732
   multi_json (1.17.0) sha256=76581f6c96aebf2e85f8a8b9854829e0988f335e8671cd1a56a1036eb75e4a1b
   multi_xml (0.6.0) sha256=d24393cf958adb226db884b976b007914a89c53ad88718e25679d7008823ad52
@@ -1164,7 +1164,7 @@ CHECKSUMS
   stateful_enum (0.7.0) sha256=bedd5994de3e5d44d943c502ad5c1394202922dad401ec414fcc8feb17689c14
   store_model (4.3.0) sha256=de3aa1fdebf115922ff95fa4c2db38fb756a6c05d4996699362f7ded3e2569e2
   stringio (3.1.7) sha256=5b78b7cb242a315fb4fca61a8255d62ec438f58da2b90be66048546ade4507fa
-  strong_migrations (2.5.0) sha256=6100cab81305bb753fafa22fecb24d5c81f8891b617c408930e55e34ab7359df
+  strong_migrations (2.5.1) sha256=8bca3a9b491ec20cf1961c18050c16ac67d8b8f4e3a7c2ccf652b79638859426
   swd (2.0.3) sha256=4cdbe2a4246c19f093fce22e967ec3ebdd4657d37673672e621bf0c7eb770655
   thor (1.4.0) sha256=8763e822ccb0f1d7bee88cde131b19a65606657b847cc7b7b4b82e772bcd8a3d
   timecop (0.9.10) sha256=12ba45ce57cdcf6b1043cb6cdffa6381fd89ce10d369c28a7f6f04dc1b0cd8eb
