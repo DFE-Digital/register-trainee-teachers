@@ -64,4 +64,29 @@ describe UserPolicy do
       it { is_expected.not_to permit(lead_partner_admin_user_context) }
     end
   end
+
+  context "when can_sign_off_performance_profile?" do
+    permissions :can_sign_off_performance_profile? do
+      context "during performance profile sign off period" do
+        before do
+          allow(DetermineSignOffPeriod).to receive(:call).and_return(:performance_period)
+        end
+
+        it { is_expected.to permit(provider_user_context) }
+        it { is_expected.to permit(provider_admin_user_context) }
+      end
+
+      context "outside performance profile sign off period" do
+        before do
+          allow(DetermineSignOffPeriod).to receive(:call).and_return(:outside_period)
+        end
+
+        it { is_expected.not_to permit(lead_partner_user_context) }
+        it { is_expected.not_to permit(lead_partner_admin_user_context) }
+
+        it { is_expected.not_to permit(provider_user_context) }
+        it { is_expected.not_to permit(provider_admin_user_context) }
+      end
+    end
+  end
 end

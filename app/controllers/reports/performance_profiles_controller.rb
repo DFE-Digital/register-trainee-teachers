@@ -2,9 +2,8 @@
 
 module Reports
   class PerformanceProfilesController < ApplicationController
-    before_action :redirect_if_not_applicable, only: %i[index create new]
     def index
-      authorize(current_user, :reports?)
+      authorize(current_user, :can_sign_off_performance_profile?)
 
       @previous_academic_cycle = AcademicCycle.previous
       @previous_academic_cycle_label = @previous_academic_cycle.label
@@ -31,7 +30,7 @@ module Reports
     end
 
     def new
-      authorize(current_user, :reports?)
+      authorize(current_user, :can_sign_off_performance_profile?)
 
       @previous_academic_cycle = AcademicCycle.previous
       @previous_academic_cycle_label = @previous_academic_cycle.label
@@ -40,7 +39,7 @@ module Reports
     end
 
     def create
-      authorize(current_user, :reports?)
+      authorize(current_user, :can_sign_off_performance_profile?)
 
       @performance_profile_sign_off_form = PerformanceProfileSignOffForm.new(sign_off: sign_off, provider: current_user.organisation, user: current_user)
 
@@ -55,20 +54,12 @@ module Reports
     end
 
     def confirmation
-      authorize(current_user, :reports?)
+      authorize(current_user, :can_sign_off_performance_profile?)
 
       redirect_to(reports_path) unless current_user.provider? && current_user.organisation.performance_profile_signed_off? && DetermineSignOffPeriod.call == :performance_period
     end
 
   private
-
-    def redirect_if_not_applicable
-      redirect_to(reports_path) unless applicable_to_user?
-    end
-
-    def applicable_to_user?
-      current_user.provider? && current_user.organisation.performance_profile_awaiting_sign_off? && DetermineSignOffPeriod.call == :performance_period
-    end
 
     def time_now
       Time.now.in_time_zone("London").strftime("%F_%H-%M-%S")

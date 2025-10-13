@@ -25,6 +25,12 @@ class UserPolicy < ProviderPolicy
     user.system_admin? && user.providers.empty? && user.lead_partners.empty?
   end
 
+  def can_sign_off_performance_profile?
+    return false unless DetermineSignOffPeriod.call == :performance_period
+
+    drafts? && user.provider? && user.organisation.performance_profile_awaiting_sign_off?
+  end
+
   alias_method :reports?, :drafts?
   alias_method :bulk_placement?, :bulk_recommend?
 end
