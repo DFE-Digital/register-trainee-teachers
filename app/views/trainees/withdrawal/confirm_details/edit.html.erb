@@ -12,7 +12,7 @@
 <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 <h1 class="govuk-heading-l"> <%= heading %> </h1>
 
-<%= render Withdrawal::View.new(data_model: form, editable: true) %>
+<%= render Withdrawal::View.new(data_model: form, editable: true, render_list_only: true) %>
 
 <%= govuk_button_to t("trainees.withdrawals.confirm_details.edit.confirm"), trainee_withdrawal_confirm_detail_path(trainee), method: :put %>
 
