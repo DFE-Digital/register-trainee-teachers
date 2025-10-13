@@ -339,7 +339,6 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             "application_id is too long (maximum is 7 characters)"
           )
         end
-        end
       end
     end
 
@@ -1319,8 +1318,12 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
-        expect(response.parsed_body["errors"]).to include(/uk_degree has invalid reference data value of/)
+        expect(response.parsed_body["message"]).to eq("Validation failed: 3 errors prohibited this trainee from being saved")
+        expect(response.parsed_body["errors"]).to contain_exactly(
+          "graduation_year must be in the past, for example 2014",
+          "graduation_year is invalid",
+          /uk_degree has invalid reference data value of/
+        )
       end
     end
   end
