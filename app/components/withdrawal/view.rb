@@ -4,12 +4,13 @@ module Withdrawal
   class View < ApplicationComponent
     include SanitizeHelper
 
-    def initialize(data_model:, editable: false, undo_withdrawal: false, show_date_prefix: true)
+    def initialize(data_model:, editable: false, undo_withdrawal: false, show_date_prefix: true, render_list_only: false)
       @data_model = data_model
       @undo_withdrawal = undo_withdrawal
       @editable = editable
       @deferred = trainee.deferred?
       @show_date_prefix = show_date_prefix
+      @render_list_only = render_list_only
     end
 
     def trainee
@@ -27,7 +28,7 @@ module Withdrawal
 
   private
 
-    attr_accessor :data_model, :editable, :undo_withdrawal, :deferred
+    attr_accessor :data_model, :editable, :undo_withdrawal, :deferred, :render_list_only
 
     def withdraw_date_from_course
       mappable_field(
@@ -102,7 +103,7 @@ module Withdrawal
         end
       end.map { |reason| "<li>#{reason}</li>" }
 
-      ["<ul class=\"app-summary-card__values-list\">", *reasons, "</ul>"].join.html_safe
+      ["<ul class=\"app-summary-card__values-list app-summary-list__values-list\">", *reasons, "</ul>"].join.html_safe
     end
 
     def withdrawal_reasons

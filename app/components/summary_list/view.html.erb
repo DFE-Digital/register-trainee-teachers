@@ -1,0 +1,11 @@
+<section class="app-summary-list govuk-!-margin-bottom-6" <%= "id=#{id}" if id.present? %>>
+  <%= render GovukComponent::SummaryListComponent.new do |summary_list| %>
+    <% summary_rows.each do |summary_row| %>
+      <% summary_list.with_row(html_attributes: { id: row_title(summary_row[:key]) }, classes: row_title(summary_row[:key])) do |row|
+        row.with_key(text: summary_row[:key])
+        row.with_value(text: summary_row[:value])
+        row.with_action(href: summary_row[:action_href], text: summary_row[:action_text], visually_hidden_text: summary_row[:action_visually_hidden_text] ) if editable
+      end %>
+    <% end %>
+  <% end %>
+</section>
