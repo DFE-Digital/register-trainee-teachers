@@ -68,10 +68,17 @@ succeed. If not, speak with the TRS team about the trainee.
 
 ### 404 error
 
-This is triggered when TRS cannot find the trainee on their side.
+This is triggered by `Trs::RetrieveTeacher` when TRS cannot find the trainee on their side.
 
 ```json
-status: 404, body: {"title":"Person not found.","status":404,"detail":"TRN: '1234567890'","errorCode":10001}
+status: 404, body: {"title": "Person not found.", "status": 404, "detail": "TRN: '1234567890'","errorCode":10001}
+```
+
+
+and by `Trs::RetrieveTrnRequest` when TRS cannot find the TRN request on their side:
+
+```json
+status: 404, body: {"title": "TRN request does not exist.","status": 404, "detail": "TRN request ID: 'fe7711e7-5f0d-478a-9ce2-a9b1b9835c36'", "errorCode": 10031}
 ```
 
 * You may also see this error come up when the trainee’s TRN is inactive on the TRS side
@@ -85,7 +92,7 @@ some kind of validation error in the payload which will need to be
 investigated.
 
 ```json
-status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode":10006}
+status: 400, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"holdsFrom":["Holds from date must be specified when status is 'Holds'."]}
 ```
 
 * There might be a trainee state mismatch here between TRS and Register
@@ -94,7 +101,7 @@ status: 400, body: {"title":"Teacher has no QTS record","status":400,"errorCode"
 * In this case you might need to check with the provider what the state of the record should be
 
 ```json
-status: 400, body: {"title":"Teacher has no incomplete ITT record","status":400,"errorCode":10005}
+status: 400, body: {"title":"Teacher has no incomplete ITT record", "status":400, "errorCode":10005}
 ```
 
 * If this error came from the award job, then the trainee might be stuck in recommended for award state
@@ -141,6 +148,18 @@ future:
 
 ```ruby
 Trs::RetrieveTrnJob.perform_later(t.dqt_trn_request, Date.today + 4.days)
+```
+
+### 500 error
+
+Generally returned without a response body, often indicates a duplicate provider record on the TRS side. You'll need to liaise with the TRS team to resolve this.
+
+### 503 error
+
+May indicate that TRS is down.
+
+```json
+status: 503, body: {"type":"https://tools.ietf.org/html/rfc9110#section-15.6.4","title":"Service Unavailable","status":503,"traceId":"00-d25977e8c3bea5a9d8fcfd2041e1e4ae-229da0abb1de21bc-00"}
 ```
 
 ## Incorrectly awarded trainee
