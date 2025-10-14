@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSafeguardingWithdrawalReason < ActiveRecord::Migration[7.2]
   def change
     WithdrawalReason.upsert(

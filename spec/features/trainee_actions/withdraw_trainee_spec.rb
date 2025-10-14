@@ -68,10 +68,10 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
       end
     end
 
@@ -88,10 +88,10 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
       end
     end
 
@@ -109,10 +109,10 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+        and_i_see_the_summary_card(withdrawal_date:, reason:)
       end
     end
 
@@ -133,11 +133,11 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason: withdrawal_reason_safeguarding.name)
+        and_i_see_the_summary_card(start_date, withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
         and_i_can_see_the_safeguarding_concern_reasons_text
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date:, withdrawal_date:, reason: withdrawal_reason_safeguarding.name)
+        and_i_see_the_summary_card(start_date, withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
         and_i_can_see_the_safeguarding_concern_reasons_text
       end
     end
@@ -387,7 +387,7 @@ feature "Withdrawing a trainee" do
     expect(withdrawal_reason_page).to have_content('Only select "Unknown" if no other withdrawal reasons apply')
   end
 
-  def and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
+  def and_i_see_the_summary_card(withdrawal_date:, reason:)
     expect(page).to have_text(date_for_summary_view(withdrawal_date))
     expect(page).to have_text(I18n.t("components.withdrawal_details.reasons.#{reason}"))
   end

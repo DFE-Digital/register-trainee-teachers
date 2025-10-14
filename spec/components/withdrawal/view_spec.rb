@@ -59,7 +59,7 @@ describe Withdrawal::View do
       it "renders a prefixed date of withdrawal" do
         expect(rendered_content).to have_css(
           "#when-did-the-trainee-withdraw",
-          text: "Today - #{date_for_summary_view(withdraw_date)}"
+          text: "Today - #{date_for_summary_view(withdraw_date)}",
         )
       end
     end
@@ -71,7 +71,7 @@ describe Withdrawal::View do
       it "renders a prefixed date of withdrawal" do
         expect(rendered_content).to have_css(
           "#when-did-the-trainee-withdraw",
-          text: "#{date_for_summary_view(withdraw_date)}"
+          text: date_for_summary_view(withdraw_date),
         )
       end
     end
@@ -93,7 +93,7 @@ describe Withdrawal::View do
       it "renders an unprefixed date of withdrawal" do
         expect(rendered_content).to have_css(
           "#when-did-the-trainee-withdraw",
-          text: "#{date_for_summary_view(withdraw_date)}",
+          text: date_for_summary_view(withdraw_date),
         )
       end
     end
