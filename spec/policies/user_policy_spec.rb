@@ -11,7 +11,7 @@ describe UserPolicy do
   let(:provider_user) { create(:user, providers: [provider]) }
   let(:provider_user_context) { UserWithOrganisationContext.new(user: provider_user, session: {}) }
 
-  let(:provider_admin_user) { create(:user, system_admin: true) }
+  let(:provider_admin_user) { create(:user, providers: [provider], system_admin: true) }
   let(:provider_admin_user_context) { UserWithOrganisationContext.new(user: provider_admin_user, session: {}) }
 
   let(:lead_partner) { create(:lead_partner, :school) }
@@ -82,6 +82,49 @@ describe UserPolicy do
       context "outside performance profile sign off period" do
         before do
           allow(DetermineSignOffPeriod).to receive(:call).and_return(:outside_period)
+        end
+
+        it { is_expected.not_to permit(lead_partner_user_context) }
+        it { is_expected.not_to permit(lead_partner_admin_user_context) }
+
+        it { is_expected.not_to permit(provider_user_context) }
+        it { is_expected.not_to permit(provider_admin_user_context) }
+      end
+    end
+  end
+
+  context "performance_profile_signed_off?" do
+    permissions :performance_profile_signed_off? do
+      context "during performance profile sign off period" do
+        before do
+          allow(DetermineSignOffPeriod).to receive(:call).and_return(:performance_period)
+        end
+
+        context "when the performance profile hasn't been signed off" do
+          it { is_expected.not_to permit(provider_user_context) }
+          it { is_expected.not_to permit(provider_admin_user_context) }
+
+          it { is_expected.not_to permit(lead_partner_user_context) }
+          it { is_expected.not_to permit(lead_partner_admin_user_context) }
+        end
+
+        context "when the performance profile has been signed off" do
+          before do
+            allow(provider).to receive(:performance_profile_signed_off?).and_return(true)
+          end
+
+          it { is_expected.to permit(provider_user_context) }
+          it { is_expected.to permit(provider_admin_user_context) }
+
+          it { is_expected.not_to permit(lead_partner_user_context) }
+          it { is_expected.not_to permit(lead_partner_admin_user_context) }
+        end
+      end
+
+      context "outside performance profile sign off period" do
+        before do
+          allow(provider).to receive(:performance_profile_signed_off?).and_return(true)
+          SignOff.create(academic_cycle: AcademicCycle.previous, sign_off_type: :performance_profile, provider: provider, user: provider.users.first)
         end
 
         it { is_expected.not_to permit(lead_partner_user_context) }

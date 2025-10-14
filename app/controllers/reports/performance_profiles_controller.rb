@@ -56,9 +56,7 @@ module Reports
     end
 
     def confirmation
-      authorize(current_user, :reports?)
-
-      redirect_to(reports_path) unless current_user.provider? && current_user.organisation.performance_profile_signed_off? && DetermineSignOffPeriod.call == :performance_period
+      authorize(current_user, :performance_profile_signed_off?)
     end
 
   private
