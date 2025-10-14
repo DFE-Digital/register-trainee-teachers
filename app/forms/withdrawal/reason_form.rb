@@ -31,6 +31,7 @@ module Withdrawal
     def save!
       withdrawal = trainee.current_withdrawal
       withdrawal.update!(another_reason:) if another_reason.present?
+      withdrawal.update!(safeguarding_concern_reasons:) if safeguarding_concern_reasons.present?
 
       reason_ids.each do |reason_id|
         withdrawal.trainee_withdrawal_reasons.create!(
