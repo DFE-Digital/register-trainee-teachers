@@ -92,7 +92,10 @@ module Withdrawal
 
       reasons = withdrawal_reasons.map do |reason|
         if reason.name.match?("another_reason")
-          another_reason
+          [
+            t("components.withdrawal_details.reasons.#{reason.name}"),
+            sanitize(another_reason),
+          ].compact_blank.join("<br>")
         elsif reason.name == "safeguarding_concerns"
           [
             t("components.withdrawal_details.reasons.#{reason.name}"),
