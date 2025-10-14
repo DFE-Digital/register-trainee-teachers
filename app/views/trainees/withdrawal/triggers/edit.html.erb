@@ -15,9 +15,7 @@
     <%= register_form_with(model: form, url: trainee_withdrawal_trigger_path(trainee), local: true, method: :put) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <span class="govuk-caption-l">
-        <%= trainee_name(trainee) %>
-      </span>
+      <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
       <%= f.govuk_radio_buttons_fieldset(:trigger,
       legend: { text: t("views.forms.withdrawal_trigger.title"), size: "l"},
