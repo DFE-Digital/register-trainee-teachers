@@ -96,6 +96,9 @@ variable "send_traffic_to_maintenance_page" {
   default     = false
 }
 
+# pg_airbyte_enabled used in the postgres module
+variable "pg_airbyte_enabled" { default = false }
+
 locals {
   app_name_suffix   = var.app_name == null ? var.app_environment : var.app_name
 
