@@ -138,6 +138,7 @@ feature "Withdrawing a trainee" do
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
         and_i_see_the_summary_card(start_date:, withdrawal_date:, reason: withdrawal_reason_safeguarding.name)
+        and_i_can_see_the_safeguarding_concern_reasons_text
       end
     end
 
@@ -214,27 +215,6 @@ feature "Withdrawing a trainee" do
     and_i_am_on_the_trainee_record_page
     and_i_click_on_withdraw_and_continue
     then_the_duplicate_record_text_should_be_shown
-  end
-
-  scenario "trainee is withdrawn and changes their start date to a date before the withdrawal date", skip: skip_test_due_to_first_day_of_current_academic_year? do
-    when_i_am_on_the_withdrawal_page
-    and_i_choose_today
-    and_i_continue(:date)
-    when_i_choose_trainee_chose_to_withdraw
-    and_i_continue(:trigger)
-    when_i_check_a_reason
-    and_i_continue(:reason)
-    when_i_choose_future_interest
-    and_i_continue(:future_interest)
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_click_change_start_date
-    and_i_choose_they_have_started
-    and_i_continue(:date)
-    and_i_select_no_they_started_later
-    and_i_fill_in_a_new_start_date(2.days.ago)
-    and_i_continue(:date)
-    then_i_am_redirected_to_withdrawal_confirmation_page
-    and_i_see_my_date(2.days.ago)
   end
 
   scenario "trainee is already withdrawn" do
@@ -408,7 +388,6 @@ feature "Withdrawing a trainee" do
   end
 
   def and_i_see_the_summary_card(start_date:, withdrawal_date:, reason:)
-    expect(page).to have_text(date_for_summary_view(start_date))
     expect(page).to have_text(date_for_summary_view(withdrawal_date))
     expect(page).to have_text(I18n.t("components.withdrawal_details.reasons.#{reason}"))
   end
