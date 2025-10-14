@@ -24,9 +24,7 @@
     <%= register_form_with(model: form, url: trainee_withdrawal_date_path(trainee), method: :put, local: true) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <span class="govuk-caption-l">
-        <%= trainee_name(trainee) %>
-      </span>
+      <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
       <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: heading, tag: "h1", size: "l" }, hint: { text: t("trainees.withdrawals.dates.edit.hint") }, class: "withdrawal-date") do %>
         <%= f.govuk_radio_button :date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
