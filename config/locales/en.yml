@@ -1328,10 +1328,10 @@ en:
           heading: "Withdraw the trainee"
           before_you_start:
             header: "Before you start"
-            body: "Make sure you have all the background information to why this trainee has withdrawn."
+            body: "Make sure you have all the information related to the withdrawal of this trainee."
           how_your_answers_will_help:
             header: "How your answers will help us"
-            body: "Your answers will help us better understand withdrawal reasons and inform policy with the aim to increase trainee retention."
+            body: "These may help inform policy in the future and help increase trainee retention."
       dates:
         edit:
           heading: When did the trainee withdraw?
