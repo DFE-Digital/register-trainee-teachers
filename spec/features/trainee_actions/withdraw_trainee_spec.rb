@@ -133,11 +133,11 @@ feature "Withdrawing a trainee" do
         when_i_choose_future_interest
         and_i_continue(:future_interest)
         then_i_am_redirected_to_withdrawal_confirmation_page
-        and_i_see_the_summary_card(start_date, withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
+        and_i_see_the_summary_card(withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
         and_i_can_see_the_safeguarding_concern_reasons_text
         and_i_continue(:confirm_detail)
         then_i_am_redirected_to_the_record_page
-        and_i_see_the_summary_card(start_date, withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
+        and_i_see_the_summary_card(withdrawal_date: withdrawal_date, reason: withdrawal_reason_safeguarding.name)
         and_i_can_see_the_safeguarding_concern_reasons_text
       end
     end
