@@ -26,9 +26,7 @@ class UserPolicy < ProviderPolicy
   end
 
   def can_sign_off_performance_profile?
-    return false unless DetermineSignOffPeriod.call == :performance_period
-
-    drafts? && user.provider? && user.organisation.performance_profile_awaiting_sign_off?
+    user.provider? && user.organisation.performance_profile_awaiting_sign_off? && DetermineSignOffPeriod.call == :performance_period
   end
 
   alias_method :reports?, :drafts?

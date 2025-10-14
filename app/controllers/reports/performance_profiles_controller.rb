@@ -2,6 +2,8 @@
 
 module Reports
   class PerformanceProfilesController < ApplicationController
+    rescue_from Pundit::NotAuthorizedError, with: :redirect_if_not_applicable
+
     def index
       authorize(current_user, :can_sign_off_performance_profile?)
 
@@ -54,7 +56,7 @@ module Reports
     end
 
     def confirmation
-      authorize(current_user, :can_sign_off_performance_profile?)
+      authorize(current_user, :reports?)
 
       redirect_to(reports_path) unless current_user.provider? && current_user.organisation.performance_profile_signed_off? && DetermineSignOffPeriod.call == :performance_period
     end
@@ -67,6 +69,10 @@ module Reports
 
     def performance_profiles_filename
       "#{time_now}_#{@previous_academic_cycle.label('-')}_trainees_performance-profiles-sign-off_register-trainee-teachers.csv"
+    end
+
+    def redirect_if_not_applicable
+      redirect_to(reports_path)
     end
 
     def performance_profiles_trainees
