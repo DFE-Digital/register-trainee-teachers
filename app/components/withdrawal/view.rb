@@ -90,7 +90,7 @@ module Withdrawal
     def reasons_html_safe
       return unless withdrawal_reasons
 
-      reasons = withdrawal_reasons.map do |reason|
+      reason_names = withdrawal_reasons.map do |reason|
         if reason.name.match?("another_reason")
           [
             t("components.withdrawal_details.reasons.#{reason.name}"),
@@ -104,7 +104,8 @@ module Withdrawal
         else
           t("components.withdrawal_details.reasons.#{reason.name}", default: "-")
         end
-      end.map { |reason| "<li>#{reason}</li>" }
+      end
+      reasons = reason_names.map { |reason| "<li>#{reason}</li>" }
 
       ["<ul class=\"app-summary-card__values-list app-summary-list__values-list\">", *reasons, "</ul>"].join.html_safe
     end
