@@ -37,9 +37,7 @@
     <%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
       <%= f.govuk_error_summary %>
 
-      <span class="govuk-caption-l">
-        <%= trainee_name(trainee) %>
-      </span>
+      <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
       <%= f.govuk_check_boxes_fieldset :reason_ids,
           legend: { text: heading, tag: "h1", size: "l" },
