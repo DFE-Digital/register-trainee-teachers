@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: 99333dd48115f5d4f13e1fd6bc11b53197ecaa53
-  tag: v1.15.8
+  revision: 66887ceeb047568ad4d8a1df7ef1670d13d59a19
+  tag: v1.15.9
   specs:
-    dfe-analytics (1.15.8)
+    dfe-analytics (1.15.9)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       multi_xml (~> 0.6.0)
@@ -241,7 +241,7 @@ GEM
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-follow_redirects (0.3.0)
+    faraday-follow_redirects (0.4.0)
       faraday (>= 1, < 3)
     faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
@@ -263,7 +263,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    google-apis-bigquery_v2 (0.93.0)
+    google-apis-bigquery_v2 (0.95.0)
       google-apis-core (>= 0.15.0, < 2.a)
     google-apis-core (1.0.2)
       addressable (~> 2.8, >= 2.8.7)
@@ -289,7 +289,7 @@ GEM
       faraday (>= 1.0, < 3.a)
     google-cloud-errors (1.5.0)
     google-logging-utils (0.2.0)
-    googleauth (1.15.0)
+    googleauth (1.15.1)
       faraday (>= 1.0, < 3.a)
       google-cloud-env (~> 2.2)
       google-logging-utils (~> 0.1)
@@ -743,7 +743,7 @@ GEM
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
     uniform_notifier (1.17.0)
-    uri (1.0.3)
+    uri (1.0.4)
     useragent (0.16.11)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
@@ -965,7 +965,7 @@ CHECKSUMS
   debug (1.11.0) sha256=1425db64cfa0130c952684e3dc974985be201dd62899bf4bbe3f8b5d6cf1aef2
   declarative (0.0.20) sha256=8021dd6cb17ab2b61233c56903d3f5a259c5cf43c80ff332d447d395b17d9ff9
   deep_merge (1.2.2) sha256=83ced3a3d7f95f67de958d2ce41b1874e83c8d94fe2ddbff50c8b4b82323563a
-  dfe-analytics (1.15.8)
+  dfe-analytics (1.15.9)
   dfe-reference-data (3.8.3)
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
   discard (1.4.0) sha256=6efcd2a53ddf96781f81b825d398f1c88ab88c0faa84e131bea6e16ef95d65d0
@@ -984,7 +984,7 @@ CHECKSUMS
   factory_bot_rails (6.4.4) sha256=139e17caa2c50f098fddf5e5e1f29e8067352024e91ca1186d018b36589e5c88
   faker (3.5.2) sha256=f9a80291b2e3f259801d1dd552f0732fe04dce5d1f74e798365bc0413789c473
   faraday (2.14.0) sha256=8699cfe5d97e55268f2596f9a9d5a43736808a943714e3d9a53e6110593941cd
-  faraday-follow_redirects (0.3.0) sha256=d92d975635e2c7fe525dd494fcd4b9bb7f0a4a0ec0d5f4c15c729530fdb807f9
+  faraday-follow_redirects (0.4.0) sha256=d3fa1118ab1350e24035a272b4cff64948643bb7182846db89acaf87abadd5d9
   faraday-net_http (3.4.1) sha256=095757fae7872b94eac839c08a1a4b8d84fd91d6886cfbe75caa2143de64ab3b
   ferrum (0.17.1) sha256=51d591120fc593e5a13b5d9d6474389f5145bb92a91e36eab147b5d096c8cbe7
   ffi (1.17.1-arm64-darwin) sha256=a8e04f79d375742c54ee7f9fff4b4022b87200a4ec0eb082128d3b6559e67b4d
@@ -995,14 +995,14 @@ CHECKSUMS
   front_matter_parser (1.0.1) sha256=bae298bda01db95788a4d6452f1670a3d198c6716c8d3727db9a95533deb7b7b
   fugit (1.11.1) sha256=e89485e7be22226d8e9c6da411664d0660284b4b1c08cacb540f505907869868
   globalid (1.2.1) sha256=70bf76711871f843dbba72beb8613229a49429d1866828476f9c9d6ccc327ce9
-  google-apis-bigquery_v2 (0.93.0) sha256=db98bdab9d1663122738cce61ac795c26a01776757f6f54ca72a0255a68ccecf
+  google-apis-bigquery_v2 (0.95.0) sha256=db9f402734efff82e6ca9a7d7e71b496c932b62db84ab768b9f18e96827ab3a5
   google-apis-core (1.0.2) sha256=ba4579aaadc902d6cc7bc8db88f566ab00f5e31ea87ab41e9f9a032c470f2629
   google-cloud-bigquery (1.59.0) sha256=ad897d0b52794e548a24bdd339bc126b852d0ca3304956a1168aaf26c509f3ea
   google-cloud-core (1.8.0) sha256=e572edcbf189cfcab16590628a516cec3f4f63454b730e59f0b36575120281cf
   google-cloud-env (2.3.1) sha256=0faac01eb27be78c2591d64433663b1a114f8f7af55a4f819755426cac9178e7
   google-cloud-errors (1.5.0) sha256=b56be28b8c10628125214dde571b925cfcebdbc58619e598250c37a2114f7b4b
   google-logging-utils (0.2.0) sha256=675462b4ea5affa825a3442694ca2d75d0069455a1d0956127207498fca3df7b
-  googleauth (1.15.0) sha256=122ae61813805a1cfdf225638f33d354ca6078be17e9712669667226a7243bcf
+  googleauth (1.15.1) sha256=d61960893d0d573601d94a38889613b991f40a59ab755b5beed87bf2c3d3cb24
   govuk-components (5.11.3) sha256=b3fbf5c040c93e0552220c6296382a8730a0398032639393edc88c68fb240dcc
   govuk_design_system_formbuilder (5.10.1) sha256=36aeaff5d0bd2a31767bfc6b9ba20bb4a86829ba79812f21db9c76b4f792338b
   govuk_markdown (2.0.3) sha256=30fc99b502d96cf81751cbfc115e3717f8252940735dc40ee6dc83b454b1b35e
@@ -1178,7 +1178,7 @@ CHECKSUMS
   unicode-display_width (3.2.0) sha256=0cdd96b5681a5949cdbc2c55e7b420facae74c4aaf9a9815eee1087cb1853c42
   unicode-emoji (4.1.0) sha256=4997d2d5df1ed4252f4830a9b6e86f932e2013fbff2182a9ce9ccabda4f325a5
   uniform_notifier (1.17.0) sha256=db4787ed2ad168ccb0ad4027a45811e1c9e2f8275682fee72697e6ce1c6d6ca7
-  uri (1.0.3) sha256=e9f2244608eea2f7bc357d954c65c910ce0399ca5e18a7a29207ac22d8767011
+  uri (1.0.4) sha256=34485d137c079f8753a0ca1d883841a7ba2e5fae556e3c30c2aab0dde616344b
   useragent (0.16.11) sha256=700e6413ad4bb954bb63547fa098dddf7b0ebe75b40cc6f93b8d54255b173844
   validate_url (1.0.15) sha256=72fe164c0713d63a9970bd6700bea948babbfbdcec392f2342b6704042f57451
   view_component (4.0.2) sha256=80eb4a8ecf8ff4cf152aea4821a8748d071a2e3af04f0532efcbf5011e8e9f65
