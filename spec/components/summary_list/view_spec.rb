@@ -12,7 +12,7 @@ describe SummaryList::View do
   end
 
   subject do
-    render_inline(SummaryList::View.new(rows: rows))
+    render_inline(SummaryList::View.new(rows:))
   end
 
   it "renders a summary list component for rows" do
