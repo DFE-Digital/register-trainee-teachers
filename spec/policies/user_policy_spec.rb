@@ -124,7 +124,6 @@ describe UserPolicy do
       context "outside performance profile sign off period" do
         before do
           allow(provider).to receive(:performance_profile_signed_off?).and_return(true)
-          SignOff.create(academic_cycle: AcademicCycle.previous, sign_off_type: :performance_profile, provider: provider, user: provider.users.first)
         end
 
         it { is_expected.not_to permit(lead_partner_user_context) }
