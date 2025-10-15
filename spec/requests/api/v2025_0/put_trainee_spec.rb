@@ -1388,6 +1388,15 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body[:data][:training_route]).to eq(training_route)
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it do
+            expect(response).to have_http_status(:ok)
+            expect(response.parsed_body[:data][:training_route]).to eq(training_route)
+          end
+        end
       end
 
       context "when not present" do
@@ -1415,6 +1424,18 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]],
           )
           expect(trainee.reload.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it do
+            expect(response).to have_http_status(:ok)
+            expect(response.parsed_body[:data][:training_route]).to eq(
+              Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]],
+            )
+            expect(trainee.reload.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
+          end
         end
       end
 
@@ -1450,182 +1471,9 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             "training_route has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
           )
         end
-      end
 
-      context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
-
-        context "when present" do
-          let(:params) do
-            {
-              data: {
-                itt_start_date:,
-                training_route:,
-              },
-            }
-          end
-
-          let(:itt_start_date) { "2023-01-01" }
-          let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-            expect(response.parsed_body[:data][:training_route]).to eq(training_route)
-          end
-        end
-
-        context "when not present" do
-          let(:params) do
-            {
-              data: {
-                training_route:,
-              },
-            }
-          end
-
-          let(:training_route) { nil }
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-            expect(response.parsed_body[:data][:training_route]).to eq(
-              Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]],
-            )
-            expect(trainee.reload.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-          end
-        end
-
-        context "when invalid" do
-          let(:params) do
-            {
-              data: {
-                itt_start_date: itt_start_date,
-                itt_end_date: itt_end_date,
-                training_route: training_route,
-                trainee_start_date: itt_start_date,
-              },
-            }
-          end
-
-          let(:itt_start_date) { "2021-08-01" }
-          let(:itt_end_date)   { "2022-01-01" }
-          let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
-
-          let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2021, next_cycle: true) }
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body[:errors]).to eq(
-              "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
-              ],
-            )
-          end
-        end
-
-        context "when present" do
-          let(:params) do
-            {
-              data: {
-                itt_start_date:,
-                training_route:,
-              },
-            }
-          end
-
-          let(:itt_start_date) { "2023-01-01" }
-          let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_undergrad]] }
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-            expect(response.parsed_body[:data][:training_route]).to eq(training_route)
-          end
-        end
-
-        context "when not present" do
-          let(:params) do
-            {
-              data: {
-                training_route:,
-              },
-            }
-          end
-
-          let(:training_route) { nil }
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-            expect(response.parsed_body[:data][:training_route]).to eq(
-              Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]],
-            )
-            expect(trainee.reload.training_route).to eq(TRAINING_ROUTE_ENUMS[:provider_led_postgrad])
-          end
-        end
-
-        context "when invalid" do
-          let(:params) do
-            {
-              data: {
-                itt_start_date: itt_start_date,
-                itt_end_date: itt_end_date,
-                training_route: training_route,
-                trainee_start_date: itt_start_date,
-              },
-            }
-          end
-
-          let(:itt_start_date) { "2021-08-01" }
-          let(:itt_end_date)   { "2022-01-01" }
-          let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
-
-          let!(:academic_cycle) { create(:academic_cycle, cycle_year: 2021, next_cycle: true) }
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -1668,6 +1516,20 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(trainee.reload.disabilities.count).to eq(1)
           expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Mental health condition")
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it do
+            expect(response).to have_http_status(:ok)
+            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+            expect(response.parsed_body[:data][:disability1]).to eq("55")
+            expect(response.parsed_body[:data][:disability2]).to be_nil
+
+            expect(trainee.reload.disabilities.count).to eq(1)
+            expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Mental health condition")
+          end
+        end
       end
 
       context "when disability1 is set" do
@@ -1689,6 +1551,21 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(trainee.disabilities.count).to eq(1)
           expect(trainee.disabilities.map(&:name)).to contain_exactly("Deaf")
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it do
+            expect(response).to have_http_status(:ok)
+
+            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+            expect(response.parsed_body[:data][:disability1]).to eq("57")
+            expect(response.parsed_body[:data][:disability2]).to be_nil
+
+            expect(trainee.disabilities.count).to eq(1)
+            expect(trainee.disabilities.map(&:name)).to contain_exactly("Deaf")
+          end
+        end
       end
 
       context "when disability2 is set" do
@@ -1709,6 +1586,21 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
           expect(trainee.disabilities.count).to eq(2)
           expect(trainee.disabilities.map(&:name)).to contain_exactly("Mental health condition", "Deaf")
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it do
+            expect(response).to have_http_status(:ok)
+
+            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+            expect(response.parsed_body[:data][:disability1]).to eq("55")
+            expect(response.parsed_body[:data][:disability2]).to eq("57")
+
+            expect(trainee.disabilities.count).to eq(2)
+            expect(trainee.disabilities.map(&:name)).to contain_exactly("Mental health condition", "Deaf")
+          end
         end
       end
 
@@ -1732,6 +1624,21 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(trainee.disabilities.count).to eq(2)
           expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it do
+            expect(response).to have_http_status(:ok)
+
+            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
+            expect(response.parsed_body[:data][:disability1]).to eq("58")
+            expect(response.parsed_body[:data][:disability2]).to eq("57")
+
+            expect(trainee.disabilities.count).to eq(2)
+            expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
+          end
+        end
       end
 
       context "when disability1 & disability2 have the same code values" do
@@ -1750,136 +1657,9 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             "disabilities contain duplicate values",
           )
         end
-      end
 
-      %w[95 98 99].each do |code|
-        let(:disability_disclosures) {
-          {
-            "95" => "no_disability",
-            "98" => "disability_not_provided",
-            "99" => "disability_not_provided",
-          }
-        }
-
-        context "when disability1 has code #{code}" do
-          let(:params) do
-            {
-              data: {
-                disability1: code,
-              },
-            }
-          end
-
-          it do
-            expect(response).to have_http_status(:success)
-
-            expect(response.parsed_body[:data][:disability_disclosure]).to eq(disability_disclosures[code])
-            expect(response.parsed_body[:data][:disability1]).to eq(code)
-
-            trainee.reload
-
-            expect(trainee.disability_disclosure).to eq(disability_disclosures[code])
-            expect(trainee.disabilities).to be_empty
-          end
-        end
-      end
-
-      context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
-
-        context "when not present" do
-          let(:params) do
-            {
-              data: {
-                first_names: "Alice",
-              },
-            }
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
-            expect(response.parsed_body[:data][:disability1]).to eq("55")
-            expect(response.parsed_body[:data][:disability2]).to be_nil
-
-            expect(trainee.reload.disabilities.count).to eq(1)
-            expect(trainee.reload.disabilities.map(&:name)).to contain_exactly("Mental health condition")
-          end
-        end
-
-        context "when disability1 is set" do
-          let(:params) do
-            {
-              data: {
-                disability1: "57",
-              },
-            }
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-
-            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
-            expect(response.parsed_body[:data][:disability1]).to eq("57")
-            expect(response.parsed_body[:data][:disability2]).to be_nil
-
-            expect(trainee.disabilities.count).to eq(1)
-            expect(trainee.disabilities.map(&:name)).to contain_exactly("Deaf")
-          end
-        end
-
-        context "when disability2 is set" do
-          let(:params) do
-            {
-              data: {
-                disability2: "57",
-              },
-            }
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-
-            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
-            expect(response.parsed_body[:data][:disability1]).to eq("55")
-            expect(response.parsed_body[:data][:disability2]).to eq("57")
-
-            expect(trainee.disabilities.count).to eq(2)
-            expect(trainee.disabilities.map(&:name)).to contain_exactly("Mental health condition", "Deaf")
-          end
-        end
-
-        context "when disability1 & disability2 are set" do
-          let(:params) do
-            {
-              data: {
-                disability1: "58",
-                disability2: "57",
-              },
-            }
-          end
-
-          it do
-            expect(response).to have_http_status(:ok)
-
-            expect(response.parsed_body[:data][:disability_disclosure]).to eq("disabled")
-            expect(response.parsed_body[:data][:disability1]).to eq("58")
-            expect(response.parsed_body[:data][:disability2]).to eq("57")
-
-            expect(trainee.disabilities.count).to eq(2)
-            expect(trainee.disabilities.map(&:name)).to contain_exactly("Blind", "Deaf")
-          end
-        end
-
-        context "when disability1 & disability2 have the same code values" do
-          let(:params) do
-            {
-              data: {
-                disability1: "58",
-                disability2: "58",
-              },
-            }
-          end
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
 
           it do
             expect(response).to have_http_status(:unprocessable_entity)
@@ -1917,6 +1697,22 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
               expect(trainee.disability_disclosure).to eq(disability_disclosures[code])
               expect(trainee.disabilities).to be_empty
+            end
+
+            context "with enhanced errors" do
+              let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+              it do
+                expect(response).to have_http_status(:success)
+
+                expect(response.parsed_body[:data][:disability_disclosure]).to eq(disability_disclosures[code])
+                expect(response.parsed_body[:data][:disability1]).to eq(code)
+
+                trainee.reload
+
+                expect(trainee.disability_disclosure).to eq(disability_disclosures[code])
+                expect(trainee.disabilities).to be_empty
+              end
             end
           end
         end
@@ -1960,6 +1756,23 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
             expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
           end
+
+          context "with enhanced errors" do
+            let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+            it "sets the correct subjects" do
+              trainee.reload
+
+              expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range])
+              expect(trainee.course_subject_one).to eq("primary teaching")
+              expect(trainee.course_subject_two).to eq("biology")
+              expect(trainee.course_subject_three).to eq("historical linguistics")
+
+              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
+              expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
+            end
+          end
         end
 
         context "when '100511' is present" do
@@ -1983,6 +1796,22 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
             expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
             expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          end
+
+          context "with enhanced errors" do
+            let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+            it "sets the correct subjects" do
+              trainee.reload
+
+              expect(trainee.course_subject_one).to eq("primary teaching")
+              expect(trainee.course_subject_two).to eq("historical linguistics")
+              expect(trainee.course_subject_three).to eq("computer science")
+
+              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
+              expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+            end
           end
         end
       end
@@ -2022,6 +1851,22 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response.parsed_body[:data][:course_subject_two]).to be_nil
             expect(response.parsed_body[:data][:course_subject_three]).to be_nil
           end
+
+          context "with enhanced errors" do
+            let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+            it "sets the correct subjects" do
+              trainee.reload
+
+              expect(trainee.course_subject_one).to eq("primary teaching")
+              expect(trainee.course_subject_two).to be_nil
+              expect(trainee.course_subject_three).to be_nil
+
+              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_two]).to be_nil
+              expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+            end
+          end
         end
 
         context "via blank values" do
@@ -2045,6 +1890,22 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
             expect(response.parsed_body[:data][:course_subject_two]).to be_nil
             expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+          end
+
+          context "with enhanced errors" do
+            let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+            it "sets the correct subjects" do
+              trainee.reload
+
+              expect(trainee.course_subject_one).to eq("primary teaching")
+              expect(trainee.course_subject_two).to be_nil
+              expect(trainee.course_subject_three).to be_nil
+
+              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
+              expect(response.parsed_body[:data][:course_subject_two]).to be_nil
+              expect(response.parsed_body[:data][:course_subject_three]).to be_nil
+            end
           end
         end
       end
@@ -2079,6 +1940,22 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
           expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "sets the correct subjects" do
+            trainee.reload
+
+            expect(trainee.course_subject_one).to eq("biology")
+            expect(trainee.course_subject_two).to eq("historical linguistics")
+            expect(trainee.course_subject_three).to eq("computer science")
+
+            expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
+            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
+            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
+          end
+        end
       end
 
       context "when course_subject_one has invalid reference data values" do
@@ -2100,6 +1977,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response.parsed_body["errors"]).to include(
             /course_subject_one has invalid reference data value of 'chemistry'/,
           )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "course_subject_one" => [/has invalid reference data value of 'chemistry'/],
+            )
+          end
         end
       end
 
@@ -2123,6 +2011,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             /course_subject_two has invalid reference data value of/,
           )
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "course_subject_two" => [/has invalid reference data value of/],
+            )
+          end
+        end
       end
 
       context "when course_subject_three has invalid reference data values" do
@@ -2144,6 +2043,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response.parsed_body["errors"]).to include(
             /course_subject_three has invalid reference data value of/,
           )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "course_subject_three" => [/has invalid reference data value of/],
+            )
+          end
         end
       end
 
@@ -2167,6 +2077,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             /study_mode has invalid reference data value of/,
           )
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "study_mode" => [/has invalid reference data value of/],
+            )
+          end
+        end
       end
 
       context "when nationality has invalid reference data values" do
@@ -2188,6 +2109,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response.parsed_body["errors"]).to include(
             /nationality has invalid reference data value of/,
           )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "nationality" => [/has invalid reference data value of/],
+            )
+          end
         end
       end
 
@@ -2211,6 +2143,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             /training_initiative has invalid reference data value of/,
           )
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to match(
+              "training_initiative" => [/has invalid reference data value of/],
+            )
+          end
+        end
       end
 
       context "when training_initiative is unavailable (025/transition_to_teach) in the given academic year" do
@@ -2232,6 +2175,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response.parsed_body["errors"]).to contain_exactly(
             "training_initiative 'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'",
           )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to eq(
+              "training_initiative" => ["'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'"],
+            )
+          end
         end
       end
 
@@ -2255,6 +2209,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             /funding_method has invalid reference data value of/,
           )
         end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "funding_method" => [/has invalid reference data value of/],
+            )
+          end
+        end
       end
 
       context "when itt_aim has invalid reference data values" do
@@ -2276,6 +2241,17 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response.parsed_body["errors"]).to include(
             /itt_aim has invalid reference data value of/,
           )
+        end
+
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
+
+          it "return status code 422 with a meaningful error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include(
+              "itt_aim" => [/has invalid reference data value of/],
+            )
+          end
         end
       end
 
@@ -2299,378 +2275,9 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             "itt_qualification_aim has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
           )
         end
-      end
 
-      context "with enhanced errors" do
-        let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
-
-        context "when HasCourseAttributes#primary_education_phase? is true" do
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          context "when '100511' is not present" do
-            let(:course_age_range) { "13914" }
-            let(:params) do
-              {
-                data: {
-                  course_subject_one: "100346",
-                  course_subject_two: "101410",
-                  course_subject_three: "100366",
-                  course_age_range: course_age_range,
-                },
-              }
-            end
-
-            it "sets the correct subjects" do
-              trainee.reload
-
-              expect(trainee.course_age_range).to eq(DfE::ReferenceData::AgeRanges::HESA_CODE_SETS[course_age_range])
-              expect(trainee.course_subject_one).to eq("primary teaching")
-              expect(trainee.course_subject_two).to eq("biology")
-              expect(trainee.course_subject_three).to eq("historical linguistics")
-
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to eq("100346")
-              expect(response.parsed_body[:data][:course_subject_three]).to eq("101410")
-            end
-          end
-
-          context "when '100511' is present" do
-            let(:params) do
-              {
-                data: {
-                  course_subject_one: "100511",
-                  course_subject_two: "101410",
-                  course_subject_three: "100366",
-                },
-              }
-            end
-
-            it "sets the correct subjects" do
-              trainee.reload
-
-              expect(trainee.course_subject_one).to eq("primary teaching")
-              expect(trainee.course_subject_two).to eq("historical linguistics")
-              expect(trainee.course_subject_three).to eq("computer science")
-
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-              expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
-            end
-          end
-        end
-
-        context "when course_subject_two or course_subject_three are being unset" do
-          before do
-            trainee.update(course_subject_one: "biology",
-                           course_subject_two: "historical linguistics",
-                           course_subject_three: "computer science")
-
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          context "via null values" do
-            let(:params) do
-              {
-                data: {
-                  course_subject_one: "100511",
-                  course_subject_two: nil,
-                  course_subject_three: nil,
-                },
-              }
-            end
-
-            it "sets the correct subjects" do
-              trainee.reload
-
-              expect(trainee.course_subject_one).to eq("primary teaching")
-              expect(trainee.course_subject_two).to be_nil
-              expect(trainee.course_subject_three).to be_nil
-
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to be_nil
-              expect(response.parsed_body[:data][:course_subject_three]).to be_nil
-            end
-          end
-
-          context "via blank values" do
-            let(:params) do
-              {
-                data: {
-                  course_subject_one: "100511",
-                  course_subject_two: "",
-                  course_subject_three: "",
-                },
-              }
-            end
-
-            it "sets the correct subjects" do
-              trainee.reload
-
-              expect(trainee.course_subject_one).to eq("primary teaching")
-              expect(trainee.course_subject_two).to be_nil
-              expect(trainee.course_subject_three).to be_nil
-
-              expect(response.parsed_body[:data][:course_subject_one]).to eq("100511")
-              expect(response.parsed_body[:data][:course_subject_two]).to be_nil
-              expect(response.parsed_body[:data][:course_subject_three]).to be_nil
-            end
-          end
-        end
-
-        context "when HasCourseAttributes#primary_education_phase? is false" do
-          let(:params) do
-            {
-              data: {
-                course_subject_one: "100346",
-                course_subject_two: "101410",
-                course_subject_three: "100366",
-              },
-            }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "sets the correct subjects" do
-            trainee.reload
-
-            expect(trainee.course_subject_one).to eq("biology")
-            expect(trainee.course_subject_two).to eq("historical linguistics")
-            expect(trainee.course_subject_three).to eq("computer science")
-
-            expect(response.parsed_body[:data][:course_subject_one]).to eq("100346")
-            expect(response.parsed_body[:data][:course_subject_two]).to eq("101410")
-            expect(response.parsed_body[:data][:course_subject_three]).to eq("100366")
-          end
-        end
-
-        context "when course_subject_one has invalid reference data values" do
-          let(:course_subject_one) { "chemistry" }
-          let(:params) do
-            { data: { course_subject_one: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "course_subject_one" => [/has invalid reference data value of 'chemistry'/],
-            )
-          end
-        end
-
-        context "when course_subject_two has invalid reference data values" do
-          let(:course_subject_two) { "child development" }
-          let(:params) do
-            { data: { course_subject_two: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-
-            expect(response.parsed_body["errors"]).to include(
-              "course_subject_two" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when course_subject_three has invalid reference data values" do
-          let(:course_subject_three) { "classical studies" }
-          let(:params) do
-            { data: { course_subject_three: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "course_subject_three" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when study_mode has invalid reference data values" do
-          let(:study_mode) { 1 }
-          let(:params) do
-            { data: { study_mode: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "study_mode" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when nationality has invalid reference data values" do
-          let(:nationality) { "british" }
-          let(:params) do
-            { data: { nationality: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "nationality" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when training_initiative has invalid reference data values" do
-          let(:training_initiative) { "now_teach" }
-          let(:params) do
-            { data: { training_initiative: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "training_initiative" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when training_initiative is unavailable (025/transition_to_teach) in the given academic year" do
-          let(:training_initiative) { "025" }
-          let(:params) do
-            { data: { training_initiative: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to eq(
-              "training_initiative" => ["'transition_to_teach' is not available in academic cycle '#{academic_cycle.label}'"],
-            )
-          end
-        end
-
-        context "when funding_method has invalid reference data values" do
-          let(:funding_method) { "8c629dd7-bfc3-eb11-bacc-000d3addca7a" }
-          let(:params) do
-            { data: { funding_method: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "funding_method" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when itt_aim has invalid reference data values" do
-          let(:itt_aim) { "321" }
-          let(:params) do
-            { data: { itt_aim: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
-
-          it "return status code 422 with a meaningful error message" do
-            expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.parsed_body["errors"]).to include(
-              "itt_aim" => [/has invalid reference data value of/],
-            )
-          end
-        end
-
-        context "when itt_qualification_aim has invalid reference data values" do
-          let(:itt_qualification_aim) { "321" }
-          let(:params) do
-            { data: { itt_qualification_aim: } }
-          end
-
-          before do
-            put(
-              endpoint,
-              headers: { Authorization: "Bearer #{token}", **json_headers },
-              params: params.to_json,
-            )
-          end
+        context "with enhanced errors" do
+          let(:json_headers) { super().merge("ENHANCED_ERRORS" => true) }
 
           it "return status code 422 with a meaningful error message" do
             expect(response).to have_http_status(:unprocessable_entity)
