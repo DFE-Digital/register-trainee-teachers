@@ -85,6 +85,66 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         )
       end
 
+      context "with `another_reason`" do
+        let(:reason) { create(:withdrawal_reason, :provider, name: WithdrawalReasons::HAD_TO_WITHDRAW_TRAINEE_ANOTHER_REASON) }
+
+        it "returns status code 422 with a valid JSON response when the `another_reason` is blank" do
+          post(
+            "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { error: "UnprocessableEntity", message: "another_reason Enter another reason" },
+          )
+        end
+
+        it "returns status code 200 with a valid JSON response when the `another_reason` is present" do
+          params[:data][:another_reason] = "Some other reason"
+          post(
+            "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+
+          expect(response).to have_http_status(:success)
+          expect(response.parsed_body[:errors]).to be_nil
+        end
+      end
+
+      context "with `safeguarding_concerns`" do
+        let(:reason) { create(:withdrawal_reason, :provider, name: WithdrawalReasons::SAFEGUARDING_CONCERNS) }
+
+        it "returns status code 422 with a valid JSON response when the `safeguarding_concern_reasons` is blank" do
+          post(
+            "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+
+          expect(response).to have_http_status(:unprocessable_entity)
+
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            { error: "UnprocessableEntity", message: "foo" },
+          )
+        end
+
+        it "returns status code 200 with a valid JSON response when the `safeguarding_concern_reasons` is present" do
+          params[:data][:safeguarding_concern_reasons] = "Some safeguarding reasons"
+          post(
+            "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json,
+          )
+
+          expect(response).to have_http_status(:success)
+          expect(response.parsed_body[:errors]).to be_nil
+        end
+      end
+
       context "with invalid params" do
         context "with empty withdraw_date" do
           let(:params) do
