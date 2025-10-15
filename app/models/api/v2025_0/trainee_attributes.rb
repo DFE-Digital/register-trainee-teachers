@@ -380,7 +380,6 @@ module Api
           progress[:contact_details] = true
           progress[:diversity] = true
           progress[:course_details] = true
-          progress[:training_details] = true
           progress[:trainee_start_status] = true
           progress[:trainee_data] = true
           progress[:schools] = true
