@@ -164,7 +164,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           it "returns status code 422" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to include(
-              "email" => ["Enter an email address in the correct format, like name@example.com"]
+              "email" => ["Enter an email address in the correct format, like name@example.com"],
             )
           end
         end
@@ -178,8 +178,8 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
           expect(response.parsed_body[:errors]).to eq(
             "personal_details" => {
-              "first_names" => ["First name must be 60 characters or fewer"]
-            }
+              "first_names" => ["First name must be 60 characters or fewer"],
+            },
           )
         end
 
@@ -191,8 +191,8 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
             expect(response.parsed_body[:errors]).to eq(
               "personal_details" => {
-                "first_names" => ["First name must be 60 characters or fewer"]
-              }
+                "first_names" => ["First name must be 60 characters or fewer"],
+              },
             )
           end
         end
@@ -338,7 +338,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "course_age_range" => ["can't be blank"]
+            "course_age_range" => ["can't be blank"],
           )
         end
       end
@@ -369,7 +369,8 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
             "course_age_range" => [
-              "has invalid reference data value of '1234'. Example values include '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'..."],
+              "has invalid reference data value of '1234'. Example values include '13909', '13911', '13912', '13913', '13914', '13915', '13916', '13917', '13918', '13919'...",
+            ],
           )
         end
       end
@@ -397,7 +398,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "sex" => ["can't be blank"]
+            "sex" => ["can't be blank"],
           )
         end
       end
@@ -610,13 +611,13 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           "/api/v2025.0/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: { data: { itt_start_date: "2023-02-30" } },
-          as: :json
+          as: :json,
         )
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body["errors"]).to include(
-          "itt_start_date" => ["is invalid"]
+          "itt_start_date" => ["is invalid"],
         )
         expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
       end
@@ -628,13 +629,13 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           "/api/v2025.0/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: { data: { itt_start_date: "2023-02-28", itt_end_date: "2023-13-13" } },
-          as: :json
+          as: :json,
         )
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body["errors"]).to include(
-          "itt_end_date" => ["is invalid"]
+          "itt_end_date" => ["is invalid"],
         )
         expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
       end
@@ -647,13 +648,13 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           "/api/v2025.0/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: { data: { hesa_id: nil, itt_start_date: "2023-02-28", itt_end_date: "2022-02-28" } },
-          as: :json
+          as: :json,
         )
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body[:errors]).to eq(
-          "itt_end_date" => ["must be after itt_start_date"]
+          "itt_end_date" => ["must be after itt_start_date"],
         )
         expect(trainee.reload.itt_start_date).to eq(original_itt_start_date)
         expect(trainee.reload.itt_end_date).to eq(original_itt_end_date)
@@ -664,12 +665,12 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           "/api/v2025.0/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: { data: { trainee_start_date: "2023-04-31" } },
-          as: :json
+          as: :json,
         )
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          "trainee_start_date" => ["is invalid"]
+          "trainee_start_date" => ["is invalid"],
         )
         expect(response.parsed_body).to have_key("errors")
       end
@@ -679,13 +680,13 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
           "/api/v2025.0/trainees/#{trainee.slug}",
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: { data: { trainee_start_date: "#{Time.zone.today.year + 1}-08-01" } },
-          as: :json
+          as: :json,
         )
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body).to have_key("errors")
         expect(response.parsed_body["errors"]).to include(
-          "trainee_start_date" => ["must be in the past"]
+          "trainee_start_date" => ["must be in the past"],
         )
       end
     end
@@ -1538,7 +1539,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'."
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
               ],
             )
           end
@@ -1629,7 +1630,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
               "training_route" => [
-                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'."
+                "has invalid reference data value of 'provider_led_postgrad'. Valid values are '02', '03', '09', '10', '11', '12', '14'.",
               ],
             )
           end
@@ -2675,7 +2676,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
             expect(response.parsed_body["errors"]).to include(
               "itt_qualification_aim" => [
                 "has invalid reference data value of '321'. Example values include '001', '002', '003', '004', '007', '008', '020', '021', '028', '031'...",
-              ]
+              ],
             )
           end
         end
@@ -3064,10 +3065,10 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
                 }.from("63").to("64"),
               )
 
-                expect(response).to have_http_status(:ok)
-                expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
-                expect(response.parsed_body[:data][:first_names]).to eq("Alice")
-                expect(response.parsed_body[:data][:study_mode]).to eq("64")
+              expect(response).to have_http_status(:ok)
+              expect(response.parsed_body[:data][:trainee_id]).to eq(slug)
+              expect(response.parsed_body[:data][:first_names]).to eq("Alice")
+              expect(response.parsed_body[:data][:study_mode]).to eq("64")
             end
           end
 

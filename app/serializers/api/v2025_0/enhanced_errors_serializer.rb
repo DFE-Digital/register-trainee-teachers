@@ -27,7 +27,7 @@ module Api
         errors.inject({}) do |hash, error|
           error_array = error.split
           attribute   = error_array.first
-          message     = error_array[1..-1].join(" ")
+          message     = error_array[1..].join(" ")
 
           if hash[attribute]
             hash[attribute] += [message]
@@ -39,7 +39,7 @@ module Api
         end
       end
 
-      private
+    private
 
       def enhanced?
         errors.is_a?(Hash) && (errors.keys & EXCLUDED_ATTRIBUTES)
