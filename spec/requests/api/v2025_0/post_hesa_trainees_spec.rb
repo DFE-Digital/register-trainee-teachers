@@ -307,7 +307,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it "returns errors" do
             expect {
               post endpoint, params: params.to_json, headers: {
-                Authorization: token, **json_headers.merge("ENHANCED_ERRORS" => true),
+                Authorization: token, **json_headers.merge("ENHANCED_ERRORS" => true)
               }
             }.not_to change {
               Degree.count
@@ -363,7 +363,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it "returns errors" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
-              "provider_trainee_id" => ["is too long (maximum is 50 characters)"]
+              "provider_trainee_id" => ["is too long (maximum is 50 characters)"],
             )
           end
         end
@@ -410,7 +410,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it "returns errors" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
-              "application_id" => ["is too long (maximum is 7 characters)"]
+              "application_id" => ["is too long (maximum is 7 characters)"],
             )
           end
         end
@@ -631,7 +631,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "disabilities" => ["contain duplicate values"]
+            "disabilities" => ["contain duplicate values"],
           )
         end
       end
@@ -655,7 +655,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "does not create a trainee record and returns a 422 status with meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "itt_start_date" => ["is invalid"]
+            "itt_start_date" => ["is invalid"],
           )
         end
       end
@@ -679,7 +679,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "does not create a trainee record and returns a 422 status with meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "itt_end_date" => ["must be after itt_start_date"]
+            "itt_end_date" => ["must be after itt_start_date"],
           )
         end
       end
@@ -731,7 +731,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
           expect(response.parsed_body[:errors]).to eq(
-            "graduation_year" => ["is invalid"]
+            "graduation_year" => ["is invalid"],
           )
         end
       end
@@ -755,7 +755,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "does not create a degree" do
           expect(response.parsed_body[:data]).to be_nil
           expect(response.parsed_body[:errors]).to eq(
-            "graduation_year" => ["is invalid"]
+            "graduation_year" => ["is invalid"],
           )
         end
       end
@@ -929,7 +929,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "course_subject_three might contain duplicate values"
+            "course_subject_three might contain duplicate values",
           )
         end
 
@@ -939,7 +939,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
-              "course_subject_three" => ["might contain duplicate values"]
+              "course_subject_three" => ["might contain duplicate values"],
             )
           end
         end
@@ -1082,7 +1082,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to include(
-              "ethnicity" => [/has invalid reference data value of '1000'/]
+              "ethnicity" => [/has invalid reference data value of '1000'/],
             )
           end
         end
@@ -1140,7 +1140,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body[:errors]).to contain_exactly(
-            "training_route can't be blank"
+            "training_route can't be blank",
           )
         end
 
@@ -1150,7 +1150,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to eq(
-              "training_route" => ["can't be blank"]
+              "training_route" => ["can't be blank"],
             )
           end
         end
@@ -1170,7 +1170,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
 
         let(:json_headers) do
           {
-            Authorization: token
+            Authorization: token,
           }
         end
 
@@ -1200,7 +1200,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             it do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body[:errors]).to include(
-                "training_route" => [/has invalid reference data value of/]
+                "training_route" => [/has invalid reference data value of/],
               )
             end
           end
@@ -1225,7 +1225,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           it "is invalid" do
             expect(response).to have_http_status(:unprocessable_entity)
             expect(response.parsed_body[:errors]).to contain_exactly(
-              "degrees_attributes must be entered if specifying a postgraduate training_route"
+              "degrees_attributes must be entered if specifying a postgraduate training_route",
             )
           end
 
@@ -1235,7 +1235,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             it "is invalid" do
               expect(response).to have_http_status(:unprocessable_entity)
               expect(response.parsed_body[:errors]).to eq(
-                "degrees_attributes" => ["must be entered if specifying a postgraduate training_route"]
+                "degrees_attributes" => ["must be entered if specifying a postgraduate training_route"],
               )
             end
           end
@@ -1280,7 +1280,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           "course_year" => ["can't be blank"],
           "course_age_range" => ["can't be blank"],
           "fund_code" => ["can't be blank"],
-          "funding_method" => ["can't be blank"]
+          "funding_method" => ["can't be blank"],
         )
       end
     end
@@ -1292,8 +1292,8 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
           personal_details: {
-            date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"]
-          }
+            date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"],
+          },
         )
       end
 
@@ -1304,8 +1304,8 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
             personal_details: {
-              date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"]
-            }
+              date_of_birth: ["Enter a date of birth that is in the past, for example 31 3 1980"],
+            },
           )
         end
       end
@@ -1333,7 +1333,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "itt_start_date" => ["must not be more than one year in the future"]
+            "itt_start_date" => ["must not be more than one year in the future"],
           )
         end
       end
@@ -1355,7 +1355,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "course_age_range" => ["can't be blank"]
+            "course_age_range" => ["can't be blank"],
           )
         end
       end
@@ -1400,7 +1400,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to eq(
-            "sex" => ["can't be blank"]
+            "sex" => ["can't be blank"],
           )
         end
       end
@@ -1424,7 +1424,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "sex" => [/has invalid reference data value of '3'/]
+            "sex" => [/has invalid reference data value of '3'/],
           )
         end
       end
@@ -1547,7 +1547,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "study_mode" => [/has invalid reference data value of '1'/]
+            "study_mode" => [/has invalid reference data value of '1'/],
           )
         end
       end
@@ -1572,7 +1572,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "nationality" => [/has invalid reference data value of 'british'/]
+            "nationality" => [/has invalid reference data value of 'british'/],
           )
         end
       end
@@ -1597,7 +1597,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         it "return status code 422 with a meaningful error message" do
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.parsed_body["errors"]).to include(
-            "training_initiative" => [/has invalid reference data value of 'now_teach'/]
+            "training_initiative" => [/has invalid reference data value of 'now_teach'/],
           )
         end
       end
@@ -1697,7 +1697,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       it "return status code 422 with a meaningful error message" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["errors"]).to include(
-          "placements_attributes" => ["name can't be blank"]
+          "placements_attributes" => ["name can't be blank"],
         )
       end
     end
@@ -1742,10 +1742,10 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 2 errors prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          "graduation_year" =>  [
+          "graduation_year" => [
             "must be in the past, for example 2014",
-            "is invalid"
-          ]
+            "is invalid",
+          ],
         )
       end
     end
@@ -1764,7 +1764,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         expect(response.parsed_body["errors"]).to contain_exactly(
           "graduation_year must be in the past, for example 2014",
           "graduation_year is invalid",
-          /uk_degree has invalid reference data value of 'Bachelor of Arts'/
+          /uk_degree has invalid reference data value of 'Bachelor of Arts'/,
         )
       end
 
@@ -1776,7 +1776,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           expect(response.parsed_body["message"]).to eq("Validation failed: 3 errors prohibited this trainee from being saved")
           expect(response.parsed_body["errors"]).to match(
             "graduation_year" => ["must be in the past, for example 2014", "is invalid"],
-            "uk_degree" => [/has invalid reference data value of 'Bachelor of Arts'./]
+            "uk_degree" => [/has invalid reference data value of 'Bachelor of Arts'./],
           )
         end
       end
@@ -1803,7 +1803,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.parsed_body["message"]).to include("Validation failed: 1 error prohibited this trainee from being saved")
         expect(response.parsed_body["errors"]).to include(
-          "uk_degree" => ["must be entered if specifying a previous UK degree"]
+          "uk_degree" => ["must be entered if specifying a previous UK degree"],
         )
       end
     end
@@ -1839,7 +1839,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         )
         expect(response.parsed_body["errors"]).to eq(
           "funding_method" => [
-            "training route 'teacher_degree_apprenticeship' and subject code 'biology' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'"
+            "training route 'teacher_degree_apprenticeship' and subject code 'biology' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
           ],
         )
       end

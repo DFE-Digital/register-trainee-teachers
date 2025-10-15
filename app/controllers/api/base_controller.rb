@@ -78,7 +78,7 @@ module Api
     def enhance_errors
       body = JSON.parse(response.body, symbolize_names: true)
 
-      return unless body.has_key?(:errors)
+      return unless body.key?(:errors)
 
       body[:errors] = enhanced_errors_serializer.new(body[:errors]).as_hash
 
@@ -99,11 +99,9 @@ module Api
       request.authorization&.delete_prefix("Bearer ")&.strip
     end
 
-    private
-
     def enhanced_errors_serializer
       Api::GetVersionedItem.for_serializer(
-        model: :enhanced_errors, version: version
+        model: :enhanced_errors, version: version,
       )
     end
   end
