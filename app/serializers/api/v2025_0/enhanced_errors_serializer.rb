@@ -7,11 +7,10 @@ module Api
         personal_details
         contact_details
         diversity
+        degrees
         course_details
-        training_details
-        trainee_start_status
-        trainee_data
         schools
+        placements
         funding
         iqts_country
       ].freeze
