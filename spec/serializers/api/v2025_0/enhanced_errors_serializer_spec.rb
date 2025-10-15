@@ -28,15 +28,15 @@ RSpec.describe Api::V20250::EnhancedErrorsSerializer do
   end
 
   %w[
-      personal_details
-      contact_details
-      diversity
-      course_details
-      training_details
-      trainee_start_status
-      trainee_data schools
-      funding
-      iqts_country
+    personal_details
+    contact_details
+    diversity
+    degrees
+    course_details
+    schools
+    placements
+    funding
+    iqts_country
   ].each do |attribute|
     context "with excluded attribute #{attribute}" do
       let(:errors) do
