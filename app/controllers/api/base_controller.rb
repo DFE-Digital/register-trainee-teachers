@@ -75,6 +75,16 @@ module Api
 
     alias_method :version, :current_version
 
+    def enhance_errors
+      body = JSON.parse(response.body, symbolize_names: true)
+
+      return unless body.has_key?(:errors)
+
+      body[:errors] = enhanced_errors_serializer.new(body[:errors]).as_hash
+
+      response.body = body.to_json
+    end
+
     def valid_authentication_token?
       auth_token.present? && auth_token.active?
     end
@@ -87,6 +97,14 @@ module Api
 
     def bearer_token
       request.authorization&.delete_prefix("Bearer ")&.strip
+    end
+
+    private
+
+    def enhanced_errors_serializer
+      Api::GetVersionedItem.for_serializer(
+        model: :enhanced_errors, version: version
+      )
     end
   end
 end
