@@ -22,7 +22,7 @@ RSpec.describe Api::V20250::EnhancedErrorsSerializer do
           "is invalid",
         ],
         "itt_start_date" => ["is invalid"],
-        "trainee_start_date" => ["is invalid"]
+        "trainee_start_date" => ["is invalid"],
       )
     end
   end
@@ -41,9 +41,9 @@ RSpec.describe Api::V20250::EnhancedErrorsSerializer do
     context "with excluded attribute #{attribute}" do
       let(:errors) do
         {
-            attribute => {
-              "nested_attribute" => ["error occured"]
-            }
+          attribute => {
+            "nested_attribute" => ["error occured"],
+          },
         }
       end
 
