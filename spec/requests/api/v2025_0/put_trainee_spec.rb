@@ -2,6 +2,7 @@
 
 require "rails_helper"
 
+# rubocop:disable RSpec/NestedGroups
 describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
   let(:trainee) do
     create(
@@ -3136,3 +3137,4 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
     end
   end
 end
+# rubocop:enable RSpec/NestedGroups
