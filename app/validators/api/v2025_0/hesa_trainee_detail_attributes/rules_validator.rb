@@ -8,10 +8,10 @@ module Api
           record.errors.add(:fund_code, :ineligible) unless Rules::FundCode.valid?(record)
 
           validation_result = Rules::FundingMethod.call(record)
-          record.errors.add(:funding_method, :ineligible, **validation_result.error_details) unless validation_result.valid?
+          record.errors.add(:funding_method, validation_result.error_type, **validation_result.error_details) unless validation_result.valid?
 
           validation_result = Rules::TrainingInitiative.call(record)
-          record.trainee_attributes.errors.add(:training_initiative, :ineligible, **validation_result.error_details) unless validation_result.valid?
+          record.trainee_attributes.errors.add(:training_initiative, validation_result.error_type, **validation_result.error_details) unless validation_result.valid?
         end
       end
     end

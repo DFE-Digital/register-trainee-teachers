@@ -766,8 +766,6 @@ en:
         itt_start_date: *course_path
         itt_end_date: *course_path
         main_age_range: *course_path
-        itt_start_date: *course_path
-        itt_end_date: *course_path
         training_initiative: edit_trainee_funding_training_initiative_path
         applying_for_bursary: &funding_method_path edit_trainee_funding_bursary_path
         applying_for_grant: *funding_method_path
@@ -2086,7 +2084,6 @@ en:
               future: must be in the past
             itt_start_date:
               future: must not be more than one year in the future
-            inclusion: "has invalid reference data value of '%{value}'. Valid values are %{valid_values}."
             itt_end_date:
               api:
                 before_or_same_as_start_date: must be after itt_start_date
@@ -2125,6 +2122,7 @@ en:
             fund_code:
               ineligible: &ineligible is not valid for this trainee
             funding_method:
+              not_eligible_fund_code: "'%{funding_type}' is not allowed when fund code is '%{fund_code}'"
               ineligible: "training route '%{training_route}' and subject code '%{subject}' are not eligible for '%{funding_type}' in academic cycle '%{academic_cycle}'"
             itt_aim:
               ineligible: *ineligible

@@ -47,10 +47,11 @@ module Api
           def call
             return ValidationResult.new(true) if no_funding_method? || funding_method_invalid? || training_route.nil?
 
-            return ValidationResult.new(false, error_details) if fund_code_not_eligible? && funding_method? && !fund_code_exception?
+            return ValidationResult.new(false, :not_eligible_fund_code, error_details) if fund_code_not_eligible? && funding_method? && !fund_code_exception?
 
             ValidationResult.new(
               funding_method_exists?,
+              :ineligible,
               funding_method_exists? ? nil : error_details,
             )
           end
@@ -105,8 +106,9 @@ module Api
           def error_details
             {
               academic_cycle: academic_cycle&.label,
-              subject: course_subject_one,
+              fund_code: fund_code,
               funding_type: ::FUNDING_TYPES.invert[funding_type],
+              subject: course_subject_one,
               training_route: training_route.to_s,
             }
           end
