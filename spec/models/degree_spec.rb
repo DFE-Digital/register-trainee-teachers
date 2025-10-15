@@ -47,9 +47,9 @@ describe Degree do
 
         it "validates" do
           expect { degree.save! }.to raise_error(ActiveRecord::RecordInvalid)
-          expect(degree.errors.messages[:graduation_year]).to include(I18n.t(
-                                                                        "activerecord.errors.models.degree.attributes.graduation_year.invalid",
-                                                                      ))
+          expect(degree.errors.messages[:graduation_year]).to contain_exactly(
+            "Enter a valid graduation year",
+          )
         end
       end
 
@@ -58,9 +58,10 @@ describe Degree do
 
         it "validates" do
           expect { degree.save! }.to raise_error(ActiveRecord::RecordInvalid)
-          expect(degree.errors.messages[:graduation_year]).to include(I18n.t(
-                                                                        "activerecord.errors.models.degree.attributes.graduation_year.future",
-                                                                      ))
+          expect(degree.errors.messages[:graduation_year]).to contain_exactly(
+            "Enter a graduation year that is in the past, for example 2014",
+            "Enter a valid graduation year",
+          )
         end
       end
     end

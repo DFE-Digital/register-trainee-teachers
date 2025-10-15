@@ -53,7 +53,7 @@ class Degree < ApplicationRecord
     validates :graduation_year, presence: true, on: %i[uk non_uk]
   end
 
-  validate :graduation_year_valid, if: -> { graduation_year.present? }
+  validates :graduation_year, "degrees/graduation_year": true
 
   belongs_to :trainee, touch: true
 
@@ -73,11 +73,6 @@ class Degree < ApplicationRecord
     nullify: false,
   )
 
-  def graduation_year_valid
-    errors.add(:graduation_year, :future) if graduation_year > next_year
-    errors.add(:graduation_year, :invalid) unless graduation_year.between?(next_year - MAX_GRAD_YEARS, next_year)
-  end
-
   def non_uk_degree_non_enic?
     non_uk_degree == NON_ENIC
   end
@@ -91,11 +86,5 @@ class Degree < ApplicationRecord
 
   def apply_import?
     ActiveModel::Type::Boolean.new.cast(@is_apply_import)
-  end
-
-private
-
-  def next_year
-    Time.zone.now.year.next
   end
 end

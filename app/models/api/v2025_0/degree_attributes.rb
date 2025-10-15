@@ -33,7 +33,7 @@ module Api
       attr_reader :existing_degrees
 
       validates :locale_code, presence: true
-      validates :graduation_year, presence: true
+      validates :graduation_year, presence: true, "degrees/graduation_year": true
       validates :subject, presence: true
 
       validates :country, api_inclusion: {
@@ -67,7 +67,7 @@ module Api
         new(degree.attributes.select { |k, _v| ATTRIBUTES.include?(k.to_sym) }, trainee:)
       end
 
-      def initialize(params, trainee: nil, record_source: nil)
+      def initialize(params, trainee: nil, record_source: Trainee::API_SOURCE)
         super(params)
 
         self.record_source = record_source

@@ -71,6 +71,8 @@ module BulkUpdate
             expect(result.success).to be(false)
             expect(result.error_type).to eq(:validation)
 
+            expect(result.errors).to include("Degree graduation year Enter a valid graduation year")
+            expect(result.errors).to include("Degree graduation year Enter a year that is in the past, for example 2014")
             expect(result.errors).to include("Degree grade must be entered if specifying a previous UK degree or non-UK degree")
             expect(result.errors).to include("ITT Start Date can't be blank")
             expect(result.errors).to include("Date of Birth can't be blank")
