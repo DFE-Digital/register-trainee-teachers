@@ -30,8 +30,11 @@ module Withdrawal
 
     def save!
       withdrawal = trainee.current_withdrawal
-      withdrawal.update!(another_reason:) if another_reason.present?
-      withdrawal.update!(safeguarding_concern_reasons:) if safeguarding_concern_reasons.present?
+      attrs = Hash.new.tap do |h|
+        h[:another_reason] = another_reason if another_reason.present?
+        h[:safeguarding_concern_reasons] = safeguarding_concern_reasons if safeguarding_concern_reasons.present?
+      end
+      withdrawal.update!(attrs)
 
       reason_ids.each do |reason_id|
         withdrawal.trainee_withdrawal_reasons.create!(
