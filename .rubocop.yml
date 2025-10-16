@@ -109,6 +109,7 @@ Rails/UnknownEnv:
     - production
     - development
     - test
+    - review
 
 Metrics/CollectionLiteralLength:
   Exclude:
