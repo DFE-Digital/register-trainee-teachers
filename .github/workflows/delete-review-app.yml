@@ -35,6 +35,13 @@ jobs:
         run: |
           echo "APP_NAME=pr-${{ github.event.pull_request.number || github.event.inputs.pr_number }}" >> $GITHUB_ENV
 
+      - name: Set Airbyte
+        if: (contains(github.event.pull_request.labels.*.name, 'airbyte'))
+        run: |
+          echo "TF_VAR_pg_airbyte_enabled=true" >> $GITHUB_ENV
+          echo "TF_VAR_airbyte_enabled=true" >> $GITHUB_ENV
+          echo "TF_VAR_connection_status=active" >> $GITHUB_ENV
+
       - uses: DFE-Digital/github-actions/delete-review-app@master
         with:
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -47,3 +54,5 @@ jobs:
           tf-state-file: pr-${{ github.event.pull_request.number || github.event.inputs.pr_number }}.tfstate
           terraform-base: terraform/aks
           tf-file: provider.tf
+          gcp-project-id: rugged-abacus-218110
+          gcp-wip: projects/712009772377/locations/global/workloadIdentityPools/register-trainee-teachers/providers/register-trainee-teachers

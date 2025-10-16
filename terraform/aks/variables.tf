@@ -111,6 +111,7 @@ locals {
     {
       DB_SSLMODE                                  = var.db_sslmode
       SETTINGS__AZURE__STORAGE__TEMP_DATA_ACCOUNT = local.azure_tempdata_storage_account_name
+      BIGQUERY_AIRBYTE_DATASET                    = var.airbyte_enabled ? local.gcp_dataset_name : null
     }
   )
 
