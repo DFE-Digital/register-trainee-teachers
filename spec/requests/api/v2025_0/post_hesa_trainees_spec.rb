@@ -1358,7 +1358,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
         "Validation failed: 1 error prohibited this trainee from being saved",
       )
       expect(response.parsed_body["errors"]).to contain_exactly(
-        "funding_method training route 'teacher_degree_apprenticeship' and subject code 'biology' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
+        "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'biology'",
       )
     end
   end

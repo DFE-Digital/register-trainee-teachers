@@ -21,7 +21,7 @@ module Api
           def call
             return ValidationResult.new(true) if no_training_initiative?
 
-            return ValidationResult.new(false, error_details) if training_initiative_not_eligible?
+            return ValidationResult.new(false, :ineligible, error_details) if training_initiative_not_eligible?
 
             ValidationResult.new(true)
           end

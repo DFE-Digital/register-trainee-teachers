@@ -101,6 +101,34 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
     end
   end
 
+  context "when the request is invalid because the fund code is not eligible but everything else is correct" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::NOT_ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::POSTGRADUATE_BURSARY }
+
+    it "does not create a trainee with a bursary and returns an error" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body[:errors]).to contain_exactly("funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'mathematics'")
+    end
+  end
+
+  context "when the request is invalid because no funding exists for the combination of academic_cycle, funding_method, course_subject_one, and training_route" do
+    let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
+    let(:funding_method) { Hesa::CodeSets::BursaryLevels::SCHOLARSHIP }
+    let(:training_route) { Hesa::CodeSets::TrainingRoutes::MAPPING.invert[TRAINING_ROUTE_ENUMS[:provider_led_postgrad]] }
+    let(:course_subject_one) { Hesa::CodeSets::CourseSubjects::MAPPING.invert[CourseSubjects::PSYCHOLOGY] }
+
+    it "does not create a trainee with a bursary and returns an error" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response.parsed_body[:errors]).to contain_exactly(
+        "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_one is 'psychology' in academic cycle '2024 to 2025'",
+      )
+    end
+  end
+
   context "when the request is valid and includes a undergrad bursary" do
     let(:fund_code) { Hesa::CodeSets::FundCodes::ELIGIBLE }
     let(:funding_method) { Hesa::CodeSets::BursaryLevels::UNDERGRADUATE_BURSARY }

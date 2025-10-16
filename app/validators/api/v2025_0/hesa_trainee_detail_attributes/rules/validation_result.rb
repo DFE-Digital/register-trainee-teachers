@@ -4,7 +4,7 @@ module Api
   module V20250
     class HesaTraineeDetailAttributes
       module Rules
-        ValidationResult = Struct.new(:valid?, :error_details)
+        ValidationResult = Struct.new(:valid?, :error_type, :error_details)
       end
     end
   end
