@@ -35,6 +35,7 @@ RSpec.describe Api::V20250::TraineeSerializer do
         withdrawal_trigger
         withdrawal_future_interest
         withdrawal_another_reason
+        withdrawal_safeguarding_concern_reasons
         defer_date
         defer_reason
         recommended_for_award_at

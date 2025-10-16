@@ -16,6 +16,7 @@ module Api
       validates :trigger, inclusion: { in: TraineeWithdrawal.triggers.keys }
       validates :future_interest, inclusion: { in: TraineeWithdrawal.future_interests.keys }
       validate :another_reason_text_provided?
+      validate :safeguarding_concern_reasons_text_provided?
 
       attr_accessor :trainee
 
@@ -25,6 +26,7 @@ module Api
         trigger
         future_interest
         another_reason
+        safeguarding_concern_reasons
       ].freeze
 
       ATTRIBUTES.each do |attr|
@@ -92,6 +94,10 @@ module Api
 
       def another_reason_text_provided?
         errors.add(:another_reason, :blank) if reasons&.any? { |x| x.include?("another_reason") } && another_reason.blank?
+      end
+
+      def safeguarding_concern_reasons_text_provided?
+        errors.add(:safeguarding_concern_reasons, :blank) if reasons&.include?("safeguarding_concerns") && safeguarding_concern_reasons.blank?
       end
     end
   end

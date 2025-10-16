@@ -128,7 +128,7 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
           expect(response).to have_http_status(:unprocessable_entity)
 
           expect(response.parsed_body[:errors]).to contain_exactly(
-            { error: "UnprocessableEntity", message: "foo" },
+            { error: "UnprocessableEntity", message: "safeguarding_concern_reasons Enter the concerns" },
           )
         end
 

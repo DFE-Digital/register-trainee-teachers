@@ -12,6 +12,7 @@ describe Api::Trainees::WithdrawResponse do
       trigger:,
       future_interest:,
       another_reason:,
+      safeguarding_concern_reasons:,
     }
   end
   let(:reason) { create(:withdrawal_reason, :provider) }
@@ -20,6 +21,7 @@ describe Api::Trainees::WithdrawResponse do
   let(:future_interest) { "no" }
   let(:withdraw_date) { Time.zone.today.iso8601 }
   let(:another_reason) { "" }
+  let(:safeguarding_concern_reasons) { "" }
 
   subject { withdraw_response }
 
