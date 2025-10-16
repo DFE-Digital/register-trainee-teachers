@@ -99,6 +99,7 @@ Rails/UnknownEnv:
     - rollover
     - qa_pass
     - research
+    - review
 
 Rails/CreateTableWithTimestamps:
   Exclude:
@@ -107,4 +108,3 @@ Rails/CreateTableWithTimestamps:
 Rails/Exit:
   Exclude:
     - spec/**/*
-
