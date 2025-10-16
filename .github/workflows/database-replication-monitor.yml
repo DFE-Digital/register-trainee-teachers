@@ -1,4 +1,4 @@
-name: Monitor Database wal lag
+name: Monitor Database logical replication
 
 on:
   schedule:
