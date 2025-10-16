@@ -39,6 +39,12 @@ ci:	## Run in automation environment
 	$(eval export AUTO_APPROVE=-auto-approve)
 	$(eval SKIP_CONFIRM=true)
 
+airbyte: ## Add airbyte for review apps
+	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
+	$(eval export TF_VAR_pg_airbyte_enabled=true)
+	$(eval export TF_VAR_airbyte_enabled=true)
+	$(eval export TF_VAR_connection_status=active)
+
 review:
 	$(if $(APP_NAME), , $(error Missing environment variable "APP_NAME", Please specify a pr number for your review app))
 	$(eval include global_config/review.sh)
