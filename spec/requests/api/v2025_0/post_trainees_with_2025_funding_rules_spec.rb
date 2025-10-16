@@ -109,7 +109,7 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body[:errors]).to contain_exactly("funding_method 'bursary' is not allowed when fund code is '2'")
+      expect(response.parsed_body[:errors]).to contain_exactly("funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'mathematics'")
     end
   end
 
@@ -123,7 +123,9 @@ describe "`POST /api/v2025.0/trainees` endpoint", time_sensitive: true do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(response.parsed_body[:errors]).to contain_exactly("funding_method training route 'provider_led_postgrad' and subject code 'psychology' are not eligible for 'scholarship' in academic cycle '2024 to 2025'")
+      expect(response.parsed_body[:errors]).to contain_exactly(
+        "funding_method 'scholarship' is not allowed when training_route is 'provider_led_postgrad' and course_subject_one is 'psychology' in academic cycle '2024 to 2025'",
+      )
     end
   end
 

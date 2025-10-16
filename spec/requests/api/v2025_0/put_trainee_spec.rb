@@ -1647,7 +1647,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
               "Validation failed: 1 error prohibited this trainee from being saved",
             )
             expect(response.parsed_body["errors"]).to contain_exactly(
-              "funding_method 'bursary' is not allowed when fund code is '2'",
+              "funding_method 'bursary' is not allowed when fund_code is '2' and course_subject_one is 'primary teaching'",
             )
           end
         end
