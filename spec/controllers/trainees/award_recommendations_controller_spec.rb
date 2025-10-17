@@ -10,7 +10,7 @@ describe Trainees::AwardRecommendationsController do
 
   before do
     allow(controller).to receive(:current_user).and_return(current_user)
-    allow(OutcomeDateForm).to receive(:new).with(trainee, update_dqt: false).and_return(double(save!: true))
+    allow(OutcomeDateForm).to receive(:new).with(trainee, update_trs: false).and_return(double(save!: true))
   end
 
   describe "#create" do
@@ -30,12 +30,12 @@ describe Trainees::AwardRecommendationsController do
     end
   end
 
-  context "when the DQT feature flag is enabled", feature_integrate_with_dqt: true do
+  context "when the TRS feature flag is enabled", feature_integrate_with_trs: true do
     describe "#create" do
-      it "sends the ITT outcome to DQT" do
+      it "sends the ITT outcome to TRS" do
         expect {
           post :create, params: { trainee_id: trainee }
-        }.to have_enqueued_job(Dqt::RecommendForAwardJob).with(trainee)
+        }.to have_enqueued_job(Trs::UpdateProfessionalStatusJob).with(trainee)
       end
     end
   end

@@ -28,7 +28,6 @@ features:
   qualtrics_survey: true
   google:
     send_data_to_big_query: true
-  integrate_with_dqt: false
   integrate_with_trs: true
   hesa_trn_requests: false
   hesa_import:

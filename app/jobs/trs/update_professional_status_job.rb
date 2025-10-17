@@ -16,7 +16,7 @@ module Trs
       # TRS returns 204 No Content, so we need to use our own award date
       if trainee.recommended_for_award? && trainee.outcome_date.present?
         trainee.award_qts!(trainee.outcome_date)
-        Trainees::Update.call(trainee: trainee, update_dqt: false)
+        Trainees::Update.call(trainee: trainee, update_trs: false)
         Survey::SendJob.set(wait: Settings.qualtrics.days_delayed.days).perform_later(trainee: trainee, event_type: :award) if survey_should_be_scheduled?
       end
     end

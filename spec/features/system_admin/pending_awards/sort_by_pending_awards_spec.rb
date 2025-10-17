@@ -7,8 +7,8 @@ feature "sort by pending awards" do
   let!(:trainee_one) { create(:trainee, :recommended_for_award, recommended_for_award_at: 2.days.ago) }
 
   before do
-    allow(Dqt::FindDeadJobs).to receive(:call).and_return({})
-    allow(Dqt::FindRetryJobs).to receive(:call).and_return({})
+    allow(Trs::FindDeadJobs).to receive(:call).and_return({})
+    allow(Trs::FindRetryJobs).to receive(:call).and_return({})
     given_i_am_authenticated_as_system_admin
     and_i_visit_the_pending_awards_page
   end
