@@ -143,6 +143,7 @@ runs:
       shell: bash
       if: ${{ contains(fromJSON('["productiondata"]'), inputs.environment) &&  env.worker_app_instances == 0 }}
       run: |
+        sudo apt-get update
         sudo apt-get install -y redis-tools redis-server
         bin/konduit.sh -n ${{ env.namespace }} -r REDIS_QUEUE_URL register-${{ env.app_environment }} -- redis-cli del queues
 
