@@ -14,6 +14,7 @@ class GuidanceController < ApplicationController
   def bulk_recommend_trainees; end
   def manually_registering_trainees; end
   def how_to_extract_trns_from_the_register_service; end
+  def how_to_resolve_funding_and_bursary_errors; end
 
   def manage_placements
     render(layout: "application")
