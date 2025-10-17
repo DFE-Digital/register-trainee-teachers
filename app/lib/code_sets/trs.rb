@@ -31,6 +31,7 @@ module CodeSets
       "school_direct_salaried" => "12a742c3-1cd4-43b7-a2fa-1000bd4cc373",
       "school_direct_tuition_fee" => "d9490e58-acdc-4a38-b13e-5a5c21417737",
       "teach_first" => "5b7f5e90-1ca6-4529-baa0-dfba68e698b8",
+      "teacher_degree_apprenticeship" => "5D4C01C1-0841-4306-B49C-48AD6499FDC0",
     }.freeze
 
     DEGREE_TYPES = {
