@@ -4,7 +4,9 @@ require "rails_helper"
 require "csv"
 
 describe FindNewStarterTrainees do
-  subject { described_class.new(DateTime.new(2022, 10, 12)).call }
+  let(:census_date) { DateTime.new(2022, 10, 12) }
+
+  subject { described_class.new(census_date).call }
 
   before do
     create(:academic_cycle)
@@ -83,6 +85,22 @@ describe FindNewStarterTrainees do
 
     it "does not include early years assessment only trainees" do
       expect(subject).not_to include(early_years_assessment_only_trainee)
+    end
+  end
+
+  context "when trainee is withdrawn before census cutoff" do
+    let(:withdrawn_trainee) do
+      create(
+        :trainee,
+        :withdrawn,
+        itt_start_date: 2.months.ago,
+        start_academic_cycle: AcademicCycle.current,
+        training_route: :provider_led_postgrad,
+      )
+    end
+
+    it "does not include withdrawn trainees" do
+      expect(subject).not_to include(withdrawn_trainee)
     end
   end
 end
