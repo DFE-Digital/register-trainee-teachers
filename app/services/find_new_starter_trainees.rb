@@ -19,6 +19,11 @@ class FindNewStarterTrainees
                       .where.not(training_route: EXCLUDED_ROUTES)
                       .not_draft
 
-    Trainees::Filter.call(trainees: trainees, filters: nil)
+    Trainees::Filter.call(
+      trainees: trainees,
+      filters: {
+        not_withdrawn_before: AcademicCycle.current.second_wednesday_of_october,
+      },
+    )
   end
 end

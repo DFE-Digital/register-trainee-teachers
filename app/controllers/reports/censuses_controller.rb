@@ -85,7 +85,12 @@ module Reports
     end
 
     def censuses_trainees
-      Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@current_academic_cycle.start_year] })
+      Trainees::Filter.call(
+        trainees: base_trainee_scope,
+        filters: {
+          academic_year: [@current_academic_cycle.start_year],
+          not_withdrawn_before: @current_academic_cycle.second_wednesday_of_october,
+        })
     end
 
     def base_trainee_scope

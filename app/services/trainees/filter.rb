@@ -173,6 +173,13 @@ module Trainees
       end
     end
 
+    def not_withdrawn_before(filtered_trainees, date)
+      return trainees if date.nil?
+
+      filtered_trainees.left_outer_joins(:trainee_withdrawals).where.not(state: :withdrawn)
+        .or(Trainee.left_outer_joins(:trainee_withdrawals).where("trainee_withdrawals.date >= ?", date))
+    end
+
     def filter_trainees
       filtered_trainees = trainees
 
@@ -188,6 +195,7 @@ module Trainees
       filtered_trainees = record_completion(filtered_trainees, filters[:record_completion])
       filtered_trainees = study_mode(filtered_trainees, filters[:study_mode])
       filtered_trainees = trn(filtered_trainees, filters[:has_trn])
+      filtered_trainees = not_withdrawn_before(filtered_trainees, filters[:not_withdrawn_before])
 
       record_source(filtered_trainees, filters[:record_source])
     end
