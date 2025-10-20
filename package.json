@@ -18,7 +18,7 @@
     "@ministryofjustice/frontend": "^5.2.1",
     "accessible-autocomplete": "^3.0.1",
     "govuk-country-and-territory-autocomplete": "^2.0.0",
-    "govuk-frontend": "^5.12.0",
+    "govuk-frontend": "^5.13.0",
     "jquery": "^3.7.1",
     "rails-ujs": "^5.2.8",
     "sass": "^1.93.2",
