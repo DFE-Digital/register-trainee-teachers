@@ -236,6 +236,12 @@ describe Provider do
 
       it { is_expected.to be false }
     end
+
+    context "when the accreditation_id belongs to NIoT" do
+      subject { build(:provider, accreditation_id: "5728").hei? }
+
+      it { is_expected.to be true }
+    end
   end
 
   describe "#performance_profile_sign_offs" do

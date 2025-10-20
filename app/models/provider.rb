@@ -84,6 +84,7 @@ class Provider < ApplicationRecord
   TEACH_FIRST_PROVIDER_CODE = "1TF"
   AMBITION_PROVIDER_CODE = "2A2"
   START_MANDATING_PLACEMENT_DATA_CYCLE = 2022
+  NIOT_ACCREDITATION_ID = "5728"
 
   def code=(cde)
     self[:code] = cde.to_s.upcase
@@ -109,7 +110,7 @@ class Provider < ApplicationRecord
   end
 
   def hei?
-    accreditation_id&.starts_with?("1")
+    accreditation_id&.starts_with?("1") || NIOT_ACCREDITATION_ID == accreditation_id
   end
 
   def performance_profile_sign_offs
