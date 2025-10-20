@@ -401,21 +401,17 @@ module Trainees
       let!(:withdrawn_trainee_before_date) do
         create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 9, 1))
       end
-
       let!(:withdrawn_trainee_on_date) do
         create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 10, 11))
       end
-
       let!(:withdrawn_trainee_after_date) do
         create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 11, 1))
       end
-
       let!(:withdrawn_trainee_before_and_again_after_date) do
         trainee = create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 11, 1))
         create(:trainee_withdrawal, trainee:, date: Date.new(2023, 9, 1))
         trainee
       end
-
       let!(:active_trainee) { create(:trainee) }
 
       let(:filters) { { not_withdrawn_before: Date.new(2023, 10, 11) } }
