@@ -980,10 +980,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@ministryofjustice/frontend@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-5.2.1.tgz#811fc89736daa954a49a71d297d2b2ca14bf1bd1"
-  integrity sha512-6P79TnIZnmntuFoGDSY+suOtgSBmCd4cGFfzImspvYhL4GjXFR9zjWrPt33Dem2wONAA96OQNUpKqScTV74yvQ==
+"@ministryofjustice/frontend@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@ministryofjustice/frontend/-/frontend-6.0.0.tgz#bcfc015981472a4f081ce41ef8bb3383a47bfbf1"
+  integrity sha512-EzIckqyaY/JZIHOGLAqF+slCEAVB7HI0RSuYkQ9KCQlRfuiXztfRt/KcsSc/Ax7tGpC80g7w/mH16eLXIkPAag==
 
 "@napi-rs/wasm-runtime@^0.2.11":
   version "0.2.11"
