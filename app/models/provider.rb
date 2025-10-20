@@ -79,7 +79,7 @@ class Provider < ApplicationRecord
                     },
                   }
 
-  scope :active_hei, -> { kept.where(accredited: true).where("accreditation_id ~ ?", "^1[0-9]{3}$") }
+  scope :active_hei, -> { kept.where(accredited: true).where("accreditation_id ~ ?", "^(1[0-9]{3}|#{NIOT_ACCREDITATION_ID})$") }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
   AMBITION_PROVIDER_CODE = "2A2"
