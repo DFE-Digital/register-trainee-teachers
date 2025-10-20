@@ -92,6 +92,7 @@ describe FindNewStarterTrainees do
       create(
         :trainee,
         :withdrawn,
+        withdrawal_date: AcademicCycle.current.second_wednesday_of_october - 1.day,
         itt_start_date: 2.months.ago,
         start_academic_cycle: AcademicCycle.current,
         training_route: :provider_led_postgrad,
