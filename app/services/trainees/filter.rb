@@ -177,7 +177,7 @@ module Trainees
       return filtered_trainees if date.nil?
 
       filtered_trainees.left_outer_joins(:trainee_withdrawals).where.not(state: :withdrawn)
-        .or(Trainee.left_outer_joins(:trainee_withdrawals).where("trainee_withdrawals.date >= ?", date))
+        .or(Trainee.left_outer_joins(:trainee_withdrawals).where(trainee_withdrawals: { date: date.. }))
     end
 
     def filter_trainees

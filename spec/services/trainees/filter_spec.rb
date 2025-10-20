@@ -409,7 +409,7 @@ module Trainees
       end
       let!(:withdrawn_trainee_before_and_again_after_date) do
         trainee = create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 11, 1))
-        create(:trainee_withdrawal, trainee:, date: Date.new(2023, 9, 1))
+        create(:trainee_withdrawal, trainee: trainee, date: Date.new(2023, 9, 1))
         trainee
       end
       let!(:active_trainee) { create(:trainee) }
