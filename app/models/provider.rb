@@ -110,7 +110,7 @@ class Provider < ApplicationRecord
   end
 
   def hei?
-    accreditation_id&.starts_with?("1") || NIOT_ACCREDITATION_ID == accreditation_id
+    accreditation_id&.starts_with?("1") || accreditation_id == NIOT_ACCREDITATION_ID
   end
 
   def performance_profile_sign_offs
