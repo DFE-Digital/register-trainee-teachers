@@ -476,11 +476,15 @@ FactoryBot.define do
 
       state { "withdrawn" }
 
-      after(:create) do |trainee|
+      transient do
+        withdrawal_date { nil }
+      end
+
+      after(:create) do |trainee, evaluator|
         create(
           :trainee_withdrawal,
           trainee: trainee,
-          date: Faker::Date.between(
+          date: evaluator.withdrawal_date || Faker::Date.between(
             from: trainee.itt_start_date + 1.day,
             to: trainee.itt_start_date + 1.year,
           ),

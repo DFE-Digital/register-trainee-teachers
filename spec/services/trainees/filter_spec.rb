@@ -396,5 +396,27 @@ module Trainees
 
       it { expect { trigger } .not_to raise_error }
     end
+
+    describe "not_withdrawn_before filter" do
+      let!(:withdrawn_trainee_before_date) do
+        create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 9, 1))
+      end
+
+      let!(:withdrawn_trainee_on_date) do
+        create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 10, 11))
+      end
+
+      let!(:withdrawn_trainee_after_date) do
+        create(:trainee, :withdrawn, withdrawal_date: Date.new(2023, 11, 1))
+      end
+
+      let!(:active_trainee) { create(:trainee) }
+
+      let(:filters) { { not_withdrawn_before: Date.new(2023, 10, 11) } }
+
+      it "excludes trainees withdrawn before the given date" do
+        expect(subject).to contain_exactly(withdrawn_trainee_on_date, withdrawn_trainee_after_date, active_trainee)
+      end
+    end
   end
 end
