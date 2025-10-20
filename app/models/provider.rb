@@ -79,11 +79,12 @@ class Provider < ApplicationRecord
                     },
                   }
 
-  scope :active_hei, -> { kept.where(accredited: true).where("accreditation_id ~ ?", "^1[0-9]{3}$") }
+  scope :active_hei, -> { kept.where(accredited: true).where("accreditation_id LIKE ? OR accreditation_id = ?", "1%", NIOT_ACCREDITATION_ID) }
 
   TEACH_FIRST_PROVIDER_CODE = "1TF"
   AMBITION_PROVIDER_CODE = "2A2"
   START_MANDATING_PLACEMENT_DATA_CYCLE = 2022
+  NIOT_ACCREDITATION_ID = "5728"
 
   def code=(cde)
     self[:code] = cde.to_s.upcase
@@ -109,7 +110,7 @@ class Provider < ApplicationRecord
   end
 
   def hei?
-    accreditation_id&.starts_with?("1")
+    accreditation_id&.starts_with?("1") || accreditation_id == NIOT_ACCREDITATION_ID
   end
 
   def performance_profile_sign_offs

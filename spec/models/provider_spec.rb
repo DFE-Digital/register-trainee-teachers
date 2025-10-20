@@ -6,6 +6,7 @@ describe Provider do
   describe "scopes" do
     describe ".active_hei" do
       let(:active_hei_provider) { create(:provider, :hei) }
+      let(:niot) { create(:provider, :hei, accreditation_id: "5728") }
       let(:inactive_hei_provider) { create(:provider, :hei) }
       let(:unaccredited_hei_provider) { create(:provider, :hei, :unaccredited) }
       let(:active_scitt_provider) { create(:provider, :scitt) }
@@ -14,6 +15,7 @@ describe Provider do
 
       before do
         active_hei_provider
+        niot
         inactive_hei_provider.discard
         unaccredited_hei_provider
         active_scitt_provider
@@ -22,7 +24,7 @@ describe Provider do
       end
 
       it "returns providers that are accredited and have a valid accreditation_id" do
-        expect(described_class.active_hei).to contain_exactly(active_hei_provider)
+        expect(described_class.active_hei).to contain_exactly(active_hei_provider, niot)
       end
     end
   end
@@ -235,6 +237,12 @@ describe Provider do
       subject { build(:provider, accreditation_id: "234567").hei? }
 
       it { is_expected.to be false }
+    end
+
+    context "when the accreditation_id belongs to NIoT" do
+      subject { build(:provider, accreditation_id: "5728").hei? }
+
+      it { is_expected.to be true }
     end
   end
 
