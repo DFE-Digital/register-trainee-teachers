@@ -1792,9 +1792,9 @@ en:
         withdrawal/date_form:
           attributes:
             date_string:
-              blank: Choose a withdrawal date
+              blank: Select when the trainee withdrew
             date:
-              blank: &withdrawal_date_blank The withdrawal date must have a day, month and year
+              blank: &withdrawal_date_blank Enter the date the trainee withdrew
               invalid: *withdrawal_date_blank
         funding/training_initiatives_form:
           attributes:
