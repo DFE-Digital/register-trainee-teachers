@@ -161,7 +161,7 @@ feature "Withdrawing a trainee" do
     given_i_am_authenticated
     given_a_trainee_exists_to_be_withdrawn_with_no_start_date
     and_i_am_on_the_trainee_record_page
-    and_i_click_on_withdraw_and_continue
+    and_i_click_on_withdraw
     and_i_choose_they_have_not_started
     then_i_am_taken_to_the_forbidden_withdrawal_page
   end
@@ -356,7 +356,7 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_date_not_chosen
-    expect(withdrawal_date_page).to have_content("Choose a withdrawal date")
+    expect(withdrawal_date_page).to have_content("Select when the trainee withdrew")
   end
 
   def then_i_see_the_error_message_for_invalid_date
@@ -376,11 +376,11 @@ feature "Withdrawing a trainee" do
   end
 
   def then_i_see_the_error_message_for_trigger_not_chosen
-    expect(withdrawal_trigger_page).to have_content("Please select an option")
+    expect(withdrawal_trigger_page).to have_content("Select who chose to withdraw the trainee")
   end
 
   def then_i_see_the_error_message_for_future_interest_not_chosen
-    expect(withdrawal_future_interest_page).to have_content("Please select an option")
+    expect(withdrawal_future_interest_page).to have_content("Select if the trainee would be interested in becoming a teacher in the future")
   end
 
   def then_i_see_the_error_message_for_unknown_exclusivity
