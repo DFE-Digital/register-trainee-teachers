@@ -284,6 +284,7 @@ Rails.application.routes.draw do
     get "/manage-placements", to: "guidance#manage_placements"
     get "/bulk-upload-placement-data", to: "guidance#bulk_upload_placement_data"
     get "/how_to_extract_trns_from_the_register_service", to: "guidance#how_to_extract_trns_from_the_register_service"
+    get "/how-to-resolve-funding-and-bursary-errors", to: "guidance#how_to_resolve_funding_and_bursary_errors"
   end
 
   if FeatureService.enabled?("funding")
