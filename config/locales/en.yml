@@ -1774,7 +1774,7 @@ en:
           attributes:
             reason_ids:
               trainee:
-                blank: Select if the trainee would be interested in becoming a teacher in the future
+                blank: Choose a reason for the trainee’s decision to withdraw
               provider:
                 blank: Choose a reason for removing the trainee
             another_reason:
