@@ -396,11 +396,16 @@ weight: 1
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the lead partner for the trainee.
-        Other possible values:
+        Examples:
       </p>
       <ul>
         <li><code>115795</code> - Cheltenham College</li>
         <li><code>133795</code> - University of Sussex</li>
+      </ul>
+      <p class="govuk-body">
+        Other possible values:
+      </p>
+      <ul>
         <li><code>900000</code> - Establishment outside England and Wales</li>
         <li><code>900020</code> - Other establishment without a URN</li>
         <li><code>900030</code> - Not available</li>
