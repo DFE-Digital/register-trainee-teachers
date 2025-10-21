@@ -50,7 +50,7 @@ I was expecting a bursary to be valid but I’ve received an error message.
 
 ### Fields causing the error:
 Fund Code: 7<br/>
-Course age range: ‘Empty field’
+Course Age Range: ‘Empty field’
 
 ### Reason for this error message:
 Funding is only given when it appears alongside the correct age range.
