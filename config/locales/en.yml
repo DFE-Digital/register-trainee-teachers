@@ -1792,7 +1792,7 @@ en:
         withdrawal/future_interest_form:
           attributes:
             future_interest:
-              blank: Please select an option
+              blank: Select if the trainee would be interested in becoming a teacher in the future
         withdrawal/date_form:
           attributes:
             date_string:
