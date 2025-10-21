@@ -17,27 +17,26 @@
 
       <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
-      <%= f.govuk_radio_buttons_fieldset(:future_interest, legend: { text: t("views.forms.withdrawal_future_interest.title"), size: "l" }, hint: { text: t("views.forms.withdrawal_future_interest.hint") } ) do %>
-      <%= f.govuk_radio_button(
-        :future_interest,
-        :yes,
-        label: { text: t("views.forms.withdrawal_future_interest.yes.label") },
-        link_errors: true,
-      ) %>
+      <%= f.govuk_radio_buttons_fieldset(:future_interest, legend: { text: t("views.forms.withdrawal_future_interest.title"), size: "l" } ) do %>
+        <%= f.govuk_radio_button(
+          :future_interest,
+          :yes,
+          label: { text: t("views.forms.withdrawal_future_interest.yes.label") },
+          link_errors: true,
+        ) %>
 
-      <%= f.govuk_radio_button(
-        :future_interest,
-        :no,
-        label: { text: t("views.forms.withdrawal_future_interest.no.label") },
-      ) %>
+        <%= f.govuk_radio_button(
+          :future_interest,
+          :no,
+          label: { text: t("views.forms.withdrawal_future_interest.no.label") },
+        ) %>
 
-      <%= f.govuk_radio_button(
-        :future_interest,
-        :unknown,
-        label: { text: t("views.forms.withdrawal_future_interest.unknown.label") },
-      ) %>
-  <% end %>
-
+        <%= f.govuk_radio_button(
+          :future_interest,
+          :unknown,
+          label: { text: t("views.forms.withdrawal_future_interest.unknown.label") },
+        ) %>
+      <% end %>
 
       <%= f.govuk_submit %>
     <% end %>
