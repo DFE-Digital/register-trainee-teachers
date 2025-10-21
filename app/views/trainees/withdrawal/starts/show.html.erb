@@ -9,7 +9,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
+    <%= render TraineeName::View.new(trainee) %>
 
     <h1 class="govuk-heading-l"><%= t("trainees.withdrawals.start.show.heading") %></h1>
 
@@ -23,7 +23,10 @@
       <%= t("trainees.withdrawals.start.show.how_your_answers_will_help.body") %>
     </p>
 
-    <%= govuk_link_to t("views.forms.common.continue"), edit_trainee_withdrawal_date_path(trainee), class: "govuk-button" %>
+    <%= render GovukComponent::StartButtonComponent.new(
+      text: "Start",
+      href: edit_trainee_withdrawal_date_path(trainee),
+    ) %>
   </div>
 </div>
 
