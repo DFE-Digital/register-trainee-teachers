@@ -1324,7 +1324,7 @@ en:
     withdrawals:
       start:
         show:
-          heading: "Withdraw the trainee"
+          heading: "Withdraw trainee"
           before_you_start:
             header: "Before you start"
             body: "Make sure you have all the information related to the withdrawal of this trainee."
