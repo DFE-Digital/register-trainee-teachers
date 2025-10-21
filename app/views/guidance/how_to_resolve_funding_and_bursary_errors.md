@@ -7,6 +7,8 @@ Some users are experiencing issues where they receive unexpected error messages 
 
 If you continue to experience error messages, email
 <a class='govuk-link' href="mailto:becomingateacher@digital.education.gov.uk">becomingateacher@digital.education.gov.uk</a>
+<br/>
+<br/>
 
 ## Problem Statement 1:
 I was expecting a bursary to be valid but I’ve received an error message.
@@ -22,7 +24,8 @@ Under the field ‘Course Subject One’ (API: course_subject_one) ensure you’
 specified French OR Spanish OR German as the course.
 
 You can add Modern languages as a second course option.
-
+<br/>
+<br/>
 
 ## Problem Statement 2:
 
@@ -38,6 +41,8 @@ first course mentioned which is causing an error message.
 ### Solution:
 Under ‘Course Subject One’ ensure you’ve put Physics.
 You can add Mathematics as a second course option.
+<br/>
+<br/>
 
 ## Problem Statement 3:
 
@@ -52,6 +57,8 @@ Funding is only given when it appears alongside the correct age range.
 
 ### Solution:
 Under ‘Course Age Range’ select the correct ages for the course the trainee is doing.
+<br/>
+<br/>
 
 ## Problem Statement 4:
 
@@ -65,6 +72,8 @@ A value of ‘7’ is required for someone to be entitled to funding.
 
 ### Solution:
 Use value ‘7’ in the Fund Code field.
+<br/>
+<br/>
 
 ## Problem Statement 5:
 
