@@ -4,24 +4,19 @@ require "rails_helper"
 require "csv"
 
 describe FindNewStarterTrainees do
-  subject { described_class.new(DateTime.new(2022, 10, 12)).call }
+  let(:census_date) { AcademicCycle.current.second_wednesday_of_october }
+  let(:valid_trainee) { create(:trainee, state: 1, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
+  let(:valid_trainee_with_no_trainee_start_date) { create(:trainee, state: 1, trainee_start_date: nil, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
+  let(:valid_draft_trainee) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
+  let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle_id: 10, training_route: :provider_led_postgrad) }
+
+  subject { described_class.new(census_date).call }
 
   before do
     create(:academic_cycle)
     create(:academic_cycle, previous_cycle: true, id: 10)
     allow(Trainees::SetAcademicCycles).to receive(:call) # deactivate so it doesn't override factories
   end
-
-  around do |example|
-    Timecop.freeze(Time.zone.local(2022, 9, 3)) do
-      example.run
-    end
-  end
-
-  let(:valid_trainee) { create(:trainee, state: 1, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
-  let(:valid_trainee_with_no_trainee_start_date) { create(:trainee, state: 1, trainee_start_date: nil, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
-  let(:valid_draft_trainee) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle: AcademicCycle.current, training_route: :provider_led_postgrad) }
-  let(:valid_trainee_from_previous_academic_cycle) { create(:trainee, state: 0, itt_start_date: 2.months.ago, start_academic_cycle_id: 10, training_route: :provider_led_postgrad) }
 
   it "to contain non draft current academic cycle trainees starting before the census date" do
     expect(subject).to include(valid_trainee)
@@ -83,6 +78,23 @@ describe FindNewStarterTrainees do
 
     it "does not include early years assessment only trainees" do
       expect(subject).not_to include(early_years_assessment_only_trainee)
+    end
+  end
+
+  context "when trainee is withdrawn before census cutoff" do
+    let(:withdrawn_trainee) do
+      create(
+        :trainee,
+        :withdrawn,
+        withdrawal_date: census_date - 1.day,
+        itt_start_date: 2.months.ago,
+        start_academic_cycle: AcademicCycle.current,
+        training_route: :provider_led_postgrad,
+      )
+    end
+
+    it "does not include withdrawn trainees" do
+      expect(subject).not_to include(withdrawn_trainee)
     end
   end
 end

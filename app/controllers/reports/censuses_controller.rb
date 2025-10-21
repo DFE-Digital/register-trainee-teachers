@@ -80,14 +80,6 @@ module Reports
       Time.now.in_time_zone("London").strftime("%F_%H-%M-%S")
     end
 
-    def censuses_filename
-      "#{time_now}_#{@current_academic_cycle.label('-')}_trainees_censuses-sign-off_register-trainee-teachers.csv"
-    end
-
-    def censuses_trainees
-      Trainees::Filter.call(trainees: base_trainee_scope, filters: { academic_year: [@current_academic_cycle.start_year] })
-    end
-
     def base_trainee_scope
       policy_scope(Trainee.includes({ provider: [:courses] }, :start_academic_cycle, :end_academic_cycle).not_draft)
     end
