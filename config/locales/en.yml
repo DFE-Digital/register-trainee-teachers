@@ -988,7 +988,6 @@ en:
           label: The trainee chose to withdraw
       withdrawal_future_interest:
         title: Would this trainee be interested in becoming a teacher in the future?
-        hint: Choose an option
         "yes":
           label: "Yes"
         "no":
