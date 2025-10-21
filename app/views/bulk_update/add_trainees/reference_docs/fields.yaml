@@ -330,10 +330,14 @@
 - field_name: Lead Partner URN
   technical: lead_partner_urn
   hesa_alignment: SDLEAD
-  description: This field collects the lead school for School Direct trainees
+  description: |-
+    This field collects the Unique Reference Number (URN) of the lead partner for the trainee.
+
+    The system validates the provided URN against the Register database. If the URN is not found in Register, the lead partner may not be set correctly.
   format: Must be a 6-digit number
   example: |-
     - `115795` - Cheltenham College
+    - `133795` - University of Sussex
     - `900000` - Establishment outside England and Wales
     - `900020` - Other establishment without a URN
     - `900030` - Not available

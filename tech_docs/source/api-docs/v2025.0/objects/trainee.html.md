@@ -175,7 +175,7 @@ weight: 1
         value.
       </p>
       <p class="govuk-body">
-       Note: If no ethnicity value is provided (blank or null), the system will automatically 
+       Note: If no ethnicity value is provided (blank or null), the system will automatically
         set this field to <code>997</code> (Not provided).
       </p>
       <p class="govuk-body">
@@ -261,9 +261,9 @@ weight: 1
       </p>
       <p class="govuk-body">
         Notes:
-        Where the course maximum age is 11 or less as stated in <code>course_age_range</code>, 
+        Where the course maximum age is 11 or less as stated in <code>course_age_range</code>,
         we expect <code>course_subject_one</code> to be “Primary Teaching”. We will automatically apply HESA code <code>100511</code> if you have not already done so.
-        Any subjects provided in the trainee details will be shifted to <code>course_subject_two</code> and <code>course_subject_three</code>. 
+        Any subjects provided in the trainee details will be shifted to <code>course_subject_two</code> and <code>course_subject_three</code>.
         Where trainees study a primary specialism, a valid HECoS code should be used in this field.
       </p>
       <p class="govuk-body">
@@ -396,6 +396,13 @@ weight: 1
       </p>
       <p class="govuk-body">
         The Unique Reference Number (URN) of the lead partner for the trainee.
+        Examples:
+      </p>
+      <ul>
+        <li><code>115795</code> - Cheltenham College</li>
+        <li><code>133795</code> - University of Sussex</li>
+      </ul>
+      <p class="govuk-body">
         Other possible values:
       </p>
       <ul>
@@ -404,8 +411,8 @@ weight: 1
         <li><code>900030</code> - Not available</li>
       </ul>
       <p class="govuk-body">
-       Note: The system validates the provided URN against the Register database. 
-        If the URN is not found in Register, the request will not return an error but the 
+       Note: The system validates the provided URN against the Register database.
+        If the URN is not found in Register, the request will not return an error but the
         lead partner association may not be established correctly.
       </p>
       <p class="govuk-body">
@@ -439,8 +446,8 @@ weight: 1
         The start date of the trainee on their ITT course.
       </p>
       <p class="govuk-body">
-       Note: If <code>trainee_start_date</code> is not provided, it will be automatically 
-        set to the value of <code>itt_start_date</code>. The <code>trainee_start_date</code> is validated to ensure it is not 
+       Note: If <code>trainee_start_date</code> is not provided, it will be automatically
+        set to the value of <code>itt_start_date</code>. The <code>trainee_start_date</code> is validated to ensure it is not
         more than 10 years in the past, and cannot be in the future unless it matches <code>itt_start_date</code>.
       </p>
       <p class="govuk-body">

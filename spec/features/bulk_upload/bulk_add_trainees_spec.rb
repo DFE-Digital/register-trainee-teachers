@@ -394,6 +394,39 @@ feature "bulk add trainees" do
         then_i_can_see_the_new_trainees_with_a_disability
       end
 
+      scenario "the bulk add trainees page is visible and I upload a file with lead partners" do
+        when_lead_partners_exist
+        when_i_visit_the_bulk_update_index_page
+        and_i_click_the_bulk_add_trainees_page
+        and_i_attach_a_valid_file_with_lead_partners
+        and_i_click_the_upload_button
+        and_i_click_on_continue_button
+        and_the_send_csv_processing_first_stage_email_has_been_sent
+        then_a_job_is_queued_to_process_the_upload
+        then_i_see_that_the_upload_is_processing
+
+        when_the_background_job_is_run
+        and_i_refresh_the_page
+        and_i_see_file_validation_passed
+
+        Timecop.travel 1.hour.from_now do
+          and_i_click_the_submit_button
+        end
+
+        then_a_job_is_queued_to_process_the_upload
+
+        when_the_background_job_is_run
+        and_i_refresh_the_summary_page
+
+        and_i_dont_see_the_review_errors_message
+
+        when_i_click_on_home_link
+        then_i_see_the_root_page
+
+        and_i_visit_the_trainees_page
+        then_i_can_see_the_new_trainees_with_lead_partners
+      end
+
       scenario "when I try to look at the status of a different providers upload" do
         when_there_is_a_bulk_update_trainee_upload
 
@@ -686,6 +719,12 @@ private
     end
   end
 
+  def when_lead_partners_exist
+    create(:lead_partner, :hei, name: "University of Sussex", urn: 133795)
+    create(:lead_partner, :hei, name: "University of Cumbria", urn: 135398)
+    create(:lead_partner, :scitt, name: "Leeds SCITT", urn: 133838)
+  end
+
   def when_an_upload_exist
     create(:bulk_update_trainee_upload, provider: current_user.organisation)
   end
@@ -925,6 +964,12 @@ private
     and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
   end
 
+  def and_i_attach_a_valid_file_with_lead_partners
+    filename = "three_trainees_with_lead_partners.csv"
+
+    and_i_attach_a_file(file_content("bulk_update/trainee_uploads/#{filename}"), filename)
+  end
+
   def when_i_attach_a_file_with_invalid_rows
     csv = Rails.root.join("spec/fixtures/files/bulk_update/trainee_uploads/five_trainees_with_failed.csv").read
     and_i_attach_a_file(csv)
@@ -1123,6 +1168,28 @@ private
     expect(page).to have_content("physical disability or mobility issue")
     expect(page).to have_content("social or communication impairment")
     expect(page).to have_content("other")
+  end
+
+  def then_i_can_see_the_new_trainees_with_lead_partners
+    expect(page).to have_content("Spencer Murphy")
+    expect(page).to have_content("Adrianne Koelpin")
+    expect(page).to have_content("Sacha Bechtelar")
+
+    click_on "Spencer Murphy"
+    expect(page).to have_content("University of Sussex")
+    expect(page).to have_content("URN 133795")
+
+    click_on "All records"
+
+    click_on "Adrianne Koelpin"
+    expect(page).to have_content("University of Cumbria")
+    expect(page).to have_content("URN 135398")
+
+    click_on "All records"
+
+    click_on "Sacha Bechtelar"
+    expect(page).to have_content("Leeds SCITT")
+    expect(page).to have_content("URN 133838")
   end
 
   def when_the_upload_has_failed_with_validation_errors
