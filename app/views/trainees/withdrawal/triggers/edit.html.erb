@@ -18,8 +18,7 @@
       <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
       <%= f.govuk_radio_buttons_fieldset(:trigger,
-      legend: { text: t("views.forms.withdrawal_trigger.title"), size: "l"},
-      hint: { text: t("views.forms.withdrawal_trigger.hint") }) do %>
+      legend: { text: t("views.forms.withdrawal_trigger.title"), size: "l"}) do %>
       <%= f.govuk_radio_button(
         :trigger,
         :provider,
