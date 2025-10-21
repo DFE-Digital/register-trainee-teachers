@@ -58,7 +58,10 @@
               link_errors: index.zero?,
             ) %>
           <% else %>
+            <%= f.govuk_check_box_divider unless reason.name == WithdrawalReasons::SAFEGUARDING_CONCERNS %>
+
             <% detail_field = reason.name == WithdrawalReasons::SAFEGUARDING_CONCERNS ? :safeguarding_concern_reasons : :another_reason %>
+
             <%= f.govuk_check_box(
               :reason_ids,
               reason.id,

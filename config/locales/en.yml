@@ -1340,7 +1340,7 @@ en:
           heading:
             trainee: Why did the trainee withdraw?
             provider: Why did you withdraw the trainee?
-          hint: Select all reasons that apply
+          hint: Select all that apply
       trigger:
         edit:
           heading: Who chose to withdraw the trainee?
