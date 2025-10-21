@@ -980,7 +980,7 @@ en:
         deferral_notice_html: We’ll use the trainee’s deferral date of <span class="govuk-!-font-weight-bold">%{date}</span> as their withdrawal date.
         deferral_notice_link_html: To use a different date, %{reinstatement_link}, then withdraw them.
       withdrawal_trigger:
-        title: Why are you withdrawing the trainee?
+        title: Who chose to withdraw the trainee?
         hint: Choose an option
         provider:
           label: We chose to withdraw the trainee
@@ -1356,9 +1356,6 @@ en:
         update:
           success: Trainee withdrawn
           error: Unable to withdraw trainee, please message support
-      triggers:
-        edit:
-          heading: Why are you withdrawing the trainee?
       future_interests:
         edit:
           heading: Would this trainee be interested in becoming a teacher in the future?
