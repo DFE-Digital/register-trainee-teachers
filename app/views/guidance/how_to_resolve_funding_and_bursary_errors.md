@@ -32,7 +32,7 @@ You can add Modern languages as a second course option.
 I was expecting a bursary to be valid but I’ve received an error message.
 
 ### Field causing the error:
-Course subject: Mathematics and Physics
+Course Subject: Mathematics and Physics
 
 ### Reason for this error message:
 Mathematics is not eligible for funding. In this scenario Mathematics is the
