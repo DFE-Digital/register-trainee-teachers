@@ -22,7 +22,7 @@ Course Subject: Modern languages
 Only French, Spanish and German are eligible for scholarships.
 
 ### Solution:
-Under the field ‘Course Subject One’ (API: course_subject_one') ensure you’ve
+Under the field ‘Course Subject One’ (API: course_subject_one) ensure you’ve
 specified French OR Spanish OR German as the course.
 
 To be eligible for funding we need to know which specific language they are
@@ -44,7 +44,7 @@ A language must be specified. Choose from French OR Spanish OR German if the
 trainee is not eligible for student finance (Fund Code 2).
 
 ### Solution:
-Under the field ‘Course Subject One’ (API: course_subject_one')
+Under the field ‘Course Subject One’ (API: course_subject_one)
 ensure you’ve specified French OR Spanish OR German as the course.
 
 You can add Modern languages as a second course option.
