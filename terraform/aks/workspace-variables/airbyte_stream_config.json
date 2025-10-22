@@ -2055,6 +2055,11 @@
           },
           {
             "fieldPath": [
+              "safeguarding_concern_reasons"
+            ]
+          },
+          {
+            "fieldPath": [
               "future_interest"
             ]
           },
