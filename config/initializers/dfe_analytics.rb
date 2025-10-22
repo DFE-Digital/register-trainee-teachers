@@ -54,7 +54,7 @@ DfE::Analytics.configure do |config|
   # use a new version of the BigQuery streaming APIs.
   config.azure_federated_auth = true
 
-  if Rails.env.review?
+  if Rails.env.in?(%w[review qa]) && ENV["BIGQUERY_AIRBYTE_DATASET"].present?
     # Perform airbyte checks on startup and allow airbyte config generation
     config.airbyte_enabled = true
 
