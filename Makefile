@@ -124,35 +124,10 @@ deploy-arm-resources: arm-deployment ## Validate ARM resource deployment. Usage:
 
 validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
 
-install-fetch-config:
-	[ ! -f bin/fetch_config.rb ] \
-		&& curl -s https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/scripts/fetch_config/fetch_config.rb -o bin/fetch_config.rb \
-		&& chmod +x bin/fetch_config.rb \
-		|| true
-
-read-tf-config:
-	$(eval key_vault_name=$(shell jq -r '.key_vault_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval key_vault_app_secret_name=$(shell jq -r '.key_vault_app_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
-	$(eval key_vault_infra_secret_name=$(shell jq -r '.key_vault_infra_secret_name' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
-
 read-cluster-config:
 	$(eval CLUSTER=$(shell jq -r '.cluster' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval NAMESPACE=$(shell jq -r '.namespace' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
 	$(eval CONFIG_LONG=$(shell jq -r '.env_config' terraform/$(PLATFORM)/workspace-variables/$(DEPLOY_ENV).tfvars.json))
-
-edit-app-secrets: read-tf-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} \
-		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml -c
-
-edit-infra-secrets: read-tf-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} \
-		-e -d azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml -c
-
-print-app-secrets: read-tf-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_app_secret_name} -f yaml
-
-print-infra-secrets: read-tf-config install-fetch-config set-azure-account
-	bin/fetch_config.rb -s azure-key-vault-secret:${key_vault_name}/${key_vault_infra_secret_name} -f yaml
 
 terraform-plan: deploy-plan
 
