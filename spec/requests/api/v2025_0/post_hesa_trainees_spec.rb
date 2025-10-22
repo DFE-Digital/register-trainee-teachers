@@ -141,6 +141,14 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       expect(response.parsed_body[:data][:study_mode]).to eq("63")
     end
 
+    it "sets the correct nationality" do
+      post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
+
+      expect(response.parsed_body[:data][:nationality]).to eq("GB")
+      trainee = Trainee.last
+      expect(trainee.nationalities.pluck(:name)).to contain_exactly("british")
+    end
+
     it "sets the correct disabilities" do
       post endpoint, params: params.to_json, headers: { Authorization: token, **json_headers }
 

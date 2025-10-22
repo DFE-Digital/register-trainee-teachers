@@ -218,7 +218,7 @@ module Api
       end
 
       def nationality
-        return if @trainee.nationalities.blank?
+        return if @trainee.nationalities.reload.blank?
 
         RecruitsApi::CodeSets::Nationalities::APPLY_MAPPING[
           @trainee.nationalities.first.name,
