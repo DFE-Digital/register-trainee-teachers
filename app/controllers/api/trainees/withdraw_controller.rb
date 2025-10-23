@@ -26,7 +26,7 @@ module Api
       end
 
       def withdrawal_params
-        params.require(:data).permit(:withdraw_date, :trigger, :future_interest, :another_reason, reasons: [])
+        params.require(:data).permit(:withdraw_date, :trigger, :future_interest, :another_reason, :safeguarding_concern_reasons, reasons: [])
       end
     end
   end
