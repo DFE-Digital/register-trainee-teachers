@@ -81,6 +81,17 @@ describe Api::Trainees::WithdrawResponse do
           )
         end
       end
+
+      context "with safeguarding_concerns reason selected but the safeguarding_concern_reasons text not provided" do
+        let(:reason) { create(:withdrawal_reason, :safeguarding) }
+
+        it "returns status unprocessable entity with error response" do
+          expect(subject[:status]).to be(:unprocessable_entity)
+          expect(subject[:json][:errors]).to include(
+            { error: "UnprocessableEntity", message: "safeguarding_concern_reasons Enter the concerns" },
+          )
+        end
+      end
     end
   end
 
