@@ -54,6 +54,7 @@ Deletes an existing placement for this trainee.
         "withdrawal_trigger": null,
         "withdrawal_reasons": null,
         "withdrawal_another_reason": null,
+        "withdrawal_safeguarding_concern_reasons": null,
         "defer_date": "2023-10-17",
         "defer_reason": null,
         "recommended_for_award_at": null,
