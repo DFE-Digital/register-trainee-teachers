@@ -33,16 +33,20 @@
         </p>
       <% end %>
     <% end %>
+  </div>
+</div>
 
-    <%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
-      <%= f.govuk_error_summary %>
+<%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
       <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
       <%= f.govuk_check_boxes_fieldset :reason_ids,
-          legend: { text: heading, tag: "h1", size: "l" },
-          hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
-          class: "withdrawal" do %>
+        legend: { text: heading, tag: "h1", size: "l" },
+        hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
+        class: "withdrawal" do %>
 
         <% form.reasons.each_with_index do |reason, index| %>
           <% unless [
@@ -75,15 +79,15 @@
                 width: "two-thirds",
                 autocomplete: :off,
               ) %>
-            <% end %>
           <% end %>
         <% end %>
-      <% end %>
 
+      <% end %>
       <%= f.govuk_submit %>
-    <% end %>
+    </div>
   </div>
-</div>
+  <% end %>
+<% end %>
 
 <p class="govuk-body"><%= govuk_link_to(
     t("views.forms.common.cancel_and_return_to_record"),
