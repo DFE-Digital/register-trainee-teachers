@@ -275,7 +275,7 @@ GEM
       mini_mime (~> 1.1)
       representable (~> 3.0)
       retriable (~> 3.1)
-    google-cloud-bigquery (1.59.0)
+    google-cloud-bigquery (1.60.0)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
       google-apis-bigquery_v2 (~> 0.71)
@@ -1000,7 +1000,7 @@ CHECKSUMS
   globalid (1.2.1) sha256=70bf76711871f843dbba72beb8613229a49429d1866828476f9c9d6ccc327ce9
   google-apis-bigquery_v2 (0.95.0) sha256=db9f402734efff82e6ca9a7d7e71b496c932b62db84ab768b9f18e96827ab3a5
   google-apis-core (1.0.2) sha256=ba4579aaadc902d6cc7bc8db88f566ab00f5e31ea87ab41e9f9a032c470f2629
-  google-cloud-bigquery (1.59.0) sha256=ad897d0b52794e548a24bdd339bc126b852d0ca3304956a1168aaf26c509f3ea
+  google-cloud-bigquery (1.60.0) sha256=3755ddca2c8c78730b9708ac00259c7093422582076867e5d69e13c6c22856cf
   google-cloud-core (1.8.0) sha256=e572edcbf189cfcab16590628a516cec3f4f63454b730e59f0b36575120281cf
   google-cloud-env (2.3.1) sha256=0faac01eb27be78c2591d64433663b1a114f8f7af55a4f819755426cac9178e7
   google-cloud-errors (1.5.0) sha256=b56be28b8c10628125214dde571b925cfcebdbc58619e598250c37a2114f7b4b
