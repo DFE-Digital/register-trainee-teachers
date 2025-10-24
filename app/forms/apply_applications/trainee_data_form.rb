@@ -38,7 +38,7 @@ module ApplyApplications
       trainee.progress.personal_details = true
       trainee.progress.contact_details = true
       trainee.progress.diversity = true
-      trainee.progress.degrees = true
+      trainee.progress.degrees = true if trainee.requires_degree?
       trainee.progress.trainee_data = true
       Trainees::Update.call(trainee:)
     end
@@ -50,17 +50,17 @@ module ApplyApplications
     end
 
     def progress
-      form_validators.keys.all? { |section_key| trainee.progress.public_send(section_key) }
+      validator_keys.all? { |section_key| trainee.progress.public_send(section_key) }
     end
 
     def fields
-      form_validators.keys.map do |section|
+      validator_keys.map do |section|
         validator_obj(section).fields
       end.inject(:merge)
     end
 
     def missing_fields
-      form_validators.keys.map do |section|
+      validator_keys.map do |section|
         if section == :degrees
           validator_obj(section).missing_fields(include_degree_id:)
         else
@@ -80,7 +80,7 @@ module ApplyApplications
   private
 
     def all_forms_valid?
-      form_validators.keys.all? do |section|
+      validator_keys.all? do |section|
         validator_obj(section).valid?
       end
     end
@@ -104,6 +104,18 @@ module ApplyApplications
 
     def validator(section)
       form_validators[section][:form].constantize
+    end
+
+    def validator_keys
+      keys = []
+      form_validators.each do |validator, options|
+        next if (condition = options[:if]) && !public_send(condition)
+        next if (condition = options[:unless]) && public_send(condition)
+
+        keys << validator
+      end
+
+      keys
     end
   end
 end
