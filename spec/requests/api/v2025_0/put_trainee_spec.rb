@@ -160,23 +160,6 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
       end
     end
 
-    context "when updating with valid nationality" do
-      let(:data) { { nationality: "IE" } }
-
-      before do
-        put(
-          endpoint,
-          headers: { Authorization: "Bearer #{token}", **json_headers },
-          params: params.to_json,
-        )
-      end
-
-      it "returns status code 200" do
-        expect(response).to have_http_status(:ok)
-        expect(trainee.reload.nationalities.first.name).to eq("irish")
-      end
-    end
-
     context "when updating with valid course_age_range" do
       let(:data) { { course_age_range: } }
 
@@ -272,28 +255,27 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
     end
 
     context "when modifying nationality" do
-      let(:data) { { nationality: "IE" } }
-
-      before do
+      it "returns status code 200 and updates nationality" do
         put(
           endpoint,
           headers: { Authorization: "Bearer #{token}", **json_headers },
-          params: params.to_json,
+          params: { data: { nationality: "IE" } }.to_json,
         )
-      end
 
-      it "returns status code 200 and updates nationality" do
         expect(response).to have_http_status(:ok)
-        expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("irish")
+        expect(response.parsed_body[:data][:nationality]).to eq("IE")
+        expect(trainee.reload.nationalities.first.name).to eq("irish")
       end
 
       it "we can update nationality without creating a dual nationality" do
         put(
-          "/api/v2025.0/trainees/#{trainee.slug}",
+          endpoint,
           headers: { Authorization: "Bearer #{token}", **json_headers },
           params: { data: { nationality: "FR" } }.to_json,
         )
+
         expect(response).to have_http_status(:ok)
+        expect(response.parsed_body[:data][:nationality]).to eq("FR")
         expect(trainee.reload.nationalities.map(&:name)).to contain_exactly("french")
       end
 
@@ -302,11 +284,15 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
 
         it "return status is 422 and the trainee is not updated" do
           put(
-            "/api/v2025.0/trainees/#{trainee.slug}",
+            endpoint,
             headers: { Authorization: "Bearer #{token}", **json_headers },
             params: { data: { nationality: "XX" } }.to_json,
           )
+
           expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.parsed_body[:errors]).to contain_exactly(
+            /nationality has invalid reference data value of 'XX'. Example values include/,
+          )
           expect(trainee.reload.nationalities.map(&:name)).to be_empty
         end
       end
