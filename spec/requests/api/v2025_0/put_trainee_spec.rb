@@ -2734,7 +2734,7 @@ describe "`PUT /api/v2025.0/trainees/:id` endpoint" do
               )
               expect(response.parsed_body["errors"]).to eq(
                 "funding_method" => [
-                  "training route 'opt_in_undergrad' and subject code 'primary teaching' are not eligible for 'bursary' in academic cycle '#{academic_cycle.label}'",
+                  "'bursary' is not allowed when fund_code is '2' and course_subject_one is 'primary teaching'",
                 ],
               )
             end
