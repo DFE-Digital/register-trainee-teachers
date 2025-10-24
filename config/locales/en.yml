@@ -1329,7 +1329,7 @@ en:
             header: "Before you start"
             body: "Make sure you have all the information related to the withdrawal of this trainee."
           how_your_answers_will_help:
-            header: "How your answers will help us"
+            header: "How your answers help us"
             body: "These may help inform policy in the future and help increase trainee retention."
       dates:
         edit:
