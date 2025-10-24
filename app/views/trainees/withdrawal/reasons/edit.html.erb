@@ -2,12 +2,11 @@
 
 <%= render PageTitle::View.new(text: heading, has_errors: form.errors.present?) %>
 
-
 <%= content_for(:breadcrumbs) do %>
   <%= render GovukComponent::BackLinkComponent.new(
     text: t("back"),
     href: edit_trainee_withdrawal_trigger_path(trainee),
-    ) %>
+  ) %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -17,49 +16,80 @@
       <h3 class="govuk-heading-s"><%= t("views.forms.withdrawal_date.deferral_notice_heading") %></h3>
       <%= render GovukComponent::InsetTextComponent.new(classes: "deferral-notice") do %>
         <p class="govuk-body deferral-notice_text">
-          <%= t("views.forms.withdrawal_date.deferral_notice_html", date: date_for_summary_view(@trainee.defer_date)) %>
+          <%= t(
+            "views.forms.withdrawal_date.deferral_notice_html",
+            date: date_for_summary_view(@trainee.defer_date),
+          ) %>
         </p>
         <p class="govuk-body deferral-notice_link">
-          <%= t("views.forms.withdrawal_date.deferral_notice_link_html", reinstatement_link: govuk_link_to("reinstate this trainee", trainee_reinstatement_path(@trainee))) %>
+          <%= t(
+            "views.forms.withdrawal_date.deferral_notice_link_html",
+            reinstatement_link:
+              govuk_link_to(
+                "reinstate this trainee",
+                trainee_reinstatement_path(@trainee),
+              ),
+          ) %>
         </p>
       <% end %>
-    <% end %>
-
-    <%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
-      <%= f.govuk_error_summary %>
-
-      <span class="govuk-caption-l">
-        <%= trainee_name(trainee) %>
-      </span>
-
-      <%= f.govuk_check_boxes_fieldset :reason_ids,
-          legend: { text: heading, tag: "h1", size: "l" },
-          hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
-          class: "withdrawal" do %>
-
-        <% form.reasons.each_with_index do |reason, index| %>
-          <% unless [WithdrawalReasons::HAD_TO_WITHDRAW_TRAINEE_ANOTHER_REASON, WithdrawalReasons::TRAINEE_CHOSE_TO_WITHDRAW_ANOTHER_REASON].include?(reason.name) %>
-            <%= f.govuk_check_box :reason_ids,
-                reason.id,
-                label: { text: t("components.withdrawal_details.reasons.#{reason.name}") },
-                hint: { text: t("components.withdrawal_details.hints.#{reason.name}", default: "") },
-                link_errors: index.zero? %>
-          <% else %>
-            <%= f.govuk_check_box :reason_ids, reason.id, label: { text: t("components.withdrawal_details.reasons.#{reason.name}") },
-                                                                  link_errors: index.zero? do %>
-              <%= f.govuk_text_area :another_reason,
-                                     label: { text: t("components.withdrawal_details.another_reason_label.title"), size: "m" },
-                                     hint: { text: t("components.withdrawal_details.another_reason_label.hint") },
-                                     width: "two-thirds",
-                                     autocomplete: :off %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-
-      <%= f.govuk_submit %>
     <% end %>
   </div>
 </div>
 
-<p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>
+<%= register_form_with(model: form, url: trainee_withdrawal_reason_path(trainee), local: true, method: :put) do |f| %>
+  <%= f.govuk_error_summary %>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
+
+      <%= f.govuk_check_boxes_fieldset :reason_ids,
+        legend: { text: heading, tag: "h1", size: "l" },
+        hint: { text: t("trainees.withdrawals.reasons.edit.hint") },
+        class: "withdrawal" do %>
+
+        <% form.reasons.each_with_index do |reason, index| %>
+          <% unless [
+              WithdrawalReasons::HAD_TO_WITHDRAW_TRAINEE_ANOTHER_REASON,
+              WithdrawalReasons::TRAINEE_CHOSE_TO_WITHDRAW_ANOTHER_REASON,
+              WithdrawalReasons::SAFEGUARDING_CONCERNS,
+          ].include?(reason.name) %>
+            <%= f.govuk_check_box(
+              :reason_ids,
+              reason.id,
+              label: { text: t("components.withdrawal_details.reasons.#{reason.name}") },
+              hint: { text: t("components.withdrawal_details.hints.#{reason.name}", default: "") },
+              link_errors: index.zero?,
+            ) %>
+          <% else %>
+            <%= f.govuk_check_box_divider unless reason.name == WithdrawalReasons::SAFEGUARDING_CONCERNS %>
+
+            <% detail_field = reason.name == WithdrawalReasons::SAFEGUARDING_CONCERNS ? :safeguarding_concern_reasons : :another_reason %>
+
+            <%= f.govuk_check_box(
+              :reason_ids,
+              reason.id,
+              label: { text: t("components.withdrawal_details.reasons.#{reason.name}") },
+              link_errors: index.zero?) do %>
+              <%= f.govuk_text_area(
+                detail_field,
+                label: { text: t(
+                  "components.withdrawal_details.#{detail_field}_label.title"), size: "s" },
+                hint: { text: t("components.withdrawal_details.#{detail_field}_label.hint") },
+                width: "two-thirds",
+                autocomplete: :off,
+              ) %>
+          <% end %>
+        <% end %>
+
+      <% end %>
+      <%= f.govuk_submit %>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+<p class="govuk-body"><%= govuk_link_to(
+    t("views.forms.common.cancel_and_return_to_record"),
+    trainee_path(trainee),
+  ) %></p>

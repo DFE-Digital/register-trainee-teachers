@@ -264,6 +264,7 @@ shared:
     - date
     - trigger
     - another_reason
+    - safeguarding_concern_reasons
     - future_interest
     - discarded_at
     - created_at

@@ -20,6 +20,10 @@ FactoryBot.define do
       name { WithdrawalReasons::TRAINEE_REASONS.first }
     end
 
+    trait :safeguarding do
+      name { WithdrawalReasons::SAFEGUARDING_CONCERNS }
+    end
+
     trait :with_all_reasons do
       to_create do |_instance|
         WithdrawalReasons::SEED.each do |seed|

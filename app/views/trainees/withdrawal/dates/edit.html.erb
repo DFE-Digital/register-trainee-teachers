@@ -9,24 +9,22 @@
   ) %>
 <% end %>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds-from-desktop">
+<% if trainee.duplicate? %>
+  <%= render GovukComponent::InsetTextComponent.new(classes: "duplicate-notice") do %>
+    <p class="govuk-body duplicate-notice_text">
+    <%= t("views.forms.withdrawal_date.duplicate_record_notice",
+          contact_link: support_email).html_safe %>
+    </p>
+  <% end %>
+<% end %>
 
-    <% if trainee.duplicate? %>
-      <%= render GovukComponent::InsetTextComponent.new(classes: "duplicate-notice") do %>
-        <p class="govuk-body duplicate-notice_text">
-          <%= t("views.forms.withdrawal_date.duplicate_record_notice",
-                contact_link: support_email).html_safe %>
-        </p>
-      <% end %>
-    <% end %>
+<%= register_form_with(model: form, url: trainee_withdrawal_date_path(trainee), method: :put, local: true) do |f| %>
+  <%= f.govuk_error_summary %>
 
-    <%= register_form_with(model: form, url: trainee_withdrawal_date_path(trainee), method: :put, local: true) do |f| %>
-      <%= f.govuk_error_summary %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
 
-      <span class="govuk-caption-l">
-        <%= trainee_name(trainee) %>
-      </span>
+      <%= render TraineeName::View.new(trainee, prefix: "Withdraw trainee -") %>
 
       <%= f.govuk_radio_buttons_fieldset(:date_string, legend: { text: heading, tag: "h1", size: "l" }, hint: { text: t("trainees.withdrawals.dates.edit.hint") }, class: "withdrawal-date") do %>
         <%= f.govuk_radio_button :date_string, :today, label: { text: t("views.forms.common.today") }, link_errors: true %>
@@ -37,8 +35,8 @@
       <% end %>
 
       <%= f.govuk_submit t(:continue) %>
-    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <p class="govuk-body"><%= govuk_link_to(t("views.forms.common.cancel_and_return_to_record"), trainee_path(trainee)) %></p>

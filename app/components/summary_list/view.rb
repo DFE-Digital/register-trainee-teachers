@@ -1,16 +1,13 @@
 # frozen_string_literal: true
 
-class SummaryCard::View < ApplicationComponent
+class SummaryList::View < ApplicationComponent
   renders_one :header_actions
 
-  def initialize(title:, heading_level: 2, rows:, id_suffix: nil, editable: true, id: nil, render_list_only: false)
-    @title = title
-    @heading_level = heading_level
+  def initialize(rows:, id_suffix: nil, editable: true, id: nil)
     @rows = rows
     @editable = editable
     @id_suffix = id_suffix
     @id = id
-    @render_list_only = render_list_only
   end
 
   def summary_rows

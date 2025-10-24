@@ -1,0 +1,12 @@
+.app-summary-list {
+  // adjust the padding for inline `ul`s so that they align correctly
+  // with plain text values.
+
+  .app-summary-list__values-list {
+    padding-left: govuk-spacing(4);
+
+    li {
+      padding-bottom: govuk-spacing(2);
+    }
+  }
+}
