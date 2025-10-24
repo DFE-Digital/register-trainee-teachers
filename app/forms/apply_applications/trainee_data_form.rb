@@ -15,13 +15,17 @@ module ApplyApplications
     validator :personal_details, form: "PersonalDetailsForm"
     validator :contact_details, form: "ContactDetailsForm"
     validator :diversity, form: "Diversities::FormValidator"
-    validator :degrees, form: "DegreesForm"
+    validator :degrees, form: "DegreesForm", if: :validate_degree?
 
     delegate :apply_application?, to: :trainee
 
     validate :submission_ready
 
     attr_accessor :mark_as_reviewed, :trainee, :include_degree_id
+
+    def validate_degree?
+      trainee.requires_degree?
+    end
 
     def initialize(trainee, include_degree_id: false)
       @trainee = trainee
