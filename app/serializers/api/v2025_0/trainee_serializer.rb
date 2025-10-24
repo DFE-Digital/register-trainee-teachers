@@ -70,6 +70,7 @@ module Api
             withdrawal_trigger: @trainee.current_withdrawal&.trigger,
             withdrawal_future_interest: @trainee.current_withdrawal&.future_interest,
             withdrawal_another_reason: @trainee.current_withdrawal&.another_reason,
+            withdrawal_safeguarding_concern_reasons: @trainee.current_withdrawal&.safeguarding_concern_reasons,
             placements: placements,
             degrees: degrees,
             state: @trainee.state,
