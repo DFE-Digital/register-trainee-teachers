@@ -99,7 +99,7 @@ Withdraw details
       string, conditional
     </p>
     <p class="govuk-body">
-       More information about the reason a trainee withdrew if the other values do not sufficiently describe why the trainee withdrew. Required if <code>reasons</code> is <code>safeguarding_concerns</code>.
+       More information about the safeguarding concern that caused a trainee to be withdrawn. Required if <code>reasons</code> is <code>safeguarding_concerns</code>.
     </p>
     <p class="govuk-body">
       Example: <code>Detail about the safeguarding concerns</code>
