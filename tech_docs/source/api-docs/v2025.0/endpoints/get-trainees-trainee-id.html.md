@@ -108,6 +108,7 @@ Get a single trainee.
         "withdrawal_trigger": null,
         "withdrawal_reasons": null,
         "withdrawal_another_reason": null,
+        "withdrawal_safeguarding_concern_reasons": null,
         "placements": [
           {
             "placement_id": "AXsRAS4LfwZZXvSX7aAfNUb4",
