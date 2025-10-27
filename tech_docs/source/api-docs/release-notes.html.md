@@ -25,6 +25,7 @@ Originally released for testing as v2025.0-rc on 13 May 2025.
 * Added support for some missing HESA data values
 * Improved error messages to include exact field names in error response
 * Updated reference documentation
+* New withdrawal `reasons` value `safeguarding_concerns` and optional field `safeguarding_concern_reasons` for `POST /trainees/{trainee_id}/withdraw`
 
 ## v1.0-pre — 12 August 2024
 
@@ -40,7 +41,6 @@ yet live but is available for testing.
 * Changes for ITT Reform 2024. These include support for lead partners and changes to the validation rules
 * Better duplicate checks for degrees and placements
 * Improved error messages for validation errors
-* New withdrawal `reason` value `safeguarding_concerns` and optional field `safeguarding_concern_reasons` for `POST /trainees/{trainee_id}/withdraw`
 
 ## v0.1 — 22 April 2024
 

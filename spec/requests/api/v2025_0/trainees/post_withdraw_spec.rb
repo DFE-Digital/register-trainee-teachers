@@ -85,6 +85,21 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
         )
       end
 
+      it "returns the trainee's withdrawal details in the response" do
+        post(
+          "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+          headers: { Authorization: "Bearer #{token}", **json_headers },
+          params: params.to_json
+        )
+
+        expect(response.parsed_body.dig(:data, :withdraw_reasons)).to match_array([reason.name])
+        expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+        expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
+        expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
+        expect(response.parsed_body.dig(:data, :withdrawal_another_reason)).to be_nil
+        expect(response.parsed_body.dig(:data, :withdrawal_safeguarding_concern_reaasons)).to be_nil
+      end
+
       context "with `another_reason`" do
         let(:reason) { create(:withdrawal_reason, :provider, name: WithdrawalReasons::HAD_TO_WITHDRAW_TRAINEE_ANOTHER_REASON) }
 
@@ -112,6 +127,22 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
           expect(response).to have_http_status(:success)
           expect(response.parsed_body[:errors]).to be_nil
+        end
+
+        it "returns the trainee's withdrawal details in the response" do
+          params[:data][:another_reason] = "Another test reason"
+          post(
+            "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json
+          )
+
+          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to match_array([reason.name])
+          expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+          expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
+          expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
+          expect(response.parsed_body.dig(:data, :withdrawal_another_reason)).to eq("Another test reason")
+          expect(response.parsed_body.dig(:data, :withdrawal_safeguarding_concern_reaasons)).to be_nil
         end
       end
 
@@ -142,6 +173,22 @@ describe "`POST /trainees/:trainee_id/withdraw` endpoint" do
 
           expect(response).to have_http_status(:success)
           expect(response.parsed_body[:errors]).to be_nil
+        end
+
+        it "returns the trainee's withdrawal details in the response" do
+          params[:data][:safeguarding_concern_reasons] = "Some safeguarding reasons"
+          post(
+            "/api/v2025.0/trainees/#{trainee_id}/withdraw",
+            headers: { Authorization: "Bearer #{token}", **json_headers },
+            params: params.to_json
+          )
+
+          expect(response.parsed_body.dig(:data, :withdraw_reasons)).to match_array([reason.name])
+          expect(response.parsed_body.dig(:data, :withdraw_date)).to eq(withdraw_date)
+          expect(response.parsed_body.dig(:data, :withdrawal_trigger)).to eq(trigger)
+          expect(response.parsed_body.dig(:data, :withdrawal_future_interest)).to eq(future_interest)
+          expect(response.parsed_body.dig(:data, :withdrawal_another_reason)).to be_nil
+          expect(response.parsed_body.dig(:data, :withdrawal_safeguarding_concern_reasons)).to eq("Some safeguarding reasons")
         end
       end
 
