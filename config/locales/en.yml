@@ -1774,9 +1774,9 @@ en:
           attributes:
             reason_ids:
               trainee:
-                blank: Choose a reason for the trainee’s decision to withdraw
+                blank: Select why the trainee chose to withdraw
               provider:
-                blank: Choose a reason for removing the trainee
+                blank: Select why you withdrew the trainee
             another_reason:
               blank: Enter another reason
             safeguarding_concern_reasons:
