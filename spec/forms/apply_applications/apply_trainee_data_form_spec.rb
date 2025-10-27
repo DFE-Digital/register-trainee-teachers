@@ -40,7 +40,7 @@ module ApplyApplications
       context "when all of the forms are valid" do
         let(:trainee) { create(:trainee, :with_apply_application, :completed) }
 
-        it "returns the entire form as invalid" do
+        it "returns the entire form as valid" do
           expect(subject.progress).to be true
           expect(subject.errors).to be_empty
         end
