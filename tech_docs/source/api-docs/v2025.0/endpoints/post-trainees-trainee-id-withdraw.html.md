@@ -118,9 +118,11 @@ Withdraw details
         "withdraw_date": "2025-03-05",
         "reasons": [
           "unacceptable_behavior",
-          "had_to_withdraw_trainee_another_reason"
+          "had_to_withdraw_trainee_another_reason",
+          "safeguarding_concerns"
         ],
-        "another_reason": "Bespoke reason"
+        "another_reason": "Bespoke reason",
+        "safeguarding_concern_reasons": "Reasons for safeguarding concern"
       }
     }</pre>
   </div>

@@ -40,6 +40,7 @@ yet live but is available for testing.
 * Changes for ITT Reform 2024. These include support for lead partners and changes to the validation rules
 * Better duplicate checks for degrees and placements
 * Improved error messages for validation errors
+* New withdrawal `reason` value `safeguarding_concerns` and optional field `safeguarding_concern_reasons` for `POST /trainees/{trainee_id}/withdraw`
 
 ## v0.1 — 22 April 2024
 
