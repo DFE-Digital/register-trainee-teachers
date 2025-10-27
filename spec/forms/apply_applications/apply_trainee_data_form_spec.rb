@@ -56,7 +56,7 @@ module ApplyApplications
             expect(subject.progress_status(:degrees)).to eq(:not_provided)
           end
 
-          it "returns the entire form as invalid" do
+          it "returns the entire form as valid" do
             expect(subject.progress).to be true
             expect(subject.errors).to be_empty
           end
