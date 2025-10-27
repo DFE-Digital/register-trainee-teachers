@@ -240,7 +240,7 @@ module Api
         def lead_partner_from_urn
           lead_partner_id =
             if params[:lead_partner_urn].present?
-              LeadPartner.find_by(urn: params[:lead_partner_urn])&.id
+              LeadPartner.find_by(urn: params[:lead_partner_urn])&.id || InvalidValue.new(params[:lead_partner_urn])
             end
 
           {

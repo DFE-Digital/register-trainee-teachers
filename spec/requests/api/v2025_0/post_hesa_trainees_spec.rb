@@ -439,7 +439,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
           expect(response.parsed_body[:employing_school_urn]).to be_nil
         end
 
-        it "sets lead_partner_not_applicable and employing_school_not_applicable to false" do
+        it "sets lead_partner_not_applicable and employing_school_not_applicable to true" do
           trainee = Trainee.last
 
           expect(trainee.lead_partner_not_applicable).to be(true)
@@ -472,7 +472,7 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
       end
 
       context "when lead_partner_urn is present" do
-        context "when lead_partner_urn is not an applicable shool urn" do
+        context "when lead_partner_urn is not an applicable school urn" do
           let(:params) do
             {
               data: data.merge(
@@ -491,6 +491,26 @@ describe "`POST /api/v2025.0/trainees` endpoint" do
             trainee = Trainee.last
 
             expect(trainee.lead_partner_not_applicable).to be(true)
+          end
+        end
+
+        context "when lead_partner_urn is not a valid school urn (and not one of the special codes like 900020)" do
+          let(:params) do
+            {
+              data: data.merge(
+                lead_partner_urn: "123456",
+                employing_school_urn: "",
+              ),
+            }
+          end
+
+          it "returns unprocessible entity HTTP code and a validation error message" do
+            expect(response).to have_http_status(:unprocessable_entity)
+
+            response.parsed_body[:data]
+
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(response.parsed_body["errors"]).to include("lead_partner_urn is not a valid school urn")
           end
         end
 
