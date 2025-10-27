@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sandbox.register-trainee-teachers.service.gov.uk
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: sandbox.register-trainee-teachers.service.gov.uk
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        backend:
+          service:
+            name: register-sandbox
+            port:
+              number: 80
