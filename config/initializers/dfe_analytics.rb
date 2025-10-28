@@ -56,7 +56,7 @@ DfE::Analytics.configure do |config|
 
   # Path of airbyte stream config file relative to the App root (Rails.root)
   config.airbyte_stream_config_path = "terraform/aks/workspace-variables/airbyte_stream_config.json"
-  
+
   config.airbyte_enabled = true if Rails.env.development?
 
   if Rails.env.in?(%w[review qa]) && ENV["BIGQUERY_AIRBYTE_DATASET"].present?
